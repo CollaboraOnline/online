@@ -1,0 +1,19 @@
+client -> server
+================
+
+load <url>
+
+status
+
+tile width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
+
+server -> client
+================
+
+error: cmd=<command> kind=<kind>
+<freeErrorText>
+
+status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height>
+
+tile: width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> 
+<binaryPngImage>
