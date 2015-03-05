@@ -226,7 +226,7 @@ void LOOLConnectionServer::sendTile(StringTokenizer& tokens)
         static int n = 0;
         std::fstream dump("FOO" + std::to_string(n++) + ".png", std::ios::out);
 
-        dump.write(output.data() + response.size(), output.size());
+        dump.write(output.data() + response.size(), output.size() - response.size());
         dump.close();
     }
 
