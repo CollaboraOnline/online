@@ -1,3 +1,6 @@
+All communication consists of one line of human-readable UTF-8 text
+optionally followed by a single newline and binary data.
+
 client -> server
 ================
 
@@ -6,6 +9,8 @@ load <url>
 status
 
 tile width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
+
+close
 
 server -> client
 ================
@@ -17,3 +22,13 @@ status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=
 
 tile: width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> 
 <binaryPngImage>
+
+invalidatetiles: <payload>
+
+invalidatecursor:
+
+textselection: <payload>
+
+textselectionstart: <payload>
+
+textselectionend: <payload>
