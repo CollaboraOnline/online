@@ -14,14 +14,12 @@
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 
-class LOOLConnectionServer
+struct LOOLConnectionServer
 {
 public:
     LOOLConnectionServer(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit);
-  
-    void handleInput(char *buffer, int length);
-
-private:
+    ~LOOLConnectionServer();
+    bool handleInput(char *buffer, int length);
     void sendTextFrame(std::string text);
     void sendBinaryFrame(const char *buffer, int length);
     void loadDocument(Poco::StringTokenizer& tokens);

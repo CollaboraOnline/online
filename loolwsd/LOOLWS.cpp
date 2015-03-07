@@ -112,7 +112,7 @@ public:
             if (kid == 0)
 #endif
             {
-                LOOLConnectionServer *server(new LOOLConnectionServer(ws, _loKit));
+                LOOLConnectionServer server(ws, _loKit);
 
                 // Loop, receiving LOOL client WebSocket messages
                 try
@@ -126,7 +126,8 @@ public:
                         app.logger().information(Poco::format("Frame received (length=%d, flags=0x%x).", n, unsigned(flags)));
 
                         if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                            server->handleInput(buffer, n);
+                            if (!server.handleInput(buffer, n))
+                                n = 0;
                     }
                     while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
                     app.logger().information("WebSocket connection closed.");
@@ -189,7 +190,7 @@ public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
         Application& app = Application::instance();
-        app.logger().information("Request from " 
+        app.logger().information("Request from "
             + request.clientAddress().toString()
             + ": "
             + request.getMethod()
@@ -197,12 +198,12 @@ public:
             + request.getURI()
             + " "
             + request.getVersion());
-            
+
         for (HTTPServerRequest::ConstIterator it = request.begin(); it != request.end(); ++it)
         {
             app.logger().information(it->first + ": " + it->second);
         }
-        
+
         return new WebSocketRequestHandler(_loKit);
     }
 
@@ -224,7 +225,7 @@ public:
         int n;
         do
         {
-            char buffer[10240];
+            char buffer[30000];
             n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
 
             if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
@@ -296,7 +297,7 @@ public:
         _doTest(false)
     {
     }
-    
+
     ~LOOLWS()
     {
     }
@@ -306,7 +307,7 @@ protected:
     {
         ServerApplication::initialize(self);
     }
-        
+
     void uninitialize() override
     {
         ServerApplication::uninitialize();
@@ -315,7 +316,7 @@ protected:
     void defineOptions(OptionSet& options) override
     {
         ServerApplication::defineOptions(options);
-        
+
         options.addOption(
             Option("help", "h", "display help information on command line arguments")
                 .required(false)

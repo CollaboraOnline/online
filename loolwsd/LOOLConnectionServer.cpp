@@ -30,7 +30,14 @@ LOOLConnectionServer::LOOLConnectionServer(WebSocket& ws, LibreOfficeKit *loKit)
 {
 }
 
-void LOOLConnectionServer::handleInput(char *buffer, int length)
+LOOLConnectionServer::~LOOLConnectionServer()
+{
+    _ws.shutdown();
+    if (_loKitDocument)
+        _loKitDocument->pClass->destroy(_loKitDocument);
+}
+
+bool LOOLConnectionServer::handleInput(char *buffer, int length)
 {
     Application& app = Application::instance();
 
@@ -40,7 +47,7 @@ void LOOLConnectionServer::handleInput(char *buffer, int length)
         commandline = std::string(buffer, length);
     else
         commandline = std::string(buffer, endl-buffer);
-    
+
     app.logger().information("Command: " + commandline);
 
     StringTokenizer tokens(commandline, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -50,15 +57,14 @@ void LOOLConnectionServer::handleInput(char *buffer, int length)
         if (_loKitDocument)
         {
             app.logger().error("A document is already loaded");
-            _ws.shutdown();
-            return;
+            return false;
         }
         loadDocument(tokens);
     }
     else if (!_loKitDocument)
     {
         sendTextFrame("No document loaded");
-        _ws.shutdown();
+        return false;
     }
     else if (tokens[0] == "status")
     {
@@ -68,6 +74,12 @@ void LOOLConnectionServer::handleInput(char *buffer, int length)
     {
         sendTile(tokens);
     }
+    else if (tokens[0] == "close")
+    {
+        _loKitDocument->pClass->destroy(_loKitDocument);
+        _loKitDocument = NULL;
+    }
+    return true;
 }
 
 void LOOLConnectionServer::sendTextFrame(std::string text)
@@ -80,6 +92,32 @@ void LOOLConnectionServer::sendBinaryFrame(const char *buffer, int length)
     _ws.sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
+extern "C"
+{
+    static void myCallback(int nType, const char* pPayload, void* pData)
+    {
+        LOOLConnectionServer *srv = (LOOLConnectionServer *) pData;
+
+        switch ((LibreOfficeKitCallbackType) nType)
+        {
+        case LOK_CALLBACK_INVALIDATE_TILES:
+            srv->sendTextFrame("invalidatetiles: " + std::string(pPayload));
+            break;
+        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
+            srv->sendTextFrame("invalidatecursor:");
+        case LOK_CALLBACK_TEXT_SELECTION:
+            srv->sendTextFrame("textselection: " + std::string(pPayload));
+            break;
+        case LOK_CALLBACK_TEXT_SELECTION_START:
+            srv->sendTextFrame("textselectionstart: " + std::string(pPayload));
+            break;
+        case LOK_CALLBACK_TEXT_SELECTION_END:
+            srv->sendTextFrame("textselectionend: " + std::string(pPayload));
+            break;
+        }
+    }
+}
+
 void LOOLConnectionServer::loadDocument(StringTokenizer& tokens)
 {
     if (tokens.count() != 2)
@@ -88,7 +126,11 @@ void LOOLConnectionServer::loadDocument(StringTokenizer& tokens)
         return;
     }
     if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, tokens[1].c_str())) != NULL)
+    {
         sendTextFrame(getStatus());
+        _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
+
+    }
 }
 
 std::string LOOLConnectionServer::getStatus()
@@ -145,13 +187,15 @@ namespace {
     }
 }
 
-extern "C" 
+// Callback functions for libpng
+
+extern "C"
 {
-    void user_write_status_fn(png_structp, png_uint_32, int)
+    static void user_write_status_fn(png_structp, png_uint_32, int)
     {
     }
 
-    void user_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
+    static void user_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
     {
         std::vector<char> *outputp = (std::vector<char> *) png_get_io_ptr(png_ptr);
         size_t oldsize = outputp->size();
@@ -160,7 +204,7 @@ extern "C"
         std::cout << "Write to output: from " << oldsize << " to " << outputp->size() << std::endl;
     }
 
-    void user_flush_fn(png_structp)
+    static void user_flush_fn(png_structp)
     {
     }
 }
@@ -171,7 +215,7 @@ void LOOLConnectionServer::sendTile(StringTokenizer& tokens)
 
     if (tokens.count() != 7 ||
         !getTokenInteger(tokens[1], "width", &width) ||
-        !getTokenInteger(tokens[2], "height", &height) || 
+        !getTokenInteger(tokens[2], "height", &height) ||
         !getTokenInteger(tokens[3], "tileposx", &tilePosX) ||
         !getTokenInteger(tokens[4], "tileposy", &tilePosY) ||
         !getTokenInteger(tokens[5], "tilewidth", &tileWidth) ||
