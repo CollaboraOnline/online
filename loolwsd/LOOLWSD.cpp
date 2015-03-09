@@ -288,17 +288,17 @@ private:
     HTTPServer& _srv;
 };
 
-class LOOLWS: public Poco::Util::ServerApplication
+class LOOLWSD: public Poco::Util::ServerApplication
 {
 public:
-    LOOLWS() :
+    LOOLWSD() :
         _helpRequested(false),
         _portNumber(9980),
         _doTest(false)
     {
     }
 
-    ~LOOLWS()
+    ~LOOLWSD()
     {
     }
 
@@ -402,6 +402,6 @@ private:
     bool _doTest;
 };
 
-POCO_SERVER_MAIN(LOOLWS)
+POCO_SERVER_MAIN(LOOLWSD)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
