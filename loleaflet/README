@@ -1,0 +1,10 @@
+Leaflet paltform for LibreOffice On-Line 
+
+Code convention for line terminators:
+    * files should have unix line terminators (LF)
+    * tools to convert files: dos2unix or fromdos 
+
+Building:
+    npm install -g jake
+    npm install
+    jake build
