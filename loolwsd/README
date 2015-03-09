@@ -14,8 +14,11 @@ been written... I found Poco while looking for code to do the
 WebSocket handshake and marshalling. But that functionality is just a
 small part of what Poco does.
 
-The Makefile is very trivial and obviously it needs to be replaced by
-some proper autofoo. And for Windows, a proper VS2013 project.
+This uses autofoo now: autoreconf, run ./configure with appropriate
+--with-lokit-path, --with-poco-includes and --with-poco-libs options,
+make.
+
+For Windows, a proper VS2013 project is needed.
 
 For now this is intentionally just serving one client once. (This is
 what the SOW says we should do first. See SOW for the directions of
