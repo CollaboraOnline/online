@@ -10,8 +10,6 @@ status
 
 tile width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 
-close
-
 server -> client
 ================
 

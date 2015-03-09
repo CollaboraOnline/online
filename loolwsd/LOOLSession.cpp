@@ -74,11 +74,6 @@ bool LOOLSession::handleInput(char *buffer, int length)
     {
         sendTile(tokens);
     }
-    else if (tokens[0] == "close")
-    {
-        _loKitDocument->pClass->destroy(_loKitDocument);
-        _loKitDocument = NULL;
-    }
     return true;
 }
 
