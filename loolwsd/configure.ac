@@ -76,5 +76,7 @@ AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
 
 AC_LANG_POP
 
+AC_DEFINE([LOOLWSD_CACHEDIR],["${localstatedir}/cache/${PACKAGE}"],[Cache folder])
+
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
