@@ -10,6 +10,8 @@
 #ifndef INCLUDED_LOOLSESSION_HPP
 #define INCLUDED_LOOLSESSION_HPP
 
+#include <unistd.h>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -19,7 +21,6 @@
 
 struct LOOLSession
 {
-public:
     LOOLSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit);
     ~LOOLSession();
     bool handleInput(char *buffer, int length);
@@ -28,6 +29,10 @@ public:
     void loadDocument(Poco::StringTokenizer& tokens);
     std::string getStatus();
     void sendTile(Poco::StringTokenizer& tokens);
+
+    bool _haveSeparateProcess;
+    pid_t _pid;
+    int _pipe;
 
     Poco::Net::WebSocket& _ws;
     LibreOfficeKit *_loKit;
