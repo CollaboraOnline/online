@@ -49,11 +49,16 @@ AS_IF([test -n "$with_poco_includes"],
 AS_IF([test -n "$with_poco_libs"],
       [LDFLAGS="$LDFLAGS -L${with_poco_libs}"])
 
-AC_SEARCH_LIBS([dlopen],
-               [dl dld])
+AS_IF([test `uname -s` != Darwin],
+      [AC_SEARCH_LIBS([dlopen],
+                      [dl dld],
+                      [],
+                      [AC_MSG_ERROR([dlopen not found])])])
 
 AC_SEARCH_LIBS([png_create_write_struct],
-               [png])
+               [png],
+               [],
+               [AC_MSG_ERROR([libpng not available?])])
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX}"
 
