@@ -107,54 +107,23 @@ public:
             WebSocket ws(request, response);
             app.logger().information("WebSocket connection established.");
 
-#if 0
-            int kid = fork();
-            if (kid == 0)
-#endif
-            {
-                LOOLSession server(ws, _loKit);
+            LOOLSession server(ws, _loKit);
 
-                // Loop, receiving LOOL client WebSocket messages
-                try
-                {
-                    int flags;
-                    int n;
-                    do
-                    {
-                        char buffer[1024];
-                        n = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                        app.logger().information(Poco::format("Frame received (length=%d, flags=0x%x).", n, unsigned(flags)));
-
-                        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                            if (!server.handleInput(buffer, n))
-                                n = 0;
-                    }
-                    while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-                    app.logger().information("WebSocket connection closed.");
-                }
-                catch (WebSocketException& exc)
-                {
-                    app.logger().log(exc);
-                    switch (exc.code())
-                    {
-                    case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
-                        response.set("Sec-WebSocket-Version", WebSocket::WEBSOCKET_VERSION);
-                        // fallthrough
-                    case WebSocket::WS_ERR_NO_HANDSHAKE:
-                    case WebSocket::WS_ERR_HANDSHAKE_NO_VERSION:
-                    case WebSocket::WS_ERR_HANDSHAKE_NO_KEY:
-                        response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
-                        response.setContentLength(0);
-                        response.send();
-                        break;
-                    }
-                }
-            }
-#if 0
-            else
+            // Loop, receiving LOOL client WebSocket messages
+            int flags;
+            int n;
+            do
             {
+                char buffer[1024];
+                n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+                app.logger().information(Poco::format("Frame received (length=%d, flags=0x%x).", n, unsigned(flags)));
+
+                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                    if (!server.handleInput(buffer, n))
+                        n = 0;
             }
-#endif
+            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+            app.logger().information("WebSocket connection closed.");
         }
         catch (WebSocketException& exc)
         {
