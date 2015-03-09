@@ -17,27 +17,27 @@
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
 
-#include "LOOLConnectionServer.h"
+#include "LOOLSession.hpp"
 
 using Poco::Net::WebSocket;
 using Poco::Util::Application;
 using Poco::StringTokenizer;
 
-LOOLConnectionServer::LOOLConnectionServer(WebSocket& ws, LibreOfficeKit *loKit) :
+LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit) :
     _ws(ws),
     _loKit(loKit),
     _loKitDocument(NULL)
 {
 }
 
-LOOLConnectionServer::~LOOLConnectionServer()
+LOOLSession::~LOOLSession()
 {
     _ws.shutdown();
     if (_loKitDocument)
         _loKitDocument->pClass->destroy(_loKitDocument);
 }
 
-bool LOOLConnectionServer::handleInput(char *buffer, int length)
+bool LOOLSession::handleInput(char *buffer, int length)
 {
     Application& app = Application::instance();
 
@@ -82,12 +82,12 @@ bool LOOLConnectionServer::handleInput(char *buffer, int length)
     return true;
 }
 
-void LOOLConnectionServer::sendTextFrame(std::string text)
+void LOOLSession::sendTextFrame(std::string text)
 {
     _ws.sendFrame(text.data(), text.size());
 }
 
-void LOOLConnectionServer::sendBinaryFrame(const char *buffer, int length)
+void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
     _ws.sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
@@ -96,7 +96,7 @@ extern "C"
 {
     static void myCallback(int nType, const char* pPayload, void* pData)
     {
-        LOOLConnectionServer *srv = (LOOLConnectionServer *) pData;
+        LOOLSession *srv = (LOOLSession *) pData;
 
         switch ((LibreOfficeKitCallbackType) nType)
         {
@@ -118,7 +118,7 @@ extern "C"
     }
 }
 
-void LOOLConnectionServer::loadDocument(StringTokenizer& tokens)
+void LOOLSession::loadDocument(StringTokenizer& tokens)
 {
     if (tokens.count() != 2)
     {
@@ -133,7 +133,7 @@ void LOOLConnectionServer::loadDocument(StringTokenizer& tokens)
     }
 }
 
-std::string LOOLConnectionServer::getStatus()
+std::string LOOLSession::getStatus()
 {
     LibreOfficeKitDocumentType type = (LibreOfficeKitDocumentType) _loKitDocument->pClass->getDocumentType(_loKitDocument);
     std::string typeString;
@@ -209,7 +209,7 @@ extern "C"
     }
 }
 
-void LOOLConnectionServer::sendTile(StringTokenizer& tokens)
+void LOOLSession::sendTile(StringTokenizer& tokens)
 {
     int width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 

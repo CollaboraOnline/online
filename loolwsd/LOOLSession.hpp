@@ -7,6 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#ifndef INCLUDED_LOOLSESSION_HPP
+#define INCLUDED_LOOLSESSION_HPP
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -14,11 +17,11 @@
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 
-struct LOOLConnectionServer
+struct LOOLSession
 {
 public:
-    LOOLConnectionServer(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit);
-    ~LOOLConnectionServer();
+    LOOLSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit);
+    ~LOOLSession();
     bool handleInput(char *buffer, int length);
     void sendTextFrame(std::string text);
     void sendBinaryFrame(const char *buffer, int length);
@@ -30,5 +33,7 @@ public:
     LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
 };
+
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

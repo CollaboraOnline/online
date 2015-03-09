@@ -60,7 +60,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
 
-#include "LOOLConnectionServer.h"
+#include "LOOLSession.hpp"
 
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
@@ -112,7 +112,7 @@ public:
             if (kid == 0)
 #endif
             {
-                LOOLConnectionServer server(ws, _loKit);
+                LOOLSession server(ws, _loKit);
 
                 // Loop, receiving LOOL client WebSocket messages
                 try
