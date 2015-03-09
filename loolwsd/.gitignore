@@ -1,0 +1,25 @@
+# Editor backup files etc
+*~
+\#*
+
+# Autofoo
+/.deps
+/Makefile
+/Makefile.in
+/aclocal.m4
+/autom4te.cache
+/config.h
+/config.log
+/config.status
+/configure
+/depcomp
+/install-sh
+/missing
+/stamp-h1
+
+*.o
+loolwsd
+
+
+# Debug output
+/FOO*.png
