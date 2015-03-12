@@ -7,9 +7,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
-#include <cstring>
+#include <memory>
 
 #include <png.h>
 
@@ -18,12 +19,14 @@
 #include <Poco/StringTokenizer.h>
 
 #include "LOOLSession.hpp"
+#include "TileCache.hpp"
 
 using Poco::Net::WebSocket;
 using Poco::Util::Application;
 using Poco::StringTokenizer;
 
 LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit) :
+    _haveSeparateProcess(false),
     _ws(ws),
     _loKit(loKit),
     _loKitDocument(NULL)
@@ -124,7 +127,7 @@ void LOOLSession::loadDocument(StringTokenizer& tokens)
     {
         sendTextFrame(getStatus());
         _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
-
+        _docURL = tokens[1];
     }
 }
 
@@ -196,7 +199,6 @@ extern "C"
         size_t oldsize = outputp->size();
         outputp->resize(oldsize + length);
         memcpy(outputp->data() + oldsize, data, length);
-        std::cout << "Write to output: from " << oldsize << " to " << outputp->size() << std::endl;
     }
 
     static void user_flush_fn(png_structp)
@@ -220,11 +222,32 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
         return;
     }
 
+    std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+
+    std::vector<char> output;
+    output.reserve(4 * width * height);
+    output.resize(response.size());
+    memcpy(output.data(), response.data(), response.size());
+
+    std::unique_ptr<std::fstream> cachedTile = TileCache::lookup(_docURL, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    if (cachedTile->is_open())
+    {
+        cachedTile->seekg(0, std::ios_base::end);
+        size_t pos = output.size();
+        std::streamsize size = cachedTile->tellg();
+        output.resize(pos + size);
+        cachedTile->seekg(0, std::ios_base::beg);
+        cachedTile->read(output.data() + pos, size);
+        cachedTile->close();
+
+        sendBinaryFrame(output.data(), output.size());
+
+        return;
+    }
+
     unsigned char *buffer = new unsigned char[4 * width * height];
     int rowStride;
     _loKitDocument->pClass->paintTile(_loKitDocument, buffer, width, height, &rowStride, tilePosX, tilePosY, tileWidth, tileHeight);
-
-    std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
     png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
@@ -238,11 +261,6 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
     }
 
     png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-
-    std::vector<char> output;
-    output.reserve(4 * width * height);
-    output.resize(response.size());
-    memcpy(output.data(), response.data(), response.size());
 
     png_set_write_fn(png_ptr, &output, user_write_fn, user_flush_fn);
     png_set_write_status_fn(png_ptr, user_write_status_fn);
@@ -258,8 +276,6 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
 
     delete[] buffer;
 
-    std::cout << "Got " << output.size() << " bytes of PNG" << std::endl;
-
     if (getenv("DUMPPNG"))
     {
         static int n = 0;
@@ -268,6 +284,8 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
         dump.write(output.data() + response.size(), output.size() - response.size());
         dump.close();
     }
+
+    TileCache::save(_docURL, width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
 
     sendBinaryFrame(output.data(), output.size());
 }

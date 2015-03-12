@@ -34,6 +34,8 @@ struct LOOLSession
     pid_t _pid;
     int _pipe;
 
+    std::string _docURL;
+
     Poco::Net::WebSocket& _ws;
     LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
