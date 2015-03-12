@@ -105,7 +105,6 @@ public:
         try
         {
             WebSocket ws(request, response);
-            app.logger().information("WebSocket connection established.");
 
             LOOLSession session(ws, _loKit);
 
@@ -116,7 +115,6 @@ public:
             {
                 char buffer[1024];
                 n = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                app.logger().information(Poco::format("Frame received (length=%d, flags=0x%x).", n, unsigned(flags)));
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                     if (!session.handleInput(buffer, n))
@@ -127,10 +125,6 @@ public:
             {
                 // TODO: is this the right thing to do?
                 ws.close();
-            }
-            else
-            {
-                app.logger().information("WebSocket connection closed.");
             }
         }
         catch (WebSocketException& exc)
@@ -200,23 +194,32 @@ public:
     {
         int flags;
         int n;
-        do
+        Application& app = Application::instance();
+        try
         {
-            char buffer[30000];
-            n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
-
-            if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+            do
             {
-                char *endl = (char *) memchr(buffer, '\n', n);
-                std::string response;
-                if (endl == NULL)
-                    response = std::string(buffer, n);
-                else
-                    response = std::string(buffer, endl-buffer);
-                std::cout << ">>" << n << " bytes: " << response << std::endl;
+                char buffer[30000];
+                n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
+
+                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                {
+                    char *endl = (char *) memchr(buffer, '\n', n);
+                    std::string response;
+                    if (endl == NULL)
+                        response = std::string(buffer, n);
+                    else
+                        response = std::string(buffer, endl-buffer);
+                    std::cout << ">>" << n << " bytes: " << response << std::endl;
+                }
             }
+            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
         }
-        while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+        catch (WebSocketException& exc)
+        {
+            app.logger().log(exc);
+            _ws.close();
+        }
     }
 
 private:
