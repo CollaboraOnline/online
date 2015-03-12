@@ -76,7 +76,15 @@ AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
 
 AC_LANG_POP
 
-AC_DEFINE([LOOLWSD_CACHEDIR],["${localstatedir}/cache/${PACKAGE}"],[Cache folder])
+test "$prefix" = NONE && prefix=$ac_default_prefix
+cachedir=${localstatedir}/cache/${PACKAGE}
+while :; do
+    oldvalue=$cachedir
+    cachedir=`eval echo $cachedir`
+    test $cachedir = $oldvalue && break
+done
+
+AC_DEFINE_UNQUOTED([LOOLWSD_CACHEDIR],["$cachedir"],[Cache folder])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
