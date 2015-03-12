@@ -276,15 +276,6 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
 
     delete[] buffer;
 
-    if (getenv("DUMPPNG"))
-    {
-        static int n = 0;
-        std::fstream dump("FOO" + std::to_string(n++) + ".png", std::ios::out);
-
-        dump.write(output.data() + response.size(), output.size() - response.size());
-        dump.close();
-    }
-
     TileCache::save(_docURL, width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
 
     sendBinaryFrame(output.data(), output.size());
