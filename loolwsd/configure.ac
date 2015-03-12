@@ -7,7 +7,7 @@ AC_INIT([loolwsd], [1.0], [libreoffice@collabora.com])
 
 AM_INIT_AUTOMAKE([1.11 silent-rules])
 
-AC_CONFIG_SRCDIR([LOOLWS.cpp])
+AC_CONFIG_SRCDIR([LOOLWSD.cpp])
 
 AC_CONFIG_HEADERS([config.h])
 
