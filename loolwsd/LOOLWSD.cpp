@@ -120,8 +120,8 @@ public:
                     if (!session.handleInput(buffer, n))
                         n = 0;
             }
-            while (n > 0 && !session._haveSeparateProcess && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-            if (session._haveSeparateProcess)
+            while (n > 0 && !session.haveSeparateProcess() && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+            if (session.haveSeparateProcess())
             {
                 // TODO: is this the right thing to do?
                 ws.close();

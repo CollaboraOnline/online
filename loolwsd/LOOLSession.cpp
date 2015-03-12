@@ -80,6 +80,11 @@ bool LOOLSession::handleInput(char *buffer, int length)
     return true;
 }
 
+bool LOOLSession::haveSeparateProcess() const
+{
+    return _haveSeparateProcess;
+}
+
 void LOOLSession::sendTextFrame(std::string text)
 {
     _ws.sendFrame(text.data(), text.size());
@@ -123,11 +128,14 @@ void LOOLSession::loadDocument(StringTokenizer& tokens)
         sendTextFrame("error: cmd=load kind=syntax");
         return;
     }
-    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, tokens[1].c_str())) != NULL)
+
+    _docURL = tokens[1];
+    _tileCache.reset(new TileCache(_docURL));
+
+    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _docURL.c_str())) != NULL)
     {
         sendTextFrame(getStatus());
         _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
-        _docURL = tokens[1];
     }
 }
 
@@ -229,9 +237,10 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
     output.resize(response.size());
     memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedTile = TileCache::lookup(_docURL, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    if (cachedTile->is_open())
+    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookup(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    if (cachedTile && cachedTile->is_open())
     {
+        std::cout << "Found in cache!" << std::endl;
         cachedTile->seekg(0, std::ios_base::end);
         size_t pos = output.size();
         std::streamsize size = cachedTile->tellg();
@@ -276,9 +285,13 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
 
     delete[] buffer;
 
-    TileCache::save(_docURL, width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
+    _tileCache->save(width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
 
     sendBinaryFrame(output.data(), output.size());
+}
+
+void LOOLSession::forkOff()
+{
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

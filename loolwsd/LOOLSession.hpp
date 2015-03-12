@@ -19,16 +19,26 @@
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 
-struct LOOLSession
+#include "TileCache.hpp"
+
+class LOOLSession
 {
+public:
     LOOLSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit);
     ~LOOLSession();
+
     bool handleInput(char *buffer, int length);
+    bool haveSeparateProcess() const;
+
     void sendTextFrame(std::string text);
     void sendBinaryFrame(const char *buffer, int length);
+
+private:
     void loadDocument(Poco::StringTokenizer& tokens);
     std::string getStatus();
     void sendTile(Poco::StringTokenizer& tokens);
+
+    void forkOff();
 
     bool _haveSeparateProcess;
     pid_t _pid;
@@ -39,6 +49,8 @@ struct LOOLSession
     Poco::Net::WebSocket& _ws;
     LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
+
+    std::unique_ptr<TileCache> _tileCache;
 };
 
 #endif

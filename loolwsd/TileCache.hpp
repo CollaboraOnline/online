@@ -13,10 +13,22 @@
 #include <fstream>
 #include <memory>
 
-struct TileCache
+#include <Poco/Timestamp.h>
+
+class TileCache
 {
-    static std::unique_ptr<std::fstream> lookup(const std::string& docURL, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
-    static void save(const std::string& docURL, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
+public:
+    TileCache(const std::string& docURL);
+
+    std::unique_ptr<std::fstream> lookup(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    void save(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
+
+private:
+    std::string cacheDirName();
+    std::string cacheFileName(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    Poco::Timestamp getLastModified();
+
+    const std::string& _docURL;
 };
 
 #endif
