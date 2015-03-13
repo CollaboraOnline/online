@@ -59,14 +59,14 @@ bool LOOLSession::handleInput(char *buffer, int length)
     {
         if (_loKitDocument)
         {
-            app.logger().error("A document is already loaded");
+            sendTextFrame("error: cms=load kind=docalreadyloaded");
             return false;
         }
         loadDocument(tokens);
     }
     else if (!_loKitDocument)
     {
-        sendTextFrame("No document loaded");
+        sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
     else if (tokens[0] == "status")
