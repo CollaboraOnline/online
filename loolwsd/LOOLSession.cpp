@@ -118,6 +118,15 @@ extern "C"
         case LOK_CALLBACK_TEXT_SELECTION_END:
             srv->sendTextFrame("textselectionend: " + std::string(pPayload));
             break;
+        case LOK_CALLBACK_CURSOR_VISIBLE:
+            srv->sendTextFrame("cursorvisible: " + std::string(pPayload));
+            break;
+        case LOK_CALLBACK_GRAPHIC_SELECTION:
+            srv->sendTextFrame("graphicselection: " + std::string(pPayload));
+            break;
+        case LOK_CALLBACK_HYPERLINK_CLICKED:
+            srv->sendTextFrame("hyperlinkclicked: " + std::string(pPayload));
+            break;
         }
     }
 }
