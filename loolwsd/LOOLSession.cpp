@@ -151,6 +151,10 @@ void LOOLSession::loadDocument(StringTokenizer& tokens)
 
 std::string LOOLSession::getStatus()
 {
+    std::string status = _tileCache->getStatus();
+    if (status.size() > 0)
+        return status;
+
     LibreOfficeKitDocumentType type = (LibreOfficeKitDocumentType) _loKitDocument->pClass->getDocumentType(_loKitDocument);
     std::string typeString;
     switch (type)
@@ -173,11 +177,14 @@ std::string LOOLSession::getStatus()
     }
     long width, height;
     _loKitDocument->pClass->getDocumentSize(_loKitDocument, &width, &height);
-    return ("status: type=" + typeString + " "
-            "parts=" + std::to_string(_loKitDocument->pClass->getParts(_loKitDocument)) + " "
-            "current=" + std::to_string(_loKitDocument->pClass->getPart(_loKitDocument)) + " "
-            "width=" + std::to_string(width) + " "
-            "height=" + std::to_string(height));
+    std::string result = ("status: type=" + typeString + " "
+                          "parts=" + std::to_string(_loKitDocument->pClass->getParts(_loKitDocument)) + " "
+                          "current=" + std::to_string(_loKitDocument->pClass->getPart(_loKitDocument)) + " "
+                          "width=" + std::to_string(width) + " "
+                          "height=" + std::to_string(height));
+    _tileCache->saveStatus(result);
+
+    return result;
 }
 
 namespace {
@@ -247,10 +254,9 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
     output.resize(response.size());
     memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookup(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     if (cachedTile && cachedTile->is_open())
     {
-        std::cout << "Found in cache!" << std::endl;
         cachedTile->seekg(0, std::ios_base::end);
         size_t pos = output.size();
         std::streamsize size = cachedTile->tellg();
@@ -295,7 +301,7 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
 
     delete[] buffer;
 
-    _tileCache->save(width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
+    _tileCache->saveTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
 
     sendBinaryFrame(output.data(), output.size());
 }

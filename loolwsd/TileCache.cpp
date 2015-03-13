@@ -34,7 +34,7 @@ TileCache::TileCache(const std::string& docURL) :
     }
 }
 
-std::unique_ptr<std::fstream> TileCache::lookup(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+std::unique_ptr<std::fstream> TileCache::lookupTile(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
 {
     std::string dirName = cacheDirName();
 
@@ -48,12 +48,13 @@ std::unique_ptr<std::fstream> TileCache::lookup(int width, int height, int tileP
     return result;
 }
 
-void TileCache::save(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size)
+void TileCache::saveTile(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size)
 {
     std::string dirName = cacheDirName();
-    std::string fileName = dirName + "/" + cacheFileName(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     Poco::File(dirName).createDirectories();
+
+    std::string fileName = dirName + "/" + cacheFileName(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     std::fstream outStream(fileName, std::ios::out);
     outStream.write(data, size);
@@ -62,6 +63,45 @@ void TileCache::save(int width, int height, int tilePosX, int tilePosY, int tile
     std::fstream modTimeFile(dirName + "/modtime.txt", std::ios::out);
     modTimeFile << Poco::File(_docURL).getLastModified().raw() << std::endl;
     modTimeFile.close();
+}
+
+std::string TileCache::getStatus()
+{
+    std::string dirName = cacheDirName();
+
+    if (!Poco::File(dirName).exists() || !Poco::File(dirName).isDirectory())
+        return nullptr;
+
+    std::string fileName = dirName + "/status.txt";
+    std::fstream statusStream(fileName, std::ios::in);
+    if (!statusStream.is_open())
+        return "";
+    std::vector<char> result;
+    statusStream.seekg(0, std::ios_base::end);
+    std::streamsize size = statusStream.tellg();
+    result.resize(size);
+    statusStream.seekg(0, std::ios_base::beg);
+    statusStream.read(result.data(), size);
+    statusStream.close();
+
+    if (result[result.size()-1] == '\n')
+        result.resize(result.size() - 1);
+    return std::string(result.data(), result.size());
+}
+
+void TileCache::saveStatus(const std::string& status)
+{
+    std::string dirName = cacheDirName();
+
+    Poco::File(dirName).createDirectories();
+
+    std::string fileName = dirName + "/status.txt";
+    std::fstream statusStream(fileName, std::ios::out);
+    if (!statusStream.is_open())
+        return;
+
+    statusStream << status << std::endl;
+    statusStream.close();
 }
 
 std::string TileCache::cacheDirName()
