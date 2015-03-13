@@ -108,6 +108,7 @@ extern "C"
             break;
         case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
             srv->sendTextFrame("invalidatecursor:");
+            break;
         case LOK_CALLBACK_TEXT_SELECTION:
             srv->sendTextFrame("textselection: " + std::string(pPayload));
             break;
