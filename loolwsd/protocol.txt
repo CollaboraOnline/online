@@ -21,12 +21,12 @@ status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=
 tile: width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> 
 <binaryPngImage>
 
+Each LOK_CALLBACK_FOO_BAR callback causes a corresponding message to
+the client, consisting of the FOO_BAR part in lowercase, without
+underscore, followed by a colon, space and the callback payload. For
+instance:
+
 invalidatetiles: <payload>
 
 invalidatecursor:
 
-textselection: <payload>
-
-textselectionstart: <payload>
-
-textselectionend: <payload>
