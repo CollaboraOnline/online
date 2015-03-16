@@ -74,13 +74,13 @@ using Poco::Net::HTTPServerResponse;
 using Poco::Net::ServerSocket;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
+using Poco::Runnable;
+using Poco::Thread;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
-using Poco::Runnable;
-using Poco::Thread;
 
 class WebSocketRequestHandler: public HTTPRequestHandler
     /// Handle a WebSocket connection.
