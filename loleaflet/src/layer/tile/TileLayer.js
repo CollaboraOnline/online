@@ -44,6 +44,17 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_initDocument: function () {
+		if (!this._map.socket) {
+			console.log("Socket initialization error");
+			return;
+		}
+		if (this.options.doc) {
+			this._map.socket.send("load " + this.options.doc);
+		}
+		this._update();
+	},
+
 	setUrl: function (url, noRedraw) {
 		this._url = url;
 
@@ -69,19 +80,36 @@ L.TileLayer = L.GridLayer.extend({
 		*/
 		tile.alt = '';
 
-		tile.src = this.getTileUrl(coords);
+		tile.src = 'http://i387.photobucket.com/albums/oo316/barkse90/Cartman-Cop-head-256x256.png';
 
 		return tile;
 	},
 
-	getTileUrl: function (coords) {
-		return L.Util.template(this._url, L.extend({
-			r: this.options.detectRetina && L.Browser.retina && this.options.maxZoom > 0 ? '@2x' : '',
-			s: this._getSubdomain(coords),
-			x: coords.x,
-			y: this.options.tms ? this._globalTileRange.max.y - coords.y : coords.y,
-			z: this._getZoomForUrl()
-		}, this.options));
+	_onMessage: function (evt) {
+		if (typeof(evt.data) === "string") {
+			console.log(evt.data);
+		}
+		else if (typeof(evt.data) === "object") {
+			var bytes = new Uint8Array(evt.data);
+			var index = 0;
+			// search for the first newline which marks the end of the message
+			while (index < bytes.length && bytes[index] != 10) {
+				index++;
+			}
+			var text_msg_bytes = bytes.subarray(0, index + 1);
+			var info = this._getTileInfo(String.fromCharCode.apply(null, text_msg_bytes));
+			var coords = this._twipsToCoords(new L.Point(info.x, info.y));
+			coords.z = this._map.getZoom();
+			var data = bytes.subarray(index + 1);
+			var done = L.bind(this._tileReady, this, coords)
+
+			var tile = document.createElement("img");
+			tile.onload = L.bind(this._tileOnLoad, this, done, tile);
+			tile.onerror = L.bind(this._tileOnError, this, done, tile);
+			tile.alt = '';
+			tile.src = 'data:image/png;base64,' + window.btoa(String.fromCharCode.apply(null, data));
+			this._handleTile(tile, coords);
+		}
 	},
 
 	_tileOnLoad: function (done, tile) {
@@ -106,6 +134,22 @@ L.TileLayer = L.GridLayer.extend({
 		return zoomN !== null && zoom > zoomN ?
 				Math.round(options.tileSize / map.getZoomScale(zoomN, zoom)) :
 				options.tileSize;
+	},
+
+	_getTileInfo: function (msg) {
+		var tokens = msg.split(" ");
+		var info = new Object;
+		for (var i = 0; i < tokens.length; i++) {
+			if (tokens[i].substring(0,9) === "tileposx=")
+				info.x = parseInt(tokens[i].substring(9));
+			if (tokens[i].substring(0,9) === "tileposy=")
+				info.y = parseInt(tokens[i].substring(9));
+			if (tokens[i].substring(0,10) === "tilewidth=")
+				info.tilewidth = parseInt(tokens[i].substring(10));
+			if (tokens[i].substring(0,11) === "tileheight=")
+				info.tileheight = parseInt(tokens[i].substring(11));
+		}
+		return info;
 	},
 
 	_onTileRemove: function (e) {

@@ -5,7 +5,7 @@
 L.Map = L.Evented.extend({
 
 	options: {
-		crs: L.CRS.EPSG3857,
+		crs: L.CRS.Simple,
 
 		/*
 		center: LatLng,
@@ -21,6 +21,8 @@ L.Map = L.Evented.extend({
 	initialize: function (id, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
+		this.socket = new WebSocket(options.server);
+		this.socket.binaryType = "arraybuffer";
 		this._initContainer(id);
 		this._initLayout();
 
