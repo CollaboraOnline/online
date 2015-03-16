@@ -86,16 +86,6 @@ L.Control.Attribution = L.Control.extend({
 	}
 });
 
-L.Map.mergeOptions({
-	attributionControl: true
-});
-
-L.Map.addInitHook(function () {
-	if (this.options.attributionControl) {
-		this.attributionControl = (new L.Control.Attribution()).addTo(this);
-	}
-});
-
 L.control.attribution = function (options) {
 	return new L.Control.Attribution(options);
 };
