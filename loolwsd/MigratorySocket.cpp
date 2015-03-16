@@ -7,16 +7,31 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <iostream>
+
 #include <Poco/Net/Socket.h>
 
 #include "MigratorySocket.hpp"
 
-MigratorySocket::MigratorySocket(const Poco::Net::Socket& socket)
+using Poco::Net::Socket;
+
+MigratorySocket::MigratorySocket(const Socket& socket) :
+    Socket(socket)
+{
+}
+
+MigratorySocket::MigratorySocket(Poco::Net::SocketImpl* pImpl) :
+    Socket(pImpl)
 {
 }
 
 MigratorySocket::~MigratorySocket()
 {
+}
+
+poco_socket_t MigratorySocket::sockfd() const
+{
+    return Socket::sockfd();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

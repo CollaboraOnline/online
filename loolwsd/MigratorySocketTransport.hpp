@@ -31,7 +31,7 @@ public:
     std::string string();
 
     /// Parent side: Send a socket to the child
-    void send(MigratorySocket socket);
+    void send(const MigratorySocket& socket);
 
     /// Child side: Receive a socket sent from an ancestor process
     MigratorySocket receive();

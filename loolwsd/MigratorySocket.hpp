@@ -19,7 +19,11 @@ public:
     /// The argument is the actual socket to be transported.
     MigratorySocket(const Poco::Net::Socket& socket);
 
+    MigratorySocket(Poco::Net::SocketImpl* pImpl);
+
     virtual ~MigratorySocket();
+
+    poco_socket_t sockfd() const;
 
 private:
     /// Socket that is to be migrated
