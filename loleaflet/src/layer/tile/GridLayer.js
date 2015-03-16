@@ -382,7 +382,7 @@ L.GridLayer = L.Layer.extend({
 
 	_update: function (center, zoom) {
 		var map = this._map;
-		if (!map) { return; }
+		if (!map || map.socket.readyState != 1) { return; }
 
 		// TODO move to reset
 		// var zoom = this._map.getZoom();
@@ -430,14 +430,9 @@ L.GridLayer = L.Layer.extend({
 				this.fire('loading');
 			}
 
-			// create DOM fragment to append tiles in one batch
-			var fragment = document.createDocumentFragment();
-
 			for (i = 0; i < queue.length; i++) {
-				this._addTile(queue[i], fragment);
+				this._addTile(queue[i]);
 			}
-
-			this._level.el.appendChild(fragment);
 		}
 	},
 
@@ -525,12 +520,31 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
-	_addTile: function (coords, container) {
+	_addTile: function (coords) {
+		if (this._map.socket) {
+			var twips = this._coordsToTwips(coords);
+			this._map.socket.send("tile width=" + this._tileSize + " " +
+									"height=" + this._tileSize + " " +
+									"tileposx=" + twips.x + " "	+
+									"tileposy=" + twips.y + " " +
+									"tilewidth=3000 tileheight=3000");
+		}
+		else {
+			var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+			this._handleTile(tile, coords);
+		}
+	},
+
+	_handleTile: function (tile, coords) {
 		var tilePos = this._getTilePos(coords),
-		    key = this._tileCoordsToKey(coords);
+			key = this._tileCoordsToKey(coords);
 
-		var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
-
+		if (this._tiles[key]) {
+			// tile is already added, between the first request and the response
+			// from the server there might have been other request, which are now
+			// invalid 
+			return;
+		}
 		this._initTile(tile);
 
 		// if createTile is defined with a second argument ("done" callback),
@@ -551,7 +565,7 @@ L.GridLayer = L.Layer.extend({
 			current: true
 		};
 
-		container.appendChild(tile);
+		this._level.el.appendChild(tile);
 		this.fire('tileloadstart', {
 			tile: tile,
 			coords: coords
@@ -612,6 +626,18 @@ L.GridLayer = L.Layer.extend({
 		return new L.Bounds(
 			bounds.min.divideBy(this._tileSize).floor(),
 			bounds.max.divideBy(this._tileSize).ceil().subtract([1, 1]));
+	},
+
+	_twipsToCoords: function (twips) {
+		return new L.Point(
+				twips.x / 15 / this._tileSize,
+				twips.y / 15 / this._tileSize);
+	},
+
+	_coordsToTwips: function (coords) {
+		return new L.Point(
+				coords.x * 15 * this._tileSize,
+				coords.y * 15 * this._tileSize);
 	},
 
 	_noTilesToLoad: function () {
