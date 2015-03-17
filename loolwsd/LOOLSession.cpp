@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <cassert>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -14,27 +15,45 @@
 
 #include <png.h>
 
-#include <Poco/Util/Application.h>
+#include <Poco/Buffer.h>
+#include <Poco/Process.h>
+#include <Poco/Random.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/Util/Application.h>
 
 #include "LOOLSession.hpp"
+#include "LOOLWSD.hpp"
 #include "TileCache.hpp"
+#include "Util.hpp"
 
+using Poco::Buffer;
 using Poco::Net::WebSocket;
-using Poco::Util::Application;
+using Poco::Process;
+using Poco::ProcessHandle;
+using Poco::Random;
 using Poco::StringTokenizer;
+using Poco::Thread;
+using Poco::UInt64;
+using Poco::Util::Application;
+
+std::map<UInt64, LOOLSession*> LOOLSession::_childToClient;
 
 LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit) :
-    _haveSeparateProcess(false),
+    _docURL(""),
     _ws(ws),
+    _toChildProcess(false),
+    _peerWs(nullptr),
+    _childId(0),
     _loKit(loKit),
     _loKitDocument(NULL)
 {
+    std::cout << Util::logPrefix() << "LOOLSesstion ctor this=" << this << " ws=" << &_ws << std::endl;
 }
 
 LOOLSession::~LOOLSession()
 {
+    std::cout << Util::logPrefix() << "LOOLSesstion dtor this=" << this << std::endl;
     _ws.shutdown();
     if (_loKitDocument)
         _loKitDocument->pClass->destroy(_loKitDocument);
@@ -44,45 +63,100 @@ bool LOOLSession::handleInput(char *buffer, int length)
 {
     Application& app = Application::instance();
 
+    if (haveSeparateProcess())
+    {
+        forwardRequest(buffer, length);
+        return true;
+    }
+
     char *endl = (char *) memchr(buffer, '\n', length);
     std::string commandline;
-    if (endl == NULL)
+    if (endl == nullptr)
         commandline = std::string(buffer, length);
     else
         commandline = std::string(buffer, endl-buffer);
 
-    app.logger().information("Command: " + commandline);
+    std::cout << Util::logPrefix() << "this=" << this << std::endl;
+
+    app.logger().information(Util::logPrefix() + "Input: '" + commandline + "'" + (endl == nullptr ? "" : " ..."));
 
     StringTokenizer tokens(commandline, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-    if (tokens[0] == "load")
+    if (toChildProcess())
     {
-        if (_loKitDocument)
+        assert(_peerWs != nullptr);
+        _peerWs->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+    }
+    else if (tokens[0] == "child")
+    {
+        if (_peerWs != nullptr ||
+            isChildProcess())
+        {
+            sendTextFrame("error: cmd=child kind=invalid");
+            return false;
+        }
+        if (tokens.count() != 2)
+        {
+            sendTextFrame("error: cmd=child kind=syntax");
+            return false;
+        }
+        UInt64 childId = std::stoull(tokens[1]);
+        app.logger().information(Util::logPrefix() + "childId=" + std::to_string(childId));
+        if (_childToClient.find(childId) == _childToClient.end())
+        {
+            sendTextFrame("error: cmd=child kind=notfound");
+            return false;
+        }
+        assert(_childToClient[childId]->haveSeparateProcess());
+        assert(_childToClient[childId]->_peerWs == nullptr);
+        _childToClient[childId]->_peerWs = &_ws;
+        _peerWs = &_childToClient[childId]->_ws;
+        for (auto i : _childToClient[childId]->_backLog)
+        {
+            std::cout << Util::logPrefix() << "Sending backlog: '" << std::string(i->begin(), i->size()) << "'" << std::endl;
+            _ws.sendFrame(i->begin(), i->size(), WebSocket::FRAME_BINARY);
+            delete i;
+        }
+        _toChildProcess = true;
+    }
+    else if (tokens[0] == "load")
+    {
+        if (_docURL != "")
         {
             sendTextFrame("error: cms=load kind=docalreadyloaded");
             return false;
         }
-        loadDocument(tokens);
+        return loadDocument(buffer, length, tokens);
     }
-    else if (!_loKitDocument)
+    else if (_docURL == "")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
     else if (tokens[0] == "status")
     {
-        sendTextFrame(getStatus());
+        return getStatus(buffer, length);
     }
     else if (tokens[0] == "tile")
     {
-        sendTile(tokens);
+        sendTile(buffer, length, tokens);
+    }
+    else
+    {
+        sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
+        return false;
     }
     return true;
 }
 
 bool LOOLSession::haveSeparateProcess() const
 {
-    return _haveSeparateProcess;
+    return _childId != 0;
+}
+
+bool LOOLSession::toChildProcess() const
+{
+    return _toChildProcess;
 }
 
 void LOOLSession::sendTextFrame(std::string text)
@@ -99,7 +173,7 @@ extern "C"
 {
     static void myCallback(int nType, const char* pPayload, void* pData)
     {
-        LOOLSession *srv = (LOOLSession *) pData;
+        LOOLSession *srv = reinterpret_cast<LOOLSession *>(pData);
 
         switch ((LibreOfficeKitCallbackType) nType)
         {
@@ -131,29 +205,45 @@ extern "C"
     }
 }
 
-void LOOLSession::loadDocument(StringTokenizer& tokens)
+bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
 {
     if (tokens.count() != 2)
     {
         sendTextFrame("error: cmd=load kind=syntax");
-        return;
+        return false;
     }
 
     _docURL = tokens[1];
     _tileCache.reset(new TileCache(_docURL));
 
-    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _docURL.c_str())) != NULL)
+    if (isChildProcess())
     {
-        sendTextFrame(getStatus());
-        _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
-    }
+        if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _docURL.c_str())) != NULL)
+        {
+            if (!getStatus(buffer, length))
+                return false;
+            _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
+        }
+    }        
+
+    return true;
 }
 
-std::string LOOLSession::getStatus()
+bool LOOLSession::getStatus(const char *buffer, int length)
 {
     std::string status = _tileCache->getStatus();
     if (status.size() > 0)
-        return status;
+    {
+        sendTextFrame(status);
+        return true;
+    }
+
+    if (!isChildProcess())
+    {
+        forkOff();
+        forwardRequest(buffer, length);
+        return true;
+    }
 
     LibreOfficeKitDocumentType type = (LibreOfficeKitDocumentType) _loKitDocument->pClass->getDocumentType(_loKitDocument);
     std::string typeString;
@@ -177,14 +267,16 @@ std::string LOOLSession::getStatus()
     }
     long width, height;
     _loKitDocument->pClass->getDocumentSize(_loKitDocument, &width, &height);
-    std::string result = ("status: type=" + typeString + " "
-                          "parts=" + std::to_string(_loKitDocument->pClass->getParts(_loKitDocument)) + " "
-                          "current=" + std::to_string(_loKitDocument->pClass->getPart(_loKitDocument)) + " "
-                          "width=" + std::to_string(width) + " "
-                          "height=" + std::to_string(height));
-    _tileCache->saveStatus(result);
+    status = ("status: type=" + typeString + " "
+              "parts=" + std::to_string(_loKitDocument->pClass->getParts(_loKitDocument)) + " "
+              "current=" + std::to_string(_loKitDocument->pClass->getPart(_loKitDocument)) + " "
+              "width=" + std::to_string(width) + " "
+              "height=" + std::to_string(height));
+    _tileCache->saveStatus(status);
 
-    return result;
+    sendTextFrame(status);
+
+    return true;
 }
 
 namespace {
@@ -231,7 +323,7 @@ extern "C"
     }
 }
 
-void LOOLSession::sendTile(StringTokenizer& tokens)
+void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
 {
     int width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
@@ -270,9 +362,17 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
         return;
     }
 
-    unsigned char *buffer = new unsigned char[4 * width * height];
+    if (!isChildProcess())
+    {
+        forkOff();
+        forwardRequest(buffer, length);
+        return;
+    }
+
+
+    unsigned char *pixmap = new unsigned char[4 * width * height];
     int rowStride;
-    _loKitDocument->pClass->paintTile(_loKitDocument, buffer, width, height, &rowStride, tilePosX, tilePosY, tileWidth, tileHeight);
+    _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, &rowStride, tilePosX, tilePosY, tileWidth, tileHeight);
 
     png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
@@ -293,13 +393,13 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
     png_write_info(png_ptr, info_ptr);
 
     for (int y = 0; y < height; ++y)
-        png_write_row(png_ptr, buffer + y * width * 4);
+        png_write_row(png_ptr, pixmap + y * width * 4);
 
     png_write_end(png_ptr, info_ptr);
 
     png_destroy_write_struct(&png_ptr, NULL);
 
-    delete[] buffer;
+    delete[] pixmap;
 
     _tileCache->saveTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
 
@@ -308,6 +408,42 @@ void LOOLSession::sendTile(StringTokenizer& tokens)
 
 void LOOLSession::forkOff()
 {
+    assert(!isChildProcess());
+
+    Process::Args args;
+    args.push_back("--port=" + std::to_string(LOOLWSD::portNumber));
+    args.push_back("--lopath=" + LOOLWSD::loPath);
+
+    Random rng;
+    
+    _childId = (((UInt64)rng.next()) << 32) | rng.next() | 1;
+
+    _childToClient[_childId] = this;
+
+    args.push_back("--child=" + std::to_string(_childId));
+
+    Application::instance().logger().information(Util::logPrefix() + "Launching child: " + Poco::cat(std::string(" "), args.begin(), args.end()));
+
+    ProcessHandle child = Process::launch(Application::instance().commandPath(), args);
+
+    std::string loadRequest = "load " + _docURL;
+    forwardRequest(loadRequest.c_str(), loadRequest.size());
 }
+
+void LOOLSession::forwardRequest(const char *buffer, int length)
+{
+    if (_peerWs == nullptr)
+    {
+        _backLog.push_back(new Poco::Buffer<char>(buffer, length));
+        return;
+    }
+    _peerWs->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+}
+
+bool LOOLSession::isChildProcess() const
+{
+    return _loKit != nullptr;
+}
+
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

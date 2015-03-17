@@ -61,6 +61,8 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Util/ServerApplication.h>
 
 #include "LOOLSession.hpp"
+#include "LOOLWSD.hpp"
+#include "Util.hpp"
 
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
@@ -86,8 +88,7 @@ class WebSocketRequestHandler: public HTTPRequestHandler
     /// Handle a WebSocket connection.
 {
 public:
-    WebSocketRequestHandler(LibreOfficeKit *loKit) :
-        _loKit(loKit)
+    WebSocketRequestHandler()
     {
     }
 
@@ -106,30 +107,27 @@ public:
         {
             WebSocket ws(request, response);
 
-            LOOLSession session(ws, _loKit);
+            LOOLSession session(ws);
 
-            // Loop, receiving LOOL client WebSocket messages
+            // Loop, receiving WebSocket messages either from the
+            // client, or from the child process (to be forwarded to
+            // the client).
             int flags;
             int n;
             do
             {
-                char buffer[1024];
+                char buffer[100000];
                 n = ws.receiveFrame(buffer, sizeof(buffer), flags);
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                     if (!session.handleInput(buffer, n))
                         n = 0;
             }
-            while (n > 0 && !session.haveSeparateProcess() && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-            if (session.haveSeparateProcess())
-            {
-                // TODO: is this the right thing to do?
-                ws.close();
-            }
+            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
         }
         catch (WebSocketException& exc)
         {
-            app.logger().log(exc);
+            app.logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
             switch (exc.code())
             {
             case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
@@ -145,41 +143,32 @@ public:
             }
         }
     }
-
-private:
-    LibreOfficeKit *_loKit;
 };
 
 class RequestHandlerFactory: public HTTPRequestHandlerFactory
 {
 public:
-    RequestHandlerFactory(LibreOfficeKit *loKit) :
-        _loKit(loKit)
+    RequestHandlerFactory()
     {
     }
 
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
         Application& app = Application::instance();
-        app.logger().information("Request from "
-            + request.clientAddress().toString()
-            + ": "
-            + request.getMethod()
-            + " "
-            + request.getURI()
-            + " "
-            + request.getVersion());
+        std::string line = (Util::logPrefix() + "Request from " +
+                            request.clientAddress().toString() + ": " +
+                            request.getMethod() + " " +
+                            request.getURI() + " " +
+                            request.getVersion());
 
         for (HTTPServerRequest::ConstIterator it = request.begin(); it != request.end(); ++it)
         {
-            app.logger().information(it->first + ": " + it->second);
+            line += " / " + it->first + ": " + it->second;
         }
 
-        return new WebSocketRequestHandler(_loKit);
+        app.logger().information(line);
+        return new WebSocketRequestHandler();
     }
-
-private:
-    LibreOfficeKit *_loKit;
 };
 
 class TestOutput: public Runnable
@@ -199,25 +188,28 @@ public:
         {
             do
             {
-                char buffer[30000];
+                char buffer[100000];
                 n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     char *endl = (char *) memchr(buffer, '\n', n);
                     std::string response;
-                    if (endl == NULL)
+                    if (endl == nullptr)
                         response = std::string(buffer, n);
                     else
                         response = std::string(buffer, endl-buffer);
-                    std::cout << ">>" << n << " bytes: " << response << std::endl;
+                    std::cout <<
+                        Util::logPrefix() << "Client got " << n << " bytes: '" << response << "'" <<
+                        (endl == nullptr ? "" : " ...") <<
+                        std::endl;
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
         }
         catch (WebSocketException& exc)
         {
-            app.logger().log(exc);
+            app.logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
             _ws.close();
         }
     }
@@ -247,8 +239,11 @@ public:
         TestOutput output(ws);
         thread.start(output);
 
-        std::cout << std::endl;
-        std::cout << "Enter LOOL WS requests, one per line. Enter EOF to finish." << std::endl;
+        if (isatty(0))
+        {
+            std::cout << std::endl;
+            std::cout << "Enter LOOL WS requests, one per line. Enter EOF to finish." << std::endl;
+        }
 
         while (!std::cin.eof())
         {
@@ -256,7 +251,6 @@ public:
             std::getline(std::cin, line);
             ws.sendFrame(line.c_str(), line.size());
         }
-        ws.shutdown();
         thread.join();
         _srv.stopAll();
         _main.terminate();
@@ -268,119 +262,166 @@ private:
     HTTPServer& _srv;
 };
 
-class LOOLWSD: public Poco::Util::ServerApplication
+int LOOLWSD::portNumber = DEFAULT_PORT_NUMBER;
+std::string LOOLWSD::loPath;
+
+LOOLWSD::LOOLWSD() :
+    _helpRequested(false),
+    _doTest(false),
+    _childId(0)
 {
-public:
-    LOOLWSD() :
-        _helpRequested(false),
-        _portNumber(9980),
-        _doTest(false)
+}
+
+LOOLWSD::~LOOLWSD()
+{
+}
+
+void LOOLWSD::initialize(Application& self)
+{
+    ServerApplication::initialize(self);
+}
+
+void LOOLWSD::uninitialize()
+{
+    ServerApplication::uninitialize();
+}
+
+void LOOLWSD::defineOptions(OptionSet& options)
+{
+    ServerApplication::defineOptions(options);
+
+    options.addOption(Option("help", "h", "display help information on command line arguments")
+                      .required(false)
+                      .repeatable(false));
+
+    options.addOption(Option("port", "p", "port number to listen to (default:9980)")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("<port number>"));
+
+    options.addOption(Option("lopath", "l", "path to LibreOffice installation")
+                      .required(true)
+                      .repeatable(false)
+                      .argument("directory"));
+
+    options.addOption(Option("test", "t", "interactive testing")
+                      .required(false)
+                      .repeatable(false));
+
+    options.addOption(Option("child", "c", "for internal use only")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("<loolwsd URL>"));
+}
+
+ void LOOLWSD::handleOption(const std::string& name, const std::string& value)
+ {
+     ServerApplication::handleOption(name, value);
+
+     if (name == "help")
+     {
+         displayHelp();
+         exit(Application::EXIT_OK);
+     }
+     else if (name == "port")
+         portNumber = std::stoi(value);
+     else if (name == "lopath")
+         loPath = value;
+     else if (name == "test")
+         _doTest = true;
+     else if (name == "child")
+     {
+         _childId = std::stoull(value);
+     }
+
+ }
+
+ void LOOLWSD::displayHelp()
+ {
+     HelpFormatter helpFormatter(options());
+     helpFormatter.setCommand(commandName());
+     helpFormatter.setUsage("OPTIONS");
+     helpFormatter.setHeader("LibreOffice On-Line WebSocket server.");
+     helpFormatter.format(std::cout);
+ }
+
+int LOOLWSD::childMain()
+{
+    std::cout << Util::logPrefix() << "Child here!" << std::endl;
+
+    LibreOfficeKit *loKit(lok_init(loPath.c_str()));
+
+    if (!loKit)
     {
+        logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
+        return Application::EXIT_UNAVAILABLE;
     }
 
-    ~LOOLWSD()
+    // Open websocket connection between the child process and the
+    // parent. The parent forwars us requests that it can't handle.
+
+    HTTPClientSession cs("localhost", portNumber);
+    HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
+    HTTPResponse response;
+    WebSocket ws(cs, request, response);
+
+    LOOLSession session(ws, loKit);
+
+    std::string hello("child " + std::to_string(_childId));
+    ws.sendFrame(hello.c_str(), hello.size());
+
+    int flags;
+    int n;
+    do
     {
+        char buffer[1024];
+        n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+
+        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+            if (!session.handleInput(buffer, n))
+                n = 0;
+    }
+    while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+
+    return Application::EXIT_OK;
+}
+
+int LOOLWSD::main(const std::vector<std::string>& args)
+{
+    if (childMode())
+        return childMain();
+
+    ServerSocket svs(portNumber);
+
+    std::cout << "Receive timeout=" << svs.getReceiveTimeout().milliseconds() << std::endl;
+
+    HTTPServer srv(new RequestHandlerFactory(), svs, new HTTPServerParams);
+
+    srv.start();
+
+    std::cout << "Receive timeout=" << svs.getReceiveTimeout().milliseconds() << std::endl;
+
+    Thread thread;
+    TestInput input(*this, svs, srv);
+    if (_doTest)
+    {
+        thread.start(input);
     }
 
-protected:
-    void initialize(Application& self) override
-    {
-        ServerApplication::initialize(self);
-    }
+    waitForTerminationRequest();
 
-    void uninitialize() override
-    {
-        ServerApplication::uninitialize();
-    }
+    srv.stop();
 
-    void defineOptions(OptionSet& options) override
-    {
-        ServerApplication::defineOptions(options);
+    if (_doTest)
+        thread.join();
 
-        options.addOption(
-            Option("help", "h", "display help information on command line arguments")
-                .required(false)
-                .repeatable(false));
-        options.addOption(
-            Option("port", "p", "port number to listen to (default:9980)")
-                .required(false)
-                .repeatable(false));
-        options.addOption(
-            Option("lopath", "l", "path to LibreOffice installation")
-                .required(true)
-                .repeatable(false)
-                .argument("directory"));
-        options.addOption(
-            Option("test", "t", "interactive testing")
-                .required(false)
-                .repeatable(false));
-    }
+    return Application::EXIT_OK;
+}
 
-    void handleOption(const std::string& name, const std::string& value) override
-    {
-        ServerApplication::handleOption(name, value);
-
-        if (name == "help")
-        {
-            displayHelp();
-            exit(Application::EXIT_OK);
-        }
-        else if (name == "port")
-            _portNumber = atoi(value.c_str());
-        else if (name == "lopath")
-            _loPath = value;
-        else if (name == "test")
-            _doTest = true;
-    }
-
-    void displayHelp()
-    {
-        HelpFormatter helpFormatter(options());
-        helpFormatter.setCommand(commandName());
-        helpFormatter.setUsage("OPTIONS");
-        helpFormatter.setHeader("LibreOffice On-Line WebSocket server.");
-        helpFormatter.format(std::cout);
-    }
-
-    int main(const std::vector<std::string>& args) override
-    {
-        LibreOfficeKit *loKit(lok_init(_loPath.c_str()));
-
-        if (!loKit)
-        {
-            logger().fatal("LibreOfficeKit initialisation failed");
-            exit(Application::EXIT_UNAVAILABLE);
-        }
-
-        ServerSocket svs(_portNumber);
-
-        HTTPServer srv(new RequestHandlerFactory(loKit), svs, new HTTPServerParams);
-
-        srv.start();
-
-        Thread thread;
-        TestInput input(*this, svs, srv);
-        if (_doTest)
-        {
-            thread.start(input);
-        }
-
-        waitForTerminationRequest();
-
-        srv.stop();
-
-        if (_doTest)
-            thread.join();
-
-        return Application::EXIT_OK;
-    }
-
-private:
-    bool _helpRequested;
-    int _portNumber;
-    std::string _loPath;
-    bool _doTest;
-};
+bool LOOLWSD::childMode() const
+{
+    return _childId != 0;
+}
 
 POCO_SERVER_MAIN(LOOLWSD)
 
