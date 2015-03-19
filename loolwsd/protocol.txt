@@ -1,5 +1,6 @@
-All communication consists of one line of human-readable UTF-8 text
-optionally followed by a single newline and binary data.
+All communication consists of messages that are one line of
+human-readable UTF-8 text optionally followed by a single newline and
+binary data.
 
 client -> server
 ================
@@ -30,3 +31,18 @@ invalidatetiles: <payload>
 
 invalidatecursor:
 
+
+
+The communication between the parent process (the one keeping open the
+Websocket connections to the clients) and a child process (handling
+one document through LibreOfficeKit) uses the same protocol, with
+the following additions and changes:
+
+child -> parent
+===============
+
+child <id>
+
+Must be the first message sent from the child to the parent. The
+parent has passed the id (a 64-bit random number) to the child when
+starting it, so this is how the child identificates itself.
