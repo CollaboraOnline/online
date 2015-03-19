@@ -42,6 +42,13 @@ private:
 
     void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
+    bool keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool selectText(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    void resetSelection();
+
     void forkOff();
     void forwardRequest(const char *buffer, int length);
 

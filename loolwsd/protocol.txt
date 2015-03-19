@@ -5,11 +5,39 @@ binary data.
 client -> server
 ================
 
-load <url>
+load <pathname>
+
+    Deprecated.
+
+load url=<url>
 
 status
 
 tile width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
+
+    All parameters are numbers.
+
+key type=<type> char=<charcode> key=<keycode>
+
+    <type> is 'input' or 'up', <charcode> and <keycode> are numbers.
+
+mouse type=<type> x=<x> y=<y> count=<count>
+
+    <type> is 'buttondown', 'buttonup' or 'move', others are numbers.
+
+uno <command>
+
+    <command> is a line of text.
+
+selecttext type=<type> x=<x> y=<y>
+
+    <type> is 'start', 'end' or 'reset', <x> and <y> are numbers.
+
+selectgraphic type=<type> x=<x> y=<y>
+
+    <type> is 'start' or 'end' <x> and <y> are numbers.
+
+resetselection
 
 server -> client
 ================
@@ -17,10 +45,18 @@ server -> client
 error: cmd=<command> kind=<kind>
 <freeErrorText>
 
+    <command> is the command part of the corresponding client->server
+    message that caused the error. <kind> is some single-word
+    classification
+
 status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height>
+
+    <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
 
 tile: width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> 
 <binaryPngImage>
+
+    The parameters from the corresponding 'tile' command.
 
 Each LOK_CALLBACK_FOO_BAR callback causes a corresponding message to
 the client, consisting of the FOO_BAR part in lowercase, without

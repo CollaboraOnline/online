@@ -141,6 +141,30 @@ bool LOOLSession::handleInput(char *buffer, int length)
     {
         sendTile(buffer, length, tokens);
     }
+    else if (tokens[0] == "key")
+    {
+        return keyEvent(buffer, length, tokens);
+    }
+    else if (tokens[0] == "mouse")
+    {
+        return mouseEvent(buffer, length, tokens);
+    }
+    else if (tokens[0] == "uno")
+    {
+        return unoCommand(buffer, length, tokens);
+    }
+    else if (tokens[0] == "selecttext")
+    {
+        return selectText(buffer, length, tokens);
+    }
+    else if (tokens[0] == "selectgraphic")
+    {
+        return selectGraphic(buffer, length, tokens);
+    }
+    else if (tokens[0] == "resetselection")
+    {
+        resetSelection();
+    }
     else
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
@@ -213,7 +237,11 @@ bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& 
         return false;
     }
 
-    _docURL = tokens[1];
+    if (tokens[1].find("url=") == 0)
+        _docURL = tokens[1].substr(strlen("url="));
+    else
+        _docURL = tokens[1];
+
     _tileCache.reset(new TileCache(_docURL));
 
     if (isChildProcess())
@@ -369,7 +397,6 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
         return;
     }
 
-
     unsigned char *pixmap = new unsigned char[4 * width * height];
     int rowStride;
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, &rowStride, tilePosX, tilePosY, tileWidth, tileHeight);
@@ -404,6 +431,96 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
     _tileCache->saveTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
 
     sendBinaryFrame(output.data(), output.size());
+}
+
+bool LOOLSession::keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens)
+{
+    int type, charcode, keycode;
+
+    if (tokens.count() != 4 ||
+        !getTokenInteger(tokens[1], "type", &type) ||
+        !getTokenInteger(tokens[2], "char", &charcode) ||
+        !getTokenInteger(tokens[3], "key", &keycode))
+    {
+        sendTextFrame("error: cmd=key kind=syntax");
+        return false;
+    }
+
+    _loKitDocument->pClass->postKeyEvent(_loKitDocument, type, charcode, keycode);
+
+    return true;
+}
+
+bool LOOLSession::mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens)
+{
+    int type, x, y, count;
+
+    if (tokens.count() != 5 ||
+        !getTokenInteger(tokens[1], "type", &type) ||
+        !getTokenInteger(tokens[2], "x", &x) ||
+        !getTokenInteger(tokens[3], "y", &y) ||
+        !getTokenInteger(tokens[4], "count", &count))
+    {
+        sendTextFrame("error: cmd=mouse kind=syntax");
+        return false;
+    }
+
+    _loKitDocument->pClass->postMouseEvent(_loKitDocument, type, x, y, count);
+
+    return true;
+}
+
+bool LOOLSession::unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens)
+{
+    if (tokens.count() == 1)
+    {
+        sendTextFrame("error: cmd=uno kind=syntax");
+        return false;
+    }
+
+    _loKitDocument->pClass->postUnoCommand(_loKitDocument, buffer + strlen("uno "));
+
+    return true;
+}
+
+bool LOOLSession::selectText(const char *buffer, int length, Poco::StringTokenizer& tokens)
+{
+    int type, x, y;
+
+    if (tokens.count() != 4 ||         !getTokenInteger(tokens[1], "type", &type) ||
+        !getTokenInteger(tokens[2], "x", &x) ||
+        !getTokenInteger(tokens[3], "y", &y))
+    {
+        sendTextFrame("error: cmd=selecttext kind=syntax");
+        return false;
+    }
+
+    _loKitDocument->pClass->setTextSelection(_loKitDocument, type, x, y);
+
+    return true;
+}
+
+bool LOOLSession::selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens)
+{
+    int type, x, y;
+
+    if (tokens.count() != 4 ||
+        !getTokenInteger(tokens[1], "type", &type) ||
+        !getTokenInteger(tokens[2], "x", &x) ||
+        !getTokenInteger(tokens[3], "y", &y))
+    {
+        sendTextFrame("error: cmd=selectghraphic kind=syntax");
+        return false;
+    }
+
+    _loKitDocument->pClass->setGraphicSelection(_loKitDocument, type, x, y);
+
+    return true;
+}
+
+void LOOLSession::resetSelection()
+{
+    _loKitDocument->pClass->resetSelection(_loKitDocument);
 }
 
 void LOOLSession::forkOff()
