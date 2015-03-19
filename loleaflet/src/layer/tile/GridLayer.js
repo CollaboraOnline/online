@@ -17,8 +17,10 @@ L.GridLayer = L.Layer.extend({
 		zIndex: null,
 		bounds: null,
 
-		minZoom: 0
+		minZoom: 0,
 		// maxZoom: <Number>
+		tileWidthTwips: 3000,
+		tileHeightTwips: 3000
 	},
 
 	initialize: function (options) {
@@ -355,6 +357,8 @@ L.GridLayer = L.Layer.extend({
 		    crs = map.options.crs,
 		    tileSize = this._tileSize = this._getTileSize(),
 		    tileZoom = this._tileZoom;
+		this._tileWidthTwips = this.options.tileWidthTwips;
+		this._tileHeightTwips = this.options.tileHeightTwips;
 
 		var bounds = this._map.getPixelWorldBounds(this._tileZoom);
 		if (bounds) {
@@ -382,7 +386,10 @@ L.GridLayer = L.Layer.extend({
 
 	_update: function (center, zoom) {
 		var map = this._map;
-		if (!map || map.socket.readyState != 1) { return; }
+		if (!map ||
+			(this.options.useSocket && map.socket && map.socket.readyState != 1)) {
+			return;
+		}
 
 		// TODO move to reset
 		// var zoom = this._map.getZoom();
@@ -521,13 +528,14 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_addTile: function (coords) {
-		if (this._map.socket) {
+		if (this.options.useSocket && this._map.socket) {
 			var twips = this._coordsToTwips(coords);
-			this._map.socket.send("tile width=" + this._tileSize + " " +
-									"height=" + this._tileSize + " " +
-									"tileposx=" + twips.x + " "	+
-									"tileposy=" + twips.y + " " +
-									"tilewidth=3000 tileheight=3000");
+			this._map.socket.send('tile width=' + this._tileSize + ' ' +
+									'height=' + this._tileSize + ' ' +
+									'tileposx=' + twips.x + ' '	+
+									'tileposy=' + twips.y + ' ' +
+									'tilewidth=' + this._tileWidthTwips + ' ' +
+									'tileheight=' + this._tileHeightTwips);
 		}
 		else {
 			var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
@@ -630,14 +638,14 @@ L.GridLayer = L.Layer.extend({
 
 	_twipsToCoords: function (twips) {
 		return new L.Point(
-				twips.x / 15 / this._tileSize,
-				twips.y / 15 / this._tileSize);
+				twips.x / this._tileWidthTwips,
+				twips.y / this._tileHeightTwips);
 	},
 
 	_coordsToTwips: function (coords) {
 		return new L.Point(
-				coords.x * 15 * this._tileSize,
-				coords.y * 15 * this._tileSize);
+				coords.x * this._tileWidthTwips,
+				coords.y * this._tileHeightTwips);
 	},
 
 	_noTilesToLoad: function () {

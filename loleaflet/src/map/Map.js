@@ -21,8 +21,9 @@ L.Map = L.Evented.extend({
 	initialize: function (id, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
-		this.socket = new WebSocket(options.server);
-		this.socket.binaryType = "arraybuffer";
+		if (options.server) {
+			this._initSocket();
+		}
 		this._initContainer(id);
 		this._initLayout();
 
@@ -432,6 +433,18 @@ L.Map = L.Evented.extend({
 
 
 	// map initialization methods
+	_initSocket: function () {
+		try {
+			this.socket = new WebSocket(this.options.server);
+		} catch (e) {
+			console.log('Socket connection error');
+			console.log(e);
+			return;
+		}
+		this.socket.onerror = L.bind(this._socketError, this);
+		this.socket.binaryType = 'arraybuffer';
+	},
+
 
 	_initContainer: function (id) {
 		var container = this._container = L.DomUtil.get(id);
@@ -720,6 +733,11 @@ L.Map = L.Evented.extend({
 		    max = this.getMaxZoom();
 
 		return Math.max(min, Math.min(max, zoom));
+	},
+
+	_socketError: function (e) {
+		console.log('Socket connection error');
+		console.log(e);
 	}
 });
 

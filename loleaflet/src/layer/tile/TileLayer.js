@@ -46,11 +46,11 @@ L.TileLayer = L.GridLayer.extend({
 
 	_initDocument: function () {
 		if (!this._map.socket) {
-			console.log("Socket initialization error");
+			console.log('Socket initialization error');
 			return;
 		}
 		if (this.options.doc) {
-			this._map.socket.send("load " + this.options.doc);
+			this._map.socket.send('load ' + this.options.doc);
 		}
 		this._update();
 	},
@@ -86,24 +86,36 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onMessage: function (evt) {
-		if (typeof(evt.data) === "string") {
-			console.log(evt.data);
+		if (typeof(evt.data) === 'string') {
+			var info = this._getTileInfo(evt.data);
+			if (info.width && info.height) {
+				var docPixelLimits = new L.Point(info.height / this._tileHeightTwips,
+												 info.width / this._tileWidthTwips);
+				// add one more tile to the right bound
+				//docPixelLimits = docPixelLimits.add(new L.Point(1,1));
+				docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
+
+				var topLeft = this._map.unproject([0, 0]);
+				//var bottomRight = map.unproject(docPixelLimits);
+				var bottomRight = this._map.unproject([docPixelLimits.x, docPixelLimits.y]);
+				var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
+			}
 		}
-		else if (typeof(evt.data) === "object") {
+		else if (typeof(evt.data) === 'object') {
 			var bytes = new Uint8Array(evt.data);
 			var index = 0;
 			// search for the first newline which marks the end of the message
-			while (index < bytes.length && bytes[index] != 10) {
+			while (index < bytes.length && bytes[index] !== 10) {
 				index++;
 			}
-			var text_msg_bytes = bytes.subarray(0, index + 1);
-			var info = this._getTileInfo(String.fromCharCode.apply(null, text_msg_bytes));
+			var textMsgBytes = bytes.subarray(0, index + 1);
+			var info = this._getTileInfo(String.fromCharCode.apply(null, textMsgBytes));
 			var coords = this._twipsToCoords(new L.Point(info.x, info.y));
 			coords.z = this._map.getZoom();
 			var data = bytes.subarray(index + 1);
-			var done = L.bind(this._tileReady, this, coords)
+			var done = L.bind(this._tileReady, this, coords);
 
-			var tile = document.createElement("img");
+			var tile = document.createElement('img');
 			tile.onload = L.bind(this._tileOnLoad, this, done, tile);
 			tile.onerror = L.bind(this._tileOnError, this, done, tile);
 			tile.alt = '';
@@ -137,17 +149,21 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_getTileInfo: function (msg) {
-		var tokens = msg.split(" ");
-		var info = new Object;
+		var tokens = msg.split(' ');
+		var info = new Object();
 		for (var i = 0; i < tokens.length; i++) {
-			if (tokens[i].substring(0,9) === "tileposx=")
+			if (tokens[i].substring(0,9) === 'tileposx=')
 				info.x = parseInt(tokens[i].substring(9));
-			if (tokens[i].substring(0,9) === "tileposy=")
+			if (tokens[i].substring(0,9) === 'tileposy=')
 				info.y = parseInt(tokens[i].substring(9));
-			if (tokens[i].substring(0,10) === "tilewidth=")
+			if (tokens[i].substring(0,10) === 'tilewidth=')
 				info.tilewidth = parseInt(tokens[i].substring(10));
-			if (tokens[i].substring(0,11) === "tileheight=")
+			if (tokens[i].substring(0,11) === 'tileheight=')
 				info.tileheight = parseInt(tokens[i].substring(11));
+			if (tokens[i].substring(0,6) === 'width=')
+				info.width = parseInt(tokens[i].substring(6));
+			if (tokens[i].substring(0,7) === 'height=')
+				info.height = parseInt(tokens[i].substring(7));
 		}
 		return info;
 	},

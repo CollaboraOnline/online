@@ -44,10 +44,10 @@ L.Layer = L.Evented.extend({
 		this._map = map;
 		this._zoomAnimated = map._zoomAnimated;
 
-		if (!this._map.socket.onopen) {
+		if (this._map.socket && !this._map.socket.onopen) {
 			this._map.socket.onopen = L.bind(this._initDocument, this);
 		}
-		if (!this._map.socket.onmessage) {
+		if (this._map.socket && !this._map.socket.onmessage) {
 			this._map.socket.onmessage = L.bind(this._onMessage, this);
 		}
 		this.onAdd(map);
