@@ -76,8 +76,6 @@ bool LOOLSession::handleInput(char *buffer, int length)
     else
         commandline = std::string(buffer, endl-buffer);
 
-    std::cout << Util::logPrefix() << "this=" << this << std::endl;
-
     app.logger().information(Util::logPrefix() + "Input: '" + commandline + "'" + (endl == nullptr ? "" : " ..."));
 
     StringTokenizer tokens(commandline, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -141,34 +139,56 @@ bool LOOLSession::handleInput(char *buffer, int length)
     {
         sendTile(buffer, length, tokens);
     }
-    else if (tokens[0] == "key")
-    {
-        return keyEvent(buffer, length, tokens);
-    }
-    else if (tokens[0] == "mouse")
-    {
-        return mouseEvent(buffer, length, tokens);
-    }
-    else if (tokens[0] == "uno")
-    {
-        return unoCommand(buffer, length, tokens);
-    }
-    else if (tokens[0] == "selecttext")
-    {
-        return selectText(buffer, length, tokens);
-    }
-    else if (tokens[0] == "selectgraphic")
-    {
-        return selectGraphic(buffer, length, tokens);
-    }
-    else if (tokens[0] == "resetselection")
-    {
-        resetSelection(buffer, length, tokens);
-    }
     else
     {
-        sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
-        return false;
+        // All other commands are such that they always require a
+        // LibreOfficeKitDocument session, i.e. need to be handled in
+        // a child process.
+
+        if (!isChildProcess())
+        {
+            if (tokens[0] != "key" &&
+                tokens[0] != "mouse" &&
+                tokens[0] != "uno" &&
+                tokens[0] != "selecttext" &&
+                tokens[0] != "selectgraphic" &&
+                tokens[0] != "resetselection")
+            {
+                sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
+                return false;
+            }
+
+            forkOff();
+            forwardRequest(buffer, length);
+            return true;
+        }
+
+        if (tokens[0] == "key")
+        {
+            return keyEvent(buffer, length, tokens);
+        }
+        else if (tokens[0] == "mouse")
+        {
+            return mouseEvent(buffer, length, tokens);
+        }
+        else if (tokens[0] == "uno")
+        {
+            return unoCommand(buffer, length, tokens);
+        }
+        else if (tokens[0] == "selecttext")
+        {
+            return selectText(buffer, length, tokens);
+        }
+        else if (tokens[0] == "selectgraphic")
+        {
+            return selectGraphic(buffer, length, tokens);
+        }
+        else if (tokens[0] == "resetselection")
+        {
+            resetSelection(buffer, length, tokens);
+        }
+        else
+            assert(false);
     }
     return true;
 }
@@ -434,6 +454,8 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
 
 bool LOOLSession::keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens)
 {
+    assert(isChildProcess());
+
     int type, charcode, keycode;
 
     if (tokens.count() != 4 ||
@@ -445,13 +467,6 @@ bool LOOLSession::keyEvent(const char *buffer, int length, Poco::StringTokenizer
         return false;
     }
 
-    if (!isChildProcess())
-    {
-        forkOff();
-        forwardRequest(buffer, length);
-        return true;
-    }
-
     _loKitDocument->pClass->postKeyEvent(_loKitDocument, type, charcode, keycode);
 
     return true;
@@ -459,6 +474,8 @@ bool LOOLSession::keyEvent(const char *buffer, int length, Poco::StringTokenizer
 
 bool LOOLSession::mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens)
 {
+    assert(isChildProcess());
+
     int type, x, y, count;
 
     if (tokens.count() != 5 ||
@@ -471,13 +488,6 @@ bool LOOLSession::mouseEvent(const char *buffer, int length, Poco::StringTokeniz
         return false;
     }
 
-    if (!isChildProcess())
-    {
-        forkOff();
-        forwardRequest(buffer, length);
-        return true;
-    }
-
     _loKitDocument->pClass->postMouseEvent(_loKitDocument, type, x, y, count);
 
     return true;
@@ -485,17 +495,12 @@ bool LOOLSession::mouseEvent(const char *buffer, int length, Poco::StringTokeniz
 
 bool LOOLSession::unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens)
 {
+    assert(isChildProcess());
+
     if (tokens.count() == 1)
     {
         sendTextFrame("error: cmd=uno kind=syntax");
         return false;
-    }
-
-    if (!isChildProcess())
-    {
-        forkOff();
-        forwardRequest(buffer, length);
-        return true;
     }
 
     _loKitDocument->pClass->postUnoCommand(_loKitDocument, buffer + strlen("uno "));
@@ -505,6 +510,8 @@ bool LOOLSession::unoCommand(const char *buffer, int length, Poco::StringTokeniz
 
 bool LOOLSession::selectText(const char *buffer, int length, Poco::StringTokenizer& tokens)
 {
+    assert(isChildProcess());
+
     int type, x, y;
 
     if (tokens.count() != 4 ||         !getTokenInteger(tokens[1], "type", &type) ||
@@ -515,13 +522,6 @@ bool LOOLSession::selectText(const char *buffer, int length, Poco::StringTokeniz
         return false;
     }
 
-    if (!isChildProcess())
-    {
-        forkOff();
-        forwardRequest(buffer, length);
-        return true;
-    }
-
     _loKitDocument->pClass->setTextSelection(_loKitDocument, type, x, y);
 
     return true;
@@ -529,6 +529,8 @@ bool LOOLSession::selectText(const char *buffer, int length, Poco::StringTokeniz
 
 bool LOOLSession::selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens)
 {
+    assert(isChildProcess());
+
     int type, x, y;
 
     if (tokens.count() != 4 ||
@@ -540,13 +542,6 @@ bool LOOLSession::selectGraphic(const char *buffer, int length, Poco::StringToke
         return false;
     }
 
-    if (!isChildProcess())
-    {
-        forkOff();
-        forwardRequest(buffer, length);
-        return true;
-    }
-
     _loKitDocument->pClass->setGraphicSelection(_loKitDocument, type, x, y);
 
     return true;
@@ -554,17 +549,12 @@ bool LOOLSession::selectGraphic(const char *buffer, int length, Poco::StringToke
 
 bool LOOLSession::resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens)
 {
+    assert(isChildProcess());
+
     if (tokens.count() != 1)
     {
         sendTextFrame("error: cmd=resetselection kind=syntax");
         return false;
-    }
-
-    if (!isChildProcess())
-    {
-        forkOff();
-        forwardRequest(buffer, length);
-        return true;
     }
 
     _loKitDocument->pClass->resetSelection(_loKitDocument);
