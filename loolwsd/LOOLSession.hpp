@@ -47,7 +47,7 @@ private:
     bool unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool selectText(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    void resetSelection();
+    bool resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     void forkOff();
     void forwardRequest(const char *buffer, int length);
