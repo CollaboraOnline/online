@@ -398,8 +398,7 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
     }
 
     unsigned char *pixmap = new unsigned char[4 * width * height];
-    int rowStride;
-    _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, &rowStride, tilePosX, tilePosY, tileWidth, tileHeight);
+    _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
