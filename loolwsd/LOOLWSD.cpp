@@ -393,13 +393,9 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     ServerSocket svs(portNumber);
 
-    std::cout << "Receive timeout=" << svs.getReceiveTimeout().milliseconds() << std::endl;
-
     HTTPServer srv(new RequestHandlerFactory(), svs, new HTTPServerParams);
 
     srv.start();
-
-    std::cout << "Receive timeout=" << svs.getReceiveTimeout().milliseconds() << std::endl;
 
     Thread thread;
     TestInput input(*this, svs, srv);
