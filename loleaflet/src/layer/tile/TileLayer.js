@@ -91,14 +91,12 @@ L.TileLayer = L.GridLayer.extend({
 			if (info.width && info.height) {
 				var docPixelLimits = new L.Point(info.height / this._tileHeightTwips,
 												 info.width / this._tileWidthTwips);
-				// add one more tile to the right bound
-				//docPixelLimits = docPixelLimits.add(new L.Point(1,1));
 				docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 
 				var topLeft = this._map.unproject([0, 0]);
-				//var bottomRight = map.unproject(docPixelLimits);
-				var bottomRight = this._map.unproject([docPixelLimits.x, docPixelLimits.y]);
+				var bottomRight = this._map.unproject([docPixelLimits.y, docPixelLimits.x]);
 				var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
+                this._map.setMaxBounds(maxBounds);
 			}
 		}
 		else if (typeof(evt.data) === 'object') {
