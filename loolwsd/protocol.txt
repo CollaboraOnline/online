@@ -39,6 +39,11 @@ selectgraphic type=<type> x=<x> y=<y>
 
 resetselection
 
+saveas url=<url> format=<format> options=<options>
+
+    <url> is a URL, encoded. <format> is also URL-encoded, i.e. spaces as %20
+    options are the whole rest of the line, not URL-encoded, and can be empty
+
 server -> client
 ================
 

@@ -20,6 +20,7 @@
 #include <Poco/Random.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
 #include "LOOLSession.hpp"
@@ -35,6 +36,7 @@ using Poco::Random;
 using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::UInt64;
+using Poco::URI;
 using Poco::Util::Application;
 
 std::map<UInt64, LOOLSession*> LOOLSession::_childToClient;
@@ -152,7 +154,8 @@ bool LOOLSession::handleInput(char *buffer, int length)
                 tokens[0] != "uno" &&
                 tokens[0] != "selecttext" &&
                 tokens[0] != "selectgraphic" &&
-                tokens[0] != "resetselection")
+                tokens[0] != "resetselection" &&
+                tokens[0] != "saveas")
             {
                 sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
                 return false;
@@ -185,7 +188,11 @@ bool LOOLSession::handleInput(char *buffer, int length)
         }
         else if (tokens[0] == "resetselection")
         {
-            resetSelection(buffer, length, tokens);
+            return resetSelection(buffer, length, tokens);
+        }
+        else if (tokens[0] == "saveas")
+        {
+            return saveAs(buffer, length, tokens);
         }
         else
             assert(false);
@@ -346,6 +353,25 @@ namespace {
         {
             return false;
         }
+        return true;
+    }
+
+    bool getTokenString(const std::string& token, const std::string& name, std::string& value)
+    {
+        try
+        {
+            if (token.size() < name.size() + 2 ||
+                token.substr(0, name.size()) != name ||
+                token[name.size()] != '=')
+            {
+                throw std::invalid_argument("bah");
+            }
+        }
+        catch (std::invalid_argument&)
+        {
+            return false;
+        }
+        value = token.substr(name.size() + 1);
         return true;
     }
 }
@@ -558,6 +584,32 @@ bool LOOLSession::resetSelection(const char *buffer, int length, Poco::StringTok
     }
 
     _loKitDocument->pClass->resetSelection(_loKitDocument);
+
+    return true;
+}
+
+bool LOOLSession::saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens)
+{
+    assert(isChildProcess());
+
+    std::string url, format, filterOptions;
+
+    if (tokens.count() < 4 ||
+        !getTokenString(tokens[1], "url", url) ||
+        !getTokenString(tokens[2], "format", format) ||
+        !getTokenString(tokens[3], "options", filterOptions))
+    {
+        sendTextFrame("error: cmd=saveas kind=syntax");
+        return false;
+    }
+
+    URI::decode(url, url, true);
+    URI::decode(format, format, true);
+
+    if (tokens.count() > 4)
+        filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
+
+    _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(), format.c_str(), filterOptions.c_str());
 
     return true;
 }
