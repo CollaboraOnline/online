@@ -11,7 +11,7 @@ L.PosAnimation = L.Evented.extend({
 		this._inProgress = true;
 		this._duration = duration || 0.25;
         // workaround for Leaflet issue #3320
-        this._duration = 0;
+		this._duration = 0;
 		this._easeOutPower = 1 / Math.max(easeLinearity || 0.5, 0.2);
 
 		this._startPos = L.DomUtil.getPosition(el);

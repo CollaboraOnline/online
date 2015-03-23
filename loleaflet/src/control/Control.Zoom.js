@@ -91,10 +91,10 @@ L.Map.mergeOptions({
 });
 
 L.Map.addInitHook(function () {
-   if (this.options.zoomControl) {
+	if (this.options.zoomControl) {
 		this.zoomControl = new L.Control.Zoom();
 		this.addControl(this.zoomControl);
-   }
+	}
 });
 
 L.control.zoom = function (options) {

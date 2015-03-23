@@ -86,7 +86,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onMessage: function (evt) {
-		if (typeof(evt.data) === 'string') {
+		if (typeof (evt.data) === 'string') {
 			var info = this._getTileInfo(evt.data);
 			if (info.width && info.height) {
 				this._docWidthTwips = info.width;
@@ -94,7 +94,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._updateMaxBounds();
 			}
 		}
-		else if (typeof(evt.data) === 'object') {
+		else if (typeof (evt.data) === 'object') {
 			var bytes = new Uint8Array(evt.data);
 			var index = 0;
 			// search for the first newline which marks the end of the message
@@ -143,20 +143,26 @@ L.TileLayer = L.GridLayer.extend({
 
 	_getTileInfo: function (msg) {
 		var tokens = msg.split(' ');
-		var info = new Object();
+		var info = {};
 		for (var i = 0; i < tokens.length; i++) {
-			if (tokens[i].substring(0,9) === 'tileposx=')
+			if (tokens[i].substring(0, 9) === 'tileposx=') {
 				info.x = parseInt(tokens[i].substring(9));
-			if (tokens[i].substring(0,9) === 'tileposy=')
+			}
+			if (tokens[i].substring(0, 9) === 'tileposy=') {
 				info.y = parseInt(tokens[i].substring(9));
-			if (tokens[i].substring(0,10) === 'tilewidth=')
+			}
+			if (tokens[i].substring(0, 10) === 'tilewidth=') {
 				info.tilewidth = parseInt(tokens[i].substring(10));
-			if (tokens[i].substring(0,11) === 'tileheight=')
+			}
+			if (tokens[i].substring(0, 11) === 'tileheight=') {
 				info.tileheight = parseInt(tokens[i].substring(11));
-			if (tokens[i].substring(0,6) === 'width=')
+			}
+			if (tokens[i].substring(0, 6) === 'width=') {
 				info.width = parseInt(tokens[i].substring(6));
-			if (tokens[i].substring(0,7) === 'height=')
+			}
+			if (tokens[i].substring(0, 7) === 'height=') {
 				info.height = parseInt(tokens[i].substring(7));
+			}
 		}
 		return info;
 	},

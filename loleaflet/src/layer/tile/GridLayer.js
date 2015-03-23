@@ -415,7 +415,7 @@ L.GridLayer = L.Layer.extend({
 	_update: function (center, zoom) {
 		var map = this._map;
 		if (!map ||
-			(this.options.useSocket && map.socket && map.socket.readyState != 1)) {
+			(this.options.useSocket && map.socket && map.socket.readyState !== 1)) {
 			return;
 		}
 
@@ -579,7 +579,7 @@ L.GridLayer = L.Layer.extend({
 		if (this._tiles[key]) {
 			// tile is already added, between the first request and the response
 			// from the server there might have been other request, which are now
-			// invalid 
+			// invalid
 			this._tiles[key].current = true;
 			this._tiles[key].active = false;
 			this._tiles[key].loaded = +new Date();
