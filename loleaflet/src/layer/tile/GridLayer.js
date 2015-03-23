@@ -323,6 +323,10 @@ L.GridLayer = L.Layer.extend({
 			}
 
 			this._tileZoom = tileZoom;
+			if (tileZoomChanged) {
+				this._updateTileTwips(this._map.options.zoom - tileZoom);
+				this._updateMaxBounds();
+			}
 			this._updateLevels();
 			this._resetGrid();
 
@@ -336,6 +340,26 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		this._setZoomTransforms(center, zoom);
+	},
+
+	_updateTileTwips: function (difference) {
+		// zoom by 20%
+		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * (1 + difference * 0.2));
+		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * (1 + difference * 0.2));
+	},
+
+	_updateMaxBounds: function () {
+		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
+			return;
+		}
+		var docPixelLimits = new L.Point(this._docHeightTwips / this._tileHeightTwips,
+										 this._docWidthTwips / this._tileWidthTwips);
+		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
+
+		var topLeft = this._map.unproject([0, 0], this._tileZoom);
+		var bottomRight = this._map.unproject([docPixelLimits.y, docPixelLimits.x], this._tileZoom);
+		var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
+		this._map.setMaxBounds(maxBounds);
 	},
 
 	_setZoomTransforms: function (center, zoom) {
@@ -357,8 +381,12 @@ L.GridLayer = L.Layer.extend({
 		    crs = map.options.crs,
 		    tileSize = this._tileSize = this._getTileSize(),
 		    tileZoom = this._tileZoom;
-		this._tileWidthTwips = this.options.tileWidthTwips;
-		this._tileHeightTwips = this.options.tileHeightTwips;
+		if (this._tileWidthTwips === undefined) {
+			this._tileWidthTwips = this.options.tileWidthTwips;
+		}
+		if (this._tileHeightTwips === undefined) {
+			this._tileHeightTwips = this.options.tileHeightTwips;
+		}
 
 		var bounds = this._map.getPixelWorldBounds(this._tileZoom);
 		if (bounds) {
@@ -417,7 +445,8 @@ L.GridLayer = L.Layer.extend({
 
 				if (!this._isValidTile(coords)) { continue; }
 
-				var tile = this._tiles[this._tileCoordsToKey(coords)];
+				key = this._tileCoordsToKey(coords);
+				var tile = this._tiles[key];
 				if (tile) {
 					tile.current = true;
 				} else {
@@ -551,6 +580,9 @@ L.GridLayer = L.Layer.extend({
 			// tile is already added, between the first request and the response
 			// from the server there might have been other request, which are now
 			// invalid 
+			this._tiles[key].current = true;
+			this._tiles[key].active = false;
+			this._tiles[key].loaded = +new Date();
 			return;
 		}
 		this._initTile(tile);
