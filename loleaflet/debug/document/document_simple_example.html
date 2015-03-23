@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)http://leafletjs.com/examples/quick-start-example.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Document Simple Example</title>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../../dist/leaflet.css">
+<style type="text/css"></style></head>
+<body>
+	<script src="../../dist/leaflet.js"></script>
+    <div id="map" style="height:500px;width:1000px"></div>
+	<script>
+
+    var map = L.map('map', {
+            center: [0, 0],
+            zoom: 5,
+            minZoom: 1,
+            maxZoom: 10,
+            server: "ws://localhost:9980",
+            });
+
+    // Large bounds - will be updated when the document has loaded
+    var topLeft = map.unproject([0, 0]);
+    var bottomRight = map.unproject([10000, 10000]);
+    var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
+    map.setMaxBounds(maxBounds);
+
+    // Popup for displaying pixel coordinates
+    var popup = L.popup();
+    function onMapClick(e) {
+        popup.setLatLng(e.latlng)
+        .setContent("You clicked the map at " + map.project(e.latlng).toString())
+        .openOn(map);
+    }
+    map.on('click', onMapClick);
+
+    L.tileLayer('', {
+        doc: '/PATH/TO/DOCUMENT',
+        useSocket : true
+    }).addTo(map);
+	</script>
+</body></html>
