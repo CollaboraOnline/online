@@ -1,6 +1,7 @@
 Leaflet paltform for LibreOffice On-Line 
 
-Code convention for line terminators:
+Code convention
+    * 'jake lint' should be run before commiting
     * files should have unix line terminators (LF)
     * tools to convert files: dos2unix or fromdos 
 
