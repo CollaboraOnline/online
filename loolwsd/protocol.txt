@@ -2,6 +2,12 @@ All communication consists of messages that are one line of
 human-readable UTF-8 text optionally followed by a single newline and
 binary data.
 
+The protocol is not a request-response one. Messages may be sent in
+either direction at any time, either in response to some message, or
+spontaneously. For 'tile' messages, the client may send a bunch of
+tile requests without waiting for return messages. The server may send
+tiles proactively (guessing what the client might need). Etc.
+
 client -> server
 ================
 
