@@ -413,6 +413,17 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
         return;
     }
 
+    if (width <= 0 ||
+        height <= 0 ||
+        tilePosX < 0 ||
+        tilePosY < 0 ||
+        tileWidth <= 0 ||
+        tileHeight <= 0)
+    {
+        sendTextFrame("error: cmd=tile kind=invalid");
+        return;
+    }
+
     std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
     std::vector<char> output;
