@@ -10,6 +10,10 @@ Building:
     npm install
     jake build
 
+If you want to avoid having to run the above as root, create a directory that
+you own somehwere, for instance /opt/npm, and add a line to ~/.npmrc:
+prefix=/opt/npm
+
 Loading a document:
     The map should have the following options:
         - bounds = top left [0, 0] and something larger in the bottom right corner which
