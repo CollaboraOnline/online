@@ -434,7 +434,10 @@ L.GridLayer = L.Layer.extend({
 			queue = [];
 
 		for (var key in this._tiles) {
-			this._tiles[key].current = false;
+			if (this._keyToTileCoords(key).z !== zoom) {
+				this._tiles[key].current = false;
+				L.DomUtil.setOpacity(this._tiles[key].el, 0);
+			}
 		}
 
 		// create a queue of coordinates to load tiles from
@@ -449,6 +452,7 @@ L.GridLayer = L.Layer.extend({
 				var tile = this._tiles[key];
 				if (tile) {
 					tile.current = true;
+					L.DomUtil.setOpacity(tile.el, 1);
 				} else {
 					queue.push(coords);
 				}
@@ -524,15 +528,7 @@ L.GridLayer = L.Layer.extend({
 	_removeTile: function (key) {
 		var tile = this._tiles[key];
 		if (!tile) { return; }
-
-		L.DomUtil.remove(tile.el);
-
-		delete this._tiles[key];
-
-		this.fire('tileunload', {
-			tile: tile.el,
-			coords: this._keyToTileCoords(key)
-		});
+		tile.current = false;
 	},
 
 	_initTile: function (tile) {
