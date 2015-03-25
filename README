@@ -1,1 +1,14 @@
 LibreOffice on-line.
+
+This project fundamentally has two pieces.
+
+loolwsd/
+	The server side component.
+
+loleaflet/ 
+	The Client side component.
+
+Since you need both of these to get things working, it is recommended
+to read the READMEs in both projects.
+
+Enjoy.
