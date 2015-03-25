@@ -273,12 +273,15 @@ bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& 
 
     if (isChildProcess())
     {
-        if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _docURL.c_str())) != NULL)
+        if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _docURL.c_str())) == NULL)
         {
-            if (!getStatus(buffer, length))
-                return false;
-            _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
+            sendTextFrame("error: cmd=load kind=failed");
+            return false;
         }
+
+        if (!getStatus(buffer, length))
+            return false;
+        _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
     }        
 
     return true;
