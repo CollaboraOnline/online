@@ -314,36 +314,35 @@ void LOOLWSD::defineOptions(OptionSet& options)
                       .argument("<loolwsd URL>"));
 }
 
- void LOOLWSD::handleOption(const std::string& name, const std::string& value)
- {
-     ServerApplication::handleOption(name, value);
+void LOOLWSD::handleOption(const std::string& name, const std::string& value)
+{
+    ServerApplication::handleOption(name, value);
 
-     if (name == "help")
-     {
-         displayHelp();
-         exit(Application::EXIT_OK);
-     }
-     else if (name == "port")
-         portNumber = std::stoi(value);
-     else if (name == "lopath")
-         loPath = value;
-     else if (name == "test")
-         _doTest = true;
-     else if (name == "child")
-     {
-         _childId = std::stoull(value);
-     }
+    if (name == "help")
+    {
+        displayHelp();
+        exit(Application::EXIT_OK);
+    }
+    else if (name == "port")
+        portNumber = std::stoi(value);
+    else if (name == "lopath")
+        loPath = value;
+    else if (name == "test")
+        _doTest = true;
+    else if (name == "child")
+    {
+        _childId = std::stoull(value);
+    }
+}
 
- }
-
- void LOOLWSD::displayHelp()
- {
-     HelpFormatter helpFormatter(options());
-     helpFormatter.setCommand(commandName());
-     helpFormatter.setUsage("OPTIONS");
-     helpFormatter.setHeader("LibreOffice On-Line WebSocket server.");
-     helpFormatter.format(std::cout);
- }
+void LOOLWSD::displayHelp()
+{
+    HelpFormatter helpFormatter(options());
+    helpFormatter.setCommand(commandName());
+    helpFormatter.setUsage("OPTIONS");
+    helpFormatter.setHeader("LibreOffice On-Line WebSocket server.");
+    helpFormatter.format(std::cout);
+}
 
 int LOOLWSD::childMain()
 {
