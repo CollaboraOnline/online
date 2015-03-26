@@ -12,7 +12,6 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Buffer.h>

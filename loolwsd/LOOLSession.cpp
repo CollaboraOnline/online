@@ -13,6 +13,10 @@
 #include <iostream>
 #include <memory>
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.h>
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+
 #include <png.h>
 
 #include <Poco/Buffer.h>
@@ -23,10 +27,13 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
+#include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
+
+using namespace LOOLProtocol;
 
 using Poco::Buffer;
 using Poco::Net::WebSocket;
@@ -337,48 +344,6 @@ bool LOOLSession::getStatus(const char *buffer, int length)
     return true;
 }
 
-namespace {
-    bool getTokenInteger(const std::string& token, const std::string& name, int *value)
-    {
-        size_t nextIdx;
-        try
-        {
-            if (token.size() < name.size() + 2 ||
-                token.substr(0, name.size()) != name ||
-                token[name.size()] != '=' ||
-                (*value = std::stoi(token.substr(name.size() + 1), &nextIdx), false) ||
-                nextIdx != token.size() - name.size() - 1)
-            {
-                throw std::invalid_argument("bah");
-            }
-        }
-        catch (std::invalid_argument&)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    bool getTokenString(const std::string& token, const std::string& name, std::string& value)
-    {
-        try
-        {
-            if (token.size() < name.size() + 2 ||
-                token.substr(0, name.size()) != name ||
-                token[name.size()] != '=')
-            {
-                throw std::invalid_argument("bah");
-            }
-        }
-        catch (std::invalid_argument&)
-        {
-            return false;
-        }
-        value = token.substr(name.size() + 1);
-        return true;
-    }
-}
-
 // Callback functions for libpng
 
 extern "C"
@@ -405,12 +370,12 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
     int width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
     if (tokens.count() != 7 ||
-        !getTokenInteger(tokens[1], "width", &width) ||
-        !getTokenInteger(tokens[2], "height", &height) ||
-        !getTokenInteger(tokens[3], "tileposx", &tilePosX) ||
-        !getTokenInteger(tokens[4], "tileposy", &tilePosY) ||
-        !getTokenInteger(tokens[5], "tilewidth", &tileWidth) ||
-        !getTokenInteger(tokens[6], "tileheight", &tileHeight))
+        !getTokenInteger(tokens[1], "width", width) ||
+        !getTokenInteger(tokens[2], "height", height) ||
+        !getTokenInteger(tokens[3], "tileposx", tilePosX) ||
+        !getTokenInteger(tokens[4], "tileposy", tilePosY) ||
+        !getTokenInteger(tokens[5], "tilewidth", tileWidth) ||
+        !getTokenInteger(tokens[6], "tileheight", tileHeight))
     {
         sendTextFrame("error: cmd=tile kind=syntax");
         return;
@@ -499,9 +464,9 @@ bool LOOLSession::keyEvent(const char *buffer, int length, Poco::StringTokenizer
     int type, charcode, keycode;
 
     if (tokens.count() != 4 ||
-        !getTokenInteger(tokens[1], "type", &type) ||
-        !getTokenInteger(tokens[2], "char", &charcode) ||
-        !getTokenInteger(tokens[3], "key", &keycode))
+        !getTokenInteger(tokens[1], "type", type) ||
+        !getTokenInteger(tokens[2], "char", charcode) ||
+        !getTokenInteger(tokens[3], "key", keycode))
     {
         sendTextFrame("error: cmd=key kind=syntax");
         return false;
@@ -519,10 +484,10 @@ bool LOOLSession::mouseEvent(const char *buffer, int length, Poco::StringTokeniz
     int type, x, y, count;
 
     if (tokens.count() != 5 ||
-        !getTokenInteger(tokens[1], "type", &type) ||
-        !getTokenInteger(tokens[2], "x", &x) ||
-        !getTokenInteger(tokens[3], "y", &y) ||
-        !getTokenInteger(tokens[4], "count", &count))
+        !getTokenInteger(tokens[1], "type", type) ||
+        !getTokenInteger(tokens[2], "x", x) ||
+        !getTokenInteger(tokens[3], "y", y) ||
+        !getTokenInteger(tokens[4], "count", count))
     {
         sendTextFrame("error: cmd=mouse kind=syntax");
         return false;
@@ -554,9 +519,10 @@ bool LOOLSession::selectText(const char *buffer, int length, Poco::StringTokeniz
 
     int type, x, y;
 
-    if (tokens.count() != 4 ||         !getTokenInteger(tokens[1], "type", &type) ||
-        !getTokenInteger(tokens[2], "x", &x) ||
-        !getTokenInteger(tokens[3], "y", &y))
+    if (tokens.count() != 4 ||
+        !getTokenInteger(tokens[1], "type", type) ||
+        !getTokenInteger(tokens[2], "x", x) ||
+        !getTokenInteger(tokens[3], "y", y))
     {
         sendTextFrame("error: cmd=selecttext kind=syntax");
         return false;
@@ -574,9 +540,9 @@ bool LOOLSession::selectGraphic(const char *buffer, int length, Poco::StringToke
     int type, x, y;
 
     if (tokens.count() != 4 ||
-        !getTokenInteger(tokens[1], "type", &type) ||
-        !getTokenInteger(tokens[2], "x", &x) ||
-        !getTokenInteger(tokens[3], "y", &y))
+        !getTokenInteger(tokens[1], "type", type) ||
+        !getTokenInteger(tokens[2], "x", x) ||
+        !getTokenInteger(tokens[3], "y", y))
     {
         sendTextFrame("error: cmd=selectghraphic kind=syntax");
         return false;
