@@ -266,7 +266,6 @@ int LOOLWSD::portNumber = DEFAULT_PORT_NUMBER;
 std::string LOOLWSD::loPath;
 
 LOOLWSD::LOOLWSD() :
-    _helpRequested(false),
     _doTest(false),
     _childId(0)
 {

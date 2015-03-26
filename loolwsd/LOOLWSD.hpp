@@ -40,7 +40,6 @@ private:
 
     static const int DEFAULT_PORT_NUMBER = 9980;
 
-    bool _helpRequested;
     bool _doTest;
     long long _childId;
 };
