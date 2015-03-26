@@ -26,6 +26,8 @@ public:
     static int portNumber;
     static std::string loPath;
 
+    static const int DEFAULT_PORT_NUMBER = 9980;
+
 protected:
     void initialize(Poco::Util::Application& self) override;
     void uninitialize() override;
@@ -37,8 +39,6 @@ private:
     void displayHelp();
     int childMain();
     bool childMode() const;
-
-    static const int DEFAULT_PORT_NUMBER = 9980;
 
     bool _doTest;
     long long _childId;
