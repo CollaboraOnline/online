@@ -329,9 +329,7 @@ void LOOLWSD::handleOption(const std::string& name, const std::string& value)
     else if (name == "test")
         _doTest = true;
     else if (name == "child")
-    {
         _childId = std::stoull(value);
-    }
 }
 
 void LOOLWSD::displayHelp()
