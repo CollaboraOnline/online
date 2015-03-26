@@ -10,10 +10,9 @@
 #ifndef INCLUDED_UTIL_HPP
 #define INCLUDED_UTIL_HPP
 
-class Util
+namespace Util
 {
-public:
-    static std::string logPrefix();
+    std::string logPrefix();
 };
 
 #endif

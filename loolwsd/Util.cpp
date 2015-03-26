@@ -14,9 +14,13 @@
 
 #include "Util.hpp"
 
-std::string Util::logPrefix()
+namespace Util
 {
-    return std::to_string(Poco::Process::id()) + ":" + (Poco::Thread::current() ? std::to_string(Poco::Thread::current()->id()) : "0") + ": ";
+
+    std::string logPrefix()
+    {
+        return std::to_string(Poco::Process::id()) + ":" + (Poco::Thread::current() ? std::to_string(Poco::Thread::current()->id()) : "0") + ": ";
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
