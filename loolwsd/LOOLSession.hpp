@@ -10,8 +10,6 @@
 #ifndef INCLUDED_LOOLSESSION_HPP
 #define INCLUDED_LOOLSESSION_HPP
 
-#include <unistd.h>
-
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
