@@ -210,7 +210,7 @@ bool LOOLSession::toChildProcess() const
     return _toChildProcess;
 }
 
-void LOOLSession::sendTextFrame(std::string text)
+void LOOLSession::sendTextFrame(const std::string& text)
 {
     _ws.sendFrame(text.data(), text.size());
 }

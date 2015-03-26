@@ -33,7 +33,7 @@ public:
     bool haveSeparateProcess() const;
     bool toChildProcess() const;
 
-    void sendTextFrame(std::string text);
+    void sendTextFrame(const std::string& text);
     void sendBinaryFrame(const char *buffer, int length);
 
 private:
