@@ -144,31 +144,35 @@ public:
 
     void run() override
     {
-        Timestamp start;
         std::vector<std::string> uris(_app.getDocList());
         std::random_device rd;
         std::mt19937 g(rd());
         std::shuffle(uris.begin(), uris.end(), g);
         if (uris.size() > _app.getNumDocsPerClient())
             uris.resize(_app.getNumDocsPerClient());
-        while (true)
+        while (!clientDurationExceeded())
         {
             std::shuffle(uris.begin(), uris.end(), g);
             for (auto i : uris)
             {
-                if (start.isElapsed(_app.getDuration() * Timespan::HOURS))
+                if (clientDurationExceeded())
                     break;
 
                 testDocument(i);
             }
-            if (start.isElapsed(_app.getDuration() * Timespan::HOURS))
-                break;
         }
     }
 
 private:
+    bool clientDurationExceeded()
+    {
+        return _clientStartTimestamp.isElapsed(_app.getDuration() * Timespan::HOURS);
+    }
+
     void testDocument(const std::string& document)
     {
+        Timestamp documentStartTimestamp;
+
         URI uri(_app.getURL());
 
         HTTPClientSession cs(uri.getHost(), uri.getPort());
@@ -191,13 +195,24 @@ private:
 
         sendTextFrame(ws, "status");
 
+        // Wait for the "status:" message
         mutex.lock();
         cond.wait(mutex);
         mutex.unlock();
 
         std::cout << Util::logPrefix() << "Got status, size=" << output._width << "x" << output._height << std::endl;
 
-        sendTextFrame(ws, "tile width=256 height=256 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000");
+        int n = 0;
+        const int DOCTILEHEIGHT = 5000;
+        // Exercise the server with this document for some minutes
+        while (!documentStartTimestamp.isElapsed(1 * Timespan::MINUTES) && !clientDurationExceeded())
+        {
+            sendTextFrame(ws, "tile width=256 height=256 tileposx=0 tileposy=" + std::to_string(n * DOCTILEHEIGHT) + " " +
+                          "tilewidth=" + std::to_string(DOCTILEHEIGHT) + " "
+                          "tileheight=" + std::to_string(DOCTILEHEIGHT));
+            n = ((n + 1) % (output._height / DOCTILEHEIGHT));
+            Thread::sleep(100);
+        }
 
         Thread::sleep(10000);
 
@@ -213,6 +228,7 @@ private:
     }
 
     LoadTest& _app;
+    Timestamp _clientStartTimestamp;
 };
 
 LoadTest::LoadTest() :
@@ -287,10 +303,10 @@ void LoadTest::handleOption(const std::string& name, const std::string& value)
     Application::handleOption(name, value);
 
     if (name == "help")
-        {
-            displayHelp();
-            exit(Application::EXIT_OK);
-        }
+    {
+        displayHelp();
+        exit(Application::EXIT_OK);
+    }
     else if (name == "doclist")
         _docList = readDocList(value);
     else if (name == "numclients")
