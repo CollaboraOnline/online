@@ -55,6 +55,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Process.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
@@ -298,7 +299,7 @@ void LOOLWSD::defineOptions(OptionSet& options)
     options.addOption(Option("port", "p", "port number to listen to (default:9980)")
                       .required(false)
                       .repeatable(false)
-                      .argument("<port number>"));
+                      .argument("port number"));
 
     options.addOption(Option("lopath", "l", "path to LibreOffice installation")
                       .required(true)
@@ -312,7 +313,7 @@ void LOOLWSD::defineOptions(OptionSet& options)
     options.addOption(Option("child", "c", "for internal use only")
                       .required(false)
                       .repeatable(false)
-                      .argument("<loolwsd URL>"));
+                      .argument("child id"));
 }
 
 void LOOLWSD::handleOption(const std::string& name, const std::string& value)
@@ -346,6 +347,13 @@ void LOOLWSD::displayHelp()
 int LOOLWSD::childMain()
 {
     std::cout << Util::logPrefix() << "Child here!" << std::endl;
+
+    if (getenv("SLEEPFORDEBUGGER"))
+    {
+        std::cout << "Sleeping " << getenv("SLEEPFORDEBUGGER") << " seconds, " <<
+            "attach process " << Poco::Process::id() << " in debugger now." << std::endl;
+        Thread::sleep(std::stoul(getenv("SLEEPFORDEBUGGER")) * 1000);
+    }
 
     LibreOfficeKit *loKit(lok_init(loPath.c_str()));
 
