@@ -5,11 +5,13 @@ loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp TileCache.cpp Util.cpp LOOLProtoco
 # This code not actually used for now
 MIGRATORY_SOCKET_SOURCES = MigratorySocket.cpp MigratorySocketTransport.cpp
 
-noinst_PROGRAMS = loadtest sockettransporttest
+noinst_PROGRAMS = loadtest sockettransporttest connect
 
 loadtest_SOURCES = LoadTest.cpp Util.cpp LOOLProtocol.cpp
 
 sockettransporttest_SOURCES = SocketTransportTest.cpp $(MIGRATORY_SOCKET_SOURCES)
+
+connect_SOURCES = Connect.cpp  Util.cpp
 
 clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
