@@ -13,4 +13,4 @@ sockettransporttest_SOURCES = SocketTransportTest.cpp $(MIGRATORY_SOCKET_SOURCES
 
 clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
-	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]/*
+	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
