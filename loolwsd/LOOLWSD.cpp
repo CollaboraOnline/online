@@ -114,6 +114,7 @@ public:
             // the client).
             int flags;
             int n;
+            ws.setReceiveTimeout(0);
             do
             {
                 char buffer[100000];
@@ -184,6 +185,7 @@ public:
         int flags;
         int n;
         Application& app = Application::instance();
+        _ws.setReceiveTimeout(0);
         try
         {
             do

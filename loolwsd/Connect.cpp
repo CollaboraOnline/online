@@ -117,6 +117,8 @@ protected:
         HTTPResponse response;
         WebSocket ws(cs, request, response);
 
+        ws.setReceiveTimeout(0);
+
         Thread thread;
         Output output(ws);
         thread.start(output);
