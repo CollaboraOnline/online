@@ -27,6 +27,7 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
+#include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
@@ -310,33 +311,7 @@ bool LOOLSession::getStatus(const char *buffer, int length)
         return true;
     }
 
-    LibreOfficeKitDocumentType type = (LibreOfficeKitDocumentType) _loKitDocument->pClass->getDocumentType(_loKitDocument);
-    std::string typeString;
-    switch (type)
-    {
-    case LOK_DOCTYPE_TEXT:
-        typeString = "text";
-        break;
-    case LOK_DOCTYPE_SPREADSHEET:
-        typeString = "spreadsheet";
-        break;
-    case LOK_DOCTYPE_PRESENTATION:
-        typeString = "presentation";
-        break;
-    case LOK_DOCTYPE_DRAWING:
-        typeString = "drawing";
-        break;
-    default:
-        typeString = "other";
-        break;
-    }
-    long width, height;
-    _loKitDocument->pClass->getDocumentSize(_loKitDocument, &width, &height);
-    status = ("status: type=" + typeString + " "
-              "parts=" + std::to_string(_loKitDocument->pClass->getParts(_loKitDocument)) + " "
-              "current=" + std::to_string(_loKitDocument->pClass->getPart(_loKitDocument)) + " "
-              "width=" + std::to_string(width) + " "
-              "height=" + std::to_string(height));
+    status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
     _tileCache->saveStatus(status);
 
     sendTextFrame(status);
