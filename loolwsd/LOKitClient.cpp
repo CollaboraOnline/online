@@ -69,7 +69,6 @@ protected:
 
         if (isatty(0))
         {
-            std::cout << std::endl;
             std::cout << "Enter LOKit \"commands\", one per line. Enter EOF to finish." << std::endl;
         }
 
