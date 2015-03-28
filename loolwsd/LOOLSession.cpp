@@ -17,8 +17,6 @@
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-#include <png.h>
-
 #include <Poco/Buffer.h>
 #include <Poco/Process.h>
 #include <Poco/Random.h>
@@ -319,27 +317,6 @@ bool LOOLSession::getStatus(const char *buffer, int length)
     return true;
 }
 
-// Callback functions for libpng
-
-extern "C"
-{
-    static void user_write_status_fn(png_structp, png_uint_32, int)
-    {
-    }
-
-    static void user_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
-    {
-        std::vector<char> *outputp = (std::vector<char> *) png_get_io_ptr(png_ptr);
-        size_t oldsize = outputp->size();
-        outputp->resize(oldsize + length);
-        memcpy(outputp->data() + oldsize, data, length);
-    }
-
-    static void user_flush_fn(png_structp)
-    {
-    }
-}
-
 void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
 {
     int width, height, tilePosX, tilePosY, tileWidth, tileHeight;
@@ -400,30 +377,11 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
     unsigned char *pixmap = new unsigned char[4 * width * height];
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-
-    png_infop info_ptr = png_create_info_struct(png_ptr);
-
-    if (setjmp(png_jmpbuf(png_ptr)))
+    if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output))
     {
-        png_destroy_write_struct(&png_ptr, NULL);
         sendTextFrame("error: cmd=tile kind=failure");
         return;
     }
-
-    png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-
-    png_set_write_fn(png_ptr, &output, user_write_fn, user_flush_fn);
-    png_set_write_status_fn(png_ptr, user_write_status_fn);
-
-    png_write_info(png_ptr, info_ptr);
-
-    for (int y = 0; y < height; ++y)
-        png_write_row(png_ptr, pixmap + y * width * 4);
-
-    png_write_end(png_ptr, info_ptr);
-
-    png_destroy_write_struct(&png_ptr, NULL);
 
     delete[] pixmap;
 

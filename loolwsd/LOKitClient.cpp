@@ -8,6 +8,7 @@
  */
 
 #include <cassert>
+#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -24,18 +25,18 @@
 #include <Poco/Random.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
 #include "LOKitHelper.hpp"
 #include "Util.hpp"
 
-using Poco::Buffer;
-using Poco::Random;
 using Poco::StringTokenizer;
+using Poco::TemporaryFile;
 using Poco::Util::Application;
 
-class LOKitClient: public Poco::Util::Application
+class LOKitClient: public Application
 {
 public:
 protected:
@@ -63,6 +64,8 @@ protected:
             logger().fatal("Document loading failed: " + std::string(loKit->pClass->getError(loKit)));
             return Application::EXIT_UNAVAILABLE;
         }
+
+        loKitDocument->pClass->initializeForRendering(loKitDocument);
 
         if (isatty(0))
         {
@@ -117,9 +120,22 @@ protected:
                 int tileWidth(std::stoi(tokens[5]));
                 int tileHeight(std::stoi(tokens[6]));
                 
-                std::vector<unsigned char> buffer(canvasWidth*canvasHeight*4);
-                loKitDocument->pClass->paintTile(loKitDocument, buffer.data(), canvasWidth, canvasHeight, tilePosX, tilePosY, tileWidth, tileHeight);
+                std::vector<unsigned char> pixmap(canvasWidth*canvasHeight*4);
+                loKitDocument->pClass->paintTile(loKitDocument, pixmap.data(), canvasWidth, canvasHeight, tilePosX, tilePosY, tileWidth, tileHeight);
 
+                if (!Util::windowingAvailable())
+                    continue;
+
+                std::vector<char> png;
+                Util::encodePNGAndAppendToBuffer(pixmap.data(), canvasWidth, canvasHeight, png);
+
+                TemporaryFile pngFile;
+                std::ofstream pngStream(pngFile.path(), std::ios::binary);
+                pngStream.write(png.data(), png.size());
+                pngStream.close();
+#ifdef __linux
+                std::system((std::string("display ") + pngFile.path()).c_str());
+#endif
             }
             else
             {

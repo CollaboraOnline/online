@@ -13,6 +13,8 @@
 namespace Util
 {
     std::string logPrefix();
+    bool windowingAvailable();
+    bool encodePNGAndAppendToBuffer(const unsigned char *pixmap, int width, int height, std::vector<char>& output);
 };
 
 #endif
