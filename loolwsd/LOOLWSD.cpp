@@ -34,9 +34,7 @@ DEALINGS IN THE SOFTWARE.
 
  */
 
-#include <unistd.h>
-#include <stdlib.h>
-
+#include <cstdlib>
 #include <iostream>
 
 #define LOK_USE_UNSTABLE_API
@@ -348,11 +346,11 @@ int LOOLWSD::childMain()
 {
     std::cout << Util::logPrefix() << "Child here!" << std::endl;
 
-    if (getenv("SLEEPFORDEBUGGER"))
+    if (std::getenv("SLEEPFORDEBUGGER"))
     {
-        std::cout << "Sleeping " << getenv("SLEEPFORDEBUGGER") << " seconds, " <<
+        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
             "attach process " << Poco::Process::id() << " in debugger now." << std::endl;
-        Thread::sleep(std::stoul(getenv("SLEEPFORDEBUGGER")) * 1000);
+        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
     LibreOfficeKit *loKit(lok_init(loPath.c_str()));
