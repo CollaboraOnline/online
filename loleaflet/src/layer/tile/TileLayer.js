@@ -53,7 +53,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.socket.send('load url=' + this.options.doc);
 			this._map.socket.send('status');
 		}
-		this._update();
 	},
 
 	setUrl: function (url, noRedraw) {
