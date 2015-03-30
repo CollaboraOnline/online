@@ -359,7 +359,16 @@ L.GridLayer = L.Layer.extend({
 		var topLeft = this._map.unproject([0, 0], this._tileZoom);
 		var bottomRight = this._map.unproject(docPixelLimits, this._tileZoom);
 		var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
+		var document_container = document.getElementById('document-container');
+		document_container.style.overflow = '';
+		this._map._container.style.width = docPixelLimits.x + 'px';
+		this._map._container.style.height = docPixelLimits.y + 'px';
 		this._map.setMaxBounds(maxBounds);
+		// When zooming, the (0,0) point is no longer in the top left corner
+		// and this puts it back. If it's done without a timeout, it sometimes
+		// crashes on Chrome
+		setTimeout(L.bind(this._map.invalidateSize, this._map), 100);
+		document_container.style.overflow = 'auto';
 	},
 
 	_setZoomTransforms: function (center, zoom) {
