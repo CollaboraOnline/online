@@ -50,7 +50,8 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 		if (this.options.doc) {
-			this._map.socket.send('load ' + this.options.doc);
+			this._map.socket.send('load url=' + this.options.doc);
+			this._map.socket.send('status');
 		}
 		this._update();
 	},
