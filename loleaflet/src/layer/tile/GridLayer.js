@@ -352,12 +352,12 @@ L.GridLayer = L.Layer.extend({
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
 		}
-		var docPixelLimits = new L.Point(this._docHeightTwips / this._tileHeightTwips,
-										 this._docWidthTwips / this._tileWidthTwips);
+		var docPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
+										 this._docHeightTwips / this._tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 
 		var topLeft = this._map.unproject([0, 0], this._tileZoom);
-		var bottomRight = this._map.unproject([docPixelLimits.y, docPixelLimits.x], this._tileZoom);
+		var bottomRight = this._map.unproject(docPixelLimits, this._tileZoom);
 		var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
 		this._map.setMaxBounds(maxBounds);
 	},
