@@ -10,7 +10,22 @@
 <style type="text/css"></style></head>
 <body>
 	<script src="../../dist/leaflet.js"></script>
-    <div id="map" style="height:500px;width:1000px"></div>
+
+    <!--The "controls" div holds map controls suchs as the Zoom button and
+        it's separated from the map in order to have the controls on the top
+        of the page all the time.
+
+        The "document-container" div is the actual display of the document, is
+        what the user sees and it should be no larger than the screen size.
+
+        The "map" div is the actual document and it has the document's size
+        and width, this being inside the smaller "document-container" will
+        cause the content to overflow, creating scrollbars -->
+    <div id="controls"></div>
+    <div id="document-container" style="height:300px;width:1000px;overflow:auto">
+        <div id="map" style="height:2900px;width:2900px;"></div>
+    </div>
+
 	<script>
 
     var map = L.map('map', {

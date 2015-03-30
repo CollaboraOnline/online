@@ -87,7 +87,7 @@ L.Control.Zoom = L.Control.extend({
 });
 
 L.Map.mergeOptions({
-	zoomControl: true
+	zoomControl: false
 });
 
 L.Map.addInitHook(function () {
