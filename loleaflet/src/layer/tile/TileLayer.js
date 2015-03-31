@@ -42,6 +42,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (!L.Browser.android) {
 			this.on('tileunload', this._onTileRemove);
 		}
+		this._documentInfo = '';
 	},
 
 	_initDocument: function () {
@@ -88,7 +89,8 @@ L.TileLayer = L.GridLayer.extend({
 	_onMessage: function (evt) {
 		if (typeof (evt.data) === 'string') {
 			var info = this._getTileInfo(evt.data);
-			if (info.width && info.height) {
+			if (info.width && info.height && this._documentInfo !== evt.data) {
+				this._documentInfo = evt.data;
 				this._docWidthTwips = info.width;
 				this._docHeightTwips = info.height;
 				this._updateMaxBounds();
