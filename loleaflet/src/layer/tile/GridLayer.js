@@ -585,9 +585,6 @@ L.GridLayer = L.Layer.extend({
 			// tile is already added, between the first request and the response
 			// from the server there might have been other request, which are now
 			// invalid
-			this._tiles[key].current = true;
-			this._tiles[key].active = false;
-			this._tiles[key].loaded = +new Date();
 			return;
 		}
 		this._initTile(tile);
@@ -631,7 +628,7 @@ L.GridLayer = L.Layer.extend({
 		var key = this._tileCoordsToKey(coords);
 
 		tile = this._tiles[key];
-		if (!tile) { return; }
+		if (!tile || tile.loaded !== undefined ) { return; }
 
 		tile.loaded = +new Date();
 		if (this._map._fadeAnimated) {
