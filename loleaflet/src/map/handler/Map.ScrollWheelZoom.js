@@ -66,5 +66,3 @@ L.Map.ScrollWheelZoom = L.Handler.extend({
 		}
 	}
 });
-
-L.Map.addInitHook('addHandler', 'scrollWheelZoom', L.Map.ScrollWheelZoom);
