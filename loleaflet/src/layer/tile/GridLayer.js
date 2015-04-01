@@ -495,6 +495,8 @@ L.GridLayer = L.Layer.extend({
 			    (!crs.wrapLat && (coords.y < bounds.min.y || coords.y > bounds.max.y))) { return false; }
 		}
 
+		if (coords.x < 0 || coords.y < 0) { return false; }
+
 		if (!this.options.bounds) { return true; }
 
 		// don't load tile if it doesn't intersect the bounds in options
