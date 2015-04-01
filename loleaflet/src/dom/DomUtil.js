@@ -19,6 +19,10 @@ L.DomUtil = {
 		return value === 'auto' ? null : value;
 	},
 
+	setStyle: function (el, style, value) {
+		el.style[style] = value;
+	},
+
 	create: function (tagName, className, container) {
 
 		var el = document.createElement(tagName);
