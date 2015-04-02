@@ -18,13 +18,13 @@ L.Map = L.Evented.extend({
 		markerZoomAnimation: true
 	},
 
-	initialize: function (id, options) { // (HTMLElement or String, Object)
+	initialize: function (id, outerId, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
 		if (options.server) {
 			this._initSocket();
 		}
-		this._initContainer(id);
+		this._initContainer(id, outerId);
 		this._initLayout();
 
 		// hack for https://github.com/Leaflet/Leaflet/issues/1980
@@ -446,13 +446,18 @@ L.Map = L.Evented.extend({
 	},
 
 
-	_initContainer: function (id) {
+	_initContainer: function (id, outerId) {
 		var container = this._container = L.DomUtil.get(id);
+		var outerContainer = this._outerContainer = L.DomUtil.get(outerId);
 
 		if (!container) {
 			throw new Error('Map container not found.');
 		} else if (container._leaflet) {
 			throw new Error('Map container is already initialized.');
+		}
+
+		if (!outerContainer) {
+			throw new Error('Document outer container not found.');
 		}
 
 		container._leaflet = true;
@@ -741,6 +746,6 @@ L.Map = L.Evented.extend({
 	}
 });
 
-L.map = function (id, options) {
-	return new L.Map(id, options);
+L.map = function (id, outerId, options) {
+	return new L.Map(id, outerId, options);
 };

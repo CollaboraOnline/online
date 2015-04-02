@@ -359,8 +359,7 @@ L.GridLayer = L.Layer.extend({
 		var topLeft = this._map.unproject([0, 0], this._tileZoom);
 		var bottomRight = this._map.unproject(docPixelLimits, this._tileZoom);
 		var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
-		var document_container = L.DomUtil.get('document-container');
-		L.DomUtil.setStyle(document_container, 'overflow', '');
+		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', '');
 		L.DomUtil.setStyle(this._map._container, 'width', docPixelLimits.x + 'px');
 		L.DomUtil.setStyle(this._map._container, 'height', docPixelLimits.y + 'px');
 		this._map.setMaxBounds(maxBounds);
@@ -368,7 +367,7 @@ L.GridLayer = L.Layer.extend({
 		// and this puts it back. If it's done without a timeout, it sometimes
 		// crashes on Chrome
 		setTimeout(L.bind(this._map.invalidateSize, this._map), 100);
-		L.DomUtil.setStyle(document_container, 'overflow', 'auto');
+		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', 'auto');
 	},
 
 	_setZoomTransforms: function (center, zoom) {
