@@ -56,5 +56,10 @@
         doc: '/PATH/TO/DOCUMENT',
         useSocket : true
     }).addTo(map);
+
+    var control = L.control.zoom();
+    control._map = map;
+    var controlDiv = control.onAdd(map);
+    document.getElementById('controls').appendChild(controlDiv);
 	</script>
 </body></html>
