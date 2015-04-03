@@ -332,8 +332,14 @@ L.Map = L.Evented.extend({
 	},
 
 	getPixelBounds: function (center, zoom) {
-		var topLeftPoint = this._getTopLeftPoint(center, zoom);
-		return new L.Bounds(topLeftPoint, topLeftPoint.add(this.getSize()));
+		var topLeftPoint = new L.Point(
+				this._outerContainer.scrollLeft,
+				this._outerContainer.scrollTop);
+		var outerContainerSize = new L.Point(
+				this._outerContainer.clientWidth,
+				this._outerContainer.clientHeight);
+		return new L.Bounds(topLeftPoint, topLeftPoint.add(outerContainerSize));
+
 	},
 
 	getPixelOrigin: function () {
