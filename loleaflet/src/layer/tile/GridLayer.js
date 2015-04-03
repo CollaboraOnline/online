@@ -667,8 +667,8 @@ L.GridLayer = L.Layer.extend({
 
 	_pxBoundsToTileRange: function (bounds) {
 		return new L.Bounds(
-			bounds.min.divideBy(this._tileSize).floor(),
-			bounds.max.divideBy(this._tileSize).ceil().subtract([1, 1]));
+			bounds.min.divideBy(this._tileSize).floor().subtract([1, 1]),
+			bounds.max.divideBy(this._tileSize).ceil());
 	},
 
 	_twipsToCoords: function (twips) {
