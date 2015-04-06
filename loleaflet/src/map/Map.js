@@ -611,6 +611,10 @@ L.Map = L.Evented.extend({
 			L.DomUtil.preventOutline(e.target || e.srcElement);
 		}
 
+		// workaround for drawing shapes, wihout this shapes cannot be shrunken
+		if (target !== undefined && target._path !== undefined && type === 'mousemove') {
+			target = undefined;
+		}
 		this._fireDOMEvent(target || this, e, type);
 	},
 
