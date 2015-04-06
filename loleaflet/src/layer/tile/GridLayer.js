@@ -451,7 +451,6 @@ L.GridLayer = L.Layer.extend({
 		for (var key in this._tiles) {
 			if (this._keyToTileCoords(key).z !== zoom) {
 				this._tiles[key].current = false;
-				L.DomUtil.setOpacity(this._tiles[key].el, 0);
 			}
 		}
 
@@ -467,7 +466,6 @@ L.GridLayer = L.Layer.extend({
 				var tile = this._tiles[key];
 				if (tile) {
 					tile.current = true;
-					L.DomUtil.setOpacity(tile.el, 1);
 				} else {
 					queue.push(coords);
 				}
