@@ -14,22 +14,22 @@ For a custom build, open build/build.html in the browser and follow the instruct
 
 var build = require('./build/build.js');
 
-function hint(msg, paths) {
-    return function () {
-        console.log(msg);
-        jake.exec('node node_modules/jshint/bin/jshint -c ' + paths,
-                    {printStdout: true}, function () {
-            console.log('\tCheck passed.\n');
-            complete();
-        });
-    };
+function hint(msg, args) {
+	return function () {
+		console.log(msg);
+		jake.exec('node ../../node_modules/eslint/bin/eslint.js ' + args,
+				{printStdout: true}, function () {
+			console.log('\tCheck passed.\n');
+			complete();
+		});
+	};
 }
 
-desc('Check Leaflet.draw source for errors with JSHint');
-task('lint', {async: true}, hint('Checking for JS errors...', 'build/hintrc.js src'));
+desc('Check Leaflet source for errors with ESLint');
+task('lint', {async: true}, hint('Checking for JS errors...', 'src --config .eslintrc'));
 
-desc('Check Leaflet.draw specs source for errors with JSHint');
-task('lintspec', {async: true}, hint('Checking for specs JS errors...', 'spec/spec.hintrc.js spec/suites'));
+desc('Check Leaflet specs source for errors with ESLint');
+task('lintspec', {async: true}, hint('Checking for specs JS errors...', 'spec/suites --config spec/.eslintrc'));
 
 desc('Combine and compress Leaflet.draw source files');
 task('build', {async: true}, function () {
