@@ -7,9 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="../../dist/leaflet.css">
+<link rel="stylesheet" href="../../plugins/draw-0.2.4/dist/leaflet.draw.css">
 <style type="text/css"></style></head>
 <body>
 	<script src="../../dist/leaflet.js"></script>
+	<script src="../../plugins/draw-0.2.4/dist/leaflet.draw.js"></script>
 
     <!--The "controls" div holds map controls suchs as the Zoom button and
         it's separated from the map in order to have the controls on the top
@@ -52,14 +54,49 @@
     }
     map.on('click', onMapClick);
 
-    L.tileLayer('', {
+    ////// Document layer ////
+    var docLayer = new L.TileLayer('', {
         doc: '/PATH/TO/DOCUMENT',
         useSocket : true
-    }).addTo(map);
+    });
+    map.addLayer(docLayer);
 
-    var control = L.control.zoom();
-    control._map = map;
-    var controlDiv = control.onAdd(map);
-    document.getElementById('controls').appendChild(controlDiv);
+    ////// Zoom Control /////
+    var zoomControl = L.control.zoom();
+    zoomControl._map = map;
+    var zoomControlDiv = zoomControl.onAdd(map);
+
+    ////// Draw Control /////
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+    var drawControl = new L.Control.Draw({
+        draw: {
+            position: 'topleft',
+            polygon: false,
+            polyline: false,
+            circle: false,
+            marker: false,
+            rectangle: {
+                shapeOptions: {
+                    color: '#a8d1ff',
+                }
+            }
+        },
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    drawControl._map = map;
+    var drawControlDiv = drawControl.onAdd(map);
+
+    map.on('draw:created', function (e) {
+        var type = e.layerType,
+            layer = e.layer;
+
+        drawnItems.addLayer(layer);
+    });
+
+    document.getElementById('controls').appendChild(zoomControlDiv);
+    document.getElementById('controls').appendChild(drawControlDiv);
 	</script>
 </body></html>
