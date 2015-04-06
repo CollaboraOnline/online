@@ -35,7 +35,6 @@ L.Edit.Marker = L.Handler.extend({
 		if (!this._icon) {
 			return;
 		}
-		
 		// This is quite naughty, but I don't see another way of doing it. (short of setting a new icon)
 		var icon = this._icon;
 

@@ -30,7 +30,7 @@ L.EditToolbar.Edit = L.Handler.extend({
 		this.fire('enabled', {handler: this.type});
 			//this disable other handlers
 
-		this._map.fire('draw:editstart', { handler: this.type });
+		this._map.fire('draw:editstart', {handler: this.type});
 			//allow drawLayer to be updated before beginning edition.
 
 		L.Handler.prototype.enable.call(this);
@@ -45,7 +45,7 @@ L.EditToolbar.Edit = L.Handler.extend({
 			.off('layeradd', this._enableLayerEdit, this)
 			.off('layerremove', this._disableLayerEdit, this);
 		L.Handler.prototype.disable.call(this);
-		this._map.fire('draw:editstop', { handler: this.type });
+		this._map.fire('draw:editstop', {handler: this.type});
 		this.fire('disabled', {handler: this.type});
 	},
 
@@ -135,7 +135,7 @@ L.EditToolbar.Edit = L.Handler.extend({
 				layer.setLatLng(this._uneditedLayerProps[id].latlng);
 			}
 
-			layer.fire('revert-edited', { layer: layer });
+			layer.fire('revert-edited', {layer: layer});
 		}
 	},
 

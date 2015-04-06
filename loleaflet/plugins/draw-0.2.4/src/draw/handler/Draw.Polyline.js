@@ -387,11 +387,11 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		// Update tooltip
 		this._tooltip
 			.showAsError()
-			.updateContent({ text: this.options.drawError.message });
+			.updateContent({text: this.options.drawError.message});
 
 		// Update shape
 		this._updateGuideColor(this.options.drawError.color);
-		this._poly.setStyle({ color: this.options.drawError.color });
+		this._poly.setStyle({color: this.options.drawError.color});
 
 		// Hide the error after 2 seconds
 		this._clearHideErrorTimeout();
@@ -410,7 +410,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 		// Revert shape
 		this._updateGuideColor(this.options.shapeOptions.color);
-		this._poly.setStyle({ color: this.options.shapeOptions.color });
+		this._poly.setStyle({color: this.options.shapeOptions.color});
 	},
 
 	_clearHideErrorTimeout: function () {

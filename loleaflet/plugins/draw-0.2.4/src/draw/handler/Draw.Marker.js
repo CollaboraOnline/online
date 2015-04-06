@@ -20,7 +20,7 @@ L.Draw.Marker = L.Draw.Feature.extend({
 		L.Draw.Feature.prototype.addHooks.call(this);
 
 		if (this._map) {
-			this._tooltip.updateContent({ text: L.drawLocal.draw.handlers.marker.tooltip.start });
+			this._tooltip.updateContent({text: L.drawLocal.draw.handlers.marker.tooltip.start});
 
 			// Same mouseMarker as in Draw.Polyline
 			if (!this._mouseMarker) {
@@ -96,7 +96,7 @@ L.Draw.Marker = L.Draw.Feature.extend({
 	},
 
 	_fireCreatedEvent: function () {
-		var marker = new L.Marker(this._marker.getLatLng(), { icon: this.options.icon });
+		var marker = new L.Marker(this._marker.getLatLng(), {icon: this.options.icon});
 		L.Draw.Feature.prototype._fireCreatedEvent.call(this, marker);
 	}
 });

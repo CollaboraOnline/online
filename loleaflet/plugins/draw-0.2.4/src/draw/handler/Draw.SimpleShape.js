@@ -23,7 +23,7 @@ L.Draw.SimpleShape = L.Draw.Feature.extend({
 			//TODO refactor: move cursor to styles
 			this._container.style.cursor = 'crosshair';
 
-			this._tooltip.updateContent({ text: this._initialLabelText });
+			this._tooltip.updateContent({text: this._initialLabelText});
 
 			this._map
 				.on('mousedown', this._onMouseDown, this)
