@@ -9,6 +9,8 @@ Building:
     npm install -g jake
     npm install
     jake build
+    cd plugins/draw-0.2.4
+    jake build
 
 If you want to avoid having to run the above as root, create a directory that
 you own somehwere, for instance /opt/npm, and add a line to ~/.npmrc:
@@ -27,5 +29,9 @@ Loading a document:
         - doc = path to the document that will be loaded
         - useSocket = tells the map the tiles will be received from a websocket
           connection. If this parameter is false, an image will be loaded in each tile
+
+Controls are added above the map in a div called "controls" is intended to be used as a toolbar.
+There is no leaflet method of adding them in a separte div, so for now this is done in the html
+document after the map initialization.
 
 To run an example, open debug/document/document_simple_example.html in the browser
