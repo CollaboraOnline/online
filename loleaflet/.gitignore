@@ -7,6 +7,7 @@ tmp/**/*
 *.sublime-*
 _site
 dist/*.js
+plugins/draw-0.2.4/dist/*.js
 coverage/
 *.js.html
 index.html
