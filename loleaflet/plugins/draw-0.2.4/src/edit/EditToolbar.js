@@ -79,6 +79,12 @@ L.EditToolbar = L.Toolbar.extend({
 				text: L.drawLocal.edit.toolbar.actions.cancel.text,
 				callback: this.disable,
 				context: this
+			},
+			{
+				title: L.drawLocal.edit.toolbar.actions.removeAll.title,
+				text: L.drawLocal.edit.toolbar.actions.removeAll.text,
+				callback: this._removeAll,
+				context: this
 			}
 		];
 	},
@@ -109,6 +115,11 @@ L.EditToolbar = L.Toolbar.extend({
 
 	_save: function () {
 		this._activeMode.handler.save();
+		this._activeMode.handler.disable();
+	},
+
+	_removeAll: function() {
+		this._activeMode.handler._removeAll();
 		this._activeMode.handler.disable();
 	},
 

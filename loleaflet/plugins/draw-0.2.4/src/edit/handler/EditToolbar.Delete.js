@@ -115,6 +115,14 @@ L.EditToolbar.Delete = L.Handler.extend({
 		layer.fire('deleted');
 	},
 
+	_removeAll: function () {
+		this._deletableLayers.eachLayer(function (layer) {
+			this._deletedLayers.addLayer(layer);
+		}, this);
+		this._deletableLayers.clearLayers();
+		this.save();
+	},
+
 	_onMouseMove: function (e) {
 		this._tooltip.updatePosition(e.latlng);
 	},
