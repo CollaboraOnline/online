@@ -8,7 +8,7 @@ L.drawLocal = {
 	draw: {
 		toolbar: {
 			actions: {
-				title: 'Cancel drawing',
+				title: 'Cancel selection',
 				text: 'Cancel'
 			},
 			undo: {
@@ -18,7 +18,7 @@ L.drawLocal = {
 			buttons: {
 				polyline: 'Draw a polyline',
 				polygon: 'Draw a polygon',
-				rectangle: 'Draw a rectangle',
+				rectangle: 'Select',
 				circle: 'Draw a circle',
 				marker: 'Draw a marker'
 			}
@@ -52,12 +52,12 @@ L.drawLocal = {
 			},
 			rectangle: {
 				tooltip: {
-					start: 'Click and drag to draw rectangle.'
+					start: 'Click and drag to select.'
 				}
 			},
 			simpleshape: {
 				tooltip: {
-					end: 'Release mouse to finish drawing.'
+					end: 'Release mouse to finish selecting.'
 				}
 			}
 		}
@@ -72,6 +72,10 @@ L.drawLocal = {
 				cancel: {
 					title: 'Cancel editing, discards all changes.',
 					text: 'Cancel'
+				},
+				removeAll: {
+					title: 'Deselect all.',
+					text: 'All'
 				}
 			},
 			buttons: {
@@ -84,13 +88,13 @@ L.drawLocal = {
 		handlers: {
 			edit: {
 				tooltip: {
-					text: 'Drag handles, or marker to edit feature.',
+					text: 'Drag selection area.',
 					subtext: 'Click cancel to undo changes.'
 				}
 			},
 			remove: {
 				tooltip: {
-					text: 'Click on a feature to remove'
+					text: 'Click to deselect.'
 				}
 			}
 		}

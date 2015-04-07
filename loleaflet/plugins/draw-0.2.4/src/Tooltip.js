@@ -30,9 +30,7 @@ L.Tooltip = L.Class.extend({
 			this._singleLineLabel = false;
 		}
 
-		this._container.innerHTML =
-			(labelText.subtext.length > 0 ? '<span class="leaflet-draw-tooltip-subtext">' + labelText.subtext + '</span>' + '<br />' : '') +
-			'<span>' + labelText.text + '</span>';
+		this._container.innerHTML = '<span>' + labelText.text + '</span>';
 
 		return this;
 	},
