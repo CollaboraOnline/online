@@ -32,6 +32,11 @@
 	background-size: 270px 30px;
 }
 
+.leaflet-draw {
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+}
 .leaflet-draw a {
 	display: block;
 	text-align: center;
