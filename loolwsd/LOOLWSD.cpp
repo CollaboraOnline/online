@@ -36,6 +36,8 @@ DEALINGS IN THE SOFTWARE.
 
 #include "config.h"
 
+#include <unistd.h>
+
 #include <cstdlib>
 #include <iostream>
 
@@ -58,6 +60,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Process.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
+#include <Poco/Util/OptionException.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
 
@@ -81,6 +84,8 @@ using Poco::Runnable;
 using Poco::Thread;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
+using Poco::Util::IncompatibleOptionsException;
+using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
@@ -266,7 +271,12 @@ private:
 };
 
 int LOOLWSD::portNumber = DEFAULT_PORT_NUMBER;
-std::string LOOLWSD::loPath;
+std::string LOOLWSD::sysTemplate;
+std::string LOOLWSD::loTemplate;
+std::string LOOLWSD::childRoot;
+std::string LOOLWSD::loSubPath = "lo";
+std::string LOOLWSD::jail;
+int LOOLWSD::numPreForkedChildren = 10;
 
 LOOLWSD::LOOLWSD() :
     _doTest(false),
@@ -292,28 +302,53 @@ void LOOLWSD::defineOptions(OptionSet& options)
 {
     ServerApplication::defineOptions(options);
 
-    options.addOption(Option("help", "h", "display help information on command line arguments")
+    options.addOption(Option("help", "", "display help information on command line arguments")
                       .required(false)
                       .repeatable(false));
 
-    options.addOption(Option("port", "p", "port number to listen to (default:9980)")
+    options.addOption(Option("port", "", "port number to listen to (default: " + std::to_string(LOOLWSD::DEFAULT_PORT_NUMBER) + ")")
                       .required(false)
                       .repeatable(false)
                       .argument("port number"));
 
-    options.addOption(Option("lopath", "l", "path to LibreOffice installation")
-                      .required(true)
+    options.addOption(Option("systemplate", "", "path to a template tree with shared libraries etc to be used as source for chroot jails for child processes")
+                      .required(false)
                       .repeatable(false)
                       .argument("directory"));
 
-    options.addOption(Option("test", "t", "interactive testing")
+    options.addOption(Option("lotemplate", "", "path to a LibreOffice installation tree to be copied (linked) into the jails for child processes")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("directory"));
+
+    options.addOption(Option("childroot", "", "path to the directory under which the chroot jails for the child processes will be created")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("directory"));
+
+    options.addOption(Option("losubpath", "", "relative path where the LibreOffice installation will be copied inside a jail (default: '" + loSubPath + "')")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("relative path"));
+
+    options.addOption(Option("numpreforks", "", "number of child processes to keep waiting for new clients")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("port number"));
+
+    options.addOption(Option("test", "", "interactive testing")
                       .required(false)
                       .repeatable(false));
 
-    options.addOption(Option("child", "c", "for internal use only")
+    options.addOption(Option("child", "", "for internal use only")
                       .required(false)
                       .repeatable(false)
                       .argument("child id"));
+
+    options.addOption(Option("jail", "", "for internal use only")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("directory"));
 }
 
 void LOOLWSD::handleOption(const std::string& name, const std::string& value)
@@ -327,12 +362,22 @@ void LOOLWSD::handleOption(const std::string& name, const std::string& value)
     }
     else if (name == "port")
         portNumber = std::stoi(value);
-    else if (name == "lopath")
-        loPath = value;
+    else if (name == "systemplate")
+        sysTemplate = value;
+    else if (name == "lotemplate")
+        loTemplate = value;
+    else if (name == "childroot")
+        childRoot = value;
+    else if (name == "losubpath")
+        loSubPath = value;
+    else if (name == "numpreforks")
+        numPreForkedChildren = std::stoi(value);
     else if (name == "test")
         _doTest = true;
     else if (name == "child")
         _childId = std::stoull(value);
+    else if (name == "jail")
+        jail = value;
 }
 
 void LOOLWSD::displayHelp()
@@ -348,6 +393,32 @@ int LOOLWSD::childMain()
 {
     std::cout << Util::logPrefix() << "Child here!" << std::endl;
 
+    // We use the same option set for both parent and child loolwsd,
+    // so must check options required in the child (but not in the
+    // parent) separately now. And also for options that are
+    // meaningless to the child.
+    if (jail == "")
+        throw MissingOptionException("systemplate");
+
+    if (sysTemplate != "")
+        throw IncompatibleOptionsException("systemplate");
+    if (loTemplate != "")
+        throw IncompatibleOptionsException("lotemplate");
+    if (childRoot != "")
+        throw IncompatibleOptionsException("childroot");
+
+    if (chroot(jail.c_str()) == -1)
+    {
+        logger().error("chroot(\"" + jail + "\") failed: " + strerror(errno));
+        exit(1);
+    }
+
+    if (chdir("/") == -1)
+    {
+        logger().error(std::string("chdir(\"/\") in jail failed: ") + strerror(errno));
+        exit(1);
+    }
+
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
         std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
@@ -355,7 +426,12 @@ int LOOLWSD::childMain()
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
-    LibreOfficeKit *loKit(lok_init(loPath.c_str()));
+    LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
+
+    // If lok_init_2() fails, try once more in case it's the "LOK init
+    // failed -- restart required" case
+    if (!loKit)
+        loKit = lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user");
 
     if (!loKit)
     {
@@ -373,8 +449,10 @@ int LOOLWSD::childMain()
 
     LOOLSession session(ws, loKit);
 
+    ws.setReceiveTimeout(0);
+
     std::string hello("child " + std::to_string(_childId));
-    ws.sendFrame(hello.c_str(), hello.size());
+    session.sendTextFrame(hello);
 
     int flags;
     int n;
@@ -403,6 +481,25 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     if (childMode())
         return childMain();
+
+    // We use the same option set for both parent and child loolwsd,
+    // so must check options required in the parent (but not in the
+    // child) separately now. Also check for options that are
+    // meaningless for the parent.
+    if (sysTemplate == "")
+        throw MissingOptionException("systemplate");
+    if (loTemplate == "")
+        throw MissingOptionException("lotemplate");
+    if (childRoot == "")
+        throw MissingOptionException("childroot");
+
+    if (_childId != 0)
+        throw IncompatibleOptionsException("child");
+    if (jail != "")
+        throw IncompatibleOptionsException("jail");
+
+    for (int i = 0; i < numPreForkedChildren; i++)
+        LOOLSession::preFork();
 
     ServerSocket svs(portNumber);
 

@@ -24,7 +24,13 @@ public:
     // An Application is a singleton anyway, so just keep these as
     // statics
     static int portNumber;
-    static std::string loPath;
+    static std::string sysTemplate;
+    static std::string loTemplate;
+    static std::string childRoot;
+    static std::string loSubPath;
+    static std::string jail;
+
+    static int numPreForkedChildren;
 
     static const int DEFAULT_PORT_NUMBER = 9980;
 

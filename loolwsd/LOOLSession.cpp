@@ -7,17 +7,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <ftw.h>
+
 #include <cassert>
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <memory>
+#include <set>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/Buffer.h>
+#include <Poco/File.h>
+#include <Poco/Net/WebSocket.h>
+#include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/Random.h>
 #include <Poco/String.h>
@@ -35,7 +42,9 @@
 using namespace LOOLProtocol;
 
 using Poco::Buffer;
+using Poco::File;
 using Poco::Net::WebSocket;
+using Poco::Path;
 using Poco::Process;
 using Poco::ProcessHandle;
 using Poco::Random;
@@ -45,24 +54,34 @@ using Poco::UInt64;
 using Poco::URI;
 using Poco::Util::Application;
 
-std::map<UInt64, LOOLSession*> LOOLSession::_childToClient;
+std::map<UInt64, LOOLSession*> LOOLSession::_childIdToChildSession;
+std::set<UInt64> LOOLSession::_pendingPreForkedChildren;
+std::set<LOOLSession*> LOOLSession::_availableChildSessions;
+
+LOOLSession::LOOLSession(UInt64 childId, const std::string& jail) :
+    _peerWs(nullptr),
+    _childId(childId),
+    _jail(jail)
+{
+    std::cout << Util::logPrefix() << "LOOLSesstion ctor this=" << this << " childId=" << childId << std::endl;
+}
 
 LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit) :
-    _docURL(""),
-    _ws(ws),
+    _ws(&ws),
     _toChildProcess(false),
+    _docURL(""),
     _peerWs(nullptr),
     _childId(0),
     _loKit(loKit),
     _loKitDocument(NULL)
 {
-    std::cout << Util::logPrefix() << "LOOLSesstion ctor this=" << this << " ws=" << &_ws << std::endl;
+    std::cout << Util::logPrefix() << "LOOLSesstion ctor this=" << this << " ws=" << _ws << std::endl;
 }
 
 LOOLSession::~LOOLSession()
 {
     std::cout << Util::logPrefix() << "LOOLSesstion dtor this=" << this << std::endl;
-    _ws.shutdown();
+    _ws->shutdown();
     if (_loKitDocument)
         _loKitDocument->pClass->destroy(_loKitDocument);
 }
@@ -71,7 +90,7 @@ bool LOOLSession::handleInput(char *buffer, int length)
 {
     Application& app = Application::instance();
 
-    if (haveSeparateProcess())
+    if (!toChildProcess() && haveSeparateProcess())
     {
         forwardRequest(buffer, length);
         return true;
@@ -108,22 +127,16 @@ bool LOOLSession::handleInput(char *buffer, int length)
         }
         UInt64 childId = std::stoull(tokens[1]);
         app.logger().information(Util::logPrefix() + "childId=" + std::to_string(childId));
-        if (_childToClient.find(childId) == _childToClient.end())
+        if (_pendingPreForkedChildren.find(childId) == _pendingPreForkedChildren.end())
         {
             sendTextFrame("error: cmd=child kind=notfound");
             return false;
         }
-        assert(_childToClient[childId]->haveSeparateProcess());
-        assert(_childToClient[childId]->_peerWs == nullptr);
-        _childToClient[childId]->_peerWs = &_ws;
-        _peerWs = &_childToClient[childId]->_ws;
-        for (auto i : _childToClient[childId]->_backLog)
-        {
-            std::cout << Util::logPrefix() << "Sending backlog: '" << std::string(i->begin(), i->size()) << "'" << std::endl;
-            _ws.sendFrame(i->begin(), i->size(), WebSocket::FRAME_BINARY);
-            delete i;
-        }
+        _pendingPreForkedChildren.erase(childId);
+        _availableChildSessions.insert(this);
+        _childIdToChildSession[childId] = this;
         _toChildProcess = true;
+        _childId = childId;
     }
     else if (tokens[0] == "load")
     {
@@ -167,7 +180,7 @@ bool LOOLSession::handleInput(char *buffer, int length)
                 return false;
             }
 
-            forkOff();
+            dispatchChild();
             forwardRequest(buffer, length);
             return true;
         }
@@ -218,12 +231,12 @@ bool LOOLSession::toChildProcess() const
 
 void LOOLSession::sendTextFrame(const std::string& text)
 {
-    _ws.sendFrame(text.data(), text.size());
+    _ws->sendFrame(text.data(), text.size());
 }
 
 void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
-    _ws.sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+    _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
 extern "C"
@@ -282,6 +295,10 @@ bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& 
 
     if (isChildProcess())
     {
+        // The URL in the request is directly the file: URL (umm,
+        // actually file name, need to fix this inconsistency of
+        // talking about URLs but using file names) of the document as
+        // copied into our jail.
         if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _docURL.c_str())) == NULL)
         {
             sendTextFrame("error: cmd=load kind=failed");
@@ -293,7 +310,7 @@ bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& 
         if (!getStatus(buffer, length))
             return false;
         _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
-    }        
+    }
 
     return true;
 }
@@ -309,7 +326,7 @@ bool LOOLSession::getStatus(const char *buffer, int length)
 
     if (!isChildProcess())
     {
-        forkOff();
+        dispatchChild();
         forwardRequest(buffer, length);
         return true;
     }
@@ -374,7 +391,7 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
 
     if (!isChildProcess())
     {
-        forkOff();
+        dispatchChild();
         forwardRequest(buffer, length);
         return;
     }
@@ -532,44 +549,135 @@ bool LOOLSession::saveAs(const char *buffer, int length, Poco::StringTokenizer& 
     return true;
 }
 
-void LOOLSession::forkOff()
+namespace
 {
-    assert(!isChildProcess());
+    std::string sourceForLinkOrCopy;
+    Path destinationForLinkOrCopy;
 
-    Process::Args args;
-    args.push_back("--port=" + std::to_string(LOOLWSD::portNumber));
-    args.push_back("--lopath=" + LOOLWSD::loPath);
+    int linkOrCopyFunction(const char *fpath,
+                           const struct stat *sb,
+                           int typeflag,
+                           struct FTW *ftwbuf)
+    {
+        if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
+            return 0;
+
+        assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
+        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
+        Path newPath(destinationForLinkOrCopy, relativeOldPath);
+
+        switch (typeflag)
+        {
+        case FTW_F:
+            if (link(fpath, newPath.toString().c_str()) == -1)
+            {
+                Application::instance().logger().error(Util::logPrefix() +
+                                                       "link(\"" + fpath + "\",\"" + newPath.toString() + "\") failed: " +
+                                                       strerror(errno));
+                exit(1);
+            }
+            break;
+        case FTW_D:
+            if (mkdir(newPath.toString().c_str(), 0700) == -1)
+            {
+                Application::instance().logger().error(Util::logPrefix() +
+                                                       "mkdir(\"" + newPath.toString() + "\") failed: " +
+                                                       strerror(errno));
+                return 1;
+            }
+            break;
+        case FTW_DNR:
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "Cannot read directory '" + fpath + "'");
+            return 1;
+        case FTW_NS:
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "nftw: stat failed for '" + fpath + "'");
+            return 1;
+        case FTW_SLN:
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "nftw: symlink to nonexistent file: '" + fpath + "'");
+            return 1;
+        default:
+            assert(false);
+        }
+        return 0;
+    }
+
+    void linkOrCopy(const std::string& source, const Path& destination)
+    {
+        sourceForLinkOrCopy = source;
+        destinationForLinkOrCopy = destination;
+        nftw(source.c_str(), linkOrCopyFunction, 10, 0);
+    }
+}
+
+void LOOLSession::preFork()
+{
+    // Create child-specific subtree that will become its chroot root
 
     Random rng;
-    
-    _childId = (((UInt64)rng.next()) << 32) | rng.next() | 1;
+    UInt64 childId = (((UInt64)rng.next()) << 32) | rng.next() | 1;
 
-    _childToClient[_childId] = this;
+    Path jail = getJailPath(childId);
+    File(jail).createDirectory();
 
-    args.push_back("--child=" + std::to_string(_childId));
+    Path jailLOInstallation(jail, LOOLWSD::loSubPath);
+    File(jailLOInstallation).createDirectory();
+
+    // Copy (link) LO installation and other necessary files into it from the template
+
+    linkOrCopy(LOOLWSD::sysTemplate, jail);
+    linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
+
+    _pendingPreForkedChildren.insert(childId);
+
+    Process::Args args;
+    args.push_back("--child=" + std::to_string(childId));
+    args.push_back("--port=" + std::to_string(LOOLWSD::portNumber));
+    args.push_back("--jail=" + jail.toString());
+    args.push_back("--losubpath=" + LOOLWSD::loSubPath);
 
     Application::instance().logger().information(Util::logPrefix() + "Launching child: " + Poco::cat(std::string(" "), args.begin(), args.end()));
 
     ProcessHandle child = Process::launch(Application::instance().commandPath(), args);
+}
 
-    std::string loadRequest = "load " + _docURL;
+void LOOLSession::dispatchChild()
+{
+    assert(!isChildProcess());
+
+    // Copy document into jail using the fixed name "/user/thedocument"...
+
+    assert(_availableChildSessions.size() > 0);
+
+    LOOLSession *childSession = *(_availableChildSessions.begin());
+
+    _availableChildSessions.erase(childSession);
+
+    Path copy(getJailPath(_childId), "user/thedocument");
+    Application::instance().logger().information(Util::logPrefix() + "Copying " + _docURL + " to " + copy.toString());
+
+    File(_docURL).copyTo(copy.toString());
+
+    std::string loadRequest = "load url=/user/thedocument";
     forwardRequest(loadRequest.c_str(), loadRequest.size());
 }
 
 void LOOLSession::forwardRequest(const char *buffer, int length)
 {
-    if (_peerWs == nullptr)
-    {
-        _backLog.push_back(new Poco::Buffer<char>(buffer, length));
-        return;
-    }
+    assert(_peerWs != nullptr);
     _peerWs->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+}
+
+Path LOOLSession::getJailPath(Poco::UInt64 childId)
+{
+    return Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(childId));
 }
 
 bool LOOLSession::isChildProcess() const
 {
     return _loKit != nullptr;
 }
-
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -13,3 +13,9 @@ lokitclient_SOURCES = LOKitClient.cpp Util.cpp
 clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
+
+# After building loolwsd, set its capabilities to allow chroot()
+SETCAP: loolwsd
+	sudo /sbin/setcap cap_sys_chroot=ep loolwsd
+
+bin_PROGRAMS += SETCAP

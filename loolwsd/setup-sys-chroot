@@ -1,0 +1,37 @@
+#!/bin/bash
+
+test $# -eq 2 || { echo "Usage: $0 <chroot template directory> <LO installation directory>"; exit 1; }
+
+# No provision for spaces or other weird characters in pathnames. So sue me.
+
+CHROOT=$1
+INSTDIR=$2
+
+mkdir $CHROOT || exit 1
+
+cd $CHROOT || exit 1
+
+(
+    # Produce a list of file names, one per line, that will be copied
+    # into the template tree of system files for the chroot jails.
+
+    # First essential files and shared objects
+    for F in /etc/passwd /etc/group /etc/hosts \
+	     /etc/resolv.conf \
+	     /lib/ld-* /lib64/ld-* \
+	     /lib/libnss_* /lib64/libnss_* ; do echo $F; done
+
+    find /etc/fonts -type f
+
+    # Go through the LO shared objects and check what system libraries
+    # they link to.
+    find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |
+    while read file; do
+	ldd $file 2>/dev/null
+    done |
+    grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u
+) |
+
+while read file; do
+    cp --parents $file . || exit 1
+done

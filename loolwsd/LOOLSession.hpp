@@ -10,6 +10,9 @@
 #ifndef INCLUDED_LOOLSESSION_HPP
 #define INCLUDED_LOOLSESSION_HPP
 
+#include <map>
+#include <set>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 
@@ -23,6 +26,7 @@
 class LOOLSession
 {
 public:
+    LOOLSession(Poco::UInt64 childId, const std::string& jail);
     LOOLSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit = nullptr);
     ~LOOLSession();
 
@@ -32,6 +36,10 @@ public:
 
     void sendTextFrame(const std::string& text);
     void sendBinaryFrame(const char *buffer, int length);
+
+    // Set up the chroot environment for one child process and start
+    // it, in advance of it being actually needed
+    static void preFork();
 
 private:
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -47,10 +55,10 @@ private:
     bool resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-    void forkOff();
+    void dispatchChild();
     void forwardRequest(const char *buffer, int length);
 
-    std::string _docURL;
+    static Poco::Path getJailPath(Poco::UInt64 childId);
 
     bool isChildProcess() const;
 
@@ -59,12 +67,15 @@ private:
     // In the parent process, the websocket to the LOOL client or the
     // child process. In a child process, the websocket to the
     // parent.
-    Poco::Net::WebSocket& _ws;
+    Poco::Net::WebSocket *_ws;
 
     std::unique_ptr<TileCache> _tileCache;
 
     // Whether this session is to a LOOL client or to a child process
     bool _toChildProcess;
+
+    // In the parent, the actual URL. In the child, the copy inside the chroot jail.
+    std::string _docURL;
 
     // Parent only:
 
@@ -80,14 +91,20 @@ private:
     // The id of the child process
     Poco::UInt64 _childId;
 
-    // Buffer for requests to be forwarded to the child process once
-    // it has completed its handshake.
-    std::vector<Poco::Buffer<char>*> _backLog;
+    // Map from child ids to the corresponding session to the child
+    // process.
+    static std::map<Poco::UInt64, LOOLSession*> _childIdToChildSession;
 
-    // Map from child ids to the corresponding client session
-    static std::map<Poco::UInt64, LOOLSession*> _childToClient;
+    // Pre-forked child processes that haven't yet connected.
+    static std::set<Poco::UInt64> _pendingPreForkedChildren;
+
+    // Child processes that have connected but are not yet assigned a
+    // document to work on.
+    static std::set<LOOLSession*> _availableChildSessions;
 
     // Child only:
+    std::string _jail;
+    std::string _loSubPath;
     LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
 };

@@ -20,6 +20,8 @@
 
 *.o
 *.exe
+connect
+lokitclient
 loadtest
 loolwsd
 sockettransporttest
