@@ -36,6 +36,13 @@ L.Map = L.Evented.extend({
 			this.setMaxBounds(options.maxBounds);
 		}
 
+		if (options.topLeft && options.topRight) {
+			var topLeft = this.unproject(options.topLeft);
+			var bottomRight = this.unproject(options.topRight);
+			var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
+			this.setMaxBounds(maxBounds);
+		}
+
 		if (options.zoom !== undefined) {
 			this._zoom = this._limitZoom(options.zoom);
 		}

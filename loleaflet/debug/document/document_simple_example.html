@@ -36,14 +36,10 @@
             minZoom: 1,
             maxZoom: 10,
             server: "ws://localhost:9980",
-            dragging: false
+            dragging: false,
+            topLeft: new L.Point([0, 0]),
+            bottomRight: new L.Point([10000, 10000])
             });
-
-    // Large bounds - will be updated when the document has loaded
-    var topLeft = map.unproject([0, 0]);
-    var bottomRight = map.unproject([10000, 10000]);
-    var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
-    map.setMaxBounds(maxBounds);
 
     // Popup for displaying pixel coordinates
     var popup = L.popup();
