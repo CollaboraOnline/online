@@ -204,6 +204,9 @@
 .leaflet-container {
 	background: #f0f0f0;
 	outline: 0;
+	margin: auto;
+	min-height: 100% !important;
+	height: 100%;
 	}
 .leaflet-container a {
 	color: #0078A8;
@@ -499,3 +502,16 @@
 	background: #fff;
 	border: 1px solid #666;
 	}
+
+#document-container {
+	width: 100%;
+	overflow: auto;
+	background: #F0F0F0;
+	position: absolute;
+	top: 120px;
+	bottom: 0px;
+}
+
+html, body {
+	margin: 0px;
+}
