@@ -8,9 +8,8 @@
  */
 
 #include <cstdlib>
-
+#include <cstring>
 #include <string>
-#include <string.h>
 
 #include <png.h>
 

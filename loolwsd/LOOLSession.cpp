@@ -349,7 +349,7 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
     std::vector<char> output;
     output.reserve(4 * width * height);
     output.resize(response.size());
-    memcpy(output.data(), response.data(), response.size());
+    std::memcpy(output.data(), response.data(), response.size());
 
     std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     if (cachedTile && cachedTile->is_open())
