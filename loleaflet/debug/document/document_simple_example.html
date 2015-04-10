@@ -23,7 +23,7 @@
         The "map" div is the actual document and it has the document's size
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
-    <div id="controls"></div>
+    <div id="toolbar"></div>
     <div id="document-container">
         <div id="map"></div>
     </div>
@@ -59,8 +59,7 @@
 
     ////// Zoom Control /////
     var zoomControl = L.control.zoom();
-    zoomControl._map = map;
-    var zoomControlDiv = zoomControl.onAdd(map);
+    map.addControl(zoomControl);
 
     ////// Draw Control /////
     var drawnItems = new L.FeatureGroup();
@@ -82,8 +81,7 @@
             featureGroup: drawnItems
         }
     });
-    drawControl._map = map;
-    var drawControlDiv = drawControl.onAdd(map);
+    map.addControl(drawControl);
 
     map.on('draw:created', function (e) {
         var type = e.layerType,
@@ -91,8 +89,5 @@
 
         drawnItems.addLayer(layer);
     });
-
-    document.getElementById('controls').appendChild(zoomControlDiv);
-    document.getElementById('controls').appendChild(drawControlDiv);
 	</script>
 </body></html>

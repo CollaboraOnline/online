@@ -88,7 +88,10 @@ L.control = function (options) {
 
 L.Map.include({
 	addControl: function (control) {
-		control.addTo(this);
+		control._map = this;
+		var controlDiv = control.onAdd(this);
+		var controlContainer = L.DomUtil.get('toolbar');
+		controlContainer.appendChild(controlDiv);
 		return this;
 	},
 
