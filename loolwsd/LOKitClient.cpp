@@ -134,7 +134,7 @@ protected:
                 pngStream.write(png.data(), png.size());
                 pngStream.close();
 #ifdef __linux
-                std::system((std::string("display ") + pngFile.path()).c_str());
+                (void) std::system((std::string("display ") + pngFile.path()).c_str());
 #endif
             }
             else
