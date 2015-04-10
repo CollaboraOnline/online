@@ -285,6 +285,8 @@ bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& 
             return false;
         }
 
+        _loKitDocument->pClass->initializeForRendering(_loKitDocument);
+
         if (!getStatus(buffer, length))
             return false;
         _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
