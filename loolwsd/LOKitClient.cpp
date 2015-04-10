@@ -134,7 +134,11 @@ protected:
                 pngStream.write(png.data(), png.size());
                 pngStream.close();
 #ifdef __linux
-                (void) std::system((std::string("display ") + pngFile.path()).c_str());
+                if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
+                {
+                    // Not worth it to display a warning, this is just a throwaway test program, and
+                    // the developer running it surely notices if nothing shows up...
+                }
 #endif
             }
             else
