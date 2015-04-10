@@ -7,7 +7,7 @@ L.CRS.Simple = L.extend({}, L.CRS, {
 	transformation: new L.Transformation(1, 0, -1, 0),
 
 	scale: function (zoom) {
-		return Math.pow(2, zoom);
+		return zoom / 10;
 	},
 
 	distance: function (latlng1, latlng2) {

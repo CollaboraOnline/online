@@ -324,7 +324,7 @@ L.GridLayer = L.Layer.extend({
 
 			this._tileZoom = tileZoom;
 			if (tileZoomChanged) {
-				this._updateTileTwips(this._map.options.zoom - tileZoom);
+				this._updateTileTwips();
 				this._updateMaxBounds();
 			}
 			this._updateLevels();
@@ -342,10 +342,11 @@ L.GridLayer = L.Layer.extend({
 		this._setZoomTransforms(center, zoom);
 	},
 
-	_updateTileTwips: function (difference) {
-		// zoom by 20%
-		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * (1 + difference * 0.2));
-		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * (1 + difference * 0.2));
+	_updateTileTwips: function () {
+		// smaller zoom = zoom in
+		var factor = 1 + (10 - this._tileZoom) / 10;
+		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
+		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
 	},
 
 	_updateMaxBounds: function () {
