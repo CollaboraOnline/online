@@ -33,6 +33,10 @@ Loading a document:
         - useSocket = tells the map the tiles will be received from a websocket
           connection. If this parameter is false, an image will be loaded in each tile
 
+How zooming works:
+    The zoom level goes from 1 to 20 (thoes limits can be changed) and the initial
+    level is 10, which represents the 100% zoom level. 9 = 90%, 11 = 110% and so on.
+
 Controls are added above the map in a div called "controls" is intended to be used as a toolbar.
 There is no leaflet method of adding them in a separte div, so for now this is done in the html
 document after the map initialization.
