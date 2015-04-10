@@ -338,7 +338,7 @@ L.Map = L.Evented.extend({
 		return this._size.clone();
 	},
 
-	getPixelBounds: function (center, zoom) {
+	getPixelBounds: function (center) {
 		var topLeftPoint = new L.Point(
 				this._outerContainer.scrollLeft,
 				this._outerContainer.scrollTop);

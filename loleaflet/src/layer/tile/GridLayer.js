@@ -635,7 +635,7 @@ L.GridLayer = L.Layer.extend({
 		var key = this._tileCoordsToKey(coords);
 
 		tile = this._tiles[key];
-		if (!tile || tile.loaded !== undefined ) { return; }
+		if (!tile || tile.loaded !== undefined) { return; }
 
 		tile.loaded = +new Date();
 		if (this._map._fadeAnimated) {
