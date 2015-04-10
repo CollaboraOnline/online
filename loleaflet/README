@@ -6,8 +6,11 @@ Code convention
     * tools to convert files: dos2unix or fromdos 
 
 Building:
+    unzip node_modules/modules.zip -d node_modules
+    *** OR ***
     npm install -g jake
     npm install
+    *** THEN ***
     jake build
     cd plugins/draw-0.2.4
     jake build
