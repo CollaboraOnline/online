@@ -428,11 +428,6 @@ int LOOLWSD::childMain()
 
     LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
 
-    // If lok_init_2() fails, try once more in case it's the "LOK init
-    // failed -- restart required" case
-    if (!loKit)
-        loKit = lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user");
-
     if (!loKit)
     {
         logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
