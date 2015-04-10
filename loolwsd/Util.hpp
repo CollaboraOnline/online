@@ -14,7 +14,9 @@ namespace Util
 {
     std::string logPrefix();
     bool windowingAvailable();
-    bool encodePNGAndAppendToBuffer(const unsigned char *pixmap, int width, int height, std::vector<char>& output);
+    // Sadly, older libpng headers don't use const for the pixmap pointer parameter to
+    // png_write_row(), so can't use const here for pixmap.
+    bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output);
 };
 
 #endif

@@ -56,7 +56,7 @@ namespace Util
         return false;
     }
 
-    bool encodePNGAndAppendToBuffer(const unsigned char *pixmap, int width, int height, std::vector<char>& output)
+    bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output)
     {
         png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
