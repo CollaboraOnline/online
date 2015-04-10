@@ -36,6 +36,10 @@ DEALINGS IN THE SOFTWARE.
 
 #include "config.h"
 
+// This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
+// parent process that listens on the TCP port and accepts connections from LOOL clients, and a
+// number of child processes, each which handles a viewing (editing) session for one document.
+
 #include <unistd.h>
 
 #include <cstdlib>

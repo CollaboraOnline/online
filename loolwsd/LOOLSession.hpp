@@ -23,6 +23,13 @@
 
 #include "TileCache.hpp"
 
+// LOOLSession objects are used for three different purposes. This is probably not a good idea, I
+// should introduce derived classes instead.
+
+// 1) The Websocket session between the parent loolwsd process to the end-user LOOL client
+// 2) The session between the parent loolwsd and a child loolwsd process, in the parent loolwsd
+// 3) Ditto, in the child loolwsd
+
 class LOOLSession
 {
 public:
