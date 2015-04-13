@@ -361,8 +361,10 @@ L.GridLayer = L.Layer.extend({
 		var bottomRight = this._map.unproject(docPixelLimits, this._tileZoom);
 		var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
 		// previous scroll position (relative)
-		var prevX = this._map._outerContainer.scrollLeft / this._map._container.clientWidth;
-		var prevY = this._map._outerContainer.scrollTop / this._map._container.clientHeight;
+		var prevX = this._map._outerContainer.scrollLeft /
+			(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
+		var prevY = this._map._outerContainer.scrollTop /
+			(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
 
 		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', '');
 		L.DomUtil.setStyle(this._map._container, 'width', docPixelLimits.x + 'px');
@@ -374,8 +376,10 @@ L.GridLayer = L.Layer.extend({
 		setTimeout(L.bind(this._map.invalidateSize, this._map), 100);
 		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', 'auto');
 		// restore the relative scroll position
-		this._map._outerContainer.scrollLeft = prevX * this._map._container.clientWidth;
-		this._map._outerContainer.scrollTop = prevY * this._map._container.clientHeight;
+		this._map._outerContainer.scrollLeft = prevX *
+			(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
+		this._map._outerContainer.scrollTop = prevY *
+			(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
 	},
 
 	_setZoomTransforms: function (center, zoom) {
