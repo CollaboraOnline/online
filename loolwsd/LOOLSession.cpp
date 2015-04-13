@@ -58,20 +58,12 @@ std::map<UInt64, LOOLSession*> LOOLSession::_childIdToChildSession;
 std::set<UInt64> LOOLSession::_pendingPreForkedChildren;
 std::set<LOOLSession*> LOOLSession::_availableChildSessions;
 
-LOOLSession::LOOLSession(UInt64 childId, const std::string& jail) :
-    _peerWs(nullptr),
-    _childId(childId),
-    _jail(jail)
-{
-    std::cout << Util::logPrefix() << "LOOLSesstion ctor this=" << this << " childId=" << childId << std::endl;
-}
-
-LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit) :
+LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit, UInt64 childId) :
     _ws(&ws),
     _toChildProcess(false),
     _docURL(""),
     _peerWs(nullptr),
-    _childId(0),
+    _childId(childId),
     _loKit(loKit),
     _loKitDocument(NULL)
 {
@@ -86,12 +78,15 @@ LOOLSession::~LOOLSession()
         _loKitDocument->pClass->destroy(_loKitDocument);
 }
 
+const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
+
 bool LOOLSession::handleInput(char *buffer, int length)
 {
     Application& app = Application::instance();
 
-    if (!toChildProcess() && haveSeparateProcess())
+    if (!isChildProcess() && haveSeparateProcess())
     {
+        std::cout << Util::logPrefix() << "FOO" << std::endl;
         forwardRequest(buffer, length);
         return true;
     }
@@ -295,11 +290,10 @@ bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& 
 
     if (isChildProcess())
     {
-        // The URL in the request is directly the file: URL (umm,
-        // actually file name, need to fix this inconsistency of
-        // talking about URLs but using file names) of the document as
-        // copied into our jail.
-        if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _docURL.c_str())) == NULL)
+        // The URL in the request is the original one, not visible in the chroot jail.
+        // The child process uses the fixed name jailDocumentURL.
+
+        if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, jailDocumentURL.c_str())) == NULL)
         {
             sendTextFrame("error: cmd=load kind=failed");
             return false;
@@ -647,7 +641,7 @@ void LOOLSession::dispatchChild()
 {
     assert(!isChildProcess());
 
-    // Copy document into jail using the fixed name "/user/thedocument"...
+    // Copy document into jail using the fixed name
 
     assert(_availableChildSessions.size() > 0);
 
@@ -655,17 +649,22 @@ void LOOLSession::dispatchChild()
 
     _availableChildSessions.erase(childSession);
 
-    Path copy(getJailPath(_childId), "user/thedocument");
+    assert(jailDocumentURL[0] == '/');
+    Path copy(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
     Application::instance().logger().information(Util::logPrefix() + "Copying " + _docURL + " to " + copy.toString());
 
     File(_docURL).copyTo(copy.toString());
 
-    std::string loadRequest = "load url=/user/thedocument";
+    _peerWs = childSession->_ws;
+    childSession->_peerWs = _ws;
+
+    std::string loadRequest = "load url=" + _docURL;
     forwardRequest(loadRequest.c_str(), loadRequest.size());
 }
 
 void LOOLSession::forwardRequest(const char *buffer, int length)
 {
+    Application::instance().logger().information(Util::logPrefix() + "forwardRequest(" + std::string(buffer, length) + ")");
     assert(_peerWs != nullptr);
     _peerWs->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }

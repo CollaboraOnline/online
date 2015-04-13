@@ -33,9 +33,10 @@
 class LOOLSession
 {
 public:
-    LOOLSession(Poco::UInt64 childId, const std::string& jail);
-    LOOLSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit = nullptr);
+    LOOLSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit = nullptr, Poco::UInt64 childId = 0);
     ~LOOLSession();
+
+    static const std::string jailDocumentURL;
 
     bool handleInput(char *buffer, int length);
     bool haveSeparateProcess() const;
@@ -86,13 +87,13 @@ private:
 
     // Parent only:
 
-    // In sessions to LOOL clients only:
+    // If haveSeparateProcess() is true and the child process has started and completed its
+    // handshake with the parent process: Points to the websocket to in the LOOLSession object for
+    // the child process handling the document in question, if any.
 
-    // This points to the other websocket to the child process handling the
-    // document in question, if any. (If haveSeparateProcess() is true
-    // and the child process has started and completed its handshake
-    // with the parent process). In the session to the child process,
-    // this points to the websocket to the LOOL client.
+    // In the session to the child process, points to the websocket to the LOOL client. This will
+    // obvious have to be rethought when we add collaboration and there can be several LOOL clients
+    // per document being edited (i.e., per child process).
     Poco::Net::WebSocket *_peerWs;
 
     // The id of the child process

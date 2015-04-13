@@ -446,7 +446,7 @@ int LOOLWSD::childMain()
     HTTPResponse response;
     WebSocket ws(cs, request, response);
 
-    LOOLSession session(ws, loKit);
+    LOOLSession session(ws, loKit, _childId);
 
     ws.setReceiveTimeout(0);
 
