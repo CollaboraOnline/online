@@ -86,7 +86,6 @@ bool LOOLSession::handleInput(char *buffer, int length)
 
     if (!isChildProcess() && haveSeparateProcess())
     {
-        std::cout << Util::logPrefix() << "FOO" << std::endl;
         forwardRequest(buffer, length);
         return true;
     }
@@ -137,7 +136,7 @@ bool LOOLSession::handleInput(char *buffer, int length)
     {
         if (_docURL != "")
         {
-            sendTextFrame("error: cms=load kind=docalreadyloaded");
+            sendTextFrame("error: cmd=load kind=docalreadyloaded");
             return false;
         }
         return loadDocument(buffer, length, tokens);
