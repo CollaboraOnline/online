@@ -127,7 +127,15 @@ protected:
         {
             std::string line;
             std::getline(std::cin, line);
-            ws.sendFrame(line.c_str(), line.size());
+            // Accept an input line "sleep <n>" that makes us sleep a number of seconds. Useful for
+            // debugging. Interrupt with Control-C.
+            if (line.find("sleep ") == 0)
+            {
+                long sleepTime = std::stol(line.substr(std::string("sleep").length()));
+                Thread::sleep(sleepTime * 1000);
+            }
+            else
+                ws.sendFrame(line.c_str(), line.size());
         }
 
         thread.join();
