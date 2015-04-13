@@ -35,6 +35,7 @@ L.GridLayer = L.Layer.extend({
 
 		this._viewReset();
 		this._update();
+		this.on('draw:created', L.bind(this._handleSelection, this));
 	},
 
 	beforeAdd: function (map) {
@@ -595,7 +596,8 @@ L.GridLayer = L.Layer.extend({
 		if (this._tiles[key]) {
 			// tile is already added, between the first request and the response
 			// from the server there might have been other request, which are now
-			// invalid
+			// invalid OR the tile needs to be updated
+			this._tiles[key].el.src = tile.src;
 			return;
 		}
 		this._initTile(tile);
@@ -698,6 +700,20 @@ L.GridLayer = L.Layer.extend({
 			if (!this._tiles[key].loaded) { return false; }
 		}
 		return true;
+	},
+
+	_handleSelection: function (evt) {
+		var bounds = evt.layer.getBounds();
+		var startPx = this._map.project(bounds.getNorthWest());
+		var endPx = this._map.project(bounds.getSouthEast());
+		var startTwips = startPx.divideBy(this._tileSize).multiplyBy(this._tileWidthTwips);
+		startTwips = startTwips.round();
+		var endTwips = endPx.divideBy(this._tileSize).multiplyBy(this._tileWidthTwips);
+		endTwips = endTwips.round();
+		this._map.socket.send('selecttext ' + 'type=\'start\' ' +
+				'x=' + startTwips.x + ' y=' + startTwips.y);
+		this._map.socket.send('selecttext ' + 'type=\'end\' ' +
+				'x=' + endTwips.x + ' y=' + endTwips.y);
 	}
 });
 
