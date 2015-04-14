@@ -53,10 +53,25 @@ Again, <...> is location of the LibreOffice source tree with a built
 LibreOffice.  This is work in progress, and consequently needs the latest
 LibreOffice master.
 
-For testing purposes, you can use the loolwsd testing mode:
+Run loolwsd for instance like this, to run it the way it is supposed
+to eventually be run "for real":
+
+    ./loolwsd --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
+
+The lool-sys-template directory tree above is something set up using
+the setup-sys-chroot script here. Improvements to that script are very
+likely needed on various distros.
+
+Also, it you plan to hack on this, you probably want to familiarize
+yourself with loolwsd's --test and --numpreforks options, and the
+'connect' test program.
+
+For interactive testing, you can use the loolwsd --test switch, or you
+can use the 'connect' program. Both accept "commands" from the
+protocol on standard input. For instance:
 
     (echo load foo.odt; echo tile width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) |
-        ./loolwsd --lopath=<...>/instdir/program --test
+    ./loolwsd --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
 
 The handling of termination is a bit fragile, occasionally it dumps
 core somewhere in LO code when quitting. Don't be scared, work in progress.
