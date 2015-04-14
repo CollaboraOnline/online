@@ -258,6 +258,9 @@ extern "C"
         case LOK_CALLBACK_HYPERLINK_CLICKED:
             srv->sendTextFrame("hyperlinkclicked: " + std::string(pPayload));
             break;
+        case LOK_CALLBACK_STATE_CHANGED:
+            srv->sendTextFrame("statechanged: " + std::string(pPayload));
+            break;
         }
     }
 }
