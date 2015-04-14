@@ -23,9 +23,7 @@ make
 
 For Windows, a proper VS2013 project is needed.
 
-See SOW for the directions of further work.
-
-Also there is unconditional debugging output etc.
+There is still unconditional debugging output etc. This is a work in progress.
 
 Run loolwsd for instance like this to test:
 
