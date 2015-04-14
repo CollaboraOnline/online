@@ -640,6 +640,8 @@ void LOOLSession::preFork()
     // Create child-specific subtree that will become its chroot root
 
     Random rng;
+
+    rng.seed();
     UInt64 childId = (((UInt64)rng.next()) << 32) | rng.next() | 1;
 
     Path jail = getJailPath(childId);
