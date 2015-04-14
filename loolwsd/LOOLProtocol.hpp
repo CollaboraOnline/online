@@ -63,6 +63,9 @@ namespace LOOLProtocol
 
     // Functions that parse messages. All return false if parsing fails
     bool parseStatus(const std::string& message, LibreOfficeKitDocumentType& type, int& nParts, int& currentPart, int& width, int& height);
+
+    std::string getFirstLine(const char *message, int length);
+    std::string getAbbreviatedMessage(const char *message, int length);
 };
 
 #endif

@@ -8,6 +8,7 @@
  */
 
 #include <cassert>
+#include <cstring>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -112,6 +113,23 @@ namespace LOOLProtocol
             return false;
 
         return true;
+    }
+
+    std::string getFirstLine(const char *message, int length)
+    {
+        const char *endOfLine = static_cast<const char *>(std::memchr(message, '\n', length));
+        if (endOfLine == nullptr)
+            return std::string(message, length);
+        else
+            return std::string(message, endOfLine-message);
+    }
+
+    std::string getAbbreviatedMessage(const char *message, int length)
+    {
+        std::string result = "'" + getFirstLine(message, length) + "'";
+        if (result.size() < static_cast<std::string::size_type>(length))
+            result += "...";
+        return result;
     }
 };
 

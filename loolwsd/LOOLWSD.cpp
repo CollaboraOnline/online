@@ -43,6 +43,7 @@ DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 
 #define LOK_USE_UNSTABLE_API
@@ -68,9 +69,12 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
 
+#include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
 #include "Util.hpp"
+
+using namespace LOOLProtocol;
 
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
@@ -205,15 +209,9 @@ public:
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
-                    char *endl = (char *) memchr(buffer, '\n', n);
-                    std::string response;
-                    if (endl == nullptr)
-                        response = std::string(buffer, n);
-                    else
-                        response = std::string(buffer, endl-buffer);
                     std::cout <<
-                        Util::logPrefix() << "Client got " << n << " bytes: '" << response << "'" <<
-                        (endl == nullptr ? "" : " ...") <<
+                        Util::logPrefix() <<
+                        "Client got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) <<
                         std::endl;
                 }
             }

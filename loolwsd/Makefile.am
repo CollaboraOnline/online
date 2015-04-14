@@ -6,7 +6,7 @@ noinst_PROGRAMS = loadtest connect lokitclient
 
 loadtest_SOURCES = LoadTest.cpp Util.cpp LOOLProtocol.cpp
 
-connect_SOURCES = Connect.cpp  Util.cpp
+connect_SOURCES = Connect.cpp Util.cpp LOOLProtocol.cpp
 
 lokitclient_SOURCES = LOKitClient.cpp Util.cpp
 

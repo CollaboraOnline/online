@@ -62,7 +62,7 @@ LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit, UInt64 childId) :
     _ws(&ws),
     _toChildProcess(false),
     _docURL(""),
-    _peerWs(nullptr),
+    _peer(nullptr),
     _childId(childId),
     _loKit(loKit),
     _loKitDocument(NULL)
@@ -84,31 +84,60 @@ bool LOOLSession::handleInput(char *buffer, int length)
 {
     Application& app = Application::instance();
 
+    std::string firstLine = getFirstLine(buffer, length);
+    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
     if (!isChildProcess() && haveSeparateProcess())
     {
-        forwardRequest(buffer, length);
+        // Note that this handles both forwarding requests from the client to the child process, and
+        // forwarding replies from the child process to the client.
+
+        // Snoop at tile: and status: messages and cache them
+        if (toChildProcess())
+        {
+            if (tokens[0] == "tile:")
+            {
+                int width, height, tilePosX, tilePosY, tileWidth, tileHeight;
+                if (tokens.count() != 7 ||
+                    !getTokenInteger(tokens[1], "width", width) ||
+                    !getTokenInteger(tokens[2], "height", height) ||
+                    !getTokenInteger(tokens[3], "tileposx", tilePosX) ||
+                    !getTokenInteger(tokens[4], "tileposy", tilePosY) ||
+                    !getTokenInteger(tokens[5], "tilewidth", tileWidth) ||
+                    !getTokenInteger(tokens[6], "tileheight", tileHeight))
+                    assert(false);
+
+                assert(firstLine.size() < static_cast<std::string::size_type>(length));
+                _peer->_tileCache->saveTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+            }
+            else if (tokens[0] == "status:")
+            {
+                assert(firstLine.size() == static_cast<std::string::size_type>(length));
+                _peer->_tileCache->saveStatus(firstLine);
+            }
+        }
+
+        forwardToPeer(buffer, length);
         return true;
     }
 
-    char *endl = (char *) memchr(buffer, '\n', length);
-    std::string commandline;
-    if (endl == nullptr)
-        commandline = std::string(buffer, length);
-    else
-        commandline = std::string(buffer, endl-buffer);
-
-    app.logger().information(Util::logPrefix() + "Input: '" + commandline + "'" + (endl == nullptr ? "" : " ..."));
-
-    StringTokenizer tokens(commandline, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    app.logger().information(Util::logPrefix() + "Input: " + getAbbreviatedMessage(buffer, length));
 
     if (toChildProcess())
     {
-        assert(_peerWs != nullptr);
-        _peerWs->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+        // Message from child process to be forwarded to client.
+
+        // FIXME: Do we ever get here, doesn't the first case above (!isChildProcess() &&
+        // haveSeparateProcess()) also cover this case?
+
+        assert(false);
+
+        assert(_peer != nullptr);
+        _peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
     }
     else if (tokens[0] == "child")
     {
-        if (_peerWs != nullptr ||
+        if (_peer != nullptr ||
             isChildProcess())
         {
             sendTextFrame("error: cmd=child kind=invalid");
@@ -175,7 +204,7 @@ bool LOOLSession::handleInput(char *buffer, int length)
             }
 
             dispatchChild();
-            forwardRequest(buffer, length);
+            forwardToPeer(buffer, length);
             return true;
         }
 
@@ -285,8 +314,6 @@ bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& 
     else
         _docURL = tokens[1];
 
-    _tileCache.reset(new TileCache(_docURL));
-
     if (isChildProcess())
     {
         // The URL in the request is the original one, not visible in the chroot jail.
@@ -304,28 +331,33 @@ bool LOOLSession::loadDocument(const char *buffer, int length, StringTokenizer& 
             return false;
         _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
     }
+    else
+    {
+        _tileCache.reset(new TileCache(_docURL));
+    }
 
     return true;
 }
 
 bool LOOLSession::getStatus(const char *buffer, int length)
 {
-    std::string status = _tileCache->getStatus();
-    if (status.size() > 0)
-    {
-        sendTextFrame(status);
-        return true;
-    }
+    std::string status;
 
     if (!isChildProcess())
     {
+        status = _tileCache->getStatus();
+        if (status.size() > 0)
+        {
+            sendTextFrame(status);
+            return true;
+        }
+
         dispatchChild();
-        forwardRequest(buffer, length);
+        forwardToPeer(buffer, length);
         return true;
     }
 
     status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
-    _tileCache->saveStatus(status);
 
     sendTextFrame(status);
 
@@ -366,26 +398,26 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    if (cachedTile && cachedTile->is_open())
-    {
-        cachedTile->seekg(0, std::ios_base::end);
-        size_t pos = output.size();
-        std::streamsize size = cachedTile->tellg();
-        output.resize(pos + size);
-        cachedTile->seekg(0, std::ios_base::beg);
-        cachedTile->read(output.data() + pos, size);
-        cachedTile->close();
-
-        sendBinaryFrame(output.data(), output.size());
-
-        return;
-    }
-
     if (!isChildProcess())
     {
+        std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+        if (cachedTile && cachedTile->is_open())
+        {
+            cachedTile->seekg(0, std::ios_base::end);
+            size_t pos = output.size();
+            std::streamsize size = cachedTile->tellg();
+            output.resize(pos + size);
+            cachedTile->seekg(0, std::ios_base::beg);
+            cachedTile->read(output.data() + pos, size);
+            cachedTile->close();
+
+            sendBinaryFrame(output.data(), output.size());
+
+            return;
+        }
+
         dispatchChild();
-        forwardRequest(buffer, length);
+        forwardToPeer(buffer, length);
         return;
     }
 
@@ -399,8 +431,6 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
     }
 
     delete[] pixmap;
-
-    _tileCache->saveTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight, output.data() + response.size(), output.size() - response.size());
 
     sendBinaryFrame(output.data(), output.size());
 }
@@ -654,18 +684,18 @@ void LOOLSession::dispatchChild()
 
     File(_docURL).copyTo(copy.toString());
 
-    _peerWs = childSession->_ws;
-    childSession->_peerWs = _ws;
+    _peer = childSession;
+    childSession->_peer = this;
 
     std::string loadRequest = "load url=" + _docURL;
-    forwardRequest(loadRequest.c_str(), loadRequest.size());
+    forwardToPeer(loadRequest.c_str(), loadRequest.size());
 }
 
-void LOOLSession::forwardRequest(const char *buffer, int length)
+void LOOLSession::forwardToPeer(const char *buffer, int length)
 {
-    Application::instance().logger().information(Util::logPrefix() + "forwardRequest(" + std::string(buffer, length) + ")");
-    assert(_peerWs != nullptr);
-    _peerWs->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+    Application::instance().logger().information(Util::logPrefix() + "forwardToPeer(" + getAbbreviatedMessage(buffer, length) + ")");
+    assert(_peer != nullptr);
+    _peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
 Path LOOLSession::getJailPath(Poco::UInt64 childId)

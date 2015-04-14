@@ -64,7 +64,7 @@ private:
     bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     void dispatchChild();
-    void forwardRequest(const char *buffer, int length);
+    void forwardToPeer(const char *buffer, int length);
 
     static Poco::Path getJailPath(Poco::UInt64 childId);
 
@@ -77,8 +77,6 @@ private:
     // parent.
     Poco::Net::WebSocket *_ws;
 
-    std::unique_ptr<TileCache> _tileCache;
-
     // Whether this session is to a LOOL client or to a child process
     bool _toChildProcess;
 
@@ -88,16 +86,18 @@ private:
     // Parent only:
 
     // If haveSeparateProcess() is true and the child process has started and completed its
-    // handshake with the parent process: Points to the websocket to in the LOOLSession object for
-    // the child process handling the document in question, if any.
+    // handshake with the parent process: Points to the LOOLSession for the child process handling
+    // the document in question, if any.
 
-    // In the session to the child process, points to the websocket to the LOOL client. This will
+    // In the session to the child process, points to the LOOLSession for the LOOL client. This will
     // obvious have to be rethought when we add collaboration and there can be several LOOL clients
     // per document being edited (i.e., per child process).
-    Poco::Net::WebSocket *_peerWs;
+    LOOLSession *_peer;
 
     // The id of the child process
     Poco::UInt64 _childId;
+
+    std::unique_ptr<TileCache> _tileCache;
 
     // Map from child ids to the corresponding session to the child
     // process.

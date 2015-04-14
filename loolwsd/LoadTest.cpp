@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include <algorithm>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -93,18 +94,12 @@ public:
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
-                    char *endl = (char *) memchr(buffer, '\n', n);
-                    std::string response;
-                    if (endl == nullptr)
-                        response = std::string(buffer, n);
-                    else
-                        response = std::string(buffer, endl-buffer);
                     std::cout <<
                         Util::logPrefix() <<
-                        "Client got " << n << " bytes: '" << response << "'" <<
-                        (endl == nullptr ? "" : " ...") <<
+                        "Client got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) <<
                         std::endl;
 
+                    std::string response = getFirstLine(buffer, n);
                     if (response.find("status:") == 0)
                     {
                         parseStatus(response, _type, _numParts, _currentPart, _width, _height);

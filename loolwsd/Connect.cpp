@@ -7,6 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <cstring>
+#include <fstream>
 #include <iostream>
 
 #include <Poco/Net/HTTPClientSession.h>
@@ -20,7 +22,8 @@
 #include <Poco/Net/TCPServerConnectionFactory.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
-#include <Poco/String.h>
+#include <Poco/StringTokenizer.h>
+#include <Poco/TemporaryFile.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
@@ -45,6 +48,8 @@ using Poco::Net::TCPServerConnection;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Runnable;
+using Poco::StringTokenizer;
+using Poco::TemporaryFile;
 using Poco::Thread;
 using Poco::URI;
 using Poco::Util::Application;
@@ -73,16 +78,24 @@ public:
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
-                    char *endl = (char *) memchr(buffer, '\n', n);
-                    std::string response;
-                    if (endl == nullptr)
-                        response = std::string(buffer, n);
-                    else
-                        response = std::string(buffer, endl-buffer);
-                    std::cout <<
-                        "Got " << n << " bytes: '" << response << "'" <<
-                        (endl == nullptr ? "" : " ...") <<
-                        std::endl;
+                    std::cout << "Got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) << std::endl;
+
+                    std::string firstLine = getFirstLine(buffer, n);
+                    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+#ifdef __linux
+                    if (tokens[0] == "tile:")
+                    {
+                        TemporaryFile pngFile;
+                        std::ofstream pngStream(pngFile.path(), std::ios::binary);
+                        pngStream.write(buffer + firstLine.size() + 1, n - firstLine.size() - 1);
+                        pngStream.close();
+                        if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
+                        {
+                            // Not worth it to display a warning, this is just a throwaway test program, and
+                            // the developer running it surely notices if nothing shows up...
+                        }
+                    }
+#endif
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
