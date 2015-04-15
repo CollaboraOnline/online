@@ -1,3 +1,8 @@
+- Make child processes time out and go away when inactive for a while.
+
+- Pre-spawn a new child process when one has been taken into use from
+  the pool.
+
 - Make the "load" request actually take an URL, not a file name. (But
   for now would always be a file: URL, sure.)
 
@@ -9,3 +14,6 @@
 
 - Investigate using "seccomp". Not available in the Linux 3.7.10 in
   openSUSE 12.3 for instance, though.
+
+- Add some intentional slowdown option to emulate slow network
+  connection.
