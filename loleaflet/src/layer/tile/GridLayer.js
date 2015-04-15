@@ -372,9 +372,8 @@ L.GridLayer = L.Layer.extend({
 		L.DomUtil.setStyle(this._map._container, 'height', docPixelLimits.y + 'px');
 		this._map.setMaxBounds(maxBounds);
 		// When zooming, the (0,0) point is no longer in the top left corner
-		// and this puts it back. If it's done without a timeout, it sometimes
-		// crashes on Chrome
-		setTimeout(L.bind(this._map.invalidateSize, this._map), 100);
+		// and this puts it back.
+		this._map.invalidateSize();
 		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', 'auto');
 		// restore the relative scroll position
 		this._map._outerContainer.scrollLeft = prevX *
