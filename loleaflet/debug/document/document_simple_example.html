@@ -41,15 +41,6 @@
             bottomRight: new L.Point([10000, 10000])
             });
 
-    // Popup for displaying pixel coordinates
-    var popup = L.popup();
-    function onMapClick(e) {
-        popup.setLatLng(e.latlng)
-        .setContent("You clicked the map at " + map.project(e.latlng).toString())
-        .openOn(map);
-    }
-    map.on('click', onMapClick);
-
     ////// Document layer ////
     var docLayer = new L.TileLayer('', {
         doc: '/PATH/TO/DOCUMENT',
