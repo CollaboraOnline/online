@@ -694,6 +694,9 @@ void LOOLSession::dispatchChild()
 
     std::string loadRequest = "load url=" + _docURL;
     forwardToPeer(loadRequest.c_str(), loadRequest.size());
+
+    // As we took one child process into use, spawn a new one
+    preSpawn();
 }
 
 void LOOLSession::forwardToPeer(const char *buffer, int length)
