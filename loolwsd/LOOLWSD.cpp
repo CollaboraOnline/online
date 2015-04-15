@@ -304,50 +304,50 @@ void LOOLWSD::defineOptions(OptionSet& options)
 {
     ServerApplication::defineOptions(options);
 
-    options.addOption(Option("help", "", "display help information on command line arguments")
+    options.addOption(Option("help", "", "Display help information on command line arguments.")
                       .required(false)
                       .repeatable(false));
 
-    options.addOption(Option("port", "", "port number to listen to (default: " + std::to_string(LOOLWSD::DEFAULT_PORT_NUMBER) + ")")
+    options.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(LOOLWSD::DEFAULT_PORT_NUMBER) + ").")
                       .required(false)
                       .repeatable(false)
                       .argument("port number"));
 
-    options.addOption(Option("systemplate", "", "path to a template tree with shared libraries etc to be used as source for chroot jails for child processes")
+    options.addOption(Option("systemplate", "", "Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes.")
                       .required(false)
                       .repeatable(false)
                       .argument("directory"));
 
-    options.addOption(Option("lotemplate", "", "path to a LibreOffice installation tree to be copied (linked) into the jails for child processes")
+    options.addOption(Option("lotemplate", "", "Path to a LibreOffice installation tree to be copied (linked) into the jails for child processes. Should be on the same file system as systemplate.")
                       .required(false)
                       .repeatable(false)
                       .argument("directory"));
 
-    options.addOption(Option("childroot", "", "path to the directory under which the chroot jails for the child processes will be created")
+    options.addOption(Option("childroot", "", "Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate.")
                       .required(false)
                       .repeatable(false)
                       .argument("directory"));
 
-    options.addOption(Option("losubpath", "", "relative path where the LibreOffice installation will be copied inside a jail (default: '" + loSubPath + "')")
+    options.addOption(Option("losubpath", "", "Relative path where the LibreOffice installation will be copied inside a jail (default: '" + loSubPath + "').")
                       .required(false)
                       .repeatable(false)
                       .argument("relative path"));
 
-    options.addOption(Option("numprespawns", "", "number of child processes to keep waiting for new clients")
+    options.addOption(Option("numprespawns", "", "Number of child processes to keep started in advance and waiting for new clients.")
                       .required(false)
                       .repeatable(false)
                       .argument("port number"));
 
-    options.addOption(Option("test", "", "interactive testing")
+    options.addOption(Option("test", "", "Interactive testing.")
                       .required(false)
                       .repeatable(false));
 
-    options.addOption(Option("child", "", "for internal use only")
+    options.addOption(Option("child", "", "For internal use only.")
                       .required(false)
                       .repeatable(false)
                       .argument("child id"));
 
-    options.addOption(Option("jail", "", "for internal use only")
+    options.addOption(Option("jail", "", "For internal use only.")
                       .required(false)
                       .repeatable(false)
                       .argument("directory"));
