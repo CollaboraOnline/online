@@ -597,7 +597,7 @@ L.GridLayer = L.Layer.extend({
 			// tile is already added, between the first request and the response
 			// from the server there might have been other request, which are now
 			// invalid OR the tile needs to be updated
-			this._tiles[key].el.src = tile.src;
+			//this._tiles[key].el.src = tile.src;
 			return;
 		}
 		this._initTile(tile);
