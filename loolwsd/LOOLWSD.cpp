@@ -278,7 +278,7 @@ std::string LOOLWSD::loTemplate;
 std::string LOOLWSD::childRoot;
 std::string LOOLWSD::loSubPath = "lo";
 std::string LOOLWSD::jail;
-int LOOLWSD::numPreForkedChildren = 10;
+int LOOLWSD::numPreSpawnedChildren = 10;
 
 LOOLWSD::LOOLWSD() :
     _doTest(false),
@@ -333,7 +333,7 @@ void LOOLWSD::defineOptions(OptionSet& options)
                       .repeatable(false)
                       .argument("relative path"));
 
-    options.addOption(Option("numpreforks", "", "number of child processes to keep waiting for new clients")
+    options.addOption(Option("numprespawns", "", "number of child processes to keep waiting for new clients")
                       .required(false)
                       .repeatable(false)
                       .argument("port number"));
@@ -372,8 +372,8 @@ void LOOLWSD::handleOption(const std::string& name, const std::string& value)
         childRoot = value;
     else if (name == "losubpath")
         loSubPath = value;
-    else if (name == "numpreforks")
-        numPreForkedChildren = std::stoi(value);
+    else if (name == "numprespawns")
+        numPreSpawnedChildren = std::stoi(value);
     else if (name == "test")
         _doTest = true;
     else if (name == "child")
@@ -495,8 +495,8 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     if (jail != "")
         throw IncompatibleOptionsException("jail");
 
-    for (int i = 0; i < numPreForkedChildren; i++)
-        LOOLSession::preFork();
+    for (int i = 0; i < numPreSpawnedChildren; i++)
+        LOOLSession::preSpawn();
 
     ServerSocket svs(portNumber);
 

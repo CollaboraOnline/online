@@ -30,7 +30,7 @@ public:
     static std::string loSubPath;
     static std::string jail;
 
-    static int numPreForkedChildren;
+    static int numPreSpawnedChildren;
 
     static const int DEFAULT_PORT_NUMBER = 9980;
 

@@ -55,7 +55,7 @@ using Poco::URI;
 using Poco::Util::Application;
 
 std::map<UInt64, LOOLSession*> LOOLSession::_childIdToChildSession;
-std::set<UInt64> LOOLSession::_pendingPreForkedChildren;
+std::set<UInt64> LOOLSession::_pendingPreSpawnedChildren;
 std::set<LOOLSession*> LOOLSession::_availableChildSessions;
 
 LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit, UInt64 childId) :
@@ -150,12 +150,12 @@ bool LOOLSession::handleInput(char *buffer, int length)
         }
         UInt64 childId = std::stoull(tokens[1]);
         app.logger().information(Util::logPrefix() + "childId=" + std::to_string(childId));
-        if (_pendingPreForkedChildren.find(childId) == _pendingPreForkedChildren.end())
+        if (_pendingPreSpawnedChildren.find(childId) == _pendingPreSpawnedChildren.end())
         {
             sendTextFrame("error: cmd=child kind=notfound");
             return false;
         }
-        _pendingPreForkedChildren.erase(childId);
+        _pendingPreSpawnedChildren.erase(childId);
         _availableChildSessions.insert(this);
         _childIdToChildSession[childId] = this;
         _toChildProcess = true;
@@ -638,7 +638,7 @@ namespace
     }
 }
 
-void LOOLSession::preFork()
+void LOOLSession::preSpawn()
 {
     // Create child-specific subtree that will become its chroot root
 
@@ -658,7 +658,7 @@ void LOOLSession::preFork()
     linkOrCopy(LOOLWSD::sysTemplate, jail);
     linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
 
-    _pendingPreForkedChildren.insert(childId);
+    _pendingPreSpawnedChildren.insert(childId);
 
     Process::Args args;
     args.push_back("--child=" + std::to_string(childId));

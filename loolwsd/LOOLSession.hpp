@@ -47,7 +47,7 @@ public:
 
     // Set up the chroot environment for one child process and start
     // it, in advance of it being actually needed
-    static void preFork();
+    static void preSpawn();
 
 private:
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -103,8 +103,8 @@ private:
     // process.
     static std::map<Poco::UInt64, LOOLSession*> _childIdToChildSession;
 
-    // Pre-forked child processes that haven't yet connected.
-    static std::set<Poco::UInt64> _pendingPreForkedChildren;
+    // Pre-spawned child processes that haven't yet connected.
+    static std::set<Poco::UInt64> _pendingPreSpawnedChildren;
 
     // Child processes that have connected but are not yet assigned a
     // document to work on.

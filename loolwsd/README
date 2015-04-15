@@ -63,7 +63,7 @@ the setup-sys-chroot script here. Improvements to that script are very
 likely needed on various distros.
 
 Also, it you plan to hack on this, you probably want to familiarize
-yourself with loolwsd's --test and --numpreforks options, and the
+yourself with loolwsd's --test and --numprespawns options, and the
 'connect' test program.
 
 For interactive testing, you can use the loolwsd --test switch, or you
