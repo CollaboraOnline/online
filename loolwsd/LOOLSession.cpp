@@ -203,7 +203,8 @@ bool LOOLSession::handleInput(char *buffer, int length)
                 return false;
             }
 
-            dispatchChild();
+            if (!_peer)
+                dispatchChild();
             forwardToPeer(buffer, length);
             return true;
         }
@@ -352,7 +353,8 @@ bool LOOLSession::getStatus(const char *buffer, int length)
             return true;
         }
 
-        dispatchChild();
+        if (!_peer)
+            dispatchChild();
         forwardToPeer(buffer, length);
         return true;
     }
@@ -416,7 +418,8 @@ void LOOLSession::sendTile(const char *buffer, int length, StringTokenizer& toke
             return;
         }
 
-        dispatchChild();
+        if (!_peer)
+            dispatchChild();
         forwardToPeer(buffer, length);
         return;
     }
