@@ -430,7 +430,7 @@ int LOOLWSD::childMain()
     }
 
     // Open websocket connection between the child process and the
-    // parent. The parent forwars us requests that it can't handle.
+    // parent. The parent forwards us requests that it can't handle.
 
     HTTPClientSession cs("localhost", portNumber);
     HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
