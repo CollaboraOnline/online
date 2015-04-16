@@ -292,6 +292,8 @@ class Undertaker : public Runnable
 public:
     Undertaker()
     {
+        // We must do this sigprocmask and signalfd stuff in the main thread it seems. If we do it
+        // in the run() function it doesn't work, we don't get notifications about dies children.
         sigset_t mask;
 
         sigemptyset(&mask);
@@ -317,45 +319,51 @@ public:
 
     void run() override
     {
-        signalfd_siginfo ssinfo;
+        bool someChildrenHaveDied = false;
 
-        int rc = read(_fd, &ssinfo, sizeof(ssinfo));
-        if (rc == -1)
+        while (!someChildrenHaveDied || LOOLSession::_childProcesses.size() > 0)
         {
-            Application::instance().logger().error(Util::logPrefix() + "read(" + std::to_string(_fd) + ") failed: " + std::strerror(errno));
-            exit(Application::EXIT_OSERR);
-        }
-        if (rc < static_cast<int>(sizeof(ssinfo)))
-        {
-            Application::instance().logger().error(Util::logPrefix() + "Partial read from signalfd " + std::to_string(_fd));
-            exit(Application::EXIT_OSERR);
-        }
+            signalfd_siginfo ssinfo;
 
-        assert(ssinfo.ssi_signo == SIGCHLD);
-
-        // Multiple children dying can be compressed into a single event by signalfd
-        while (LOOLSession::_childProcesses.size() > 0)
-        {
-            int status;
-            pid_t pid = waitpid(-1, &status, WNOHANG);
-            if (pid <= 0)
-                break;
-
-            if (LOOLSession::_childProcesses.find(pid) == LOOLSession::_childProcesses.end())
-                std::cout << Util::logPrefix() << "(Not one of our known child processes)" << std::endl;
-            else
+            int rc = read(_fd, &ssinfo, sizeof(ssinfo));
+            if (rc == -1)
             {
-                File jailDir(LOOLSession::getJailPath(LOOLSession::_childProcesses[pid]));
-                LOOLSession::_childProcesses.erase(pid);
-                if (!jailDir.exists() || !jailDir.isDirectory())
-                {
+                Application::instance().logger().error(Util::logPrefix() + "read(" + std::to_string(_fd) + ") failed: " + std::strerror(errno));
+                exit(Application::EXIT_OSERR);
+            }
+            if (rc < static_cast<int>(sizeof(ssinfo)))
+            {
+                Application::instance().logger().error(Util::logPrefix() + "Partial read from signalfd " + std::to_string(_fd));
+                exit(Application::EXIT_OSERR);
+            }
 
-                    Application::instance().logger().error(Util::logPrefix() + "Jail '" + jailDir.path() + "' does not exist or is not a directory");
-                }
+            assert(ssinfo.ssi_signo == SIGCHLD);
+
+            // Multiple children dying can be compressed into a single event by signalfd
+            while (true)
+            {
+                int status;
+                pid_t pid = waitpid(-1, &status, WNOHANG);
+                if (pid <= 0)
+                    break;
+
+                if (LOOLSession::_childProcesses.find(pid) == LOOLSession::_childProcesses.end())
+                    std::cout << Util::logPrefix() << "(Not one of our known child processes)" << std::endl;
                 else
                 {
-                    std::cout << Util::logPrefix() << "Removing jail tree " << jailDir.path() << std::endl;
-                    jailDir.remove(true);
+                    File jailDir(LOOLSession::getJailPath(LOOLSession::_childProcesses[pid]));
+                    LOOLSession::_childProcesses.erase(pid);
+                    someChildrenHaveDied = true;
+                    if (!jailDir.exists() || !jailDir.isDirectory())
+                    {
+
+                        Application::instance().logger().error(Util::logPrefix() + "Jail '" + jailDir.path() + "' does not exist or is not a directory");
+                    }
+                    else
+                    {
+                        std::cout << Util::logPrefix() << "Removing jail tree " << jailDir.path() << std::endl;
+                        jailDir.remove(true);
+                    }
                 }
             }
         }
