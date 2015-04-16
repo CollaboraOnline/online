@@ -421,13 +421,6 @@ int LOOLWSD::childMain()
         exit(1);
     }
 
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
-            "attach process " << Poco::Process::id() << " in debugger now." << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
-    }
-
     LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
 
     if (!loKit)
