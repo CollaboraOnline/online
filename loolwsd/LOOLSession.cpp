@@ -73,10 +73,10 @@ LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit, UInt64 childId) :
 
 LOOLSession::~LOOLSession()
 {
-    std::cout << Util::logPrefix() << "LOOLSesstion dtor this=" << this << std::endl;
+    std::cout << Util::logPrefix() << "LOOLSesstion dtor this=" << this << " isChildProcess()=" << (isChildProcess()?"YES":"NO") << " toChildProcess()=" << (toChildProcess()?"YES":"NO") << " _peer=" << _peer << std::endl;
     _ws->shutdown();
-    if (_loKitDocument)
-        _loKitDocument->pClass->destroy(_loKitDocument);
+    if (!isChildProcess() && !toChildProcess() && _peer != nullptr)
+        _peer->_ws->shutdown();
 }
 
 const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
