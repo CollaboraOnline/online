@@ -40,8 +40,19 @@ DEALINGS IN THE SOFTWARE.
 // parent process that listens on the TCP port and accepts connections from LOOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
 
+#include <errno.h>
 #include <unistd.h>
 
+#ifdef __linux
+#include <fcntl.h>
+#include <signal.h>
+#include <sys/select.h>
+#include <sys/signalfd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#endif
+
+#include <cassert>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -49,7 +60,7 @@ DEALINGS IN THE SOFTWARE.
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
-#include <Poco/Format.h>
+#include <Poco/File.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
@@ -62,6 +73,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
@@ -76,6 +88,7 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace LOOLProtocol;
 
+using Poco::File;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
@@ -88,6 +101,8 @@ using Poco::Net::HTTPServerResponse;
 using Poco::Net::ServerSocket;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
+using Poco::Path;
+using Poco::Process;
 using Poco::Runnable;
 using Poco::Thread;
 using Poco::Util::Application;
@@ -270,6 +285,85 @@ private:
     ServerApplication& _main;
     ServerSocket& _svs;
     HTTPServer& _srv;
+};
+
+class Undertaker : public Runnable
+{
+public:
+    Undertaker()
+    {
+        sigset_t mask;
+
+        sigemptyset(&mask);
+        sigaddset(&mask, SIGCHLD);
+
+        assert(sigismember(&mask, SIGCHLD));
+
+        if (sigprocmask(SIG_BLOCK, &mask, NULL) == -1)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "sigprocmask() failed: " + std::strerror(errno));
+            exit(Application::EXIT_OSERR);
+        }
+
+        _fd = signalfd(-1, &mask, SFD_CLOEXEC);
+        if (_fd == -1)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "signalfd() failed: " + std::strerror(errno));
+            exit(Application::EXIT_OSERR);
+        }
+
+        std::cout << "Set up signalfd " << _fd << std::endl;
+    }
+
+    void run() override
+    {
+        signalfd_siginfo ssinfo;
+
+        int rc = read(_fd, &ssinfo, sizeof(ssinfo));
+        if (rc == -1)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "read(" + std::to_string(_fd) + ") failed: " + std::strerror(errno));
+            exit(Application::EXIT_OSERR);
+        }
+        if (rc < static_cast<int>(sizeof(ssinfo)))
+        {
+            Application::instance().logger().error(Util::logPrefix() + "Partial read from signalfd " + std::to_string(_fd));
+            exit(Application::EXIT_OSERR);
+        }
+
+        assert(ssinfo.ssi_signo == SIGCHLD);
+
+        // Multiple children dying can be compressed into a single event by signalfd
+        while (LOOLSession::_childProcesses.size() > 0)
+        {
+            int status;
+            pid_t pid = waitpid(-1, &status, WNOHANG);
+            if (pid <= 0)
+                break;
+
+            if (LOOLSession::_childProcesses.find(pid) == LOOLSession::_childProcesses.end())
+                std::cout << Util::logPrefix() << "(Not one of our known child processes)" << std::endl;
+            else
+            {
+                File jailDir(LOOLSession::getJailPath(LOOLSession::_childProcesses[pid]));
+                LOOLSession::_childProcesses.erase(pid);
+                if (!jailDir.exists() || !jailDir.isDirectory())
+                {
+
+                    Application::instance().logger().error(Util::logPrefix() + "Jail '" + jailDir.path() + "' does not exist or is not a directory");
+                }
+                else
+                {
+                    std::cout << Util::logPrefix() << "Removing jail tree " << jailDir.path() << std::endl;
+                    jailDir.remove(true);
+                }
+            }
+        }
+        std::cout << Util::logPrefix() << "All child processes have died (I hope)" << std::endl;
+    }
+
+private:
+    int _fd;
 };
 
 int LOOLWSD::portNumber = DEFAULT_PORT_NUMBER;
@@ -488,6 +582,11 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     if (jail != "")
         throw IncompatibleOptionsException("jail");
 
+    // Set up a thread to reap child processes and clean up after them
+    Undertaker undertaker;
+    Thread undertakerThread;
+    undertakerThread.start(undertaker);
+
     for (int i = 0; i < numPreSpawnedChildren; i++)
         LOOLSession::preSpawn();
 
@@ -497,19 +596,29 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     srv.start();
 
-    Thread thread;
     TestInput input(*this, svs, srv);
+    Thread inputThread;
     if (_doTest)
     {
-        thread.start(input);
+        inputThread.start(input);
     }
 
     waitForTerminationRequest();
 
-    srv.stop();
+    // Doing this causes a crash. So just let the process proceed and exit.
+    // srv.stop();
 
     if (_doTest)
-        thread.join();
+        inputThread.join();
+
+    // Terminate child processes
+    for (auto i : LOOLSession::_childProcesses)
+    {
+        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
+        Process::requestTermination(i.first);
+    }
+
+    undertakerThread.join();
 
     return Application::EXIT_OK;
 }

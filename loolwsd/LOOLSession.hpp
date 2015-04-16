@@ -18,6 +18,8 @@
 
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Buffer.h>
+#include <Poco/Path.h>
+#include <Poco/Process.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Types.h>
 
@@ -45,9 +47,13 @@ public:
     void sendTextFrame(const std::string& text);
     void sendBinaryFrame(const char *buffer, int length);
 
+    static Poco::Path getJailPath(Poco::UInt64 childId);
+
     // Set up the chroot environment for one child process and start
     // it, in advance of it being actually needed
     static void preSpawn();
+
+    static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 
 private:
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -65,8 +71,6 @@ private:
 
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
-
-    static Poco::Path getJailPath(Poco::UInt64 childId);
 
     bool isChildProcess() const;
 

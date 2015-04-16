@@ -57,6 +57,7 @@ using Poco::Util::Application;
 std::map<UInt64, LOOLSession*> LOOLSession::_childIdToChildSession;
 std::set<UInt64> LOOLSession::_pendingPreSpawnedChildren;
 std::set<LOOLSession*> LOOLSession::_availableChildSessions;
+std::map<Process::PID, UInt64> LOOLSession::_childProcesses;
 
 LOOLSession::LOOLSession(WebSocket& ws, LibreOfficeKit *loKit, UInt64 childId) :
     _ws(&ws),
@@ -669,6 +670,7 @@ void LOOLSession::preSpawn()
     Application::instance().logger().information(Util::logPrefix() + "Launching child: " + Poco::cat(std::string(" "), args.begin(), args.end()));
 
     ProcessHandle child = Process::launch(Application::instance().commandPath(), args);
+    _childProcesses[child.id()] = childId;
 }
 
 void LOOLSession::dispatchChild()
