@@ -10,7 +10,9 @@
 #ifndef INCLUDED_LOOLSESSION_HPP
 #define INCLUDED_LOOLSESSION_HPP
 
+#include <cassert>
 #include <map>
+#include <ostream>
 #include <set>
 
 #define LOK_USE_UNSTABLE_API
@@ -25,27 +27,76 @@
 
 #include "TileCache.hpp"
 
-// LOOLSession objects are used for three different purposes. This is probably not a good idea, I
-// should introduce derived classes instead.
-
-// 1) The Websocket session between the parent loolwsd process to the end-user LOOL client
-// 2) The session between the parent loolwsd and a child loolwsd process, in the parent loolwsd
-// 3) Ditto, in the child loolwsd
+// We have three kinds of Websocket sessions
+// 1) Between the master loolwsd server to the end-user LOOL client
+// 2) Between the master loolwsd server and a jailed loolwsd child process, in the master process
+// 3) Ditto, in the jailed loolwsd process
 
 class LOOLSession
 {
 public:
-    LOOLSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit = nullptr, Poco::UInt64 childId = 0);
-    ~LOOLSession();
+    enum class Kind { ToClient, ToPrisoner, ToMaster };
+
+    void sendTextFrame(const std::string& text);
+
+protected:
+    LOOLSession(Poco::Net::WebSocket& ws, Kind kind);
+    virtual ~LOOLSession();
 
     static const std::string jailDocumentURL;
 
-    bool handleInput(char *buffer, int length);
-    bool haveSeparateProcess() const;
-    bool toChildProcess() const;
+    const Kind _kind;
 
-    void sendTextFrame(const std::string& text);
+    virtual bool handleInput(char *buffer, int length) = 0;
+
     void sendBinaryFrame(const char *buffer, int length);
+
+    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
+    virtual bool getStatus(const char *buffer, int length) = 0;
+
+    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
+
+    // Fields common to sessions in master and jailed processes:
+
+    // In the master process, the websocket to the LOOL client or the jailed child process. In a
+    // jailed process, the websocket to the parent.
+    Poco::Net::WebSocket *_ws;
+
+    // In the master, the actual URL. In the child, the copy inside the chroot jail.
+    std::string _docURL;
+
+    // The id of the child process
+    Poco::UInt64 _childId;
+
+    std::unique_ptr<TileCache> _tileCache;
+};
+
+template<typename charT, typename traits>
+inline std::basic_ostream<charT, traits> & operator <<(std::basic_ostream<charT, traits> & stream, LOOLSession::Kind kind)
+{
+    switch (kind)
+    {
+    case LOOLSession::Kind::ToClient:
+        return stream << "TO_CLIENT";
+    case LOOLSession::Kind::ToPrisoner:
+        return stream << "TO_PRISONER";
+    case LOOLSession::Kind::ToMaster:
+        return stream << "TO_MASTER";
+    default:
+        assert(false);
+        return stream << "UNK_" + std::to_string(static_cast<int>(kind));
+    }
+}
+
+class MasterProcessSession final : public LOOLSession
+{
+public:
+    MasterProcessSession(Poco::Net::WebSocket& ws, Kind kind);
+    virtual ~MasterProcessSession();
+
+    virtual bool handleInput(char *buffer, int length) override;
+
+    bool haveSeparateProcess();
 
     static Poco::Path getJailPath(Poco::UInt64 childId);
 
@@ -55,11 +106,49 @@ public:
 
     static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 
-private:
-    bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool getStatus(const char *buffer, int length);
+protected:
+    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
+    virtual bool getStatus(const char *buffer, int length);
 
-    void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
+    void dispatchChild();
+    void forwardToPeer(const char *buffer, int length);
+
+    // If _kind==ToPrisoner and the child process has started and completed its handshake with the
+    // parent process: Points to the WebSocketSession for the child process handling the document in
+    // question, if any.
+
+    // In the session to the child process, points to the LOOLSession for the LOOL client. This will
+    // obvious have to be rethought when we add collaboration and there can be several LOOL clients
+    // per document being edited (i.e., per child process).
+    MasterProcessSession *_peer;
+
+    // Map from child ids to the corresponding session to the child
+    // process.
+    static std::map<Poco::UInt64, MasterProcessSession*> _childIdToChildSession;
+
+    // Pre-spawned child processes that haven't yet connected.
+    static std::set<Poco::UInt64> _pendingPreSpawnedChildren;
+
+    // Sessions to pre-spawned child processes that have connected but are not yet assigned a
+    // document to work on.
+    static std::set<MasterProcessSession*> _availableChildSessions;
+};
+
+class ChildProcessSession final : public LOOLSession
+{
+public:
+    ChildProcessSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit, Poco::UInt64 childId);
+    virtual ~ChildProcessSession();
+
+    virtual bool handleInput(char *buffer, int length) override;
+
+protected:
+    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
+    virtual bool getStatus(const char *buffer, int length);
+
+    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     bool keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -69,52 +158,6 @@ private:
     bool resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-    void dispatchChild();
-    void forwardToPeer(const char *buffer, int length);
-
-    bool isChildProcess() const;
-
-    // Fields common to parent and child:
-
-    // In the parent process, the websocket to the LOOL client or the
-    // child process. In a child process, the websocket to the
-    // parent.
-    Poco::Net::WebSocket *_ws;
-
-    // Whether this session is to a LOOL client or to a child process
-    bool _toChildProcess;
-
-    // In the parent, the actual URL. In the child, the copy inside the chroot jail.
-    std::string _docURL;
-
-    // Parent only:
-
-    // If haveSeparateProcess() is true and the child process has started and completed its
-    // handshake with the parent process: Points to the LOOLSession for the child process handling
-    // the document in question, if any.
-
-    // In the session to the child process, points to the LOOLSession for the LOOL client. This will
-    // obvious have to be rethought when we add collaboration and there can be several LOOL clients
-    // per document being edited (i.e., per child process).
-    LOOLSession *_peer;
-
-    // The id of the child process
-    Poco::UInt64 _childId;
-
-    std::unique_ptr<TileCache> _tileCache;
-
-    // Map from child ids to the corresponding session to the child
-    // process.
-    static std::map<Poco::UInt64, LOOLSession*> _childIdToChildSession;
-
-    // Pre-spawned child processes that haven't yet connected.
-    static std::set<Poco::UInt64> _pendingPreSpawnedChildren;
-
-    // Child processes that have connected but are not yet assigned a
-    // document to work on.
-    static std::set<LOOLSession*> _availableChildSessions;
-
-    // Child only:
     std::string _jail;
     std::string _loSubPath;
     LibreOfficeKit *_loKit;

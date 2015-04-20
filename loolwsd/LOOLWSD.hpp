@@ -33,6 +33,7 @@ public:
     static int numPreSpawnedChildren;
 
     static const int DEFAULT_PORT_NUMBER = 9980;
+    static const std::string CHILD_URI;
 
 protected:
     void initialize(Poco::Util::Application& self) override;
@@ -47,7 +48,7 @@ private:
     bool childMode() const;
 
     bool _doTest;
-    long long _childId;
+    Poco::UInt64 _childId;
 };
 
 #endif

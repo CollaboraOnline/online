@@ -132,7 +132,16 @@ public:
         {
             WebSocket ws(request, response);
 
-            LOOLSession session(ws);
+            std::unique_ptr<MasterProcessSession> session;
+
+            if (request.getURI() == LOOLWSD::CHILD_URI)
+            {
+                session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToPrisoner));
+            }
+            else
+            {
+                session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToClient));
+            }
 
             // Loop, receiving WebSocket messages either from the
             // client, or from the child process (to be forwarded to
@@ -146,7 +155,7 @@ public:
                 n = ws.receiveFrame(buffer, sizeof(buffer), flags);
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                    if (!session.handleInput(buffer, n))
+                    if (!session->handleInput(buffer, n))
                         n = 0;
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
@@ -294,19 +303,19 @@ public:
     {
         bool someChildrenHaveDied = false;
 
-        while (!someChildrenHaveDied || LOOLSession::_childProcesses.size() > 0)
+        while (!someChildrenHaveDied || MasterProcessSession::_childProcesses.size() > 0)
         {
             int status;
             pid_t pid = waitpid(-1, &status, WNOHANG);
             if (pid <= 0)
                 continue;
 
-            if (LOOLSession::_childProcesses.find(pid) == LOOLSession::_childProcesses.end())
+            if (MasterProcessSession::_childProcesses.find(pid) == MasterProcessSession::_childProcesses.end())
                 std::cout << Util::logPrefix() << "(Not one of our known child processes)" << std::endl;
             else
             {
-                File jailDir(LOOLSession::getJailPath(LOOLSession::_childProcesses[pid]));
-                LOOLSession::_childProcesses.erase(pid);
+                File jailDir(MasterProcessSession::getJailPath(MasterProcessSession::_childProcesses[pid]));
+                MasterProcessSession::_childProcesses.erase(pid);
                 someChildrenHaveDied = true;
                 if (!jailDir.exists() || !jailDir.isDirectory())
                 {
@@ -330,6 +339,7 @@ std::string LOOLWSD::childRoot;
 std::string LOOLWSD::loSubPath = "lo";
 std::string LOOLWSD::jail;
 int LOOLWSD::numPreSpawnedChildren = 10;
+const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 
 LOOLWSD::LOOLWSD() :
     _doTest(false),
@@ -484,11 +494,11 @@ int LOOLWSD::childMain()
     // parent. The parent forwards us requests that it can't handle.
 
     HTTPClientSession cs("localhost", portNumber);
-    HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
+    HTTPRequest request(HTTPRequest::HTTP_GET, LOOLWSD::CHILD_URI);
     HTTPResponse response;
     WebSocket ws(cs, request, response);
 
-    LOOLSession session(ws, loKit, _childId);
+    ChildProcessSession session(ws, loKit, _childId);
 
     ws.setReceiveTimeout(0);
 
@@ -545,7 +555,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     undertakerThread.start(undertaker);
 
     for (int i = 0; i < numPreSpawnedChildren; i++)
-        LOOLSession::preSpawn();
+        MasterProcessSession::preSpawn();
 
     ServerSocket svs(portNumber);
 
@@ -569,7 +579,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
         inputThread.join();
 
     // Terminate child processes
-    for (auto i : LOOLSession::_childProcesses)
+    for (auto i : MasterProcessSession::_childProcesses)
     {
         logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
         Process::requestTermination(i.first);
