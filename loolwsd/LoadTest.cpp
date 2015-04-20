@@ -262,35 +262,34 @@ void LoadTest::defineOptions(OptionSet& options)
 {
     Application::defineOptions(options);
 
-    options.addOption(
-        Option("doclist", "", "file containing URIs or pathnames of documents to load, - for stdin")
-            .required(true)
-            .repeatable(false)
-            .argument("file"));
+    options.addOption(Option("help", "", "Display help information on command line arguments.")
+                      .required(false)
+                      .repeatable(false));
 
-    options.addOption(
-        Option("numclients", "", "number of simultaneous clients to simulate")
-            .required(false)
-            .repeatable(false)
-            .argument("number"));
+    options.addOption(Option("doclist", "", "file containing URIs or pathnames of documents to load, - for stdin")
+                      .required(true)
+                      .repeatable(false)
+                      .argument("file"));
 
-    options.addOption(
-        Option("numdocs", "", "number of sequential documents per client")
-            .required(false)
-            .repeatable(false)
-            .argument("number"));
+    options.addOption(Option("numclients", "", "number of simultaneous clients to simulate")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("number"));
 
-    options.addOption(
-        Option("duration", "", "duration in hours")
-            .required(false)
-            .repeatable(false)
-            .argument("hours"));
+    options.addOption(Option("numdocs", "", "number of sequential documents per client")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("number"));
 
-    options.addOption(
-        Option("server", "", "URI of LOOL server")
-            .required(false)
-            .repeatable(false)
-            .argument("uri"));
+    options.addOption(Option("duration", "", "duration in hours")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("hours"));
+
+    options.addOption(Option("server", "", "URI of LOOL server")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("uri"));
 }
 
 void LoadTest::handleOption(const std::string& name, const std::string& value)
