@@ -199,14 +199,15 @@ private:
 
         int n = 0;
         const int DOCTILEHEIGHT = 5000;
+
         // Exercise the server with this document for some minutes
-        while (!documentStartTimestamp.isElapsed(1 * Timespan::MINUTES) && !clientDurationExceeded())
+        while (!documentStartTimestamp.isElapsed(20 * Timespan::SECONDS) && !clientDurationExceeded())
         {
             sendTextFrame(ws, "tile width=256 height=256 tileposx=0 tileposy=" + std::to_string(n * DOCTILEHEIGHT) + " " +
                           "tilewidth=" + std::to_string(DOCTILEHEIGHT) + " "
                           "tileheight=" + std::to_string(DOCTILEHEIGHT));
             n = ((n + 1) % (output._height / DOCTILEHEIGHT));
-            Thread::sleep(100);
+            Thread::sleep(1000);
         }
 
         Thread::sleep(10000);
