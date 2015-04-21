@@ -24,57 +24,66 @@ loolwsd uses autoconf/automake, so build using the usual:
 
     autoreconf
     automake --add-missing
-    ./configure --enable-silent-rules --with-lokit-path=<...>/include
+    ./configure --enable-silent-rules --with-lokit-path=<MASTER>/include
     make
 
-where <...> is the location of the LibreOffice source tree.
+where <MASTER> is the location of the LibreOffice source tree.
 
 If you have self-built Poco, add the following to ./configure:
 
-    --with-poco-includes=<...>/include --with-poco-libs=<...>/lib
+    --with-poco-includes=<MASTER>/include --with-poco-libs=<...>/lib
 
-If you have the Poco debugging libraries (eg. you have a self-built Poco), you
-can add --enable-debug to the configure options for additional debugging.
+If you have the Poco debugging libraries (eg. you have a self-built
+Poco), you can add --enable-debug to the configure options for
+additional debugging.
 
 For Windows, a proper VS2013 project is needed.
 
-There is still unconditional debugging output etc. This is a work in progress.
+There is still unconditional debugging output etc. This is a work in
+progress.
 
 Running
 -------
 
-Run the loolwsd in the daemon mode:
-
-    ./loolwsd --lopath=<...>/instdir/program
-
-and connect loleaflet to that (see loleaflet/README for more info).
-
-Again, <...> is location of the LibreOffice source tree with a built
-LibreOffice.  This is work in progress, and consequently needs the latest
-LibreOffice master.
-
 Run loolwsd for instance like this, to run it the way it is supposed
 to eventually be run "for real":
 
-    ./loolwsd --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
+    ./loolwsd --systemplate=<SYSTEMPLATE> --lotemplate=<MASTER>/instdir --childroot=<ROOTFORJAILS>
 
-The lool-sys-template directory tree above is something set up using
-the setup-sys-chroot script here. Improvements to that script are very
-likely needed on various distros.
+and connect loleaflet to that (see loleaflet/README for more info).
 
-Also, it you plan to hack on this, you probably want to familiarize
-yourself with loolwsd's --test and --numprespawns options, and the
+Again, <MASTER> is location of the LibreOffice source tree with a built
+LibreOffice.  This is work in progress, and consequently needs the latest
+LibreOffice master.
+
+The <SYSTEMPLATE> is a directory tree set up using the
+setup-sys-chroot script here. It is intended to contain the runtime
+environment needed by the LibreOffice dynamic libraries used through
+LibreOfficeKit. Improvements to that script are very likely needed on
+various distros.
+
+The <ROOTFORJAILS> directory above is a presumably initially empty
+directory under which loolwsd will create chroot jails for editing
+each specific document.
+
+As loolwsd uses hardlinks to "copy" the contents of both <SYSTEMPLATE>
+and the <MASTER>instdir directories into each chroot jail,
+<SYSTEMPLATE> and <ROOTFORJAILS> need to be on the same file system as
+<MASTER>/instdir.
+
+If you plan to hack on loolwsd, you probably want to familiarize
+yourself with loolwsd's --test and --numprespawns switches, and the
 'connect' test program.
 
 For interactive testing, you can use the loolwsd --test switch, or you
 can use the 'connect' program. Both accept "commands" from the
-protocol on standard input. For instance:
+protocol on standard input. You can either used them tuly
+interactively, or edit input lines into a file, or use shell
+scripting, etc. For instance:
 
-    (echo load foo.odt; echo tile width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) |
+    (echo load /some/where/foo.odt; echo tile width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) |
     ./loolwsd --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
 
-The handling of termination is a bit fragile, occasionally it dumps
-core somewhere in LO code when quitting. Don't be scared, work in progress.
 
 Protocol description
 --------------------
