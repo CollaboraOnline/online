@@ -5,8 +5,10 @@ This project fundamentally has two pieces:
 loolwsd/
 	The server side component.
 
-loleaflet/ 
+loleaflet/
 	The client side component.
+
+First compile loolwsd, and then loleaflet.
 
 Since you need both of these to get things working, it is recommended
 to read the READMEs in both projects.

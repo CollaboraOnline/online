@@ -1,34 +1,68 @@
 LibreOffice On-Line WebSocket server
+====================================
 
-See protocol.txt for a description of the protocol to be used over the
-websocket.
+Installation
+------------
 
-Uses libpng and the Poco library, from
-http://pocoproject.org/index.html. Build it with ./configure
---prefix=/opt/poco && make install. Probably is available packaged in
-some distros
+LibreOffice On-Line WebSocket server has the following dependencies:
 
-At least I like the Poco library. But if it is not acceptable for some
-reason, please scream quickly, before too much code that uses Poco has
-been written... I found Poco while looking for code to do the
-WebSocket handshake and marshalling. But that functionality is just a
-small part of what Poco does.
+* libpng
+* Poco library: http://pocoproject.org/index.html.
 
-This uses autofoo so build like this:
+Poco can be built with ./configure --prefix=/opt/poco && make install, but
+distro packages exist too.
 
-autoreconf
-automake --add-missing
-./configure --enable-debug --enable-silent-rules --with-lokit-path=<...>/include --with-poco-includes=<..>./include --with-poco-libs=<...>/lib
-make
+On openSUSE, you can use:
+
+    zypper ar http://download.opensuse.org/repositories/devel:/libraries:/c_c++/openSUSE_13.2/devel:libraries:c_c++.repo
+    zypper in poco
+
+Building
+--------
+
+loolwsd uses autoconf/automake, so build using the usual:
+
+    autoreconf
+    automake --add-missing
+    ./configure --enable-silent-rules --with-lokit-path=<...>/include
+    make
+
+where <...> is the location of the LibreOffice source tree.
+
+If you have self-built Poco, add the following to ./configure:
+
+    --with-poco-includes=<...>/include --with-poco-libs=<...>/lib
+
+If you have the Poco debugging libraries (eg. you have a self-built Poco), you
+can add --enable-debug to the configure options for additional debugging.
 
 For Windows, a proper VS2013 project is needed.
 
 There is still unconditional debugging output etc. This is a work in progress.
 
-Run loolwsd for instance like this to test:
+Running
+-------
 
-(echo load foo.odt; echo tile width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) | 
-    ./loolwsd --lopath=<...>/instdir/program --test
+Run the loolwsd in the daemon mode:
+
+    ./loolwsd --lopath=<...>/instdir/program
+
+and connect loleaflet to that (see loleaflet/README for more info).
+
+Again, <...> is location of the LibreOffice source tree with a built
+LibreOffice.  This is work in progress, and consequently needs the latest
+LibreOffice master.
+
+For testing purposes, you can use the loolwsd testing mode:
+
+    (echo load foo.odt; echo tile width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) |
+        ./loolwsd --lopath=<...>/instdir/program --test
 
 The handling of termination is a bit fragile, occasionally it dumps
-core somewhere in LO code when quitting. Don't be scared.
+core somewhere in LO code when quitting. Don't be scared, work in progress.
+
+Protocol description
+--------------------
+
+See protocol.txt for a description of the protocol to be used over the
+websocket.
