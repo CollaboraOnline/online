@@ -34,6 +34,8 @@ DEALINGS IN THE SOFTWARE.
 
  */
 
+#include "config.h"
+
 #include <cstdlib>
 #include <iostream>
 
@@ -392,6 +394,13 @@ int LOOLWSD::childMain()
 
 int LOOLWSD::main(const std::vector<std::string>& args)
 {
+    if (access(LOOLWSD_CACHEDIR, R_OK | W_OK | X_OK) != 0)
+    {
+        std::cout << "Unable to access " << LOOLWSD_CACHEDIR <<
+            ", please make sure it exists, and has write permission for this user." << std::endl;
+        return Application::EXIT_UNAVAILABLE;
+    }
+
     if (childMode())
         return childMain();
 
