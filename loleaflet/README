@@ -1,28 +1,65 @@
-Leaflet paltform for LibreOffice On-Line 
+Leaflet platform for LibreOffice On-Line
+========================================
 
-Code convention
-    * 'jake lint' should be run before commiting
-    * files should have unix line terminators (LF)
-    * tools to convert files: dos2unix or fromdos 
+This is the client part of LibreOffice On-Line.  For the server part, see the
+../loolwsd/README, and install it first.
 
-Building:
-    unzip node_modules/modules.zip -d node_modules
-    *** OR ***
+Build dependencies
+------------------
+
+First you need to install 'jake'.  As root, do:
+
     npm install -g jake
     npm install
-    *** THEN ***
+
+Alternatively, you can use the provided zip (as a normal user):
+
+    unzip node_modules/modules.zip -d node_modules
+
+Building
+--------
+
+As a normal user:
+
     jake build
     cd plugins/draw-0.2.4
     jake build
 
-If you want to avoid having to run the above as root, create a directory that
-you own somehwere, for instance /opt/npm, and add a line to ~/.npmrc:
-prefix=/opt/npm
+Running
+-------
+
+To see an example:
+
+* run loolwsd, like:
+
+    ./loolwsd --lopath=<...>/instdir/program
+
+* edit debug/document/document_simple_example.html, and change
+  /PATH/TO/DOCUMENT to a file reachable by loolwsd
+
+* open debug/document/document_simple_example.html in the browser, like:
+
+    firefox debug/document/document_simple_example.html
+
+and you should see the document in the browser.  In case anything goes wrong,
+check the loolwsd console for the debugging output.
+
+Contributing
+------------
+
+Code conventions:
+
+    * 'jake lint' should be run before commiting
+    * files should have unix line terminators (LF)
+    * tools to convert files: dos2unix or fromdos
+
+Implementation details
+----------------------
 
 Loading a document:
     The map should have the following options:
         - bounds = top left [0, 0] and something larger in the bottom right corner which
-          will later be updated 
+          will later be updated
         - center at [0, 0] this will try to place the [0, 0] point in the middle of the
           map, but it will be moved in the top left corner when the maxBounds are set
         - zoom = defautl zoom value, zooming in and out will refer to this value
@@ -40,5 +77,3 @@ How zooming works:
 Controls are added above the map in a div called "controls" is intended to be used as a toolbar.
 There is no leaflet method of adding them in a separte div, so for now this is done in the html
 document after the map initialization.
-
-To run an example, open debug/document/document_simple_example.html in the browser
