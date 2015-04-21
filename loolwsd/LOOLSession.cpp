@@ -68,7 +68,14 @@ LOOLSession::LOOLSession(WebSocket& ws, Kind kind) :
 LOOLSession::~LOOLSession()
 {
     std::cout << Util::logPrefix() << "LOOLSession dtor this=" << this << " " << _kind << std::endl;
-    _ws->shutdown();
+    try
+    {
+        _ws->shutdown();
+    }
+    catch (Poco::IOException& exc)
+    {
+        Application::instance().logger().error(Util::logPrefix() + "IOException: " + exc.message());
+    }
 }
 
 void LOOLSession::sendTextFrame(const std::string& text)
@@ -98,7 +105,16 @@ MasterProcessSession::~MasterProcessSession()
     std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer << std::endl;
     _ws->shutdown();
     if (_kind == Kind::ToClient && _peer != nullptr)
-        _peer->_ws->shutdown();
+    {
+        try
+        {
+            _peer->_ws->shutdown();
+        }
+        catch (Poco::IOException& exc)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "IOException: " + exc.message());
+        }
+    }
 }
 
 bool MasterProcessSession::handleInput(char *buffer, int length)

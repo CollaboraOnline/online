@@ -130,52 +130,59 @@ public:
         Application& app = Application::instance();
         try
         {
-            WebSocket ws(request, response);
-
-            std::unique_ptr<MasterProcessSession> session;
-
-            if (request.getURI() == LOOLWSD::CHILD_URI)
+            try
             {
-                session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToPrisoner));
-            }
-            else
-            {
-                session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToClient));
-            }
+                WebSocket ws(request, response);
 
-            // Loop, receiving WebSocket messages either from the
-            // client, or from the child process (to be forwarded to
-            // the client).
-            int flags;
-            int n;
-            ws.setReceiveTimeout(0);
-            do
-            {
-                char buffer[100000];
-                n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+                std::unique_ptr<MasterProcessSession> session;
 
-                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                    if (!session->handleInput(buffer, n))
-                        n = 0;
+                if (request.getURI() == LOOLWSD::CHILD_URI)
+                {
+                    session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToPrisoner));
+                }
+                else
+                {
+                    session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToClient));
+                }
+
+                // Loop, receiving WebSocket messages either from the
+                // client, or from the child process (to be forwarded to
+                // the client).
+                int flags;
+                int n;
+                ws.setReceiveTimeout(0);
+                do
+                {
+                    char buffer[100000];
+                    n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+
+                    if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                        if (!session->handleInput(buffer, n))
+                            n = 0;
+                }
+                while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
             }
-            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+            catch (WebSocketException& exc)
+            {
+                app.logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
+                switch (exc.code())
+                {
+                case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
+                    response.set("Sec-WebSocket-Version", WebSocket::WEBSOCKET_VERSION);
+                    // fallthrough
+                case WebSocket::WS_ERR_NO_HANDSHAKE:
+                case WebSocket::WS_ERR_HANDSHAKE_NO_VERSION:
+                case WebSocket::WS_ERR_HANDSHAKE_NO_KEY:
+                    response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
+                    response.setContentLength(0);
+                    response.send();
+                    break;
+                }
+            }
         }
-        catch (WebSocketException& exc)
+        catch (Poco::IOException& exc)
         {
-            app.logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
-            switch (exc.code())
-            {
-            case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
-                response.set("Sec-WebSocket-Version", WebSocket::WEBSOCKET_VERSION);
-                // fallthrough
-            case WebSocket::WS_ERR_NO_HANDSHAKE:
-            case WebSocket::WS_ERR_HANDSHAKE_NO_VERSION:
-            case WebSocket::WS_ERR_HANDSHAKE_NO_KEY:
-                response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
-                response.setContentLength(0);
-                response.send();
-                break;
-            }
+            app.logger().error(Util::logPrefix() + "IOException: " + exc.message());
         }
     }
 };
