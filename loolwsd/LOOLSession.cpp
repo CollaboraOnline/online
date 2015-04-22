@@ -116,7 +116,7 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         // forwarding replies from the child process to the client. Or does it?
 
         // Snoop at tile: and status: messages and cache them
-        if (_kind == Kind::ToPrisoner)
+        if (_kind == Kind::ToPrisoner && _peer->_tileCache)
         {
             if (tokens[0] == "tile:")
             {
