@@ -108,16 +108,12 @@ L.TileLayer = L.GridLayer.extend({
 			var textMsgBytes = bytes.subarray(0, index + 1);
 			var info = this._getTileInfo(String.fromCharCode.apply(null, textMsgBytes));
 			var coords = this._twipsToCoords(new L.Point(info.x, info.y));
-			coords.z = this._map.getZoom();
+			coords.z = info.zoom;
 			var data = bytes.subarray(index + 1);
-			var done = L.bind(this._tileReady, this, coords);
 
-			var tile = document.createElement('img');
-			tile.onload = L.bind(this._tileOnLoad, this, done, tile);
-			tile.onerror = L.bind(this._tileOnError, this, done, tile);
-			tile.alt = '';
-			tile.src = 'data:image/png;base64,' + window.btoa(String.fromCharCode.apply(null, data));
-			this._handleTile(tile, coords);
+			var key = this._tileCoordsToKey(coords);
+			var tile = this._tiles[key];
+			tile.el.src = 'data:image/png;base64,' + window.btoa(String.fromCharCode.apply(null, data));
 		}
 	},
 
@@ -156,10 +152,10 @@ L.TileLayer = L.GridLayer.extend({
 				info.y = parseInt(tokens[i].substring(9));
 			}
 			if (tokens[i].substring(0, 10) === 'tilewidth=') {
-				info.tilewidth = parseInt(tokens[i].substring(10));
+				info.tileWidth = parseInt(tokens[i].substring(10));
 			}
 			if (tokens[i].substring(0, 11) === 'tileheight=') {
-				info.tileheight = parseInt(tokens[i].substring(11));
+				info.tileHeight = parseInt(tokens[i].substring(11));
 			}
 			if (tokens[i].substring(0, 6) === 'width=') {
 				info.width = parseInt(tokens[i].substring(6));
@@ -167,6 +163,12 @@ L.TileLayer = L.GridLayer.extend({
 			if (tokens[i].substring(0, 7) === 'height=') {
 				info.height = parseInt(tokens[i].substring(7));
 			}
+		}
+		if (info.tileWidth && info.tileHeight) {
+			var scale = info.tileWidth / this.options.tileWidthTwips;
+			// scale = 1.2 ^ (10 - zoom)
+			// zoom = 10 -log(scale) / log(1.2)
+			info.zoom = Math.round(10 - Math.log(scale) / Math.log(1.2));
 		}
 		return info;
 	},

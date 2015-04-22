@@ -445,7 +445,6 @@ L.GridLayer = L.Layer.extend({
 
 		var pixelBounds = map.getPixelBounds(center, zoom),
 			tileRange = this._pxBoundsToTileRange(pixelBounds),
-			tileCenter = tileRange.getCenter(),
 			queue = [];
 
 		for (var key in this._tiles) {
@@ -472,20 +471,20 @@ L.GridLayer = L.Layer.extend({
 			}
 		}
 
-		// sort tile queue to load tiles in order of their distance to center
-		queue.sort(function (a, b) {
-			return a.distanceTo(tileCenter) - b.distanceTo(tileCenter);
-		});
-
 		if (queue.length !== 0) {
 			// if its the first batch of tiles to load
 			if (this._noTilesToLoad()) {
 				this.fire('loading');
 			}
 
+			// create DOM fragment to append tiles in one batch
+			var fragment = document.createDocumentFragment();
+
 			for (i = 0; i < queue.length; i++) {
-				this._addTile(queue[i]);
+				this._addTile(queue[i], fragment);
 			}
+
+			this._level.el.appendChild(fragment);
 		}
 	},
 
@@ -567,7 +566,7 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
-	_addTile: function (coords) {
+	_addTile: function (coords, fragment) {
 		if (this.options.useSocket && this._map.socket) {
 			var twips = this._coordsToTwips(coords);
 			this._map.socket.send('tile width=' + this._tileSize + ' ' +
@@ -577,23 +576,11 @@ L.GridLayer = L.Layer.extend({
 									'tilewidth=' + this._tileWidthTwips + ' ' +
 									'tileheight=' + this._tileHeightTwips);
 		}
-		else {
-			var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
-			this._handleTile(tile, coords);
-		}
-	},
 
-	_handleTile: function (tile, coords) {
 		var tilePos = this._getTilePos(coords),
 			key = this._tileCoordsToKey(coords);
+		var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
-		if (this._tiles[key]) {
-			// tile is already added, between the first request and the response
-			// from the server there might have been other request, which are now
-			// invalid OR the tile needs to be updated
-			//this._tiles[key].el.src = tile.src;
-			return;
-		}
 		this._initTile(tile);
 
 		// if createTile is defined with a second argument ("done" callback),
