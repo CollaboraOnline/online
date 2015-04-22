@@ -82,7 +82,7 @@ L.TileLayer = L.GridLayer.extend({
 		*/
 		tile.alt = '';
 
-		tile.src = 'http://i387.photobucket.com/albums/oo316/barkse90/Cartman-Cop-head-256x256.png';
+		tile.src = '';
 
 		return tile;
 	},
