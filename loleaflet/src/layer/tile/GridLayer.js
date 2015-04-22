@@ -345,7 +345,7 @@ L.GridLayer = L.Layer.extend({
 
 	_updateTileTwips: function () {
 		// smaller zoom = zoom in
-		var factor = 1 + (10 - this._tileZoom) / 10;
+		var factor = Math.pow(1.2, (10 - this._tileZoom));
 		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
 	},
@@ -358,28 +358,23 @@ L.GridLayer = L.Layer.extend({
 										 this._docHeightTwips / this._tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 
-		var topLeft = this._map.unproject([0, 0], this._tileZoom);
-		var bottomRight = this._map.unproject(docPixelLimits, this._tileZoom);
-		var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
+		// TODO set a smooth transition when updating the scroll position
 		// previous scroll position (relative)
-		var prevX = this._map._outerContainer.scrollLeft /
-			(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
-		var prevY = this._map._outerContainer.scrollTop /
-			(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
+		//var prevX = this._map._outerContainer.scrollLeft /
+		//	(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
+		//var prevY = this._map._outerContainer.scrollTop /
+		//	(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
 
 		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', '');
 		L.DomUtil.setStyle(this._map._container, 'width', docPixelLimits.x + 'px');
 		L.DomUtil.setStyle(this._map._container, 'height', docPixelLimits.y + 'px');
-		this._map.setMaxBounds(maxBounds);
-		// When zooming, the (0,0) point is no longer in the top left corner
-		// and this puts it back.
-		this._map.invalidateSize();
 		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', 'auto');
+
 		// restore the relative scroll position
-		this._map._outerContainer.scrollLeft = prevX *
-			(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
-		this._map._outerContainer.scrollTop = prevY *
-			(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
+		//this._map._outerContainer.scrollLeft = prevX *
+		//	(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
+		//this._map._outerContainer.scrollTop = prevY *
+		//	(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
 	},
 
 	_setZoomTransforms: function (center, zoom) {

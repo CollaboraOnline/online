@@ -36,12 +36,7 @@ L.Map = L.Evented.extend({
 			this.setMaxBounds(options.maxBounds);
 		}
 
-		if (options.topLeft && options.topRight) {
-			var topLeft = this.unproject(options.topLeft);
-			var bottomRight = this.unproject(options.topRight);
-			var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
-			this.setMaxBounds(maxBounds);
-		}
+		this._initBounds();
 
 		if (options.zoom !== undefined) {
 			this._zoom = this._limitZoom(options.zoom);
@@ -76,7 +71,14 @@ L.Map = L.Evented.extend({
 			this._zoom = this._limitZoom(zoom);
 			return this;
 		}
-		return this.setView(this.getCenter(), zoom, {zoom: options});
+		var scale = this.getZoomScale(zoom),
+		    viewHalf = this.getSize().divideBy(2),
+		    containerPoint = new L.Point(0,0);
+		    centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
+		    newCenter = this.containerPointToLatLng(viewHalf.add(centerOffset));
+
+		return this.setView(newCenter, zoom, {zoom: options});
+
 	},
 
 	zoomIn: function (delta, options) {
@@ -474,6 +476,13 @@ L.Map = L.Evented.extend({
 		}
 
 		container._leaflet = true;
+	},
+
+	_initBounds: function () {
+		var topLeft = this.unproject(new L.Point(0, 0));
+		var bottomRight = this.unproject(this.getSize());
+		var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
+		this.setMaxBounds(maxBounds);
 	},
 
 	_initLayout: function () {

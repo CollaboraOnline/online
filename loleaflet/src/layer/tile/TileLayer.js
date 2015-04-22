@@ -95,6 +95,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._docWidthTwips = info.width;
 				this._docHeightTwips = info.height;
 				this._updateMaxBounds();
+				this._update();
 			}
 		}
 		else if (typeof (evt.data) === 'object') {
