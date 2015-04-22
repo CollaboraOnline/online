@@ -67,8 +67,6 @@ protected:
 
     // The id of the child process
     Poco::UInt64 _childId;
-
-    std::unique_ptr<TileCache> _tileCache;
 };
 
 template<typename charT, typename traits>
@@ -134,6 +132,8 @@ protected:
     // Sessions to pre-spawned child processes that have connected but are not yet assigned a
     // document to work on.
     static std::set<MasterProcessSession*> _availableChildSessions;
+
+    std::unique_ptr<TileCache> _tileCache;
 };
 
 class ChildProcessSession final : public LOOLSession
