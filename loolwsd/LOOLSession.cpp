@@ -81,7 +81,6 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
     _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
-std::map<UInt64, MasterProcessSession*> MasterProcessSession::_childIdToChildSession;
 std::set<UInt64> MasterProcessSession::_pendingPreSpawnedChildren;
 std::set<MasterProcessSession*> MasterProcessSession::_availableChildSessions;
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
@@ -172,7 +171,6 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         }
         _pendingPreSpawnedChildren.erase(childId);
         _availableChildSessions.insert(this);
-        _childIdToChildSession[childId] = this;
         _childId = childId;
     }
     else if (_kind == Kind::ToPrisoner)

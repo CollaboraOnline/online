@@ -122,10 +122,6 @@ protected:
     // per document being edited (i.e., per child process).
     MasterProcessSession *_peer;
 
-    // Map from child ids to the corresponding session to the child
-    // process.
-    static std::map<Poco::UInt64, MasterProcessSession*> _childIdToChildSession;
-
     // Pre-spawned child processes that haven't yet connected.
     static std::set<Poco::UInt64> _pendingPreSpawnedChildren;
 
