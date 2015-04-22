@@ -12,6 +12,7 @@
 
 #include <cassert>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 
@@ -83,7 +84,7 @@ inline std::basic_ostream<charT, traits> & operator <<(std::basic_ostream<charT,
     }
 }
 
-class MasterProcessSession final : public LOOLSession
+class MasterProcessSession final : public LOOLSession, public std::enable_shared_from_this<MasterProcessSession>
 {
 public:
     MasterProcessSession(Poco::Net::WebSocket& ws, Kind kind);
@@ -117,14 +118,14 @@ protected:
     // In the session to the child process, points to the LOOLSession for the LOOL client. This will
     // obvious have to be rethought when we add collaboration and there can be several LOOL clients
     // per document being edited (i.e., per child process).
-    MasterProcessSession *_peer;
+    std::weak_ptr<MasterProcessSession> _peer;
 
     // Pre-spawned child processes that haven't yet connected.
     static std::set<Poco::UInt64> _pendingPreSpawnedChildren;
 
     // Sessions to pre-spawned child processes that have connected but are not yet assigned a
     // document to work on.
-    static std::set<MasterProcessSession*> _availableChildSessions;
+    static std::set<std::shared_ptr<MasterProcessSession>> _availableChildSessions;
 
     std::unique_ptr<TileCache> _tileCache;
 

@@ -134,7 +134,7 @@ public:
             {
                 WebSocket ws(request, response);
 
-                std::unique_ptr<MasterProcessSession> session;
+                std::shared_ptr<MasterProcessSession> session;
 
                 if (request.getURI() == LOOLWSD::CHILD_URI)
                 {

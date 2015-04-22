@@ -81,12 +81,11 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 }
 
 std::set<UInt64> MasterProcessSession::_pendingPreSpawnedChildren;
-std::set<MasterProcessSession*> MasterProcessSession::_availableChildSessions;
+std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
 MasterProcessSession::MasterProcessSession(WebSocket& ws, Kind kind) :
     LOOLSession(ws, kind),
-    _peer(nullptr),
     _childId(0)
 {
     std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws << std::endl;
@@ -94,11 +93,12 @@ MasterProcessSession::MasterProcessSession(WebSocket& ws, Kind kind) :
 
 MasterProcessSession::~MasterProcessSession()
 {
-    std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer << std::endl;
+    std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer.lock().get() << std::endl;
     Util::shutdownWebSocket(*_ws);
-    if (_kind == Kind::ToClient && _peer != nullptr)
+    auto peer = _peer.lock();
+    if (_kind == Kind::ToClient && peer)
     {
-        Util::shutdownWebSocket(*(_peer->_ws));
+        Util::shutdownWebSocket(*(peer->_ws));
     }
 }
 
@@ -115,7 +115,8 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         // forwarding replies from the child process to the client. Or does it?
 
         // Snoop at tile: and status: messages and cache them
-        if (_kind == Kind::ToPrisoner && _peer->_tileCache)
+        auto peer = _peer.lock();
+        if (_kind == Kind::ToPrisoner && peer && peer->_tileCache)
         {
             if (tokens[0] == "tile:")
             {
@@ -130,12 +131,12 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
                     assert(false);
 
                 assert(firstLine.size() < static_cast<std::string::size_type>(length));
-                _peer->_tileCache->saveTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+                peer->_tileCache->saveTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
             }
             else if (tokens[0] == "status:")
             {
                 assert(firstLine.size() == static_cast<std::string::size_type>(length));
-                _peer->_tileCache->saveStatus(firstLine);
+                peer->_tileCache->saveStatus(firstLine);
             }
         }
 
@@ -152,7 +153,7 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             sendTextFrame("error: cmd=child kind=invalid");
             return false;
         }
-        if (_peer != nullptr)
+        if (!_peer.expired())
         {
             sendTextFrame("error: cmd=child kind=invalid");
             return false;
@@ -169,7 +170,7 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             return false;
         }
         _pendingPreSpawnedChildren.erase(childId);
-        _availableChildSessions.insert(this);
+        _availableChildSessions.insert(shared_from_this());
         _childId = childId;
     }
     else if (_kind == Kind::ToPrisoner)
@@ -178,10 +179,6 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
 
         // I think we should never get here
         assert(false);
-
-        assert(_peer != nullptr);
-
-        _peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
     }
     else if (tokens[0] == "load")
     {
@@ -223,7 +220,7 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             return false;
         }
 
-        if (!_peer)
+        if (_peer.expired())
             dispatchChild();
         forwardToPeer(buffer, length);
     }
@@ -366,7 +363,7 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
         return true;
     }
 
-    if (!_peer)
+    if (_peer.expired())
         dispatchChild();
     forwardToPeer(buffer, length);
     return true;
@@ -422,7 +419,7 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         return;
     }
 
-    if (!_peer)
+    if (_peer.expired())
         dispatchChild();
     forwardToPeer(buffer, length);
 }
@@ -431,11 +428,15 @@ void MasterProcessSession::dispatchChild()
 {
     // Copy document into jail using the fixed name
 
+    std::cout << Util::logPrefix() << "available child sessions: " << _availableChildSessions.size() << std::endl;
+
     assert(_availableChildSessions.size() > 0);
 
-    MasterProcessSession *childSession = *(_availableChildSessions.begin());
+    std::shared_ptr<MasterProcessSession> childSession = *(_availableChildSessions.begin());
 
     _availableChildSessions.erase(childSession);
+
+    std::cout << Util::logPrefix() << "available child sessions: " << _availableChildSessions.size() << std::endl;
 
     assert(jailDocumentURL[0] == '/');
     Path copy(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
@@ -444,7 +445,7 @@ void MasterProcessSession::dispatchChild()
     File(_docURL).copyTo(copy.toString());
 
     _peer = childSession;
-    childSession->_peer = this;
+    childSession->_peer = shared_from_this();
 
     std::string loadRequest = "load url=" + _docURL;
     forwardToPeer(loadRequest.c_str(), loadRequest.size());
@@ -456,8 +457,9 @@ void MasterProcessSession::dispatchChild()
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 {
     Application::instance().logger().information(Util::logPrefix() + "forwardToPeer(" + getAbbreviatedMessage(buffer, length) + ")");
-    assert(_peer != nullptr);
-    _peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+    auto peer = _peer.lock();
+    assert(peer);
+    peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
 ChildProcessSession::ChildProcessSession(WebSocket& ws, LibreOfficeKit *loKit) :
