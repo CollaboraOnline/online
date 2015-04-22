@@ -446,7 +446,7 @@ bool LOOLSession::unoCommand(const char *buffer, int length, Poco::StringTokeniz
         return false;
     }
 
-    _loKitDocument->pClass->postUnoCommand(_loKitDocument, buffer + strlen("uno "));
+    _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str());
 
     return true;
 }
