@@ -163,7 +163,6 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             return false;
         }
         UInt64 childId = std::stoull(tokens[1]);
-        app.logger().information(Util::logPrefix() + "childId=" + std::to_string(childId));
         if (_pendingPreSpawnedChildren.find(childId) == _pendingPreSpawnedChildren.end())
         {
             sendTextFrame("error: cmd=child kind=notfound");
