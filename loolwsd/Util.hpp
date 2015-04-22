@@ -10,6 +10,8 @@
 #ifndef INCLUDED_UTIL_HPP
 #define INCLUDED_UTIL_HPP
 
+#include <Poco/Net/WebSocket.h>
+
 namespace Util
 {
     std::string logPrefix();
@@ -17,6 +19,9 @@ namespace Util
     // Sadly, older libpng headers don't use const for the pixmap pointer parameter to
     // png_write_row(), so can't use const here for pixmap.
     bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output);
+
+    // Call WebSocket::shutdown() ignoring Poco::IOException
+    void shutdownWebSocket(Poco::Net::WebSocket& ws);
 };
 
 #endif

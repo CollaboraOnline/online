@@ -68,14 +68,7 @@ LOOLSession::LOOLSession(WebSocket& ws, Kind kind) :
 LOOLSession::~LOOLSession()
 {
     std::cout << Util::logPrefix() << "LOOLSession dtor this=" << this << " " << _kind << std::endl;
-    try
-    {
-        _ws->shutdown();
-    }
-    catch (Poco::IOException& exc)
-    {
-        Application::instance().logger().error(Util::logPrefix() + "IOException: " + exc.message());
-    }
+    Util::shutdownWebSocket(*_ws);
 }
 
 void LOOLSession::sendTextFrame(const std::string& text)
@@ -103,17 +96,10 @@ MasterProcessSession::MasterProcessSession(WebSocket& ws, Kind kind) :
 MasterProcessSession::~MasterProcessSession()
 {
     std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer << std::endl;
-    _ws->shutdown();
+    Util::shutdownWebSocket(*_ws);
     if (_kind == Kind::ToClient && _peer != nullptr)
     {
-        try
-        {
-            _peer->_ws->shutdown();
-        }
-        catch (Poco::IOException& exc)
-        {
-            Application::instance().logger().error(Util::logPrefix() + "IOException: " + exc.message());
-        }
+        Util::shutdownWebSocket(*(_peer->_ws));
     }
 }
 
@@ -488,7 +474,7 @@ ChildProcessSession::ChildProcessSession(WebSocket& ws, LibreOfficeKit *loKit, P
 ChildProcessSession::~ChildProcessSession()
 {
     std::cout << Util::logPrefix() << "ChildProcessSession dtor this=" << this << std::endl;
-    _ws->shutdown();
+    Util::shutdownWebSocket(*_ws);
 }
 
 bool ChildProcessSession::handleInput(char *buffer, int length)

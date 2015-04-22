@@ -13,8 +13,11 @@
 
 #include <png.h>
 
+#include <Poco/Exception.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
 #include <Poco/Thread.h>
+#include <Poco/Util/Application.h>
 
 #include "Util.hpp"
 
@@ -83,6 +86,18 @@ namespace Util
         png_destroy_write_struct(&png_ptr, NULL);
 
         return true;
+    }
+
+    void shutdownWebSocket(Poco::Net::WebSocket& ws)
+    {
+        try
+        {
+            ws.shutdown();
+        }
+        catch (Poco::IOException& exc)
+        {
+            Poco::Util::Application::instance().logger().error(logPrefix() + "IOException: " + exc.message());
+        }
     }
 }
 
