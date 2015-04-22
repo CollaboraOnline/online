@@ -64,9 +64,6 @@ protected:
 
     // In the master, the actual URL. In the child, the copy inside the chroot jail.
     std::string _docURL;
-
-    // The id of the child process
-    Poco::UInt64 _childId;
 };
 
 template<typename charT, typename traits>
@@ -130,12 +127,16 @@ protected:
     static std::set<MasterProcessSession*> _availableChildSessions;
 
     std::unique_ptr<TileCache> _tileCache;
+
+private:
+    // The id of the child process
+    Poco::UInt64 _childId;
 };
 
 class ChildProcessSession final : public LOOLSession
 {
 public:
-    ChildProcessSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit, Poco::UInt64 childId);
+    ChildProcessSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit);
     virtual ~ChildProcessSession();
 
     virtual bool handleInput(char *buffer, int length) override;

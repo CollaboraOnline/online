@@ -59,8 +59,7 @@ const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
 LOOLSession::LOOLSession(WebSocket& ws, Kind kind) :
     _kind(kind),
     _ws(&ws),
-    _docURL(""),
-    _childId(0)
+    _docURL("")
 {
     std::cout << Util::logPrefix() << "LOOLSession ctor this=" << this << " " << _kind << " ws=" << _ws << std::endl;
 }
@@ -87,7 +86,8 @@ std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
 MasterProcessSession::MasterProcessSession(WebSocket& ws, Kind kind) :
     LOOLSession(ws, kind),
-    _peer(nullptr)
+    _peer(nullptr),
+    _childId(0)
 {
     std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws << std::endl;
 }
@@ -461,7 +461,7 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
     _peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
-ChildProcessSession::ChildProcessSession(WebSocket& ws, LibreOfficeKit *loKit, Poco::UInt64 childId) :
+ChildProcessSession::ChildProcessSession(WebSocket& ws, LibreOfficeKit *loKit) :
     LOOLSession(ws, Kind::ToMaster),
     _loKit(loKit),
     _loKitDocument(NULL)

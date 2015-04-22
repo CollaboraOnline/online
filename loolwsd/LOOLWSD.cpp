@@ -505,7 +505,7 @@ int LOOLWSD::childMain()
     HTTPResponse response;
     WebSocket ws(cs, request, response);
 
-    ChildProcessSession session(ws, loKit, _childId);
+    ChildProcessSession session(ws, loKit);
 
     ws.setReceiveTimeout(0);
 
