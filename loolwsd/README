@@ -35,7 +35,9 @@ invokes sudo to run /sbin/setcap.
 
 If you have self-built Poco, add the following to ./configure:
 
-    --with-poco-includes=<MASTER>/include --with-poco-libs=<...>/lib
+    --with-poco-includes=<POCOINST>/include --with-poco-libs=<POCOINST>/lib
+
+where <POCOINST> means the Poco installation location.
 
 If you have the Poco debugging libraries (eg. you have a self-built
 Poco), you can add --enable-debug to the configure options for
