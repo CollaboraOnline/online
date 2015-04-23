@@ -37,28 +37,36 @@ namespace LOOLProtocol
         }
         catch (std::invalid_argument&)
         {
-            std::string type = token.substr(name.size() + 1);
-            if (type == "'start'" ||
-                type == "'buttondown'" ||
-                type == "'input'")
+            if (token.size() > name.size() + 1)
             {
-                value = 0;
-            }
-            else if (type == "'end'" ||
-                     type == "'buttonup'" ||
-                     type == "'up'")
-            {
-                value = 1;
-            }
-            else if (type == "'reset'" ||
-                     type == "'move'")
-            {
-                value = 2;
+                std::string type = token.substr(name.size() + 1);
+                if (type == "'start'" ||
+                    type == "'buttondown'" ||
+                    type == "'input'")
+                {
+                    value = 0;
+                }
+                else if (type == "'end'" ||
+                         type == "'buttonup'" ||
+                         type == "'up'")
+                {
+                    value = 1;
+                }
+                else if (type == "'reset'" ||
+                         type == "'move'")
+                {
+                    value = 2;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                return false ;
+                return false;
             }
+
         }
         return true;
     }
