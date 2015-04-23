@@ -33,5 +33,5 @@ cd $CHROOT || exit 1
 ) |
 
 while read file; do
-    cp --parents $file . || exit 1
+    cp --parents $file .
 done
