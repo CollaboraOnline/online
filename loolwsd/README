@@ -1,13 +1,14 @@
 LibreOffice On-Line WebSocket server
 ====================================
 
-Installation
+Dependencies
 ------------
 
 LibreOffice On-Line WebSocket server has the following dependencies:
 
 * libpng
 * Poco library: http://pocoproject.org/index.html.
+* libcap-progs
 
 Poco can be built with ./configure --prefix=/opt/poco && make install, but
 distro packages exist too.
@@ -15,7 +16,7 @@ distro packages exist too.
 On openSUSE, you can use:
 
     zypper ar http://download.opensuse.org/repositories/devel:/libraries:/c_c++/openSUSE_13.2/devel:libraries:c_c++.repo
-    zypper in poco
+    zypper in poco-devel libcap-progs
 
 Building
 --------
