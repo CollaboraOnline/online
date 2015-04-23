@@ -14,6 +14,11 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CXX
 
+AC_PATH_PROG([SETCAP], setcap,[],[/bin:/usr/bin:/sbin:/usr/sbin])
+
+AS_IF([test -z "$SETCAP"],
+      [AC_MSG_ERROR([The setcap command is needed. It might be in a package called libcap-progs.])])
+
 # Declare options
 AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],

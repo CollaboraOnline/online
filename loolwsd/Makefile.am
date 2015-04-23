@@ -16,6 +16,6 @@ clean-cache:
 
 # After building loolwsd, set its capabilities to allow chroot()
 SETCAP: loolwsd
-	sudo /sbin/setcap cap_sys_chroot=ep loolwsd
+	sudo @SETCAP@ cap_sys_chroot=ep loolwsd
 
 bin_PROGRAMS += SETCAP
