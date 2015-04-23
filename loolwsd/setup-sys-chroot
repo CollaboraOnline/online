@@ -16,12 +16,11 @@ cd $CHROOT || exit 1
     # into the template tree of system files for the chroot jails.
 
     # First essential files and shared objects
-    for F in /etc/passwd /etc/group /etc/hosts \
-	     /etc/resolv.conf \
-	     /lib/ld-* /lib64/ld-* \
-	     /lib/libnss_* /lib64/libnss_* ; do echo $F; done
-
-    find /etc/fonts -type f
+    find /etc/passwd /etc/group /etc/hosts \
+	 /etc/resolv.conf \
+	 /lib/ld-* /lib64/ld-* \
+	 /lib/libnss_* /lib64/libnss_* \
+	 /etc/fonts -type f
 
     # Go through the LO shared objects and check what system libraries
     # they link to.
