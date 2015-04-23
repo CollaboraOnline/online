@@ -1,3 +1,6 @@
+- You can easily get loolwsd running in a busy loop when a child crashes
+  Instead, we should just re-steart the child
+
 - Make child processes time out and go away when inactive for a while.
 
 - Make the "load" request actually take an URL, not a file name. (But

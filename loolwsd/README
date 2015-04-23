@@ -52,8 +52,13 @@ progress.
 Running
 -------
 
-Run loolwsd for instance like this, to run it the way it is supposed
-to eventually be run "for real":
+Now you need to set up a minimal chroot system, and directory for the jails:
+
+    ./setup-sys-chroot <SYSTEMPLATE> <MASTER>/instdir
+    mkdir <ROOTFORJAILS>
+
+To run loolwsd the way it is supposed to eventually be run "for real", you can
+now do:
 
     ./loolwsd --systemplate=<SYSTEMPLATE> --lotemplate=<MASTER>/instdir --childroot=<ROOTFORJAILS>
 
@@ -91,6 +96,20 @@ scripting, etc. For instance:
     (echo load /some/where/foo.odt; echo tile width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) |
     ./loolwsd --test --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
 
+Debugging
+---------
+
+When debugging, you want to add --numprespawns=1 to the loolwsd parameters to
+limit the amount of concurrently running processes.
+
+When the crash happens too early, you also want to
+
+    export SLEEPFORDEBUGGER=<number of seconds>
+
+so that you have time to attach to the process.
+
+Then run loolwsd, and attach your debugger to the process you are interested
+in.
 
 Protocol description
 --------------------
