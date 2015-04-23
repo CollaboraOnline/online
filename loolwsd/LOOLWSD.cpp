@@ -267,7 +267,7 @@ public:
 
     void run() override
     {
-        HTTPClientSession cs("localhost", _svs.address().port());
+        HTTPClientSession cs("127.0.0.1", _svs.address().port());
         HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
         HTTPResponse response;
         WebSocket ws(cs, request, response);
@@ -507,7 +507,7 @@ int LOOLWSD::childMain()
     // Open websocket connection between the child process and the
     // parent. The parent forwards us requests that it can't handle.
 
-    HTTPClientSession cs("localhost", portNumber);
+    HTTPClientSession cs("127.0.0.1", portNumber);
     HTTPRequest request(HTTPRequest::HTTP_GET, LOOLWSD::CHILD_URI);
     HTTPResponse response;
     WebSocket ws(cs, request, response);

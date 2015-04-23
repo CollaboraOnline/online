@@ -114,7 +114,7 @@ class Connect: public Poco::Util::Application
 {
 public:
     Connect() :
-        _uri("http://localhost:" + std::to_string(LOOLWSD::DEFAULT_PORT_NUMBER) + "/ws")
+        _uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_PORT_NUMBER) + "/ws")
     {
     }
 
