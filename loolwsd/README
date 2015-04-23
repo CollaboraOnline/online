@@ -88,7 +88,7 @@ interactively, or edit input lines into a file, or use shell
 scripting, etc. For instance:
 
     (echo load /some/where/foo.odt; echo tile width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) |
-    ./loolwsd --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
+    ./loolwsd --test --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
 
 
 Protocol description
