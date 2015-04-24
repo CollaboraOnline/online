@@ -14,7 +14,7 @@ L.Map = L.Evented.extend({
 		*/
 
 		fadeAnimation: true,
-		trackResize: true,
+		trackResize: false,
 		markerZoomAnimation: true
 	},
 
