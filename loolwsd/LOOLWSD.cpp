@@ -313,9 +313,29 @@ public:
         while (!someChildrenHaveDied || MasterProcessSession::_childProcesses.size() > 0)
         {
             int status;
-            pid_t pid = waitpid(-1, &status, WNOHANG);
-            if (pid <= 0)
-                continue;
+            pid_t pid = waitpid(-1, &status, 0);
+            if (pid < 0)
+            {
+                if (errno == ECHILD)
+                {
+                    if (!someChildrenHaveDied)
+                    {
+                        // We haven't spawned any children yet, or at least none has died yet. So
+                        // wait a bit and try again
+                        Thread::sleep(1000);
+                        continue;
+                    }
+                    else
+                    {
+                        // We have spawned children, and we think that we still have them running,
+                        // but we don't, huh? Something badly messed up, or just a timing glitch,
+                        // like we are at the moment in the process of spawning new children?
+                        // Sleep or return from the function (i.e. finish the Undertaker thread)?
+                        std::cout << Util::logPrefix() << "No child processes even if we think there should be some!?" << std::endl;
+                        return;
+                    }
+                }
+            }
 
             if (MasterProcessSession::_childProcesses.find(pid) == MasterProcessSession::_childProcesses.end())
                 std::cout << Util::logPrefix() << "(Not one of our known child processes)" << std::endl;
