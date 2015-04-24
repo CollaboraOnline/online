@@ -1,5 +1,10 @@
 - You can easily get loolwsd running in a busy loop when a child crashes
-  Instead, we should just re-steart the child
+  Instead, we should just re-start the child
+
+- Add a document part number parameter to the protocol where
+  appropriate. Needed at least for the tile, key, mouse, selecttext
+  and selectgrahic client->server messages, and for the tile:
+  server->client message. Not sure about the LOK callbacks.
 
 - Make child processes time out and go away when inactive for a while.
 
