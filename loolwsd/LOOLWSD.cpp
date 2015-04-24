@@ -337,6 +337,11 @@ public:
                 }
             }
 
+            if (WIFSIGNALED(status))
+                Application::instance().logger().error(Util::logPrefix() + "Child " + std::to_string(pid) + " killed by signal " + Util::signalName(WTERMSIG(status)));
+            else
+                Application::instance().logger().information(Util::logPrefix() + "Child " + std::to_string(pid) + " died normally, status: " + std::to_string(WEXITSTATUS(status)));
+
             if (MasterProcessSession::_childProcesses.find(pid) == MasterProcessSession::_childProcesses.end())
                 std::cout << Util::logPrefix() << "(Not one of our known child processes)" << std::endl;
             else
