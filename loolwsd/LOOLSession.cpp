@@ -296,7 +296,9 @@ namespace
     {
         sourceForLinkOrCopy = source;
         destinationForLinkOrCopy = destination;
-        nftw(source.c_str(), linkOrCopyFunction, 10, 0);
+        if (nftw(source.c_str(), linkOrCopyFunction, 10, 0) == -1)
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "linkOrCopy: nftw() failed for '" + source + "'");
     }
 }
 
