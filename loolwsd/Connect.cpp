@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -83,7 +84,7 @@ public:
                     std::string firstLine = getFirstLine(buffer, n);
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 #ifdef __linux
-                    if (tokens[0] == "tile:")
+                    if (std::getenv("DISPLAY") != nullptr && tokens[0] == "tile:")
                     {
                         TemporaryFile pngFile;
                         std::ofstream pngStream(pngFile.path(), std::ios::binary);

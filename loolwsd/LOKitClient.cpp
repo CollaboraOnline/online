@@ -133,10 +133,13 @@ protected:
                 pngStream.write(png.data(), png.size());
                 pngStream.close();
 #ifdef __linux
-                if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
+                if (std::getenv("DISPLAY") != nullptr)
                 {
-                    // Not worth it to display a warning, this is just a throwaway test program, and
-                    // the developer running it surely notices if nothing shows up...
+                    if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
+                    {
+                        // Not worth it to display a warning, this is just a throwaway test program, and
+                        // the developer running it surely notices if nothing shows up...
+                    }
                 }
 #endif
             }
