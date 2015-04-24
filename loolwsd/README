@@ -52,6 +52,12 @@ progress.
 Running
 -------
 
+First create the directory used for caching tiles. It is set as
+"${localstatedir}/cache/${PACKAGE}" in the configure.ac, so if you did
+not pass any switch to the configure script that affects
+"localstatedir, it will be /usr/local/var/cache/loolwsd . If you did
+pass such a switch, like --prefix, check config.h for the exact value.
+
 Now you need to set up a minimal chroot system, and directory for the jails:
 
     ./setup-sys-chroot <SYSTEMPLATE> <MASTER>/instdir
