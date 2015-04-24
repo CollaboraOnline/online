@@ -10,6 +10,8 @@
 #ifndef INCLUDED_UTIL_HPP
 #define INCLUDED_UTIL_HPP
 
+#include <string>
+
 #include <Poco/Net/WebSocket.h>
 
 namespace Util
@@ -22,6 +24,8 @@ namespace Util
 
     // Call WebSocket::shutdown() ignoring Poco::IOException
     void shutdownWebSocket(Poco::Net::WebSocket& ws);
+
+    std::string signalName(int signo);
 };
 
 #endif

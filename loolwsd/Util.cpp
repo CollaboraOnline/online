@@ -13,6 +13,8 @@
 
 #include <png.h>
 
+#include <signal.h>
+
 #include <Poco/Exception.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
@@ -97,6 +99,58 @@ namespace Util
         catch (Poco::IOException& exc)
         {
             Poco::Util::Application::instance().logger().error(logPrefix() + "IOException: " + exc.message());
+        }
+    }
+
+    std::string signalName(int signo)
+    {
+        switch (signo)
+        {
+#define CASE(x) case SIG##x: return #x
+            CASE(HUP);
+            CASE(INT);
+            CASE(QUIT);
+            CASE(ILL);
+            CASE(ABRT);
+            CASE(FPE);
+            CASE(KILL);
+            CASE(SEGV);
+            CASE(ALRM);
+            CASE(TERM);
+            CASE(USR1);
+            CASE(USR2);
+            CASE(CHLD);
+            CASE(CONT);
+            CASE(STOP);
+            CASE(TSTP);
+            CASE(TTIN);
+            CASE(TTOU);
+            CASE(BUS);
+            CASE(POLL);
+            CASE(PROF);
+            CASE(SYS);
+            CASE(TRAP);
+            CASE(URG);
+            CASE(VTALRM);
+            CASE(XCPU);
+            CASE(XFSZ);
+#ifdef SIGEMT
+            CASE(EMT);
+#endif
+            CASE(STKFLT);
+#if defined(SIGIO) && SIGIO != SIGPOLL
+            CASE(IO);
+#endif
+#ifdef SIGPWR
+            CASE(PWR);
+#endif
+#ifdef SIGLOST
+            CASE(LOST);
+#endif
+            CASE(WINCH);
+#undef CASE
+        default:
+            return std::to_string(signo);
         }
     }
 }
