@@ -15,7 +15,5 @@ clean-cache:
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
 
 # After building loolwsd, set its capabilities to allow chroot()
-SETCAP: loolwsd
+all-local: loolwsd
 	sudo @SETCAP@ cap_sys_chroot=ep loolwsd
-
-bin_PROGRAMS += SETCAP
