@@ -116,3 +116,45 @@ Protocol description
 
 See protocol.txt for a description of the protocol to be used over the
 websocket.
+
+Coding style
+------------
+
+There is not really any serious rationale why the code ended up being
+written in the style it is... but unless you plan to change some style
+detail completely and consistenly all over, please keep to the style
+of the existing code when editing.
+
+The style is roughly as follows, in rough order of importance:
+
+- As in LO, no hard TABs in source files. Only spaces. Indentation
+  step is four columns.
+
+- As in LO, the braces { and } of the block of if, switch, and while
+  statements go on separate lines.
+
+- Following Poco conventions, member variables are prefixed with an
+  underscore. But I am not opposed to changing this to 'm_' for
+  instance.
+
+- Do use C++11. I admit in some places (out of laziness or ignorance)
+  I use Poco API even if there probably is an equivalent std::
+  API. (Like for threads.) Feel free to change those, if the std:: API
+  is not much more verbose or ugly, and you are sure it is equivalent.
+
+- Always prefer the C++ wrapped version of a C library
+  API. I.e. include <cstring> instead of <string.h>, use std::memcpy()
+  instead of memcpy(), etc.
+
+- Use std:: prefix for all std API, i.e. don't ever do "using
+  std;". But it's OK to use "using Poco::Foo;" all over. Maybe that is
+  not a good idea?
+
+- Be as portable as possible, i.e. don't intentionally write Unix-only
+  code if there is a choice. Obviously some parts of the code
+  currently use Unix-only things like chroot() and link() though.
+
+- Member functions use camelCaseWithInitialLowerCase. I don't like
+  CamelCaseWithInitialUpperCase.
+
+- No kind of Hungarian prefixes.
