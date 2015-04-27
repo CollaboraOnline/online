@@ -85,10 +85,10 @@ The <ROOTFORJAILS> directory above is a presumably initially empty
 directory under which loolwsd will create chroot jails for editing
 each specific document.
 
-As loolwsd uses hardlinks to "copy" the contents of both <SYSTEMPLATE>
-and the <MASTER>/instdir directories into each chroot jail,
-<SYSTEMPLATE> and <ROOTFORJAILS> need to be on the same file system as
-<MASTER>/instdir.
+As loolwsd uses hardlinks to "copy" the contents of both
+<SYSTEMPLATE> and the <MASTER>/instdir directories into each chroot
+jail, <SYSTEMPLATE> and <MASTER>/instdir need to be on the same file
+system as <ROOTFORJAILS>.
 
 If you plan to hack on loolwsd, you probably want to familiarize
 yourself with loolwsd's --test and --numprespawns switches, and the
