@@ -3,6 +3,10 @@
   and selectgrahic client->server messages, and for the tile:
   server->client message. Not sure about the LOK callbacks.
 
+- Have MasterProcessSession::dispatchChild() wait for a child process
+  to become available, if none of those that have been (pre-)spawned
+  have initialised themselves and reported back yet.
+
 - Make child processes time out and go away when inactive for a while.
 
 - Make the "load" request actually take an URL, not a file name. (But
