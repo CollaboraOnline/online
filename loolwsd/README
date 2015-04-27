@@ -75,10 +75,11 @@ LibreOffice.  This is work in progress, and consequently needs the latest
 LibreOffice master.
 
 The <SYSTEMPLATE> is a directory tree set up using the
-setup-sys-chroot script here. It is intended to contain the runtime
-environment needed by the LibreOffice dynamic libraries used through
-LibreOfficeKit. Improvements to that script are very likely needed on
-various distros.
+setup-sys-chroot script here. (It should not exist before running the
+script.) It will contain the runtime environment needed by the
+LibreOffice dynamic libraries used through LibreOfficeKit.
+Improvements to that script are very likely needed on various
+distros.
 
 The <ROOTFORJAILS> directory above is a presumably initially empty
 directory under which loolwsd will create chroot jails for editing
