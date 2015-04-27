@@ -113,7 +113,9 @@ L.TileLayer = L.GridLayer.extend({
 
 			var key = this._tileCoordsToKey(coords);
 			var tile = this._tiles[key];
-			tile.el.src = 'data:image/png;base64,' + window.btoa(String.fromCharCode.apply(null, data));
+			if (tile) {
+				tile.el.src = 'data:image/png;base64,' + window.btoa(String.fromCharCode.apply(null, data));
+			}
 		}
 	},
 

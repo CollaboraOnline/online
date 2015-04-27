@@ -325,6 +325,7 @@ L.GridLayer = L.Layer.extend({
 
 			this._tileZoom = tileZoom;
 			if (tileZoomChanged) {
+				this._map._zoom = tileZoom;
 				this._updateTileTwips();
 				this._updateMaxBounds();
 			}
@@ -360,10 +361,10 @@ L.GridLayer = L.Layer.extend({
 
 		// TODO set a smooth transition when updating the scroll position
 		// previous scroll position (relative)
-		//var prevX = this._map._outerContainer.scrollLeft /
-		//	(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
-		//var prevY = this._map._outerContainer.scrollTop /
-		//	(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
+		var prevX = this._map._outerContainer.scrollLeft /
+			(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
+		var prevY = this._map._outerContainer.scrollTop /
+			(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
 
 		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', '');
 		L.DomUtil.setStyle(this._map._container, 'width', docPixelLimits.x + 'px');
@@ -371,10 +372,10 @@ L.GridLayer = L.Layer.extend({
 		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', 'auto');
 
 		// restore the relative scroll position
-		//this._map._outerContainer.scrollLeft = prevX *
-		//	(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
-		//this._map._outerContainer.scrollTop = prevY *
-		//	(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
+		this._map._outerContainer.scrollLeft = prevX *
+			(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
+		this._map._outerContainer.scrollTop = prevY *
+			(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
 	},
 
 	_setZoomTransforms: function (center, zoom) {
