@@ -1,7 +1,7 @@
 - Add a document part number parameter to the protocol where
-  appropriate. Needed at least for the tile, key, mouse, selecttext
-  and selectgrahic client->server messages, and for the tile:
-  server->client message. Not sure about the LOK callbacks.
+  appropriate. Needed at least for the key, mouse, selecttext and
+  selectgrahic client->server messages. Probably also the LOK
+  callback server->client messages.
 
 - Have MasterProcessSession::dispatchChild() wait for a child process
   to become available, if none of those that have been (pre-)spawned
