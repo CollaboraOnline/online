@@ -23,12 +23,14 @@ Building
 
 loolwsd uses autoconf/automake, so build using the usual:
 
+    MASTER=/path/to/built/core.git # configure for your system
+
     autoreconf
     automake --add-missing
-    ./configure --enable-silent-rules --with-lokit-path=<MASTER>/include
+    ./configure --enable-silent-rules --with-lokit-path=${MASTER}/include
     make
 
-where <MASTER> is the location of the LibreOffice source tree.
+where ${MASTER} is the location of the LibreOffice source tree.
 
 Note that the loolwsd program needs the CAP_SYS_CHROOT capability,
 thus you will be asked the root password when running make as it
@@ -58,37 +60,45 @@ not pass any switch to the configure script that affects
 "localstatedir, it will be /usr/local/var/cache/loolwsd . If you did
 pass such a switch, like --prefix, check config.h for the exact value.
 
+If you're using the defaults you'll need to:
+
+sudo mkdir -p /usr/local/var/cache/loolwsd
+sudo chown `whoami` /usr/local/var/cache/loolwsd
+
 Now you need to set up a minimal chroot system, and directory for the jails:
 
-    ./setup-sys-chroot <SYSTEMPLATE> <MASTER>/instdir
-    mkdir <ROOTFORJAILS>
+    SYSTEMPLATE=`pwd`/systemplate  # or tweak for your system
+    ROOTFORJAILS=`pwd`/jails       # or tweak for your system
+
+    ./setup-sys-chroot ${SYSTEMPLATE} ${MASTER}/instdir
+    mkdir -p ${ROOTFORJAILS}
 
 To run loolwsd the way it is supposed to eventually be run "for real", you can
 now do:
 
-    ./loolwsd --systemplate=<SYSTEMPLATE> --lotemplate=<MASTER>/instdir --childroot=<ROOTFORJAILS>
+    ./loolwsd --systemplate=${SYSTEMPLATE} --lotemplate=${MASTER}/instdir --childroot=${ROOTFORJAILS}
 
 and connect loleaflet to that (see loleaflet/README for more info).
 
-Again, <MASTER> is location of the LibreOffice source tree with a built
+Again, ${MASTER} is location of the LibreOffice source tree with a built
 LibreOffice.  This is work in progress, and consequently needs the latest
 LibreOffice master.
 
-The <SYSTEMPLATE> is a directory tree set up using the
+The ${SYSTEMPLATE} is a directory tree set up using the
 setup-sys-chroot script here. (It should not exist before running the
 script.) It will contain the runtime environment needed by the
 LibreOffice dynamic libraries used through LibreOfficeKit.
 Improvements to that script are very likely needed on various
 distros.
 
-The <ROOTFORJAILS> directory above is a presumably initially empty
+The ${ROOTFORJAILS} directory above is a presumably initially empty
 directory under which loolwsd will create chroot jails for editing
 each specific document.
 
 As loolwsd uses hardlinks to "copy" the contents of both
-<SYSTEMPLATE> and the <MASTER>/instdir directories into each chroot
-jail, <SYSTEMPLATE> and <MASTER>/instdir need to be on the same file
-system as <ROOTFORJAILS>.
+${SYSTEMPLATE} and the ${MASTER}/instdir directories into each chroot
+jail, ${SYSTEMPLATE} and ${MASTER}/instdir need to be on the same file
+system as ${ROOTFORJAILS}.
 
 If you plan to hack on loolwsd, you probably want to familiarize
 yourself with loolwsd's --test and --numprespawns switches, and the
