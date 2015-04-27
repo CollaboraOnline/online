@@ -66,6 +66,11 @@ AC_SEARCH_LIBS([png_create_write_struct],
                [],
                [AC_MSG_ERROR([libpng not available?])])
 
+AC_SEARCH_LIBS([cap_get_proc],
+               [cap],
+               [],
+               [AC_MSG_ERROR([libcap not available?])])
+
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX}"
 
 AC_LANG_PUSH([C++])

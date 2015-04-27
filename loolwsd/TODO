@@ -12,8 +12,6 @@
 - Make the "load" request actually take an URL, not a file name. (But
   for now would always be a file: URL, sure.)
 
-- Get rid of the CHROOT capability after using it
-
 - Investigate using "bind" mounts, remounted read-only, to set up the
   chroot jail, instead of requiring the "sys" template tree to
   traverse and hardlink into the jail.

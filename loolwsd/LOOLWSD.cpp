@@ -44,6 +44,7 @@ DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 
 #ifdef __linux
+#include <sys/capability.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #endif
@@ -484,6 +485,36 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
+namespace
+{
+    void dropChrootCapability()
+    {
+        cap_t caps;
+        cap_value_t cap_list[] = { CAP_SYS_CHROOT };
+
+        caps = cap_get_proc();
+        if (caps == NULL)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "cap_get_proc() failed: " + strerror(errno));
+            exit(1);
+        }
+
+        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
+            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
+        {
+            Application::instance().logger().error(Util::logPrefix() +  "cap_set_flag() failed: " + strerror(errno));
+            exit(1);
+        }
+
+        if (cap_set_proc(caps) == -1)
+        {
+            Application::instance().logger().error(std::string("cap_set_proc() failed: ") + strerror(errno));
+            exit(1);
+        }
+        cap_free(caps);
+    }
+}
+
 int LOOLWSD::childMain()
 {
     std::cout << Util::logPrefix() << "Child here!" << std::endl;
@@ -571,6 +602,8 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     if (childMode())
         return childMain();
+
+    dropChrootCapability();
 
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the parent (but not in the
