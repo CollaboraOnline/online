@@ -21,7 +21,7 @@ cd $CHROOT || exit 1
 	 /lib/ld-* /lib64/ld-* \
 	 /etc/ld.so.* \
 	 /lib/libnss_* /lib64/libnss_* \
-	 /usr/share/fonts \
+	 /var/cache/fontconfig \
 	 /etc/fonts -type f
 
     # Go through the LO shared objects and check what system libraries
@@ -36,3 +36,10 @@ cd $CHROOT || exit 1
 while read file; do
     cp --parents $file .
 done
+
+# /usr/share/fonts needs to be taken care of separately because the
+# directory time stamps must be preserved are for fontconfig to trust
+# its cache.
+
+mkdir usr/share || exit 1
+cp -r -p /usr/share/fonts usr/share
