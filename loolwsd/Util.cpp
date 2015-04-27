@@ -16,8 +16,10 @@
 #include <signal.h>
 
 #include <Poco/Exception.h>
+#include <Poco/Format.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
+#include <Poco/Timestamp.h>
 #include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
 
@@ -49,7 +51,9 @@ namespace Util
 
     std::string logPrefix()
     {
-        return std::to_string(Poco::Process::id()) + ":" + (Poco::Thread::current() ? std::to_string(Poco::Thread::current()->id()) : "0") + ": ";
+        static Poco::Timestamp firstTimeStamp;
+        Poco::Int64 now = firstTimeStamp.elapsed();
+        return std::to_string(Poco::Process::id()) + ":" + (Poco::Thread::current() ? std::to_string(Poco::Thread::current()->id()) : "0") + ":" + std::to_string(now / 1000000) + "." + Poco::format("%03d", (int)((now / 1000) % 1000)) + ": ";
     }
 
     bool windowingAvailable()
