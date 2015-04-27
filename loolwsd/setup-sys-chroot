@@ -43,3 +43,5 @@ done
 
 mkdir usr/share || exit 1
 cp -r -p /usr/share/fonts usr/share
+mkdir usr/share/ghostscript || exit 1
+cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
