@@ -19,7 +19,9 @@ cd $CHROOT || exit 1
     find /etc/passwd /etc/group /etc/hosts \
 	 /etc/resolv.conf \
 	 /lib/ld-* /lib64/ld-* \
+	 /etc/ld.so.* \
 	 /lib/libnss_* /lib64/libnss_* \
+	 /usr/share/fonts \
 	 /etc/fonts -type f
 
     # Go through the LO shared objects and check what system libraries

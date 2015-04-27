@@ -70,8 +70,9 @@ Now you need to set up a minimal chroot system, and directory for the jails:
     SYSTEMPLATE=`pwd`/systemplate  # or tweak for your system
     ROOTFORJAILS=`pwd`/jails       # or tweak for your system
 
-    ./setup-sys-chroot ${SYSTEMPLATE} ${MASTER}/instdir
-    mkdir -p ${ROOTFORJAILS}
+    rm -Rf ${SYSTEMPLATE} # clean
+    ./setup-sys-chroot ${SYSTEMPLATE} ${MASTER}/instdir # build template
+    mkdir -p ${ROOTFORJAILS} # create location for transient jails.
 
 To run loolwsd the way it is supposed to eventually be run "for real", you can
 now do:
