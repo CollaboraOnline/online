@@ -7,7 +7,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
 #include <ftw.h>
+#include <utime.h>
 
 #include <cassert>
 #include <cstring>
@@ -252,11 +256,12 @@ namespace
 
         assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
         const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
-        Path newPath(destinationForLinkOrCopy, relativeOldPath);
+        Path newPath(destinationForLinkOrCopy, Path(relativeOldPath));
 
         switch (typeflag)
         {
         case FTW_F:
+            File(newPath.parent()).createDirectories();
             if (link(fpath, newPath.toString().c_str()) == -1)
             {
                 Application::instance().logger().error(Util::logPrefix() +
@@ -265,13 +270,27 @@ namespace
                 exit(1);
             }
             break;
-        case FTW_D:
-            if (mkdir(newPath.toString().c_str(), 0700) == -1)
+        case FTW_DP:
             {
-                Application::instance().logger().error(Util::logPrefix() +
-                                                       "mkdir(\"" + newPath.toString() + "\") failed: " +
-                                                       strerror(errno));
-                return 1;
+                struct stat st;
+                if (stat(fpath, &st) == -1)
+                {
+                    Application::instance().logger().error(Util::logPrefix() +
+                                                           "stat(\"" + fpath + "\") failed: " +
+                                                           strerror(errno));
+                    return 1;
+                }
+                File(newPath).createDirectories();
+                struct utimbuf ut;
+                ut.actime = st.st_atime;
+                ut.modtime = st.st_mtime;
+                if (utime(newPath.toString().c_str(), &ut) == -1)
+                {
+                    Application::instance().logger().error(Util::logPrefix() +
+                                                           "utime(\"" + newPath.toString() + "\", &ut) failed: " +
+                                                           strerror(errno));
+                    return 1;
+                }
             }
             break;
         case FTW_DNR:
@@ -283,9 +302,9 @@ namespace
                                                    "nftw: stat failed for '" + fpath + "'");
             return 1;
         case FTW_SLN:
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "nftw: symlink to nonexistent file: '" + fpath + "'");
-            return 1;
+            Application::instance().logger().information(Util::logPrefix() +
+                                                         "nftw: symlink to nonexistent file: '" + fpath + "', ignored");
+            break;
         default:
             assert(false);
         }
@@ -296,7 +315,7 @@ namespace
     {
         sourceForLinkOrCopy = source;
         destinationForLinkOrCopy = destination;
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, 0) == -1)
+        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
             Application::instance().logger().error(Util::logPrefix() +
                                                    "linkOrCopy: nftw() failed for '" + source + "'");
     }
@@ -315,6 +334,7 @@ void MasterProcessSession::preSpawn()
     File(jail).createDirectory();
 
     Path jailLOInstallation(jail, LOOLWSD::loSubPath);
+    jailLOInstallation.makeDirectory();
     File(jailLOInstallation).createDirectory();
 
     // Copy (link) LO installation and other necessary files into it from the template
