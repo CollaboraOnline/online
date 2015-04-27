@@ -124,18 +124,19 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         {
             if (tokens[0] == "tile:")
             {
-                int width, height, tilePosX, tilePosY, tileWidth, tileHeight;
-                if (tokens.count() != 7 ||
-                    !getTokenInteger(tokens[1], "width", width) ||
-                    !getTokenInteger(tokens[2], "height", height) ||
-                    !getTokenInteger(tokens[3], "tileposx", tilePosX) ||
-                    !getTokenInteger(tokens[4], "tileposy", tilePosY) ||
-                    !getTokenInteger(tokens[5], "tilewidth", tileWidth) ||
-                    !getTokenInteger(tokens[6], "tileheight", tileHeight))
+                int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
+                if (tokens.count() != 8 ||
+                    !getTokenInteger(tokens[1], "part", part) ||
+                    !getTokenInteger(tokens[2], "width", width) ||
+                    !getTokenInteger(tokens[3], "height", height) ||
+                    !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
+                    !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
+                    !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
+                    !getTokenInteger(tokens[7], "tileheight", tileHeight))
                     assert(false);
 
                 assert(firstLine.size() < static_cast<std::string::size_type>(length));
-                peer->_tileCache->saveTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+                peer->_tileCache->saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
             }
             else if (tokens[0] == "status:")
             {
@@ -393,21 +394,23 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
 
 void MasterProcessSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
 {
-    int width, height, tilePosX, tilePosY, tileWidth, tileHeight;
+    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
-    if (tokens.count() != 7 ||
-        !getTokenInteger(tokens[1], "width", width) ||
-        !getTokenInteger(tokens[2], "height", height) ||
-        !getTokenInteger(tokens[3], "tileposx", tilePosX) ||
-        !getTokenInteger(tokens[4], "tileposy", tilePosY) ||
-        !getTokenInteger(tokens[5], "tilewidth", tileWidth) ||
-        !getTokenInteger(tokens[6], "tileheight", tileHeight))
+    if (tokens.count() != 8 ||
+        !getTokenInteger(tokens[1], "part", part) ||
+        !getTokenInteger(tokens[2], "width", width) ||
+        !getTokenInteger(tokens[3], "height", height) ||
+        !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
+        !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
+        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
+        !getTokenInteger(tokens[7], "tileheight", tileHeight))
     {
         sendTextFrame("error: cmd=tile kind=syntax");
         return;
     }
 
-    if (width <= 0 ||
+    if (part < 0 ||
+        width <= 0 ||
         height <= 0 ||
         tilePosX < 0 ||
         tilePosY < 0 ||
@@ -425,7 +428,7 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     if (cachedTile && cachedTile->is_open())
     {
         cachedTile->seekg(0, std::ios_base::end);
@@ -659,21 +662,23 @@ bool ChildProcessSession::getStatus(const char *buffer, int length)
 
 void ChildProcessSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
 {
-    int width, height, tilePosX, tilePosY, tileWidth, tileHeight;
+    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
-    if (tokens.count() != 7 ||
-        !getTokenInteger(tokens[1], "width", width) ||
-        !getTokenInteger(tokens[2], "height", height) ||
-        !getTokenInteger(tokens[3], "tileposx", tilePosX) ||
-        !getTokenInteger(tokens[4], "tileposy", tilePosY) ||
-        !getTokenInteger(tokens[5], "tilewidth", tileWidth) ||
-        !getTokenInteger(tokens[6], "tileheight", tileHeight))
+    if (tokens.count() != 8 ||
+        !getTokenInteger(tokens[1], "part", part) ||
+        !getTokenInteger(tokens[2], "width", width) ||
+        !getTokenInteger(tokens[3], "height", height) ||
+        !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
+        !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
+        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
+        !getTokenInteger(tokens[7], "tileheight", tileHeight))
     {
         sendTextFrame("error: cmd=tile kind=syntax");
         return;
     }
 
-    if (width <= 0 ||
+    if (part < 0 ||
+        width <= 0 ||
         height <= 0 ||
         tilePosX < 0 ||
         tilePosY < 0 ||
@@ -692,6 +697,7 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
     std::memcpy(output.data(), response.data(), response.size());
 
     unsigned char *pixmap = new unsigned char[4 * width * height];
+    _loKitDocument->pClass->setPart(_loKitDocument, part);
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output))

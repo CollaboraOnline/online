@@ -34,27 +34,27 @@ TileCache::TileCache(const std::string& docURL) :
     }
 }
 
-std::unique_ptr<std::fstream> TileCache::lookupTile(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
 {
     std::string dirName = cacheDirName();
 
     if (!Poco::File(dirName).exists() || !Poco::File(dirName).isDirectory())
         return nullptr;
 
-    std::string fileName = dirName + "/" + cacheFileName(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
 
     return result;
 }
 
-void TileCache::saveTile(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size)
+void TileCache::saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size)
 {
     std::string dirName = cacheDirName();
 
     Poco::File(dirName).createDirectories();
 
-    std::string fileName = dirName + "/" + cacheFileName(width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     std::fstream outStream(fileName, std::ios::out);
     outStream.write(data, size);
@@ -117,9 +117,10 @@ std::string TileCache::cacheDirName()
             Poco::DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
 }
 
-std::string TileCache::cacheFileName(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
 {
-    return (std::to_string(width) + "x" + std::to_string(height) + "." +
+    return (std::to_string(part) + "_" +
+            std::to_string(width) + "x" + std::to_string(height) + "." +
             std::to_string(tilePosX) + "," + std::to_string(tilePosY) + "." +
             std::to_string(tileWidth) + "x" + std::to_string(tileHeight) + ".png");
 }

@@ -19,7 +19,7 @@ load url=<url>
 
 status
 
-tile width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
+tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 
     All parameters are numbers.
 
@@ -64,7 +64,7 @@ status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=
 
     <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
 
-tile: width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> 
+tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 <binaryPngImage>
 
     The parameters from the corresponding 'tile' command.

@@ -20,14 +20,14 @@ class TileCache
 public:
     TileCache(const std::string& docURL);
 
-    std::unique_ptr<std::fstream> lookupTile(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
-    void saveTile(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
+    std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
     std::string getStatus();
     void saveStatus(const std::string& status);
 
 private:
     std::string cacheDirName();
-    std::string cacheFileName(int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     Poco::Timestamp getLastModified();
 
     const std::string& _docURL;
