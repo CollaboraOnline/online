@@ -85,7 +85,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_setPanOffset: function (pan) {
-		var keys = this._panKeys = {},
+		var keys = {},
 		    codes = this.keyCodes,
 		    i, len;
 
@@ -130,17 +130,7 @@ L.Map.Keyboard = L.Handler.extend({
 		var key = e.keyCode,
 		    map = this._map;
 
-		if (key in this._panKeys) {
-
-			if (map._panAnim && map._panAnim._inProgress) { return; }
-
-			map.panBy(this._panKeys[key]);
-
-			if (map.options.maxBounds) {
-				map.panInsideBounds(map.options.maxBounds);
-			}
-
-		} else if (key in this._zoomKeys) {
+		if (key in this._zoomKeys) {
 			map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);
 
 		} else if (key === 27) {
