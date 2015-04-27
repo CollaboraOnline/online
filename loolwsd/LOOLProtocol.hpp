@@ -10,6 +10,9 @@
 #ifndef INCLUDED_LOOLPROTOCOL_HPP
 #define INCLUDED_LOOLPROTOCOL_HPP
 
+#include <map>
+#include <string>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
@@ -60,6 +63,7 @@ namespace LOOLProtocol
 
     bool getTokenInteger(const std::string& token, const std::string& name, int& value);
     bool getTokenString(const std::string& token, const std::string& name, std::string& value);
+    bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value);
 
     // Functions that parse messages. All return false if parsing fails
     bool parseStatus(const std::string& message, LibreOfficeKitDocumentType& type, int& nParts, int& currentPart, int& width, int& height);

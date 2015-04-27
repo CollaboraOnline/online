@@ -450,7 +450,7 @@ void MasterProcessSession::dispatchChild()
 {
     // Copy document into jail using the fixed name
 
-    std::cout << Util::logPrefix() << "available child sessions: " << _availableChildSessions.size() << std::endl;
+    std::cout << Util::logPrefix() << "available child sessions: " << _availableChildSessions.size() << " pending child sessions: " << _pendingPreSpawnedChildren.size() << std::endl;
 
     assert(_availableChildSessions.size() > 0);
 
@@ -710,7 +710,9 @@ bool ChildProcessSession::keyEvent(const char *buffer, int length, Poco::StringT
     int type, charcode, keycode;
 
     if (tokens.count() != 4 ||
-        !getTokenInteger(tokens[1], "type", type) ||
+        !getTokenKeyword(tokens[1], "type",
+                         {{"input", LOK_KEYEVENT_KEYINPUT}, {"up", LOK_KEYEVENT_KEYUP}},
+                         type) ||
         !getTokenInteger(tokens[2], "char", charcode) ||
         !getTokenInteger(tokens[3], "key", keycode))
     {
@@ -728,7 +730,11 @@ bool ChildProcessSession::mouseEvent(const char *buffer, int length, Poco::Strin
     int type, x, y, count;
 
     if (tokens.count() != 5 ||
-        !getTokenInteger(tokens[1], "type", type) ||
+        !getTokenKeyword(tokens[1], "type",
+                         {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
+                          {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
+                          {"move", LOK_MOUSEEVENT_MOUSEMOVE}},
+                         type) ||
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y) ||
         !getTokenInteger(tokens[4], "count", count))
@@ -760,7 +766,11 @@ bool ChildProcessSession::selectText(const char *buffer, int length, Poco::Strin
     int type, x, y;
 
     if (tokens.count() != 4 ||
-        !getTokenInteger(tokens[1], "type", type) ||
+        !getTokenKeyword(tokens[1], "type",
+                         {{"start", LOK_SETTEXTSELECTION_START},
+                          {"end", LOK_SETTEXTSELECTION_END},
+                          {"reset", LOK_SETTEXTSELECTION_RESET}},
+                         type) ||
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y))
     {
@@ -778,7 +788,10 @@ bool ChildProcessSession::selectGraphic(const char *buffer, int length, Poco::St
     int type, x, y;
 
     if (tokens.count() != 4 ||
-        !getTokenInteger(tokens[1], "type", type) ||
+        !getTokenKeyword(tokens[1], "type",
+                         {{"start", LOK_SETGRAPHICSELECTION_START},
+                          {"end", LOK_SETGRAPHICSELECTION_END}},
+                         type) ||
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y))
     {

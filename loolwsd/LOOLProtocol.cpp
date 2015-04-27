@@ -9,6 +9,8 @@
 
 #include <cassert>
 #include <cstring>
+#include <map>
+#include <string>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -37,37 +39,9 @@ namespace LOOLProtocol
         }
         catch (std::invalid_argument&)
         {
-            if (token.size() > name.size() + 1)
-            {
-                std::string type = token.substr(name.size() + 1);
-                if (type == "'start'" ||
-                    type == "'buttondown'" ||
-                    type == "'input'")
-                {
-                    value = 0;
-                }
-                else if (type == "'end'" ||
-                         type == "'buttonup'" ||
-                         type == "'up'")
-                {
-                    value = 1;
-                }
-                else if (type == "'reset'" ||
-                         type == "'move'")
-                {
-                    value = 2;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-
+            return false;
         }
+
         return true;
     }
 
@@ -87,6 +61,25 @@ namespace LOOLProtocol
             return false;
         }
         value = token.substr(name.size() + 1);
+        return true;
+    }
+
+    bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value)
+    {
+        if (token.size() < name.size() + 2 ||
+            token.substr(0, name.size()) != name ||
+            token[name.size()] != '=')
+            return false;
+
+        std::string t = token.substr(name.size()+1);
+        if (t[0] == '\'' && t[t.size()-1] == '\'')
+            t = t.substr(1, t.size()-2);
+
+        auto p = map.find(t);
+        if (p == map.cend())
+            return false;
+
+        value = p->second;
         return true;
     }
 
