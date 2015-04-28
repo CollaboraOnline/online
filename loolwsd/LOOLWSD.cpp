@@ -632,6 +632,9 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     srv.start();
 
+    if (_doTest)
+        numPreSpawnedChildren = 1;
+
     for (int i = 0; i < numPreSpawnedChildren; i++)
         MasterProcessSession::preSpawn();
 
