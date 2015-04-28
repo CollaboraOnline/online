@@ -371,7 +371,7 @@ std::string LOOLWSD::loTemplate;
 std::string LOOLWSD::childRoot;
 std::string LOOLWSD::loSubPath = "lo";
 std::string LOOLWSD::jail;
-int LOOLWSD::numPreSpawnedChildren = 10;
+int LOOLWSD::_numPreSpawnedChildren = 10;
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 
 LOOLWSD::LOOLWSD() :
@@ -467,7 +467,7 @@ void LOOLWSD::handleOption(const std::string& name, const std::string& value)
     else if (name == "losubpath")
         loSubPath = value;
     else if (name == "numprespawns")
-        numPreSpawnedChildren = std::stoi(value);
+        _numPreSpawnedChildren = std::stoi(value);
     else if (name == "test")
         _doTest = true;
     else if (name == "child")
@@ -633,9 +633,9 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     srv.start();
 
     if (_doTest)
-        numPreSpawnedChildren = 1;
+        _numPreSpawnedChildren = 1;
 
-    for (int i = 0; i < numPreSpawnedChildren; i++)
+    for (int i = 0; i < _numPreSpawnedChildren; i++)
         MasterProcessSession::preSpawn();
 
     TestInput input(*this, svs, srv);

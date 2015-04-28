@@ -30,8 +30,6 @@ public:
     static std::string loSubPath;
     static std::string jail;
 
-    static int numPreSpawnedChildren;
-
     static const int DEFAULT_PORT_NUMBER = 9980;
     static const std::string CHILD_URI;
 
@@ -49,6 +47,7 @@ private:
 
     bool _doTest;
     Poco::UInt64 _childId;
+    static int _numPreSpawnedChildren;
 };
 
 #endif
