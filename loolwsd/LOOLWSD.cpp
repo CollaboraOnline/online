@@ -593,17 +593,17 @@ int LOOLWSD::childMain()
 
 int LOOLWSD::main(const std::vector<std::string>& args)
 {
+    if (childMode())
+        return childMain();
+
+    dropChrootCapability();
+
     if (access(LOOLWSD_CACHEDIR, R_OK | W_OK | X_OK) != 0)
     {
         std::cout << "Unable to access " << LOOLWSD_CACHEDIR <<
             ", please make sure it exists, and has write permission for this user." << std::endl;
         return Application::EXIT_UNAVAILABLE;
     }
-
-    if (childMode())
-        return childMain();
-
-    dropChrootCapability();
 
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the parent (but not in the
