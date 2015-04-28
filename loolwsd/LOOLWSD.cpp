@@ -539,6 +539,8 @@ int LOOLWSD::childMain()
         exit(1);
     }
 
+    dropChrootCapability();
+
     if (chdir("/") == -1)
     {
         logger().error(std::string("chdir(\"/\") in jail failed: ") + strerror(errno));
