@@ -626,14 +626,14 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     Thread undertakerThread;
     undertakerThread.start(undertaker);
 
-    for (int i = 0; i < numPreSpawnedChildren; i++)
-        MasterProcessSession::preSpawn();
-
     ServerSocket svs(portNumber);
 
     HTTPServer srv(new RequestHandlerFactory(), svs, new HTTPServerParams);
 
     srv.start();
+
+    for (int i = 0; i < numPreSpawnedChildren; i++)
+        MasterProcessSession::preSpawn();
 
     TestInput input(*this, svs, srv);
     Thread inputThread;
