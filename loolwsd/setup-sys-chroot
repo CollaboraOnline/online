@@ -9,20 +9,25 @@ INSTDIR=$2
 
 mkdir $CHROOT || exit 1
 
-cd $CHROOT || exit 1
+CHROOT=`cd $CHROOT && /bin/pwd`
+INSTDIR=`cd $INSTDIR && /bin/pwd`
+
+cd / || exit 1
 
 (
     # Produce a list of file names, one per line, that will be copied
     # into the template tree of system files for the chroot jails.
 
     # First essential files and shared objects
-    find /etc/passwd /etc/group /etc/hosts \
-	 /etc/resolv.conf \
-	 /lib/ld-* /lib64/ld-* \
-	 /etc/ld.so.* \
-	 /lib/libnss_* /lib64/libnss_* \
-	 /var/cache/fontconfig \
-	 /etc/fonts -type f
+    find etc/passwd etc/group etc/hosts \
+	 etc/resolv.conf \
+	 lib/ld-* lib64/ld-* \
+	 etc/ld.so.* \
+	 lib/libnss_* lib64/libnss_* \
+	 var/cache/fontconfig \
+	 etc/fonts \
+         usr/share/liblangtag \
+	     -type f
 
     # Go through the LO shared objects and check what system libraries
     # they link to.
@@ -30,18 +35,23 @@ cd $CHROOT || exit 1
     while read file; do
 	ldd $file 2>/dev/null
     done |
-    grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u
+    grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
 ) |
 
-while read file; do
-    cp --parents $file .
-done
+# Can't use -l because then symlinks won't be handled well enough.
+# This will now copy the file a symlink points to, but whatever.
+cpio -p -d -L $CHROOT
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved are for fontconfig to trust
 # its cache.
 
-mkdir usr/share || exit 1
+cd $CHROOT || exit 1
+
+mkdir -p usr/share || exit 1
 cp -r -p /usr/share/fonts usr/share
-mkdir usr/share/ghostscript || exit 1
-cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
+
+if [ -h usr/share/fonts/ghostscript ]; then
+    mkdir usr/share/ghostscript || exit 1
+    cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
+fi
