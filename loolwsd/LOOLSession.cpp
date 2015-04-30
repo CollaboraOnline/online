@@ -152,6 +152,8 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             }
         }
 
+        if (_peer.expired())
+            return false;
         forwardToPeer(buffer, length);
         return true;
     }
