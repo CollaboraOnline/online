@@ -590,7 +590,8 @@ int LOOLWSD::childMain()
     }
     while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
 
-    return Application::EXIT_OK;
+    // Safest to just bluntly exit
+    _Exit(Application::EXIT_OK);
 }
 
 int LOOLWSD::main(const std::vector<std::string>& args)
