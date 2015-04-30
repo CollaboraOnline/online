@@ -24,7 +24,7 @@ TileCache::TileCache(const std::string& docURL) :
 {
     Poco::File dir(cacheDirName());
 
-    // TODO: get last modified time of docURL if it *is* some kind of URL and not a local file
+    // TODO: Actually handle URLs (file: and http:), not file names.
     if (dir.exists() && dir.isDirectory() && Poco::File(_docURL).exists() && Poco::File(_docURL).isFile())
     {
         if (getLastModified() != Poco::File(_docURL).getLastModified())
@@ -60,6 +60,9 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
     outStream.write(data, size);
     outStream.close();
 
+    // TODO: Actually handle URLs (file: and http:), not file names.
+    if (!Poco::File(_docURL).exists() || !Poco::File(_docURL).isFile())
+        return;
     std::fstream modTimeFile(dirName + "/modtime.txt", std::ios::out);
     modTimeFile << Poco::File(_docURL).getLastModified().raw() << std::endl;
     modTimeFile.close();
