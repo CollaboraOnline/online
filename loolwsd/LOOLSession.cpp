@@ -17,6 +17,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <set>
@@ -27,6 +28,7 @@
 
 #include <Poco/Buffer.h>
 #include <Poco/File.h>
+#include <Poco/Net/HTTPStreamFactory.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
@@ -34,6 +36,7 @@
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
+#include <Poco/URIStreamOpener.h>
 #include <Poco/Util/Application.h>
 
 #include "LOKitHelper.hpp"
@@ -47,6 +50,7 @@ using namespace LOOLProtocol;
 
 using Poco::Buffer;
 using Poco::File;
+using Poco::Net::HTTPStreamFactory;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Process;
@@ -56,6 +60,7 @@ using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::UInt64;
 using Poco::URI;
+using Poco::URIStreamOpener;
 using Poco::Util::Application;
 
 const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
@@ -467,7 +472,20 @@ void MasterProcessSession::dispatchChild()
     Path copy(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
     Application::instance().logger().information(Util::logPrefix() + "Copying " + _docURL + " to " + copy.toString());
 
-    File(_docURL).copyTo(copy.toString());
+    URIStreamOpener opener;
+    opener.registerStreamFactory("http", new HTTPStreamFactory());
+    std::istream *input = opener.open(_docURL);
+    std::ofstream output(copy.toString());
+    if (!output)
+    {
+        Application::instance().logger().information(Util::logPrefix() + "Could not open " + copy.toString() + " for writing");
+        sendTextFrame("error: cmd=load kind=internal");
+        return;
+    }
+    std::copy(std::istreambuf_iterator<char>(*input),
+              std::istreambuf_iterator<char>(),
+              std::ostreambuf_iterator<char>(output));
+    output.close();
 
     _peer = childSession;
     childSession->_peer = shared_from_this();
