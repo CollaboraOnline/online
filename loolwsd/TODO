@@ -1,3 +1,6 @@
+- Use proper URLs for the url parameter. For http and https ones,
+  download the document. (What to do when editing added is TBD.)
+
 - Add a document part number parameter to the protocol where
   appropriate. Needed at least for the key, mouse, selecttext and
   selectgrahic client->server messages. Probably also the LOK
