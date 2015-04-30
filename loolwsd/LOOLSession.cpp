@@ -152,8 +152,6 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             }
         }
 
-        if (_peer.expired())
-            return false;
         forwardToPeer(buffer, length);
         return true;
     }
@@ -503,7 +501,8 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 {
     Application::instance().logger().information(Util::logPrefix() + "forwardToPeer(" + getAbbreviatedMessage(buffer, length) + ")");
     auto peer = _peer.lock();
-    assert(peer);
+    if (!peer)
+        return;
     peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
