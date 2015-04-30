@@ -33,6 +33,7 @@
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/Random.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
@@ -56,6 +57,7 @@ using Poco::Path;
 using Poco::Process;
 using Poco::ProcessHandle;
 using Poco::Random;
+using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::UInt64;
@@ -482,9 +484,7 @@ void MasterProcessSession::dispatchChild()
         sendTextFrame("error: cmd=load kind=internal");
         return;
     }
-    std::copy(std::istreambuf_iterator<char>(*input),
-              std::istreambuf_iterator<char>(),
-              std::ostreambuf_iterator<char>(output));
+    StreamCopier::copyStream(*input, output);
     output.close();
 
     _peer = childSession;
