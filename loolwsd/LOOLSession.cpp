@@ -487,6 +487,8 @@ void MasterProcessSession::dispatchChild()
     StreamCopier::copyStream(*input, output);
     output.close();
 
+    Application::instance().logger().information(Util::logPrefix() + "Copying done");
+
     _peer = childSession;
     childSession->_peer = shared_from_this();
 
