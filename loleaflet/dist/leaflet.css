@@ -205,8 +205,7 @@
 	background: #f0f0f0;
 	outline: 0;
 	margin: auto;
-	min-height: 100% !important;
-	height: 100%;
+	/*height: 100%;*/
 	}
 .leaflet-container a {
 	color: #0078A8;
@@ -504,14 +503,33 @@
 	}
 
 #document-container {
-	width: 100%;
-	overflow: auto;
 	background: #F0F0F0;
 	position: absolute;
 	top: 120px;
 	bottom: 0px;
+	right: 0px;
+	left: 0px;
 }
 
-html, body {
-	margin: 0px;
+#map
+#scroll-container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#scroll-container {
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+}
+
+#map {
+	top: 0px;
+	bottom: 16px;
+	left: 0px;
+	right: 16px;
+	z-index: 10;
 }
