@@ -58,8 +58,6 @@ Implementation details
 
 Loading a document:
     The map should have the following options:
-        - bounds = top left [0, 0] and something larger in the bottom right corner which
-          will later be updated
         - center at [0, 0] this will try to place the [0, 0] point in the middle of the
           map, but it will be moved in the top left corner when the maxBounds are set
         - zoom = defautl zoom value, zooming in and out will refer to this value
@@ -71,9 +69,16 @@ Loading a document:
           connection. If this parameter is false, an image will be loaded in each tile
 
 How zooming works:
-    The zoom level goes from 1 to 20 (thoes limits can be changed) and the initial
-    level is 10, which represents the 100% zoom level. 9 = 90%, 11 = 110% and so on.
+    The zoom level goes from 1 to 20 (those limits can be changed) and the initial
+    level is 10, which represents the 100% zoom level. The zoom factor is 1.2
 
 Controls are added above the map in a div called "controls" is intended to be used as a toolbar.
-There is no leaflet method of adding them in a separte div, so for now this is done in the html
+There is no leaflet method of adding them in a separate div, so for now this is done in the html
 document after the map initialization.
+
+To enable scrollbars the map is placed above a div that contains a bigger div of 
+the document's size (a mock document). So the div under the map gets scrollbars which 
+are independent of the map's div, thus enabling us to link them to the map as needed.
+When the user scrolls, the map is panned by the same amount as it would've been scrolled.
+Also, some custom jquery scrollbars are used, to trigger the same scroll events across 
+browsers.
