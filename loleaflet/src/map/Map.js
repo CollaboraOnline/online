@@ -18,13 +18,13 @@ L.Map = L.Evented.extend({
 		markerZoomAnimation: true
 	},
 
-	initialize: function (id, outerId, options) { // (HTMLElement or String, Object)
+	initialize: function (id, scrollContId, mockDocId, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
 		if (options.server) {
 			this._initSocket();
 		}
-		this._initContainer(id, outerId);
+		this._initContainer(id, scrollContId, mockDocId);
 		this._initLayout();
 
 		// hack for https://github.com/Leaflet/Leaflet/issues/1980
@@ -35,8 +35,6 @@ L.Map = L.Evented.extend({
 		if (options.maxBounds) {
 			this.setMaxBounds(options.maxBounds);
 		}
-
-		this._initBounds();
 
 		if (options.zoom !== undefined) {
 			this._zoom = this._limitZoom(options.zoom);
@@ -71,14 +69,7 @@ L.Map = L.Evented.extend({
 			this._zoom = this._limitZoom(zoom);
 			return this;
 		}
-		var scale = this.getZoomScale(zoom),
-		    viewHalf = this.getSize().divideBy(2),
-		    containerPoint = new L.Point(0,0);
-		    centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
-		    newCenter = this.containerPointToLatLng(viewHalf.add(centerOffset));
-
-		return this.setView(newCenter, zoom, {zoom: options});
-
+		return this.setView(this.getCenter(), zoom, {zoom: options});
 	},
 
 	zoomIn: function (delta, options) {
@@ -340,15 +331,9 @@ L.Map = L.Evented.extend({
 		return this._size.clone();
 	},
 
-	getPixelBounds: function (center) {
-		var topLeftPoint = new L.Point(
-				this._outerContainer.scrollLeft,
-				this._outerContainer.scrollTop);
-		var outerContainerSize = new L.Point(
-				this._outerContainer.clientWidth,
-				this._outerContainer.clientHeight);
-		return new L.Bounds(topLeftPoint, topLeftPoint.add(outerContainerSize));
-
+	getPixelBounds: function (center, zoom) {
+		var topLeftPoint = this._getTopLeftPoint(center, zoom);
+		return new L.Bounds(topLeftPoint, topLeftPoint.add(this.getSize()));
 	},
 
 	getPixelOrigin: function () {
@@ -461,9 +446,10 @@ L.Map = L.Evented.extend({
 	},
 
 
-	_initContainer: function (id, outerId) {
+	_initContainer: function (id, scrollContId, mockDocId) {
 		var container = this._container = L.DomUtil.get(id);
-		var outerContainer = this._outerContainer = L.DomUtil.get(outerId);
+		var scrollContainer = this._scrollContainer = L.DomUtil.get(scrollContId);
+		var mockDoc = this._mockDoc = L.DomUtil.get(mockDocId);
 
 		if (!container) {
 			throw new Error('Map container not found.');
@@ -471,18 +457,15 @@ L.Map = L.Evented.extend({
 			throw new Error('Map container is already initialized.');
 		}
 
-		if (!outerContainer) {
-			throw new Error('Document outer container not found.');
+		if (!scrollContainer) {
+			throw new Error('Scroll container not found.');
+		}
+
+		if (!mockDoc) {
+			throw new Error('Mock document div not found.');
 		}
 
 		container._leaflet = true;
-	},
-
-	_initBounds: function () {
-		var topLeft = this.unproject(new L.Point(0, 0));
-		var bottomRight = this.unproject(this.getSize());
-		var maxBounds = new L.LatLngBounds(topLeft, bottomRight);
-		this.setMaxBounds(maxBounds);
 	},
 
 	_initLayout: function () {
@@ -500,7 +483,7 @@ L.Map = L.Evented.extend({
 		var position = L.DomUtil.getStyle(container, 'position');
 
 		if (position !== 'absolute' && position !== 'relative' && position !== 'fixed') {
-			container.style.position = 'relative';
+			container.style.position = 'absolute';
 		}
 
 		this._initPanes();
@@ -772,6 +755,6 @@ L.Map = L.Evented.extend({
 	}
 });
 
-L.map = function (id, outerId, options) {
-	return new L.Map(id, outerId, options);
+L.map = function (id, scrollContId, mockDocId, options) {
+	return new L.Map(id, scrollContId, mockDocId, options);
 };
