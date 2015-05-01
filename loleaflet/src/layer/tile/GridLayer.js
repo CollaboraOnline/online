@@ -325,7 +325,6 @@ L.GridLayer = L.Layer.extend({
 
 			this._tileZoom = tileZoom;
 			if (tileZoomChanged) {
-				this._map._zoom = tileZoom;
 				this._updateTileTwips();
 				this._updateMaxBounds();
 			}
@@ -359,23 +358,33 @@ L.GridLayer = L.Layer.extend({
 										 this._docHeightTwips / this._tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 
-		// TODO set a smooth transition when updating the scroll position
-		// previous scroll position (relative)
-		var prevX = this._map._outerContainer.scrollLeft /
-			(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
-		var prevY = this._map._outerContainer.scrollTop /
-			(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
+		if (this._documentInfo === '') {
+			// we just got the first status so we need to center the document
+			var topLeft = new L.Point(0, 0);
+			topLeft = this._map.unproject(topLeft);
+			var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
+			bottomRight = this._map.unproject(bottomRight);
+			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
+		}
+		L.DomUtil.setStyle(this._map._mockDoc, 'width', docPixelLimits.x + 'px');
+		L.DomUtil.setStyle(this._map._mockDoc, 'height', docPixelLimits.y + 'px');
+	},
 
-		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', '');
-		L.DomUtil.setStyle(this._map._container, 'width', docPixelLimits.x + 'px');
-		L.DomUtil.setStyle(this._map._container, 'height', docPixelLimits.y + 'px');
-		L.DomUtil.setStyle(this._map._outerContainer, 'overflow', 'auto');
-
-		// restore the relative scroll position
-		this._map._outerContainer.scrollLeft = prevX *
-			(this._map._outerContainer.scrollWidth - this._map._outerContainer.clientWidth);
-		this._map._outerContainer.scrollTop = prevY *
-			(this._map._outerContainer.scrollHeight - this._map._outerContainer.clientHeight);
+	_updateScrollOffset: function () {
+		if (this._map._scrollContainer.mcs) {
+			var centerPixel = this._map.project(this._map.getCenter());
+			var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));
+			var x = newScrollPos.x < 0 ? 0 : newScrollPos.x;
+			var y = newScrollPos.y < 0 ? 0 : newScrollPos.y;
+			if (x == 0 && y == 0 &&
+				(this._prevScrollx === undefined && this._prevScrolly === undefined ||
+				this._prevScrollx == 0 && this._prevScrolly == 0)) {
+				return;
+			}
+			this._ignoreScroll = true;
+			$('#scroll-container').mCustomScrollbar('scrollTo',
+					[y, x]);
+		}
 	},
 
 	_setZoomTransforms: function (center, zoom) {
@@ -430,7 +439,7 @@ L.GridLayer = L.Layer.extend({
 
 	_update: function (center, zoom) {
 		var map = this._map;
-		if (!map ||
+		if (!map || this._documentInfo === '' ||
 			(this.options.useSocket && map.socket && map.socket.readyState !== 1)) {
 			return;
 		}
@@ -602,7 +611,7 @@ L.GridLayer = L.Layer.extend({
 			current: true
 		};
 
-		this._level.el.appendChild(tile);
+		fragment.appendChild(tile);
 		this.fire('tileloadstart', {
 			tile: tile,
 			coords: coords
@@ -696,6 +705,33 @@ L.GridLayer = L.Layer.extend({
 				'x=' + startTwips.x + ' y=' + startTwips.y);
 		this._map.socket.send('selecttext ' + 'type=\'end\' ' +
 				'x=' + endTwips.x + ' y=' + endTwips.y);
+	},
+
+	_onScroll: function (evt) {
+		if (this._ignoreScroll) {
+			return;
+		}
+		if (this._prevScrollY === undefined) {
+			this._prevScrollY = 0;
+		}
+		if (this._prevScrollX === undefined) {
+			this._prevScrollX = 0;
+		}
+		var offset = new L.Point(
+				-evt.mcs.left - this._prevScrollX,
+				-evt.mcs.top - this._prevScrollY);
+
+        if (!offset.equals(new L.Point(0, 0))) {
+            this._prevScrollY = -evt.mcs.top;
+            this._prevScrollX = -evt.mcs.left;
+            this._map.panBy(offset, {animate:false});
+        }
+	},
+
+	_onScrollEnd: function (evt) {
+		this._prevScrollY = -evt.mcs.top;
+		this._prevScrollX = -evt.mcs.left;
+		this._ignoreScroll = false;
 	}
 });
 
