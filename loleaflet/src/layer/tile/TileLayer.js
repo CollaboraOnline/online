@@ -54,7 +54,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.socket.send('load url=' + this.options.doc);
 			this._map.socket.send('status');
 		}
-		this._map._outerContainer.onscroll = L.bind(this._update, this);
+		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
+		this._map.on('zoomend', L.bind(this._updateScrollOffset, this));
 	},
 
 	setUrl: function (url, noRedraw) {
@@ -91,10 +92,10 @@ L.TileLayer = L.GridLayer.extend({
 		if (typeof (evt.data) === 'string') {
 			var info = this._getTileInfo(evt.data);
 			if (info.width && info.height && this._documentInfo !== evt.data) {
-				this._documentInfo = evt.data;
 				this._docWidthTwips = info.width;
 				this._docHeightTwips = info.height;
 				this._updateMaxBounds();
+				this._documentInfo = evt.data;
 				this._update();
 			}
 		}
