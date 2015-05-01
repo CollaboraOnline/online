@@ -8,10 +8,14 @@
 
 <link rel="stylesheet" href="../../dist/leaflet.css">
 <link rel="stylesheet" href="../../plugins/draw-0.2.4/dist/leaflet.draw.css">
+<link rel="stylesheet" href="../../src/scrollbar/jquery.mCustomScrollbar.css">
 <style type="text/css"></style></head>
 <body>
-	<script src="../../dist/leaflet.js"></script>
-	<script src="../../plugins/draw-0.2.4/dist/leaflet.draw.js"></script>
+    <script src="../../dist/leaflet-src.js"></script>
+    <script src="../../plugins/draw-0.2.4/dist/leaflet.draw.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../src/scrollbar/jquery-1.11.0.min.js"><\/script>')</script>
+    <script src="../../src/scrollbar/jquery.mCustomScrollbar.js"></script>
 
     <!--The "controls" div holds map controls suchs as the Zoom button and
         it's separated from the map in order to have the controls on the top
@@ -24,16 +28,20 @@
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
     <div id="toolbar" align="center">
-	<p>This space is a placeholder for the future toolbar, so far contains
+	<p style="margin:0px">This space is a placeholder for the future toolbar, so far contains
 	only zoom:</p>
     </div>
-    <div id="document-container">
+    <div id="document-container" style="top:140px">
         <div id="map"></div>
+        <div id="scroll-container">
+            <div id="mock-document">
+            </div>
+        </div>
     </div>
 
 	<script>
 
-    var map = L.map('map', 'document-container', {
+    var map = L.map('map', 'scroll-container', 'mock-document', {
             center: [0, 0],
             zoom: 10,
             minZoom: 1,
@@ -82,5 +90,22 @@
         drawnItems.addLayer(layer);
         docLayer.fire('draw:created', e);
     });
-	</script>
+    (function($){
+        $(window).load(function(){
+            $("#scroll-container").mCustomScrollbar({
+                axis: 'yx',
+                theme: 'dark-thick',
+                callbacks:{
+                    onScroll: function(){
+                        docLayer._onScrollEnd(this);
+                    },
+                    whileScrolling: function(){
+                        docLayer._onScroll(this);
+                    },
+                    alwaysTriggerOffsets:false
+                }
+            });
+        });
+    })(jQuery);
+    </script>
 </body></html>
