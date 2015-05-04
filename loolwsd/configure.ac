@@ -14,10 +14,10 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CXX
 
-AC_PATH_PROG([SETCAP], setcap,[],[/bin:/usr/bin:/sbin:/usr/sbin])
-
-AS_IF([test -z "$SETCAP"],
-      [AC_MSG_ERROR([The setcap command is needed. It might be in a package called libcap-progs.])])
+AS_IF([test `uname -s` = Linux],
+      [AC_PATH_PROG([SETCAP], setcap,[],[/bin:/usr/bin:/sbin:/usr/sbin])]
+       AS_IF([test -z "$SETCAP"],
+       [AC_MSG_ERROR([The setcap command is needed. It might be in a package called libcap-progs.])]))
 
 # Declare options
 AC_ARG_ENABLE([debug],
@@ -66,10 +66,11 @@ AC_SEARCH_LIBS([png_create_write_struct],
                [],
                [AC_MSG_ERROR([libpng not available?])])
 
-AC_SEARCH_LIBS([cap_get_proc],
-               [cap],
-               [],
-               [AC_MSG_ERROR([libcap not available?])])
+AS_IF([test `uname -s` = Linux],
+      [AC_SEARCH_LIBS([cap_get_proc],
+                      [cap],
+                      [],
+                      [AC_MSG_ERROR([libcap not available?])])])
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX}"
 
