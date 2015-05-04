@@ -53,7 +53,11 @@ AS_IF([test -n "$with_poco_includes"],
       [CPPFLAGS="$CPPFLAGS -I${with_poco_includes}"])
 
 AS_IF([test -n "$with_poco_libs"],
-      [LDFLAGS="$LDFLAGS -L${with_poco_libs} -Wl,-rpath,${with_poco_libs}"])
+      [LDFLAGS="$LDFLAGS -L${with_poco_libs}"])
+
+AS_IF([test `uname -s` = Linux],
+      [AS_IF([test -n "$with_poco_libs"],
+             [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_poco_libs}"])])
 
 AS_IF([test `uname -s` != Darwin],
       [AC_SEARCH_LIBS([dlopen],
