@@ -16,4 +16,8 @@ clean-cache:
 
 # After building loolwsd, set its capabilities to allow chroot()
 all-local: loolwsd
-	sudo @SETCAP@ cap_sys_chroot=ep loolwsd
+	if test `uname -s` = Linux; then \
+	    sudo @SETCAP@ cap_sys_chroot=ep loolwsd; \
+	else \
+	    sudo chown root loolwsd && sudo chmod u+s loolwsd; \
+	fi
