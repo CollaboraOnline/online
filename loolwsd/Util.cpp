@@ -119,6 +119,7 @@ namespace Util
             CASE(FPE);
             CASE(KILL);
             CASE(SEGV);
+            CASE(PIPE);
             CASE(ALRM);
             CASE(TERM);
             CASE(USR1);
@@ -130,7 +131,9 @@ namespace Util
             CASE(TTIN);
             CASE(TTOU);
             CASE(BUS);
+#ifdef SIGPOLL
             CASE(POLL);
+#endif
             CASE(PROF);
             CASE(SYS);
             CASE(TRAP);
@@ -141,7 +144,9 @@ namespace Util
 #ifdef SIGEMT
             CASE(EMT);
 #endif
+#ifdef SIGSTKFLT
             CASE(STKFLT);
+#endif
 #if defined(SIGIO) && SIGIO != SIGPOLL
             CASE(IO);
 #endif
@@ -152,6 +157,9 @@ namespace Util
             CASE(LOST);
 #endif
             CASE(WINCH);
+#if defined(SIGINFO) && SIGINFO != SIGPWR
+            CASE(INFO);
+#endif
 #undef CASE
         default:
             return std::to_string(signo);
