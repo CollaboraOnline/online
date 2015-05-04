@@ -89,7 +89,22 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onMessage: function (evt) {
+		var bytes, index, textMsg;
+
 		if (typeof (evt.data) === 'string') {
+			textMsg = evt.data;
+		}
+		else if (typeof (evt.data) === 'object') {
+			bytes = new Uint8Array(evt.data);
+			index = 0;
+			// search for the first newline which marks the end of the message
+			while (index < bytes.length && bytes[index] !== 10) {
+				index++;
+			}
+			textMsg = String.fromCharCode.apply(null, bytes.subarray(0, index + 1));
+		}
+
+		if (textMsg.startsWith('status')) {
 			var info = this._getTileInfo(evt.data);
 			if (info.width && info.height && this._documentInfo !== evt.data) {
 				this._docWidthTwips = info.width;
@@ -99,15 +114,8 @@ L.TileLayer = L.GridLayer.extend({
 				this._update();
 			}
 		}
-		else if (typeof (evt.data) === 'object') {
-			var bytes = new Uint8Array(evt.data);
-			var index = 0;
-			// search for the first newline which marks the end of the message
-			while (index < bytes.length && bytes[index] !== 10) {
-				index++;
-			}
-			var textMsgBytes = bytes.subarray(0, index + 1);
-			var info = this._getTileInfo(String.fromCharCode.apply(null, textMsgBytes));
+		else if (textMsg.startsWith('tile')) {
+			var info = this._getTileInfo(textMsg);
 			var coords = this._twipsToCoords(new L.Point(info.x, info.y));
 			coords.z = info.zoom;
 			var data = bytes.subarray(index + 1);
