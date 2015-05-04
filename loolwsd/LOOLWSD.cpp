@@ -489,6 +489,7 @@ namespace
 {
     void dropChrootCapability()
     {
+#ifdef __linux
         cap_t caps;
         cap_value_t cap_list[] = { CAP_SYS_CHROOT };
 
@@ -512,6 +513,9 @@ namespace
             exit(1);
         }
         cap_free(caps);
+#else
+        setuid(getuid());
+#endif
     }
 }
 
