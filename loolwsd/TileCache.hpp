@@ -12,6 +12,7 @@
 
 #include <fstream>
 #include <memory>
+#include <string>
 
 #include <Poco/Timestamp.h>
 
