@@ -28,8 +28,14 @@
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
     <div id="toolbar" align="center">
-	<p style="margin:0px">This space is a placeholder for the future toolbar, so far contains
-	only zoom:</p>
+        <div id="search-box" class="search-box">
+            <input id="search-bar" class="search-box" type="text">
+            <button id="search-prev" class="search-box" type="button">&#x25B2</button>
+            <button id="search-next" class="search-box" type="button">&#x25BC</button>
+        </div>
+
+        <p style="margin:0px">This space is a placeholder for the future toolbar, so far contains
+        only zoom:</p>
     </div>
     <div id="document-container" style="top:140px">
         <div id="map"></div>
