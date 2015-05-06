@@ -32,14 +32,15 @@ To see an example:
 
 * run loolwsd, like:
 
-    ./loolwsd --lopath=<...>/instdir/program
-
-* edit debug/document/document_simple_example.html, and change
-  /PATH/TO/DOCUMENT to a file reachable by loolwsd
+    ./loolwsd --systemplate=${SYSTEMPLATE} --lotemplate=${MASTER}/instdir --childroot=${ROOTFORJAILS}
 
 * open debug/document/document_simple_example.html in the browser, like:
 
     firefox debug/document/document_simple_example.html
+
+* modify the URL to allow loleaflet to connect to a server and open a document
+
+    http://web-page/document_simple_example.html?file_path=/PATH/TO/DOC&host=ws://localhost:9980
 
 and you should see the document in the browser.  In case anything goes wrong,
 check the loolwsd console for the debugging output.
@@ -76,9 +77,9 @@ Controls are added above the map in a div called "controls" is intended to be us
 There is no leaflet method of adding them in a separate div, so for now this is done in the html
 document after the map initialization.
 
-To enable scrollbars the map is placed above a div that contains a bigger div of 
-the document's size (a mock document). So the div under the map gets scrollbars which 
+To enable scrollbars the map is placed above a div that contains a bigger div of
+the document's size (a mock document). So the div under the map gets scrollbars which
 are independent of the map's div, thus enabling us to link them to the map as needed.
 When the user scrolls, the map is panned by the same amount as it would've been scrolled.
-Also, some custom jquery scrollbars are used, to trigger the same scroll events across 
+Also, some custom jquery scrollbars are used, to trigger the same scroll events across
 browsers.
