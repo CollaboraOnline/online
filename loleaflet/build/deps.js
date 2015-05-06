@@ -206,6 +206,13 @@ var deps = {
 		desc: 'Basic zoom control with two buttons (zoom in / zoom out).'
 	},
 
+	SearchZoom: {
+		src: ['control/Control.js',
+		      'control/Control.Search.js'],
+		heading: 'Controls',
+		desc: 'Search control with two buttons (previous / next).'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],
