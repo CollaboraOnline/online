@@ -2,6 +2,15 @@
  * L.TileLayer is used for standard xyz-numbered tile layers.
  */
 
+// Implement String::startsWith which is non-portable (Firefox only, it seems)
+// See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
+
+if (typeof String.prototype.startsWith != 'function') {
+  String.prototype.startsWith = function (str){
+    return this.slice(0, str.length) == str;
+  };
+}
+
 L.TileLayer = L.GridLayer.extend({
 
 	options: {
