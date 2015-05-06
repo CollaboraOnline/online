@@ -519,6 +519,8 @@ ChildProcessSession::ChildProcessSession(WebSocket& ws, LibreOfficeKit *loKit) :
 ChildProcessSession::~ChildProcessSession()
 {
     std::cout << Util::logPrefix() << "ChildProcessSession dtor this=" << this << std::endl;
+    if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
+        _loKit->pClass->registerCallback(_loKit, 0, 0);
     Util::shutdownWebSocket(*_ws);
 }
 
@@ -637,6 +639,15 @@ extern "C"
         case LOK_CALLBACK_STATE_CHANGED:
             srv->sendTextFrame("statechanged: " + std::string(pPayload));
             break;
+        case LOK_CALLBACK_STATUS_INDICATOR_START:
+            srv->sendTextFrame("statusindicatorstart:");
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+            srv->sendTextFrame("statusindicatorsetvalue: " + std::string(pPayload));
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+            srv->sendTextFrame("statusindicatorfinish:");
+            break;
         }
     }
 }
@@ -656,6 +667,9 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
 
     // The URL in the request is the original one, not visible in the chroot jail.
     // The child process uses the fixed name jailDocumentURL.
+
+    if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
+        _loKit->pClass->registerCallback(_loKit, myCallback, this);
 
     if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, jailDocumentURL.c_str())) == NULL)
     {
