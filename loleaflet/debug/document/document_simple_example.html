@@ -41,18 +41,34 @@
 
 	<script>
 
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var filePath = getParameterByName('file_path');
+    var host = getParameterByName('host');
+    if (filePath === '') {
+        alert('Wrong file_path, usage: file_path=/path/to/doc/');
+    }
+    if (host === '') {
+        alert('Wrong host, usage: host=ws://localhost:9980');
+    }
+
     var map = L.map('map', 'scroll-container', 'mock-document', {
             center: [0, 0],
             zoom: 10,
             minZoom: 1,
             maxZoom: 20,
-            server: "ws://localhost:9980",
+            server: host,
             dragging: false
             });
 
     ////// Document layer ////
     var docLayer = new L.TileLayer('', {
-        doc: '/PATH/TO/DOCUMENT',
+        doc: filePath,
         useSocket : true
     });
     map.addLayer(docLayer);
