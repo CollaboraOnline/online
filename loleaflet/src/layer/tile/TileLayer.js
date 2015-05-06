@@ -105,8 +105,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		if (textMsg.startsWith('status')) {
-			var info = this._getTileInfo(evt.data);
-			if (info.width && info.height && this._documentInfo !== evt.data) {
+			var info = this._getTileInfo(textMsg);
+			if (info.width && info.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = info.width;
 				this._docHeightTwips = info.height;
 				this._updateMaxBounds();
