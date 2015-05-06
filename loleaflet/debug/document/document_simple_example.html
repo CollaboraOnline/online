@@ -111,6 +111,7 @@
             $("#scroll-container").mCustomScrollbar({
                 axis: 'yx',
                 theme: 'dark-thick',
+                scrollInertia: 0,
                 callbacks:{
                     onScroll: function(){
                         docLayer._onScrollEnd(this);
