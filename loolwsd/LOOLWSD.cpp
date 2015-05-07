@@ -513,9 +513,14 @@ namespace
             exit(1);
         }
         cap_free(caps);
-#else
-        setuid(getuid());
 #endif
+        if (geteuid() == 0 && getuid() != 0)
+        {
+            // The program is setuid root. Not normal on Linux where we use setcap, but if this
+            // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
+            // to do chroot().
+            setuid(getuid());
+        }
     }
 }
 
