@@ -633,9 +633,10 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     Thread undertakerThread;
     undertakerThread.start(undertaker);
 
-    ServerSocket svs(portNumber);
+    ServerSocket svs(portNumber, _numPreSpawnedChildren*5);
 
-    HTTPServer srv(new RequestHandlerFactory(), svs, new HTTPServerParams);
+    Poco::ThreadPool threadPool(_numPreSpawnedChildren, _numPreSpawnedChildren*5);
+    HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
 
     srv.start();
 
