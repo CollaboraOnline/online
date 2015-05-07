@@ -99,6 +99,8 @@ std::set<UInt64> MasterProcessSession::_pendingPreSpawnedChildren;
 std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::mutex MasterProcessSession::_availableChildSessionMutex;
 std::condition_variable MasterProcessSession::_availableChildSessionCV;
+Poco::Random MasterProcessSession::_rng;
+std::mutex MasterProcessSession::_rngMutex;
 
 MasterProcessSession::MasterProcessSession(WebSocket& ws, Kind kind) :
     LOOLSession(ws, kind),
@@ -341,10 +343,9 @@ void MasterProcessSession::preSpawn()
 {
     // Create child-specific subtree that will become its chroot root
 
-    Random rng;
-
-    rng.seed();
-    UInt64 childId = (((UInt64)rng.next()) << 32) | rng.next() | 1;
+    std::unique_lock<std::mutex> rngLock(_rngMutex);
+    UInt64 childId = (((UInt64)_rng.next()) << 32) | _rng.next() | 1;
+    rngLock.unlock();
 
     Path jail = getJailPath(childId);
     File(jail).createDirectory();

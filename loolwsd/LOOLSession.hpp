@@ -25,6 +25,7 @@
 #include <Poco/Buffer.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
+#include <Poco/Random.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Types.h>
 
@@ -136,6 +137,8 @@ protected:
 private:
     // The id of the child process
     Poco::UInt64 _childId;
+    static Poco::Random _rng;
+    static std::mutex _rngMutex;
 };
 
 class ChildProcessSession final : public LOOLSession
