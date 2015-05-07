@@ -11,8 +11,10 @@
 #define INCLUDED_LOOLSESSION_HPP
 
 #include <cassert>
+#include <condition_variable>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <ostream>
 #include <set>
 
@@ -126,6 +128,8 @@ protected:
     // Sessions to pre-spawned child processes that have connected but are not yet assigned a
     // document to work on.
     static std::set<std::shared_ptr<MasterProcessSession>> _availableChildSessions;
+    static std::mutex _availableChildSessionMutex;
+    static std::condition_variable _availableChildSessionCV;
 
     std::unique_ptr<TileCache> _tileCache;
 

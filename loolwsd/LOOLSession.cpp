@@ -14,12 +14,14 @@
 #include <utime.h>
 
 #include <cassert>
+#include <condition_variable>
 #include <cstring>
 #include <fstream>
 #include <iostream>
 #include <iterator>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <set>
 
 #define LOK_USE_UNSTABLE_API
@@ -91,9 +93,12 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
     _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
+std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
+
 std::set<UInt64> MasterProcessSession::_pendingPreSpawnedChildren;
 std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
-std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
+std::mutex MasterProcessSession::_availableChildSessionMutex;
+std::condition_variable MasterProcessSession::_availableChildSessionCV;
 
 MasterProcessSession::MasterProcessSession(WebSocket& ws, Kind kind) :
     LOOLSession(ws, kind),
@@ -182,8 +187,11 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             return false;
         }
         _pendingPreSpawnedChildren.erase(childId);
+        std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.insert(shared_from_this());
+        lock.unlock();
         _childId = childId;
+        _availableChildSessionCV.notify_one();
     }
     else if (_kind == Kind::ToPrisoner)
     {
@@ -462,11 +470,20 @@ void MasterProcessSession::dispatchChild()
 
     std::cout << Util::logPrefix() << "available child sessions: " << _availableChildSessions.size() << " pending child sessions: " << _pendingPreSpawnedChildren.size() << std::endl;
 
-    assert(_availableChildSessions.size() > 0);
+    std::shared_ptr<MasterProcessSession> childSession;
+    std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
 
-    std::shared_ptr<MasterProcessSession> childSession = *(_availableChildSessions.begin());
+    if (_availableChildSessions.size() == 0)
+    {
+        std::cout << Util::logPrefix() << "waiting for a child session to become available" << std::endl;
+        _availableChildSessionCV.wait(lock, [] { return _availableChildSessions.size() > 0; });
+        std::cout << Util::logPrefix() << "waiting done" << std::endl;
+    }
+
+    childSession = *(_availableChildSessions.begin());
 
     _availableChildSessions.erase(childSession);
+    lock.unlock();
 
     std::cout << Util::logPrefix() << "available child sessions: " << _availableChildSessions.size() << std::endl;
 
