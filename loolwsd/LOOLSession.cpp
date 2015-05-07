@@ -38,6 +38,7 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/ThreadLocal.h>
 #include <Poco/URI.h>
 #include <Poco/URIStreamOpener.h>
 #include <Poco/Util/Application.h>
@@ -62,6 +63,7 @@ using Poco::Random;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::Thread;
+using Poco::ThreadLocal;
 using Poco::UInt64;
 using Poco::URI;
 using Poco::URIStreamOpener;
@@ -261,20 +263,20 @@ Path MasterProcessSession::getJailPath(Poco::UInt64 childId)
 
 namespace
 {
-    std::string sourceForLinkOrCopy;
-    Path destinationForLinkOrCopy;
+    ThreadLocal<std::string> sourceForLinkOrCopy;
+    ThreadLocal<Path> destinationForLinkOrCopy;
 
     int linkOrCopyFunction(const char *fpath,
                            const struct stat *sb,
                            int typeflag,
                            struct FTW *ftwbuf)
     {
-        if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
+        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
             return 0;
 
-        assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
-        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
-        Path newPath(destinationForLinkOrCopy, Path(relativeOldPath));
+        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
+        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
+        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
 
         switch (typeflag)
         {
@@ -331,8 +333,8 @@ namespace
 
     void linkOrCopy(const std::string& source, const Path& destination)
     {
-        sourceForLinkOrCopy = source;
-        destinationForLinkOrCopy = destination;
+        *sourceForLinkOrCopy = source;
+        *destinationForLinkOrCopy = destination;
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
             Application::instance().logger().error(Util::logPrefix() +
                                                    "linkOrCopy: nftw() failed for '" + source + "'");
