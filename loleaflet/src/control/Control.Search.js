@@ -9,7 +9,9 @@ L.Control.Search = L.Control.extend({
 		prevText: '&#x25B2',
 		prevTitle: 'Previous',
 		nextText: '&#x25BC',
-		nextTitle: 'Next'
+		nextTitle: 'Next',
+		cancelText: '&#x2716',
+		cancelTitle: 'Cancel'
 	},
 
 	onAdd: function (map) {
@@ -23,6 +25,9 @@ L.Control.Search = L.Control.extend({
 				searchName + '-prev', container, this._searchPrev);
 		this._nextButton = this._createButton(options.nextText, options.nextTitle,
 				searchName + '-next', container, this._searchNext);
+		this._cancelButton = this._createButton(options.cancelText, options.cancelTitle,
+				searchName + '-cancel', container, this._cancel);
+		L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
 
 		this._updateDisabled();
 
@@ -45,20 +50,30 @@ L.Control.Search = L.Control.extend({
 	},
 
 	_searchStart: function (e) {
-		if (!this._disabled) {
-			// TODO fire search start
+		if (!this._disabled && e.keyCode === 13 && this._searchBar.value !== '' ) {
+			L.DomUtil.setStyle(this._cancelButton, 'display', 'inline-block');
+			// TODO update protocol
+			//this._map.socket.send('search ' + this._searchBar.value);
 		}
 	},
 
 	_searchPrev: function (e) {
 		if (!this._disabled) {
-            // TODO fire search prev
+			this._map.fire('searchprev');
 		}
 	},
 
 	_searchNext: function (e) {
 		if (!this._disabled) {
-            // TODO fire search next
+			this._map.fire('searchnext');
+		}
+	},
+
+	_cancel: function (e) {
+		if (!this._disabled) {
+			L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
+			this._map.fire('clearselection');
+			this._map.fire('cancelsearch');
 		}
 	},
 
@@ -70,6 +85,8 @@ L.Control.Search = L.Control.extend({
 		L.DomEvent
 			.on(bar, 'keyup', L.DomEvent.stop)
 			.on(bar, 'keyup', fn, this);
+
+		return bar;
 	},
 
 	_createButton: function (text, title, className, container, fn) {
