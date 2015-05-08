@@ -30,7 +30,8 @@ public:
     static std::string loSubPath;
     static std::string jail;
 
-    static const int DEFAULT_PORT_NUMBER = 9980;
+    static const int DEFAULT_CLIENT_PORT_NUMBER = 9980;
+    static const int MASTER_PORT_NUMBER = 9981;
     static const std::string CHILD_URI;
 
 protected:

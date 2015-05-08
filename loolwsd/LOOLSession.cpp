@@ -193,8 +193,9 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         _pendingPreSpawnedChildren.erase(childId);
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.insert(shared_from_this());
-        lock.unlock();
+        std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
         _childId = childId;
+        lock.unlock();
         _availableChildSessionCV.notify_one();
     }
     else if (_kind == Kind::ToPrisoner)
@@ -471,10 +472,10 @@ void MasterProcessSession::dispatchChild()
 {
     // Copy document into jail using the fixed name
 
-    std::cout << Util::logPrefix() << "available child sessions: " << _availableChildSessions.size() << " pending child sessions: " << _pendingPreSpawnedChildren.size() << std::endl;
-
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
+
+    std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << " _pendingChildSessions size=" << _pendingPreSpawnedChildren.size() << std::endl;
 
     if (_availableChildSessions.size() == 0)
     {
@@ -495,9 +496,8 @@ void MasterProcessSession::dispatchChild()
     childSession = *(_availableChildSessions.begin());
 
     _availableChildSessions.erase(childSession);
+    std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
     lock.unlock();
-
-    std::cout << Util::logPrefix() << "available child sessions: " << _availableChildSessions.size() << std::endl;
 
     assert(jailDocumentURL[0] == '/');
     Path copy(getJailPath(childSession->_childId), jailDocumentURL.substr(1));

@@ -231,7 +231,7 @@ LoadTest::LoadTest() :
     _numClients(20),
     _numDocsPerClient(500),
     _duration(6),
-    _url("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_PORT_NUMBER) + "/ws")
+    _url("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
 {
 }
 

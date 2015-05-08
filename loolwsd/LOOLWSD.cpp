@@ -70,6 +70,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/ServerSocket.h>
+#include <Poco/Net/SocketAddress.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
@@ -97,6 +98,7 @@ using Poco::Net::HTTPServerParams;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::ServerSocket;
+using Poco::Net::SocketAddress;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Path;
@@ -138,7 +140,7 @@ public:
 
                 std::shared_ptr<MasterProcessSession> session;
 
-                if (request.getURI() == LOOLWSD::CHILD_URI)
+                if (request.getURI() == LOOLWSD::CHILD_URI && request.serverAddress().port() == LOOLWSD::MASTER_PORT_NUMBER)
                 {
                     session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToPrisoner));
                 }
@@ -366,7 +368,7 @@ public:
     }
 };
 
-int LOOLWSD::portNumber = DEFAULT_PORT_NUMBER;
+int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
 std::string LOOLWSD::sysTemplate;
 std::string LOOLWSD::loTemplate;
 std::string LOOLWSD::childRoot;
@@ -403,7 +405,7 @@ void LOOLWSD::defineOptions(OptionSet& options)
                       .required(false)
                       .repeatable(false));
 
-    options.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(LOOLWSD::DEFAULT_PORT_NUMBER) + ").")
+    options.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER) + ").")
                       .required(false)
                       .repeatable(false)
                       .argument("port number"));
@@ -577,7 +579,8 @@ int LOOLWSD::childMain()
         // Open websocket connection between the child process and the
         // parent. The parent forwards us requests that it can't handle.
 
-        HTTPClientSession cs("127.0.0.1", portNumber);
+        HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+        cs.setTimeout(0);
         HTTPRequest request(HTTPRequest::HTTP_GET, LOOLWSD::CHILD_URI);
         HTTPResponse response;
         WebSocket ws(cs, request, response);
@@ -644,18 +647,29 @@ int LOOLWSD::main(const std::vector<std::string>& args)
         throw IncompatibleOptionsException("child");
     if (jail != "")
         throw IncompatibleOptionsException("jail");
+    if (portNumber == MASTER_PORT_NUMBER)
+        throw IncompatibleOptionsException("port");
+
 
     // Set up a thread to reap child processes and clean up after them
     Undertaker undertaker;
     Thread undertakerThread;
     undertakerThread.start(undertaker);
 
-    ServerSocket svs(portNumber, _numPreSpawnedChildren*5);
-
-    Poco::ThreadPool threadPool(_numPreSpawnedChildren, _numPreSpawnedChildren*5);
+    // Start a server listening on the port for clients
+    ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
+    Poco::ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
     HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
 
     srv.start();
+
+    // And one on the port for child processes
+    SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
+    ServerSocket svs2(addr2, _numPreSpawnedChildren);
+    Poco::ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
+
+    srv2.start();
 
     if (_doTest)
         _numPreSpawnedChildren = 1;
