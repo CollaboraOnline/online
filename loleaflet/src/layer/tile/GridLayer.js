@@ -29,13 +29,15 @@ L.GridLayer = L.Layer.extend({
 
 	onAdd: function () {
 		this._initContainer();
+		this._selections = new L.LayerGroup();
+		this._map.addLayer(this._selections);
 
 		this._levels = {};
 		this._tiles = {};
 
 		this._viewReset();
 		this._update();
-		this.on('draw:created', L.bind(this._handleSelection, this));
+
 	},
 
 	beforeAdd: function (map) {
@@ -691,20 +693,6 @@ L.GridLayer = L.Layer.extend({
 			if (!this._tiles[key].loaded) { return false; }
 		}
 		return true;
-	},
-
-	_handleSelection: function (evt) {
-		var bounds = evt.layer.getBounds();
-		var startPx = this._map.project(bounds.getNorthWest());
-		var endPx = this._map.project(bounds.getSouthEast());
-		var startTwips = startPx.divideBy(this._tileSize).multiplyBy(this._tileWidthTwips);
-		startTwips = startTwips.round();
-		var endTwips = endPx.divideBy(this._tileSize).multiplyBy(this._tileWidthTwips);
-		endTwips = endTwips.round();
-		this._map.socket.send('selecttext ' + 'type=\'start\' ' +
-				'x=' + startTwips.x + ' y=' + startTwips.y);
-		this._map.socket.send('selecttext ' + 'type=\'end\' ' +
-				'x=' + endTwips.x + ' y=' + endTwips.y);
 	},
 
 	_onScroll: function (evt) {
