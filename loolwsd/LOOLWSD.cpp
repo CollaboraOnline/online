@@ -57,6 +57,7 @@ DEALINGS IN THE SOFTWARE.
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
+#include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -563,41 +564,52 @@ int LOOLWSD::childMain()
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
-    LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
-
-    if (!loKit)
+    try
     {
-        logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
-        return Application::EXIT_UNAVAILABLE;
+        LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
+
+        if (!loKit)
+        {
+            logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
+            return Application::EXIT_UNAVAILABLE;
+        }
+
+        // Open websocket connection between the child process and the
+        // parent. The parent forwards us requests that it can't handle.
+
+        HTTPClientSession cs("127.0.0.1", portNumber);
+        HTTPRequest request(HTTPRequest::HTTP_GET, LOOLWSD::CHILD_URI);
+        HTTPResponse response;
+        WebSocket ws(cs, request, response);
+
+        ChildProcessSession session(ws, loKit);
+
+        ws.setReceiveTimeout(0);
+
+        std::string hello("child " + std::to_string(_childId));
+        session.sendTextFrame(hello);
+
+        int flags;
+        int n;
+        do
+        {
+            char buffer[1024];
+            n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+
+            if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                if (!session.handleInput(buffer, n))
+                    n = 0;
+        }
+        while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
     }
-
-    // Open websocket connection between the child process and the
-    // parent. The parent forwards us requests that it can't handle.
-
-    HTTPClientSession cs("127.0.0.1", portNumber);
-    HTTPRequest request(HTTPRequest::HTTP_GET, LOOLWSD::CHILD_URI);
-    HTTPResponse response;
-    WebSocket ws(cs, request, response);
-
-    ChildProcessSession session(ws, loKit);
-
-    ws.setReceiveTimeout(0);
-
-    std::string hello("child " + std::to_string(_childId));
-    session.sendTextFrame(hello);
-
-    int flags;
-    int n;
-    do
+    catch (Poco::Exception& exc)
     {
-        char buffer[1024];
-        n = ws.receiveFrame(buffer, sizeof(buffer), flags);
-
-        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-            if (!session.handleInput(buffer, n))
-                n = 0;
+        logger().log(Util::logPrefix() + "Exception: " + exc.what());
     }
-    while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+    catch (std::exception& exc)
+    {
+        logger().error(Util::logPrefix() + "Exception: " + exc.what());
+    }
 
     // Safest to just bluntly exit
     _Exit(Application::EXIT_OK);
