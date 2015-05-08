@@ -64,9 +64,11 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.socket.send('status');
 		}
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
-		this._map.on('zoomend', L.bind(this._updateScrollOffset, this));
-		this._map.on('searchprev searchnext', L.bind(this._search, this));
-		this._map.on('clearselection', L.bind(this._clearSelections, this));
+		this._map.on('zoomend', this._updateScrollOffset, this);
+		this._map.on('searchprev searchnext', this._search, this);
+		this._map.on('clearselection', this._clearSelections, this);
+		this._map.on('mousedown mouseup mouseover mouseout mousemove',
+				this._onMouseEvent, this);
 	},
 
 	setUrl: function (url, noRedraw) {
@@ -267,6 +269,27 @@ L.TileLayer = L.GridLayer.extend({
 		this._selections.clearLayers();
 		this._searchResults = [];
 		this._searchIndex = 0;
+	},
+
+	_onMouseEvent: function (e) {
+		if (e.type === 'mousedown') {
+			this._selecting = true;
+			this._clearSelections();
+			//this._map.socket.send('selecttext type=reset x=0 y=0');
+			var selectionStart = this._latLngToTwips(e.latlng);
+			//this._map.socket.send('selecttext type=start ' +
+			//		'x=' + selectionStart.x + ' ' +
+			//		'y=' + selectionStart.y);
+		}
+		else if (e.type === 'mouseup') {
+			this._selecting = false;
+		}
+		else if (e.type === 'mousemove' && this._selecting) {
+			var selectionEnd = this._latLngToTwips(e.latlng);
+			//this._map.socket.send('selecttext type=end ' +
+			//		'x=' + selectionEnd.x + ' ' +
+			//		'y=' + selectionEnd.y);
+		}
 	}
 });
 
