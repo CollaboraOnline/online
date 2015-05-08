@@ -688,6 +688,20 @@ L.GridLayer = L.Layer.extend({
 				coords.y * this._tileHeightTwips);
 	},
 
+	_twipsToLatLng: function (twips) {
+		var pixels = new L.Point(
+				twips.x / this._tileWidthTwips * this._tileSize,
+				twips.y / this._tileHeightTwips * this._tileSize);
+		return this._map.layerPointToLatLng(pixels);
+	},
+
+	_latLngToTwips: function (latLng) {
+		var pixels = this._map.latLngToLayerPoint(latLng);
+		return new L.Point(
+				Math.round(pixels.x / this._tileSize * this._tileWidthTwips),
+				Math.round(pixels.y / this._tileSize * this._tileHeightTwips));
+	},
+
 	_noTilesToLoad: function () {
 		for (var key in this._tiles) {
 			if (!this._tiles[key].loaded) { return false; }
