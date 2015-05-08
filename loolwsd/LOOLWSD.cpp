@@ -405,7 +405,8 @@ void LOOLWSD::defineOptions(OptionSet& options)
                       .required(false)
                       .repeatable(false));
 
-    options.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER) + ").")
+    options.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),"
+                             " must not be " + std::to_string(MASTER_PORT_NUMBER) + ".")
                       .required(false)
                       .repeatable(false)
                       .argument("port number"));
