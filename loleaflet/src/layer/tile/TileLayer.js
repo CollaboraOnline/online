@@ -65,6 +65,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend', L.bind(this._updateScrollOffset, this));
+		this._map.on('searchprev searchnext', L.bind(this._search, this));
+		this._map.on('clearselection', L.bind(this._clearSelections, this));
 	},
 
 	setUrl: function (url, noRedraw) {
@@ -134,6 +136,12 @@ L.TileLayer = L.GridLayer.extend({
 			if (tile) {
 				tile.el.src = 'data:image/png;base64,' + window.btoa(String.fromCharCode.apply(null, data));
 			}
+		}
+		else if (textMsg.startsWith('search')) {
+			// TODO update protocol
+			this._clearSelections();
+			this._searchIndex = 0;
+			this._searchResults = [];
 		}
 	},
 
@@ -230,6 +238,35 @@ L.TileLayer = L.GridLayer.extend({
 				L.DomUtil.remove(tile);
 			}
 		}
+	},
+
+	_search: function (e) {
+		if (e.type === 'searchprev') {
+			if (this._searchIndex > 0) {
+				this._searchIndex -= 1;
+				// scrollTo searchResults[searchIndex]
+				if (this._searchIndex === 0) {
+					this._map.fire('disablesearchprev');
+				}
+			}
+			this._map.fire('enablesearchnext');
+		}
+		else if (e.type === 'searchnext') {
+			if (this._searchIndex < this._searchResults.length - 1) {
+				this._searchIndex += 1;
+				// scrollTo searchResults[searchIndex]
+				if (this._searchIndex === this._searchResults.length - 1) {
+					this._map.fire('disablesearchnext');
+				}
+			}
+			this._map.fire('enablesearchprev');
+		}
+	},
+
+	_clearSelections: function () {
+		this._selections.clearLayers();
+		this._searchResults = [];
+		this._searchIndex = 0;
 	}
 });
 
