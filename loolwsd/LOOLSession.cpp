@@ -478,6 +478,15 @@ void MasterProcessSession::dispatchChild()
 
     if (_availableChildSessions.size() == 0)
     {
+        if (_pendingPreSpawnedChildren.size() == 0)
+        {
+            // Running out of pre-spawned children, so spawn one more
+            Application::instance().logger().information(Util::logPrefix() + "Running out of pre-spawned childred, adding one more");
+            lock.unlock();
+            preSpawn();
+            lock.lock();
+        }
+
         std::cout << Util::logPrefix() << "waiting for a child session to become available" << std::endl;
         _availableChildSessionCV.wait(lock, [] { return _availableChildSessions.size() > 0; });
         std::cout << Util::logPrefix() << "waiting done" << std::endl;
