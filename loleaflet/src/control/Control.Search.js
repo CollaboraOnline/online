@@ -27,30 +27,23 @@ L.Control.Search = L.Control.extend({
 				searchName + '-next', container, this._searchNext);
 		this._cancelButton = this._createButton(options.cancelText, options.cancelTitle,
 				searchName + '-cancel', container, this._cancel);
+		this._prevButton.disabled = true;
+		this._nextButton.disabled = true;
 		L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
 
-		this._updateDisabled();
+		map.on('disablesearchprev disablesearchnext enablesearchprev enablesearchnext',
+				this._updateDisabled, this);
 
 		return container;
 	},
 
 	onRemove: function (map) {
-	},
-
-	disable: function () {
-		this._disabled = true;
-		this._updateDisabled();
-		return this;
-	},
-
-	enable: function () {
-		this._disabled = false;
-		this._updateDisabled();
-		return this;
+		map.off('disablesearchprev disablesearchnext enablesearchprev enablesearchnext',
+				this._updateDisabled, this);
 	},
 
 	_searchStart: function (e) {
-		if (!this._disabled && e.keyCode === 13 && this._searchBar.value !== '' ) {
+		if (e.keyCode === 13 && this._searchBar.value !== '' ) {
 			L.DomUtil.setStyle(this._cancelButton, 'display', 'inline-block');
 			// TODO update protocol
 			//this._map.socket.send('search ' + this._searchBar.value);
@@ -58,23 +51,16 @@ L.Control.Search = L.Control.extend({
 	},
 
 	_searchPrev: function (e) {
-		if (!this._disabled) {
-			this._map.fire('searchprev');
-		}
+		this._map.fire('searchprev');
 	},
 
 	_searchNext: function (e) {
-		if (!this._disabled) {
-			this._map.fire('searchnext');
-		}
+		this._map.fire('searchnext');
 	},
 
 	_cancel: function (e) {
-		if (!this._disabled) {
-			L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
-			this._map.fire('clearselection');
-			this._map.fire('cancelsearch');
-		}
+		L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
+		this._map.fire('clearselection');
 	},
 
 	_createSearchBar: function(title, className, container, fn) {
@@ -104,13 +90,20 @@ L.Control.Search = L.Control.extend({
 		return button;
 	},
 
-	_updateDisabled: function () {
-		var map = this._map,
-			className = 'leaflet-disabled';
-
-		L.DomUtil.removeClass(this._prevButton, className);
-		L.DomUtil.removeClass(this._nextButton, className);
-        // TODO disable next/prev buttons depending on curent focused result
+	_updateDisabled: function (e) {
+		switch (e.type) {
+			case 'disablesearchprev':
+				this._prevButton.disabled = true;
+				break;
+			case 'disablesearchnext':
+				this._nextButton.disabled = true;
+				break;
+			case 'enablesearchprev':
+				this._prevButton.disabled = false;
+				break;
+			case 'enablesearchnext':
+				this._nextButton.disabled = false;
+		}
 	}
 });
 
