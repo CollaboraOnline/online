@@ -526,7 +526,7 @@ namespace
 
 int LOOLWSD::childMain()
 {
-    std::cout << Util::logPrefix() << "Child here!" << std::endl;
+    std::cout << Util::logPrefix() << "Child here! id=" << _childId << std::endl;
 
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the child (but not in the
