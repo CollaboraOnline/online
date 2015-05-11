@@ -118,19 +118,19 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		if (textMsg.startsWith('status')) {
-			var info = this._getTileInfo(textMsg);
-			if (info.width && info.height && this._documentInfo !== textMsg) {
-				this._docWidthTwips = info.width;
-				this._docHeightTwips = info.height;
+			var command = this._parseServerCmd(textMsg);
+			if (command.width && command.height && this._documentInfo !== textMsg) {
+				this._docWidthTwips = command.width;
+				this._docHeightTwips = command.height;
 				this._updateMaxBounds();
 				this._documentInfo = textMsg;
 				this._update();
 			}
 		}
 		else if (textMsg.startsWith('tile')) {
-			var info = this._getTileInfo(textMsg);
-			var coords = this._twipsToCoords(new L.Point(info.x, info.y));
-			coords.z = info.zoom;
+			var command = this._parseServerCmd(textMsg);
+			var coords = this._twipsToCoords(new L.Point(command.x, command.y));
+			coords.z = command.zoom;
 			var data = bytes.subarray(index + 1);
 
 			var key = this._tileCoordsToKey(coords);
@@ -171,36 +171,36 @@ L.TileLayer = L.GridLayer.extend({
 				options.tileSize;
 	},
 
-	_getTileInfo: function (msg) {
+	_parseServerCmd: function (msg) {
 		var tokens = msg.split(' ');
-		var info = {};
+		var command = {};
 		for (var i = 0; i < tokens.length; i++) {
 			if (tokens[i].substring(0, 9) === 'tileposx=') {
-				info.x = parseInt(tokens[i].substring(9));
+				command.x = parseInt(tokens[i].substring(9));
 			}
 			if (tokens[i].substring(0, 9) === 'tileposy=') {
-				info.y = parseInt(tokens[i].substring(9));
+				command.y = parseInt(tokens[i].substring(9));
 			}
 			if (tokens[i].substring(0, 10) === 'tilewidth=') {
-				info.tileWidth = parseInt(tokens[i].substring(10));
+				command.tileWidth = parseInt(tokens[i].substring(10));
 			}
 			if (tokens[i].substring(0, 11) === 'tileheight=') {
-				info.tileHeight = parseInt(tokens[i].substring(11));
+				command.tileHeight = parseInt(tokens[i].substring(11));
 			}
 			if (tokens[i].substring(0, 6) === 'width=') {
-				info.width = parseInt(tokens[i].substring(6));
+				command.width = parseInt(tokens[i].substring(6));
 			}
 			if (tokens[i].substring(0, 7) === 'height=') {
-				info.height = parseInt(tokens[i].substring(7));
+				command.height = parseInt(tokens[i].substring(7));
 			}
 		}
-		if (info.tileWidth && info.tileHeight) {
-			var scale = info.tileWidth / this.options.tileWidthTwips;
+		if (command.tileWidth && command.tileHeight) {
+			var scale = command.tileWidth / this.options.tileWidthTwips;
 			// scale = 1.2 ^ (10 - zoom)
 			// zoom = 10 -log(scale) / log(1.2)
-			info.zoom = Math.round(10 - Math.log(scale) / Math.log(1.2));
+			command.zoom = Math.round(10 - Math.log(scale) / Math.log(1.2));
 		}
-		return info;
+		return command;
 	},
 
 	_onTileRemove: function (e) {
