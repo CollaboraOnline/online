@@ -123,7 +123,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._docWidthTwips = info.width;
 				this._docHeightTwips = info.height;
 				this._updateMaxBounds();
-				this._documentInfo = evt.data;
+				this._documentInfo = textMsg;
 				this._update();
 			}
 		}
