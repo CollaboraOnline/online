@@ -164,18 +164,6 @@ L.TileLayer = L.GridLayer.extend({
 		done(e, tile);
 	},
 
-	_getTileSize: function () {
-		var map = this._map,
-		    options = this.options,
-		    zoom = this._tileZoom + options.zoomOffset,
-		    zoomN = options.maxNativeZoom;
-
-		// increase tile size when overscaling
-		return zoomN !== null && zoom > zoomN ?
-				Math.round(options.tileSize / map.getZoomScale(zoomN, zoom)) :
-				options.tileSize;
-	},
-
 	_parseServerCmd: function (msg) {
 		var tokens = msg.split(' ');
 		var command = {};
@@ -216,25 +204,6 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onTileRemove: function (e) {
 		e.tile.onload = null;
-	},
-
-	_getZoomForUrl: function () {
-
-		var options = this.options,
-		    zoom = this._tileZoom;
-
-		if (options.zoomReverse) {
-			zoom = options.maxZoom - zoom;
-		}
-
-		zoom += options.zoomOffset;
-
-		return options.maxNativeZoom ? Math.min(zoom, options.maxNativeZoom) : zoom;
-	},
-
-	_getSubdomain: function (tilePoint) {
-		var index = Math.abs(tilePoint.x + tilePoint.y) % this.options.subdomains.length;
-		return this.options.subdomains[index];
 	},
 
 	// stops loading all tiles in the background layer
