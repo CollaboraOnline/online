@@ -124,6 +124,11 @@ L.TileLayer = L.GridLayer.extend({
 				this._docHeightTwips = command.height;
 				this._updateMaxBounds();
 				this._documentInfo = textMsg;
+				if (this._parts === undefined && command.parts > 1) {
+					this._map.addControl(L.control.parts({'parts':command.parts}));
+				}
+				this._parts = command.parts;
+				this._currentPart = 0;
 				this._update();
 			}
 		}
@@ -192,6 +197,12 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			if (tokens[i].substring(0, 7) === 'height=') {
 				command.height = parseInt(tokens[i].substring(7));
+			}
+			if (tokens[i].substring(0, 6) === 'parts=') {
+				command.parts = parseInt(tokens[i].substring(7));
+			}
+			if (tokens[i].substring(0, 8) === 'current=') {
+				command.part = parseInt(tokens[i].substring(7));
 			}
 		}
 		if (command.tileWidth && command.tileHeight) {

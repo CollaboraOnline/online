@@ -581,7 +581,9 @@ L.GridLayer = L.Layer.extend({
 	_addTile: function (coords, fragment) {
 		if (this.options.useSocket && this._map.socket) {
 			var twips = this._coordsToTwips(coords);
-			this._map.socket.send('tile part=0 width=' + this._tileSize + ' ' +
+			this._map.socket.send('tile ' +
+									'part=' + this._currentPart + ' ' +
+									'width=' + this._tileSize + ' ' +
 									'height=' + this._tileSize + ' ' +
 									'tileposx=' + twips.x + ' '	+
 									'tileposy=' + twips.y + ' ' +
