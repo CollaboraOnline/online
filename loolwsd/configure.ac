@@ -14,6 +14,8 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CXX
 
+AC_LANG_PUSH([C++])
+
 AS_IF([test `uname -s` = Linux],
       [AC_PATH_PROG([SETCAP], setcap,[],[/bin:/usr/bin:/sbin:/usr/sbin])]
        AS_IF([test -z "$SETCAP"],
@@ -78,7 +80,6 @@ AS_IF([test `uname -s` = Linux],
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX}"
 
-AC_LANG_PUSH([C++])
 AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
                  [],
                  [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
@@ -86,11 +87,19 @@ AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
                  [],
                  [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
 
+AC_MSG_CHECKING([POCO version])
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+#include <Poco/Version.h>
+#if POCO_VERSION < 0x01060000
+#error Require Poco 1.6.0 or newer
+#endif
+])],
+                  [AC_MSG_RESULT([OK])],
+                  [AC_MSG_ERROR([The POCO version is too old])])
+
 # How to check for C++ libraries? AC_CHECK_LIB works only for C. Let's
 # not bother, garbage in--garbage out. We will find out when
 # makeing...
-
-AC_LANG_POP
 
 test "$prefix" = NONE && prefix=$ac_default_prefix
 LOOLWSD_CACHEDIR=${localstatedir}/cache/${PACKAGE}
@@ -105,3 +114,5 @@ AC_SUBST(LOOLWSD_CACHEDIR)
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
+
+AC_LANG_POP
