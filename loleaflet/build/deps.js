@@ -213,6 +213,13 @@ var deps = {
 		desc: 'Search control with two buttons (previous / next).'
 	},
 
+	ControlParts: {
+		src: ['control/Control.js',
+		      'control/Control.Parts.js'],
+		heading: 'Controls',
+		desc: 'Parts control with two buttons (previous / next).'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],
