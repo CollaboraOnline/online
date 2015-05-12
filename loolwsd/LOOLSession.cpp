@@ -505,18 +505,39 @@ void MasterProcessSession::dispatchChild()
 
     URIStreamOpener opener;
     opener.registerStreamFactory("http", new HTTPStreamFactory());
-    std::istream *input = opener.open(_docURL);
-    std::ofstream output(copy.toString());
-    if (!output)
+    try
     {
-        Application::instance().logger().information(Util::logPrefix() + "Could not open " + copy.toString() + " for writing");
-        sendTextFrame("error: cmd=load kind=internal");
-        return;
-    }
-    StreamCopier::copyStream(*input, output);
-    output.close();
+        std::istream *input = opener.open(_docURL);
+        std::ofstream output(copy.toString());
+        if (!output)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "Could not open " + copy.toString() + " for writing");
+            sendTextFrame("error: cmd=load kind=internal");
 
-    Application::instance().logger().information(Util::logPrefix() + "Copying done");
+            // We did not use the child session after all
+            lock.lock();
+            _availableChildSessions.insert(childSession);
+            std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
+            lock.unlock();
+            throw Poco::IOException(copy.toString());
+        }
+        StreamCopier::copyStream(*input, output);
+        output.close();
+
+        Application::instance().logger().information(Util::logPrefix() + "Copying done");
+    }
+    catch (Poco::IOException& exc)
+    {
+        Application::instance().logger().error(Util::logPrefix() + "Copying failed: " + exc.message());
+        sendTextFrame("error: cmd=load kind=failed");
+
+        lock.lock();
+        _availableChildSessions.insert(childSession);
+        std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
+        lock.unlock();
+
+        throw;
+    }
 
     _peer = childSession;
     childSession->_peer = shared_from_this();
