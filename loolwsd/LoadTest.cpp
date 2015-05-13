@@ -109,7 +109,6 @@ public:
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-            std::cout << Util::logPrefix() << "Finishing" << std::endl;
         }
         catch (WebSocketException& exc)
         {
