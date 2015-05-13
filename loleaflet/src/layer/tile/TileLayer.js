@@ -65,7 +65,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend', this._updateScrollOffset, this);
-		this._map.on('searchprev searchnext', this._search, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('mousedown mouseup mouseover mouseout mousemove',
 				this._onMouseEvent, this);
@@ -144,11 +143,21 @@ L.TileLayer = L.GridLayer.extend({
 				tile.el.src = 'data:image/png;base64,' + window.btoa(String.fromCharCode.apply(null, data));
 			}
 		}
-		else if (textMsg.startsWith('search')) {
-			// TODO update protocol
+		else if (textMsg.startsWith('textselection:')) {
+			strTwips = textMsg.match(/\d+/g);
 			this._clearSelections();
-			this._searchIndex = 0;
-			this._searchResults = [];
+			if (strTwips != null) {
+				for (var i = 0; i < strTwips.length; i += 4) {
+					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i+1]));
+					var offset = new L.Point(parseInt(strTwips[i+2]), parseInt(strTwips[i+3]));
+					var bottomRightTwips = topLeftTwips.add(offset);
+					var bounds = new L.LatLngBounds(
+							this._twipsToLatLng(topLeftTwips),
+							this._twipsToLatLng(bottomRightTwips));
+					var selection = new L.Rectangle(bounds, {stroke:false});
+					this._selections.addLayer(selection);
+				}
+			}
 		}
 	},
 
@@ -219,29 +228,6 @@ L.TileLayer = L.GridLayer.extend({
 				tile.src = L.Util.emptyImageUrl;
 				L.DomUtil.remove(tile);
 			}
-		}
-	},
-
-	_search: function (e) {
-		if (e.type === 'searchprev') {
-			if (this._searchIndex > 0) {
-				this._searchIndex -= 1;
-				// scrollTo searchResults[searchIndex]
-				if (this._searchIndex === 0) {
-					this._map.fire('disablesearchprev');
-				}
-			}
-			this._map.fire('enablesearchnext');
-		}
-		else if (e.type === 'searchnext') {
-			if (this._searchIndex < this._searchResults.length - 1) {
-				this._searchIndex += 1;
-				// scrollTo searchResults[searchIndex]
-				if (this._searchIndex === this._searchResults.length - 1) {
-					this._map.fire('disablesearchnext');
-				}
-			}
-			this._map.fire('enablesearchprev');
 		}
 	},
 
