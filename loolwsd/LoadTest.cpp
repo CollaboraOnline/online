@@ -209,7 +209,7 @@ private:
             while (!documentStartTimestamp.isElapsed(20 * Timespan::SECONDS) && !clientDurationExceeded())
             {
                 sendTextFrame(ws,
-                              "tile width=256 height=256 "
+                              "tile part=0 width=256 height=256 "
                               "tileposx=" + std::to_string(x * DOCTILESIZE) + " "
                               "tileposy=" + std::to_string(y * DOCTILESIZE) + " "
                               "tilewidth=" + std::to_string(DOCTILESIZE) + " "
