@@ -43,6 +43,9 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
       [POCO_DEBUG_SUFFIX=])
 
+AS_IF([test "$enable_debug" = yes],
+      [AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code])])
+
 # Test for build environment
 
 CXXFLAGS="$CXXFLAGS -std=c++11"
