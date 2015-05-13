@@ -523,7 +523,9 @@ namespace
             // The program is setuid root. Not normal on Linux where we use setcap, but if this
             // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
             // to do chroot().
-            setuid(getuid());
+            if (setuid(getuid()) != 0) {
+                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+            }
         }
     }
 }
