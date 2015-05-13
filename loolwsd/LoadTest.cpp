@@ -94,11 +94,12 @@ public:
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
+#if 0
                     std::cout <<
                         Util::logPrefix() <<
                         "Client got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) <<
                         std::endl;
-
+#endif
                     std::string response = getFirstLine(buffer, n);
                     if (response.find("status:") == 0)
                     {
