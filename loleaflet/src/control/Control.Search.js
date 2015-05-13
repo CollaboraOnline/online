@@ -27,12 +27,19 @@ L.Control.Search = L.Control.extend({
 				searchName + '-next', container, this._searchNext);
 		this._cancelButton = this._createButton(options.cancelText, options.cancelTitle,
 				searchName + '-cancel', container, this._cancel);
-		this._prevButton.disabled = true;
-		this._nextButton.disabled = true;
-		L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
+		this._searchCmd = {
+			'SearchItem.SearchString': {
+				'type': 'string',
+				'value': ''
+			},
+			'SearchItem.Backward': {
+				'type': 'boolean',
+				'value': false
+			}
+		};
 
-		map.on('disablesearchprev disablesearchnext enablesearchprev enablesearchnext',
-				this._updateDisabled, this);
+		this._disabled = true;
+		this._updateDisabled();
 
 		return container;
 	},
@@ -44,23 +51,28 @@ L.Control.Search = L.Control.extend({
 
 	_searchStart: function (e) {
 		if (e.keyCode === 13 && this._searchBar.value !== '' ) {
-			L.DomUtil.setStyle(this._cancelButton, 'display', 'inline-block');
-			// TODO update protocol
-			//this._map.socket.send('search ' + this._searchBar.value);
+			this._disabled = false;
+			this._updateDisabled();
+			this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
+			this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 		}
 	},
 
 	_searchPrev: function (e) {
-		this._map.fire('searchprev');
+		this._searchCmd['SearchItem.Backward'].value = true;
+		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 	},
 
 	_searchNext: function (e) {
-		this._map.fire('searchnext');
+		this._searchCmd['SearchItem.Backward'].value = false;
+		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 	},
 
 	_cancel: function (e) {
 		L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
 		this._map.fire('clearselection');
+		this._disabled = true;
+		this._updateDisabled();
 	},
 
 	_createSearchBar: function(title, className, container, fn) {
@@ -90,19 +102,14 @@ L.Control.Search = L.Control.extend({
 		return button;
 	},
 
-	_updateDisabled: function (e) {
-		switch (e.type) {
-			case 'disablesearchprev':
-				this._prevButton.disabled = true;
-				break;
-			case 'disablesearchnext':
-				this._nextButton.disabled = true;
-				break;
-			case 'enablesearchprev':
-				this._prevButton.disabled = false;
-				break;
-			case 'enablesearchnext':
-				this._nextButton.disabled = false;
+	_updateDisabled: function () {
+		this._prevButton.disabled = this._disabled;
+		this._nextButton.disabled = this._disabled;
+		if (this._disabled) {
+			L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
+		}
+		else {
+			L.DomUtil.setStyle(this._cancelButton, 'display', 'inline-block');
 		}
 	}
 });
