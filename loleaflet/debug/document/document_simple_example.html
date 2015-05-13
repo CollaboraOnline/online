@@ -45,10 +45,10 @@
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
             results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        return results === null ? "" : results[1].replace(/\+/g, " ");
     }
 
-    var filePath = getParameterByName('file_path');
+    var filePath = 'file://' + getParameterByName('file_path');
     var host = getParameterByName('host');
     if (filePath === '') {
         alert('Wrong file_path, usage: file_path=/path/to/doc/');
