@@ -694,11 +694,11 @@ L.GridLayer = L.Layer.extend({
 		var pixels = new L.Point(
 				twips.x / this._tileWidthTwips * this._tileSize,
 				twips.y / this._tileHeightTwips * this._tileSize);
-		return this._map.layerPointToLatLng(pixels);
+		return this._map.unproject(pixels);
 	},
 
 	_latLngToTwips: function (latLng) {
-		var pixels = this._map.latLngToLayerPoint(latLng);
+		var pixels = this._map.project(latLng);
 		return new L.Point(
 				Math.round(pixels.x / this._tileSize * this._tileWidthTwips),
 				Math.round(pixels.y / this._tileSize * this._tileHeightTwips));
