@@ -154,11 +154,21 @@ L.TileLayer = L.GridLayer.extend({
 					var bounds = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips),
 							this._twipsToLatLng(bottomRightTwips));
+					if (!this._map.getBounds().contains(bounds.getCenter())) {
+						var center = this._map.project(bounds.getCenter());
+						center = center.subtract(this._map.getSize().divideBy(2));
+						center.x = center.x < 0 ? 0 : center.x;
+						center.y = center.y < 0 ? 0 : center.y;
+						$('#scroll-container').mCustomScrollbar('scrollTo', [center.y, center.x]);
+					}
 					var selection = new L.Rectangle(bounds, {stroke:false});
 					this._selections.addLayer(selection);
 				}
 			}
 		}
+        else if (textMsg.startsWith('error:')) {
+            alert(textMsg);
+        }
 	},
 
 	_tileOnLoad: function (done, tile) {
