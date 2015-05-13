@@ -189,7 +189,7 @@ private:
         if (document[0] == '/')
             sendTextFrame(ws, "load " + document);
         else
-            sendTextFrame(ws, "load uri=" + document);
+            sendTextFrame(ws, "load url=" + document);
 
         sendTextFrame(ws, "status");
 
