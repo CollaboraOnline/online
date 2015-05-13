@@ -41,12 +41,6 @@
 
 	<script>
 
-    if (typeof String.prototype.startsWith != 'function') {
-        String.prototype.startsWith = function (str){
-          return this.slice(0, str.length) == str;
-        };
-    }
-
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -55,9 +49,6 @@
     }
 
     var filePath = getParameterByName('file_path');
-    if (!filePath.startsWith('file://')) {
-        filePath = 'file://' + filePath;
-    }
     var host = getParameterByName('host');
     if (filePath === '') {
         alert('Wrong file_path, usage: file_path=/path/to/doc/');
