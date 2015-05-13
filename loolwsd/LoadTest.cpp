@@ -170,6 +170,8 @@ private:
 
         URI uri(_app.getURL());
 
+        std::cout << Util::logPrefix() << "Starting client for '" << document << "'" << std::endl;
+
         HTTPClientSession cs(uri.getHost(), uri.getPort());
         HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
         HTTPResponse response;
@@ -197,22 +199,32 @@ private:
 
         std::cout << Util::logPrefix() << "Got status, size=" << output._width << "x" << output._height << std::endl;
 
-        int n = 0;
-        const int DOCTILEHEIGHT = 5000;
+        int y = 0;
+        const int DOCTILESIZE = 5000;
 
         // Exercise the server with this document for some minutes
         while (!documentStartTimestamp.isElapsed(20 * Timespan::SECONDS) && !clientDurationExceeded())
         {
-            sendTextFrame(ws, "tile width=256 height=256 tileposx=0 tileposy=" + std::to_string(n * DOCTILEHEIGHT) + " " +
-                          "tilewidth=" + std::to_string(DOCTILEHEIGHT) + " "
-                          "tileheight=" + std::to_string(DOCTILEHEIGHT));
-            n = ((n + 1) % (output._height / DOCTILEHEIGHT));
+            int x = 0;
+            while (!documentStartTimestamp.isElapsed(20 * Timespan::SECONDS) && !clientDurationExceeded())
+            {
+                sendTextFrame(ws,
+                              "tile width=256 height=256 "
+                              "tileposx=" + std::to_string(x * DOCTILESIZE) + " "
+                              "tileposy=" + std::to_string(y * DOCTILESIZE) + " "
+                              "tilewidth=" + std::to_string(DOCTILESIZE) + " "
+                              "tileheight=" + std::to_string(DOCTILESIZE));
+                x = ((x + 1) % ((output._width-1)/DOCTILESIZE + 1));
+                if (x == 0)
+                    break;
+            }
+            y = ((y + 1) % ((output._height-1)/DOCTILESIZE + 1));
             Thread::sleep(1000);
         }
 
         Thread::sleep(10000);
 
-        std::cout << Util::logPrefix() << "Shutting down" << std::endl;
+        std::cout << Util::logPrefix() << "Shutting down client for '" << document << "'" << std::endl;
 
         ws.shutdown();
         thread.join();
