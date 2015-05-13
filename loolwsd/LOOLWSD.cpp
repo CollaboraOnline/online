@@ -44,6 +44,7 @@ DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 
 #ifdef __linux
+#include <pwd.h>
 #include <sys/capability.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -112,6 +113,10 @@ using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
+
+#if ENABLE_DEBUG
+uid_t uid = 0;
+#endif
 
 class WebSocketRequestHandler: public HTTPRequestHandler
     /// Handle a WebSocket connection.
@@ -449,6 +454,13 @@ void LOOLWSD::defineOptions(OptionSet& options)
                       .required(false)
                       .repeatable(false)
                       .argument("directory"));
+
+#if ENABLE_DEBUG
+    options.addOption(Option("uid", "", "Uid to assume if running under sudo for debugging purposes.")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("uid"));
+#endif
 }
 
 void LOOLWSD::handleOption(const std::string& name, const std::string& value)
@@ -478,6 +490,10 @@ void LOOLWSD::handleOption(const std::string& name, const std::string& value)
         _childId = std::stoull(value);
     else if (name == "jail")
         jail = value;
+#if ENABLE_DEBUG
+    else if (name == "uid")
+        uid = std::stoull(value);
+#endif
 }
 
 void LOOLWSD::displayHelp()
@@ -527,6 +543,21 @@ namespace
                 Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
             }
         }
+#if ENABLE_DEBUG
+        if (geteuid() == 0 && getuid() == 0)
+        {
+            // Running under sudo, probably because being debugged? Let's drop super-user rights.
+            if (uid == 0)
+            {
+                struct passwd *nobody = getpwnam("nobody");
+                if (nobody)
+                    uid = nobody->pw_uid;
+                else
+                    uid = 65534;
+            }
+            setuid(uid);
+        }
+#endif
     }
 }
 
