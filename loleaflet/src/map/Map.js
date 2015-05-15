@@ -608,6 +608,9 @@ L.Map = L.Evented.extend({
 		// prevents outline when clicking on keyboard-focusable element
 		if (type === 'mousedown') {
 			L.DomUtil.preventOutline(e.target || e.srcElement);
+			// Prevents image dragging on Mozilla when map's dragging
+			// option is set to false
+			e.preventDefault();
 		}
 
 		// workaround for drawing shapes, wihout this shapes cannot be shrunken
