@@ -243,8 +243,6 @@ L.TileLayer = L.GridLayer.extend({
 
 	_clearSelections: function () {
 		this._selections.clearLayers();
-		this._searchResults = [];
-		this._searchIndex = 0;
 	},
 
 	_onMouseEvent: function (e) {
