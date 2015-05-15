@@ -100,9 +100,20 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([
                   [AC_MSG_RESULT([OK])],
                   [AC_MSG_ERROR([The POCO version is too old])])
 
-# How to check for C++ libraries? AC_CHECK_LIB works only for C. Let's
-# not bother, garbage in--garbage out. We will find out when
-# makeing...
+# If poco is built with --unbundled, it uses the system pcre library
+AC_MSG_CHECKING([If we need to link with -lpcre])
+AC_LINK_IFELSE([AC_LANG_SOURCE([
+#include <Poco/RegularExpression.h>
+int main(int argc, char **argv)
+{
+    Poco::RegularExpression e("abc.[def]");
+    Poco::RegularExpression::Match m;
+    return e.match(argv[[1]], m);
+}
+])],
+               [AC_MSG_RESULT([No])],
+               [AC_MSG_RESULT([Yes])
+                LIBS="$LIBS -lpcre"])
 
 test "$prefix" = NONE && prefix=$ac_default_prefix
 LOOLWSD_CACHEDIR=${localstatedir}/cache/${PACKAGE}
