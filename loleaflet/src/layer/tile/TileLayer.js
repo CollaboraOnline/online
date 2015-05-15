@@ -162,7 +162,11 @@ L.TileLayer = L.GridLayer.extend({
 						center.y = center.y < 0 ? 0 : center.y;
 						$('#scroll-container').mCustomScrollbar('scrollTo', [center.y, center.x]);
 					}
-					var selection = new L.Rectangle(bounds, {stroke:false});
+					var selection = new L.Rectangle(bounds, {
+						fillColor: '#43ACE8',
+						fillOpacity: 0.25,
+						weight: 2,
+						opacity: 0.25});
 					this._selections.addLayer(selection);
 				}
 			}
