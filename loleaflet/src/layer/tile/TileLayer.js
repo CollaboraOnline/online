@@ -127,7 +127,7 @@ L.TileLayer = L.GridLayer.extend({
 					this._map.addControl(L.control.parts({'parts':command.parts}));
 				}
 				this._parts = command.parts;
-				this._currentPart = 0;
+				this._currentPart = command.currentPart;
 				this._update();
 			}
 		}
@@ -135,6 +135,7 @@ L.TileLayer = L.GridLayer.extend({
 			var command = this._parseServerCmd(textMsg);
 			var coords = this._twipsToCoords(new L.Point(command.x, command.y));
 			coords.z = command.zoom;
+			coords.part = command.part;
 			var data = bytes.subarray(index + 1);
 
 			var key = this._tileCoordsToKey(coords);
@@ -190,26 +191,29 @@ L.TileLayer = L.GridLayer.extend({
 			if (tokens[i].substring(0, 9) === 'tileposx=') {
 				command.x = parseInt(tokens[i].substring(9));
 			}
-			if (tokens[i].substring(0, 9) === 'tileposy=') {
+			else if (tokens[i].substring(0, 9) === 'tileposy=') {
 				command.y = parseInt(tokens[i].substring(9));
 			}
-			if (tokens[i].substring(0, 10) === 'tilewidth=') {
+			else if (tokens[i].substring(0, 10) === 'tilewidth=') {
 				command.tileWidth = parseInt(tokens[i].substring(10));
 			}
-			if (tokens[i].substring(0, 11) === 'tileheight=') {
+			else if (tokens[i].substring(0, 11) === 'tileheight=') {
 				command.tileHeight = parseInt(tokens[i].substring(11));
 			}
-			if (tokens[i].substring(0, 6) === 'width=') {
+			else if (tokens[i].substring(0, 6) === 'width=') {
 				command.width = parseInt(tokens[i].substring(6));
 			}
-			if (tokens[i].substring(0, 7) === 'height=') {
+			else if (tokens[i].substring(0, 7) === 'height=') {
 				command.height = parseInt(tokens[i].substring(7));
 			}
-			if (tokens[i].substring(0, 6) === 'parts=') {
-				command.parts = parseInt(tokens[i].substring(7));
+			else if (tokens[i].substring(0, 5) === 'part=') {
+				command.part = parseInt(tokens[i].substring(5));
 			}
-			if (tokens[i].substring(0, 8) === 'current=') {
-				command.part = parseInt(tokens[i].substring(7));
+			else if (tokens[i].substring(0, 6) === 'parts=') {
+				command.parts = parseInt(tokens[i].substring(6));
+			}
+			else if (tokens[i].substring(0, 8) === 'current=') {
+				command.currentPart = parseInt(tokens[i].substring(8));
 			}
 		}
 		if (command.tileWidth && command.tileHeight) {

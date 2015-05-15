@@ -460,7 +460,8 @@ L.GridLayer = L.Layer.extend({
 			queue = [];
 
 		for (var key in this._tiles) {
-			if (this._keyToTileCoords(key).z !== zoom) {
+			if (this._keyToTileCoords(key).z !== zoom ||
+					this._keyToTileCoords(key).part !== this._currentPart) {
 				this._tiles[key].current = false;
 			}
 		}
@@ -470,6 +471,7 @@ L.GridLayer = L.Layer.extend({
 			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
 				var coords = new L.Point(i, j);
 				coords.z = zoom;
+				coords.part = this._currentPart;
 
 				if (!this._isValidTile(coords)) { continue; }
 
@@ -540,7 +542,7 @@ L.GridLayer = L.Layer.extend({
 
 	// converts tile coordinates to key for the tile cache
 	_tileCoordsToKey: function (coords) {
-		return coords.x + ':' + coords.y + ':' + coords.z;
+		return coords.x + ':' + coords.y + ':' + coords.z + ':' + coords.part;
 	},
 
 	// converts tile cache key to coordinates
@@ -548,6 +550,7 @@ L.GridLayer = L.Layer.extend({
 		var k = key.split(':'),
 			coords = new L.Point(+k[0], +k[1]);
 		coords.z = +k[2];
+		coords.part = +k[3];
 		return coords;
 	},
 
