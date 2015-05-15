@@ -181,8 +181,8 @@
 	pointer-events: none;
 	}
 .leaflet-container {
-	cursor: -webkit-grab;
-	cursor:    -moz-grab;
+	cursor: text;
+	cursor: text;
 	}
 .leaflet-crosshair,
 .leaflet-crosshair .leaflet-interactive {
