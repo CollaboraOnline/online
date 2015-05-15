@@ -64,7 +64,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.socket.send('status');
 		}
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
-		this._map.on('zoomend', this._updateScrollOffset, this);
+		this._map.on('zoomend resize', this._updateScrollOffset, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('mousedown mouseup mouseover mouseout mousemove',
 				this._onMouseEvent, this);
