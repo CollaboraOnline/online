@@ -178,6 +178,7 @@
 
 .leaflet-interactive {
 	cursor: pointer;
+	pointer-events: none;
 	}
 .leaflet-container {
 	cursor: -webkit-grab;

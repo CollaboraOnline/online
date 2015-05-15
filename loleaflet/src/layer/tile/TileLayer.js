@@ -251,18 +251,22 @@ L.TileLayer = L.GridLayer.extend({
 			this._clearSelections();
 			//this._map.socket.send('selecttext type=reset x=0 y=0');
 			var selectionStart = this._latLngToTwips(e.latlng);
-			//this._map.socket.send('selecttext type=start ' +
-			//		'x=' + selectionStart.x + ' ' +
-			//		'y=' + selectionStart.y);
+			this._map.socket.send('selecttext type=reset ' +
+					'x=' + selectionStart.x + ' ' +
+					'y=' + selectionStart.y);
+
+			this._map.socket.send('selecttext type=start ' +
+					'x=' + selectionStart.x + ' ' +
+					'y=' + selectionStart.y);
 		}
 		else if (e.type === 'mouseup') {
 			this._selecting = false;
 		}
 		else if (e.type === 'mousemove' && this._selecting) {
 			var selectionEnd = this._latLngToTwips(e.latlng);
-			//this._map.socket.send('selecttext type=end ' +
-			//		'x=' + selectionEnd.x + ' ' +
-			//		'y=' + selectionEnd.y);
+			this._map.socket.send('selecttext type=end ' +
+					'x=' + selectionEnd.x + ' ' +
+					'y=' + selectionEnd.y);
 		}
 	}
 });
