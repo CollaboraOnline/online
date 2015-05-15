@@ -60,11 +60,13 @@ L.Control.Search = L.Control.extend({
 
 	_searchPrev: function (e) {
 		this._searchCmd['SearchItem.Backward'].value = true;
+		this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
 		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 	},
 
 	_searchNext: function (e) {
 		this._searchCmd['SearchItem.Backward'].value = false;
+		this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
 		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 	},
 
