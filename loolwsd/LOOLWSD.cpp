@@ -555,7 +555,9 @@ namespace
                 else
                     uid = 65534;
             }
-            setuid(uid);
+            if (setuid(uid) != 0) {
+                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+            }
         }
 #endif
     }
