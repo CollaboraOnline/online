@@ -40,13 +40,13 @@ L.Control.Search = L.Control.extend({
 
 		this._disabled = true;
 		this._updateDisabled();
+		map.on('searchfound searchnotfound', this._searchResultFound, this);
 
 		return container;
 	},
 
 	onRemove: function (map) {
-		map.off('disablesearchprev disablesearchnext enablesearchprev enablesearchnext',
-				this._updateDisabled, this);
+		map.on('searchfound searchnotfound', this._searchResultFound, this);
 	},
 
 	_searchStart: function (e) {
@@ -55,6 +55,16 @@ L.Control.Search = L.Control.extend({
 			this._updateDisabled();
 			this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
 			this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
+		}
+	},
+
+	_searchResultFound: function (e) {
+		if (e.type === 'searchfound') {
+			L.DomUtil.removeClass(this._searchBar, 'search-not-found');
+		}
+		else if (e.type == 'searchnotfound') {
+			L.DomUtil.addClass(this._searchBar, 'search-not-found');
+			setTimeout(L.bind(this._map.fire, this._map, 'searchfound'), 500);
 		}
 	},
 

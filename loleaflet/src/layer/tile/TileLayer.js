@@ -148,6 +148,7 @@ L.TileLayer = L.GridLayer.extend({
 			strTwips = textMsg.match(/\d+/g);
 			this._clearSelections();
 			if (strTwips != null) {
+				this._map.fire('searchfound');
 				for (var i = 0; i < strTwips.length; i += 4) {
 					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i+1]));
 					var offset = new L.Point(parseInt(strTwips[i+2]), parseInt(strTwips[i+3]));
@@ -169,6 +170,9 @@ L.TileLayer = L.GridLayer.extend({
 						opacity: 0.25});
 					this._selections.addLayer(selection);
 				}
+			}
+			else {
+				this._map.fire('searchnotfound');
 			}
 		}
         else if (textMsg.startsWith('error:')) {
