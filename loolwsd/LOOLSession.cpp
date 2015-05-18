@@ -793,6 +793,8 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
 
     delete[] pixmap;
 
+    sendTextFrame("nextmessage: size=" + std::to_string(output.size()));
+
     sendBinaryFrame(output.data(), output.size());
 }
 

@@ -75,6 +75,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
+#include <Poco/StringTokenizer.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionException.h>
@@ -105,6 +106,7 @@ using Poco::Net::WebSocketException;
 using Poco::Path;
 using Poco::Process;
 using Poco::Runnable;
+using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
@@ -166,8 +168,28 @@ public:
                     n = ws.receiveFrame(buffer, sizeof(buffer), flags);
 
                     if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                        if (!session->handleInput(buffer, n))
-                            n = 0;
+                    {
+                        std::string firstLine = getFirstLine(buffer, n);
+                        StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+                        int size;
+                        if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                        {
+                            std::unique_ptr<char>largeBuffer(new char[size]);
+
+                            n = ws.receiveFrame(largeBuffer.get(), size, flags);
+                            if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                            {
+                                if (!session->handleInput(largeBuffer.get(), n))
+                                    n = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (!session->handleInput(buffer, n))
+                                n = 0;
+                        }
+                    }
                 }
                 while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
             }
