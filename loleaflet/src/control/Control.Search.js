@@ -55,6 +55,7 @@ L.Control.Search = L.Control.extend({
 			this._disabled = false;
 			this._updateDisabled();
 			this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
+			this._searchCmd['SearchItem.Backward'].value = false;
 			this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 		}
 	},
