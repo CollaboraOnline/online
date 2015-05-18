@@ -378,6 +378,7 @@ L.GridLayer = L.Layer.extend({
 
 	_updateScrollOffset: function () {
 		if (this._map._scrollContainer.mcs) {
+			$('#scroll-container').mCustomScrollbar('stop');
 			var centerPixel = this._map.project(this._map.getCenter());
 			var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));
 			var x = newScrollPos.x < 0 ? 0 : newScrollPos.x;
@@ -385,7 +386,7 @@ L.GridLayer = L.Layer.extend({
 			this._prevScrollY = y;
 			this._prevScrollX = x;
 			this._ignoreScroll = false;
-			$('#scroll-container').mCustomScrollbar('scrollTo', [y, x], {callbacks: false});
+			$('#scroll-container').mCustomScrollbar('scrollTo', [y, x], {callbacks: false, timeout:0});
 		}
 	},
 
