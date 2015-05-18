@@ -139,10 +139,15 @@ L.TileLayer = L.GridLayer.extend({
 			coords.part = command.part;
 			var data = bytes.subarray(index + 1);
 
+
 			var key = this._tileCoordsToKey(coords);
 			var tile = this._tiles[key];
 			if (tile) {
-				tile.el.src = 'data:image/png;base64,' + window.btoa(String.fromCharCode.apply(null, data));
+				var strBytes = '';
+				for (var i = 0; i < data.length; i++) {
+					strBytes += String.fromCharCode(data[i]);
+				}
+				tile.el.src = 'data:image/png;base64,' + window.btoa(strBytes);
 			}
 		}
 		else if (textMsg.startsWith('textselection:')) {
