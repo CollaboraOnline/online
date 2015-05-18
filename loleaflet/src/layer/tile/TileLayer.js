@@ -66,6 +66,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend resize', this._updateScrollOffset, this);
 		this._map.on('clearselection', this._clearSelections, this);
+		this._map.on('prevpart nextpart', this._onSwitchPart, this);
 		this._map.on('mousedown mouseup mouseover mouseout mousemove',
 				this._onMouseEvent, this);
 	},
@@ -261,8 +262,8 @@ L.TileLayer = L.GridLayer.extend({
 		if (e.type === 'mousedown') {
 			this._selecting = true;
 			this._clearSelections();
-			//this._map.socket.send('selecttext type=reset x=0 y=0');
 			var selectionStart = this._latLngToTwips(e.latlng);
+
 			this._map.socket.send('selecttext type=reset ' +
 					'x=' + selectionStart.x + ' ' +
 					'y=' + selectionStart.y);
@@ -280,6 +281,19 @@ L.TileLayer = L.GridLayer.extend({
 					'x=' + selectionEnd.x + ' ' +
 					'y=' + selectionEnd.y);
 		}
+	},
+
+	_onSwitchPart: function (e) {
+		if (e.type === 'prevpart') {
+			this._currentPart -= 1;
+			if (this._currentPart < 0) {
+				this._currentPart = this._parts - 1;
+			}
+		}
+		else if (e.type === 'nextpart') {
+			this._currentPart = (this._currentPart + 1) % this._parts;
+		}
+		this._update();
 	}
 });
 
