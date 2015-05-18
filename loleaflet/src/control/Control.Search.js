@@ -50,6 +50,7 @@ L.Control.Search = L.Control.extend({
 	},
 
 	_searchStart: function (e) {
+		this._map.fire('clearselection');
 		if (e.keyCode === 13 && this._searchBar.value !== '' ) {
 			this._disabled = false;
 			this._updateDisabled();
