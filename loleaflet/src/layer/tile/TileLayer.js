@@ -177,9 +177,9 @@ L.TileLayer = L.GridLayer.extend({
 					this._selections.addLayer(selection);
 				}
 			}
-			else {
-				this._map.fire('searchnotfound');
-			}
+		}
+		else if (textMsg.startsWith('searchnotfound:')) {
+			this._map.fire('searchnotfound');
 		}
         else if (textMsg.startsWith('error:')) {
             alert(textMsg);
