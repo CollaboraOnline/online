@@ -25,7 +25,7 @@ clean-cache:
 # installing.
 all-local: loolwsd
 	if test `uname -s` = Linux; then \
-	    sudo @SETCAP@ cap_sys_chroot=ep loolwsd; \
+	    sudo @SETCAP@ cap_fowner,cap_sys_chroot=ep loolwsd; \
 	else \
 	    sudo chown root loolwsd && sudo chmod u+s loolwsd; \
 	fi

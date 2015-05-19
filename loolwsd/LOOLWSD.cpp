@@ -529,11 +529,11 @@ void LOOLWSD::displayHelp()
 
 namespace
 {
-    void dropChrootCapability()
+    void dropCapability(cap_value_t capability)
     {
 #ifdef __linux
         cap_t caps;
-        cap_value_t cap_list[] = { CAP_SYS_CHROOT };
+        cap_value_t cap_list[] = { capability };
 
         caps = cap_get_proc();
         if (caps == NULL)
@@ -556,6 +556,8 @@ namespace
         }
         cap_free(caps);
 #endif
+        // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
+        // don't own, so drop root.
         if (geteuid() == 0 && getuid() != 0)
         {
             // The program is setuid root. Not normal on Linux where we use setcap, but if this
@@ -589,6 +591,8 @@ int LOOLWSD::childMain()
 {
     std::cout << Util::logPrefix() << "Child here! id=" << _childId << std::endl;
 
+    dropCapability(CAP_FOWNER);
+
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the child (but not in the
     // parent) separately now. And also for options that are
@@ -609,7 +613,7 @@ int LOOLWSD::childMain()
         exit(1);
     }
 
-    dropChrootCapability();
+    dropCapability(CAP_SYS_CHROOT);
 
     if (chdir("/") == -1)
     {
@@ -681,7 +685,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     if (childMode())
         return childMain();
 
-    dropChrootCapability();
+    dropCapability(CAP_SYS_CHROOT);
 
     if (access(LOOLWSD_CACHEDIR, R_OK | W_OK | X_OK) != 0)
     {
