@@ -554,6 +554,11 @@ namespace
             Application::instance().logger().error(std::string("cap_set_proc() failed: ") + strerror(errno));
             exit(1);
         }
+
+        char *capText = cap_to_text(caps, NULL);
+        Application::instance().logger().information(Util::logPrefix() + "Capabilities now: " + capText);
+        cap_free(capText);
+
         cap_free(caps);
 #endif
         // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
