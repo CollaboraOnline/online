@@ -698,6 +698,9 @@ extern "C"
         case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
             srv->sendTextFrame("statusindicatorfinish:");
             break;
+        case LOK_CALLBACK_SEARCH_NOT_FOUND:
+            srv->sendTextFrame("searchnotfound: " + std::string(pPayload));
+            break;
         }
     }
 }
