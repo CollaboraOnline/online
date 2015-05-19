@@ -13,6 +13,7 @@ L.Map = L.Evented.extend({
 		layers: Array,
 		*/
 
+		doubleClickZoom: false,
 		fadeAnimation: true,
 		trackResize: true,
 		markerZoomAnimation: true

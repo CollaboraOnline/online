@@ -67,7 +67,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('zoomend resize', this._updateScrollOffset, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('prevpart nextpart', this._onSwitchPart, this);
-		this._map.on('mousedown mouseup mouseover mouseout mousemove',
+		this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
 				this._onMouseEvent, this);
 	},
 
@@ -263,28 +263,53 @@ L.TileLayer = L.GridLayer.extend({
 		this._selections.clearLayers();
 	},
 
+	_postMouseEvent: function(type, x, y, count) {
+		console.log(type + ' ' + count);
+		this._map.socket.send('mouse type=' + type +
+				' x=' + x + ' y=' + y + ' count=' + count);
+	},
+
 	_onMouseEvent: function (e) {
 		if (e.type === 'mousedown') {
 			this._selecting = true;
 			this._clearSelections();
-			var selectionStart = this._latLngToTwips(e.latlng);
-
-			this._map.socket.send('selecttext type=reset ' +
-					'x=' + selectionStart.x + ' ' +
-					'y=' + selectionStart.y);
-
-			this._map.socket.send('selecttext type=start ' +
-					'x=' + selectionStart.x + ' ' +
-					'y=' + selectionStart.y);
+			var mousePos = this._latLngToTwips(e.latlng);
+			this._mouseDownPos = mousePos;
+			this._holdStart = setTimeout(L.bind(function() {
+				this._holdStart = null;
+				this._postMouseEvent('buttondown',this._mouseDownPos.x,
+					this._mouseDownPos.y, 1);
+			}, this), 500);
 		}
 		else if (e.type === 'mouseup') {
 			this._selecting = false;
+			if (this._holdStart) {
+				// it was a click
+				clearTimeout(this._holdStart);
+				this._holdStart = null;
+				this._postMouseEvent('buttondown',this._mouseDownPos.x,
+						this._mouseDownPos.y, 1);
+			}
+			var mousePos = this._latLngToTwips(e.latlng);
+			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
 		}
 		else if (e.type === 'mousemove' && this._selecting) {
-			var selectionEnd = this._latLngToTwips(e.latlng);
-			this._map.socket.send('selecttext type=end ' +
-					'x=' + selectionEnd.x + ' ' +
-					'y=' + selectionEnd.y);
+			if (this._holdStart) {
+				clearTimeout(this._holdStart);
+				// it's not a dblclick, so we post the initial mousedown
+				this._postMouseEvent('buttondown', this._mouseDownPos.x,
+						this._mouseDownPos.y, 1);
+				this._holdStart = null;
+			}
+			var mousePos = this._latLngToTwips(e.latlng);
+			this._postMouseEvent('move', mousePos.x, mousePos.y, 1);
+		}
+		else if (e.type === 'dblclick') {
+			var mousePos = this._latLngToTwips(e.latlng);
+			this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);
+			this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2);
+			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2);
+			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
 		}
 	},
 
