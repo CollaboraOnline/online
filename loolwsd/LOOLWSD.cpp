@@ -175,12 +175,12 @@ public:
                         int size;
                         if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
                         {
-                            std::unique_ptr<char>largeBuffer(new char[size]);
+                            char largeBuffer[size];
 
-                            n = ws.receiveFrame(largeBuffer.get(), size, flags);
+                            n = ws.receiveFrame(largeBuffer, size, flags);
                             if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                             {
-                                if (!session->handleInput(largeBuffer.get(), n))
+                                if (!session->handleInput(largeBuffer, n))
                                     n = 0;
                             }
                         }
