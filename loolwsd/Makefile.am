@@ -1,6 +1,6 @@
 bin_PROGRAMS = loolwsd
 
-bin_SCRIPTS = loolwsd-systemplate-setup
+dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
 loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp TileCache.cpp Util.cpp LOOLProtocol.cpp
 
