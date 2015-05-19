@@ -25,8 +25,14 @@ Source0:        loolwsd-1.0.12.tar.gz
 BuildRequires:  libcap-progs libcap-devel libpng-devel poco-devel >= 1.6.0
 Requires:       libcap libcap-progs libpng libPocoFoundation30 >= 1.6.0 libPocoNet30 >= 1.6.0
 
-%description
+%define owner lool
+%define group lool
 
+# This works for now only with the TDF nightly builds or similar, I think
+%define sofficeversion 5.0
+%define sofficepackage libreofficedev%{sofficeversion}
+
+%description
 
 %prep
 %setup -q
@@ -50,7 +56,18 @@ make install DESTDIR=%{buildroot}
 
 %post
 setcap cap_fowner,cap_sys_chroot=ep /usr/bin/loolwsd
+
+getent group %{group} >/dev/null || groupadd -r %{group}
+getent passwd %{owner} >/dev/null || useradd -g %{group} -m -r %{owner}
+
 mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
+
+su - %{owner} -c 'mkdir lool-child-roots'
+
+# Figure out where LO is installed
+loroot=`rpm -ql %{sofficepackage} | grep '/soffice$' | sed -e 's-/program/soffice--'`
+
+su - %{owner} -c "loolwsd-systemplate-setup /home/lool/lool-systemplate ${loroot} >/dev/null"
 
 %changelog
 * Tue May 19 2015 Tor Lillqvist
