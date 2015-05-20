@@ -264,7 +264,6 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postMouseEvent: function(type, x, y, count) {
-		console.log(type + ' ' + count);
 		this._map.socket.send('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count);
 	},
