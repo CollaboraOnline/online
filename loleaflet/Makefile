@@ -11,4 +11,8 @@ all:
 
 .PHONY: dist
 dist:
-	git archive --prefix=loleaflet-$(VERSION)/ HEAD | gzip >loleaflet-$(VERSION).tar.gz
+	rm -rf loleaflet-$(VERSION)
+	mkdir loleaflet-$(VERSION)
+	tar cf - dist plugins/draw-$(DRAW_VERSION)/dist debug/document | (cd loleaflet-$(VERSION) && tar xf -)
+	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
+	rm -rf loleaflet-$(VERSION)
