@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.69])
 
-AC_INIT([loolwsd], [1.0.13], [libreoffice@collabora.com])
+AC_INIT([loolwsd], [1.0.14], [libreoffice@collabora.com])
 
 AM_INIT_AUTOMAKE([1.11 silent-rules])
 
@@ -126,7 +126,8 @@ done
 AC_DEFINE_UNQUOTED([LOOLWSD_CACHEDIR],["$LOOLWSD_CACHEDIR"],[Cache folder])
 AC_SUBST(LOOLWSD_CACHEDIR)
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile
+                 loolwsd.spec])
 AC_OUTPUT
 
 AC_LANG_POP

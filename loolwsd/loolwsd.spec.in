@@ -16,12 +16,12 @@
 # See also http://en.opensuse.org/openSUSE:Specfile_guidelines
 
 Name:           loolwsd
-Version:        1.0.12
+Version:        @PACKAGE_VERSION@
 Release:        0
 Vendor:         Collabora
 Summary:        LibreOffice On-Line WebSocket Daemon
 License:        MPL
-Source0:        loolwsd-1.0.12.tar.gz
+Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-progs libcap-devel libpng-devel poco-devel >= 1.6.0
 Requires:       libcap libcap-progs libpng libPocoFoundation30 >= 1.6.0 libPocoNet30 >= 1.6.0
 
