@@ -38,6 +38,14 @@ AC_ARG_WITH([poco-libs],
             AS_HELP_STRING([--with-poco-libs=<path>],
                            [Path the "lib" directory with the Poco libraries]))
 
+AC_ARG_WITH([libpng-includes],
+            AS_HELP_STRING([--with-libpng-includes=<path>],
+                           [Path the "include" directory with the libpng headers]))
+
+AC_ARG_WITH([libpng-libs],
+            AS_HELP_STRING([--with-libpng-libs=<path>],
+                           [Path the "lib" directory with the libpng libraries]))
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -59,6 +67,12 @@ AS_IF([test -n "$with_poco_includes"],
 
 AS_IF([test -n "$with_poco_libs"],
       [LDFLAGS="$LDFLAGS -L${with_poco_libs}"])
+
+AS_IF([test -n "$with_libpng_includes"],
+      [CPPFLAGS="$CPPFLAGS -I${with_libpng_includes}"])
+
+AS_IF([test -n "$with_libpng_libs"],
+      [LDFLAGS="$LDFLAGS -L${with_libpng_libs}"])
 
 AS_IF([test `uname -s` = Linux],
       [AS_IF([test -n "$with_poco_libs"],
