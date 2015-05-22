@@ -39,6 +39,12 @@ cd / || exit 1
 	done |
 	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
     else
+	find usr/lib/dyld  \
+	     usr/lib/libauto.dylib \
+	     usr/lib/libc++abi.dylib \
+	     usr/lib/system/*.dylib \
+	         -type f
+
 	find $INSTDIR -name '*.dylib' |
 	while read file; do
 	    otool -L $file 2>/dev/null
