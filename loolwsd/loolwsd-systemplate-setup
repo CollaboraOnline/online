@@ -40,16 +40,36 @@ cd / || exit 1
 	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
     else
 	find usr/lib/dyld  \
-	     usr/lib/libauto.dylib \
-	     usr/lib/libc++abi.dylib \
+	     usr/lib/*.dylib \
 	     usr/lib/system/*.dylib \
+	     System/Library/Frameworks/Accelerate.framework \
+	     System/Library/Frameworks/ApplicationServices.framework \
+	     System/Library/Frameworks/CFNetwork.framework \
+	     System/Library/Frameworks/Carbon.framework \
+	     System/Library/Frameworks/CoreFoundation.framework \
+	     System/Library/Frameworks/CoreGraphics.framework \
+	     System/Library/Frameworks/CoreServices.framework \
+	     System/Library/Frameworks/CoreText.framework \
+	     System/Library/Frameworks/DiskArbitration.framework \
+	     System/Library/Frameworks/Foundation.framework \
+	     System/Library/Frameworks/ImageIO.framework \
+	     System/Library/Frameworks/IOKit.framework \
+	     System/Library/Frameworks/IOSurface.framework \
+	     System/Library/Frameworks/NetFS.framework \
+	     System/Library/Frameworks/OpenDirectory.framework \
+	     System/Library/Frameworks/Security.framework \
+	     System/Library/Frameworks/SystemConfiguration.framework \
+	     System/Library/PrivateFrameworks/DataDetectorsCore.framework \
+	     System/Library/PrivateFrameworks/MultitouchSupport.framework \
+	     System/Library/PrivateFrameworks/NetAuth.framework \
+	     System/Library/PrivateFrameworks/login.framework \
 	         -type f
 
 	find $INSTDIR -name '*.dylib' |
 	while read file; do
 	    otool -L $file 2>/dev/null
 	done |
-	sed -e 's/^[ 	]//' | grep -E '^(/lib|/usr/lib)' | cut -d' ' -f1 | sort -u | sed -e 's,^/,,'
+	sed -e 's/^[ 	]//' | grep -E '^/(lib|usr/lib)/' | cut -d' ' -f1 | sort -u | sed -e 's,^/,,'
     fi
 ) |
 
