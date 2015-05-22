@@ -618,7 +618,6 @@ int LOOLWSD::childMain()
     if (childRoot != "")
         throw IncompatibleOptionsException("childroot");
 
-    logger().information("uid=" + std::to_string(getuid()) + " euid=" + std::to_string(geteuid()));
     if (chroot(jail.c_str()) == -1)
     {
         logger().error("chroot(\"" + jail + "\") failed: " + strerror(errno));
@@ -702,7 +701,6 @@ int LOOLWSD::childMain()
 
 int LOOLWSD::main(const std::vector<std::string>& args)
 {
-    logger().information("uid=" + std::to_string(getuid()) + " euid=" + std::to_string(geteuid()));
     if (childMode())
         return childMain();
 
@@ -711,8 +709,6 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 #else
     dropCapability();
 #endif
-
-    logger().information("uid=" + std::to_string(getuid()) + " euid=" + std::to_string(geteuid()));
 
     if (access(LOOLWSD_CACHEDIR, R_OK | W_OK | X_OK) != 0)
     {
