@@ -18,24 +18,33 @@ cd / || exit 1
     # Produce a list of file names, one per line, that will be copied
     # into the template tree of system files for the chroot jails.
 
-    # First essential files and shared objects
-    find etc/passwd etc/group etc/hosts \
-	 etc/resolv.conf \
-	 lib/ld-* lib64/ld-* \
-	 etc/ld.so.* \
-	 lib/libnss_* lib64/libnss_* \
-	 var/cache/fontconfig \
-	 etc/fonts \
-         usr/share/liblangtag \
-	     -type f
+    if [ `uname -s` = Linux ]; then
 
-    # Go through the LO shared objects and check what system libraries
-    # they link to.
-    find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |
-    while read file; do
-	ldd $file 2>/dev/null
-    done |
-    grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
+	# First essential files and shared objects
+	find etc/passwd etc/group etc/hosts \
+	     etc/resolv.conf \
+	     lib/ld-* lib64/ld-* \
+	     etc/ld.so.* \
+	     lib/libnss_* lib64/libnss_* \
+	     var/cache/fontconfig \
+	     etc/fonts \
+	     usr/share/liblangtag \
+		 -type f
+
+	# Go through the LO shared objects and check what system libraries
+	# they link to.
+	find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |
+	while read file; do
+	    ldd $file 2>/dev/null
+	done |
+	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
+    else
+	find $INSTDIR -name '*.dylib' |
+	while read file; do
+	    otool -L $file 2>/dev/null
+	done |
+	sed -e 's/^[ 	]//' | grep -E '^(/lib|/usr/lib)' | cut -d' ' -f1 | sort -u | sed -e 's,^/,,'
+    fi
 ) |
 
 # Can't use -l because then symlinks won't be handled well enough.
@@ -48,10 +57,12 @@ cpio -p -d -L $CHROOT
 
 cd $CHROOT || exit 1
 
-mkdir -p usr/share || exit 1
-cp -r -p /usr/share/fonts usr/share
+if [ `uname -s` = Linux ]; then
+    mkdir -p usr/share || exit 1
+    cp -r -p /usr/share/fonts usr/share
 
-if [ -h usr/share/fonts/ghostscript ]; then
-    mkdir usr/share/ghostscript || exit 1
-    cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
+    if [ -h usr/share/fonts/ghostscript ]; then
+	mkdir usr/share/ghostscript || exit 1
+	cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
+    fi
 fi
