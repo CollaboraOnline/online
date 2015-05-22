@@ -10,6 +10,8 @@
 #ifndef INCLUDED_LOOLWSD_HPP
 #define INCLUDED_LOOLWSD_HPP
 
+#include "config.h"
+
 #include <string>
 
 #include <Poco/Util/OptionSet.h>
@@ -49,6 +51,11 @@ private:
     bool _doTest;
     Poco::UInt64 _childId;
     static int _numPreSpawnedChildren;
+
+#if ENABLE_DEBUG
+public:
+    static bool runningAsRoot;
+#endif
 };
 
 #endif

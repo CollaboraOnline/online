@@ -402,6 +402,9 @@ std::string LOOLWSD::childRoot;
 std::string LOOLWSD::loSubPath = "lo";
 std::string LOOLWSD::jail;
 int LOOLWSD::_numPreSpawnedChildren = 10;
+#if ENABLE_DEBUG
+bool LOOLWSD::runningAsRoot = false;
+#endif
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 
 LOOLWSD::LOOLWSD() :
@@ -580,6 +583,7 @@ namespace
         if (geteuid() == 0 && getuid() == 0)
         {
             // Running under sudo, probably because being debugged? Let's drop super-user rights.
+            LOOLWSD::runningAsRoot = true;
             if (uid == 0)
             {
                 struct passwd *nobody = getpwnam("nobody");
@@ -617,6 +621,7 @@ int LOOLWSD::childMain()
     if (childRoot != "")
         throw IncompatibleOptionsException("childroot");
 
+    logger().information("uid=" + std::to_string(getuid()) + " euid=" + std::to_string(geteuid()));
     if (chroot(jail.c_str()) == -1)
     {
         logger().error("chroot(\"" + jail + "\") failed: " + strerror(errno));
@@ -696,6 +701,7 @@ int LOOLWSD::childMain()
 
 int LOOLWSD::main(const std::vector<std::string>& args)
 {
+    logger().information("uid=" + std::to_string(getuid()) + " euid=" + std::to_string(geteuid()));
     if (childMode())
         return childMain();
 

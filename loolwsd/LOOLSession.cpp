@@ -371,14 +371,27 @@ void MasterProcessSession::preSpawn()
     _pendingPreSpawnedChildren.insert(childId);
 
     Process::Args args;
+
+#if ENABLE_DEBUG
+    if (LOOLWSD::runningAsRoot)
+        args.push_back(Application::instance().commandPath());
+#endif
+
     args.push_back("--child=" + std::to_string(childId));
     args.push_back("--port=" + std::to_string(LOOLWSD::portNumber));
     args.push_back("--jail=" + jail.toString());
     args.push_back("--losubpath=" + LOOLWSD::loSubPath);
 
-    Application::instance().logger().information(Util::logPrefix() + "Launching child: " + Poco::cat(std::string(" "), args.begin(), args.end()));
+    const std::string executable = (LOOLWSD::runningAsRoot ? "/usr/bin/sudo" : Application::instance().commandPath());
 
+    Application::instance().logger().information(Util::logPrefix() + "Launching child: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()));
+
+#if ENABLE_DEBUG
+    ProcessHandle child = Process::launch(executable, args);
+#else
     ProcessHandle child = Process::launch(Application::instance().commandPath(), args);
+#endif
+
     _childProcesses[child.id()] = childId;
 }
 
