@@ -277,6 +277,12 @@ namespace
 
         assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
         const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
+
+#ifdef __APPLE__
+        if (strcmp(relativeOldPath, "PkgInfo") == 0)
+            return 0;
+#endif
+
         Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
 
         switch (typeflag)
