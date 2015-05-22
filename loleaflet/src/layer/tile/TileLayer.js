@@ -95,9 +95,6 @@ L.TileLayer = L.GridLayer.extend({
 		 http://www.w3.org/TR/WCAG20-TECHS/H67
 		*/
 		tile.alt = '';
-
-		tile.src = '';
-
 		return tile;
 	},
 

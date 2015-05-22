@@ -34,6 +34,7 @@ L.GridLayer = L.Layer.extend({
 
 		this._levels = {};
 		this._tiles = {};
+		this._tileCache = {};
 
 		this._viewReset();
 		this._update();
@@ -262,11 +263,11 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_retainParent: function (x, y, z, minZoom) {
-		var x2 = Math.floor(x / 2),
-			y2 = Math.floor(y / 2),
+		var x2 = Math.floor(x / 1.2),
+			y2 = Math.floor(y / 1.2),
 			z2 = z - 1;
 
-		var key = x2 + ':' + y2 + ':' + z2,
+		var key = x2 + ':' + y2 + ':' + z2 + ':' + this._currentPart,
 			tile = this._tiles[key];
 
 		if (tile && tile.active) {
@@ -286,10 +287,11 @@ L.GridLayer = L.Layer.extend({
 
 	_retainChildren: function (x, y, z, maxZoom) {
 
-		for (var i = 2 * x; i < 2 * x + 2; i++) {
-			for (var j = 2 * y; j < 2 * y + 2; j++) {
+		for (var i = 1.2 * x; i < 1.2 * x + 2; i++) {
+			for (var j = 1.2 * y; j < 1.2 * y + 2; j++) {
 
-				var key = i + ':' + j + ':' + (z + 1),
+				var key = Math.floor(i) + ':' + Math.floor(j) + ':' +
+					(z + 1) + ':' + this._currentPart,
 					tile = this._tiles[key];
 
 				if (tile && tile.active) {
@@ -437,7 +439,6 @@ L.GridLayer = L.Layer.extend({
 
 	_move: function () {
 		this._update();
-		this._pruneTiles();
 	},
 
 	_update: function (center, zoom) {
@@ -558,7 +559,15 @@ L.GridLayer = L.Layer.extend({
 	_removeTile: function (key) {
 		var tile = this._tiles[key];
 		if (!tile) { return; }
-		tile.current = false;
+
+		this._tileCache[key] = tile.el.src;
+		L.DomUtil.remove(tile.el);
+		delete this._tiles[key];
+
+		this.fire('tileunload', {
+			tile: tile.el,
+			coords: this._keyToTileCoords(key)
+		});
 	},
 
 	_initTile: function (tile) {
@@ -583,18 +592,6 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_addTile: function (coords, fragment) {
-		if (this.options.useSocket && this._map.socket) {
-			var twips = this._coordsToTwips(coords);
-			this._map.socket.send('tile ' +
-									'part=' + this._currentPart + ' ' +
-									'width=' + this._tileSize + ' ' +
-									'height=' + this._tileSize + ' ' +
-									'tileposx=' + twips.x + ' '	+
-									'tileposy=' + twips.y + ' ' +
-									'tilewidth=' + this._tileWidthTwips + ' ' +
-									'tileheight=' + this._tileHeightTwips);
-		}
-
 		var tilePos = this._getTilePos(coords),
 			key = this._tileCoordsToKey(coords);
 		var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
@@ -624,6 +621,23 @@ L.GridLayer = L.Layer.extend({
 			tile: tile,
 			coords: coords
 		});
+
+		if (!this._tileCache[key]) {
+			if (this.options.useSocket && this._map.socket) {
+				var twips = this._coordsToTwips(coords);
+				this._map.socket.send('tile ' +
+										'part=' + this._currentPart + ' ' +
+										'width=' + this._tileSize + ' ' +
+										'height=' + this._tileSize + ' ' +
+										'tileposx=' + twips.x + ' '	+
+										'tileposy=' + twips.y + ' ' +
+										'tilewidth=' + this._tileWidthTwips + ' ' +
+										'tileheight=' + this._tileHeightTwips);
+			}
+		}
+		else {
+			tile.src = this._tileCache[key];
+		}
 	},
 
 	_tileReady: function (coords, err, tile) {
@@ -640,7 +654,7 @@ L.GridLayer = L.Layer.extend({
 		var key = this._tileCoordsToKey(coords);
 
 		tile = this._tiles[key];
-		if (!tile || tile.loaded !== undefined) { return; }
+		if (!tile) { return; }
 
 		tile.loaded = +new Date();
 		if (this._map._fadeAnimated) {
