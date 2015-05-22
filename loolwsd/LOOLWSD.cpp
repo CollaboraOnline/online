@@ -41,10 +41,10 @@ DEALINGS IN THE SOFTWARE.
 // number of child processes, each which handles a viewing (editing) session for one document.
 
 #include <errno.h>
+#include <pwd.h>
 #include <unistd.h>
 
 #ifdef __linux
-#include <pwd.h>
 #include <sys/capability.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -529,7 +529,11 @@ void LOOLWSD::displayHelp()
 
 namespace
 {
-    void dropCapability(cap_value_t capability)
+    void dropCapability(
+#ifdef __linux
+                        cap_value_t capability
+#endif
+                        )
     {
 #ifdef __linux
         cap_t caps;
@@ -596,8 +600,9 @@ int LOOLWSD::childMain()
 {
     std::cout << Util::logPrefix() << "Child here! id=" << _childId << std::endl;
 
+#ifdef __linux
     dropCapability(CAP_FOWNER);
-
+#endif
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the child (but not in the
     // parent) separately now. And also for options that are
@@ -618,7 +623,11 @@ int LOOLWSD::childMain()
         exit(1);
     }
 
+#ifdef __linux
     dropCapability(CAP_SYS_CHROOT);
+#else
+    dropCapability();
+#endif
 
     if (chdir("/") == -1)
     {
@@ -690,7 +699,11 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     if (childMode())
         return childMain();
 
+#ifdef __linux
     dropCapability(CAP_SYS_CHROOT);
+#else
+    dropCapability();
+#endif
 
     if (access(LOOLWSD_CACHEDIR, R_OK | W_OK | X_OK) != 0)
     {
