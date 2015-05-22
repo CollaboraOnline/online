@@ -382,6 +382,11 @@ void MasterProcessSession::preSpawn()
     args.push_back("--jail=" + jail.toString());
     args.push_back("--losubpath=" + LOOLWSD::loSubPath);
 
+#if ENABLE_DEBUG
+    if (LOOLWSD::runningAsRoot)
+        args.push_back("--uid=" + std::to_string(LOOLWSD::uid));
+#endif
+
     const std::string executable = (LOOLWSD::runningAsRoot ? "/usr/bin/sudo" : Application::instance().commandPath());
 
     Application::instance().logger().information(Util::logPrefix() + "Launching child: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()));

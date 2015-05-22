@@ -116,10 +116,6 @@ using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
 
-#if ENABLE_DEBUG
-uid_t uid = 0;
-#endif
-
 class WebSocketRequestHandler: public HTTPRequestHandler
     /// Handle a WebSocket connection.
 {
@@ -404,6 +400,7 @@ std::string LOOLWSD::jail;
 int LOOLWSD::_numPreSpawnedChildren = 10;
 #if ENABLE_DEBUG
 bool LOOLWSD::runningAsRoot = false;
+int LOOLWSD::uid = 0;
 #endif
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 
@@ -584,15 +581,15 @@ namespace
         {
             // Running under sudo, probably because being debugged? Let's drop super-user rights.
             LOOLWSD::runningAsRoot = true;
-            if (uid == 0)
+            if (LOOLWSD::uid == 0)
             {
                 struct passwd *nobody = getpwnam("nobody");
                 if (nobody)
-                    uid = nobody->pw_uid;
+                    LOOLWSD::uid = nobody->pw_uid;
                 else
-                    uid = 65534;
+                    LOOLWSD::uid = 65534;
             }
-            if (setuid(uid) != 0) {
+            if (setuid(LOOLWSD::uid) != 0) {
                 Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
             }
         }
@@ -714,6 +711,8 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 #else
     dropCapability();
 #endif
+
+    logger().information("uid=" + std::to_string(getuid()) + " euid=" + std::to_string(geteuid()));
 
     if (access(LOOLWSD_CACHEDIR, R_OK | W_OK | X_OK) != 0)
     {

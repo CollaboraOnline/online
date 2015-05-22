@@ -55,6 +55,7 @@ private:
 #if ENABLE_DEBUG
 public:
     static bool runningAsRoot;
+    static int uid;
 #endif
 };
 
