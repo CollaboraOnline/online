@@ -88,7 +88,7 @@ protected:
                     "Commands mimic LOOL protocol but we talk directly to LOKit:" << std::endl <<
                     "    status" << std::endl <<
                     "        calls LibreOfficeKitDocument::getDocumentType, getParts, getPartName, getDocumentSize" << std::endl <<
-                    "    tile pixelwidth pixelheight docposx docposy doctilewidth doctileheight" << std::endl <<
+                    "    tile part pixelwidth pixelheight docposx docposy doctilewidth doctileheight" << std::endl <<
                     "        calls LibreOfficeKitDocument::paintTile" << std::endl;
             }
             else if (tokens[0] == "status")
@@ -106,20 +106,22 @@ protected:
             }
             else if (tokens[0] == "tile")
             {
-                if (tokens.count() != 7)
+                if (tokens.count() != 8)
                 {
                     std::cout << "? syntax" << std::endl;
                     continue;
                 }
 
-                int canvasWidth(std::stoi(tokens[1]));
-                int canvasHeight(std::stoi(tokens[2]));
-                int tilePosX(std::stoi(tokens[3]));
-                int tilePosY(std::stoi(tokens[4]));
-                int tileWidth(std::stoi(tokens[5]));
-                int tileHeight(std::stoi(tokens[6]));
+                int partNumber(std::stoi(tokens[1]));
+                int canvasWidth(std::stoi(tokens[2]));
+                int canvasHeight(std::stoi(tokens[3]));
+                int tilePosX(std::stoi(tokens[4]));
+                int tilePosY(std::stoi(tokens[5]));
+                int tileWidth(std::stoi(tokens[6]));
+                int tileHeight(std::stoi(tokens[7]));
                 
                 std::vector<unsigned char> pixmap(canvasWidth*canvasHeight*4);
+                loKitDocument->pClass->setPart(loKitDocument, partNumber);
                 loKitDocument->pClass->paintTile(loKitDocument, pixmap.data(), canvasWidth, canvasHeight, tilePosX, tilePosY, tileWidth, tileHeight);
 
                 if (!Util::windowingAvailable())
