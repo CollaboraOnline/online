@@ -69,7 +69,7 @@ protected:
 
         if (isatty(0))
         {
-            std::cout << "Enter LOKit \"commands\", one per line. Enter EOF to finish." << std::endl;
+            std::cout << "Enter LOKit \"commands\", one per line. 'help' for help. EOF to finish." << std::endl;
         }
 
         while (!std::cin.eof())
