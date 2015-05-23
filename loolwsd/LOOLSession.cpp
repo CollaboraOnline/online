@@ -725,6 +725,9 @@ extern "C"
         case LOK_CALLBACK_SEARCH_NOT_FOUND:
             srv->sendTextFrame("searchnotfound: " + std::string(pPayload));
             break;
+        case LOK_CALLBACK_PAGE_COUNT_CHANGED:
+            srv->sendTextFrame("pagecountchanged:");
+            break;
         }
     }
 }
