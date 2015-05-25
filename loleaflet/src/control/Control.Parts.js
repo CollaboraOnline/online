@@ -29,13 +29,17 @@ L.Control.Parts = L.Control.extend({
 
 	_prevPart: function (e) {
 		this._map.fire('prevpart');
-		this._currentPart -= 1;
+		if (this._currentPart > 0) {
+			this._currentPart -= 1;
+		}
 		this._updateDisabled();
 	},
 
 	_nextPart: function (e) {
 		this._map.fire('nextpart');
-		this._currentPart += 1;
+		if (this._currentPart < this._parts - 1) {
+			this._currentPart += 1;
+		}
 		this._updateDisabled();
 	},
 
@@ -56,13 +60,15 @@ L.Control.Parts = L.Control.extend({
 
 	_updateDisabled: function () {
 		var className = 'leaflet-disabled';
-		L.DomUtil.removeClass(this._prevPartButton, className);
-		L.DomUtil.removeClass(this._nextPartButton, className);
 		if (this._currentPart === 0) {
 			L.DomUtil.addClass(this._prevPartButton, className);
+		} else {
+			L.DomUtil.removeClass(this._prevPartButton, className);
 		}
 		if (this._currentPart === this._parts - 1) {
 			L.DomUtil.addClass(this._nextPartButton, className);
+		} else {
+			L.DomUtil.removeClass(this._nextPartButton, className);
 		}
 	}
 });

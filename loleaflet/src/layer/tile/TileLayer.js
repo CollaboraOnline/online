@@ -465,13 +465,14 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onSwitchPart: function (e) {
 		if (e.type === 'prevpart') {
-			this._currentPart -= 1;
-			if (this._currentPart < 0) {
-				this._currentPart = this._parts - 1;
+			if (this._currentPart > 0) {
+				this._currentPart -= 1;
 			}
 		}
 		else if (e.type === 'nextpart') {
-			this._currentPart = (this._currentPart + 1) % this._parts;
+			if (this._currentPart < this._parts - 1) {
+				this._currentPart += 1;
+			}
 		}
 		this._update();
 		this._pruneTiles();
