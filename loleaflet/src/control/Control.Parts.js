@@ -21,15 +21,22 @@ L.Control.Parts = L.Control.extend({
 		this._nextPartButton = this._createButton(options.nextPartText, options.nextPartTitle,
 		        partName + '-next', container, this._nextPart);
 
+		this._parts = options.parts;
+		this._currentPart = options.currentPart;
+		this._updateDisabled();
 		return container;
 	},
 
 	_prevPart: function (e) {
 		this._map.fire('prevpart');
+		this._currentPart -= 1;
+		this._updateDisabled();
 	},
 
 	_nextPart: function (e) {
 		this._map.fire('nextpart');
+		this._currentPart += 1;
+		this._updateDisabled();
 	},
 
 	_createButton: function (html, title, className, container, fn) {
@@ -45,6 +52,18 @@ L.Control.Parts = L.Control.extend({
 		    .on(link, 'click', this._refocusOnMap, this);
 
 		return link;
+	},
+
+	_updateDisabled: function () {
+		var className = 'leaflet-disabled';
+		L.DomUtil.removeClass(this._prevPartButton, className);
+		L.DomUtil.removeClass(this._nextPartButton, className);
+		if (this._currentPart === 0) {
+			L.DomUtil.addClass(this._prevPartButton, className);
+		}
+		if (this._currentPart === this._parts - 1) {
+			L.DomUtil.addClass(this._nextPartButton, className);
+		}
 	}
 });
 

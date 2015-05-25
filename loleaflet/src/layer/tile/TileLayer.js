@@ -122,7 +122,9 @@ L.TileLayer = L.GridLayer.extend({
 				this._updateMaxBounds();
 				this._documentInfo = textMsg;
 				if (this._parts === undefined && command.parts > 1) {
-					this._map.addControl(L.control.parts({'parts':command.parts}));
+					this._map.addControl(L.control.parts({
+						'parts': command.parts,
+						'currentPart': command.currentPart}));
 				}
 				this._parts = command.parts;
 				this._currentPart = command.currentPart;
