@@ -152,21 +152,32 @@ L.TileLayer = L.GridLayer.extend({
 			this._clearSelections();
 			if (strTwips != null) {
 				this._map.fire('searchfound');
+				var rectangles = [];
+				var selectionCenter = new L.Point(0,0);
 				for (var i = 0; i < strTwips.length; i += 4) {
 					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i+1]));
 					var offset = new L.Point(parseInt(strTwips[i+2]), parseInt(strTwips[i+3]));
+					var topRightTwips = topLeftTwips.add(new L.Point(offset.x, 0));
+					var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
 					var bottomRightTwips = topLeftTwips.add(offset);
-					var bounds = new L.LatLngBounds(
-							this._twipsToLatLng(topLeftTwips),
-							this._twipsToLatLng(bottomRightTwips));
-					if (!this._map.getBounds().contains(bounds.getCenter())) {
-						var center = this._map.project(bounds.getCenter());
-						center = center.subtract(this._map.getSize().divideBy(2));
-						center.x = center.x < 0 ? 0 : center.x;
-						center.y = center.y < 0 ? 0 : center.y;
-						$('#scroll-container').mCustomScrollbar('scrollTo', [center.y, center.x]);
-					}
-					var selection = new L.Rectangle(bounds, {
+					rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
+					selectionCenter = selectionCenter.add(topLeftTwips);
+					selectionCenter = selectionCenter.add(offset.divideBy(2));
+				}
+				// average of all rectangles' centers
+				selectionCenter = selectionCenter.divideBy(strTwips.length / 4);
+				selectionCenter = this._twipsToLatLng(selectionCenter);
+				if (!this._map.getBounds().contains(selectionCenter)) {
+					var center = this._map.project(selectionCenter);
+					center = center.subtract(this._map.getSize().divideBy(2));
+					center.x = center.x < 0 ? 0 : center.x;
+					center.y = center.y < 0 ? 0 : center.y;
+					$('#scroll-container').mCustomScrollbar('scrollTo', [center.y, center.x]);
+				}
+
+				var polygons = this._rectanglesToPolygons(rectangles);
+				for (var i = 0; i < polygons.length; i++) {
+					var selection = new L.Polygon(polygons[i], {
 						fillColor: '#43ACE8',
 						fillOpacity: 0.25,
 						weight: 2,
@@ -254,6 +265,147 @@ L.TileLayer = L.GridLayer.extend({
 				L.DomUtil.remove(tile);
 			}
 		}
+	},
+
+	_rectanglesToPolygons: function(rectangles) {
+		// algorithm found here http://stackoverflow.com/questions/13746284/merging-multiple-adjacent-rectangles-into-one-polygon
+		var eps = 20;
+		// Glue rectangles if the space between them is less then eps
+		for (var i = 0; i < rectangles.length - 1; i++) {
+			for (var j = i + 1; j < rectangles.length; j++) {
+				for (var k = 0; k < rectangles[i].length; k++) {
+					for (var l = 0; l < rectangles[j].length; l++) {
+						if (Math.abs(rectangles[i][k].x - rectangles[j][l].x) < eps) {
+							rectangles[j][l].x = rectangles[i][k].x;
+						}
+						if (Math.abs(rectangles[i][k].y - rectangles[j][l].y) < eps) {
+							rectangles[j][l].y = rectangles[i][k].y;
+						}
+					}
+				}
+			}
+		}
+
+		points = {};
+		for (var i = 0; i < rectangles.length; i++) {
+			for (var j = 0; j < rectangles[i].length; j++) {
+				if (points[rectangles[i][j]]) {
+					delete points[rectangles[i][j]];
+				}
+				else {
+					points[rectangles[i][j]] = rectangles[i][j];
+				}
+			}
+		}
+
+		function getKeys(points) {
+			keys = [];
+			for (var key in points) {
+				if (points.hasOwnProperty(key)) {
+					keys.push(key);
+				}
+			}
+			return keys;
+		}
+
+		function x_then_y(a_str, b_str) {
+			a = a_str.match(/\d+/g);
+			a[0] = parseInt(a[0]);
+			a[1] = parseInt(a[1]);
+			b = b_str.match(/\d+/g);
+			b[0] = parseInt(b[0]);
+			b[1] = parseInt(b[1]);
+
+			if (a[0] < b[0] || (a[0] == b[0] && a[1] < b[1])) {
+				return -1;
+			}
+			else if (a[0] == b[0] && a[1] == b[1]) {
+				return 0;
+			}
+			else {
+				return 1;
+			}
+		}
+
+		function y_then_x(a_str, b_str) {
+			a = a_str.match(/\d+/g);
+			a[0] = parseInt(a[0]);
+			a[1] = parseInt(a[1]);
+			b = b_str.match(/\d+/g);
+			b[0] = parseInt(b[0]);
+			b[1] = parseInt(b[1]);
+
+			if (a[1] < b[1] || (a[1] == b[1] && a[0] < b[0])) {
+				return -1;
+			}
+			else if (a[0] == b[0] && a[1] == b[1]) {
+				return 0;
+			}
+			else {
+				return 1;
+			}
+		}
+
+		sort_x = getKeys(points).sort(x_then_y);
+		sort_y = getKeys(points).sort(y_then_x);
+
+		edges_h = {};
+		edges_v = {};
+
+		var len = getKeys(points).length;
+		var i = 0;
+		while (i < len) {
+			var curr_y = points[sort_y[i]].y;
+			while (i < len && points[sort_y[i]].y === curr_y) {
+				edges_h[sort_y[i]] = sort_y[i+1];
+				edges_h[sort_y[i+1]] = sort_y[i];
+				i += 2;
+			}
+		}
+
+		i = 0;
+		while (i < len) {
+			var curr_x = points[sort_x[i]].x;
+			while (i < len && points[sort_x[i]].x === curr_x) {
+				edges_v[sort_x[i]] = sort_x[i+1];
+				edges_v[sort_x[i+1]] = sort_x[i];
+				i += 2;
+			}
+		}
+
+		var polygons = [];
+		var edges_h_keys = getKeys(edges_h);
+		while (edges_h_keys.length > 0) {
+			var p = [[edges_h_keys[0], 0]];
+			while (true) {
+				var curr = p[p.length - 1][0];
+				var e = p[p.length - 1][1];
+				if (e === 0) {
+					var next_vertex = edges_v[curr];
+					delete edges_v[curr];
+					p.push([next_vertex, 1]);
+				}
+				else {
+					var next_vertex = edges_h[curr];
+					delete edges_h[curr];
+					p.push([next_vertex, 0]);
+				}
+				if (p[p.length - 1][0] === p[0][0] && p[p.length - 1][1] === p[0][1]) {
+					p.pop();
+					break;
+				}
+			}
+			var polygon = [];
+			for (var i = 0; i < p.length; i++) {
+				polygon.push(this._twipsToLatLng(points[p[i][0]]));
+				delete edges_h[p[i][0]];
+				delete edges_v[p[i][0]];
+			}
+			polygon.push(this._twipsToLatLng(points[p[0][0]]));
+			edges_h_keys = getKeys(edges_h);
+			polygons.push(polygon);
+		}
+		return polygons;
 	},
 
 	_clearSelections: function () {
