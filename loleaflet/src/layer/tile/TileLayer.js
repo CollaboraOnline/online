@@ -472,6 +472,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._currentPart = (this._currentPart + 1) % this._parts;
 		}
 		this._update();
+		this._pruneTiles();
 	}
 });
 
