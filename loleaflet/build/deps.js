@@ -220,6 +220,13 @@ var deps = {
 		desc: 'Parts control with two buttons (previous / next).'
 	},
 
+	ControlEditViewSwitch: {
+		src: ['control/Control.js',
+		      'control/Control.EditView.js'],
+		heading: 'Controls',
+		desc: 'Switches from viewing to editing mode and backwards'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],
