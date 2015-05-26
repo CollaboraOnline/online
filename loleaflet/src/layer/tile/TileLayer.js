@@ -63,12 +63,15 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.socket.send('load url=' + this.options.doc);
 			this._map.socket.send('status');
 		}
+		this._map.dragging.disable();
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend resize', this._updateScrollOffset, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('prevpart nextpart', this._onSwitchPart, this);
 		this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
 				this._onMouseEvent, this);
+		this._map.on('viewmode editmode', this._updateEditViewMode, this);
+		this._map.on('drag', this._updateScrollOffset, this);
 	},
 
 	setUrl: function (url, noRedraw) {
@@ -476,6 +479,20 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._update();
 		this._pruneTiles();
+	},
+
+	_updateEditViewMode: function (e) {
+		if (e.type === 'viewmode') {
+			this._map.dragging.enable();
+			// disable all user interaction, will need to add keyboard too
+			this._map.off('mousedown mouseup mouseover mouseout mousemove dblclick',
+					this._onMouseEvent, this);
+		}
+		else if (e.type === 'editmode') {
+			this._map.dragging.disable();
+			this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
+					this._onMouseEvent, this);
+		}
 	}
 });
 
