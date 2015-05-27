@@ -732,8 +732,8 @@ extern "C"
         case LOK_CALLBACK_SEARCH_NOT_FOUND:
             srv->sendTextFrame("searchnotfound: " + std::string(pPayload));
             break;
-        case LOK_CALLBACK_PAGE_COUNT_CHANGED:
-            srv->sendTextFrame("pagecountchanged:");
+        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
+            srv->sendTextFrame("documentsizechanged:" + std::string(pPayload));
             break;
         case LOK_CALLBACK_SET_PART:
             srv->sendTextFrame("setpart: " + std::string(pPayload));
