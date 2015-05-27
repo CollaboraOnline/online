@@ -214,6 +214,19 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         }
         return loadDocument(buffer, length, tokens);
     }
+    else if (tokens[0] != "status" &&
+             tokens[0] != "tile" &&
+             tokens[0] != "key" &&
+             tokens[0] != "mouse" &&
+             tokens[0] != "uno" &&
+             tokens[0] != "selecttext" &&
+             tokens[0] != "selectgraphic" &&
+             tokens[0] != "resetselection" &&
+             tokens[0] != "saveas")
+    {
+        sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
+        return false;
+    }
     else if (_docURL == "")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
@@ -232,18 +245,6 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         // All other commands are such that they always require a
         // LibreOfficeKitDocument session, i.e. need to be handled in
         // a child process.
-
-        if (tokens[0] != "key" &&
-            tokens[0] != "mouse" &&
-            tokens[0] != "uno" &&
-            tokens[0] != "selecttext" &&
-            tokens[0] != "selectgraphic" &&
-            tokens[0] != "resetselection" &&
-            tokens[0] != "saveas")
-        {
-            sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
-            return false;
-        }
 
         if (_peer.expired())
             dispatchChild();
