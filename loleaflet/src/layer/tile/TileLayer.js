@@ -74,6 +74,25 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('drag', this._updateScrollOffset, this);
 	},
 
+	getEvents: function () {
+		var events = {
+			viewreset: this._viewReset,
+			moveend: this._move,
+			keypress: this._onKeyPress
+		};
+
+		if (!this.options.updateWhenIdle) {
+			// update tiles on move, but not more often than once per given interval
+			events.move = L.Util.throttle(this._move, this.options.updateInterval, this);
+		}
+
+		if (this._zoomAnimated) {
+			events.zoomanim = this._animateZoom;
+		}
+
+		return events;
+	},
+
 	setUrl: function (url, noRedraw) {
 		this._url = url;
 
@@ -422,6 +441,11 @@ L.TileLayer = L.GridLayer.extend({
 				' x=' + x + ' y=' + y + ' count=' + count);
 	},
 
+	_postKeyboardEvent: function(type, charcode, keycode) {
+		this._map.socket.send('key type=' + type +
+				' char=' + charcode + ' key=' + keycode);
+	},
+
 	_onMouseEvent: function (e) {
 		if (e.type === 'mousedown') {
 			this._selecting = true;
@@ -492,6 +516,12 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.dragging.disable();
 			this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
 					this._onMouseEvent, this);
+		}
+	},
+
+	_onKeyPress: function (e) {
+		if (this._cursorMarker) {
+			this._postKeyboardEvent('input', e.originalEvent.charCode, e.originalEvent.keyCode);
 		}
 	}
 });
