@@ -126,6 +126,9 @@ public:
 protected:
     int main(const std::vector<std::string>& args) override
     {
+        if (args.size() > 0)
+            _uri = URI(args[0]);
+
         HTTPClientSession cs(_uri.getHost(), _uri.getPort());
         HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
         HTTPResponse response;
