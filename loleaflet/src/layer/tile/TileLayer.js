@@ -52,6 +52,9 @@ L.TileLayer = L.GridLayer.extend({
 			this.on('tileunload', this._onTileRemove);
 		}
 		this._documentInfo = '';
+		this._cursorVisible = false;
+		this._cursorBounds = null;
+		this._cursorMarker = null;
 	},
 
 	_initDocument: function () {
@@ -136,7 +139,22 @@ L.TileLayer = L.GridLayer.extend({
 			textMsg = String.fromCharCode.apply(null, bytes.subarray(0, index + 1));
 		}
 
-		if (textMsg.startsWith('status')) {
+		if (textMsg.startsWith('cursorvisible')) {
+			var command = textMsg.match('cursorvisible: true');
+			this._cursorVisible = command == undefined ? false : true;
+			this._onUpdateCursor();
+		}
+		else if (textMsg.startsWith('invalidatecursor')) {
+			strTwips = textMsg.match(/\d+/g);
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+			this._cursorBounds = new L.LatLngBounds(
+							this._twipsToLatLng(topLeftTwips),
+							this._twipsToLatLng(bottomRightTwips));
+			this._onUpdateCursor();
+		}
+		else if (textMsg.startsWith('status')) {
 			var command = this._parseServerCmd(textMsg);
 			if (command.width && command.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = command.width;
@@ -522,6 +540,22 @@ L.TileLayer = L.GridLayer.extend({
 	_onKeyPress: function (e) {
 		if (this._cursorMarker) {
 			this._postKeyboardEvent('input', e.originalEvent.charCode, e.originalEvent.keyCode);
+		}
+	},
+
+	_onUpdateCursor: function () {
+		if (this._cursorVisible && this._cursorBounds ) {
+			if (this._cursorMarker)
+				this._map.removeLayer(this._cursorMarker);
+
+			var latlngs = L.rectangle(this._cursorBounds).getLatLngs();
+			// TODO replace for a blinking cursor image.
+			this._cursorMarker = L.polyline(latlngs.concat([latlngs[0]]));
+			this._map.addLayer(this._cursorMarker);
+		}
+		else {
+			if (this._cursorMarker)
+				this._map.removeLayer(this._cursorMarker);
 		}
 	}
 });
