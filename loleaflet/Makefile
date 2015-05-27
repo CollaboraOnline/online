@@ -1,6 +1,6 @@
 # Version number of loleaflet, no need to be in sync with the loolwsd one
 
-VERSION=1.0.2
+VERSION=1.0.4
 
 # Version number of the bundled 'draw' thing
 DRAW_VERSION=0.2.4
@@ -14,7 +14,10 @@ dist: all Makefile loleaflet.spec
 	rm -rf loleaflet-$(VERSION)
 	mkdir loleaflet-$(VERSION)
 	cp README loleaflet-$(VERSION)
-	tar cf - dist/leaflet.js dist/leaflet.css dist/images plugins/draw-$(DRAW_VERSION)/dist/leaflet.draw.js plugins/draw-$(DRAW_VERSION)/dist/leaflet.draw.css plugins/draw-$(DRAW_VERSION)/dist/images debug/document | (cd loleaflet-$(VERSION) && tar xf -)
+	tar cf - dist/leaflet.js dist/leaflet.css dist/images \
+	         plugins/draw-$(DRAW_VERSION)/dist/leaflet.draw.js plugins/draw-$(DRAW_VERSION)/dist/leaflet.draw.css plugins/draw-$(DRAW_VERSION)/dist/images \
+		 src/scrollbar \
+		 debug/document | (cd loleaflet-$(VERSION) && tar xf -)
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
 	rm -rf loleaflet-$(VERSION)
 
