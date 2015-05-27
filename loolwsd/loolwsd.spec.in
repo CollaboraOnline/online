@@ -62,7 +62,9 @@ getent passwd %{owner} >/dev/null || useradd -g %{group} -m -r %{owner}
 
 mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
 
-su - %{owner} -c 'mkdir lool-child-roots'
+su - %{owner} -c 'mkdir -p lool-child-roots'
+
+su - %{owner} -c "rm -rf /home/lool/lool-systemplate"
 
 # Figure out where LO is installed
 loroot=`rpm -ql %{sofficepackage} | grep '/soffice$' | sed -e 's-/program/soffice--'`
