@@ -58,18 +58,21 @@ make install DESTDIR=%{buildroot}
 setcap cap_fowner,cap_sys_chroot=ep /usr/bin/loolwsd
 
 getent group %{group} >/dev/null || groupadd -r %{group}
-getent passwd %{owner} >/dev/null || useradd -g %{group} -m -r %{owner}
+getent passwd %{owner} >/dev/null || useradd -g %{group} -r %{owner}
 
 mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
 
-su - %{owner} -c 'mkdir -p lool-child-roots'
-
-su - %{owner} -c "rm -rf /home/lool/lool-systemplate"
-
-# Figure out where LO is installed
+# Figure out where LO is installed, let's hope it is not a mount point
+# Create a directory for loolwsd on the same file system
 loroot=`rpm -ql %{sofficepackage} | grep '/soffice$' | sed -e 's-/program/soffice--'`
+loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
-su - %{owner} -c "loolwsd-systemplate-setup /home/lool/lool-systemplate ${loroot} >/dev/null"
+rm -rf ${loolparent}/lool
+mkdir -p ${loolparent}/lool/child-roots
+chown %{owner} ${loolparent}/lool
+chown %{owner} ${loolparent}/lool/child-roots
+
+su %{owner} -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null"
 
 %changelog
 * Tue May 19 2015 Tor Lillqvist
