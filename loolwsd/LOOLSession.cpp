@@ -735,6 +735,9 @@ extern "C"
         case LOK_CALLBACK_PAGE_COUNT_CHANGED:
             srv->sendTextFrame("pagecountchanged:");
             break;
+        case LOK_CALLBACK_SET_PART:
+            srv->sendTextFrame("setpart: " + std::string(pPayload));
+            break;
         }
     }
 }
