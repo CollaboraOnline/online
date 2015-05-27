@@ -154,6 +154,29 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(bottomRightTwips));
 			this._onUpdateCursor();
 		}
+		else if (textMsg.startsWith('invalidatetiles')) {
+			strTwips = textMsg.match(/\d+/g);
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+
+			for (var key in this._tiles) {
+				var coords = this._tiles[key].coords;
+				var point1 = this._coordsToTwips(coords);
+				var point2 = new L.Point(point1.x + this._tileWidthTwips, point1.y + this._tileHeightTwips);
+				var bounds = new L.Bounds(point1, point2);
+				if (bounds.contains(topLeftTwips) || bounds.contains(bottomRightTwips)) {
+					this._map.socket.send('tile ' +
+						'part=' + coords.part + ' ' +
+						'width=' + this._tileSize + ' ' +
+						'height=' + this._tileSize + ' ' +
+						'tileposx=' + point1.x + ' '	+
+						'tileposy=' + point1.y + ' ' +
+						'tilewidth=' + this._tileWidthTwips + ' ' +
+						'tileheight=' + this._tileHeightTwips);
+				}
+			}
+		}
 		else if (textMsg.startsWith('status')) {
 			var command = this._parseServerCmd(textMsg);
 			if (command.width && command.height && this._documentInfo !== textMsg) {
