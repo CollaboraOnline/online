@@ -227,6 +227,13 @@ var deps = {
 		desc: 'Switches from viewing to editing mode and backwards'
 	},
 
+	ControlStatusIndicator: {
+		src: ['control/Control.js',
+		      'control/Control.StatusIndicator.js'],
+		heading: 'Controls',
+		desc: 'Display document loading status'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],

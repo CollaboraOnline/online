@@ -194,6 +194,16 @@ L.TileLayer = L.GridLayer.extend({
 				this._update();
 			}
 		}
+		else if (textMsg.startsWith('statusindicatorstart:')) {
+			this._map.fire('statusindicator:start');
+		}
+		else if (textMsg.startsWith('statusindicatorsetvalue:')) {
+			var statusIndicator = textMsg.match(/\d+/g)[0];
+			this._map.fire('statusindicator:setvalue', {statusIndicator:statusIndicator});
+		}
+		else if (textMsg.startsWith('statusindicatorfinish:')) {
+			this._map.fire('statusindicator:finish');
+		}
 		else if (textMsg.startsWith('tile:')) {
 			var command = this._parseServerCmd(textMsg);
 			var coords = this._twipsToCoords(new L.Point(command.x, command.y));
