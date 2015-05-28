@@ -11,29 +11,26 @@ tiles proactively (guessing what the client might need). Etc.
 client -> server
 ================
 
+key type=<type> char=<charcode> key=<keycode>
+
+    <type> is 'input' or 'up', <charcode> and <keycode> are numbers.
+
 load <pathname>
 
     Deprecated.
 
 load url=<url>
 
-status
-
-tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
-
-    All parameters are numbers.
-
-key type=<type> char=<charcode> key=<keycode>
-
-    <type> is 'input' or 'up', <charcode> and <keycode> are numbers.
-
 mouse type=<type> x=<x> y=<y> count=<count>
 
     <type> is 'buttondown', 'buttonup' or 'move', others are numbers.
 
-uno <command>
+resetselection
 
-    <command> is a line of text.
+saveas url=<url> format=<format> options=<options>
+
+    <url> is a URL, encoded. <format> is also URL-encoded, i.e. spaces as %20
+    options are the whole rest of the line, not URL-encoded, and can be empty
 
 selecttext type=<type> x=<x> y=<y>
 
@@ -43,12 +40,16 @@ selectgraphic type=<type> x=<x> y=<y>
 
     <type> is 'start' or 'end' <x> and <y> are numbers.
 
-resetselection
+status
 
-saveas url=<url> format=<format> options=<options>
+tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 
-    <url> is a URL, encoded. <format> is also URL-encoded, i.e. spaces as %20
-    options are the whole rest of the line, not URL-encoded, and can be empty
+    All parameters are numbers.
+
+uno <command>
+
+    <command> is a line of text.
+
 
 server -> client
 ================
@@ -60,15 +61,6 @@ error: cmd=<command> kind=<kind>
     message that caused the error. <kind> is some single-word
     classification
 
-status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height>
-
-    <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
-
-tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
-<binaryPngImage>
-
-    The parameters from the corresponding 'tile' command.
-
 nextmessage: size=<byteSize>
 
     <byteSize> is the size, in bytes, of the next message, in case it
@@ -78,36 +70,44 @@ nextmessage: size=<byteSize>
     must be handled by clients that cannot (like those using Poco
     1.6.0).
 
+status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height>
+
+    <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
+
+tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
+<binaryPngImage>
+
+    The parameters from the corresponding 'tile' command.
+
 Each LOK_CALLBACK_FOO_BAR callback causes a corresponding message to
 the client, consisting of the FOO_BAR part in lowercase, without
 underscore, followed by a colon, space and the callback payload. For
 instance:
 
-invalidatetiles: <payload>
-
 invalidatecursor:
 
-
+invalidatetiles: <payload>
 
 The communication between the parent process (the one keeping open the
 Websocket connections to the clients) and a child process (handling
 one document through LibreOfficeKit) uses the same protocol, with
 the following additions and changes:
 
+
 child -> parent
 ===============
 
 child <id>
 
-Must be the first message sent from the child to the parent. The
-parent has passed the id (a 64-bit random number) to the child when
-starting it, so this is how the child identificates itself.
+    Must be the first message sent from the child to the parent. The
+    parent has passed the id (a 64-bit random number) to the child
+    when starting it, so this is how the child identificates itself.
 
 nextmessage: size=<upperlimit>
 
-each tile: message sent from the child to the parent is preceded by a
-nextmessage: message that gives an upper limit on the size of the
-tile: message that will follow. (We assume it is only tile: messages
-that can be "large".) Once we depend on Poco 1.6.1, where one doesn't
-need to use a pre-allocated buffer when receiving WebSocket messages,
-this will go away.
+    each tile: message sent from the child to the parent is preceded
+    by a nextmessage: message that gives an upper limit on the size of
+    the tile: message that will follow. (We assume it is only tile:
+    messages that can be "large".) Once we depend on Poco 1.6.1, where
+    one doesn't need to use a pre-allocated buffer when receiving
+    WebSocket messages, this will go away.
