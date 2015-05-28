@@ -46,7 +46,7 @@ public:
     virtual bool getStatus(const char *buffer, int length) = 0;
 
 protected:
-    LOOLSession(Poco::Net::WebSocket& ws, Kind kind);
+    LOOLSession(std::shared_ptr<Poco::Net::WebSocket> ws, Kind kind);
     virtual ~LOOLSession();
 
     static const std::string jailDocumentURL;
@@ -65,7 +65,7 @@ protected:
 
     // In the master process, the websocket to the LOOL client or the jailed child process. In a
     // jailed process, the websocket to the parent.
-    Poco::Net::WebSocket *_ws;
+    std::shared_ptr<Poco::Net::WebSocket> _ws;
 
     // In the master, the actual URL. In the child, the copy inside the chroot jail.
     std::string _docURL;
@@ -91,7 +91,7 @@ inline std::basic_ostream<charT, traits> & operator <<(std::basic_ostream<charT,
 class MasterProcessSession final : public LOOLSession, public std::enable_shared_from_this<MasterProcessSession>
 {
 public:
-    MasterProcessSession(Poco::Net::WebSocket& ws, Kind kind);
+    MasterProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, Kind kind);
     virtual ~MasterProcessSession();
 
     virtual bool handleInput(char *buffer, int length) override;
@@ -146,7 +146,7 @@ private:
 class ChildProcessSession final : public LOOLSession
 {
 public:
-    ChildProcessSession(Poco::Net::WebSocket& ws, LibreOfficeKit *loKit);
+    ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, LibreOfficeKit *loKit);
     virtual ~ChildProcessSession();
 
     virtual bool handleInput(char *buffer, int length) override;

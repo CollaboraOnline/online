@@ -139,7 +139,7 @@ public:
         {
             try
             {
-                WebSocket ws(request, response);
+                std::shared_ptr<WebSocket> ws(new WebSocket(request, response));
 
                 std::shared_ptr<MasterProcessSession> session;
 
@@ -157,11 +157,11 @@ public:
                 // the client).
                 int flags;
                 int n;
-                ws.setReceiveTimeout(0);
+                ws->setReceiveTimeout(0);
                 do
                 {
                     char buffer[100000];
-                    n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+                    n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
                     if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                     {
@@ -178,7 +178,7 @@ public:
                         {
                             char largeBuffer[size];
 
-                            n = ws.receiveFrame(largeBuffer, size, flags);
+                            n = ws->receiveFrame(largeBuffer, size, flags);
                             if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                             {
                                 if (!session->handleInput(largeBuffer, n))
@@ -579,6 +579,12 @@ namespace
 #if ENABLE_DEBUG
         if (geteuid() == 0 && getuid() == 0)
         {
+#ifdef __linux
+            // Argh, awful hack
+            if (capability == CAP_FOWNER)
+                return;
+#endif
+
             // Running under sudo, probably because being debugged? Let's drop super-user rights.
             LOOLWSD::runningAsRoot = true;
             if (LOOLWSD::uid == 0)
@@ -664,11 +670,11 @@ int LOOLWSD::childMain()
         cs.setTimeout(0);
         HTTPRequest request(HTTPRequest::HTTP_GET, LOOLWSD::CHILD_URI);
         HTTPResponse response;
-        WebSocket ws(cs, request, response);
+        std::shared_ptr<WebSocket> ws(new WebSocket(cs, request, response));
 
         ChildProcessSession session(ws, loKit);
 
-        ws.setReceiveTimeout(0);
+        ws->setReceiveTimeout(0);
 
         std::string hello("child " + std::to_string(_childId));
         session.sendTextFrame(hello);
@@ -678,7 +684,7 @@ int LOOLWSD::childMain()
         do
         {
             char buffer[1024];
-            n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+            n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
             if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 if (!session.handleInput(buffer, n))

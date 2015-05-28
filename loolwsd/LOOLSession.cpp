@@ -71,12 +71,12 @@ using Poco::Util::Application;
 
 const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
 
-LOOLSession::LOOLSession(WebSocket& ws, Kind kind) :
+LOOLSession::LOOLSession(std::shared_ptr<WebSocket> ws, Kind kind) :
     _kind(kind),
-    _ws(&ws),
+    _ws(ws),
     _docURL("")
 {
-    std::cout << Util::logPrefix() << "LOOLSession ctor this=" << this << " " << _kind << " ws=" << _ws << std::endl;
+    std::cout << Util::logPrefix() << "LOOLSession ctor this=" << this << " " << _kind << " ws=" << _ws.get() << std::endl;
 }
 
 LOOLSession::~LOOLSession()
@@ -104,11 +104,11 @@ std::condition_variable MasterProcessSession::_availableChildSessionCV;
 Poco::Random MasterProcessSession::_rng;
 std::mutex MasterProcessSession::_rngMutex;
 
-MasterProcessSession::MasterProcessSession(WebSocket& ws, Kind kind) :
+MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind kind) :
     LOOLSession(ws, kind),
     _childId(0)
 {
-    std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws << std::endl;
+    std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
 }
 
 MasterProcessSession::~MasterProcessSession()
@@ -590,12 +590,12 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
     peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
-ChildProcessSession::ChildProcessSession(WebSocket& ws, LibreOfficeKit *loKit) :
+ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws, LibreOfficeKit *loKit) :
     LOOLSession(ws, Kind::ToMaster),
     _loKit(loKit),
     _loKitDocument(NULL)
 {
-    std::cout << Util::logPrefix() << "ChildProcessSession ctor this=" << this << " ws=" << _ws << std::endl;
+    std::cout << Util::logPrefix() << "ChildProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
 }
 
 ChildProcessSession::~ChildProcessSession()
