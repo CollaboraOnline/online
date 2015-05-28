@@ -28,9 +28,7 @@ Requires:       libcap libcap-progs libpng libPocoFoundation30 >= 1.6.0 libPocoN
 %define owner lool
 %define group lool
 
-# This works for now only with the TDF nightly builds or similar, I think
-%define sofficeversion 5.0
-%define sofficepackage libreofficedev%{sofficeversion}
+# This works for now only with the TDF nightly builds of 5.0 or 5.1, I think
 
 %description
 
@@ -64,7 +62,9 @@ mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system
-loroot=`rpm -ql %{sofficepackage} | grep '/soffice$' | sed -e 's-/program/soffice--'`
+# First look for TDF libreofficedev5.1, then 5.0
+loroot=`rpm -ql libreofficedev5.1 | grep '/soffice$' | sed -e 's-/program/soffice--'`
+test -z "$loroot" && loroot=`rpm -ql libreofficedev5.0 | grep '/soffice$' | sed -e 's-/program/soffice--'`
 loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
 rm -rf ${loolparent}/lool
