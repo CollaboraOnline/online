@@ -153,7 +153,7 @@ void TileCache::invalidateTiles(int part, const std::string& tiles)
 {
     Poco::StringTokenizer tokens(tiles, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
 
-    assert(tokens[0] == "invalidateTiles:");
+    assert(tokens[0] == "invalidatetiles:");
 
     if (tokens.count() != 5)
         return;
