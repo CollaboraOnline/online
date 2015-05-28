@@ -24,7 +24,12 @@ public:
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
     std::string getStatus();
+
+    // The parameter is a status: message
     void saveStatus(const std::string& status);
+
+    // The parameter is a documentsizechanged: message
+    bool updateSizeInStatus(const std::string& status, std::string& newStatus);
 
 private:
     std::string cacheDirName();
