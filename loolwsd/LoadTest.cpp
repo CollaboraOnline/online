@@ -153,21 +153,20 @@ class Client: public Runnable
 public:
 
     Client(LoadTest& app) :
-        _app(app)
+        _app(app),
+        _g(_rd())
     {
     }
 
     void run() override
     {
         std::vector<std::string> uris(_app.getDocList());
-        std::random_device rd;
-        std::mt19937 g(rd());
-        std::shuffle(uris.begin(), uris.end(), g);
+        std::shuffle(uris.begin(), uris.end(), _g);
         if (uris.size() > _app.getNumDocsPerClient())
             uris.resize(_app.getNumDocsPerClient());
         while (!clientDurationExceeded())
         {
-            std::shuffle(uris.begin(), uris.end(), g);
+            std::shuffle(uris.begin(), uris.end(), _g);
             for (auto i : uris)
             {
                 if (clientDurationExceeded())
@@ -222,11 +221,14 @@ private:
         int y = 0;
         const int DOCTILESIZE = 5000;
 
+        std::uniform_int_distribution<> dis(0, 20);
+        int extra = dis(_g);
+
         // Exercise the server with this document for some minutes
-        while (!documentStartTimestamp.isElapsed(20 * Timespan::SECONDS) && !clientDurationExceeded())
+        while (!documentStartTimestamp.isElapsed((20 + extra) * Timespan::SECONDS) && !clientDurationExceeded())
         {
             int x = 0;
-            while (!documentStartTimestamp.isElapsed(20 * Timespan::SECONDS) && !clientDurationExceeded())
+            while (!documentStartTimestamp.isElapsed((20 + extra) * Timespan::SECONDS) && !clientDurationExceeded())
             {
                 sendTextFrame(ws,
                               "tile part=0 width=256 height=256 "
@@ -239,7 +241,7 @@ private:
                     break;
             }
             y = ((y + 1) % ((output._height-1)/DOCTILESIZE + 1));
-            Thread::sleep(1000);
+            Thread::sleep(200);
         }
 
         Thread::sleep(10000);
@@ -257,6 +259,9 @@ private:
 
     LoadTest& _app;
     Timestamp _clientStartTimestamp;
+
+    std::random_device _rd;
+    std::mt19937 _g;
 };
 
 LoadTest::LoadTest() :
