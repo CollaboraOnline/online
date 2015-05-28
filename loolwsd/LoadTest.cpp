@@ -28,7 +28,7 @@
 #include <Poco/Net/TCPServerConnectionFactory.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
-#include <Poco/String.h>
+#include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
 #include <Poco/Timespan.h>
 #include <Poco/Timestamp.h>
@@ -58,6 +58,7 @@ using Poco::Net::TCPServerConnection;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Runnable;
+using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::Timespan;
 using Poco::Timestamp;
@@ -101,6 +102,18 @@ public:
                         std::endl;
 #endif
                     std::string response = getFirstLine(buffer, n);
+                    StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+                    int size;
+                    if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                    {
+                        char largeBuffer[size];
+
+                        n = _ws.receiveFrame(largeBuffer, size, flags);
+                        // We don't actually need to do anything with the buffer in this program. We
+                        // only parse status: messages and they are not preceded by nextmessage:
+                        // messages.
+                    }
                     if (response.find("status:") == 0)
                     {
                         parseStatus(response, _type, _numParts, _currentPart, _width, _height);
