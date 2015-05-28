@@ -154,7 +154,7 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(bottomRightTwips));
 			this._onUpdateCursor();
 		}
-		else if (textMsg.startsWith('invalidatetiles')) {
+		else if (textMsg.startsWith('invalidatetiles') && !textMsg.match('EMPTY')) {
 			strTwips = textMsg.match(/\d+/g);
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
