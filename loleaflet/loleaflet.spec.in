@@ -22,6 +22,7 @@ Vendor:         Collabora
 Summary:        LibreOffice On-Line Javascript part
 License:        MPL
 Source0:        loleaflet-@PACKAGE_VERSION@.tar.gz
+BuildArchitectures: noarch
 
 %description
 
