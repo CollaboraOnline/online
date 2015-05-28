@@ -21,11 +21,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/Util/Application.h>
 
-#include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
-#include "Util.hpp"
-
-using namespace LOOLProtocol;
 
 TileCache::TileCache(const std::string& docURL) :
     _docURL(docURL)
@@ -120,73 +116,6 @@ void TileCache::saveStatus(const std::string& status)
 
     statusStream << status << std::endl;
     statusStream.close();
-}
-
-bool TileCache::updateSizeInStatus(const std::string& status, std::string& newStatus)
-{
-    std::string dirName = cacheDirName();
-
-    Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-
-    assert(tokens[0] == "documentsizechanged:");
-
-    // These messages are constructed directly from the payload in the LO callback. If the payload
-    // does not seem to be like we expect, ignore it here. Just let it be passed on to the client.
-
-    if (tokens.count() != 3)
-        return false;
-
-    int newWidth = std::stoi(tokens[1]);
-    int newHeight = std::stoi(tokens[2]);
-
-    if (newWidth < 0 || newHeight < 0)
-        return false;
-
-    // Update the size in the cached status, if any
-    std::string fileName = dirName + "/status.txt";
-    std::fstream statusStream(fileName, std::ios::in);
-
-    if (!statusStream.is_open())
-        return false;
-
-    std::string line;
-    std::getline(statusStream, line);
-    statusStream.close();
-
-    Poco::StringTokenizer oldTokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-
-    std::string type;
-    int parts, current, width, height;
-    if (oldTokens.count() != 6 ||
-        oldTokens[0] != "status:" ||
-        !getTokenString(oldTokens[1], "type", type) ||
-        !getTokenInteger(oldTokens[2], "parts", parts) ||
-        !getTokenInteger(oldTokens[3], "current", current) ||
-        !getTokenInteger(oldTokens[4], "width", width) ||
-        !getTokenInteger(oldTokens[5], "height", height))
-    {
-        // Existing status file has wrong syntax. It is useless anyway, delete it.
-        Poco::Util::Application::instance().logger().error(Util::logPrefix() + "Cached status '" + fileName + "' is bogus, removing");
-        std::remove(fileName.c_str());
-
-        return false;
-    }
-
-    statusStream.open(fileName, std::ios::out);
-    if (!statusStream.is_open())
-        return false;
-
-    line = ("status:"
-            " type=" + type +
-            " parts=" + std::to_string(parts) +
-            " current=" + std::to_string(current) +
-            " width=" + std::to_string(newWidth) +
-            " height=" + std::to_string(newHeight));
-    statusStream << line << std::endl;
-    statusStream.close();
-
-    newStatus = line;
-    return true;
 }
 
 std::string TileCache::cacheDirName()

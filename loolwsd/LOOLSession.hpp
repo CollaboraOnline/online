@@ -43,6 +43,8 @@ public:
 
     void sendTextFrame(const std::string& text);
 
+    virtual bool getStatus(const char *buffer, int length) = 0;
+
 protected:
     LOOLSession(Poco::Net::WebSocket& ws, Kind kind);
     virtual ~LOOLSession();
@@ -56,7 +58,6 @@ protected:
     void sendBinaryFrame(const char *buffer, int length);
 
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
-    virtual bool getStatus(const char *buffer, int length) = 0;
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
@@ -105,9 +106,10 @@ public:
 
     static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 
-protected:
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
     virtual bool getStatus(const char *buffer, int length);
+
+ protected:
+    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
@@ -149,9 +151,10 @@ public:
 
     virtual bool handleInput(char *buffer, int length) override;
 
-protected:
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
     virtual bool getStatus(const char *buffer, int length);
+
+ protected:
+    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 

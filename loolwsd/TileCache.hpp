@@ -28,9 +28,6 @@ public:
     // The parameter is a status: message
     void saveStatus(const std::string& status);
 
-    // The parameter is a documentsizechanged: message
-    bool updateSizeInStatus(const std::string& status, std::string& newStatus);
-
 private:
     std::string cacheDirName();
     std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);

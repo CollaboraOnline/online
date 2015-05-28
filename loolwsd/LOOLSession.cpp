@@ -134,7 +134,7 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         // Note that this handles both forwarding requests from the client to the child process, and
         // forwarding replies from the child process to the client. Or does it?
 
-        // Snoop at tile:, status: and documentsizechanged: messages and (re-)cache them
+        // Snoop at tile: and status: messages and (re-)cache them
         auto peer = _peer.lock();
         if (_kind == Kind::ToPrisoner && peer && peer->_tileCache)
         {
@@ -158,16 +158,6 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             {
                 assert(firstLine.size() == static_cast<std::string::size_type>(length));
                 peer->_tileCache->saveStatus(firstLine);
-            }
-            else if (tokens[0] == "documentsizechanged:")
-            {
-                std::string statusMessage;
-                assert(firstLine.size() == static_cast<std::string::size_type>(length));
-                if (peer->_tileCache->updateSizeInStatus(firstLine, statusMessage))
-                {
-                    forwardToPeer(statusMessage.c_str(), statusMessage.size());
-                    return true;
-                }
             }
         }
 
@@ -742,7 +732,7 @@ extern "C"
             srv->sendTextFrame("searchnotfound: " + std::string(pPayload));
             break;
         case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-            srv->sendTextFrame("documentsizechanged: " + std::string(pPayload));
+            srv->getStatus("", 0);
             break;
         case LOK_CALLBACK_SET_PART:
             srv->sendTextFrame("setpart: " + std::string(pPayload));
