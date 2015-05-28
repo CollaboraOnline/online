@@ -110,6 +110,13 @@ public:
                         char largeBuffer[size];
 
                         n = _ws.receiveFrame(largeBuffer, size, flags);
+
+#if 0
+                        std::cout <<
+                            Util::logPrefix() <<
+                            "Client got " << n << " bytes: " << getAbbreviatedMessage(largeBuffer, n) <<
+                            std::endl;
+#endif
                         // We don't actually need to do anything with the buffer in this program. We
                         // only parse status: messages and they are not preceded by nextmessage:
                         // messages.
