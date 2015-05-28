@@ -488,6 +488,8 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         cachedTile->read(output.data() + pos, size);
         cachedTile->close();
 
+        sendTextFrame("nextmessage: size=" + std::to_string(output.size()));
+
         sendBinaryFrame(output.data(), output.size());
 
         return;
