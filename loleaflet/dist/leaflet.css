@@ -198,7 +198,9 @@
 	cursor: -webkit-grabbing;
 	cursor:    -moz-grabbing;
 	}
-
+.leaflet-viewmode {
+    cursor: pointer;
+    }
 
 /* visual tweaks */
 

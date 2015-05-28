@@ -19,11 +19,14 @@ L.Control.EditViewSwitch = L.Control.extend({
 	},
 
     _onChange: function() {
+        var className = 'leaflet-viewmode';
         if (this._checkBox.checked) {
             this._map.fire('viewmode');
+            L.DomUtil.addClass(this._map._container, className);
         }
         else {
             this._map.fire('editmode');
+            L.DomUtil.removeClass(this._map._container, className);
         }
     }
 });
