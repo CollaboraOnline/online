@@ -177,7 +177,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		}
-		else if (textMsg.startsWith('status')) {
+		else if (textMsg.startsWith('status:')) {
 			var command = this._parseServerCmd(textMsg);
 			if (command.width && command.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = command.width;
@@ -194,7 +194,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._update();
 			}
 		}
-		else if (textMsg.startsWith('tile')) {
+		else if (textMsg.startsWith('tile:')) {
 			var command = this._parseServerCmd(textMsg);
 			var coords = this._twipsToCoords(new L.Point(command.x, command.y));
 			coords.z = command.zoom;
