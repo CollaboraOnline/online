@@ -124,7 +124,7 @@ MasterProcessSession::~MasterProcessSession()
 
 bool MasterProcessSession::handleInput(char *buffer, int length)
 {
-    Application& app = Application::instance();
+    Application::instance().logger().information(Util::logPrefix() + "Input: " + getAbbreviatedMessage(buffer, length));
 
     std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -174,8 +174,6 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         forwardToPeer(buffer, length);
         return true;
     }
-
-    app.logger().information(Util::logPrefix() + "Input: " + getAbbreviatedMessage(buffer, length));
 
     if (tokens[0] == "child")
     {
