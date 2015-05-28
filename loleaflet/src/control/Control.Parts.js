@@ -24,6 +24,8 @@ L.Control.Parts = L.Control.extend({
 		this._parts = options.parts;
 		this._currentPart = options.currentPart;
 		this._updateDisabled();
+		map.on('setpart', this._updateDisabled, this);
+
 		return container;
 	},
 
@@ -58,7 +60,10 @@ L.Control.Parts = L.Control.extend({
 		return link;
 	},
 
-	_updateDisabled: function () {
+	_updateDisabled: function (e) {
+		if (e) {
+			this._currentPart = e.currentPart;
+		}
 		var className = 'leaflet-disabled';
 		if (this._currentPart === 0) {
 			L.DomUtil.addClass(this._prevPartButton, className);
