@@ -108,6 +108,12 @@ child <id>
     parent has passed the id (a 64-bit random number) to the child
     when starting it, so this is how the child identificates itself.
 
+curpart: part=<partNumber>
+
+    Sent to the parent process before certain messages that the parent
+    needs to act on in addition to passing them on to the client, like
+    invalidatetiles:
+
 nextmessage: size=<upperlimit>
 
     each tile: message sent from the child to the parent is preceded

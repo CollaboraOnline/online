@@ -28,9 +28,15 @@ public:
     // The parameter is a status: message
     void saveStatus(const std::string& status);
 
+    // The tiles parameter is an invalidatetiles: message as sent by the child process
+    void invalidateTiles(int part, const std::string& tiles);
+
+    void invalidateTiles(int part, int x, int y, int width, int height);
+
 private:
     std::string cacheDirName();
     std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    bool parseCacheFileName(std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
     Poco::Timestamp getLastModified();
 
     const std::string& _docURL;

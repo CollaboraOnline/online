@@ -106,7 +106,8 @@ std::mutex MasterProcessSession::_rngMutex;
 
 MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind kind) :
     LOOLSession(ws, kind),
-    _childId(0)
+    _childId(0),
+    _curPart(0)
 {
     std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
 }
@@ -134,8 +135,19 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         // Note that this handles both forwarding requests from the client to the child process, and
         // forwarding replies from the child process to the client. Or does it?
 
-        // Snoop at tile: and status: messages and (re-)cache them
+        // Snoop at some  messages and manipulate tile cache information as needed
         auto peer = _peer.lock();
+
+        if (_kind == Kind::ToPrisoner)
+        {
+            if (tokens[0] == "curpart:" &&
+                tokens.count() == 2 &&
+                getTokenInteger(tokens[1], "part", _curPart))
+            {
+                return true;
+            }
+        }
+
         if (_kind == Kind::ToPrisoner && peer && peer->_tileCache)
         {
             if (tokens[0] == "tile:")
@@ -158,6 +170,11 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
             {
                 assert(firstLine.size() == static_cast<std::string::size_type>(length));
                 peer->_tileCache->saveStatus(firstLine);
+            }
+            else if (tokens[0] == "invalidatetiles:")
+            {
+                assert(firstLine.size() == static_cast<std::string::size_type>(length));
+                peer->_tileCache->invalidateTiles(_curPart, firstLine);
             }
         }
 
@@ -212,15 +229,16 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
         }
         return loadDocument(buffer, length, tokens);
     }
-    else if (tokens[0] != "status" &&
-             tokens[0] != "tile" &&
+    else if (tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
-             tokens[0] != "uno" &&
-             tokens[0] != "selecttext" &&
-             tokens[0] != "selectgraphic" &&
              tokens[0] != "resetselection" &&
-             tokens[0] != "saveas")
+             tokens[0] != "saveas" &&
+             tokens[0] != "selectgraphic" &&
+             tokens[0] != "selecttext" &&
+             tokens[0] != "status" &&
+             tokens[0] != "tile" &&
+             tokens[0] != "uno")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
@@ -229,6 +247,10 @@ bool MasterProcessSession::handleInput(char *buffer, int length)
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
+    }
+    else if (tokens[0] == "invalidatetiles")
+    {
+        return invalidateTiles(buffer, length, tokens);
     }
     else if (tokens[0] == "status")
     {
@@ -404,6 +426,25 @@ void MasterProcessSession::preSpawn()
 #endif
 
     _childProcesses[child.id()] = childId;
+}
+
+bool MasterProcessSession::invalidateTiles(const char *buffer, int length, StringTokenizer& tokens)
+{
+    int part, tilePosX, tilePosY, tileWidth, tileHeight;
+
+    if (tokens.count() != 6 ||
+        !getTokenInteger(tokens[1], "part", part) ||
+        !getTokenInteger(tokens[2], "tileposx", tilePosX) ||
+        !getTokenInteger(tokens[3], "tileposy", tilePosY) ||
+        !getTokenInteger(tokens[4], "tilewidth", tileWidth) ||
+        !getTokenInteger(tokens[5], "tileheight", tileHeight))
+    {
+        sendTextFrame("error: cmd=invalidatetiles kind=syntax");
+        return false;
+    }
+
+    _tileCache->invalidateTiles(_curPart, tilePosX, tilePosY, tileWidth, tileHeight);
+    return true;
 }
 
 bool MasterProcessSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
@@ -592,8 +633,8 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 
 ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws, LibreOfficeKit *loKit) :
     LOOLSession(ws, Kind::ToMaster),
-    _loKit(loKit),
-    _loKitDocument(NULL)
+    _loKitDocument(NULL),
+    _loKit(loKit)
 {
     std::cout << Util::logPrefix() << "ChildProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
 }
@@ -690,11 +731,12 @@ extern "C"
 {
     static void myCallback(int nType, const char* pPayload, void* pData)
     {
-        LOOLSession *srv = reinterpret_cast<LOOLSession *>(pData);
+        ChildProcessSession *srv = reinterpret_cast<ChildProcessSession *>(pData);
 
         switch ((LibreOfficeKitCallbackType) nType)
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
+            srv->sendTextFrame("curpart: part=" + std::to_string(srv->_loKitDocument->pClass->getPart(srv->_loKitDocument)));
             srv->sendTextFrame("invalidatetiles: " + std::string(pPayload));
             break;
         case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:

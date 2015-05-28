@@ -109,6 +109,8 @@ public:
     virtual bool getStatus(const char *buffer, int length);
 
  protected:
+    bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -141,6 +143,7 @@ private:
     Poco::UInt64 _childId;
     static Poco::Random _rng;
     static std::mutex _rngMutex;
+    int _curPart;
 };
 
 class ChildProcessSession final : public LOOLSession
@@ -152,6 +155,8 @@ public:
     virtual bool handleInput(char *buffer, int length) override;
 
     virtual bool getStatus(const char *buffer, int length);
+
+    LibreOfficeKitDocument *_loKitDocument;
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
@@ -169,7 +174,6 @@ public:
     std::string _jail;
     std::string _loSubPath;
     LibreOfficeKit *_loKit;
-    LibreOfficeKitDocument *_loKitDocument;
 };
 
 #endif

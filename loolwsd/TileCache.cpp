@@ -10,11 +10,13 @@
 #include "config.h"
 
 #include <cassert>
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
 
+#include <Poco/DirectoryIterator.h>
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
@@ -118,6 +120,52 @@ void TileCache::saveStatus(const std::string& status)
     statusStream.close();
 }
 
+void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
+{
+    std::string dirName = cacheDirName();
+
+    std::vector<std::string> toBeRemoved;
+
+    for (auto tileIterator = Poco::DirectoryIterator(dirName); tileIterator != Poco::DirectoryIterator(); ++tileIterator)
+    {
+        std::string baseName = tileIterator.path().getBaseName();
+
+        int tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight;
+
+        if (parseCacheFileName(baseName, tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight))
+        {
+            std::cout << "Tile " << baseName << " is " << tileWidth << "x" << tileHeight << "@+" << tilePosX << "+" << tilePosY << std::endl;
+            if (tilePart == part &&
+                tilePosX < x + width && tilePosX + tileWidth >= x &&
+                tilePosY < y + height && tilePosY + tileHeight >= y)
+            {
+                std::cout << "Match!" << std::endl;
+                toBeRemoved.push_back(tileIterator.path().toString());
+            }
+        }
+    }
+
+    for (auto i: toBeRemoved)
+        std::remove(i.c_str());
+}
+
+void TileCache::invalidateTiles(int part, const std::string& tiles)
+{
+    Poco::StringTokenizer tokens(tiles, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+
+    assert(tokens[0] == "invalidateTiles:");
+
+    if (tokens.count() != 5)
+        return;
+
+    int width(std::stoi(tokens[1]));
+    int height(std::stoi(tokens[2]));
+    int x(std::stoi(tokens[3]));
+    int y(std::stoi(tokens[4]));
+
+    invalidateTiles(part, x, y, width, height);
+}
+
 std::string TileCache::cacheDirName()
 {
     Poco::SHA1Engine digestEngine;
@@ -134,6 +182,11 @@ std::string TileCache::cacheFileName(int part, int width, int height, int tilePo
             std::to_string(width) + "x" + std::to_string(height) + "." +
             std::to_string(tilePosX) + "," + std::to_string(tilePosY) + "." +
             std::to_string(tileWidth) + "x" + std::to_string(tileHeight) + ".png");
+}
+
+bool TileCache::parseCacheFileName(std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight)
+{
+    return (std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7);
 }
 
 Poco::Timestamp TileCache::getLastModified()
