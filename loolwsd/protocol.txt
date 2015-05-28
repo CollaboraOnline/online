@@ -69,6 +69,15 @@ tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<
 
     The parameters from the corresponding 'tile' command.
 
+nextmessage: size=<byteSize>
+
+    <byteSize> is the size, in bytes, of the next message, in case it
+    is "large" (in practise, nextmessage: messages precede each tile:
+    message). Can be ignored by clients using an API that can read
+    arbitrarily large buffers from a WebSocket (like JavaScript), but
+    must be handled by clients that cannot (like those using Poco
+    1.6.0).
+
 Each LOK_CALLBACK_FOO_BAR callback causes a corresponding message to
 the client, consisting of the FOO_BAR part in lowercase, without
 underscore, followed by a colon, space and the callback payload. For

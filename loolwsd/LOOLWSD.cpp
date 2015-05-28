@@ -165,6 +165,11 @@ public:
 
                     if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                     {
+                        if (!session->handleInput(buffer, n))
+                            n = 0;
+                    }
+                    if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                    {
                         std::string firstLine = getFirstLine(buffer, n);
                         StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -179,11 +184,6 @@ public:
                                 if (!session->handleInput(largeBuffer, n))
                                     n = 0;
                             }
-                        }
-                        else
-                        {
-                            if (!session->handleInput(buffer, n))
-                                n = 0;
                         }
                     }
                 }
