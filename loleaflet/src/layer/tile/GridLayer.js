@@ -38,7 +38,7 @@ L.GridLayer = L.Layer.extend({
 
 		this._viewReset();
 		this._update();
-
+		this._map._docLayer = this;
 	},
 
 	beforeAdd: function (map) {
