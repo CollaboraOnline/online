@@ -38,13 +38,13 @@ Requires:       libcap libcap-progs libpng libPocoFoundation30 >= 1.6.0 libPocoN
 %build
 %configure --with-lokit-path=bundled/include
 
-make %{?_smp_mflags}
+env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 
 %check
-make check
+env BUILDING_FROM_RPMBUILD=yes make check
 
 %install
-make install DESTDIR=%{buildroot}
+env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
 
 %files
 /usr/bin/loolwsd

@@ -24,9 +24,10 @@ clean-cache:
 # it already after a plain 'make' to allow for testing without
 # installing.
 all-local: loolwsd
-	if test `uname -s` = Linux; then \
-	    sudo @SETCAP@ cap_fowner,cap_sys_chroot=ep loolwsd; \
-	else \
-	    sudo chown root loolwsd && sudo chmod u+s loolwsd; \
+	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
+	    if test `uname -s` = Linux; then \
+		sudo @SETCAP@ cap_fowner,cap_sys_chroot=ep loolwsd; \
+	    else \
+		sudo chown root loolwsd && sudo chmod u+s loolwsd; \
+	    fi; \
 	fi
-
