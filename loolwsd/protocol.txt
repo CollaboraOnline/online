@@ -66,10 +66,25 @@ error: cmd=<command> kind=<kind>
     message that caused the error. <kind> is some single-word
     classification
 
+invalidate: part=<partNumber> x=<x> y=<y> width=<width> height=<height>
+
+    All parameters are numbers. Tells the client to invalidate any
+    cached tiles for the document area specified (in twips), at any
+    zoom level.
+
+    The client should handle either this message or the
+    invalidatetiles: message, which has a different syntax, with
+    payload directly from the LOK_CALLBACK_INVALIDATE_TILES
+    callback. (The latter does not contain a part number, and as the
+    protocol is asynchronous, it is unclear whether a client can be
+    sure, or find out with certainty, for what part the
+    invalidatetiles: message is. The invalidatetiles: message will be
+    dropped soon.)
+
 nextmessage: size=<byteSize>
 
     <byteSize> is the size, in bytes, of the next message, in case it
-    is "large" (in practise, nextmessage: messages precede each tile:
+    is "large". (In practice, nextmessage: messages precede each tile:
     message). Can be ignored by clients using an API that can read
     arbitrarily large buffers from a WebSocket (like JavaScript), but
     must be handled by clients that cannot (like those using Poco

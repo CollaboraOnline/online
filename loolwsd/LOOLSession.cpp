@@ -736,8 +736,25 @@ extern "C"
         switch ((LibreOfficeKitCallbackType) nType)
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
-            srv->sendTextFrame("curpart: part=" + std::to_string(srv->_loKitDocument->pClass->getPart(srv->_loKitDocument)));
-            srv->sendTextFrame("invalidatetiles: " + std::string(pPayload));
+            {
+                int curPart = srv->_loKitDocument->pClass->getPart(srv->_loKitDocument);
+                srv->sendTextFrame("curpart: part=" + std::to_string(curPart));
+                srv->sendTextFrame("invalidatetiles: " + std::string(pPayload));
+                StringTokenizer tokens(std::string(pPayload), " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                if (tokens.count() == 4)
+                {
+                    int width(std::stoi(tokens[0]));
+                    int height(std::stoi(tokens[1]));
+                    int x(std::stoi(tokens[2]));
+                    int y(std::stoi(tokens[3]));
+                    srv->sendTextFrame("invalidate:"
+                                       " part=" + std::to_string(curPart) +
+                                       " x=" + std::to_string(x) +
+                                       " y=" + std::to_string(y) +
+                                       " width=" + std::to_string(width) +
+                                       " height=" + std::to_string(height));
+                }
+            }
             break;
         case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
             srv->sendTextFrame("invalidatecursor: " + std::string(pPayload));
