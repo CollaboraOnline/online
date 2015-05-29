@@ -370,10 +370,6 @@ L.GridLayer = L.Layer.extend({
 			bottomRight = this._map.unproject(bottomRight);
 			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 		}
-		else {
-			// the scroll container will get updated so we ignore scroll events
-			this._ignoreScroll = true;
-		}
 		L.DomUtil.setStyle(this._map._mockDoc, 'width', docPixelLimits.x + 'px');
 		L.DomUtil.setStyle(this._map._mockDoc, 'height', docPixelLimits.y + 'px');
 	},
@@ -387,7 +383,6 @@ L.GridLayer = L.Layer.extend({
 			var y = newScrollPos.y < 0 ? 0 : newScrollPos.y;
 			this._prevScrollY = y;
 			this._prevScrollX = x;
-			this._ignoreScroll = false;
 			$('#scroll-container').mCustomScrollbar('scrollTo', [y, x], {callbacks: false, timeout:0});
 		}
 	},
@@ -730,9 +725,6 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_onScroll: function (evt) {
-		if (this._ignoreScroll) {
-			return;
-		}
 		if (this._prevScrollY === undefined) {
 			this._prevScrollY = 0;
 		}
@@ -753,7 +745,6 @@ L.GridLayer = L.Layer.extend({
 	_onScrollEnd: function (evt) {
 		this._prevScrollY = -evt.mcs.top;
 		this._prevScrollX = -evt.mcs.left;
-		this._ignoreScroll = false;
 	}
 });
 
