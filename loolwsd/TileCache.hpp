@@ -14,6 +14,7 @@
 #include <memory>
 #include <string>
 
+#include <Poco/File.h>
 #include <Poco/Timestamp.h>
 
 class TileCache
@@ -38,6 +39,7 @@ private:
     std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     bool parseCacheFileName(std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
     Poco::Timestamp getLastModified();
+    void setupForFile(Poco::File& cacheDir, const std::string& path);
 
     const std::string& _docURL;
 };

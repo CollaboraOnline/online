@@ -19,11 +19,13 @@
 
 #include <Poco/DigestEngine.h>
 #include <Poco/DirectoryIterator.h>
+#include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Timestamp.h>
+#include <Poco/URI.h>
 
 #include "TileCache.hpp"
 
@@ -32,20 +34,26 @@ using Poco::DirectoryIterator;
 using Poco::File;
 using Poco::SHA1Engine;
 using Poco::StringTokenizer;
+using Poco::SyntaxException;
 using Poco::Timestamp;
+using Poco::URI;
 
 TileCache::TileCache(const std::string& docURL) :
     _docURL(docURL)
 {
     File dir(cacheDirName());
 
-    // TODO: Actually handle URLs (file: and http:), not file names.
-    if (dir.exists() && dir.isDirectory() && File(_docURL).exists() && File(_docURL).isFile())
+    try
     {
-        if (getLastModified() != File(_docURL).getLastModified())
+        URI uri(_docURL);
+        if (uri.getScheme() == "" ||
+            uri.getScheme() == "file")
         {
-            dir.remove(true);
-       }
+            setupForFile(dir, uri.getPath());
+        }
+    }
+    catch (SyntaxException& e)
+    {
     }
 }
 
@@ -74,13 +82,6 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
     std::fstream outStream(fileName, std::ios::out);
     outStream.write(data, size);
     outStream.close();
-
-    // TODO: Actually handle URLs (file: and http:), not file names.
-    if (!File(_docURL).exists() || !File(_docURL).isFile())
-        return;
-    std::fstream modTimeFile(dirName + "/modtime.txt", std::ios::out);
-    modTimeFile << File(_docURL).getLastModified().raw() << std::endl;
-    modTimeFile.close();
 }
 
 std::string TileCache::getStatus()
@@ -220,5 +221,19 @@ Timestamp TileCache::getLastModified()
     return result;
 }
 
+void TileCache::setupForFile(File& cacheDir, const std::string& path)
+{
+    if (File(path).exists() && File(path).isFile())
+    {
+        if (cacheDir.exists() && getLastModified() != File(path).getLastModified())
+        {
+            cacheDir.remove(true);
+        }
+        cacheDir.createDirectories();
+        std::fstream modTimeFile(cacheDir.path() + "/modtime.txt", std::ios::out);
+        modTimeFile << File(path).getLastModified().raw() << std::endl;
+        modTimeFile.close();
+    }
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
