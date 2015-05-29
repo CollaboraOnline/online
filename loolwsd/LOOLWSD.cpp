@@ -76,6 +76,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/ThreadPool.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionException.h>
@@ -89,7 +90,9 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace LOOLProtocol;
 
+using Poco::Exception;
 using Poco::File;
+using Poco::IOException;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
@@ -108,6 +111,7 @@ using Poco::Process;
 using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Thread;
+using Poco::ThreadPool;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
 using Poco::Util::IncompatibleOptionsException;
@@ -207,7 +211,7 @@ public:
                 }
             }
         }
-        catch (Poco::IOException& exc)
+        catch (IOException& exc)
         {
             app.logger().error(Util::logPrefix() + "IOException: " + exc.message());
         }
@@ -240,7 +244,7 @@ public:
     }
 };
 
-class TestOutput: public Runnable
+class TestOutput : public Runnable
 {
 public:
     TestOutput(WebSocket& ws) :
@@ -282,7 +286,7 @@ private:
     WebSocket& _ws;
 };
 
-class TestInput: public Runnable
+class TestInput : public Runnable
 {
 public:
     TestInput(ServerApplication& main, ServerSocket& svs, HTTPServer& srv) :
@@ -645,7 +649,7 @@ int LOOLWSD::childMain()
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
         std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
-            "attach process " << Poco::Process::id() << " in debugger now." << std::endl;
+            "attach process " << Process::id() << " in debugger now." << std::endl;
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
@@ -692,7 +696,7 @@ int LOOLWSD::childMain()
         }
         while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
     }
-    catch (Poco::Exception& exc)
+    catch (Exception& exc)
     {
         logger().log(Util::logPrefix() + "Exception: " + exc.what());
     }
@@ -749,7 +753,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     // Start a server listening on the port for clients
     ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
-    Poco::ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
     HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
 
     srv.start();
@@ -757,7 +761,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
     ServerSocket svs2(addr2, _numPreSpawnedChildren);
-    Poco::ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
     HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
 
     srv2.start();

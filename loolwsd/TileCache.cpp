@@ -17,24 +17,32 @@
 #include <memory>
 #include <string>
 
+#include <Poco/DigestEngine.h>
 #include <Poco/DirectoryIterator.h>
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Util/Application.h>
+#include <Poco/Timestamp.h>
 
 #include "TileCache.hpp"
+
+using Poco::DigestEngine;
+using Poco::DirectoryIterator;
+using Poco::File;
+using Poco::SHA1Engine;
+using Poco::StringTokenizer;
+using Poco::Timestamp;
 
 TileCache::TileCache(const std::string& docURL) :
     _docURL(docURL)
 {
-    Poco::File dir(cacheDirName());
+    File dir(cacheDirName());
 
     // TODO: Actually handle URLs (file: and http:), not file names.
-    if (dir.exists() && dir.isDirectory() && Poco::File(_docURL).exists() && Poco::File(_docURL).isFile())
+    if (dir.exists() && dir.isDirectory() && File(_docURL).exists() && File(_docURL).isFile())
     {
-        if (getLastModified() != Poco::File(_docURL).getLastModified())
+        if (getLastModified() != File(_docURL).getLastModified())
         {
             dir.remove(true);
        }
@@ -45,7 +53,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
 {
     std::string dirName = cacheDirName();
 
-    if (!Poco::File(dirName).exists() || !Poco::File(dirName).isDirectory())
+    if (!File(dirName).exists() || !File(dirName).isDirectory())
         return nullptr;
 
     std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
@@ -59,7 +67,7 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
 {
     std::string dirName = cacheDirName();
 
-    Poco::File(dirName).createDirectories();
+    File(dirName).createDirectories();
 
     std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
@@ -68,10 +76,10 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
     outStream.close();
 
     // TODO: Actually handle URLs (file: and http:), not file names.
-    if (!Poco::File(_docURL).exists() || !Poco::File(_docURL).isFile())
+    if (!File(_docURL).exists() || !File(_docURL).isFile())
         return;
     std::fstream modTimeFile(dirName + "/modtime.txt", std::ios::out);
-    modTimeFile << Poco::File(_docURL).getLastModified().raw() << std::endl;
+    modTimeFile << File(_docURL).getLastModified().raw() << std::endl;
     modTimeFile.close();
 }
 
@@ -79,7 +87,7 @@ std::string TileCache::getStatus()
 {
     std::string dirName = cacheDirName();
 
-    if (!Poco::File(dirName).exists() || !Poco::File(dirName).isDirectory())
+    if (!File(dirName).exists() || !File(dirName).isDirectory())
         return "";
 
     std::string fileName = dirName + "/status.txt";
@@ -105,9 +113,9 @@ void TileCache::saveStatus(const std::string& status)
 {
     std::string dirName = cacheDirName();
 
-    Poco::File(dirName).createDirectories();
+    File(dirName).createDirectories();
 
-    Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     assert(tokens[0] == "status:");
 
@@ -127,7 +135,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
 
     std::vector<std::string> toBeRemoved;
 
-    for (auto tileIterator = Poco::DirectoryIterator(dirName); tileIterator != Poco::DirectoryIterator(); ++tileIterator)
+    for (auto tileIterator = DirectoryIterator(dirName); tileIterator != DirectoryIterator(); ++tileIterator)
     {
         std::string baseName = tileIterator.path().getBaseName();
 
@@ -152,7 +160,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
 
 void TileCache::invalidateTiles(int part, const std::string& tiles)
 {
-    Poco::StringTokenizer tokens(tiles, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    StringTokenizer tokens(tiles, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     assert(tokens[0] == "invalidatetiles:");
 
@@ -177,12 +185,12 @@ void TileCache::invalidateTiles(int part, const std::string& tiles)
 
 std::string TileCache::cacheDirName()
 {
-    Poco::SHA1Engine digestEngine;
+    SHA1Engine digestEngine;
 
     digestEngine.update(_docURL.c_str(), _docURL.size());
 
     return (LOOLWSD_CACHEDIR "/" +
-            Poco::DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
+            DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
 }
 
 std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
@@ -198,14 +206,14 @@ bool TileCache::parseCacheFileName(std::string& fileName, int& part, int& width,
     return (std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7);
 }
 
-Poco::Timestamp TileCache::getLastModified()
+Timestamp TileCache::getLastModified()
 {
     std::fstream modTimeFile(cacheDirName() + "/modtime.txt", std::ios::in);
 
     if (!modTimeFile.is_open())
         return 0;
 
-    Poco::Timestamp::TimeVal result;
+    Timestamp::TimeVal result;
     modTimeFile >> result;
 
     modTimeFile.close();

@@ -28,7 +28,7 @@
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-#include <Poco/Buffer.h>
+#include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/Net/HTTPStreamFactory.h>
 #include <Poco/Net/WebSocket.h>
@@ -52,8 +52,8 @@
 
 using namespace LOOLProtocol;
 
-using Poco::Buffer;
 using Poco::File;
+using Poco::IOException;
 using Poco::Net::HTTPStreamFactory;
 using Poco::Net::WebSocket;
 using Poco::Path;
@@ -101,7 +101,7 @@ std::set<UInt64> MasterProcessSession::_pendingPreSpawnedChildren;
 std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::mutex MasterProcessSession::_availableChildSessionMutex;
 std::condition_variable MasterProcessSession::_availableChildSessionCV;
-Poco::Random MasterProcessSession::_rng;
+Random MasterProcessSession::_rng;
 std::mutex MasterProcessSession::_rngMutex;
 
 MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind kind) :
@@ -278,7 +278,7 @@ bool MasterProcessSession::haveSeparateProcess()
     return _childId != 0;
 }
 
-Path MasterProcessSession::getJailPath(Poco::UInt64 childId)
+Path MasterProcessSession::getJailPath(UInt64 childId)
 {
     return Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(childId));
 }
@@ -592,14 +592,14 @@ void MasterProcessSession::dispatchChild()
             _availableChildSessions.insert(childSession);
             std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
             lock.unlock();
-            throw Poco::IOException(copy.toString());
+            throw IOException(copy.toString());
         }
         StreamCopier::copyStream(*input, output);
         output.close();
 
         Application::instance().logger().information(Util::logPrefix() + "Copying done");
     }
-    catch (Poco::IOException& exc)
+    catch (IOException& exc)
     {
         Application::instance().logger().error(Util::logPrefix() + "Copying failed: " + exc.message());
         sendTextFrame("error: cmd=load kind=failed");
@@ -881,7 +881,7 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
     sendBinaryFrame(output.data(), output.size());
 }
 
-bool ChildProcessSession::keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens)
+bool ChildProcessSession::keyEvent(const char *buffer, int length, StringTokenizer& tokens)
 {
     int type, charcode, keycode;
 
@@ -901,7 +901,7 @@ bool ChildProcessSession::keyEvent(const char *buffer, int length, Poco::StringT
     return true;
 }
 
-bool ChildProcessSession::mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens)
+bool ChildProcessSession::mouseEvent(const char *buffer, int length, StringTokenizer& tokens)
 {
     int type, x, y, count;
 
@@ -924,7 +924,7 @@ bool ChildProcessSession::mouseEvent(const char *buffer, int length, Poco::Strin
     return true;
 }
 
-bool ChildProcessSession::unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens)
+bool ChildProcessSession::unoCommand(const char *buffer, int length, StringTokenizer& tokens)
 {
     if (tokens.count() == 1)
     {
@@ -937,7 +937,7 @@ bool ChildProcessSession::unoCommand(const char *buffer, int length, Poco::Strin
     return true;
 }
 
-bool ChildProcessSession::selectText(const char *buffer, int length, Poco::StringTokenizer& tokens)
+bool ChildProcessSession::selectText(const char *buffer, int length, StringTokenizer& tokens)
 {
     int type, x, y;
 
@@ -959,7 +959,7 @@ bool ChildProcessSession::selectText(const char *buffer, int length, Poco::Strin
     return true;
 }
 
-bool ChildProcessSession::selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens)
+bool ChildProcessSession::selectGraphic(const char *buffer, int length, StringTokenizer& tokens)
 {
     int type, x, y;
 
@@ -980,7 +980,7 @@ bool ChildProcessSession::selectGraphic(const char *buffer, int length, Poco::St
     return true;
 }
 
-bool ChildProcessSession::resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens)
+bool ChildProcessSession::resetSelection(const char *buffer, int length, StringTokenizer& tokens)
 {
     if (tokens.count() != 1)
     {
@@ -993,7 +993,7 @@ bool ChildProcessSession::resetSelection(const char *buffer, int length, Poco::S
     return true;
 }
 
-bool ChildProcessSession::saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens)
+bool ChildProcessSession::saveAs(const char *buffer, int length, StringTokenizer& tokens)
 {
     std::string url, format, filterOptions;
 
