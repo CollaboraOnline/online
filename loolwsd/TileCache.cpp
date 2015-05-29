@@ -10,6 +10,7 @@
 #include "config.h"
 
 #include <cassert>
+#include <climits>
 #include <cstdio>
 #include <fstream>
 #include <iostream>
@@ -135,7 +136,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
         if (parseCacheFileName(baseName, tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight))
         {
             std::cout << "Tile " << baseName << " is " << tileWidth << "x" << tileHeight << "@+" << tilePosX << "+" << tilePosY << std::endl;
-            if (tilePart == part &&
+            if ((part == -1 || tilePart == part) &&
                 tilePosX < x + width && tilePosX + tileWidth >= x &&
                 tilePosY < y + height && tilePosY + tileHeight >= y)
             {
@@ -155,15 +156,23 @@ void TileCache::invalidateTiles(int part, const std::string& tiles)
 
     assert(tokens[0] == "invalidatetiles:");
 
-    if (tokens.count() != 5)
+    if (tokens.count() == 2 && tokens[1] == "EMPTY")
+    {
+        invalidateTiles(-1, 0, 0, INT_MAX, INT_MAX);
+    }
+    else if (tokens.count() != 5)
+    {
         return;
+    }
+    else
+    {
+        int width(std::stoi(tokens[1]));
+        int height(std::stoi(tokens[2]));
+        int x(std::stoi(tokens[3]));
+        int y(std::stoi(tokens[4]));
 
-    int width(std::stoi(tokens[1]));
-    int height(std::stoi(tokens[2]));
-    int x(std::stoi(tokens[3]));
-    int y(std::stoi(tokens[4]));
-
-    invalidateTiles(part, x, y, width, height);
+        invalidateTiles(part, x, y, width, height);
+    }
 }
 
 std::string TileCache::cacheDirName()
