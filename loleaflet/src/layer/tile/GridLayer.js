@@ -682,6 +682,7 @@ L.GridLayer = L.Layer.extend({
 			this._wrapX ? L.Util.wrapNum(coords.x, this._wrapX) : coords.x,
 			this._wrapY ? L.Util.wrapNum(coords.y, this._wrapY) : coords.y);
 		newCoords.z = coords.z;
+		newCoords.part = coords.part;
 		return newCoords;
 	},
 
