@@ -139,7 +139,7 @@ L.TileLayer = L.GridLayer.extend({
 			textMsg = String.fromCharCode.apply(null, bytes.subarray(0, index + 1));
 		}
 
-		if (textMsg.startsWith('cursorvisible')) {
+		/*if (textMsg.startsWith('cursorvisible')) {
 			var command = textMsg.match('cursorvisible: true');
 			this._cursorVisible = command == undefined ? false : true;
 			this._onUpdateCursor();
@@ -177,7 +177,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		}
-		else if (textMsg.startsWith('status:')) {
+		else*/ if (textMsg.startsWith('status:')) {
 			var command = this._parseServerCmd(textMsg);
 			if (command.width && command.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = command.width;
@@ -210,7 +210,6 @@ L.TileLayer = L.GridLayer.extend({
 			coords.z = command.zoom;
 			coords.part = command.part;
 			var data = bytes.subarray(index + 1);
-
 
 			var key = this._tileCoordsToKey(coords);
 			var tile = this._tiles[key];
