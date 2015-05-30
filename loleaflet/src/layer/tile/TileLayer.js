@@ -332,22 +332,6 @@ L.TileLayer = L.GridLayer.extend({
 		e.tile.onload = null;
 	},
 
-	// stops loading all tiles in the background layer
-	_abortLoading: function () {
-		var i, tile;
-		for (i in this._tiles) {
-			tile = this._tiles[i].el;
-
-			tile.onload = L.Util.falseFn;
-			tile.onerror = L.Util.falseFn;
-
-			if (!tile.complete) {
-				tile.src = L.Util.emptyImageUrl;
-				L.DomUtil.remove(tile);
-			}
-		}
-	},
-
 	_rectanglesToPolygons: function(rectangles) {
 		// algorithm found here http://stackoverflow.com/questions/13746284/merging-multiple-adjacent-rectangles-into-one-polygon
 		var eps = 20;
