@@ -225,7 +225,6 @@ L.TileLayer = L.GridLayer.extend({
 			strTwips = textMsg.match(/\d+/g);
 			this._clearSelections();
 			if (strTwips != null) {
-				this._map.fire('searchfound');
 				var rectangles = [];
 				var selectionCenter = new L.Point(0,0);
 				for (var i = 0; i < strTwips.length; i += 4) {

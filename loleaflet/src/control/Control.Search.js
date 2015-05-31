@@ -40,13 +40,13 @@ L.Control.Search = L.Control.extend({
 
 		this._disabled = true;
 		this._updateDisabled();
-		map.on('searchfound searchnotfound', this._searchResultFound, this);
+		map.on('clearnotfound searchnotfound', this._searchResultFound, this);
 
 		return container;
 	},
 
 	onRemove: function (map) {
-		map.on('searchfound searchnotfound', this._searchResultFound, this);
+		map.on('clearnotfound searchnotfound', this._searchResultFound, this);
 	},
 
 	_searchStart: function (e) {
@@ -76,12 +76,12 @@ L.Control.Search = L.Control.extend({
 	},
 
 	_searchResultFound: function (e) {
-		if (e.type === 'searchfound') {
+		if (e.type === 'clearnotfound') {
 			L.DomUtil.removeClass(this._searchBar, 'search-not-found');
 		}
 		else if (e.type == 'searchnotfound') {
 			L.DomUtil.addClass(this._searchBar, 'search-not-found');
-			setTimeout(L.bind(this._map.fire, this._map, 'searchfound'), 500);
+			setTimeout(L.bind(this._map.fire, this._map, 'clearnotfound'), 500);
 		}
 	},
 
