@@ -261,10 +261,13 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		else if (textMsg.startsWith('setpart:')) {
-			this._currentPart = parseInt(textMsg.match(/\d+/g)[0]);
-			this._update();
-			this._clearSelections();
-			this._map.fire('setpart', {currentPart: this._currentPart});
+			var part = parseInt(textMsg.match(/\d+/g)[0]);
+			if (part != this._currentPart) {
+				this._currentPart = part;
+				this._update();
+				this._clearSelections();
+				this._map.fire('setpart', {currentPart: this._currentPart});
+			}
 		}
 		else if (textMsg.startsWith('searchnotfound:')) {
 			this._map.fire('searchnotfound');
