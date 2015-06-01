@@ -465,7 +465,7 @@ void LOOLWSD::defineOptions(OptionSet& options)
     options.addOption(Option("numprespawns", "", "Number of child processes to keep started in advance and waiting for new clients.")
                       .required(false)
                       .repeatable(false)
-                      .argument("port number"));
+                      .argument("number"));
 
     options.addOption(Option("test", "", "Interactive testing.")
                       .required(false)
