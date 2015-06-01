@@ -1,0 +1,9 @@
+## Path:	Network/Remote access/LOOLWSD
+## Description:	LibreOffice On-Line WebSocket Daemon settings
+## Type:	string
+## Default:	""
+## ServiceRestart: loolwsd
+#
+# Number of child processes to pre-spawn initially
+#
+LOOLWSD_NUMPRESPAWNS="5"
