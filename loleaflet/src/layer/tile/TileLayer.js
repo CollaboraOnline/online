@@ -160,6 +160,8 @@ L.TileLayer = L.GridLayer.extend({
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
 
+			this._map._fadeAnimated = false;
+
 			for (var key in this._tiles) {
 				var coords = this._tiles[key].coords;
 				var point1 = this._coordsToTwips(coords);
