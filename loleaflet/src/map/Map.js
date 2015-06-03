@@ -600,7 +600,8 @@ L.Map = L.Evented.extend({
 
 		// find the layer the event is propagating from
 		var target = this._targets[L.stamp(e.target || e.srcElement)],
-			type = e.type === 'keypress' && e.keyCode === 13 ? 'click' : e.type;
+			//type = e.type === 'keypress' && e.keyCode === 13 ? 'click' : e.type;
+			type = e.type;
 
 		// special case for map mouseover/mouseout events so that they're actually mouseenter/mouseleave
 		if (!target && (type === 'mouseover' || type === 'mouseout') &&
