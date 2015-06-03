@@ -576,8 +576,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.removeLayer(this._cursorMarker);
 
 			var latlngs = L.rectangle(this._cursorBounds).getLatLngs();
-			// TODO replace for a blinking cursor image.
-			this._cursorMarker = L.polyline(latlngs.concat([latlngs[0]]));
+			this._cursorMarker = L.cursor(latlngs[2], {color: 'red'});
 			this._map.addLayer(this._cursorMarker);
 		}
 		else {

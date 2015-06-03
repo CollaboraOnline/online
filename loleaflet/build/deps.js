@@ -57,7 +57,8 @@ var deps = {
 	Marker: {
 		src: ['layer/marker/Icon.js',
 		      'layer/marker/Icon.Default.js',
-		      'layer/marker/Marker.js'],
+		      'layer/marker/Marker.js',
+		      'layer/marker/Cursor.js'],
 		desc: 'Markers to put on the map.'
 	},
 
