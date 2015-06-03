@@ -564,9 +564,141 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	// TODO. This should be optimized to an index array
+	_toUNOKeyCode: function ( keyCode ) {
+		var unoKeyCode = keyCode;
+
+		if (keyCode == 8) // backspace
+			unoKeyCode = 1283; // BACKSPACE
+		else if (keyCode == 9) // tab
+			unoKeyCode = 1282; // TAB
+		else if (keyCode == 13) // enter
+			unoKeyCode = 1280; // RETURN
+		else if (keyCode == 16) // shift
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 17) // ctrl
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 18) // alt
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 19) // pause/break
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 20) // caps lock
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 27) // escape
+			unoKeyCode = 1281; // ESCAPE
+		else if (keyCode == 32) // space
+			unoKeyCode = 1284; // SPACE
+		else if (keyCode == 33) // page up
+			unoKeyCode = 1030; // PAGEUP
+		else if (keyCode == 34) // page down
+			unoKeyCode = 1031; // PAGEDOWN
+		else if (keyCode == 35) // end
+			unoKeyCode = 1029; // END
+		else if (keyCode == 36) // home
+			unoKeyCode = 1028; // HOME
+		else if (keyCode == 37) // left arrow
+			unoKeyCode = 1026; // LEFT
+		else if (keyCode == 38) // up arrow
+			unoKeyCode = 1025; // UP
+		else if (keyCode == 39) // right arrow
+			unoKeyCode = 1027; // UP
+		else if (keyCode == 40) // down arrow
+			unoKeyCode = 1024; // DOWN
+		else if (keyCode == 45) // insert
+			unoKeyCode = 1285; // INSERT
+		else if (keyCode == 46) // delete
+			unoKeyCode = 1286; // DELETE
+		else if (keyCode == 91) // left window key
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 92) // right window key
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 93) // select key
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 96) // numpad 0
+			unoKeyCode = 256; // NUM0
+		else if (keyCode == 97) // numpad 1
+			unoKeyCode = 257; // NUM1
+		else if (keyCode == 98) // numpad 2
+			unoKeyCode = 258; // NUM2
+		else if (keyCode == 99) // numpad 3
+			unoKeyCode = 259; // NUM3
+		else if (keyCode == 100) // numpad 4
+			unoKeyCode = 260; // NUM4
+		else if (keyCode == 101) // numpad 5
+			unoKeyCode = 261; // NUM5
+		else if (keyCode == 102) // numpad 6
+			unoKeyCode = 262; // NUM6
+		else if (keyCode == 103) // numpad 7
+			unoKeyCode = 263; // NUM7
+		else if (keyCode == 104) // numpad 8
+			unoKeyCode = 264; // NUM8
+		else if (keyCode == 105) // numpad 9
+			unoKeyCode = 265; // NUM9
+		else if (keyCode == 106) // multiply
+			unoKeyCode = 1289; // MULTIPLY
+		else if (keyCode == 107) // add
+			unoKeyCode = 1287; // ADD
+		else if (keyCode == 109) // subtract
+			unoKeyCode = 1288; // SUBTRACT
+		else if (keyCode == 110) // decimal point
+			unoKeyCode = 1309; // DECIMAL
+		else if (keyCode == 111) // divide
+			unoKeyCode = 1290; // DIVIDE
+		else if (keyCode == 112) // f1
+			unoKeyCode = 768; // F1
+		else if (keyCode == 113) // f2
+			unoKeyCode = 769; // F2
+		else if (keyCode == 114) // f3
+			unoKeyCode = 770; // F3
+		else if (keyCode == 115) // f4
+			unoKeyCode = 771; // F4
+		else if (keyCode == 116) // f5
+			unoKeyCode = 772; // F5
+		else if (keyCode == 117) // f6
+			unoKeyCode = 773; // F6
+		else if (keyCode == 118) // f7
+			unoKeyCode = 774; // F7
+		else if (keyCode == 119) // f8
+			unoKeyCode = 775; // F8
+		else if (keyCode == 120) // f9
+			unoKeyCode = 776; // F9
+		else if (keyCode == 121) // f10
+			unoKeyCode = 777; // F10
+		else if (keyCode == 122) // f11
+			unoKeyCode = 778; // F11
+		else if (keyCode == 144) // num lock
+			unoKeyCode = 1313; // NUMLOCK
+		else if (keyCode == 145) // scroll lock
+			unoKeyCode = 1314; // SCROLLLOCK
+		else if (keyCode == 186) // semi-colon
+			unoKeyCode = 1317; // SEMICOLON
+		else if (keyCode == 187) // equal sign
+			unoKeyCode = 1295; // EQUAL
+		else if (keyCode == 188) // comma
+			unoKeyCode = 1292; // COMMA
+		else if (keyCode == 189) // dash
+			unoKeyCode = 5; // DASH
+		else if (keyCode == 190) // period
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 191) // forward slash
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 192) // grave accent
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 219) // open bracket
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 220) // back slash
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 221) // close bracket
+			unoKeyCode = keyCode; // UNKOWN
+		else if (keyCode == 222) // single quote
+			unoKeyCode = keyCode; // UNKOWN
+
+		return unoKeyCode;
+	},
+
 	_onKeyPress: function (e) {
 		if (this._cursorMarker) {
-			this._postKeyboardEvent('input', e.originalEvent.charCode, e.originalEvent.keyCode);
+			this._postKeyboardEvent('input', e.originalEvent.charCode, this._toUNOKeyCode(e.originalEvent.keyCode));
 		}
 	},
 
