@@ -1,0 +1,14 @@
+Source: loolwsd
+Section: web
+Priority: optional
+Maintainer: Tor Lillqvist <tml@collabora.com>
+Build-Depends: debhelper (>= 8.0.0), libcap-dev, libcap2-bin, libpcre3-dev, libpng-dev, libpoco-dev (>= 1.6.0)
+Standards-Version: 3.9.2
+
+Package: loolwsd
+Section: web
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: LibreOffice On-Line WebSocket Daemon
+ LOOLWSD is a daemon that talks to web browser clients and provides LibreOffice
+ services.

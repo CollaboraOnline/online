@@ -1,0 +1,15 @@
+loolwsd (1.0.34-1) UNRELEASED; urgency=medium
+
+  * Back to packaging this for Debian.
+
+ -- Tor Lillqvist <tml@collabora.com>  Wed, 03 Jun 2015 20:24:50 +0300
+
+loolwsd (1.0.0-1) unstable; urgency=low
+
+  * Initial release
+
+  * Local Variables:
+  * Mode: fundamental
+  * End:
+
+ -- Tor Lillqvist <tml@collabora.com>  Fri, 15 May 2015 11:10:20 +0300
