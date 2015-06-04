@@ -5,7 +5,7 @@ DPKG_EXPORT_BUILDFLAGS = 1
 
 include /usr/share/dpkg/default.mk
 
-CONFFLAGS = --prefix=/usr --with-lokit-path=bundled/include
+CONFFLAGS = --prefix=/usr --localstatedir=/var --with-lokit-path=bundled/include
 
 # Avoid setcap when doing "make", when building for packaging
 # the setcap is done at installation time
