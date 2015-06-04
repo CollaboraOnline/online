@@ -26,6 +26,7 @@ public:
     // An Application is a singleton anyway, so just keep these as
     // statics
     static int portNumber;
+    static std::string cache;
     static std::string sysTemplate;
     static std::string loTemplate;
     static std::string childRoot;

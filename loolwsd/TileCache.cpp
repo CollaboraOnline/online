@@ -27,6 +27,7 @@
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 
+#include "LOOLWSD.hpp"
 #include "TileCache.hpp"
 
 using Poco::DigestEngine;
@@ -190,7 +191,7 @@ std::string TileCache::cacheDirName()
 
     digestEngine.update(_docURL.c_str(), _docURL.size());
 
-    return (LOOLWSD_CACHEDIR "/" +
+    return (LOOLWSD::cache + "/" +
             DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
 }
 

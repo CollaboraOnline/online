@@ -396,6 +396,7 @@ public:
 };
 
 int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
+std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
 std::string LOOLWSD::loTemplate;
 std::string LOOLWSD::childRoot;
@@ -441,6 +442,11 @@ void LOOLWSD::defineOptions(OptionSet& options)
                       .required(false)
                       .repeatable(false)
                       .argument("port number"));
+
+    options.addOption(Option("cache", "", "Path to a directory where to keep the persistent tile cache (default: " + std::string(LOOLWSD_CACHEDIR) + ").")
+                      .required(false)
+                      .repeatable(false)
+                      .argument("directory"));
 
     options.addOption(Option("systemplate", "", "Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes.")
                       .required(false)
@@ -500,6 +506,8 @@ void LOOLWSD::handleOption(const std::string& name, const std::string& value)
     }
     else if (name == "port")
         portNumber = std::stoi(value);
+    else if (name == "cache")
+        cache = value;
     else if (name == "systemplate")
         sysTemplate = value;
     else if (name == "lotemplate")
@@ -720,9 +728,9 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     dropCapability();
 #endif
 
-    if (access(LOOLWSD_CACHEDIR, R_OK | W_OK | X_OK) != 0)
+    if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        std::cout << "Unable to access " << LOOLWSD_CACHEDIR <<
+        std::cout << "Unable to access " << cache <<
             ", please make sure it exists, and has write permission for this user." << std::endl;
         return Application::EXIT_UNAVAILABLE;
     }
