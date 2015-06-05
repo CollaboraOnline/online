@@ -67,7 +67,7 @@ protected:
     // jailed process, the websocket to the parent.
     std::shared_ptr<Poco::Net::WebSocket> _ws;
 
-    // In the master, the actual URL. In the child, the copy inside the chroot jail.
+    // The actual URL, also in the child, even if the child never accesses that.
     std::string _docURL;
 };
 
