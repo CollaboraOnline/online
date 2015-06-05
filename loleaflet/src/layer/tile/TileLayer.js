@@ -139,12 +139,12 @@ L.TileLayer = L.GridLayer.extend({
 			textMsg = String.fromCharCode.apply(null, bytes.subarray(0, index + 1));
 		}
 
-		/*if (textMsg.startsWith('cursorvisible')) {
+		if (textMsg.startsWith('cursorvisible:')) {
 			var command = textMsg.match('cursorvisible: true');
 			this._cursorVisible = command == undefined ? false : true;
 			this._onUpdateCursor();
 		}
-		else if (textMsg.startsWith('invalidatecursor')) {
+		else if (textMsg.startsWith('invalidatecursor:')) {
 			strTwips = textMsg.match(/\d+/g);
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
@@ -154,7 +154,7 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(bottomRightTwips));
 			this._onUpdateCursor();
 		}
-		else if (textMsg.startsWith('invalidatetiles') && !textMsg.match('EMPTY')) {
+		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.match('EMPTY')) {
 			strTwips = textMsg.match(/\d+/g);
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
@@ -179,7 +179,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		}
-		else*/ if (textMsg.startsWith('status:')) {
+		else if (textMsg.startsWith('status:')) {
 			var command = this._parseServerCmd(textMsg);
 			if (command.width && command.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = command.width;
