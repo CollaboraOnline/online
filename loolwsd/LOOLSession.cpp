@@ -87,11 +87,21 @@ LOOLSession::~LOOLSession()
 
 void LOOLSession::sendTextFrame(const std::string& text)
 {
+    std::unique_lock<std::mutex> lock(_mutex);
+
     _ws->sendFrame(text.data(), text.size());
 }
 
 void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    if (length > 1000)
+    {
+        std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+        _ws->sendFrame(nextmessage.data(), nextmessage.size());
+    }
+
     _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
@@ -529,8 +539,6 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         cachedTile->read(output.data() + pos, size);
         cachedTile->close();
 
-        sendTextFrame("nextmessage: size=" + std::to_string(output.size()));
-
         sendBinaryFrame(output.data(), output.size());
 
         return;
@@ -628,7 +636,7 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
     auto peer = _peer.lock();
     if (!peer)
         return;
-    peer->_ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+    peer->sendBinaryFrame(buffer, length);
 }
 
 ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws, LibreOfficeKit *loKit) :
@@ -892,8 +900,6 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
     }
 
     delete[] pixmap;
-
-    sendTextFrame("nextmessage: size=" + std::to_string(output.size()));
 
     sendBinaryFrame(output.data(), output.size());
 }

@@ -86,6 +86,7 @@ DEALINGS IN THE SOFTWARE.
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
+#include "tsqueue.h"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -120,6 +121,36 @@ using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
 
+class FromClientQueueHandler: public Runnable
+{
+public:
+    FromClientQueueHandler(tsqueue<std::string>& queue):
+        _queue(queue)
+    {
+    }
+
+    void setSession(std::shared_ptr<MasterProcessSession> session)
+    {
+        _session = session;
+    }
+
+    void run() override
+    {
+        while (true)
+        {
+            std::string input = _queue.get();
+            if (input == "eof")
+                break;
+            if (!_session->handleInput(input.c_str(), input.size()))
+                break;
+        }
+    }
+
+private:
+    std::shared_ptr<MasterProcessSession> _session;
+    tsqueue<std::string>& _queue;
+};
+
 class WebSocketRequestHandler: public HTTPRequestHandler
     /// Handle a WebSocket connection.
 {
@@ -139,26 +170,37 @@ public:
         }
 
         Application& app = Application::instance();
+
+        tsqueue<std::string> queue;
+        Thread queueHandlerThread;
+        FromClientQueueHandler handler(queue);
+
         try
         {
             try
             {
                 std::shared_ptr<WebSocket> ws(new WebSocket(request, response));
 
-                std::shared_ptr<MasterProcessSession> session;
+                LOOLSession::Kind kind;
 
                 if (request.getURI() == LOOLWSD::CHILD_URI && request.serverAddress().port() == LOOLWSD::MASTER_PORT_NUMBER)
-                {
-                    session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToPrisoner));
-                }
+                    kind = LOOLSession::Kind::ToPrisoner;
                 else
+                    kind = LOOLSession::Kind::ToClient;
+
+                std::shared_ptr<MasterProcessSession> session(new MasterProcessSession(ws, kind));
+
+                // For ToClient sessions, we store incoming messages in a queue and have a separate
+                // thread that handles them. This is so that we can empty the queue when we get a
+                // "canceltiles" message.
+                if (kind == LOOLSession::Kind::ToClient)
                 {
-                    session.reset(new MasterProcessSession(ws, LOOLSession::Kind::ToClient));
+                    handler.setSession(session);
+                    queueHandlerThread.start(handler);
                 }
 
-                // Loop, receiving WebSocket messages either from the
-                // client, or from the child process (to be forwarded to
-                // the client).
+                // Loop, receiving WebSocket messages either from the client, or from the child
+                // process (to be forwarded to the client).
                 int flags;
                 int n;
                 ws->setReceiveTimeout(0);
@@ -167,25 +209,43 @@ public:
                     char buffer[100000];
                     n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
-                    if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                    {
-                        if (!session->handleInput(buffer, n))
-                            n = 0;
-                    }
-                    if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                    {
-                        std::string firstLine = getFirstLine(buffer, n);
-                        StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    std::string firstLine = getFirstLine(buffer, n);
+                    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-                        int size;
-                        if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                    if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                    {
+                        if (kind == LOOLSession::Kind::ToClient && firstLine.size() == static_cast<std::string::size_type>(n))
                         {
-                            char largeBuffer[size];
-
-                            n = ws->receiveFrame(largeBuffer, size, flags);
-                            if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                            // Check if it is a "canceltiles" and in that case remove outstanding
+                            // "tile" messages from the queue.
+                            if (tokens.count() == 1 && tokens[0] == "canceltiles")
                             {
-                                if (!session->handleInput(largeBuffer, n))
+                                queue.remove_if([](std::string& x){ return x.find("tile ") == 0;});
+                            }
+                            else
+                            {
+                                queue.put(firstLine);
+                            }
+                        }
+                        else
+                        {
+                            // Check if it is a "nextmessage:" and in that case read the large
+                            // follow-up message separately, and handle that only.
+                            int size;
+                            if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                            {
+                                char largeBuffer[size];
+
+                                n = ws->receiveFrame(largeBuffer, size, flags);
+                                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                                {
+                                    if (!session->handleInput(largeBuffer, n))
+                                        n = 0;
+                                }
+                            }
+                            else
+                            {
+                                if (!session->handleInput(buffer, n))
                                     n = 0;
                             }
                         }
@@ -215,6 +275,9 @@ public:
         {
             app.logger().error(Util::logPrefix() + "IOException: " + exc.message());
         }
+        queue.clear();
+        queue.put("eof");
+        queueHandlerThread.join();
     }
 };
 

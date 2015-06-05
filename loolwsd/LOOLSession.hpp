@@ -69,6 +69,9 @@ protected:
 
     // The actual URL, also in the child, even if the child never accesses that.
     std::string _docURL;
+
+private:
+    std::mutex _mutex;
 };
 
 template<typename charT, typename traits>

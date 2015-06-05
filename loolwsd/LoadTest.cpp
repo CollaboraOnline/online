@@ -241,8 +241,9 @@ private:
                     break;
             }
             y = ((y + 1) % ((output._height-1)/DOCTILESIZE + 1));
-            Thread::sleep(200);
+            Thread::sleep(50);
         }
+        sendTextFrame(ws, "canceltiles");
 
         Thread::sleep(10000);
 

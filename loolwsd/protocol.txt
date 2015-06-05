@@ -11,6 +11,12 @@ tiles proactively (guessing what the client might need). Etc.
 client -> server
 ================
 
+canceltiles
+
+    All outstanding tile messages from the client to the server are
+    dropped and will not be handled. There is no guarantee of exacely
+    which tile: messages might still be sent back to the client.
+
 invalidatetiles part=<partNumber> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 
     All parameters are numbers. Makes the server remove any cached
@@ -88,7 +94,7 @@ nextmessage: size=<byteSize>
     message). Can be ignored by clients using an API that can read
     arbitrarily large buffers from a WebSocket (like JavaScript), but
     must be handled by clients that cannot (like those using Poco
-    1.6.0).
+    1.6.0, like the "loadtest" program in the loolwsd sources).
 
 status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height>
 
