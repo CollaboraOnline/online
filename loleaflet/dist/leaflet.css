@@ -555,9 +555,12 @@
 
 }
 
+.leaflet-cursor {
+	position: absolute;
+	text-align: center;
+}
+
 .blinking-cursor {
-  font-weight: 100;
-  font-size: 20px;
   color: #2E3D48;
   -webkit-animation: 1s blink step-end infinite;
   -moz-animation: 1s blink step-end infinite;

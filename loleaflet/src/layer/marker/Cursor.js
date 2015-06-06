@@ -5,7 +5,6 @@
 L.Cursor = L.Layer.extend({
 
 	options: {
-		zIndexOffset: 0,
 		opacity: 1
 	},
 
@@ -40,11 +39,6 @@ L.Cursor = L.Layer.extend({
 		return this.fire('move', {oldLatLng: oldLatLng, latlng: this._latlng});
 	},
 
-	setZIndexOffset: function (offset) {
-		this.options.zIndexOffset = offset;
-		return this.update();
-	},
-
 	update: function () {
 		if (this._container) {
 			var pos = this._map.latLngToLayerPoint(this._latlng).round();
@@ -54,14 +48,14 @@ L.Cursor = L.Layer.extend({
 	},
 
 	_initLayout: function () {
-		this._container = L.DomUtil.create('div', 'leaflet-popup');
+		this._container = L.DomUtil.create('div', 'leaflet-cursor');
 
 		//<span class="blinking-cursor">|</span>
-		var span = L.DomUtil.create('span', 'blinking-cursor', this._container);
-		span.innerHTML = '|';
+		this._span = L.DomUtil.create('span', 'blinking-cursor', this._container);
+		this._span.innerHTML = '|';
 
 		L.DomEvent
-			.disableClickPropagation(span)
+			.disableClickPropagation(this._span)
 			.disableScrollPropagation(this._container);
 
 		if (this._container) {
@@ -73,18 +67,6 @@ L.Cursor = L.Layer.extend({
 		L.DomUtil.setPosition(this._container, pos);
 
 		this._zIndex = pos.y + this.options.zIndexOffset;
-
-		this._resetZIndex();
-	},
-
-	_updateZIndex: function (offset) {
-		this._icon.style.zIndex = this._zIndex + offset;
-	},
-
-	_animateZoom: function (opt) {
-		var pos = this._map._latLngToNewLayerPoint(this._latlng, opt.zoom, opt.center).round();
-
-		this._setPos(pos);
 	},
 
 	setOpacity: function (opacity) {
@@ -101,12 +83,9 @@ L.Cursor = L.Layer.extend({
 		L.DomUtil.setOpacity(this._container, opacity);
 	},
 
-	_bringToFront: function () {
-		this._updateZIndex(this.options.riseOffset);
-	},
-
-	_resetZIndex: function () {
-		this._updateZIndex(0);
+	setSize: function (size) {
+		this._container.style.lineHeight = size.y + 'px';
+		this._span.style.fontSize = size.y - 2 + 'px';
 	}
 });
 

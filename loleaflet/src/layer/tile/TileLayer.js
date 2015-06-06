@@ -707,9 +707,13 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._cursorMarker)
 				this._map.removeLayer(this._cursorMarker);
 
-			var latlngs = L.rectangle(this._cursorBounds).getLatLngs();
-			this._cursorMarker = L.cursor(latlngs[2], {color: 'red'});
+			var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._cursorBounds.getSouthWest()),
+						 this._map.latLngToLayerPoint(this._cursorBounds.getNorthEast()));
+			var latBounds = L.rectangle(this._cursorBounds).getLatLngs();
+
+			this._cursorMarker = L.cursor(latBounds[2], {color: 'red'});
 			this._map.addLayer(this._cursorMarker);
+			this._cursorMarker.setSize(pixBounds.getSize());
 		}
 		else {
 			if (this._cursorMarker)
