@@ -1,6 +1,6 @@
 #!/bin/bash
 
-test $# -eq 2 || { echo "Usage: $0 <chroot template directory> <LO installation directory>"; exit 1; }
+test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to create> <LO installation directory>"; exit 1; }
 
 # No provision for spaces or other weird characters in pathnames. So sue me.
 
