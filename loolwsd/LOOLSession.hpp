@@ -53,7 +53,7 @@ protected:
 
     const Kind _kind;
 
-    virtual bool handleInput(char *buffer, int length) = 0;
+    virtual bool handleInput(const char *buffer, int length) = 0;
 
     void sendBinaryFrame(const char *buffer, int length);
 
@@ -94,7 +94,7 @@ public:
     MasterProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, Kind kind);
     virtual ~MasterProcessSession();
 
-    virtual bool handleInput(char *buffer, int length) override;
+    virtual bool handleInput(const char *buffer, int length) override;
 
     bool haveSeparateProcess();
 
@@ -152,7 +152,7 @@ public:
     ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, LibreOfficeKit *loKit);
     virtual ~ChildProcessSession();
 
-    virtual bool handleInput(char *buffer, int length) override;
+    virtual bool handleInput(const char *buffer, int length) override;
 
     virtual bool getStatus(const char *buffer, int length);
 

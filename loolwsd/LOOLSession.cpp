@@ -123,7 +123,7 @@ MasterProcessSession::~MasterProcessSession()
     }
 }
 
-bool MasterProcessSession::handleInput(char *buffer, int length)
+bool MasterProcessSession::handleInput(const char *buffer, int length)
 {
     Application::instance().logger().information(Util::logPrefix() + "Input: " + getAbbreviatedMessage(buffer, length));
 
@@ -647,7 +647,7 @@ ChildProcessSession::~ChildProcessSession()
     Util::shutdownWebSocket(*_ws);
 }
 
-bool ChildProcessSession::handleInput(char *buffer, int length)
+bool ChildProcessSession::handleInput(const char *buffer, int length)
 {
     Application& app = Application::instance();
 
