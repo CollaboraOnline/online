@@ -85,6 +85,7 @@ public:
     {
         int flags;
         int n;
+        int tileCount = 0;
         Application& app = Application::instance();
         try
         {
@@ -117,14 +118,16 @@ public:
                             "Client got " << n << " bytes: " << getAbbreviatedMessage(largeBuffer, n) <<
                             std::endl;
 #endif
-                        // We don't actually need to do anything with the buffer in this program. We
-                        // only parse status: messages and they are not preceded by nextmessage:
-                        // messages.
+                        response = getFirstLine(buffer, n);
                     }
                     if (response.find("status:") == 0)
                     {
                         parseStatus(response, _type, _numParts, _currentPart, _width, _height);
                         _cond.signal();
+                    }
+                    else if (response.find("tile:") == 0)
+                    {
+                        tileCount++;
                     }
                 }
             }
@@ -135,6 +138,7 @@ public:
             app.logger().error("WebSocketException: " + exc.message());
             _ws.close();
         }
+        std::cout << Util::logPrefix() << "Got " << tileCount << " tiles" << std::endl;
     }
 
     WebSocket& _ws;
@@ -224,6 +228,8 @@ private:
         std::uniform_int_distribution<> dis(0, 20);
         int extra = dis(_g);
 
+        int requestCount = 0;
+
         // Exercise the server with this document for some minutes
         while (!documentStartTimestamp.isElapsed((20 + extra) * Timespan::SECONDS) && !clientDurationExceeded())
         {
@@ -236,6 +242,7 @@ private:
                               "tileposy=" + std::to_string(y * DOCTILESIZE) + " "
                               "tilewidth=" + std::to_string(DOCTILESIZE) + " "
                               "tileheight=" + std::to_string(DOCTILESIZE));
+                requestCount++;
                 x = ((x + 1) % ((output._width-1)/DOCTILESIZE + 1));
                 if (x == 0)
                     break;
@@ -247,7 +254,7 @@ private:
 
         Thread::sleep(10000);
 
-        std::cout << Util::logPrefix() << "Shutting down client for '" << document << "'" << std::endl;
+        std::cout << Util::logPrefix() << "Sent " << requestCount << " tile requests, shutting down client for '" << document << "'" << std::endl;
 
         ws.shutdown();
         thread.join();
