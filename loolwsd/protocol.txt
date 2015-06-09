@@ -14,7 +14,7 @@ client -> server
 canceltiles
 
     All outstanding tile messages from the client to the server are
-    dropped and will not be handled. There is no guarantee of exacely
+    dropped and will not be handled. There is no guarantee of exactly
     which tile: messages might still be sent back to the client.
 
 invalidatetiles part=<partNumber> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
