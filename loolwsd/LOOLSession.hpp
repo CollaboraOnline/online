@@ -45,6 +45,8 @@ public:
 
     virtual bool getStatus(const char *buffer, int length) = 0;
 
+    virtual bool handleInput(const char *buffer, int length) = 0;
+
 protected:
     LOOLSession(std::shared_ptr<Poco::Net::WebSocket> ws, Kind kind);
     virtual ~LOOLSession();
@@ -52,8 +54,6 @@ protected:
     static const std::string jailDocumentURL;
 
     const Kind _kind;
-
-    virtual bool handleInput(const char *buffer, int length) = 0;
 
     void sendBinaryFrame(const char *buffer, int length);
 

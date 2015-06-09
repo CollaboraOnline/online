@@ -239,7 +239,8 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         }
         return loadDocument(buffer, length, tokens);
     }
-    else if (tokens[0] != "invalidatetiles" &&
+    else if (tokens[0] != "canceltiles" &&
+             tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
              tokens[0] != "resetselection" &&
@@ -257,6 +258,11 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
+    }
+    else if (tokens[0] == "canceltiles")
+    {
+        if (!_peer.expired())
+            forwardToPeer(buffer, length);
     }
     else if (tokens[0] == "invalidatetiles")
     {

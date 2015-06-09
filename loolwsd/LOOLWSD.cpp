@@ -121,15 +121,15 @@ using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
 
-class FromClientQueueHandler: public Runnable
+class QueueHandler: public Runnable
 {
 public:
-    FromClientQueueHandler(tsqueue<std::string>& queue):
+    QueueHandler(tsqueue<std::string>& queue):
         _queue(queue)
     {
     }
 
-    void setSession(std::shared_ptr<MasterProcessSession> session)
+    void setSession(std::shared_ptr<LOOLSession> session)
     {
         _session = session;
     }
@@ -147,7 +147,7 @@ public:
     }
 
 private:
-    std::shared_ptr<MasterProcessSession> _session;
+    std::shared_ptr<LOOLSession> _session;
     tsqueue<std::string>& _queue;
 };
 
@@ -173,7 +173,7 @@ public:
 
         tsqueue<std::string> queue;
         Thread queueHandlerThread;
-        FromClientQueueHandler handler(queue);
+        QueueHandler handler(queue);
 
         try
         {
@@ -209,11 +209,11 @@ public:
                     char buffer[100000];
                     n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
-                    std::string firstLine = getFirstLine(buffer, n);
-                    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
                     if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                     {
+                        std::string firstLine = getFirstLine(buffer, n);
+                        StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
                         if (kind == LOOLSession::Kind::ToClient && firstLine.size() == static_cast<std::string::size_type>(n))
                         {
                             // Check if it is a "canceltiles" and in that case remove outstanding
@@ -221,6 +221,9 @@ public:
                             if (tokens.count() == 1 && tokens[0] == "canceltiles")
                             {
                                 queue.remove_if([](std::string& x){ return x.find("tile ") == 0;});
+
+                                // Also forward the "canceltiles" to the child process, if any
+                                session->handleInput(buffer, n);
                             }
                             else
                             {
@@ -747,12 +750,19 @@ int LOOLWSD::childMain()
         HTTPResponse response;
         std::shared_ptr<WebSocket> ws(new WebSocket(cs, request, response));
 
-        ChildProcessSession session(ws, loKit);
+        std::shared_ptr<ChildProcessSession> session(new ChildProcessSession(ws, loKit));
 
         ws->setReceiveTimeout(0);
 
         std::string hello("child " + std::to_string(_childId));
-        session.sendTextFrame(hello);
+        session->sendTextFrame(hello);
+
+        tsqueue<std::string> queue;
+        Thread queueHandlerThread;
+        QueueHandler handler(queue);
+
+        handler.setSession(session);
+        queueHandlerThread.start(handler);
 
         int flags;
         int n;
@@ -762,10 +772,30 @@ int LOOLWSD::childMain()
             n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
             if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                if (!session.handleInput(buffer, n))
-                    n = 0;
+            {
+                std::string firstLine = getFirstLine(buffer, n);
+                StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+                // The only kind of messages a child process receives are the single-line ones (?)
+                assert(firstLine.size() == static_cast<std::string::size_type>(n));
+
+                // Check if it is a "canceltiles" and in that case remove outstanding
+                // "tile" messages from the queue.
+                if (tokens.count() == 1 && tokens[0] == "canceltiles")
+                {
+                    queue.remove_if([](std::string& x){ return x.find("tile ") == 0;});
+                }
+                else
+                {
+                    queue.put(firstLine);
+                }
+            }
         }
         while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+
+        queue.clear();
+        queue.put("eof");
+        queueHandlerThread.join();
     }
     catch (Exception& exc)
     {
