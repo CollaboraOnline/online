@@ -86,7 +86,6 @@ public:
         int flags;
         int n;
         int tileCount = 0;
-        Application& app = Application::instance();
         try
         {
             do
@@ -135,7 +134,7 @@ public:
         }
         catch (WebSocketException& exc)
         {
-            app.logger().error("WebSocketException: " + exc.message());
+            Application::instance().logger().error("WebSocketException: " + exc.message());
             _ws.close();
         }
         std::cout << Util::logPrefix() << "Got " << tileCount << " tiles" << std::endl;

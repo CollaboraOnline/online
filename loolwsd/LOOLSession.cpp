@@ -663,12 +663,10 @@ ChildProcessSession::~ChildProcessSession()
 
 bool ChildProcessSession::handleInput(const char *buffer, int length)
 {
-    Application& app = Application::instance();
-
     std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-    app.logger().information(Util::logPrefix() + "Input: " + getAbbreviatedMessage(buffer, length));
+    Application::instance().logger().information(Util::logPrefix() + "Input: " + getAbbreviatedMessage(buffer, length));
 
     if (tokens[0] == "load")
     {

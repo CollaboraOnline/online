@@ -169,8 +169,6 @@ public:
             return;
         }
 
-        Application& app = Application::instance();
-
         tsqueue<std::string> queue;
         Thread queueHandlerThread;
         QueueHandler handler(queue);
@@ -258,7 +256,7 @@ public:
             }
             catch (WebSocketException& exc)
             {
-                app.logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
+                Application::instance().logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
                 switch (exc.code())
                 {
                 case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
@@ -276,7 +274,7 @@ public:
         }
         catch (IOException& exc)
         {
-            app.logger().error(Util::logPrefix() + "IOException: " + exc.message());
+            Application::instance().logger().error(Util::logPrefix() + "IOException: " + exc.message());
         }
         queue.clear();
         queue.put("eof");
@@ -293,7 +291,6 @@ public:
 
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
-        Application& app = Application::instance();
         std::string line = (Util::logPrefix() + "Request from " +
                             request.clientAddress().toString() + ": " +
                             request.getMethod() + " " +
@@ -305,7 +302,7 @@ public:
             line += " / " + it->first + ": " + it->second;
         }
 
-        app.logger().information(line);
+        Application::instance().logger().information(line);
         return new WebSocketRequestHandler();
     }
 };
@@ -322,7 +319,6 @@ public:
     {
         int flags;
         int n;
-        Application& app = Application::instance();
         _ws.setReceiveTimeout(0);
         try
         {
@@ -343,7 +339,7 @@ public:
         }
         catch (WebSocketException& exc)
         {
-            app.logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
+            Application::instance().logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
             _ws.close();
         }
     }
