@@ -22,8 +22,6 @@ Vendor:         Collabora
 Summary:        LibreOffice On-Line WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
-Source1:        loolwsd.service
-Source2:        sysconfig.loolwsd
 BuildRequires:  libcap-progs libcap-devel libpng-devel poco-devel >= 1.6.0 systemd-rpm-macros
 # This works for now only with a CP build of 5.0, I think. The TDF
 # (and thus also CP) packages include the version number in their
@@ -48,9 +46,9 @@ env BUILDING_FROM_RPMBUILD=yes make check
 
 %install
 env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
-%__install -D -m 444 %{SOURCE1} %{buildroot}%{_unitdir}/loolwsd.service
+%__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
-install -D -m 644 %{SOURCE2} %{buildroot}/var/adm/fillup-templates
+install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
 
 %files
 /usr/bin/loolwsd
