@@ -25,10 +25,10 @@ Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
 Source1:        loolwsd.service
 Source2:        sysconfig.loolwsd
 BuildRequires:  libcap-progs libcap-devel libpng-devel poco-devel >= 1.6.0 systemd-rpm-macros
-# This works for now only with the TDF nightly builds of 5.0 or 5.1, I
-# think. But the TDF packages include the version number in their
+# This works for now only with a CP build of 5.0, I think. The TDF
+# (and thus also CP) packages include the version number in their
 # names. How clever is that? So we need to specify one.
-Requires:       libcap libcap-progs libpng libPocoFoundation30 >= 1.6.0 libPocoNet30 >= 1.6.0 libreofficedev5.1 libreofficedev5.1-en-US libreofficedev5.1-ure lodevbasis5.1-core lodevbasis5.1-writer lodevbasis5.1-impress lodevbasis5.1-graphicfilter lodevbasis5.1-en-US lodevbasis5.1-calc lodevbasis5.1-en-US-res lodevbasis5.1-en-US-calc lodevbasis5.1-ooofonts lodevbasis5.1-images lodevbasis5.1-filter-data lodevbasis5.1-draw lodevbasis5.1-base lodevbasis5.1-en-US-writer lodevbasis5.1-en-US-math lodevbasis5.1-en-US-base Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig libbz2-1 libcairo2 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgthread-2_0-0 liblzma5 libpcre1 libpixman-1-0 libpng16-16 libuuid1 libxml2-2 %{?systemd_requires} %{fillup_prereq}
+Requires:       libcap libcap-progs libpng libPocoFoundation30 >= 1.6.0 libPocoNet30 >= 1.6.0 libreoffice5.0 libreoffice5.0-en-US libreoffice5.0-ure libobasis5.0-core libobasis5.0-writer libobasis5.0-impress libobasis5.0-graphicfilter libobasis5.0-en-US libobasis5.0-calc libobasis5.0-en-US-res libobasis5.0-en-US-calc libobasis5.0-ooofonts libobasis5.0-images libobasis5.0-filter-data libobasis5.0-draw libobasis5.0-base libobasis5.0-en-US-writer libobasis5.0-en-US-math libobasis5.0-en-US-base Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig libbz2-1 libcairo2 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgthread-2_0-0 liblzma5 libpcre1 libpixman-1-0 libpng16-16 libuuid1 libxml2-2 %{?systemd_requires} %{fillup_prereq}
 
 %define owner lool
 %define group lool
@@ -73,7 +73,7 @@ mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system
-loroot=`rpm -ql libreofficedev5.1 | grep '/soffice$' | sed -e 's-/program/soffice--'`
+loroot=`rpm -ql libreoffice5.0 | grep '/soffice$' | sed -e 's-/program/soffice--'`
 loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
 rm -rf ${loolparent}/lool
