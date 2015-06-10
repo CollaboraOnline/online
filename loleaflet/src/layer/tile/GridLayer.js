@@ -552,7 +552,11 @@ L.GridLayer = L.Layer.extend({
 		var tile = this._tiles[key];
 		if (!tile) { return; }
 
-		this._tileCache[key] = tile.el.src;
+		// FIXME: this _tileCache is used for prev/next slide; but it is
+		// dangerous in connection with typing / invalidation, so let's
+		// comment it out for now
+		//this._tileCache[key] = tile.el.src;
+
 		L.DomUtil.remove(tile.el);
 		delete this._tiles[key];
 
