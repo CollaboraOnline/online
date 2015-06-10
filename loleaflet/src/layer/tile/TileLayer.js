@@ -213,15 +213,16 @@ L.TileLayer = L.GridLayer.extend({
 			coords.part = command.part;
 			var data = bytes.subarray(index + 1);
 
-			var key = this._tileCoordsToKey(coords);
-			var tile = this._tiles[key];
-			if (tile) {
-				var strBytes = '';
-				for (var i = 0; i < data.length; i++) {
-					strBytes += String.fromCharCode(data[i]);
-				}
-				tile.el.src = 'data:image/png;base64,' + window.btoa(strBytes);
+			// read the tile data
+			var strBytes = '';
+			for (var i = 0; i < data.length; i++) {
+				strBytes += String.fromCharCode(data[i]);
 			}
+
+			// setup the tile
+			var fragment = document.createDocumentFragment();
+			this._addTileToMap(coords, fragment, 'data:image/png;base64,' + window.btoa(strBytes));
+			this._level.el.appendChild(fragment);
 		}
 		else if (textMsg.startsWith('textselection:')) {
 			strTwips = textMsg.match(/\d+/g);
