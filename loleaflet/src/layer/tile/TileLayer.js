@@ -81,7 +81,8 @@ L.TileLayer = L.GridLayer.extend({
 		var events = {
 			viewreset: this._viewReset,
 			moveend: this._move,
-			keypress: this._onKeyPress
+			keypress: this._onKeyPress,
+			keyup: this._onKeyUp
 		};
 
 		if (!this.options.updateWhenIdle) {
@@ -710,6 +711,12 @@ L.TileLayer = L.GridLayer.extend({
 	_onKeyPress: function (e) {
 		if (this._cursorMarker) {
 			this._postKeyboardEvent('input', e.originalEvent.charCode, this._toUNOKeyCode(e.originalEvent.keyCode));
+		}
+	},
+
+	_onKeyUp: function (e) {
+		if (this._cursorMarker) {
+			this._postKeyboardEvent('up', e.originalEvent.charCode, this._toUNOKeyCode(e.originalEvent.keyCode));
 		}
 	},
 
