@@ -715,15 +715,15 @@ L.GridLayer = L.Layer.extend({
 				coords.y * this._tileHeightTwips);
 	},
 
-	_twipsToLatLng: function (twips) {
+	_twipsToLatLng: function (twips, zoom) {
 		var pixels = new L.Point(
 				twips.x / this._tileWidthTwips * this._tileSize,
 				twips.y / this._tileHeightTwips * this._tileSize);
-		return this._map.unproject(pixels);
+		return this._map.unproject(pixels, zoom);
 	},
 
-	_latLngToTwips: function (latLng) {
-		var pixels = this._map.project(latLng);
+	_latLngToTwips: function (latLng, zoom) {
+		var pixels = this._map.project(latLng, zoom);
 		return new L.Point(
 				Math.round(pixels.x / this._tileSize * this._tileWidthTwips),
 				Math.round(pixels.y / this._tileSize * this._tileHeightTwips));
