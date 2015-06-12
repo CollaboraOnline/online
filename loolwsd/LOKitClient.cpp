@@ -36,6 +36,36 @@ using Poco::StringTokenizer;
 using Poco::TemporaryFile;
 using Poco::Util::Application;
 
+extern "C"
+{
+    static void myCallback(int nType, const char* pPayload, void*)
+    {
+        std::cout << "Callback: ";
+        switch ((LibreOfficeKitCallbackType) nType)
+        {
+#define CASE(x) case LOK_CALLBACK_##x: std::cout << #x; break
+            CASE(INVALIDATE_TILES);
+            CASE(INVALIDATE_VISIBLE_CURSOR);
+            CASE(TEXT_SELECTION);
+            CASE(TEXT_SELECTION_START);
+            CASE(TEXT_SELECTION_END);
+            CASE(CURSOR_VISIBLE);
+            CASE(GRAPHIC_SELECTION);
+            CASE(HYPERLINK_CLICKED);
+            CASE(STATE_CHANGED);
+            CASE(STATUS_INDICATOR_START);
+            CASE(STATUS_INDICATOR_SET_VALUE);
+            CASE(STATUS_INDICATOR_FINISH);
+            CASE(SEARCH_NOT_FOUND);
+            CASE(DOCUMENT_SIZE_CHANGED);
+            CASE(SET_PART);
+#undef CASE
+        }
+        std::cout << " payload: " << pPayload << std::endl;
+    }
+}
+
+
 class LOKitClient: public Application
 {
 public:
@@ -58,12 +88,15 @@ protected:
             return Application::EXIT_UNAVAILABLE;
         }
 
+
         loKitDocument = loKit->pClass->documentLoad(loKit, args[1].c_str());
         if (!loKitDocument)
         {
             logger().fatal("Document loading failed: " + std::string(loKit->pClass->getError(loKit)));
             return Application::EXIT_UNAVAILABLE;
         }
+
+        loKitDocument->pClass->registerCallback(loKitDocument, myCallback, NULL);
 
         loKitDocument->pClass->initializeForRendering(loKitDocument);
 
