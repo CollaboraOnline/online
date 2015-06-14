@@ -150,6 +150,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (textMsg.startsWith('cursorvisible:')) {
 			var command = textMsg.match('cursorvisible: true');
 			this._bCursorVisible = command == undefined ? false : true;
+			this._bCursorOverlayVisible = true;
 			this._onUpdateCursor();
 		}
 		else if (textMsg.startsWith('invalidatecursor:')) {
@@ -725,10 +726,13 @@ L.TileLayer = L.GridLayer.extend({
 		if ( !this._bEdit )
 			return;
 
-		if ( e.type === 'keyup' )
-			this._postKeyboardEvent('up', e.originalEvent.charCode, this._toUNOKeyCode(e.originalEvent.keyCode));
-		else
-			this._postKeyboardEvent('input', e.originalEvent.charCode, this._toUNOKeyCode(e.originalEvent.keyCode));
+		if ( e.type === 'keypress' ) {
+			this._keyEvent = e.originalEvent;
+			this._postKeyboardEvent('input', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
+		}
+		else if ( e.type === 'keyup' ) {
+			this._postKeyboardEvent('up', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
+		}
 	},
 
 	// Is rRectangle empty?
