@@ -60,8 +60,12 @@ L.TileLayer = L.GridLayer.extend({
 		this._bCursorOverlayVisible = false;
 		// Cursor is visible or hidden (e.g. for graphic selection).
 		this._bCursorVisible = true;
-		// Marker cursor
+		// Rectangle graphic selection
+		this._aGraphicSelection = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+		// Cursor marker
 		this._cursorMarker = null;
+		// Graphic marker
+		this._graphicMarker = null;
 	},
 
 	_initDocument: function () {
@@ -163,6 +167,21 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 			this._bCursorOverlayVisible = true;
 			this._onUpdateCursor();
+		}
+		else if (textMsg.startsWith('graphicselection:')) {
+			if (textMsg.match('EMPTY')) {
+				this._aGraphicSelection = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+			}
+			else {
+				strTwips = textMsg.match(/\d+/g);
+				var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+				var bottomRightTwips = topLeftTwips.add(offset);
+				this._aGraphicSelection = new L.LatLngBounds(
+								this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+								this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+			}
+			this._onUpdateGraphicSelection();
 		}
 		else if (textMsg.startsWith('invalidatetiles:')) {
 			if (textMsg.match('EMPTY')) {
@@ -759,6 +778,17 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.removeLayer(this._cursorMarker);
 				this._bCursorOverlayVisible = false;
 			}
+		}
+	},
+
+	_onUpdateGraphicSelection: function () {
+		if (!this._isEmptyRectangle(this._aGraphicSelection)) {
+			this._graphicMarker = L.rectangle(this._aGraphicSelection, {color: 'red', fill: false});
+			this._map.addLayer(this._graphicMarker);
+		}
+		else {
+			if (this._graphicMarker)
+				this._map.removeLayer(this._graphicMarker);
 		}
 	}
 });
