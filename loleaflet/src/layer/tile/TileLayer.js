@@ -749,7 +749,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._keyEvent = e.originalEvent;
 			this._postKeyboardEvent('input', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
 		}
-		else if ( e.type === 'keyup' ) {
+		else if ( e.type === 'keyup' &&  this._keyEvent ) {
 			this._postKeyboardEvent('up', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
 		}
 	},
@@ -770,11 +770,13 @@ L.TileLayer = L.GridLayer.extend({
 
 			var latBounds = L.rectangle(this._aVisibleCursor).getLatLngs();
 			this._cursorMarker = L.cursor(latBounds[2], {color: 'red'});
+			this._map._bDisableKeyboard = true;
 			this._map.addLayer(this._cursorMarker);
 			this._cursorMarker.setSize(pixBounds.getSize());
 		}
 		else {
 			if (this._cursorMarker) {
+				this._map._bDisableKeyboard = false;
 				this._map.removeLayer(this._cursorMarker);
 				this._bCursorOverlayVisible = false;
 			}

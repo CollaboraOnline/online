@@ -49,6 +49,7 @@ L.Map = L.Evented.extend({
 		this._layers = {};
 		this._zoomBoundLayers = {};
 		this._sizeChanged = true;
+		this._bDisableKeyboard = false;
 
 		this.callInitHooks();
 
