@@ -378,6 +378,8 @@ namespace
     void linkOrCopy(const std::string& source, const Path& destination)
     {
         *sourceForLinkOrCopy = source;
+        if (sourceForLinkOrCopy->back() == '/')
+            sourceForLinkOrCopy->pop_back();
         *destinationForLinkOrCopy = destination;
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
             Application::instance().logger().error(Util::logPrefix() +
