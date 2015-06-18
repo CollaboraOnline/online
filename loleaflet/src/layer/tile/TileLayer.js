@@ -181,6 +181,7 @@ L.TileLayer = L.GridLayer.extend({
 								this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 								this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 			}
+
 			this._onUpdateGraphicSelection();
 		}
 		else if (textMsg.startsWith('invalidatetiles:')) {
@@ -530,6 +531,11 @@ L.TileLayer = L.GridLayer.extend({
 				' char=' + charcode + ' key=' + keycode);
 	},
 
+	_postSelectGraphicEvent: function(type, x, y) {
+		this._map.socket.send('selectgraphic type=' + type +
+				' x=' + x + ' y=' + y);
+	},
+
 	_onMouseEvent: function (e) {
 		if (e.type === 'mousedown') {
 			this._selecting = true;
@@ -783,14 +789,36 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	// Update graphics resize.
+	_onGraphicEdit: function (e) {
+		if ( !e.handle ) return;
+
+		var aPos = this._latLngToTwips(e.handle.getLatLng());
+		if ( e.type === 'editstart' ) {
+			this._postSelectGraphicEvent('start', aPos.x, aPos.y);
+		}
+		else if ( e.type === 'editend' ) {
+			this._postSelectGraphicEvent('end', aPos.x, aPos.y);
+		}
+	},
+
+	// Update group layer selection handler.
 	_onUpdateGraphicSelection: function () {
 		if (!this._isEmptyRectangle(this._aGraphicSelection)) {
-			this._graphicMarker = L.rectangle(this._aGraphicSelection, {color: 'red', fill: false});
+			if (this._graphicMarker) {
+				this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
+				this._map.removeLayer(this._graphicMarker);
+			}
+			this._graphicMarker = L.rectangle(this._aGraphicSelection, {fill: false});
+			this._graphicMarker.editing.enable();
+			this._graphicMarker.on('editstart editend', this._onGraphicEdit, this);
 			this._map.addLayer(this._graphicMarker);
 		}
 		else {
-			if (this._graphicMarker)
+			if (this._graphicMarker) {
+				this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
 				this._map.removeLayer(this._graphicMarker);
+			}
 		}
 	}
 });

@@ -178,10 +178,8 @@
 
 .leaflet-interactive {
 	cursor: pointer;
-	pointer-events: none;
 	}
 .leaflet-container {
-	cursor: text;
 	cursor: text;
 	}
 .leaflet-crosshair,

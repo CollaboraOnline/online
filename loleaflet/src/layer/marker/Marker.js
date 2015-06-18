@@ -11,7 +11,7 @@ L.Marker = L.Layer.extend({
 		// title: '',
 		// alt: '',
 		interactive: true,
-		// draggable: false,
+		draggable: false,
 		keyboard: true,
 		zIndexOffset: 0,
 		opacity: 1,
