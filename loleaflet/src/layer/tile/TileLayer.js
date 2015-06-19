@@ -182,6 +182,7 @@ L.TileLayer = L.GridLayer.extend({
 		var events = {
 			viewreset: this._viewReset,
 			moveend: this._move,
+			keydown: this._signalKey,
 			keypress: this._signalKey,
 			keyup: this._signalKey
 		};
@@ -746,7 +747,10 @@ L.TileLayer = L.GridLayer.extend({
 		if ( !this._bEdit )
 			return;
 
-		if ( e.type === 'keypress' ) {
+		if ( e.type == 'keydown' ) {
+			this._keyEvent = null;
+		}
+		else if ( e.type === 'keypress' ) {
 			this._keyEvent = e.originalEvent;
 			this._postKeyboardEvent('input', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
 		}
