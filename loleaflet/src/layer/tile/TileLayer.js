@@ -62,10 +62,33 @@ L.TileLayer = L.GridLayer.extend({
 		this._bCursorVisible = true;
 		// Rectangle graphic selection
 		this._aGraphicSelection = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+		// Position and size of the selection start (as if there would be a cursor caret there).
+		this._aTextSelectionStart = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+		// Position and size of the selection end.
+		this._aTextSelectionEnd = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+
 		// Cursor marker
 		this._cursorMarker = null;
 		// Graphic marker
 		this._graphicMarker = null;
+		// Handle start marker
+		this._startMarker = L.marker( new L.LatLng(0,0), {
+			icon: L.icon({
+				iconUrl: L.Icon.Default.imagePath + '/handle_start.png',
+				iconSize: [30, 44],
+				iconAnchor: [28, 2]
+			}),
+			draggable: true
+		});
+		// Handle end marker
+		this._endMarker = L.marker( new L.LatLng(0,0), {
+			icon: L.icon({
+				iconUrl: L.Icon.Default.imagePath + '/handle_end.png',
+				iconSize: [30, 44],
+				iconAnchor: [2, 2]
+			}),
+			draggable: true
+		});
 	},
 
 	_initDocument: function () {
@@ -86,6 +109,8 @@ L.TileLayer = L.GridLayer.extend({
 				this._onMouseEvent, this);
 		this._map.on('viewmode editmode', this._updateEditViewMode, this);
 		this._map.on('drag', this._updateScrollOffset, this);
+		this._startMarker.on('dragend', this._onDragEndHandler, this);
+		this._endMarker.on('dragend', this._onDragEndHandler, this);
 	},
 
 	getEvents: function () {
@@ -167,6 +192,32 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 			this._bCursorOverlayVisible = true;
 			this._onUpdateCursor();
+		}
+		else if (textMsg.startsWith('textselectionstart:')) {
+			strTwips = textMsg.match(/\d+/g);
+			if (strTwips != null) {
+				var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+				var bottomRightTwips = topLeftTwips.add(offset);
+				this._aTextSelectionStart = new L.LatLngBounds(
+							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+			}
+			else
+				this._aTextSelectionStart = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+		}
+		else if (textMsg.startsWith('textselectionend:')) {
+			strTwips = textMsg.match(/\d+/g);
+			if (strTwips != null) {
+				var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+				var bottomRightTwips = topLeftTwips.add(offset);
+				this._aTextSelectionEnd = new L.LatLngBounds(
+							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+			}
+			else
+				this._aTextSelectionEnd = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
 		}
 		else if (textMsg.startsWith('graphicselection:')) {
 			if (textMsg.match('EMPTY')) {
@@ -301,6 +352,7 @@ L.TileLayer = L.GridLayer.extend({
 					this._selections.addLayer(selection);
 				}
 			}
+			this._onUpdateTextSelection();
 		}
 		else if (textMsg.startsWith('setpart:')) {
 			var part = parseInt(textMsg.match(/\d+/g)[0]);
@@ -533,6 +585,11 @@ L.TileLayer = L.GridLayer.extend({
 
 	_postSelectGraphicEvent: function(type, x, y) {
 		this._map.socket.send('selectgraphic type=' + type +
+				' x=' + x + ' y=' + y);
+	},
+
+	_postSelectTextEvent: function(type, x, y) {
+		this._map.socket.send('selecttext type=' + type +
 				' x=' + x + ' y=' + y);
 	},
 
@@ -789,7 +846,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	// Update graphics resize.
+	// Update dragged graphics selection resize.
 	_onGraphicEdit: function (e) {
 		if ( !e.handle ) return;
 
@@ -800,6 +857,17 @@ L.TileLayer = L.GridLayer.extend({
 		else if ( e.type === 'editend' ) {
 			this._postSelectGraphicEvent('end', aPos.x, aPos.y);
 		}
+	},
+
+	// Update dragged text selection.
+	_onDragEndHandler: function (e) {
+		var aPos = this._latLngToTwips(e.target.getLatLng());
+
+		if ( this._startMarker == e.target )
+			this._postSelectTextEvent('start', aPos.x, aPos.y);
+
+		if ( this._endMarker == e.target )
+			this._postSelectTextEvent('end', aPos.x, aPos.y);
 	},
 
 	// Update group layer selection handler.
@@ -819,6 +887,27 @@ L.TileLayer = L.GridLayer.extend({
 				this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
 				this._map.removeLayer(this._graphicMarker);
 			}
+		}
+	},
+
+	// Update text selection handlers.
+	_onUpdateTextSelection: function () {
+		if (this._selections.getLayers().length !== 0) {
+			if (!this._isEmptyRectangle(this._aTextSelectionStart)) {
+				this._startMarker.setLatLng(this._aTextSelectionStart.getSouthWest());
+				this._map.addLayer(this._startMarker);
+			}
+
+			if (!this._isEmptyRectangle(this._aTextSelectionEnd)) {
+				this._endMarker.setLatLng(this._aTextSelectionEnd.getSouthEast());
+				this._map.addLayer(this._endMarker);
+			}
+		}
+		else {
+			this._aTextSelectionStart = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+			this._aTextSelectionEnd = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+			this._map.removeLayer(this._startMarker);
+			this._map.removeLayer(this._endMarker);
 		}
 	}
 });
