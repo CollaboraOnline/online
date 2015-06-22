@@ -174,8 +174,8 @@ L.TileLayer = L.GridLayer.extend({
 				this._onMouseEvent, this);
 		this._map.on('viewmode editmode', this._updateEditViewMode, this);
 		this._map.on('drag', this._updateScrollOffset, this);
-		this._startMarker.on('dragend', this._onDragEndHandler, this);
-		this._endMarker.on('dragend', this._onDragEndHandler, this);
+		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
+		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 	},
 
 	getEvents: function () {
@@ -802,8 +802,14 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	// Update dragged text selection.
-	_onDragEndHandler: function (e) {
+	_onSelectionHandleDrag: function (e) {
 		var aPos = this._latLngToTwips(e.target.getLatLng());
+
+		if (e.type === 'drag')
+			e.target.dragging = true;
+
+		if (e.type === 'dragend')
+			e.target.dragging = false;
 
 		if ( this._startMarker == e.target )
 			this._postSelectTextEvent('start', aPos.x, aPos.y);
@@ -835,12 +841,14 @@ L.TileLayer = L.GridLayer.extend({
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
 		if (this._selections.getLayers().length !== 0) {
-			if (!this._isEmptyRectangle(this._aTextSelectionStart)) {
+			if (!this._isEmptyRectangle(this._aTextSelectionStart) &&
+					this._startMarker.dragging !== true) {
 				this._startMarker.setLatLng(this._aTextSelectionStart.getSouthWest());
 				this._map.addLayer(this._startMarker);
 			}
 
-			if (!this._isEmptyRectangle(this._aTextSelectionEnd)) {
+			if (!this._isEmptyRectangle(this._aTextSelectionEnd) &&
+					this._endMarker.dragging !== true) {
 				this._endMarker.setLatLng(this._aTextSelectionEnd.getSouthEast());
 				this._map.addLayer(this._endMarker);
 			}
