@@ -366,10 +366,11 @@ L.TileLayer = L.GridLayer.extend({
 				strBytes += String.fromCharCode(data[i]);
 			}
 
-			// setup the tile
-			var fragment = document.createDocumentFragment();
-			this._addTileToMap(coords, fragment, 'data:image/png;base64,' + window.btoa(strBytes));
-			this._level.el.appendChild(fragment);
+			var key = this._tileCoordsToKey(coords);
+			var tile = this._tiles[key];
+			if (tile) {
+				tile.el.src = 'data:image/png;base64,' + window.btoa(strBytes);
+			}
 		}
 		else if (textMsg.startsWith('textselection:')) {
 			strTwips = textMsg.match(/\d+/g);

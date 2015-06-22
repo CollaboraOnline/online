@@ -488,11 +488,14 @@ L.GridLayer = L.Layer.extend({
 				this.fire('loading');
 			}
 
-			// send the requests for tiles (requests only - they are not
-			// created before we actually really get them from the server)
+			// create DOM fragment to append tiles in one batch
+			var fragment = document.createDocumentFragment();
+
 			for (i = 0; i < queue.length; i++) {
-				this._addTile(queue[i]);
+				this._addTile(queue[i], fragment);
 			}
+
+			this._level.el.appendChild(fragment);
 		}
 	},
 
@@ -587,7 +590,7 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
-	_addTileToMap: function (coords, fragment, bitmap_src) {
+	_addTile: function (coords, fragment) {
 		var tilePos = this._getTilePos(coords),
 			key = this._tileCoordsToKey(coords);
 		var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
@@ -605,9 +608,6 @@ L.GridLayer = L.Layer.extend({
 		// which is slow, and it also fixes gaps between tiles in Safari
 		L.DomUtil.setPosition(tile, tilePos, true);
 
-		// set the bitmap data ('data:image/png;base64,...');
-		tile.src = bitmap_src;
-
 		// save tile in cache
 		this._tiles[key] = {
 			el: tile,
@@ -621,10 +621,6 @@ L.GridLayer = L.Layer.extend({
 			tile: tile,
 			coords: coords
 		});
-	},
-
-	_addTile: function (coords) {
-		var key = this._tileCoordsToKey(coords);
 
 		if (!this._tileCache[key]) {
 			if (this.options.useSocket && this._map.socket) {
@@ -640,9 +636,7 @@ L.GridLayer = L.Layer.extend({
 			}
 		}
 		else {
-			var fragment = document.createDocumentFragment();
-			this._addTileToMap(coords, fragment, this._tileCache[key]);
-			this._level.el.appendChild(fragment);
+			tile.src = this._tileCache[key];
 		}
 	},
 
