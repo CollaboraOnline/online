@@ -306,6 +306,7 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
+			var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 
 			this._map._fadeAnimated = false;
 
@@ -314,7 +315,7 @@ L.TileLayer = L.GridLayer.extend({
 				var point1 = this._coordsToTwips(coords);
 				var point2 = new L.Point(point1.x + this._tileWidthTwips, point1.y + this._tileHeightTwips);
 				var bounds = new L.Bounds(point1, point2);
-				if (bounds.contains(topLeftTwips) || bounds.contains(bottomRightTwips)) {
+				if (invalidBounds.intersects(bounds)) {
 					this._map.socket.send('tile ' +
 									'part=' + coords.part + ' ' +
 									'width=' + this._tileSize + ' ' +
