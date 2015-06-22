@@ -555,7 +555,7 @@ L.GridLayer = L.Layer.extend({
 		// FIXME: this _tileCache is used for prev/next slide; but it is
 		// dangerous in connection with typing / invalidation, so let's
 		// comment it out for now
-		//this._tileCache[key] = tile.el.src;
+		this._tileCache[key] = tile.el.src;
 
 		L.DomUtil.remove(tile.el);
 		delete this._tiles[key];

@@ -301,39 +301,29 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._onUpdateGraphicSelection();
 		}
-		else if (textMsg.startsWith('invalidatetiles:')) {
-			if (textMsg.match('EMPTY')) {
-				// invalidate everything
-				this.redraw();
-				for (var key in this._tiles) {
-					this._addTile(this._tiles[key].coords);
+		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.match('EMPTY')) {
+			strTwips = textMsg.match(/\d+/g);
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+
+			this._map._fadeAnimated = false;
+
+			for (var key in this._tiles) {
+				var coords = this._tiles[key].coords;
+				var point1 = this._coordsToTwips(coords);
+				var point2 = new L.Point(point1.x + this._tileWidthTwips, point1.y + this._tileHeightTwips);
+				var bounds = new L.Bounds(point1, point2);
+				if (bounds.contains(topLeftTwips) || bounds.contains(bottomRightTwips)) {
+					this._map.socket.send('tile ' +
+									'part=' + coords.part + ' ' +
+									'width=' + this._tileSize + ' ' +
+									'height=' + this._tileSize + ' ' +
+									'tileposx=' + point1.x + ' '    +
+									'tileposy=' + point1.y + ' ' +
+									'tilewidth=' + this._tileWidthTwips + ' ' +
+									'tileheight=' + this._tileHeightTwips);
 				}
-			}
-			else {
-				strTwips = textMsg.match(/\d+/g);
-
-				// convert to bounds
-				var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-				var bottomRightTwips = topLeftTwips.add(offset);
-				var invalidateBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
-
-				// FIXME - we want the fading when zooming, but not when
-				// typing; we need to modify this so that we fade only
-				// the tiles that do not exist yet
-				this._map._fadeAnimated = false;
-
-				for (var key in this._tiles) {
-					var coords = this._tiles[key].coords;
-					var point1 = this._coordsToTwips(coords);
-					var point2 = new L.Point(point1.x + this._tileWidthTwips, point1.y + this._tileHeightTwips);
-					var tileBounds = new L.Bounds(point1, point2);
-
-					if (invalidateBounds.intersects(tileBounds)) {
-						this._addTile(coords);
-					}
-				}
-				this._update();
 			}
 		}
 		else if (textMsg.startsWith('status:')) {
