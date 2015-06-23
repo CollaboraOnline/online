@@ -39,6 +39,10 @@ L.GridLayer = L.Layer.extend({
 		this._viewReset();
 		this._update();
 		this._map._docLayer = this;
+		var mapDim = this._map.getSize();
+		this._maxVisibleTiles =
+			(Math.floor(mapDim.x / this._tileSize) + 2) *
+			(Math.floor(mapDim.y / this._tileSize) + 2);
 	},
 
 	beforeAdd: function (map) {
@@ -483,6 +487,18 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (queue.length !== 0) {
+			if (queue.length > this._maxVisibleTiles) {
+				// we know that a new set of tiles that cover the whole view has been requested
+				// so we're able to cancel the previous requests that are being processed
+				this._map.socket.send('canceltiles');
+				for (var key in this._tiles) {
+					if (!this._tiles[key].loaded) {
+						L.DomUtil.remove(this._tiles[key].el);
+						delete this._tiles[key];
+					}
+				}
+			}
+
 			// if its the first batch of tiles to load
 			if (this._noTilesToLoad()) {
 				this.fire('loading');
