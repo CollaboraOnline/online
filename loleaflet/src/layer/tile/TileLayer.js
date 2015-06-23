@@ -403,6 +403,7 @@ L.TileLayer = L.GridLayer.extend({
 				var polygons = this._rectanglesToPolygons(rectangles);
 				for (var i = 0; i < polygons.length; i++) {
 					var selection = new L.Polygon(polygons[i], {
+						pointerEvents: 'none',
 						fillColor: '#43ACE8',
 						fillOpacity: 0.25,
 						weight: 2,
