@@ -798,10 +798,10 @@ L.TileLayer = L.GridLayer.extend({
 		var aPos = this._latLngToTwips(e.target.getLatLng());
 
 		if (e.type === 'drag')
-			e.target.dragging = true;
+			e.target.isDragged = true;
 
 		if (e.type === 'dragend')
-			e.target.dragging = false;
+			e.target.isDragged = false;
 
 		if ( this._startMarker == e.target )
 			this._postSelectTextEvent('start', aPos.x, aPos.y);
@@ -834,13 +834,13 @@ L.TileLayer = L.GridLayer.extend({
 	_onUpdateTextSelection: function () {
 		if (this._selections.getLayers().length !== 0) {
 			if (!this._isEmptyRectangle(this._aTextSelectionStart) &&
-					this._startMarker.dragging !== true) {
+					this._startMarker.isDragged !== true) {
 				this._startMarker.setLatLng(this._aTextSelectionStart.getSouthWest());
 				this._map.addLayer(this._startMarker);
 			}
 
 			if (!this._isEmptyRectangle(this._aTextSelectionEnd) &&
-					this._endMarker.dragging !== true) {
+					this._endMarker.isDragged !== true) {
 				this._endMarker.setLatLng(this._aTextSelectionEnd.getSouthEast());
 				this._map.addLayer(this._endMarker);
 			}
