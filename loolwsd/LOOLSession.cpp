@@ -183,6 +183,10 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             }
             else if (tokens[0] == "invalidatetiles:")
             {
+                // FIXME temporarily, set the editing on the 1st invalidate, TODO extend
+                // the protocol so that the client can set the editing or view only.
+                peer->_tileCache->setEditing(true);
+
                 assert(firstLine.size() == static_cast<std::string::size_type>(length));
                 peer->_tileCache->invalidateTiles(_curPart, firstLine);
             }
@@ -461,6 +465,10 @@ bool MasterProcessSession::invalidateTiles(const char *buffer, int length, Strin
         sendTextFrame("error: cmd=invalidatetiles kind=syntax");
         return false;
     }
+
+    // FIXME temporarily, set the editing on the 1st invalidate, TODO extend
+    // the protocol so that the client can set the editing or view only.
+    _tileCache->setEditing(true);
 
     _tileCache->invalidateTiles(_curPart, tilePosX, tilePosY, tileWidth, tileHeight);
     return true;

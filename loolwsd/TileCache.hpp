@@ -12,11 +12,21 @@
 
 #include <fstream>
 #include <memory>
+#include <set>
 #include <string>
 
 #include <Poco/File.h>
 #include <Poco/Timestamp.h>
 
+/** Handles the cache for tiles of one document.
+
+The cache consists of 2 cache directories:
+
+  * persistent - that always represents the document as is saved
+  * editing - that represents the document in the current state (with edits)
+
+The editing cache is cleared on startup, and copied to the persistent on each save.
+*/
 class TileCache
 {
 public:
@@ -25,6 +35,12 @@ public:
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
     std::string getStatus();
+
+    /// Notify the cache that the document was saved - to copy tiles from the Editing cache to Persistent.
+    void documentSaved();
+
+    /// Notify whether we need to use the Editing cache.
+    void setEditing(bool editing = true);
 
     // The parameter is a status: message
     void saveStatus(const std::string& status);
@@ -35,13 +51,31 @@ public:
     void invalidateTiles(int part, int x, int y, int width, int height);
 
 private:
-    std::string cacheDirName();
+    /// Toplevel cache dirname.
+    std::string toplevelCacheDirName();
+
+    /// Path of the (sub-)cache dir, the parameter specifies which (sub-)cache to use.
+    std::string cacheDirName(bool useEditingCache);
+
     std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     bool parseCacheFileName(std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
+
+    /// Extract location from fileName, and check if it intersects with [x, y, width, height].
+    bool intersectsTile(std::string& fileName, int part, int x, int y, int width, int height);
+
     Poco::Timestamp getLastModified();
     void setupForFile(Poco::File& cacheDir, const std::string& path);
 
     const std::string& _docURL;
+
+    /// The document is being edited.
+    bool _isEditing;
+
+    /// We have some unsaved changes => use the Editing cache.
+    bool _hasUnsavedChanges;
+
+    /// Set of tiles that we want to remove from the Persistent cache on the next save.
+    std::set<std::string> _toBeRemoved;
 };
 
 #endif

@@ -40,9 +40,11 @@ using Poco::Timestamp;
 using Poco::URI;
 
 TileCache::TileCache(const std::string& docURL) :
-    _docURL(docURL)
+    _docURL(docURL),
+    _isEditing(false),
+    _hasUnsavedChanges(false)
 {
-    File dir(cacheDirName());
+    File dir(toplevelCacheDirName());
 
     try
     {
@@ -60,12 +62,34 @@ TileCache::TileCache(const std::string& docURL) :
 
 std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
 {
-    std::string dirName = cacheDirName();
+    std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    if (!File(dirName).exists() || !File(dirName).isDirectory())
+    if (_hasUnsavedChanges)
+    {
+        // try the Editing cache first
+        std::string dirName = cacheDirName(true);
+        std::string fileName =  + "/" + cachedName;
+        File dir(dirName);
+
+        if (dir.exists() && dir.isDirectory() && File(fileName).exists())
+        {
+            std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
+            return result;
+        }
+    }
+
+    // skip tiles scheduled for removal from the Persistent cache (on save)
+    if (_toBeRemoved.find(cachedName) != _toBeRemoved.end())
         return nullptr;
 
-    std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    // default to the content of the Persistent cache
+    std::string dirName = cacheDirName(false);
+    File dir(dirName);
+
+    if (!dir.exists() || !dir.isDirectory())
+        return nullptr;
+
+    std::string fileName = dirName + "/" + cachedName;
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
 
@@ -74,7 +98,10 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
 
 void TileCache::saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size)
 {
-    std::string dirName = cacheDirName();
+    if (_isEditing && !_hasUnsavedChanges)
+        _hasUnsavedChanges = true;
+
+    std::string dirName = cacheDirName(_hasUnsavedChanges);
 
     File(dirName).createDirectories();
 
@@ -87,12 +114,24 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
 
 std::string TileCache::getStatus()
 {
-    std::string dirName = cacheDirName();
+    const char statusFile[] = "/status.txt";
+
+    std::string dirName = cacheDirName(false);
+    if (_hasUnsavedChanges)
+    {
+        // try the Editing cache first, and prefer its status.txt if it exists
+        std::string editingDirName = cacheDirName(true);
+        File dir(editingDirName);
+
+        File status(editingDirName + statusFile);
+        if (dir.exists() && dir.isDirectory() && status.exists() && !status.isDirectory())
+            dirName = editingDirName;
+    }
 
     if (!File(dirName).exists() || !File(dirName).isDirectory())
         return "";
 
-    std::string fileName = dirName + "/status.txt";
+    std::string fileName = dirName + statusFile;
     std::fstream statusStream(fileName, std::ios::in);
     if (!statusStream.is_open())
         return "";
@@ -111,9 +150,30 @@ std::string TileCache::getStatus()
     return std::string(result.data(), result.size());
 }
 
+void TileCache::documentSaved()
+{
+    // first remove the invalidated tiles from the Persistent cache
+    std::string persistentDirName = cacheDirName(false);
+    for (const auto& it : _toBeRemoved)
+        File(persistentDirName + "/" + it).remove();
+
+    // then move the new tiles from the Editing cache to Persistent
+    for (auto tileIterator = DirectoryIterator(cacheDirName(true)); tileIterator != DirectoryIterator(); ++tileIterator)
+        tileIterator->moveTo(persistentDirName);
+
+    // update status
+    _toBeRemoved.clear();
+    _hasUnsavedChanges = false;
+}
+
+void TileCache::setEditing(bool editing)
+{
+    _isEditing = editing;
+}
+
 void TileCache::saveStatus(const std::string& status)
 {
-    std::string dirName = cacheDirName();
+    std::string dirName = cacheDirName(_hasUnsavedChanges);
 
     File(dirName).createDirectories();
 
@@ -133,31 +193,35 @@ void TileCache::saveStatus(const std::string& status)
 
 void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
 {
-    std::string dirName = cacheDirName();
-
-    std::vector<std::string> toBeRemoved;
-
-    for (auto tileIterator = DirectoryIterator(dirName); tileIterator != DirectoryIterator(); ++tileIterator)
+    // in the Editing cache, remove immediately
+    std::string editingDirName = cacheDirName(true);
+    File editingDir(editingDirName);
+    if (editingDir.exists() && editingDir.isDirectory())
     {
-        std::string baseName = tileIterator.path().getBaseName();
-
-        int tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight;
-
-        if (parseCacheFileName(baseName, tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight))
+        for (auto tileIterator = DirectoryIterator(editingDir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
-            std::cout << "Tile " << baseName << " is " << tileWidth << "x" << tileHeight << "@+" << tilePosX << "+" << tilePosY << std::endl;
-            if ((part == -1 || tilePart == part) &&
-                tilePosX < x + width && tilePosX + tileWidth >= x &&
-                tilePosY < y + height && tilePosY + tileHeight >= y)
+            std::string fileName = tileIterator.path().getFileName();
+            if (intersectsTile(fileName, part, x, y, width, height))
             {
-                std::cout << "Match!" << std::endl;
-                toBeRemoved.push_back(tileIterator.path().toString());
+                File(tileIterator.path()).remove();
             }
         }
     }
 
-    for (auto i: toBeRemoved)
-        std::remove(i.c_str());
+    // in the Persistent cache, add to _toBeRemoved for removal on save
+    std::string persistentDirName = cacheDirName(false);
+    File persistentDir(persistentDirName);
+    if (persistentDir.exists() && persistentDir.isDirectory())
+    {
+        for (auto tileIterator = DirectoryIterator(persistentDir); tileIterator != DirectoryIterator(); ++tileIterator)
+        {
+            std::string fileName = tileIterator.path().getFileName();
+            if (_toBeRemoved.find(fileName) == _toBeRemoved.end() && intersectsTile(fileName, part, x, y, width, height))
+            {
+                _toBeRemoved.insert(fileName);
+            }
+        }
+    }
 }
 
 void TileCache::invalidateTiles(int part, const std::string& tiles)
@@ -185,7 +249,7 @@ void TileCache::invalidateTiles(int part, const std::string& tiles)
     }
 }
 
-std::string TileCache::cacheDirName()
+std::string TileCache::toplevelCacheDirName()
 {
     SHA1Engine digestEngine;
 
@@ -193,6 +257,14 @@ std::string TileCache::cacheDirName()
 
     return (LOOLWSD::cache + "/" +
             DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
+}
+
+std::string TileCache::cacheDirName(bool useEditingCache)
+{
+    if (useEditingCache)
+        return toplevelCacheDirName() + "/editing";
+    else
+        return toplevelCacheDirName() + "/persistent";
 }
 
 std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
@@ -205,12 +277,33 @@ std::string TileCache::cacheFileName(int part, int width, int height, int tilePo
 
 bool TileCache::parseCacheFileName(std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight)
 {
-    return (std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7);
+    return (std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d.png", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7);
+}
+
+bool TileCache::intersectsTile(std::string& fileName, int part, int x, int y, int width, int height)
+{
+    int tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight;
+
+    if (parseCacheFileName(fileName, tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight))
+    {
+        if (part != -1 && tilePart != part)
+            return false;
+
+        int left = std::max(x, tilePosX);
+        int right = std::min(x + width, tilePosX + tileWidth);
+        int top = std::max(y, tilePosY);
+        int bottom = std::min(y + height, tilePosY + tileHeight);
+
+        if (left <= right && top <= bottom)
+            return true;
+    }
+
+    return false;
 }
 
 Timestamp TileCache::getLastModified()
 {
-    std::fstream modTimeFile(cacheDirName() + "/modtime.txt", std::ios::in);
+    std::fstream modTimeFile(toplevelCacheDirName() + "/modtime.txt", std::ios::in);
 
     if (!modTimeFile.is_open())
         return 0;
@@ -226,9 +319,20 @@ void TileCache::setupForFile(File& cacheDir, const std::string& path)
 {
     if (File(path).exists() && File(path).isFile())
     {
-        if (cacheDir.exists() && getLastModified() != File(path).getLastModified())
+        if (cacheDir.exists())
         {
-            cacheDir.remove(true);
+            if (getLastModified() != File(path).getLastModified())
+            {
+                // document changed externally, clean up everything
+                cacheDir.remove(true);
+            }
+            else
+            {
+                // remove only the Editing cache
+                File editingCacheDir(cacheDirName(true));
+                if (editingCacheDir.exists())
+                    editingCacheDir.remove(true);
+            }
         }
         cacheDir.createDirectories();
         std::fstream modTimeFile(cacheDir.path() + "/modtime.txt", std::ios::out);
