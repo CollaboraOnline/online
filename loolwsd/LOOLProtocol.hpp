@@ -31,8 +31,9 @@ namespace LOOLProtocol
     // "commands".
 
     // Not sure if these enums will be needed
-    enum class Command 
+    enum class Command
     {
+        GETTEXTSELECTION,
         KEY,
         LOAD,
         MOUSE,

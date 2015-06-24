@@ -240,6 +240,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         return loadDocument(buffer, length, tokens);
     }
     else if (tokens[0] != "canceltiles" &&
+             tokens[0] != "gettextselection" &&
              tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
@@ -697,7 +698,8 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         // All other commands are such that they always require a LibreOfficeKitDocument session,
         // i.e. need to be handled in a child process.
 
-        assert(tokens[0] == "key" ||
+        assert(tokens[0] == "gettextselection" ||
+               tokens[0] == "key" ||
                tokens[0] == "mouse" ||
                tokens[0] == "uno" ||
                tokens[0] == "selecttext" ||
@@ -705,7 +707,11 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
                tokens[0] == "resetselection" ||
                tokens[0] == "saveas");
 
-        if (tokens[0] == "key")
+        if (tokens[0] == "gettextselection")
+        {
+            return getTextSelection(buffer, length, tokens);
+        }
+        else if (tokens[0] == "key")
         {
             return keyEvent(buffer, length, tokens);
         }
@@ -908,6 +914,23 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
     delete[] pixmap;
 
     sendBinaryFrame(output.data(), output.size());
+}
+
+bool ChildProcessSession::getTextSelection(const char *buffer, int length, StringTokenizer& tokens)
+{
+    std::string mimeType;
+
+    if (tokens.count() != 2 ||
+        !getTokenString(tokens[1], "mimetype", mimeType))
+    {
+        sendTextFrame("error: cmd=gettextselection kind=syntax");
+        return false;
+    }
+
+    char *textSelection = _loKitDocument->pClass->getTextSelection(_loKitDocument, mimeType.c_str(), NULL);
+
+    sendTextFrame("textselectioncontent: " + std::string(textSelection));
+    return true;
 }
 
 bool ChildProcessSession::keyEvent(const char *buffer, int length, StringTokenizer& tokens)

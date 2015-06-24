@@ -17,6 +17,10 @@ canceltiles
     dropped and will not be handled. There is no guarantee of exactly
     which tile: messages might still be sent back to the client.
 
+gettextselection mimetype=<mimeType>
+
+    Request selection's content
+
 invalidatetiles part=<partNumber> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 
     All parameters are numbers. Makes the server remove any cached
@@ -99,6 +103,10 @@ nextmessage: size=<byteSize>
 status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height>
 
     <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
+
+textselectioncontent: <content>
+
+    Current selection's content
 
 tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 <binaryPngImage>
