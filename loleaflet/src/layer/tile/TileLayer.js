@@ -174,6 +174,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._onMouseEvent, this);
 		this._map.on('viewmode editmode', this._updateEditViewMode, this);
 		this._map.on('drag', this._updateScrollOffset, this);
+		this._map.on('copy', this._onCopy, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 	},
@@ -852,6 +853,16 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._startMarker);
 			this._map.removeLayer(this._endMarker);
 		}
+	},
+
+	_onCopy: function (e) {
+		console.log(e);
+		e = e.originalEvent;
+		e.preventDefault();
+		e.clipboardData.setData('text', 'test copy');
+		var clipboardContainer = L.DomUtil.get('clipboard-container');
+		L.DomUtil.setStyle(clipboardContainer, 'display', 'none');
+		this._map._container.focus();
 	}
 });
 

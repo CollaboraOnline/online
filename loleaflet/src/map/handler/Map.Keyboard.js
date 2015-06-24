@@ -125,6 +125,14 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onKeyDown: function (e) {
+		if (e.ctrlKey) {
+			var clipboardContainer = L.DomUtil.get('clipboard-container');
+			var textArea = L.DomUtil.get('clipboard');
+			L.DomUtil.setStyle(clipboardContainer, 'display', 'inline');
+			textArea.value = 'dummy text';
+			textArea.focus();
+			textArea.select();
+		}
 		if (this._map._bDisableKeyboard || e.altKey || e.ctrlKey || e.metaKey) { return; }
 
 		var key = e.keyCode,
