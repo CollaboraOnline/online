@@ -560,6 +560,7 @@
 
 .blinking-cursor {
   color: #2E3D48;
+  pointer-events: none;
   -webkit-animation: 1s blink step-end 0s infinite;
   -moz-animation: 1s blink step-end 0s infinite;
   -ms-animation: 1s blink step-end 0s infinite;
