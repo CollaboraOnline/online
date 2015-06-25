@@ -240,10 +240,10 @@ void TileCache::invalidateTiles(int part, const std::string& tiles)
     }
     else
     {
-        int width(std::stoi(tokens[1]));
-        int height(std::stoi(tokens[2]));
-        int x(std::stoi(tokens[3]));
-        int y(std::stoi(tokens[4]));
+        int x(std::stoi(tokens[1]));
+        int y(std::stoi(tokens[2]));
+        int width(std::stoi(tokens[3]));
+        int height(std::stoi(tokens[4]));
 
         invalidateTiles(part, x, y, width, height);
     }
