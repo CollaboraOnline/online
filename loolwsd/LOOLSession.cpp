@@ -771,10 +771,10 @@ extern "C"
                 StringTokenizer tokens(std::string(pPayload), " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (tokens.count() == 4)
                 {
-                    int width(std::stoi(tokens[0]));
-                    int height(std::stoi(tokens[1]));
-                    int x(std::stoi(tokens[2]));
-                    int y(std::stoi(tokens[3]));
+                    int x(std::stoi(tokens[0]));
+                    int y(std::stoi(tokens[1]));
+                    int width(std::stoi(tokens[2]));
+                    int height(std::stoi(tokens[3]));
                     srv->sendTextFrame("invalidate:"
                                        " part=" + std::to_string(curPart) +
                                        " x=" + std::to_string(x) +
