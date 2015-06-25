@@ -309,6 +309,8 @@ L.TileLayer = L.GridLayer.extend({
 			var bottomRightTwips = topLeftTwips.add(offset);
 			var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 
+			this._map._fadeAnimated = false;
+
 			for (var key in this._tiles) {
 				var coords = this._tiles[key].coords;
 				var point1 = this._coordsToTwips(coords);
@@ -370,7 +372,7 @@ L.TileLayer = L.GridLayer.extend({
 			var tile = this._tiles[key];
 			if (tile) {
 				if (tile.el.src) {
-					this._tiles[key]._skipAnim = true;
+					this._tiles[key]._skipPrune = true;
 				}
 				tile.el.src = 'data:image/png;base64,' + window.btoa(strBytes);
 			}

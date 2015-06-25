@@ -333,6 +333,7 @@ L.GridLayer = L.Layer.extend({
 
 			this._tileZoom = tileZoom;
 			if (tileZoomChanged) {
+				this._map._fadeAnimated = true;
 				this._updateTileTwips();
 				this._updateMaxBounds();
 			}
@@ -437,6 +438,7 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_move: function () {
+		this._fadeAnimated = true;
 		this._update();
 	},
 
@@ -673,17 +675,17 @@ L.GridLayer = L.Layer.extend({
 		if (!tile) { return; }
 
 		tile.loaded = +new Date();
-		if (tile._skipAnim) {
-			this._tiles[key]._skipAnim = null;
-			return;
-		}
 		if (this._map._fadeAnimated) {
 			L.DomUtil.setOpacity(tile.el, 0);
 			L.Util.cancelAnimFrame(this._fadeFrame);
 			this._fadeFrame = L.Util.requestAnimFrame(this._updateOpacity, this);
 		} else {
 			tile.active = true;
-			this._pruneTiles();
+			if (tile._skipPrune) {
+				// avoid running the algorithm when we just replace a tile
+				this._pruneTiles();
+			}
+			this._tiles[key]._skipPrune = false;
 		}
 
 		L.DomUtil.addClass(tile.el, 'leaflet-tile-loaded');
