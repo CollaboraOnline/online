@@ -39,7 +39,7 @@ typedef enum
      * Any tiles which are over the rectangle described in the payload are no
      * longer valid.
      *
-     * Rectangle format: "width, height, x, y", where all numbers are document
+     * Rectangle format: "x, y, width, height", where all numbers are document
      * coordinates, in twips. When all tiles are supposed to be dropped, the
      * format is the "EMPTY" string.
      */
@@ -119,7 +119,7 @@ typedef enum
      * document, the status indicator callbacks will arrive to the callback
      * registered for the LibreOfficeKit (singleton) object, not a
      * LibreOfficeKitDocument one, because we are in the very progress of
-     * loading a docuemnt and then constructing a LibreOfficeKitDocument
+     * loading a document and then constructing a LibreOfficeKitDocument
      * object.
      */
     LOK_CALLBACK_STATUS_INDICATOR_START,
