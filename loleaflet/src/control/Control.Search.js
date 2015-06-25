@@ -58,7 +58,7 @@ L.Control.Search = L.Control.extend({
 				Math.max(viewTopLeftpx.y, docBoundsTopLeft.y)));
 		var topLeftTwips = this._map._docLayer._latLngToTwips(topLeft);
 
-		if (e.keyCode === 13 && this._searchBar.value !== '' ) {
+		if (e.keyCode === 13 && this._searchBar.value !== '') {
 			this._disabled = false;
 			this._updateDisabled();
 			this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
@@ -79,25 +79,25 @@ L.Control.Search = L.Control.extend({
 		if (e.type === 'clearnotfound') {
 			L.DomUtil.removeClass(this._searchBar, 'search-not-found');
 		}
-		else if (e.type == 'searchnotfound') {
+		else if (e.type === 'searchnotfound') {
 			L.DomUtil.addClass(this._searchBar, 'search-not-found');
 			setTimeout(L.bind(this._map.fire, this._map, 'clearnotfound'), 500);
 		}
 	},
 
-	_searchPrev: function (e) {
+	_searchPrev: function () {
 		this._searchCmd['SearchItem.Backward'].value = true;
 		this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
 		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 	},
 
-	_searchNext: function (e) {
+	_searchNext: function () {
 		this._searchCmd['SearchItem.Backward'].value = false;
 		this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
 		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 	},
 
-	_cancel: function (e) {
+	_cancel: function () {
 		L.DomUtil.setStyle(this._cancelButton, 'display', 'none');
 		this._map.fire('clearselection');
 		this._disabled = true;
@@ -148,8 +148,8 @@ L.Map.mergeOptions({
 });
 
 L.Map.addInitHook(function () {
-    this.searchControl = new L.Control.Search();
-    this.addControl(this.searchControl);
+	this.searchControl = new L.Control.Search();
+	this.addControl(this.searchControl);
 });
 
 L.control.search = function (options) {
