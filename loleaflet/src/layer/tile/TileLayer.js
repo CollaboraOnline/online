@@ -5,10 +5,10 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-if (typeof String.prototype.startsWith != 'function') {
-  String.prototype.startsWith = function (str){
-    return this.slice(0, str.length) == str;
-  };
+if (typeof String.prototype.startsWith !== 'function') {
+	String.prototype.startsWith = function (str) {
+		return this.slice(0, str.length) === str;
+	};
 }
 
 L.TileLayer = L.GridLayer.extend({
@@ -120,24 +120,24 @@ L.TileLayer = L.GridLayer.extend({
 		// View or edit mode.
 		this._bEdit = false;
 		// Position and size of the visible cursor.
-		this._aVisibleCursor = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+		this._aVisibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Cursor overlay is visible or hidden (for blinking).
 		this._bCursorOverlayVisible = false;
 		// Cursor is visible or hidden (e.g. for graphic selection).
 		this._bCursorVisible = true;
 		// Rectangle graphic selection
-		this._aGraphicSelection = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+		this._aGraphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Position and size of the selection start (as if there would be a cursor caret there).
-		this._aTextSelectionStart = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+		this._aTextSelectionStart = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Position and size of the selection end.
-		this._aTextSelectionEnd = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+		this._aTextSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 
 		// Cursor marker
 		this._cursorMarker = null;
 		// Graphic marker
 		this._graphicMarker = null;
 		// Handle start marker
-		this._startMarker = L.marker( new L.LatLng(0,0), {
+		this._startMarker = L.marker(new L.LatLng(0, 0), {
 			icon: L.icon({
 				iconUrl: L.Icon.Default.imagePath + '/handle_start.png',
 				iconSize: [30, 44],
@@ -146,7 +146,7 @@ L.TileLayer = L.GridLayer.extend({
 			draggable: true
 		});
 		// Handle end marker
-		this._endMarker = L.marker( new L.LatLng(0,0), {
+		this._endMarker = L.marker(new L.LatLng(0, 0), {
 			icon: L.icon({
 				iconUrl: L.Icon.Default.imagePath + '/handle_end.png',
 				iconSize: [30, 44],
@@ -245,12 +245,12 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (textMsg.startsWith('cursorvisible:')) {
 			var command = textMsg.match('cursorvisible: true');
-			this._bCursorVisible = command == undefined ? false : true;
+			this._bCursorVisible = command === undefined ? false : true;
 			this._bCursorOverlayVisible = true;
 			this._onUpdateCursor();
 		}
 		else if (textMsg.startsWith('invalidatecursor:')) {
-			strTwips = textMsg.match(/\d+/g);
+			var strTwips = textMsg.match(/\d+/g);
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
@@ -263,38 +263,40 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('textselectionstart:')) {
 			strTwips = textMsg.match(/\d+/g);
 			if (strTwips != null) {
-				var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-				var bottomRightTwips = topLeftTwips.add(offset);
+				topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+				offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+				bottomRightTwips = topLeftTwips.add(offset);
 				this._aTextSelectionStart = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 			}
-			else
-				this._aTextSelectionStart = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+			else {
+				this._aTextSelectionStart = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+			}
 		}
 		else if (textMsg.startsWith('textselectionend:')) {
 			strTwips = textMsg.match(/\d+/g);
 			if (strTwips != null) {
-				var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-				var bottomRightTwips = topLeftTwips.add(offset);
+				topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+				offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+				bottomRightTwips = topLeftTwips.add(offset);
 				this._aTextSelectionEnd = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 			}
-			else
-				this._aTextSelectionEnd = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+			else {
+				this._aTextSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+			}
 		}
 		else if (textMsg.startsWith('graphicselection:')) {
 			if (textMsg.match('EMPTY')) {
-				this._aGraphicSelection = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+				this._aGraphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 			}
 			else {
 				strTwips = textMsg.match(/\d+/g);
-				var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-				var bottomRightTwips = topLeftTwips.add(offset);
+				topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+				offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+				bottomRightTwips = topLeftTwips.add(offset);
 				this._aGraphicSelection = new L.LatLngBounds(
 								this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 								this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
@@ -304,9 +306,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.match('EMPTY')) {
 			strTwips = textMsg.match(/\d+/g);
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-			var bottomRightTwips = topLeftTwips.add(offset);
+			topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			bottomRightTwips = topLeftTwips.add(offset);
 			var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 
 			this._map._fadeAnimated = false;
@@ -329,7 +331,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		else if (textMsg.startsWith('status:')) {
-			var command = this._parseServerCmd(textMsg);
+			command = this._parseServerCmd(textMsg);
 			if (command.width && command.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = command.width;
 				this._docHeightTwips = command.height;
@@ -356,8 +358,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('statusindicator:finish');
 		}
 		else if (textMsg.startsWith('tile:')) {
-			var command = this._parseServerCmd(textMsg);
-			var coords = this._twipsToCoords(new L.Point(command.x, command.y));
+			command = this._parseServerCmd(textMsg);
+			coords = this._twipsToCoords(new L.Point(command.x, command.y));
 			coords.z = command.zoom;
 			coords.part = command.part;
 			var data = bytes.subarray(index + 1);
@@ -368,7 +370,7 @@ L.TileLayer = L.GridLayer.extend({
 				strBytes += String.fromCharCode(data[i]);
 			}
 
-			var key = this._tileCoordsToKey(coords);
+			key = this._tileCoordsToKey(coords);
 			var tile = this._tiles[key];
 			if (tile) {
 				if (tile.el.src) {
@@ -382,13 +384,13 @@ L.TileLayer = L.GridLayer.extend({
 			this._clearSelections();
 			if (strTwips != null) {
 				var rectangles = [];
-				var selectionCenter = new L.Point(0,0);
-				for (var i = 0; i < strTwips.length; i += 4) {
-					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i+1]));
-					var offset = new L.Point(parseInt(strTwips[i+2]), parseInt(strTwips[i+3]));
+				var selectionCenter = new L.Point(0, 0);
+				for (i = 0; i < strTwips.length; i += 4) {
+					topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
+					offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
 					var topRightTwips = topLeftTwips.add(new L.Point(offset.x, 0));
 					var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
-					var bottomRightTwips = topLeftTwips.add(offset);
+					bottomRightTwips = topLeftTwips.add(offset);
 					rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
 					selectionCenter = selectionCenter.add(topLeftTwips);
 					selectionCenter = selectionCenter.add(offset.divideBy(2));
@@ -405,7 +407,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 
 				var polygons = this._rectanglesToPolygons(rectangles);
-				for (var i = 0; i < polygons.length; i++) {
+				for (i = 0; i < polygons.length; i++) {
 					var selection = new L.Polygon(polygons[i], {
 						pointerEvents: 'none',
 						fillColor: '#43ACE8',
@@ -424,11 +426,10 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
 			this._selectionTextContent = textMsg.substr(22);
-			console.log(this._selectionTextContent);
 		}
 		else if (textMsg.startsWith('setpart:')) {
 			var part = parseInt(textMsg.match(/\d+/g)[0]);
-			if (part != this._currentPart) {
+			if (part !== this._currentPart) {
 				this._currentPart = part;
 				this._update();
 				this._clearSelections();
@@ -439,8 +440,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('searchnotfound');
 		}
         else if (textMsg.startsWith('error:')) {
-            alert(textMsg);
-        }
+			alert(textMsg);
+		}
 	},
 
 	_tileOnLoad: function (done, tile) {
@@ -519,9 +520,9 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 
-		points = {};
-		for (var i = 0; i < rectangles.length; i++) {
-			for (var j = 0; j < rectangles[i].length; j++) {
+		var points = {};
+		for (i = 0; i < rectangles.length; i++) {
+			for (j = 0; j < rectangles[i].length; j++) {
 				if (points[rectangles[i][j]]) {
 					delete points[rectangles[i][j]];
 				}
@@ -532,7 +533,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		function getKeys(points) {
-			keys = [];
+			var keys = [];
 			for (var key in points) {
 				if (points.hasOwnProperty(key)) {
 					keys.push(key);
@@ -541,18 +542,18 @@ L.TileLayer = L.GridLayer.extend({
 			return keys;
 		}
 
-		function x_then_y(a_str, b_str) {
-			a = a_str.match(/\d+/g);
+		function xThenY(aStr, bStr) {
+			var a = aStr.match(/\d+/g);
 			a[0] = parseInt(a[0]);
 			a[1] = parseInt(a[1]);
-			b = b_str.match(/\d+/g);
+			var b = bStr.match(/\d+/g);
 			b[0] = parseInt(b[0]);
 			b[1] = parseInt(b[1]);
 
-			if (a[0] < b[0] || (a[0] == b[0] && a[1] < b[1])) {
+			if (a[0] < b[0] || (a[0] === b[0] && a[1] < b[1])) {
 				return -1;
 			}
-			else if (a[0] == b[0] && a[1] == b[1]) {
+			else if (a[0] === b[0] && a[1] === b[1]) {
 				return 0;
 			}
 			else {
@@ -560,18 +561,18 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 
-		function y_then_x(a_str, b_str) {
-			a = a_str.match(/\d+/g);
+		function yThenX(aStr, bStr) {
+			var a = aStr.match(/\d+/g);
 			a[0] = parseInt(a[0]);
 			a[1] = parseInt(a[1]);
-			b = b_str.match(/\d+/g);
+			var b = bStr.match(/\d+/g);
 			b[0] = parseInt(b[0]);
 			b[1] = parseInt(b[1]);
 
-			if (a[1] < b[1] || (a[1] == b[1] && a[0] < b[0])) {
+			if (a[1] < b[1] || (a[1] === b[1] && a[0] < b[0])) {
 				return -1;
 			}
-			else if (a[0] == b[0] && a[1] == b[1]) {
+			else if (a[0] === b[0] && a[1] === b[1]) {
 				return 0;
 			}
 			else {
@@ -579,49 +580,49 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 
-		sort_x = getKeys(points).sort(x_then_y);
-		sort_y = getKeys(points).sort(y_then_x);
+		var sortX = getKeys(points).sort(xThenY);
+		var sortY = getKeys(points).sort(yThenX);
 
-		edges_h = {};
-		edges_v = {};
+		var edgesH = {};
+		var edgesV = {};
 
 		var len = getKeys(points).length;
-		var i = 0;
+		i = 0;
 		while (i < len) {
-			var curr_y = points[sort_y[i]].y;
-			while (i < len && points[sort_y[i]].y === curr_y) {
-				edges_h[sort_y[i]] = sort_y[i+1];
-				edges_h[sort_y[i+1]] = sort_y[i];
+			var currY = points[sortY[i]].y;
+			while (i < len && points[sortY[i]].y === currY) {
+				edgesH[sortY[i]] = sortY[i + 1];
+				edgesH[sortY[i + 1]] = sortY[i];
 				i += 2;
 			}
 		}
 
 		i = 0;
 		while (i < len) {
-			var curr_x = points[sort_x[i]].x;
-			while (i < len && points[sort_x[i]].x === curr_x) {
-				edges_v[sort_x[i]] = sort_x[i+1];
-				edges_v[sort_x[i+1]] = sort_x[i];
+			var currX = points[sortX[i]].x;
+			while (i < len && points[sortX[i]].x === currX) {
+				edgesV[sortX[i]] = sortX[i + 1];
+				edgesV[sortX[i + 1]] = sortX[i];
 				i += 2;
 			}
 		}
 
 		var polygons = [];
-		var edges_h_keys = getKeys(edges_h);
-		while (edges_h_keys.length > 0) {
-			var p = [[edges_h_keys[0], 0]];
+		var edgesHKeys = getKeys(edgesH);
+		while (edgesHKeys.length > 0) {
+			var p = [[edgesHKeys[0], 0]];
 			while (true) {
 				var curr = p[p.length - 1][0];
 				var e = p[p.length - 1][1];
 				if (e === 0) {
-					var next_vertex = edges_v[curr];
-					delete edges_v[curr];
-					p.push([next_vertex, 1]);
+					var nextVertex = edgesV[curr];
+					delete edgesV[curr];
+					p.push([nextVertex, 1]);
 				}
 				else {
-					var next_vertex = edges_h[curr];
-					delete edges_h[curr];
-					p.push([next_vertex, 0]);
+					nextVertex = edgesH[curr];
+					delete edgesH[curr];
+					p.push([nextVertex, 0]);
 				}
 				if (p[p.length - 1][0] === p[0][0] && p[p.length - 1][1] === p[0][1]) {
 					p.pop();
@@ -629,13 +630,13 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 			var polygon = [];
-			for (var i = 0; i < p.length; i++) {
+			for (i = 0; i < p.length; i++) {
 				polygon.push(this._twipsToLatLng(points[p[i][0]]));
-				delete edges_h[p[i][0]];
-				delete edges_v[p[i][0]];
+				delete edgesH[p[i][0]];
+				delete edgesV[p[i][0]];
 			}
 			polygon.push(this._twipsToLatLng(points[p[0][0]]));
-			edges_h_keys = getKeys(edges_h);
+			edgesHKeys = getKeys(edgesH);
 			polygons.push(polygon);
 		}
 		return polygons;
@@ -673,7 +674,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._mouseDownPos = mousePos;
 			this._holdStart = setTimeout(L.bind(function() {
 				this._holdStart = null;
-				this._postMouseEvent('buttondown',this._mouseDownPos.x,
+				this._postMouseEvent('buttondown', this._mouseDownPos.x,
 					this._mouseDownPos.y, 1);
 			}, this), 500);
 
@@ -685,10 +686,10 @@ L.TileLayer = L.GridLayer.extend({
 				// it was a click
 				clearTimeout(this._holdStart);
 				this._holdStart = null;
-				this._postMouseEvent('buttondown',this._mouseDownPos.x,
+				this._postMouseEvent('buttondown', this._mouseDownPos.x,
 						this._mouseDownPos.y, 1);
 			}
-			var mousePos = this._latLngToTwips(e.latlng);
+			mousePos = this._latLngToTwips(e.latlng);
 			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
 
 			this._bEdit = true;
@@ -701,11 +702,11 @@ L.TileLayer = L.GridLayer.extend({
 						this._mouseDownPos.y, 1);
 				this._holdStart = null;
 			}
-			var mousePos = this._latLngToTwips(e.latlng);
+			mousePos = this._latLngToTwips(e.latlng);
 			this._postMouseEvent('move', mousePos.x, mousePos.y, 1);
 		}
 		else if (e.type === 'dblclick') {
-			var mousePos = this._latLngToTwips(e.latlng);
+			mousePos = this._latLngToTwips(e.latlng);
 			this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);
 			this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2);
 			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2);
@@ -744,37 +745,39 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	// Convert javascript key codes to UNO key codes.
-	_toUNOKeyCode: function ( keyCode ) {
+	_toUNOKeyCode: function (keyCode) {
 		return this.keymap[keyCode] || keyCode;
 	},
 
 	// Receives a key press or release event.
 	_signalKey: function (e) {
-		if ( !this._bEdit )
+		if (!this._bEdit) {
 			return;
+		}
 
-		if ( e.type == 'keydown' ) {
+		if (e.type === 'keydown') {
 			this._keyEvent = null;
 		}
-		else if ( e.type === 'keypress' ) {
+		else if (e.type === 'keypress') {
 			this._keyEvent = e.originalEvent;
 			this._postKeyboardEvent('input', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
 		}
-		else if ( e.type === 'keyup' &&  this._keyEvent ) {
+		else if (e.type === 'keyup' &&  this._keyEvent) {
 			this._postKeyboardEvent('up', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
 		}
 	},
 
 	// Is rRectangle empty?
 	_isEmptyRectangle: function (aBounds) {
-		return aBounds.getSouthWest().equals( new L.LatLng(0,0) ) && aBounds.getNorthEast().equals( new L.LatLng(0,0) )
+		return aBounds.getSouthWest().equals(new L.LatLng(0, 0)) && aBounds.getNorthEast().equals(new L.LatLng(0, 0));
 	},
 
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function () {
 		if (this._bEdit && this._bCursorVisible && this._bCursorOverlayVisible && !this._isEmptyRectangle(this._aVisibleCursor)) {
-			if (this._cursorMarker)
+			if (this._cursorMarker) {
 				this._map.removeLayer(this._cursorMarker);
+			}
 
 			var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._aVisibleCursor.getSouthWest()),
 						 this._map.latLngToLayerPoint(this._aVisibleCursor.getNorthEast()));
@@ -785,24 +788,22 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.addLayer(this._cursorMarker);
 			this._cursorMarker.setSize(pixBounds.getSize());
 		}
-		else {
-			if (this._cursorMarker) {
-				this._map._bDisableKeyboard = false;
-				this._map.removeLayer(this._cursorMarker);
-				this._bCursorOverlayVisible = false;
-			}
+		else if (this._cursorMarker) {
+			this._map._bDisableKeyboard = false;
+			this._map.removeLayer(this._cursorMarker);
+			this._bCursorOverlayVisible = false;
 		}
 	},
 
 	// Update dragged graphics selection resize.
 	_onGraphicEdit: function (e) {
-		if ( !e.handle ) return;
+		if (!e.handle) { return; }
 
 		var aPos = this._latLngToTwips(e.handle.getLatLng());
-		if ( e.type === 'editstart' ) {
+		if (e.type === 'editstart') {
 			this._postSelectGraphicEvent('start', aPos.x, aPos.y);
 		}
-		else if ( e.type === 'editend' ) {
+		else if (e.type === 'editend') {
 			this._postSelectGraphicEvent('end', aPos.x, aPos.y);
 		}
 	},
@@ -811,17 +812,19 @@ L.TileLayer = L.GridLayer.extend({
 	_onSelectionHandleDrag: function (e) {
 		var aPos = this._latLngToTwips(e.target.getLatLng());
 
-		if (e.type === 'drag')
+		if (e.type === 'drag') {
 			e.target.isDragged = true;
-
-		if (e.type === 'dragend')
+		}
+		if (e.type === 'dragend') {
 			e.target.isDragged = false;
+		}
 
-		if ( this._startMarker == e.target )
+		if (this._startMarker === e.target) {
 			this._postSelectTextEvent('start', aPos.x, aPos.y);
-
-		if ( this._endMarker == e.target )
+		}
+		if (this._endMarker === e.target) {
 			this._postSelectTextEvent('end', aPos.x, aPos.y);
+		}
 	},
 
 	// Update group layer selection handler.
@@ -836,11 +839,9 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.on('editstart editend', this._onGraphicEdit, this);
 			this._map.addLayer(this._graphicMarker);
 		}
-		else {
-			if (this._graphicMarker) {
-				this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
-				this._map.removeLayer(this._graphicMarker);
-			}
+		else if (this._graphicMarker) {
+			this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
+			this._map.removeLayer(this._graphicMarker);
 		}
 	},
 
@@ -860,8 +861,8 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		else {
-			this._aTextSelectionStart = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
-			this._aTextSelectionEnd = new L.LatLngBounds( new L.LatLng(0, 0), new L.LatLng(0, 0) );
+			this._aTextSelectionStart = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+			this._aTextSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 			this._map.removeLayer(this._startMarker);
 			this._map.removeLayer(this._endMarker);
 		}
