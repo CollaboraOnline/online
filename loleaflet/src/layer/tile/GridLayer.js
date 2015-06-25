@@ -493,7 +493,7 @@ L.GridLayer = L.Layer.extend({
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
 				this._map.socket.send('canceltiles');
-				for (var key in this._tiles) {
+				for (key in this._tiles) {
 					if (!this._tiles[key].loaded) {
 						L.DomUtil.remove(this._tiles[key].el);
 						delete this._tiles[key];
@@ -763,11 +763,11 @@ L.GridLayer = L.Layer.extend({
 				-evt.mcs.left - this._prevScrollX,
 				-evt.mcs.top - this._prevScrollY);
 
-        if (!offset.equals(new L.Point(0, 0))) {
-            this._prevScrollY = -evt.mcs.top;
-            this._prevScrollX = -evt.mcs.left;
-            this._map.panBy(offset, {animate:false});
-        }
+		if (!offset.equals(new L.Point(0, 0))) {
+			this._prevScrollY = -evt.mcs.top;
+			this._prevScrollX = -evt.mcs.left;
+			this._map.panBy(offset, {animate:false});
+		}
 	},
 
 	_onScrollEnd: function (evt) {
