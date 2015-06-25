@@ -4,7 +4,7 @@
 
 L.Control.StatusIndicator = L.Control.extend({
 	options: {
-		position: 'topleft',
+		position: 'topleft'
 	},
 
 	onAdd: function (map) {
