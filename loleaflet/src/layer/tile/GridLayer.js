@@ -673,6 +673,10 @@ L.GridLayer = L.Layer.extend({
 		if (!tile) { return; }
 
 		tile.loaded = +new Date();
+		if (tile._skipAnim) {
+			this._tiles[key]._skipAnim = null;
+			return;
+		}
 		if (this._map._fadeAnimated) {
 			L.DomUtil.setOpacity(tile.el, 0);
 			L.Util.cancelAnimFrame(this._fadeFrame);
