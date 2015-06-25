@@ -13,7 +13,7 @@ L.Cursor = L.Layer.extend({
 		this._latlng = L.latLng(latlng);
 	},
 
-	onAdd: function (map) {
+	onAdd: function () {
 		this._initLayout();
 		this.update();
 	},
