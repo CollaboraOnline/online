@@ -637,7 +637,7 @@ L.Map = L.Evented.extend({
 		var data = {
 			originalEvent: e
 		};
-		if (e.type !== 'keypress' && e.type !== 'keyup' && e.type !== 'keydown' && e.type != 'copy') {
+		if (e.type !== 'keypress' && e.type !== 'keyup' && e.type !== 'keydown' && e.type !== 'copy') {
 			data.containerPoint = target instanceof L.Marker ?
 					this.latLngToContainerPoint(target.getLatLng()) : this.mouseEventToContainerPoint(e);
 			data.layerPoint = this.containerPointToLayerPoint(data.containerPoint);
