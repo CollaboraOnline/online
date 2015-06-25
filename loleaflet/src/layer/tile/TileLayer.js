@@ -412,8 +412,17 @@ L.TileLayer = L.GridLayer.extend({
 						opacity: 0.25});
 					this._selections.addLayer(selection);
 				}
+				if (this._selectionContentRequest) {
+					clearTimeout(this._selectionContentRequest);
+				}
+				this._selectionContentRequest = setTimeout(L.bind(function () {
+					this._map.socket.send('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
 			}
 			this._onUpdateTextSelection();
+		}
+		else if (textMsg.startsWith('textselectioncontent:')) {
+			this._selectionTextContent = textMsg.substr(22);
+			console.log(this._selectionTextContent);
 		}
 		else if (textMsg.startsWith('setpart:')) {
 			var part = parseInt(textMsg.match(/\d+/g)[0]);
@@ -857,13 +866,17 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCopy: function (e) {
-		console.log(e);
 		e = e.originalEvent;
 		e.preventDefault();
-		e.clipboardData.setData('text', 'test copy');
-		var clipboardContainer = L.DomUtil.get('clipboard-container');
-		L.DomUtil.setStyle(clipboardContainer, 'display', 'none');
-		this._map._container.focus();
+		if (!this._selectionTextContent) {
+			alert('Oops, no content available yet');
+		}
+		else {
+			e.clipboardData.setData('text/plain', this._selectionTextContent);
+			var clipboardContainer = L.DomUtil.get('clipboard-container');
+			L.DomUtil.setStyle(clipboardContainer, 'display', 'none');
+			this._map._container.focus();
+		}
 	}
 });
 
