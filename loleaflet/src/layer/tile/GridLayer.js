@@ -359,7 +359,7 @@ L.GridLayer = L.Layer.extend({
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
 	},
 
-	_updateMaxBounds: function () {
+	_updateMaxBounds: function (sizeChanged) {
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
 		}
@@ -367,13 +367,17 @@ L.GridLayer = L.Layer.extend({
 										 this._docHeightTwips / this._tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 
+		var topLeft = new L.Point(0, 0);
+		topLeft = this._map.unproject(topLeft);
+		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
+		bottomRight = this._map.unproject(bottomRight);
+
 		if (this._documentInfo === '') {
 			// we just got the first status so we need to center the document
-			var topLeft = new L.Point(0, 0);
-			topLeft = this._map.unproject(topLeft);
-			var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
-			bottomRight = this._map.unproject(bottomRight);
 			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
+		}
+		else if (sizeChanged) {
+			this._map.options.maxBounds = new L.LatLngBounds(topLeft, bottomRight);
 		}
 		L.DomUtil.setStyle(this._map._mockDoc, 'width', docPixelLimits.x + 'px');
 		L.DomUtil.setStyle(this._map._mockDoc, 'height', docPixelLimits.y + 'px');

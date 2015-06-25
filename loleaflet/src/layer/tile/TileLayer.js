@@ -335,7 +335,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (command.width && command.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = command.width;
 				this._docHeightTwips = command.height;
-				this._updateMaxBounds();
+				this._updateMaxBounds(true);
 				this._documentInfo = textMsg;
 				if (this._parts === undefined && command.parts > 1) {
 					this._map.addControl(L.control.parts({
