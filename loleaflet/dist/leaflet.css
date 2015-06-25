@@ -560,55 +560,55 @@
 
 .blinking-cursor {
   color: #2E3D48;
-  -webkit-animation: 1s blink linear 0s infinite;
-  -moz-animation: 1s blink linear 0s infinite;
-  -ms-animation: 1s blink linear 0s infinite;
-  -o-animation: 1s blink linear 0s infinite;
-  animation: 1s blink linear 0s infinite;
+  -webkit-animation: 1s blink step-end 0s infinite;
+  -moz-animation: 1s blink step-end 0s infinite;
+  -ms-animation: 1s blink step-end 0s infinite;
+  -o-animation: 1s blink step-end 0s infinite;
+  animation: 1s blink step-end 0s infinite;
 }
 
 @keyframes "blink" {
   from, to {
-    color: transparent;
+    color: black;
   }
   50% {
-    color: black;
+    color: transparent;
   }
 }
 
 @-moz-keyframes blink {
   from, to {
-    color: transparent;
+    color: black;
   }
   50% {
-    color: black;
+    color: transparent;
   }
 }
 
 @-webkit-keyframes "blink" {
   from, to {
-    color: transparent;
+    color: black;
   }
   50% {
-    color: black;
+    color: transparent;
   }
 }
 
 @-ms-keyframes "blink" {
   from, to {
-    color: transparent;
+    color: black;
   }
   50% {
-    color: black;
+    color: transparent;
   }
 }
 
 @-o-keyframes "blink" {
   from, to {
-    color: transparent;
+    color: black;
   }
   50% {
-    color: black;
+    color: transparent;
   }
 }
 
