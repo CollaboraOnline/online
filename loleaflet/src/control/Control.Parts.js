@@ -29,7 +29,7 @@ L.Control.Parts = L.Control.extend({
 		return container;
 	},
 
-	_prevPart: function (e) {
+	_prevPart: function () {
 		this._map.fire('prevpart');
 		if (this._currentPart > 0) {
 			this._currentPart -= 1;
@@ -37,7 +37,7 @@ L.Control.Parts = L.Control.extend({
 		this._updateDisabled();
 	},
 
-	_nextPart: function (e) {
+	_nextPart: function () {
 		this._map.fire('nextpart');
 		if (this._currentPart < this._parts - 1) {
 			this._currentPart += 1;
