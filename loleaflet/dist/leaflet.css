@@ -623,7 +623,6 @@
 	width: 0px;
 	height: 0px;
 	z-index: 100;
-	display: none;
 	opacity: 0;
 }
 #clipboard {

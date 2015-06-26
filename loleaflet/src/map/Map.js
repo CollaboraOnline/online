@@ -584,7 +584,7 @@ L.Map = L.Evented.extend({
 
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
 			'mouseover mouseout mousemove contextmenu keydown keypress keyup', this._handleDOMEvent, this);
-		L.DomEvent[onOff](L.DomUtil.get('clipboard'), 'copy', this._handleDOMEvent, this);
+		L.DomEvent[onOff](L.DomUtil.get('clipboard'), 'copy keydown keypress keyup', this._handleDOMEvent, this);
 
 		if (this.options.trackResize) {
 			L.DomEvent[onOff](window, 'resize', this._onResize, this);

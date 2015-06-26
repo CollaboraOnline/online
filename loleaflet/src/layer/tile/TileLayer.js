@@ -154,6 +154,8 @@ L.TileLayer = L.GridLayer.extend({
 			}),
 			draggable: true
 		});
+		this._textArea = L.DomUtil.get('clipboard');
+		this._textArea.focus();
 	},
 
 	_initDocument: function () {
@@ -699,6 +701,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._endMarker._icon) {
 				L.DomUtil.removeClass(this._endMarker._icon, 'leaflet-not-clickable');
 			}
+			this._textArea.focus();
 		}
 		else if (e.type === 'mousemove' && this._selecting) {
 			if (this._holdStart) {
@@ -764,6 +767,14 @@ L.TileLayer = L.GridLayer.extend({
 	// Receives a key press or release event.
 	_signalKey: function (e) {
 		if (!this._editMode) {
+			return;
+		}
+
+		if (e.originalEvent.ctrlKey) {
+			// we prepare for a copy event
+			this._textArea.value = 'dummy text';
+			this._textArea.focus();
+			this._textArea.select();
 			return;
 		}
 
@@ -903,9 +914,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else {
 			e.clipboardData.setData('text/plain', this._selectionTextContent);
-			var clipboardContainer = L.DomUtil.get('clipboard-container');
-			L.DomUtil.setStyle(clipboardContainer, 'display', 'none');
-			this._map._container.focus();
 		}
 	}
 });
