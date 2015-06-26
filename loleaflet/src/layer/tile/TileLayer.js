@@ -247,7 +247,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (textMsg.startsWith('cursorvisible:')) {
 			var command = textMsg.match('cursorvisible: true');
-			this._isCursorVisible = command === undefined ? false : true;
+			this._isCursorVisible = command ? true : false;
 			this._isCursorOverlayVisible = true;
 			this._onUpdateCursor();
 		}
