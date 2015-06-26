@@ -755,15 +755,18 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 
-		if (e.type === 'keydown') {
-			this._keyEvent = null;
+		var charCode = e.originalEvent.charCode;
+		var keyCode = e.originalEvent.keyCode;
+		if (e.type === 'keypress') {
+			if (charCode === keyCode && charCode !== 13) {
+				// Chrome sets keyCode = charCode for printable keys
+				// while LO requires it to be 0
+				keyCode = 0;
+			}
+			this._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
 		}
-		else if (e.type === 'keypress') {
-			this._keyEvent = e.originalEvent;
-			this._postKeyboardEvent('input', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
-		}
-		else if (e.type === 'keyup' &&  this._keyEvent) {
-			this._postKeyboardEvent('up', this._keyEvent.charCode, this._toUNOKeyCode(this._keyEvent.keyCode));
+		else if (e.type === 'keyup') {
+			this._postKeyboardEvent('up', charCode, this._toUNOKeyCode(keyCode));
 		}
 	},
 
