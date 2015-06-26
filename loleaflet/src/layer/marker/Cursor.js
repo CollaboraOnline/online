@@ -86,6 +86,7 @@ L.Cursor = L.Layer.extend({
 	setSize: function (size) {
 		this._container.style.lineHeight = size.y + 'px';
 		this._span.style.fontSize = size.y - 2 + 'px';
+		this._container.style.left = '-' + this._container.clientWidth/2 + 'px';
 	}
 });
 

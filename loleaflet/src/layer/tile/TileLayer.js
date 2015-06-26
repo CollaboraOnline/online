@@ -797,8 +797,7 @@ L.TileLayer = L.GridLayer.extend({
 			var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
 						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
 
-			var latBounds = L.rectangle(this._visibleCursor).getLatLngs();
-			this._cursorMarker = L.cursor(latBounds[2], {color: 'red'});
+			this._cursorMarker = L.cursor(this._visibleCursor.getNorthWest());
 			this._map._bDisableKeyboard = true;
 			this._map.addLayer(this._cursorMarker);
 			this._cursorMarker.setSize(pixBounds.getSize());
