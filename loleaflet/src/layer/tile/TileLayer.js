@@ -865,6 +865,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._textSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 			this._map.removeLayer(this._startMarker);
 			this._map.removeLayer(this._endMarker);
+			this._endMarker.isDragged = false;
+			this._startMarker.isDragged = false;
 		}
 	},
 
