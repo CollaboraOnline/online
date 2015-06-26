@@ -787,6 +787,16 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._bDisableKeyboard = true;
 			this._map.addLayer(this._cursorMarker);
 			this._cursorMarker.setSize(pixBounds.getSize());
+
+			var cursor = this._map.latLngToLayerPoint(this._cursorMarker.getLatLng());
+			var start = this._map.latLngToLayerPoint(this._startMarker.getLatLng());
+			var end = this._map.latLngToLayerPoint(this._endMarker.getLatLng());
+
+			if (Math.abs(start.distanceTo(cursor)) < Math.abs(end.distanceTo(cursor))) {
+				var swap = this._endMarker.getLatLng();
+				this._endMarker.setLatLng(this._startMarker.getLatLng());
+				this._startMarker.setLatLng(swap);
+			}
 		}
 		else if (this._cursorMarker) {
 			this._map._bDisableKeyboard = false;
@@ -848,14 +858,15 @@ L.TileLayer = L.GridLayer.extend({
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
 		if (this._selections.getLayers().length !== 0) {
-			if (!this._isEmptyRectangle(this._textSelectionStart) &&
-					this._startMarker.isDragged !== true) {
+			if ( this._startMarker.isDragged === true || this._endMarker.isDragged === true)
+				return;
+
+			if (!this._isEmptyRectangle(this._textSelectionStart)) {
 				this._startMarker.setLatLng(this._textSelectionStart.getSouthWest());
 				this._map.addLayer(this._startMarker);
 			}
 
-			if (!this._isEmptyRectangle(this._textSelectionEnd) &&
-					this._endMarker.isDragged !== true) {
+			if (!this._isEmptyRectangle(this._textSelectionEnd)) {
 				this._endMarker.setLatLng(this._textSelectionEnd.getSouthEast());
 				this._map.addLayer(this._endMarker);
 			}
