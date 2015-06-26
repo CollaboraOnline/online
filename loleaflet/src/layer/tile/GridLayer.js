@@ -363,8 +363,8 @@ L.GridLayer = L.Layer.extend({
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
 		}
-		var docPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
-										 this._docHeightTwips / this._tileHeightTwips);
+		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
+										 this._docHeightTwips / this.options.tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 
 		var topLeft = new L.Point(0, 0);
@@ -377,10 +377,17 @@ L.GridLayer = L.Layer.extend({
 			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 		}
 		else if (sizeChanged) {
+			// we just update the bounds without panning into the new bounds,
+			// the scrollbars should handle that
 			this._map.options.maxBounds = new L.LatLngBounds(topLeft, bottomRight);
 		}
-		L.DomUtil.setStyle(this._map._mockDoc, 'width', docPixelLimits.x + 'px');
-		L.DomUtil.setStyle(this._map._mockDoc, 'height', docPixelLimits.y + 'px');
+
+		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
+										 this._docHeightTwips / this._tileHeightTwips);
+		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize);
+
+		L.DomUtil.setStyle(this._map._mockDoc, 'width', scrollPixelLimits.x + 'px');
+		L.DomUtil.setStyle(this._map._mockDoc, 'height', scrollPixelLimits.y + 'px');
 	},
 
 	_updateScrollOffset: function () {
