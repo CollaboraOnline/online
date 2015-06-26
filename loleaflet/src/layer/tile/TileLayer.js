@@ -693,6 +693,12 @@ L.TileLayer = L.GridLayer.extend({
 			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
 
 			this._editMode = true;
+			if (this._startMarker._icon) {
+				L.DomUtil.removeClass(this._startMarker._icon, 'leaflet-not-clickable');
+			}
+			if (this._endMarker._icon) {
+				L.DomUtil.removeClass(this._endMarker._icon, 'leaflet-not-clickable');
+			}
 		}
 		else if (e.type === 'mousemove' && this._selecting) {
 			if (this._holdStart) {
@@ -704,6 +710,12 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			mousePos = this._latLngToTwips(e.latlng);
 			this._postMouseEvent('move', mousePos.x, mousePos.y, 1);
+			if (this._startMarker._icon) {
+				L.DomUtil.addClass(this._startMarker._icon, 'leaflet-not-clickable');
+			}
+			if (this._endMarker._icon) {
+				L.DomUtil.addClass(this._endMarker._icon, 'leaflet-not-clickable');
+			}
 		}
 		else if (e.type === 'dblclick') {
 			mousePos = this._latLngToTwips(e.latlng);

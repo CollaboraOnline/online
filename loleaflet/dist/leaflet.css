@@ -504,6 +504,9 @@
 	border: 1px solid #999;
 	}
 
+.leaflet-not-clickable {
+	pointer-events: none;
+	}
 
 /* div icon */
 
