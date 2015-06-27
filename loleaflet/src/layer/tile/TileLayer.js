@@ -669,6 +669,8 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onMouseEvent: function (e) {
+		if (this._graphicMarker && this._graphicMarker.isDragged) { return; }
+
 		if (e.type === 'mousedown') {
 			this._selecting = true;
 			this._clearSelections();
@@ -836,10 +838,12 @@ L.TileLayer = L.GridLayer.extend({
 
 		var aPos = this._latLngToTwips(e.handle.getLatLng());
 		if (e.type === 'editstart') {
+			this._graphicMarker.isDragged = true;
 			this._postSelectGraphicEvent('start', aPos.x, aPos.y);
 		}
 		else if (e.type === 'editend') {
 			this._postSelectGraphicEvent('end', aPos.x, aPos.y);
+			this._graphicMarker.isDragged = false;
 		}
 	},
 
@@ -877,6 +881,7 @@ L.TileLayer = L.GridLayer.extend({
 		else if (this._graphicMarker) {
 			this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
 			this._map.removeLayer(this._graphicMarker);
+			this._graphicMarker.isDragged = false;
 		}
 	},
 
