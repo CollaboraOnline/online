@@ -905,6 +905,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		if (e.type === 'dragend') {
 			e.target.isDragged = false;
+			this._textArea.focus();
 		}
 
 		if (this._startMarker === e.target) {
