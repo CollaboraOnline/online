@@ -671,6 +671,9 @@ L.TileLayer = L.GridLayer.extend({
 	_onMouseEvent: function (e) {
 		if (this._graphicMarker && this._graphicMarker.isDragged) { return; }
 
+		if (this._startMarker.isDragged === true || this._endMarker.isDragged === true)
+			return;
+
 		if (e.type === 'mousedown') {
 			this._selecting = true;
 			this._clearSelections();
@@ -887,7 +890,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
-		if ( this._startMarker.isDragged === true || this._endMarker.isDragged === true)
+		if (this._startMarker.isDragged === true || this._endMarker.isDragged === true)
 			return;
 
 		if (this._selections.getLayers().length !== 0) {
