@@ -887,10 +887,10 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
-		if (this._selections.getLayers().length !== 0) {
-			if ( this._startMarker.isDragged === true || this._endMarker.isDragged === true)
-				return;
+		if ( this._startMarker.isDragged === true || this._endMarker.isDragged === true)
+			return;
 
+		if (this._selections.getLayers().length !== 0) {
 			if (!this._isEmptyRectangle(this._textSelectionStart)) {
 				this._startMarker.setLatLng(this._textSelectionStart.getSouthWest());
 				this._map.addLayer(this._startMarker);
