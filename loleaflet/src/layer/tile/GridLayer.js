@@ -386,11 +386,16 @@ L.GridLayer = L.Layer.extend({
 										 this._docHeightTwips / this._tileHeightTwips);
 		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize);
 
+		if (!sizeChanged) {
+			this._ignoreScroll = true;
+			setTimeout(L.bind(function() {this._ignoreScroll = null;}, this), 200);
+		}
 		L.DomUtil.setStyle(this._map._mockDoc, 'width', scrollPixelLimits.x + 'px');
 		L.DomUtil.setStyle(this._map._mockDoc, 'height', scrollPixelLimits.y + 'px');
 	},
 
 	_updateScrollOffset: function () {
+		this._ignoreScroll = null;
 		if (this._map._scrollContainer.mcs) {
 			$('#scroll-container').mCustomScrollbar('stop');
 			var centerPixel = this._map.project(this._map.getCenter());
@@ -764,6 +769,9 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_onScroll: function (evt) {
+		if (this._ignoreScroll) {
+			return;
+		}
 		if (this._prevScrollY === undefined) {
 			this._prevScrollY = 0;
 		}
