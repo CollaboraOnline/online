@@ -168,7 +168,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.socket.send('load url=' + this.options.doc);
 			this._map.socket.send('status');
 		}
-		this._map.dragging.enable();
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend resize', this._updateScrollOffset, this);
 		this._map.on('clearselection', this._clearSelections, this);
@@ -178,6 +177,9 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('copy', this._onCopy, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
+		if (this.options.editMode) {
+			this._map.fire('updatemode:edit');
+		}
 	},
 
 	getEvents: function () {

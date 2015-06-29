@@ -51,6 +51,7 @@
 
     var filePath = getParameterByName('file_path');
     var host = getParameterByName('host');
+    var editMode = getParameterByName('edit') === 'true';
     if (filePath === '') {
         alert('Wrong file_path, usage: file_path=/path/to/doc/');
     }
@@ -70,7 +71,8 @@
     ////// Document layer ////
     var docLayer = new L.TileLayer('', {
         doc: filePath,
-        useSocket : true
+        useSocket : true,
+        editMode: editMode
     });
     map.addLayer(docLayer);
 
