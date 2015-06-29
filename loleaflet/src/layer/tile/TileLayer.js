@@ -154,6 +154,7 @@ L.TileLayer = L.GridLayer.extend({
 			}),
 			draggable: true
 		});
+		this._mouseEventsQueue = [];
 		this._textArea = L.DomUtil.get('clipboard');
 		this._textArea.focus();
 	},
@@ -669,35 +670,45 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onMouseEvent: function (e) {
-		if (this._graphicMarker && this._graphicMarker.isDragged) { return; }
-
-		if (this._startMarker.isDragged === true || this._endMarker.isDragged === true)
+		if (this._graphicMarker && this._graphicMarker.isDragged) {
 			return;
+		}
+
+		if (this._startMarker.isDragged === true || this._endMarker.isDragged === true) {
+			return;
+		}
 
 		if (e.type === 'mousedown') {
 			this._selecting = true;
-			this._clearSelections();
+			if (this._holdMouseEvent) {
+				clearTimeout(this._holdMouseEvent);
+			}
 			var mousePos = this._latLngToTwips(e.latlng);
-			this._mouseDownPos = mousePos;
-			this._holdStart = setTimeout(L.bind(function() {
-				this._holdStart = null;
-				this._postMouseEvent('buttondown', this._mouseDownPos.x,
-					this._mouseDownPos.y, 1);
-			}, this), 500);
+			this._mouseEventsQueue.push(L.bind(function() {
+				this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);}, this));
+			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 500);
 
 			this._editMode = true;
 		}
 		else if (e.type === 'mouseup') {
 			this._selecting = false;
-			if (this._holdStart) {
-				// it was a click
-				clearTimeout(this._holdStart);
-				this._holdStart = null;
-				this._postMouseEvent('buttondown', this._mouseDownPos.x,
-						this._mouseDownPos.y, 1);
+			if (this._holdMouseEvent) {
+				clearTimeout(this._holdMouseEvent);
+				this._holdMouseEvent = null;
+			}
+			if (this._mouseEventsQueue.length === 3) {
+				// i.e. we have mousedown, mouseup, mousedown and here comes another
+				// mouseup. Those are 2 consecutive clicks == doubleclick, we cancel
+				// everything and wait for the dblclick event to arrive where it's handled
+				this._mouseEventsQueue = [];
+				return;
 			}
 			mousePos = this._latLngToTwips(e.latlng);
-			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
+			this._mouseEventsQueue.push(L.bind(function() {
+				this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
+				this._textArea.focus();
+			}, this));
+			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 250);
 
 			this._editMode = true;
 			if (this._startMarker._icon) {
@@ -706,15 +717,17 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._endMarker._icon) {
 				L.DomUtil.removeClass(this._endMarker._icon, 'leaflet-not-clickable');
 			}
-			this._textArea.focus();
 		}
 		else if (e.type === 'mousemove' && this._selecting) {
-			if (this._holdStart) {
-				clearTimeout(this._holdStart);
-				// it's not a dblclick, so we post the initial mousedown
-				this._postMouseEvent('buttondown', this._mouseDownPos.x,
-						this._mouseDownPos.y, 1);
-				this._holdStart = null;
+			if (this._holdMouseEvent) {
+				clearTimeout(this._holdMouseEvent);
+				this._holdMouseEvent = null;
+				for (var i = 0; i < this._mouseEventsQueue.length; i++) {
+					// synchronously execute old mouse events so we know that
+					// they arrive to the server before the move command
+					this._mouseEventsQueue[i]();
+				}
+				this._mouseEventsQueue = [];
 			}
 			mousePos = this._latLngToTwips(e.latlng);
 			this._postMouseEvent('move', mousePos.x, mousePos.y, 1);
@@ -732,6 +745,14 @@ L.TileLayer = L.GridLayer.extend({
 			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2);
 			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
 		}
+	},
+
+	_executeMouseEvents: function () {
+		this._holdMouseEvent = null;
+		for (var i = 0; i < this._mouseEventsQueue.length; i++) {
+			this._mouseEventsQueue[i]();
+		}
+		this._mouseEventsQueue = [];
 	},
 
 	_onSwitchPart: function (e) {
