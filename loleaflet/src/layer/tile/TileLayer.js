@@ -168,13 +168,11 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.socket.send('load url=' + this.options.doc);
 			this._map.socket.send('status');
 		}
-		this._map.dragging.disable();
+		this._map.dragging.enable();
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend resize', this._updateScrollOffset, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('prevpart nextpart', this._onSwitchPart, this);
-		this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
-				this._onMouseEvent, this);
 		this._map.on('viewmode editmode', this._updateEditViewMode, this);
 		this._map.on('drag', this._updateScrollOffset, this);
 		this._map.on('copy', this._onCopy, this);
@@ -703,8 +701,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._mouseEventsQueue.push(L.bind(function() {
 				this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);}, this));
 			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 500);
-
-			this._editMode = true;
 		}
 		else if (e.type === 'mouseup') {
 			this._selecting = false;
@@ -726,7 +722,6 @@ L.TileLayer = L.GridLayer.extend({
 			}, this));
 			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 250);
 
-			this._editMode = true;
 			if (this._startMarker._icon) {
 				L.DomUtil.removeClass(this._startMarker._icon, 'leaflet-not-clickable');
 			}
@@ -793,11 +788,17 @@ L.TileLayer = L.GridLayer.extend({
 			// disable all user interaction, will need to add keyboard too
 			this._map.off('mousedown mouseup mouseover mouseout mousemove dblclick',
 					this._onMouseEvent, this);
+			this._editMode = false;
+			this._onUpdateCursor();
+			this._clearSelections();
+			this._onUpdateTextSelection();
 		}
 		else if (e.type === 'editmode') {
+			this._editMode = true;
 			this._map.dragging.disable();
 			this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
 					this._onMouseEvent, this);
+			this._map._container.focus();
 		}
 	},
 
@@ -860,7 +861,6 @@ L.TileLayer = L.GridLayer.extend({
 						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
 
 			this._cursorMarker = L.cursor(this._visibleCursor.getNorthWest());
-			this._map._bDisableKeyboard = true;
 			this._map.addLayer(this._cursorMarker);
 			this._cursorMarker.setSize(pixBounds.getSize());
 
@@ -875,7 +875,6 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		else if (this._cursorMarker) {
-			this._map._bDisableKeyboard = false;
 			this._map.removeLayer(this._cursorMarker);
 			this._isCursorOverlayVisible = false;
 		}

@@ -180,7 +180,7 @@
 	cursor: pointer;
 	}
 .leaflet-container {
-	cursor: text;
+	cursor: pointer;
 	}
 .leaflet-crosshair,
 .leaflet-crosshair .leaflet-interactive {
@@ -196,8 +196,8 @@
 	cursor: -webkit-grabbing;
 	cursor:    -moz-grabbing;
 	}
-.leaflet-viewmode {
-    cursor: pointer;
+.leaflet-editmode {
+    cursor: text;
     }
 
 /* visual tweaks */

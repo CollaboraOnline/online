@@ -14,18 +14,18 @@ L.Control.EditViewSwitch = L.Control.extend({
 		this._checkBox = L.DomUtil.create('input', 'editview-cb', container);
 		this._checkBox.type = 'checkbox';
 		L.DomEvent.on(this._checkBox, 'change', this._onChange, this);
-		container.appendChild(document.createTextNode('View only'));
+		container.appendChild(document.createTextNode('Enable editing'));
 		return container;
 	},
 
 	_onChange: function() {
-		var className = 'leaflet-viewmode';
+		var className = 'leaflet-editmode';
 		if (this._checkBox.checked) {
-			this._map.fire('viewmode');
+			this._map.fire('editmode');
 			L.DomUtil.addClass(this._map._container, className);
 		}
 		else {
-			this._map.fire('editmode');
+			this._map.fire('viewmode');
 			L.DomUtil.removeClass(this._map._container, className);
 		}
 	}
