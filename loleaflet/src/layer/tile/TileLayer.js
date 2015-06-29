@@ -862,7 +862,8 @@ L.TileLayer = L.GridLayer.extend({
 			var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
 						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
 
-			this._cursorMarker = L.cursor(this._visibleCursor.getNorthWest());
+			var cursorPos = this._visibleCursor.getNorthWest();
+			this._cursorMarker = L.cursor(cursorPos);
 			this._map.addLayer(this._cursorMarker);
 			this._cursorMarker.setSize(pixBounds.getSize());
 
@@ -874,6 +875,13 @@ L.TileLayer = L.GridLayer.extend({
 				var swap = this._endMarker.getLatLng();
 				this._endMarker.setLatLng(this._startMarker.getLatLng());
 				this._startMarker.setLatLng(swap);
+			}
+			if (!this._map.getBounds().contains(cursorPos)) {
+				var center = this._map.project(cursorPos);
+				center = center.subtract(this._map.getSize().divideBy(2));
+				center.x = center.x < 0 ? 0 : center.x;
+				center.y = center.y < 0 ? 0 : center.y;
+				$('#scroll-container').mCustomScrollbar('scrollTo', [center.y, center.x]);
 			}
 		}
 		else if (this._cursorMarker) {
