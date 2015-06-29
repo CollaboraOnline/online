@@ -806,7 +806,11 @@ L.TileLayer = L.GridLayer.extend({
 
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
-		if (e.type === 'keypress') {
+		if (e.type === 'keydown' && keyCode === 8) {
+			// chrome backspace
+			this._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
+		}
+		else if (e.type === 'keypress') {
 			if (charCode === keyCode && charCode !== 13) {
 				// Chrome sets keyCode = charCode for printable keys
 				// while LO requires it to be 0
