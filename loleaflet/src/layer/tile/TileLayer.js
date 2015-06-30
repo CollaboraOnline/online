@@ -190,7 +190,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend resize', this._updateScrollOffset, this);
-		this._map.on('zoomend', this._onUpdateCursor, this);
+		this._map.on('zoomstart zoomend', this._onZoom, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('prevpart nextpart', this._onSwitchPart, this);
 		this._map.on('viewmode editmode', this._updateEditViewMode, this);
@@ -335,8 +335,6 @@ L.TileLayer = L.GridLayer.extend({
 			bottomRightTwips = topLeftTwips.add(offset);
 			var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 
-			this._map._fadeAnimated = false;
-
 			for (var key in this._tiles) {
 				var coords = this._tiles[key].coords;
 				var point1 = this._coordsToTwips(coords);
@@ -399,7 +397,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('tile:')) {
 			command = this._parseServerCmd(textMsg);
-			coords = this._twipsToCoords(new L.Point(command.x, command.y));
+			coords = this._twipsToCoords(command);
 			coords.z = command.zoom;
 			coords.part = command.part;
 			var data = bytes.subarray(index + 1);
@@ -414,10 +412,14 @@ L.TileLayer = L.GridLayer.extend({
 			var tile = this._tiles[key];
 			if (tile) {
 				if (tile.el.src) {
-					this._tiles[key]._skipPrune = true;
+					this._map._fadeAnimated = false;
 				}
 				tile.el.src = 'data:image/png;base64,' + window.btoa(strBytes);
 			}
+			else {
+				this._tileCache[key] = 'data:image/png;base64,' + window.btoa(strBytes);
+			}
+
 		}
 		else if (textMsg.startsWith('textselection:')) {
 			strTwips = textMsg.match(/\d+/g);
@@ -994,6 +996,15 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else {
 			e.clipboardData.setData('text/plain', this._selectionTextContent);
+		}
+	},
+
+	_onZoom: function (e) {
+		if (e.type === 'zoomstart') {
+			this._fadeAnimated = false;
+		}
+		else if (e.type === 'zoomend') {
+			this._onUpdateCursor();
 		}
 	}
 });

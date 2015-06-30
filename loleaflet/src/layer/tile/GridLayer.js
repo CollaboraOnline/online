@@ -333,7 +333,6 @@ L.GridLayer = L.Layer.extend({
 
 			this._tileZoom = tileZoom;
 			if (tileZoomChanged) {
-				this._map._fadeAnimated = true;
 				this._updateTileTwips();
 				this._updateMaxBounds();
 			}
@@ -697,11 +696,7 @@ L.GridLayer = L.Layer.extend({
 			this._fadeFrame = L.Util.requestAnimFrame(this._updateOpacity, this);
 		} else {
 			tile.active = true;
-			if (tile._skipPrune) {
-				// avoid running the algorithm when we just replace a tile
-				this._pruneTiles();
-			}
-			this._tiles[key]._skipPrune = false;
+			this._pruneTiles();
 		}
 
 		L.DomUtil.addClass(tile.el, 'leaflet-tile-loaded');
@@ -737,8 +732,8 @@ L.GridLayer = L.Layer.extend({
 
 	_twipsToCoords: function (twips) {
 		return new L.Point(
-				twips.x / this._tileWidthTwips,
-				twips.y / this._tileHeightTwips);
+				Math.round(twips.x / twips.tileWidth),
+				Math.round(twips.y / twips.tileHeight));
 	},
 
 	_coordsToTwips: function (coords) {
