@@ -92,6 +92,26 @@ L.TileLayer = L.GridLayer.extend({
 		222 : null  // single quote	: UNKOWN
 	},
 
+	handleOnKeyDown: {
+		// these keys need to be handled on keydown in order for them
+		// to work on chrome
+		8   : true, // backspace
+		9   : true, // tab
+		19  : true, // pause/break
+		20  : true, // caps lock
+		27  : true, // escape
+		33  : true, // page up
+		34  : true, // page down
+		35  : true, // end
+		36  : true, // home
+		37  : true, // left arrow
+		38  : true, // up arrow
+		39  : true, // right arrow
+		40  : true, // down arrow
+		45  : true, // insert
+		46  : true // delete
+	},
+
 	initialize: function (url, options) {
 
 		this._url = url;
@@ -825,16 +845,10 @@ L.TileLayer = L.GridLayer.extend({
 
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
-		// TODO handle browser differences
-		if (e.type === 'keydown' && keyCode === 8) {
-			// chrome backspace
+		if (e.type === 'keydown' && this.handleOnKeyDown[keyCode]) {
 			this._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
 		}
-		else if (e.type === 'keypress') {
-			if (keyCode === 8) {
-				// backspace has already been handled
-				return;
-			}
+		else if (e.type === 'keypress' && !this.handleOnKeyDown[keyCode]) {
 			if (charCode === keyCode && charCode !== 13) {
 				// Chrome sets keyCode = charCode for printable keys
 				// while LO requires it to be 0
