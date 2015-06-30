@@ -190,6 +190,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend resize', this._updateScrollOffset, this);
+		this._map.on('zoomend', this._onUpdateCursor, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('prevpart nextpart', this._onSwitchPart, this);
 		this._map.on('viewmode editmode', this._updateEditViewMode, this);
@@ -879,7 +880,8 @@ L.TileLayer = L.GridLayer.extend({
 			var cursorPos = this._visibleCursor.getNorthWest();
 			this._cursorMarker = L.cursor(cursorPos);
 			this._map.addLayer(this._cursorMarker);
-			this._cursorMarker.setSize(pixBounds.getSize());
+			this._cursorMarker.setSize(pixBounds.getSize().multiplyBy(
+						this._map.getZoomScale(this._map.getZoom())));
 
 			var cursor = this._map.latLngToLayerPoint(this._cursorMarker.getLatLng());
 			var start = this._map.latLngToLayerPoint(this._startMarker.getLatLng());
