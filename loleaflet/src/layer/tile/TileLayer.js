@@ -341,6 +341,12 @@ L.TileLayer = L.GridLayer.extend({
 				var point2 = new L.Point(point1.x + this._tileWidthTwips, point1.y + this._tileHeightTwips);
 				var bounds = new L.Bounds(point1, point2);
 				if (invalidBounds.intersects(bounds)) {
+					if (this._tiles[key]._invalidCount) {
+						this._tiles[key]._invalidCount += 1;
+					}
+					else {
+						this._tiles[key]._invalidCount = 1;
+					}
 					this._map.socket.send('tile ' +
 									'part=' + coords.part + ' ' +
 									'width=' + this._tileSize + ' ' +
@@ -357,11 +363,11 @@ L.TileLayer = L.GridLayer.extend({
 				coords = this._keyToTileCoords(key);
 				var scale = this._map.getZoomScale(coords.z);
 				topLeftTwips = new L.Point(
-						this.options.tileWidthTwips * scale * coords.x,
-						this.options.tileHeightTwips * scale * coords.y);
+						this.options.tileWidthTwips / scale * coords.x,
+						this.options.tileHeightTwips / scale * coords.y);
 				bottomRightTwips = topLeftTwips.add(new L.Point(
-						this.options.tileWidthTwips * scale,
-						this.options.tileHeightTwips * scale));
+						this.options.tileWidthTwips / scale,
+						this.options.tileHeightTwips / scale));
 				bounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 				if (invalidBounds.intersects(bounds)) {
 					delete this._tileCache[key];
@@ -413,6 +419,9 @@ L.TileLayer = L.GridLayer.extend({
 			if (tile) {
 				if (tile.el.src) {
 					this._map._fadeAnimated = false;
+				}
+				if (this._tiles[key]._invalidCount && this._tiles[key]._invalidCount > 0) {
+					this._tiles[key]._invalidCount -= 1;
 				}
 				tile.el.src = 'data:image/png;base64,' + window.btoa(strBytes);
 			}
