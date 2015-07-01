@@ -453,7 +453,7 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_move: function () {
-		this._fadeAnimated = true;
+		this._skipFadeAnimated = false;
 		this._update();
 	},
 
@@ -692,7 +692,7 @@ L.GridLayer = L.Layer.extend({
 		if (!tile) { return; }
 
 		tile.loaded = +new Date();
-		if (this._map._fadeAnimated) {
+		if (this._map._fadeAnimated && !this._skipFadeAnimated) {
 			L.DomUtil.setOpacity(tile.el, 0);
 			L.Util.cancelAnimFrame(this._fadeFrame);
 			this._fadeFrame = L.Util.requestAnimFrame(this._updateOpacity, this);

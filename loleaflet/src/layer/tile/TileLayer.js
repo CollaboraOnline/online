@@ -418,7 +418,7 @@ L.TileLayer = L.GridLayer.extend({
 			var tile = this._tiles[key];
 			if (tile) {
 				if (tile.el.src) {
-					this._map._fadeAnimated = false;
+					this._skipFadeAnimated = true;
 				}
 				if (this._tiles[key]._invalidCount && this._tiles[key]._invalidCount > 0) {
 					this._tiles[key]._invalidCount -= 1;
@@ -1010,7 +1010,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onZoom: function (e) {
 		if (e.type === 'zoomstart') {
-			this._fadeAnimated = false;
+			this._skipFadeAnimated = true;
 		}
 		else if (e.type === 'zoomend') {
 			this._onUpdateCursor();
