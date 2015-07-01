@@ -857,10 +857,11 @@ L.TileLayer = L.GridLayer.extend({
 
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
-		if (e.type === 'keydown' && this.handleOnKeyDown[keyCode]) {
+		if (e.type === 'keydown' && this.handleOnKeyDown[keyCode] && charCode === 0) {
 			this._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
 		}
-		else if (e.type === 'keypress' && !this.handleOnKeyDown[keyCode]) {
+		else if (e.type === 'keypress' &&
+				(!this.handleOnKeyDown[keyCode] || charCode !== 0)) {
 			if (charCode === keyCode && charCode !== 13) {
 				// Chrome sets keyCode = charCode for printable keys
 				// while LO requires it to be 0
@@ -870,6 +871,10 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (e.type === 'keyup') {
 			this._postKeyboardEvent('up', charCode, this._toUNOKeyCode(keyCode));
+		}
+		if (keyCode === 9) {
+			// tab would change focus to other DOM elements
+			e.originalEvent.preventDefault();
 		}
 	},
 
