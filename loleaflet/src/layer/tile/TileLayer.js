@@ -196,6 +196,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('viewmode editmode', this._updateEditViewMode, this);
 		this._map.on('drag', this._updateScrollOffset, this);
 		this._map.on('copy', this._onCopy, this);
+		this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
+				this._onMouseEvent, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		if (this.options.editMode) {
@@ -727,7 +729,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		if (e.type === 'mousedown') {
-			this._selecting = true;
+			this._mouseDown = true;
 			if (this._holdMouseEvent) {
 				clearTimeout(this._holdMouseEvent);
 			}
@@ -737,7 +739,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 500);
 		}
 		else if (e.type === 'mouseup') {
-			this._selecting = false;
+			this._mouseDown = false;
 			if (this._holdMouseEvent) {
 				clearTimeout(this._holdMouseEvent);
 				this._holdMouseEvent = null;
@@ -746,6 +748,10 @@ L.TileLayer = L.GridLayer.extend({
 				// i.e. we have mousedown, mouseup, mousedown and here comes another
 				// mouseup. Those are 2 consecutive clicks == doubleclick, we cancel
 				// everything and wait for the dblclick event to arrive where it's handled
+				if (!this._editMode) {
+					this._editMode = true;
+					this._map.fire('updatemode:edit');
+				}
 				this._mouseEventsQueue = [];
 				return;
 			}
@@ -763,10 +769,15 @@ L.TileLayer = L.GridLayer.extend({
 				L.DomUtil.removeClass(this._endMarker._icon, 'leaflet-not-clickable');
 			}
 		}
-		else if (e.type === 'mousemove' && this._selecting) {
+		else if (e.type === 'mousemove' && this._mouseDown) {
 			if (this._holdMouseEvent) {
 				clearTimeout(this._holdMouseEvent);
 				this._holdMouseEvent = null;
+				if (!this._editMode) {
+					// The user just panned the document
+					this._mouseEventsQueue = [];
+					return;
+				}
 				for (var i = 0; i < this._mouseEventsQueue.length; i++) {
 					// synchronously execute old mouse events so we know that
 					// they arrive to the server before the move command
@@ -774,13 +785,15 @@ L.TileLayer = L.GridLayer.extend({
 				}
 				this._mouseEventsQueue = [];
 			}
-			mousePos = this._latLngToTwips(e.latlng);
-			this._postMouseEvent('move', mousePos.x, mousePos.y, 1);
-			if (this._startMarker._icon) {
-				L.DomUtil.addClass(this._startMarker._icon, 'leaflet-not-clickable');
-			}
-			if (this._endMarker._icon) {
-				L.DomUtil.addClass(this._endMarker._icon, 'leaflet-not-clickable');
+			if (this._editMode) {
+				mousePos = this._latLngToTwips(e.latlng);
+				this._postMouseEvent('move', mousePos.x, mousePos.y, 1);
+				if (this._startMarker._icon) {
+					L.DomUtil.addClass(this._startMarker._icon, 'leaflet-not-clickable');
+				}
+				if (this._endMarker._icon) {
+					L.DomUtil.addClass(this._endMarker._icon, 'leaflet-not-clickable');
+				}
 			}
 		}
 		else if (e.type === 'dblclick') {
@@ -794,6 +807,16 @@ L.TileLayer = L.GridLayer.extend({
 
 	_executeMouseEvents: function () {
 		this._holdMouseEvent = null;
+		if (this._mouseEventsQueue.length === 1 && !this._editMode) {
+			// long mouse down or a mouseup after panning
+			this._mouseEventsQueue = [];
+			return;
+		}
+		else if (!this._editMode) {
+			// this time we have a mousedown and mouseup
+			this._editMode = true;
+			this._map.fire('updatemode:edit');
+		}
 		for (var i = 0; i < this._mouseEventsQueue.length; i++) {
 			this._mouseEventsQueue[i]();
 		}
@@ -820,8 +843,6 @@ L.TileLayer = L.GridLayer.extend({
 		if (e.type === 'viewmode') {
 			this._map.dragging.enable();
 			// disable all user interaction, will need to add keyboard too
-			this._map.off('mousedown mouseup mouseover mouseout mousemove dblclick',
-					this._onMouseEvent, this);
 			this._editMode = false;
 			this._onUpdateCursor();
 			this._clearSelections();
@@ -830,8 +851,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (e.type === 'editmode') {
 			this._editMode = true;
 			this._map.dragging.disable();
-			this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
-					this._onMouseEvent, this);
 			this._map._container.focus();
 		}
 	},
