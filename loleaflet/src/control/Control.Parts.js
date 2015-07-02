@@ -1,5 +1,5 @@
 /*
- * L.Control.Zoom is used for the default zoom buttons on the map.
+ * L.Control.Parts is used to switch parts
  */
 
 L.Control.Parts = L.Control.extend({
