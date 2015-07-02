@@ -613,6 +613,7 @@ void MasterProcessSession::dispatchChild()
             sendTextFrame("error: cmd=load kind=internal");
 
             // We did not use the child session after all
+            // FIXME: Why do we do the same thing both here and then when we catch the IOException that we throw, a dozen line below?
             lock.lock();
             _availableChildSessions.insert(childSession);
             std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
@@ -629,6 +630,7 @@ void MasterProcessSession::dispatchChild()
         Application::instance().logger().error(Util::logPrefix() + "Copying failed: " + exc.message());
         sendTextFrame("error: cmd=load kind=failed");
 
+        // FIXME: See above FIXME
         lock.lock();
         _availableChildSessions.insert(childSession);
         std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
