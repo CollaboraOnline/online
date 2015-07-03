@@ -597,46 +597,49 @@ void MasterProcessSession::dispatchChild()
     std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
     lock.unlock();
 
-    assert(jailDocumentURL[0] == '/');
-    Path copy(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
-    Application::instance().logger().information(Util::logPrefix() + "Copying " + _docURL + " to " + copy.toString());
-
-    URIStreamOpener opener;
-    opener.registerStreamFactory("http", new HTTPStreamFactory());
-    try
+    if (_docURL.find("http:"))
     {
-        std::istream *input = opener.open(_docURL);
-        std::ofstream output(copy.toString());
-        if (!output)
-        {
-            Application::instance().logger().error(Util::logPrefix() + "Could not open " + copy.toString() + " for writing");
-            sendTextFrame("error: cmd=load kind=internal");
+        assert(jailDocumentURL[0] == '/');
+        Path copy(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
+        Application::instance().logger().information(Util::logPrefix() + "Copying " + _docURL + " to " + copy.toString());
 
-            // We did not use the child session after all
-            // FIXME: Why do we do the same thing both here and then when we catch the IOException that we throw, a dozen line below?
+        URIStreamOpener opener;
+        opener.registerStreamFactory("http", new HTTPStreamFactory());
+        try
+        {
+            std::istream *input = opener.open(_docURL);
+            std::ofstream output(copy.toString());
+            if (!output)
+            {
+                Application::instance().logger().error(Util::logPrefix() + "Could not open " + copy.toString() + " for writing");
+                sendTextFrame("error: cmd=load kind=internal");
+
+                // We did not use the child session after all
+                // FIXME: Why do we do the same thing both here and then when we catch the IOException that we throw, a dozen line below?
+                lock.lock();
+                _availableChildSessions.insert(childSession);
+                std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
+                lock.unlock();
+                throw IOException(copy.toString());
+            }
+            StreamCopier::copyStream(*input, output);
+            output.close();
+
+            Application::instance().logger().information(Util::logPrefix() + "Copying done");
+        }
+        catch (IOException& exc)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "Copying failed: " + exc.message());
+            sendTextFrame("error: cmd=load kind=failed");
+
+            // FIXME: See above FIXME
             lock.lock();
             _availableChildSessions.insert(childSession);
             std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
             lock.unlock();
-            throw IOException(copy.toString());
+
+            throw;
         }
-        StreamCopier::copyStream(*input, output);
-        output.close();
-
-        Application::instance().logger().information(Util::logPrefix() + "Copying done");
-    }
-    catch (IOException& exc)
-    {
-        Application::instance().logger().error(Util::logPrefix() + "Copying failed: " + exc.message());
-        sendTextFrame("error: cmd=load kind=failed");
-
-        // FIXME: See above FIXME
-        lock.lock();
-        _availableChildSessions.insert(childSession);
-        std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
-        lock.unlock();
-
-        throw;
     }
 
     _peer = childSession;
@@ -851,7 +854,14 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, myCallback, this);
 
-    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, jailDocumentURL.c_str())) == NULL)
+    std::string sURL;
+
+    if ( _docURL.find("http:") )
+        sURL = _docURL;
+    else
+        sURL = jailDocumentURL;
+
+    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, sURL.c_str())) == NULL)
     {
         sendTextFrame("error: cmd=load kind=failed");
         return false;
