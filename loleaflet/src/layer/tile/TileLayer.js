@@ -420,9 +420,11 @@ L.TileLayer = L.GridLayer.extend({
 			var tile = this._tiles[key];
 			if (tile) {
 				if (tile.el.src) {
+					// cancel the animFade if there's any
+					L.DomUtil.setOpacity(tile.el, 1);
 					this._skipFadeAnimated = true;
 				}
-				if (this._tiles[key]._invalidCount && this._tiles[key]._invalidCount > 0) {
+				if (this._tiles[key]._invalidCount > 0) {
 					this._tiles[key]._invalidCount -= 1;
 				}
 				tile.el.src = 'data:image/png;base64,' + window.btoa(strBytes);
