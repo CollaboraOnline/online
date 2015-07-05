@@ -42,6 +42,7 @@
 #include <Poco/URI.h>
 #include <Poco/URIStreamOpener.h>
 #include <Poco/Util/Application.h>
+#include <Poco/Exception.h>
 
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
@@ -68,6 +69,7 @@ using Poco::UInt64;
 using Poco::URI;
 using Poco::URIStreamOpener;
 using Poco::Util::Application;
+using Poco::Exception;
 
 const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
 
@@ -487,6 +489,16 @@ bool MasterProcessSession::loadDocument(const char *buffer, int length, StringTo
     else
         _docURL = tokens[1];
 
+    try
+    {
+        URI aUri(_docURL);
+    }
+    catch(Poco::SyntaxException&)
+    {
+        sendTextFrame("error: cmd=load kind=URI invalid syntax");
+        return false;
+    }
+
     _tileCache.reset(new TileCache(_docURL));
 
     return true;
@@ -597,48 +609,53 @@ void MasterProcessSession::dispatchChild()
     std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
     lock.unlock();
 
-    if (_docURL.find("http:"))
-    {
-        assert(jailDocumentURL[0] == '/');
-        Path copy(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
-        Application::instance().logger().information(Util::logPrefix() + "Copying " + _docURL + " to " + copy.toString());
+    // Assume a valid URI
+    URI aUri(_docURL);
 
-        URIStreamOpener opener;
-        opener.registerStreamFactory("http", new HTTPStreamFactory());
+    if (aUri.isRelative())
+        aUri = URI( URI("file://"), aUri.toString() );
+
+    if (!aUri.empty() && aUri.getScheme() == "file")
+    {
+        Path aSrcFile(aUri.getPath());
+        Path aDstFile(Path(getJailPath(childSession->_childId), jailDocumentURL.substr(1)), aSrcFile.getFileName());
+        Path aDstPath(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
+        Path aJailFile(jailDocumentURL, aSrcFile.getFileName());
+
         try
         {
-            std::istream *input = opener.open(_docURL);
-            std::ofstream output(copy.toString());
-            if (!output)
-            {
-                Application::instance().logger().error(Util::logPrefix() + "Could not open " + copy.toString() + " for writing");
-                sendTextFrame("error: cmd=load kind=internal");
-
-                // We did not use the child session after all
-                // FIXME: Why do we do the same thing both here and then when we catch the IOException that we throw, a dozen line below?
-                lock.lock();
-                _availableChildSessions.insert(childSession);
-                std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
-                lock.unlock();
-                throw IOException(copy.toString());
-            }
-            StreamCopier::copyStream(*input, output);
-            output.close();
-
-            Application::instance().logger().information(Util::logPrefix() + "Copying done");
+            File(aDstPath).createDirectories();
         }
-        catch (IOException& exc)
+        catch (Exception& exc)
         {
-            Application::instance().logger().error(Util::logPrefix() + "Copying failed: " + exc.message());
-            sendTextFrame("error: cmd=load kind=failed");
+            Application::instance().logger().error( Util::logPrefix() +
+                "createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
 
-            // FIXME: See above FIXME
-            lock.lock();
-            _availableChildSessions.insert(childSession);
-            std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
-            lock.unlock();
+        }
 
-            throw;
+#ifdef __linux
+        Application::instance().logger().information(Util::logPrefix() + "Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
+        if (link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
+        {
+            // Failed
+            Application::instance().logger().error( Util::logPrefix() +
+                "link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + strerror(errno) );
+        }
+#endif
+
+        try
+        {
+            //fallback
+            if (!File(aDstFile).exists())
+            {
+                Application::instance().logger().information(Util::logPrefix() + "Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
+                File(aSrcFile).copyTo(aDstFile.toString());
+            }
+        }
+        catch (Exception& exc)
+        {
+            Application::instance().logger().error( Util::logPrefix() +
+                "copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
         }
     }
 
@@ -848,25 +865,37 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     else
         _docURL = tokens[1];
 
+    URI aUri;
+    try
+    {
+        aUri = URI(_docURL);
+    }
+    catch(Poco::SyntaxException&)
+    {
+        sendTextFrame("error: cmd=load kind=URI invalid syntax");
+        return false;
+    }
+
+    if (aUri.empty())
+    {
+        sendTextFrame("error: cmd=load kind=URI empty");
+        return false;
+    }
+
     // The URL in the request is the original one, not visible in the chroot jail.
     // The child process uses the fixed name jailDocumentURL.
 
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, myCallback, this);
 
-    std::string sURL;
+    if (aUri.isRelative() || aUri.getScheme() == "file")
+        aUri = URI( URI("file://"), Path(jailDocumentURL, Path(aUri.getPath()).getFileName()).toString() );
 
-    if ( _docURL.find("http:") )
-        sURL = _docURL;
-    else
-        sURL = jailDocumentURL;
-
-    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, sURL.c_str())) == NULL)
+    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, aUri.toString().c_str())) == NULL)
     {
         sendTextFrame("error: cmd=load kind=failed");
         return false;
     }
-
     _loKitDocument->pClass->initializeForRendering(_loKitDocument);
 
     if (!getStatus(buffer, length))
