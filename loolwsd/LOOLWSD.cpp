@@ -683,6 +683,7 @@ int LOOLWSD::childMain()
 
 #ifdef __linux
     dropCapability(CAP_FOWNER);
+    dropCapability(CAP_MKNOD);
 #endif
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the child (but not in the

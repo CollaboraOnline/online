@@ -31,6 +31,8 @@ cd / || exit 1
 	     usr/share/liblangtag \
 		 -type f
 
+	find lib/libnss_* lib64/libnss_* -type l
+
 	# Go through the LO shared objects and check what system libraries
 	# they link to.
 	find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |

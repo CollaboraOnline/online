@@ -414,6 +414,29 @@ void MasterProcessSession::preSpawn()
     linkOrCopy(LOOLWSD::sysTemplate, jail);
     linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
 
+#ifdef __linux
+    // Create the urandom and random devices
+    File(Path(jail, "/dev")).createDirectory();
+    if (mknod((jail.toString() + "/dev/random").c_str(),
+                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                makedev(1, 8)) != 0)
+    {
+        Application::instance().logger().error(Util::logPrefix() +
+                "mknod(" + jail.toString() + "/dev/random) failed: " +
+                strerror(errno));
+
+    }
+    if (mknod((jail.toString() + "/dev/urandom").c_str(),
+                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                makedev(1, 9)) != 0)
+    {
+        Application::instance().logger().error(Util::logPrefix() +
+                "mknod(" + jail.toString() + "/dev/urandom) failed: " +
+                strerror(errno));
+
+    }
+#endif
+
     _pendingPreSpawnedChildren.insert(childId);
 
     Process::Args args;
