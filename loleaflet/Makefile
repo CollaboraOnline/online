@@ -1,6 +1,6 @@
 # Version number of loleaflet, no need to be in sync with the loolwsd one
 
-VERSION=1.1.4
+VERSION=1.1.5
 
 # Version number of the bundled 'draw' thing
 DRAW_VERSION=0.2.4
