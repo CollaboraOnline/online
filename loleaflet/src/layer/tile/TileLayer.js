@@ -920,15 +920,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._cursorMarker.setSize(pixBounds.getSize().multiplyBy(
 						this._map.getZoomScale(this._map.getZoom())));
 
-			var cursor = this._map.latLngToLayerPoint(this._cursorMarker.getLatLng());
-			var start = this._map.latLngToLayerPoint(this._startMarker.getLatLng());
-			var end = this._map.latLngToLayerPoint(this._endMarker.getLatLng());
-
-			if (Math.abs(start.distanceTo(cursor)) < Math.abs(end.distanceTo(cursor))) {
-				var swap = this._endMarker.getLatLng();
-				this._endMarker.setLatLng(this._startMarker.getLatLng());
-				this._startMarker.setLatLng(swap);
-			}
 			if (!this._map.getBounds().contains(cursorPos)) {
 				var center = this._map.project(cursorPos);
 				center = center.subtract(this._map.getSize().divideBy(2));
@@ -999,16 +990,13 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
-		if (this._startMarker.isDragged === true || this._endMarker.isDragged === true)
-			return;
-
 		if (this._selections.getLayers().length !== 0) {
-			if (!this._isEmptyRectangle(this._textSelectionStart)) {
+			if (!this._isEmptyRectangle(this._textSelectionStart) && !this._startMarker.isDragged) {
 				this._startMarker.setLatLng(this._textSelectionStart.getSouthWest());
 				this._map.addLayer(this._startMarker);
 			}
 
-			if (!this._isEmptyRectangle(this._textSelectionEnd)) {
+			if (!this._isEmptyRectangle(this._textSelectionEnd) && !this._endMarker.isDragged) {
 				this._endMarker.setLatLng(this._textSelectionEnd.getSouthEast());
 				this._map.addLayer(this._endMarker);
 			}
