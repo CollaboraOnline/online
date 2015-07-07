@@ -480,6 +480,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._onUpdateTextSelection();
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
+			textMsg += String.fromCharCode.apply(null, bytes.subarray(index + 1));
 			this._selectionTextContent = textMsg.substr(22);
 		}
 		else if (textMsg.startsWith('setpart:')) {
