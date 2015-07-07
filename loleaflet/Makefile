@@ -18,5 +18,5 @@ dist: all
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
 	rm -rf loleaflet-$(VERSION)
 
-loleaflet.spec: loleaflet.spec.in
+loleaflet.spec: loleaflet.spec.in Makefile
 	sed -e 's/@PACKAGE_VERSION@/$(VERSION)/g' <loleaflet.spec.in >loleaflet.spec
