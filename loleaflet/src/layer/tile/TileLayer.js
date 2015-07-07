@@ -747,29 +747,35 @@ L.TileLayer = L.GridLayer.extend({
 				clearTimeout(this._holdMouseEvent);
 				this._holdMouseEvent = null;
 			}
-			if (this._mouseEventsQueue.length === 3) {
-				// i.e. we have mousedown, mouseup, mousedown and here comes another
-				// mouseup. Those are 2 consecutive clicks == doubleclick, we cancel
-				// everything and wait for the dblclick event to arrive where it's handled
+			if (this._clickTime && Date.now() - this._clickTime <= 250) {
+				// double click, a click was sent already
+				this._mouseEventsQueue = [];
+				return;
+			}
+			else {
+				// if it's a click or mouseup after selecting
+				if (this._mouseEventsQueue.length > 0 || this._editMode) {
+					this._clickTime = Date.now();
+					if (this._mouseEventsQueue.length > 0) {
+						// fire mousedown
+						this._mouseEventsQueue[0]();
+					}
+					this._mouseEventsQueue = [];
+				}
 				if (!this._editMode) {
 					this._editMode = true;
 					this._map.fire('updatemode:edit');
 				}
-				this._mouseEventsQueue = [];
-				return;
-			}
-			mousePos = this._latLngToTwips(e.latlng);
-			this._mouseEventsQueue.push(L.bind(function() {
+				mousePos = this._latLngToTwips(e.latlng);
 				this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
 				this._textArea.focus();
-			}, this));
-			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 250);
 
-			if (this._startMarker._icon) {
-				L.DomUtil.removeClass(this._startMarker._icon, 'leaflet-not-clickable');
-			}
-			if (this._endMarker._icon) {
-				L.DomUtil.removeClass(this._endMarker._icon, 'leaflet-not-clickable');
+				if (this._startMarker._icon) {
+					L.DomUtil.removeClass(this._startMarker._icon, 'leaflet-not-clickable');
+				}
+				if (this._endMarker._icon) {
+					L.DomUtil.removeClass(this._endMarker._icon, 'leaflet-not-clickable');
+				}
 			}
 		}
 		else if (e.type === 'mousemove' && this._mouseDown) {
