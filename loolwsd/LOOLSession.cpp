@@ -1056,7 +1056,14 @@ bool ChildProcessSession::unoCommand(const char *buffer, int length, StringToken
         return false;
     }
 
-    _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str());
+    if (tokens.count() == 2)
+    {
+        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), 0);
+    }
+    else
+    {
+        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str());
+    }
 
     return true;
 }
