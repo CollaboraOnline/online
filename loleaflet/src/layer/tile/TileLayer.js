@@ -423,11 +423,6 @@ L.TileLayer = L.GridLayer.extend({
 			key = this._tileCoordsToKey(coords);
 			var tile = this._tiles[key];
 			if (tile) {
-				if (tile.el.src) {
-					// cancel the animFade if there's any
-					L.DomUtil.setOpacity(tile.el, 1);
-					this._skipFadeAnimated = true;
-				}
 				if (this._tiles[key]._invalidCount > 0) {
 					this._tiles[key]._invalidCount -= 1;
 				}
@@ -1035,7 +1030,6 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onZoom: function (e) {
 		if (e.type === 'zoomstart') {
-			this._skipFadeAnimated = true;
 		}
 		else if (e.type === 'zoomend') {
 			this._onUpdateCursor();
