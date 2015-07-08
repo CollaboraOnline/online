@@ -305,6 +305,34 @@
 	user-select: none;
 	}
 
+/* Toolbar buttons control */
+
+.leaflet-control-buttons-container {
+	float: left;
+	}
+
+.leaflet-control-buttons,
+a.leaflet-control-buttons,
+a.leaflet-control-buttons:hover {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	width: 24px;
+	height: 24px;
+	float: left;
+	}
+
+a.leaflet-control-buttons,
+a.leaflet-control-buttons:hover {
+	margin-left: 3px;
+	}
+
+.leaflet-control-buttons-active {
+	border: thin solid;
+	}
+
+
+
 /* layers control */
 
 .leaflet-control-layers {

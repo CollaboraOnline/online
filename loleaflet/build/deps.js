@@ -228,6 +228,13 @@ var deps = {
 		desc: 'Switches from viewing to editing mode and backwards'
 	},
 
+	ControlButtons: {
+		src: ['control/Control.js',
+		      'control/Control.Buttons.js'],
+		heading: 'Buttons',
+		desc: 'Handles buttons from the toolbar'
+	},
+
 	ControlStatusIndicator: {
 		src: ['control/Control.js',
 		      'control/Control.StatusIndicator.js'],

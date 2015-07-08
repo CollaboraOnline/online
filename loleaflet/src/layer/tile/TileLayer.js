@@ -376,6 +376,10 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		}
+		else if (textMsg.startsWith('statechanged:')) {
+			var state = textMsg.substr(14);
+			map.fire('statechanged', {state : state});
+		}
 		else if (textMsg.startsWith('status:')) {
 			command = this._parseServerCmd(textMsg);
 			if (command.width && command.height && this._documentInfo !== textMsg) {
