@@ -750,10 +750,14 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (e.type === 'mouseup') {
 			this._mouseDown = false;
-			if (this._holdMouseEvent) {
-				clearTimeout(this._holdMouseEvent);
-				this._holdMouseEvent = null;
+			if (!this._editMode) {
+				if (this._mouseEventsQueue.length === 0) {
+					// mouse up after panning
+					return;
+				}
 			}
+			clearTimeout(this._holdMouseEvent);
+			this._holdMouseEvent = null;
 			if (this._clickTime && Date.now() - this._clickTime <= 250) {
 				// double click, a click was sent already
 				this._mouseEventsQueue = [];
@@ -761,18 +765,16 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			else {
 				// if it's a click or mouseup after selecting
-				if (this._mouseEventsQueue.length > 0 || this._editMode) {
+				if (this._mouseEventsQueue.length > 0) {
+					// it's a click, fire mousedown
+					this._mouseEventsQueue[0]();
 					this._clickTime = Date.now();
-					if (this._mouseEventsQueue.length > 0) {
-						// fire mousedown
-						this._mouseEventsQueue[0]();
+					if (!this._editMode) {
+						this._editMode = true;
+						this._map.fire('updatemode:edit');
 					}
-					this._mouseEventsQueue = [];
 				}
-				if (!this._editMode) {
-					this._editMode = true;
-					this._map.fire('updatemode:edit');
-				}
+				this._mouseEventsQueue = [];
 				mousePos = this._latLngToTwips(e.latlng);
 				this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
 				this._textArea.focus();
