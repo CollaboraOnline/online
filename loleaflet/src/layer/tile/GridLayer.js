@@ -40,10 +40,6 @@ L.GridLayer = L.Layer.extend({
 		this._viewReset();
 		this._update();
 		this._map._docLayer = this;
-		var mapDim = this._map.getSize();
-		this._maxVisibleTiles =
-			(Math.floor(mapDim.x / this._tileSize) + 2) *
-			(Math.floor(mapDim.y / this._tileSize) + 2);
 	},
 
 	beforeAdd: function (map) {
@@ -484,6 +480,8 @@ L.GridLayer = L.Layer.extend({
 			}
 		}
 
+		// if there is no exiting tile in the current view
+		var newView = true;
 		// create a queue of coordinates to load tiles from
 		for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
 			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
@@ -497,6 +495,7 @@ L.GridLayer = L.Layer.extend({
 				var tile = this._tiles[key];
 				if (tile) {
 					tile.current = true;
+					newView = false;
 				} else {
 					queue.push(coords);
 				}
@@ -504,7 +503,7 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (queue.length !== 0) {
-			if (queue.length > this._maxVisibleTiles) {
+			if (newView) {
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
 				this._map.socket.send('canceltiles');
@@ -533,22 +532,14 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_isValidTile: function (coords) {
-		var crs = this._map.options.crs;
-
-		if (!crs.infinite) {
-			// don't load tile if it's out of bounds and not wrapped
-			var bounds = this._globalTileRange;
-			if ((!crs.wrapLng && (coords.x < bounds.min.x || coords.x > bounds.max.x)) ||
-			    (!crs.wrapLat && (coords.y < bounds.min.y || coords.y > bounds.max.y))) { return false; }
+		if (coords.x < 0 || coords.y < 0) {
+			return false;
 		}
-
-		if (coords.x < 0 || coords.y < 0) { return false; }
-
-		if (!this.options.bounds) { return true; }
-
-		// don't load tile if it doesn't intersect the bounds in options
-		var tileBounds = this._tileCoordsToBounds(coords);
-		return L.latLngBounds(this.options.bounds).intersects(tileBounds);
+		if (coords.x * this._tileWidthTwips > this._docWidthTwips ||
+				coords.y * this._tileHeightTwips > this._docHeightTwips) {
+			return false;
+		}
+		return true;
 	},
 
 	_keyToBounds: function (key) {
