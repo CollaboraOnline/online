@@ -694,11 +694,6 @@ L.GridLayer = L.Layer.extend({
 
 		L.DomUtil.addClass(tile.el, 'leaflet-tile-loaded');
 
-		this.fire('tileload', {
-			tile: tile.el,
-			coords: coords
-		});
-
 		if (this._noTilesToLoad()) {
 			this.fire('load');
 		}
