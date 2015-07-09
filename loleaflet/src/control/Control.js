@@ -71,9 +71,11 @@ L.Control = L.Class.extend({
 		return this;
 	},
 
-	_refocusOnMap: function (e) {
-		// if map exists and event is not a keyboard event
-		if (this._map && e && e.screenX > 0 && e.screenY > 0) {
+	_refocusOnMap: function () {
+		if (this._map._docLayer._editMode) {
+			this._map._docLayer._textArea.focus();
+		}
+		else {
 			this._map.getContainer().focus();
 		}
 	}

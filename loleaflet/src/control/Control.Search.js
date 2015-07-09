@@ -72,6 +72,7 @@ L.Control.Search = L.Control.extend({
 			this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
 			delete this._searchCmd['SearchItem.SearchStartPointX'];
 			delete this._searchCmd['SearchItem.SearchStartPointY'];
+			this._refocusOnMap();
 		}
 	},
 
@@ -89,12 +90,14 @@ L.Control.Search = L.Control.extend({
 		this._searchCmd['SearchItem.Backward'].value = true;
 		this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
 		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
+		this._refocusOnMap();
 	},
 
 	_searchNext: function () {
 		this._searchCmd['SearchItem.Backward'].value = false;
 		this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
 		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
+		this._refocusOnMap();
 	},
 
 	_cancel: function () {
@@ -102,6 +105,7 @@ L.Control.Search = L.Control.extend({
 		this._map.fire('clearselection');
 		this._disabled = true;
 		this._updateDisabled();
+		this._refocusOnMap();
 	},
 
 	_createSearchBar: function(title, className, container, fn) {
