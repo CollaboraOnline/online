@@ -71,7 +71,8 @@
     var docLayer = new L.TileLayer('', {
         doc: filePath,
         useSocket : true,
-        editMode: editMode
+        editMode: editMode,
+        readOnly: true
     });
     map.addLayer(docLayer);
 

@@ -14,7 +14,7 @@ L.Control.EditViewSwitch = L.Control.extend({
 		this._checkBox = L.DomUtil.create('input', 'editview-cb', container);
 		this._checkBox.type = 'checkbox';
 		L.DomEvent.on(this._checkBox, 'change', this._onChange, this);
-        map.on('updatemode:view updatemode:edit', this._onUpdateMode, this);
+		map.on('updatemode:view updatemode:edit updatemode:readonly', this._onUpdateMode, this);
 		container.appendChild(document.createTextNode('Enable editing'));
 		return container;
 	},
@@ -42,6 +42,9 @@ L.Control.EditViewSwitch = L.Control.extend({
 			this._map.fire('viewmode');
 			L.DomUtil.removeClass(this._map._container, className);
 			this._checkBox.checked = false;
+		}
+		else if (e.type === 'updatemode:readonly') {
+			this._checkBox.disabled = true;
 		}
 	}
 });

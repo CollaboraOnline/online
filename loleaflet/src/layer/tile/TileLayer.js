@@ -200,8 +200,12 @@ L.TileLayer = L.GridLayer.extend({
 				this._onMouseEvent, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
-		if (this.options.editMode) {
+		if (this.options.editMode && !this.options.readOnly) {
 			this._map.fire('updatemode:edit');
+		}
+		if (this.options.readOnly) {
+			this._map.fire('updatemode:readonly');
+			this._readOnlyMode = true;
 		}
 	},
 
@@ -727,6 +731,10 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		if (this._startMarker.isDragged === true || this._endMarker.isDragged === true) {
+			return;
+		}
+
+		if (this._readOnlyMode) {
 			return;
 		}
 
