@@ -138,7 +138,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._documentInfo = '';
 		// View or edit mode.
-		this._editMode = false;
+		this._permission = 'view';
 		// Position and size of the visible cursor.
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Cursor overlay is visible or hidden (for blinking).
@@ -194,19 +194,17 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('zoomstart zoomend', this._onZoom, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('prevpart nextpart', this._onSwitchPart, this);
-		this._map.on('viewmode editmode', this._updateEditViewMode, this);
 		this._map.on('drag', this._updateScrollOffset, this);
 		this._map.on('copy', this._onCopy, this);
 		this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
 				this._onMouseEvent, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
-		if (this.options.editMode && !this.options.readOnly) {
-			this._map.fire('updatemode:edit');
+		if (this.options.edit && !this.options.readOnly) {
+			this._map.setPermission('edit');
 		}
 		if (this.options.readOnly) {
-			this._map.fire('updatemode:readonly');
-			this._readOnlyMode = true;
+			this._map.setPermission('readonly');
 		}
 	},
 
@@ -741,7 +739,7 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 
-		if (this._readOnlyMode) {
+		if (this._permission === 'readonly') {
 			return;
 		}
 
@@ -757,7 +755,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (e.type === 'mouseup') {
 			this._mouseDown = false;
-			if (!this._editMode) {
+			if (this._permission !== 'edit') {
 				if (this._mouseEventsQueue.length === 0) {
 					// mouse up after panning
 					return;
@@ -776,9 +774,8 @@ L.TileLayer = L.GridLayer.extend({
 					// it's a click, fire mousedown
 					this._mouseEventsQueue[0]();
 					this._clickTime = Date.now();
-					if (!this._editMode) {
-						this._editMode = true;
-						this._map.fire('updatemode:edit');
+					if (this._permission !== 'edit') {
+						this._map.setPermission('edit');
 					}
 				}
 				this._mouseEventsQueue = [];
@@ -798,7 +795,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._holdMouseEvent) {
 				clearTimeout(this._holdMouseEvent);
 				this._holdMouseEvent = null;
-				if (!this._editMode) {
+				if (this._permission !== 'edit') {
 					// The user just panned the document
 					this._mouseEventsQueue = [];
 					return;
@@ -810,7 +807,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 				this._mouseEventsQueue = [];
 			}
-			if (this._editMode) {
+			if (this._permission === 'edit') {
 				mousePos = this._latLngToTwips(e.latlng);
 				this._postMouseEvent('move', mousePos.x, mousePos.y, 1);
 				if (this._startMarker._icon) {
@@ -832,15 +829,14 @@ L.TileLayer = L.GridLayer.extend({
 
 	_executeMouseEvents: function () {
 		this._holdMouseEvent = null;
-		if (this._mouseEventsQueue.length === 1 && !this._editMode) {
+		if (this._mouseEventsQueue.length === 1 && this._permission !== 'edit') {
 			// long mouse down or a mouseup after panning
 			this._mouseEventsQueue = [];
 			return;
 		}
-		else if (!this._editMode) {
+		else if (this._permission !== 'edit') {
 			// this time we have a mousedown and mouseup
-			this._editMode = true;
-			this._map.fire('updatemode:edit');
+			this._map.setPermission('edit');
 		}
 		for (var i = 0; i < this._mouseEventsQueue.length; i++) {
 			this._mouseEventsQueue[i]();
@@ -864,22 +860,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._clearSelections();
 	},
 
-	_updateEditViewMode: function (e) {
-		if (e.type === 'viewmode') {
-			this._map.dragging.enable();
-			// disable all user interaction, will need to add keyboard too
-			this._editMode = false;
-			this._onUpdateCursor();
-			this._clearSelections();
-			this._onUpdateTextSelection();
-		}
-		else if (e.type === 'editmode') {
-			this._editMode = true;
-			this._map.dragging.disable();
-			this._map._container.focus();
-		}
-	},
-
 	// Convert javascript key codes to UNO key codes.
 	_toUNOKeyCode: function (keyCode) {
 		return this.keymap[keyCode] || keyCode;
@@ -887,7 +867,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Receives a key press or release event.
 	_signalKey: function (e) {
-		if (!this._editMode) {
+		if (this._permission !== 'edit') {
 			return;
 		}
 
@@ -929,7 +909,8 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function () {
-		if (this._editMode && this._isCursorVisible && this._isCursorOverlayVisible && !this._isEmptyRectangle(this._visibleCursor)) {
+		if (this._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
+				&& !this._isEmptyRectangle(this._visibleCursor)) {
 			if (this._cursorMarker) {
 				this._map.removeLayer(this._cursorMarker);
 			}

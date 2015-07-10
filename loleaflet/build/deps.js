@@ -221,11 +221,11 @@ var deps = {
 		desc: 'Parts control with two buttons (previous / next).'
 	},
 
-	ControlEditViewSwitch: {
+	ControlPermissionSwitch: {
 		src: ['control/Control.js',
-		      'control/Control.EditView.js'],
+		      'control/Control.Permission.js'],
 		heading: 'Controls',
-		desc: 'Switches from viewing to editing mode and backwards'
+		desc: 'Switches edit, view and readOnly modes'
 	},
 
 	ControlButtons: {
@@ -263,6 +263,11 @@ var deps = {
 	Search: {
 		src: ['control/Search.js'],
 		desc: 'Search command handler.'
+	},
+
+	Permission: {
+		src: ['control/Permission.js'],
+		desc: 'Permission change handler (edit, view, readonly).'
 	},
 
 	AnimationPan: {
