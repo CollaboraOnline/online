@@ -27,16 +27,6 @@ L.Control.Search = L.Control.extend({
 				searchName + '-next', container, this._searchNext);
 		this._cancelButton = this._createButton(options.cancelText, options.cancelTitle,
 				searchName + '-cancel', container, this._cancel);
-		this._searchCmd = {
-			'SearchItem.SearchString': {
-				'type': 'string',
-				'value': ''
-			},
-			'SearchItem.Backward': {
-				'type': 'boolean',
-				'value': false
-			}
-		};
 
 		this._disabled = true;
 		this._updateDisabled();
@@ -50,28 +40,10 @@ L.Control.Search = L.Control.extend({
 	},
 
 	_searchStart: function (e) {
-		this._map.fire('clearselection');
-		var viewTopLeftpx = this._map.project(this._map.getBounds().getNorthWest());
-		var docBoundsTopLeft = this._map.project(this._map.options.maxBounds.getNorthWest());
-		var topLeft = this._map.unproject(new L.Point(
-				Math.max(viewTopLeftpx.x, docBoundsTopLeft.x),
-				Math.max(viewTopLeftpx.y, docBoundsTopLeft.y)));
-		var topLeftTwips = this._map._docLayer._latLngToTwips(topLeft);
-
 		if (e.keyCode === 13 && this._searchBar.value !== '') {
+			this._map.search(this._searchBar.value);
 			this._disabled = false;
 			this._updateDisabled();
-			this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
-			this._searchCmd['SearchItem.Backward'].value = false;
-			this._searchCmd['SearchItem.SearchStartPointX'] = {};
-			this._searchCmd['SearchItem.SearchStartPointX'].type = 'long';
-			this._searchCmd['SearchItem.SearchStartPointX'].value = topLeftTwips.x;
-			this._searchCmd['SearchItem.SearchStartPointY'] = {};
-			this._searchCmd['SearchItem.SearchStartPointY'].type = 'long';
-			this._searchCmd['SearchItem.SearchStartPointY'].value = topLeftTwips.y;
-			this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
-			delete this._searchCmd['SearchItem.SearchStartPointX'];
-			delete this._searchCmd['SearchItem.SearchStartPointY'];
 			this._refocusOnMap();
 		}
 	},
@@ -87,16 +59,12 @@ L.Control.Search = L.Control.extend({
 	},
 
 	_searchPrev: function () {
-		this._searchCmd['SearchItem.Backward'].value = true;
-		this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
-		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
+		this._map.search(this._searchBar.value, true);
 		this._refocusOnMap();
 	},
 
 	_searchNext: function () {
-		this._searchCmd['SearchItem.Backward'].value = false;
-		this._searchCmd['SearchItem.SearchString'].value = this._searchBar.value;
-		this._map.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(this._searchCmd));
+		this._map.search(this._searchBar.value);
 		this._refocusOnMap();
 	},
 

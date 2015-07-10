@@ -260,6 +260,11 @@ var deps = {
 		desc: 'Layer Switcher control.'
 	},
 
+	Search: {
+		src: ['control/Search.js'],
+		desc: 'Search command handler.'
+	},
+
 	AnimationPan: {
 		src: [
 			'dom/DomEvent.js',
