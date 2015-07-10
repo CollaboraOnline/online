@@ -404,14 +404,14 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		else if (textMsg.startsWith('statusindicatorstart:')) {
-			this._map.fire('statusindicator:start');
+			this._map.fire('statusindicator', {statusType : 'start'});
 		}
 		else if (textMsg.startsWith('statusindicatorsetvalue:')) {
-			var statusIndicator = textMsg.match(/\d+/g)[0];
-			this._map.fire('statusindicator:setvalue', {statusIndicator:statusIndicator});
+			var value = textMsg.match(/\d+/g)[0];
+			this._map.fire('statusindicator', {statusType : 'setvalue', value : value});
 		}
 		else if (textMsg.startsWith('statusindicatorfinish:')) {
-			this._map.fire('statusindicator:finish');
+			this._map.fire('statusindicator', {statusType : 'finish'});
 		}
 		else if (textMsg.startsWith('tile:')) {
 			command = this._parseServerCmd(textMsg);

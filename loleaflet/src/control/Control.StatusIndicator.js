@@ -11,20 +11,19 @@ L.Control.StatusIndicator = L.Control.extend({
 		var partName = 'leaflet-control-statusindicator';
 		this._container = L.DomUtil.create('div', partName + ' leaflet-bar');
 
-		map.on('statusindicator:start statusindicator:setvalue statusindicator:finish',
-			this._updateStatus, this);
+		map.on('statusindicator', this._updateStatus, this);
 		return this._container;
 	},
 
 	_updateStatus: function (e) {
-		if (e.type === 'statusindicator:start') {
+		if (e.statusType === 'start') {
 			L.DomUtil.setStyle(this._container, 'display', '');
 			this._container.innerText = '0 %';
 		}
-		else if (e.type === 'statusindicator:setvalue') {
-			this._container.innerText = e.statusIndicator + '% ';
+		else if (e.statusType === 'setvalue') {
+			this._container.innerText = e.value + '% ';
 		}
-		else if (e.type === 'statusindicator:finish') {
+		else if (e.statusType === 'finish') {
 			L.DomUtil.setStyle(this._container, 'display', 'none');
 		}
 	}
