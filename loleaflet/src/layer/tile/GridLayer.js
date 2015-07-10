@@ -104,6 +104,7 @@ L.GridLayer = L.Layer.extend({
 	getEvents: function () {
 		var events = {
 			viewreset: this._viewReset,
+			movestart: this._moveStart,
 			moveend: this._move
 		};
 
@@ -449,8 +450,17 @@ L.GridLayer = L.Layer.extend({
 		return this.options.tileSize;
 	},
 
+	_moveStart: function () {
+		clearInterval(this._tilesPrefetcher);
+		this._tilesPrefetcher = null;
+		this._preFetchBorder = null;
+	},
+
 	_move: function () {
 		this._update();
+		if (!this._tilesPreFetcher) {
+			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), 2000);
+		}
 	},
 
 	_update: function (center, zoom) {
@@ -786,36 +796,44 @@ L.GridLayer = L.Layer.extend({
 		var center = map.getCenter();
 		var zoom = map.getZoom();
 
-		var pixelBounds = map.getPixelBounds(center, zoom),
-			tileRange = this._pxBoundsToTileRange(pixelBounds),
-			queue = [],
-			finalQueue = [];
-			tilesToFetch = 10;
+		if (!this._preFetchBorder) {
+			var pixelBounds = map.getPixelBounds(center, zoom),
+				tileBorder = this._pxBoundsToTileRange(pixelBounds);
+			this._preFetchBorder = tileBorder;
+		}
+		else {
+			tileBorder = this._preFetchBorder;
+		}
+		var queue = [],
+			finalQueue = [],
+			tilesToFetch = 10,
+			borderWidth = 0;
+			// don't search on a border wider than 5 tiles because it will freeze the UI
 
-		while ((tileRange.min.x >= 0 || tileRange.min.y >= 0 ||
-				tileRange.max.x * this._tileWidthTwips < this._docWidthTwips ||
-				 tileRange.max.y * this._tileHeightTwips < this._docHeightTwips) &&
-				tilesToFetch > 0) {
+		while ((tileBorder.min.x >= 0 || tileBorder.min.y >= 0 ||
+				tileBorder.max.x * this._tileWidthTwips < this._docWidthTwips ||
+				 tileBorder.max.y * this._tileHeightTwips < this._docHeightTwips) &&
+				tilesToFetch > 0 && borderWidth < 5) {
 			// while the bounds do not fully contain the document
 
-			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
+			for (var i = tileBorder.min.x; i <= tileBorder.max.x; i++) {
 				// tiles below the visible area
-				var coords = new L.Point(i, tileRange.max.y);
+				var coords = new L.Point(i, tileBorder.max.y);
 				queue.push(coords);
 			}
-			for (i = tileRange.min.x; i <= tileRange.max.x; i++) {
+			for (i = tileBorder.min.x; i <= tileBorder.max.x; i++) {
 				// tiles above the visible area
-				coords = new L.Point(i, tileRange.min.y);
+				coords = new L.Point(i, tileBorder.min.y);
 				queue.push(coords);
 			}
-			for (i = tileRange.min.y; i <= tileRange.max.y; i++) {
+			for (i = tileBorder.min.y; i <= tileBorder.max.y; i++) {
 				// tiles to the right of the visible area
-				coords = new L.Point(tileRange.max.x, i);
+				coords = new L.Point(tileBorder.max.x, i);
 				queue.push(coords);
 			}
-			for (i = tileRange.min.y; i <= tileRange.max.y; i++) {
+			for (i = tileBorder.min.y; i <= tileBorder.max.y; i++) {
 				// tiles to the left of the visible area
-				coords = new L.Point(tileRange.min.x, i);
+				coords = new L.Point(tileBorder.min.x, i);
 				queue.push(coords);
 			}
 
@@ -834,18 +852,24 @@ L.GridLayer = L.Layer.extend({
 				finalQueue.push(coords);
 				tilesToFetch -= 1;
 			}
-			if (tileRange.min.x >= 0) {
-				tileRange.min.x -= 1;
+			if (tilesToFetch === 0) {
+				// don't update the border as there are still
+				// some tiles to be fetched
+				continue;
 			}
-			if (tileRange.min.y >= 0) {
-				tileRange.min.y -= 1;
+			if (tileBorder.min.x >= 0) {
+				tileBorder.min.x -= 1;
 			}
-			if (tileRange.max.x * this._tileWidthTwips <= this._docWidthTwips) {
-				tileRange.max.x += 1;
+			if (tileBorder.min.y >= 0) {
+				tileBorder.min.y -= 1;
 			}
-			if (tileRange.max.y * this._tileHeightTwips <= this._docHeightTwips) {
-				tileRange.max.y += 1;
+			if (tileBorder.max.x * this._tileWidthTwips <= this._docWidthTwips) {
+				tileBorder.max.x += 1;
 			}
+			if (tileBorder.max.y * this._tileHeightTwips <= this._docHeightTwips) {
+				tileBorder.max.y += 1;
+			}
+			borderWidth += 1;
 		}
 
 		if (finalQueue.length > 0) {

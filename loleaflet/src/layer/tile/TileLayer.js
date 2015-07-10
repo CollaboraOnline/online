@@ -213,6 +213,7 @@ L.TileLayer = L.GridLayer.extend({
 	getEvents: function () {
 		var events = {
 			viewreset: this._viewReset,
+			movestart: this._moveStart,
 			moveend: this._move,
 			keydown: this._signalKey,
 			keypress: this._signalKey,
@@ -1046,9 +1047,15 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onZoom: function (e) {
 		if (e.type === 'zoomstart') {
+			clearInterval(this._tilesPrefetcher);
+			this._tilesPrefetcher = null;
+			this._preFetchBorder = null;
 		}
 		else if (e.type === 'zoomend') {
 			this._onUpdateCursor();
+			if (!this._tilesPreFetcher) {
+				this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), 2000);
+			}
 		}
 	}
 });
