@@ -381,8 +381,12 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		else if (textMsg.startsWith('statechanged:')) {
-			var state = textMsg.substr(14);
-			map.fire('statechanged', {state : state});
+			var unoMsg = textMsg.substr(14);
+			var unoCmd = unoMsg.match('.uno:(.*)=')[1];
+			var state = unoMsg.match('.*=(.*)')[1];
+			if (unoCmd && state) {
+				map.fire('statechanged', {unoCmd : unoCmd, state : state});
+			}
 		}
 		else if (textMsg.startsWith('status:')) {
 			command = this._parseServerCmd(textMsg);

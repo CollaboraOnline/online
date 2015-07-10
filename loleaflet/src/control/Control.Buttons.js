@@ -59,12 +59,12 @@ L.Control.Buttons = L.Control.extend({
 			L.DomUtil.addClass(e.target, 'leaflet-control-buttons-active');
 			button.active = true;
 		}
-		this._map.socket.send('uno .uno:' + button.uno);
+		this._map.toggleState(button.uno);
 	},
 
 	_onStateChange: function (e) {
-		var unoCmd = e.state.match('.uno:(.*)=')[1];
-		var state = e.state.match('.*=(.*)')[1];
+		var unoCmd = e.unoCmd;
+		var state = e.state;
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
 			if (button.uno === unoCmd) {
