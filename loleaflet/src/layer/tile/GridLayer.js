@@ -507,6 +507,7 @@ L.GridLayer = L.Layer.extend({
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
 				this._map.socket.send('canceltiles');
+				this._pendingTilesCount = 0;
 				for (key in this._tiles) {
 					if (!this._tiles[key].loaded) {
 						L.DomUtil.remove(this._tiles[key].el);
@@ -651,6 +652,7 @@ L.GridLayer = L.Layer.extend({
 		if (!this._tileCache[key]) {
 			if (this.options.useSocket && this._map.socket) {
 				var twips = this._coordsToTwips(coords);
+				this._pendingTilesCount += 1;
 				this._map.socket.send('tile ' +
 										'part=' + this._currentPart + ' ' +
 										'width=' + this._tileSize + ' ' +
@@ -775,6 +777,84 @@ L.GridLayer = L.Layer.extend({
 	_onScrollEnd: function (evt) {
 		this._prevScrollY = -evt.mcs.top;
 		this._prevScrollX = -evt.mcs.left;
+	},
+
+	_preFetchTiles: function () {
+		if (this._pendingTilesCount > 0) {
+			return;
+		}
+		var center = map.getCenter();
+		var zoom = map.getZoom();
+
+		var pixelBounds = map.getPixelBounds(center, zoom),
+			tileRange = this._pxBoundsToTileRange(pixelBounds),
+			queue = [],
+			finalQueue = [];
+			tilesToFetch = 10;
+
+		while ((tileRange.min.x >= 0 || tileRange.min.y >= 0 ||
+				tileRange.max.x * this._tileWidthTwips < this._docWidthTwips ||
+				 tileRange.max.y * this._tileHeightTwips < this._docHeightTwips) &&
+				tilesToFetch > 0) {
+			// while the bounds do not fully contain the document
+
+			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
+				// tiles below the visible area
+				var coords = new L.Point(i, tileRange.max.y);
+				queue.push(coords);
+			}
+			for (i = tileRange.min.x; i <= tileRange.max.x; i++) {
+				// tiles above the visible area
+				coords = new L.Point(i, tileRange.min.y);
+				queue.push(coords);
+			}
+			for (i = tileRange.min.y; i <= tileRange.max.y; i++) {
+				// tiles to the right of the visible area
+				coords = new L.Point(tileRange.max.x, i);
+				queue.push(coords);
+			}
+			for (i = tileRange.min.y; i <= tileRange.max.y; i++) {
+				// tiles to the left of the visible area
+				coords = new L.Point(tileRange.min.x, i);
+				queue.push(coords);
+			}
+
+			for (i = 0; i < queue.length && tilesToFetch > 0; i++) {
+				coords = queue[i];
+				coords.z = zoom;
+				coords.part = this._currentPart,
+				key = this._tileCoordsToKey(coords);
+
+				if (!this._isValidTile(coords) ||
+						this._tiles[key] ||
+						this._tileCache[key]) {
+					continue;
+				}
+
+				finalQueue.push(coords);
+				tilesToFetch -= 1;
+			}
+			if (tileRange.min.x >= 0) {
+				tileRange.min.x -= 1;
+			}
+			if (tileRange.min.y >= 0) {
+				tileRange.min.y -= 1;
+			}
+			if (tileRange.max.x * this._tileWidthTwips <= this._docWidthTwips) {
+				tileRange.max.x += 1;
+			}
+			if (tileRange.max.y * this._tileHeightTwips <= this._docHeightTwips) {
+				tileRange.max.y += 1;
+			}
+		}
+
+		if (finalQueue.length > 0) {
+			var fragment = document.createDocumentFragment();
+			for (i = 0; i < finalQueue.length; i++) {
+				this._addTile(finalQueue[i], fragment);
+			}
+			this._level.el.appendChild(fragment);
+		}
 	}
 });
 

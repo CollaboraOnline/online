@@ -175,6 +175,7 @@ L.TileLayer = L.GridLayer.extend({
 			draggable: true
 		});
 		this._mouseEventsQueue = [];
+		this._pendingTilesCount = 0;
 		this._textArea = L.DomUtil.get('clipboard');
 		this._textArea.focus();
 	},
@@ -399,6 +400,9 @@ L.TileLayer = L.GridLayer.extend({
 				this._parts = command.parts;
 				this._currentPart = command.currentPart;
 				this._update();
+				if (!this._tilesPreFetcher) {
+					this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), 2000);
+				}
 			}
 		}
 		else if (textMsg.startsWith('statusindicatorstart:')) {
@@ -435,7 +439,9 @@ L.TileLayer = L.GridLayer.extend({
 			else {
 				this._tileCache[key] = 'data:image/png;base64,' + window.btoa(strBytes);
 			}
-
+			if (this._pendingTilesCount > 0) {
+				this._pendingTilesCount -= 1;
+			}
 		}
 		else if (textMsg.startsWith('textselection:')) {
 			strTwips = textMsg.match(/\d+/g);
