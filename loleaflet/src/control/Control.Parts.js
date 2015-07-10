@@ -21,28 +21,16 @@ L.Control.Parts = L.Control.extend({
 		this._nextPartButton = this._createButton(options.nextPartText, options.nextPartTitle,
 		        partName + '-next', container, this._nextPart);
 
-		this._parts = options.parts;
-		this._currentPart = options.currentPart;
-		this._updateDisabled();
-		map.on('setpart', this._updateDisabled, this);
-
+		map.on('updateparts', this._updateDisabled, this);
 		return container;
 	},
 
 	_prevPart: function () {
-		this._map.fire('prevpart');
-		if (this._currentPart > 0) {
-			this._currentPart -= 1;
-		}
-		this._updateDisabled();
+		this._map.setPart('previous');
 	},
 
 	_nextPart: function () {
-		this._map.fire('nextpart');
-		if (this._currentPart < this._parts - 1) {
-			this._currentPart += 1;
-		}
-		this._updateDisabled();
+		this._map.setPart('next');
 	},
 
 	_createButton: function (html, title, className, container, fn) {
@@ -61,16 +49,13 @@ L.Control.Parts = L.Control.extend({
 	},
 
 	_updateDisabled: function (e) {
-		if (e) {
-			this._currentPart = e.currentPart;
-		}
 		var className = 'leaflet-disabled';
-		if (this._currentPart === 0) {
+		if (e.currentPart === 0) {
 			L.DomUtil.addClass(this._prevPartButton, className);
 		} else {
 			L.DomUtil.removeClass(this._prevPartButton, className);
 		}
-		if (this._currentPart === this._parts - 1) {
+		if (e.currentPart === e.parts - 1) {
 			L.DomUtil.addClass(this._nextPartButton, className);
 		} else {
 			L.DomUtil.removeClass(this._nextPartButton, className);
@@ -79,8 +64,14 @@ L.Control.Parts = L.Control.extend({
 });
 
 L.Map.mergeOptions({
-	partsControl: false
+	partsControl: true
 });
+
+L.Map.addInitHook(function () {
+	this.partsControl = new L.Control.Parts();
+	this.addControl(this.partsControl);
+});
+
 
 L.control.parts = function (options) {
 	return new L.Control.Parts(options);

@@ -275,6 +275,11 @@ var deps = {
 		desc: 'Toolbar buttons handler.'
 	},
 
+	Parts: {
+		src: ['control/Parts.js'],
+		desc: 'Parts change handler.'
+	},
+
 	AnimationPan: {
 		src: [
 			'dom/DomEvent.js',
