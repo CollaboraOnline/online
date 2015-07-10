@@ -63,16 +63,6 @@ L.Control.Parts = L.Control.extend({
 	}
 });
 
-L.Map.mergeOptions({
-	partsControl: true
-});
-
-L.Map.addInitHook(function () {
-	this.partsControl = new L.Control.Parts();
-	this.addControl(this.partsControl);
-});
-
-
 L.control.parts = function (options) {
 	return new L.Control.Parts(options);
 };

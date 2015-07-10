@@ -67,6 +67,14 @@
             doubleClickZoom: false
             });
 
+    ////// Controls /////
+    map.addControl(L.control.buttons());
+    map.addControl(L.control.search());
+    map.addControl(L.control.permissionSwitch());
+    map.addControl(L.control.zoom());
+    map.addControl(L.control.parts());
+    map.addControl(L.control.statusIndicator());
+
     ////// Document layer ////
     var docLayer = new L.TileLayer('', {
         doc: filePath,
@@ -75,10 +83,6 @@
         readOnly: false
     });
     map.addLayer(docLayer);
-
-    ////// Zoom Control /////
-    var zoomControl = L.control.zoom();
-    map.addControl(zoomControl);
 
     ////// Scrollbar /////
     (function($){

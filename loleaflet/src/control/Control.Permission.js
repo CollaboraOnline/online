@@ -44,17 +44,6 @@ L.Control.PermissionSwitch = L.Control.extend({
 	}
 });
 
-L.Map.mergeOptions({
-	permissionSwitchControl: true
-});
-
-L.Map.addInitHook(function () {
-	if (this.options.permissionSwitchControl) {
-		this.permissionSwitchControl = new L.Control.PermissionSwitch();
-		this.addControl(this.permissionSwitchControl);
-	}
-});
-
 L.control.permissionSwitch = function (options) {
 	return new L.Control.PermissionSwitch(options);
 };

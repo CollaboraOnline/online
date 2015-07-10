@@ -29,17 +29,6 @@ L.Control.StatusIndicator = L.Control.extend({
 	}
 });
 
-L.Map.mergeOptions({
-	statusIndicatorControl: true
-});
-
-L.Map.addInitHook(function () {
-	if (this.options.statusIndicatorControl) {
-		this.statusIndicatorControl = new L.Control.StatusIndicator();
-		this.addControl(this.statusIndicatorControl);
-	}
-});
-
 L.control.statusIndicator = function (options) {
 	return new L.Control.StatusIndicator(options);
 };

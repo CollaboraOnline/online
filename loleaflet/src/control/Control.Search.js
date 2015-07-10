@@ -115,15 +115,6 @@ L.Control.Search = L.Control.extend({
 	}
 });
 
-L.Map.mergeOptions({
-	searchControl: true
-});
-
-L.Map.addInitHook(function () {
-	this.searchControl = new L.Control.Search();
-	this.addControl(this.searchControl);
-});
-
 L.control.search = function (options) {
 	return new L.Control.Search(options);
 };

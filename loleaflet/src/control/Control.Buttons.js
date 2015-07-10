@@ -79,15 +79,6 @@ L.Control.Buttons = L.Control.extend({
 	}
 });
 
-L.Map.mergeOptions({
-	buttonsControl: true
-});
-
-L.Map.addInitHook(function () {
-	this.buttonsControl = new L.Control.Buttons();
-	this.addControl(this.buttonsControl);
-});
-
 L.control.buttons = function (options) {
 	return new L.Control.Buttons(options);
 };
