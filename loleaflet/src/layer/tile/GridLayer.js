@@ -546,8 +546,8 @@ L.GridLayer = L.Layer.extend({
 		if (coords.x < 0 || coords.y < 0) {
 			return false;
 		}
-		if (coords.x * this._tileWidthTwips > this._docWidthTwips ||
-				coords.y * this._tileHeightTwips > this._docHeightTwips) {
+		if (coords.x * this._tileWidthTwips >= this._docWidthTwips ||
+				coords.y * this._tileHeightTwips >= this._docHeightTwips) {
 			return false;
 		}
 		return true;
@@ -806,6 +806,7 @@ L.GridLayer = L.Layer.extend({
 		}
 		var queue = [],
 			finalQueue = [],
+			visitedTiles = {},
 			tilesToFetch = 10,
 			borderWidth = 0;
 			// don't search on a border wider than 5 tiles because it will freeze the UI
@@ -845,10 +846,12 @@ L.GridLayer = L.Layer.extend({
 
 				if (!this._isValidTile(coords) ||
 						this._tiles[key] ||
-						this._tileCache[key]) {
+						this._tileCache[key] ||
+						visitedTiles[key]) {
 					continue;
 				}
 
+				visitedTiles[key] = true;
 				finalQueue.push(coords);
 				tilesToFetch -= 1;
 			}
