@@ -59,7 +59,7 @@ L.Control.Buttons = L.Control.extend({
 			L.DomUtil.addClass(e.target, 'leaflet-control-buttons-active');
 			button.active = true;
 		}
-		this._map.toggleState(button.uno);
+		this._map.toggleCommandState(button.uno);
 	},
 
 	_onStateChange: function (e) {
