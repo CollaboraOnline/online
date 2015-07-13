@@ -768,19 +768,26 @@ L.TileLayer = L.GridLayer.extend({
 				return;
 			}
 			else {
-				// if it's a click or mouseup after selecting
-				if (this._mouseEventsQueue.length > 0) {
-					// it's a click, fire mousedown
-					this._mouseEventsQueue[0]();
-					this._clickTime = Date.now();
-					if (this._permission !== 'edit') {
-						this._map.setPermission('edit');
-					}
-				}
-				this._mouseEventsQueue = [];
+				this._clickTime = Date.now();
 				mousePos = this._latLngToTwips(e.latlng);
-				this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
-				this._textArea.focus();
+				var timeOut = 250;
+				if (this._permission === 'edit') {
+					timeOut = 0;
+				}
+				this._mouseEventsQueue.push(L.bind(function() {
+					// if it's a click or mouseup after selecting
+					if (this._mouseEventsQueue.length > 1) {
+						// it's a click, fire mousedown
+						this._mouseEventsQueue[0]();
+						if (this._permission !== 'edit') {
+							this._map.setPermission('edit');
+						}
+					}
+					this._mouseEventsQueue = [];
+					this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
+					this._textArea.focus();
+				}, this));
+				this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), timeOut);
 
 				if (this._startMarker._icon) {
 					L.DomUtil.removeClass(this._startMarker._icon, 'leaflet-not-clickable');
@@ -850,15 +857,15 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Receives a key press or release event.
 	_signalKey: function (e) {
-		if (this._permission !== 'edit') {
-			return;
-		}
-
 		if (e.originalEvent.ctrlKey) {
 			// we prepare for a copy event
 			this._textArea.value = 'dummy text';
 			this._textArea.focus();
 			this._textArea.select();
+			return;
+		}
+
+		if (this._permission !== 'edit') {
 			return;
 		}
 
