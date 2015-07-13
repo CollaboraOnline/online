@@ -18,6 +18,24 @@ L.Map.include({
 			L.DomUtil.removeClass(this._container, className);
 		}
 		this.fire('updatepermission', {perm : perm});
+	},
+
+	enableSelection: function () {
+		if (this._docLayer._permission === 'edit') {
+			return;
+		}
+		var className = 'leaflet-editmode';
+		this.dragging.disable();
+		L.DomUtil.addClass(this._container, className);
+	},
+
+	disableSelection: function () {
+		if (this._docLayer._permission === 'edit') {
+			return;
+		}
+		var className = 'leaflet-editmode';
+		this.dragging.enable();
+		L.DomUtil.removeClass(this._container, className);
 	}
 });
 

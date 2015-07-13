@@ -228,6 +228,13 @@ var deps = {
 		desc: 'Switches edit, view and readOnly modes'
 	},
 
+	ControlSelection: {
+		src: ['control/Control.js',
+		      'control/Control.Selection.js'],
+		heading: 'Controls',
+		desc: 'Enables selection in view mode'
+	},
+
 	ControlButtons: {
 		src: ['control/Control.js',
 		      'control/Control.Buttons.js'],
