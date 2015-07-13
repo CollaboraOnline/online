@@ -4,7 +4,7 @@
 L.Map.include({
 	setPart: function (part) {
 		var docLayer = this._docLayer
-		if (part === 'previous') {
+		if (part === 'prev') {
 			if (docLayer._currentPart > 0) {
 				docLayer._currentPart -= 1;
 			}

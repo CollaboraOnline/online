@@ -26,7 +26,7 @@ L.Control.Parts = L.Control.extend({
 	},
 
 	_prevPart: function () {
-		this._map.setPart('previous');
+		this._map.setPart('prev');
 	},
 
 	_nextPart: function () {
