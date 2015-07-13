@@ -13,8 +13,11 @@
 #include "config.h"
 
 #include <string>
+#include <mutex>
 
 #include <Poco/Util/OptionSet.h>
+#include <Poco/Random.h>
+#include <Poco/Path.h>
 #include <Poco/Util/ServerApplication.h>
 
 class LOOLWSD: public Poco::Util::ServerApplication
@@ -35,6 +38,7 @@ public:
 
     static const int DEFAULT_CLIENT_PORT_NUMBER = 9980;
     static const int MASTER_PORT_NUMBER = 9981;
+    static const int FILE_PORT_NUMBER = 9979;
     static const std::string CHILD_URI;
 
 protected:
@@ -46,12 +50,20 @@ protected:
 
 private:
     void displayHelp();
-    int childMain();
     bool childMode() const;
+    void componentMain();
+    void desktopMain();
+    void loolMain();
+    void startupComponent(int nComponents);
+    void startupDesktop(int nDesktop);
+    int  createComponent();
+    int  createDesktop();
 
     bool _doTest;
     Poco::UInt64 _childId;
     static int _numPreSpawnedChildren;
+    static std::mutex _rngMutex;
+    static Poco::Random _rng;
 
 #if ENABLE_DEBUG
 public:

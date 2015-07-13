@@ -102,10 +102,9 @@ public:
     bool haveSeparateProcess();
 
     static Poco::Path getJailPath(Poco::UInt64 childId);
-
-    // Set up the chroot environment for one child process and start
-    // it, in advance of it being actually needed
-    static void preSpawn();
+    static void addPendingChildrem(Poco::UInt64 childId);
+    static int  getAvailableChildSessions();
+    static int  getPendingPreSpawnedChildren();
 
     static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 

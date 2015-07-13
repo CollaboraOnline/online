@@ -43,6 +43,9 @@
 #include <Poco/URIStreamOpener.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Exception.h>
+#include <Poco/Net/NetException.h>
+#include <Poco/Net/DialogSocket.h>
+#include <Poco/Net/SocketAddress.h>
 
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
@@ -70,6 +73,9 @@ using Poco::URI;
 using Poco::URIStreamOpener;
 using Poco::Util::Application;
 using Poco::Exception;
+using Poco::Net::DialogSocket;
+using Poco::Net::SocketAddress;
+using Poco::Net::WebSocketException;
 
 const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
 
@@ -215,13 +221,22 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=child kind=syntax");
             return false;
         }
+
         UInt64 childId = std::stoull(tokens[1]);
-        if (_pendingPreSpawnedChildren.find(childId) == _pendingPreSpawnedChildren.end())
+        // TODO. rework, the desktop and its childrem is jail root same folder
+        /*if (_pendingPreSpawnedChildren.find(childId) == _pendingPreSpawnedChildren.end())
         {
+            std::cout << Util::logPrefix() << "Error _pendingPreSpawnedChildren.find(childId)" << this << " id=" << childId << std::endl;
+
             sendTextFrame("error: cmd=child kind=notfound");
             return false;
+        }*/
+
+        if (_pendingPreSpawnedChildren.size() > 0)
+        {
+            std::set<UInt64>::iterator it = _pendingPreSpawnedChildren.begin();
+            _pendingPreSpawnedChildren.erase(it);
         }
-        _pendingPreSpawnedChildren.erase(childId);
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.insert(shared_from_this());
         std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
@@ -306,175 +321,21 @@ Path MasterProcessSession::getJailPath(UInt64 childId)
     return Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(childId));
 }
 
-namespace
+void MasterProcessSession::addPendingChildrem(UInt64 childId)
 {
-    ThreadLocal<std::string> sourceForLinkOrCopy;
-    ThreadLocal<Path> destinationForLinkOrCopy;
-
-    int linkOrCopyFunction(const char *fpath,
-                           const struct stat *sb,
-                           int typeflag,
-                           struct FTW *ftwbuf)
-    {
-        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
-            return 0;
-
-        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
-        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
-
-#ifdef __APPLE__
-        if (strcmp(relativeOldPath, "PkgInfo") == 0)
-            return 0;
-#endif
-
-        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
-
-        switch (typeflag)
-        {
-        case FTW_F:
-            File(newPath.parent()).createDirectories();
-            if (link(fpath, newPath.toString().c_str()) == -1)
-            {
-                Application::instance().logger().error(Util::logPrefix() +
-                                                       "link(\"" + fpath + "\",\"" + newPath.toString() + "\") failed: " +
-                                                       strerror(errno));
-                exit(1);
-            }
-            break;
-        case FTW_DP:
-            {
-                struct stat st;
-                if (stat(fpath, &st) == -1)
-                {
-                    Application::instance().logger().error(Util::logPrefix() +
-                                                           "stat(\"" + fpath + "\") failed: " +
-                                                           strerror(errno));
-                    return 1;
-                }
-                File(newPath).createDirectories();
-                struct utimbuf ut;
-                ut.actime = st.st_atime;
-                ut.modtime = st.st_mtime;
-                if (utime(newPath.toString().c_str(), &ut) == -1)
-                {
-                    Application::instance().logger().error(Util::logPrefix() +
-                                                           "utime(\"" + newPath.toString() + "\", &ut) failed: " +
-                                                           strerror(errno));
-                    return 1;
-                }
-            }
-            break;
-        case FTW_DNR:
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "Cannot read directory '" + fpath + "'");
-            return 1;
-        case FTW_NS:
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "nftw: stat failed for '" + fpath + "'");
-            return 1;
-        case FTW_SLN:
-            Application::instance().logger().information(Util::logPrefix() +
-                                                         "nftw: symlink to nonexistent file: '" + fpath + "', ignored");
-            break;
-        default:
-            assert(false);
-        }
-        return 0;
-    }
-
-    void linkOrCopy(const std::string& source, const Path& destination)
-    {
-        *sourceForLinkOrCopy = source;
-        if (sourceForLinkOrCopy->back() == '/')
-            sourceForLinkOrCopy->pop_back();
-        *destinationForLinkOrCopy = destination;
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "linkOrCopy: nftw() failed for '" + source + "'");
-    }
-}
-
-void MasterProcessSession::preSpawn()
-{
-    // Create child-specific subtree that will become its chroot root
-
-    std::unique_lock<std::mutex> rngLock(_rngMutex);
-    UInt64 childId = (((UInt64)_rng.next()) << 32) | _rng.next() | 1;
-    rngLock.unlock();
-
-    Path jail = getJailPath(childId);
-    File(jail).createDirectory();
-
-    Path jailLOInstallation(jail, LOOLWSD::loSubPath);
-    jailLOInstallation.makeDirectory();
-    File(jailLOInstallation).createDirectory();
-
-    // Copy (link) LO installation and other necessary files into it from the template
-
-    linkOrCopy(LOOLWSD::sysTemplate, jail);
-    linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
-
-#ifdef __linux
-    // Create the urandom and random devices
-    File(Path(jail, "/dev")).createDirectory();
-    if (mknod((jail.toString() + "/dev/random").c_str(),
-                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                makedev(1, 8)) != 0)
-    {
-        Application::instance().logger().error(Util::logPrefix() +
-                "mknod(" + jail.toString() + "/dev/random) failed: " +
-                strerror(errno));
-
-    }
-    if (mknod((jail.toString() + "/dev/urandom").c_str(),
-                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                makedev(1, 9)) != 0)
-    {
-        Application::instance().logger().error(Util::logPrefix() +
-                "mknod(" + jail.toString() + "/dev/urandom) failed: " +
-                strerror(errno));
-
-    }
-#endif
-
     _pendingPreSpawnedChildren.insert(childId);
-
-    Process::Args args;
-
-#if ENABLE_DEBUG
-    if (LOOLWSD::runningAsRoot)
-        args.push_back(Application::instance().commandPath());
-#endif
-
-    args.push_back("--child=" + std::to_string(childId));
-    args.push_back("--port=" + std::to_string(LOOLWSD::portNumber));
-    args.push_back("--jail=" + jail.toString());
-    args.push_back("--losubpath=" + LOOLWSD::loSubPath);
-
-    std::string executable;
-
-#if ENABLE_DEBUG
-    if (LOOLWSD::runningAsRoot)
-    {
-        args.push_back("--uid=" + std::to_string(LOOLWSD::uid));
-        executable = "/usr/bin/sudo";
-    }
-    else
-#endif
-    {
-        executable = Application::instance().commandPath();
-    }
-
-    Application::instance().logger().information(Util::logPrefix() + "Launching child: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()));
-
-#if ENABLE_DEBUG
-    ProcessHandle child = Process::launch(executable, args);
-#else
-    ProcessHandle child = Process::launch(Application::instance().commandPath(), args);
-#endif
-
-    _childProcesses[child.id()] = childId;
 }
+
+int  MasterProcessSession::getAvailableChildSessions()
+{
+    return _availableChildSessions.size();
+}
+
+int  MasterProcessSession::getPendingPreSpawnedChildren()
+{
+    return _pendingPreSpawnedChildren.size();
+}
+
 
 bool MasterProcessSession::invalidateTiles(const char *buffer, int length, StringTokenizer& tokens)
 {
@@ -616,9 +477,6 @@ void MasterProcessSession::dispatchChild()
         {
             // Running out of pre-spawned children, so spawn one more
             Application::instance().logger().information(Util::logPrefix() + "Running out of pre-spawned childred, adding one more");
-            lock.unlock();
-            preSpawn();
-            lock.lock();
         }
 
         std::cout << Util::logPrefix() << "waiting for a child session to become available" << std::endl;
@@ -640,46 +498,29 @@ void MasterProcessSession::dispatchChild()
 
     if (!aUri.empty() && aUri.getScheme() == "file")
     {
-        Path aSrcFile(aUri.getPath());
-        Path aDstFile(Path(getJailPath(childSession->_childId), jailDocumentURL.substr(1)), aSrcFile.getFileName());
-        Path aDstPath(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
-        Path aJailFile(jailDocumentURL, aSrcFile.getFileName());
-
+        // The process is jail rooted, so it requests loolMain process to transfer files.
         try
         {
-            File(aDstPath).createDirectories();
+            Path aSrcFile(aUri.getPath());
+            Path aDstFile(Path(getJailPath(childSession->_childId), jailDocumentURL.substr(1)), aSrcFile.getFileName());
+            std::string sCopy(aSrcFile.toString() + " " + aDstFile.toString());
+            std::string str;
+
+            DialogSocket ds;
+            ds.connect(SocketAddress("127.0.0.1", LOOLWSD::FILE_PORT_NUMBER));
+            ds.sendMessage(sCopy);
+            ds.receiveMessage(str);
+
+            if (str != "OK")
+                Application::instance().logger().error( Util::logPrefix() +
+                    "DataSocket copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + str);
         }
         catch (Exception& exc)
         {
             Application::instance().logger().error( Util::logPrefix() +
-                "createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
-
+                "FileTransferHanlder failed: " + exc.displayText());
         }
 
-#ifdef __linux
-        Application::instance().logger().information(Util::logPrefix() + "Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
-        if (link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
-        {
-            // Failed
-            Application::instance().logger().error( Util::logPrefix() +
-                "link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + strerror(errno) );
-        }
-#endif
-
-        try
-        {
-            //fallback
-            if (!File(aDstFile).exists())
-            {
-                Application::instance().logger().information(Util::logPrefix() + "Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
-                File(aSrcFile).copyTo(aDstFile.toString());
-            }
-        }
-        catch (Exception& exc)
-        {
-            Application::instance().logger().error( Util::logPrefix() +
-                "copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
-        }
     }
 
     _peer = childSession;
@@ -687,9 +528,6 @@ void MasterProcessSession::dispatchChild()
 
     std::string loadRequest = "load url=" + _docURL;
     forwardToPeer(loadRequest.c_str(), loadRequest.size());
-
-    // As we took one child process into use, spawn a new one
-    preSpawn();
 }
 
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)
@@ -919,6 +757,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         sendTextFrame("error: cmd=load kind=failed");
         return false;
     }
+
     _loKitDocument->pClass->initializeForRendering(_loKitDocument);
 
     if (!getStatus(buffer, length))

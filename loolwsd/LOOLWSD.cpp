@@ -50,10 +50,15 @@ DEALINGS IN THE SOFTWARE.
 #include <sys/wait.h>
 #endif
 
+#include <ftw.h>
+#include <utime.h>
+
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <sstream>
+#include <mutex>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -82,6 +87,12 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Util/OptionException.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
+#include <Poco/Mutex.h>
+#include <Poco/Net/DialogSocket.h>
+#include <Poco/Net/Net.h>
+#include <Poco/ThreadLocal.h>
+#include <Poco/NamedMutex.h>
+
 
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
@@ -120,6 +131,12 @@ using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
+using Poco::Net::DialogSocket;
+using Poco::FastMutex;
+using Poco::Net::Socket;
+using Poco::ThreadLocal;
+using Poco::Random;
+using Poco::NamedMutex;
 
 class QueueHandler: public Runnable
 {
@@ -392,70 +409,91 @@ private:
     HTTPServer& _srv;
 };
 
-class Undertaker : public Runnable
+class FileTransferHandler : public Runnable
 {
 public:
-    Undertaker()
+    FileTransferHandler() : _socket(ServerSocket(LOOLWSD::FILE_PORT_NUMBER))
     {
     }
 
     void run() override
     {
-        bool someChildrenHaveDied = false;
+        Poco::Timespan span(250000);
 
-        while (!someChildrenHaveDied || MasterProcessSession::_childProcesses.size() > 0)
+        while (true)
         {
-            int status;
-            pid_t pid = waitpid(-1, &status, 0);
-            if (pid < 0)
+            if (_socket.poll(span, Socket::SELECT_READ))
             {
-                if (errno == ECHILD)
+                DialogSocket ds = _socket.acceptConnection();
+
+                try
                 {
-                    if (!someChildrenHaveDied)
+                    std::string command;
+                    while (ds.receiveMessage(command))
                     {
-                        // We haven't spawned any children yet, or at least none has died yet. So
-                        // wait a bit and try again
-                        Thread::sleep(1000);
-                        continue;
-                    }
-                    else
-                    {
-                        // We have spawned children, and we think that we still have them running,
-                        // but we don't, huh? Something badly messed up, or just a timing glitch,
-                        // like we are at the moment in the process of spawning new children?
-                        // Sleep or return from the function (i.e. finish the Undertaker thread)?
-                        std::cout << Util::logPrefix() << "No child processes even if we think there should be some!?" << std::endl;
-                        return;
+                        FastMutex::ScopedLock lock(_mutex);
+                        ds.sendMessage(transferFile(command));
                     }
                 }
-            }
-
-            if (WIFSIGNALED(status))
-                Application::instance().logger().error(Util::logPrefix() + "Child " + std::to_string(pid) + " killed by signal " + Util::signalName(WTERMSIG(status)));
-            else
-                Application::instance().logger().information(Util::logPrefix() + "Child " + std::to_string(pid) + " died normally, status: " + std::to_string(WEXITSTATUS(status)));
-
-            if (MasterProcessSession::_childProcesses.find(pid) == MasterProcessSession::_childProcesses.end())
-                std::cout << Util::logPrefix() << "(Not one of our known child processes)" << std::endl;
-            else
-            {
-                File jailDir(MasterProcessSession::getJailPath(MasterProcessSession::_childProcesses[pid]));
-                MasterProcessSession::_childProcesses.erase(pid);
-                someChildrenHaveDied = true;
-                if (!jailDir.exists() || !jailDir.isDirectory())
-                {
-                    Application::instance().logger().error(Util::logPrefix() + "Jail '" + jailDir.path() + "' does not exist or is not a directory");
-                }
-                else
-                {
-                    std::cout << Util::logPrefix() << "Removing jail tree " << jailDir.path() << std::endl;
-                    jailDir.remove(true);
-                }
+				catch (Poco::Exception& exc)
+				{
+					std::cerr << "FileTransferHandler: " << exc.displayText() << std::endl;
+				}
             }
         }
-        std::cout << Util::logPrefix() << "All child processes have died (I hope)" << std::endl;
     }
+
+    std::string transferFile(std::string command)
+    {
+        StringTokenizer tokens(command, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        if ( tokens.count() != 2 )
+            return "Souce and Destination is needed :" + command;
+
+        Path aSrcFile(tokens[0]);
+        Path aDstFile(tokens[1]);
+        Path aDstPath(aDstFile.parent());
+
+        try
+        {
+            File(aDstPath).createDirectories();
+        }
+        catch (Exception& exc)
+        {
+            return exc.displayText();
+        }
+
+#ifdef __linux
+        Application::instance().logger().information(Util::logPrefix() + "Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
+        if (link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
+        {
+            // Failed
+            Application::instance().logger().error( Util::logPrefix() +
+                "link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + strerror(errno) );
+        }
+#endif
+
+        try
+        {
+            //fallback
+            if (!File(aDstFile).exists())
+            {
+                Application::instance().logger().information(Util::logPrefix() + "Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
+                File(aSrcFile).copyTo(aDstFile.toString());
+            }
+        }
+        catch (Exception& exc)
+        {
+            return exc.displayText();
+        }
+
+        return "OK";
+    }
+
+private:
+	Poco::Net::ServerSocket  _socket;
+    mutable Poco::FastMutex  _mutex;
 };
+
 
 int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
 std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
@@ -464,6 +502,10 @@ std::string LOOLWSD::loTemplate;
 std::string LOOLWSD::childRoot;
 std::string LOOLWSD::loSubPath = "lo";
 std::string LOOLWSD::jail;
+std::mutex LOOLWSD::_rngMutex;
+Random LOOLWSD::_rng;
+static NamedMutex namedMutexLOOL("loolwsd");
+
 int LOOLWSD::_numPreSpawnedChildren = 10;
 #if ENABLE_DEBUG
 bool LOOLWSD::runningAsRoot = false;
@@ -603,6 +645,91 @@ void LOOLWSD::displayHelp()
 
 namespace
 {
+    ThreadLocal<std::string> sourceForLinkOrCopy;
+    ThreadLocal<Path> destinationForLinkOrCopy;
+
+    int linkOrCopyFunction(const char *fpath,
+                           const struct stat *sb,
+                           int typeflag,
+                           struct FTW *ftwbuf)
+    {
+        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
+            return 0;
+
+        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
+        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
+
+#ifdef __APPLE__
+        if (strcmp(relativeOldPath, "PkgInfo") == 0)
+            return 0;
+#endif
+
+        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
+
+        switch (typeflag)
+        {
+        case FTW_F:
+            File(newPath.parent()).createDirectories();
+            if (link(fpath, newPath.toString().c_str()) == -1)
+            {
+                Application::instance().logger().error(Util::logPrefix() +
+                                                       "link(\"" + fpath + "\",\"" + newPath.toString() + "\") failed: " +
+                                                       strerror(errno));
+                exit(1);
+            }
+            break;
+        case FTW_DP:
+            {
+                struct stat st;
+                if (stat(fpath, &st) == -1)
+                {
+                    Application::instance().logger().error(Util::logPrefix() +
+                                                           "stat(\"" + fpath + "\") failed: " +
+                                                           strerror(errno));
+                    return 1;
+                }
+                File(newPath).createDirectories();
+                struct utimbuf ut;
+                ut.actime = st.st_atime;
+                ut.modtime = st.st_mtime;
+                if (utime(newPath.toString().c_str(), &ut) == -1)
+                {
+                    Application::instance().logger().error(Util::logPrefix() +
+                                                           "utime(\"" + newPath.toString() + "\", &ut) failed: " +
+                                                           strerror(errno));
+                    return 1;
+                }
+            }
+            break;
+        case FTW_DNR:
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "Cannot read directory '" + fpath + "'");
+            return 1;
+        case FTW_NS:
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "nftw: stat failed for '" + fpath + "'");
+            return 1;
+        case FTW_SLN:
+            Application::instance().logger().information(Util::logPrefix() +
+                                                         "nftw: symlink to nonexistent file: '" + fpath + "', ignored");
+            break;
+        default:
+            assert(false);
+        }
+        return 0;
+    }
+
+    void linkOrCopy(const std::string& source, const Path& destination)
+    {
+        *sourceForLinkOrCopy = source;
+        if (sourceForLinkOrCopy->back() == '/')
+            sourceForLinkOrCopy->pop_back();
+        *destinationForLinkOrCopy = destination;
+        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "linkOrCopy: nftw() failed for '" + source + "'");
+    }
+
     void dropCapability(
 #ifdef __linux
                         cap_value_t capability
@@ -677,55 +804,14 @@ namespace
     }
 }
 
-int LOOLWSD::childMain()
+// Writer, Impress or Calc
+void LOOLWSD::componentMain()
 {
-    std::cout << Util::logPrefix() << "Child here! id=" << _childId << std::endl;
-
-#ifdef __linux
-    dropCapability(CAP_FOWNER);
-    dropCapability(CAP_MKNOD);
-#endif
-    // We use the same option set for both parent and child loolwsd,
-    // so must check options required in the child (but not in the
-    // parent) separately now. And also for options that are
-    // meaningless to the child.
-    if (jail == "")
-        throw MissingOptionException("systemplate");
-
-    if (sysTemplate != "")
-        throw IncompatibleOptionsException("systemplate");
-    if (loTemplate != "")
-        throw IncompatibleOptionsException("lotemplate");
-    if (childRoot != "")
-        throw IncompatibleOptionsException("childroot");
-
-    if (chroot(jail.c_str()) == -1)
-    {
-        logger().error("chroot(\"" + jail + "\") failed: " + strerror(errno));
-        exit(1);
-    }
-
-#ifdef __linux
-    dropCapability(CAP_SYS_CHROOT);
-#else
-    dropCapability();
-#endif
-
-    if (chdir("/") == -1)
-    {
-        logger().error(std::string("chdir(\"/\") in jail failed: ") + strerror(errno));
-        exit(1);
-    }
-
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
-            "attach process " << Process::id() << " in debugger now." << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
-    }
-
     try
     {
+        // initialisation
+        //_childId = Process::id();
+
 #ifdef __APPLE__
         LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
 #else
@@ -735,8 +821,12 @@ int LOOLWSD::childMain()
         if (!loKit)
         {
             logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
-            return Application::EXIT_UNAVAILABLE;
+            exit(Application::EXIT_UNAVAILABLE);
         }
+
+        // wait until desktop sockets setup
+        namedMutexLOOL.lock();
+        namedMutexLOOL.unlock();
 
         // Open websocket connection between the child process and the
         // parent. The parent forwards us requests that it can't handle.
@@ -803,14 +893,92 @@ int LOOLWSD::childMain()
         logger().error(Util::logPrefix() + "Exception: " + exc.what());
     }
 
-    // Safest to just bluntly exit
-    _Exit(Application::EXIT_OK);
+    exit(Application::EXIT_OK);
 }
 
-int LOOLWSD::main(const std::vector<std::string>& args)
+int LOOLWSD::createComponent()
 {
-    if (childMode())
-        return childMain();
+    int pid;
+
+    if ((pid = fork()) == -1)
+    {
+        std::cout << "Fork failed." << std::endl;
+        return Application::EXIT_UNAVAILABLE;
+    }
+
+    if (!pid)
+    {
+        componentMain();
+    }
+
+    MasterProcessSession::addPendingChildrem(pid);
+    MasterProcessSession::_childProcesses[pid] = pid;
+
+    return Application::EXIT_OK;
+}
+
+void LOOLWSD::startupComponent(int nComponents)
+{
+    for (int nCntr = nComponents; nCntr; nCntr--)
+    {
+        if (createComponent() < 0)
+            break;
+    }
+}
+
+void LOOLWSD::desktopMain()
+{
+    // Initialization
+    std::unique_lock<std::mutex> rngLock(_rngMutex);
+    _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
+    rngLock.unlock();
+
+    Path jail = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
+    File(jail).createDirectory();
+
+    Path jailLOInstallation(jail, LOOLWSD::loSubPath);
+    jailLOInstallation.makeDirectory();
+    File(jailLOInstallation).createDirectory();
+
+    // Copy (link) LO installation and other necessary files into it from the template
+
+    linkOrCopy(LOOLWSD::sysTemplate, jail);
+    linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
+
+#ifdef __linux
+    // Create the urandom and random devices
+    File(Path(jail, "/dev")).createDirectory();
+    if (mknod((jail.toString() + "/dev/random").c_str(),
+                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                makedev(1, 8)) != 0)
+    {
+        Application::instance().logger().error(Util::logPrefix() +
+                "mknod(" + jail.toString() + "/dev/random) failed: " +
+                strerror(errno));
+
+    }
+    if (mknod((jail.toString() + "/dev/urandom").c_str(),
+                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                makedev(1, 9)) != 0)
+    {
+        Application::instance().logger().error(Util::logPrefix() +
+                "mknod(" + jail.toString() + "/dev/urandom) failed: " +
+                strerror(errno));
+    }
+#endif
+
+    Application::instance().logger().information("desktopMain -> chroot(\"" + jail.toString() + "\")");
+    if (chroot(jail.toString().c_str()) == -1)
+    {
+        logger().error("chroot(\"" + jail.toString() + "\") failed: " + strerror(errno));
+        exit(Application::EXIT_UNAVAILABLE);
+    }
+
+    if (chdir("/") == -1)
+    {
+        logger().error(std::string("chdir(\"/\") in jail failed: ") + strerror(errno));
+        exit(Application::EXIT_UNAVAILABLE);
+    }
 
 #ifdef __linux
     dropCapability(CAP_SYS_CHROOT);
@@ -818,6 +986,148 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     dropCapability();
 #endif
 
+    if (std::getenv("SLEEPFORDEBUGGER"))
+    {
+        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
+            "attach process " << Process::id() << " in debugger now." << std::endl;
+        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
+    }
+
+    // TODO  loKit SolarMutex is locked, it ends deadlock
+/*
+#ifdef __APPLE__
+    LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
+#else
+    LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
+#endif
+
+    if (!loKit)
+    {
+        logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
+        exit(Application::EXIT_UNAVAILABLE);
+    }*/
+
+    namedMutexLOOL.lock();
+
+    startupComponent(_numPreSpawnedChildren);
+
+    // Start a server listening on the port for clients
+    ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
+    ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
+
+    srv.start();
+
+    // And one on the port for child processes
+    SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
+    ServerSocket svs2(addr2, _numPreSpawnedChildren);
+    ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
+
+    srv2.start();
+
+    namedMutexLOOL.unlock();
+
+    while (MasterProcessSession::_childProcesses.size() > 0)
+    {
+        int status;
+        pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
+        if (pid < 0)
+        {
+            if (errno == ECHILD)
+            {
+                // We have spawned children, and we think that we still have them running,
+                // but we don't, huh? Something badly messed up, or just a timing glitch,
+                // like we are at the moment in the process of spawning new children?
+                // Sleep or return from the function (i.e. finish the Undertaker thread)?
+                std::cout << Util::logPrefix() << "No child processes even if we think there should be some!?" << std::endl;
+             }
+        }
+
+        if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) &&
+            MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end())
+            std::cout << Util::logPrefix() << "One of our known child processes died" << std::endl;
+
+        if (WSTOPSIG(status) && MasterProcessSession::getAvailableChildSessions() == 0 && MasterProcessSession::getPendingPreSpawnedChildren() == 0 )
+        {
+            std::cout << Util::logPrefix() << "No availabe child session, fork new one" << std::endl;
+            if (createComponent() < 0 )
+                break;
+        }
+    }
+
+    // Terminate child processes
+    for (auto i : MasterProcessSession::_childProcesses)
+    {
+        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
+        Process::requestTermination(i.first);
+    }
+
+    exit(Application::EXIT_OK);
+}
+
+
+int LOOLWSD::createDesktop()
+{
+    int pid;
+
+    if ((pid = fork()) == -1)
+    {
+        std::cout << "createDesktop fork failed." << std::endl;
+        return Application::EXIT_UNAVAILABLE;
+    }
+
+    if (!pid)
+    {
+        desktopMain();
+    }
+
+    MasterProcessSession::_childProcesses[pid] = pid;
+
+    return Application::EXIT_OK;
+}
+
+void LOOLWSD::startupDesktop(int nDesktops)
+{
+    for (int nCntr = nDesktops; nCntr; nCntr--)
+    {
+        if (createDesktop() < 0)
+            break;
+    }
+}
+
+
+void LOOLWSD::loolMain()
+{
+    std::unique_lock<std::mutex> rngLock(_rngMutex);
+    _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
+    rngLock.unlock();
+
+    startupDesktop(1);
+
+#ifdef __linux
+    dropCapability(CAP_SYS_CHROOT);
+#else
+    dropCapability();
+#endif
+
+    Thread threadFile;
+    FileTransferHandler svrFile;
+    threadFile.start(svrFile);
+
+    int status;
+    waitpid(-1, &status, 0);
+
+    // Terminate child processes
+    for (auto i : MasterProcessSession::_childProcesses)
+    {
+        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
+        Process::requestTermination(i.first);
+    }
+}
+
+int LOOLWSD::main(const std::vector<std::string>& args)
+{
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
         std::cout << "Unable to access " << cache <<
@@ -843,56 +1153,10 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     if (portNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
 
-
-    // Set up a thread to reap child processes and clean up after them
-    Undertaker undertaker;
-    Thread undertakerThread;
-    undertakerThread.start(undertaker);
-
-    // Start a server listening on the port for clients
-    ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
-    ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
-    HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
-
-    srv.start();
-
-    // And one on the port for child processes
-    SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
-    ServerSocket svs2(addr2, _numPreSpawnedChildren);
-    ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
-    HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
-
-    srv2.start();
-
     if (_doTest)
         _numPreSpawnedChildren = 1;
 
-    for (int i = 0; i < _numPreSpawnedChildren; i++)
-        MasterProcessSession::preSpawn();
-
-    TestInput input(*this, svs, srv);
-    Thread inputThread;
-    if (_doTest)
-    {
-        inputThread.start(input);
-    }
-
-    waitForTerminationRequest();
-
-    // Doing this causes a crash. So just let the process proceed and exit.
-    // srv.stop();
-
-    if (_doTest)
-        inputThread.join();
-
-    // Terminate child processes
-    for (auto i : MasterProcessSession::_childProcesses)
-    {
-        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
-        Process::requestTermination(i.first);
-    }
-
-    undertakerThread.join();
+    loolMain();
 
     return Application::EXIT_OK;
 }
