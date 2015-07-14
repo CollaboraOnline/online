@@ -171,7 +171,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             if (tokens[0] == "tile:")
             {
                 int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
-                if (tokens.count() != 8 ||
+                if (tokens.count() < 8 ||
                     !getTokenInteger(tokens[1], "part", part) ||
                     !getTokenInteger(tokens[2], "width", width) ||
                     !getTokenInteger(tokens[3], "height", height) ||
@@ -409,7 +409,7 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
 {
     int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
-    if (tokens.count() != 8 ||
+    if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
         !getTokenInteger(tokens[2], "width", width) ||
         !getTokenInteger(tokens[3], "height", height) ||
@@ -780,7 +780,7 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
 {
     int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
-    if (tokens.count() != 8 ||
+    if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
         !getTokenInteger(tokens[2], "width", width) ||
         !getTokenInteger(tokens[3], "height", height) ||
