@@ -13,13 +13,13 @@ L.Control.Parts = L.Control.extend({
 
 	onAdd: function (map) {
 		var partName = 'leaflet-control-part',
-		    container = L.DomUtil.create('div', partName + ' leaflet-bar'),
-		    options = this.options;
+			container = L.DomUtil.create('div', partName + ' leaflet-bar'),
+			options = this.options;
 
 		this._prevPartButton  = this._createButton(options.prevPartText, options.prevPartTitle,
-		        partName + '-prev',  container, this._prevPart);
+				partName + '-prev',  container, this._prevPart);
 		this._nextPartButton = this._createButton(options.nextPartText, options.nextPartTitle,
-		        partName + '-next', container, this._nextPart);
+				partName + '-next', container, this._nextPart);
 		this._previewInitialized = false;
 		this._previewTiles = {};
 
@@ -43,10 +43,10 @@ L.Control.Parts = L.Control.extend({
 		link.title = title;
 
 		L.DomEvent
-		    .on(link, 'mousedown dblclick', L.DomEvent.stopPropagation)
-		    .on(link, 'click', L.DomEvent.stop)
-		    .on(link, 'click', fn, this)
-		    .on(link, 'click', this._refocusOnMap, this);
+			.on(link, 'mousedown dblclick', L.DomEvent.stopPropagation)
+			.on(link, 'click', L.DomEvent.stop)
+			.on(link, 'click', fn, this)
+			.on(link, 'click', this._refocusOnMap, this);
 
 		return link;
 	},
@@ -98,9 +98,10 @@ L.Control.Parts = L.Control.extend({
 		// probably a bug from the scrollbar
 		this._previewTiles[id].onload = function () {
 			$('#parts-preview').mCustomScrollbar({
-                axis: 'y',
-                theme: 'dark-thick',
-                alwaysShowScrollbar: 1});
+				axis: 'y',
+				theme: 'dark-thick',
+				scrollInertia: 0,
+				alwaysShowScrollbar: 1});
 		}
 
 		this._previewTiles[id].src = e.tile;
