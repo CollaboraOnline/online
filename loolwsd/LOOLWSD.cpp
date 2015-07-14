@@ -235,7 +235,9 @@ public:
                             // "tile" messages from the queue.
                             if (tokens.count() == 1 && tokens[0] == "canceltiles")
                             {
-                                queue.remove_if([](std::string& x){ return x.find("tile ") == 0;});
+                                queue.remove_if([](std::string& x) {
+                                    return (x.find("tile ") == 0 && x.find("id=") == std::string::npos);
+                                });
 
                                 // Also forward the "canceltiles" to the child process, if any
                                 session->handleInput(buffer, n);
@@ -870,7 +872,9 @@ void LOOLWSD::componentMain()
                 // "tile" messages from the queue.
                 if (tokens.count() == 1 && tokens[0] == "canceltiles")
                 {
-                    queue.remove_if([](std::string& x){ return x.find("tile ") == 0;});
+                    queue.remove_if([](std::string& x) {
+                        return (x.find("tile ") == 0 && x.find("id=") == std::string::npos);
+                    });
                 }
                 else
                 {
