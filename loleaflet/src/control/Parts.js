@@ -24,5 +24,26 @@ L.Map.include({
 		docLayer._update();
 		docLayer._pruneTiles();
 		docLayer._clearSelections();
+	},
+
+	getPartPreview: function (id, part, maxWidth, maxHeight) {
+		var docLayer = this._docLayer;
+		var docRatio = docLayer._docWidthTwips / docLayer._docHeightTwips;
+		var imgRatio = maxWidth / maxHeight;
+		// fit into the given rectangle while maintaining the ratio
+		if (imgRatio > docRatio) {
+			maxWidth = Math.round(docLayer._docWidthTwips * maxHeight / docLayer._docHeightTwips);
+		}
+		else {
+			maxHeight = Math.round(docLayer._docHeightTwips * maxWidth / docLayer._docWidthTwips);
+		}
+		this.socket.send('tile ' +
+				'part=' + part + ' ' +
+				'width=' + maxWidth + ' ' +
+				'height=' + maxHeight + ' ' +
+				'tileposx=0 tileposy=0 ' +
+				'tilewidth=' + docLayer._docWidthTwips + ' ' +
+				'tileheight=' + docLayer._docHeightTwips + ' ' +
+				'id=' + id);
 	}
 });

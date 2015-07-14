@@ -428,14 +428,24 @@ L.TileLayer = L.GridLayer.extend({
 
 			key = this._tileCoordsToKey(coords);
 			var tile = this._tiles[key];
-			if (tile) {
+			var img = 'data:image/png;base64,' + window.btoa(strBytes);
+			if (command.id !== undefined) {
+				map.fire('tilepreview', {
+					tile: img,
+					id: command.id,
+					width: command.width,
+					height: command.height,
+					part: command.part
+				});
+			}
+			else if (tile) {
 				if (this._tiles[key]._invalidCount > 0) {
 					this._tiles[key]._invalidCount -= 1;
 				}
-				tile.el.src = 'data:image/png;base64,' + window.btoa(strBytes);
+				tile.el.src = img;
 			}
 			else {
-				this._tileCache[key] = 'data:image/png;base64,' + window.btoa(strBytes);
+				this._tileCache[key] = img;
 			}
 			if (this._pendingTilesCount > 0) {
 				this._pendingTilesCount -= 1;
@@ -549,6 +559,9 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			else if (tokens[i].substring(0, 8) === 'current=') {
 				command.currentPart = parseInt(tokens[i].substring(8));
+			}
+			else if (tokens[i].substring(0, 3) === 'id=') {
+				command.id = parseInt(tokens[i].substring(3));
 			}
 		}
 		if (command.tileWidth && command.tileHeight) {
