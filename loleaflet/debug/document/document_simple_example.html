@@ -30,6 +30,8 @@
     <div id="toolbar" align="center">
         <p style="margin:0px">This space is a placeholder for the future toolbar</p>
     </div>
+    <div id="preview">
+    </div>
     <div id="document-container" style="top:100px">
         <div id="clipboard-container"><textarea id="clipboard"></textarea></div>
         <div id="map"></div>
@@ -102,6 +104,12 @@
                     alwaysTriggerOffsets:false
                 }
             });
+            $("#preview").mCustomScrollbar({
+                axis: 'y',
+                theme: 'dark-thick',
+                alwaysShowScrollbar: 1
+            });
+
         });
     })(jQuery);
     </script>
