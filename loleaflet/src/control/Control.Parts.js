@@ -20,8 +20,11 @@ L.Control.Parts = L.Control.extend({
 		        partName + '-prev',  container, this._prevPart);
 		this._nextPartButton = this._createButton(options.nextPartText, options.nextPartTitle,
 		        partName + '-next', container, this._nextPart);
+		this._previewInitialized = false;
+		this._previewTiles = {};
 
 		map.on('updateparts', this._updateDisabled, this);
+		map.on('tilepreview', this._updatePreview, this);
 		return container;
 	},
 
@@ -50,16 +53,57 @@ L.Control.Parts = L.Control.extend({
 
 	_updateDisabled: function (e) {
 		var className = 'leaflet-disabled';
-		if (e.currentPart === 0) {
+		var parts = e.parts;
+		var currentPart = e.currentPart;
+		if (currentPart === 0) {
 			L.DomUtil.addClass(this._prevPartButton, className);
 		} else {
 			L.DomUtil.removeClass(this._prevPartButton, className);
 		}
-		if (e.currentPart === e.parts - 1) {
+		if (currentPart === parts - 1) {
 			L.DomUtil.addClass(this._nextPartButton, className);
 		} else {
 			L.DomUtil.removeClass(this._nextPartButton, className);
 		}
+		if (!this._previewInitialized && parts > 1) {
+			var container = L.DomUtil.get('parts-preview');
+			for (var i = 0; i < parts; i++) {
+				var id = 'preview-tile' + i;
+				var frame = L.DomUtil.create('div', 'preview-frame', container);
+				L.DomUtil.create('span', 'preview-helper', frame);
+				var img = L.DomUtil.create('img', 'preview-img', frame);
+				img.id = id;
+				this._previewTiles[id] = img;
+				L.DomEvent
+					.on(img, 'click', L.DomEvent.stopPropagation)
+					.on(img, 'click', L.DomEvent.stop)
+					.on(img, 'click', this._setPart, this)
+					.on(img, 'click', this._refocusOnMap, this);
+				this._map.getPartPreview(i, i, 180, 180);
+			}
+			this._previewInitialized = true;
+		}
+	},
+
+	_setPart: function (e) {
+		var part =  e.target.id.match(/\d+/g)[0];
+		if (part !== null) {
+			this._map.setPart(parseInt(part));
+		}
+	},
+
+	_updatePreview: function (e) {
+		var id = 'preview-tile' + e.id;
+		// the scrollbar has to be re-initialized here else it doesn't work
+		// probably a bug from the scrollbar
+		this._previewTiles[id].onload = function () {
+			$('#parts-preview').mCustomScrollbar({
+                axis: 'y',
+                theme: 'dark-thick',
+                alwaysShowScrollbar: 1});
+		}
+
+		this._previewTiles[id].src = e.tile;
 	}
 });
 
