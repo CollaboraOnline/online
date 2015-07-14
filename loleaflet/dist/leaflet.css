@@ -575,15 +575,6 @@ a.leaflet-control-buttons:hover {
 	z-index: 10;
 }
 
-#preview {
-	background: #DFDFDF;
-	position: absolute;
-	top: 100px;
-	bottom: 0px;
-	width: 195px;
-}
-
-
 .search-not-found {
 	background-color: red;
 	-webkit-transition: background-color 0.8s linear;
@@ -667,3 +658,29 @@ a.leaflet-control-buttons:hover {
 	height: 1px;
 	padding: 0px;
 }
+
+#parts-preview {
+	background: #DFDFDF;
+	position: absolute;
+	top: 100px;
+	bottom: 0px;
+	width: 195px;
+}
+
+.preview-frame {
+	max-width: 180px;
+	white-space: nowrap;
+	text-align: center; margin: 1em 0;
+	}
+
+.preview-helper {
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	}
+
+.preview-img {
+	vertical-align: middle;
+	max-width: 180px;
+	cursor: pointer;
+	}
