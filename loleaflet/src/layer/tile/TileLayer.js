@@ -269,7 +269,7 @@ L.TileLayer = L.GridLayer.extend({
 			while (index < bytes.length && bytes[index] !== 10) {
 				index++;
 			}
-			textMsg = String.fromCharCode.apply(null, bytes.subarray(0, index + 1));
+			textMsg = String.fromCharCode.apply(null, bytes.subarray(0, index));
 		}
 
 		if (textMsg.startsWith('cursorvisible:')) {
@@ -397,10 +397,13 @@ L.TileLayer = L.GridLayer.extend({
 				this._documentInfo = textMsg;
 				this._parts = command.parts;
 				this._currentPart = command.currentPart;
+				var partNamesStr = bytes === undefined ? textMsg : String.fromCharCode.apply(null, bytes.subarray(index));
+				var partNames = partNamesStr.match(/[^\r\n]+/g);
 				this._map.fire('updateparts', {
 					currentPart: this._currentPart,
 					parts: this._parts,
-					docType: this._docType
+					docType: this._docType,
+					partNames: partNames
 				});
 				this._update();
 				if (!this._tilesPreFetcher) {
@@ -503,7 +506,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._onUpdateTextSelection();
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
-			textMsg += String.fromCharCode.apply(null, bytes.subarray(index + 1));
+			textMsg += String.fromCharCode.apply(null, bytes.subarray(index));
 			this._selectionTextContent = textMsg.substr(22);
 		}
 		else if (textMsg.startsWith('setpart:')) {
