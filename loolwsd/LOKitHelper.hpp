@@ -38,13 +38,22 @@ namespace LOKitHelper
     std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
     {
         std::string typeString(documentTypeToString(static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument))));
-        long width, height;
+        long width, height, parts;
         loKitDocument->pClass->getDocumentSize(loKitDocument, &width, &height);
-        return ("type=" + typeString + " "
-                "parts=" + std::to_string(loKitDocument->pClass->getParts(loKitDocument)) + " "
+        parts = loKitDocument->pClass->getParts(loKitDocument);
+        std::string status =
+               ("type=" + typeString + " "
+                "parts=" + std::to_string(parts) + " "
                 "current=" + std::to_string(loKitDocument->pClass->getPart(loKitDocument)) + " "
                 "width=" + std::to_string(width) + " "
                 "height=" + std::to_string(height));
+        if (typeString == "spreadsheet" || typeString == "presentation") {
+            for (int i = 0; i < parts; i++) {
+                status += "\n";
+                status += loKitDocument->pClass->getPartName(loKitDocument, i);
+            }
+        }
+        return status;
     }
 };
 

@@ -186,7 +186,6 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             }
             else if (tokens[0] == "status:")
             {
-                assert(firstLine.size() == static_cast<std::string::size_type>(length));
                 peer->_tileCache->saveStatus(firstLine);
             }
             else if (tokens[0] == "invalidatetiles:")
