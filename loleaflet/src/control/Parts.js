@@ -20,7 +20,11 @@ L.Map.include({
 		else {
 			return;
 		}
-		this.fire('updateparts', {currentPart : docLayer._currentPart, parts : docLayer._parts});
+		this.fire('updateparts', {
+			currentPart: docLayer._currentPart,
+			parts: docLayer._parts,
+			docType: docLayer._docType
+		});
 		docLayer._update();
 		docLayer._pruneTiles();
 		docLayer._clearSelections();

@@ -22,6 +22,8 @@ L.Control.Parts = L.Control.extend({
 				partName + '-next', container, this._nextPart);
 		this._previewInitialized = false;
 		this._previewTiles = {};
+		this._tabsInitialized = false;
+		this._spreadsheetTabs = {};
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('tilepreview', this._updatePreview, this);
@@ -90,6 +92,38 @@ L.Control.Parts = L.Control.extend({
 				this._map.getPartPreview(i, i, 180, 180);
 			}
 			this._previewInitialized = true;
+		}
+		if (docType === 'spreadsheet') {
+			if (!this._tabsInitialized) {
+				// make room for the preview
+				var docContainer = L.DomUtil.get('document-container');
+				L.DomUtil.setStyle(docContainer, 'bottom', '20px');
+				setTimeout(L.bind(function () {
+					this._map.invalidateSize();
+					$("#scroll-container").mCustomScrollbar('update');
+				}, this), 500);
+				var container = L.DomUtil.get('spreadsheet-tab');
+				for (var i = 0; i < parts; i++) {
+					var id = 'spreadsheet-tab' + i;
+					var tab = L.DomUtil.create('li', '', container);
+					tab.innerHTML = 'Sheet ' + (i + 1);
+					tab.id = id;
+					L.DomEvent
+						.on(tab, 'click', L.DomEvent.stopPropagation)
+						.on(tab, 'click', L.DomEvent.stop)
+						.on(tab, 'click', this._setPart, this)
+						.on(tab, 'click', this._refocusOnMap, this);
+					this._spreadsheetTabs[id] = tab;
+				}
+				this._tabsInitialized = true;
+			}
+			for (key in this._spreadsheetTabs) {
+				var part =  parseInt(key.match(/\d+/g)[0]);
+				L.DomUtil.removeClass(this._spreadsheetTabs[key], "selected");
+				if (part === currentPart) {
+					L.DomUtil.addClass(this._spreadsheetTabs[key], "selected");
+				}
+			}
 		}
 	},
 
