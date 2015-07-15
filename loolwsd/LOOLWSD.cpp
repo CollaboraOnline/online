@@ -1052,7 +1052,7 @@ void LOOLWSD::desktopMain()
             MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end())
             std::cout << Util::logPrefix() << "One of our known child processes died" << std::endl;
 
-        if (WSTOPSIG(status) && MasterProcessSession::getAvailableChildSessions() == 0 && MasterProcessSession::getPendingPreSpawnedChildren() == 0 )
+        if (MasterProcessSession::getAvailableChildSessions() == 0 && MasterProcessSession::getPendingPreSpawnedChildren() == 0 )
         {
             std::cout << Util::logPrefix() << "No availabe child session, fork new one" << std::endl;
             if (createComponent() < 0 )
