@@ -392,11 +392,16 @@ L.TileLayer = L.GridLayer.extend({
 			if (command.width && command.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = command.width;
 				this._docHeightTwips = command.height;
+				this._docType = command.type;
 				this._updateMaxBounds(true);
 				this._documentInfo = textMsg;
 				this._parts = command.parts;
 				this._currentPart = command.currentPart;
-				this._map.fire('updateparts', {currentPart : this._currentPart, parts: this._parts});
+				this._map.fire('updateparts', {
+					currentPart: this._currentPart,
+					parts: this._parts,
+					docType: this._docType
+				});
 				this._update();
 				if (!this._tilesPreFetcher) {
 					this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), 2000);
@@ -435,7 +440,8 @@ L.TileLayer = L.GridLayer.extend({
 					id: command.id,
 					width: command.width,
 					height: command.height,
-					part: command.part
+					part: command.part,
+					docType: this._docType
 				});
 			}
 			else if (tile) {
@@ -561,7 +567,12 @@ L.TileLayer = L.GridLayer.extend({
 				command.currentPart = parseInt(tokens[i].substring(8));
 			}
 			else if (tokens[i].substring(0, 3) === 'id=') {
-				command.id = parseInt(tokens[i].substring(3));
+				// remove newline characters
+				command.id = tokens[i].substring(3).replace(/(\r\n|\n|\r)/gm, '');
+			}
+			else if (tokens[i].substring(0, 5) === 'type=') {
+				// remove newline characters
+				command.type = tokens[i].substring(5).replace(/(\r\n|\n|\r)/gm, '');
 			}
 		}
 		if (command.tileWidth && command.tileHeight) {

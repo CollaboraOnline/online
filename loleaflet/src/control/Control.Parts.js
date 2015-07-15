@@ -55,6 +55,7 @@ L.Control.Parts = L.Control.extend({
 		var className = 'leaflet-disabled';
 		var parts = e.parts;
 		var currentPart = e.currentPart;
+		var docType = e.docType;
 		if (currentPart === 0) {
 			L.DomUtil.addClass(this._prevPartButton, className);
 		} else {
@@ -65,7 +66,7 @@ L.Control.Parts = L.Control.extend({
 		} else {
 			L.DomUtil.removeClass(this._nextPartButton, className);
 		}
-		if (!this._previewInitialized && parts > 1) {
+		if (!this._previewInitialized && docType === 'presentation') {
 			// make room for the preview
 			var docContainer = L.DomUtil.get('document-container');
 			L.DomUtil.setStyle(docContainer, 'left', '200px');
