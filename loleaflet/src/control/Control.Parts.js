@@ -66,6 +66,13 @@ L.Control.Parts = L.Control.extend({
 			L.DomUtil.removeClass(this._nextPartButton, className);
 		}
 		if (!this._previewInitialized && parts > 1) {
+			// make room for the preview
+			var docContainer = L.DomUtil.get('document-container');
+			L.DomUtil.setStyle(docContainer, 'left', '200px');
+			setTimeout(L.bind(function () {
+				this._map.invalidateSize();
+				$("#scroll-container").mCustomScrollbar('update');
+			}, this), 500);
 			var container = L.DomUtil.get('parts-preview');
 			for (var i = 0; i < parts; i++) {
 				var id = 'preview-tile' + i;
