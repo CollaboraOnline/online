@@ -46,10 +46,64 @@ To see an example:
 
 * modify the URL to allow loleaflet to connect to a server and open a document
 
-    http://web-page/document_simple_example.html?file_path=/PATH/TO/DOC&host=ws://localhost:9980
+    http://web-page/document_simple_example.html?file_path=file:///PATH/TO/DOC&host=ws://localhost:9980
 
 and you should see the document in the browser.  In case anything goes wrong,
 check the loolwsd console for the debugging output.
+
+API & events
+------------
+
+Search:
+    - API:
+        map.search(text, [backward])
+    - events:
+        map.on('searchnotfound', function)
+
+Zoom:
+    - API:
+        map.zoomIn(amount)
+        map.zoomOut(amout)
+        map.getMinZoom()
+        map.getMaxZoom()
+    - events:
+        map.on('zoomend zoomlevelschange', function)
+
+Edit, view, readOnly:
+    - API:
+        map.setPermission('edit' | 'view' | 'readonly')
+    - events:
+        map.on('updatepermission', function (e) {}) where:
+            + e.perm == 'edit' | 'view' | 'readonly'
+
+Buttons like Bold, Italic, Strike through etc.
+    - API:
+        map.toggleCommandState('Bold' | 'Italic' | 'Underline' | 'Strikeout' | 'AlighLeft', etc)
+    - events:
+        map.on('commandstatechanged', function (e) {}) where:
+            + e.unoCmd == 'Bold' | 'Italic' etc.
+            + e.state = 'true' | 'false'
+
+Parts (like slides in presentation, or sheets in spreadsheets):
+    - API:
+        map.setPart('next' | 'prev' | partNumber)
+        map.getPartPreview(id, part, maxWidth, maxHeight) where:
+            + id = the ID of the request so that the response can be identified
+            + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
+              image might be returned in order to keep the original ratio of the document
+    - events:
+        map.on('updateparts', function (e) {}) where:
+            + e.currentPart is the current part
+            + e.parts == the number of parts that the document has
+            + e.docType == 'text' | 'spreadsheet' | 'presentation' | 'drawing' | 'other'
+            + [e.partNames] if present, part names (e.g. sheet names)
+
+Statusindicator (when the document is loading):
+    - events
+        map.on('statusindicator', function (e) {}) where:
+            + e.statusType = 'start' | 'setvalue' | 'finish'
+            + e.value == a value from 0 to 100 indicating the status
+              if the statusType is 'setvalue
 
 Contributing
 ------------
