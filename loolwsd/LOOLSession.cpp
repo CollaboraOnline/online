@@ -306,6 +306,11 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         if (_peer.expired())
             dispatchChild();
         forwardToPeer(buffer, length);
+
+        if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save") ||
+               tokens[0] == "saveas") {
+           _tileCache->documentSaved();
+        }
     }
     return true;
 }
