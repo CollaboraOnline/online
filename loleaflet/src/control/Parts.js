@@ -3,7 +3,7 @@
  */
 L.Map.include({
 	setPart: function (part) {
-		var docLayer = this._docLayer
+		var docLayer = this._docLayer;
 		if (part === 'prev') {
 			if (docLayer._currentPart > 0) {
 				docLayer._currentPart -= 1;
@@ -14,7 +14,7 @@ L.Map.include({
 				docLayer._currentPart += 1;
 			}
 		}
-		else if (typeof(part) === 'number' && part >= 0 && part < docLayer._parts) {
+		else if (typeof (part) === 'number' && part >= 0 && part < docLayer._parts) {
 			docLayer._currentPart = part;
 		}
 		else {

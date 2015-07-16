@@ -276,7 +276,7 @@ L.TileLayer = L.GridLayer.extend({
 									'tileheight=' + this._tileHeightTwips, key);
 				}
 			}
-			for (var key in this._tileCache) {
+			for (key in this._tileCache) {
 				// compute the rectangle that each tile covers in the document based
 				// on the zoom level
 				coords = this._keyToTileCoords(key);
@@ -298,7 +298,7 @@ L.TileLayer = L.GridLayer.extend({
 			var unoCmd = unoMsg.match('.uno:(.*)=')[1];
 			var state = unoMsg.match('.*=(.*)')[1];
 			if (unoCmd && state) {
-				map.fire('statechanged', {unoCmd : unoCmd, state : state});
+				this._map.fire('statechanged', {unoCmd : unoCmd, state : state});
 			}
 		}
 		else if (textMsg.startsWith('status:')) {
@@ -352,7 +352,7 @@ L.TileLayer = L.GridLayer.extend({
 			var tile = this._tiles[key];
 			var img = 'data:image/png;base64,' + window.btoa(strBytes);
 			if (command.id !== undefined) {
-				map.fire('tilepreview', {
+				this._map.fire('tilepreview', {
 					tile: img,
 					id: command.id,
 					width: command.width,
@@ -436,7 +436,7 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('searchnotfound:')) {
 			this._map.fire('searchnotfound');
 		}
-        else if (textMsg.startsWith('error:')) {
+		else if (textMsg.startsWith('error:')) {
 			vex.dialog.alert(textMsg);
 		}
 	},

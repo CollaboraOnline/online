@@ -38,4 +38,3 @@ L.Map.include({
 		L.DomUtil.removeClass(this._container, className);
 	}
 });
-

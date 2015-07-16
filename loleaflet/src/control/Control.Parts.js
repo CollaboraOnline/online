@@ -74,7 +74,7 @@ L.Control.Parts = L.Control.extend({
 			L.DomUtil.setStyle(docContainer, 'left', '200px');
 			setTimeout(L.bind(function () {
 				this._map.invalidateSize();
-				$("#scroll-container").mCustomScrollbar('update');
+				$('#scroll-container').mCustomScrollbar('update');
 			}, this), 500);
 			var container = L.DomUtil.get('parts-preview');
 			for (var i = 0; i < parts; i++) {
@@ -96,15 +96,15 @@ L.Control.Parts = L.Control.extend({
 		if (docType === 'spreadsheet') {
 			if (!this._tabsInitialized) {
 				// make room for the preview
-				var docContainer = L.DomUtil.get('document-container');
+				docContainer = L.DomUtil.get('document-container');
 				L.DomUtil.setStyle(docContainer, 'bottom', '20px');
 				setTimeout(L.bind(function () {
 					this._map.invalidateSize();
-					$("#scroll-container").mCustomScrollbar('update');
+					$('#scroll-container').mCustomScrollbar('update');
 				}, this), 500);
-				var container = L.DomUtil.get('spreadsheet-tab');
-				for (var i = 0; i < parts; i++) {
-					var id = 'spreadsheet-tab' + i;
+				container = L.DomUtil.get('spreadsheet-tab');
+				for (i = 0; i < parts; i++) {
+					id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('li', '', container);
 					tab.innerHTML = 'Sheet ' + (i + 1);
 					tab.id = id;
@@ -117,11 +117,11 @@ L.Control.Parts = L.Control.extend({
 				}
 				this._tabsInitialized = true;
 			}
-			for (key in this._spreadsheetTabs) {
+			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
-				L.DomUtil.removeClass(this._spreadsheetTabs[key], "selected");
+				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'selected');
 				if (part === currentPart) {
-					L.DomUtil.addClass(this._spreadsheetTabs[key], "selected");
+					L.DomUtil.addClass(this._spreadsheetTabs[key], 'selected');
 				}
 			}
 		}
@@ -144,7 +144,7 @@ L.Control.Parts = L.Control.extend({
 				theme: 'dark-thick',
 				scrollInertia: 0,
 				alwaysShowScrollbar: 1});
-		}
+		};
 
 		this._previewTiles[id].src = e.tile;
 	}

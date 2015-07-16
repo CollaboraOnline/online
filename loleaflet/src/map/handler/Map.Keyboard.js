@@ -3,7 +3,7 @@
  */
 
 L.Map.mergeOptions({
-	keyboard: true,
+	keyboard: true
 });
 
 L.Map.Keyboard = L.Handler.extend({

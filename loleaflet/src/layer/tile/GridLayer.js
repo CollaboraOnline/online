@@ -793,17 +793,17 @@ L.GridLayer = L.Layer.extend({
 		if (this._pendingTilesCount > 0) {
 			return;
 		}
-		var center = map.getCenter();
-		var zoom = map.getZoom();
+		var center = this._map.getCenter();
+		var zoom = this._map.getZoom();
 		var tilesToFetch = 10;
 		var maxBorderWidth = 5;
-		if (this._premission === 'edit') {
+		if (this._permission === 'edit') {
 			tilesToFetch = 2;
 			maxBorderWidth = 2;
 		}
 
 		if (!this._preFetchBorder) {
-			var pixelBounds = map.getPixelBounds(center, zoom),
+			var pixelBounds = this._map.getPixelBounds(center, zoom),
 				tileBorder = this._pxBoundsToTileRange(pixelBounds);
 			this._preFetchBorder = tileBorder;
 		}
@@ -846,8 +846,8 @@ L.GridLayer = L.Layer.extend({
 			for (i = 0; i < queue.length && tilesToFetch > 0; i++) {
 				coords = queue[i];
 				coords.z = zoom;
-				coords.part = this._currentPart,
-				key = this._tileCoordsToKey(coords);
+				coords.part = this._currentPart;
+				var key = this._tileCoordsToKey(coords);
 
 				if (!this._isValidTile(coords) ||
 						this._tiles[key] ||

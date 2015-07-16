@@ -8,7 +8,7 @@ L.Log = {
 		if (!this._logs) {
 			this._logs = [];
 		}
-		msg = msg.replace(/(\r\n|\n|\r)/gm,' ');
+		msg = msg.replace(/(\r\n|\n|\r)/gm, ' ');
 		this._logs.push({msg : msg, direction : direction,
 			coords : tileCoords, time : time});
 	},

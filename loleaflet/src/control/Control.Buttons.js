@@ -21,7 +21,7 @@ L.Control.Buttons = L.Control.extend({
 			'alignright':    {title: 'Align right',        uno: 'AlignRight',  iconName: 'alignright.png'},
 			'alignblock':    {title: 'Justified',          uno: 'AlignBlock',  iconName: 'alignblock.png'},
 			'save':          {title: 'Save',               uno: 'Save',        iconName: 'save.png'},
-			'saveas':        {title: 'Save As',            uno: '',            iconName: 'saveas.png'},
+			'saveas':        {title: 'Save As',            uno: '',            iconName: 'saveas.png'}
 		};
 		for (var key in this._buttons) {
 			var button = this._buttons[key];

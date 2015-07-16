@@ -3,7 +3,7 @@
  */
 
 L.Map.mergeOptions({
-	mouse: true,
+	mouse: true
 });
 
 L.Map.Mouse = L.Handler.extend({
