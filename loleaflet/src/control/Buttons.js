@@ -4,7 +4,7 @@
 L.Map.include({
 	toggleCommandState: function (unoState) {
 		if (this._docLayer._permission === 'edit') {
-			this.socket.send('uno .uno:' + unoState);
+			this._docLayer.sendMessage('uno .uno:' + unoState);
 		}
 	},
 
@@ -15,7 +15,7 @@ L.Map.include({
 		if (options === undefined || options === null) {
 			options = '';
 		}
-		this.socket.send('saveas ' +
+		this._docLayer.sendMessage('saveas ' +
 			'url=' + url + ' ' +
 			'format=' + format + ' ' +
 			'options=' + options);

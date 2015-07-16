@@ -186,8 +186,8 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 		if (this.options.doc) {
-			this._map.socket.send('load url=' + this.options.doc);
-			this._map.socket.send('status');
+			this.sendMessage('load url=' + this.options.doc);
+			this.sendMessage('status');
 		}
 		this._map._scrollContainer.onscroll = L.bind(this._onScroll, this);
 		this._map.on('zoomend resize', this._updateScrollOffset, this);
@@ -352,14 +352,14 @@ L.TileLayer = L.GridLayer.extend({
 					else {
 						this._tiles[key]._invalidCount = 1;
 					}
-					this._map.socket.send('tile ' +
+					this.sendMessage('tile ' +
 									'part=' + coords.part + ' ' +
 									'width=' + this._tileSize + ' ' +
 									'height=' + this._tileSize + ' ' +
 									'tileposx=' + point1.x + ' '    +
 									'tileposy=' + point1.y + ' ' +
 									'tilewidth=' + this._tileWidthTwips + ' ' +
-									'tileheight=' + this._tileHeightTwips);
+									'tileheight=' + this._tileHeightTwips, key);
 				}
 			}
 			for (var key in this._tileCache) {
@@ -501,7 +501,7 @@ L.TileLayer = L.GridLayer.extend({
 					clearTimeout(this._selectionContentRequest);
 				}
 				this._selectionContentRequest = setTimeout(L.bind(function () {
-					this._map.socket.send('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
+					this.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
 			}
 			this._onUpdateTextSelection();
 		}
@@ -524,6 +524,10 @@ L.TileLayer = L.GridLayer.extend({
         else if (textMsg.startsWith('error:')) {
 			vex.dialog.alert(textMsg);
 		}
+	},
+
+	sendMessage: function (msg, coords) {
+		this._map.socket.send(msg);
 	},
 
 	_tileOnLoad: function (done, tile) {
@@ -737,22 +741,22 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postMouseEvent: function(type, x, y, count) {
-		this._map.socket.send('mouse type=' + type +
+		this.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count);
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
-		this._map.socket.send('key type=' + type +
+		this.sendMessage('key type=' + type +
 				' char=' + charcode + ' key=' + keycode);
 	},
 
 	_postSelectGraphicEvent: function(type, x, y) {
-		this._map.socket.send('selectgraphic type=' + type +
+		this.sendMessage('selectgraphic type=' + type +
 				' x=' + x + ' y=' + y);
 	},
 
 	_postSelectTextEvent: function(type, x, y) {
-		this._map.socket.send('selecttext type=' + type +
+		this.sendMessage('selecttext type=' + type +
 				' x=' + x + ' y=' + y);
 	},
 

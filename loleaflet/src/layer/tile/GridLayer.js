@@ -516,7 +516,7 @@ L.GridLayer = L.Layer.extend({
 			if (newView) {
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
-				this._map.socket.send('canceltiles');
+				this.sendMessage('canceltiles');
 				this._pendingTilesCount = 0;
 				for (key in this._tiles) {
 					if (!this._tiles[key].loaded) {
@@ -663,14 +663,14 @@ L.GridLayer = L.Layer.extend({
 			if (this.options.useSocket && this._map.socket) {
 				var twips = this._coordsToTwips(coords);
 				this._pendingTilesCount += 1;
-				this._map.socket.send('tile ' +
-										'part=' + this._currentPart + ' ' +
-										'width=' + this._tileSize + ' ' +
-										'height=' + this._tileSize + ' ' +
-										'tileposx=' + twips.x + ' '	+
-										'tileposy=' + twips.y + ' ' +
-										'tilewidth=' + this._tileWidthTwips + ' ' +
-										'tileheight=' + this._tileHeightTwips);
+				this.sendMessage('tile ' +
+								'part=' + this._currentPart + ' ' +
+								'width=' + this._tileSize + ' ' +
+								'height=' + this._tileSize + ' ' +
+								'tileposx=' + twips.x + ' '	+
+								'tileposy=' + twips.y + ' ' +
+								'tilewidth=' + this._tileWidthTwips + ' ' +
+								'tileheight=' + this._tileHeightTwips, key);
 			}
 		}
 		else {

@@ -41,13 +41,13 @@ L.Map.include({
 		else {
 			maxHeight = Math.round(docLayer._docHeightTwips * maxWidth / docLayer._docWidthTwips);
 		}
-		this.socket.send('tile ' +
-				'part=' + part + ' ' +
-				'width=' + maxWidth + ' ' +
-				'height=' + maxHeight + ' ' +
-				'tileposx=0 tileposy=0 ' +
-				'tilewidth=' + docLayer._docWidthTwips + ' ' +
-				'tileheight=' + docLayer._docHeightTwips + ' ' +
-				'id=' + id);
+		docLayer.sendMessage('tile ' +
+							'part=' + part + ' ' +
+							'width=' + maxWidth + ' ' +
+							'height=' + maxHeight + ' ' +
+							'tileposx=0 tileposy=0 ' +
+							'tilewidth=' + docLayer._docWidthTwips + ' ' +
+							'tileheight=' + docLayer._docHeightTwips + ' ' +
+							'id=' + id);
 	}
 });

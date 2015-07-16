@@ -29,6 +29,6 @@ L.Map.include({
 		searchCmd['SearchItem.SearchStartPointY'] = {};
 		searchCmd['SearchItem.SearchStartPointY'].type = 'long';
 		searchCmd['SearchItem.SearchStartPointY'].value = topLeftTwips.y;
-		this.socket.send('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
+		this._docLayer.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
 	}
 });
