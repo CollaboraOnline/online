@@ -795,6 +795,12 @@ L.GridLayer = L.Layer.extend({
 		}
 		var center = map.getCenter();
 		var zoom = map.getZoom();
+		var tilesToFetch = 10;
+		var maxBorderWidth = 5;
+		if (this._premission === 'edit') {
+			tilesToFetch = 2;
+			maxBorderWidth = 2;
+		}
 
 		if (!this._preFetchBorder) {
 			var pixelBounds = map.getPixelBounds(center, zoom),
@@ -807,14 +813,13 @@ L.GridLayer = L.Layer.extend({
 		var queue = [],
 			finalQueue = [],
 			visitedTiles = {},
-			tilesToFetch = 10,
 			borderWidth = 0;
 			// don't search on a border wider than 5 tiles because it will freeze the UI
 
 		while ((tileBorder.min.x >= 0 || tileBorder.min.y >= 0 ||
 				tileBorder.max.x * this._tileWidthTwips < this._docWidthTwips ||
 				 tileBorder.max.y * this._tileHeightTwips < this._docHeightTwips) &&
-				tilesToFetch > 0 && borderWidth < 5) {
+				tilesToFetch > 0 && borderWidth < maxBorderWidth) {
 			// while the bounds do not fully contain the document
 
 			for (var i = tileBorder.min.x; i <= tileBorder.max.x; i++) {
