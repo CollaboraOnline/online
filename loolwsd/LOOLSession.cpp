@@ -967,19 +967,22 @@ bool ChildProcessSession::saveAs(const char *buffer, int length, StringTokenizer
     std::string url, format, filterOptions;
 
     if (tokens.count() < 4 ||
-        !getTokenString(tokens[1], "url", url) ||
-        !getTokenString(tokens[2], "format", format) ||
-        !getTokenString(tokens[3], "options", filterOptions))
+        !getTokenString(tokens[1], "url", url))
     {
         sendTextFrame("error: cmd=saveas kind=syntax");
         return false;
     }
 
     URI::decode(url, url, true);
-    URI::decode(format, format, true);
+    if (getTokenString(tokens[2], "format", format)) {
+        URI::decode(format, format, true);
+    }
 
-    if (tokens.count() > 4)
-        filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
+    if (getTokenString(tokens[3], "options", filterOptions)) {
+        if (tokens.count() > 4) {
+            filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
+        }
+    }
 
     _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(), format.c_str(), filterOptions.c_str());
 
