@@ -49,13 +49,11 @@ L.Cursor = L.Layer.extend({
 
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'leaflet-cursor');
-
-		//<span class="blinking-cursor">|</span>
-		this._span = L.DomUtil.create('span', 'blinking-cursor', this._container);
-		this._span.innerHTML = '|';
+		// a black rectangle
+		this._cursor = L.DomUtil.create('div', 'blinking-cursor', this._container);
 
 		L.DomEvent
-			.disableClickPropagation(this._span)
+			.disableClickPropagation(this._cursor)
 			.disableScrollPropagation(this._container);
 
 		if (this._container) {
@@ -84,10 +82,8 @@ L.Cursor = L.Layer.extend({
 	},
 
 	setSize: function (size) {
-		this._container.style.lineHeight = size.y + 'px';
-		this._span.style.fontSize = size.y - 2 + 'px';
-		this._container.style.left = '-' + (this._container.clientWidth - size.x)/2 + 'px';
-		this._container.style.top = '-' + (this._container.clientHeight - size.y - 2)/2 + 'px';
+		this._cursor.style.height = size.y + 'px';
+		this._container.style.top = '-' + (this._container.clientHeight - size.y - 2) / 2 + 'px';
 	}
 });
 

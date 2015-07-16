@@ -590,7 +590,8 @@ a.leaflet-control-buttons:hover {
 }
 
 .blinking-cursor {
-  color: #2E3D48;
+  background: black;
+  width: 2px;
   pointer-events: none;
   -webkit-animation: 1s blink step-end 0s infinite;
   -moz-animation: 1s blink step-end 0s infinite;
@@ -601,46 +602,46 @@ a.leaflet-control-buttons:hover {
 
 @keyframes "blink" {
   from, to {
-    color: black;
+    background: black;
   }
   50% {
-    color: transparent;
+    background: transparent;
   }
 }
 
 @-moz-keyframes blink {
   from, to {
-    color: black;
+    background: black;
   }
   50% {
-    color: transparent;
+    background: transparent;
   }
 }
 
 @-webkit-keyframes "blink" {
   from, to {
-    color: black;
+    background: black;
   }
   50% {
-    color: transparent;
+    background: transparent;
   }
 }
 
 @-ms-keyframes "blink" {
   from, to {
-    color: black;
+    background: black;
   }
   50% {
-    color: transparent;
+    background: transparent;
   }
 }
 
 @-o-keyframes "blink" {
   from, to {
-    color: black;
+    background: black;
   }
   50% {
-    color: transparent;
+    background: transparent;
   }
 }
 
