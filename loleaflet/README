@@ -105,6 +105,10 @@ Statusindicator (when the document is loading):
             + e.value == a value from 0 to 100 indicating the status
               if the statusType is 'setvalue
 
+Save:
+    - API:
+        map.saveAs(url, [format, options])
+
 Contributing
 ------------
 
