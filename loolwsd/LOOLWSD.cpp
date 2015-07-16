@@ -1018,25 +1018,42 @@ void LOOLWSD::desktopMain()
 
     namedMutexLOOL.unlock();
 
+    /* Pause for a second */
+    sleep(1);
+
     while (MasterProcessSession::_childProcesses.size() > 0)
     {
         int status;
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
-        if (pid < 0)
+        if (pid > 0)
         {
-            if (errno == ECHILD)
+            if ( MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end() )
             {
-                // We have spawned children, and we think that we still have them running,
-                // but we don't, huh? Something badly messed up, or just a timing glitch,
-                // like we are at the moment in the process of spawning new children?
-                // Sleep or return from the function (i.e. finish the Undertaker thread)?
-                std::cout << Util::logPrefix() << "No child processes even if we think there should be some!?" << std::endl;
-             }
-        }
+                if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
+                {
+                    std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
+                    MasterProcessSession::_childProcesses.erase(pid);
+                }
 
-        if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) &&
-            MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end())
-            std::cout << Util::logPrefix() << "One of our known child processes died" << std::endl;
+                if ( WCOREDUMP(status) )
+                    std::cout << Util::logPrefix() << "The child produced a core dump." << std::endl;
+
+                if ( WIFSTOPPED(status) )
+                    std::cout << Util::logPrefix() << "The child process was stopped by delivery of a signal." << std::endl;
+
+                if ( WSTOPSIG(status) )
+                    std::cout << Util::logPrefix() << "The child process was stopped." << std::endl;
+
+                if ( WIFCONTINUED(status) )
+                    std::cout << Util::logPrefix() << "The child process was resumed." << std::endl;
+            }
+            else
+            {
+                std::cout << Util::logPrefix() << "None of our known child processes died :" << std::to_string(pid)  << std::endl;
+            }
+        }
+        else if (pid < 0)
+            std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
 
         if (MasterProcessSession::getAvailableChildSessions() == 0 && MasterProcessSession::getPendingPreSpawnedChildren() == 0 )
         {
