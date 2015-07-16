@@ -1,6 +1,7 @@
 var deps = {
 	Core: {
 		src: ['Leaflet.js',
+		      'core/Log.js',
 		      'core/Util.js',
 		      'core/Class.js',
 		      'core/Events.js',
