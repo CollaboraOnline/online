@@ -522,7 +522,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('searchnotfound');
 		}
         else if (textMsg.startsWith('error:')) {
-			alert(textMsg);
+			vex.dialog.alert(textMsg);
 		}
 	},
 
@@ -1023,7 +1023,7 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 		if (!this._selectionTextContent) {
-			alert('Oops, no content available yet');
+			vex.dialog.alert('Oops, no content available yet');
 		}
 		else {
 			e.clipboardData.setData('text/plain', this._selectionTextContent);

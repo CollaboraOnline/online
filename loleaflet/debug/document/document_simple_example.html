@@ -60,10 +60,10 @@
     var host = getParameterByName('host');
     var edit = getParameterByName('edit') === 'true';
     if (filePath === '') {
-        alert('Wrong file_path, usage: file_path=/path/to/doc/');
+        vex.dialog.alert('Wrong file_path, usage: file_path=/path/to/doc/');
     }
     if (host === '') {
-        alert('Wrong host, usage: host=ws://localhost:9980');
+        vex.dialog.alert('Wrong host, usage: host=ws://localhost:9980');
     }
 
     var map = L.map('map', 'scroll-container', 'mock-document', {
