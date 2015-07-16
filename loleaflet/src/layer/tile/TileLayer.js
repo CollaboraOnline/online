@@ -272,6 +272,11 @@ L.TileLayer = L.GridLayer.extend({
 			textMsg = String.fromCharCode.apply(null, bytes.subarray(0, index));
 		}
 
+		if (!textMsg.startsWith('tile:')) {
+			// log the tile msg separately as we need the tile coordinates
+			L.Log.log(textMsg, L.INCOMING);
+		}
+
 		if (textMsg.startsWith('cursorvisible:')) {
 			var command = textMsg.match('cursorvisible: true');
 			this._isCursorVisible = command ? true : false;
@@ -459,6 +464,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._pendingTilesCount > 0) {
 				this._pendingTilesCount -= 1;
 			}
+			L.Log.log(textMsg, L.INCOMING, key);
 		}
 		else if (textMsg.startsWith('textselection:')) {
 			strTwips = textMsg.match(/\d+/g);
@@ -527,6 +533,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	sendMessage: function (msg, coords) {
+		L.Log.log(msg, L.OUTGOING, coords);
 		this._map.socket.send(msg);
 	},
 
