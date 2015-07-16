@@ -42,7 +42,7 @@ extern "C"
 
     void *_dlopen(const char *pFN)
     {
-        return dlopen(pFN, RTLD_LAZY
+        return dlopen(pFN, RTLD_NOW
 #if defined __clang__ && defined __linux__ \
     && defined ENABLE_RUNTIME_OPTIMIZATIONS
 #if !ENABLE_RUNTIME_OPTIMIZATIONS

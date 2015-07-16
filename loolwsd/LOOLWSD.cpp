@@ -997,20 +997,6 @@ void LOOLWSD::desktopMain()
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
-    // TODO  loKit SolarMutex is locked, it ends deadlock
-/*
-#ifdef __APPLE__
-    LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
-#else
-    LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
-#endif
-
-    if (!loKit)
-    {
-        logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
-        exit(Application::EXIT_UNAVAILABLE);
-    }*/
-
     namedMutexLOOL.lock();
 
     startupComponent(_numPreSpawnedChildren);
