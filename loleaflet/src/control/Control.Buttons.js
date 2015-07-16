@@ -20,7 +20,8 @@ L.Control.Buttons = L.Control.extend({
 			'aligncenter':   {title: 'Center horizontaly', uno: 'AlignCenter', iconName: 'aligncenter.png'},
 			'alignright':    {title: 'Align right',        uno: 'AlignRight',  iconName: 'alignright.png'},
 			'alignblock':    {title: 'Justified',          uno: 'AlignBlock',  iconName: 'alignblock.png'},
-			'save':          {title: 'Save',               uno: 'Save',        iconName: 'save.png'}
+			'save':          {title: 'Save',               uno: 'Save',        iconName: 'save.png'},
+			'saveas':        {title: 'Save As',            uno: '',            iconName: 'saveas.png'},
 		};
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
@@ -52,7 +53,16 @@ L.Control.Buttons = L.Control.extend({
 	_onButtonClick: function (e) {
 		var id = e.target.id;
 		var button = this._buttons[id];
-		this._map.toggleCommandState(button.uno);
+		if (id === 'saveas') {
+			vex.dialog.open({
+				message: 'Save as:',
+				input: this._getDialogHTML(),
+				callback: L.bind(this._onSaveAs, this)
+			});
+		}
+		else {
+			this._map.toggleCommandState(button.uno);
+		}
 	},
 
 	_onStateChange: function (e) {
@@ -68,6 +78,22 @@ L.Control.Buttons = L.Control.extend({
 					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-active');
 				}
 			}
+		}
+	},
+
+	_getDialogHTML: function () {
+		return (
+			'<label for="url">URL</label>' +
+			'<input name="url" type="text" value=' + this._map._docLayer.options.doc + '/>' +
+			'<label for="format">Format</label>' +
+			'<input name="format" type="text" />' +
+			'<label for="options">Options</label>' +
+			'<input name="options" type="text" />');
+	},
+
+	_onSaveAs: function (e) {
+		if (e !== false) {
+			this._map.saveAs(e.url, e.format, e.options);
 		}
 	}
 });
