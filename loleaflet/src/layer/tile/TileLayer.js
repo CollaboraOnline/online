@@ -89,7 +89,6 @@ L.TileLayer = L.GridLayer.extend({
 			}),
 			draggable: true
 		});
-		this._mouseEventsQueue = [];
 		this._pendingTilesCount = 0;
 		this._textArea = L.DomUtil.get('clipboard');
 		this._textArea.focus();
@@ -110,8 +109,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('drag', this._updateScrollOffset, this);
 		this._map.on('copy', this._onCopy, this);
-		this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
-				this._onMouseEvent, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		if (this.options.edit && !this.options.readOnly) {
@@ -679,113 +676,7 @@ L.TileLayer = L.GridLayer.extend({
 				' x=' + x + ' y=' + y);
 	},
 
-	_onMouseEvent: function (e) {
-		if (this._graphicMarker && this._graphicMarker.isDragged) {
-			return;
-		}
 
-		if (this._startMarker.isDragged === true || this._endMarker.isDragged === true) {
-			return;
-		}
-
-		if (e.type === 'mousedown') {
-			this._mouseDown = true;
-			if (this._holdMouseEvent) {
-				clearTimeout(this._holdMouseEvent);
-			}
-			var mousePos = this._latLngToTwips(e.latlng);
-			this._mouseEventsQueue.push(L.bind(function() {
-				this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);}, this));
-			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 500);
-		}
-		else if (e.type === 'mouseup') {
-			this._mouseDown = false;
-			if (this._map.dragging.enabled()) {
-				if (this._mouseEventsQueue.length === 0) {
-					// mouse up after panning
-					return;
-				}
-			}
-			clearTimeout(this._holdMouseEvent);
-			this._holdMouseEvent = null;
-			if (this._clickTime && Date.now() - this._clickTime <= 250) {
-				// double click, a click was sent already
-				this._mouseEventsQueue = [];
-				return;
-			}
-			else {
-				this._clickTime = Date.now();
-				mousePos = this._latLngToTwips(e.latlng);
-				var timeOut = 250;
-				if (this._permission === 'edit') {
-					timeOut = 0;
-				}
-				this._mouseEventsQueue.push(L.bind(function() {
-					// if it's a click or mouseup after selecting
-					if (this._mouseEventsQueue.length > 1) {
-						// it's a click, fire mousedown
-						this._mouseEventsQueue[0]();
-						if (this._permission === 'view') {
-							this._map.setPermission('edit');
-						}
-					}
-					this._mouseEventsQueue = [];
-					this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
-					this._textArea.focus();
-				}, this));
-				this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), timeOut);
-
-				if (this._startMarker._icon) {
-					L.DomUtil.removeClass(this._startMarker._icon, 'leaflet-not-clickable');
-				}
-				if (this._endMarker._icon) {
-					L.DomUtil.removeClass(this._endMarker._icon, 'leaflet-not-clickable');
-				}
-			}
-		}
-		else if (e.type === 'mousemove' && this._mouseDown) {
-			if (this._holdMouseEvent) {
-				clearTimeout(this._holdMouseEvent);
-				this._holdMouseEvent = null;
-				if (this._map.dragging.enabled()) {
-					// The user just panned the document
-					this._mouseEventsQueue = [];
-					return;
-				}
-				for (var i = 0; i < this._mouseEventsQueue.length; i++) {
-					// synchronously execute old mouse events so we know that
-					// they arrive to the server before the move command
-					this._mouseEventsQueue[i]();
-				}
-				this._mouseEventsQueue = [];
-			}
-			if (!this._map.dragging.enabled()) {
-				mousePos = this._latLngToTwips(e.latlng);
-				this._postMouseEvent('move', mousePos.x, mousePos.y, 1);
-				if (this._startMarker._icon) {
-					L.DomUtil.addClass(this._startMarker._icon, 'leaflet-not-clickable');
-				}
-				if (this._endMarker._icon) {
-					L.DomUtil.addClass(this._endMarker._icon, 'leaflet-not-clickable');
-				}
-			}
-		}
-		else if (e.type === 'dblclick') {
-			mousePos = this._latLngToTwips(e.latlng);
-			this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);
-			this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2);
-			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2);
-			this._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
-		}
-	},
-
-	_executeMouseEvents: function () {
-		this._holdMouseEvent = null;
-		for (var i = 0; i < this._mouseEventsQueue.length; i++) {
-			this._mouseEventsQueue[i]();
-		}
-		this._mouseEventsQueue = [];
-	},
 
 	// Is rRectangle empty?
 	_isEmptyRectangle: function (aBounds) {

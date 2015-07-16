@@ -192,7 +192,12 @@ var deps = {
 
 	Keyboard: {
 		src: ['map/handler/Map.Keyboard.js'],
-		desc: 'Enables keyboard pan/zoom when the map is focused.'
+		desc: 'Handles keyboard interaction with the document.'
+	},
+
+	Mouse: {
+		src: ['map/handler/Map.Mouse.js'],
+		desc: 'Handles mouse interaction with the document.'
 	},
 
 	MarkerDrag: {
