@@ -245,8 +245,8 @@ L.GridLayer = L.Layer.extend({
 			tile = this._tiles[key];
 			if (tile.current && !tile.active) {
 				var coords = tile.coords;
-				if (!this._retainParent(coords.x, coords.y, coords.z, coords.z - 5)) {
-					this._retainChildren(coords.x, coords.y, coords.z, coords.z + 2);
+				if (!this._retainParent(coords.x, coords.y, coords.z, coords.part, coords.z - 5)) {
+					this._retainChildren(coords.x, coords.y, coords.z, coords.part, coords.z + 2);
 				}
 			}
 		}
@@ -264,12 +264,12 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
-	_retainParent: function (x, y, z, minZoom) {
+	_retainParent: function (x, y, z, part, minZoom) {
 		var x2 = Math.floor(x / 1.2),
 			y2 = Math.floor(y / 1.2),
 			z2 = z - 1;
 
-		var key = x2 + ':' + y2 + ':' + z2 + ':' + this._currentPart,
+		var key = x2 + ':' + y2 + ':' + z2 + ':' + part,
 			tile = this._tiles[key];
 
 		if (tile && tile.active) {
@@ -281,19 +281,19 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (z2 > minZoom) {
-			return this._retainParent(x2, y2, z2, minZoom);
+			return this._retainParent(x2, y2, z2, part, minZoom);
 		}
 
 		return false;
 	},
 
-	_retainChildren: function (x, y, z, maxZoom) {
+	_retainChildren: function (x, y, z, part, maxZoom) {
 
 		for (var i = 1.2 * x; i < 1.2 * x + 2; i++) {
 			for (var j = 1.2 * y; j < 1.2 * y + 2; j++) {
 
 				var key = Math.floor(i) + ':' + Math.floor(j) + ':' +
-					(z + 1) + ':' + this._currentPart,
+					(z + 1) + ':' + part,
 					tile = this._tiles[key];
 
 				if (tile && tile.active) {
@@ -305,7 +305,7 @@ L.GridLayer = L.Layer.extend({
 				}
 
 				if (z + 1 < maxZoom) {
-					this._retainChildren(i, j, z + 1, maxZoom);
+					this._retainChildren(i, j, z + 1, part, maxZoom);
 				}
 			}
 		}
@@ -664,7 +664,7 @@ L.GridLayer = L.Layer.extend({
 				var twips = this._coordsToTwips(coords);
 				this._pendingTilesCount += 1;
 				this.sendMessage('tile ' +
-								'part=' + this._currentPart + ' ' +
+								'part=' + coords.part + ' ' +
 								'width=' + this._tileSize + ' ' +
 								'height=' + this._tileSize + ' ' +
 								'tileposx=' + twips.x + ' '	+
@@ -846,7 +846,7 @@ L.GridLayer = L.Layer.extend({
 			for (i = 0; i < queue.length && tilesToFetch > 0; i++) {
 				coords = queue[i];
 				coords.z = zoom;
-				coords.part = this._currentPart;
+				coords.part = this._preFetchPart;
 				var key = this._tileCoordsToKey(coords);
 
 				if (!this._isValidTile(coords) ||
@@ -878,6 +878,40 @@ L.GridLayer = L.Layer.extend({
 				tileBorder.max.y += 1;
 			}
 			borderWidth += 1;
+			if (!(tileBorder.min.x >= 0 || tileBorder.min.y >= 0 ||
+					tileBorder.max.x * this._tileWidthTwips < this._docWidthTwips ||
+					 tileBorder.max.y * this._tileHeightTwips < this._docHeightTwips) &&
+					this.options.preFetchOtherParts) {
+				var diff = this._preFetchPart - this._currentPart;
+				if (diff === 0 && this._currentPart < this._parts - 1) {
+					this._preFetchPart += 1;
+					this._preFetchBorder = null;
+				}
+				else if (diff > 0) {
+					if (this._currentPart - diff >= 0) {
+						// lower part number
+						this._preFetchPart = this._currentPart - diff;
+						this._preFetchBorder = null;
+					}
+					else if (this._currentPart + diff + 1 < this._parts) {
+						// higher part number
+						this._preFetchPart = this._currentPart + diff + 1;
+						this._preFetchBorder = null;
+					}
+				}
+				else if (diff < 0) {
+					if (this._currentPart - diff + 1 < this._parts) {
+						// higher part number
+						this._preFetchPart = this._currentPart - diff + 1;
+						this._preFetchBorder = null;
+					}
+					else if (this._currentPart + diff - 1 >= 0) {
+						// lower part number
+						this._preFetchPart = this._currentPart + diff - 1;
+						this._preFetchBorder = null;
+					}
+				}
+			}
 		}
 
 		if (finalQueue.length > 0) {
