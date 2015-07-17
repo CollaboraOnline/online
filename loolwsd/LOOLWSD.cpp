@@ -998,9 +998,36 @@ void LOOLWSD::startupDesktop(int nDesktops)
     }
 }
 
-
-void LOOLWSD::loolMain()
+int LOOLWSD::main(const std::vector<std::string>& args)
 {
+    if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
+    {
+        std::cout << "Unable to access " << cache <<
+            ", please make sure it exists, and has write permission for this user." << std::endl;
+        return Application::EXIT_UNAVAILABLE;
+    }
+
+    // We use the same option set for both parent and child loolwsd,
+    // so must check options required in the parent (but not in the
+    // child) separately now. Also check for options that are
+    // meaningless for the parent.
+    if (sysTemplate == "")
+        throw MissingOptionException("systemplate");
+    if (loTemplate == "")
+        throw MissingOptionException("lotemplate");
+    if (childRoot == "")
+        throw MissingOptionException("childroot");
+
+    if (_childId != 0)
+        throw IncompatibleOptionsException("child");
+    if (jail != "")
+        throw IncompatibleOptionsException("jail");
+    if (portNumber == MASTER_PORT_NUMBER)
+        throw IncompatibleOptionsException("port");
+
+    if (_doTest)
+        _numPreSpawnedChildren = 1;
+
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
     rngLock.unlock();
@@ -1074,39 +1101,6 @@ void LOOLWSD::loolMain()
         logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
         Process::requestTermination(i.first);
     }
-}
-
-int LOOLWSD::main(const std::vector<std::string>& args)
-{
-    if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
-    {
-        std::cout << "Unable to access " << cache <<
-            ", please make sure it exists, and has write permission for this user." << std::endl;
-        return Application::EXIT_UNAVAILABLE;
-    }
-
-    // We use the same option set for both parent and child loolwsd,
-    // so must check options required in the parent (but not in the
-    // child) separately now. Also check for options that are
-    // meaningless for the parent.
-    if (sysTemplate == "")
-        throw MissingOptionException("systemplate");
-    if (loTemplate == "")
-        throw MissingOptionException("lotemplate");
-    if (childRoot == "")
-        throw MissingOptionException("childroot");
-
-    if (_childId != 0)
-        throw IncompatibleOptionsException("child");
-    if (jail != "")
-        throw IncompatibleOptionsException("jail");
-    if (portNumber == MASTER_PORT_NUMBER)
-        throw IncompatibleOptionsException("port");
-
-    if (_doTest)
-        _numPreSpawnedChildren = 1;
-
-    loolMain();
 
     return Application::EXIT_OK;
 }

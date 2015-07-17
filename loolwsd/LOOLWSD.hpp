@@ -55,7 +55,6 @@ private:
     bool childMode() const;
     void componentMain();
     void desktopMain();
-    void loolMain();
     void startupComponent(int nComponents);
     void startupDesktop(int nDesktop);
     int  createComponent();
