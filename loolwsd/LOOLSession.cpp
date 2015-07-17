@@ -504,29 +504,46 @@ void MasterProcessSession::dispatchChild()
 
     if (!aUri.empty() && aUri.getScheme() == "file")
     {
-        // The process is jail rooted, so it requests loolMain process to transfer files.
+        Path aSrcFile(aUri.getPath());
+        Path aDstFile(Path(getJailPath(childSession->_childId), jailDocumentURL.substr(1)), aSrcFile.getFileName());
+        Path aDstPath(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
+        Path aJailFile(jailDocumentURL, aSrcFile.getFileName());
+
         try
         {
-            Path aSrcFile(aUri.getPath());
-            Path aDstFile(Path(getJailPath(childSession->_childId), jailDocumentURL.substr(1)), aSrcFile.getFileName());
-            std::string sCopy(aSrcFile.toString() + " " + aDstFile.toString());
-            std::string str;
-
-            DialogSocket ds;
-            ds.connect(SocketAddress("127.0.0.1", LOOLWSD::FILE_PORT_NUMBER));
-            ds.sendMessage(sCopy);
-            ds.receiveMessage(str);
-
-            if (str != "OK")
-                Application::instance().logger().error( Util::logPrefix() +
-                    "DataSocket copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + str);
+            File(aDstPath).createDirectories();
         }
         catch (Exception& exc)
         {
             Application::instance().logger().error( Util::logPrefix() +
-                "FileTransferHanlder failed: " + exc.displayText());
+                "createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
+
         }
 
+#ifdef __linux
+        Application::instance().logger().information(Util::logPrefix() + "Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
+        if (link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
+        {
+            // Failed
+            Application::instance().logger().error( Util::logPrefix() +
+                "link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + strerror(errno) );
+        }
+#endif
+
+        try
+        {
+            //fallback
+            if (!File(aDstFile).exists())
+            {
+                Application::instance().logger().information(Util::logPrefix() + "Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
+                File(aSrcFile).copyTo(aDstFile.toString());
+            }
+        }
+        catch (Exception& exc)
+        {
+            Application::instance().logger().error( Util::logPrefix() +
+                "copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
+        }
     }
 
     _peer = childSession;

@@ -411,92 +411,6 @@ private:
     HTTPServer& _srv;
 };
 
-class FileTransferHandler : public Runnable
-{
-public:
-    FileTransferHandler() : _socket(ServerSocket(LOOLWSD::FILE_PORT_NUMBER))
-    {
-    }
-
-    void run() override
-    {
-        Poco::Timespan span(250000);
-
-        while (true)
-        {
-            if (_socket.poll(span, Socket::SELECT_READ))
-            {
-                DialogSocket ds = _socket.acceptConnection();
-
-                try
-                {
-                    std::string command;
-                    while (ds.receiveMessage(command))
-                    {
-                        FastMutex::ScopedLock lock(_mutex);
-                        ds.sendMessage(transferFile(command));
-                    }
-                }
-				catch (Poco::Exception& exc)
-				{
-					std::cerr << "FileTransferHandler: " << exc.displayText() << std::endl;
-				}
-            }
-        }
-    }
-
-    std::string transferFile(std::string command)
-    {
-        StringTokenizer tokens(command, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        if ( tokens.count() != 2 )
-            return "Souce and Destination is needed :" + command;
-
-        Path aSrcFile(tokens[0]);
-        Path aDstFile(tokens[1]);
-        Path aDstPath(aDstFile.parent());
-
-        try
-        {
-            File(aDstPath).createDirectories();
-        }
-        catch (Exception& exc)
-        {
-            return exc.displayText();
-        }
-
-#ifdef __linux
-        Application::instance().logger().information(Util::logPrefix() + "Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
-        if (link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
-        {
-            // Failed
-            Application::instance().logger().error( Util::logPrefix() +
-                "link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + strerror(errno) );
-        }
-#endif
-
-        try
-        {
-            //fallback
-            if (!File(aDstFile).exists())
-            {
-                Application::instance().logger().information(Util::logPrefix() + "Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
-                File(aSrcFile).copyTo(aDstFile.toString());
-            }
-        }
-        catch (Exception& exc)
-        {
-            return exc.displayText();
-        }
-
-        return "OK";
-    }
-
-private:
-	Poco::Net::ServerSocket  _socket;
-    mutable Poco::FastMutex  _mutex;
-};
-
-
 int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
 std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
@@ -1117,10 +1031,6 @@ void LOOLWSD::loolMain()
     srv2.start();
 
     namedMutexLOOL.unlock();
-
-    Thread threadFile;
-    FileTransferHandler svrFile;
-    threadFile.start(svrFile);
 
     while (MasterProcessSession::_childProcesses.size() > 0)
     {
