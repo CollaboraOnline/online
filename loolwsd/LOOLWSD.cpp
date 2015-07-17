@@ -507,6 +507,7 @@ std::string LOOLWSD::jail;
 std::mutex LOOLWSD::_rngMutex;
 Random LOOLWSD::_rng;
 static NamedMutex namedMutexLOOL("loolwsd");
+Poco::SharedMemory LOOLWSD::_sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
 
 int LOOLWSD::_numPreSpawnedChildren = 10;
 #if ENABLE_DEBUG
@@ -811,6 +812,7 @@ void LOOLWSD::componentMain()
 {
     try
     {
+
         // initialisation
         //_childId = Process::id();
 
@@ -997,29 +999,7 @@ void LOOLWSD::desktopMain()
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
-    namedMutexLOOL.lock();
-
     startupComponent(_numPreSpawnedChildren);
-
-    // Start a server listening on the port for clients
-    ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
-    ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
-    HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
-
-    srv.start();
-
-    // And one on the port for child processes
-    SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
-    ServerSocket svs2(addr2, _numPreSpawnedChildren);
-    ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
-    HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
-
-    srv2.start();
-
-    namedMutexLOOL.unlock();
-
-    /* Pause for a second */
-    sleep(1);
 
     while (MasterProcessSession::_childProcesses.size() > 0)
     {
@@ -1055,8 +1035,9 @@ void LOOLWSD::desktopMain()
         else if (pid < 0)
             std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
 
-        if (MasterProcessSession::getAvailableChildSessions() == 0 && MasterProcessSession::getPendingPreSpawnedChildren() == 0 )
+        if ( _sharedForkChild.begin()[0] )
         {
+            _sharedForkChild.begin()[0] = 0;
             std::cout << Util::logPrefix() << "No availabe child session, fork new one" << std::endl;
             if (createComponent() < 0 )
                 break;
@@ -1110,6 +1091,8 @@ void LOOLWSD::loolMain()
     _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
     rngLock.unlock();
 
+    namedMutexLOOL.lock();
+
     startupDesktop(1);
 
 #ifdef __linux
@@ -1118,12 +1101,62 @@ void LOOLWSD::loolMain()
     dropCapability();
 #endif
 
+    // Start a server listening on the port for clients
+    ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
+    ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
+
+    srv.start();
+
+    // And one on the port for child processes
+    SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
+    ServerSocket svs2(addr2, _numPreSpawnedChildren);
+    ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
+
+    srv2.start();
+
+    namedMutexLOOL.unlock();
+
     Thread threadFile;
     FileTransferHandler svrFile;
     threadFile.start(svrFile);
 
-    int status;
-    waitpid(-1, &status, 0);
+    while (MasterProcessSession::_childProcesses.size() > 0)
+    {
+        int status;
+        pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
+        if (pid > 0)
+        {
+            if ( MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end() )
+            {
+                if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
+                {
+                    std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
+                    MasterProcessSession::_childProcesses.erase(pid);
+                }
+
+                if ( WCOREDUMP(status) )
+                    std::cout << Util::logPrefix() << "The child produced a core dump." << std::endl;
+
+                if ( WIFSTOPPED(status) )
+                    std::cout << Util::logPrefix() << "The child process was stopped by delivery of a signal." << std::endl;
+
+                if ( WSTOPSIG(status) )
+                    std::cout << Util::logPrefix() << "The child process was stopped." << std::endl;
+
+                if ( WIFCONTINUED(status) )
+                    std::cout << Util::logPrefix() << "The child process was resumed." << std::endl;
+            }
+            else
+            {
+                std::cout << Util::logPrefix() << "None of our known child processes died :" << std::to_string(pid)  << std::endl;
+            }
+        }
+        else if (pid < 0)
+            std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
+
+    }
 
     // Terminate child processes
     for (auto i : MasterProcessSession::_childProcesses)

@@ -492,6 +492,8 @@ void MasterProcessSession::dispatchChild()
 
     _availableChildSessions.erase(childSession);
     std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
+    if (_availableChildSessions.size() == 0)
+        LOOLWSD::_sharedForkChild.begin()[0] = 1;
     lock.unlock();
 
     // Assume a valid URI
