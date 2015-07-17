@@ -280,6 +280,9 @@ L.TileLayer = L.GridLayer.extend({
 				// compute the rectangle that each tile covers in the document based
 				// on the zoom level
 				coords = this._keyToTileCoords(key);
+				if (coords.part !== this._currentPart) {
+					continue;
+				}
 				var scale = this._map.getZoomScale(coords.z);
 				topLeftTwips = new L.Point(
 						this.options.tileWidthTwips / scale * coords.x,
@@ -320,6 +323,10 @@ L.TileLayer = L.GridLayer.extend({
 					partNames: partNames
 				});
 				this._update();
+				if (this._preFetchPart !== this._currentPart) {
+					this._preFetchPart = this._currentPart;
+					this._preFetchBorder = null;
+				}
 				if (!this._tilesPreFetcher) {
 					this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), 2000);
 				}
