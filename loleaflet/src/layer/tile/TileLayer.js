@@ -24,7 +24,8 @@ L.TileLayer = L.GridLayer.extend({
 		tms: false,
 		zoomReverse: false,
 		detectRetina: false,
-		crossOrigin: false
+		crossOrigin: false,
+		preFetchOtherParts: false
 	},
 
 	initialize: function (url, options) {
