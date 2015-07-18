@@ -82,6 +82,8 @@ cd / || exit 1
 # This will now copy the file a symlink points to, but whatever.
 cpio -p -d -L $CHROOT
 
+mkdir -p $CHROOT/tmp
+
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved are for fontconfig to trust
 # its cache.
