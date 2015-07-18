@@ -420,7 +420,7 @@ std::string LOOLWSD::loSubPath = "lo";
 std::string LOOLWSD::jail;
 std::mutex LOOLWSD::_rngMutex;
 Random LOOLWSD::_rng;
-static NamedMutex namedMutexLOOL("loolwsd");
+Poco::NamedMutex LOOLWSD::_namedMutexLOOL("loolwsd");
 Poco::SharedMemory LOOLWSD::_sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
 
 int LOOLWSD::_numPreSpawnedChildren = 10;
@@ -726,7 +726,7 @@ void LOOLWSD::componentMain()
 {
     try
     {
-        namedMutexLOOL.lock();
+        _namedMutexLOOL.lock();
 
 #ifdef __APPLE__
         LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
@@ -740,7 +740,7 @@ void LOOLWSD::componentMain()
             exit(Application::EXIT_UNAVAILABLE);
         }
 
-        namedMutexLOOL.unlock();
+        _namedMutexLOOL.unlock();
 
         // Open websocket connection between the child process and the
         // parent. The parent forwards us requests that it can't handle.
@@ -1028,7 +1028,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
     rngLock.unlock();
 
-    namedMutexLOOL.lock();
+    _namedMutexLOOL.lock();
 
     startupDesktop(1);
 
@@ -1053,7 +1053,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     srv2.start();
 
-    namedMutexLOOL.unlock();
+    _namedMutexLOOL.unlock();
 
     while (MasterProcessSession::_childProcesses.size() > 0)
     {

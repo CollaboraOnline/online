@@ -20,6 +20,7 @@
 #include <Poco/Path.h>
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/SharedMemory.h>
+#include <Poco/NamedMutex.h>
 
 class LOOLWSD: public Poco::Util::ServerApplication
 {
@@ -65,6 +66,7 @@ private:
     static int _numPreSpawnedChildren;
     static std::mutex _rngMutex;
     static Poco::Random _rng;
+    static Poco::NamedMutex _namedMutexLOOL;
 
 #if ENABLE_DEBUG
 public:
