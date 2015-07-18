@@ -726,9 +726,7 @@ void LOOLWSD::componentMain()
 {
     try
     {
-
-        // initialisation
-        //_childId = Process::id();
+        namedMutexLOOL.lock();
 
 #ifdef __APPLE__
         LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
@@ -742,8 +740,6 @@ void LOOLWSD::componentMain()
             exit(Application::EXIT_UNAVAILABLE);
         }
 
-        // wait until desktop sockets setup
-        namedMutexLOOL.lock();
         namedMutexLOOL.unlock();
 
         // Open websocket connection between the child process and the
