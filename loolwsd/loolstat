@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# utilities
+TR='tr'
+WC='wc'
+PS='ps'
+SED='sed'
+GREP='grep'
+PSTREE='pstree'
+
+# log pid file
+PIDLOG="/tmp/loolwsd.pid"
+
+# print error message
+log_failure_msg () {
+  if [ -n "${1:-}" ]; then
+    /bin/echo "$@" || true
+  fi
+}
+
+# checking ... print lines matching a pattern utility
+if ! echo a | $GREP -E '(a|b)' >/dev/null 2>&1; then
+  log_failure_msg "$0: error: $GREP utility not found."
+fi
+
+# checking ... word count utility
+if ! $WC --version >/dev/null 2>&1; then
+  log_failure_msg "$0: error: $WC utility not found."
+fi
+
+# checking ... stream editor utility
+if ! $SED --version >/dev/null 2>&1; then
+  log_failure_msg "$0: error: $SED utility not found."
+fi
+
+# checking ... delete characters utility
+if ! $TR --version >/dev/null 2>&1; then
+  log_failure_msg "$0: error: $TR utility not found."
+fi
+
+# checking ... display a tree of processes utility
+if ! $PSTREE --version >/dev/null 2>&1; then
+  log_failure_msg "$0: error: $PSTREE utility not found."
+fi
+
+# checking ... report a snapshot of the current processes utility.
+if ! $PS --version >/dev/null 2>&1; then
+  log_failure_msg "$0: error: $PS utility not found."
+fi
+
+# checking pid log file.
+if [ ! -f $PIDLOG ]; then
+	log_failure_msg "$0: error: $PIDLOG file not found."
+	exit 1;
+fi
+
+# get the loolwsd process id.
+LOOLWSD_PID=$(cat $PIDLOG);
+
+# checking if loolwsd is running.
+if ! $PS -p $LOOLWSD_PID > /dev/null; then
+	log_failure_msg "$0: error: loolwsd is not running."
+	exit 1;
+fi
+
+# display a tree of processes.
+$PSTREE -a -c -h -A -p $LOOLWSD_PID;
+
+# get the number of running processes.
+PROCESS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolwsd,' | $WC -l);
+
+# get the number of running threads.
+THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolwsd}' | $WC -l);
+
+# get the number of processes swapped out.
+SWAPPEDOUT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '(loolwsd,' | $WC -l);
+
+# display report stats
+printf "\n %-10s\n" "LOOLWSD STATS";
+printf "==========================\n";
+printf " %-10s %d\n" "Running process:" "$PROCESS";
+printf " %-10s %d\n" "Running threads:" "$THREADS";
+printf " %-10s %d\n" "Process swapped out:" "$SWAPPEDOUT";
+
