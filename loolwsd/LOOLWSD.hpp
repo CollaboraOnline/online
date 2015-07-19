@@ -43,6 +43,7 @@ public:
     static const int MASTER_PORT_NUMBER = 9981;
     static const int FILE_PORT_NUMBER = 9979;
     static const std::string CHILD_URI;
+    static const std::string PIDLOG;
 
 protected:
     void initialize(Poco::Util::Application& self) override;

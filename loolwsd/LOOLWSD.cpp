@@ -92,6 +92,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/Net.h>
 #include <Poco/ThreadLocal.h>
 #include <Poco/NamedMutex.h>
+#include <Poco/FileStream.h>
 
 
 #include "LOOLProtocol.hpp"
@@ -429,6 +430,7 @@ bool LOOLWSD::runningAsRoot = false;
 int LOOLWSD::uid = 0;
 #endif
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
+const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 
 LOOLWSD::LOOLWSD() :
     _doTest(false),
@@ -1023,6 +1025,13 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     if (_doTest)
         _numPreSpawnedChildren = 1;
+
+    // log pid information
+    {
+        Poco::FileOutputStream filePID(LOOLWSD::PIDLOG);
+        if (filePID.good())
+            filePID << Process::id();
+    }
 
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
