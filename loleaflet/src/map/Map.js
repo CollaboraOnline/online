@@ -443,7 +443,8 @@ L.Map = L.Evented.extend({
 			vex.dialog.alert('Socket connection error');
 			return;
 		}
-		this.socket.onerror = L.bind(this._socketError, this);
+		this.socket.onerror = L.bind(this._onSocketError, this);
+		this.socket.onclose = L.bind(this._onSocketClose, this);
 		this.socket.binaryType = 'arraybuffer';
 	},
 
@@ -756,9 +757,14 @@ L.Map = L.Evented.extend({
 		return Math.max(min, Math.min(max, zoom));
 	},
 
-	_socketError: function (e) {
+	_onSocketError: function (e) {
 		console.log(e);
 		vex.dialog.alert('Socket connection error');
+	},
+
+	_onSocketClose: function (e) {
+		console.log(e);
+		vex.dialog.alert('Socket connection closed');
 	}
 });
 
