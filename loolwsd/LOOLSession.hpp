@@ -55,6 +55,8 @@ protected:
 
     const Kind _kind;
 
+    std::string _kindString;
+
     void sendBinaryFrame(const char *buffer, int length);
 
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;

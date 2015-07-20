@@ -51,9 +51,9 @@ namespace Util
 
     std::string logPrefix()
     {
-        static Poco::Timestamp firstTimeStamp;
-        Poco::Int64 now = firstTimeStamp.elapsed();
-        return std::to_string(Poco::Process::id()) + ":" + (Poco::Thread::current() ? std::to_string(Poco::Thread::current()->id()) : "0") + ":" + std::to_string(now / 1000000) + "." + Poco::format("%03d", (int)((now / 1000) % 1000)) + ": ";
+        Poco::Timestamp timeStamp;
+        Poco::Int64 now = timeStamp.epochMicroseconds();
+        return std::to_string(Poco::Process::id()) + "," + (Poco::Thread::current() ? std::to_string(Poco::Thread::current()->id()) : "0") + "," + std::to_string(now / 1000) + ",";
     }
 
     bool windowingAvailable()

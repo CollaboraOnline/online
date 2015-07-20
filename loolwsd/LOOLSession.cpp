@@ -85,6 +85,15 @@ LOOLSession::LOOLSession(std::shared_ptr<WebSocket> ws, Kind kind) :
     _docURL("")
 {
     std::cout << Util::logPrefix() << "LOOLSession ctor this=" << this << " " << _kind << " ws=" << _ws.get() << std::endl;
+    if (kind == Kind::ToClient) {
+        _kindString = "ToClient";
+    }
+    else if (kind == Kind::ToMaster) {
+        _kindString = "ToMaster";
+    }
+    else if (kind == Kind::ToPrisoner) {
+        _kindString = "ToPrisoner";
+    }
 }
 
 LOOLSession::~LOOLSession()
@@ -143,7 +152,7 @@ MasterProcessSession::~MasterProcessSession()
 
 bool MasterProcessSession::handleInput(const char *buffer, int length)
 {
-    Application::instance().logger().information(Util::logPrefix() + "Input: " + getAbbreviatedMessage(buffer, length));
+    Application::instance().logger().information(Util::logPrefix() + _kindString + ",Input," + getAbbreviatedMessage(buffer, length));
 
     std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -555,7 +564,7 @@ void MasterProcessSession::dispatchChild()
 
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 {
-    Application::instance().logger().information(Util::logPrefix() + "forwardToPeer(" + getAbbreviatedMessage(buffer, length) + ")");
+    Application::instance().logger().information(Util::logPrefix() + _kindString + ",forwardToPeer," + getAbbreviatedMessage(buffer, length));
     auto peer = _peer.lock();
     if (!peer)
         return;
@@ -583,7 +592,7 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
     std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-    Application::instance().logger().information(Util::logPrefix() + "Input: " + getAbbreviatedMessage(buffer, length));
+    Application::instance().logger().information(Util::logPrefix() + _kindString + ",Input," + getAbbreviatedMessage(buffer, length));
 
     if (tokens[0] == "load")
     {
