@@ -126,13 +126,9 @@ When the crash happens too early, you also want to
 so that you have time to attach to the process.
 
 Then run loolwsd, and attach your debugger to the process you are
-interested in. Note that as the loolwsd executable file has the
-cap_sys_chroot capability set, you most likely need to run the
-debugger with super-user privilege (use the sudo command) to be able
-to attach a running loolwsd process. (This is a bit odd, as a child
-loolwsd process gives up its chroot capability after using it, and the
-master loolwsd process doesn't ebven use it, but gies it up right
-away.)
+interested in. Note that as the loolwsd executable file has
+capabilities set, you need to run the debugger with super-user
+privilege.
 
 Also, note that as the child processes run in a chroot environment,
 they see the LibreOffice shared libraries as being in a directory tree
