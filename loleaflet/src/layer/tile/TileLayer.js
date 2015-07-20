@@ -249,18 +249,26 @@ L.TileLayer = L.GridLayer.extend({
 			this._onUpdateGraphicSelection();
 		}
 		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.match('EMPTY')) {
-			strTwips = textMsg.match(/\d+/g);
-			topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			command = this._parseServerCmd(textMsg);
+			if (command.x === undefined || command.y === undefined || command.part === undefined) {
+				strTwips = textMsg.match(/\d+/g);
+				command.x = parseInt(strTwips[0]);
+				command.y = parseInt(strTwips[1]);
+				command.width = parseInt(strTwips[2]);
+				command.height = parseInt(strTwips[3]);
+				command.part = this._currentPart;
+			}
+			topLeftTwips = new L.Point(command.x, command.y);
+			offset = new L.Point(command.width, command.height);
 			bottomRightTwips = topLeftTwips.add(offset);
 			var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 
 			for (var key in this._tiles) {
 				var coords = this._tiles[key].coords;
-				var point1 = this._coordsToTwips(coords);
-				var point2 = new L.Point(point1.x + this._tileWidthTwips, point1.y + this._tileHeightTwips);
-				var bounds = new L.Bounds(point1, point2);
-				if (invalidBounds.intersects(bounds)) {
+				var tileTopLeft = this._coordsToTwips(coords);
+				var tileBottomRight = new L.Point(this._tileWidthTwips, this._tileHeightTwips);
+				var bounds = new L.Bounds(tileTopLeft, tileTopLeft.add(tileBottomRight));
+				if (invalidBounds.intersects(bounds) && coords.part === command.part) {
 					if (this._tiles[key]._invalidCount) {
 						this._tiles[key]._invalidCount += 1;
 					}
@@ -271,8 +279,8 @@ L.TileLayer = L.GridLayer.extend({
 									'part=' + coords.part + ' ' +
 									'width=' + this._tileSize + ' ' +
 									'height=' + this._tileSize + ' ' +
-									'tileposx=' + point1.x + ' '    +
-									'tileposy=' + point1.y + ' ' +
+									'tileposx=' + tileTopLeft.x + ' '    +
+									'tileposy=' + tileTopLeft.y + ' ' +
 									'tilewidth=' + this._tileWidthTwips + ' ' +
 									'tileheight=' + this._tileHeightTwips, key);
 				}
@@ -281,7 +289,7 @@ L.TileLayer = L.GridLayer.extend({
 				// compute the rectangle that each tile covers in the document based
 				// on the zoom level
 				coords = this._keyToTileCoords(key);
-				if (coords.part !== this._currentPart) {
+				if (coords.part !== command.part) {
 					continue;
 				}
 				var scale = this._map.getZoomScale(coords.z);
@@ -475,6 +483,12 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			else if (tokens[i].substring(0, 9) === 'tileposy=') {
 				command.y = parseInt(tokens[i].substring(9));
+			}
+			else if (tokens[i].substring(0, 2) === 'x=') {
+				command.x = parseInt(tokens[i].substring(2));
+			}
+			else if (tokens[i].substring(0, 2) === 'y=') {
+				command.y = parseInt(tokens[i].substring(2));
 			}
 			else if (tokens[i].substring(0, 10) === 'tilewidth=') {
 				command.tileWidth = parseInt(tokens[i].substring(10));
