@@ -682,7 +682,6 @@ extern "C"
             {
                 int curPart = srv->_loKitDocument->pClass->getPart(srv->_loKitDocument);
                 srv->sendTextFrame("curpart: part=" + std::to_string(curPart));
-                srv->sendTextFrame("invalidatetiles: " + std::string(pPayload));
                 StringTokenizer tokens(std::string(pPayload), " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (tokens.count() == 4)
                 {
@@ -690,12 +689,15 @@ extern "C"
                     int y(std::stoi(tokens[1]));
                     int width(std::stoi(tokens[2]));
                     int height(std::stoi(tokens[3]));
-                    srv->sendTextFrame("invalidate:"
+                    srv->sendTextFrame("invalidatetiles:"
                                        " part=" + std::to_string(curPart) +
                                        " x=" + std::to_string(x) +
                                        " y=" + std::to_string(y) +
                                        " width=" + std::to_string(width) +
                                        " height=" + std::to_string(height));
+                }
+                else {
+                    srv->sendTextFrame("invalidatetiles: " + std::string(pPayload));
                 }
             }
             break;
