@@ -12,16 +12,16 @@ L.Control.Buttons = L.Control.extend({
 		    container = L.DomUtil.create('div', buttonsName + '-container' + ' leaflet-bar');
 
 		this._buttons = {
-			'bold':          {title: 'Bold',               uno: 'Bold',        iconName: 'bold.png'},
-			'italic':        {title: 'Italic',             uno: 'Italic',      iconName: 'italic.png'},
-			'underline':     {title: 'Underline',          uno: 'Underline',   iconName: 'underline.png'},
-			'strikethrough': {title: 'Strike-through',     uno: 'Strikeout',   iconName: 'strikethrough.png'},
-			'alignleft':     {title: 'Align left',         uno: 'AlignLeft',   iconName: 'alignleft.png'},
-			'aligncenter':   {title: 'Center horizontaly', uno: 'AlignCenter', iconName: 'aligncenter.png'},
-			'alignright':    {title: 'Align right',        uno: 'AlignRight',  iconName: 'alignright.png'},
-			'alignblock':    {title: 'Justified',          uno: 'AlignBlock',  iconName: 'alignblock.png'},
-			'save':          {title: 'Save',               uno: 'Save',        iconName: 'save.png'},
-			'saveas':        {title: 'Save As',            uno: '',            iconName: 'saveas.png'}
+			'bold':          {title: 'Bold',               uno: 'Bold',                        iconName: 'bold.png'},
+			'italic':        {title: 'Italic',             uno: 'Italic',                      iconName: 'italic.png'},
+			'underline':     {title: 'Underline',          uno: 'Underline',                   iconName: 'underline.png'},
+			'strikethrough': {title: 'Strike-through',     uno: 'Strikeout',                   iconName: 'strikethrough.png'},
+			'alignleft':     {title: 'Align left',         uno: 'CommonAlignLeft',             iconName: 'alignleft.png'},
+			'aligncenter':   {title: 'Center horizontaly', uno: 'CommonAlignHorizontalCenter', iconName: 'aligncenter.png'},
+			'alignright':    {title: 'Align right',        uno: 'CommonAlignRight',            iconName: 'alignright.png'},
+			'alignblock':    {title: 'Justified',          uno: 'CommonAlignJustified',        iconName: 'alignblock.png'},
+			'save':          {title: 'Save',               uno: 'Save',                        iconName: 'save.png'},
+			'saveas':        {title: 'Save As',            uno: '',                            iconName: 'saveas.png'}
 		};
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
