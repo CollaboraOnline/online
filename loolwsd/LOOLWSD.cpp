@@ -243,7 +243,7 @@ public:
                                 // Also forward the "canceltiles" to the child process, if any
                                 session->handleInput(buffer, n);
                             }
-                            else
+                            else if (!queue.alreadyInQueue(firstLine))
                             {
                                 queue.put(firstLine);
                             }

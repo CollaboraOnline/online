@@ -54,6 +54,15 @@ public:
                      _queue.end());
     }
 
+    bool alreadyInQueue(std::string cmd) {
+        for (auto it = _queue.cbegin(); it != _queue.cend(); ++it) {
+            if (cmd == *it) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 private:
     std::mutex _mutex;
     std::condition_variable _cv;
