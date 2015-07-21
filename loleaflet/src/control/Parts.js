@@ -25,6 +25,7 @@ L.Map.include({
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
+		docLayer.sendMessage('setclientpart part=' + docLayer._currentPart);
 		docLayer._update();
 		docLayer._pruneTiles();
 		docLayer._clearSelections();
