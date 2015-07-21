@@ -46,7 +46,7 @@ public:
     void saveStatus(const std::string& status);
 
     // The tiles parameter is an invalidatetiles: message as sent by the child process
-    void invalidateTiles(int part, const std::string& tiles);
+    void invalidateTiles(const std::string& tiles);
 
     void invalidateTiles(int part, int x, int y, int width, int height);
 

@@ -204,7 +204,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
                 peer->_tileCache->setEditing(true);
 
                 assert(firstLine.size() == static_cast<std::string::size_type>(length));
-                peer->_tileCache->invalidateTiles(_curPart, firstLine);
+                peer->_tileCache->invalidateTiles(firstLine);
             }
         }
 

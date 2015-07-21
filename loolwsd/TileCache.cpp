@@ -28,6 +28,7 @@
 #include <Poco/URI.h>
 
 #include "LOOLWSD.hpp"
+#include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
 
 using Poco::DigestEngine;
@@ -38,6 +39,8 @@ using Poco::StringTokenizer;
 using Poco::SyntaxException;
 using Poco::Timestamp;
 using Poco::URI;
+
+using namespace LOOLProtocol;
 
 TileCache::TileCache(const std::string& docURL) :
     _docURL(docURL),
@@ -224,7 +227,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
     }
 }
 
-void TileCache::invalidateTiles(int part, const std::string& tiles)
+void TileCache::invalidateTiles(const std::string& tiles)
 {
     StringTokenizer tokens(tiles, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -234,18 +237,21 @@ void TileCache::invalidateTiles(int part, const std::string& tiles)
     {
         invalidateTiles(-1, 0, 0, INT_MAX, INT_MAX);
     }
-    else if (tokens.count() != 5)
+    else if (tokens.count() != 6)
     {
         return;
     }
     else
     {
-        int x(std::stoi(tokens[1]));
-        int y(std::stoi(tokens[2]));
-        int width(std::stoi(tokens[3]));
-        int height(std::stoi(tokens[4]));
-
-        invalidateTiles(part, x, y, width, height);
+        int part, x, y, width, height;
+        if (getTokenInteger(tokens[1], "part", part) &&
+            getTokenInteger(tokens[2], "x", x) &&
+            getTokenInteger(tokens[3], "y", y) &&
+            getTokenInteger(tokens[4], "width", width) &&
+            getTokenInteger(tokens[5], "height", height))
+        {
+            invalidateTiles(part, x, y, width, height);
+        }
     }
 }
 
