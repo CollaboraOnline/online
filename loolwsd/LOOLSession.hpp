@@ -175,10 +175,14 @@ public:
     bool selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     std::string _jail;
     std::string _loSubPath;
     LibreOfficeKit *_loKit;
+
+ private:
+    int _clientPart;
 };
 
 #endif

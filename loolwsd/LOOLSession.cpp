@@ -277,6 +277,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
              tokens[0] != "saveas" &&
              tokens[0] != "selectgraphic" &&
              tokens[0] != "selecttext" &&
+             tokens[0] != "setclientpart" &&
              tokens[0] != "status" &&
              tokens[0] != "tile" &&
              tokens[0] != "uno")
@@ -574,7 +575,8 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws, LibreOfficeKit *loKit) :
     LOOLSession(ws, Kind::ToMaster),
     _loKitDocument(NULL),
-    _loKit(loKit)
+    _loKit(loKit),
+    _clientPart(0)
 {
     std::cout << Util::logPrefix() << "ChildProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
 }
@@ -608,6 +610,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
+    else if (tokens[0] == "setclientpart")
+    {
+        return setClientPart(buffer, length, tokens);
+    }
     else if (tokens[0] == "status")
     {
         return getStatus(buffer, length);
@@ -630,6 +636,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
                tokens[0] == "resetselection" ||
                tokens[0] == "saveas");
 
+        if (_loKitDocument->pClass->getPart(_loKitDocument) != _clientPart)
+        {
+            _loKitDocument->pClass->setPart(_loKitDocument, _clientPart);
+        }
         if (tokens[0] == "gettextselection")
         {
             return getTextSelection(buffer, length, tokens);
@@ -1021,6 +1031,16 @@ bool ChildProcessSession::saveAs(const char *buffer, int length, StringTokenizer
 
     _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(), format.c_str(), filterOptions.c_str());
 
+    return true;
+}
+
+bool ChildProcessSession::setClientPart(const char *buffer, int length, StringTokenizer& tokens)
+{
+    if (tokens.count() < 2 ||
+        !getTokenInteger(tokens[1], "part", _clientPart))
+    {
+        return false;
+    }
     return true;
 }
 
