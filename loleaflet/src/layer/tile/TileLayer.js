@@ -328,8 +328,9 @@ L.TileLayer = L.GridLayer.extend({
 				this._parts = command.parts;
 				this._currentPart = command.currentPart;
 				this.sendMessage('setclientpart part=' + this._currentPart);
-				var partNamesStr = bytes === undefined ? textMsg : String.fromCharCode.apply(null, bytes.subarray(index));
-				var partNames = partNamesStr.match(/[^\r\n]+/g);
+				var partNames = textMsg.match(/[^\r\n]+/g);
+				// only get the last matches
+				partNames = partNames.slice(partNames.length - this._parts);
 				this._map.fire('updateparts', {
 					currentPart: this._currentPart,
 					parts: this._parts,

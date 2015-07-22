@@ -58,6 +58,7 @@ L.Control.Parts = L.Control.extend({
 		var parts = e.parts;
 		var currentPart = e.currentPart;
 		var docType = e.docType;
+		var partNames = e.partNames;
 		if (currentPart === 0) {
 			L.DomUtil.addClass(this._prevPartButton, className);
 		} else {
@@ -106,7 +107,7 @@ L.Control.Parts = L.Control.extend({
 				for (i = 0; i < parts; i++) {
 					id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('li', '', container);
-					tab.innerHTML = 'Sheet ' + (i + 1);
+					tab.innerHTML = partNames[i];
 					tab.id = id;
 					L.DomEvent
 						.on(tab, 'click', L.DomEvent.stopPropagation)
