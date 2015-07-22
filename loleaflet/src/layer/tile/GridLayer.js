@@ -517,7 +517,6 @@ L.GridLayer = L.Layer.extend({
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
 				this.sendMessage('canceltiles');
-				this._pendingTilesCount = 0;
 				for (key in this._tiles) {
 					if (!this._tiles[key].loaded) {
 						L.DomUtil.remove(this._tiles[key].el);
@@ -662,7 +661,6 @@ L.GridLayer = L.Layer.extend({
 		if (!this._tileCache[key]) {
 			if (this.options.useSocket && this._map.socket) {
 				var twips = this._coordsToTwips(coords);
-				this._pendingTilesCount += 1;
 				this.sendMessage('tile ' +
 								'part=' + coords.part + ' ' +
 								'width=' + this._tileSize + ' ' +
@@ -790,17 +788,13 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_preFetchTiles: function () {
-		if (this._pendingTilesCount > 0) {
+		if (this._permission === 'edit') {
 			return;
 		}
 		var center = this._map.getCenter();
 		var zoom = this._map.getZoom();
 		var tilesToFetch = 10;
 		var maxBorderWidth = 5;
-		if (this._permission === 'edit') {
-			tilesToFetch = 2;
-			maxBorderWidth = 2;
-		}
 
 		if (!this._preFetchBorder) {
 			var pixelBounds = this._map.getPixelBounds(center, zoom),

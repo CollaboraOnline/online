@@ -90,7 +90,6 @@ L.TileLayer = L.GridLayer.extend({
 			}),
 			draggable: true
 		});
-		this._pendingTilesCount = 0;
 		this._textArea = L.DomUtil.get('clipboard');
 		this._textArea.focus();
 	},
@@ -391,9 +390,6 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			else {
 				this._tileCache[key] = img;
-			}
-			if (this._pendingTilesCount > 0) {
-				this._pendingTilesCount -= 1;
 			}
 			L.Log.log(textMsg, L.INCOMING, key);
 		}
