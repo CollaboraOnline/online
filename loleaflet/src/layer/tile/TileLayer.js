@@ -185,6 +185,10 @@ L.TileLayer = L.GridLayer.extend({
 		if (!textMsg.startsWith('tile:')) {
 			// log the tile msg separately as we need the tile coordinates
 			L.Log.log(textMsg, L.INCOMING);
+			if (bytes !== undefined) {
+				// if it's not a tile, parse the whole message
+				textMsg = String.fromCharCode.apply(null, bytes);
+			}
 		}
 
 		if (textMsg.startsWith('cursorvisible:')) {
@@ -438,7 +442,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._onUpdateTextSelection();
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
-			textMsg += String.fromCharCode.apply(null, bytes.subarray(index));
 			this._selectionTextContent = textMsg.substr(22);
 		}
 		else if (textMsg.startsWith('setpart:')) {
@@ -476,7 +479,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_parseServerCmd: function (msg) {
-		var tokens = msg.split(' ');
+		var tokens = msg.split(/[ \n]+/);
 		var command = {};
 		for (var i = 0; i < tokens.length; i++) {
 			if (tokens[i].substring(0, 9) === 'tileposx=') {
