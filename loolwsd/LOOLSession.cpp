@@ -195,7 +195,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             }
             else if (tokens[0] == "status:")
             {
-                peer->_tileCache->saveStatus(firstLine);
+                peer->_tileCache->saveStatus(std::string(buffer, length));
             }
             else if (tokens[0] == "invalidatetiles:")
             {
