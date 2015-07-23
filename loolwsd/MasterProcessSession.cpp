@@ -52,90 +52,8 @@ using Poco::URI;
 using Poco::File;
 using Poco::Exception;
 
-
-/*#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
-
-#include <Poco/Exception.h>
-#include <Poco/Net/HTTPStreamFactory.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/String.h>
-#include <Poco/ThreadLocal.h>
-#include <Poco/URIStreamOpener.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Net/DialogSocket.h>
-#include <Poco/Net/SocketAddress.h>
-
-#include "LOKitHelper.hpp"
-#include "TileCache.hpp"
-
-
-using Poco::IOException;
-using Poco::Net::HTTPStreamFactory;
-using Poco::ProcessHandle;
-using Poco::StreamCopier;
-using Poco::Thread;
-using Poco::ThreadLocal;
-using Poco::UInt64;
-using Poco::URIStreamOpener;
-using Poco::Net::DialogSocket;
-using Poco::Net::SocketAddress;
-using Poco::Net::WebSocketException;*/
-
-
-/*#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
-
-#include <Poco/Exception.h>
-#include <Poco/File.h>
-#include <Poco/Net/HTTPStreamFactory.h>
-#include <Poco/Path.h>
-#include <Poco/Process.h>
-#include <Poco/Random.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/String.h>
-#include <Poco/StringTokenizer.h>
-#include <Poco/ThreadLocal.h>
-#include <Poco/URI.h>
-#include <Poco/URIStreamOpener.h>
-#include <Poco/Util/Application.h>
-#include <Poco/Exception.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Net/DialogSocket.h>
-#include <Poco/Net/SocketAddress.h>
-
-#include "LOKitHelper.hpp"
-#include "LOOLSession.hpp"
-#include "LOOLWSD.hpp"
-#include "TileCache.hpp"
-
-using namespace LOOLProtocol;
-
-using Poco::File;
-using Poco::IOException;
-using Poco::Net::HTTPStreamFactory;
-using Poco::Path;
-using Poco::Process;
-using Poco::ProcessHandle;
-using Poco::Random;
-using Poco::StreamCopier;
-using Poco::StringTokenizer;
-using Poco::Thread;
-using Poco::ThreadLocal;
-using Poco::URI;
-using Poco::URIStreamOpener;
-using Poco::Util::Application;
-using Poco::Exception;
-using Poco::Net::DialogSocket;
-using Poco::Net::SocketAddress;
-using Poco::Net::WebSocketException;*/
-
-
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
-std::set<UInt64> MasterProcessSession::_pendingPreSpawnedChildren;
 std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::mutex MasterProcessSession::_availableChildSessionMutex;
 std::condition_variable MasterProcessSession::_availableChildSessionCV;
@@ -148,12 +66,12 @@ MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind k
     _childId(0),
     _curPart(0)
 {
-    std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws.get() << kind << std::endl;
+    std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws.get() << " kind="<< _kind << std::endl;
 }
 
 MasterProcessSession::~MasterProcessSession()
 {
-    std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer.lock().get() << std::endl;
+    std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer.lock().get() <<" kind="<< _kind << std::endl;
     Util::shutdownWebSocket(*_ws);
     auto peer = _peer.lock();
     if (_kind == Kind::ToClient && peer)
@@ -243,20 +161,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         }
 
         UInt64 childId = std::stoull(tokens[1]);
-        // TODO. rework, the desktop and its childrem is jail root same folder
-        /*if (_pendingPreSpawnedChildren.find(childId) == _pendingPreSpawnedChildren.end())
-        {
-            std::cout << Util::logPrefix() << "Error _pendingPreSpawnedChildren.find(childId)" << this << " id=" << childId << std::endl;
 
-            sendTextFrame("error: cmd=child kind=notfound");
-            return false;
-        }*/
-
-        if (_pendingPreSpawnedChildren.size() > 0)
-        {
-            std::set<UInt64>::iterator it = _pendingPreSpawnedChildren.begin();
-            _pendingPreSpawnedChildren.erase(it);
-        }
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.insert(shared_from_this());
         std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
@@ -479,16 +384,10 @@ void MasterProcessSession::dispatchChild()
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
 
-    std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << " _pendingChildSessions size=" << _pendingPreSpawnedChildren.size() << std::endl;
+    std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
 
     if (_availableChildSessions.size() == 0)
     {
-        if (_pendingPreSpawnedChildren.size() == 0)
-        {
-            // Running out of pre-spawned children, so spawn one more
-            Application::instance().logger().information(Util::logPrefix() + "Running out of pre-spawned childred, adding one more");
-        }
-
         std::cout << Util::logPrefix() << "waiting for a child session to become available" << std::endl;
         _availableChildSessionCV.wait(lock, [] { return _availableChildSessions.size() > 0; });
         std::cout << Util::logPrefix() << "waiting done" << std::endl;

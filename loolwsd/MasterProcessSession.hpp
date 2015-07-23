@@ -51,9 +51,6 @@ public:
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
 
-    // Pre-spawned child processes that haven't yet connected.
-    static std::set<Poco::UInt64> _pendingPreSpawnedChildren;
-
     // Sessions to pre-spawned child processes that have connected but are not yet assigned a
     // document to work on.
     static std::set<std::shared_ptr<MasterProcessSession>> _availableChildSessions;
