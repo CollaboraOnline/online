@@ -523,6 +523,7 @@ L.GridLayer = L.Layer.extend({
 						delete this._tiles[key];
 					}
 				}
+				this._emptyTilesCount = 0;
 			}
 
 			// if its the first batch of tiles to load

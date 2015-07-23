@@ -90,6 +90,7 @@ L.TileLayer = L.GridLayer.extend({
 			}),
 			draggable: true
 		});
+		this._emptyTilesCount = 0;
 		this._textArea = L.DomUtil.get('clipboard');
 		this._textArea.focus();
 	},
@@ -162,6 +163,7 @@ L.TileLayer = L.GridLayer.extend({
 		 http://www.w3.org/TR/WCAG20-TECHS/H67
 		*/
 		tile.alt = '';
+		this._emptyTilesCount += 1;
 		return tile;
 	},
 
@@ -385,6 +387,13 @@ L.TileLayer = L.GridLayer.extend({
 			else if (tile) {
 				if (this._tiles[key]._invalidCount > 0) {
 					this._tiles[key]._invalidCount -= 1;
+				}
+				if (!tile.loaded) {
+					this._emptyTilesCount -= 1;
+					if (this._emptyTilesCount === 0) {
+						console.log('alltilesloaded');
+						this._map.fire('alltilesloaded');
+					}
 				}
 				tile.el.src = img;
 			}
