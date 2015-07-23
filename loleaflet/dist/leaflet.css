@@ -645,7 +645,7 @@ a.leaflet-control-buttons:hover {
   }
 }
 
-#clipboard-container {
+.clipboard-container {
 	position: fixed;
 	left: 0px;
 	top: 0px;
@@ -654,7 +654,7 @@ a.leaflet-control-buttons:hover {
 	z-index: 100;
 	opacity: 0;
 }
-#clipboard {
+.clipboard {
 	width: 1px;
 	height: 1px;
 	padding: 0px;

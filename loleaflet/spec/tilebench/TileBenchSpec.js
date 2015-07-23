@@ -27,7 +27,7 @@ describe('TileBench', function () {
 		var docLayer = new L.TileLayer('', {
 			doc: 'file:///home/mihai/Desktop/test_docs/eval.odt',
 			useSocket : true,
-			edit: true,
+			edit: false,
 			readOnly: false
 		});
 		map.addLayer(docLayer);

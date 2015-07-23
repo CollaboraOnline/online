@@ -468,6 +468,9 @@ L.Map = L.Evented.extend({
 			throw new Error('Mock document div not found.');
 		}
 
+		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container.parentElement);
+		this._textArea = L.DomUtil.create('textarea', 'clipboard', textAreaContainer);
+
 		container._leaflet = true;
 	},
 
@@ -585,7 +588,7 @@ L.Map = L.Evented.extend({
 
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
 			'mouseover mouseout mousemove contextmenu keydown keypress keyup', this._handleDOMEvent, this);
-		L.DomEvent[onOff](L.DomUtil.get('clipboard'), 'copy keydown keypress keyup', this._handleDOMEvent, this);
+		L.DomEvent[onOff](this._textArea, 'copy keydown keypress keyup', this._handleDOMEvent, this);
 
 		if (this.options.trackResize) {
 			L.DomEvent[onOff](window, 'resize', this._onResize, this);

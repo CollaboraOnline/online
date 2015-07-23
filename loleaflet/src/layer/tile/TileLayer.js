@@ -91,8 +91,6 @@ L.TileLayer = L.GridLayer.extend({
 			draggable: true
 		});
 		this._emptyTilesCount = 0;
-		this._textArea = L.DomUtil.get('clipboard');
-		this._textArea.focus();
 	},
 
 	_initDocument: function () {
@@ -112,6 +110,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('copy', this._onCopy, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
+		this._textArea = this._map._textArea;
+		this._textArea.focus();
 		if (this.options.edit && !this.options.readOnly) {
 			this._map.setPermission('edit');
 		}
