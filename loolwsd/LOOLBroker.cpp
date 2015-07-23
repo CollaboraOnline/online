@@ -204,41 +204,27 @@ static int prefixcmp(const char *str, const char *prefix)
 }
 
 
-static int createLibreOfficeKit()
+static int createLibreOfficeKit(std::string loSubPath, Poco::UInt64 childID)
 {
     Process::Args args;
-    //args.push_back("--losubpath=" + LOOLWSD::loSubPath);
-    //args.push_back("--systemplate=" + sysTemplate);
-    //args.push_back("--lotemplate=" + loTemplate);
-    //args.push_back("--childroot=" + childRoot);
-    //args.push_back("--numprespawns=" + std::to_string(_numPreSpawnedChildren));
+    args.push_back("--losubpath=" + loSubPath);
+    args.push_back("--child=" + std::to_string(childID));
 
     std::string executable = "loolkit";
     
-    /*if (!File(executable).exists())
-    {
-      std::cout << Util::logPrefix() + "Error loolkit does not exists" << std::endl;      
-      return -1;
-    }*/
-    
-	  //Process::Env env;
-    //env["LD_LIBRARY_PATH"] = "/usr/local/lib";
-    //env["LD_DEBUG"] = "libs";
-    
     std::cout << Util::logPrefix() + "Launching LibreOfficeKit: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()) << std::endl;
     
-    //ProcessHandle child = Process::launch(executable, args, "/usr/bin/", NULL, NULL, NULL, env);
     ProcessHandle child = Process::launch(executable, args);
     
     _childProcesses[child.id()] = child.id();
     return 0;
 }
 
-static void startupLibreOfficeKit(int nLOKits)
+static void startupLibreOfficeKit(int nLOKits, std::string loSubPath, Poco::UInt64 child)
 {
     for (int nCntr = nLOKits; nCntr; nCntr--)
     {
-        if (createLibreOfficeKit() < 0)
+        if (createLibreOfficeKit(loSubPath, child) < 0)
             break;
     }
 }
@@ -394,7 +380,7 @@ int main(int argc, char** argv)
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
-    startupLibreOfficeKit(_numPreSpawnedChildren);
+    startupLibreOfficeKit(_numPreSpawnedChildren, loSubPath, _childId);
 
     while (_childProcesses.size() > 0)
     {
@@ -434,7 +420,7 @@ int main(int argc, char** argv)
         {
             _sharedForkChild.begin()[0] = 0;
             std::cout << Util::logPrefix() << "No availabe child session, fork new one" << std::endl;
-            if (createLibreOfficeKit() < 0 )
+            if (createLibreOfficeKit(loSubPath, _childId) < 0 )
                 break;
         }
     }
