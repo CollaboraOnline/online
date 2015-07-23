@@ -23,7 +23,6 @@
 #include "LOOLProtocol.hpp"
 
 using namespace LOOLProtocol;
-using Poco::Util::Application;
 using Poco::Net::WebSocket;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
@@ -64,6 +63,15 @@ private:
     tsqueue<std::string>& _queue;
 };
 
+static int prefixcmp(const char *str, const char *prefix)
+{
+	for (; ; str++, prefix++)
+		if (!*prefix)
+			return 0;
+		else if (*str != *prefix)
+			return (unsigned char)*prefix - (unsigned char)*str;
+}
+
 const int MASTER_PORT_NUMBER = 9981;
 const std::string CHILD_URI = "/loolws/child/";
 
@@ -71,8 +79,40 @@ Poco::NamedMutex _namedMutexLOOL("loolwsd");
 
 int main(int argc, char** argv)
 {
-    std::string loSubPath = "lo";
-    Poco::UInt64 _childId = Process::id();
+    std::string loSubPath;
+    Poco::UInt64 _childId = 0;
+
+    while (argc > 0)
+    {
+		  char *cmd = argv[0];
+		  char *eq  = NULL;
+      if (!prefixcmp(cmd, "--losubpath="))
+      {
+        eq = strchrnul(cmd, '=');
+        if (*eq)
+          loSubPath = std::string(++eq);
+      }
+      else if (!prefixcmp(cmd, "--child="))
+      {
+        eq = strchrnul(cmd, '=');
+        if (*eq)
+          _childId = std::stoll(std::string(++eq));
+      }
+		  argv++;
+		  argc--;
+    }
+
+   if (loSubPath.empty())
+   {
+     std::cout << "--losubpath is empty" << std::endl;
+     exit(1);
+   }
+
+   if ( !_childId )
+   {
+     std::cout << "--child is 0" << std::endl;
+     exit(1);
+   }
 
     try
     {
@@ -86,8 +126,8 @@ int main(int argc, char** argv)
 
         if (!loKit)
         {
-            Application::instance().logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
-            exit(Application::EXIT_UNAVAILABLE);
+            std::cout << Util::logPrefix() + "LibreOfficeKit initialization failed" << std::endl;
+            exit(-1);
         }
 
         _namedMutexLOOL.unlock();
@@ -152,13 +192,13 @@ int main(int argc, char** argv)
     }
     catch (Exception& exc)
     {
-        Application::instance().logger().log(Util::logPrefix() + "Exception: " + exc.what());
+        std::cout << Util::logPrefix() + "Exception: " + exc.what() << std::endl;
     }
     catch (std::exception& exc)
     {
-        Application::instance().logger().error(Util::logPrefix() + "Exception: " + exc.what());
+        std::cout << Util::logPrefix() + "Exception: " + exc.what() << std::endl;
     }
-    
+
     std::cout << Util::logPrefix() << "loolkit finished OK!" << std::endl;
     return 0;
 }
