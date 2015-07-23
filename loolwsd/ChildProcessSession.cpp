@@ -24,10 +24,6 @@
 #include <mutex>
 #include <set>
 
-/*#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>*/
-
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
@@ -43,45 +39,6 @@ using Poco::Net::WebSocket;
 using Poco::StringTokenizer;
 using Poco::URI;
 using Poco::Path;
-
-/*
-
-#include <Poco/Exception.h>
-#include <Poco/File.h>
-#include <Poco/Net/HTTPStreamFactory.h>
-#include <Poco/Process.h>
-#include <Poco/Random.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/String.h>
-#include <Poco/ThreadLocal.h>
-#include <Poco/URIStreamOpener.h>
-#include <Poco/Exception.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Net/DialogSocket.h>
-#include <Poco/Net/SocketAddress.h>
-
-#include "LOOLSession.hpp"
-#include "LOOLWSD.hpp"
-#include "TileCache.hpp"
-
-
-using Poco::File;
-using Poco::IOException;
-using Poco::Net::HTTPStreamFactory;
-using Poco::Process;
-using Poco::ProcessHandle;
-using Poco::Random;
-using Poco::StreamCopier;
-using Poco::Thread;
-using Poco::ThreadLocal;
-using Poco::UInt64;
-using Poco::URIStreamOpener;
-using Poco::Util::Application;
-using Poco::Exception;
-using Poco::Net::DialogSocket;
-using Poco::Net::SocketAddress;
-using Poco::Net::WebSocketException;*/
-
 
 ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws, LibreOfficeKit *loKit) :
     LOOLSession(ws, Kind::ToMaster),

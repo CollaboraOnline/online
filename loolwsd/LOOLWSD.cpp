@@ -560,9 +560,6 @@ int LOOLWSD::createBroker()
 {
     Process::Args args;
 
-    //args.push_back("--child=" + std::to_string(_childId));
-    //args.push_back("--port=" + std::to_string(LOOLWSD::portNumber));
-    //args.push_back("--jail=" + LOOLWSD::jail);
     args.push_back("--losubpath=" + LOOLWSD::loSubPath);
     args.push_back("--systemplate=" + sysTemplate);
     args.push_back("--lotemplate=" + loTemplate);
