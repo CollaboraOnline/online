@@ -30,7 +30,6 @@
 
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Util/Application.h>
 #include <Poco/URI.h>
 #include <Poco/Path.h>
 
@@ -42,7 +41,6 @@
 using namespace LOOLProtocol;
 using Poco::Net::WebSocket;
 using Poco::StringTokenizer;
-using Poco::Util::Application;
 using Poco::URI;
 using Poco::Path;
 
@@ -107,7 +105,7 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
     std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-    Application::instance().logger().information(Util::logPrefix() + _kindString + ",Input," + getAbbreviatedMessage(buffer, length));
+    std::cout << Util::logPrefix() + _kindString + ",Input," + getAbbreviatedMessage(buffer, length) << std::endl;
 
     if (tokens[0] == "load")
     {
