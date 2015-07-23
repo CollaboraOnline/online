@@ -391,7 +391,6 @@ L.TileLayer = L.GridLayer.extend({
 				if (!tile.loaded) {
 					this._emptyTilesCount -= 1;
 					if (this._emptyTilesCount === 0) {
-						console.log('alltilesloaded');
 						this._map.fire('alltilesloaded');
 					}
 				}
