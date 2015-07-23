@@ -6,6 +6,7 @@ test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to
 
 CHROOT=$1
 INSTDIR=$2
+POCODIR=/usr/local/lib
 
 mkdir $CHROOT || exit 1
 
@@ -35,7 +36,11 @@ cd / || exit 1
 
 	find lib/libnss_* lib64/libnss_* -type l
 	find lib/*-linux-gnu/libnss* -type l
-
+	find lib/*-linux-gnu/ld-* -type l
+  find lib/*-linux-gnu/libcap* -type l
+	find lib/*-linux-gnu/libattr* -type l
+#	find lib/*-linux-gnu/libtinfo* -type l
+	
 	# Go through the LO shared objects and check what system libraries
 	# they link to.
 	find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |
@@ -43,6 +48,14 @@ cd / || exit 1
 	    ldd $file 2>/dev/null
 	done |
 	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
+	
+	# Go through the loolkit
+	find $POCODIR -name '*Poco*.so' -o -name '*.so.[0-9]*' |
+	while read file; do
+	    ldd $file 2>/dev/null
+	done |
+	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
+	
     else
 	find usr/lib/dyld  \
 	     usr/lib/*.dylib \
@@ -82,7 +95,34 @@ cd / || exit 1
 # This will now copy the file a symlink points to, but whatever.
 cpio -p -d -L $CHROOT
 
+cp -v -P --parent	$(find /usr/local/lib/libPoco*) $CHROOT
+
 mkdir -p $CHROOT/tmp
+mkdir -p $CHROOT/bin
+mkdir -p $CHROOT/usr/bin
+
+cp /bin/bash $CHROOT/bin/bash
+cp /usr/bin/env $CHROOT/usr/bin/env
+
+# make sure the link loader are copied
+mkdir -p $CHROOT/lib64
+mkdir -p $CHROOT/lib32
+
+LOADER64=$(find /lib64/ld-* -type l)
+LOADER32=$(find /lib32/ld-* -type l)
+LOADER=$(find /lib/ld-* -type l)
+
+if [ -n "$LOADER64" ]; then
+  cp -v $LOADER64 $CHROOT$LOADER64
+fi
+
+if [ -n "$LOADER32" ]; then
+  cp -v $LOADER32 $CHROOT$LOADER32
+fi
+
+if [ -n "$LOADER" ]; then
+  cp -v $LOADER $CHROOT$LOADER
+fi
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved are for fontconfig to trust

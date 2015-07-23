@@ -1,21 +1,12 @@
-bin_PROGRAMS = loolwsd
+bin_PROGRAMS = loolwsd loolbroker loolkit
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
-loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp TileCache.cpp Util.cpp LOOLProtocol.cpp
+loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MasterProcessSession.cpp TileCache.cpp Util.cpp LOOLProtocol.cpp
 
-noinst_PROGRAMS = loadtest connect lokitclient
+loolkit_SOURCES = LOOLKit.cpp LOOLSession.cpp ChildProcessSession.cpp Util.cpp LOOLProtocol.cpp
 
-loadtest_SOURCES = LoadTest.cpp Util.cpp LOOLProtocol.cpp
-
-connect_SOURCES = Connect.cpp Util.cpp LOOLProtocol.cpp
-
-lokitclient_SOURCES = LOKitClient.cpp Util.cpp
-
-noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp LOOLWSD.hpp LoadTest.hpp TileCache.hpp Util.hpp \
-                 tsqueue.h \
-                 bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
-                 bundled/include/LibreOfficeKit/LibreOfficeKitInit.h bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h
+loolbroker_SOURCES = LOOLBroker.cpp Util.cpp
 
 EXTRA_DIST = loolwsd.service sysconfig.loolwsd
 
@@ -30,7 +21,11 @@ all-local: loolwsd
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    if test `uname -s` = Linux; then \
 		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolwsd; \
+		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
 	    else \
 		sudo chown root loolwsd && sudo chmod u+s loolwsd; \
+		sudo chown root loolbroker && sudo chmod u+s loolbroker; \
 	    fi; \
 	fi
+	mkdir -p ./systemplate/usr/bin
+	cp loolkit ./systemplate/usr/bin

@@ -56,6 +56,7 @@ DEALINGS IN THE SOFTWARE.
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+#include <string>
 #include <iostream>
 #include <sstream>
 #include <mutex>
@@ -96,7 +97,7 @@ DEALINGS IN THE SOFTWARE.
 
 
 #include "LOOLProtocol.hpp"
-#include "LOOLSession.hpp"
+#include "MasterProcessSession.hpp"
 #include "LOOLWSD.hpp"
 #include "tsqueue.h"
 #include "Util.hpp"
@@ -138,6 +139,84 @@ using Poco::Net::Socket;
 using Poco::ThreadLocal;
 using Poco::Random;
 using Poco::NamedMutex;
+using Poco::ProcessHandle;
+
+
+namespace
+{
+    void dropCapability(
+#ifdef __linux
+                        cap_value_t capability
+#endif
+                        )
+    {
+#ifdef __linux
+        cap_t caps;
+        cap_value_t cap_list[] = { capability };
+
+        caps = cap_get_proc();
+        if (caps == NULL)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "cap_get_proc() failed: " + strerror(errno));
+            exit(1);
+        }
+
+        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
+            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
+        {
+            Application::instance().logger().error(Util::logPrefix() +  "cap_set_flag() failed: " + strerror(errno));
+            exit(1);
+        }
+
+        if (cap_set_proc(caps) == -1)
+        {
+            Application::instance().logger().error(std::string("cap_set_proc() failed: ") + strerror(errno));
+            exit(1);
+        }
+
+        char *capText = cap_to_text(caps, NULL);
+        Application::instance().logger().information(Util::logPrefix() + "Capabilities now: " + capText);
+        cap_free(capText);
+
+        cap_free(caps);
+#endif
+        // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
+        // don't own, so drop root.
+        if (geteuid() == 0 && getuid() != 0)
+        {
+            // The program is setuid root. Not normal on Linux where we use setcap, but if this
+            // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
+            // to do chroot().
+            if (setuid(getuid()) != 0) {
+                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+            }
+        }
+#if ENABLE_DEBUG
+        if (geteuid() == 0 && getuid() == 0)
+        {
+#ifdef __linux
+            // Argh, awful hack
+            if (capability == CAP_FOWNER)
+                return;
+#endif
+
+            // Running under sudo, probably because being debugged? Let's drop super-user rights.
+            LOOLWSD::runningAsRoot = true;
+            if (LOOLWSD::uid == 0)
+            {
+                struct passwd *nobody = getpwnam("nobody");
+                if (nobody)
+                    LOOLWSD::uid = nobody->pw_uid;
+                else
+                    LOOLWSD::uid = 65534;
+            }
+            if (setuid(LOOLWSD::uid) != 0) {
+                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+            }
+        }
+#endif
+    }
+}
 
 class QueueHandler: public Runnable
 {
@@ -327,91 +406,6 @@ public:
     }
 };
 
-class TestOutput : public Runnable
-{
-public:
-    TestOutput(WebSocket& ws) :
-        _ws(ws)
-    {
-    }
-
-    void run() override
-    {
-        int flags;
-        int n;
-        _ws.setReceiveTimeout(0);
-        try
-        {
-            do
-            {
-                char buffer[100000];
-                n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
-
-                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                {
-                    std::cout <<
-                        Util::logPrefix() <<
-                        "Client got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) <<
-                        std::endl;
-                }
-            }
-            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-        }
-        catch (WebSocketException& exc)
-        {
-            Application::instance().logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
-            _ws.close();
-        }
-    }
-
-private:
-    WebSocket& _ws;
-};
-
-class TestInput : public Runnable
-{
-public:
-    TestInput(ServerApplication& main, ServerSocket& svs, HTTPServer& srv) :
-        _main(main),
-        _svs(svs),
-        _srv(srv)
-    {
-    }
-
-    void run() override
-    {
-        HTTPClientSession cs("127.0.0.1", _svs.address().port());
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
-        HTTPResponse response;
-        WebSocket ws(cs, request, response);
-
-        Thread thread;
-        TestOutput output(ws);
-        thread.start(output);
-
-        if (isatty(0))
-        {
-            std::cout << std::endl;
-            std::cout << "Enter LOOL WS requests, one per line. Enter EOF to finish." << std::endl;
-        }
-
-        while (!std::cin.eof())
-        {
-            std::string line;
-            std::getline(std::cin, line);
-            ws.sendFrame(line.c_str(), line.size());
-        }
-        thread.join();
-        _srv.stopAll();
-        _main.terminate();
-    }
-
-private:
-    ServerApplication& _main;
-    ServerSocket& _svs;
-    HTTPServer& _srv;
-};
-
 int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
 std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
@@ -562,436 +556,35 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-namespace
+int LOOLWSD::createBroker()
 {
-    ThreadLocal<std::string> sourceForLinkOrCopy;
-    ThreadLocal<Path> destinationForLinkOrCopy;
+    Process::Args args;
 
-    int linkOrCopyFunction(const char *fpath,
-                           const struct stat *sb,
-                           int typeflag,
-                           struct FTW *ftwbuf)
-    {
-        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
-            return 0;
+    //args.push_back("--child=" + std::to_string(_childId));
+    //args.push_back("--port=" + std::to_string(LOOLWSD::portNumber));
+    //args.push_back("--jail=" + LOOLWSD::jail);
+    args.push_back("--losubpath=" + LOOLWSD::loSubPath);
+    args.push_back("--systemplate=" + sysTemplate);
+    args.push_back("--lotemplate=" + loTemplate);
+    args.push_back("--childroot=" + childRoot);
+    args.push_back("--numprespawns=" + std::to_string(_numPreSpawnedChildren));
 
-        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
-        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
+    std::string executable = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
+    
+    Application::instance().logger().information(Util::logPrefix() + "Launching broker: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()));
+    
+    ProcessHandle child = Process::launch(executable, args);
 
-#ifdef __APPLE__
-        if (strcmp(relativeOldPath, "PkgInfo") == 0)
-            return 0;
-#endif
-
-        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
-
-        switch (typeflag)
-        {
-        case FTW_F:
-            File(newPath.parent()).createDirectories();
-            if (link(fpath, newPath.toString().c_str()) == -1)
-            {
-                Application::instance().logger().error(Util::logPrefix() +
-                                                       "link(\"" + fpath + "\",\"" + newPath.toString() + "\") failed: " +
-                                                       strerror(errno));
-                exit(1);
-            }
-            break;
-        case FTW_DP:
-            {
-                struct stat st;
-                if (stat(fpath, &st) == -1)
-                {
-                    Application::instance().logger().error(Util::logPrefix() +
-                                                           "stat(\"" + fpath + "\") failed: " +
-                                                           strerror(errno));
-                    return 1;
-                }
-                File(newPath).createDirectories();
-                struct utimbuf ut;
-                ut.actime = st.st_atime;
-                ut.modtime = st.st_mtime;
-                if (utime(newPath.toString().c_str(), &ut) == -1)
-                {
-                    Application::instance().logger().error(Util::logPrefix() +
-                                                           "utime(\"" + newPath.toString() + "\", &ut) failed: " +
-                                                           strerror(errno));
-                    return 1;
-                }
-            }
-            break;
-        case FTW_DNR:
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "Cannot read directory '" + fpath + "'");
-            return 1;
-        case FTW_NS:
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "nftw: stat failed for '" + fpath + "'");
-            return 1;
-        case FTW_SLN:
-            Application::instance().logger().information(Util::logPrefix() +
-                                                         "nftw: symlink to nonexistent file: '" + fpath + "', ignored");
-            break;
-        default:
-            assert(false);
-        }
-        return 0;
-    }
-
-    void linkOrCopy(const std::string& source, const Path& destination)
-    {
-        *sourceForLinkOrCopy = source;
-        if (sourceForLinkOrCopy->back() == '/')
-            sourceForLinkOrCopy->pop_back();
-        *destinationForLinkOrCopy = destination;
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "linkOrCopy: nftw() failed for '" + source + "'");
-    }
-
-    void dropCapability(
-#ifdef __linux
-                        cap_value_t capability
-#endif
-                        )
-    {
-#ifdef __linux
-        cap_t caps;
-        cap_value_t cap_list[] = { capability };
-
-        caps = cap_get_proc();
-        if (caps == NULL)
-        {
-            Application::instance().logger().error(Util::logPrefix() + "cap_get_proc() failed: " + strerror(errno));
-            exit(1);
-        }
-
-        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
-            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
-        {
-            Application::instance().logger().error(Util::logPrefix() +  "cap_set_flag() failed: " + strerror(errno));
-            exit(1);
-        }
-
-        if (cap_set_proc(caps) == -1)
-        {
-            Application::instance().logger().error(std::string("cap_set_proc() failed: ") + strerror(errno));
-            exit(1);
-        }
-
-        char *capText = cap_to_text(caps, NULL);
-        Application::instance().logger().information(Util::logPrefix() + "Capabilities now: " + capText);
-        cap_free(capText);
-
-        cap_free(caps);
-#endif
-        // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
-        // don't own, so drop root.
-        if (geteuid() == 0 && getuid() != 0)
-        {
-            // The program is setuid root. Not normal on Linux where we use setcap, but if this
-            // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
-            // to do chroot().
-            if (setuid(getuid()) != 0) {
-                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
-            }
-        }
-#if ENABLE_DEBUG
-        if (geteuid() == 0 && getuid() == 0)
-        {
-#ifdef __linux
-            // Argh, awful hack
-            if (capability == CAP_FOWNER)
-                return;
-#endif
-
-            // Running under sudo, probably because being debugged? Let's drop super-user rights.
-            LOOLWSD::runningAsRoot = true;
-            if (LOOLWSD::uid == 0)
-            {
-                struct passwd *nobody = getpwnam("nobody");
-                if (nobody)
-                    LOOLWSD::uid = nobody->pw_uid;
-                else
-                    LOOLWSD::uid = 65534;
-            }
-            if (setuid(LOOLWSD::uid) != 0) {
-                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
-            }
-        }
-#endif
-    }
-}
-
-// Writer, Impress or Calc
-void LOOLWSD::componentMain()
-{
-    try
-    {
-        _namedMutexLOOL.lock();
-
-#ifdef __APPLE__
-        LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
-#else
-        LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
-#endif
-
-        if (!loKit)
-        {
-            logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
-            exit(Application::EXIT_UNAVAILABLE);
-        }
-
-        _namedMutexLOOL.unlock();
-
-        // Open websocket connection between the child process and the
-        // parent. The parent forwards us requests that it can't handle.
-
-        HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
-        cs.setTimeout(0);
-        HTTPRequest request(HTTPRequest::HTTP_GET, LOOLWSD::CHILD_URI);
-        HTTPResponse response;
-        std::shared_ptr<WebSocket> ws(new WebSocket(cs, request, response));
-
-        std::shared_ptr<ChildProcessSession> session(new ChildProcessSession(ws, loKit));
-
-        ws->setReceiveTimeout(0);
-
-        std::string hello("child " + std::to_string(_childId));
-        session->sendTextFrame(hello);
-
-        tsqueue<std::string> queue;
-        Thread queueHandlerThread;
-        QueueHandler handler(queue);
-
-        handler.setSession(session);
-        queueHandlerThread.start(handler);
-
-        int flags;
-        int n;
-        do
-        {
-            char buffer[1024];
-            n = ws->receiveFrame(buffer, sizeof(buffer), flags);
-
-            if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-            {
-                std::string firstLine = getFirstLine(buffer, n);
-                StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-                // The only kind of messages a child process receives are the single-line ones (?)
-                assert(firstLine.size() == static_cast<std::string::size_type>(n));
-
-                // Check if it is a "canceltiles" and in that case remove outstanding
-                // "tile" messages from the queue.
-                if (tokens.count() == 1 && tokens[0] == "canceltiles")
-                {
-                    queue.remove_if([](std::string& x) {
-                        return (x.find("tile ") == 0 && x.find("id=") == std::string::npos);
-                    });
-                }
-                else
-                {
-                    queue.put(firstLine);
-                }
-            }
-        }
-        while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-
-        queue.clear();
-        queue.put("eof");
-        queueHandlerThread.join();
-    }
-    catch (Exception& exc)
-    {
-        logger().log(Util::logPrefix() + "Exception: " + exc.what());
-    }
-    catch (std::exception& exc)
-    {
-        logger().error(Util::logPrefix() + "Exception: " + exc.what());
-    }
-
-    exit(Application::EXIT_OK);
-}
-
-int LOOLWSD::createComponent()
-{
-    int pid;
-
-    if ((pid = fork()) == -1)
-    {
-        std::cout << "Fork failed." << std::endl;
-        return Application::EXIT_UNAVAILABLE;
-    }
-
-    if (!pid)
-    {
-        componentMain();
-    }
-
-    MasterProcessSession::addPendingChildrem(pid);
-    MasterProcessSession::_childProcesses[pid] = pid;
+    MasterProcessSession::_childProcesses[child.id()] = child.id();
 
     return Application::EXIT_OK;
 }
 
-void LOOLWSD::startupComponent(int nComponents)
+void LOOLWSD::startupBroker(int nBrokers)
 {
-    for (int nCntr = nComponents; nCntr; nCntr--)
+    for (int nCntr = nBrokers; nCntr; nCntr--)
     {
-        if (createComponent() < 0)
-            break;
-    }
-}
-
-void LOOLWSD::desktopMain()
-{
-    // Initialization
-    std::unique_lock<std::mutex> rngLock(_rngMutex);
-    _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
-    rngLock.unlock();
-
-    Path jail = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
-    File(jail).createDirectory();
-
-    Path jailLOInstallation(jail, LOOLWSD::loSubPath);
-    jailLOInstallation.makeDirectory();
-    File(jailLOInstallation).createDirectory();
-
-    // Copy (link) LO installation and other necessary files into it from the template
-
-    linkOrCopy(LOOLWSD::sysTemplate, jail);
-    linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
-
-#ifdef __linux
-    // Create the urandom and random devices
-    File(Path(jail, "/dev")).createDirectory();
-    if (mknod((jail.toString() + "/dev/random").c_str(),
-                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                makedev(1, 8)) != 0)
-    {
-        Application::instance().logger().error(Util::logPrefix() +
-                "mknod(" + jail.toString() + "/dev/random) failed: " +
-                strerror(errno));
-
-    }
-    if (mknod((jail.toString() + "/dev/urandom").c_str(),
-                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                makedev(1, 9)) != 0)
-    {
-        Application::instance().logger().error(Util::logPrefix() +
-                "mknod(" + jail.toString() + "/dev/urandom) failed: " +
-                strerror(errno));
-    }
-#endif
-
-    Application::instance().logger().information("desktopMain -> chroot(\"" + jail.toString() + "\")");
-    if (chroot(jail.toString().c_str()) == -1)
-    {
-        logger().error("chroot(\"" + jail.toString() + "\") failed: " + strerror(errno));
-        exit(Application::EXIT_UNAVAILABLE);
-    }
-
-    if (chdir("/") == -1)
-    {
-        logger().error(std::string("chdir(\"/\") in jail failed: ") + strerror(errno));
-        exit(Application::EXIT_UNAVAILABLE);
-    }
-
-#ifdef __linux
-    dropCapability(CAP_SYS_CHROOT);
-#else
-    dropCapability();
-#endif
-
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
-            "attach process " << Process::id() << " in debugger now." << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
-    }
-
-    startupComponent(_numPreSpawnedChildren);
-
-    while (MasterProcessSession::_childProcesses.size() > 0)
-    {
-        int status;
-        pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
-        if (pid > 0)
-        {
-            if ( MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end() )
-            {
-                if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
-                {
-                    std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
-                    MasterProcessSession::_childProcesses.erase(pid);
-                }
-
-                if ( WCOREDUMP(status) )
-                    std::cout << Util::logPrefix() << "The child produced a core dump." << std::endl;
-
-                if ( WIFSTOPPED(status) )
-                    std::cout << Util::logPrefix() << "The child process was stopped by delivery of a signal." << std::endl;
-
-                if ( WSTOPSIG(status) )
-                    std::cout << Util::logPrefix() << "The child process was stopped." << std::endl;
-
-                if ( WIFCONTINUED(status) )
-                    std::cout << Util::logPrefix() << "The child process was resumed." << std::endl;
-            }
-            else
-            {
-                std::cout << Util::logPrefix() << "None of our known child processes died :" << std::to_string(pid)  << std::endl;
-            }
-        }
-        else if (pid < 0)
-            std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
-
-        if ( _sharedForkChild.begin()[0] )
-        {
-            _sharedForkChild.begin()[0] = 0;
-            std::cout << Util::logPrefix() << "No availabe child session, fork new one" << std::endl;
-            if (createComponent() < 0 )
-                break;
-        }
-    }
-
-    // Terminate child processes
-    for (auto i : MasterProcessSession::_childProcesses)
-    {
-        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
-        Process::requestTermination(i.first);
-    }
-
-    exit(Application::EXIT_OK);
-}
-
-
-int LOOLWSD::createDesktop()
-{
-    int pid;
-
-    if ((pid = fork()) == -1)
-    {
-        std::cout << "createDesktop fork failed." << std::endl;
-        return Application::EXIT_UNAVAILABLE;
-    }
-
-    if (!pid)
-    {
-        desktopMain();
-    }
-
-    MasterProcessSession::_childProcesses[pid] = pid;
-
-    return Application::EXIT_OK;
-}
-
-void LOOLWSD::startupDesktop(int nDesktops)
-{
-    for (int nCntr = nDesktops; nCntr; nCntr--)
-    {
-        if (createDesktop() < 0)
+        if (createBroker() < 0)
             break;
     }
 }
@@ -1039,7 +632,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     _namedMutexLOOL.lock();
 
-    startupDesktop(1);
+    startupBroker(1);
 
 #ifdef __linux
     dropCapability(CAP_SYS_CHROOT);
@@ -1107,12 +700,8 @@ int LOOLWSD::main(const std::vector<std::string>& args)
         Process::requestTermination(i.first);
     }
 
+    std::cout << Util::logPrefix() << "loolwsd finished OK!" << std::endl;
     return Application::EXIT_OK;
-}
-
-bool LOOLWSD::childMode() const
-{
-    return _childId != 0;
 }
 
 POCO_SERVER_MAIN(LOOLWSD)

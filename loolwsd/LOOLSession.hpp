@@ -18,18 +18,8 @@
 #include <ostream>
 #include <set>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-
 #include <Poco/Net/WebSocket.h>
-#include <Poco/Buffer.h>
-#include <Poco/Path.h>
-#include <Poco/Process.h>
-#include <Poco/Random.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Types.h>
-
-#include "TileCache.hpp"
 
 // We have three kinds of Websocket sessions
 // 1) Between the master loolwsd server to the end-user LOOL client
@@ -92,98 +82,6 @@ inline std::basic_ostream<charT, traits> & operator <<(std::basic_ostream<charT,
         return stream << "UNK_" + std::to_string(static_cast<int>(kind));
     }
 }
-
-class MasterProcessSession final : public LOOLSession, public std::enable_shared_from_this<MasterProcessSession>
-{
-public:
-    MasterProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, Kind kind);
-    virtual ~MasterProcessSession();
-
-    virtual bool handleInput(const char *buffer, int length) override;
-
-    bool haveSeparateProcess();
-
-    static Poco::Path getJailPath(Poco::UInt64 childId);
-    static void addPendingChildrem(Poco::UInt64 childId);
-    static int  getAvailableChildSessions();
-    static int  getPendingPreSpawnedChildren();
-
-    static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
-
-    virtual bool getStatus(const char *buffer, int length);
-
- protected:
-    bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
-    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    void dispatchChild();
-    void forwardToPeer(const char *buffer, int length);
-
-    // If _kind==ToPrisoner and the child process has started and completed its handshake with the
-    // parent process: Points to the WebSocketSession for the child process handling the document in
-    // question, if any.
-
-    // In the session to the child process, points to the LOOLSession for the LOOL client. This will
-    // obvious have to be rethought when we add collaboration and there can be several LOOL clients
-    // per document being edited (i.e., per child process).
-    std::weak_ptr<MasterProcessSession> _peer;
-
-    // Pre-spawned child processes that haven't yet connected.
-    static std::set<Poco::UInt64> _pendingPreSpawnedChildren;
-
-    // Sessions to pre-spawned child processes that have connected but are not yet assigned a
-    // document to work on.
-    static std::set<std::shared_ptr<MasterProcessSession>> _availableChildSessions;
-    static std::mutex _availableChildSessionMutex;
-    static std::condition_variable _availableChildSessionCV;
-
-    std::unique_ptr<TileCache> _tileCache;
-
-private:
-    // The id of the child process
-    Poco::UInt64 _childId;
-    static Poco::Random _rng;
-    static std::mutex _rngMutex;
-    int _curPart;
-};
-
-class ChildProcessSession final : public LOOLSession
-{
-public:
-    ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, LibreOfficeKit *loKit);
-    virtual ~ChildProcessSession();
-
-    virtual bool handleInput(const char *buffer, int length) override;
-
-    virtual bool getStatus(const char *buffer, int length);
-
-    LibreOfficeKitDocument *_loKitDocument;
-
- protected:
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
-    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    bool getTextSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool selectText(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    std::string _jail;
-    std::string _loSubPath;
-    LibreOfficeKit *_loKit;
-
- private:
-    int _clientPart;
-};
 
 #endif
 

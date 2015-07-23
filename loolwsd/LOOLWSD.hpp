@@ -54,13 +54,8 @@ protected:
 
 private:
     void displayHelp();
-    bool childMode() const;
-    void componentMain();
-    void desktopMain();
-    void startupComponent(int nComponents);
-    void startupDesktop(int nDesktop);
-    int  createComponent();
-    int  createDesktop();
+    void startupBroker(int nBroker);
+    int  createBroker();
 
     bool _doTest;
     Poco::UInt64 _childId;
