@@ -38,10 +38,6 @@
     </div>
     <div id="document-container" style="top:100px">
         <div id="map"></div>
-        <div id="scroll-container">
-            <div id="mock-document">
-            </div>
-        </div>
     </div>
     <div id="spreadsheet-tab" class="spreadsheet-tab">
     </div>
@@ -65,7 +61,7 @@
         vex.dialog.alert('Wrong host, usage: host=ws://localhost:9980');
     }
 
-    var map = L.map('map', 'scroll-container', 'mock-document', {
+    var map = L.map('map', {
             center: [0, 0],
             zoom: 10,
             minZoom: 1,
@@ -82,6 +78,7 @@
     map.addControl(L.control.zoom());
     map.addControl(L.control.parts());
     map.addControl(L.control.statusIndicator());
+    map.addControl(L.control.scroll());
 
     ////// Document layer ////
     var docLayer = new L.TileLayer('', {
@@ -91,25 +88,5 @@
         readOnly: false
     });
     map.addLayer(docLayer);
-
-    ////// Scrollbar /////
-    (function($){
-        $(window).load(function(){
-            $("#scroll-container").mCustomScrollbar({
-                axis: 'yx',
-                theme: 'dark-thick',
-                scrollInertia: 0,
-                callbacks:{
-                    onScroll: function(){
-                        docLayer._onScrollEnd(this);
-                    },
-                    whileScrolling: function(){
-                        docLayer._onScroll(this);
-                    },
-                    alwaysTriggerOffsets:false
-                }
-            });
-        });
-    })(jQuery);
     </script>
 </body></html>

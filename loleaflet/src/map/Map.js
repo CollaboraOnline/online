@@ -19,13 +19,13 @@ L.Map = L.Evented.extend({
 		markerZoomAnimation: true
 	},
 
-	initialize: function (id, scrollContId, mockDocId, options) { // (HTMLElement or String, Object)
+	initialize: function (id, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
 		if (options.server) {
 			this._initSocket();
 		}
-		this._initContainer(id, scrollContId, mockDocId);
+		this._initContainer(id);
 		this._initLayout();
 
 		// hack for https://github.com/Leaflet/Leaflet/issues/1980
@@ -449,23 +449,13 @@ L.Map = L.Evented.extend({
 	},
 
 
-	_initContainer: function (id, scrollContId, mockDocId) {
+	_initContainer: function (id) {
 		var container = this._container = L.DomUtil.get(id);
-		var scrollContainer = this._scrollContainer = L.DomUtil.get(scrollContId);
-		var mockDoc = this._mockDoc = L.DomUtil.get(mockDocId);
 
 		if (!container) {
 			throw new Error('Map container not found.');
 		} else if (container._leaflet) {
 			throw new Error('Map container is already initialized.');
-		}
-
-		if (!scrollContainer) {
-			throw new Error('Scroll container not found.');
-		}
-
-		if (!mockDoc) {
-			throw new Error('Mock document div not found.');
 		}
 
 		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container.parentElement);
@@ -771,6 +761,6 @@ L.Map = L.Evented.extend({
 	}
 });
 
-L.map = function (id, scrollContId, mockDocId, options) {
-	return new L.Map(id, scrollContId, mockDocId, options);
+L.map = function (id, options) {
+	return new L.Map(id, options);
 };

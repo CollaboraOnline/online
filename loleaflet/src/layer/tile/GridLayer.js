@@ -382,27 +382,15 @@ L.GridLayer = L.Layer.extend({
 		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
 										 this._docHeightTwips / this._tileHeightTwips);
 		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize);
-
-		if (!sizeChanged) {
-			this._ignoreScroll = true;
-			setTimeout(L.bind(function() {this._ignoreScroll = null;}, this), 200);
-		}
-		L.DomUtil.setStyle(this._map._mockDoc, 'width', scrollPixelLimits.x + 'px');
-		L.DomUtil.setStyle(this._map._mockDoc, 'height', scrollPixelLimits.y + 'px');
+		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y});
 	},
 
 	_updateScrollOffset: function () {
-		this._ignoreScroll = null;
-		if (this._map._scrollContainer.mcs) {
-			$('#scroll-container').mCustomScrollbar('stop');
-			var centerPixel = this._map.project(this._map.getCenter());
-			var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));
-			var x = newScrollPos.x < 0 ? 0 : newScrollPos.x;
-			var y = newScrollPos.y < 0 ? 0 : newScrollPos.y;
-			this._prevScrollY = y;
-			this._prevScrollX = x;
-			$('#scroll-container').mCustomScrollbar('scrollTo', [y, x], {callbacks: false, timeout:0});
-		}
+		var centerPixel = this._map.project(this._map.getCenter());
+		var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));
+		var x = newScrollPos.x < 0 ? 0 : newScrollPos.x;
+		var y = newScrollPos.y < 0 ? 0 : newScrollPos.y;
+		this._map.fire('updatescrolloffset', {x: x, y: y});
 	},
 
 	_setZoomTransforms: function (center, zoom) {
@@ -760,32 +748,6 @@ L.GridLayer = L.Layer.extend({
 			if (!this._tiles[key].loaded) { return false; }
 		}
 		return true;
-	},
-
-	_onScroll: function (evt) {
-		if (this._ignoreScroll) {
-			return;
-		}
-		if (this._prevScrollY === undefined) {
-			this._prevScrollY = 0;
-		}
-		if (this._prevScrollX === undefined) {
-			this._prevScrollX = 0;
-		}
-		var offset = new L.Point(
-				-evt.mcs.left - this._prevScrollX,
-				-evt.mcs.top - this._prevScrollY);
-
-		if (!offset.equals(new L.Point(0, 0))) {
-			this._prevScrollY = -evt.mcs.top;
-			this._prevScrollX = -evt.mcs.left;
-			this._map.panBy(offset, {animate:false});
-		}
-	},
-
-	_onScrollEnd: function (evt) {
-		this._prevScrollY = -evt.mcs.top;
-		this._prevScrollX = -evt.mcs.left;
 	},
 
 	_preFetchTiles: function () {

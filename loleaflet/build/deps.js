@@ -255,6 +255,13 @@ var deps = {
 		desc: 'Display document loading status'
 	},
 
+	ControlScroll: {
+		src: ['control/Control.js',
+		      'control/Control.Scroll.js'],
+		heading: 'Controls',
+		desc: 'Creates and handles the scrollbar'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],
