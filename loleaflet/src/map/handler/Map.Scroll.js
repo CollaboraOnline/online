@@ -47,7 +47,7 @@ L.Map.Scroll = L.Handler.extend({
 
 	_performScroll: function () {
 		var map = this._map,
-		    delta = this._delta;
+		    delta = -this._delta;
 
 		this._delta = 0;
 		this._startTime = null;

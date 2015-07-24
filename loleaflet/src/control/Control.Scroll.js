@@ -64,6 +64,7 @@ L.Control.Scroll = L.Control.extend({
 	},
 
 	_onScrollBy: function (e) {
+		e.y *= (-1);
 		var y = '+=' + e.y;
 		if (e.y < 0) {
 			y = '-=' + Math.abs(e.y);
