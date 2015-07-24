@@ -104,9 +104,6 @@ public:
     bool haveSeparateProcess();
 
     static Poco::Path getJailPath(Poco::UInt64 childId);
-    static void addPendingChildrem(Poco::UInt64 childId);
-    static int  getAvailableChildSessions();
-    static int  getPendingPreSpawnedChildren();
 
     static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 
@@ -130,9 +127,6 @@ public:
     // obvious have to be rethought when we add collaboration and there can be several LOOL clients
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
-
-    // Pre-spawned child processes that haven't yet connected.
-    static std::set<Poco::UInt64> _pendingPreSpawnedChildren;
 
     // Sessions to pre-spawned child processes that have connected but are not yet assigned a
     // document to work on.

@@ -124,7 +124,6 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
-std::set<UInt64> MasterProcessSession::_pendingPreSpawnedChildren;
 std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::mutex MasterProcessSession::_availableChildSessionMutex;
 std::condition_variable MasterProcessSession::_availableChildSessionCV;
@@ -231,20 +230,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         }
 
         UInt64 childId = std::stoull(tokens[1]);
-        // TODO. rework, the desktop and its childrem is jail root same folder
-        /*if (_pendingPreSpawnedChildren.find(childId) == _pendingPreSpawnedChildren.end())
-        {
-            std::cout << Util::logPrefix() << "Error _pendingPreSpawnedChildren.find(childId)" << this << " id=" << childId << std::endl;
 
-            sendTextFrame("error: cmd=child kind=notfound");
-            return false;
-        }*/
-
-        if (_pendingPreSpawnedChildren.size() > 0)
-        {
-            std::set<UInt64>::iterator it = _pendingPreSpawnedChildren.begin();
-            _pendingPreSpawnedChildren.erase(it);
-        }
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.insert(shared_from_this());
         std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
@@ -334,22 +320,6 @@ Path MasterProcessSession::getJailPath(UInt64 childId)
 {
     return Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(childId));
 }
-
-void MasterProcessSession::addPendingChildrem(UInt64 childId)
-{
-    _pendingPreSpawnedChildren.insert(childId);
-}
-
-int  MasterProcessSession::getAvailableChildSessions()
-{
-    return _availableChildSessions.size();
-}
-
-int  MasterProcessSession::getPendingPreSpawnedChildren()
-{
-    return _pendingPreSpawnedChildren.size();
-}
-
 
 bool MasterProcessSession::invalidateTiles(const char *buffer, int length, StringTokenizer& tokens)
 {
@@ -483,16 +453,10 @@ void MasterProcessSession::dispatchChild()
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
 
-    std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << " _pendingChildSessions size=" << _pendingPreSpawnedChildren.size() << std::endl;
+    std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
 
     if (_availableChildSessions.size() == 0)
     {
-        if (_pendingPreSpawnedChildren.size() == 0)
-        {
-            // Running out of pre-spawned children, so spawn one more
-            Application::instance().logger().information(Util::logPrefix() + "Running out of pre-spawned childred, adding one more");
-        }
-
         std::cout << Util::logPrefix() << "waiting for a child session to become available" << std::endl;
         _availableChildSessionCV.wait(lock, [] { return _availableChildSessions.size() > 0; });
         std::cout << Util::logPrefix() << "waiting done" << std::endl;
