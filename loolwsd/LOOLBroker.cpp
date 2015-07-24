@@ -332,6 +332,14 @@ int main(int argc, char** argv)
     linkOrCopy(sysTemplate, jail);
     linkOrCopy(loTemplate, jailLOInstallation);
 
+    // It is necessary to deploy loolkit process to chroot jail.
+    if (!File("loolkit").exists())
+    {
+      std::cout << "loolkit does not exists" << std::endl;
+      exit(1);
+    }
+    File("loolkit").copyTo(Path(jail, "/usr/bin").toString());
+
 #ifdef __linux
     // Create the urandom and random devices
     File(Path(jail, "/dev")).createDirectory();
@@ -354,7 +362,7 @@ int main(int argc, char** argv)
     }
 #endif
 
-    std::cout << "desktopMain -> chroot(\"" + jail.toString() + "\")" << std::endl;
+    std::cout << "loolbroker -> chroot(\"" + jail.toString() + "\")" << std::endl;
     if (chroot(jail.toString().c_str()) == -1)
     {
         std::cout << "chroot(\"" + jail.toString() + "\") failed: " + strerror(errno) << std::endl;

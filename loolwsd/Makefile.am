@@ -27,5 +27,3 @@ all-local: loolwsd
 		sudo chown root loolbroker && sudo chmod u+s loolbroker; \
 	    fi; \
 	fi
-	mkdir -p ./systemplate/usr/bin
-	cp loolkit ./systemplate/usr/bin
