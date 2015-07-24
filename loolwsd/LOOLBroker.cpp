@@ -23,6 +23,9 @@
 
 #include "Util.hpp"
 
+#define INTERVAL_PROBES 10
+#define MAINTENANCE_INTERVAL 1000000
+
 using Poco::Path;
 using Poco::File;
 using Poco::ThreadLocal;
@@ -229,6 +232,8 @@ static void startupLibreOfficeKit(int nLOKits, std::string loSubPath, Poco::UInt
     }
 }
 
+static int timeoutCounter = 0;
+
 // Broker process
 int main(int argc, char** argv)
 {
@@ -430,6 +435,13 @@ int main(int argc, char** argv)
             std::cout << Util::logPrefix() << "No availabe child session, fork new one" << std::endl;
             if (createLibreOfficeKit(loSubPath, _childId) < 0 )
                 break;
+        }
+
+        ++timeoutCounter;
+        if (timeoutCounter == INTERVAL_PROBES)
+        {
+            timeoutCounter = 0;
+            sleep(MAINTENANCE_INTERVAL);
         }
     }
     

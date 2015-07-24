@@ -407,6 +407,7 @@ public:
 };
 
 int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
+int LOOLWSD::timeoutCounter = 0;
 std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
 std::string LOOLWSD::loTemplate;
@@ -688,6 +689,12 @@ int LOOLWSD::main(const std::vector<std::string>& args)
         else if (pid < 0)
             std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
 
+        ++timeoutCounter;
+        if (timeoutCounter == INTERVAL_PROBES)
+        {
+            timeoutCounter = 0;
+            sleep(MAINTENANCE_INTERVAL);
+        }
     }
 
     // Terminate child processes
