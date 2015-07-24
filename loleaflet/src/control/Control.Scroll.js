@@ -10,6 +10,7 @@ L.Control.Scroll = L.Control.extend({
 		this._mockDoc.id = 'mock-doc';
 
 		map.on('scrollto', this._onScrollTo, this);
+		map.on('scrollby', this._onScrollBy, this);
 		map.on('docsize', this._onUpdateSize, this);
 		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
 
@@ -59,7 +60,15 @@ L.Control.Scroll = L.Control.extend({
 
 	_onScrollTo: function (e) {
 		// triggered by the document (e.g. search result out of the viewing area)
-		$('#scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x]);
+		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x]);
+	},
+
+	_onScrollBy: function (e) {
+		var y = '+=' + e.y;
+		if (e.y < 0) {
+			y = '-=' + Math.abs(e.y);
+		}
+		$('.scroll-container').mCustomScrollbar('scrollTo', [y, '+=0']);
 	},
 
 	_onUpdateSize: function (e) {
@@ -71,10 +80,10 @@ L.Control.Scroll = L.Control.extend({
 
 	_onUpdateScrollOffset: function (e) {
 		this._ignoreScroll = null;
-		$('#scroll-container').mCustomScrollbar('stop');
+		$('.scroll-container').mCustomScrollbar('stop');
 		this._prevScrollY = e.y;
 		this._prevScrollX = e.x;
-		$('#scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {callbacks: false, timeout:0});
+		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {callbacks: false, timeout:0});
 	}
 });
 

@@ -1,13 +1,15 @@
 /*
- * L.Handler.ScrollWheelZoom is used by L.Map to enable mouse scroll wheel zoom on the map.
+ * L.Handler.Scroll is used by L.Map to enable mouse scroll wheel zoom on the map.
  */
 
 L.Map.mergeOptions({
-	scrollWheelZoom: true,
-	wheelDebounceTime: 40
+	scroll: true,
+	wheelDebounceTime: 40,
+	// scroll by 150px
+	scrollAmount: 150
 });
 
-L.Map.ScrollWheelZoom = L.Handler.extend({
+L.Map.Scroll = L.Handler.extend({
 	addHooks: function () {
 		L.DomEvent.on(this._map._container, {
 			mousewheel: this._onWheelScroll,
@@ -38,31 +40,21 @@ L.Map.ScrollWheelZoom = L.Handler.extend({
 		var left = Math.max(debounce - (+new Date() - this._startTime), 0);
 
 		clearTimeout(this._timer);
-		this._timer = setTimeout(L.bind(this._performZoom, this), left);
+		this._timer = setTimeout(L.bind(this._performScroll, this), left);
 
 		L.DomEvent.stop(e);
 	},
 
-	_performZoom: function () {
+	_performScroll: function () {
 		var map = this._map,
-		    delta = this._delta,
-		    zoom = map.getZoom();
-
-		map.stop(); // stop panning and fly animations if any
-
-		delta = delta > 0 ? Math.ceil(delta) : Math.floor(delta);
-		delta = Math.max(Math.min(delta, 4), -4);
-		delta = map._limitZoom(zoom + delta) - zoom;
+		    delta = this._delta;
 
 		this._delta = 0;
 		this._startTime = null;
 
 		if (!delta) { return; }
-
-		if (map.options.scrollWheelZoom === 'center') {
-			map.setZoom(zoom + delta);
-		} else {
-			map.setZoomAround(this._lastMousePos, zoom + delta);
-		}
+		map.fire('scrollby', {x: 0, y: delta * this._map.options.scrollAmount});
 	}
 });
+
+L.Map.addInitHook('addHandler', 'scroll', L.Map.Scroll);
