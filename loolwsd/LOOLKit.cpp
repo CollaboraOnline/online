@@ -104,13 +104,13 @@ int main(int argc, char** argv)
 
    if (loSubPath.empty())
    {
-     std::cout << "--losubpath is empty" << std::endl;
+     std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
      exit(1);
    }
 
    if ( !_childId )
    {
-     std::cout << "--child is 0" << std::endl;
+     std::cout << Util::logPrefix() << "--child is 0" << std::endl;
      exit(1);
    }
 

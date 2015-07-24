@@ -146,12 +146,12 @@ namespace
 
         if (cap_set_proc(caps) == -1)
         {
-            std::cout << std::string("cap_set_proc() failed: ") + strerror(errno) << std::endl;
+            std::cout << Util::logPrefix() << std::string("cap_set_proc() failed: ") + strerror(errno) << std::endl;
             exit(1);
         }
 
         char *capText = cap_to_text(caps, NULL);
-        std::cout <<Util::logPrefix() + "Capabilities now: " + capText << std::endl;
+        std::cout << Util::logPrefix() + "Capabilities now: " + capText << std::endl;
         cap_free(capText);
 
         cap_free(caps);
@@ -164,7 +164,7 @@ namespace
             // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
             // to do chroot().
             if (setuid(getuid()) != 0) {
-                std::cout << std::string("setuid() failed: ") + strerror(errno) << std::endl;
+                std::cout << Util::logPrefix() << std::string("setuid() failed: ") + strerror(errno) << std::endl;
             }
         }
 #if ENABLE_DEBUG
@@ -187,7 +187,7 @@ namespace
                     LOOLWSD::uid = 65534;
             }
             if (setuid(LOOLWSD::uid) != 0) {
-                std::cout << std::string("setuid() failed: ") + strerror(errno) << std::endl;
+                std::cout << Util::logPrefix() << std::string("setuid() failed: ") + strerror(errno) << std::endl;
             }
         }
 #endif
@@ -292,31 +292,31 @@ int main(int argc, char** argv)
    
    if (loSubPath.empty())
    {
-     std::cout << "--losubpath is empty" << std::endl;
+     std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
      exit(1);
    }
     
    if (sysTemplate.empty())
    {
-     std::cout << "--systemplate is empty" << std::endl;
+     std::cout << Util::logPrefix() << "--systemplate is empty" << std::endl;
      exit(1);
    }
 
    if (loTemplate.empty())
    {
-     std::cout << "--lotemplate is empty" << std::endl;
+     std::cout << Util::logPrefix() << "--lotemplate is empty" << std::endl;
      exit(1);
    }
 
    if (childRoot.empty())
    {
-     std::cout << "--childroot is empty" << std::endl;
+     std::cout << Util::logPrefix() << "--childroot is empty" << std::endl;
      exit(1);
    }
 
    if ( !_numPreSpawnedChildren )
    {
-     std::cout << "--numprespawns is 0" << std::endl;
+     std::cout << Util::logPrefix() << "--numprespawns is 0" << std::endl;
      exit(1);
    }
 
@@ -340,7 +340,7 @@ int main(int argc, char** argv)
     // It is necessary to deploy loolkit process to chroot jail.
     if (!File("loolkit").exists())
     {
-      std::cout << "loolkit does not exists" << std::endl;
+      std::cout << Util::logPrefix() << "loolkit does not exists" << std::endl;
       exit(1);
     }
     File("loolkit").copyTo(Path(jail, "/usr/bin").toString());
@@ -367,16 +367,16 @@ int main(int argc, char** argv)
     }
 #endif
 
-    std::cout << "loolbroker -> chroot(\"" + jail.toString() + "\")" << std::endl;
+    std::cout << Util::logPrefix() << "loolbroker -> chroot(\"" + jail.toString() + "\")" << std::endl;
     if (chroot(jail.toString().c_str()) == -1)
     {
-        std::cout << "chroot(\"" + jail.toString() + "\") failed: " + strerror(errno) << std::endl;
+        std::cout << Util::logPrefix() << "chroot(\"" + jail.toString() + "\") failed: " + strerror(errno) << std::endl;
         exit(-1);
     }
 
     if (chdir("/") == -1)
     {
-        std::cout << std::string("chdir(\"/\") in jail failed: ") + strerror(errno) << std::endl;
+        std::cout << Util::logPrefix() << std::string("chdir(\"/\") in jail failed: ") + strerror(errno) << std::endl;
         exit(-1);
     }
 
@@ -388,7 +388,7 @@ int main(int argc, char** argv)
 
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
-        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
+        std::cout << Util::logPrefix() <<  "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
             "attach process " << Process::id() << " in debugger now." << std::endl;
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }

@@ -591,7 +591,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 {
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        std::cout << "Unable to access " << cache <<
+        std::cout << Util::logPrefix() << "Unable to access " << cache <<
             ", please make sure it exists, and has write permission for this user." << std::endl;
         return Application::EXIT_UNAVAILABLE;
     }
