@@ -4,9 +4,7 @@
 
 L.Map.mergeOptions({
 	scroll: true,
-	wheelDebounceTime: 40,
-	// scroll by 150px
-	scrollAmount: 150
+	wheelDebounceTime: 40
 });
 
 L.Map.Scroll = L.Handler.extend({
@@ -47,13 +45,14 @@ L.Map.Scroll = L.Handler.extend({
 
 	_performScroll: function () {
 		var map = this._map,
-		    delta = -this._delta;
+			delta = -this._delta,
+			scrollAmount = Math.round(map.getSize().y / 4);
 
 		this._delta = 0;
 		this._startTime = null;
 
 		if (!delta) { return; }
-		map.fire('scrollby', {x: 0, y: delta * this._map.options.scrollAmount});
+		map.fire('scrollby', {x: 0, y: delta * scrollAmount});
 	}
 });
 
