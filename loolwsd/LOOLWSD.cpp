@@ -693,7 +693,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
         if (timeoutCounter == INTERVAL_PROBES)
         {
             timeoutCounter = 0;
-            sleep(MAINTENANCE_INTERVAL);
+            sleep(MAINTENANCE_INTERVAL*2);
         }
     }
 

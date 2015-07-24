@@ -24,7 +24,7 @@
 #include "Util.hpp"
 
 #define INTERVAL_PROBES 10
-#define MAINTENANCE_INTERVAL 1000000
+#define MAINTENANCE_INTERVAL 1
 
 using Poco::Path;
 using Poco::File;
