@@ -154,13 +154,6 @@ do
   cp --parent -n $loader $CHROOT
 done
 
-loaders="$(find /lib/ld-* -type l) $(find /lib32/ld-* -type l) $(find /lib64/ld-* -type l)"
-
-for loader in $loaders
-do
-  cp --parent -n $loader $CHROOT
-done
-
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved are for fontconfig to trust
 # its cache.
