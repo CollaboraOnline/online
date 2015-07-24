@@ -36,11 +36,7 @@ cd / || exit 1
 
 	find lib/libnss_* lib64/libnss_* -type l
 	find lib/*-linux-gnu/libnss* -type l
-	find lib/*-linux-gnu/ld-* -type l
-  find lib/*-linux-gnu/libcap* -type l
-	find lib/*-linux-gnu/libattr* -type l
-#	find lib/*-linux-gnu/libtinfo* -type l
-	
+
 	# Go through the LO shared objects and check what system libraries
 	# they link to.
 	find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |
@@ -48,14 +44,14 @@ cd / || exit 1
 	    ldd $file 2>/dev/null
 	done |
 	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
-	
+
 	# Go through the loolkit
 	find $POCODIR -name '*Poco*.so' -o -name '*.so.[0-9]*' |
 	while read file; do
 	    ldd $file 2>/dev/null
 	done |
 	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
-	
+
     else
 	find usr/lib/dyld  \
 	     usr/lib/*.dylib \
@@ -95,34 +91,75 @@ cd / || exit 1
 # This will now copy the file a symlink points to, but whatever.
 cpio -p -d -L $CHROOT
 
-cp -v -P --parent	$(find /usr/local/lib/libPoco*) $CHROOT
-
 mkdir -p $CHROOT/tmp
-mkdir -p $CHROOT/bin
-mkdir -p $CHROOT/usr/bin
+mkdir -p $CHROOT/usr/bin/
+dummy=$CHROOT/usr/bin/dummy
 
-cp /bin/bash $CHROOT/bin/bash
-cp /usr/bin/env $CHROOT/usr/bin/env
+# checking for library containing Poco::Application
+cat <<_ACEOF >$dummy.cpp
+#include <iostream>
+#include <Poco/Util/Application.h>
 
-# make sure the link loader are copied
-mkdir -p $CHROOT/lib64
-mkdir -p $CHROOT/lib32
+using Poco::Util::Application;
 
-LOADER64=$(find /lib64/ld-* -type l)
-LOADER32=$(find /lib32/ld-* -type l)
-LOADER=$(find /lib/ld-* -type l)
+int main ()
+{
+  std::cout << "Poco functionality OK!" << std::endl;
+  return Application::EXIT_OK;
+}
+_ACEOF
 
-if [ -n "$LOADER64" ]; then
-  cp -v $LOADER64 $CHROOT$LOADER64
+gcc_compile='gcc -o $dummy.o -c $dummy.cpp'
+(eval "$gcc_compile") 2>$dummy.err
+
+if ! test $? = 0; then
+  cat $dummy.err;
+  exit 1;
 fi
 
-if [ -n "$LOADER32" ]; then
-  cp -v $LOADER32 $CHROOT$LOADER32
+gcc_link='gcc -o $dummy -lcap -lpng -ldl  -lPocoNet -lPocoUtil -lPocoXML -lPocoJSON -lPocoFoundation $dummy.o'
+(eval "$gcc_link") 2>$dummy.err
+
+if ! test $? = 0; then
+  cat $dummy.err;
+  exit 1;
 fi
 
-if [ -n "$LOADER" ]; then
-  cp -v $LOADER $CHROOT$LOADER
-fi
+lib_poco=$( echo "$dummy" |
+  while read file; do
+    ldd $file 2>/dev/null
+  done |
+  grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)')
+
+for lib in $lib_poco
+do
+  cp --parent -n $lib $CHROOT
+
+  libs=$( echo $lib |
+  while read file; do
+    ldd $file 2>/dev/null
+  done |
+  grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)')
+
+  for sofile in $libs
+  do
+    cp --parent -n $sofile $CHROOT
+  done
+done
+
+loaders="$(find /lib/ld-* -type l) $(find /lib32/ld-* -type l) $(find /lib64/ld-* -type l)"
+
+for loader in $loaders
+do
+  cp --parent -n $loader $CHROOT
+done
+
+loaders="$(find /lib/ld-* -type l) $(find /lib32/ld-* -type l) $(find /lib64/ld-* -type l)"
+
+for loader in $loaders
+do
+  cp --parent -n $loader $CHROOT
+done
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved are for fontconfig to trust
@@ -139,3 +176,6 @@ if [ `uname -s` = Linux ]; then
 	cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
     fi
 fi
+
+echo "testing if Poco libraries were installed properly"
+sudo chroot $CHROOT /usr/bin/dummy
