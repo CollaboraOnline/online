@@ -3,7 +3,9 @@
  */
 
 L.Map.mergeOptions({
-	keyboard: true
+	keyboard: true,
+	keyboardPanOffset: 20,
+	keyboardZoomOffset: 1
 });
 
 L.Map.Keyboard = L.Handler.extend({
@@ -93,8 +95,19 @@ L.Map.Keyboard = L.Handler.extend({
 		46  : true // delete
 	},
 
+	navigationKeyCodes: {
+		left:    [37],
+		right:   [39],
+		down:    [40],
+		up:      [38],
+		zoomIn:  [187, 107, 61, 171],
+		zoomOut: [189, 109, 173]
+	},
+
 	initialize: function (map) {
 		this._map = map;
+		this._setPanOffset(map.options.keyboardPanOffset);
+		this._setZoomOffset(map.options.keyboardZoomOffset);
 	},
 
 	addHooks: function () {
@@ -107,6 +120,38 @@ L.Map.Keyboard = L.Handler.extend({
 
 		this._map.on('mousedown', this._onMouseDown, this);
 		this._map.on('keydown keyup keypress', this._onKeyDown, this);
+	},
+
+	_setPanOffset: function (pan) {
+		var keys = this._panKeys = {},
+		    codes = this.navigationKeyCodes,
+		    i, len;
+
+		for (i = 0, len = codes.left.length; i < len; i++) {
+			keys[codes.left[i]] = [-1 * pan, 0];
+		}
+		for (i = 0, len = codes.right.length; i < len; i++) {
+			keys[codes.right[i]] = [pan, 0];
+		}
+		for (i = 0, len = codes.down.length; i < len; i++) {
+			keys[codes.down[i]] = [0, pan];
+		}
+		for (i = 0, len = codes.up.length; i < len; i++) {
+			keys[codes.up[i]] = [0, -1 * pan];
+		}
+	},
+
+	_setZoomOffset: function (zoom) {
+		var keys = this._zoomKeys = {},
+		    codes = this.navigationKeyCodes,
+		    i, len;
+
+		for (i = 0, len = codes.zoomIn.length; i < len; i++) {
+			keys[codes.zoomIn[i]] = zoom;
+		}
+		for (i = 0, len = codes.zoomOut.length; i < len; i++) {
+			keys[codes.zoomOut[i]] = -zoom;
+		}
 	},
 
 	_onMouseDown: function () {
@@ -131,30 +176,41 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
-		if (docLayer._permission !== 'edit') {
-			return;
-		}
-
-		var charCode = e.originalEvent.charCode;
-		var keyCode = e.originalEvent.keyCode;
-		if (e.type === 'keydown' && this.handleOnKeyDown[keyCode] && charCode === 0) {
-			docLayer._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
-		}
-		else if (e.type === 'keypress' &&
-				(!this.handleOnKeyDown[keyCode] || charCode !== 0)) {
-			if (charCode === keyCode && charCode !== 13) {
-				// Chrome sets keyCode = charCode for printable keys
-				// while LO requires it to be 0
-				keyCode = 0;
+		if (docLayer._permission === 'edit') {
+			var charCode = e.originalEvent.charCode;
+			var keyCode = e.originalEvent.keyCode;
+			if (e.type === 'keydown' && this.handleOnKeyDown[keyCode] && charCode === 0) {
+				docLayer._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
 			}
-			docLayer._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
+			else if (e.type === 'keypress' &&
+					(!this.handleOnKeyDown[keyCode] || charCode !== 0)) {
+				if (charCode === keyCode && charCode !== 13) {
+					// Chrome sets keyCode = charCode for printable keys
+					// while LO requires it to be 0
+					keyCode = 0;
+				}
+				docLayer._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
+			}
+			else if (e.type === 'keyup') {
+				docLayer._postKeyboardEvent('up', charCode, this._toUNOKeyCode(keyCode));
+			}
+			if (keyCode === 9) {
+				// tab would change focus to other DOM elements
+				e.originalEvent.preventDefault();
+			}
 		}
-		else if (e.type === 'keyup') {
-			docLayer._postKeyboardEvent('up', charCode, this._toUNOKeyCode(keyCode));
-		}
-		if (keyCode === 9) {
-			// tab would change focus to other DOM elements
-			e.originalEvent.preventDefault();
+		else if (e.type === 'keydown') {
+			var key = e.originalEvent.keyCode;
+			var map = this._map;
+			if (key in this._panKeys) {
+				if (map._panAnim && map._panAnim._inProgress) {
+					return;
+				}
+				map.fire('scrollby', {x: this._panKeys[key][0], y: this._panKeys[key][1]});
+			}
+			else if (key in this._zoomKeys) {
+				map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);
+			}
 		}
 		L.DomEvent.stopPropagation(e.originalEvent);
 	}
