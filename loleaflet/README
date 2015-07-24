@@ -109,6 +109,32 @@ Save:
     - API:
         map.saveAs(url, [format, options])
 
+Scroll (the following are measured in pixels):
+    - API:
+        map.scroll(x,y)
+            + scroll right by 'x' and down by 'y' (or left and up if negative)
+        map.scrollDown(y)
+            + scroll down by 'y' (or up if negative)
+        map.scrollRight(x)
+            + scroll right by 'x' (or left if nevative)
+    - events
+        map.on('docsize', function (e) {}) where:
+            + e.x = document width
+            + e.y = document height
+        map.on('updatescrolloffset', function (e) {}) where:
+            + e.x = difference between document's left and current view's left
+                (how much has the document been scrolled right)
+            + e.y = difference between document's top and current view's top
+                (how much has the document been scrolled down)
+            - this event is fired when zooming and the current view is maintained but the
+                document shrinks or grow OR when the document is panned OR when the container is resized
+        map.on('scrollto', function (e) {}) where:
+            + e.x = view's left position (so that the cursor/search result is in the center)
+            + e.y = view's top position (so that the cursor/search result is in the center)
+        map.on('scrollby', function (e) {}) where:
+            + e.x = the amount scrolled to the right (or left if negative)
+            + e.y = the amount scrolled to the bottom (or top if negative)
+
 Contributing
 ------------
 

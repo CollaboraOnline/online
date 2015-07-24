@@ -306,6 +306,11 @@ var deps = {
 		desc: 'Parts change handler.'
 	},
 
+	Scroll: {
+		src: ['control/Scroll.js'],
+		desc: 'Scroll handler.'
+	},
+
 	AnimationPan: {
 		src: [
 			'dom/DomEvent.js',

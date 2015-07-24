@@ -49,7 +49,7 @@ L.Control.Scroll = L.Control.extend({
 		if (!offset.equals(new L.Point(0, 0))) {
 			this._prevScrollY = -e.mcs.top;
 			this._prevScrollX = -e.mcs.left;
-			this._map.panBy(offset, {animate:false});
+			this._map.scroll(offset.x, offset.y);
 		}
 	},
 
