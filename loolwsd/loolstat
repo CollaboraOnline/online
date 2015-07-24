@@ -5,6 +5,7 @@ TR='tr'
 WC='wc'
 PS='ps'
 SED='sed'
+TOP='top'
 GREP='grep'
 PSTREE='pstree'
 
@@ -48,6 +49,11 @@ if ! $PS --version >/dev/null 2>&1; then
   log_failure_msg "$0: error: $PS utility not found."
 fi
 
+# checking ... report a snapshot of the current processes utility.
+if ! $TOP --v >/dev/null 2>&1; then
+  log_failure_msg "$0: error: $TOP utility not found."
+fi
+
 # checking pid log file.
 if [ ! -f $PIDLOG ]; then
 	log_failure_msg "$0: error: $PIDLOG file not found."
@@ -67,18 +73,37 @@ fi
 $PSTREE -a -c -h -A -p $LOOLWSD_PID;
 
 # get the number of running processes.
-PROCESS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolwsd,' | $WC -l);
+LOOLWSD=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolwsd,' | $WC -l);
 
 # get the number of running threads.
-THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolwsd}' | $WC -l);
+LOOLWSD_THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolwsd}' | $WC -l);
+
+# get the number of running processes.
+LOOLBROKER=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolbroker,' | $WC -l);
+
+# get the number of running threads.
+LOOLBROKER_THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolbroker}' | $WC -l);
+
+# get the number of running processes.
+LOOLKIT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolkit,' | $WC -l);
+
+# get the number of running processes.
+LOOLKIT_THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolkit}' | $WC -l);
 
 # get the number of processes swapped out.
-SWAPPEDOUT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '(loolwsd,' | $WC -l);
+LOOLKIT_SWAPPEDOUT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '(loolkit,' | $WC -l);
 
 # display report stats
 printf "\n %-10s\n" "LOOLWSD STATS";
 printf "==========================\n";
-printf " %-10s %d\n" "Running process:" "$PROCESS";
-printf " %-10s %d\n" "Running threads:" "$THREADS";
-printf " %-10s %d\n" "Process swapped out:" "$SWAPPEDOUT";
+printf " %-10s %d\n" "Running loolwsd process:" "$LOOLWSD";
+printf " %-10s %d\n" "Running loolwsd threads:" "$LOOLWSD_THREADS";
+$TOP -bn 1 -p $LOOLWSD_PID | $GREP -E 'loolwsd|COMMAND'
+printf " %-10s %d\n" "Running loolbroker process:" "$LOOLBROKER";
+printf " %-10s %d\n" "Running loolbroker threads:" "$LOOLBROKER_THREADS";
+$TOP -bn 1 | $GREP -E 'loolbroker|COMMAND'
+printf " %-10s %d\n" "Running LibreOfficeKit process:" "$LOOLKIT";
+printf " %-10s %d\n" "Running LibreOfficeKit threads:" "$LOOLKIT_THREADS";
+printf " %-10s %d\n" "Process LibreOfficeKit swapped out:" "$LOOLKIT_SWAPPEDOUT";
+$TOP -bn 1 | $GREP -E 'loolkit|COMMAND'
 
