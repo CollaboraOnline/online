@@ -5,6 +5,7 @@ TR='tr'
 WC='wc'
 PS='ps'
 SED='sed'
+TOP='top'
 GREP='grep'
 PSTREE='pstree'
 
@@ -48,6 +49,11 @@ if ! $PS --version >/dev/null 2>&1; then
   log_failure_msg "$0: error: $PS utility not found."
 fi
 
+# checking ... display Linux processes utility.
+if ! $TOP --v >/dev/null 2>&1; then
+  log_failure_msg "$0: error: $TOP utility not found."
+fi
+
 # checking pid log file.
 if [ ! -f $PIDLOG ]; then
 	log_failure_msg "$0: error: $PIDLOG file not found."
@@ -81,4 +87,5 @@ printf "==========================\n";
 printf " %-10s %d\n" "Running process:" "$PROCESS";
 printf " %-10s %d\n" "Running threads:" "$THREADS";
 printf " %-10s %d\n" "Process swapped out:" "$SWAPPEDOUT";
+$TOP -bn 1 | $GREP -E 'loolwsd|COMMAND'
 
