@@ -24,6 +24,9 @@ L.Control.Parts = L.Control.extend({
 		this._previewTiles = {};
 		this._tabsInitialized = false;
 		this._spreadsheetTabs = {};
+		var docContainer = L.DomUtil.get('document-container');
+		this._partsPreviewCont = L.DomUtil.create('div', 'parts-preview', docContainer.parentElement);
+		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tab', docContainer.parentElement);
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('tilepreview', this._updatePreview, this);
@@ -75,12 +78,11 @@ L.Control.Parts = L.Control.extend({
 			L.DomUtil.setStyle(docContainer, 'left', '200px');
 			setTimeout(L.bind(function () {
 				this._map.invalidateSize();
-				$('#scroll-container').mCustomScrollbar('update');
+				$('.scroll-container').mCustomScrollbar('update');
 			}, this), 500);
-			var container = L.DomUtil.get('parts-preview');
 			for (var i = 0; i < parts; i++) {
 				var id = 'preview-tile' + i;
-				var frame = L.DomUtil.create('div', 'preview-frame', container);
+				var frame = L.DomUtil.create('div', 'preview-frame', this._partsPreviewCont);
 				L.DomUtil.create('span', 'preview-helper', frame);
 				var img = L.DomUtil.create('img', 'preview-img', frame);
 				img.id = id;
@@ -101,12 +103,11 @@ L.Control.Parts = L.Control.extend({
 				L.DomUtil.setStyle(docContainer, 'bottom', '20px');
 				setTimeout(L.bind(function () {
 					this._map.invalidateSize();
-					$('#scroll-container').mCustomScrollbar('update');
+					$('.scroll-container').mCustomScrollbar('update');
 				}, this), 500);
-				container = L.DomUtil.get('spreadsheet-tab');
 				for (i = 0; i < parts; i++) {
 					id = 'spreadsheet-tab' + i;
-					var tab = L.DomUtil.create('li', '', container);
+					var tab = L.DomUtil.create('li', '', this._tabsCont);
 					tab.innerHTML = partNames[i];
 					tab.id = id;
 					L.DomEvent
@@ -140,7 +141,7 @@ L.Control.Parts = L.Control.extend({
 		// the scrollbar has to be re-initialized here else it doesn't work
 		// probably a bug from the scrollbar
 		this._previewTiles[id].onload = function () {
-			$('#parts-preview').mCustomScrollbar({
+			$('.parts-preview').mCustomScrollbar({
 				axis: 'y',
 				theme: 'dark-thick',
 				scrollInertia: 0,
