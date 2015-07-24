@@ -166,11 +166,17 @@ var deps = {
 		heading: 'Interaction'
 	},
 
+	MapScroll: {
+		src: ['dom/DomEvent.js',
+		      'core/Handler.js',
+		      'map/handler/Map.Scroll.js'],
+		desc: 'Handles the mouse wheel scroll',
+	},
+
 	MouseZoom: {
 		src: ['dom/DomEvent.js',
 		      'core/Handler.js',
-		      'map/handler/Map.DoubleClickZoom.js',
-		      'map/handler/Map.ScrollWheelZoom.js'],
+		      'map/handler/Map.DoubleClickZoom.js'],
 		desc: 'Scroll wheel zoom and double click zoom on the map.'
 	},
 
