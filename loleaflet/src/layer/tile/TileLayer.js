@@ -106,6 +106,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('zoomstart zoomend', this._onZoom, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('copy', this._onCopy, this);
+		this._map.on('alltilesloaded', this._preFetchTiles, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._textArea = this._map._textArea;
