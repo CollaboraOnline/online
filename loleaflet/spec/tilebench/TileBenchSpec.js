@@ -15,7 +15,7 @@ describe('TileBench', function () {
 
 	before(function () {
 		// initialize the map and load the document
-		map = L.map('map', 'scroll-container', 'mock-document', {
+		map = L.map('map', {
 			center: [0, 0],
 			zoom: 10,
 			minZoom: 1,
@@ -31,24 +31,7 @@ describe('TileBench', function () {
 			readOnly: false
 		});
 		map.addLayer(docLayer);
-
-		////// Scrollbar /////
-		(function($){
-				$("#scroll-container").mCustomScrollbar({
-					axis: 'yx',
-					theme: 'dark-thick',
-					scrollInertia: 0,
-					callbacks:{
-						onScroll: function(){
-							docLayer._onScrollEnd(this);
-						},
-						whileScrolling: function(){
-							docLayer._onScroll(this);
-						},
-						alwaysTriggerOffsets:false
-					}
-				});
-		})(jQuery);
+		map.addControl(L.control.scroll());
 	});
 
 	afterEach(function () {
@@ -72,7 +55,7 @@ describe('TileBench', function () {
 		});
 
 		it('Scroll to the bottom', function (done) {
-			$('#scroll-container').mCustomScrollbar('scrollTo', 'bottom', {scrollInertia: 3000});
+			$('.scroll-container').mCustomScrollbar('scrollTo', 'bottom', {scrollInertia: 3000});
 			// check how we're doing 200ms after the scroll has ended
 			// (allow enough time to request new tiles)
 			this.timeOut = setTimeout(L.bind(function () {
