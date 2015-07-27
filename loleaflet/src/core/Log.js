@@ -3,8 +3,10 @@
  */
 
 L.Log = {
-	log: function (msg, direction, tileCoords) {
-		var time = Date.now();
+	log: function (msg, direction, tileCoords, time) {
+		if (!time) {
+			var time = Date.now();
+		}
 		if (!this._logs) {
 			this._logs = [];
 		}
