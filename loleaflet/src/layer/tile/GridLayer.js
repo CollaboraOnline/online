@@ -369,14 +369,9 @@ L.GridLayer = L.Layer.extend({
 		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
 		bottomRight = this._map.unproject(bottomRight);
 
-		if (this._documentInfo === '') {
+		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
 			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
-		}
-		else if (sizeChanged) {
-			// we just update the bounds without panning into the new bounds,
-			// the scrollbars should handle that
-			this._map.options.maxBounds = new L.LatLngBounds(topLeft, bottomRight);
 		}
 
 		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
