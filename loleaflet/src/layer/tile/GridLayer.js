@@ -576,6 +576,9 @@ L.GridLayer = L.Layer.extend({
 			this._tileCache[key] = tile.el.src;
 		}
 
+		if (!tile.loaded && this._emptyTilesCount > 0) {
+			this._emptyTilesCount -= 1;
+		}
 		L.DomUtil.remove(tile.el);
 		delete this._tiles[key];
 

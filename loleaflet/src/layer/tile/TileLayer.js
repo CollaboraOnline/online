@@ -265,6 +265,9 @@ L.TileLayer = L.GridLayer.extend({
 			offset = new L.Point(command.width, command.height);
 			bottomRightTwips = topLeftTwips.add(offset);
 			var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
+			var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
+			var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
+			var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
 
 			for (var key in this._tiles) {
 				var coords = this._tiles[key].coords;
@@ -278,14 +281,21 @@ L.TileLayer = L.GridLayer.extend({
 					else {
 						this._tiles[key]._invalidCount = 1;
 					}
-					this.sendMessage('tile ' +
-									'part=' + coords.part + ' ' +
-									'width=' + this._tileSize + ' ' +
-									'height=' + this._tileSize + ' ' +
-									'tileposx=' + tileTopLeft.x + ' '    +
-									'tileposy=' + tileTopLeft.y + ' ' +
-									'tilewidth=' + this._tileWidthTwips + ' ' +
-									'tileheight=' + this._tileHeightTwips, key);
+					if (visibleArea.intersects(bounds)) {
+						this.sendMessage('tile ' +
+										'part=' + coords.part + ' ' +
+										'width=' + this._tileSize + ' ' +
+										'height=' + this._tileSize + ' ' +
+										'tileposx=' + tileTopLeft.x + ' '    +
+										'tileposy=' + tileTopLeft.y + ' ' +
+										'tilewidth=' + this._tileWidthTwips + ' ' +
+										'tileheight=' + this._tileHeightTwips, key);
+					}
+					else {
+						// tile outside of the visible area, just remove it
+						this._preFetchBorder = null;
+						this._removeTile(key);
+					}
 				}
 			}
 			for (key in this._tileCache) {
@@ -390,9 +400,6 @@ L.TileLayer = L.GridLayer.extend({
 					}
 				}
 				tile.el.src = img;
-			}
-			else {
-				this._tileCache[key] = img;
 			}
 			L.Log.log(textMsg, L.INCOMING, key);
 		}
