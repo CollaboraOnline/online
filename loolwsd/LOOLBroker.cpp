@@ -407,21 +407,21 @@ int main(int argc, char** argv)
     }
 
     void* dlSC = dlopen(Path("/"+ loSubPath + "/program", LIB_SCLO).toString().c_str(), RTLD_NOW);
-    if ( !dlOffice )
+    if ( !dlSC )
     {
         std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SCLO << std::endl;
         exit(-1);
     }
 
     void* dlSW = dlopen(Path("/"+ loSubPath + "/program", LIB_SWLO).toString().c_str(), RTLD_NOW);
-    if ( !dlOffice )
+    if ( !dlSW )
     {
         std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SWLO << std::endl;
         exit(-1);
     }
 
     void* dlSD = dlopen(Path("/"+ loSubPath + "/program", LIB_SDLO).toString().c_str(), RTLD_NOW);
-    if ( !dlOffice )
+    if ( !dlSD )
     {
         std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SDLO << std::endl;
         exit(-1);
