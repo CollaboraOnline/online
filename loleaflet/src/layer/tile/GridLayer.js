@@ -434,16 +434,12 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_moveStart: function () {
-		clearInterval(this._tilesPrefetcher);
-		this._tilesPrefetcher = null;
-		this._preFetchBorder = null;
+		this._resetPreFetching();
 	},
 
 	_move: function () {
 		this._update();
-		if (!this._tilesPreFetcher) {
-			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), 2000);
-		}
+		this._resetPreFetching(true);
 	},
 
 	_update: function (center, zoom) {
@@ -746,13 +742,18 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_preFetchTiles: function () {
-		if (this._permission === 'edit' || this._emptyTilesCount > 0) {
+		if (this._emptyTilesCount > 0) {
 			return;
 		}
 		var center = this._map.getCenter();
 		var zoom = this._map.getZoom();
 		var tilesToFetch = 10;
 		var maxBorderWidth = 5;
+
+		if (this._permission === 'edit') {
+			tilesToFetch = 5;
+			maxBorderWidth = 3;
+		}
 
 		if (!this._preFetchBorder) {
 			var pixelBounds = this._map.getPixelBounds(center, zoom),
@@ -873,6 +874,19 @@ L.GridLayer = L.Layer.extend({
 			}
 			this._level.el.appendChild(fragment);
 		}
+	},
+
+	_resetPreFetching: function (resetBorder) {
+		clearInterval(this._tilesPreFetcher);
+		clearTimeout(this._preFetchIdle);
+		if (resetBorder) {
+			this._preFetchBorder = null;
+		}
+		var interval = 750;
+		var idleTime = 5000;
+		this._preFetchIdle = setTimeout(L.bind( function () {
+			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), interval);
+		}, this), idleTime);
 	}
 });
 

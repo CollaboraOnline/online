@@ -177,6 +177,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (docLayer._permission === 'edit') {
+			docLayer._resetPreFetching();
 			var charCode = e.originalEvent.charCode;
 			var keyCode = e.originalEvent.keyCode;
 			if (e.type === 'keydown' && this.handleOnKeyDown[keyCode] && charCode === 0) {

@@ -29,6 +29,7 @@ L.Map.Mouse = L.Handler.extend({
 		}
 
 		if (e.type === 'mousedown') {
+			docLayer._resetPreFetching();
 			this._mouseDown = true;
 			if (this._holdMouseEvent) {
 				clearTimeout(this._holdMouseEvent);
