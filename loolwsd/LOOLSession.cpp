@@ -982,10 +982,7 @@ bool ChildProcessSession::saveAs(const char *buffer, int length, StringTokenizer
         return false;
     }
 
-    URI::decode(url, url, true);
-    if (getTokenString(tokens[2], "format", format)) {
-        URI::decode(format, format, true);
-    }
+    getTokenString(tokens[2], "format", format);
 
     if (getTokenString(tokens[3], "options", filterOptions)) {
         if (tokens.count() > 4) {
@@ -993,7 +990,9 @@ bool ChildProcessSession::saveAs(const char *buffer, int length, StringTokenizer
         }
     }
 
-    _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(), format.c_str(), filterOptions.c_str());
+    _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
+            format.size() == 0 ? NULL :format.c_str(),
+            filterOptions.size() == 0 ? NULL : filterOptions.c_str());
 
     return true;
 }
