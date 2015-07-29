@@ -309,6 +309,7 @@
 /* Toolbar buttons control */
 
 .leaflet-control-buttons-container {
+	box-shadow: 0 0 0;
 	}
 
 .leaflet-control-buttons,
@@ -553,6 +554,7 @@ a.leaflet-control-buttons:hover:first-child {
 	}
 
 #document-container {
+	border-top: 2px solid #B6B6B6;
 	background: #DFDFDF;
 	position: absolute;
 	top: 65px;
@@ -727,7 +729,6 @@ a.leaflet-control-buttons:hover:first-child {
 	}
 
 #toolbar {
-	border-bottom: 2px solid #B6B6B6;
 	position: fixed;
 	top: 0;
 	left: 0;
