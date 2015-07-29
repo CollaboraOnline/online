@@ -25,6 +25,10 @@ L.Control.Buttons = L.Control.extend({
 		};
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
+			if (key === 'alignleft' || key === 'save') {
+				// add a separator
+				L.DomUtil.create('span', 'leaflet-control-button-separator', container);
+			}
 			button.el = this._createButton(key, button.title, button.iconName,
 				buttonsName, container, this._onButtonClick);
 		}

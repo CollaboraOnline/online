@@ -31,10 +31,9 @@
         The "map" div is the actual document and it has the document's size
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
-    <div id="toolbar" align="center">
-        <p style="margin:0px">This space is a placeholder for the future toolbar</p>
+    <div id="toolbar">
     </div>
-    <div id="document-container" style="top:100px">
+    <div id="document-container">
         <div id="map"></div>
     </div>
 
@@ -68,11 +67,11 @@
 
     ////// Controls /////
     map.addControl(L.control.buttons());
+    map.addControl(L.control.zoom());
+    map.addControl(L.control.parts());
     map.addControl(L.control.search());
     map.addControl(L.control.permissionSwitch());
     map.addControl(L.control.selection());
-    map.addControl(L.control.zoom());
-    map.addControl(L.control.parts());
     map.addControl(L.control.statusIndicator());
     map.addControl(L.control.scroll());
 

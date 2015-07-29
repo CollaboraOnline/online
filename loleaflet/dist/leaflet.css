@@ -233,6 +233,7 @@
 	border-radius: 4px;
 	display: inline-block;
 	margin: 3px;
+	vertical-align: middle;
 	}
 .leaflet-bar a,
 .leaflet-bar a:hover {
@@ -308,7 +309,6 @@
 /* Toolbar buttons control */
 
 .leaflet-control-buttons-container {
-	float: left;
 	}
 
 .leaflet-control-buttons,
@@ -327,11 +327,20 @@ a.leaflet-control-buttons:hover {
 	margin-left: 3px;
 	}
 
+a.leaflet-control-buttons:first-child,
+a.leaflet-control-buttons:hover:first-child {
+	margin-left: 0px;
+	}
 .leaflet-control-buttons-active {
 	border: thin solid;
 	}
 
-
+.leaflet-control-button-separator {
+	width: 14px;
+	height: 1px;
+	float: left;
+	visibility: hidden;
+	}
 
 /* layers control */
 
@@ -546,7 +555,7 @@ a.leaflet-control-buttons:hover {
 #document-container {
 	background: #DFDFDF;
 	position: absolute;
-	top: 100px;
+	top: 65px;
 	bottom: 0px;
 	right: 0px;
 	left: 0px;
@@ -716,3 +725,65 @@ a.leaflet-control-buttons:hover {
 	color: #7E7E7E;
 	border-top: #FFF 1px solid;
 	}
+
+#toolbar {
+	border-bottom: 2px solid #B6B6B6;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	text-align: center;
+}
+
+.leaflet-bar a {
+    float: left;
+}
+
+div .leaflet-bar a:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
+.leaflet-control-editviewswitch.leaflet-bar
+, leaflet-control-search.leaflet-bar {
+
+}
+
+label.leaflet-control-editviewswitch {
+    padding: 0.2em 0.4em 0.2em 0em;
+}
+
+input.leaflet-control-search-bar {
+    padding: 0.3em;
+}
+
+.leaflet-control-zoom.leaflet-bar {
+    margin-left: 0.5em;
+}
+
+div.leaflet-control-zoom leaflet-bar {
+    width: 53px;
+}
+
+button.leaflet-control-search-prev {
+    margin-left: 0.2em;
+}
+
+button.leaflet-control-search-next
+, leaflet-control-search-cancel {
+    margin-right: 0.2em;
+}
+
+#toolbar label
+, .leaflet-control-search {
+    background-color: #fff;
+}
+
+div .leaflet-bar a:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+div .leaflet-bar a:last-child {
+    border-radius: 0 4px 4px 0;
+}
