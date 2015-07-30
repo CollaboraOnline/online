@@ -401,6 +401,10 @@ L.TileLayer = L.GridLayer.extend({
 				}
 				tile.el.src = img;
 			}
+			else if (command.preFetch === 'true') {
+				this._emptyTilesCount -= 1;
+				this._tileCache[key] = img;
+			}
 			L.Log.log(textMsg, L.INCOMING, key);
 		}
 		else if (textMsg.startsWith('textselection:')) {
@@ -529,6 +533,9 @@ L.TileLayer = L.GridLayer.extend({
 			else if (tokens[i].substring(0, 5) === 'type=') {
 				// remove newline characters
 				command.type = tokens[i].substring(5).replace(/(\r\n|\n|\r)/gm, '');
+			}
+			else if (tokens[i].substring(0,9) === 'prefetch=') {
+				command.preFetch = tokens[i].substring(9);
 			}
 		}
 		if (command.tileWidth && command.tileHeight) {

@@ -612,46 +612,53 @@ L.GridLayer = L.Layer.extend({
 	_addTile: function (coords, fragment) {
 		var tilePos = this._getTilePos(coords),
 			key = this._tileCoordsToKey(coords);
-		var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
-		this._initTile(tile);
+		if (coords.part === this._currentPart) {
+			var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
-		// if createTile is defined with a second argument ("done" callback),
-		// we know that tile is async and will be ready later; otherwise
-		if (this.createTile.length < 2) {
-			// mark tile as ready, but delay one frame for opacity animation to happen
-			setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
+			this._initTile(tile);
+
+			// if createTile is defined with a second argument ("done" callback),
+			// we know that tile is async and will be ready later; otherwise
+			if (this.createTile.length < 2) {
+				// mark tile as ready, but delay one frame for opacity animation to happen
+				setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
+			}
+
+			// we prefer top/left over translate3d so that we don't create a HW-accelerated layer from each tile
+			// which is slow, and it also fixes gaps between tiles in Safari
+			L.DomUtil.setPosition(tile, tilePos, true);
+
+			// save tile in cache
+			this._tiles[key] = {
+				el: tile,
+				coords: coords,
+				current: true
+			};
+
+			fragment.appendChild(tile);
+
+			this.fire('tileloadstart', {
+				tile: tile,
+				coords: coords
+			});
 		}
-
-		// we prefer top/left over translate3d so that we don't create a HW-accelerated layer from each tile
-		// which is slow, and it also fixes gaps between tiles in Safari
-		L.DomUtil.setPosition(tile, tilePos, true);
-
-		// save tile in cache
-		this._tiles[key] = {
-			el: tile,
-			coords: coords,
-			current: true
-		};
-
-		fragment.appendChild(tile);
-
-		this.fire('tileloadstart', {
-			tile: tile,
-			coords: coords
-		});
 
 		if (!this._tileCache[key]) {
 			if (this.options.useSocket && this._map.socket) {
 				var twips = this._coordsToTwips(coords);
-				this.sendMessage('tile ' +
-								'part=' + coords.part + ' ' +
-								'width=' + this._tileSize + ' ' +
-								'height=' + this._tileSize + ' ' +
-								'tileposx=' + twips.x + ' '	+
-								'tileposy=' + twips.y + ' ' +
-								'tilewidth=' + this._tileWidthTwips + ' ' +
-								'tileheight=' + this._tileHeightTwips, key);
+				var msg = 'tile ' +
+						'part=' + coords.part + ' ' +
+						'width=' + this._tileSize + ' ' +
+						'height=' + this._tileSize + ' ' +
+						'tileposx=' + twips.x + ' '	+
+						'tileposy=' + twips.y + ' ' +
+						'tilewidth=' + this._tileWidthTwips + ' ' +
+						'tileheight=' + this._tileHeightTwips;
+				if (coords.part !== this._currentPart) {
+					msg += ' prefetch=true';
+				}
+				this.sendMessage(msg, key);
 			}
 		}
 		else {
