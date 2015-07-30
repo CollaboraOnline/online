@@ -759,9 +759,15 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (!this._preFetchBorder) {
-			var pixelBounds = this._map.getPixelBounds(center, zoom),
-				tileBorder = this._pxBoundsToTileRange(pixelBounds);
-			this._preFetchBorder = tileBorder;
+			if (this._currentPart !== this._preFetchPart) {
+				// all tiles from the new part have to be pre-fetched
+				tileBorder = this._preFetchBorder = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
+			}
+			else {
+				var pixelBounds = this._map.getPixelBounds(center, zoom),
+					tileBorder = this._pxBoundsToTileRange(pixelBounds);
+				this._preFetchBorder = tileBorder;
+			}
 		}
 		else {
 			tileBorder = this._preFetchBorder;
