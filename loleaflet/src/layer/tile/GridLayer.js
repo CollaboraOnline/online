@@ -856,6 +856,10 @@ L.GridLayer = L.Layer.extend({
 					this._preFetchPart += 1;
 					this._preFetchBorder = null;
 				}
+				else if (diff === 0 && this._currentPart > 0) {
+					this._preFetchPart -= 1;
+					this._preFetchBorder = null;
+				}
 				else if (diff > 0) {
 					if (this._currentPart - diff >= 0) {
 						// lower part number
