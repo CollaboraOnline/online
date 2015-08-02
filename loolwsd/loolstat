@@ -50,7 +50,7 @@ if ! $PS --version >/dev/null 2>&1; then
 fi
 
 # checking ... report a snapshot of the current processes utility.
-if ! $TOP --v >/dev/null 2>&1; then
+if ! $TOP -v >/dev/null 2>&1; then
   log_failure_msg "$0: error: $TOP utility not found."
 fi
 
