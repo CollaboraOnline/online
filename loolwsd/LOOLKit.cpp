@@ -1,3 +1,4 @@
+#include <sys/prctl.h>
 
 #include <memory>
 #include <iostream>
@@ -48,6 +49,11 @@ public:
 
     void run() override
     {
+#ifdef __linux
+      if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0) {
+        std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+      }
+#endif
         while (true)
         {
             std::string input = _queue.get();
