@@ -115,13 +115,16 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     }
   }
 
+  if ( errno )
+    error(EXIT_FAILURE, errno, "%s\n", cmdline);
+
   printf("%s\n", cmdline);
   printf("Process ID    :%20ld\n", proc_id);
   printf("--------------------------------------\n");
   printf("Shared Clean  :%20ld kB\n", total_shared_clean);
   printf("Shared Diry   :%20ld kB\n", total_shared_dirty);
-  printf("Private Clean :%20ld kB\n", total_private_dirty);
-  printf("Private Diry  :%20ld kB\n\n", total_shared_dirty);
+  printf("Private Clean :%20ld kB\n", total_private_clean);
+  printf("Private Diry  :%20ld kB\n\n", total_private_dirty);
 }
 
 int main(int argc, char **argv)
@@ -137,17 +140,12 @@ int main(int argc, char **argv)
   setlocale (LC_ALL, "");
   getopt(argc, argv, "");
 
-	argc -= optind;
-	argv += optind;
-
-	if (argc != 1)
+	if (argc != 2)
 		error(EXIT_FAILURE, EINVAL);
 
   root_proc = opendir("/proc");
   if (!root_proc)
     error(EXIT_FAILURE, errno, "%s", "/proc");
-
-  pid_curr = getpid();
 
   while ( ( dir_proc = readdir(root_proc) ) )
   {
@@ -159,14 +157,17 @@ int main(int argc, char **argv)
       pid_proc = strtoul(dir_proc->d_name, NULL, 10);
       snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
       if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&
-          strstr(cmdline, argv[0]) &&
-          pid_curr != pid_proc )
+          strstr(cmdline, argv[1]) &&
+          !strstr(cmdline, argv[0]) )
       {
         snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "smaps");
         total_smaps(pid_proc, path_proc, cmdline);
       }
     }
   }
+
+  if ( errno )
+    error(EXIT_FAILURE, errno);
 
 	return EXIT_SUCCESS;
 }
