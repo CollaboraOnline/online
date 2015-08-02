@@ -1,4 +1,4 @@
-bin_PROGRAMS = loolwsd loolbroker loolkit
+bin_PROGRAMS = loolwsd loolbroker loolkit loolmap
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -7,6 +7,8 @@ loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MasterProcessSession.cpp TileCache
 loolkit_SOURCES = LOOLKit.cpp LOOLSession.cpp ChildProcessSession.cpp Util.cpp LOOLProtocol.cpp
 
 loolbroker_SOURCES = LOOLBroker.cpp Util.cpp
+
+loolmap_SOURCES = loolmap.c
 
 EXTRA_DIST = loolwsd.service sysconfig.loolwsd
 
