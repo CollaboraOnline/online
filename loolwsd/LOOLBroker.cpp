@@ -399,34 +399,6 @@ int main(int argc, char** argv)
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
-    void* dlOffice = dlopen(Path("/"+ loSubPath + "/program", LIB_SOFFICEAPP).toString().c_str(), RTLD_NOW);
-    if ( !dlOffice )
-    {
-        std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SOFFICEAPP << std::endl;
-        exit(-1);
-    }
-
-    void* dlSC = dlopen(Path("/"+ loSubPath + "/program", LIB_SCLO).toString().c_str(), RTLD_NOW);
-    if ( !dlSC )
-    {
-        std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SCLO << std::endl;
-        exit(-1);
-    }
-
-    void* dlSW = dlopen(Path("/"+ loSubPath + "/program", LIB_SWLO).toString().c_str(), RTLD_NOW);
-    if ( !dlSW )
-    {
-        std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SWLO << std::endl;
-        exit(-1);
-    }
-
-    void* dlSD = dlopen(Path("/"+ loSubPath + "/program", LIB_SDLO).toString().c_str(), RTLD_NOW);
-    if ( !dlSD )
-    {
-        std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SDLO << std::endl;
-        exit(-1);
-    }
-
     startupLibreOfficeKit(_numPreSpawnedChildren, loSubPath, _childId);
 
     while (_childProcesses.size() > 0)
@@ -486,11 +458,6 @@ int main(int argc, char** argv)
         Process::requestTermination(i.first);
     }
     
-    dlclose(dlOffice);
-    dlclose(dlSC);
-    dlclose(dlSW);
-    dlclose(dlSD);
-
     std::cout << Util::logPrefix() << "loolbroker finished OK!" << std::endl;
     return 0;
 }
