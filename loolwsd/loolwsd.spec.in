@@ -55,6 +55,9 @@ install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
 /usr/bin/loolwsd-systemplate-setup
 %{_unitdir}/loolwsd.service
 /var/adm/fillup-templates/sysconfig.loolwsd
+mkdir -p %{buildroot}/etc/cron.d
+echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
+echo "0 0 */10 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
 
 %doc README
 
