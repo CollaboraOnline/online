@@ -171,6 +171,7 @@ public:
     bool resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool setPage(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     std::string _jail;
     std::string _loSubPath;

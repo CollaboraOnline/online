@@ -264,6 +264,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
              tokens[0] != "selectgraphic" &&
              tokens[0] != "selecttext" &&
              tokens[0] != "setclientpart" &&
+             tokens[0] != "setpage" &&
              tokens[0] != "status" &&
              tokens[0] != "tile" &&
              tokens[0] != "uno")
@@ -576,6 +577,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] == "setclientpart")
     {
         return setClientPart(buffer, length, tokens);
+    }
+    else if (tokens[0] == "setpage")
+    {
+        return setPage(buffer, length, tokens);
     }
     else if (tokens[0] == "status")
     {
@@ -1013,6 +1018,19 @@ bool ChildProcessSession::setClientPart(const char *buffer, int length, StringTo
     {
         return false;
     }
+    return true;
+}
+
+bool ChildProcessSession::setPage(const char *buffer, int length, StringTokenizer& tokens)
+{
+    int page;
+    if (tokens.count() < 2 ||
+        !getTokenInteger(tokens[1], "page", page))
+    {
+        sendTextFrame("error: cmd=setpage kind=invalid");
+        return false;
+    }
+    _loKitDocument->pClass->setPart(_loKitDocument, page);
     return true;
 }
 

@@ -50,5 +50,18 @@ L.Map.include({
 							'tilewidth=' + docLayer._docWidthTwips + ' ' +
 							'tileheight=' + docLayer._docHeightTwips + ' ' +
 							'id=' + id);
+	},
+
+	goToPage: function (page) {
+		var docLayer = this._docLayer;
+		if (page < 0 || page >= docLayer._pages) {
+			return;
+		}
+		docLayer._currentPage = page;
+		docLayer.sendMessage('setpage page=' + page);
+	},
+
+	getNumberOfPages: function () {
+		return this._docLayer._pages;
 	}
 });
