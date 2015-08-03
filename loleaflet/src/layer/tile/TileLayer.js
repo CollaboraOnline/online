@@ -344,24 +344,22 @@ L.TileLayer = L.GridLayer.extend({
 					this._parts = 1;
 					this._currentPage = command.part;
 					this._pages = command.parts;
-					map.fire('updatepages', {
+					map.fire('pagenumberchanged', {
 						currentPage: this._currentPage,
 						pages: this._pages,
 						docType: this._docType
 					});
 				}
-				else {
-					this.sendMessage('setclientpart part=' + this._currentPart);
-					var partNames = textMsg.match(/[^\r\n]+/g);
-					// only get the last matches
-					partNames = partNames.slice(partNames.length - this._parts);
-					this._map.fire('updateparts', {
-						currentPart: this._currentPart,
-						parts: this._parts,
-						docType: this._docType,
-						partNames: partNames
-					});
-				}
+				this.sendMessage('setclientpart part=' + this._currentPart);
+				var partNames = textMsg.match(/[^\r\n]+/g);
+				// only get the last matches
+				partNames = partNames.slice(partNames.length - this._parts);
+				this._map.fire('updateparts', {
+					currentPart: this._currentPart,
+					parts: this._parts,
+					docType: this._docType,
+					partNames: partNames
+				});
 				this._update();
 				if (this._preFetchPart !== this._currentPart) {
 					this._preFetchPart = this._currentPart;
@@ -480,7 +478,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.fire('setpart', {currentPart: this._currentPart});
 			}
 			else if (this._docType === 'text') {
-				map.fire('updatepages', {
+				map.fire('pagenumberchanged', {
 					currentPage: part,
 					pages: this._pages,
 					docType: this._docType
