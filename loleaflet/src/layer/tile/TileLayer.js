@@ -261,6 +261,9 @@ L.TileLayer = L.GridLayer.extend({
 				command.height = parseInt(strTwips[3]);
 				command.part = this._currentPart;
 			}
+			if (this._docType === 'text') {
+				command.part = 0;
+			}
 			topLeftTwips = new L.Point(command.x, command.y);
 			offset = new L.Point(command.width, command.height);
 			bottomRightTwips = topLeftTwips.add(offset);
@@ -336,16 +339,29 @@ L.TileLayer = L.GridLayer.extend({
 				this._documentInfo = textMsg;
 				this._parts = command.parts;
 				this._currentPart = command.currentPart;
-				this.sendMessage('setclientpart part=' + this._currentPart);
-				var partNames = textMsg.match(/[^\r\n]+/g);
-				// only get the last matches
-				partNames = partNames.slice(partNames.length - this._parts);
-				this._map.fire('updateparts', {
-					currentPart: this._currentPart,
-					parts: this._parts,
-					docType: this._docType,
-					partNames: partNames
-				});
+				if (this._docType === 'text') {
+					this._currentPart = 0;
+					this._parts = 1;
+					this._currentPage = command.part;
+					this._pages = command.parts;
+					map.fire('updatepages', {
+						currentPage: this._currentPage,
+						pages: this._pages,
+						docType: this._docType
+					});
+				}
+				else {
+					this.sendMessage('setclientpart part=' + this._currentPart);
+					var partNames = textMsg.match(/[^\r\n]+/g);
+					// only get the last matches
+					partNames = partNames.slice(partNames.length - this._parts);
+					this._map.fire('updateparts', {
+						currentPart: this._currentPart,
+						parts: this._parts,
+						docType: this._docType,
+						partNames: partNames
+					});
+				}
 				this._update();
 				if (this._preFetchPart !== this._currentPart) {
 					this._preFetchPart = this._currentPart;
@@ -457,11 +473,18 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('setpart:')) {
 			var part = parseInt(textMsg.match(/\d+/g)[0]);
-			if (part !== this._currentPart) {
+			if (part !== this._currentPart && this._docType !== 'text') {
 				this._currentPart = part;
 				this._update();
 				this._clearSelections();
 				this._map.fire('setpart', {currentPart: this._currentPart});
+			}
+			else if (this._docType === 'text') {
+				map.fire('updatepages', {
+					currentPage: part,
+					pages: this._pages,
+					docType: this._docType
+				});
 			}
 		}
 		else if (textMsg.startsWith('searchnotfound:')) {
