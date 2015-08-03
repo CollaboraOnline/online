@@ -21,10 +21,6 @@
 #include <Poco/Process.h>
 #include <Poco/Thread.h>
 #include <Poco/SharedMemory.h>
-#include <Poco/NamedMutex.h>
-
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitInit.h>
 
 #include "Util.hpp"
 
@@ -243,7 +239,6 @@ static void startupLibreOfficeKit(int nLOKits, std::string loSubPath, Poco::UInt
 }
 
 static int timeoutCounter = 0;
-Poco::NamedMutex _namedMutexLOOL("loolwsd");
 
 // Broker process
 int main(int argc, char** argv)
@@ -404,21 +399,7 @@ int main(int argc, char** argv)
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
 
-    _namedMutexLOOL.lock();
-#ifdef __APPLE__
-    LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
-#else
-    LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
-#endif
-
-    if (!loKit)
-    {
-        std::cout << Util::logPrefix() + "LibreOfficeKit initialization failed" << std::endl;
-        exit(-1);
-    }
-    _namedMutexLOOL.unlock();
-
-    /*void* dlOffice = dlopen(Path("/"+ loSubPath + "/program", LIB_SOFFICEAPP).toString().c_str(), RTLD_NOW);
+    void* dlOffice = dlopen(Path("/"+ loSubPath + "/program", LIB_SOFFICEAPP).toString().c_str(), RTLD_NOW);
     if ( !dlOffice )
     {
         std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SOFFICEAPP << std::endl;
@@ -444,7 +425,7 @@ int main(int argc, char** argv)
     {
         std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SDLO << std::endl;
         exit(-1);
-    }*/
+    }
 
     startupLibreOfficeKit(_numPreSpawnedChildren, loSubPath, _childId);
 
@@ -505,10 +486,10 @@ int main(int argc, char** argv)
         Process::requestTermination(i.first);
     }
     
-    //dlclose(dlOffice);
-    //dlclose(dlSC);
-    //dlclose(dlSW);
-    //dlclose(dlSD);
+    dlclose(dlOffice);
+    dlclose(dlSC);
+    dlclose(dlSW);
+    dlclose(dlSD);
 
     std::cout << Util::logPrefix() << "loolbroker finished OK!" << std::endl;
     return 0;
