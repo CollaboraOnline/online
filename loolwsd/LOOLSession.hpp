@@ -155,6 +155,7 @@ public:
     virtual bool getStatus(const char *buffer, int length);
 
     LibreOfficeKitDocument *_loKitDocument;
+    std::string _docType;
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;

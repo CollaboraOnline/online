@@ -599,7 +599,7 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
                tokens[0] == "resetselection" ||
                tokens[0] == "saveas");
 
-        if (_loKitDocument->pClass->getPart(_loKitDocument) != _clientPart)
+        if (_docType != "text" && _loKitDocument->pClass->getPart(_loKitDocument) != _clientPart)
         {
             _loKitDocument->pClass->setPart(_loKitDocument, _clientPart);
         }
@@ -655,6 +655,10 @@ extern "C"
             {
                 int curPart = srv->_loKitDocument->pClass->getPart(srv->_loKitDocument);
                 srv->sendTextFrame("curpart: part=" + std::to_string(curPart));
+                if (srv->_docType == "text")
+                {
+                    curPart = 0;
+                }
                 StringTokenizer tokens(std::string(pPayload), " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (tokens.count() == 4)
                 {
@@ -777,7 +781,11 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
 bool ChildProcessSession::getStatus(const char *buffer, int length)
 {
     std::string status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
-
+    StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    if (!getTokenString(tokens[1], "type", _docType))
+    {
+        Application::instance().logger().information(Util::logPrefix() + "failed to get document type from" + status);
+    }
     sendTextFrame(status);
 
     return true;
@@ -820,7 +828,9 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
     std::memcpy(output.data(), response.data(), response.size());
 
     unsigned char *pixmap = new unsigned char[4 * width * height];
-    _loKitDocument->pClass->setPart(_loKitDocument, part);
+    if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument)) {
+        _loKitDocument->pClass->setPart(_loKitDocument, part);
+    }
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output))
