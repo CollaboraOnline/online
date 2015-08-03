@@ -49,15 +49,15 @@ env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
 %__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
 install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
+mkdir -p %{buildroot}/etc/cron.d
+echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
+echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
 
 %files
 /usr/bin/loolwsd
 /usr/bin/loolwsd-systemplate-setup
 %{_unitdir}/loolwsd.service
 /var/adm/fillup-templates/sysconfig.loolwsd
-mkdir -p %{buildroot}/etc/cron.d
-echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
-echo "0 0 */10 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
 
 %doc README
 
@@ -95,6 +95,8 @@ su %{owner} -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroo
 %service_del_postun loolwsd.service
 
 %changelog
+* Mon Aug 03 2015 Mihai Varga
+- added the cronjob
 * Tue May 19 2015 Tor Lillqvist
 - Initial RPM release
 
