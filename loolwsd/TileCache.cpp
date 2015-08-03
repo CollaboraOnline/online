@@ -31,9 +31,6 @@
 #include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
 
-// 1 hour tile cache expired
-#define  TILE_EXPIRED 3600000000
-
 using Poco::DigestEngine;
 using Poco::DirectoryIterator;
 using Poco::File;
@@ -96,16 +93,6 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
         return nullptr;
 
     std::string fileName = dirName + "/" + cachedName;
-    File fileTile(fileName);
-
-    if ( fileTile.exists() )
-    {
-        Poco::Timestamp timeNow;
-        if ( timeNow - fileTile.getLastModified() > TILE_EXPIRED )
-            fileTile.remove();
-        else
-            fileTile.setLastModified(timeNow);
-    }
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
 
