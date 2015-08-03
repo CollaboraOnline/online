@@ -135,6 +135,15 @@ Scroll (the following are measured in pixels):
             + e.x = the amount scrolled to the right (or left if negative)
             + e.y = the amount scrolled to the bottom (or top if negative)
 
+Writer pages:
+    - API:
+        map.goToPage(page)
+        map.getNumberOfPages()
+    - events
+        map.on('pagenumberchanged', function (e) {}) where:
+            + e.currentPage = the page on which the cursor lies
+            + e.pages = number of pages
+            + e.docType = document type, should be 'text'
 Contributing
 ------------
 
