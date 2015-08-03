@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.69])
 
-AC_INIT([loolwsd], [1.2.1], [libreoffice@collabora.com])
+AC_INIT([loolwsd], [1.2.2], [libreoffice@collabora.com])
 
 AM_INIT_AUTOMAKE([1.11 silent-rules])
 
