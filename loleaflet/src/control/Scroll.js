@@ -15,5 +15,24 @@ L.Map.include({
 
 	scrollRight: function (x) {
 		this.scroll(x, 0);
+	},
+
+	scrollOffset: function () {
+		var center = this.project(this.getCenter());
+		var centerOffset = center.subtract(this.getSize().divideBy(2));
+		var offset = {};
+		offset.x = centerOffset.x < 0 ? 0 : Math.round(centerOffset.x);
+		offset.y = centerOffset.y < 0 ? 0 : Math.round(centerOffset.y);
+		return offset;
+	},
+
+	scrollTop: function (y) {
+		var offset = this.scrollOffset();
+		this.panBy(new L.Point(0, y - offset.y), {animate: false});
+	},
+
+	scrollLeft: function (x) {
+		var offset = this.scrollOffset();
+		this.panBy(new L.Point(x - offset.x, 0), {animate: false});
 	}
 });

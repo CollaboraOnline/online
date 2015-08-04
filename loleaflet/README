@@ -117,6 +117,12 @@ Scroll (the following are measured in pixels):
             + scroll down by 'y' (or up if negative)
         map.scrollRight(x)
             + scroll right by 'x' (or left if nevative)
+        map.scrollTop(y)
+            + scroll to 'y' offset relative to the beginning of the document
+        map.scrollLeft(x)
+            + scroll to 'x' offset relative to the beginning of the document
+        map.scrollOffset()
+            + returns the scroll offset relative to the beginning of the document
     - events
         map.on('docsize', function (e) {}) where:
             + e.x = document width
