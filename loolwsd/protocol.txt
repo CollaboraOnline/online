@@ -34,7 +34,10 @@ load <pathname>
 
     Deprecated.
 
-load url=<url>
+load url=<url> [timestamp=<time>]
+
+    timestamp is an optional parameter.  <time> is provided in microseconds
+    since the Unix epoch - midnight, January 1, 1970.
 
 mouse type=<type> x=<x> y=<y> count=<count>
 
