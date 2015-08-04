@@ -58,6 +58,7 @@ echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -ex
 /usr/bin/loolwsd-systemplate-setup
 %{_unitdir}/loolwsd.service
 /var/adm/fillup-templates/sysconfig.loolwsd
+/etc/cron.d/loolwsd.cron
 
 %doc README
 
