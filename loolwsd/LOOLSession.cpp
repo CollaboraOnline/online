@@ -743,9 +743,17 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         _docURL = tokens[1];
 
     URI aUri;
+    URI::QueryParameters params;
     try
     {
         aUri = URI(_docURL);
+        params = aUri.getQueryParameters();
+        if ( !params.empty() && params.back().first == "timestamp" )
+        {
+            aUri.setQuery("");
+            params.pop_back();
+            aUri.setQueryParameters(params);
+        }
     }
     catch(Poco::SyntaxException&)
     {
