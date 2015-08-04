@@ -30,7 +30,10 @@ The editing cache is cleared on startup, and copied to the persistent on each sa
 class TileCache
 {
 public:
-    TileCache(const std::string& docURL);
+    /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
+    /// For file:// url's, it's ignored.
+    /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
+    TileCache(const std::string& docURL, const std::string& timestamp);
 
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
@@ -63,8 +66,15 @@ private:
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
     bool intersectsTile(std::string& fileName, int part, int x, int y, int width, int height);
 
+    /// Load the timestamp from modtime.txt.
     Poco::Timestamp getLastModified();
-    void setupForFile(Poco::File& cacheDir, const std::string& path);
+
+    /// Store the timestamp to modtime.txt.
+    void saveLastModified(const Poco::Timestamp& timestamp);
+
+    /// Create or cleanup the cache directory.
+    /// For non-file:// protocols, the timestamp has to be provided externally.
+    void setup(const std::string& timestamp);
 
     const std::string& _docURL;
 

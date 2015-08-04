@@ -100,8 +100,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		if (this.options.doc) {
 			var msg = 'load url=' + this.options.doc;
-			if (this.options.timeStamp) {
-				msg += '?timestamp=' + this.options.timeStamp;
+			if (this.options.timestamp) {
+				msg += ' timestamp=' + this.options.timestamp;
 			}
 			this.sendMessage(msg);
 			this.sendMessage('status');

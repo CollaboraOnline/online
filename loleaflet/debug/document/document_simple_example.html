@@ -49,7 +49,7 @@
     var filePath = getParameterByName('file_path');
     var host = getParameterByName('host');
     var edit = getParameterByName('edit') === 'true';
-    var timeStamp = getParameterByName('timestamp');
+    var timestamp = getParameterByName('timestamp');
     if (filePath === '') {
         vex.dialog.alert('Wrong file_path, usage: file_path=/path/to/doc/');
     }
@@ -81,7 +81,7 @@
         doc: filePath,
         useSocket : true,
         edit: edit,
-        timeStamp: timeStamp,
+        timestamp: timestamp,
         readOnly: false
     });
     map.addLayer(docLayer);

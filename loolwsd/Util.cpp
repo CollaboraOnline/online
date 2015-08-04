@@ -51,8 +51,8 @@ namespace Util
 
     std::string logPrefix()
     {
-        Poco::Timestamp timeStamp;
-        Poco::Int64 now = timeStamp.epochMicroseconds();
+        Poco::Timestamp timestamp;
+        Poco::Int64 now = timestamp.epochMicroseconds();
         return std::to_string(Poco::Process::id()) + "," + (Poco::Thread::current() ? std::to_string(Poco::Thread::current()->id()) : "0") + "," + std::to_string(now / 1000) + ",";
     }
 

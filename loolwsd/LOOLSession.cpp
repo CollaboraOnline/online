@@ -346,16 +346,20 @@ bool MasterProcessSession::invalidateTiles(const char *buffer, int length, Strin
 
 bool MasterProcessSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
 {
-    if (tokens.count() != 2)
+    if (tokens.count() < 2 || tokens.count() > 3)
     {
         sendTextFrame("error: cmd=load kind=syntax");
         return false;
     }
 
-    if (tokens[1].find("url=") == 0)
-        _docURL = tokens[1].substr(strlen("url="));
-    else
-        _docURL = tokens[1];
+    std::string timestamp;
+    for (size_t i = 1; i < tokens.count(); ++i)
+    {
+        if (tokens[i].find("url=") == 0)
+            _docURL = tokens[i].substr(strlen("url="));
+        else if (tokens[i].find("timestamp=") == 0)
+            timestamp = tokens[i].substr(strlen("timestamp="));
+    }
 
     try
     {
@@ -367,7 +371,7 @@ bool MasterProcessSession::loadDocument(const char *buffer, int length, StringTo
         return false;
     }
 
-    _tileCache.reset(new TileCache(_docURL));
+    _tileCache.reset(new TileCache(_docURL, timestamp));
 
     return true;
 }
@@ -743,17 +747,9 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         _docURL = tokens[1];
 
     URI aUri;
-    URI::QueryParameters params;
     try
     {
         aUri = URI(_docURL);
-        params = aUri.getQueryParameters();
-        if ( !params.empty() && params.back().first == "timestamp" )
-        {
-            aUri.setQuery("");
-            params.pop_back();
-            aUri.setQueryParameters(params);
-        }
     }
     catch(Poco::SyntaxException&)
     {
@@ -779,6 +775,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, aUri.toString().c_str())) == NULL)
     {
         sendTextFrame("error: cmd=load kind=failed");
+        Application::instance().logger().information(Util::logPrefix() + "Failed to load: " + aUri.toString() + ", error is: " + _loKit->pClass->getError(_loKit));
         return false;
     }
 

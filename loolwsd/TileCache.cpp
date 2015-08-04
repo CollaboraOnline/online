@@ -15,6 +15,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <sstream>
 #include <string>
 
 #include <Poco/DigestEngine.h>
@@ -26,10 +27,12 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
+#include <Poco/Util/Application.h>
 
 #include "LOOLWSD.hpp"
 #include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
+#include "Util.hpp"
 
 using Poco::DigestEngine;
 using Poco::DirectoryIterator;
@@ -39,28 +42,16 @@ using Poco::StringTokenizer;
 using Poco::SyntaxException;
 using Poco::Timestamp;
 using Poco::URI;
+using Poco::Util::Application;
 
 using namespace LOOLProtocol;
 
-TileCache::TileCache(const std::string& docURL) :
+TileCache::TileCache(const std::string& docURL, const std::string& timestamp) :
     _docURL(docURL),
     _isEditing(false),
     _hasUnsavedChanges(false)
 {
-    File dir(toplevelCacheDirName());
-
-    try
-    {
-        URI uri(_docURL);
-        if (uri.getScheme() == "" ||
-            uri.getScheme() == "file")
-        {
-            setupForFile(dir, uri.getPath());
-        }
-    }
-    catch (SyntaxException& e)
-    {
-    }
+    setup(timestamp);
 }
 
 std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
@@ -167,6 +158,9 @@ void TileCache::documentSaved()
     // update status
     _toBeRemoved.clear();
     _hasUnsavedChanges = false;
+
+    // FIXME should we take the exact time of the file for the local files?
+    saveLastModified(Timestamp());
 }
 
 void TileCache::setEditing(bool editing)
@@ -321,30 +315,78 @@ Timestamp TileCache::getLastModified()
     return result;
 }
 
-void TileCache::setupForFile(File& cacheDir, const std::string& path)
+void TileCache::saveLastModified(const Poco::Timestamp& timestamp)
 {
-    if (File(path).exists() && File(path).isFile())
+    std::fstream modTimeFile(toplevelCacheDirName() + "/modtime.txt", std::ios::out);
+    modTimeFile << timestamp.raw() << std::endl;
+    modTimeFile.close();
+}
+
+void TileCache::setup(const std::string& timestamp)
+{
+    bool cleanEverything = true;
+    std::string filePath;
+    Timestamp lastModified;
+
+    try
     {
-        if (cacheDir.exists())
+        URI uri(_docURL);
+        if (uri.getScheme() == "" ||
+            uri.getScheme() == "file")
         {
-            if (getLastModified() != File(path).getLastModified())
+            filePath = uri.getPath();
+        }
+    }
+    catch (SyntaxException& e)
+    {
+    }
+
+    if (!filePath.empty() && File(filePath).exists() && File(filePath).isFile())
+    {
+        // for files, always use the real path
+        lastModified = File(filePath).getLastModified();
+        cleanEverything = (getLastModified() < lastModified);
+    }
+    else if (!timestamp.empty())
+    {
+        // otherwise try the timestamp provided by the caller
+        Timestamp::TimeVal lastTimeVal;
+        std::istringstream(timestamp) >> lastTimeVal;
+        lastModified = lastTimeVal;
+        Application::instance().logger().information(Util::logPrefix() + "Timestamp provided externally: " + timestamp);
+
+        cleanEverything = (getLastModified() < Timestamp(lastModified));
+    }
+    else
+    {
+        // when no timestamp, and non-file, assume 'now'
+        lastModified = Timestamp();
+    }
+
+    File cacheDir(toplevelCacheDirName());
+    if (cacheDir.exists())
+    {
+        if (cleanEverything)
+        {
+            // document changed externally, clean up everything
+            cacheDir.remove(true);
+            Application::instance().logger().information(Util::logPrefix() + "Completely cleared cache: " + toplevelCacheDirName());
+        }
+        else
+        {
+            // remove only the Editing cache
+            File editingCacheDir(cacheDirName(true));
+            if (editingCacheDir.exists())
             {
-                // document changed externally, clean up everything
-                cacheDir.remove(true);
-            }
-            else
-            {
-                // remove only the Editing cache
-                File editingCacheDir(cacheDirName(true));
-                if (editingCacheDir.exists())
-                    editingCacheDir.remove(true);
+                editingCacheDir.remove(true);
+                Application::instance().logger().information(Util::logPrefix() + "Cleared the editing cache: " + cacheDirName(true));
             }
         }
-        cacheDir.createDirectories();
-        std::fstream modTimeFile(cacheDir.path() + "/modtime.txt", std::ios::out);
-        modTimeFile << File(path).getLastModified().raw() << std::endl;
-        modTimeFile.close();
     }
+
+    cacheDir.createDirectories();
+
+    saveLastModified(lastModified);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
