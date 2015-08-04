@@ -615,7 +615,7 @@ L.TileLayer = L.GridLayer.extend({
 						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
 		var cursorPos = this._visibleCursor.getNorthWest();
 
-		if (!e && !this._map.getBounds().contains(cursorPos)) {
+		if (!e && !this._map.getBounds().contains(cursorPos) && this._isCursorVisible) {
 			var center = this._map.project(cursorPos);
 			center = center.subtract(this._map.getSize().divideBy(2));
 			center.x = center.x < 0 ? 0 : center.x;
