@@ -99,7 +99,8 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 		if (this.options.doc) {
-			this.sendMessage('load url=' + this.options.doc);
+		        var timestamp = Math.round(+new Date()/1000);
+			this.sendMessage('load url=' + this.options.doc + ( this.options.doc.indexOf('?') !== -1 ? '&' : '?' ) + 'timestamp=' + timestamp);
 			this.sendMessage('status');
 		}
 		this._map.on('drag resize zoomend', this._updateScrollOffset, this);
