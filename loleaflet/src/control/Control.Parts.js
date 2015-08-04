@@ -30,15 +30,26 @@ L.Control.Parts = L.Control.extend({
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('tilepreview', this._updatePreview, this);
+		map.on('pagenumberchanged', this._updateDisabledText, this);
 		return container;
 	},
 
 	_prevPart: function () {
-		this._map.setPart('prev');
+		if (this._docType === 'text' && this._currentPage > 0) {
+			this._map.goToPage(this._currentPage - 1);
+		}
+		else {
+			this._map.setPart('prev');
+		}
 	},
 
 	_nextPart: function () {
-		this._map.setPart('next');
+		if (this._docType === 'text' && this._currentPage < this._pages - 1) {
+			this._map.goToPage(this._currentPage + 1);
+		}
+		else {
+			this._map.setPart('next');
+		}
 	},
 
 	_createButton: function (html, title, className, container, fn) {
@@ -62,6 +73,9 @@ L.Control.Parts = L.Control.extend({
 		var currentPart = e.currentPart;
 		var docType = e.docType;
 		var partNames = e.partNames;
+		if (docType === 'text') {
+			return;
+		}
 		if (currentPart === 0) {
 			L.DomUtil.addClass(this._prevPartButton, className);
 		} else {
@@ -126,6 +140,26 @@ L.Control.Parts = L.Control.extend({
 					L.DomUtil.addClass(this._spreadsheetTabs[key], 'selected');
 				}
 			}
+		}
+	},
+
+
+	_updateDisabledText: function (e) {
+		if (e) {
+			this._currentPage = e.currentPage;
+			this._pages = e.pages;
+			this._docType = e.docType;
+		}
+		var className = 'leaflet-disabled';
+		if (this._currentPage === 0) {
+			L.DomUtil.addClass(this._prevPartButton, className);
+		} else {
+			L.DomUtil.removeClass(this._prevPartButton, className);
+		}
+		if (this._currentPage === this._pages - 1) {
+			L.DomUtil.addClass(this._nextPartButton, className);
+		} else {
+			L.DomUtil.removeClass(this._nextPartButton, className);
 		}
 	},
 
