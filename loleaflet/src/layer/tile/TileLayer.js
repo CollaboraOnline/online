@@ -107,9 +107,9 @@ L.TileLayer = L.GridLayer.extend({
 			this.sendMessage('status');
 		}
 		this._map.on('drag resize zoomend', this._updateScrollOffset, this);
-		this._map.on('zoomstart zoomend', this._onZoom, this);
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('copy', this._onCopy, this);
+		this._map.on('zoomend', this._onUpdateCursor, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._textArea = this._map._textArea;
@@ -610,29 +610,29 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	// Update cursor layer (blinking cursor).
-	_onUpdateCursor: function () {
+	_onUpdateCursor: function (e) {
+		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
+						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
+		var cursorPos = this._visibleCursor.getNorthWest();
+
+		if (!e && !this._map.getBounds().contains(cursorPos)) {
+			var center = this._map.project(cursorPos);
+			center = center.subtract(this._map.getSize().divideBy(2));
+			center.x = center.x < 0 ? 0 : center.x;
+			center.y = center.y < 0 ? 0 : center.y;
+			this._map.fire('scrollto', {x: center.x, y: center.y});
+		}
+
 		if (this._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
 				&& !this._isEmptyRectangle(this._visibleCursor)) {
 			if (this._cursorMarker) {
 				this._map.removeLayer(this._cursorMarker);
 			}
 
-			var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
-						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
-
-			var cursorPos = this._visibleCursor.getNorthWest();
 			this._cursorMarker = L.cursor(cursorPos);
 			this._map.addLayer(this._cursorMarker);
 			this._cursorMarker.setSize(pixBounds.getSize().multiplyBy(
 						this._map.getZoomScale(this._map.getZoom())));
-
-			if (!this._map.getBounds().contains(cursorPos)) {
-				var center = this._map.project(cursorPos);
-				center = center.subtract(this._map.getSize().divideBy(2));
-				center.x = center.x < 0 ? 0 : center.x;
-				center.y = center.y < 0 ? 0 : center.y;
-				this._map.fire('scrollto', {x: center.x, y: center.y});
-			}
 		}
 		else if (this._cursorMarker) {
 			this._map.removeLayer(this._cursorMarker);
@@ -725,14 +725,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else {
 			e.clipboardData.setData('text/plain', this._selectionTextContent);
-		}
-	},
-
-	_onZoom: function (e) {
-		if (e.type === 'zoomstart') {
-		}
-		else if (e.type === 'zoomend') {
-			this._onUpdateCursor();
 		}
 	}
 });
