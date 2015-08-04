@@ -53,6 +53,9 @@ L.Map = L.Evented.extend({
 
 		this.callInitHooks();
 
+		if (this.options.imagePath) {
+			L.Icon.Default.imagePath = this.options.imagePath;
+		}
 		this._addLayers(this.options.layers);
 	},
 
