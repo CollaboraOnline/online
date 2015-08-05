@@ -356,7 +356,7 @@ L.TileLayer = L.GridLayer.extend({
 					this._parts = 1;
 					this._currentPage = command.currentPart;
 					this._pages = command.parts;
-					map.fire('pagenumberchanged', {
+					this._map.fire('pagenumberchanged', {
 						currentPage: this._currentPage,
 						pages: this._pages,
 						docType: this._docType
