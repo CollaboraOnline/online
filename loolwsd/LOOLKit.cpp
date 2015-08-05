@@ -151,7 +151,7 @@ int main(int argc, char** argv)
 
         ws->setReceiveTimeout(0);
 
-        std::string hello("child " + std::to_string(_childId));
+        std::string hello("child " + std::to_string(_childId) + " " + std::to_string(Process::id()));
         session->sendTextFrame(hello);
 
         tsqueue<std::string> queue;

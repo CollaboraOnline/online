@@ -427,6 +427,7 @@ int LOOLWSD::uid = 0;
 #endif
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
+const std::string LOOLWSD::LOKIT_PIDLOG = "/tmp/lokit.pid";
 
 LOOLWSD::LOOLWSD() :
     _childId(0)

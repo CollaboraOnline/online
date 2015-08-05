@@ -34,6 +34,7 @@
 #include <Poco/URI.h>
 #include <Poco/File.h>
 #include <Poco/Exception.h>
+#include <Poco/FileStream.h>
 
 #include "MasterProcessSession.hpp"
 #include "Util.hpp"
@@ -154,13 +155,14 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=child kind=invalid");
             return false;
         }
-        if (tokens.count() != 2)
+        if (tokens.count() != 3)
         {
             sendTextFrame("error: cmd=child kind=syntax");
             return false;
         }
 
         UInt64 childId = std::stoull(tokens[1]);
+        Process::PID pidChild = std::stoull(tokens[2]);
 
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.insert(shared_from_this());
@@ -168,6 +170,14 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         _childId = childId;
         lock.unlock();
         _availableChildSessionCV.notify_one();
+
+        // log first lokit child pid information
+        if ( LOOLWSD::doTest )
+        {
+            Poco::FileOutputStream filePID(LOOLWSD::LOKIT_PIDLOG);
+            if (filePID.good())
+                filePID << pidChild;
+        }
     }
     else if (_kind == Kind::ToPrisoner)
     {
