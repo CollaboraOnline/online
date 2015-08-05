@@ -21,6 +21,7 @@
 #include <Poco/Process.h>
 #include <Poco/Thread.h>
 #include <Poco/SharedMemory.h>
+#include <Poco/NamedMutex.h>
 
 #include "Util.hpp"
 
@@ -239,6 +240,7 @@ static void startupLibreOfficeKit(int nLOKits, std::string loSubPath, Poco::UInt
 }
 
 static int timeoutCounter = 0;
+Poco::NamedMutex _namedMutexLOOL("loolwsd");
 
 // Broker process
 int main(int argc, char** argv)
@@ -435,10 +437,12 @@ int main(int argc, char** argv)
         else if (pid < 0)
             std::cout << Util::logPrefix() << "Child error: " << strerror(errno) << std::endl;
 
-        if ( _sharedForkChild.begin()[0] )
+        if ( _sharedForkChild.begin()[0] > 0 )
         {
-            _sharedForkChild.begin()[0] = 0;
-            std::cout << Util::logPrefix() << "No availabe child session, fork new one" << std::endl;
+            _namedMutexLOOL.lock();
+            _sharedForkChild.begin()[0] = _sharedForkChild.begin()[0] - 1;
+            _namedMutexLOOL.unlock();
+            std::cout << Util::logPrefix() << "Create child session, fork new one" << std::endl;
             if (createLibreOfficeKit(loSubPath, _childId) < 0 )
                 break;
         }

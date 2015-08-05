@@ -46,6 +46,7 @@ public:
     static const int MAINTENANCE_INTERVAL = 1;
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
+    static Poco::NamedMutex _namedMutexLOOL;
 
 protected:
     void initialize(Poco::Util::Application& self) override;
@@ -64,7 +65,6 @@ private:
     static int _numPreSpawnedChildren;
     static std::mutex _rngMutex;
     static Poco::Random _rng;
-    static Poco::NamedMutex _namedMutexLOOL;
 
 #if ENABLE_DEBUG
 public:
