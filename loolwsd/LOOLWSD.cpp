@@ -947,10 +947,12 @@ void LOOLWSD::desktopMain()
         else if (pid < 0)
             std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
 
-        if ( _sharedForkChild.begin()[0] )
+        if ( _sharedForkChild.begin()[0] > 0 )
         {
-            _sharedForkChild.begin()[0] = 0;
-            std::cout << Util::logPrefix() << "No availabe child session, fork new one" << std::endl;
+            _namedMutexLOOL.lock();
+            _sharedForkChild.begin()[0] = _sharedForkChild.begin()[0] - 1;
+            std::cout << Util::logPrefix() << "Create child session, fork new one" << std::endl;
+            _namedMutexLOOL.unlock();
             if (createComponent() < 0 )
                 break;
         }

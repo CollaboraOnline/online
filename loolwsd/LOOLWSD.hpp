@@ -39,6 +39,7 @@ public:
     static std::string loSubPath;
     static std::string jail;
     static Poco::SharedMemory _sharedForkChild;
+    static Poco::NamedMutex _namedMutexLOOL;
 
     static const int DEFAULT_CLIENT_PORT_NUMBER = 9980;
     static const int MASTER_PORT_NUMBER = 9981;
@@ -69,7 +70,6 @@ private:
     static int _numPreSpawnedChildren;
     static std::mutex _rngMutex;
     static Poco::Random _rng;
-    static Poco::NamedMutex _namedMutexLOOL;
 
 #if ENABLE_DEBUG
 public:

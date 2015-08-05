@@ -467,12 +467,16 @@ void MasterProcessSession::dispatchChild()
     }
 
     childSession = *(_availableChildSessions.begin());
-
     _availableChildSessions.erase(childSession);
-    std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
-    if (_availableChildSessions.size() == 0)
-        LOOLWSD::_sharedForkChild.begin()[0] = 1;
     lock.unlock();
+
+    if (_availableChildSessions.size() == 0)
+    {
+        LOOLWSD::_namedMutexLOOL.lock();
+        std::cout << Util::logPrefix() << "No available child sessions, queue new child session" << std::endl;
+        LOOLWSD::_sharedForkChild.begin()[0] = (LOOLWSD::_sharedForkChild.begin()[0] > 0 ? LOOLWSD::_sharedForkChild.begin()[0] + 1 : 1);
+        LOOLWSD::_namedMutexLOOL.unlock();
+    }
 
     // Assume a valid URI
     URI aUri(_docURL);
