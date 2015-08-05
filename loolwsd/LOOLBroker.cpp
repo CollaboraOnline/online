@@ -394,13 +394,6 @@ int main(int argc, char** argv)
     dropCapability();
 #endif
 
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        std::cout << Util::logPrefix() <<  "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
-            "attach process " << Process::id() << " in debugger now." << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
-    }
-
     startupLibreOfficeKit(_numPreSpawnedChildren, loSubPath, _childId);
 
     while (_childProcesses.size() > 0)

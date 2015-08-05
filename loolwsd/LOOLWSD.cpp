@@ -420,6 +420,7 @@ Poco::NamedMutex LOOLWSD::_namedMutexLOOL("loolwsd");
 Poco::SharedMemory LOOLWSD::_sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
 
 int LOOLWSD::_numPreSpawnedChildren = 10;
+bool LOOLWSD::doTest = false;
 #if ENABLE_DEBUG
 bool LOOLWSD::runningAsRoot = false;
 int LOOLWSD::uid = 0;
@@ -428,7 +429,6 @@ const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 
 LOOLWSD::LOOLWSD() :
-    _doTest(false),
     _childId(0)
 {
 }
@@ -537,7 +537,7 @@ void LOOLWSD::handleOption(const std::string& name, const std::string& value)
     else if (name == "numprespawns")
         _numPreSpawnedChildren = std::stoi(value);
     else if (name == "test")
-        _doTest = true;
+        LOOLWSD::doTest = true;
     else if (name == "child")
         _childId = std::stoull(value);
     else if (name == "jail")
@@ -614,7 +614,7 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     if (portNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
 
-    if (_doTest)
+    if (LOOLWSD::doTest)
         _numPreSpawnedChildren = 1;
 
     // log pid information

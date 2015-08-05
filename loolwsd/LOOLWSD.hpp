@@ -32,6 +32,7 @@ public:
     // statics
     static int portNumber;
     static int timeoutCounter;
+    static bool doTest;
     static std::string cache;
     static std::string sysTemplate;
     static std::string loTemplate;
@@ -60,7 +61,6 @@ private:
     void startupBroker(int nBroker);
     int  createBroker();
 
-    bool _doTest;
     Poco::UInt64 _childId;
     static int _numPreSpawnedChildren;
     static std::mutex _rngMutex;
