@@ -57,7 +57,7 @@
         vex.dialog.alert('Wrong host, usage: host=ws://localhost:9980');
     }
 
-    var map = L.map('map', {
+    var globalMap = L.map('map', {
             center: [0, 0],
             zoom: 10,
             minZoom: 1,
@@ -67,14 +67,14 @@
             });
 
     ////// Controls /////
-    map.addControl(L.control.buttons());
-    map.addControl(L.control.zoom());
-    map.addControl(L.control.parts());
-    map.addControl(L.control.search());
-    map.addControl(L.control.permissionSwitch());
-    map.addControl(L.control.selection());
-    map.addControl(L.control.statusIndicator());
-    map.addControl(L.control.scroll());
+    globalMap.addControl(L.control.buttons());
+    globalMap.addControl(L.control.zoom());
+    globalMap.addControl(L.control.parts());
+    globalMap.addControl(L.control.search());
+    globalMap.addControl(L.control.permissionSwitch());
+    globalMap.addControl(L.control.selection());
+    globalMap.addControl(L.control.statusIndicator());
+    globalMap.addControl(L.control.scroll());
 
     ////// Document layer ////
     var docLayer = new L.TileLayer('', {
@@ -84,6 +84,6 @@
         timestamp: timestamp,
         readOnly: false
     });
-    map.addLayer(docLayer);
+    globalMap.addLayer(docLayer);
     </script>
 </body></html>
