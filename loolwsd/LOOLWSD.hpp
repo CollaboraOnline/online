@@ -48,6 +48,7 @@ public:
     static const int MAINTENANCE_INTERVAL = 1;
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
+    static const std::string LOKIT_PIDLOG;
 
 protected:
     void initialize(Poco::Util::Application& self) override;

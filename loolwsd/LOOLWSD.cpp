@@ -433,6 +433,7 @@ int LOOLWSD::uid = 0;
 #endif
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
+const std::string LOOLWSD::LOKIT_PIDLOG = "/tmp/lokit.pid";
 
 LOOLWSD::LOOLWSD() :
     _childId(0)
@@ -758,7 +759,7 @@ void LOOLWSD::componentMain()
 
         ws->setReceiveTimeout(0);
 
-        std::string hello("child " + std::to_string(_childId));
+        std::string hello("child " + std::to_string(_childId) + " " + std::to_string(Process::id()));
         session->sendTextFrame(hello);
 
         tsqueue<std::string> queue;
