@@ -263,6 +263,17 @@ public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
+#ifdef __linux
+        std::string thread_name;
+        if (request.serverAddress().port() == LOOLWSD::MASTER_PORT_NUMBER)
+            thread_name = "prision_socket";
+        else
+            thread_name = "client_socket";
+
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+#endif
+
         if(!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
         {
             response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
@@ -287,13 +298,6 @@ public:
                     kind = LOOLSession::Kind::ToPrisoner;
                 else
                     kind = LOOLSession::Kind::ToClient;
-
-#ifdef __linux
-                std::stringstream thread_name;
-                thread_name << kind;
-                if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.str().c_str()), 0, 0, 0) != 0)
-                    std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
-#endif
 
                 std::shared_ptr<MasterProcessSession> session(new MasterProcessSession(ws, kind));
 
