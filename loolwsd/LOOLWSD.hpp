@@ -32,6 +32,7 @@ public:
     // statics
     static int portNumber;
     static int timeoutCounter;
+    static bool doTest;
     static std::string cache;
     static std::string sysTemplate;
     static std::string loTemplate;
@@ -65,7 +66,6 @@ private:
     int  createComponent();
     int  createDesktop();
 
-    bool _doTest;
     Poco::UInt64 _childId;
     static int _numPreSpawnedChildren;
     static std::mutex _rngMutex;

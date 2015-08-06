@@ -470,7 +470,7 @@ void MasterProcessSession::dispatchChild()
     _availableChildSessions.erase(childSession);
     lock.unlock();
 
-    if (_availableChildSessions.size() == 0)
+    if (_availableChildSessions.size() == 0 && !LOOLWSD::doTest)
     {
         LOOLWSD::_namedMutexLOOL.lock();
         std::cout << Util::logPrefix() << "No available child sessions, queue new child session" << std::endl;
