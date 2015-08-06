@@ -152,6 +152,12 @@ Writer pages:
             + e.currentPage = the page on which the cursor lies
             + e.pages = number of pages
             + e.docType = document type, should be 'text'
+
+Error:
+    - events
+        map.on('error', function (e) {}) where
+            + e.msg = a message describing the error
+
 Contributing
 ------------
 

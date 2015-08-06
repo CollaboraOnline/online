@@ -268,6 +268,13 @@ var deps = {
 		desc: 'Creates and handles the scrollbar'
 	},
 
+	ControlDialog: {
+		src: ['control/Control.js',
+		      'control/Control.Dialog.js'],
+		heading: 'Controls',
+		desc: 'Handles vex dialogs for displaying alerts'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],

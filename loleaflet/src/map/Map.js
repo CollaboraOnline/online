@@ -442,8 +442,7 @@ L.Map = L.Evented.extend({
 		try {
 			this.socket = new WebSocket(this.options.server);
 		} catch (e) {
-			console.log(e);
-			vex.dialog.alert('Socket connection error');
+			this.fire('error', {msg: 'Socket connection error'});
 			return;
 		}
 		this.socket.onerror = L.bind(this._onSocketError, this);
@@ -754,13 +753,11 @@ L.Map = L.Evented.extend({
 	},
 
 	_onSocketError: function (e) {
-		console.log(e);
-		vex.dialog.alert('Socket connection error');
+		this.fire('error', {msg: 'Socket connection error'});
 	},
 
 	_onSocketClose: function (e) {
-		console.log(e);
-		vex.dialog.alert('Socket connection closed');
+		this.fire('error', {msg: 'Socket connection closed'});
 	}
 });
 

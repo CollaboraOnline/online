@@ -95,7 +95,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_initDocument: function () {
 		if (!this._map.socket) {
-			console.log('Socket initialization error');
+			this._map.fire('error', {msg: 'Socket initialization error'});
 			return;
 		}
 		if (this.options.doc) {
@@ -494,7 +494,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.fire('setpart', {currentPart: this._currentPart});
 			}
 			else if (this._docType === 'text') {
-				map.fire('pagenumberchanged', {
+				this._map.fire('pagenumberchanged', {
 					currentPage: part,
 					pages: this._pages,
 					docType: this._docType
@@ -505,7 +505,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('searchnotfound');
 		}
 		else if (textMsg.startsWith('error:')) {
-			vex.dialog.alert(textMsg);
+			this._map.fire('error', {msg: textMsg.substring(7)});
 		}
 	},
 
@@ -731,7 +731,7 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 		if (!this._selectionTextContent) {
-			vex.dialog.alert('Oops, no content available yet');
+			this._map.fire('error', {msg: 'Oops, no content available yet'});
 		}
 		else {
 			e.clipboardData.setData('text/plain', this._selectionTextContent);
