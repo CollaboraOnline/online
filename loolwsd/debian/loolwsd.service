@@ -1,0 +1,13 @@
+[Unit]
+Description=LibreOffice On-Line WebSocket Daemon
+After=network.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/loolwsd
+ExecStart=/usr/bin/loolwsd --systemplate=/opt/lool/systemplate --lotemplate=/opt/libreoffice5.0 --childroot=/opt/lool/child-roots --numprespawns=5
+User=lool
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+    configure)
+	setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolwsd
+
+	adduser --quiet --system --group --home /opt/lool lool
+	mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
+
+	# We assume that the LibreOffice to be used is built TDF-style
+	# and installs in /opt/libreoffice5.0, and that /opt/lool is
+	# on the same file system
+
+	mkdir -p /opt/lool/child-roots
+	chown lool /opt/lool/child-roots
+
+	rm -rf /opt/lool/systemplate
+	su lool --shell=/bin/sh -c "loolwsd-systemplate-setup /opt/lool/systemplate /opt/libreoffice5.0 >/dev/null"
+	;;
+
+esac
+
+if [ -d /run/systemd/system ]; then
+    systemctl --system daemon-reload >/dev/null || true
+    systemctl enable loolwsd.service >/dev/null || true
+    deb-systemd-invoke start loolwsd.service >/dev/null || true
+fi
+
+exit 0
