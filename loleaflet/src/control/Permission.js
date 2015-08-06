@@ -21,6 +21,7 @@ L.Map.include({
 		if (this._docLayer._permission === 'edit') {
 			return;
 		}
+		this._docLayer.sendMessage('requestloksession');
 		this.dragging.disable();
 	},
 

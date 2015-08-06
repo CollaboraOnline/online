@@ -46,6 +46,9 @@ L.Control.Search = L.Control.extend({
 			this._updateDisabled();
 			this._refocusOnMap();
 		}
+		else {
+			this._map._docLayer.sendMessage('requestloksession');
+		}
 	},
 
 	_searchResultFound: function (e) {
@@ -82,6 +85,8 @@ L.Control.Search = L.Control.extend({
 		bar.title = title;
 
 		L.DomEvent
+			.on(bar, 'click', L.DomEvent.stop)
+			.on(bar, 'click', fn, this)
 			.on(bar, 'keyup', L.DomEvent.stop)
 			.on(bar, 'keyup', fn, this);
 

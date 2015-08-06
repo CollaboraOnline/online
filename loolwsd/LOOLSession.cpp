@@ -269,6 +269,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
              tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
+             tokens[0] != "requestloksession" &&
              tokens[0] != "resetselection" &&
              tokens[0] != "saveas" &&
              tokens[0] != "selectgraphic" &&
@@ -312,7 +313,10 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
 
         if (_peer.expired())
             dispatchChild();
-        forwardToPeer(buffer, length);
+        if (tokens[0] != "requestloksession")
+        {
+            forwardToPeer(buffer, length);
+        }
 
         if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save")) {
            _tileCache->documentSaved();

@@ -43,6 +43,11 @@ mouse type=<type> x=<x> y=<y> count=<count>
 
     <type> is 'buttondown', 'buttonup' or 'move', others are numbers.
 
+requestloksession
+
+    requests the initialization of a LOK process in an attempt to predict the user's
+    interaction with the document
+
 resetselection
 
 saveas url=<url> format=<format> options=<options>
