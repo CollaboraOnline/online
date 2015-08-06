@@ -121,6 +121,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this.options.readOnly) {
 			this._map.setPermission('readonly');
 		}
+		this._map.fire('statusindicator', {statusType: 'loleafletloaded'});
 	},
 
 	getEvents: function () {
