@@ -6,6 +6,7 @@ L.Map.include({
 		if (typeof (x) !== 'number' || typeof (y) !== 'number') {
 			return;
 		}
+		this.off('moveend', this._docLayer._updateScrollOffset, this._docLayer);
 		this.panBy(new L.Point(x, y), {animate: false});
 	},
 
@@ -28,11 +29,13 @@ L.Map.include({
 
 	scrollTop: function (y) {
 		var offset = this.scrollOffset();
+		this.off('moveend', this._docLayer._updateScrollOffset, this._docLayer);
 		this.panBy(new L.Point(0, y - offset.y), {animate: false});
 	},
 
 	scrollLeft: function (x) {
 		var offset = this.scrollOffset();
+		this.off('moveend', this._docLayer._updateScrollOffset, this._docLayer);
 		this.panBy(new L.Point(x - offset.x, 0), {animate: false});
 	}
 });

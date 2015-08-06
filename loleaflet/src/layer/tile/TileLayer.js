@@ -110,6 +110,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('clearselection', this._clearSelections, this);
 		this._map.on('copy', this._onCopy, this);
 		this._map.on('zoomend', this._onUpdateCursor, this);
+		this._map.on('dragstart', this._onDragStart, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._textArea = this._map._textArea;
@@ -734,6 +735,10 @@ L.TileLayer = L.GridLayer.extend({
 		else {
 			e.clipboardData.setData('text/plain', this._selectionTextContent);
 		}
+	},
+
+	_onDragStart: function () {
+		this._map.on('moveend', this._updateScrollOffset, this);
 	}
 });
 
