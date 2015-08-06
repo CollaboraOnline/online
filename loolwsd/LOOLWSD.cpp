@@ -48,6 +48,7 @@ DEALINGS IN THE SOFTWARE.
 #include <sys/capability.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/prctl.h>
 #endif
 
 #include <ftw.h>
@@ -233,6 +234,10 @@ public:
 
     void run() override
     {
+#ifdef __linux
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("client_handler"), 0, 0, 0) != 0)
+            std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+#endif
         while (true)
         {
             std::string input = _queue.get();
@@ -282,6 +287,13 @@ public:
                     kind = LOOLSession::Kind::ToPrisoner;
                 else
                     kind = LOOLSession::Kind::ToClient;
+
+#ifdef __linux
+                std::stringstream thread_name;
+                thread_name << kind;
+                if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.str().c_str()), 0, 0, 0) != 0)
+                    std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+#endif
 
                 std::shared_ptr<MasterProcessSession> session(new MasterProcessSession(ws, kind));
 
