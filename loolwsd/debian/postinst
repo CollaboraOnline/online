@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-
-case "$1" in
-    configure)
-	setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolwsd
-	;;
-esac
