@@ -768,11 +768,11 @@ L.GridLayer = L.Layer.extend({
 		if (!this._preFetchBorder) {
 			if (this._currentPart !== this._preFetchPart) {
 				// all tiles from the new part have to be pre-fetched
-				tileBorder = this._preFetchBorder = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
+				var tileBorder = this._preFetchBorder = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			}
 			else {
-				var pixelBounds = this._map.getPixelBounds(center, zoom),
-					tileBorder = this._pxBoundsToTileRange(pixelBounds);
+				var pixelBounds = this._map.getPixelBounds(center, zoom);
+				tileBorder = this._pxBoundsToTileRange(pixelBounds);
 				this._preFetchBorder = tileBorder;
 			}
 		}
@@ -904,7 +904,7 @@ L.GridLayer = L.Layer.extend({
 		}
 		var interval = 750;
 		var idleTime = 5000;
-		this._preFetchIdle = setTimeout(L.bind( function () {
+		this._preFetchIdle = setTimeout(L.bind(function () {
 			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), interval);
 		}, this), idleTime);
 	}

@@ -312,7 +312,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			var cursorPos = this._map.project(this._visibleCursor.getNorthWest());
 			cursorPos = cursorPos.divideBy(this._tileSize);
-			toRequest.sort(function(x, y) {return x.coords.distanceTo(cursorPos) - y.coords.distanceTo(cursorPos)});
+			toRequest.sort(function(x, y) {return x.coords.distanceTo(cursorPos) - y.coords.distanceTo(cursorPos);});
 			for (var i = 0; i < toRequest.length; i++) {
 				this.sendMessage(toRequest[i].msg, toRequest[i].key);
 			}
@@ -403,7 +403,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			// read the tile data
 			var strBytes = '';
-			for (var i = 0; i < data.length; i++) {
+			for (i = 0; i < data.length; i++) {
 				strBytes += String.fromCharCode(data[i]);
 			}
 
@@ -572,7 +572,7 @@ L.TileLayer = L.GridLayer.extend({
 				// remove newline characters
 				command.type = tokens[i].substring(5).replace(/(\r\n|\n|\r)/gm, '');
 			}
-			else if (tokens[i].substring(0,9) === 'prefetch=') {
+			else if (tokens[i].substring(0, 9) === 'prefetch=') {
 				command.preFetch = tokens[i].substring(9);
 			}
 		}

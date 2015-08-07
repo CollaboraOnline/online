@@ -5,7 +5,7 @@
 L.Log = {
 	log: function (msg, direction, tileCoords, time) {
 		if (!time) {
-			var time = Date.now();
+			time = Date.now();
 		}
 		if (!this._logs) {
 			this._logs = [];

@@ -752,11 +752,11 @@ L.Map = L.Evented.extend({
 		return Math.max(min, Math.min(max, zoom));
 	},
 
-	_onSocketError: function (e) {
+	_onSocketError: function () {
 		this.fire('error', {msg: 'Socket connection error'});
 	},
 
-	_onSocketClose: function (e) {
+	_onSocketClose: function () {
 		this.fire('error', {msg: 'Socket connection closed'});
 	}
 });
