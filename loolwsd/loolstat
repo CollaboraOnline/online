@@ -75,35 +75,35 @@ $PSTREE -a -c -h -A -p $LOOLWSD_PID;
 # get the number of running processes.
 LOOLWSD=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolwsd,' | $WC -l);
 
-# get the number of running threads.
-LOOLWSD_THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolwsd}' | $WC -l);
-
 # get the number of running processes.
 LOOLBROKER=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolbroker,' | $WC -l);
-
-# get the number of running threads.
-LOOLBROKER_THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolbroker}' | $WC -l);
 
 # get the number of running processes.
 LOOLKIT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolkit,' | $WC -l);
 
-# get the number of running processes.
-LOOLKIT_THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolkit}' | $WC -l);
+# get the number of running threads.
+LOOLWSD_THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{.*}' | $WC -l);
+
+# get the number of running client socket.
+LOOLWSD_CLIENT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{client_socket}' | $WC -l);
+
+# get the number of running client socket.
+LOOLWSD_PRISIONER=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{prision_socket}' | $WC -l);
 
 # get the number of processes swapped out.
-LOOLKIT_SWAPPEDOUT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '(loolkit,' | $WC -l);
+LOOLKIT_SWAPPEDOUT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '(.*)' | $WC -l);
 
 # display report stats
 printf "\n %-10s\n" "LOOLWSD STATS";
 printf "==========================\n";
 printf " %-10s %d\n" "Running loolwsd process:" "$LOOLWSD";
 printf " %-10s %d\n" "Running loolwsd threads:" "$LOOLWSD_THREADS";
+printf " %-10s %d\n" "Socket Client   threads:" "$LOOLWSD_CLIENT";
+printf " %-10s %d\n" "Socket Prision  threads:" "$LOOLWSD_PRISIONER";
+printf " %-10s %d\n\n" "Process ... swapped out:" "$LOOLKIT_SWAPPEDOUT";
 $TOP -bn 1 -p $LOOLWSD_PID | $GREP -E 'loolwsd|COMMAND'
-printf " %-10s %d\n" "Running loolbroker process:" "$LOOLBROKER";
-printf " %-10s %d\n" "Running loolbroker threads:" "$LOOLBROKER_THREADS";
+printf "\n %-10s %d\n" "Running loolbroker process:" "$LOOLBROKER";
 $TOP -bn 1 | $GREP -E 'loolbroker|COMMAND'
-printf " %-10s %d\n" "Running LibreOfficeKit process:" "$LOOLKIT";
-printf " %-10s %d\n" "Running LibreOfficeKit threads:" "$LOOLKIT_THREADS";
-printf " %-10s %d\n" "Process LibreOfficeKit swapped out:" "$LOOLKIT_SWAPPEDOUT";
+printf "\n%-10s %d\n" "Running LibreOfficeKit process:" "$LOOLKIT";
 $TOP -bn 1 | $GREP -E 'loolkit|COMMAND'
 
