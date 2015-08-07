@@ -50,7 +50,7 @@ describe('TileBench', function () {
 	});
 
 	afterEach(function () {
-		map.off('alltilesloaded');
+		map.off('statusindicator');
 	});
 
 	after(function () {
@@ -61,9 +61,11 @@ describe('TileBench', function () {
 
 	describe('Benchmarking', function () {
 		it('Load all new tiles', function (done) {
-			map.on('alltilesloaded', L.bind(function () {
-				loadCount += 1;
-				done();
+			map.on('statusindicator', L.bind(function (e) {
+				if (e.statusType === 'alltilesloaded') {
+					loadCount += 1;
+					done();
+				}
 			}, done));
 
 		});
@@ -75,9 +77,11 @@ describe('TileBench', function () {
 			var aproxTime = keyInput[keyInput.length - 1][0] + 2000;
 
 			setTimeout(L.bind(function () {
-				map.on('alltilesloaded', L.bind(function () {
-					loadCount += 1;
-					getTimes(done);
+				map.on('statusindicator', L.bind(function (e) {
+					if (e.statusType === 'alltilesloaded') {
+						loadCount += 1;
+						getTimes(done);
+					}
 				}, done));
 
 
@@ -115,10 +119,12 @@ describe('TileBench', function () {
 					done();
 				}
 				else {
-					map.on('alltilesloaded', L.bind(function () {
-						loadCount += 1;
-						clearTimeout(this.timeOut);
-						done();
+					map.on('statusindicator', L.bind(function (e) {
+						if (e.statusType === 'alltilesloaded') {
+							loadCount += 1;
+							clearTimeout(this.timeOut);
+							done();
+						}
 					}, done));
 				}
 			}, done), 3200);
