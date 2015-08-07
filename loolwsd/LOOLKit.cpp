@@ -194,6 +194,9 @@ int main(int argc, char** argv)
         queue.clear();
         queue.put("eof");
         queueHandlerThread.join();
+
+        // Destroy LibreOfficeKit
+        loKit->pClass->destroy(loKit);
     }
     catch (Exception& exc)
     {
