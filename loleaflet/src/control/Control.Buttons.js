@@ -32,7 +32,7 @@ L.Control.Buttons = L.Control.extend({
 			button.el = this._createButton(key, button.title, button.iconName,
 				buttonsName, container, this._onButtonClick);
 		}
-		map.on('statechanged', this._onStateChange, this);
+		map.on('commandstatechanged', this._onStateChange, this);
 
 		return container;
 	},

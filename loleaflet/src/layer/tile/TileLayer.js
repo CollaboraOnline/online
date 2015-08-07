@@ -341,7 +341,7 @@ L.TileLayer = L.GridLayer.extend({
 			var unoCmd = unoMsg.match('.uno:(.*)=')[1];
 			var state = unoMsg.match('.*=(.*)')[1];
 			if (unoCmd && state) {
-				this._map.fire('statechanged', {unoCmd : unoCmd, state : state});
+				this._map.fire('commandstatechanged', {unoCmd : unoCmd, state : state});
 			}
 		}
 		else if (textMsg.startsWith('status:')) {
