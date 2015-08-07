@@ -5,6 +5,7 @@ L.Map.include({
 	setPermission: function (perm) {
 		this._docLayer._permission = perm;
 		if (perm === 'edit') {
+			this._docLayer.sendMessage('requestloksession');
 			this.dragging.disable();
 		}
 		else if (perm === 'view' || perm === 'readonly') {
