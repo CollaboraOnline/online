@@ -33,6 +33,7 @@ L.Control.Buttons = L.Control.extend({
 				buttonsName, container, this._onButtonClick);
 		}
 		map.on('commandstatechanged', this._onStateChange, this);
+		map.on('updatepermission', this._onPermissionUpdate, this);
 
 		return container;
 	},
@@ -64,7 +65,7 @@ L.Control.Buttons = L.Control.extend({
 				callback: L.bind(this._onSaveAs, this)
 			});
 		}
-		else {
+		else if (this._map._docLayer._permission === 'edit') {
 			this._map.toggleCommandState(button.uno);
 		}
 	},
@@ -80,6 +81,12 @@ L.Control.Buttons = L.Control.extend({
 				}
 				else if (state === 'false') {
 					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-active');
+				}
+				else if (state === 'enabled' && this._map._docLayer._permission === 'edit') {
+					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
+				}
+				else if (state === 'disabled') {
+					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
 				}
 			}
 		}
@@ -98,6 +105,18 @@ L.Control.Buttons = L.Control.extend({
 	_onSaveAs: function (e) {
 		if (e !== false) {
 			this._map.saveAs(e.url, e.format, e.options);
+		}
+	},
+
+	_onPermissionUpdate: function (e) {
+		for (var key in this._buttons) {
+			var button = this._buttons[key];
+			if (e.perm !== 'edit') {
+				L.DomUtil.addClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
+			}
+			else {
+				L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
+			}
 		}
 	}
 });

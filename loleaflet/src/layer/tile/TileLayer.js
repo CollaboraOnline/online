@@ -116,11 +116,14 @@ L.TileLayer = L.GridLayer.extend({
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._textArea = this._map._textArea;
 		this._textArea.focus();
-		if (this.options.edit && !this.options.readOnly) {
-			this._map.setPermission('edit');
-		}
 		if (this.options.readOnly) {
 			this._map.setPermission('readonly');
+		}
+		else if (this.options.edit) {
+			this._map.setPermission('edit');
+		}
+		else {
+			this._map.setPermission('view');
 		}
 		this._map.fire('statusindicator', {statusType: 'loleafletloaded'});
 	},

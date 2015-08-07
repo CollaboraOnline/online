@@ -329,8 +329,13 @@ a.leaflet-control-buttons:first-child,
 a.leaflet-control-buttons:hover:first-child {
 	margin-left: 0px;
 	}
+
 .leaflet-control-buttons-active {
 	border: thin solid;
+	}
+
+.leaflet-control-buttons-disabled{
+	opacity: 0.5;
 	}
 
 .leaflet-control-button-separator {
