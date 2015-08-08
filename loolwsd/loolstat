@@ -50,7 +50,7 @@ if ! $PS --version >/dev/null 2>&1; then
 fi
 
 # checking ... display Linux processes utility.
-if ! $TOP --v >/dev/null 2>&1; then
+if ! $TOP -v >/dev/null 2>&1; then
   log_failure_msg "$0: error: $TOP utility not found."
 fi
 
@@ -73,13 +73,19 @@ fi
 $PSTREE -a -c -h -A -p $LOOLWSD_PID;
 
 # get the number of running processes.
-PROCESS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolwsd,' | $WC -l);
+PROCESS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -E '^loolwsd|^loolbroker|^libreofficekit' | $WC -l);
 
 # get the number of running threads.
-THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '{loolwsd}' | $WC -l);
+THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{.*}' | $WC -l);
+
+# get the number of running client socket.
+LOOLWSD_CLIENT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{client_socket}' | $WC -l);
+
+# get the number of running prision socket.
+LOOLWSD_PRISIONER=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{prision_socket}' | $WC -l);
 
 # get the number of processes swapped out.
-SWAPPEDOUT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '(loolwsd,' | $WC -l);
+SWAPPEDOUT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '(.*)' | $WC -l);
 
 # display report stats
 printf "\n %-10s\n" "LOOLWSD STATS";
@@ -87,5 +93,7 @@ printf "==========================\n";
 printf " %-10s %d\n" "Running process:" "$PROCESS";
 printf " %-10s %d\n" "Running threads:" "$THREADS";
 printf " %-10s %d\n" "Process swapped out:" "$SWAPPEDOUT";
+printf " %-10s %d\n" "Socket Client   threads:" "$LOOLWSD_CLIENT";
+printf " %-10s %d\n" "Socket Prision  threads:" "$LOOLWSD_PRISIONER";
 $TOP -bn 1 | $GREP -E 'loolwsd|COMMAND'
 
