@@ -48,6 +48,7 @@ DEALINGS IN THE SOFTWARE.
 #include <sys/capability.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/prctl.h>
 #endif
 
 #include <ftw.h>
@@ -154,6 +155,11 @@ public:
 
     void run() override
     {
+#ifdef __linux
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0)
+            std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+#endif
+
         while (true)
         {
             std::string input = _queue.get();
@@ -179,6 +185,17 @@ public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
+#ifdef __linux
+        std::string thread_name;
+        if (request.serverAddress().port() == LOOLWSD::MASTER_PORT_NUMBER)
+            thread_name = "prision_socket";
+        else
+            thread_name = "client_socket";
+
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+#endif
+
         if(!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
         {
             response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
@@ -728,6 +745,11 @@ namespace
 // Writer, Impress or Calc
 void LOOLWSD::componentMain()
 {
+#ifdef __linux
+    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
+        std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+#endif
+
     try
     {
         _namedMutexLOOL.lock();
@@ -847,6 +869,11 @@ void LOOLWSD::startupComponent(int nComponents)
 
 void LOOLWSD::desktopMain()
 {
+#ifdef __linux
+    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("loolbroker"), 0, 0, 0) != 0)
+        std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+#endif
+
     // Initialization
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
