@@ -22,7 +22,7 @@ L.Map.include({
 		}
 		if (docLayer._isCursorOverlayVisible) {
 			// a click outside the slide to clear any selection
-			docLayer.sendMessage('mouse type=buttondown x=-1 y=-1 count=1');
+			docLayer.sendMessage('resetselection');
 		}
 		this.fire('updateparts', {
 			currentPart: docLayer._currentPart,
