@@ -158,7 +158,9 @@ Writer pages:
 Error:
     - events
         map.on('error', function (e) {}) where
-            + e.msg = a message describing the error
+            + [e.msg] = a message describing the error
+            + [e.cmd] = the command that caused the error
+            + [e.kind] = the kind of error
 
 Contributing
 ------------

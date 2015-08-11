@@ -509,7 +509,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('searchnotfound');
 		}
 		else if (textMsg.startsWith('error:')) {
-			this._map.fire('error', {msg: textMsg.substring(7)});
+			command = this._parseServerCmd(textMsg);
+			this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind});
 		}
 	},
 
@@ -577,6 +578,12 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			else if (tokens[i].substring(0, 9) === 'prefetch=') {
 				command.preFetch = tokens[i].substring(9);
+			}
+			else if (tokens[i].substring(0, 4) === 'cmd=') {
+				command.errorCmd = tokens[i].substring(4);
+			}
+			else if (tokens[i].substring(0, 5) === 'kind=') {
+				command.errorKind= tokens[i].substring(5);
 			}
 		}
 		if (command.tileWidth && command.tileHeight) {
