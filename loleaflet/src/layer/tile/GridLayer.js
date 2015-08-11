@@ -38,8 +38,17 @@ L.GridLayer = L.Layer.extend({
 
 		this._map._fadeAnimated = false;
 		this._viewReset();
-		this._update();
 		this._map._docLayer = this;
+
+		if (this._map.socket && !this._map.socket.onopen) {
+			this._map.socket.onopen = L.bind(this._initDocument, this);
+		}
+		else if (this._map.socket && this._map.socket.readyState === 1) {
+			this._initDocument();
+		}
+		if (this._map.socket && !this._map.socket.onmessage) {
+			this._map.socket.onmessage = L.bind(this._onMessage, this);
+		}
 	},
 
 	beforeAdd: function (map) {
@@ -51,6 +60,7 @@ L.GridLayer = L.Layer.extend({
 		map._removeZoomLimit(this);
 		this._container = null;
 		this._tileZoom = null;
+		this._map.socket.onmessage = null;
 	},
 
 	bringToFront: function () {
