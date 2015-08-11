@@ -2,7 +2,7 @@ describe('TileBench', function () {
 	// 25 s timeout
 	this.timeout(25000);
 	var map;
-	var loadCount = 0;
+	var timeOut
 
 	var log = function (msg) {
 		// write custom log messages
@@ -61,12 +61,11 @@ describe('TileBench', function () {
 
 	describe('Benchmarking', function () {
 		it('Load all new tiles', function (done) {
-			map.on('statusindicator', L.bind(function (e) {
+			map.on('statusindicator', function (e) {
 				if (e.statusType === 'alltilesloaded') {
-					loadCount += 1;
 					done();
 				}
-			}, done));
+			});
 
 		});
 
@@ -76,13 +75,12 @@ describe('TileBench', function () {
 			// allow 2 seconds to pass after the last key input
 			var aproxTime = keyInput[keyInput.length - 1][0] + 2000;
 
-			setTimeout(L.bind(function () {
-				map.on('statusindicator', L.bind(function (e) {
+			setTimeout(function () {
+				map.on('statusindicator', function (e) {
 					if (e.statusType === 'alltilesloaded') {
-						loadCount += 1;
 						getTimes(done);
 					}
-				}, done));
+				});
 
 
 				// request an empty tile and when it arrives we know that the
@@ -100,7 +98,7 @@ describe('TileBench', function () {
 				}
 				var fragment = document.createDocumentFragment();
 				docLayer._addTile(coords, fragment);
-			}, done), aproxTime);
+			}, aproxTime);
 
 			for (var i = 0; i < keyInput.length; i++) {
 				setTimeout(L.bind(function () {
@@ -113,7 +111,7 @@ describe('TileBench', function () {
 			$('.scroll-container').mCustomScrollbar('scrollTo', 'bottom', {scrollInertia: 3000});
 			// check how we're doing 200ms after the scroll has ended
 			// (allow enough time to request new tiles)
-			this.timeOut = setTimeout(L.bind(function () {
+			timeOut = setTimeout(function () {
 				if (map._docLayer._emptyTilesCount === 0) {
 					// no pending tile requests
 					done();
@@ -121,13 +119,12 @@ describe('TileBench', function () {
 				else {
 					map.on('statusindicator', L.bind(function (e) {
 						if (e.statusType === 'alltilesloaded') {
-							loadCount += 1;
-							clearTimeout(this.timeOut);
+							clearTimeout(timeOut);
 							done();
 						}
 					}, done));
 				}
-			}, done), 3200);
+			}, 3200);
 		});
 	});
 
