@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>LOOL Spec Runner</title>
+	<link rel="stylesheet" type="text/css" href="../node_modules/mocha/mocha.css">
+	<link rel="stylesheet" type="text/css" href="../dist/leaflet.css">
+	<link rel="stylesheet" type="text/css" href="../src/scrollbar/jquery.mCustomScrollbar.css">
+	<link rel="stylesheet" type="text/css" href="../dist/dialog/vex.css" />
+	<link rel="stylesheet" type="text/css" href="../dist/dialog/vex-theme-plain.css" />
+</head>
+<body>
+	<script src="expect.js"></script>
+	<script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
+	<script type="text/javascript" src="../node_modules/happen/happen.js"></script>
+	<script type="text/javascript" src="sinon.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="../src/scrollbar/jquery-1.11.0.min.js"><\/script>')</script>
+	<script src="../src/scrollbar/jquery.mCustomScrollbar.js"></script>
+	<script src="../dist/dialog/vex.combined.min.js"></script>
+	<script>vex.defaultOptions.className = 'vex-theme-plain';</script>
+
+	<!-- source files -->
+	<script type="text/javascript" src="../build/deps.js"></script>
+
+	<script type="text/javascript" src="../debug/leaflet-include.js"></script>
+
+	<script>
+		mocha.setup({
+			ui: 'bdd',
+			ignoreLeaks: true
+		});
+	</script>
+
+	<!-- spec files -->
+	<script type="text/javascript" src="loadtest/LoadTestSpec.js"></script>
+
+	<div id="toolbar" style="hidden">
+	</div>
+	<div id="map-test" style="height:300px; width:100%; position:absolute; top:0; opacity:0.5"></div>
+	<div id="mocha" style="top:300px; position:absolute"></div>
+
+	<style>
+		#mocha-stats {
+			top: 300px;
+		}
+		#mocha-report {
+			min-width: 250px;
+		}
+	</style>
+
+	<script>
+		(window.mochaPhantomJS || window.mocha).run();
+	</script>
+</body>
+</html>
