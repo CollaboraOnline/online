@@ -986,7 +986,7 @@ bool ChildProcessSession::selectGraphic(const char *buffer, int length, StringTo
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y))
     {
-        sendTextFrame("error: cmd=selectghraphic kind=syntax");
+        sendTextFrame("error: cmd=selectgraphic kind=syntax");
         return false;
     }
 
