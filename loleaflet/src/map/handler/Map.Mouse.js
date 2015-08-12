@@ -36,7 +36,7 @@ L.Map.Mouse = L.Handler.extend({
 			}
 			var mousePos = docLayer._latLngToTwips(e.latlng);
 			this._mouseEventsQueue.push(L.bind(function() {
-				docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);}, docLayer));
+				this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);}, docLayer));
 			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 500);
 		}
 		else if (e.type === 'mouseup') {
@@ -62,10 +62,10 @@ L.Map.Mouse = L.Handler.extend({
 					timeOut = 0;
 				}
 				this._mouseEventsQueue.push(L.bind(function() {
+					var docLayer = this._map._docLayer;
 					// if it's a click or mouseup after selecting
 					if (this._mouseEventsQueue.length > 1) {
-						// it's a click, fire mousedown
-						this._mouseEventsQueue[0]();
+						// it's a click
 						if (docLayer._permission === 'view') {
 							docLayer._map.setPermission('edit');
 						}
@@ -73,7 +73,7 @@ L.Map.Mouse = L.Handler.extend({
 					this._mouseEventsQueue = [];
 					docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
 					docLayer._textArea.focus();
-				}, this, docLayer));
+				}, this));
 				this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), timeOut);
 
 				if (docLayer._startMarker._icon) {
