@@ -30,17 +30,17 @@ L.Control.Search = L.Control.extend({
 
 		this._disabled = true;
 		this._updateDisabled();
-		map.on('clearnotfound searchnotfound', this._searchResultFound, this);
+		map.on('clearnotfound search', this._searchResultFound, this);
 
 		return container;
 	},
 
 	onRemove: function (map) {
-		map.on('clearnotfound searchnotfound', this._searchResultFound, this);
+		map.on('clearnotfound search', this._searchResultFound, this);
 	},
 
 	_searchStart: function (e) {
-		if (e.keyCode === 13 && this._searchBar.value !== '') {
+		if (e.keyCode === 13) {
 			this._map.search(this._searchBar.value);
 			this._disabled = false;
 			this._updateDisabled();
@@ -55,7 +55,7 @@ L.Control.Search = L.Control.extend({
 		if (e.type === 'clearnotfound') {
 			L.DomUtil.removeClass(this._searchBar, 'search-not-found');
 		}
-		else if (e.type === 'searchnotfound') {
+		else if (e.type === 'search' && e.count === 0) {
 			L.DomUtil.addClass(this._searchBar, 'search-not-found');
 			setTimeout(L.bind(this._map.fire, this._map, 'clearnotfound'), 500);
 		}

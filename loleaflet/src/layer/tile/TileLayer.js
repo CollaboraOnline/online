@@ -506,7 +506,8 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		else if (textMsg.startsWith('searchnotfound:')) {
-			this._map.fire('searchnotfound');
+			var originalPhrase = textMsg.substring(16);
+			this._map.fire('search', {originalPhrase: originalPhrase, count: 0});
 		}
 		else if (textMsg.startsWith('error:')) {
 			command = this._parseServerCmd(textMsg);

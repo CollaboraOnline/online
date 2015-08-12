@@ -58,7 +58,9 @@ Search:
     - API:
         map.search(text, [backward])
     - events:
-        map.on('searchnotfound', function)
+        map.on('search', function (e) {}) (currently only fired when no search result is found) where:
+            + e.originalPhrase = the phrase that has been searched for
+            + e.count = number of results
 
 Zoom:
     - API:
