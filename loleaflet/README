@@ -131,6 +131,8 @@ Scroll (the following are measured in pixels):
             + scroll to 'x' offset relative to the beginning of the document
         map.scrollOffset()
             + returns the scroll offset relative to the beginning of the document
+        map.getDocSize()
+            + returns the document's size in pixels
     - events
         map.on('docsize', function (e) {}) where:
             + e.x = document width

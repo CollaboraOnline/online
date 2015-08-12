@@ -79,5 +79,9 @@ L.Map.include({
 
 	getCurrentPart: function () {
 		return this._docLayer._currentPart;
+	},
+
+	getDocSize: function () {
+		return this._docLayer._docPixelSize;
 	}
 });
