@@ -17,6 +17,9 @@
 
 #include <Poco/File.h>
 #include <Poco/Timestamp.h>
+#include <Poco/Mutex.h>
+
+using Poco::FastMutex;
 
 /** Handles the cache for tiles of one document.
 
@@ -86,6 +89,8 @@ private:
 
     /// Set of tiles that we want to remove from the Persistent cache on the next save.
     std::set<std::string> _toBeRemoved;
+
+    Poco::FastMutex _cacheMutex;
 };
 
 #endif

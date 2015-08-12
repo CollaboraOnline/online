@@ -151,9 +151,11 @@ void TileCache::documentSaved()
     for (const auto& it : _toBeRemoved)
         File(persistentDirName + "/" + it).remove();
 
+    _cacheMutex.lock();
     // then move the new tiles from the Editing cache to Persistent
     for (auto tileIterator = DirectoryIterator(cacheDirName(true)); tileIterator != DirectoryIterator(); ++tileIterator)
         tileIterator->moveTo(persistentDirName);
+    _cacheMutex.unlock();
 
     // update status
     _toBeRemoved.clear();
@@ -195,6 +197,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
     File editingDir(editingDirName);
     if (editingDir.exists() && editingDir.isDirectory())
     {
+        _cacheMutex.lock();
         for (auto tileIterator = DirectoryIterator(editingDir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
             std::string fileName = tileIterator.path().getFileName();
@@ -203,6 +206,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
                 File(tileIterator.path()).remove();
             }
         }
+        _cacheMutex.unlock();
     }
 
     // in the Persistent cache, add to _toBeRemoved for removal on save
