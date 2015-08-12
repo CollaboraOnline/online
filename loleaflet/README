@@ -119,15 +119,17 @@ Save:
 
 Scroll (the following are measured in pixels):
     - API:
-        map.scroll(x,y)
+            + options = An object with members: update (type: Boolean, default: false)
+                like {update: true}
+        map.scroll(x,y, options)
             + scroll right by 'x' and down by 'y' (or left and up if negative)
-        map.scrollDown(y)
+        map.scrollDown(y, options)
             + scroll down by 'y' (or up if negative)
-        map.scrollRight(x)
+        map.scrollRight(x, options)
             + scroll right by 'x' (or left if nevative)
-        map.scrollTop(y)
+        map.scrollTop(y, options)
             + scroll to 'y' offset relative to the beginning of the document
-        map.scrollLeft(x)
+        map.scrollLeft(x, options)
             + scroll to 'x' offset relative to the beginning of the document
         map.scrollOffset()
             + returns the scroll offset relative to the beginning of the document
