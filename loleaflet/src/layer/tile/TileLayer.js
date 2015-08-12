@@ -498,6 +498,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.fire('setpart', {currentPart: this._currentPart});
 			}
 			else if (this._docType === 'text') {
+				this._currentPage = part;
 				this._map.fire('pagenumberchanged', {
 					currentPage: part,
 					pages: this._pages,

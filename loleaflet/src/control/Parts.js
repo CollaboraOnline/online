@@ -67,5 +67,17 @@ L.Map.include({
 
 	getNumberOfPages: function () {
 		return this._docLayer._pages;
+	},
+
+	getNumberOfParts: function () {
+		return this._docLayer._parts;
+	},
+
+	getCurrentPage: function () {
+		return this._docLayer._currentPage;
+	},
+
+	getCurrentPart: function () {
+		return this._docLayer._currentPart;
 	}
 });

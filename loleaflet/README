@@ -93,6 +93,8 @@ Parts (like slides in presentation, or sheets in spreadsheets):
             + id = the ID of the request so that the response can be identified
             + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
               image might be returned in order to keep the original ratio of the document
+        map.getNumberOfParts()
+        map.getCurrentPart()
     - events:
         map.on('updateparts', function (e) {}) where:
             + e.currentPart is the current part
@@ -151,6 +153,7 @@ Writer pages:
     - API:
         map.goToPage(page)
         map.getNumberOfPages()
+        map.getCurrentPart()
     - events
         map.on('pagenumberchanged', function (e) {}) where:
             + e.currentPage = the page on which the cursor lies
