@@ -89,12 +89,22 @@ L.Map.include({
 		var controlDiv = control.onAdd(this);
 		var controlContainer = L.DomUtil.get('toolbar');
 		controlContainer.appendChild(controlDiv);
+		if (!this._controls) {
+			this._controls = [];
+		}
+		this._controls.push({div: controlDiv});
 		return this;
 	},
 
 	removeControl: function (control) {
 		control.remove();
 		return this;
+	},
+
+	removeControls: function () {
+		this._controls.forEach(function (control) {
+			L.DomUtil.remove(control.div);
+		});
 	},
 
 	_initControlPos: function () {

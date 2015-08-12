@@ -249,6 +249,9 @@ L.Map = L.Evented.extend({
 			this.fire('unload');
 		}
 
+		this.removeLayer(this._docLayer._selections);
+		this.removeLayer(this._docLayer);
+		this.removeControls();
 		return this;
 	},
 
@@ -453,6 +456,7 @@ L.Map = L.Evented.extend({
 		this.socket.onerror = L.bind(this._onSocketError, this);
 		this.socket.onclose = L.bind(this._onSocketClose, this);
 		this.socket.binaryType = 'arraybuffer';
+		return this.socket;
 	},
 
 

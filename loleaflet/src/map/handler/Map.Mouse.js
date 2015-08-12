@@ -18,6 +18,11 @@ L.Map.Mouse = L.Handler.extend({
 			this._onMouseEvent, this);
 	},
 
+	removeHooks: function () {
+		this._map.off('mousedown mouseup mouseover mouseout mousemove dblclick',
+			this._onMouseEvent, this);
+	},
+
 	_onMouseEvent: function (e) {
 		var docLayer = this._map._docLayer;
 		if (docLayer._graphicMarker && docLayer._graphicMarker.isDragged) {

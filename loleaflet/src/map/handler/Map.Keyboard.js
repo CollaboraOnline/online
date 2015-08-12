@@ -122,6 +122,11 @@ L.Map.Keyboard = L.Handler.extend({
 		this._map.on('keydown keyup keypress', this._onKeyDown, this);
 	},
 
+	removeHooks: function () {
+		this._map.on('mousedown', this._onMouseDown, this);
+		this._map.off('keydown keyup keypress', this._onKeyDown, this);
+	},
+
 	_setPanOffset: function (pan) {
 		var keys = this._panKeys = {},
 		    codes = this.navigationKeyCodes,

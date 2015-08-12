@@ -40,14 +40,17 @@ L.GridLayer = L.Layer.extend({
 		this._viewReset();
 		this._map._docLayer = this;
 
-		if (this._map.socket && !this._map.socket.onopen) {
-			this._map.socket.onopen = L.bind(this._initDocument, this);
-		}
-		else if (this._map.socket && this._map.socket.readyState === 1) {
+		this._map.socket.onopen = L.bind(this._initDocument, this);
+		this._map.socket.onmessage = L.bind(this._onMessage, this);
+		if (this._map.socket && this._map.socket.readyState === 1) {
+			// the connection is already open
 			this._initDocument();
 		}
-		if (this._map.socket && !this._map.socket.onmessage) {
-			this._map.socket.onmessage = L.bind(this._onMessage, this);
+		else if (this._map.socket && this._map.socket.readyState > 1) {
+			// the connection is closing or is closed
+			var socket = this._map._initSocket();
+			socket.onopen = L.bind(this._initDocument, this);
+			socket.onmessage = L.bind(this._onMessage, this);
 		}
 	},
 
@@ -60,7 +63,12 @@ L.GridLayer = L.Layer.extend({
 		map._removeZoomLimit(this);
 		this._container = null;
 		this._tileZoom = null;
-		this._map.socket.onmessage = null;
+		clearTimeout(this._preFetchIdle);
+		clearInterval(this._tilesPreFetcher);
+		this._map.socket.onmessage = function () {};
+		this._map.socket.onclose = function () {};
+		this._map.socket.onerror = function () {};
+		this._map.socket.close();
 	},
 
 	bringToFront: function () {
@@ -448,7 +456,7 @@ L.GridLayer = L.Layer.extend({
 		this._resetPreFetching();
 	},
 
-	_move: function () {
+	_move: function (e) {
 		this._update();
 		this._resetPreFetching(true);
 	},
