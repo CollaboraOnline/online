@@ -83,5 +83,9 @@ L.Map.include({
 
 	getDocSize: function () {
 		return this._docLayer._docPixelSize;
+	},
+
+	getDocType: function () {
+		return this._docLayer._docType;
 	}
 });
