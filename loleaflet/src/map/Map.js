@@ -436,6 +436,11 @@ L.Map = L.Evented.extend({
 		return this.layerPointToLatLng(this.mouseEventToLayerPoint(e));
 	},
 
+	focus: function () {
+		if (this._docLayer) {
+			this._docLayer._textArea.focus();
+		}
+	},
 
 	// map initialization methods
 	_initSocket: function () {

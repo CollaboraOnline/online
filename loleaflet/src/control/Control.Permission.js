@@ -26,6 +26,7 @@ L.Control.PermissionSwitch = L.Control.extend({
 		else {
 			this._map.setPermission('view');
 		}
+		this._refocusOnMap();
 	},
 
 	_onUpdatePermission: function (e) {

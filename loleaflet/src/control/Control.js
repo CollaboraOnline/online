@@ -72,12 +72,7 @@ L.Control = L.Class.extend({
 	},
 
 	_refocusOnMap: function () {
-		if (this._map._docLayer._editMode) {
-			this._map._docLayer._textArea.focus();
-		}
-		else {
-			this._map.getContainer().focus();
-		}
+		this._map.focus();
 	}
 });
 
