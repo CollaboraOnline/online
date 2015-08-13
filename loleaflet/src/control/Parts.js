@@ -56,6 +56,33 @@ L.Map.include({
 							'id=' + id);
 	},
 
+	getDocPreview: function (id, maxWidth, maxHeight, x, y, width, height) {
+		var docLayer = this._docLayer;
+		var docRatio = width / height;
+		var imgRatio = maxWidth / maxHeight;
+		// fit into the given rectangle while maintaining the ratio
+		if (imgRatio > docRatio) {
+			maxWidth = Math.round(width * maxHeight / height);
+		}
+		else {
+			maxHeight = Math.round(height * maxWidth / width);
+		}
+		x = Math.round(x / docLayer._tileSize * docLayer._tileWidthTwips);
+		width = Math.round(width / docLayer._tileSize * docLayer._tileWidthTwips);
+		y = Math.round(y / docLayer._tileSize * docLayer._tileHeightTwips);
+		height = Math.round(height / docLayer._tileSize * docLayer._tileHeightTwips);
+
+		docLayer.sendMessage('tile ' +
+							'part=0 ' +
+							'width=' + maxWidth + ' ' +
+							'height=' + maxHeight + ' ' +
+							'tileposx=' + x + ' ' +
+							'tileposy=' + y + ' ' +
+							'tilewidth=' + width + ' ' +
+							'tileheight=' + height + ' ' +
+							'id=' + id);
+	},
+
 	goToPage: function (page) {
 		var docLayer = this._docLayer;
 		if (page < 0 || page >= docLayer._pages) {

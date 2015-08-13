@@ -160,6 +160,12 @@ Writer pages:
         map.goToPage(page)
         map.getNumberOfPages()
         map.getCurrentPart()
+        map.getDocPreview(id, maxWidth, maxHeight, x, y, width, height)
+            + id = the ID of the request so that the response can be identified
+            + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
+              image might be returned in order to keep the original ratio of the document
+            + x/y = starting position, where to get the preview from
+
     - events
         map.on('pagenumberchanged', function (e) {}) where:
             + e.currentPage = the page on which the cursor lies
