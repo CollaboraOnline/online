@@ -7,7 +7,6 @@ L.Map.include({
 			return;
 		}
 		this._setUpdateOffsetEvt(options);
-		this.off('moveend', this._docLayer._updateScrollOffset, this._docLayer);
 		this.panBy(new L.Point(x, y), {animate: false});
 	},
 
