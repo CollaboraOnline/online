@@ -32,10 +32,7 @@ describe('LoadTest', function () {
 			});
 
 			after(function () {
-				map.socket.onmessage = function () {};
-				map.socket.onclose = function () {};
-				map.socket.onerror = function () {};
-				map.socket.close();
+				map.removeLayer(docLayer);
 			});
 
 			it('Load the document', function (done) {
@@ -45,10 +42,6 @@ describe('LoadTest', function () {
 						done();
 					}
 				});
-
-				if (docLayer) {
-					map.removeLayer(docLayer);
-				}
 
 				docLayer = new L.TileLayer('', {
 					doc: docPath + testDoc,
