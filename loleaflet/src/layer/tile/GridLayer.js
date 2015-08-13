@@ -69,6 +69,14 @@ L.GridLayer = L.Layer.extend({
 		this._map.socket.onclose = function () {};
 		this._map.socket.onerror = function () {};
 		this._map.socket.close();
+		if (this._cursorMarker) {
+			this._cursorMarker.remove();
+		}
+		if (this._graphicMarker) {
+			this._graphicMarker.remove();
+		}
+		this._startMarker.remove();
+		this._endMarker.remove();
 	},
 
 	bringToFront: function () {
