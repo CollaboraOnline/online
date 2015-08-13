@@ -431,7 +431,6 @@ L.TileLayer = L.GridLayer.extend({
 					this._emptyTilesCount -= 1;
 					if (this._emptyTilesCount === 0) {
 						this._map.fire('statusindicator', {statusType: 'alltilesloaded'});
-						this._map.fire('statusindicator', {statusType: 'setvalue', value: 100});
 					}
 				}
 				tile.el.src = img;
