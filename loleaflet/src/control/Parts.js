@@ -100,11 +100,11 @@ L.Map.include({
 		return this._docLayer._parts;
 	},
 
-	getCurrentPage: function () {
+	getCurrentPageNumber: function () {
 		return this._docLayer._currentPage;
 	},
 
-	getCurrentPart: function () {
+	getCurrentPartNumber: function () {
 		return this._docLayer._currentPart;
 	},
 

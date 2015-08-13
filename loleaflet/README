@@ -94,7 +94,7 @@ Parts (like slides in presentation, or sheets in spreadsheets):
             + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
               image might be returned in order to keep the original ratio of the document
         map.getNumberOfParts()
-        map.getCurrentPart()
+        map.getCurrentPartNumber()
     - events:
         map.on('updateparts', function (e) {}) where:
             + e.currentPart is the current part
@@ -159,7 +159,7 @@ Writer pages:
     - API:
         map.goToPage(page)
         map.getNumberOfPages()
-        map.getCurrentPart()
+        map.getCurrentPageNumber()
         map.getDocPreview(id, maxWidth, maxHeight, x, y, width, height)
             + id = the ID of the request so that the response can be identified
             + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
