@@ -32,9 +32,11 @@ cd / || exit 1
 	     lib/*-linux-gnu/libnss* \
 		 -type f
 
-
-	find lib/libnss_* lib64/libnss_* -type l
-	find lib/*-linux-gnu/libnss* -type l
+	find etc/fonts \
+	     lib/libnss_* \
+	     lib64/libnss_* \
+	     lib/*-linux-gnu/libnss* \
+		 -type l
 
 	# Go through the LO shared objects and check what system libraries
 	# they link to.
