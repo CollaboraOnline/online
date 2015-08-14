@@ -8,7 +8,7 @@ Standards-Version: 3.9.2
 Package: loolwsd
 Section: web
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libssl1.0.0, libmysqlclient18, libodbc1, libxinerama1, libcairo2, libgl1-mesa-glx, libcups2, libdbus-glib-1-2, cpio
+Depends: ${shlibs:Depends}, ${misc:Depends}, libssl1.0.0, libmysqlclient18, libodbc1, libxinerama1, libcairo2, libgl1-mesa-glx, libcups2, libdbus-glib-1-2, cpio, libreoffice5.0
 Description: LibreOffice On-Line WebSocket Daemon
  LOOLWSD is a daemon that talks to web browser clients and provides LibreOffice
  services.
