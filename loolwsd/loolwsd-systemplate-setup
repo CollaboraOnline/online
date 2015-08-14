@@ -7,6 +7,8 @@ test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to
 CHROOT=$1
 INSTDIR=$2
 
+test -d "$INSTDIR" || { echo "No such directory: $INSTDIR"; exit 1; }
+
 mkdir $CHROOT || exit 1
 
 CHROOT=`cd $CHROOT && /bin/pwd`
