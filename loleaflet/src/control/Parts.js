@@ -85,11 +85,20 @@ L.Map.include({
 
 	goToPage: function (page) {
 		var docLayer = this._docLayer;
-		if (page < 0 || page >= docLayer._pages) {
-			return;
+		if (page === 'prev') {
+			if (docLayer._currentPage > 0) {
+				docLayer._currentPage -= 1;
+			}
 		}
-		docLayer._currentPage = page;
-		docLayer.sendMessage('setpage page=' + page);
+		else if (page === 'next') {
+			if (docLayer._currentPage < docLayer._pages - 1) {
+				docLayer._currentPage += 1;
+			}
+		}
+		else if (typeof (page) === 'number' && page >= 0 && page < docLayer._pages) {
+			docLayer._currentPage = page;
+		}
+		docLayer.sendMessage('setpage page=' + docLayer._currentPage);
 	},
 
 	getNumberOfPages: function () {
