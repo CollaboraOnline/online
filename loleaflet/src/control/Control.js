@@ -102,9 +102,11 @@ L.Map.include({
 	},
 
 	removeControls: function () {
-		this._controls.forEach(function (control) {
-			L.DomUtil.remove(control.div);
-		});
+		if (this._controls) {
+			this._controls.forEach(function (control) {
+				L.DomUtil.remove(control.div);
+			});
+		}
 	},
 
 	_initControlPos: function () {
