@@ -30,5 +30,9 @@ L.Map.include({
 		searchCmd['SearchItem.SearchStartPointY'].type = 'long';
 		searchCmd['SearchItem.SearchStartPointY'].value = topLeftTwips.y;
 		this._docLayer.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
+	},
+
+	resetSelection: function () {
+		this._docLayer.sendMessage('resetselection');
 	}
 });
