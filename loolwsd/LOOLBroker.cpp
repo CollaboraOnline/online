@@ -228,7 +228,7 @@ static bool globalPreinit(const std::string &loSubPath)
     handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!handle)
     {
-        // FIXME: warn / complain dump char *dlerror(void);
+        std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SOFFICEAPP << std::endl;
         return false;
     }
 
@@ -239,7 +239,7 @@ static bool globalPreinit(const std::string &loSubPath)
     preInit = (PreInitFn)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
-        // FIXME; complain quietly - not the end of the world.
+        std::cout << Util::logPrefix() << " Failed to find lok_preinit hook in library :" << LIB_SOFFICEAPP << std::endl;
         return false;
     }
 
