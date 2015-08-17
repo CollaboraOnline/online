@@ -220,32 +220,71 @@ namespace
 static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
-static bool globalPreinit()
+static bool globalPreinit(const std::string &loSubPath)
 {
-    return false;
+    void *handle;
+
+    std::string fname = "/" + loSubPath + "/program" LIB_SOFFICEAPP;
+    handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
+    if (!handle)
+    {
+        // FIXME: warn / complain dump char *dlerror(void);
+        return false;
+    }
+
+    typedef int (*PreInitFn) (void);
+    PreInitFn preInit;
+
+    // FIXME: this symbol needs implementing on the cp-5.0 branch ...
+    preInit = (PreInitFn)dlsym(handle, "lok_preinit");
+    if (!preInit)
+    {
+        // FIXME; complain quietly - not the end of the world.
+        return false;
+    }
+
+    return preInit() == 0;
 }
 
-static int createLibreOfficeKit(std::string loSubPath, Poco::UInt64 childID)
+static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UInt64 childID)
 {
-    Process::Args args;
-    args.push_back("--losubpath=" + loSubPath);
-    args.push_back("--child=" + std::to_string(childID));
+    ProcessHandle child;
+    if (sharePages)
+    {
+        int pid;
+        if (!(pid = fork()))
+        { // child
+            run_lok_main(loSubPath, childID);
+            _exit(0);
+        }
+        else
+        { // parent
+            child = pid; // (somehow - switch the hash to use real pids or ?) ...
+        }
+    }
+    else
+    {
+        Process::Args args;
+        args.push_back("--losubpath=" + loSubPath);
+        args.push_back("--child=" + std::to_string(childID));
 
-    std::string executable = "loolkit";
+        std::string executable = "loolkit";
 
-    std::cout << Util::logPrefix() + "Launching LibreOfficeKit: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()) << std::endl;
+        std::cout << Util::logPrefix() + "Launching LibreOfficeKit: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()) << std::endl;
 
-    ProcessHandle child = Process::launch(executable, args);
+        child = Process::launch(executable, args);
 
+    }
     _childProcesses[child.id()] = child.id();
     return 0;
 }
 
-static void startupLibreOfficeKit(int nLOKits, std::string loSubPath, Poco::UInt64 child)
+static void startupLibreOfficeKit(bool sharePages, int nLOKits,
+                                  std::string loSubPath, Poco::UInt64 child)
 {
     for (int nCntr = nLOKits; nCntr; nCntr--)
     {
-        if (createLibreOfficeKit(loSubPath, child) < 0)
+        if (createLibreOfficeKit(sharePages, loSubPath, child) < 0)
             break;
     }
 }
@@ -332,8 +371,7 @@ int main(int argc, char** argv)
         exit(1);
     }
 
-
-    globalPreinit();
+    bool sharePages = globalPreinit(loSubPath);
 
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     Poco::UInt64 _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
@@ -401,7 +439,7 @@ int main(int argc, char** argv)
     dropCapability();
 #endif
 
-    startupLibreOfficeKit(_numPreSpawnedChildren, loSubPath, _childId);
+    startupLibreOfficeKit(sharePages, _numPreSpawnedChildren, loSubPath, _childId);
 
     while (_childProcesses.size() > 0)
     {
@@ -443,7 +481,7 @@ int main(int argc, char** argv)
             _sharedForkChild.begin()[0] = _sharedForkChild.begin()[0] - 1;
             _namedMutexLOOL.unlock();
             std::cout << Util::logPrefix() << "Create child session, fork new one" << std::endl;
-            if (createLibreOfficeKit(loSubPath, _childId) < 0 )
+            if (createLibreOfficeKit(sharePages, loSubPath, _childId) < 0 )
                 break;
         }
 
