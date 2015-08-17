@@ -89,8 +89,6 @@ static int prefixcmp(const char *str, const char *prefix)
 const int MASTER_PORT_NUMBER = 9981;
 const std::string CHILD_URI = "/loolws/child/";
 
-Poco::NamedMutex _namedMutexLOOL("loolwsd");
-
 int main(int argc, char** argv)
 {
     std::string loSubPath;
@@ -130,8 +128,6 @@ int main(int argc, char** argv)
 
     try
     {
-        _namedMutexLOOL.lock();
-
 #ifdef __APPLE__
         LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
 #else
@@ -143,8 +139,6 @@ int main(int argc, char** argv)
             std::cout << Util::logPrefix() + "LibreOfficeKit initialization failed" << std::endl;
             exit(-1);
         }
-
-        _namedMutexLOOL.unlock();
 
         // Open websocket connection between the child process and the
         // parent. The parent forwards us requests that it can't handle.
