@@ -676,10 +676,11 @@ a.leaflet-control-buttons:hover:first-child {
 .parts-preview {
 	background: #DFDFDF;
 	position: absolute;
-	top: 100px;
+	top: 65px;
 	bottom: 0px;
 	max-width: 195px;
 	overflow: hidden;
+	border-top: 2px solid #B6B6B6;
 }
 
 .preview-frame {
