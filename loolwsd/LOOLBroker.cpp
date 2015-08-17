@@ -1,3 +1,12 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/*
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/capability.h>
@@ -221,11 +230,11 @@ static int createLibreOfficeKit(std::string loSubPath, Poco::UInt64 childID)
     args.push_back("--child=" + std::to_string(childID));
 
     std::string executable = "loolkit";
-    
+
     std::cout << Util::logPrefix() + "Launching LibreOfficeKit: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()) << std::endl;
-    
+
     ProcessHandle child = Process::launch(executable, args);
-    
+
     _childProcesses[child.id()] = child.id();
     return 0;
 }
@@ -254,16 +263,16 @@ int main(int argc, char** argv)
     std::string loTemplate;
     int _numPreSpawnedChildren = 0;
     Poco::SharedMemory _sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
-    
-    while (argc > 0) 
+
+    while (argc > 0)
     {
 		  char *cmd = argv[0];
 		  char *eq  = NULL;
 		  if (strstr(cmd, "loolbroker"))
       {
-        
-      }		  
-      if (!prefixcmp(cmd, "--losubpath=")) 
+
+      }		
+      if (!prefixcmp(cmd, "--losubpath="))
       {
         eq = strchrnul(cmd, '=');
         if (*eq)
@@ -293,17 +302,17 @@ int main(int argc, char** argv)
         if (*eq)
           _numPreSpawnedChildren = std::stoi(std::string(++eq));
       }
-      
+
 		  argv++;
 		  argc--;
     }
-   
+
    if (loSubPath.empty())
    {
      std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
      exit(1);
    }
-    
+
    if (sysTemplate.empty())
    {
      std::cout << Util::logPrefix() << "--systemplate is empty" << std::endl;
@@ -331,7 +340,7 @@ int main(int argc, char** argv)
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     Poco::UInt64 _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
     rngLock.unlock();
-    
+
 
     Path jail = Path::forDirectory(childRoot + Path::separator() + std::to_string(_childId));
     File(jail).createDirectories();
@@ -447,14 +456,16 @@ int main(int argc, char** argv)
             sleep(MAINTENANCE_INTERVAL);
         }
     }
-    
+
     // Terminate child processes
     for (auto i : _childProcesses)
     {
         std::cout << Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate" << std::endl;
         Process::requestTermination(i.first);
     }
-    
+
     std::cout << Util::logPrefix() << "loolbroker finished OK!" << std::endl;
     return 0;
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
