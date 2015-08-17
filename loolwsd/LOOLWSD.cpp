@@ -585,9 +585,9 @@ int LOOLWSD::createBroker()
     args.push_back("--numprespawns=" + std::to_string(_numPreSpawnedChildren));
 
     std::string executable = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
-    
+
     Application::instance().logger().information(Util::logPrefix() + "Launching broker: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()));
-    
+
     ProcessHandle child = Process::launch(executable, args);
 
     MasterProcessSession::_childProcesses[child.id()] = child.id();

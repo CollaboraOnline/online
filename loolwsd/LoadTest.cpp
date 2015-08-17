@@ -303,7 +303,7 @@ std::vector<std::string> LoadTest::getDocList() const
     return _docList;
 }
 
-void LoadTest::defineOptions(OptionSet& options) 
+void LoadTest::defineOptions(OptionSet& options)
 {
     Application::defineOptions(options);
 
