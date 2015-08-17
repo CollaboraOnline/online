@@ -278,78 +278,78 @@ int main(int argc, char** argv)
 
     while (argc > 0)
     {
-      char *cmd = argv[0];
-      char *eq  = NULL;
-      if (strstr(cmd, "loolbroker"))
-      {
-      }
-      if (!prefixcmp(cmd, "--losubpath="))
-      {
-        eq = strchrnul(cmd, '=');
-        if (*eq)
-          loSubPath = std::string(++eq);
-      }
-      else if (!prefixcmp(cmd, "--systemplate="))
-      {
-        eq = strchrnul(cmd, '=');
-        if (*eq)
-          sysTemplate = std::string(++eq);
-      }
-      else if (!prefixcmp(cmd, "--lotemplate="))
-      {
-        eq = strchrnul(cmd, '=');
-        if (*eq)
-          loTemplate = std::string(++eq);
-      }
-      else if (!prefixcmp(cmd, "--childroot="))
-      {
-        eq = strchrnul(cmd, '=');
-        if (*eq)
-          childRoot = std::string(++eq);
-      }
-      else if (!prefixcmp(cmd, "--numprespawns="))
-      {
-        eq = strchrnul(cmd, '=');
-        if (*eq)
-          _numPreSpawnedChildren = std::stoi(std::string(++eq));
-      }
+        char *cmd = argv[0];
+        char *eq  = NULL;
+        if (strstr(cmd, "loolbroker"))
+        {
+        }
+        if (!prefixcmp(cmd, "--losubpath="))
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                loSubPath = std::string(++eq);
+        }
+        else if (!prefixcmp(cmd, "--systemplate="))
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                sysTemplate = std::string(++eq);
+        }
+        else if (!prefixcmp(cmd, "--lotemplate="))
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                loTemplate = std::string(++eq);
+        }
+        else if (!prefixcmp(cmd, "--childroot="))
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                childRoot = std::string(++eq);
+        }
+        else if (!prefixcmp(cmd, "--numprespawns="))
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                _numPreSpawnedChildren = std::stoi(std::string(++eq));
+        }
 
-      argv++;
-      argc--;
+        argv++;
+        argc--;
     }
 
-   if (loSubPath.empty())
-   {
-     std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
-     exit(1);
-   }
+    if (loSubPath.empty())
+    {
+        std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
+        exit(1);
+    }
 
-   if (sysTemplate.empty())
-   {
-     std::cout << Util::logPrefix() << "--systemplate is empty" << std::endl;
-     exit(1);
-   }
+    if (sysTemplate.empty())
+    {
+        std::cout << Util::logPrefix() << "--systemplate is empty" << std::endl;
+        exit(1);
+    }
 
-   if (loTemplate.empty())
-   {
-     std::cout << Util::logPrefix() << "--lotemplate is empty" << std::endl;
-     exit(1);
-   }
+    if (loTemplate.empty())
+    {
+        std::cout << Util::logPrefix() << "--lotemplate is empty" << std::endl;
+        exit(1);
+    }
 
-   if (childRoot.empty())
-   {
-     std::cout << Util::logPrefix() << "--childroot is empty" << std::endl;
-     exit(1);
-   }
+    if (childRoot.empty())
+    {
+        std::cout << Util::logPrefix() << "--childroot is empty" << std::endl;
+        exit(1);
+    }
 
-   if ( !_numPreSpawnedChildren )
-   {
-     std::cout << Util::logPrefix() << "--numprespawns is 0" << std::endl;
-     exit(1);
-   }
+    if ( !_numPreSpawnedChildren )
+    {
+        std::cout << Util::logPrefix() << "--numprespawns is 0" << std::endl;
+        exit(1);
+    }
 
 
-   globalPreinit();
+    globalPreinit();
 
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     Poco::UInt64 _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
@@ -371,8 +371,8 @@ int main(int argc, char** argv)
     // It is necessary to deploy loolkit process to chroot jail.
     if (!File("loolkit").exists())
     {
-      std::cout << Util::logPrefix() << "loolkit does not exists" << std::endl;
-      exit(1);
+        std::cout << Util::logPrefix() << "loolkit does not exists" << std::endl;
+        exit(1);
     }
     File("loolkit").copyTo(Path(jail, "/usr/bin").toString());
 
@@ -380,21 +380,21 @@ int main(int argc, char** argv)
     // Create the urandom and random devices
     File(Path(jail, "/dev")).createDirectory();
     if (mknod((jail.toString() + "/dev/random").c_str(),
-                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                makedev(1, 8)) != 0)
+              S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+              makedev(1, 8)) != 0)
     {
         std::cout << Util::logPrefix() +
-                "mknod(" + jail.toString() + "/dev/random) failed: " +
-                strerror(errno) << std::endl;
+            "mknod(" + jail.toString() + "/dev/random) failed: " +
+            strerror(errno) << std::endl;
 
     }
     if (mknod((jail.toString() + "/dev/urandom").c_str(),
-                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                makedev(1, 9)) != 0)
+              S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+              makedev(1, 9)) != 0)
     {
         std::cout << Util::logPrefix() +
-                "mknod(" + jail.toString() + "/dev/urandom) failed: " +
-                strerror(errno) << std::endl;
+            "mknod(" + jail.toString() + "/dev/urandom) failed: " +
+            strerror(errno) << std::endl;
     }
 #endif
 
