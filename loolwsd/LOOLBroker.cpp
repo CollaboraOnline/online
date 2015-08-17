@@ -371,8 +371,6 @@ int main(int argc, char** argv)
         exit(1);
     }
 
-    bool sharePages = globalPreinit(loSubPath);
-
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     Poco::UInt64 _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
     rngLock.unlock();
@@ -438,6 +436,8 @@ int main(int argc, char** argv)
 #else
     dropCapability();
 #endif
+
+    bool sharePages = globalPreinit(loSubPath);
 
     startupLibreOfficeKit(sharePages, _numPreSpawnedChildren, loSubPath, _childId);
 
