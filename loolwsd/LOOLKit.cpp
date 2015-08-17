@@ -80,15 +80,6 @@ private:
     tsqueue<std::string>& _queue;
 };
 
-static int prefixcmp(const char *str, const char *prefix)
-{
-	for (; ; str++, prefix++)
-		if (!*prefix)
-			return 0;
-		else if (*str != *prefix)
-			return (unsigned char)*prefix - (unsigned char)*str;
-}
-
 const int MASTER_PORT_NUMBER = 9981;
 const std::string CHILD_URI = "/loolws/child/";
 
@@ -184,7 +175,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId)
     std::cout << Util::logPrefix() << "loolkit finished OK!" << std::endl;
 }
 
-#ifdef LOOLKIT_NO_MAIN
+#ifndef LOOLKIT_NO_MAIN
 
 /// Simple argument parsing wrapper / helper for the above.
 int main(int argc, char** argv)
@@ -192,24 +183,22 @@ int main(int argc, char** argv)
     std::string loSubPath;
     Poco::UInt64 _childId = 0;
 
-    while (argc > 0)
+    for (int i = 1; i < argc; ++i)
     {
-        char *cmd = argv[0];
+        char *cmd = argv[i];
         char *eq  = NULL;
-        if (!prefixcmp(cmd, "--losubpath="))
+        if (strstr(cmd, "--losubpath=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 loSubPath = std::string(++eq);
         }
-        else if (!prefixcmp(cmd, "--child="))
+        else if (strstr(cmd, "--child=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 _childId = std::stoll(std::string(++eq));
         }
-        argv++;
-        argc--;
     }
 
     if (loSubPath.empty())

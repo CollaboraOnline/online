@@ -38,7 +38,7 @@
 // we can avoid execve and share lots of memory here. We
 // can't link to a non-PIC translation unit though, so
 // include to share.
-#define LOOKIT_NO_MAIN 1
+#define LOOLKIT_NO_MAIN 1
 #include "LOOLKit.cpp"
 
 #define INTERVAL_PROBES 10
@@ -219,16 +219,6 @@ namespace
 
 static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 
-
-static int prefixcmp(const char *str, const char *prefix)
-{
-    for (; ; str++, prefix++)
-        if (!*prefix)
-            return 0;
-        else if (*str != *prefix)
-            return (unsigned char)*prefix - (unsigned char)*str;
-}
-
 /// Initializes LibreOfficeKit for cross-fork re-use.
 static bool globalPreinit()
 {
@@ -276,46 +266,40 @@ int main(int argc, char** argv)
     int _numPreSpawnedChildren = 0;
     Poco::SharedMemory _sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
 
-    while (argc > 0)
+    for (int i = 0; i < argc; ++i)
     {
-        char *cmd = argv[0];
+        char *cmd = argv[i];
         char *eq  = NULL;
-        if (strstr(cmd, "loolbroker"))
-        {
-        }
-        if (!prefixcmp(cmd, "--losubpath="))
+        if (strstr(cmd, "--losubpath=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 loSubPath = std::string(++eq);
         }
-        else if (!prefixcmp(cmd, "--systemplate="))
+        else if (strstr(cmd, "--systemplate=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 sysTemplate = std::string(++eq);
         }
-        else if (!prefixcmp(cmd, "--lotemplate="))
+        else if (strstr(cmd, "--lotemplate=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 loTemplate = std::string(++eq);
         }
-        else if (!prefixcmp(cmd, "--childroot="))
+        else if (strstr(cmd, "--childroot=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 childRoot = std::string(++eq);
         }
-        else if (!prefixcmp(cmd, "--numprespawns="))
+        else if (strstr(cmd, "--numprespawns=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 _numPreSpawnedChildren = std::stoi(std::string(++eq));
         }
-
-        argv++;
-        argc--;
     }
 
     if (loSubPath.empty())

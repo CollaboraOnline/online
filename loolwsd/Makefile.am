@@ -4,9 +4,11 @@ dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
 loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MasterProcessSession.cpp TileCache.cpp Util.cpp LOOLProtocol.cpp
 
-loolkit_SOURCES = LOOLKit.cpp LOOLSession.cpp ChildProcessSession.cpp Util.cpp LOOLProtocol.cpp
+broker_shared_sources = ChildProcessSession.cpp Util.cpp LOOLProtocol.cpp LOOLSession.cpp
 
-loolbroker_SOURCES = LOOLBroker.cpp Util.cpp
+loolkit_SOURCES = LOOLKit.cpp $(broker_shared_sources)
+
+loolbroker_SOURCES = LOOLBroker.cpp $(broker_shared_sources)
 
 loolmap_SOURCES = loolmap.c
 
