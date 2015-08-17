@@ -233,6 +233,20 @@ var deps = {
 		desc: 'Parts control with two buttons (previous / next).'
 	},
 
+	ControlPartsPreview: {
+		src: ['control/Control.js',
+		      'control/Control.PartsPreview.js'],
+		heading: 'Controls',
+		desc: 'Parts preview sidebar'
+	},
+
+	ControlTabs: {
+		src: ['control/Control.js',
+		      'control/Control.Tabs.js'],
+		heading: 'Controls',
+		desc: 'Tabs for switching sheets'
+	},
+
 	ControlPermissionSwitch: {
 		src: ['control/Control.js',
 		      'control/Control.Permission.js'],
