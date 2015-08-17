@@ -34,6 +34,13 @@
 
 #include "Util.hpp"
 
+// First include the grist of the helper process - ideally
+// we can avoid execve and share lots of memory here. We
+// can't link to a non-PIC translation unit though, so
+// include to share.
+#define LOOKIT_NO_MAIN 1
+#include "LOOLKit.cpp"
+
 #define INTERVAL_PROBES 10
 #define MAINTENANCE_INTERVAL 1
 
@@ -215,13 +222,18 @@ static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 
 static int prefixcmp(const char *str, const char *prefix)
 {
-	for (; ; str++, prefix++)
-		if (!*prefix)
-			return 0;
-		else if (*str != *prefix)
-			return (unsigned char)*prefix - (unsigned char)*str;
+    for (; ; str++, prefix++)
+        if (!*prefix)
+            return 0;
+        else if (*str != *prefix)
+            return (unsigned char)*prefix - (unsigned char)*str;
 }
 
+/// Initializes LibreOfficeKit for cross-fork re-use.
+static bool globalPreinit()
+{
+    return false;
+}
 
 static int createLibreOfficeKit(std::string loSubPath, Poco::UInt64 childID)
 {
@@ -266,12 +278,11 @@ int main(int argc, char** argv)
 
     while (argc > 0)
     {
-		  char *cmd = argv[0];
-		  char *eq  = NULL;
-		  if (strstr(cmd, "loolbroker"))
+      char *cmd = argv[0];
+      char *eq  = NULL;
+      if (strstr(cmd, "loolbroker"))
       {
-
-      }		
+      }
       if (!prefixcmp(cmd, "--losubpath="))
       {
         eq = strchrnul(cmd, '=');
@@ -303,8 +314,8 @@ int main(int argc, char** argv)
           _numPreSpawnedChildren = std::stoi(std::string(++eq));
       }
 
-		  argv++;
-		  argc--;
+      argv++;
+      argc--;
     }
 
    if (loSubPath.empty())
@@ -336,6 +347,9 @@ int main(int argc, char** argv)
      std::cout << Util::logPrefix() << "--numprespawns is 0" << std::endl;
      exit(1);
    }
+
+
+   globalPreinit();
 
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     Poco::UInt64 _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;

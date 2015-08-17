@@ -7,12 +7,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * NB. this file is compiled both standalone, and as part of the LOOLBroker.
+ */
+
 #include <sys/prctl.h>
 
 #include <memory>
 #include <iostream>
 
-#include <Poco/NamedMutex.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Net/HTTPClientSession.h>
@@ -89,42 +92,10 @@ static int prefixcmp(const char *str, const char *prefix)
 const int MASTER_PORT_NUMBER = 9981;
 const std::string CHILD_URI = "/loolws/child/";
 
-int main(int argc, char** argv)
+void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId)
 {
-    std::string loSubPath;
-    Poco::UInt64 _childId = 0;
-
-    while (argc > 0)
-    {
-		  char *cmd = argv[0];
-		  char *eq  = NULL;
-      if (!prefixcmp(cmd, "--losubpath="))
-      {
-        eq = strchrnul(cmd, '=');
-        if (*eq)
-          loSubPath = std::string(++eq);
-      }
-      else if (!prefixcmp(cmd, "--child="))
-      {
-        eq = strchrnul(cmd, '=');
-        if (*eq)
-          _childId = std::stoll(std::string(++eq));
-      }
-		  argv++;
-		  argc--;
-    }
-
-   if (loSubPath.empty())
-   {
-     std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
-     exit(1);
-   }
-
-   if ( !_childId )
-   {
-     std::cout << Util::logPrefix() << "--child is 0" << std::endl;
-     exit(1);
-   }
+    assert (_childId != 0);
+    assert (!loSubPath.empty());
 
     try
     {
@@ -211,7 +182,53 @@ int main(int argc, char** argv)
     }
 
     std::cout << Util::logPrefix() << "loolkit finished OK!" << std::endl;
+}
+
+#ifdef LOOLKIT_NO_MAIN
+
+/// Simple argument parsing wrapper / helper for the above.
+int main(int argc, char** argv)
+{
+    std::string loSubPath;
+    Poco::UInt64 _childId = 0;
+
+    while (argc > 0)
+    {
+        char *cmd = argv[0];
+        char *eq  = NULL;
+        if (!prefixcmp(cmd, "--losubpath="))
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                loSubPath = std::string(++eq);
+        }
+        else if (!prefixcmp(cmd, "--child="))
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                _childId = std::stoll(std::string(++eq));
+        }
+        argv++;
+        argc--;
+    }
+
+    if (loSubPath.empty())
+    {
+        std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
+        exit(1);
+    }
+
+    if ( !_childId )
+    {
+        std::cout << Util::logPrefix() << "--child is 0" << std::endl;
+        exit(1);
+    }
+
+    run_lok_main(loSubPath, _childId);
+
     return 0;
 }
+
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
