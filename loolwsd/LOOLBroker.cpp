@@ -248,10 +248,10 @@ static bool globalPreinit(const std::string &loSubPath)
 
 static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UInt64 childID)
 {
-    ProcessHandle child;
+    Poco::UInt64 child;
     if (sharePages)
     {
-        int pid;
+        Poco::UInt64 pid;
         if (!(pid = fork()))
         { // child
             run_lok_main(loSubPath, childID);
@@ -272,10 +272,10 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
 
         std::cout << Util::logPrefix() + "Launching LibreOfficeKit: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()) << std::endl;
 
-        child = Process::launch(executable, args);
-
+        ProcessHandle procChild = Process::launch(executable, args);
+        child = procChild.id();
     }
-    _childProcesses[child.id()] = child.id();
+    _childProcesses[child] = child;
     return 0;
 }
 
