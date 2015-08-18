@@ -62,7 +62,7 @@ public:
     void run() override
     {
 #ifdef __linux
-      if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("prision_handler"), 0, 0, 0) != 0)
+      if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
 #endif
         while (true)
@@ -87,6 +87,11 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId)
 {
     assert (_childId != 0);
     assert (!loSubPath.empty());
+
+#ifdef __linux
+    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
+        std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+#endif
 
     try
     {
