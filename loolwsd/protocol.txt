@@ -65,6 +65,8 @@ selectgraphic type=<type> x=<x> y=<y>
 
 status
 
+styles
+
 tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 
     All parameters are numbers.
@@ -112,6 +114,8 @@ status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=
 
     <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
     if the document has multiple parts and those have names, part names follow separated by '\n'
+
+styles: {"styleFamily": ["styles in family"], etc. }
 
 textselectioncontent: <content>
 

@@ -195,7 +195,11 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             }
             else if (tokens[0] == "status:")
             {
-                peer->_tileCache->saveStatus(std::string(buffer, length));
+                peer->_tileCache->saveTextFile(std::string(buffer, length), "status.txt");
+            }
+            else if (tokens[0] == "styles:")
+            {
+                peer->_tileCache->saveTextFile(std::string(buffer, length), "styles.txt");
             }
             else if (tokens[0] == "invalidatetiles:")
             {
@@ -277,6 +281,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
              tokens[0] != "setclientpart" &&
              tokens[0] != "setpage" &&
              tokens[0] != "status" &&
+             tokens[0] != "styles" &&
              tokens[0] != "tile" &&
              tokens[0] != "uno")
     {
@@ -300,6 +305,10 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] == "status")
     {
         return getStatus(buffer, length);
+    }
+    else if (tokens[0] == "styles")
+    {
+        return getStyles(buffer, length);
     }
     else if (tokens[0] == "tile")
     {
@@ -394,10 +403,27 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
 {
     std::string status;
 
-    status = _tileCache->getStatus();
+    status = _tileCache->getTextFile("status.txt");
     if (status.size() > 0)
     {
         sendTextFrame(status);
+        return true;
+    }
+
+    if (_peer.expired())
+        dispatchChild();
+    forwardToPeer(buffer, length);
+    return true;
+}
+
+bool MasterProcessSession::getStyles(const char *buffer, int length)
+{
+    std::string styles;
+
+    styles = _tileCache->getTextFile("styles.txt");
+    if (styles.size() > 0)
+    {
+        sendTextFrame(styles);
         return true;
     }
 
@@ -608,6 +634,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
     {
         return getStatus(buffer, length);
     }
+    else if (tokens[0] == "styles")
+    {
+        return getStyles(buffer, length);
+    }
     else if (tokens[0] == "tile")
     {
         sendTile(buffer, length, tokens);
@@ -816,6 +846,12 @@ bool ChildProcessSession::getStatus(const char *buffer, int length)
     }
     sendTextFrame(status);
 
+    return true;
+}
+
+bool ChildProcessSession::getStyles(const char *buffer, int length)
+{
+    sendTextFrame("styles: " + std::string(_loKitDocument->pClass->getStyles(_loKitDocument)));
     return true;
 }
 

@@ -45,6 +45,8 @@ public:
 
     virtual bool getStatus(const char *buffer, int length) = 0;
 
+    virtual bool getStyles(const char *buffer, int length) = 0;
+
     virtual bool handleInput(const char *buffer, int length) = 0;
 
 protected:
@@ -109,6 +111,8 @@ public:
 
     virtual bool getStatus(const char *buffer, int length);
 
+    virtual bool getStyles(const char *buffer, int length);
+
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
@@ -153,6 +157,8 @@ public:
     virtual bool handleInput(const char *buffer, int length) override;
 
     virtual bool getStatus(const char *buffer, int length);
+
+    virtual bool getStyles(const char *buffer, int length);
 
     LibreOfficeKitDocument *_loKitDocument;
     std::string _docType;

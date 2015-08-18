@@ -106,37 +106,37 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
     outStream.close();
 }
 
-std::string TileCache::getStatus()
+std::string TileCache::getTextFile(std::string fileName)
 {
-    const char statusFile[] = "/status.txt";
+    const char *textFile = std::string("/" + fileName).c_str();
 
     std::string dirName = cacheDirName(false);
     if (_hasUnsavedChanges)
     {
-        // try the Editing cache first, and prefer its status.txt if it exists
+        // try the Editing cache first, and prefer it if it exists
         std::string editingDirName = cacheDirName(true);
         File dir(editingDirName);
 
-        File status(editingDirName + statusFile);
-        if (dir.exists() && dir.isDirectory() && status.exists() && !status.isDirectory())
+        File text(editingDirName + textFile);
+        if (dir.exists() && dir.isDirectory() && text.exists() && !text.isDirectory())
             dirName = editingDirName;
     }
 
     if (!File(dirName).exists() || !File(dirName).isDirectory())
         return "";
 
-    std::string fileName = dirName + statusFile;
-    std::fstream statusStream(fileName, std::ios::in);
-    if (!statusStream.is_open())
+    fileName = dirName + textFile;
+    std::fstream textStream(fileName, std::ios::in);
+    if (!textStream.is_open())
         return "";
 
     std::vector<char> result;
-    statusStream.seekg(0, std::ios_base::end);
-    std::streamsize size = statusStream.tellg();
+    textStream.seekg(0, std::ios_base::end);
+    std::streamsize size = textStream.tellg();
     result.resize(size);
-    statusStream.seekg(0, std::ios_base::beg);
-    statusStream.read(result.data(), size);
-    statusStream.close();
+    textStream.seekg(0, std::ios_base::beg);
+    textStream.read(result.data(), size);
+    textStream.close();
 
     if (result[result.size()-1] == '\n')
         result.resize(result.size() - 1);
@@ -170,24 +170,22 @@ void TileCache::setEditing(bool editing)
     _isEditing = editing;
 }
 
-void TileCache::saveStatus(const std::string& status)
+void TileCache::saveTextFile(const std::string& text, std::string fileName)
 {
     std::string dirName = cacheDirName(_hasUnsavedChanges);
 
     File(dirName).createDirectories();
 
-    StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    StringTokenizer tokens(text, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-    assert(tokens[0] == "status:");
+    fileName = dirName + "/" + fileName;
+    std::fstream textStream(fileName, std::ios::out);
 
-    std::string fileName = dirName + "/status.txt";
-    std::fstream statusStream(fileName, std::ios::out);
-
-    if (!statusStream.is_open())
+    if (!textStream.is_open())
         return;
 
-    statusStream << status << std::endl;
-    statusStream.close();
+    textStream << text << std::endl;
+    textStream.close();
 }
 
 void TileCache::invalidateTiles(int part, int x, int y, int width, int height)

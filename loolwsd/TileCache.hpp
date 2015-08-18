@@ -40,7 +40,7 @@ public:
 
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
-    std::string getStatus();
+    std::string getTextFile(std::string fileName);
 
     /// Notify the cache that the document was saved - to copy tiles from the Editing cache to Persistent.
     void documentSaved();
@@ -48,8 +48,8 @@ public:
     /// Notify whether we need to use the Editing cache.
     void setEditing(bool editing = true);
 
-    // The parameter is a status: message
-    void saveStatus(const std::string& status);
+    // The parameter is a message
+    void saveTextFile(const std::string& text, std::string fileName);
 
     // The tiles parameter is an invalidatetiles: message as sent by the child process
     void invalidateTiles(const std::string& tiles);
