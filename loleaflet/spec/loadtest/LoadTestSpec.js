@@ -1,6 +1,9 @@
 describe('LoadTest', function () {
 	// 25 s timeout
 	this.timeout(25000);
+	// set the slow time to 5ms knowing each test takes more than that,
+	// so the run time is always printed
+	this.slow(5);
 	var testsRan = 0,
 		checkTimeOut = null,
 		map = null,
@@ -9,6 +12,10 @@ describe('LoadTest', function () {
 		y = 0;
 
 	before(function() {
+		if (docPath === 'file:///PATH') {
+			throw new Error('Document file path not set');
+		}
+
 		map = L.map('map-test', {
 			center: [0, 0],
 			zoom: 10,
