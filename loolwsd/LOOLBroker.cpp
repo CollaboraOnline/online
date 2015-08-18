@@ -224,7 +224,7 @@ static bool globalPreinit(const std::string &loSubPath)
 {
     void *handle;
 
-    std::string fname = "/" + loSubPath + "/program" LIB_SOFFICEAPP;
+    std::string fname = "/" + loSubPath + "/program/" LIB_SOFFICEAPP;
     handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!handle)
     {
