@@ -179,6 +179,16 @@ Error:
             + [e.cmd] = the command that caused the error
             + [e.kind] = the kind of error
 
+Testing
+-------
+    - to simulate an editing session and to get the tile loading times
+        + open spec/tilebench.html in the browser
+    - to simulate a client opening several documents in the browser
+        + open spec/loadtest.html in the browser
+    - to simulate a client opening several documents in the console
+        + run: mocha headlessLoadTest.js
+
+
 Contributing
 ------------
 
