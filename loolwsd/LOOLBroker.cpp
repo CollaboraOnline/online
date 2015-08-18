@@ -49,6 +49,8 @@
 #define LIB_SWLO        "lib" "swlo" ".so"
 #define LIB_SDLO        "lib" "sdlo" ".so"
 
+typedef int (LokHookPreInit)  ( const char *install_path, const char *user_profile_path );
+
 using Poco::Path;
 using Poco::File;
 using Poco::ThreadLocal;
@@ -223,6 +225,7 @@ static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 static bool globalPreinit(const std::string &loSubPath)
 {
     void *handle;
+    LokHookPreInit* preInit;
 
     std::string fname = "/" + loSubPath + "/program/" LIB_SOFFICEAPP;
     handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
@@ -232,17 +235,14 @@ static bool globalPreinit(const std::string &loSubPath)
         return false;
     }
 
-    typedef int (*PreInitFn) (void);
-    PreInitFn preInit;
-
-    preInit = (PreInitFn)dlsym(handle, "lok_preinit");
+    preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
         std::cout << Util::logPrefix() << " Failed to find lok_preinit hook in library :" << LIB_SOFFICEAPP << std::endl;
         return false;
     }
 
-    return preInit() == 0;
+    return preInit(("/" + loSubPath + "/program").c_str(), "file:///user") == 0;
 }
 
 static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UInt64 childID)
