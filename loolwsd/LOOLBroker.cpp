@@ -235,7 +235,6 @@ static bool globalPreinit(const std::string &loSubPath)
     typedef int (*PreInitFn) (void);
     PreInitFn preInit;
 
-    // FIXME: this symbol needs implementing on the cp-5.0 branch ...
     preInit = (PreInitFn)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
