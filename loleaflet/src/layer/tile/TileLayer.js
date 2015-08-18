@@ -105,6 +105,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			this.sendMessage(msg);
 			this.sendMessage('status');
+			this.sendMessage('styles');
 		}
 		this._map.on('drag resize zoomend', this._updateScrollOffset, this);
 		this._map.on('clearselection', this._clearSelections, this);
@@ -508,6 +509,10 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('searchnotfound:')) {
 			var originalPhrase = textMsg.substring(16);
 			this._map.fire('search', {originalPhrase: originalPhrase, count: 0});
+		}
+		else if (textMsg.startsWith('styles:')) {
+			this._docStyles = JSON.parse(textMsg.substring(8));
+			this._map.fire('updatestyles', {styles: this._docStyles});
 		}
 		else if (textMsg.startsWith('error:')) {
 			command = this._parseServerCmd(textMsg);

@@ -172,6 +172,15 @@ Writer pages:
             + e.pages = number of pages
             + e.docType = document type, should be 'text'
 
+Styles:
+    - API:
+        map.getStyles()
+            + returns a JSON object as a mapping of style families to a list of styles
+        map.setStyle(style, familyName)
+    - events:
+        map.on('updatestyles', function (e) {}) where:
+            e.styles = a JSON object as a mapping of style families to a list of styles
+
 Error:
     - events
         map.on('error', function (e) {}) where

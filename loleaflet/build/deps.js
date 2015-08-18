@@ -332,6 +332,11 @@ var deps = {
 		desc: 'Scroll handler.'
 	},
 
+	Styles: {
+		src: ['control/Styles.js'],
+		desc: 'Document styles handler.'
+	},
+
 	AnimationPan: {
 		src: [
 			'dom/DomEvent.js',
