@@ -252,6 +252,9 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
     if (sharePages)
     {
         Poco::UInt64 pid;
+
+        std::cout << Util::logPrefix() + "Forking LibreOfficeKit" << std::endl;
+
         if (!(pid = fork()))
         { // child
             run_lok_main(loSubPath, childID);
