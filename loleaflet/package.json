@@ -38,5 +38,8 @@
       "type": "BSD-2-Clause",
       "url": "https://github.com/Leaflet/Leaflet/blob/master/LICENSE"
     }
-  ]
+  ],
+  "dependencies": {
+    "ws": "~0.7.2"
+  }
 }
