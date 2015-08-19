@@ -2,7 +2,7 @@ describe("Map", function () {
 	var map,
 		spy;
 	beforeEach(function () {
-		map = L.map(document.createElement('div'));
+		map = L.map(document.createElement('div'), {crs: L.CRS.EPSG3857});
 	});
 
 	describe("#remove", function () {

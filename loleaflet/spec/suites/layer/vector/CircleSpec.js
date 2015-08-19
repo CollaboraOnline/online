@@ -4,7 +4,7 @@ describe('Circle', function () {
 		var map, circle;
 
 		beforeEach(function () {
-			map = L.map(document.createElement('div')).setView([0, 0], 4);
+			map = L.map(document.createElement('div'), {crs: L.CRS.EPSG3857}).setView([0, 0], 4);
 			circle = L.circle([50, 30], 200).addTo(map);
 		});
 
