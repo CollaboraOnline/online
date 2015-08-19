@@ -40,8 +40,10 @@ L.GridLayer = L.Layer.extend({
 		this._viewReset();
 		this._map._docLayer = this;
 
-		this._map.socket.onopen = L.bind(this._initDocument, this);
-		this._map.socket.onmessage = L.bind(this._onMessage, this);
+		if (this._map.socket) {
+			this._map.socket.onopen = L.bind(this._initDocument, this);
+			this._map.socket.onmessage = L.bind(this._onMessage, this);
+		}
 		if (this._map.socket && this._map.socket.readyState === 1) {
 			// the connection is already open
 			this._initDocument();
@@ -65,18 +67,24 @@ L.GridLayer = L.Layer.extend({
 		this._tileZoom = null;
 		clearTimeout(this._preFetchIdle);
 		clearInterval(this._tilesPreFetcher);
-		this._map.socket.onmessage = function () {};
-		this._map.socket.onclose = function () {};
-		this._map.socket.onerror = function () {};
-		this._map.socket.close();
+		if (this._map.socket) {
+			this._map.socket.onmessage = function () {};
+			this._map.socket.onclose = function () {};
+			this._map.socket.onerror = function () {};
+			this._map.socket.close();
+		}
 		if (this._cursorMarker) {
 			this._cursorMarker.remove();
 		}
 		if (this._graphicMarker) {
 			this._graphicMarker.remove();
 		}
-		this._startMarker.remove();
-		this._endMarker.remove();
+		if (this._startMarker) {
+			this._startMarker.remove();
+		}
+		if (this._endMarker) {
+			this._endMarker.remove();
+		}
 	},
 
 	bringToFront: function () {

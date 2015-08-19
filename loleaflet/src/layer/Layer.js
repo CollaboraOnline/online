@@ -59,7 +59,8 @@ L.Layer = L.Evented.extend({
 	},
 
 	_initDocument: function () {},
-	_onMessage: function () {}
+	_onMessage: function () {},
+	sendMessage: function () {}
 });
 
 

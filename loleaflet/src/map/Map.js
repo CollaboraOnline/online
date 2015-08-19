@@ -249,8 +249,12 @@ L.Map = L.Evented.extend({
 			this.fire('unload');
 		}
 
-		this.removeLayer(this._docLayer._selections);
-		this.removeLayer(this._docLayer);
+		if (this._docLayer) {
+			if (this._docLayer._selections) {
+				this.removeLayer(this._docLayer._selections);
+			}
+			this.removeLayer(this._docLayer);
+		}
 		this.removeControls();
 		return this;
 	},
