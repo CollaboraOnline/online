@@ -289,6 +289,13 @@ var deps = {
 		desc: 'Handles vex dialogs for displaying alerts'
 	},
 
+	ControlStyles: {
+		src: ['control/Control.js',
+		      'control/Control.Styles.js'],
+		heading: 'Controls',
+		desc: 'Handles styles selection'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],
