@@ -673,6 +673,14 @@ a.leaflet-control-buttons:hover:first-child {
 	padding: 0px;
 }
 
+.resize-detector {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    visibility: hidden;
+}
+
 .parts-preview {
 	background: #DFDFDF;
 	position: absolute;

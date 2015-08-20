@@ -475,6 +475,7 @@ L.Map = L.Evented.extend({
 
 		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container.parentElement);
 		this._textArea = L.DomUtil.create('textarea', 'clipboard', textAreaContainer);
+		this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
 
 		container._leaflet = true;
 	},
@@ -596,7 +597,11 @@ L.Map = L.Evented.extend({
 		L.DomEvent[onOff](this._textArea, 'copy keydown keypress keyup', this._handleDOMEvent, this);
 
 		if (this.options.trackResize) {
-			L.DomEvent[onOff](window, 'resize', this._onResize, this);
+			var target = window;
+			if (window.opener) {
+				target = this._resizeDetector.contentWindow;
+			}
+			L.DomEvent[onOff](target, 'resize', this._onResize, this);
 		}
 	},
 
