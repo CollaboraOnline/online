@@ -69,7 +69,10 @@
 	-moz-user-select: none;
 	}
 
-.leaflet-pane         { z-index: 4; }
+.leaflet-pane {
+	z-index: 10;
+	position: relative;
+	}
 
 .leaflet-tile-pane    { z-index: 2; }
 .leaflet-overlay-pane { z-index: 4; }
@@ -678,7 +681,7 @@ a.leaflet-control-buttons:hover:first-child {
     width: 100%;
     height: 100%;
     z-index: 0;
-    visibility: hidden;
+    border: none;
 }
 
 .parts-preview {

@@ -597,11 +597,7 @@ L.Map = L.Evented.extend({
 		L.DomEvent[onOff](this._textArea, 'copy keydown keypress keyup', this._handleDOMEvent, this);
 
 		if (this.options.trackResize) {
-			var target = window;
-			if (window.opener) {
-				target = this._resizeDetector.contentWindow;
-			}
-			L.DomEvent[onOff](target, 'resize', this._onResize, this);
+			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);
 		}
 	},
 
