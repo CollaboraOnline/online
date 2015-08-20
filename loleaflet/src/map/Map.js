@@ -333,11 +333,13 @@ L.Map = L.Evented.extend({
 	},
 
 	getSize: function () {
-		this._size = new L.Point(
-			this._container.clientWidth,
-			this._container.clientHeight);
+		if (!this._size || this._sizeChanged) {
+			this._size = new L.Point(
+				this._container.clientWidth,
+				this._container.clientHeight);
 
-		this._sizeChanged = false;
+			this._sizeChanged = false;
+		}
 		return this._size.clone();
 	},
 
