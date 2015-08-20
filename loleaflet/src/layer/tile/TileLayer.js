@@ -463,8 +463,8 @@ L.TileLayer = L.GridLayer.extend({
 				if (!this._map.getBounds().contains(selectionCenter)) {
 					var center = this._map.project(selectionCenter);
 					center = center.subtract(this._map.getSize().divideBy(2));
-					center.x = center.x < 0 ? 0 : center.x;
-					center.y = center.y < 0 ? 0 : center.y;
+					center.x = Math.round(center.x < 0 ? 0 : center.x);
+					center.y = Math.round(center.y < 0 ? 0 : center.y);
 					this._map.fire('scrollto', {x: center.x, y: center.y});
 				}
 
@@ -645,8 +645,8 @@ L.TileLayer = L.GridLayer.extend({
 		if (!e && !this._map.getBounds().contains(cursorPos) && this._isCursorVisible) {
 			var center = this._map.project(cursorPos);
 			center = center.subtract(this._map.getSize().divideBy(2));
-			center.x = center.x < 0 ? 0 : center.x;
-			center.y = center.y < 0 ? 0 : center.y;
+			center.x = Math.round(center.x < 0 ? 0 : center.x);
+			center.y = Math.round(center.y < 0 ? 0 : center.y);
 			this._map.fire('scrollto', {x: center.x, y: center.y});
 		}
 
