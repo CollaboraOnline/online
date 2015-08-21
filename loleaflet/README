@@ -12,6 +12,7 @@ First you need to install 'jake'.  As root, do:
     npm install -g jake
     npm install
 
+npm is provided by the nodejs package.
 Alternatively, you can use the provided zip (as a normal user):
 
     unzip node_modules/modules.zip -d node_modules
