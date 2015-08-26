@@ -113,6 +113,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('zoomend', this._onUpdateCursor, this);
 		this._map.on('dragstart', this._onDragStart, this);
 		this._map.on('requestloksession', this._onRequestLOKSession, this);
+	        this._map.on('error', this._mapOnError, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._textArea = this._map._textArea;
@@ -536,6 +537,12 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		done(e, tile);
 	},
+
+       _mapOnError: function (e) {
+	   if (e.msg) {
+	       this._map.setPermission('view');
+	   }
+        },
 
 	_parseServerCmd: function (msg) {
 		var tokens = msg.split(/[ \n]+/);
