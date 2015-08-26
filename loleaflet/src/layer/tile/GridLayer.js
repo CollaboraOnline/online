@@ -680,7 +680,7 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (!this._tileCache[key]) {
-			if (this.options.useSocket && this._map.socket) {
+			if (this.options.useSocket && this._map.socket && this._map.socket.readyState === 1) {
 				var twips = this._coordsToTwips(coords);
 				var msg = 'tile ' +
 						'part=' + coords.part + ' ' +
