@@ -91,6 +91,7 @@ L.TileLayer = L.GridLayer.extend({
 			draggable: true
 		});
 		this._emptyTilesCount = 0;
+		this._msgQueue = [];
 	},
 
 	_initDocument: function () {
@@ -521,9 +522,41 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+    _onOpenSocket: function () {
+	for (var i = 0; i < this._msgQueue.length; i++) {
+	    this._map.socket.send(this._msgQueue[i].msg);
+	    L.Log.log(this._msgQueue[i].msg, this._msgQueue[i].coords);
+	}
+	this._msgQueue = [];
+    },
+
 	sendMessage: function (msg, coords) {
-		L.Log.log(msg, L.OUTGOING, coords);
+	    var socketState = this._map.socket.readyState;
+	    if (socketState === 2 || socketState === 3) {
+		var socket = this._map._initSocket();
+		if (socket) {
+		    socket.onopen = L.bind(this._onOpenSocket, this);
+		    socket.onmessage = L.bind(this._onMessage, this);
+		    // clear queue
+		    this._msgQueue = [];
+		    // reload interrupted document
+		    this._msgQueue.push({msg:'load url=' + this.options.doc, coords: coords});
+		    // restore current part
+		    this._msgQueue.push({msg:"setclientpart part=" + this._currentPart, coords: coords});
+		    this._msgQueue.push({msg:"setpage page=" + this._currentPart, coords: coords});
+		    // push next message
+		    this._msgQueue.push({msg: msg, coords: coords});
+		}
+	    }
+
+	    if (socketState === 0) {
+		// push message while trying to connect socket again.
+		this._msgQueue.push({msg: msg, coords: coords});
+	    }
+	    else if (socketState === 1) {
 		this._map.socket.send(msg);
+		L.Log.log(msg, L.OUTGOING, coords);
+	    }
 	},
 
 	_tileOnLoad: function (done, tile) {
