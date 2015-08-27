@@ -540,7 +540,8 @@ L.TileLayer = L.GridLayer.extend({
 		    // clear queue
 		    this._msgQueue = [];
 		    // reload interrupted document
-		    this._msgQueue.push({msg:'load url=' + this.options.doc, coords: coords});
+		    this._msgQueue.push({msg:'load url=' + this.options.doc +
+		    ( this.options.timestamp ? ' timestamp=' + this.options.timestamp : '') , coords: coords});
 		    // restore current part
 		    this._msgQueue.push({msg:"setclientpart part=" + this._currentPart, coords: coords});
 		    this._msgQueue.push({msg:"setpage page=" + this._currentPart, coords: coords});
