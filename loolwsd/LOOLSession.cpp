@@ -134,7 +134,8 @@ std::mutex MasterProcessSession::_rngMutex;
 MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind kind) :
     LOOLSession(ws, kind),
     _childId(0),
-    _curPart(0)
+    _curPart(0),
+    _loadPart(-1)
 {
     std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
 }
@@ -369,11 +370,14 @@ bool MasterProcessSession::invalidateTiles(const char *buffer, int length, Strin
 
 bool MasterProcessSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
 {
-    if (tokens.count() < 2 || tokens.count() > 3)
+    if (tokens.count() < 2 || tokens.count() > 4)
     {
         sendTextFrame("error: cmd=load kind=syntax");
         return false;
     }
+
+    if (tokens.count() > 2 )
+        getTokenInteger(tokens[1], "part", _loadPart);
 
     std::string timestamp;
     for (size_t i = 1; i < tokens.count(); ++i)
@@ -571,7 +575,7 @@ void MasterProcessSession::dispatchChild()
     _peer = childSession;
     childSession->_peer = shared_from_this();
 
-    std::string loadRequest = "load url=" + _docURL;
+    std::string loadRequest = "load" + (_loadPart >= 0 ?  " part=" + std::to_string(_loadPart) : "") + " url=" + _docURL;
     forwardToPeer(loadRequest.c_str(), loadRequest.size());
 }
 
@@ -784,13 +788,19 @@ extern "C"
 
 bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
 {
-    if (tokens.count() != 2)
+    int part = -1;
+    if (tokens.count() < 2 || tokens.count() > 4)
     {
         sendTextFrame("error: cmd=load kind=syntax");
         return false;
     }
 
-    if (tokens[1].find("url=") == 0)
+    if (tokens.count() > 2 && tokens[2].find("url=") == 0)
+    {
+        getTokenInteger(tokens[1], "part", part);
+        _docURL = tokens[2].substr(strlen("url="));
+    }
+    else if (tokens[1].find("url=") == 0)
         _docURL = tokens[1].substr(strlen("url="));
     else
         _docURL = tokens[1];
@@ -829,6 +839,12 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     }
 
     _loKitDocument->pClass->initializeForRendering(_loKitDocument);
+
+    if ( _docType != "text" && part != -1)
+    {
+        _clientPart = part;
+        _loKitDocument->pClass->setPart(_loKitDocument, part);
+    }
 
     if (!getStatus(buffer, length))
         return false;
