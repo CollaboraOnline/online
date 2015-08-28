@@ -10,6 +10,7 @@ L.Control.PartsPreview = L.Control.extend({
 		this._partsPreviewCont = L.DomUtil.create('div', 'parts-preview', docContainer.parentElement);
 
 		map.on('updateparts', this._updateDisabled, this);
+		map.on('updatepart', this._updatePart, this);
 		map.on('tilepreview', this._updatePreview, this);
 		return document.createElement('div');
 	},
@@ -51,6 +52,12 @@ L.Control.PartsPreview = L.Control.extend({
 		var part =  e.target.id.match(/\d+/g)[0];
 		if (part !== null) {
 			this._map.setPart(parseInt(part));
+		}
+	},
+
+	_updatePart: function (e) {
+		if (e.docType === 'presentation') {
+		    this._map.getPartPreview(e.part, e.part, 180, 180);
 		}
 	},
 

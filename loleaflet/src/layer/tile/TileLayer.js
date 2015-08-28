@@ -68,6 +68,7 @@ L.TileLayer = L.GridLayer.extend({
 		// Position and size of the selection end.
 		this._textSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 
+	        this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
 		// Graphic marker
@@ -340,6 +341,11 @@ L.TileLayer = L.GridLayer.extend({
 				if (invalidBounds.intersects(bounds)) {
 					delete this._tileCache[key];
 				}
+			}
+		        if ( command.part === this._currentPart &&
+			     command.part !== this._lastValidPart ) {
+			    this._lastValidPart = command.part;
+			    this._map.fire('updatepart', { part: command.part, docType: this._docType });
 			}
 		}
 		else if (textMsg.startsWith('statechanged:')) {
