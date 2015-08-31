@@ -57,7 +57,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_updatePart: function (e) {
 		if (e.docType === 'presentation') {
-		    this._map.getPartPreview(e.part, e.part, 180, 180);
+			this._map.getPartPreview(e.part, e.part, 180, 180);
 		}
 	},
 

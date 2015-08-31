@@ -9,7 +9,7 @@ L.Control.Styles = L.Control.extend({
 
 	onAdd: function (map) {
 		var stylesName = 'leaflet-control-styles';
-		this._container = L.DomUtil.create('select', stylesName + ' leaflet-bar'),
+		this._container = L.DomUtil.create('select', stylesName + ' leaflet-bar');
 
 		map.on('updatepermission', this._onUpdatePermission, this);
 		map.on('updatestyles', this._initList, this);

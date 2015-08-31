@@ -68,7 +68,7 @@ L.TileLayer = L.GridLayer.extend({
 		// Position and size of the selection end.
 		this._textSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 
-	        this._lastValidPart = -1;
+		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
 		// Graphic marker
@@ -115,7 +115,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.on('zoomend', this._onUpdateCursor, this);
 		this._map.on('dragstart', this._onDragStart, this);
 		this._map.on('requestloksession', this._onRequestLOKSession, this);
-	        this._map.on('error', this._mapOnError, this);
+		this._map.on('error', this._mapOnError, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._textArea = this._map._textArea;
@@ -342,10 +342,10 @@ L.TileLayer = L.GridLayer.extend({
 					delete this._tileCache[key];
 				}
 			}
-		        if ( command.part === this._currentPart &&
-			     command.part !== this._lastValidPart ) {
-			    this._lastValidPart = command.part;
-			    this._map.fire('updatepart', { part: command.part, docType: this._docType });
+			if (command.part === this._currentPart &&
+				command.part !== this._lastValidPart) {
+				this._lastValidPart = command.part;
+				this._map.fire('updatepart', {part: command.part, docType: this._docType});
 			}
 		}
 		else if (textMsg.startsWith('statechanged:')) {
@@ -528,39 +528,39 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-    _onOpenSocket: function () {
-	for (var i = 0; i < this._msgQueue.length; i++) {
-	    this._map.socket.send(this._msgQueue[i].msg);
-	    L.Log.log(this._msgQueue[i].msg, this._msgQueue[i].coords);
-	}
-	this._msgQueue = [];
-    },
+	_onOpenSocket: function () {
+		for (var i = 0; i < this._msgQueue.length; i++) {
+			this._map.socket.send(this._msgQueue[i].msg);
+			L.Log.log(this._msgQueue[i].msg, this._msgQueue[i].coords);
+		}
+		this._msgQueue = [];
+	},
 
 	sendMessage: function (msg, coords) {
-	    var socketState = this._map.socket.readyState;
-	    if (socketState === 2 || socketState === 3) {
-		var socket = this._map._initSocket();
-		if (socket) {
-		    socket.onopen = L.bind(this._onOpenSocket, this);
-		    socket.onmessage = L.bind(this._onMessage, this);
-		    // clear queue
-		    this._msgQueue = [];
-		    // reload interrupted document
-		    this._msgQueue.push({msg:'load part='+ this._currentPart + ' url=' + this.options.doc +
-		    ( this.options.timestamp ? ' timestamp=' + this.options.timestamp : '') , coords: coords});
-		    // push next message
-		    this._msgQueue.push({msg: msg, coords: coords});
+		var socketState = this._map.socket.readyState;
+		if (socketState === 2 || socketState === 3) {
+			var socket = this._map._initSocket();
+			if (socket) {
+				socket.onopen = L.bind(this._onOpenSocket, this);
+				socket.onmessage = L.bind(this._onMessage, this);
+				// clear queue
+				this._msgQueue = [];
+				// reload interrupted document
+				this._msgQueue.push({msg:'load part=' + this._currentPart + ' url=' + this.options.doc +
+				(this.options.timestamp ? ' timestamp=' + this.options.timestamp : ''), coords: coords});
+				// push next message
+				this._msgQueue.push({msg: msg, coords: coords});
+			}
 		}
-	    }
 
-	    if (socketState === 0) {
-		// push message while trying to connect socket again.
-		this._msgQueue.push({msg: msg, coords: coords});
-	    }
-	    else if (socketState === 1) {
-		this._map.socket.send(msg);
-		L.Log.log(msg, L.OUTGOING, coords);
-	    }
+		if (socketState === 0) {
+			// push message while trying to connect socket again.
+			this._msgQueue.push({msg: msg, coords: coords});
+		}
+		else if (socketState === 1) {
+			this._map.socket.send(msg);
+			L.Log.log(msg, L.OUTGOING, coords);
+		}
 	},
 
 	_tileOnLoad: function (done, tile) {
@@ -575,11 +575,11 @@ L.TileLayer = L.GridLayer.extend({
 		done(e, tile);
 	},
 
-       _mapOnError: function (e) {
-	   if (e.msg) {
-	       this._map.setPermission('view');
-	   }
-        },
+   _mapOnError: function (e) {
+		if (e.msg) {
+			this._map.setPermission('view');
+		}
+	},
 
 	_parseServerCmd: function (msg) {
 		var tokens = msg.split(/[ \n]+/);
@@ -633,7 +633,7 @@ L.TileLayer = L.GridLayer.extend({
 				command.errorCmd = tokens[i].substring(4);
 			}
 			else if (tokens[i].substring(0, 5) === 'kind=') {
-				command.errorKind= tokens[i].substring(5);
+				command.errorKind = tokens[i].substring(5);
 			}
 		}
 		if (command.tileWidth && command.tileHeight) {

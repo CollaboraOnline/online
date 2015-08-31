@@ -15,7 +15,7 @@ L.Control.Scroll = L.Control.extend({
 		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
 
 		var control = this;
-		$(".scroll-container").mCustomScrollbar({
+		$('.scroll-container').mCustomScrollbar({
 			axis: 'yx',
 			theme: 'dark-thick',
 			scrollInertia: 0,
