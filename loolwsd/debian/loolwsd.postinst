@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
     configure)
-	setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolwsd
+	setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolwsd || true
 
 	adduser --quiet --system --group --home /opt/lool lool
 	mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
