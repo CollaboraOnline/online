@@ -76,18 +76,16 @@ L.TileLayer = L.GridLayer.extend({
 		// Handle start marker
 		this._startMarker = L.marker(new L.LatLng(0, 0), {
 			icon: L.icon({
-				iconUrl: L.Icon.Default.imagePath + '/handle_start.png',
-				iconSize: [30, 44],
-				iconAnchor: [28, 2]
+				className: 'leaflet-selection-marker-start',
+				asDiv: true
 			}),
 			draggable: true
 		});
 		// Handle end marker
 		this._endMarker = L.marker(new L.LatLng(0, 0), {
 			icon: L.icon({
-				iconUrl: L.Icon.Default.imagePath + '/handle_end.png',
-				iconSize: [30, 44],
-				iconAnchor: [2, 2]
+				className: 'leaflet-selection-marker-end',
+				asDiv: true
 			}),
 			draggable: true
 		});

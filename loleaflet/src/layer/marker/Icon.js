@@ -15,6 +15,7 @@ L.Icon = L.Class.extend({
 		shadowSize: (Point)
 		shadowAnchor: (Point)
 		className: (String)
+		asDiv: (Boolean) (optional, creates the icon as a div)
 	},
 	*/
 
@@ -33,14 +34,19 @@ L.Icon = L.Class.extend({
 	_createIcon: function (name, oldIcon) {
 		var src = this._getIconUrl(name);
 
-		if (!src) {
+		if (!src && !this.options.asDiv) {
 			if (name === 'icon') {
 				throw new Error('iconUrl not set in Icon options (see the docs).');
 			}
 			return null;
 		}
 
-		var img = this._createImg(src, oldIcon && oldIcon.tagName === 'IMG' ? oldIcon : null);
+		if (this.options.asDiv) {
+			var img = document.createElement('div');
+		}
+		else {
+			img = this._createImg(src, oldIcon && oldIcon.tagName === 'IMG' ? oldIcon : null);
+		}
 		this._setIconStyles(img, name);
 
 		return img;
