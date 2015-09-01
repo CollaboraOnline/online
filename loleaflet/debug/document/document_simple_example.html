@@ -58,13 +58,12 @@
     }
 
     var globalMap = L.map('map', {
-            center: [0, 0],
-            zoom: 10,
-            minZoom: 1,
-            maxZoom: 20,
+            doc: filePath,
             server: host,
-            doubleClickZoom: false
-            });
+            edit: edit,
+            timestamp: timestamp,
+            readOnly: false
+        });
 
     ////// Controls /////
     globalMap.addControl(L.control.styles());
@@ -79,15 +78,5 @@
     globalMap.addControl(L.control.dialog());
     globalMap.addControl(L.control.partsPreview());
     globalMap.addControl(L.control.tabs());
-
-    ////// Document layer ////
-    var docLayer = new L.TileLayer('', {
-        doc: filePath,
-        useSocket : true,
-        edit: edit,
-        timestamp: timestamp,
-        readOnly: false
-    });
-    globalMap.addLayer(docLayer);
     </script>
 </body></html>

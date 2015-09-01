@@ -22,14 +22,14 @@ L.Map.include({
 		}
 		if (docLayer._isCursorOverlayVisible) {
 			// a click outside the slide to clear any selection
-			docLayer.sendMessage('resetselection');
+			L.Socket.sendMessage('resetselection');
 		}
 		this.fire('updateparts', {
 			currentPart: docLayer._currentPart,
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
-		docLayer.sendMessage('setclientpart part=' + docLayer._currentPart);
+		L.Socket.sendMessage('setclientpart part=' + docLayer._currentPart);
 		docLayer._update();
 		docLayer._pruneTiles();
 		docLayer._clearSelections();
@@ -46,7 +46,7 @@ L.Map.include({
 		else {
 			maxHeight = Math.round(docLayer._docHeightTwips * maxWidth / docLayer._docWidthTwips);
 		}
-		docLayer.sendMessage('tile ' +
+		L.Socket.sendMessage('tile ' +
 							'part=' + part + ' ' +
 							'width=' + maxWidth + ' ' +
 							'height=' + maxHeight + ' ' +
@@ -72,7 +72,7 @@ L.Map.include({
 		y = Math.round(y / docLayer._tileSize * docLayer._tileHeightTwips);
 		height = Math.round(height / docLayer._tileSize * docLayer._tileHeightTwips);
 
-		docLayer.sendMessage('tile ' +
+		L.Socket.sendMessage('tile ' +
 							'part=0 ' +
 							'width=' + maxWidth + ' ' +
 							'height=' + maxHeight + ' ' +
@@ -98,7 +98,7 @@ L.Map.include({
 		else if (typeof (page) === 'number' && page >= 0 && page < docLayer._pages) {
 			docLayer._currentPage = page;
 		}
-		docLayer.sendMessage('setpage page=' + docLayer._currentPage);
+		L.Socket.sendMessage('setpage page=' + docLayer._currentPage);
 	},
 
 	getNumberOfPages: function () {

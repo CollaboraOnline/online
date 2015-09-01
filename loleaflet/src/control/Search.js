@@ -29,10 +29,10 @@ L.Map.include({
 		searchCmd['SearchItem.SearchStartPointY'] = {};
 		searchCmd['SearchItem.SearchStartPointY'].type = 'long';
 		searchCmd['SearchItem.SearchStartPointY'].value = topLeftTwips.y;
-		this._docLayer.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
+		L.Socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
 	},
 
 	resetSelection: function () {
-		this._docLayer.sendMessage('resetselection');
+		L.Socket.sendMessage('resetselection');
 	}
 });

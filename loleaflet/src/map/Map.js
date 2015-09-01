@@ -6,14 +6,10 @@ L.Map = L.Evented.extend({
 
 	options: {
 		crs: L.CRS.Simple,
-
-		/*
-		center: LatLng,
-		zoom: Number,
-		layers: Array,
-		*/
-
-		doubleClickZoom: false,
+		center: [0, 0],
+		zoom: 10,
+		minZoom: 1,
+		maxZoom: 20,
 		fadeAnimation: true,
 		trackResize: true,
 		markerZoomAnimation: true
@@ -22,9 +18,6 @@ L.Map = L.Evented.extend({
 	initialize: function (id, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
-		if (options.server) {
-			this._initSocket();
-		}
 		this._initContainer(id);
 		this._initLayout();
 
@@ -57,6 +50,7 @@ L.Map = L.Evented.extend({
 			L.Icon.Default.imagePath = this.options.imagePath;
 		}
 		this._addLayers(this.options.layers);
+		L.Socket.connect(this);
 	},
 
 
@@ -256,6 +250,7 @@ L.Map = L.Evented.extend({
 			this.removeLayer(this._docLayer);
 		}
 		this.removeControls();
+		L.Socket.close();
 		return this;
 	},
 
@@ -448,21 +443,6 @@ L.Map = L.Evented.extend({
 			this._docLayer._textArea.focus();
 		}
 	},
-
-	// map initialization methods
-	_initSocket: function () {
-		try {
-			this.socket = new WebSocket(this.options.server);
-		} catch (e) {
-			this.fire('error', {msg: 'Socket connection error'});
-			return;
-		}
-		this.socket.onerror = L.bind(this._onSocketError, this);
-		this.socket.onclose = L.bind(this._onSocketClose, this);
-		this.socket.binaryType = 'arraybuffer';
-		return this.socket;
-	},
-
 
 	_initContainer: function (id) {
 		var container = this._container = L.DomUtil.get(id);
@@ -764,14 +744,6 @@ L.Map = L.Evented.extend({
 		    max = this.getMaxZoom();
 
 		return Math.max(min, Math.min(max, zoom));
-	},
-
-	_onSocketError: function () {
-		this.fire('error', {msg: 'Socket connection error'});
-	},
-
-	_onSocketClose: function () {
-		this.fire('error', {msg: 'Socket connection closed'});
 	}
 });
 

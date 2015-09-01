@@ -3,7 +3,7 @@
  */
 
 L.Map.mergeOptions({
-	doubleClickZoom: true
+	doubleClickZoom: false
 });
 
 L.Map.DoubleClickZoom = L.Handler.extend({

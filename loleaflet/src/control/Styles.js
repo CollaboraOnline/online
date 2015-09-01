@@ -12,6 +12,6 @@ L.Map.include({
 				'"Style":{"type":"string", "value": "' + style + '"},' +
 				'"FamilyName":{"type":"string", "value":"' + familyName + '"}' +
 				'}';
-		this._docLayer.sendMessage(msg);
+		L.Socket.sendMessage(msg);
 	}
 });

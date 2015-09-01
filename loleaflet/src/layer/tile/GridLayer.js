@@ -29,31 +29,9 @@ L.GridLayer = L.Layer.extend({
 
 	onAdd: function () {
 		this._initContainer();
-		this._selections = new L.LayerGroup();
-		this._map.addLayer(this._selections);
-
 		this._levels = {};
 		this._tiles = {};
-		this._tileCache = {};
-
-		this._map._fadeAnimated = false;
 		this._viewReset();
-		this._map._docLayer = this;
-
-		if (this._map.socket) {
-			this._map.socket.onopen = L.bind(this._initDocument, this);
-			this._map.socket.onmessage = L.bind(this._onMessage, this);
-		}
-		if (this._map.socket && this._map.socket.readyState === 1) {
-			// the connection is already open
-			this._initDocument();
-		}
-		else if (this._map.socket && this._map.socket.readyState > 1) {
-			// the connection is closing or is closed
-			var socket = this._map._initSocket();
-			socket.onopen = L.bind(this._initDocument, this);
-			socket.onmessage = L.bind(this._onMessage, this);
-		}
 	},
 
 	beforeAdd: function (map) {
@@ -67,12 +45,6 @@ L.GridLayer = L.Layer.extend({
 		this._tileZoom = null;
 		clearTimeout(this._preFetchIdle);
 		clearInterval(this._tilesPreFetcher);
-		if (this._map.socket) {
-			this._map.socket.onmessage = function () {};
-			this._map.socket.onclose = function () {};
-			this._map.socket.onerror = function () {};
-			this._map.socket.close();
-		}
 		if (this._cursorMarker) {
 			this._cursorMarker.remove();
 		}
@@ -472,15 +444,14 @@ L.GridLayer = L.Layer.extend({
 		this._resetPreFetching();
 	},
 
-	_move: function (e) {
+	_move: function () {
 		this._update();
 		this._resetPreFetching(true);
 	},
 
 	_update: function (center, zoom) {
 		var map = this._map;
-		if (!map || this._documentInfo === '' ||
-			(this.options.useSocket && map.socket && map.socket.readyState !== 1)) {
+		if (!map || this._documentInfo === '') {
 			return;
 		}
 
@@ -530,7 +501,7 @@ L.GridLayer = L.Layer.extend({
 			if (newView) {
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
-				this.sendMessage('canceltiles');
+				L.Socket.sendMessage('canceltiles');
 				for (key in this._tiles) {
 					if (!this._tiles[key].loaded) {
 						L.DomUtil.remove(this._tiles[key].el);
@@ -680,21 +651,19 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (!this._tileCache[key]) {
-			if (this.options.useSocket && this._map.socket && this._map.socket.readyState === 1) {
-				var twips = this._coordsToTwips(coords);
-				var msg = 'tile ' +
-						'part=' + coords.part + ' ' +
-						'width=' + this._tileSize + ' ' +
-						'height=' + this._tileSize + ' ' +
-						'tileposx=' + twips.x + ' '	+
-						'tileposy=' + twips.y + ' ' +
-						'tilewidth=' + this._tileWidthTwips + ' ' +
-						'tileheight=' + this._tileHeightTwips;
-				if (coords.part !== this._currentPart) {
-					msg += ' prefetch=true';
-				}
-				this.sendMessage(msg, key);
+			var twips = this._coordsToTwips(coords);
+			var msg = 'tile ' +
+					'part=' + coords.part + ' ' +
+					'width=' + this._tileSize + ' ' +
+					'height=' + this._tileSize + ' ' +
+					'tileposx=' + twips.x + ' '	+
+					'tileposy=' + twips.y + ' ' +
+					'tilewidth=' + this._tileWidthTwips + ' ' +
+					'tileheight=' + this._tileHeightTwips;
+			if (coords.part !== this._currentPart) {
+				msg += ' prefetch=true';
 			}
+			L.Socket.sendMessage(msg, key);
 		}
 		else {
 			tile.src = this._tileCache[key];

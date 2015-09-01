@@ -93,41 +93,38 @@ L.TileLayer = L.GridLayer.extend({
 		this._msgQueue = [];
 	},
 
-	_initDocument: function () {
-		if (!this._map.socket) {
-			this._map.fire('error', {msg: 'Socket initialization error'});
-			return;
-		}
-		if (this.options.doc) {
-			var msg = 'load url=' + this.options.doc;
-			if (this.options.timestamp) {
-				msg += ' timestamp=' + this.options.timestamp;
-			}
-			this.sendMessage(msg);
-			this.sendMessage('status');
-			this.sendMessage('styles');
-		}
-		this._map.on('drag resize zoomend', this._updateScrollOffset, this);
-		this._map.on('clearselection', this._clearSelections, this);
-		this._map.on('copy', this._onCopy, this);
-		this._map.on('zoomend', this._onUpdateCursor, this);
-		this._map.on('dragstart', this._onDragStart, this);
-		this._map.on('requestloksession', this._onRequestLOKSession, this);
-		this._map.on('error', this._mapOnError, this);
+    onAdd: function (map) {
+		this._initContainer();
+		this._selections = new L.LayerGroup();
+		map.addLayer(this._selections);
+
+		this._levels = {};
+		this._tiles = {};
+		this._tileCache = {};
+
+		map._fadeAnimated = false;
+		this._viewReset();
+		map.on('drag resize zoomend', this._updateScrollOffset, this);
+		map.on('clearselection', this._clearSelections, this);
+		map.on('copy', this._onCopy, this);
+		map.on('zoomend', this._onUpdateCursor, this);
+		map.on('dragstart', this._onDragStart, this);
+		map.on('requestloksession', this._onRequestLOKSession, this);
+		map.on('error', this._mapOnError, this);
 		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
 		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
-		this._textArea = this._map._textArea;
+		this._textArea = map._textArea;
 		this._textArea.focus();
 		if (this.options.readOnly) {
-			this._map.setPermission('readonly');
+			map.setPermission('readonly');
 		}
 		else if (this.options.edit) {
-			this._map.setPermission('edit');
+			map.setPermission('edit');
 		}
 		else {
-			this._map.setPermission('view');
+			map.setPermission('view');
 		}
-		this._map.fire('statusindicator', {statusType: 'loleafletloaded'});
+		map.fire('statusindicator', {statusType: 'loleafletloaded'});
 	},
 
 	getEvents: function () {
@@ -177,31 +174,7 @@ L.TileLayer = L.GridLayer.extend({
 		return tile;
 	},
 
-	_onMessage: function (evt) {
-		var bytes, index, textMsg;
-
-		if (typeof (evt.data) === 'string') {
-			textMsg = evt.data;
-		}
-		else if (typeof (evt.data) === 'object') {
-			bytes = new Uint8Array(evt.data);
-			index = 0;
-			// search for the first newline which marks the end of the message
-			while (index < bytes.length && bytes[index] !== 10) {
-				index++;
-			}
-			textMsg = String.fromCharCode.apply(null, bytes.subarray(0, index));
-		}
-
-		if (!textMsg.startsWith('tile:')) {
-			// log the tile msg separately as we need the tile coordinates
-			L.Log.log(textMsg, L.INCOMING);
-			if (bytes !== undefined) {
-				// if it's not a tile, parse the whole message
-				textMsg = String.fromCharCode.apply(null, bytes);
-			}
-		}
-
+	_onMessage: function (textMsg, imgBytes, index) {
 		if (textMsg.startsWith('cursorvisible:')) {
 			var command = textMsg.match('cursorvisible: true');
 			this._isCursorVisible = command ? true : false;
@@ -264,7 +237,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._onUpdateGraphicSelection();
 		}
 		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.match('EMPTY')) {
-			command = this._parseServerCmd(textMsg);
+			command = L.Socket.parseServerCmd(textMsg);
 			if (command.x === undefined || command.y === undefined || command.part === undefined) {
 				strTwips = textMsg.match(/\d+/g);
 				command.x = parseInt(strTwips[0]);
@@ -319,7 +292,7 @@ L.TileLayer = L.GridLayer.extend({
 			cursorPos = cursorPos.divideBy(this._tileSize);
 			toRequest.sort(function(x, y) {return x.coords.distanceTo(cursorPos) - y.coords.distanceTo(cursorPos);});
 			for (var i = 0; i < toRequest.length; i++) {
-				this.sendMessage(toRequest[i].msg, toRequest[i].key);
+				L.Socket.sendMessage(toRequest[i].msg, toRequest[i].key);
 			}
 			for (key in this._tileCache) {
 				// compute the rectangle that each tile covers in the document based
@@ -355,7 +328,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		else if (textMsg.startsWith('status:')) {
-			command = this._parseServerCmd(textMsg);
+			command = L.Socket.parseServerCmd(textMsg);
 			if (command.width && command.height && this._documentInfo !== textMsg) {
 				this._docWidthTwips = command.width;
 				this._docHeightTwips = command.height;
@@ -376,7 +349,7 @@ L.TileLayer = L.GridLayer.extend({
 					});
 				}
 				else {
-					this.sendMessage('setclientpart part=' + this._currentPart);
+					L.Socket.sendMessage('setclientpart part=' + this._currentPart);
 					var partNames = textMsg.match(/[^\r\n]+/g);
 					// only get the last matches
 					partNames = partNames.slice(partNames.length - this._parts);
@@ -405,11 +378,11 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('statusindicator', {statusType : 'finish'});
 		}
 		else if (textMsg.startsWith('tile:')) {
-			command = this._parseServerCmd(textMsg);
+			command = L.Socket.parseServerCmd(textMsg);
 			coords = this._twipsToCoords(command);
 			coords.z = command.zoom;
 			coords.part = command.part;
-			var data = bytes.subarray(index + 1);
+			var data = imgBytes.subarray(index + 1);
 
 			// read the tile data
 			var strBytes = '';
@@ -488,7 +461,7 @@ L.TileLayer = L.GridLayer.extend({
 					clearTimeout(this._selectionContentRequest);
 				}
 				this._selectionContentRequest = setTimeout(L.bind(function () {
-					this.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
+					L.Socket.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
 			}
 			this._onUpdateTextSelection();
 		}
@@ -521,43 +494,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('updatestyles', {styles: this._docStyles});
 		}
 		else if (textMsg.startsWith('error:')) {
-			command = this._parseServerCmd(textMsg);
+			command = L.Socket.parseServerCmd(textMsg);
 			this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind});
-		}
-	},
-
-	_onOpenSocket: function () {
-		for (var i = 0; i < this._msgQueue.length; i++) {
-			this._map.socket.send(this._msgQueue[i].msg);
-			L.Log.log(this._msgQueue[i].msg, this._msgQueue[i].coords);
-		}
-		this._msgQueue = [];
-	},
-
-	sendMessage: function (msg, coords) {
-		var socketState = this._map.socket.readyState;
-		if (socketState === 2 || socketState === 3) {
-			var socket = this._map._initSocket();
-			if (socket) {
-				socket.onopen = L.bind(this._onOpenSocket, this);
-				socket.onmessage = L.bind(this._onMessage, this);
-				// clear queue
-				this._msgQueue = [];
-				// reload interrupted document
-				this._msgQueue.push({msg:'load part=' + this._currentPart + ' url=' + this.options.doc +
-				(this.options.timestamp ? ' timestamp=' + this.options.timestamp : ''), coords: coords});
-				// push next message
-				this._msgQueue.push({msg: msg, coords: coords});
-			}
-		}
-
-		if (socketState === 0) {
-			// push message while trying to connect socket again.
-			this._msgQueue.push({msg: msg, coords: coords});
-		}
-		else if (socketState === 1) {
-			this._map.socket.send(msg);
-			L.Log.log(msg, L.OUTGOING, coords);
 		}
 	},
 
@@ -579,70 +517,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_parseServerCmd: function (msg) {
-		var tokens = msg.split(/[ \n]+/);
-		var command = {};
-		for (var i = 0; i < tokens.length; i++) {
-			if (tokens[i].substring(0, 9) === 'tileposx=') {
-				command.x = parseInt(tokens[i].substring(9));
-			}
-			else if (tokens[i].substring(0, 9) === 'tileposy=') {
-				command.y = parseInt(tokens[i].substring(9));
-			}
-			else if (tokens[i].substring(0, 2) === 'x=') {
-				command.x = parseInt(tokens[i].substring(2));
-			}
-			else if (tokens[i].substring(0, 2) === 'y=') {
-				command.y = parseInt(tokens[i].substring(2));
-			}
-			else if (tokens[i].substring(0, 10) === 'tilewidth=') {
-				command.tileWidth = parseInt(tokens[i].substring(10));
-			}
-			else if (tokens[i].substring(0, 11) === 'tileheight=') {
-				command.tileHeight = parseInt(tokens[i].substring(11));
-			}
-			else if (tokens[i].substring(0, 6) === 'width=') {
-				command.width = parseInt(tokens[i].substring(6));
-			}
-			else if (tokens[i].substring(0, 7) === 'height=') {
-				command.height = parseInt(tokens[i].substring(7));
-			}
-			else if (tokens[i].substring(0, 5) === 'part=') {
-				command.part = parseInt(tokens[i].substring(5));
-			}
-			else if (tokens[i].substring(0, 6) === 'parts=') {
-				command.parts = parseInt(tokens[i].substring(6));
-			}
-			else if (tokens[i].substring(0, 8) === 'current=') {
-				command.currentPart = parseInt(tokens[i].substring(8));
-			}
-			else if (tokens[i].substring(0, 3) === 'id=') {
-				// remove newline characters
-				command.id = tokens[i].substring(3).replace(/(\r\n|\n|\r)/gm, '');
-			}
-			else if (tokens[i].substring(0, 5) === 'type=') {
-				// remove newline characters
-				command.type = tokens[i].substring(5).replace(/(\r\n|\n|\r)/gm, '');
-			}
-			else if (tokens[i].substring(0, 9) === 'prefetch=') {
-				command.preFetch = tokens[i].substring(9);
-			}
-			else if (tokens[i].substring(0, 4) === 'cmd=') {
-				command.errorCmd = tokens[i].substring(4);
-			}
-			else if (tokens[i].substring(0, 5) === 'kind=') {
-				command.errorKind = tokens[i].substring(5);
-			}
-		}
-		if (command.tileWidth && command.tileHeight) {
-			var scale = command.tileWidth / this.options.tileWidthTwips;
-			// scale = 1.2 ^ (10 - zoom)
-			// zoom = 10 -log(scale) / log(1.2)
-			command.zoom = Math.round(10 - Math.log(scale) / Math.log(1.2));
-		}
-		return command;
-	},
-
 	_onTileRemove: function (e) {
 		e.tile.onload = null;
 	},
@@ -652,22 +526,22 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postMouseEvent: function(type, x, y, count) {
-		this.sendMessage('mouse type=' + type +
+		L.Socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count);
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
-		this.sendMessage('key type=' + type +
+		L.Socket.sendMessage('key type=' + type +
 				' char=' + charcode + ' key=' + keycode);
 	},
 
 	_postSelectGraphicEvent: function(type, x, y) {
-		this.sendMessage('selectgraphic type=' + type +
+		L.Socket.sendMessage('selectgraphic type=' + type +
 				' x=' + x + ' y=' + y);
 	},
 
 	_postSelectTextEvent: function(type, x, y) {
-		this.sendMessage('selecttext type=' + type +
+		L.Socket.sendMessage('selecttext type=' + type +
 				' x=' + x + ' y=' + y);
 	},
 
@@ -802,7 +676,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onRequestLOKSession: function () {
-		this.sendMessage('requestloksession');
+		L.Socket.sendMessage('requestloksession');
 	}
 });
 

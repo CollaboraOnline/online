@@ -5,6 +5,7 @@ var deps = {
 		      'core/Util.js',
 		      'core/Class.js',
 		      'core/Events.js',
+		      'core/Socket.js',
 		      'core/Browser.js',
 		      'geometry/Point.js',
 		      'geometry/Bounds.js',
