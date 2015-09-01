@@ -213,15 +213,11 @@ Implementation details
 
 Loading a document:
     The map should have the following options:
-        - center at [0, 0] this will try to place the [0, 0] point in the middle of the
-          map, but it will be moved in the top left corner when the maxBounds are set
-        - zoom = defautl zoom value, zooming in and out will refer to this value
         - server address
-
-    The layer (actual document) should have the following options:
-        - doc = path to the document that will be loaded
-        - useSocket = tells the map the tiles will be received from a websocket
-          connection. If this parameter is false, an image will be loaded in each tile
+        - doc - path to the document that will be loaded
+        - edit = the initial permission
+        - readOnly - whether the document is read only
+        - [timestamp] - optionally provided for remote documents
 
 How zooming works:
     The zoom level goes from 1 to 20 (those limits can be changed) and the initial
