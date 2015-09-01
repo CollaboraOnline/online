@@ -939,6 +939,7 @@ L.GridLayer = L.Layer.extend({
 		}
 		var interval = 750;
 		var idleTime = 5000;
+		this._preFetchPart = this._currentPart;
 		this._preFetchIdle = setTimeout(L.bind(function () {
 			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), interval);
 		}, this), idleTime);
