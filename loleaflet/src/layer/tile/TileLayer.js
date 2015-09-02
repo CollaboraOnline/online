@@ -298,47 +298,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_onStatusMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
-		if (command.width && command.height && this._documentInfo !== textMsg) {
-			this._docWidthTwips = command.width;
-			this._docHeightTwips = command.height;
-			this._docType = command.type;
-			this._updateMaxBounds(true);
-			this._documentInfo = textMsg;
-			this._parts = command.parts;
-			this._selectedPart = command.selectedPart;
-			if (this._docType === 'text') {
-				this._selectedPart = 0;
-				this._parts = 1;
-				this._currentPage = command.selectedPart;
-				this._pages = command.parts;
-				this._map.fire('pagenumberchanged', {
-					currentPage: this._currentPage,
-					pages: this._pages,
-					docType: this._docType
-				});
-			}
-			else {
-				L.Socket.sendMessage('setclientpart part=' + this._selectedPart);
-				var partNames = textMsg.match(/[^\r\n]+/g);
-				// only get the last matches
-				partNames = partNames.slice(partNames.length - this._parts);
-				this._map.fire('updateparts', {
-					selectedPart: this._selectedPart,
-					parts: this._parts,
-					docType: this._docType,
-					partNames: partNames
-				});
-			}
-			this._update();
-			if (this._preFetchPart !== this._selectedPart) {
-				this._preFetchPart = this._selectedPart;
-				this._preFetchBorder = null;
-			}
-		}
-	},
-
 	_onStatusIndicatorMsg: function (textMsg) {
 		if (textMsg.startsWith('statusindicatorstart:')) {
 			this._map.fire('statusindicator', {statusType : 'start'});

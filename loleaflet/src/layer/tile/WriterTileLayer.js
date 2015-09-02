@@ -79,5 +79,27 @@ L.WriterTileLayer = L.TileLayer.extend({
 				delete this._tileCache[key];
 			}
 		}
+	},
+
+	_onStatusMsg: function (textMsg) {
+		var command = L.Socket.parseServerCmd(textMsg);
+		console.log(textMsg);
+		if (command.width && command.height && this._documentInfo !== textMsg) {
+			this._docWidthTwips = command.width;
+			this._docHeightTwips = command.height;
+			this._docType = command.type;
+			this._updateMaxBounds(true);
+			this._documentInfo = textMsg;
+			this._selectedPart = 0;
+			this._parts = 1;
+			this._currentPage = command.selectedPart;
+			this._pages = command.parts;
+			this._map.fire('pagenumberchanged', {
+				currentPage: this._currentPage,
+				pages: this._pages,
+				docType: this._docType
+			});
+			this._update();
+		}
 	}
 });
