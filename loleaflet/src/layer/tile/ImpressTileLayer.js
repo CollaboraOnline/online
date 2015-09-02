@@ -86,6 +86,10 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._lastValidPart = command.part;
 			this._map.fire('updatepart', {part: command.part, docType: this._docType});
 		}
+
+		// 1s after the last invalidation, update the preview
+		clearTimeout(this._previewInvalidator);
+		this._previewInvalidator = setTimeout(L.bind(this._invalidatePreview, this), 1000);
 	},
 
 	_onSetPartMsg: function (textMsg) {
@@ -124,6 +128,30 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				this._preFetchPart = this._selectedPart;
 				this._preFetchBorder = null;
 			}
-        }
+		}
+	},
+
+	_invalidatePreview: function () {
+		if (this._map._docPreviews) {
+			// invalidate part previews
+			for (var key in this._map._docPreviews) {
+				var preview = this._map._docPreviews[key];
+				if (preview.part === this._selectedPart ||
+					(preview.part === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) {
+					// if the current part needs its preview updated OR
+					// the part has been changed and we need to update the previous part preview
+					if (preview.part === this._prevSelectedPart) {
+						this._prevSelectedPartNeedsUpdate = false;
+					}
+					if (preview.autoUpdate) {
+						this._map.getPartPreview(preview.id, preview.part, preview.maxWidth, preview.maxHeight,
+								{autoUpdate: true});
+					}
+					else {
+						this._map.fire('invalidatepreview', {id: preview.id});
+					}
+				}
+			}
+		}
 	}
 });
