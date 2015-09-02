@@ -89,13 +89,32 @@ L.Socket = {
 		if (textMsg.startsWith('status:') && !this._map._docLayer) {
 			// first status message, we need to create the document layer
 			var command = this.parseServerCmd(textMsg);
-			this._map._docLayer = new L.TileLayer('', {
-				edit: this._map.options.edit,
-				readOnly: this._map.options.readOnly
-			});
-			this._map.addLayer(this._map._docLayer);
+			var docLayer = null;
+			if (command.style === 'text') {
+				docLayer = new L.WriterTileLayer('', {
+					edit: this._map.options.edit,
+					readOnly: this._map.options.readOnly
+				});
+			}
+			else if (command.style === 'spreadsheet') {
+				docLayer = new L.CalcTileLayer('', {
+					edit: this._map.options.edit,
+					readOnly: this._map.options.readOnly
+				});
+			}
+			else {
+				docLayer = new L.ImpressTileLayer('', {
+					edit: this._map.options.edit,
+					readOnly: this._map.options.readOnly
+				});
+			}
+
+			this._map._docLayer = docLayer;
+			this._map.addLayer(docLayer);
 		}
-		this._map._docLayer._onMessage(textMsg, imgBytes, index);
+		if (this._map._docLayer) {
+			this._map._docLayer._onMessage(textMsg, imgBytes, index);
+		}
 	},
 
 	_onSocketError: function () {

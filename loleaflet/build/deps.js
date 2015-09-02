@@ -51,6 +51,24 @@ var deps = {
 		deps: ['TileLayer']
 	},
 
+	WriterTileLayer: {
+		src: ['layer/tile/WriterTileLayer.js'],
+		desc: 'Writer tile layer.',
+		deps: ['TileLayer']
+	},
+
+	ImpressTileLayer: {
+		src: ['layer/tile/ImpressTileLayer.js'],
+		desc: 'Impress tile layer.',
+		deps: ['TileLayer']
+	},
+
+	WriterTileLayer: {
+		src: ['layer/tile/CalcTileLayer.js'],
+		desc: 'Calc tile layer.',
+		deps: ['TileLayer']
+	},
+
 	ImageOverlay: {
 		src: ['layer/ImageOverlay.js'],
 		desc: 'Used to display an image over a particular rectangular area of the map.'
