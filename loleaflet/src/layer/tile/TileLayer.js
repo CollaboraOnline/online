@@ -178,20 +178,23 @@ L.TileLayer = L.GridLayer.extend({
 		if (textMsg.startsWith('cursorvisible:')) {
 			this._onCursorVisibleMsg(textMsg);
 		}
-		else if (textMsg.startsWith('invalidatecursor:')) {
-			this._onInvalidateCursorMsg(textMsg);
-		}
-		else if (textMsg.startsWith('textselectionstart:')) {
-			this._onTextSelectionStartMsg(textMsg);
-		}
-		else if (textMsg.startsWith('textselectionend:')) {
-			this._onTextSelectionEndMsg(textMsg);
+		else if (textMsg.startsWith('error:')) {
+			this._onErrorMsg(textMsg);
 		}
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('invalidatecursor:')) {
+			this._onInvalidateCursorMsg(textMsg);
+		}
 		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.match('EMPTY')) {
 			this._onInvalidateTilesMsg(textMsg);
+		}
+		else if (textMsg.startsWith('searchnotfound:')) {
+			this._onSearchNotFoundMsg(textMsg);
+		}
+		else if (textMsg.startsWith('setpart:')) {
+			this._onSetPartMsg(textMsg);
 		}
 		else if (textMsg.startsWith('statechanged:')) {
 			this._onStateChangedMsg(textMsg);
@@ -202,8 +205,8 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('statusindicator')) {
 			this._onStatusIndicatorMsg(textMsg);
 		}
-		else if (textMsg.startsWith('tile:')) {
-			this._onTileMsg(textMsg, imgBytes, index);
+		else if (textMsg.startsWith('styles:')) {
+			this._onStylesMsg(textMsg);
 		}
 		else if (textMsg.startsWith('textselection:')) {
 			this._onTextSelectionMsg(textMsg);
@@ -211,17 +214,14 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('textselectioncontent:')) {
 			this._onTextSelectionContentMsg(textMsg);
 		}
-		else if (textMsg.startsWith('setpart:')) {
-			this._onSetPartMsg(textMsg);
+		else if (textMsg.startsWith('textselectionend:')) {
+			this._onTextSelectionEndMsg(textMsg);
 		}
-		else if (textMsg.startsWith('searchnotfound:')) {
-			this._onSearchNotFoundMsg(textMsg);
+		else if (textMsg.startsWith('textselectionstart:')) {
+			this._onTextSelectionStartMsg(textMsg);
 		}
-		else if (textMsg.startsWith('styles:')) {
-			this._onStylesMsg(textMsg);
-		}
-		else if (textMsg.startsWith('error:')) {
-			this._onErrorMsg(textMsg);
+		else if (textMsg.startsWith('tile:')) {
+			this._onTileMsg(textMsg, imgBytes, index);
 		}
 	},
 
