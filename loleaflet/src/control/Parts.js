@@ -4,6 +4,7 @@
 L.Map.include({
 	setPart: function (part) {
 		var docLayer = this._docLayer;
+		docLayer._prevSelectedPart = docLayer._selectedPart;
 		if (part === 'prev') {
 			if (docLayer._selectedPart > 0) {
 				docLayer._selectedPart -= 1;
@@ -33,9 +34,19 @@ L.Map.include({
 		docLayer._update();
 		docLayer._pruneTiles();
 		docLayer._clearSelections();
+		docLayer._prevSelectedPartNeedsUpdate = true;
+		if (docLayer._invalidatePreview) {
+			docLayer._invalidatePreview();
+		}
 	},
 
-	getPartPreview: function (id, part, maxWidth, maxHeight) {
+	getPartPreview: function (id, part, maxWidth, maxHeight, options) {
+		if (!this._docPreviews) {
+			this._docPreviews = {};
+		}
+		var autoUpdate = options ? options.autoUpdate : false;
+		this._docPreviews[id] = {id: id, part: part, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate};
+
 		var docLayer = this._docLayer;
 		var docRatio = docLayer._docWidthTwips / docLayer._docHeightTwips;
 		var imgRatio = maxWidth / maxHeight;
@@ -56,7 +67,14 @@ L.Map.include({
 							'id=' + id);
 	},
 
-	getDocPreview: function (id, maxWidth, maxHeight, x, y, width, height) {
+	getDocPreview: function (id, maxWidth, maxHeight, x, y, width, height, options) {
+		if (!this._docPreviews) {
+			this._docPreviews = {};
+		}
+		var autoUpdate = options ? options.autoUpdate : false;
+		this._docPreviews[id] = {id: id, maxWidth: maxWidth, maxHeight: maxHeight, x: x, y: y,
+			width: width, height: height, autoUpdate: autoUpdate};
+
 		var docLayer = this._docLayer;
 		var docRatio = width / height;
 		var imgRatio = maxWidth / maxHeight;
@@ -81,6 +99,12 @@ L.Map.include({
 							'tilewidth=' + width + ' ' +
 							'tileheight=' + height + ' ' +
 							'id=' + id);
+	},
+
+	removePreviewUpdate: function (id) {
+		if (this._docPreviews && this._docPreviews[id]) {
+			this._docPreviews[id].autoUpdate = false;
+		}
 	},
 
 	goToPage: function (page) {

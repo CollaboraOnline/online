@@ -90,10 +90,11 @@ Buttons like Bold, Italic, Strike through etc.
 Parts (like slides in presentation, or sheets in spreadsheets):
     - API:
         map.setPart('next' | 'prev' | partNumber)
-        map.getPartPreview(id, part, maxWidth, maxHeight) where:
+        map.getPartPreview(id, part, maxWidth, maxHeight, [options]) where:
             + id = the ID of the request so that the response can be identified
             + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
               image might be returned in order to keep the original ratio of the document
+            + options = {autoUpdate: true} - automatically updates the previews
         map.getNumberOfParts()
         map.getCurrentPartNumber()
     - events:
@@ -102,6 +103,8 @@ Parts (like slides in presentation, or sheets in spreadsheets):
             + e.parts == the number of parts that the document has
             + e.docType == 'text' | 'spreadsheet' | 'presentation' | 'drawing' | 'other'
             + [e.partNames] if present, part names (e.g. sheet names)
+        map.on('invalidatepreview', function (e) {})
+            + e.id = the preview's id
 
 Statusindicator (when the document is loading):
     - events
@@ -161,17 +164,20 @@ Writer pages:
         map.goToPage(page)
         map.getNumberOfPages()
         map.getCurrentPageNumber()
-        map.getDocPreview(id, maxWidth, maxHeight, x, y, width, height)
+        map.getDocPreview(id, maxWidth, maxHeight, x, y, width, height, [options])
             + id = the ID of the request so that the response can be identified
             + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
               image might be returned in order to keep the original ratio of the document
             + x/y = starting position, where to get the preview from
+            + options = {autoUpdate: true} - automatically updates the previews
 
     - events
         map.on('pagenumberchanged', function (e) {}) where:
             + e.currentPage = the page on which the cursor lies
             + e.pages = number of pages
             + e.docType = document type, should be 'text'
+        map.on('invalidatepreview', function (e) {})
+            + e.id = the preview's id
 
 Styles:
     - API:
