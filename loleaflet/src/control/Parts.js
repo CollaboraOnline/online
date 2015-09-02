@@ -5,17 +5,17 @@ L.Map.include({
 	setPart: function (part) {
 		var docLayer = this._docLayer;
 		if (part === 'prev') {
-			if (docLayer._currentPart > 0) {
-				docLayer._currentPart -= 1;
+			if (docLayer._selectedPart > 0) {
+				docLayer._selectedPart -= 1;
 			}
 		}
 		else if (part === 'next') {
-			if (docLayer._currentPart < docLayer._parts - 1) {
-				docLayer._currentPart += 1;
+			if (docLayer._selectedPart < docLayer._parts - 1) {
+				docLayer._selectedPart += 1;
 			}
 		}
 		else if (typeof (part) === 'number' && part >= 0 && part < docLayer._parts) {
-			docLayer._currentPart = part;
+			docLayer._selectedPart = part;
 		}
 		else {
 			return;
@@ -25,11 +25,11 @@ L.Map.include({
 			L.Socket.sendMessage('resetselection');
 		}
 		this.fire('updateparts', {
-			currentPart: docLayer._currentPart,
+			selectedPart: docLayer._selectedPart,
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
-		L.Socket.sendMessage('setclientpart part=' + docLayer._currentPart);
+		L.Socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
 		docLayer._update();
 		docLayer._pruneTiles();
 		docLayer._clearSelections();
@@ -114,7 +114,7 @@ L.Map.include({
 	},
 
 	getCurrentPartNumber: function () {
-		return this._docLayer._currentPart;
+		return this._docLayer._selectedPart;
 	},
 
 	getDocSize: function () {

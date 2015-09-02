@@ -15,7 +15,7 @@ L.Control.Tabs = L.Control.extend({
 
 	_updateDisabled: function (e) {
 		var parts = e.parts;
-		var currentPart = e.currentPart;
+		var selectedPart = e.selectedPart;
 		var docType = e.docType;
 		var partNames = e.partNames;
 		if (docType === 'text') {
@@ -47,7 +47,7 @@ L.Control.Tabs = L.Control.extend({
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
 				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'selected');
-				if (part === currentPart) {
+				if (part === selectedPart) {
 					L.DomUtil.addClass(this._spreadsheetTabs[key], 'selected');
 				}
 			}

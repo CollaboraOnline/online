@@ -62,17 +62,17 @@ L.Control.Parts = L.Control.extend({
 	_updateDisabled: function (e) {
 		var className = 'leaflet-disabled';
 		var parts = e.parts;
-		var currentPart = e.currentPart;
+		var selectedPart = e.selectedPart;
 		var docType = e.docType;
 		if (docType === 'text') {
 			return;
 		}
-		if (currentPart === 0) {
+		if (selectedPart === 0) {
 			L.DomUtil.addClass(this._prevPartButton, className);
 		} else {
 			L.DomUtil.removeClass(this._prevPartButton, className);
 		}
-		if (currentPart === parts - 1) {
+		if (selectedPart === parts - 1) {
 			L.DomUtil.addClass(this._nextPartButton, className);
 		} else {
 			L.DomUtil.removeClass(this._nextPartButton, className);

@@ -274,7 +274,7 @@ L.TileLayer = L.GridLayer.extend({
 			command.y = parseInt(strTwips[1]);
 			command.width = parseInt(strTwips[2]);
 			command.height = parseInt(strTwips[3]);
-			command.part = this._currentPart;
+			command.part = this._selectedPart;
 		}
 		if (this._docType === 'text') {
 			command.part = 0;
@@ -346,7 +346,7 @@ L.TileLayer = L.GridLayer.extend({
 				delete this._tileCache[key];
 			}
 		}
-		if (command.part === this._currentPart &&
+		if (command.part === this._selectedPart &&
 			command.part !== this._lastValidPart) {
 			this._lastValidPart = command.part;
 			this._map.fire('updatepart', {part: command.part, docType: this._docType});
@@ -361,11 +361,11 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
-		if (part !== this._currentPart && this._docType !== 'text') {
-			this._currentPart = part;
+		if (part !== this._selectedPart && this._docType !== 'text') {
+			this._selectedPart = part;
 			this._update();
 			this._clearSelections();
-			this._map.fire('setpart', {currentPart: this._currentPart});
+			this._map.fire('setpart', {selectedPart: this._selectedPart});
 		}
 		else if (this._docType === 'text') {
 			this._currentPage = part;
@@ -395,11 +395,11 @@ L.TileLayer = L.GridLayer.extend({
 			this._updateMaxBounds(true);
 			this._documentInfo = textMsg;
 			this._parts = command.parts;
-			this._currentPart = command.currentPart;
+			this._selectedPart = command.selectedPart;
 			if (this._docType === 'text') {
-				this._currentPart = 0;
+				this._selectedPart = 0;
 				this._parts = 1;
-				this._currentPage = command.currentPart;
+				this._currentPage = command.selectedPart;
 				this._pages = command.parts;
 				this._map.fire('pagenumberchanged', {
 					currentPage: this._currentPage,
@@ -408,20 +408,20 @@ L.TileLayer = L.GridLayer.extend({
 				});
 			}
 			else {
-				L.Socket.sendMessage('setclientpart part=' + this._currentPart);
+				L.Socket.sendMessage('setclientpart part=' + this._selectedPart);
 				var partNames = textMsg.match(/[^\r\n]+/g);
 				// only get the last matches
 				partNames = partNames.slice(partNames.length - this._parts);
 				this._map.fire('updateparts', {
-					currentPart: this._currentPart,
+					selectedPart: this._selectedPart,
 					parts: this._parts,
 					docType: this._docType,
 					partNames: partNames
 				});
 			}
 			this._update();
-			if (this._preFetchPart !== this._currentPart) {
-				this._preFetchPart = this._currentPart;
+			if (this._preFetchPart !== this._selectedPart) {
+				this._preFetchPart = this._selectedPart;
 				this._preFetchBorder = null;
 			}
 		}

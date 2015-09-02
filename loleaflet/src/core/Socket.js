@@ -160,7 +160,7 @@ L.Socket = {
 				command.parts = parseInt(tokens[i].substring(6));
 			}
 			else if (tokens[i].substring(0, 8) === 'current=') {
-				command.currentPart = parseInt(tokens[i].substring(8));
+				command.selectedPart = parseInt(tokens[i].substring(8));
 			}
 			else if (tokens[i].substring(0, 3) === 'id=') {
 				// remove newline characters

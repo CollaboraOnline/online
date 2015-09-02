@@ -470,7 +470,7 @@ L.GridLayer = L.Layer.extend({
 
 		for (var key in this._tiles) {
 			if (this._keyToTileCoords(key).z !== zoom ||
-					this._keyToTileCoords(key).part !== this._currentPart) {
+					this._keyToTileCoords(key).part !== this._selectedPart) {
 				this._tiles[key].current = false;
 			}
 		}
@@ -482,7 +482,7 @@ L.GridLayer = L.Layer.extend({
 			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
 				var coords = new L.Point(i, j);
 				coords.z = zoom;
-				coords.part = this._currentPart;
+				coords.part = this._selectedPart;
 
 				if (!this._isValidTile(coords)) { continue; }
 
@@ -619,7 +619,7 @@ L.GridLayer = L.Layer.extend({
 		var tilePos = this._getTilePos(coords),
 			key = this._tileCoordsToKey(coords);
 
-		if (coords.part === this._currentPart) {
+		if (coords.part === this._selectedPart) {
 			var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
 			this._initTile(tile);
@@ -660,7 +660,7 @@ L.GridLayer = L.Layer.extend({
 					'tileposy=' + twips.y + ' ' +
 					'tilewidth=' + this._tileWidthTwips + ' ' +
 					'tileheight=' + this._tileHeightTwips;
-			if (coords.part !== this._currentPart) {
+			if (coords.part !== this._selectedPart) {
 				msg += ' prefetch=true';
 			}
 			L.Socket.sendMessage(msg, key);
@@ -770,7 +770,7 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (!this._preFetchBorder) {
-			if (this._currentPart !== this._preFetchPart) {
+			if (this._selectedPart !== this._preFetchPart) {
 				// all tiles from the new part have to be pre-fetched
 				var tileBorder = this._preFetchBorder = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			}
@@ -855,36 +855,36 @@ L.GridLayer = L.Layer.extend({
 					tileBorder.max.x * this._tileWidthTwips < this._docWidthTwips ||
 					 tileBorder.max.y * this._tileHeightTwips < this._docHeightTwips) &&
 					this.options.preFetchOtherParts) {
-				var diff = this._preFetchPart - this._currentPart;
-				if (diff === 0 && this._currentPart < this._parts - 1) {
+				var diff = this._preFetchPart - this._selectedPart;
+				if (diff === 0 && this._selectedPart < this._parts - 1) {
 					this._preFetchPart += 1;
 					this._preFetchBorder = null;
 				}
-				else if (diff === 0 && this._currentPart > 0) {
+				else if (diff === 0 && this._selectedPart > 0) {
 					this._preFetchPart -= 1;
 					this._preFetchBorder = null;
 				}
 				else if (diff > 0) {
-					if (this._currentPart - diff >= 0) {
+					if (this._selectedPart - diff >= 0) {
 						// lower part number
-						this._preFetchPart = this._currentPart - diff;
+						this._preFetchPart = this._selectedPart - diff;
 						this._preFetchBorder = null;
 					}
-					else if (this._currentPart + diff + 1 < this._parts) {
+					else if (this._selectedPart + diff + 1 < this._parts) {
 						// higher part number
-						this._preFetchPart = this._currentPart + diff + 1;
+						this._preFetchPart = this._selectedPart + diff + 1;
 						this._preFetchBorder = null;
 					}
 				}
 				else if (diff < 0) {
-					if (this._currentPart - diff + 1 < this._parts) {
+					if (this._selectedPart - diff + 1 < this._parts) {
 						// higher part number
-						this._preFetchPart = this._currentPart - diff + 1;
+						this._preFetchPart = this._selectedPart - diff + 1;
 						this._preFetchBorder = null;
 					}
-					else if (this._currentPart + diff - 1 >= 0) {
+					else if (this._selectedPart + diff - 1 >= 0) {
 						// lower part number
-						this._preFetchPart = this._currentPart + diff - 1;
+						this._preFetchPart = this._selectedPart + diff - 1;
 						this._preFetchBorder = null;
 					}
 				}
@@ -908,7 +908,7 @@ L.GridLayer = L.Layer.extend({
 		}
 		var interval = 750;
 		var idleTime = 5000;
-		this._preFetchPart = this._currentPart;
+		this._preFetchPart = this._selectedPart;
 		this._preFetchIdle = setTimeout(L.bind(function () {
 			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), interval);
 		}, this), idleTime);
