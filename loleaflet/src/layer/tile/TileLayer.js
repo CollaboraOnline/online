@@ -549,6 +549,10 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.removeLayer(this._graphicMarker);
 			}
 			this._graphicMarker = L.rectangle(this._graphicSelection, {fill: false});
+			if (!this._graphicMarker) {
+				this._map.fire('error', {msg: 'Graphic marker initialization'});
+				return;
+			}
 			this._graphicMarker.editing.enable();
 			this._graphicMarker.on('editstart editend', this._onGraphicEdit, this);
 			this._map.addLayer(this._graphicMarker);
