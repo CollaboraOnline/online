@@ -79,6 +79,13 @@ L.WriterTileLayer = L.TileLayer.extend({
 				delete this._tileCache[key];
 			}
 		}
+		if (!this._previewInvalidations) {
+			this._previewInvalidations = [];
+		}
+		this._previewInvalidations.push(invalidBounds);
+		// 1s after the last invalidation, update the preview
+		clearTimeout(this._previewInvalidator);
+		this._previewInvalidator = setTimeout(L.bind(this._invalidatePreview, this), 1000);
 	},
 
 	_onSetPartMsg: function (textMsg) {
@@ -111,5 +118,41 @@ L.WriterTileLayer = L.TileLayer.extend({
 			this._resetPreFetching(true);
 			this._update();
 		}
+	},
+
+	_invalidatePreview: function () {
+		// invalidate writer page previews
+		if (this._map._docPreviews && this._previewInvalidations) {
+			var toInvalidate = {};
+			for (var i = 0; i < this._previewInvalidations.length; i++) {
+				var invalidBounds = this._previewInvalidations[i];
+				var invalidPixBounds = new L.Bounds(
+						invalidBounds.min.divideBy(this.options.tileWidthTwips).multiplyBy(this._tileSize),
+						invalidBounds.max.divideBy(this.options.tileWidthTwips).multiplyBy(this._tileSize));
+
+				for (var key in this._map._docPreviews) {
+					// find preview tiles that need to be updated and add them in a set
+					var preview = this._map._docPreviews[key];
+					var bounds = new L.Bounds(new L.Point(preview.x, preview.y),
+											  new L.Point(preview.x + preview.width, preview.y + preview.height));
+					if (invalidPixBounds.intersects(bounds)) {
+						toInvalidate[key] = true;
+					}
+				}
+
+				for (key in toInvalidate) {
+					// update invalid preview tiles
+					preview = this._map._docPreviews[key];
+					if (preview.autoUpdate) {
+						this._map.getDocPreview(preview.id, preview.maxWidth, preview.maxHeight,
+								preview.x, preview.y, preview.width, preview.height, {autoUpdate: true});
+					}
+					else {
+						this._map.fire('invalidatepreview', {id: preview.id});
+					}
+				}
+			}
+		}
+		this._previewInvalidations = [];
 	}
 });
