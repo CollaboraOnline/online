@@ -86,6 +86,16 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	_onSetPartMsg: function (textMsg) {
+		var part = parseInt(textMsg.match(/\d+/g)[0]);
+		if (part !== this._selectedPart) {
+			this._selectedPart = part;
+			this._update();
+			this._clearSelections();
+			this._map.fire('setpart', {selectedPart: this._selectedPart});
+		}
+	},
+
 	_onStatusMsg: function (textMsg) {
 		var command = L.Socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
@@ -106,6 +116,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 				docType: this._docType,
 				partNames: partNames
 			});
+			this._resetPreFetching(true);
 			this._update();
 			if (this._preFetchPart !== this._selectedPart) {
 				this._preFetchPart = this._selectedPart;

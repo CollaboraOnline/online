@@ -271,24 +271,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('search', {originalPhrase: originalPhrase, count: 0});
 	},
 
-	_onSetPartMsg: function (textMsg) {
-		var part = parseInt(textMsg.match(/\d+/g)[0]);
-		if (part !== this._selectedPart && this._docType !== 'text') {
-			this._selectedPart = part;
-			this._update();
-			this._clearSelections();
-			this._map.fire('setpart', {selectedPart: this._selectedPart});
-		}
-		else if (this._docType === 'text') {
-			this._currentPage = part;
-			this._map.fire('pagenumberchanged', {
-				currentPage: part,
-				pages: this._pages,
-				docType: this._docType
-			});
-		}
-	},
-
 	_onStateChangedMsg: function (textMsg) {
 		var unoMsg = textMsg.substr(14);
 		var unoCmd = unoMsg.match('.uno:(.*)=')[1];

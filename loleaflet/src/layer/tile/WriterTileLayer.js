@@ -81,9 +81,18 @@ L.WriterTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	_onSetPartMsg: function (textMsg) {
+		var part = parseInt(textMsg.match(/\d+/g)[0]);
+		this._currentPage = part;
+		this._map.fire('pagenumberchanged', {
+			currentPage: part,
+			pages: this._pages,
+			docType: this._docType
+		});
+	},
+
 	_onStatusMsg: function (textMsg) {
 		var command = L.Socket.parseServerCmd(textMsg);
-		console.log(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
@@ -99,6 +108,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 				pages: this._pages,
 				docType: this._docType
 			});
+			this._resetPreFetching(true);
 			this._update();
 		}
 	}
