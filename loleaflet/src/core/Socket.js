@@ -17,7 +17,6 @@ L.Socket = {
 		this.socket.onopen = L.bind(this._onOpen, this);
 		this.socket.onmessage = L.bind(this._onMessage, this);
 		this.socket.binaryType = 'arraybuffer';
-		return this.socket;
 	},
 
 	close: function () {
@@ -29,7 +28,7 @@ L.Socket = {
 	sendMessage: function (msg, coords) {
 		var socketState = this.socket.readyState;
 		if (socketState === 2 || socketState === 3) {
-			this._socket = this.connect(this._map);
+			this.connect(this._map);
 			this._msgQueue.push({msg: msg, coords: coords});
 		}
 
