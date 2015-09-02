@@ -3,6 +3,10 @@
  */
 
 L.Control.PartsPreview = L.Control.extend({
+	options: {
+		autoUpdate: true
+	},
+
 	onAdd: function (map) {
 		this._previewInitialized = false;
 		this._previewTiles = {};
@@ -42,7 +46,7 @@ L.Control.PartsPreview = L.Control.extend({
 					.on(img, 'click', L.DomEvent.stop)
 					.on(img, 'click', this._setPart, this)
 					.on(img, 'click', this._refocusOnMap, this);
-				this._map.getPartPreview(i, i, 180, 180);
+				this._map.getPartPreview(i, i, 180, 180, {autoUpdate: this.options.autoUpdate});
 			}
 			this._previewInitialized = true;
 		}
@@ -57,7 +61,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_updatePart: function (e) {
 		if (e.docType === 'presentation') {
-			this._map.getPartPreview(e.part, e.part, 180, 180);
+			this._map.getPartPreview(e.part, e.part, 180, 180, {autoUpdate: this.options.autoUpdate});
 		}
 	},
 
