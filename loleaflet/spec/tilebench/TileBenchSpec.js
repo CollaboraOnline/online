@@ -16,36 +16,23 @@ describe('TileBench', function () {
 	before(function () {
 		// initialize the map and load the document
 		map = L.map('map', {
-			center: [0, 0],
-			zoom: 10,
-			minZoom: 1,
-			maxZoom: 20,
 			server: 'ws://localhost:9980',
-			doubleClickZoom: false
-		});
-
-		var docLayer = new L.TileLayer('', {
 			doc: 'file:///home/mihai/Desktop/test_docs/eval.odt',
-			useSocket : true,
 			edit: false,
 			readOnly: false
 		});
 
 		// add a timestamp to tile messages so we can identify
 		// the response
-		docLayer.sendMessage = L.bind(function (msg, coords) {
+		L.Socket.sendMessage = L.bind(function (msg, coords) {
 			var now = Date.now();
 			if (msg.startsWith('tile')) {
 				msg += ' timestamp=' + now;
 			}
 			L.Log.log(msg, L.OUTGOING, coords, now);
-			this._map.socket.send(msg);
-		}, docLayer);
+			this.socket.send(msg);
+		}, L.Socket);
 
-		// don't pre-fetch tiles
-		docLayer._preFetchTiles = L.Util.falseFn;
-
-		map.addLayer(docLayer);
 		map.addControl(L.control.scroll());
 	});
 
@@ -54,15 +41,14 @@ describe('TileBench', function () {
 	});
 
 	after(function () {
-		map.socket.onclose = undefined;
-		map.socket.onerror = undefined;
-		map.socket.close();
+		map.remove();
 	});
 
 	describe('Benchmarking', function () {
 		it('Load all new tiles', function (done) {
 			map.on('statusindicator', function (e) {
 				if (e.statusType === 'alltilesloaded') {
+					map.fire('requestloksession');
 					done();
 				}
 			});
@@ -90,7 +76,7 @@ describe('TileBench', function () {
 				var y = Math.floor(docLayer._docHeightTwips / docLayer._tileHeightTwips);
 				var coords = new L.Point(x, y);
 				coords.z = map.getZoom();
-				coords.part = docLayer._currentPart;
+				coords.part = docLayer._selectedPart;
 				var key = docLayer._tileCoordsToKey(coords);
 				if (docLayer._tiles[key]) {
 					// the tile is already here, the whole document is loaded
@@ -102,7 +88,7 @@ describe('TileBench', function () {
 
 			for (var i = 0; i < keyInput.length; i++) {
 				setTimeout(L.bind(function () {
-					map._docLayer.sendMessage(keyInput[this][1]);
+					L.Socket.sendMessage(keyInput[this][1]);
 				}, i), keyInput[i][0]);
 			}
 		});

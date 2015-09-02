@@ -15,34 +15,11 @@ describe('TileBench', function () {
 	before(function () {
 		// initialize the map and load the document
 		map = L.map('map', {
-			center: [0, 0],
-			zoom: 10,
-			minZoom: 1,
-			maxZoom: 20,
 			server: 'ws://localhost:9980',
-			doubleClickZoom: false
-		});
-
-		var docLayer = new L.TileLayer('', {
 			doc: 'file:///home/mihai/Desktop/test_docs/eval.odt',
-			useSocket : true,
 			edit: false,
 			readOnly: false
 		});
-
-		docLayer.sendMessage = L.bind(function (msg, coords) {
-			var now = Date.now();
-			if (msg.startsWith('tile')) {
-				msg += ' timestamp=' + now;
-			}
-			L.Log.log(msg, L.OUTGOING, coords, now);
-			this._map.socket.send(msg);
-		}, docLayer);
-
-		// don't pre-fetch tiles
-		docLayer._preFetchTiles = L.Util.falseFn;
-
-		map.addLayer(docLayer);
 	});
 
 	afterEach(function () {

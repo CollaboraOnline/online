@@ -15,16 +15,9 @@ describe('LoadTest', function () {
 		if (docPath === 'file:///PATH') {
 			throw new Error('Document file path not set');
 		}
-
-		map = L.map('map-test', {
-			center: [0, 0],
-			zoom: 10,
-			minZoom: 1,
-			maxZoom: 20,
-			server: 'ws://localhost:9980',
-			doubleClickZoom: false
-		});
-		map.on('docsize', function (e) { x = e.x; y = e.y; }, this);
+		else if (docPath[docPath.length - 1] !== '/') {
+			docPath += '/';
+		}
 	});
 
 	var docPath = 'file:///PATH';
@@ -39,28 +32,23 @@ describe('LoadTest', function () {
 			});
 
 			after(function () {
-				map.removeLayer(docLayer);
+				map.remove();
 			});
 
 			it('Load the document', function (done) {
-				map._initSocket();
-				map.on('statusindicator', function (e) {
-					if (e.statusType === 'alltilesloaded') {
-						done();
-					}
-				});
-
-				docLayer = new L.TileLayer('', {
+				map = L.map('map-test', {
+					server: 'ws://localhost:9980',
 					doc: docPath + testDoc,
-					useSocket : true,
 					edit: false,
 					readOnly: false
 				});
 
-				// don't pre-fetch tiles
-				docLayer._preFetchTiles = L.Util.falseFn;
-
-				map.addLayer(docLayer);
+				map.on('statusindicator', function (e) {
+					if (e.statusType === 'alltilesloaded') {
+						y = map.getDocSize().y;
+						done();
+					}
+				});
 			});
 
 			it('Scroll to the middle', function (done) {
