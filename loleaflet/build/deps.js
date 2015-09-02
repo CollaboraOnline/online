@@ -63,7 +63,7 @@ var deps = {
 		deps: ['TileLayer']
 	},
 
-	WriterTileLayer: {
+	CalcTileLayer: {
 		src: ['layer/tile/CalcTileLayer.js'],
 		desc: 'Calc tile layer.',
 		deps: ['TileLayer']

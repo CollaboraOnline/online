@@ -90,13 +90,13 @@ L.Socket = {
 			// first status message, we need to create the document layer
 			var command = this.parseServerCmd(textMsg);
 			var docLayer = null;
-			if (command.style === 'text') {
+			if (command.type === 'text') {
 				docLayer = new L.WriterTileLayer('', {
 					edit: this._map.options.edit,
 					readOnly: this._map.options.readOnly
 				});
 			}
-			else if (command.style === 'spreadsheet') {
+			else if (command.type === 'spreadsheet') {
 				docLayer = new L.CalcTileLayer('', {
 					edit: this._map.options.edit,
 					readOnly: this._map.options.readOnly
