@@ -174,7 +174,7 @@ L.TileLayer = L.GridLayer.extend({
 		return tile;
 	},
 
-	_onMessage: function (textMsg, imgBytes, index) {
+	_onMessage: function (textMsg, img) {
 		if (textMsg.startsWith('cursorvisible:')) {
 			this._onCursorVisibleMsg(textMsg);
 		}
@@ -221,7 +221,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._onTextSelectionStartMsg(textMsg);
 		}
 		else if (textMsg.startsWith('tile:')) {
-			this._onTileMsg(textMsg, imgBytes, index);
+			this._onTileMsg(textMsg, img);
 		}
 	},
 
@@ -379,22 +379,13 @@ L.TileLayer = L.GridLayer.extend({
 
 	},
 
-	_onTileMsg: function (textMsg, imgBytes, index) {
+	_onTileMsg: function (textMsg, img) {
 		var command = L.Socket.parseServerCmd(textMsg);
 		var coords = this._twipsToCoords(command);
 		coords.z = command.zoom;
 		coords.part = command.part;
-		var data = imgBytes.subarray(index + 1);
-
-		// read the tile data
-		var strBytes = '';
-		for (var i = 0; i < data.length; i++) {
-			strBytes += String.fromCharCode(data[i]);
-		}
-
 		var key = this._tileCoordsToKey(coords);
 		var tile = this._tiles[key];
-		var img = 'data:image/png;base64,' + window.btoa(strBytes);
 		if (command.id !== undefined) {
 			this._map.fire('tilepreview', {
 				tile: img,

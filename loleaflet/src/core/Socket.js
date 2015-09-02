@@ -84,6 +84,15 @@ L.Socket = {
 				textMsg = String.fromCharCode.apply(null, imgBytes);
 			}
 		}
+		else {
+			var data = imgBytes.subarray(index + 1);
+			// read the tile data
+			var strBytes = '';
+			for (var i = 0; i < data.length; i++) {
+				strBytes += String.fromCharCode(data[i]);
+			}
+			var img = 'data:image/png;base64,' + window.btoa(strBytes);
+		}
 
 		if (textMsg.startsWith('status:') && !this._map._docLayer) {
 			// first status message, we need to create the document layer
@@ -112,7 +121,7 @@ L.Socket = {
 			this._map.addLayer(docLayer);
 		}
 		if (this._map._docLayer) {
-			this._map._docLayer._onMessage(textMsg, imgBytes, index);
+			this._map._docLayer._onMessage(textMsg, img);
 		}
 	},
 
