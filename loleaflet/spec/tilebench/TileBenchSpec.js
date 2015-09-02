@@ -32,8 +32,6 @@ describe('TileBench', function () {
 			L.Log.log(msg, L.OUTGOING, coords, now);
 			this.socket.send(msg);
 		}, L.Socket);
-
-		map.addControl(L.control.scroll());
 	});
 
 	afterEach(function () {
@@ -91,26 +89,6 @@ describe('TileBench', function () {
 					L.Socket.sendMessage(keyInput[this][1]);
 				}, i), keyInput[i][0]);
 			}
-		});
-
-		it('Scroll to the bottom', function (done) {
-			$('.scroll-container').mCustomScrollbar('scrollTo', 'bottom', {scrollInertia: 3000});
-			// check how we're doing 200ms after the scroll has ended
-			// (allow enough time to request new tiles)
-			timeOut = setTimeout(function () {
-				if (map._docLayer._emptyTilesCount === 0) {
-					// no pending tile requests
-					done();
-				}
-				else {
-					map.on('statusindicator', L.bind(function (e) {
-						if (e.statusType === 'alltilesloaded') {
-							clearTimeout(timeOut);
-							done();
-						}
-					}, done));
-				}
-			}, 3200);
 		});
 	});
 
