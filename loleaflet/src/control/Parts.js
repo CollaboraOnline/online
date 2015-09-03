@@ -31,9 +31,9 @@ L.Map.include({
 			docType: docLayer._docType
 		});
 		L.Socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
+		docLayer._clearSelections();
 		docLayer._update();
 		docLayer._pruneTiles();
-		docLayer._clearSelections();
 		docLayer._prevSelectedPartNeedsUpdate = true;
 		if (docLayer._invalidatePreview) {
 			docLayer._invalidatePreview();

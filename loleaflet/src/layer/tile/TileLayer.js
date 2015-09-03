@@ -105,7 +105,6 @@ L.TileLayer = L.GridLayer.extend({
 		map._fadeAnimated = false;
 		this._viewReset();
 		map.on('drag resize zoomend', this._updateScrollOffset, this);
-		map.on('clearselection', this._clearSelections, this);
 		map.on('copy', this._onCopy, this);
 		map.on('zoomend', this._onUpdateCursor, this);
 		map.on('dragstart', this._onDragStart, this);
@@ -300,7 +299,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onTextSelectionMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
-		this._clearSelections();
+		this._selections.clearLayers();
 		if (strTwips != null) {
 			var rectangles = [];
 			var selectionCenter = new L.Point(0, 0);
@@ -438,7 +437,16 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_clearSelections: function () {
+		// hide the cursor
+		this._isCursorOverlayVisible = false;
+		this._onUpdateCursor();
+		// hide the text selection
 		this._selections.clearLayers();
+		// hide the selection handles
+		this._onUpdateTextSelection();
+		// hide the graphic selection
+		this._graphicSelection = null;
+		this._onUpdateGraphicSelection();
 	},
 
 	_postMouseEvent: function(type, x, y, count) {
@@ -534,7 +542,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update group layer selection handler.
 	_onUpdateGraphicSelection: function () {
-		if (!this._isEmptyRectangle(this._graphicSelection)) {
+		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
 			if (this._graphicMarker) {
 				this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
 				this._map.removeLayer(this._graphicMarker);

@@ -91,7 +91,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 		if (part !== this._selectedPart) {
 			this._selectedPart = part;
 			this._update();
-			this._clearSelections();
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
 		}
 	},
