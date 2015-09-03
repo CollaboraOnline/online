@@ -25,6 +25,10 @@ L.Map.Mouse = L.Handler.extend({
 
 	_onMouseEvent: function (e) {
 		var docLayer = this._map._docLayer;
+		if (!docLayer) {
+			// document not yet loaded
+			return;
+		}
 		if (docLayer._graphicMarker && docLayer._graphicMarker.isDragged) {
 			return;
 		}
