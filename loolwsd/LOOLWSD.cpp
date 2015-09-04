@@ -894,6 +894,12 @@ void LOOLWSD::desktopMain()
     linkOrCopy(LOOLWSD::sysTemplate, jail);
     linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
 
+    // We need this because sometimes the hostname is not resolved
+    File resolv("/etc/resolv.conf");
+    if (resolv.exists())
+    {
+        resolv.copyTo(Path(jail, "/etc").toString());
+    }
 #ifdef __linux
     // Create the urandom and random devices
     File(Path(jail, "/dev")).createDirectory();
