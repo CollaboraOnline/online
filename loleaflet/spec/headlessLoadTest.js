@@ -9,7 +9,7 @@ if (typeof String.prototype.startsWith != 'function') {
 
 describe('LoadTest', function () {
 	// 10s timeout
-	this.timeout(10000);
+	this.timeout(20000);
 	// set the slow time to 5ms knowing each test takes more than that,
 	// so the run time is always printed
 	this.slow(5);
