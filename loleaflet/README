@@ -97,6 +97,9 @@ Parts (like slides in presentation, or sheets in spreadsheets):
             + options = {autoUpdate: true} - automatically updates the previews
         map.getNumberOfParts()
         map.getCurrentPartNumber()
+        map.removePreviewUpdate(id)
+            + id = the preview's id
+
     - events:
         map.on('updateparts', function (e) {}) where:
             + e.currentPart is the current part
@@ -177,6 +180,8 @@ Writer pages:
               image might be returned in order to keep the original ratio of the document
             + x/y = starting position, where to get the preview from
             + options = {autoUpdate: true} - automatically updates the previews
+        map.removePreviewUpdate(id)
+            + id = the preview's id
 
     - events
         map.on('pagenumberchanged', function (e) {}) where:
