@@ -900,6 +900,11 @@ void LOOLWSD::desktopMain()
     {
         resolv.copyTo(Path(jail, "/etc").toString());
     }
+    File hosts("/etc/hosts");
+    if (hosts.exists())
+    {
+        hosts.copyTo(Path(jail, "/etc").toString());
+    }
 #ifdef __linux
     // Create the urandom and random devices
     File(Path(jail, "/dev")).createDirectory();
