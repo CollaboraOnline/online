@@ -901,6 +901,9 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_resetPreFetching: function (resetBorder) {
+		if (!this._map) {
+			return;
+		}
 		clearInterval(this._tilesPreFetcher);
 		clearTimeout(this._preFetchIdle);
 		if (resetBorder) {
