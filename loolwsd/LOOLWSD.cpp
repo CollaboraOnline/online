@@ -895,7 +895,7 @@ void LOOLWSD::desktopMain()
     linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
 
     // We need this because sometimes the hostname is not resolved
-    std::vector<std::string> networkFiles = {"/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+    std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
     for (std::vector<std::string>::iterator it = networkFiles.begin(); it != networkFiles.end(); ++it)
     {
         File networkFile(*it);
