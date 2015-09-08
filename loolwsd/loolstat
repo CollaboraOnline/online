@@ -79,7 +79,7 @@ LOOLWSD=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | 
 LOOLBROKER=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolbroker,' | $WC -l);
 
 # get the number of running processes.
-LOOLKIT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^loolkit,' | $WC -l);
+LOOLKIT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -o '^libreofficekit,' | $WC -l);
 
 # get the number of running threads.
 LOOLWSD_THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{.*}' | $WC -l);
@@ -105,5 +105,5 @@ $TOP -bn 1 -p $LOOLWSD_PID | $GREP -E 'loolwsd|COMMAND'
 printf "\n %-10s %d\n" "Running loolbroker process:" "$LOOLBROKER";
 $TOP -bn 1 | $GREP -E 'loolbroker|COMMAND'
 printf "\n%-10s %d\n" "Running LibreOfficeKit process:" "$LOOLKIT";
-$TOP -bn 1 | $GREP -E 'loolkit|COMMAND'
+$TOP -bn 1 | $GREP -E 'libreofficekit|COMMAND'
 
