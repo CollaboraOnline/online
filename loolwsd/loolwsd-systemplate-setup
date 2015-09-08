@@ -30,6 +30,8 @@ cd / || exit 1
 	     lib/libnss_* lib64/libnss_* \
 	     var/cache/fontconfig \
 	     etc/fonts \
+	     etc/localtime \
+	     usr/share/zoneinfo/* \
 	     usr/share/liblangtag \
 	     lib/*-linux-gnu/libnss* \
 		 -type f
