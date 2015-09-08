@@ -895,15 +895,14 @@ void LOOLWSD::desktopMain()
     linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
 
     // We need this because sometimes the hostname is not resolved
-    File resolv("/etc/resolv.conf");
-    if (resolv.exists())
+    std::vector<std::string> networkFiles = {"/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+    for (std::vector<std::string>::iterator it = networkFiles.begin(); it != networkFiles.end(); ++it)
     {
-        resolv.copyTo(Path(jail, "/etc").toString());
-    }
-    File hosts("/etc/hosts");
-    if (hosts.exists())
-    {
-        hosts.copyTo(Path(jail, "/etc").toString());
+        File networkFile(*it);
+        if (networkFile.exists())
+        {
+            networkFile.copyTo(Path(jail, "/etc").toString());
+        }
     }
 #ifdef __linux
     // Create the urandom and random devices
