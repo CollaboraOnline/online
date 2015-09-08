@@ -122,9 +122,12 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
   printf("Process ID    :%20ld\n", proc_id);
   printf("--------------------------------------\n");
   printf("Shared Clean  :%20ld kB\n", total_shared_clean);
-  printf("Shared Diry   :%20ld kB\n", total_shared_dirty);
+  printf("Shared Dirty  :%20ld kB\n", total_shared_dirty);
   printf("Private Clean :%20ld kB\n", total_private_clean);
-  printf("Private Diry  :%20ld kB\n\n", total_private_dirty);
+  printf("Private Dirty :%20ld kB\n", total_private_dirty);
+  printf("--------------------------------------\n");
+  printf("Shared        :%20ld kB\n", total_shared_clean + total_shared_dirty);
+  printf("Private       :%20ld kB\n\n", total_private_clean + total_private_dirty);
 }
 
 int main(int argc, char **argv)
