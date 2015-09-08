@@ -14,10 +14,13 @@ describe('TileBench', function () {
 	}
 
 	before(function () {
+		var htmlPath = window.location.pathname;
+		var dir = htmlPath.substring(0, htmlPath.lastIndexOf('/'));
+		var fileURL = 'file://' + dir + '/data/lorem.odt';
 		// initialize the map and load the document
 		map = L.map('map', {
 			server: 'ws://localhost:9980',
-			doc: 'file:///home/mihai/Desktop/test_docs/eval.odt',
+			doc: fileURL,
 			edit: false,
 			readOnly: false
 		});
