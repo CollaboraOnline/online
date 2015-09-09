@@ -343,9 +343,9 @@ var deps = {
 		desc: 'Permission change handler (edit, view, readonly).'
 	},
 
-	Buttons: {
-		src: ['control/Buttons.js'],
-		desc: 'Toolbar buttons handler.'
+	Toolbar: {
+		src: ['control/Toolbar.js'],
+		desc: 'Toolbar handler.'
 	},
 
 	Parts: {

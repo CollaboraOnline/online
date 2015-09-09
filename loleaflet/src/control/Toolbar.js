@@ -1,5 +1,5 @@
 /*
- * Toolbar buttons handler
+ * Toolbar handler
  */
 L.Map.include({
 	toggleCommandState: function (unoState) {
