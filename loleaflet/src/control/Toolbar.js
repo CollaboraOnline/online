@@ -4,12 +4,12 @@
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
-	unoToolbarCommands: {
-		'.uno:StyleApply': 'styles'
-	},
+	unoToolbarCommands: [
+		'.uno:StyleApply'
+	],
 
-	getStyles: function () {
-		return this._docLayer._docStyles;
+	getToolbarCommandValues: function (command) {
+		return this._docLayer._toolbarCommandValues[command];
 	},
 
 	saveAs: function (url, format, options) {

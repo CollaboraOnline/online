@@ -191,21 +191,21 @@ Writer pages:
         map.on('invalidatepreview', function (e) {})
             + e.id = the preview's id
 
-Styles:
-    - API:
-        map.getStyles()
-            + returns a JSON object as a mapping of style families to a list of styles
-        map.setStyle(style, familyName)
-    - events:
-        map.on('updatestyles', function (e) {}) where:
-            e.styles = a JSON object as a mapping of style families to a list of styles
-
 Error:
     - events
         map.on('error', function (e) {}) where
             + [e.msg] = a message describing the error
             + [e.cmd] = the command that caused the error
             + [e.kind] = the kind of error
+
+CommandValues:
+    - api:
+        map.getToolbarCommandValues(command)
+            + returns a JSON mapping of all possible values for the command
+    - events
+        map.on('updatetoolbarcommandvalues', function (e) {}) where
+            + e.commandName = '.uno:StyleAplly', etc
+            + e.commandValues = a JSON mapping of all possible values for the command
 
 Testing
 -------

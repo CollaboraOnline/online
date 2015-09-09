@@ -91,10 +91,12 @@ L.TileLayer = L.GridLayer.extend({
 		});
 		this._emptyTilesCount = 0;
 		this._msgQueue = [];
+		this._toolbarCommandValues = {};
 	},
 
     onAdd: function (map) {
 		this._initContainer();
+		this._getToolbarCommandsValues();
 		this._selections = new L.LayerGroup();
 		map.addLayer(this._selections);
 
@@ -173,8 +175,18 @@ L.TileLayer = L.GridLayer.extend({
 		return tile;
 	},
 
+	_getToolbarCommandsValues: function() {
+		for (var i = 0; i < this._map.unoToolbarCommands.length; i++) {
+			var command = this._map.unoToolbarCommands[i];
+			L.Socket.sendMessage('commandvalues command=' + command);
+		}
+	},
+
 	_onMessage: function (textMsg, img) {
-		if (textMsg.startsWith('cursorvisible:')) {
+		if (textMsg.startsWith('commandvalues:')) {
+			this._onCommandValuesMsg(textMsg);
+		}
+		else if (textMsg.startsWith('cursorvisible:')) {
 			this._onCursorVisibleMsg(textMsg);
 		}
 		else if (textMsg.startsWith('error:')) {
@@ -204,9 +216,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('statusindicator')) {
 			this._onStatusIndicatorMsg(textMsg);
 		}
-		else if (textMsg.startsWith('styles:')) {
-			this._onStylesMsg(textMsg);
-		}
 		else if (textMsg.startsWith('textselection:')) {
 			this._onTextSelectionMsg(textMsg);
 		}
@@ -221,6 +230,17 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('tile:')) {
 			this._onTileMsg(textMsg, img);
+		}
+	},
+
+	_onCommandValuesMsg: function (textMsg) {
+		var obj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		if (this._map.unoToolbarCommands.indexOf(obj.commandName) !== -1) {
+			this._toolbarCommandValues[obj.commandName] = obj.commandValues;
+			this._map.fire('updatetoolbarcommandvalues', {
+				commandName: obj.commandName,
+				commandValues: obj.commandValues
+			});
 		}
 	},
 
@@ -290,11 +310,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('statusindicatorfinish:')) {
 			this._map.fire('statusindicator', {statusType : 'finish'});
 		}
-	},
-
-	_onStylesMsg: function (textMsg) {
-		this._docStyles = JSON.parse(textMsg.substring(8));
-		this._map.fire('updatestyles', {styles: this._docStyles});
 	},
 
 	_onTextSelectionMsg: function (textMsg) {

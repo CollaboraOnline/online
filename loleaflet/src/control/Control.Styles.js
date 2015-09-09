@@ -12,7 +12,7 @@ L.Control.Styles = L.Control.extend({
 		this._container = L.DomUtil.create('select', stylesName + ' leaflet-bar');
 
 		map.on('updatepermission', this._onUpdatePermission, this);
-		map.on('updatestyles', this._initList, this);
+		map.on('updatetoolbarcommandvalues', this._initList, this);
 		L.DomEvent.on(this._container, 'change', this._onChange, this);
 
 		return this._container;
@@ -23,16 +23,18 @@ L.Control.Styles = L.Control.extend({
 	},
 
 	_initList: function (e) {
-		var container = this._container;
-		var first = L.DomUtil.create('option', '', container);
-		first.innerHTML = this.options.info;
-		if (this._map._docLayer._docType === 'text') {
-			var styles = e.styles.ParagraphStyles.slice(0, 12);
-			styles.forEach(function (style) {
-				var item = L.DomUtil.create('option', '', container);
-				item.value = style;
-				item.innerHTML = style;
-			});
+		if (e.commandName === '.uno:StyleApply') {
+			var container = this._container;
+			var first = L.DomUtil.create('option', '', container);
+			first.innerHTML = this.options.info;
+			if (this._map._docLayer._docType === 'text') {
+				var styles = e.commandValues.ParagraphStyles.slice(0, 12);
+				styles.forEach(function (style) {
+					var item = L.DomUtil.create('option', '', container);
+					item.value = style;
+					item.innerHTML = style;
+				});
+			}
 		}
 	},
 
