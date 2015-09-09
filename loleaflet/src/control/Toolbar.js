@@ -30,11 +30,13 @@ L.Map.include({
 			this.fire('error', {cmd: 'setStyle', kind: 'incorrectparam'});
 			return;
 		}
-		var msg = 'uno .uno:StyleApply {' +
-				'"Style":{"type":"string", "value": "' + style + '"},' +
-				'"FamilyName":{"type":"string", "value":"' + familyName + '"}' +
-				'}';
-		L.Socket.sendMessage(msg);
+		if (this._docLayer._permission === 'edit') {
+			var msg = 'uno .uno:StyleApply {' +
+					'"Style":{"type":"string", "value": "' + style + '"},' +
+					'"FamilyName":{"type":"string", "value":"' + familyName + '"}' +
+					'}';
+			L.Socket.sendMessage(msg);
+		}
 	},
 
 	toggleCommandState: function (unoState) {
