@@ -5,7 +5,7 @@ L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
 	unoToolbarCommands: {
-		'uno.StyleApply': 'styles'
+		'.uno:StyleApply': 'styles'
 	},
 
 	getStyles: function () {
