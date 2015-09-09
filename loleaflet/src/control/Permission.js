@@ -31,5 +31,13 @@ L.Map.include({
 			return;
 		}
 		this.dragging.enable();
+	},
+
+	isSelectionEnabled: function () {
+		return !this.dragging.enabled();
+	},
+
+	getPermission: function () {
+		return this._docLayer._permission;
 	}
 });
