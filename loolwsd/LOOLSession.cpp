@@ -28,8 +28,11 @@
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
+#include <Poco/Dynamic/Var.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/Net/HTTPStreamFactory.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
@@ -57,8 +60,11 @@
 
 using namespace LOOLProtocol;
 
+using Poco::Dynamic::Var;
 using Poco::File;
 using Poco::IOException;
+using Poco::JSON::Object;
+using Poco::JSON::Parser;
 using Poco::Net::HTTPStreamFactory;
 using Poco::Net::WebSocket;
 using Poco::Path;
@@ -198,9 +204,15 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             {
                 peer->_tileCache->saveTextFile(std::string(buffer, length), "status.txt");
             }
-            else if (tokens[0] == "styles:")
+            else if (tokens[0] == "commandvalues:")
             {
-                peer->_tileCache->saveTextFile(std::string(buffer, length), "styles.txt");
+                std::string stringMsg(buffer);
+                std::string stringJSON = stringMsg.substr(stringMsg.find_first_of("{"));
+                Parser parser;
+                Var result = parser.parse(stringJSON);
+                Object::Ptr object = result.extract<Object::Ptr>();
+                std::string commandName = object->get("commandName").toString();
+                peer->_tileCache->saveTextFile(std::string(buffer, length), "cmdValues" + commandName + ".txt");
             }
             else if (tokens[0] == "invalidatetiles:")
             {
@@ -270,6 +282,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         return loadDocument(buffer, length, tokens);
     }
     else if (tokens[0] != "canceltiles" &&
+             tokens[0] != "commandvalues" &&
              tokens[0] != "gettextselection" &&
              tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
@@ -282,7 +295,6 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
              tokens[0] != "setclientpart" &&
              tokens[0] != "setpage" &&
              tokens[0] != "status" &&
-             tokens[0] != "styles" &&
              tokens[0] != "tile" &&
              tokens[0] != "uno")
     {
@@ -299,6 +311,10 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         if (!_peer.expired())
             forwardToPeer(buffer, length);
     }
+    else if (tokens[0] == "commandvalues")
+    {
+        return getCommandValues(buffer, length, tokens);
+    }
     else if (tokens[0] == "invalidatetiles")
     {
         return invalidateTiles(buffer, length, tokens);
@@ -306,10 +322,6 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] == "status")
     {
         return getStatus(buffer, length);
-    }
-    else if (tokens[0] == "styles")
-    {
-        return getStyles(buffer, length);
     }
     else if (tokens[0] == "tile")
     {
@@ -420,14 +432,19 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
     return true;
 }
 
-bool MasterProcessSession::getStyles(const char *buffer, int length)
+bool MasterProcessSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
 {
-    std::string styles;
-
-    styles = _tileCache->getTextFile("styles.txt");
-    if (styles.size() > 0)
+    std::string command;
+    if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
     {
-        sendTextFrame(styles);
+        sendTextFrame("error: cmd=commandvalues kind=syntax");
+        return false;
+    }
+
+    std::string cmdValues = _tileCache->getTextFile("cmdValues" + command + ".txt");
+    if (cmdValues.size() > 0)
+    {
+        sendTextFrame(cmdValues);
         return true;
     }
 
@@ -612,6 +629,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
 
     Application::instance().logger().information(Util::logPrefix() + _kindString + ",Input," + getAbbreviatedMessage(buffer, length));
 
+    if (tokens[0] == "commandvalues")
+    {
+        return getCommandValues(buffer, length, tokens);
+    }
     if (tokens[0] == "load")
     {
         if (_docURL != "")
@@ -637,10 +658,6 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] == "status")
     {
         return getStatus(buffer, length);
-    }
-    else if (tokens[0] == "styles")
-    {
-        return getStyles(buffer, length);
     }
     else if (tokens[0] == "tile")
     {
@@ -866,9 +883,15 @@ bool ChildProcessSession::getStatus(const char *buffer, int length)
     return true;
 }
 
-bool ChildProcessSession::getStyles(const char *buffer, int length)
+bool ChildProcessSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
 {
-    sendTextFrame("styles: " + std::string(_loKitDocument->pClass->getStyles(_loKitDocument)));
+    std::string command;
+    if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
+    {
+        sendTextFrame("error: cmd=commandvalues kind=syntax");
+        return false;
+    }
+    sendTextFrame("commandvalues: " + std::string(_loKitDocument->pClass->getCommandValues(_loKitDocument, command.c_str())));
     return true;
 }
 
