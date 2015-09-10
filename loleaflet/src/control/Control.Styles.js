@@ -4,7 +4,7 @@
 
 L.Control.Styles = L.Control.extend({
 	options: {
-		info: '- Please select a style -'
+		info: '- Styles -'
 	},
 
 	onAdd: function (map) {
@@ -27,14 +27,20 @@ L.Control.Styles = L.Control.extend({
 			var container = this._container;
 			var first = L.DomUtil.create('option', '', container);
 			first.innerHTML = this.options.info;
-			if (this._map._docLayer._docType === 'text') {
-				var styles = e.commandValues.ParagraphStyles.slice(0, 12);
-				styles.forEach(function (style) {
-					var item = L.DomUtil.create('option', '', container);
-					item.value = style;
-					item.innerHTML = style;
-				});
+			if (this._map.getDocType() === 'text') {
+				var styles = e.commandValues['ParagraphStyles'].slice(0, 12);
 			}
+			else if (this._map.getDocType() === 'presentation') {
+				styles = e.commandValues['Default'];
+			}
+			else {
+				styles = [];
+			}
+			styles.forEach(function (style) {
+				var item = L.DomUtil.create('option', '', container);
+				item.value = style;
+				item.innerHTML = style;
+			});
 		}
 	},
 
@@ -52,8 +58,11 @@ L.Control.Styles = L.Control.extend({
 		if (style === this.options.info) {
 			return;
 		}
-		if (this._map._docLayer._docType === 'text') {
+		if (this._map.getDocType() === 'text') {
 			this._map.setStyle(style, 'ParagraphStyles');
+		}
+		else if (this._map.getDocType() === 'presentation') {
+			this._map.setStyle(style, 'Default');
 		}
 	}
 });
