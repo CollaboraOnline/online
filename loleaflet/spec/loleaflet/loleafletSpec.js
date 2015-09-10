@@ -15,7 +15,7 @@ describe('TileBench', function () {
 	before(function () {
 		var htmlPath = window.location.pathname;
 		var dir = htmlPath.substring(0, htmlPath.lastIndexOf('/'));
-		var fileURL = 'file://' + dir + '/data/lorem.odt';
+		var fileURL = 'file://' + dir + '/data/eval.odt';
 		// initialize the map and load the document
 		map = L.map('map', {
 			server: 'ws://localhost:9980',

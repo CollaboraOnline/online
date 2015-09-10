@@ -21,7 +21,7 @@ describe('LoadTest', function () {
 	});
 
 	var docPath = 'file:///PATH';
-	var docs = ['eval.odt', 'lorem.odt'];
+	var docs = ['eval.odt'];
 
 	docs.forEach(function (testDoc) {
 		testsRan += 1;

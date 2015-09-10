@@ -19,7 +19,7 @@ describe('LoadTest', function () {
 		host = 'ws://localhost:9980';
 
 	var docPath = 'file:///PATH';
-	var docs = ['eval.odt', 'lorem.odt'];
+	var docs = ['eval.odt', 'eval.odp'];
 
 	var _parseServerCmd = function (msg) {
 		var tokens = msg.split(/[ \n]+/);
