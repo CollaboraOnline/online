@@ -315,6 +315,13 @@ var deps = {
 		desc: 'Handles styles selection'
 	},
 
+	ControlFonts: {
+		src: ['control/Control.js',
+		      'control/Control.Fonts.js'],
+		heading: 'Controls',
+		desc: 'Handles fonts selection'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],

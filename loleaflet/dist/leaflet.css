@@ -790,7 +790,11 @@ input.leaflet-control-search-bar {
     padding: 0.3em;
 }
 
-.leaflet-control-styles {
+.leaflet-control-fonts-container {
+	display: inline;
+}
+
+select {
 	padding: 0.2em 0.4em 0.4em 0em;
 	background-color: white;
 }
