@@ -12,18 +12,20 @@ L.Control.Buttons = L.Control.extend({
 		    container = L.DomUtil.create('div', buttonsName + '-container' + ' leaflet-bar');
 
 		this._buttons = {
-			'bold':          {title: 'Bold',               uno: 'Bold',        iconName: 'bold.png'},
-			'italic':        {title: 'Italic',             uno: 'Italic',      iconName: 'italic.png'},
-			'underline':     {title: 'Underline',          uno: 'Underline',   iconName: 'underline.png'},
-			'strikethrough': {title: 'Strike-through',     uno: 'Strikeout',   iconName: 'strikethrough.png'},
-			'alignleft':     {title: 'Align left',         uno: 'LeftPara',    iconName: 'alignleft.png'},
-			'aligncenter':   {title: 'Center horizontaly', uno: 'CenterPara',  iconName: 'aligncenter.png'},
-			'alignright':    {title: 'Align right',        uno: 'RightPara',   iconName: 'alignright.png'},
-			'alignblock':    {title: 'Justified',          uno: 'JustifyPara', iconName: 'alignblock.png'},
-			'save':          {title: 'Save',               uno: 'Save',        iconName: 'save.png'},
-			'saveas':        {title: 'Save As',                                iconName: 'saveas.png'},
-			'edit':          {title: 'Enable editing',                         iconName: 'edit.png'},
-			'selection':     {title: 'Enable selection',                       iconName: 'selection.png'}
+			'bold':          {title: 'Bold',               uno: 'Bold',            iconName: 'bold.png'},
+			'italic':        {title: 'Italic',             uno: 'Italic',          iconName: 'italic.png'},
+			'underline':     {title: 'Underline',          uno: 'Underline',       iconName: 'underline.png'},
+			'strikethrough': {title: 'Strike-through',     uno: 'Strikeout',       iconName: 'strikethrough.png'},
+			'alignleft':     {title: 'Align left',         uno: 'LeftPara',        iconName: 'alignleft.png'},
+			'aligncenter':   {title: 'Center horizontaly', uno: 'CenterPara',      iconName: 'aligncenter.png'},
+			'alignright':    {title: 'Align right',        uno: 'RightPara',       iconName: 'alignright.png'},
+			'alignblock':    {title: 'Justified',          uno: 'JustifyPara',     iconName: 'alignblock.png'},
+			'incindent':     {title: 'Increment indent',   uno: 'IncrementIndent', iconName: 'incrementindent.png'},
+			'decindent':     {title: 'Decrement indent',   uno: 'DecrementIndent', iconName: 'decrementindent.png'},
+			'save':          {title: 'Save',               uno: 'Save',            iconName: 'save.png'},
+			'saveas':        {title: 'Save As',                                    iconName: 'saveas.png'},
+			'edit':          {title: 'Enable editing',                             iconName: 'edit.png'},
+			'selection':     {title: 'Enable selection',                           iconName: 'selection.png'}
 		};
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
