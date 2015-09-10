@@ -59,10 +59,10 @@ L.Control.Styles = L.Control.extend({
 			return;
 		}
 		if (this._map.getDocType() === 'text') {
-			this._map.setStyle(style, 'ParagraphStyles');
+			this._map.applyStyle(style, 'ParagraphStyles');
 		}
 		else if (this._map.getDocType() === 'presentation') {
-			this._map.setStyle(style, 'Default');
+			this._map.applyStyle(style, 'Default');
 		}
 	}
 });

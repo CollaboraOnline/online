@@ -44,7 +44,7 @@ L.Map.include({
 			'options=' + options);
 	},
 
-	setStyle: function (style, familyName) {
+	applyStyle: function (style, familyName) {
 		if (!style || !familyName) {
 			this.fire('error', {cmd: 'setStyle', kind: 'incorrectparam'});
 			return;

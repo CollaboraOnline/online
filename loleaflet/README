@@ -204,6 +204,7 @@ CommandValues:
             + returns a JSON mapping of all possible values for the command
         map.applyFont(fontName)
         map.applyFontSize(fontSize)
+        map.applyStyle(style, styleFamily)
     - events
         map.on('updatetoolbarcommandvalues', function (e) {}) where
             + e.commandName = '.uno:StyleAplly', etc
