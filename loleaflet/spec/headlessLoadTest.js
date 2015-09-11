@@ -8,18 +8,16 @@ if (typeof String.prototype.startsWith != 'function') {
 }
 
 describe('LoadTest', function () {
-	// 10s timeout
-	this.timeout(20000);
+	// 30s timeout
+	this.timeout(30000);
 	// set the slow time to 5ms knowing each test takes more than that,
 	// so the run time is always printed
 	this.slow(5);
 	var testsRan = 0,
+		testsToRun = 500;
 		tileSize = 256,
 		tileSizeTwips = 3000,
 		host = 'ws://localhost:9980';
-
-	var docPath = 'file:///PATH';
-	var docs = ['eval.odt', 'eval.odp'];
 
 	var _parseServerCmd = function (msg) {
 		var tokens = msg.split(/[ \n]+/);
@@ -56,16 +54,25 @@ describe('LoadTest', function () {
 		return command;
 	};
 
-	before(function () {
-		if (docPath === 'file:///PATH') {
-			throw new Error('Document file path not set');
-		}
-		else if (docPath[docPath.length - 1] !== '/') {
-			docPath += '/';
-		}
-	});
+	function shuffle(o){
+		for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+		return o;
+	}
+
+	docPath = 'file://' + __dirname + '/data/load_test/';
+	var docs = [];
+	for (var i = 1; i <= 125; i++) {
+		docs.push('eval' + i + '.odt');
+		docs.push('eval' + i + '.odp');
+		docs.push('eval' + i + '.ods');
+		docs.push('eval' + i + '.odg');
+	}
+	docs = shuffle(docs);
 
 	docs.forEach(function (testDoc) {
+		if (testsRan >= testsToRun) {
+			return;
+		}
 		testsRan += 1;
 		describe('Document #' + testsRan + ' (' + testDoc + ')', function () {
 			var ws;
@@ -125,9 +132,10 @@ describe('LoadTest', function () {
 				return x >= 0 && y >= 0 && (x * tileSizeTwips < docWidthTwips) && (y * tileSizeTwips < docHeightTwips);
 			};
 
-			after(function () {
+			after(function (done) {
 				ws.onmessage = function () {};
 				ws.close();
+				setTimeout(done, 20);
 			});
 
 			it('Connect to the server', function (done) {
