@@ -23,6 +23,11 @@ describe('TileBench', function () {
 			edit: false,
 			readOnly: false
 		});
+
+		map.on('scrollto', function (e) {
+			map.scrollTop(e.y);
+			map.scrollLeft(e.x);
+		});
 	});
 
 	afterEach(function () {
@@ -66,16 +71,7 @@ describe('TileBench', function () {
 			map.setPermission('view');
 		});
 
-		it('Place the coursor by clicking', function (done) {
-			map.on('statusindicator', function (e) {
-				expect(e).to.have.property('statusType');
-				if (e.statusType === 'setvalue') {
-					expect(e).to.have.property('value');
-				}
-				if (e.statusType === 'finish') {
-					done();
-				}
-			});
+		it('Place the coursor by clicking', function () {
 			map._docLayer._postMouseEvent('buttondown', 2500, 3515, 1);
 			map._docLayer._postMouseEvent('buttonup', 2500, 3515, 1);
 			map.setPermission('edit');
@@ -90,10 +86,36 @@ describe('TileBench', function () {
 			map.toggleCommandState('Bold')
 		});
 
+		it('Get document size', function () {
+			var size = map.getDocSize();
+			expect(Math.round(size.x)).to.be(1064);
+			expect(Math.round(size.y)).to.be(2946);
+		});
+
+		it('Get document type', function () {
+			expect(map.getDocType()).to.be('text');
+		});
+
+		it('Check pages', function () {
+			expect(map.getNumberOfPages()).to.be(2);
+			expect(map.getNumberOfParts()).to.be(1);
+			expect(map.getCurrentPageNumber()).to.be(0);
+		});
+
+		it('Go to the next page', function (done) {
+			map.once('pagenumberchanged', function (e) {
+				expect(e.currentPage).to.be(1);
+				expect(e.pages).to.be(2);
+				expect(e.docType).to.be('text');
+				done();
+			});
+			map.goToPage(1);
+		});
+
 		it('Search backwards', function (done) {
 			map.once('scrollto', function (e) {
-				//expect(e.x).to.be(0);
-				//expect(e.y).to.be.above(0);
+				expect(e.x).to.be(0);
+				expect(e.y).to.be(174);
 				//expect(e.y).to.be(2321);
 				done();
 			});
@@ -109,32 +131,6 @@ describe('TileBench', function () {
 			map.search('something-not-found');
 		});
 
-
-		it('Get document size', function () {
-			var size = map.getDocSize();
-			// TODO assert
-			//expect(size.x).to.be();
-			//expect(size.y).to.be();
-		});
-
-		it('Get document type', function () {
-			expect(map.getDocType()).to.be('text');
-		});
-
-		it('Check pages', function () {
-			expect(map.getNumberOfPages()).to.be(2);
-			expect(map.getNumberOfParts()).to.be(1);
-			expect(map.getCurrentPageNumber()).to.be(0);
-		});
-
-		it('Go to the next page', function () {
-			map.once('pagenumberchanged', function (e) {
-				expect(e.currentPage).to.be(1);
-				expect(e.pages).to.be(2);
-				expect(e.docType).to.be('text');
-				done();
-			});
-		});
 
 		it('Scroll to the top', function (done) {
 			map.once('updatescrolloffset', function (e) {
