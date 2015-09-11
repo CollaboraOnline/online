@@ -5,8 +5,8 @@ L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
 	unoToolbarCommands: [
-		'.uno:CharFontName',
-		'.uno:StyleApply'
+		'.uno:StyleApply',
+		'.uno:CharFontName'
 	],
 
 	applyFont: function (fontName) {
