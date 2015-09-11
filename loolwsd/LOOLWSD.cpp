@@ -1114,7 +1114,15 @@ int LOOLWSD::main(const std::vector<std::string>& args)
 
     _namedMutexLOOL.unlock();
 
-    while (MasterProcessSession::_childProcesses.size() > 0)
+    TestInput input(*this, svs, srv);
+    Thread inputThread;
+    if (LOOLWSD::doTest)
+    {
+        inputThread.start(input);
+        waitForTerminationRequest();
+    }
+
+    while (!LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
     {
         int status;
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
@@ -1155,6 +1163,9 @@ int LOOLWSD::main(const std::vector<std::string>& args)
             sleep(MAINTENANCE_INTERVAL*2);
         }
     }
+
+    if (LOOLWSD::doTest)
+        inputThread.join();
 
     // Terminate child processes
     for (auto i : MasterProcessSession::_childProcesses)
