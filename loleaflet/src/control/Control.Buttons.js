@@ -16,6 +16,8 @@ L.Control.Buttons = L.Control.extend({
 			'italic':        {title: 'Italic',             uno: 'Italic',          iconName: 'italic.png'},
 			'underline':     {title: 'Underline',          uno: 'Underline',       iconName: 'underline.png'},
 			'strikethrough': {title: 'Strike-through',     uno: 'Strikeout',       iconName: 'strikethrough.png'},
+			'bullet'       : {title: 'Bullets ON/OFF',     uno: 'DefaultBullet',   iconName: 'defaultbullet.png'},
+			'numbering'    : {title: 'Numbering ON/OFF',   uno: 'DefaultNumbering',iconName: 'defaultnumbering.png'},
 			'alignleft':     {title: 'Align left',         uno: 'LeftPara',        iconName: 'alignleft.png'},
 			'aligncenter':   {title: 'Center horizontaly', uno: 'CenterPara',      iconName: 'aligncenter.png'},
 			'alignright':    {title: 'Align right',        uno: 'RightPara',       iconName: 'alignright.png'},
@@ -29,7 +31,7 @@ L.Control.Buttons = L.Control.extend({
 		};
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
-			if (key === 'alignleft' || key === 'save' || key === 'edit') {
+			if (key === 'alignleft' || key === 'save' || key === 'bullet' || key === 'edit') {
 				// add a separator
 				L.DomUtil.create('span', 'leaflet-control-button-separator', container);
 			}
