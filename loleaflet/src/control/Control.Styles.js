@@ -13,6 +13,7 @@ L.Control.Styles = L.Control.extend({
 
 		map.on('updatepermission', this._onUpdatePermission, this);
 		map.on('updatetoolbarcommandvalues', this._initList, this);
+		map.on('commandstatechanged', this._onStateChange, this);
 		L.DomEvent.on(this._container, 'change', this._onChange, this);
 
 		return this._container;
@@ -63,6 +64,18 @@ L.Control.Styles = L.Control.extend({
 		}
 		else if (this._map.getDocType() === 'presentation') {
 			this._map.applyStyle(style, 'Default');
+		}
+	},
+
+	_onStateChange: function (e) {
+		if (e.unoCmd === 'StyleApply') {
+			// Fix 'Text Body' vs 'Text body'
+			for (var i = 0; i < this._container.length; i++) {
+				var value = this._container[i].value;
+				if (value && value.toLowerCase() == e.state.toLowerCase()) {
+					this._container.value = value;
+				}
+			}
 		}
 	}
 });

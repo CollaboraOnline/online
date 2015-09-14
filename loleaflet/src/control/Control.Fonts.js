@@ -17,6 +17,7 @@ L.Control.Fonts = L.Control.extend({
 
 		map.on('updatepermission', this._onUpdatePermission, this);
 		map.on('updatetoolbarcommandvalues', this._initList, this);
+		map.on('commandstatechanged', this._onStateChange, this);
 		L.DomEvent.on(this._fontSelect, 'change', this._onChangeFont, this);
 		L.DomEvent.on(this._sizeSelect, 'change', this._onChangeSize, this);
 
@@ -83,6 +84,20 @@ L.Control.Fonts = L.Control.extend({
 			return;
 		}
 		this._map.applyFontSize(size);
+	},
+
+	_onStateChange: function (e) {
+		if (e.unoCmd === 'CharFontName') {
+			for (var i = 0; i < this._fontSelect.length; i++) {
+				var value = this._fontSelect[i].value;
+				if (value && value.toLowerCase() == e.state.toLowerCase()) {
+					this._fontSelect.value = value;
+				}
+			}
+		}
+		else if (e.unoCmd === 'FontHeight') {
+			this._sizeSelect.value = e.state;
+		}
 	}
 });
 

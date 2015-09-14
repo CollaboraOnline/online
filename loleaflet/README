@@ -88,6 +88,7 @@ Buttons like Bold, Italic, Strike through etc.
         map.on('commandstatechanged', function (e) {}) where:
             + e.unoCmd == 'Bold' | 'Italic' etc.
             + e.state = 'true' | 'false'
+            + e.state = fontName | fontSize | styleName
 
 Parts (like slides in presentation, or sheets in spreadsheets):
     - API:
