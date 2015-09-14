@@ -788,6 +788,7 @@ label.leaflet-control-editviewswitch {
 
 input.leaflet-control-search-bar {
     padding: 0.3em;
+	max-width: 100px;
 }
 
 .leaflet-control-fonts-container {

@@ -83,6 +83,7 @@ L.Control.Search = L.Control.extend({
 		var bar = L.DomUtil.create('input', className, container);
 		bar.type = 'text';
 		bar.title = title;
+		bar.placeholder = 'Search';
 
 		L.DomEvent
 			.on(bar, 'click', L.DomEvent.stop)
