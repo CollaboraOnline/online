@@ -135,7 +135,7 @@ describe('LoadTest', function () {
 			after(function (done) {
 				ws.onmessage = function () {};
 				ws.close();
-				setTimeout(done, 20);
+				done();
 			});
 
 			it('Connect to the server', function (done) {
