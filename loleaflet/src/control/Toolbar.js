@@ -60,7 +60,10 @@ L.Map.include({
 
 	toggleCommandState: function (unoState) {
 		if (this._docLayer._permission === 'edit') {
-			L.Socket.sendMessage('uno .uno:' + unoState);
+			if (!unoState.startsWith('.uno:')) {
+				unoState = '.uno:' + unoState;
+			}
+			L.Socket.sendMessage('uno ' + unoState);
 		}
 	}
 });
