@@ -35,11 +35,11 @@ L.Control.Fonts = L.Control.extend({
 			var first = L.DomUtil.create('option', '', container);
 			first.innerHTML = this.options.fontsInfo;
 			var fonts = e.commandValues;
-			for (font in fonts) {
+			for (var font in fonts) {
 				var item = L.DomUtil.create('option', '', container);
 				item.value = font;
 				item.innerHTML = font;
-			};
+			}
 
 			// Don't show any font sizes yet
 			first = L.DomUtil.create('option', '', this._sizeSelect);
@@ -64,7 +64,7 @@ L.Control.Fonts = L.Control.extend({
 			return;
 		}
 		var container = this._sizeSelect;
-		for(var i = container.options.length - 1; i >= 0; i--) {
+		for (var i = container.options.length - 1; i >= 0; i--) {
 			container.remove(i);
 		}
 		var first = L.DomUtil.create('option', '', container);
@@ -90,7 +90,7 @@ L.Control.Fonts = L.Control.extend({
 		if (e.commandName === '.uno:CharFontName') {
 			for (var i = 0; i < this._fontSelect.length; i++) {
 				var value = this._fontSelect[i].value;
-				if (value && value.toLowerCase() == e.state.toLowerCase()) {
+				if (value && value.toLowerCase() === e.state.toLowerCase()) {
 					this._fontSelect.value = value;
 				}
 			}

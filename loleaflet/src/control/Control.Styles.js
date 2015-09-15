@@ -72,7 +72,7 @@ L.Control.Styles = L.Control.extend({
 			// Fix 'Text Body' vs 'Text body'
 			for (var i = 0; i < this._container.length; i++) {
 				var value = this._container[i].value;
-				if (value && value.toLowerCase() == e.state.toLowerCase()) {
+				if (value && value.toLowerCase() === e.state.toLowerCase()) {
 					this._container.value = value;
 				}
 			}
