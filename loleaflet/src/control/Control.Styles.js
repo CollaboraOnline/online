@@ -65,6 +65,7 @@ L.Control.Styles = L.Control.extend({
 		else if (this._map.getDocType() === 'presentation') {
 			this._map.applyStyle(style, 'Default');
 		}
+		this._refocusOnMap();
 	},
 
 	_onStateChange: function (e) {

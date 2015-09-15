@@ -65,6 +65,7 @@ L.Control.Fonts = L.Control.extend({
 		}
 		this._updateSizeList(font);
 		this._map.applyFont(font);
+		this._refocusOnMap();
 	},
 
 	_onChangeSize: function (e) {
@@ -73,6 +74,7 @@ L.Control.Fonts = L.Control.extend({
 			return;
 		}
 		this._map.applyFontSize(size);
+		this._refocusOnMap();
 	},
 
 	_updateSizeList: function (font) {
