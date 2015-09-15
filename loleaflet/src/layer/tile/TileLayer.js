@@ -201,6 +201,14 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.match('EMPTY')) {
 			this._onInvalidateTilesMsg(textMsg);
 		}
+		else if (textMsg.startsWith('invalidatetiles:') && textMsg.match('EMPTY')) {
+			var msg = 'invalidatetiles: ';
+			msg += 'part=' + this._selectedPart + ' ';
+			msg += 'x=0 y=0 ';
+			msg += 'width=' + this._docWidthTwips + ' ';
+			msg += 'height=' + this._docHeightTwips;
+			this._onInvalidateTilesMsg(msg);
+		}
 		else if (textMsg.startsWith('searchnotfound:')) {
 			this._onSearchNotFoundMsg(textMsg);
 		}
