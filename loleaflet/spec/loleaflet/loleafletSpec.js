@@ -79,7 +79,7 @@ describe('TileBench', function () {
 
 		it('Make a word Bold', function (done) {
 			map.once('commandstatechanged', function (e) {
-				expect(e.unoCmd).to.be('Bold');
+				expect(e.commandName).to.be('.uno:Bold');
 				expect(e.state).to.be('false');
 				done();
 			});

@@ -87,7 +87,7 @@ L.Control.Fonts = L.Control.extend({
 	},
 
 	_onStateChange: function (e) {
-		if (e.unoCmd === 'CharFontName') {
+		if (e.commandName === '.uno:CharFontName') {
 			for (var i = 0; i < this._fontSelect.length; i++) {
 				var value = this._fontSelect[i].value;
 				if (value && value.toLowerCase() == e.state.toLowerCase()) {
@@ -95,7 +95,7 @@ L.Control.Fonts = L.Control.extend({
 				}
 			}
 		}
-		else if (e.unoCmd === 'FontHeight') {
+		else if (e.commandName === '.uno:FontHeight') {
 			this._sizeSelect.value = e.state;
 		}
 	}

@@ -291,11 +291,14 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onStateChangedMsg: function (textMsg) {
-		var unoMsg = textMsg.substr(14);
-		var unoCmd = unoMsg.match('.uno:(.*)=')[1];
-		var state = unoMsg.match('.*=(.*)')[1];
-		if (unoCmd && state) {
-			this._map.fire('commandstatechanged', {unoCmd : unoCmd, state : state});
+		var unoMsg = textMsg.substr(14).split('=');
+		if (unoMsg.length < 2) {
+			return;
+		}
+		var commandName = unoMsg[0];
+		var state = unoMsg[1];
+		if (commandName && state) {
+			this._map.fire('commandstatechanged', {commandName : commandName, state : state});
 		}
 	},
 

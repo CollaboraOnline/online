@@ -95,11 +95,11 @@ L.Control.Buttons = L.Control.extend({
 	},
 
 	_onStateChange: function (e) {
-		var unoCmd = e.unoCmd;
+		var commandName = e.commandName;
 		var state = e.state;
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
-			if (button.uno === unoCmd) {
+			if ('.uno:' + button.uno === commandName) {
 				if (state === 'true') {
 					L.DomUtil.addClass(button.el.firstChild, 'leaflet-control-buttons-active');
 				}

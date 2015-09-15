@@ -81,12 +81,12 @@ Edit, view, readOnly:
 
 Buttons like Bold, Italic, Strike through etc.
     - API:
-        map.toggleCommandState('Bold' | 'Italic' | 'Underline' | 'Strikeout' |
+        map.toggleCommandState('.uno:' + 'Bold' | 'Italic' | 'Underline' | 'Strikeout' |
             'LeftPara' | 'CenterPara' | 'RightPara' | 'JustifyPara' |
             'IncrementIndent' | 'DecrementIndent'
     - events:
         map.on('commandstatechanged', function (e) {}) where:
-            + e.unoCmd == 'Bold' | 'Italic' etc.
+            + e.commandName == '.uno:' + 'Bold' | 'Italic' | 'StyleApply' | 'CharFontName' | 'FontHeight' etc.
             + e.state = 'true' | 'false'
             + e.state = fontName | fontSize | styleName
 

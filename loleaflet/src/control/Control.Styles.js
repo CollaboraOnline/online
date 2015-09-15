@@ -68,7 +68,7 @@ L.Control.Styles = L.Control.extend({
 	},
 
 	_onStateChange: function (e) {
-		if (e.unoCmd === 'StyleApply') {
+		if (e.commandName === '.uno:StyleApply') {
 			// Fix 'Text Body' vs 'Text body'
 			for (var i = 0; i < this._container.length; i++) {
 				var value = this._container[i].value;
