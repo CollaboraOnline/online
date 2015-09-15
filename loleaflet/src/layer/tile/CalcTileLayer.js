@@ -12,7 +12,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			command.y = parseInt(strTwips[1]);
 			command.width = parseInt(strTwips[2]);
 			command.height = parseInt(strTwips[3]);
-			command.part = this._currentPart;
+			command.part = this._selectedPart;
 		}
 		if (this._docType === 'text') {
 			command.part = 0;

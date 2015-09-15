@@ -140,6 +140,7 @@
 		<h4>Misc</h4>
 		<ul>
 			<li><a href="#event-objects">Event objects</a></li>
+			<li><a href="#object-values">Object values</a></li>
 			<li><a href="#global">global switches</a></li>
 			<li><a href="#noconflict">noConflict</a></li>
 			<li><a href="#version">version</a></li>
@@ -158,10 +159,10 @@
 
 <h3 id="map-usage">Usage example</h3>
 
-<pre><code class="javascript">// initialize the map on the "map" div with a given center and zoom
+<pre><code class="javascript">// initialize the map on the "map" div with a server and document URL
 var map = L.map('map', {
-	center: [51.505, -0.09],
-	zoom: 13
+    doc: 'file:///path/to/document',
+    server: 'ws://localhost'
 });</code></pre>
 
 <h3 id="map-constructor" class="left">Creation</h3>
@@ -199,13 +200,13 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>center</b></code></td>
 		<td><code><a href="#latlng">LatLng</a></code></td>
-		<td><code><span class="literal">null</span></code></td>
+		<td><code><span class="literal">[0, 0]</span></code></td>
 		<td>Initial geographical center of the map.</td>
 	</tr>
 	<tr>
 		<td><code><b>zoom</b></code></td>
 		<td><code>Number</code></td>
-		<td><code><span class="literal">null</span></code></td>
+		<td><code><span class="literal">10</span></code></td>
 		<td>Initial map zoom.</td>
 	</tr>
 	<tr>
@@ -217,13 +218,13 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>minZoom</b></code></td>
 		<td><code>Number</code></td>
-		<td><code><span class="literal">null</span></code></td>
+		<td><code><span class="literal">1</span></code></td>
 		<td>Minimum zoom level of the map. Overrides any <code>minZoom</code> set on map layers.</td>
 	</tr>
 	<tr>
 		<td><code><b>maxZoom</b></code></td>
 		<td><code>Number</code></td>
-		<td><code><span class="literal">null</span></code></td>
+		<td><code><span class="literal">20</span></code></td>
 		<td>Maximum zoom level of the map. This overrides any <code>maxZoom</code> set on map layers.</td>
 	</tr>
 	<tr id="map-maxbounds">
@@ -241,7 +242,7 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>crs</b></code></td>
 		<td><code><a href="#crs">CRS</a></code></td>
-		<td><code>L.CRS.<br/>EPSG3857</code></td>
+		<td><code>L.CRS.<br/>Simple</code></td>
 		<td>Coordinate Reference System to use. Don't change this if you're not sure what it means.</td>
 	</tr>
 	<tr>
@@ -262,22 +263,23 @@ var map = L.map('map', {
 		<th>Description</th>
 	</tr>
 	<tr>
+		<td><code><b>editing</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">false</span></code></td>
+		<td>Whether the document is in editing or viewing mode.</td>
+	</tr>
+	<tr>
+		<td><code><b>readOnly</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">false</span></code></td>
+		<td>Whether the document is read-only.</td>
+	</tr>
+
+	<tr>
 		<td><code><b>dragging</b></code></td>
 		<td><code>Boolean</code></td>
 		<td><code><span class="literal">true</span></code></td>
 		<td>Whether the map be draggable with mouse/touch or not.</td>
-	</tr>
-	<tr>
-		<td><code><b>touchZoom</b></code></td>
-		<td><code>Boolean</code></td>
-		<td><code><span class="literal">true</span></code></td>
-		<td>Whether the map can be zoomed by touch-dragging with two fingers. If passed <code><span class="string">'center'</span></code>, it will zoom to the center of the view regardless of where the touch events (fingers) were.</td>
-	</tr>
-	<tr>
-		<td><code><b>scrollWheelZoom</b></code></td>
-		<td><code>Boolean</code></td>
-		<td><code><span class="literal">true</span></code></td>
-		<td>Whether the map can be zoomed by using the mouse wheel. If passed <code><span class="string">'center'</span></code>, it will zoom to the center of the view regardless of where the mouse was.</td>
 	</tr>
 	<tr>
 		<td><code><b>wheelDebounceTime</b></code></td>
@@ -288,7 +290,7 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>doubleClickZoom</b></code></td>
 		<td><code>Boolean</code></td>
-		<td><code><span class="literal">true</span></code></td>
+		<td><code><span class="literal">false</span></code></td>
 		<td>Whether the map can be zoomed in by double clicking on it and zoomed out by double clicking while holding shift. If passed <code><span class="string">'center'</span></code>, double-click zoom will zoom to the center of the view regardless of where the mouse was.</td>
 	</tr>
 	<tr>
@@ -353,7 +355,7 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>keyboardPanOffset</b></code></td>
 		<td><code>Number</code></td>
-		<td><code><span class="number">80</span></code></td>
+		<td><code><span class="number">20</span></code></td>
 		<td>Amount of pixels to pan when pressing an arrow key.</td>
 	</tr>
 	<tr>
@@ -399,29 +401,6 @@ var map = L.map('map', {
 	</tr>
 </table>
 
-<h4>Control options</h4>
-
-<table data-id='map'>
-	<tr>
-		<th class="width140">Option</th>
-		<th>Type</th>
-		<th>Default</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>zoomControl</b></code></td>
-		<td><code>Boolean</code></td>
-		<td><code><span class="literal">true</span></code></td>
-		<td>Whether the <a href="#control-zoom">zoom control</a> is added to the map by default.</td>
-	</tr>
-	<tr>
-		<td><code><b>attributionControl</b></code></td>
-		<td><code>Boolean</code></td>
-		<td><code><span class="literal">true</span></code></td>
-		<td>Whether the <a href="#control-attribution">attribution control</a> is added to the map by default.</td>
-	</tr>
-</table>
-
 <h4>Animation options</h4>
 
 <table data-id='map'>
@@ -434,8 +413,8 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>fadeAnimation</b></code></td>
 		<td><code>Boolean</code></td>
-		<td>depends</td>
-		<td>Whether the tile fade animation is enabled. By default it's enabled in all browsers that support CSS3 Transitions except Android.</td>
+		<td>false</td>
+		<td>Whether the tile fade animation is enabled. By default it's disabled because it produces a bad effect when editing.</td>
 	</tr>
 	<tr>
 		<td><code><b>zoomAnimation</b></code></td>
@@ -6579,6 +6558,61 @@ map.addControl(new MyControl());
 	</tr>
 </table>
 
+<h3 id="search-event">SearchEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>originalPhrase</b></code></td>
+		<td><code>String</code></td>
+		<td>The phrase that has been searched for</td>
+	</tr>
+	<tr>
+		<td><code><b>count</b></code></td>
+		<td><code>Number</code></td>
+		<td>Number of search results</td>
+	</tr>
+</table>
+
+<h3 id="permission-event">PermissionEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>perm</b></code></td>
+		<td><code><a href="#documentpermission-values">DocumentPermission</a></code></td>
+		<td>Document permission.</td>
+	</tr>
+</table>
+
+<h3 id="commandstatechanged-event">CommandStateChangedEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>commandName</b></code></td>
+		<td><code><a href="#commandstatechanged-values">CommandStateChangedValues</a></code></td>
+		<td>UNO command.</td>
+	</tr>
+	<tr>
+		<td><code><b>state</b></code></td>
+		<td><code><a href="#commandstate-values">CommandStateValues</a></code></td>
+		<td>UNO command state.</td>
+	</tr>
+</table>
+
 <h3 id="mouse-event">MouseEvent</h3>
 
 <table data-id='events'>
@@ -6821,6 +6855,145 @@ map.addControl(new MyControl());
 		<td><code><b>distance</b></code></td>
 		<td><code>Number</code></td>
 		<td>The distance in pixels the draggable element was moved by.</td>
+	</tr>
+</table>
+
+<h2 id="object-values">Object values</h2>
+
+<p>A list of possible values for different event object properties.</p>
+
+<h3 id="documentpermission-values">DocumentPermissionValues</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">value</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>'edit'</b></code></td>
+		<td><code>String</code></td>
+		<td>The document can be edited, dragging is disabled and mouse selection is active.</td>
+	</tr>
+	<tr>
+		<td><code><b>'view'</b></code></td>
+		<td><code>String</code></td>
+		<td>The document is in viewing mode, dragging is enabled by default and by clicking in it, editing mode is entered.</td>
+	</tr>
+    <tr>
+		<td><code><b>'readonly'</b></code></td>
+		<td><code>String</code></td>
+		<td>The document is in read-only mode, dragging is enabled by default.</td>
+	</tr>
+</table>
+
+<h3 id="commandstatechanged-values">CommandStateChangedValues</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">value</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:Bold'</b></code></td>
+		<td><code>String</code></td>
+		<td>Bold.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:Italic'</b></code></td>
+		<td><code>String</code></td>
+		<td>Italic.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:Underline'</b></code></td>
+		<td><code>String</code></td>
+		<td>Underline.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:Strikeout'</b></code></td>
+		<td><code>String</code></td>
+		<td>Strikeout.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:LeftPara'</b></code></td>
+		<td><code>String</code></td>
+		<td>Align left.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:CenterPara'</b></code></td>
+		<td><code>String</code></td>
+		<td>Center horizontaly.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:RightPara'</b></code></td>
+		<td><code>String</code></td>
+		<td>Align right.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:JustifyPara'</b></code></td>
+		<td><code>String</code></td>
+		<td>Justified.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:IncrementIndent'</b></code></td>
+		<td><code>String</code></td>
+		<td>Increment indent.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:DecrementIndent'</b></code></td>
+		<td><code>String</code></td>
+		<td>Decrement indent.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:StyleApply'</b></code></td>
+		<td><code>String</code></td>
+		<td>Style related uno command.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:CharFontName'</b></code></td>
+		<td><code>String</code></td>
+		<td>Font related uno command.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:FontHeight'</b></code></td>
+		<td><code>String</code></td>
+		<td>Font size related uno command.</td>
+	</tr>
+</table>
+
+<h3 id="commandstate-values">CommandStateValues</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">value</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>'true'</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:Bold', '.uno:Italic', etc.</td>
+	</tr>
+	<tr>
+		<td><code><b>'false'</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:Bold', '.uno:Italic', etc.</td>
+	</tr>
+	<tr>
+		<td><code><b>styleName</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:StyleApply'.</td>
+	</tr>
+	<tr>
+		<td><code><b>fontName</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:CharFontName'.</td>
+	</tr>
+	<tr>
+		<td><code><b>fontSize</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:FontHeight'.</td>
 	</tr>
 </table>
 

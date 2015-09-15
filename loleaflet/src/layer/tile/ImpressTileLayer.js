@@ -12,7 +12,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			command.y = parseInt(strTwips[1]);
 			command.width = parseInt(strTwips[2]);
 			command.height = parseInt(strTwips[3]);
-			command.part = this._currentPart;
+			command.part = this._selectedPart;
 		}
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
@@ -81,7 +81,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				delete this._tileCache[key];
 			}
 		}
-		if (command.part === this._currentPart &&
+		if (command.part === this._selectedPart &&
 			command.part !== this._lastValidPart) {
 			this._lastValidPart = command.part;
 			this._map.fire('updatepart', {part: command.part, docType: this._docType});

@@ -105,7 +105,7 @@ Parts (like slides in presentation, or sheets in spreadsheets):
 
     - events:
         map.on('updateparts', function (e) {}) where:
-            + e.currentPart is the current part
+            + e.selectedPart is the current part
             + e.parts == the number of parts that the document has
             + e.docType == 'text' | 'spreadsheet' | 'presentation' | 'drawing' | 'other'
             + [e.partNames] if present, part names (e.g. sheet names)
