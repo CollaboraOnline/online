@@ -57,7 +57,7 @@ describe('LoadTest', function () {
 				});
 				map.scrollTop(y / 2);
 				checkTimeOut = setTimeout(function () {
-					expect(map._docLayer._emptyTilesCount).to.eql(1);
+					expect(map._docLayer._emptyTilesCount).to.eql(0);
 					done();
 				}, 2000);
 			});
@@ -71,7 +71,7 @@ describe('LoadTest', function () {
 				});
 				map.scrollTop(y);
 				checkTimeOut = setTimeout(function () {
-					expect(map._docLayer._emptyTilesCount).to.eql(1);
+					expect(map._docLayer._emptyTilesCount).to.eql(0);
 					done();
 				}, 2000);
 			});
