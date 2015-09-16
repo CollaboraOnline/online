@@ -300,14 +300,15 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onStateChangedMsg: function (textMsg) {
 		var unoMsg = textMsg.substr(14).split('=');
-		if (unoMsg.length < 2) {
-			return;
+		var commandName = '',
+			state = '';
+		if (unoMsg.length > 0) {
+			commandName = unoMsg[0];
 		}
-		var commandName = unoMsg[0];
-		var state = unoMsg[1];
-		if (commandName && state) {
-			this._map.fire('commandstatechanged', {commandName : commandName, state : state});
+		if (unoMsg.length > 1) {
+			state = unoMsg[1];
 		}
+		this._map.fire('commandstatechanged', {commandName : commandName, state : state});
 	},
 
 	_onStatusIndicatorMsg: function (textMsg) {

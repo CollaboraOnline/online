@@ -79,6 +79,7 @@ L.Control.Fonts = L.Control.extend({
 
 	_updateSizeList: function (font) {
 		var container = this._sizeSelect;
+		var oldSize = this._sizeSelect.value;
 		for (var i = container.options.length - 1; i >= 0; i--) {
 			container.remove(i);
 		}
@@ -90,6 +91,22 @@ L.Control.Fonts = L.Control.extend({
 			item.value = size;
 			item.innerHTML = size;
 		});
+		this._setFontSize(oldSize);
+	},
+
+	_setFontSize: function (fontSize) {
+		for (i = 0; i < this._sizeSelect.length; i++) {
+			var value = this._sizeSelect[i].value;
+			if (value === fontSize) {
+				this._sizeSelect.value = fontSize;
+				return;
+			}
+		}
+		// we have a new font size, like 18.2
+		var item = L.DomUtil.create('option', '', this._sizeSelect);
+		item.value = fontSize;
+		item.innerHTML = fontSize;
+		this._sizeSelect.value = fontSize;
 	},
 
 	_onStateChange: function (e) {
@@ -99,22 +116,17 @@ L.Control.Fonts = L.Control.extend({
 				if (value && value.toLowerCase() === e.state.toLowerCase()) {
 					this._fontSelect.value = value;
 					this._updateSizeList(value);
-				}
-			}
-		}
-		else if (e.commandName === '.uno:FontHeight') {
-			for (i = 0; i < this._sizeSelect.length; i++) {
-				var value = this._sizeSelect[i].value;
-				if (value === e.state) {
-					this._sizeSelect.value = e.state;
 					return;
 				}
 			}
-			// we have a new font size, like 18.2
-			var item = L.DomUtil.create('option', '', this._sizeSelect);
+			// we have a new font name
+			var item = L.DomUtil.create('option', '', this._fontSelect);
 			item.value = e.state;
 			item.innerHTML = e.state;
-			this._sizeSelect.value = e.state;
+			this._fontSelect.value = e.state;
+		}
+		else if (e.commandName === '.uno:FontHeight') {
+			this._setFontSize(e.state);
 		}
 	}
 });
