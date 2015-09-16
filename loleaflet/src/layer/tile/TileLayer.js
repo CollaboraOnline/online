@@ -75,17 +75,17 @@ L.TileLayer = L.GridLayer.extend({
 		this._graphicMarker = null;
 		// Handle start marker
 		this._startMarker = L.marker(new L.LatLng(0, 0), {
-			icon: L.icon({
+			icon: L.divIcon({
 				className: 'leaflet-selection-marker-start',
-				asDiv: true
+				iconSize: null
 			}),
 			draggable: true
 		});
 		// Handle end marker
 		this._endMarker = L.marker(new L.LatLng(0, 0), {
-			icon: L.icon({
+			icon: L.divIcon({
 				className: 'leaflet-selection-marker-end',
-				asDiv: true
+				iconSize: null
 			}),
 			draggable: true
 		});
