@@ -126,6 +126,9 @@ L.Control.Fonts = L.Control.extend({
 			this._fontSelect.value = e.state;
 		}
 		else if (e.commandName === '.uno:FontHeight') {
+			if (e.state === '0') {
+				e.state = '';
+			}
 			this._setFontSize(e.state);
 		}
 	}
