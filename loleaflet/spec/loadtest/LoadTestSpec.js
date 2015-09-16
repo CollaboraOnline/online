@@ -11,17 +11,14 @@ describe('LoadTest', function () {
 		x = 0,
 		y = 0;
 
+	var docPath = '';
 	before(function() {
-		if (docPath === 'file:///PATH') {
-			throw new Error('Document file path not set');
-		}
-		else if (docPath[docPath.length - 1] !== '/') {
-			docPath += '/';
-		}
+		var htmlPath = window.location.pathname;
+		var dir = htmlPath.substring(0, htmlPath.lastIndexOf('/'));
+		docPath = 'file://' + dir + '/data/';
 	});
 
-	var docPath = 'file:///PATH';
-	var docs = ['eval.odt'];
+	var docs = ['eval.odt', 'eval.odp', 'eval.ods', 'eval.odg'];
 
 	docs.forEach(function (testDoc) {
 		testsRan += 1;
