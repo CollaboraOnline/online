@@ -110,9 +110,18 @@ L.Socket = {
 				});
 			}
 			else {
+				if (command.type === 'presentation') {
+					var verticalTiles = this._map.getSize().y / 256;
+					var tileTwipsSize = Math.round(command.height / verticalTiles);
+				}
+				else {
+					tileTwipsSize = 3000;
+				}
 				docLayer = new L.ImpressTileLayer('', {
 					edit: this._map.options.edit,
-					readOnly: this._map.options.readOnly
+					readOnly: this._map.options.readOnly,
+					tileWidthTwips: tileTwipsSize,
+					tileHeightTwips: tileTwipsSize
 				});
 			}
 
