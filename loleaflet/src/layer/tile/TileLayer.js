@@ -629,12 +629,18 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			if (!startMarker.isDragged) {
-				startMarker.setLatLng(this._textSelectionStart.getSouthWest());
+				var pos = this._map.project(this._textSelectionStart.getSouthWest());
+				pos = pos.subtract(new L.Point(0, 2));
+				pos = this._map.unproject(pos);
+				startMarker.setLatLng(pos);
 				this._map.addLayer(startMarker);
 			}
 
 			if (!endMarker.isDragged) {
-				endMarker.setLatLng(this._textSelectionEnd.getSouthEast());
+				var pos = this._map.project(this._textSelectionEnd.getSouthEast());
+				pos = pos.subtract(new L.Point(0, 2));
+				pos = this._map.unproject(pos);
+				endMarker.setLatLng(pos);
 				this._map.addLayer(endMarker);
 			}
 		}
