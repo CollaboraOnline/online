@@ -33,8 +33,10 @@ L.Map.Mouse = L.Handler.extend({
 			return;
 		}
 
-		if (docLayer._startMarker.isDragged === true || docLayer._endMarker.isDragged === true) {
-			return;
+		for (var key in docLayer._selectionHandles) {
+			if (docLayer._selectionHandles[key].isDragged) {
+				return;
+			}
 		}
 
 		if (e.type === 'mousedown') {
@@ -85,11 +87,11 @@ L.Map.Mouse = L.Handler.extend({
 				}, this));
 				this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), timeOut);
 
-				if (docLayer._startMarker._icon) {
-					L.DomUtil.removeClass(docLayer._startMarker._icon, 'leaflet-not-clickable');
-				}
-				if (docLayer._endMarker._icon) {
-					L.DomUtil.removeClass(docLayer._endMarker._icon, 'leaflet-not-clickable');
+				for (key in docLayer._selectionHandles) {
+					var handle = docLayer._selectionHandles[key];
+					if (handle._icon) {
+						L.DomUtil.removeClass(handle._icon, 'leaflet-not-clickable');
+					}
 				}
 			}
 		}
@@ -112,11 +114,11 @@ L.Map.Mouse = L.Handler.extend({
 			if (!this._map.dragging.enabled()) {
 				mousePos = docLayer._latLngToTwips(e.latlng);
 				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1);
-				if (docLayer._startMarker._icon) {
-					L.DomUtil.addClass(docLayer._startMarker._icon, 'leaflet-not-clickable');
-				}
-				if (docLayer._endMarker._icon) {
-					L.DomUtil.addClass(docLayer._endMarker._icon, 'leaflet-not-clickable');
+				for (key in docLayer._selectionHandles) {
+					handle = docLayer._selectionHandles[key];
+					if (handle._icon) {
+						L.DomUtil.addClass(handle._icon, 'leaflet-not-clickable');
+					}
 				}
 			}
 		}
