@@ -64,31 +64,24 @@ L.TileLayer = L.GridLayer.extend({
 		// Rectangle graphic selection
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Position and size of the selection start (as if there would be a cursor caret there).
-		this._textSelectionStart = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
-		// Position and size of the selection end.
-		this._textSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
 		// Graphic marker
 		this._graphicMarker = null;
-		// Handle start marker
-		this._startMarker = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'leaflet-selection-marker-start',
-				iconSize: null
-			}),
-			draggable: true
-		});
-		// Handle end marker
-		this._endMarker = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'leaflet-selection-marker-end',
-				iconSize: null
-			}),
-			draggable: true
-		});
+		// Selection handle marker
+		this._selectionHandles = {};
+		['start', 'end'].forEach(L.bind(function (handle) {
+			this._selectionHandles[handle] = L.marker(new L.LatLng(0, 0), {
+				icon: L.divIcon({
+					className: 'leaflet-selection-marker-' + handle,
+					iconSize: null
+				}),
+				draggable: true
+			});
+		}, this));
+
 		this._emptyTilesCount = 0;
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
@@ -112,8 +105,9 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
-		this._startMarker.on('drag dragend', this._onSelectionHandleDrag, this);
-		this._endMarker.on('drag dragend', this._onSelectionHandleDrag, this);
+		for (var key in this._selectionHandles) {
+			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
+		}
 		this._textArea = map._textArea;
 		this._textArea.focus();
 		if (this.options.readOnly) {
@@ -385,7 +379,7 @@ L.TileLayer = L.GridLayer.extend({
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		}
 		else {
-			this._textSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+			this._textSelectionEnd = null;
 		}
 	},
 
@@ -400,7 +394,7 @@ L.TileLayer = L.GridLayer.extend({
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		}
 		else {
-			this._textSelectionStart = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+			this._textSelectionStart = null;
 		}
 
 	},
@@ -497,8 +491,11 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	// Is rRectangle empty?
-	_isEmptyRectangle: function (aBounds) {
-		return aBounds.getSouthWest().equals(new L.LatLng(0, 0)) && aBounds.getNorthEast().equals(new L.LatLng(0, 0));
+	_isEmptyRectangle: function (bounds) {
+		if (!bounds) {
+			return true;
+		}
+		return bounds.getSouthWest().equals(new L.LatLng(0, 0)) && bounds.getNorthEast().equals(new L.LatLng(0, 0));
 	},
 
 	// Update cursor layer (blinking cursor).
@@ -559,10 +556,10 @@ L.TileLayer = L.GridLayer.extend({
 			this._textArea.focus();
 		}
 
-		if (this._startMarker === e.target) {
+		if (this._selectionHandles.start === e.target) {
 			this._postSelectTextEvent('start', aPos.x, aPos.y);
 		}
-		if (this._endMarker === e.target) {
+		else if (this._selectionHandles.end === e.target) {
 			this._postSelectTextEvent('end', aPos.x, aPos.y);
 		}
 	},
@@ -592,24 +589,62 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
-		if (this._selections.getLayers().length !== 0) {
-			if (!this._isEmptyRectangle(this._textSelectionStart) && !this._startMarker.isDragged) {
-				this._startMarker.setLatLng(this._textSelectionStart.getSouthWest());
-				this._map.addLayer(this._startMarker);
+		var startMarker, endMarker;
+		for (var key in this._selectionHandles) {
+			if (key === 'start') {
+				startMarker = this._selectionHandles[key];
+			}
+			else if (key === 'end') {
+				endMarker = this._selectionHandles[key];
+			}
+		}
+
+		if (this._selections.getLayers().length !== 0 || startMarker.isDragged || endMarker.isDragged) {
+			if (!startMarker || !endMarker ||
+					this._isEmptyRectangle(this._textSelectionStart) ||
+					this._isEmptyRectangle(this._textSelectionEnd)) {
+				return;
 			}
 
-			if (!this._isEmptyRectangle(this._textSelectionEnd) && !this._endMarker.isDragged) {
-				this._endMarker.setLatLng(this._textSelectionEnd.getSouthEast());
-				this._map.addLayer(this._endMarker);
+			var startPos = this._map.project(this._textSelectionStart.getSouthWest());
+			var endPos = this._map.project(this._textSelectionEnd.getSouthWest());
+			var startMarkerPos = this._map.project(startMarker.getLatLng());
+			if (startMarkerPos.distanceTo(endPos) < startMarkerPos.distanceTo(startPos) && startMarker._icon && endMarker._icon) {
+				// if the start marker is actually closer to the end of the selection
+				// reverse icons and markers
+				L.DomUtil.removeClass(startMarker._icon, 'leaflet-selection-marker-start');
+				L.DomUtil.removeClass(endMarker._icon, 'leaflet-selection-marker-end');
+				L.DomUtil.addClass(startMarker._icon, 'leaflet-selection-marker-end');
+				L.DomUtil.addClass(endMarker._icon, 'leaflet-selection-marker-start');
+				var tmp = startMarker;
+				startMarker = endMarker;
+				endMarker = tmp;
+			}
+			else if (startMarker._icon && endMarker._icon) {
+				// normal markers and normal icons
+				L.DomUtil.removeClass(startMarker._icon, 'leaflet-selection-marker-end');
+				L.DomUtil.removeClass(endMarker._icon, 'leaflet-selection-marker-start');
+				L.DomUtil.addClass(startMarker._icon, 'leaflet-selection-marker-start');
+				L.DomUtil.addClass(endMarker._icon, 'leaflet-selection-marker-end');
+			}
+
+			if (!startMarker.isDragged) {
+				startMarker.setLatLng(this._textSelectionStart.getSouthWest());
+				this._map.addLayer(startMarker);
+			}
+
+			if (!endMarker.isDragged) {
+				endMarker.setLatLng(this._textSelectionEnd.getSouthEast());
+				this._map.addLayer(endMarker);
 			}
 		}
 		else {
-			this._textSelectionStart = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
-			this._textSelectionEnd = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
-			this._map.removeLayer(this._startMarker);
-			this._map.removeLayer(this._endMarker);
-			this._endMarker.isDragged = false;
-			this._startMarker.isDragged = false;
+			this._textSelectionStart = null;
+			this._textSelectionEnd = null;
+			for (key in this._selectionHandles) {
+				this._map.removeLayer(this._selectionHandles[key]);
+				this._selectionHandles[key].isDragged = false;
+			}
 		}
 	},
 

@@ -51,11 +51,8 @@ L.GridLayer = L.Layer.extend({
 		if (this._graphicMarker) {
 			this._graphicMarker.remove();
 		}
-		if (this._startMarker) {
-			this._startMarker.remove();
-		}
-		if (this._endMarker) {
-			this._endMarker.remove();
+		for (var key in this._selectionHandles) {
+			this._selectionHandles[key].remove();
 		}
 	},
 
