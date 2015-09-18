@@ -55,6 +55,13 @@
 		</ul>
 	</div>
 	<div class="toc-col">
+		<h4>LoLeaflet API</h4>
+		<ul>
+			<li><a href="#loleaflet-general">General</a></li>
+			<li><a href="#loleaflet-toolbar">Toolbar</a></li>
+			<li><a href="#loleaflet-page">Page oriented</a></li>
+			<li><a href="#loleaflet-part">Part oriented</a></li>
+		</ul>
 		<h4>UI Layers</h4>
 		<ul>
 			<li><a href="#marker">Marker</a></li>
@@ -1377,6 +1384,246 @@ var map = L.map('map', {
 	</tr>
 </table>
 
+<h2 id="loleaflet-general">General</h2>
+
+<p>General methods for document interaction.</p>
+
+<table data-id='map'>
+	<tr>
+		<th>Method</th>
+		<th>Returns</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>search</b>(
+			<nobr>&lt;String&gt; <i>phrase</i>,</nobr>
+			<nobr>&lt;Boolean&gt; <i>backward?</i> )</nobr>
+		</code></td>
+		<td><code>undefined</code></td>
+		<td>Searches for the given phrase downward from the current top border of the viewing area.
+        Or backwards if specified.</td>
+	</tr>
+	<tr>
+		<td><code><b>setPermission</b>(
+			<nobr>&lt;<a href="#documentpermission-values">DocumentPermissionValues</a>&gt; <i>documenPermission</i>)</nobr>
+		</code></td>
+		<td><code>undefined</code></td>
+		<td>Sets the permission of the document.</td>
+	</tr>
+	<tr>
+        <td><code><b>getDocSize</b>()</code></td>
+		<td><code><a href="#point">Point</a></code></td>
+		<td>Returns the document size.</td>
+	</tr>
+	<tr>
+        <td><code><b>getDocType</b>()</code></td>
+		<td><code><nobr><a href="#documenttype-values">DocumentTypeValues</a></nobr></code></td>
+		<td>Returns the document type.</td>
+	</tr>
+	<tr>
+        <td><code><b>scroll</b>(
+			<nobr>&lt;Number&gt;<i>x</i>,</nobr>
+			<nobr>&lt;Number&gt;<i>y</i>,</nobr>
+			<nobr>&lt;<a href="#scroll-options">ScrollOptions</a>&gt;<i>Options</i>)</nobr>
+        </code></td>
+		<td><code><nobr>undefined</nobr></code></td>
+		<td>Scroll right by 'x' and down by 'y' (or left and up if negative).</td>
+	</tr>
+	<tr>
+        <td><code><b>scrollDown</b>(
+			<nobr>&lt;Number&gt;<i>y</i>,</nobr>
+			<nobr>&lt;<a href="#scroll-options">ScrollOptions</a>&gt;<i>Options</i>)</nobr>
+        </code></td>
+		<td><code><nobr>undefined</nobr></code></td>
+		<td>Scroll down by 'y' (or up if negative).</td>
+	</tr>
+	<tr>
+        <td><code><b>scrollRight</b>(
+			<nobr>&lt;Number&gt;<i>x</i>,</nobr>
+			<nobr>&lt;<a href="#scroll-options">ScrollOptions</a>&gt;<i>Options</i>)</nobr>
+        </code></td>
+		<td><code><nobr>undefined</nobr></code></td>
+		<td>Scroll right by 'x' (or left if negative).</td>
+	</tr>
+	<tr>
+        <td><code><b>scrollTop</b>(
+			<nobr>&lt;Number&gt;<i>y</i>,</nobr>
+			<nobr>&lt;<a href="#scroll-options">ScrollOptions</a>&gt;<i>Options</i>)</nobr>
+        </code></td>
+		<td><code><nobr>undefined</nobr></code></td>
+		<td>Scroll to 'y' offset relative to the beginning of the document.</td>
+	</tr>
+	<tr>
+        <td><code><b>scrollLeft</b>(
+			<nobr>&lt;Number&gt;<i>x</i>,</nobr>
+			<nobr>&lt;<a href="#scroll-options">ScrollOptions</a>&gt;<i>Options</i>)</nobr>
+        </code></td>
+		<td><code><nobr>undefined</nobr></code></td>
+		<td>Scroll to 'x' offset relative to the beginning of the document.</td>
+	</tr>
+	<tr>
+        <td><code><b>scrollOffset</b>()</code></td>
+		<td><code><nobr><a href="#point">Point</a></nobr></code></td>
+		<td>Returns the scroll offset relative to the beginning of the document.</td>
+	</tr>
+</table>
+
+<h3 id="scroll-options">ScrollOptions</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">property</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>update</b></code></td>
+		<td><code>Boolean</code></td>
+        <td>Whether the <a href="#updatescrolloffset-event">update-scroll-offset</a> event is fired.</td>
+	</tr>
+</table>
+
+<h2 id="loleaflet-toolbar">Toolbar</h2>
+
+<p>Toolbar methods.</p>
+
+<table data-id='map'>
+	<tr>
+		<th>Method</th>
+		<th>Returns</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>getToolbarCommandValues</b>(
+			<nobr>&lt;<a href="#toolbarcommand-values">ToolbarCommandValues</a>&gt; <i>unoCommand</i>)</nobr>
+		</code></td>
+		<td><code>Object</code></td>
+		<td>Returns a JSON mapping of the possible values.</td>
+	</tr>
+	<tr>
+		<td><code><b>toggleCommandState</b>(
+			<nobr>&lt;<a href="#commandstatechanged-values">CommandValues</a>&gt; <i>unoCommand</i>)</nobr>
+		</code></td>
+		<td><code>undefined</code></td>
+		<td>Toggles the state for the given UNO command.</td>
+	</tr>
+</table>
+
+<h2 id="loleaflet-page">Page oriented</h2>
+
+<p>Methods for page oriented documents.</p>
+
+<table data-id='map'>
+	<tr>
+		<th>Method</th>
+		<th>Returns</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>getCurrentPageNumber</b>()</code></td>
+		<td><code>Number</code></td>
+		<td>Number of the current page.</td>
+	</tr>
+	<tr>
+		<td><code><b>getNumberOfPages</b>()</code></td>
+		<td><code>Number</code></td>
+		<td>Total number of pages.</td>
+	</tr>
+	<tr>
+		<td><code><b>goToPage</b>(
+			<nobr>&lt;Number&gt;<i>pageNumber</i>)</nobr>
+        </code></td>
+		<td><code>undfined</code></td>
+		<td>Scrolls to the beginning of the given page.</td>
+	</tr>
+	<tr>
+		<td><code><b>getDocPreview</b>(
+            &lt;Object&gt;<i>id</i>,<br>
+			&lt;Number&gt;<i>maxWidth</i>,<br>
+			&lt;Number&gt;<i>maxHeight</i>,<br>
+			&lt;Number&gt;<i>x</i>,<br>
+			&lt;Number&gt;<i>y</i>,<br>
+			&lt;Number&gt;<i>width</i>,<br>
+			&lt;Number&gt;<i>height</i>,<br>
+            <nobr>&lt;<a href="#getpreview-options">PreviewOptions</a>&gt;<i>options?</i>)</nobr>
+		</code></td>
+		<td><code>undefined</code></td>
+		<td>Triggers the creation of a preview with the given id, of maximum maxWidth X maxHeight size, of the
+            [(x,y), (x + width, y + height)] section of the document keeping the original ration. By passing an
+            optional parameter {autoUpdate: true}, the preview will be automatically invalidated.</td>
+	</tr>
+	<tr>
+		<td><code><b>removePreviewUpdate</b>(
+			<nobr>&lt;Object&gt;<i>id</i>)</nobr>
+        </code></td>
+		<td><code>undfined</code></td>
+		<td>Cancels the automatic update for the preview defined by 'id'.</td>
+	</tr>
+</table>
+
+<h2 id="loleaflet-part">Part oriented</h2>
+
+<p>Methods for page oriented documents.</p>
+
+<table data-id='map'>
+	<tr>
+		<th>Method</th>
+		<th>Returns</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>getCurrentPartNumber</b>()</code></td>
+		<td><code>Number</code></td>
+		<td>Number of the current part.</td>
+	</tr>
+	<tr>
+		<td><code><b>getNumberOfParts</b>()</code></td>
+		<td><code>Number</code></td>
+		<td>Total number of parts.</td>
+	</tr>
+	<tr>
+		<td><code><b>setPart</b>(
+			<nobr>&lt;Number&gt;<i>partNumber</i>)</nobr>
+        </code></td>
+		<td><code>undfined</code></td>
+		<td>Select a specific part.</td>
+	</tr>
+	<tr>
+        <td><code><b>getPartPreview</b>(
+            &lt;Object&gt;<i>id</i>,<br>
+			&lt;Number&gt;<i>part</i>,<br>
+			&lt;Number&gt;<i>maxWidth</i>,<br>
+			&lt;Number&gt;<i>maxHeight</i>,<br>
+            <nobr>&lt;<a href="#getpreview-options">PreviewOptions</a>&gt;<i>options?</i>)</nobr>
+		</code></td>
+		<td><code>undefined</code></td>
+		<td>Triggers the creation of a preview with the given id, of maximum maxWidth X maxHeight size, of the
+            specified part keeping the original ration. By passing an
+            optional parameter {autoUpdate: true}, the preview will be automatically invalidated.</td>
+	</tr>
+	<tr>
+		<td><code><b>removePreviewUpdate</b>(
+			<nobr>&lt;Object&gt;<i>id</i>)</nobr>
+        </code></td>
+		<td><code>undfined</code></td>
+		<td>Cancels the automatic update for the preview defined by 'id'.</td>
+	</tr>
+</table>
+
+<h3 id="getpreview-options">PreviewOptions</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">property</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>autoUpdate</b></code></td>
+		<td><code>Boolean</code></td>
+        <td>Whether a new preview is generated automatically when it becomes invalid.</td>
+	</tr>
+</table>
 
 <h2 id="marker">Marker</h2>
 
@@ -6633,7 +6880,7 @@ map.addControl(new MyControl());
 	</tr>
 	<tr>
 		<td><code><b>docType</b></code></td>
-		<td><code><a href="#doctype-values">DocumentTypeValues</a></code></td>
+		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
 		<td>The document type.</td>
 	</tr>
 	<tr>
@@ -6688,7 +6935,7 @@ map.addControl(new MyControl());
 	</tr>
 	<tr>
 		<td><code><b>docType</b></code></td>
-		<td><code><a href="#doctype-values">DocumentTypeValues</a></code></td>
+		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
 		<td>The document type.</td>
 	</tr>
 	<tr>
@@ -6818,7 +7065,7 @@ map.addControl(new MyControl());
 	</tr>
 	<tr>
 		<td><code><b>docType</b></code></td>
-		<td><code><a href="#doctype-values">DocumentTypeValues</a></code></td>
+		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
 		<td>The document type.</td>
 	</tr>
 </table>
@@ -7252,7 +7499,7 @@ map.addControl(new MyControl());
 	</tr>
 </table>
 
-<h3 id="doctype-values">DocumentTypeValues</h3>
+<h3 id="documenttype-values">DocumentTypeValues</h3>
 
 <table data-id='values'>
 	<tr>
