@@ -1,4 +1,4 @@
-describe('TileBench', function () {
+describe('LOLeaflet test', function () {
 	this.timeout(10000);
 	var map;
 	var timeOut
@@ -38,7 +38,7 @@ describe('TileBench', function () {
 		map.remove();
 	});
 
-	describe('Benchmarking', function () {
+	describe('', function () {
 		it('Load all new tiles', function (done) {
 			map.on('statusindicator', function (e) {
 				if (e.statusType === 'alltilesloaded') {
