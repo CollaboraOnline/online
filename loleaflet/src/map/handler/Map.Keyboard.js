@@ -10,6 +10,13 @@ L.Map.mergeOptions({
 
 L.Map.Keyboard = L.Handler.extend({
 
+	keyModifier: {
+		shift: 4096,
+		ctrl: 8192,
+		alt: 16384,
+		ctrlMac: 32768
+	},
+
 	keymap: {
 		8   : 1283, // backspace	: BACKSPACE
 		9   : 1282, // tab 		: TAB
@@ -129,8 +136,8 @@ L.Map.Keyboard = L.Handler.extend({
 
 	_setPanOffset: function (pan) {
 		var keys = this._panKeys = {},
-		    codes = this.navigationKeyCodes,
-		    i, len;
+			codes = this.navigationKeyCodes,
+			i, len;
 
 		for (i = 0, len = codes.left.length; i < len; i++) {
 			keys[codes.left[i]] = [-1 * pan, 0];
@@ -148,8 +155,8 @@ L.Map.Keyboard = L.Handler.extend({
 
 	_setZoomOffset: function (zoom) {
 		var keys = this._zoomKeys = {},
-		    codes = this.navigationKeyCodes,
-		    i, len;
+			codes = this.navigationKeyCodes,
+			i, len;
 
 		for (i = 0, len = codes.zoomIn.length; i < len; i++) {
 			keys[codes.zoomIn[i]] = zoom;
@@ -172,7 +179,6 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onKeyDown: function (e) {
-		var docLayer = this._map._docLayer;
 		if (e.originalEvent.ctrlKey) {
 			// we prepare for a copy event
 			docLayer._textArea.value = 'dummy text';
@@ -181,24 +187,31 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
+		var docLayer = this._map._docLayer;
+		var charCode = e.originalEvent.charCode;
+		var keyCode = e.originalEvent.keyCode;
+		var unoKeyCode = this._toUNOKeyCode(keyCode);
+
+		if (e.originalEvent.shiftKey) {
+			unoKeyCode |= this.keyModifier.shift;
+		}
+
 		if (docLayer._permission === 'edit') {
 			docLayer._resetPreFetching();
-			var charCode = e.originalEvent.charCode;
-			var keyCode = e.originalEvent.keyCode;
 			if (e.type === 'keydown' && this.handleOnKeyDown[keyCode] && charCode === 0) {
-				docLayer._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
+				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 			}
 			else if (e.type === 'keypress' &&
-					(!this.handleOnKeyDown[keyCode] || charCode !== 0)) {
+				(!this.handleOnKeyDown[keyCode] || charCode !== 0)) {
 				if (charCode === keyCode && charCode !== 13) {
 					// Chrome sets keyCode = charCode for printable keys
 					// while LO requires it to be 0
 					keyCode = 0;
 				}
-				docLayer._postKeyboardEvent('input', charCode, this._toUNOKeyCode(keyCode));
+				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 			}
 			else if (e.type === 'keyup') {
-				docLayer._postKeyboardEvent('up', charCode, this._toUNOKeyCode(keyCode));
+				docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
 			}
 			if (keyCode === 9) {
 				// tab would change focus to other DOM elements
@@ -208,11 +221,16 @@ L.Map.Keyboard = L.Handler.extend({
 		else if (e.type === 'keydown') {
 			var key = e.originalEvent.keyCode;
 			var map = this._map;
-			if (key in this._panKeys) {
+			if (key in this._panKeys && !e.originalEvent.shiftKey) {
 				if (map._panAnim && map._panAnim._inProgress) {
 					return;
 				}
 				map.fire('scrollby', {x: this._panKeys[key][0], y: this._panKeys[key][1]});
+			}
+			else if (key in this._panKeys && e.originalEvent.shiftKey &&
+					docLayer._selections.getLayers().length !== 0) {
+				// if there is a selection and the user wants to modify it
+				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 			}
 			else if (key in this._zoomKeys) {
 				map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);
