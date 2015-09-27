@@ -31,6 +31,7 @@ public:
     // statics
     static int portNumber;
     static int timeoutCounter;
+    static int writerBroker;
     static bool doTest;
     static std::string cache;
     static std::string sysTemplate;
@@ -45,6 +46,7 @@ public:
     static const int MAINTENANCE_INTERVAL = 1;
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
+    static const std::string FIFO_FILE;
     static const std::string LOKIT_PIDLOG;
     static Poco::NamedMutex _namedMutexLOOL;
 

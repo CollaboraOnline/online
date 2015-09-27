@@ -424,6 +424,7 @@ public:
 
 int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
 int LOOLWSD::timeoutCounter = 0;
+int LOOLWSD::writerBroker = -1;
 std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
 std::string LOOLWSD::loTemplate;
@@ -443,6 +444,7 @@ int LOOLWSD::uid = 0;
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 const std::string LOOLWSD::LOKIT_PIDLOG = "/tmp/lokit.pid";
+const std::string LOOLWSD::FIFO_FILE = "/tmp/loolwsdfifo";
 
 LOOLWSD::LOOLWSD() :
     _childId(0)
@@ -640,6 +642,12 @@ int LOOLWSD::main(const std::vector<std::string>& args)
             filePID << Process::id();
     }
 
+    if (!File(FIFO_FILE).exists() && mkfifo(FIFO_FILE.c_str(), 0666) == -1)
+    {
+        std::cout << Util::logPrefix() << "Fail to create pipe FIFO" << std::endl;
+        return Application::EXIT_UNAVAILABLE;
+    }
+
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
     rngLock.unlock();
@@ -668,6 +676,12 @@ int LOOLWSD::main(const std::vector<std::string>& args)
     HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
 
     srv2.start();
+
+    if ( (writerBroker = open(FIFO_FILE.c_str(), O_WRONLY) ) < 0 )
+    {
+        std::cout << Util::logPrefix() << "Pipe opened for writing" << strerror(errno) << std::endl;
+        return Application::EXIT_UNAVAILABLE;
+    }
 
     _namedMutexLOOL.unlock();
 
