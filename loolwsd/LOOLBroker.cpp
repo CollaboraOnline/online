@@ -255,7 +255,7 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
 
         if (!(pid = fork()))
         { // child
-            run_lok_main(loSubPath, childID);
+            run_lok_main(loSubPath, childID, "");
             _exit(0);
         }
         else
@@ -266,8 +266,11 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
     else
     {
         Process::Args args;
+        std::string pipe = "";
+
         args.push_back("--losubpath=" + loSubPath);
         args.push_back("--child=" + std::to_string(childID));
+        args.push_back("--pipe=" + pipe);
 
         std::string executable = "loolkit";
 

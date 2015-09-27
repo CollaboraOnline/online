@@ -12,6 +12,7 @@
  */
 
 #include <sys/prctl.h>
+#include <sys/poll.h>
 
 #include <memory>
 #include <iostream>
@@ -48,6 +49,7 @@ using Poco::Process;
 
 const int MASTER_PORT_NUMBER = 9981;
 const std::string CHILD_URI = "/loolws/child/";
+const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
 
 class QueueHandler: public Runnable
 {
@@ -193,8 +195,17 @@ private:
     Thread _thread;
 };
 
-void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId)
+void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std::string& pipe)
 {
+    struct pollfd aPoll;
+    ssize_t nBytes = -1;
+    char  aBuffer[1024*2];
+    char* pStart = NULL;
+    char* pEnd = NULL;
+
+    std::string aURL;
+    std::map<std::string, std::shared_ptr<Connection>> _connections;
+
     assert (_childId != 0);
     assert (!loSubPath.empty());
 
@@ -217,8 +228,126 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId)
             exit(-1);
         }
 
+        int writerBroker;
+        int readerBroker;
+
+        if ( (readerBroker = open(pipe.c_str(), O_RDONLY) ) < 0 )
+        {
+            std::cout << Util::logPrefix() << "open pipe read only: " << strerror(errno) << std::endl;
+            exit(-1);
+        }
+
+        if ( (writerBroker = open(LOKIT_BROKER.c_str(), O_WRONLY) ) < 0 )
+        {
+            std::cout << Util::logPrefix() << "open pipe write only: " << strerror(errno) << std::endl;
+            exit(-1);
+        }
+
+        std::cout << Util::logPrefix() << "child ready!" << std::endl;
+
+        std::string aResponse;
+        std::string aMessage;
+
+        while ( true )
+        {
+            if ( pStart == pEnd )
+            {
+                aPoll.fd = readerBroker;
+                aPoll.events = POLLIN;
+                aPoll.revents = 0;
+
+                (void)poll(&aPoll, 1, -1);
+
+                if( (aPoll.revents & POLLIN) != 0 )
+                {
+                    nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
+                    if (nBytes < 0)
+                    {
+                        pStart = pEnd = NULL;
+                        std::cout << Util::logPrefix() << "Error reading message :" << strerror(errno) << std::endl;
+                        continue;
+                    }
+                    pStart = aBuffer;
+                    pEnd   = aBuffer + nBytes;
+                }
+            }
+
+            if ( pStart != pEnd )
+            {
+                char aChar = *pStart++;
+                while (pStart != pEnd && aChar != '\r' && aChar != '\n')
+                {
+                    aMessage += aChar;
+                    aChar = *pStart++;
+                }
+
+                if ( aChar == '\r' && *pStart == '\n')
+                {
+                    pStart++;
+                    //std::cout << Util::logPrefix() << "child receive: " << aMessage << std::endl;
+                    StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+                    if (tokens[0] == "search")
+                    {
+                        if ( !_connections.empty() )
+                        {
+                            aResponse = std::to_string(Process::id()) + ( aURL == tokens[1] ? " ok \r\n" : " no \r\n");
+                            Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length() );
+                        }
+                        else
+                        {
+                            aURL.clear();
+                            aResponse = std::to_string(Process::id()) + " empty \r\n";
+                            Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length() );
+                        }
+                    }
+                    else if (tokens[0] == "thread")
+                    {
+                        auto aItem = _connections.find(tokens[1]);
+                        if (aItem != _connections.end())
+                        { // found item, check if still running
+                            std::cout << Util::logPrefix() << "found thread" << std::endl;
+                            if ( !aItem->second->isRunning() )
+                                std::cout << Util::logPrefix() << "found thread not running!" << std::endl;
+                        }
+                        else
+                        { // new thread id
+                            //std::cout << Util::logPrefix() << "new thread starting!" << std::endl;
+                            auto thread = std::shared_ptr<Connection>(new Connection(NULL/*loKit*/, _childId, tokens[1]));
+                            auto aInserted = _connections.insert(
+                                std::pair<std::string, std::shared_ptr<Connection>>
+                                (
+                                    tokens[1],
+                                    thread
+                                ));
+
+                            if ( aInserted.second )
+                                thread->start();
+                            else
+                                std::cout << Util::logPrefix() << "Connection not created!" << std::endl;
+
+                            std::cout << Util::logPrefix() << "connections: " << Process::id() << " " << _connections.size() << std::endl;
+                        }
+                    }
+                    else if (tokens[0] == "url")
+                    {
+                        aURL = tokens[1];
+                    }
+                    else
+                    {
+                        aResponse = "bad message \r\n";
+                        Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length() );
+                    }
+                    aMessage.clear();
+                }
+            }
+        }
+
+
         // Destroy LibreOfficeKit
         loKit->pClass->destroy(loKit);
+
+        pthread_exit(0);
     }
     catch (Exception& exc)
     {
@@ -239,6 +368,7 @@ int main(int argc, char** argv)
 {
     std::string loSubPath;
     Poco::UInt64 _childId = 0;
+    std::string _pipe;
 
     for (int i = 1; i < argc; ++i)
     {
@@ -256,6 +386,12 @@ int main(int argc, char** argv)
             if (*eq)
                 _childId = std::stoll(std::string(++eq));
         }
+        else if (strstr(cmd, "--pipe=") == cmd)
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                _pipe = std::string(++eq);
+        }
     }
 
     if (loSubPath.empty())
@@ -270,7 +406,13 @@ int main(int argc, char** argv)
         exit(1);
     }
 
-    run_lok_main(loSubPath, _childId);
+    if ( _pipe.empty() )
+    {
+        std::cout << Util::logPrefix() << "--pipe is empty" << std::endl;
+        exit(1);
+    }
+
+    run_lok_main(loSubPath, _childId, _pipe);
 
     return 0;
 }
