@@ -65,8 +65,10 @@ const std::string BROKER_PREFIX = "/tmp/lokit";
 static int readerChild = -1;
 static int readerBroker = -1;
 
+static unsigned int forkCounter = 0;
 static unsigned int childCounter = 0;
 
+static std::mutex forkMutex;
 static std::map<Poco::Process::PID, int> _childProcesses;
 
 namespace
@@ -529,6 +531,17 @@ int main(int argc, char** argv)
         }
         else if (pid < 0)
             std::cout << Util::logPrefix() << "Child error: " << strerror(errno) << std::endl;
+
+        if ( forkCounter > 0 )
+        {
+            forkMutex.lock();
+            forkCounter -= 1;
+
+            if (createLibreOfficeKit(sharePages, loSubPath, _childId) < 0 )
+                std::cout << Util::logPrefix() << "fork falied: " << strerror(errno) << std::endl;
+
+            forkMutex.unlock();
+        }
 
         ++timeoutCounter;
         if (timeoutCounter == INTERVAL_PROBES)
