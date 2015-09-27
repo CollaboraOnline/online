@@ -57,11 +57,13 @@ using Poco::Process;
 using Poco::Thread;
 using Poco::ProcessHandle;
 
+const std::string FIFO_FILE = "/tmp/loolwsdfifo";
 const std::string FIFO_BROKER = "/tmp/loolbroker.fifo";
 const std::string BROKER_SUFIX = ".fifo";
 const std::string BROKER_PREFIX = "/tmp/lokit";
 
 static int readerChild = -1;
+static int readerBroker = -1;
 
 static unsigned int childCounter = 0;
 
@@ -376,37 +378,42 @@ int main(int argc, char** argv)
     if (loSubPath.empty())
     {
         std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
-        exit(1);
+        exit(-1);
     }
 
     if (sysTemplate.empty())
     {
         std::cout << Util::logPrefix() << "--systemplate is empty" << std::endl;
-        exit(1);
+        exit(-1);
     }
 
     if (loTemplate.empty())
     {
         std::cout << Util::logPrefix() << "--lotemplate is empty" << std::endl;
-        exit(1);
+        exit(-1);
     }
 
     if (childRoot.empty())
     {
         std::cout << Util::logPrefix() << "--childroot is empty" << std::endl;
-        exit(1);
+        exit(-1);
     }
 
     if ( !_numPreSpawnedChildren )
     {
         std::cout << Util::logPrefix() << "--numprespawns is 0" << std::endl;
-        exit(1);
+        exit(-1);
+    }
+
+    if ( (readerBroker = open(FIFO_FILE.c_str(), O_RDONLY) ) < 0 )
+    {
+        std::cout << Util::logPrefix() << "pipe error: " << strerror(errno) << std::endl;
+        exit(-1);
     }
 
     std::unique_lock<std::mutex> rngLock(_rngMutex);
     Poco::UInt64 _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
     rngLock.unlock();
-
 
     Path jail = Path::forDirectory(childRoot + Path::separator() + std::to_string(_childId));
     File(jail).createDirectories();
@@ -424,7 +431,7 @@ int main(int argc, char** argv)
     if (!File("loolkit").exists())
     {
         std::cout << Util::logPrefix() << "loolkit does not exists" << std::endl;
-        exit(1);
+        exit(-1);
     }
     File("loolkit").copyTo(Path(jail, "/usr/bin").toString());
 
