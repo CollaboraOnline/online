@@ -35,6 +35,7 @@
 #include <Poco/File.h>
 #include <Poco/Exception.h>
 #include <Poco/FileStream.h>
+#include <Poco/Thread.h>
 
 #include "MasterProcessSession.hpp"
 #include "Util.hpp"
@@ -52,10 +53,11 @@ using Poco::Path;
 using Poco::URI;
 using Poco::File;
 using Poco::Exception;
+using Poco::Thread;
 
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
+std::map<Thread::TID, std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 
-std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::mutex MasterProcessSession::_availableChildSessionMutex;
 std::condition_variable MasterProcessSession::_availableChildSessionCV;
 Random MasterProcessSession::_rng;
@@ -155,17 +157,19 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=child kind=invalid");
             return false;
         }
-        if (tokens.count() != 3)
+        if (tokens.count() != 4)
         {
             sendTextFrame("error: cmd=child kind=syntax");
             return false;
         }
 
         UInt64 childId = std::stoull(tokens[1]);
-        Process::PID pidChild = std::stoull(tokens[2]);
+        Thread::TID tId = std::stoull(tokens[2]);
+        Process::PID pId = std::stoull(tokens[3]);
 
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
-        _availableChildSessions.insert(shared_from_this());
+        _availableChildSessions.insert(std::pair<Thread::TID, std::shared_ptr<MasterProcessSession>> (tId, shared_from_this()));
+        std::cout << Util::logPrefix() << _kindString << ",Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
         std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
         _childId = childId;
         lock.unlock();
@@ -176,7 +180,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         {
             Poco::FileOutputStream filePID(LOOLWSD::LOKIT_PIDLOG);
             if (filePID.good())
-                filePID << pidChild;
+                filePID << pId;
         }
     }
     else if (_kind == Kind::ToPrisoner)
@@ -403,9 +407,9 @@ void MasterProcessSession::dispatchChild()
         std::cout << Util::logPrefix() << "waiting done" << std::endl;
     }
 
-    childSession = *(_availableChildSessions.begin());
+    childSession = _availableChildSessions[Thread::currentTid()];
+    _availableChildSessions.erase(Thread::currentTid());
 
-    _availableChildSessions.erase(childSession);
     lock.unlock();
 
     // Assume a valid URI
