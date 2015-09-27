@@ -305,6 +305,10 @@ bool MasterProcessSession::loadDocument(const char *buffer, int length, StringTo
     try
     {
         URI aUri(_docURL);
+
+        // request new URL session
+        std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
+        Util::writeFIFO(LOOLWSD::writerBroker, aMessage.c_str(), aMessage.length());
     }
     catch(Poco::SyntaxException&)
     {
