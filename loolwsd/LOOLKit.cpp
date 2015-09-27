@@ -313,7 +313,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                         else
                         { // new thread id
                             //std::cout << Util::logPrefix() << "new thread starting!" << std::endl;
-                            auto thread = std::shared_ptr<Connection>(new Connection(NULL/*loKit*/, _childId, tokens[1]));
+                            auto thread = std::shared_ptr<Connection>(new Connection(loKit, _childId, tokens[1]));
                             auto aInserted = _connections.insert(
                                 std::pair<std::string, std::shared_ptr<Connection>>
                                 (
