@@ -109,7 +109,7 @@ int main ()
 }
 _ACEOF
 
-gcc_compile='gcc -o $dummy.o -c $dummy.cpp'
+gcc_compile='g++ -o $dummy.o -c $dummy.cpp'
 (eval "$gcc_compile") 2>$dummy.err
 
 if ! test $? = 0; then
@@ -117,7 +117,7 @@ if ! test $? = 0; then
   exit 1;
 fi
 
-gcc_link='gcc -o $dummy -lcap -lpng -ldl  -lPocoNet -lPocoUtil -lPocoXML -lPocoJSON -lPocoFoundation $dummy.o'
+gcc_link='g++ -o $dummy -lcap -lpng -ldl  -lPocoNet -lPocoUtil -lPocoXML -lPocoJSON -lPocoFoundation $dummy.o'
 (eval "$gcc_link") 2>$dummy.err
 
 if ! test $? = 0; then
