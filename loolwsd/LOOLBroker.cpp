@@ -302,14 +302,21 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
     return child;
 }
 
-static void startupLibreOfficeKit(bool sharePages, int nLOKits,
+static int startupLibreOfficeKit(bool sharePages, int nLOKits,
                                   std::string loSubPath, Poco::UInt64 child)
 {
+    Process::PID pId = -1;
+
     for (int nCntr = nLOKits; nCntr; nCntr--)
     {
-        if (createLibreOfficeKit(sharePages, loSubPath, child) < 0)
+        if ( (pId = createLibreOfficeKit(sharePages, loSubPath, child)) < 0)
+        {
+            std::cout << Util::logPrefix() << "startupLibreOfficeKit: " << strerror(errno) << std::endl;
             break;
+        }
     }
+
+   return pId;
 }
 
 static int timeoutCounter = 0;
@@ -461,7 +468,11 @@ int main(int argc, char** argv)
 
     bool sharePages = globalPreinit(loSubPath);
 
-    startupLibreOfficeKit(sharePages, _numPreSpawnedChildren, loSubPath, _childId);
+    if ( startupLibreOfficeKit(sharePages, _numPreSpawnedChildren, loSubPath, _childId) < 0 )
+    {
+        std::cout << Util::logPrefix() << "fail to create childs: " << strerror(errno) << std::endl;
+        exit(-1);
+    }
 
     while (_childProcesses.size() > 0)
     {
