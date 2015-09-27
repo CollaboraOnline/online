@@ -57,6 +57,13 @@ using Poco::Process;
 using Poco::Thread;
 using Poco::ProcessHandle;
 
+const std::string BROKER_SUFIX = ".fifo";
+const std::string BROKER_PREFIX = "/tmp/lokit";
+
+static unsigned int childCounter = 0;
+
+static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
+
 namespace
 {
     ThreadLocal<std::string> sourceForLinkOrCopy;
@@ -218,8 +225,6 @@ namespace
     }
 }
 
-static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
-
 /// Initializes LibreOfficeKit for cross-fork re-use.
 static bool globalPreinit(const std::string &loSubPath)
 {
@@ -247,6 +252,8 @@ static bool globalPreinit(const std::string &loSubPath)
 static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UInt64 childID)
 {
     Poco::UInt64 child;
+    int nFIFOWriter = -1;
+
     if (sharePages)
     {
         Poco::UInt64 pid;
@@ -266,18 +273,29 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
     else
     {
         Process::Args args;
-        std::string pipe = "";
+        std::string executable = "loolkit";
+        std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
+
+        if (mkfifo(pipe.c_str(), 0666) < 0)
+        {
+            std::cout << Util::logPrefix() << "mkfifo :" << strerror(errno) << std::endl;
+            return -1;
+        }
 
         args.push_back("--losubpath=" + loSubPath);
         args.push_back("--child=" + std::to_string(childID));
         args.push_back("--pipe=" + pipe);
 
-        std::string executable = "loolkit";
-
         std::cout << Util::logPrefix() + "Launching LibreOfficeKit: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()) << std::endl;
 
         ProcessHandle procChild = Process::launch(executable, args);
         child = procChild.id();
+
+        if ( ( nFIFOWriter = open(pipe.c_str(), O_WRONLY) ) < 0 )
+        {
+            std::cout << Util::logPrefix() << "open: " << strerror(errno) << std::endl;
+            return -1;
+        }
     }
     _childProcesses[child] = child;
     return 0;
