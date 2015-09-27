@@ -778,8 +778,12 @@ int main(int argc, char** argv)
             {
                 if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
                 {
+                    forkMutex.lock();
                     std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
                     _childProcesses.erase(pid);
+                    _cacheURL.clear();
+                    _emptyURL.clear();
+                    forkMutex.unlock();
                 }
 
                 if ( WCOREDUMP(status) )
