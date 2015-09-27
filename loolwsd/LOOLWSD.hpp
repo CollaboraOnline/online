@@ -19,7 +19,6 @@
 #include <Poco/Random.h>
 #include <Poco/Path.h>
 #include <Poco/Util/ServerApplication.h>
-#include <Poco/SharedMemory.h>
 #include <Poco/NamedMutex.h>
 
 class LOOLWSD: public Poco::Util::ServerApplication
@@ -39,7 +38,6 @@ public:
     static std::string childRoot;
     static std::string loSubPath;
     static std::string jail;
-    static Poco::SharedMemory _sharedForkChild;
 
     static const int DEFAULT_CLIENT_PORT_NUMBER = 9980;
     static const int MASTER_PORT_NUMBER = 9981;

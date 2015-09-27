@@ -433,7 +433,6 @@ std::string LOOLWSD::jail;
 std::mutex LOOLWSD::_rngMutex;
 Random LOOLWSD::_rng;
 Poco::NamedMutex LOOLWSD::_namedMutexLOOL("loolwsd");
-Poco::SharedMemory LOOLWSD::_sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
 
 int LOOLWSD::_numPreSpawnedChildren = 10;
 bool LOOLWSD::doTest = false;

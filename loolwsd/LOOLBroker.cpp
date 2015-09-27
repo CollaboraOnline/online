@@ -29,7 +29,6 @@
 #include <Poco/ThreadLocal.h>
 #include <Poco/Process.h>
 #include <Poco/Thread.h>
-#include <Poco/SharedMemory.h>
 #include <Poco/NamedMutex.h>
 
 #include "Util.hpp"
@@ -305,7 +304,6 @@ int main(int argc, char** argv)
     std::string sysTemplate;
     std::string loTemplate;
     int _numPreSpawnedChildren = 0;
-    Poco::SharedMemory _sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
 
     for (int i = 0; i < argc; ++i)
     {
@@ -476,16 +474,6 @@ int main(int argc, char** argv)
         }
         else if (pid < 0)
             std::cout << Util::logPrefix() << "Child error: " << strerror(errno) << std::endl;
-
-        if ( _sharedForkChild.begin()[0] > 0 )
-        {
-            _namedMutexLOOL.lock();
-            _sharedForkChild.begin()[0] = _sharedForkChild.begin()[0] - 1;
-            _namedMutexLOOL.unlock();
-            std::cout << Util::logPrefix() << "Create child session, fork new one" << std::endl;
-            if (createLibreOfficeKit(sharePages, loSubPath, _childId) < 0 )
-                break;
-        }
 
         ++timeoutCounter;
         if (timeoutCounter == INTERVAL_PROBES)
