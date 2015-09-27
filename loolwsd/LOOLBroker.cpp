@@ -62,7 +62,7 @@ const std::string BROKER_PREFIX = "/tmp/lokit";
 
 static unsigned int childCounter = 0;
 
-static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
+static std::map<Poco::Process::PID, int> _childProcesses;
 
 namespace
 {
@@ -297,8 +297,9 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
             return -1;
         }
     }
-    _childProcesses[child] = child;
-    return 0;
+
+    _childProcesses[child] = nFIFOWriter;
+    return child;
 }
 
 static void startupLibreOfficeKit(bool sharePages, int nLOKits,
