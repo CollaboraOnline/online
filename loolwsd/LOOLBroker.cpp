@@ -57,8 +57,11 @@ using Poco::Process;
 using Poco::Thread;
 using Poco::ProcessHandle;
 
+const std::string FIFO_BROKER = "/tmp/loolbroker.fifo";
 const std::string BROKER_SUFIX = ".fifo";
 const std::string BROKER_PREFIX = "/tmp/lokit";
+
+static int readerChild = -1;
 
 static unsigned int childCounter = 0;
 
@@ -466,11 +469,23 @@ int main(int argc, char** argv)
     dropCapability();
 #endif
 
+    if (mkfifo(FIFO_BROKER.c_str(), 0666) == -1)
+    {
+        std::cout << Util::logPrefix() << "Fail to create pipe FIFO " << strerror(errno) << std::endl;
+        exit(-1);
+    }
+
     bool sharePages = globalPreinit(loSubPath);
 
     if ( startupLibreOfficeKit(sharePages, _numPreSpawnedChildren, loSubPath, _childId) < 0 )
     {
         std::cout << Util::logPrefix() << "fail to create childs: " << strerror(errno) << std::endl;
+        exit(-1);
+    }
+
+    if ( (readerChild = open(FIFO_BROKER.c_str(), O_RDONLY) ) < 0 )
+    {
+        std::cout << Util::logPrefix() << "pipe opened for reading: " << strerror(errno) << std::endl;
         exit(-1);
     }
 
