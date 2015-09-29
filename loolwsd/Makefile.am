@@ -34,3 +34,7 @@ all-local: loolwsd
 		sudo chown root loolwsd && sudo chmod u+s loolwsd; \
 	    fi; \
 	fi
+
+tags:
+	ctags --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes \
+		--exclude=jails *
