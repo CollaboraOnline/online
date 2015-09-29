@@ -105,6 +105,7 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
+		map.on('resize', this._fitDocumentHorizontally, this);
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
@@ -671,6 +672,23 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onRequestLOKSession: function () {
 		L.Socket.sendMessage('requestloksession');
+	},
+
+	_fitDocumentHorizontally: function (e) {
+		if (this._docType !== 'spreadsheet') {
+			var crsScale = this._map.options.crs.scale(1);
+			if (this._docPixelSize.x > e.newSize.x) {
+				var ratio = this._docPixelSize.x / e.newSize.x;
+				var zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
+				this._map.setZoom(Math.max(1, this._map.getZoom() - zoomDelta), {animate: false});
+			}
+			else if (e.newSize.x / this._docPixelSize.x > crsScale) {
+				// we could zoom in
+				var ratio = e.newSize.x / this._docPixelSize.x;
+				var zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
+				this._map.setZoom(Math.min(10, this._map.getZoom() + zoomDelta), {animate: false});
+			}
+		}
 	}
 });
 
