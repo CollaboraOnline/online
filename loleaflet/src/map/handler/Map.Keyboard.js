@@ -179,6 +179,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onKeyDown: function (e) {
+		var docLayer = this._map._docLayer;
 		if (e.originalEvent.ctrlKey) {
 			// we prepare for a copy event
 			docLayer._textArea.value = 'dummy text';
@@ -187,7 +188,6 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
-		var docLayer = this._map._docLayer;
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
