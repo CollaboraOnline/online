@@ -214,6 +214,10 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
                 std::string commandName = object->get("commandName").toString();
                 peer->_tileCache->saveTextFile(std::string(buffer, length), "cmdValues" + commandName + ".txt");
             }
+            else if (tokens[0] == "partpagerectangles:")
+            {
+                peer->_tileCache->saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
+            }
             else if (tokens[0] == "invalidatetiles:")
             {
                 // FIXME temporarily, set the editing on the 1st invalidate, TODO extend
@@ -283,6 +287,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     }
     else if (tokens[0] != "canceltiles" &&
              tokens[0] != "commandvalues" &&
+             tokens[0] != "partpagerectangles" &&
              tokens[0] != "gettextselection" &&
              tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
@@ -314,6 +319,10 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] == "commandvalues")
     {
         return getCommandValues(buffer, length, tokens);
+    }
+    else if (tokens[0] == "partpagerectangles")
+    {
+        return getPartPageRectangles(buffer, length);
     }
     else if (tokens[0] == "invalidatetiles")
     {
@@ -445,6 +454,21 @@ bool MasterProcessSession::getCommandValues(const char *buffer, int length, Stri
     if (cmdValues.size() > 0)
     {
         sendTextFrame(cmdValues);
+        return true;
+    }
+
+    if (_peer.expired())
+        dispatchChild();
+    forwardToPeer(buffer, length);
+    return true;
+}
+
+bool MasterProcessSession::getPartPageRectangles(const char *buffer, int length)
+{
+    std::string partPageRectangles = _tileCache->getTextFile("partpagerectangles.txt");
+    if (partPageRectangles.size() > 0)
+    {
+        sendTextFrame(partPageRectangles);
         return true;
     }
 
@@ -632,6 +656,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
     if (tokens[0] == "commandvalues")
     {
         return getCommandValues(buffer, length, tokens);
+    }
+    if (tokens[0] == "partpagerectangles")
+    {
+        return getPartPageRectangles(buffer, length);
     }
     if (tokens[0] == "load")
     {
@@ -892,6 +920,12 @@ bool ChildProcessSession::getCommandValues(const char *buffer, int length, Strin
         return false;
     }
     sendTextFrame("commandvalues: " + std::string(_loKitDocument->pClass->getCommandValues(_loKitDocument, command.c_str())));
+    return true;
+}
+
+bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
+{
+    sendTextFrame("partpagerectangles: " + std::string(_loKitDocument->pClass->getPartPageRectangles(_loKitDocument)));
     return true;
 }
 

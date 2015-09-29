@@ -47,6 +47,8 @@ public:
 
     virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
+    virtual bool getPartPageRectangles(const char *buffer, int length) = 0;
+
     virtual bool handleInput(const char *buffer, int length) = 0;
 
 protected:
@@ -113,6 +115,8 @@ public:
 
     virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
+    virtual bool getPartPageRectangles(const char *buffer, int length) override;
+
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
@@ -160,6 +164,8 @@ public:
     virtual bool getStatus(const char *buffer, int length);
 
     virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
+    virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
     LibreOfficeKitDocument *_loKitDocument;
     std::string _docType;
