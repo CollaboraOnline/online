@@ -54,6 +54,9 @@ struct _LibreOfficeKitClass
     void (*registerCallback) (LibreOfficeKit* pThis,
                               LibreOfficeKitCallback pCallback,
                               void* pData);
+
+    /// @see lok::Office::getFilterTypes().
+    char* (*getFilterTypes) (LibreOfficeKit* pThis);
 #endif
 };
 
@@ -82,6 +85,9 @@ struct _LibreOfficeKitDocumentClass
     /// @see lok::Document::getParts().
     int (*getParts) (LibreOfficeKitDocument* pThis);
 
+    /// @see lok::Document::getPartPageRectangles().
+    char* (*getPartPageRectangles) (LibreOfficeKitDocument* pThis);
+
     /// @see lok::Document::getPart().
     int (*getPart) (LibreOfficeKitDocument* pThis);
 
@@ -93,10 +99,7 @@ struct _LibreOfficeKitDocumentClass
     char* (*getPartName) (LibreOfficeKitDocument* pThis,
                           int nPart);
 
-    /** Sets mode of the current part.
-     *
-     * @param nMode - element from the LibreOfficeKitPartMode enum.
-     */
+    /// @see lok::Document::setPartMode().
     void (*setPartMode) (LibreOfficeKitDocument* pThis,
                          int nMode);
 
@@ -118,6 +121,7 @@ struct _LibreOfficeKitDocumentClass
     /// @see lok::Document::initializeForRendering().
     void (*initializeForRendering) (LibreOfficeKitDocument* pThis);
 
+    /// @see lok::Document::registerCallback().
     void (*registerCallback) (LibreOfficeKitDocument* pThis,
                               LibreOfficeKitCallback pCallback,
                               void* pData);
@@ -160,8 +164,19 @@ struct _LibreOfficeKitDocumentClass
     /// @see lok::Document::resetSelection
     void (*resetSelection) (LibreOfficeKitDocument* pThis);
 
-    /// @see lok::Document:getStyles
+    /// @see lok::Document::getCommandValues().
     char* (*getCommandValues) (LibreOfficeKitDocument* pThis, const char* pCommand);
+
+    /// @see lok::Document::createView().
+    int (*createView) (LibreOfficeKitDocument* pThis);
+    /// @see lok::Document::destroyView().
+    void (*destroyView) (LibreOfficeKitDocument* pThis, int nId);
+    /// @see lok::Document::setView().
+    void (*setView) (LibreOfficeKitDocument* pThis, int nId);
+    /// @see lok::Document::getView().
+    int (*getView) (LibreOfficeKitDocument* pThis);
+    /// @see lok::Document::getViews().
+    int (*getViews) (LibreOfficeKitDocument* pThis);
 #endif // LOK_USE_UNSTABLE_API
 };
 
