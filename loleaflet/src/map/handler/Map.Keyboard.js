@@ -207,6 +207,7 @@ L.Map.Keyboard = L.Handler.extend({
 					// Chrome sets keyCode = charCode for printable keys
 					// while LO requires it to be 0
 					keyCode = 0;
+					unoKeyCode = this._toUNOKeyCode(keyCode);
 				}
 				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 			}
