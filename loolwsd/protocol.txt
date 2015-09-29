@@ -75,6 +75,9 @@ uno <command>
 
     <command> is a line of text.
 
+partpagerectangles
+
+    Invokes lok::Document::getPartPageRectangles().
 
 server -> client
 ================
@@ -116,6 +119,10 @@ status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=
     if the document has multiple parts and those have names, part names follow separated by '\n'
 
 styles: {"styleFamily": ["styles in family"], etc. }
+
+partpagerectangles: <payload>
+
+    Payload format is the same as LOK_CALLBACK_TEXT_SELECTION.
 
 textselectioncontent: <content>
 
