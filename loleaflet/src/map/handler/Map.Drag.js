@@ -20,6 +20,7 @@ L.Map.Drag = L.Handler.extend({
 			var map = this._map;
 
 			this._draggable = new L.Draggable(map._mapPane, map._container);
+			this._draggable._map = map;
 
 			this._draggable.on({
 				down: this._onDown,

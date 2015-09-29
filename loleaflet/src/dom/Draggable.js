@@ -83,6 +83,18 @@ L.Draggable = L.Evented.extend({
 		    newPoint = new L.Point(first.clientX, first.clientY),
 		    offset = newPoint.subtract(this._startPoint);
 
+		if (this._map) {
+			if (this._map.getDocSize().x < this._map.getSize().x) {
+				// don't pan horizontaly when the document fits in the viewing
+				// area horizontally (docWidth < viewAreaWidth)
+				offset.x = 0;
+			}
+			if (this._map.getDocSize().y < this._map.getSize().y) {
+				// don't pan vertically when the document fits in the viewing
+				// area horizontally (docHeight < viewAreaHeight)
+				offset.y = 0;
+			}
+		}
 		if (!offset.x && !offset.y) { return; }
 		if (L.Browser.touch && Math.abs(offset.x) + Math.abs(offset.y) < 3) { return; }
 
