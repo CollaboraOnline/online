@@ -52,6 +52,7 @@ L.Socket = {
 		}
 		this.socket.send(msg);
 		this.socket.send('status');
+		this.socket.send('partpagerectangles');
 		for (var i = 0; i < this._msgQueue.length; i++) {
 			this.socket.send(this._msgQueue[i].msg);
 			L.Log.log(this._msgQueue[i].msg, this._msgQueue[i].coords);

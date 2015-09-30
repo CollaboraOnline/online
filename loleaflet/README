@@ -193,6 +193,9 @@ Writer pages:
             + e.docType = document type, should be 'text'
         map.on('invalidatepreview', function (e) {})
             + e.id = the preview's id
+        map.on('partpagerectangles', function (e) {}) where:
+            + e.pixelRectangles = An array of bounds representing each page's dimension in pixels on the current zoom level
+            + e.twipsRectangles = An array of bounds representing each page's dimension in twips.
 
 Error:
     - events
