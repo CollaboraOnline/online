@@ -444,6 +444,7 @@ L.GridLayer = L.Layer.extend({
 	_move: function () {
 		this._update();
 		this._resetPreFetching(true);
+		this._onCurrentPageUpdate();
 	},
 
 	_update: function (center, zoom) {

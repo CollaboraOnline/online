@@ -102,6 +102,7 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('drag resize zoomend', this._updateScrollOffset, this);
 		map.on('copy', this._onCopy, this);
 		map.on('zoomend', this._onUpdateCursor, this);
+		map.on('zoomend', this._onUpdatePartPageRectangles, this);
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
@@ -204,6 +205,9 @@ L.TileLayer = L.GridLayer.extend({
 			msg += 'height=' + this._docHeightTwips;
 			this._onInvalidateTilesMsg(msg);
 		}
+		else if (textMsg.startsWith('partpagerectangles:')) {
+			this._onPartPageRectanglesMsg(textMsg);
+		}
 		else if (textMsg.startsWith('searchnotfound:')) {
 			this._onSearchNotFoundMsg(textMsg);
 		}
@@ -286,6 +290,34 @@ L.TileLayer = L.GridLayer.extend({
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		this._isCursorOverlayVisible = true;
 		this._onUpdateCursor();
+	},
+
+	_onPartPageRectanglesMsg: function (textMsg) {
+		textMsg = textMsg.substring(19);
+		var pages = textMsg.split(';');
+		this._partPageRectanglesTwips = [];
+		this._partPageRectanglesPixels = [];
+		for (var i = 0; i < pages.length; i++) {
+			var strTwips = pages[i].match(/\d+/g);
+			if (!strTwips) {
+				// probably not a text file
+				return;
+			}
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+			var pageBoundsTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
+			this._partPageRectanglesTwips.push(pageBoundsTwips);
+			var pageBoundsPixels = new L.Bounds(
+					this._twipsToPixels(topLeftTwips),
+					this._twipsToPixels(bottomRightTwips));
+			this._partPageRectanglesPixels.push(pageBoundsPixels);
+		}
+		this._map.fire('partpagerectangles', {
+			pixelRectangles: this._partPageRectanglesPixels,
+			twipsRectangles: this._partPageRectanglesTwips
+		});
+		this._onCurrentPageUpdate();
 	},
 
 	_onSearchNotFoundMsg: function (textMsg) {
@@ -688,6 +720,42 @@ L.TileLayer = L.GridLayer.extend({
 				var zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
 				this._map.setZoom(Math.min(10, this._map.getZoom() + zoomDelta), {animate: false});
 			}
+		}
+	},
+
+	_onCurrentPageUpdate: function () {
+		var mapCenter = this._map.project(this._map.getCenter());
+		if (!this._partPageRectanglesPixels || !(this._currentPage >= 0) ||
+				this._partPageRectanglesPixels[this._currentPage].contains(mapCenter)) {
+			// page number has not changed
+			return;
+		}
+		for (var i = 0; i < this._partPageRectanglesPixels.length; i++) {
+			if (this._partPageRectanglesPixels[i].contains(mapCenter)) {
+				this._currentPage = i;
+				this._map.fire('pagenumberchanged', {
+					currentPage: this._currentPage,
+					pages: this._pages,
+					docType: this._docType
+				});
+				return;
+			}
+		}
+	},
+
+	_onUpdatePartPageRectangles: function () {
+		if (this._partPageRectanglesPixels.length > 0) {
+			this._partPageRectanglesPixels = [];
+			for (var i = 0; i < this._partPageRectanglesTwips.length; i++) {
+				var pageBounds = new L.Bounds(
+						this._twipsToPixels(this._partPageRectanglesTwips[i].min),
+						this._twipsToPixels(this._partPageRectanglesTwips[i].max));
+				this._partPageRectanglesPixels.push(pageBounds);
+			}
+			this._map.fire('partpagerectangles', {
+				pixelRectangles: this._partPageRectanglesPixels,
+				twipsRectangles: this._partPageRectanglesTwips
+			});
 		}
 	}
 });

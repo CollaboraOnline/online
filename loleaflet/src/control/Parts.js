@@ -123,6 +123,11 @@ L.Map.include({
 			docLayer._currentPage = page;
 		}
 		L.Socket.sendMessage('setpage page=' + docLayer._currentPage);
+		this.fire('pagenumberchanged', {
+			currentPage: docLayer._currentPage,
+			pages: docLayer._pages,
+			docType: docLayer._docType
+		});
 	},
 
 	getNumberOfPages: function () {
