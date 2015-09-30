@@ -825,6 +825,7 @@ extern "C"
             break;
         case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
             srv->getStatus("", 0);
+            srv->getPartPageRectangles("", 0);
             break;
         case LOK_CALLBACK_SET_PART:
             srv->sendTextFrame("setpart: " + std::string(pPayload));
