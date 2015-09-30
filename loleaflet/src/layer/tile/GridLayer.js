@@ -745,6 +745,18 @@ L.GridLayer = L.Layer.extend({
 				Math.round(pixels.y / this._tileSize * this._tileHeightTwips));
 	},
 
+	_twipsToPixels: function (twips) {
+		return new L.Point(
+				twips.x / this._tileWidthTwips * this._tileSize,
+				twips.y / this._tileHeightTwips * this._tileSize);
+	},
+
+	_pixelsToTwips: function (pixels) {
+		return new L.Point(
+				pixels.x * this._tileWidthTwips / this._tileSize,
+				pixels.y * this._tileHeightTwips / this._tileSize);
+	},
+
 	_noTilesToLoad: function () {
 		for (var key in this._tiles) {
 			if (!this._tiles[key].loaded) { return false; }
