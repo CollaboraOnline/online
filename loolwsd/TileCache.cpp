@@ -172,7 +172,7 @@ void TileCache::setEditing(bool editing)
 
 void TileCache::saveTextFile(const std::string& text, std::string fileName)
 {
-    std::string dirName = cacheDirName(_hasUnsavedChanges);
+    std::string dirName = cacheDirName(_isEditing);
 
     File(dirName).createDirectories();
 

@@ -218,6 +218,9 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             {
                 peer->_tileCache->saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
             }
+            else if (tokens[0] == "invalidatecursor:") {
+                peer->_tileCache->setEditing(true);
+            }
             else if (tokens[0] == "invalidatetiles:")
             {
                 // FIXME temporarily, set the editing on the 1st invalidate, TODO extend
