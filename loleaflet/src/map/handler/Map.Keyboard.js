@@ -187,10 +187,7 @@ L.Map.Keyboard = L.Handler.extend({
 		var alt = e.originalEvent.altKey ? this.keyModifier.alt : 0;
 		this.modifier = shift | ctrl | alt;
 		if (e.originalEvent.ctrlKey) {
-			// we prepare for a copy event
-			docLayer._textArea.value = 'dummy text';
-			docLayer._textArea.focus();
-			docLayer._textArea.select();
+			this._handleCtrlCommand(e);
 			return;
 		}
 
@@ -244,6 +241,65 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 		L.DomEvent.stopPropagation(e.originalEvent);
+	},
+
+	_handleCtrlCommand: function (e) {
+		if (e.type !== 'keydown') {
+			e.originalEvent.preventDefault();
+			return;
+		};
+
+		switch (e.originalEvent.keyCode) {
+			case 13: // enter
+				L.Socket.sendMessage('uno .uno:InsertPagebreak');
+				break;
+			case 37: // left arrow
+				L.Socket.sendMessage('uno .uno:GoToPrevWord');
+				break;
+			case 39: // right arrow
+				L.Socket.sendMessage('uno .uno:GoToNextWord');
+				break;
+			case 65: // a
+				L.Socket.sendMessage('uno .uno:Selectall');
+				break;
+			case 66: // b
+				L.Socket.sendMessage('uno .uno:Bold');
+				break;
+			case 67: // c
+				// we prepare for a copy event
+				this._map._docLayer._textArea.value = 'dummy text';
+				this._map._docLayer._textArea.focus();
+				this._map._docLayer._textArea.select();
+				break;
+			case 69: // e
+				L.Socket.sendMessage('uno .uno:CenterPara');
+				break;
+			case 73: // i
+				L.Socket.sendMessage('uno .uno:Italic');
+				break;
+			case 74: // j
+				L.Socket.sendMessage('uno .uno:JustifyPara');
+				break;
+			case 76: // l
+				L.Socket.sendMessage('uno .uno:LeftPara');
+				break;
+			case 82: // r
+				L.Socket.sendMessage('uno .uno:RightPara');
+				break;
+			case 85: // u
+				L.Socket.sendMessage('uno .uno:Underline');
+				break;
+			case 90: // z
+				L.Socket.sendMessage('uno .uno:Undo');
+				break;
+			case 189: // -
+				L.Socket.sendMessage('uno .uno:InsertSoftHyphen');
+				break;
+		}
+		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86) {
+			// not copy or paste
+			e.originalEvent.preventDefault();
+		}
 	}
 });
 
