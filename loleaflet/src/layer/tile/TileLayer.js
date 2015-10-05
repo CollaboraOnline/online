@@ -214,6 +214,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('searchnotfound:')) {
 			this._onSearchNotFoundMsg(textMsg);
 		}
+		else if (textMsg.startsWith('searchresultcount:')) {
+			this._onSearchResultCount(textMsg);
+		}
 		else if (textMsg.startsWith('setpart:')) {
 			this._onSetPartMsg(textMsg);
 		}
@@ -331,6 +334,13 @@ L.TileLayer = L.GridLayer.extend({
 	_onSearchNotFoundMsg: function (textMsg) {
 		var originalPhrase = textMsg.substring(16);
 		this._map.fire('search', {originalPhrase: originalPhrase, count: 0});
+	},
+
+	_onSearchResultCount: function (textMsg) {
+		textMsg = textMsg.substring(19);
+		var count = parseInt(textMsg.substring(0, textMsg.indexOf(';')));
+		var originalPhrase = textMsg.substring(textMsg.indexOf(';') + 1);
+		this._map.fire('search', {originalPhrase: originalPhrase, count: count});
 	},
 
 	_onStateChangedMsg: function (textMsg) {

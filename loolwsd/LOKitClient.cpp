@@ -57,6 +57,7 @@ extern "C"
             CASE(STATUS_INDICATOR_SET_VALUE);
             CASE(STATUS_INDICATOR_FINISH);
             CASE(SEARCH_NOT_FOUND);
+            CASE(SEARCH_RESULT_COUNT);
             CASE(DOCUMENT_SIZE_CHANGED);
             CASE(SET_PART);
 #undef CASE
@@ -117,7 +118,7 @@ protected:
 
             if (tokens[0] == "?" || tokens[0] == "help")
             {
-                std::cout << 
+                std::cout <<
                     "Commands mimic LOOL protocol but we talk directly to LOKit:" << std::endl <<
                     "    status" << std::endl <<
                     "        calls LibreOfficeKitDocument::getDocumentType, getParts, getPartName, getDocumentSize" << std::endl <<
@@ -152,7 +153,7 @@ protected:
                 int tilePosY(std::stoi(tokens[5]));
                 int tileWidth(std::stoi(tokens[6]));
                 int tileHeight(std::stoi(tokens[7]));
-                
+
                 std::vector<unsigned char> pixmap(canvasWidth*canvasHeight*4);
                 loKitDocument->pClass->setPart(loKitDocument, partNumber);
                 loKitDocument->pClass->paintTile(loKitDocument, pixmap.data(), canvasWidth, canvasHeight, tilePosX, tilePosY, tileWidth, tileHeight);
