@@ -1025,9 +1025,9 @@ bool ChildProcessSession::keyEvent(const char *buffer, int length, StringTokeniz
 
 bool ChildProcessSession::mouseEvent(const char *buffer, int length, StringTokenizer& tokens)
 {
-    int type, x, y, count;
+    int type, x, y, count, buttons, modifier;
 
-    if (tokens.count() != 5 ||
+    if (tokens.count() != 7 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
                           {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
@@ -1035,13 +1035,15 @@ bool ChildProcessSession::mouseEvent(const char *buffer, int length, StringToken
                          type) ||
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y) ||
-        !getTokenInteger(tokens[4], "count", count))
+        !getTokenInteger(tokens[4], "count", count),
+        !getTokenInteger(tokens[5], "buttons", buttons),
+        !getTokenInteger(tokens[6], "modifier", modifier))
     {
         sendTextFrame("error: cmd=mouse kind=syntax");
         return false;
     }
 
-    _loKitDocument->pClass->postMouseEvent(_loKitDocument, type, x, y, count);
+    _loKitDocument->pClass->postMouseEvent(_loKitDocument, type, x, y, count, buttons, modifier);
 
     return true;
 }

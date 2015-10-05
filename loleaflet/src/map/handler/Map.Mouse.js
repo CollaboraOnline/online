@@ -23,6 +23,18 @@ L.Map.Mouse = L.Handler.extend({
 			this._onMouseEvent, this);
 	},
 
+	LOButtons: {
+		left: 1,
+		middle: 2,
+		right: 4
+	},
+
+	JSButtons: {
+		left: 0,
+		middle: 1,
+		right: 2
+	},
+
 	_onMouseEvent: function (e) {
 		var docLayer = this._map._docLayer;
 		if (!docLayer) {
@@ -39,6 +51,12 @@ L.Map.Mouse = L.Handler.extend({
 			}
 		}
 
+		var modifier = this._map.keyboard.modifier;
+		var buttons = 0;
+		buttons |= e.originalEvent.button === this.JSButtons.left ? this.LOButtons.left : 0;
+		buttons |= e.originalEvent.button === this.JSButtons.middle ? this.LOButtons.middle : 0;
+		buttons |= e.originalEvent.button === this.JSButtons.right ? this.LOButtons.right : 0;
+
 		if (e.type === 'mousedown') {
 			docLayer._resetPreFetching();
 			this._mouseDown = true;
@@ -47,7 +65,8 @@ L.Map.Mouse = L.Handler.extend({
 			}
 			var mousePos = docLayer._latLngToTwips(e.latlng);
 			this._mouseEventsQueue.push(L.bind(function() {
-				this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);}, docLayer));
+				this._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, buttons, modifier);
+			}, docLayer));
 			this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), 500);
 		}
 		else if (e.type === 'mouseup') {
@@ -82,7 +101,7 @@ L.Map.Mouse = L.Handler.extend({
 						}
 					}
 					this._mouseEventsQueue = [];
-					docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
+					docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, buttons, modifier);
 					docLayer._textArea.focus();
 				}, this));
 				this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), timeOut);
@@ -113,7 +132,7 @@ L.Map.Mouse = L.Handler.extend({
 			}
 			if (!this._map.dragging.enabled()) {
 				mousePos = docLayer._latLngToTwips(e.latlng);
-				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1);
+				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, buttons, modifier);
 				for (key in docLayer._selectionHandles) {
 					handle = docLayer._selectionHandles[key];
 					if (handle._icon) {
@@ -124,10 +143,10 @@ L.Map.Mouse = L.Handler.extend({
 		}
 		else if (e.type === 'dblclick') {
 			mousePos = docLayer._latLngToTwips(e.latlng);
-			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1);
-			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2);
-			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2);
-			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1);
+			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, buttons, modifier);
+			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, buttons, modifier);
+			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, buttons, modifier);
+			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, buttons, modifier);
 		}
 	},
 
