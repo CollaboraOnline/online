@@ -115,6 +115,7 @@ L.Map.Keyboard = L.Handler.extend({
 		this._map = map;
 		this._setPanOffset(map.options.keyboardPanOffset);
 		this._setZoomOffset(map.options.keyboardZoomOffset);
+		this.modifier = 0;
 	},
 
 	addHooks: function () {
@@ -180,6 +181,11 @@ L.Map.Keyboard = L.Handler.extend({
 
 	_onKeyDown: function (e) {
 		var docLayer = this._map._docLayer;
+		this.modifier = 0;
+		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
+		var ctrl = e.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
+		var alt = e.originalEvent.altKey ? this.keyModifier.alt : 0;
+		this.modifier = shift | ctrl | alt;
 		if (e.originalEvent.ctrlKey) {
 			// we prepare for a copy event
 			docLayer._textArea.value = 'dummy text';

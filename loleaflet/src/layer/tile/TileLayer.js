@@ -191,6 +191,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('hyperlinkclicked:')) {
+			this._onHyperlinkClickedMsg(textMsg);
+		}
 		else if (textMsg.startsWith('invalidatecursor:')) {
 			this._onInvalidateCursorMsg(textMsg);
 		}
@@ -278,6 +281,11 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateGraphicSelection();
+	},
+
+	_onHyperlinkClickedMsg: function (textMsg) {
+		var link = textMsg.substring(18);
+		window.open(link, '_blank');
 	},
 
 	_onInvalidateCursorMsg: function (textMsg) {
@@ -503,9 +511,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateGraphicSelection();
 	},
 
-	_postMouseEvent: function(type, x, y, count) {
+	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
 		L.Socket.sendMessage('mouse type=' + type +
-				' x=' + x + ' y=' + y + ' count=' + count);
+				' x=' + x + ' y=' + y + ' count=' + count +
+				' buttons=' + buttons + ' modifier=' + modifier);
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
