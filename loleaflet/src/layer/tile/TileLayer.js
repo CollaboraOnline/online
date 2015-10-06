@@ -214,8 +214,8 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('searchnotfound:')) {
 			this._onSearchNotFoundMsg(textMsg);
 		}
-		else if (textMsg.startsWith('searchresultcount:')) {
-			this._onSearchResultCount(textMsg);
+		else if (textMsg.startsWith('searchresultselection:')) {
+			this._onSearchResultSelection(textMsg);
 		}
 		else if (textMsg.startsWith('setpart:')) {
 			this._onSetPartMsg(textMsg);
@@ -336,11 +336,16 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('search', {originalPhrase: originalPhrase, count: 0});
 	},
 
-	_onSearchResultCount: function (textMsg) {
-		textMsg = textMsg.substring(19);
-		var count = parseInt(textMsg.substring(0, textMsg.indexOf(';')));
-		var originalPhrase = textMsg.substring(textMsg.indexOf(';') + 1);
-		this._map.fire('search', {originalPhrase: originalPhrase, count: count});
+	_onSearchResultSelection: function (textMsg) {
+		textMsg = textMsg.substring(23);
+		var obj = JSON.parse(textMsg);
+		var originalPhrase = obj.searchString;
+		var count = obj.searchResultSelection.length;
+		var results = [];
+		for (var i = 0; i < obj.searchResultSelection.length; i++) {
+			results.push(this._twipsRectangleToPixelBounds(obj.searchResultSelection[i]));
+		}
+		this._map.fire('search', {originalPhrase: originalPhrase, count: count, results: results});
 	},
 
 	_onStateChangedMsg: function (textMsg) {
