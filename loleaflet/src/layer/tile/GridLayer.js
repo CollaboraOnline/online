@@ -758,6 +758,21 @@ L.GridLayer = L.Layer.extend({
 				pixels.y * this._tileHeightTwips / this._tileSize);
 	},
 
+	_twipsRectangleToPixelBounds: function (strRectangle) {
+		// TODO use this more
+		// strRectangle = x, y, width, height
+		var strTwips = strRectangle.match(/\d+/g);
+		if (!strTwips) {
+			return null;
+		}
+		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+		var bottomRightTwips = topLeftTwips.add(offset);
+		return new L.Bounds(
+				this._twipsToPixels(topLeftTwips),
+				this._twipsToPixels(bottomRightTwips));
+	},
+
 	_noTilesToLoad: function () {
 		for (var key in this._tiles) {
 			if (!this._tiles[key].loaded) { return false; }
