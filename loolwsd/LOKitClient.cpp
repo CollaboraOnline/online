@@ -58,6 +58,7 @@ extern "C"
             CASE(STATUS_INDICATOR_FINISH);
             CASE(SEARCH_NOT_FOUND);
             CASE(SEARCH_RESULT_COUNT);
+            CASE(SEARCH_RESULT_SELECTION);
             CASE(DOCUMENT_SIZE_CHANGED);
             CASE(SET_PART);
 #undef CASE
