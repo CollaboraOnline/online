@@ -185,6 +185,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('cursorvisible:')) {
 			this._onCursorVisibleMsg(textMsg);
 		}
+		else if (textMsg.startsWith('downloadas:')) {
+			this._onDownloadAsMsg(textMsg);
+		}
 		else if (textMsg.startsWith('error:')) {
 			this._onErrorMsg(textMsg);
 		}
@@ -262,6 +265,15 @@ L.TileLayer = L.GridLayer.extend({
 		this._isCursorVisible = command ? true : false;
 		this._isCursorOverlayVisible = true;
 		this._onUpdateCursor();
+	},
+
+	_onDownloadAsMsg: function (textMsg) {
+		var command = L.Socket.parseServerCmd(textMsg);
+		var parser = document.createElement('a');
+		parser.href = this._map.options.server;
+		var url = 'http://' + parser.hostname + ':' + command.port + '/' +
+			command.jail + '/' + command.dir + '/' + command.name;
+		this._map._fileDownloader.src = url;
 	},
 
 	_onErrorMsg: function (textMsg) {
