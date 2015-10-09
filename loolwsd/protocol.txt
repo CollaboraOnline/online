@@ -17,6 +17,10 @@ canceltiles
     dropped and will not be handled. There is no guarantee of exactly
     which tile: messages might still be sent back to the client.
 
+downloadas downloadas name=<fileName> format=<document format> options=<SkipImages, etc>
+
+    Exports the current document to the desired format and returns a download URL
+
 gettextselection mimetype=<mimeType>
 
     Request selection's content
@@ -81,6 +85,11 @@ partpagerectangles
 
 server -> client
 ================
+
+downloadas: jail=<jail directory> dir=<a tmp dir> name=<name> port=<port>
+
+    The client should then request http://server:port/jail/dir/name in order to download
+    the document
 
 error: cmd=<command> kind=<kind>
 <freeErrorText>

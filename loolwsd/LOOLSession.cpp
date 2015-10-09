@@ -290,11 +290,12 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     }
     else if (tokens[0] != "canceltiles" &&
              tokens[0] != "commandvalues" &&
-             tokens[0] != "partpagerectangles" &&
+             tokens[0] != "downloadas" &&
              tokens[0] != "gettextselection" &&
              tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
+             tokens[0] != "partpagerectangles" &&
              tokens[0] != "requestloksession" &&
              tokens[0] != "resetselection" &&
              tokens[0] != "saveas" &&
@@ -632,10 +633,11 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
     peer->sendBinaryFrame(buffer, length);
 }
 
-ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws, LibreOfficeKit *loKit) :
+ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws, LibreOfficeKit *loKit, std::string childId) :
     LOOLSession(ws, Kind::ToMaster),
     _loKitDocument(NULL),
     _loKit(loKit),
+    _childId(childId),
     _clientPart(0)
 {
     std::cout << Util::logPrefix() << "ChildProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
@@ -699,7 +701,8 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         // All other commands are such that they always require a LibreOfficeKitDocument session,
         // i.e. need to be handled in a child process.
 
-        assert(tokens[0] == "gettextselection" ||
+        assert(tokens[0] == "downloadas" ||
+               tokens[0] == "gettextselection" ||
                tokens[0] == "key" ||
                tokens[0] == "mouse" ||
                tokens[0] == "uno" ||
@@ -712,7 +715,11 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         {
             _loKitDocument->pClass->setPart(_loKitDocument, _clientPart);
         }
-        if (tokens[0] == "gettextselection")
+        if (tokens[0] == "downloadas")
+        {
+            return downloadAs(buffer, length, tokens);
+        }
+        else if (tokens[0] == "gettextselection")
         {
             return getTextSelection(buffer, length, tokens);
         }
@@ -987,6 +994,48 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
     delete[] pixmap;
 
     sendBinaryFrame(output.data(), output.size());
+}
+
+bool ChildProcessSession::downloadAs(const char *buffer, int length, StringTokenizer& tokens)
+{
+    std::string name, format, filterOptions;
+
+    if (tokens.count() < 4 ||
+        !getTokenString(tokens[1], "name", name))
+    {
+        sendTextFrame("error: cmd=saveas kind=syntax");
+        return false;
+    }
+
+    getTokenString(tokens[2], "format", format);
+
+    if (getTokenString(tokens[3], "options", filterOptions)) {
+        if (tokens.count() > 4) {
+            filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
+        }
+    }
+
+    std::string tmpDir, url;
+    File *file = NULL;
+    do
+    {
+        if (file != NULL)
+        {
+            delete file;
+        }
+        tmpDir = std::to_string((((Poco::UInt64)LOOLWSD::_rng.next()) << 32) | LOOLWSD::_rng.next() | 1);
+        url = jailDocumentURL + "/" + tmpDir + "/" + name;
+        file = new File(url);
+    } while (file->exists());
+    delete file;
+
+    _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
+            format.size() == 0 ? NULL :format.c_str(),
+            filterOptions.size() == 0 ? NULL : filterOptions.c_str());
+
+    sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
+            " port=" + std::to_string(LOOLWSD::portNumber));
+    return true;
 }
 
 bool ChildProcessSession::getTextSelection(const char *buffer, int length, StringTokenizer& tokens)
