@@ -175,11 +175,11 @@ private:
     tsqueue<std::string>& _queue;
 };
 
-class WebSocketRequestHandler: public HTTPRequestHandler
-    /// Handle a WebSocket connection.
+class RequestHandler: public HTTPRequestHandler
+    /// Handle a WebSocket connection or a simple HTTP request.
 {
 public:
-    WebSocketRequestHandler()
+    RequestHandler()
     {
     }
 
@@ -198,9 +198,30 @@ public:
 
         if(!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
         {
-            response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
-            response.setContentLength(0);
-            response.send();
+            // The user might request a file to download
+            StringTokenizer tokens(request.getURI(), "/");
+            if (tokens.count() != 4)
+            {
+                response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+                response.setContentLength(0);
+                response.send();
+            }
+            std::string dirPath = LOOLWSD::childRoot + "/" + tokens[1] + LOOLSession::jailDocumentURL + "/" + tokens[2];
+            std::string filePath = dirPath + "/" + tokens[3];
+            std::cout << Util::logPrefix() << "HTTP request for: " << filePath << std::endl;
+            File file(filePath);
+            if (file.exists())
+            {
+                response.sendFile(filePath, "application/octet-stream");
+                File dir(dirPath);
+                dir.remove(true);
+            }
+            else
+            {
+                response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
+                response.setContentLength(0);
+                response.send();
+            }
             return;
         }
 
@@ -340,7 +361,7 @@ public:
         }
 
         Application::instance().logger().information(line);
-        return new WebSocketRequestHandler();
+        return new RequestHandler();
     }
 };
 
@@ -777,7 +798,7 @@ void LOOLWSD::componentMain()
         HTTPResponse response;
         std::shared_ptr<WebSocket> ws(new WebSocket(cs, request, response));
 
-        std::shared_ptr<ChildProcessSession> session(new ChildProcessSession(ws, loKit));
+        std::shared_ptr<ChildProcessSession> session(new ChildProcessSession(ws, loKit, std::to_string(_childId)));
 
         ws->setReceiveTimeout(0);
 

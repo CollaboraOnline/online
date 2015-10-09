@@ -51,11 +51,11 @@ public:
 
     virtual bool handleInput(const char *buffer, int length) = 0;
 
+    static const std::string jailDocumentURL;
+
 protected:
     LOOLSession(std::shared_ptr<Poco::Net::WebSocket> ws, Kind kind);
     virtual ~LOOLSession();
-
-    static const std::string jailDocumentURL;
 
     const Kind _kind;
 
@@ -156,7 +156,7 @@ private:
 class ChildProcessSession final : public LOOLSession
 {
 public:
-    ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, LibreOfficeKit *loKit);
+    ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, LibreOfficeKit *loKit, std::string _childId);
     virtual ~ChildProcessSession();
 
     virtual bool handleInput(const char *buffer, int length) override;
@@ -175,6 +175,7 @@ public:
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
+    bool downloadAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool getTextSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -186,9 +187,9 @@ public:
     bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool setPage(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-    std::string _jail;
     std::string _loSubPath;
     LibreOfficeKit *_loKit;
+    std::string _childId;
 
  private:
     int _clientPart;
