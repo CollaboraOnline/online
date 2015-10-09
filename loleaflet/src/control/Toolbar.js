@@ -40,6 +40,7 @@ L.Map.include({
 		}
 		L.Socket.sendMessage('downloadas ' +
 			'name=' + name + ' ' +
+			'id=0 ' +
 			'format=' + format + ' ' +
 			'options=' + options);
 	},
