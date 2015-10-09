@@ -31,6 +31,19 @@ L.Map.include({
 		return this._docLayer._toolbarCommandValues[command];
 	},
 
+	downloadAs: function (name, format, options) {
+		if (format === undefined || format === null) {
+			format = '';
+		}
+		if (options === undefined || options === null) {
+			options = '';
+		}
+		L.Socket.sendMessage('downloadas ' +
+			'name=' + name + ' ' +
+			'format=' + format + ' ' +
+			'options=' + options);
+	},
+
 	saveAs: function (url, format, options) {
 		if (format === undefined || format === null) {
 			format = '';

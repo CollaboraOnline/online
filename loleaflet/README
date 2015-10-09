@@ -133,6 +133,7 @@ Statusindicator (when the document is loading):
 Save:
     - API:
         map.saveAs(url, [format, options])
+        map.downloadAs(name, [format, options])
 
 Scroll (the following are measured in pixels):
     - API:
