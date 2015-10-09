@@ -271,7 +271,7 @@ L.TileLayer = L.GridLayer.extend({
 		var command = L.Socket.parseServerCmd(textMsg);
 		var parser = document.createElement('a');
 		parser.href = this._map.options.server;
-		var url = 'http://' + parser.hostname + ':' + command.port + '/' +
+		var url = window.location.protocol + '//' + parser.hostname + ':' + command.port + '/' +
 			command.jail + '/' + command.dir + '/' + command.name;
 		this._map._fileDownloader.src = url;
 	},
