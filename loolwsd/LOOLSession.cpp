@@ -998,19 +998,20 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
 
 bool ChildProcessSession::downloadAs(const char *buffer, int length, StringTokenizer& tokens)
 {
-    std::string name, format, filterOptions;
+    std::string name, id, format, filterOptions;
 
-    if (tokens.count() < 4 ||
-        !getTokenString(tokens[1], "name", name))
+    if (tokens.count() < 5 ||
+        !getTokenString(tokens[1], "name", name) ||
+        !getTokenString(tokens[2], "id", id))
     {
         sendTextFrame("error: cmd=saveas kind=syntax");
         return false;
     }
 
-    getTokenString(tokens[2], "format", format);
+    getTokenString(tokens[3], "format", format);
 
-    if (getTokenString(tokens[3], "options", filterOptions)) {
-        if (tokens.count() > 4) {
+    if (getTokenString(tokens[4], "options", filterOptions)) {
+        if (tokens.count() > 5) {
             filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
         }
     }
@@ -1034,7 +1035,7 @@ bool ChildProcessSession::downloadAs(const char *buffer, int length, StringToken
             filterOptions.size() == 0 ? NULL : filterOptions.c_str());
 
     sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
-            " port=" + std::to_string(LOOLWSD::portNumber));
+            " port=" + std::to_string(LOOLWSD::portNumber) + " id=" + id);
     return true;
 }
 
