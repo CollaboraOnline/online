@@ -212,6 +212,7 @@ public:
             File file(filePath);
             if (file.exists())
             {
+                response.set("Access-Control-Allow-Origin", "*");
                 response.sendFile(filePath, "application/octet-stream");
                 File dir(dirPath);
                 dir.remove(true);
