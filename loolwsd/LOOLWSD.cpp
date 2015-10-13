@@ -41,6 +41,7 @@ DEALINGS IN THE SOFTWARE.
 // number of child processes, each which handles a viewing (editing) session for one document.
 
 #include <errno.h>
+#include <locale.h>
 #include <pwd.h>
 #include <unistd.h>
 
@@ -1048,6 +1049,12 @@ void LOOLWSD::startupDesktop(int nDesktops)
 
 int LOOLWSD::main(const std::vector<std::string>& args)
 {
+#ifdef __linux
+    char *locale = setlocale(LC_ALL, NULL);
+    if (locale == NULL || std::strcmp(locale, "C") == 0)
+        setlocale(LC_ALL, "en_US.utf8");
+#endif
+
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
         std::cout << "Unable to access " << cache <<
