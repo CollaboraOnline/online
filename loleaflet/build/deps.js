@@ -225,6 +225,11 @@ var deps = {
 		desc: 'Handles mouse interaction with the document.'
 	},
 
+	Print: {
+		src: ['map/handler/Map.Print.js'],
+		desc: 'Handles the print action (ctrl + P).'
+	},
+
 	MarkerDrag: {
 		src: ['layer/marker/Marker.Drag.js'],
 		deps: ['Marker'],
