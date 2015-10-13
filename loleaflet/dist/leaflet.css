@@ -577,7 +577,7 @@ a.leaflet-control-buttons:hover:first-child {
 	border-top: 2px solid #B6B6B6;
 	background: #DFDFDF;
 	position: absolute;
-	top: 65px;
+	top: 70px;
 	bottom: 0px;
 	right: 0px;
 	left: 0px;
@@ -763,7 +763,6 @@ a.leaflet-control-buttons:hover:first-child {
 	left: 0;
 	right: 0;
 	padding-bottom: 15px;
-	padding-top: 15px;
 	text-align: center;
 }
 
