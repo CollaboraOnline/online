@@ -999,20 +999,22 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
 bool ChildProcessSession::downloadAs(const char *buffer, int length, StringTokenizer& tokens)
 {
     std::string name, id, format, filterOptions;
+    int part;
 
-    if (tokens.count() < 5 ||
+    if (tokens.count() < 6 ||
         !getTokenString(tokens[1], "name", name) ||
-        !getTokenString(tokens[2], "id", id))
+        !getTokenString(tokens[2], "id", id),
+        !getTokenInteger(tokens[3], "part", part))
     {
-        sendTextFrame("error: cmd=saveas kind=syntax");
+        sendTextFrame("error: cmd=downloadas kind=syntax");
         return false;
     }
 
-    getTokenString(tokens[3], "format", format);
+    getTokenString(tokens[4], "format", format);
 
-    if (getTokenString(tokens[4], "options", filterOptions)) {
-        if (tokens.count() > 5) {
-            filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
+    if (getTokenString(tokens[5], "options", filterOptions)) {
+        if (tokens.count() > 6) {
+            filterOptions += Poco::cat(std::string(" "), tokens.begin() + 6, tokens.end());
         }
     }
 
@@ -1030,6 +1032,10 @@ bool ChildProcessSession::downloadAs(const char *buffer, int length, StringToken
     } while (file->exists());
     delete file;
 
+    if (part != -1) {
+        // we need this to export a slide to svg
+        _loKitDocument->pClass->setPart(_loKitDocument, part);
+    }
     _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
             format.size() == 0 ? NULL :format.c_str(),
             filterOptions.size() == 0 ? NULL : filterOptions.c_str());
