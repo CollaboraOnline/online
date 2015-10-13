@@ -5,6 +5,7 @@
 L.Control.Dialog = L.Control.extend({
 	onAdd: function (map) {
 		map.on('error', this._onError, this);
+		map.on('print', this._onPrint, this);
 		return document.createElement('div');
 	},
 
@@ -17,6 +18,18 @@ L.Control.Dialog = L.Control.extend({
 						' parsing the \'' + e.cmd + '\' command.';
 			vex.dialog.alert(msg);
 		}
+	},
+
+	_onPrint: function (e) {
+		var url = e.url;
+		vex.dialog.confirm({
+			message: 'Download PDF export?',
+			callback: L.bind(function (value) {
+				if (value) {
+					this._map._fileDownloader.src = url;
+				}
+			}, this)
+		});
 	}
 });
 

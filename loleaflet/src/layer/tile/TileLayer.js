@@ -273,7 +273,20 @@ L.TileLayer = L.GridLayer.extend({
 		parser.href = this._map.options.server;
 		var url = window.location.protocol + '//' + parser.hostname + ':' + command.port + '/' +
 			command.jail + '/' + command.dir + '/' + command.name;
-		this._map._fileDownloader.src = url;
+
+		if (command.id !== '0') {
+			var isFirefox = typeof InstallTrigger !== 'undefined' || navigator.userAgent.search('Firefox') >= 0;
+			if (isFirefox) {
+				// the print dialog doesn't work well on firefox
+				this._map.fire('print', {url: url});
+			}
+			else {
+				this._map.fire('filedownloadready', {url: url, name: name, id: command.id});
+			}
+		}
+		else {
+			this._map._fileDownloader.src = url;
+		}
 	},
 
 	_onErrorMsg: function (textMsg) {
