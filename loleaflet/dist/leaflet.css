@@ -702,7 +702,7 @@ a.leaflet-control-buttons:hover:first-child {
 .parts-preview {
 	background: #DFDFDF;
 	position: absolute;
-	top: 65px;
+	top: 70px;
 	bottom: 0px;
 	max-width: 195px;
 	overflow: hidden;
