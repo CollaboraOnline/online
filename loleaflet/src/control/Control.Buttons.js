@@ -27,11 +27,13 @@ L.Control.Buttons = L.Control.extend({
 			'save':          {title: 'Save',               uno: 'Save',             iconName: 'save.png'},
 			'saveas':        {title: 'Save As',                                     iconName: 'saveas.png'},
 			'edit':          {title: 'Enable editing',                              iconName: 'edit.png'},
-			'selection':     {title: 'Enable selection',                            iconName: 'selection.png'}
+			'selection':     {title: 'Enable selection',                            iconName: 'selection.png'},
+			'presentation':  {title: 'Present',                                     iconName: 'presentation.png'}
 		};
+		var separator = ['alignleft', 'save', 'bullet', 'edit', 'presentation'];
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
-			if (key === 'alignleft' || key === 'save' || key === 'bullet' || key === 'edit') {
+			if (separator.indexOf(key) >= 0) {
 				// add a separator
 				L.DomUtil.create('span', 'leaflet-control-button-separator', container);
 			}
