@@ -417,16 +417,6 @@ L.TileLayer = L.GridLayer.extend({
 				selectionCenter = selectionCenter.add(topLeftTwips);
 				selectionCenter = selectionCenter.add(offset.divideBy(2));
 			}
-			// average of all rectangles' centers
-			selectionCenter = selectionCenter.divideBy(strTwips.length / 4);
-			selectionCenter = this._twipsToLatLng(selectionCenter);
-			if (!this._map.getBounds().contains(selectionCenter)) {
-				var center = this._map.project(selectionCenter);
-				center = center.subtract(this._map.getSize().divideBy(2));
-				center.x = Math.round(center.x < 0 ? 0 : center.x);
-				center.y = Math.round(center.y < 0 ? 0 : center.y);
-				this._map.fire('scrollto', {x: center.x, y: center.y});
-			}
 
 			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
 			for (i = 0; i < polygons.length; i++) {
