@@ -55,12 +55,14 @@
 		</ul>
 	</div>
 	<div class="toc-col">
-		<h4>LoLeaflet API</h4>
+		<h4 style="color:red;">LoLeaflet API</h4>
 		<ul>
 			<li><a href="#loleaflet-general">General</a></li>
 			<li><a href="#loleaflet-toolbar">Toolbar</a></li>
 			<li><a href="#loleaflet-page">Page oriented</a></li>
 			<li><a href="#loleaflet-part">Part oriented</a></li>
+			<li><a href="#loleaflet-events">Events</a></li>
+			<li><a href="#loleaflet-object-values">Object values</a></li>
 		</ul>
 		<h4>UI Layers</h4>
 		<ul>
@@ -147,7 +149,6 @@
 		<h4>Misc</h4>
 		<ul>
 			<li><a href="#event-objects">Event objects</a></li>
-			<li><a href="#object-values">Object values</a></li>
 			<li><a href="#global">global switches</a></li>
 			<li><a href="#noconflict">noConflict</a></li>
 			<li><a href="#version">version</a></li>
@@ -1466,6 +1467,44 @@ var map = L.map('map', {
 		<td><code><nobr><a href="#point">Point</a></nobr></code></td>
 		<td>Returns the scroll offset relative to the beginning of the document.</td>
 	</tr>
+	<tr>
+        <td><code><b>getPreview</b>(
+            &lt;Object&gt;<i>id</i>,<br>
+			&lt;Number&gt;<i>index</i>,<br>
+			&lt;Number&gt;<i>maxWidth</i>,<br>
+			&lt;Number&gt;<i>maxHeight</i>,<br>
+            <nobr>&lt;<a href="#getpreview-options">PreviewOptions</a>&gt;<i>options?</i>)</nobr>
+		</code></td>
+		<td><code>undefined</code></td>
+		<td>Triggers the creation of a preview with the given id, of maximum maxWidth X maxHeight size, of the
+            page / part with number 'index', keeping the original ration. By passing an
+            optional parameter {autoUpdate: true}, the preview will be automatically invalidated.</td>
+	</tr>
+	<tr>
+		<td><code><b>getCustomPreview</b>(
+            &lt;Object&gt;<i>id</i>,<br>
+			&lt;Number&gt;<i>part</i>,<br>
+			&lt;Number&gt;<i>width</i>,<br>
+			&lt;Number&gt;<i>height</i>,<br>
+			&lt;Number&gt;<i>tilePosX</i>,<br>
+			&lt;Number&gt;<i>tilePosY</i>,<br>
+			&lt;Number&gt;<i>tileWidth</i>,<br>
+			&lt;Number&gt;<i>tileHeight</i>,<br>
+            <nobr>&lt;<a href="#getpreview-options">PreviewOptions</a>&gt;<i>options?</i>)</nobr>
+		</code></td>
+		<td><code>undefined</code></td>
+		<td>Triggers the creation of a preview with the given id, of width X height size, of the
+            [(tilePosX,tilePosY), (tilePosX + tileWidth, tilePosY + tileHeight)] section of the document. By passing an
+            optional parameter {autoUpdate: true}, the preview will be automatically invalidated.</td>
+	</tr>
+	<tr>
+		<td><code><b>removePreviewUpdate</b>(
+			<nobr>&lt;Object&gt;<i>id</i>)</nobr>
+        </code></td>
+		<td><code>undfined</code></td>
+		<td>Cancels the automatic update for the preview defined by 'id'.</td>
+	</tr>
+
 </table>
 
 <h3 id="scroll-options">ScrollOptions</h3>
@@ -1480,6 +1519,21 @@ var map = L.map('map', {
 		<td><code><b>update</b></code></td>
 		<td><code>Boolean</code></td>
         <td>Whether the <a href="#updatescrolloffset-event">update-scroll-offset</a> event is fired.</td>
+	</tr>
+</table>
+
+<h3 id="getpreview-options">PreviewOptions</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">property</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>autoUpdate</b></code></td>
+		<td><code>Boolean</code></td>
+        <td>Whether a new preview is generated automatically when it becomes invalid.</td>
 	</tr>
 </table>
 
@@ -1536,29 +1590,6 @@ var map = L.map('map', {
 		<td><code>undfined</code></td>
 		<td>Scrolls to the beginning of the given page.</td>
 	</tr>
-	<tr>
-		<td><code><b>getDocPreview</b>(
-            &lt;Object&gt;<i>id</i>,<br>
-			&lt;Number&gt;<i>maxWidth</i>,<br>
-			&lt;Number&gt;<i>maxHeight</i>,<br>
-			&lt;Number&gt;<i>x</i>,<br>
-			&lt;Number&gt;<i>y</i>,<br>
-			&lt;Number&gt;<i>width</i>,<br>
-			&lt;Number&gt;<i>height</i>,<br>
-            <nobr>&lt;<a href="#getpreview-options">PreviewOptions</a>&gt;<i>options?</i>)</nobr>
-		</code></td>
-		<td><code>undefined</code></td>
-		<td>Triggers the creation of a preview with the given id, of maximum maxWidth X maxHeight size, of the
-            [(x,y), (x + width, y + height)] section of the document keeping the original ration. By passing an
-            optional parameter {autoUpdate: true}, the preview will be automatically invalidated.</td>
-	</tr>
-	<tr>
-		<td><code><b>removePreviewUpdate</b>(
-			<nobr>&lt;Object&gt;<i>id</i>)</nobr>
-        </code></td>
-		<td><code>undfined</code></td>
-		<td>Cancels the automatic update for the preview defined by 'id'.</td>
-	</tr>
 </table>
 
 <h2 id="loleaflet-part">Part oriented</h2>
@@ -1588,40 +1619,572 @@ var map = L.map('map', {
 		<td><code>undfined</code></td>
 		<td>Select a specific part.</td>
 	</tr>
+</table>
+
+<h2 id="loleaflet-events">Events</h2>
+
+<h3 id="search-event">SearchEvent</h3>
+
+<table data-id='events'>
 	<tr>
-        <td><code><b>getPartPreview</b>(
-            &lt;Object&gt;<i>id</i>,<br>
-			&lt;Number&gt;<i>part</i>,<br>
-			&lt;Number&gt;<i>maxWidth</i>,<br>
-			&lt;Number&gt;<i>maxHeight</i>,<br>
-            <nobr>&lt;<a href="#getpreview-options">PreviewOptions</a>&gt;<i>options?</i>)</nobr>
-		</code></td>
-		<td><code>undefined</code></td>
-		<td>Triggers the creation of a preview with the given id, of maximum maxWidth X maxHeight size, of the
-            specified part keeping the original ration. By passing an
-            optional parameter {autoUpdate: true}, the preview will be automatically invalidated.</td>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
 	</tr>
 	<tr>
-		<td><code><b>removePreviewUpdate</b>(
-			<nobr>&lt;Object&gt;<i>id</i>)</nobr>
-        </code></td>
-		<td><code>undfined</code></td>
-		<td>Cancels the automatic update for the preview defined by 'id'.</td>
+		<td><code><b>originalPhrase</b></code></td>
+		<td><code>String</code></td>
+		<td>The phrase that has been searched for</td>
+	</tr>
+	<tr>
+		<td><code><b>count</b></code></td>
+		<td><code>Number</code></td>
+		<td>Number of search results</td>
+	</tr>
+	<tr>
+		<td><code><b>results</b></code></td>
+		<td><code><a href="#bounds">Bounds[]</a></code></td>
+		<td>An array of bounds representing the selections of the search results in the document.</td>
 	</tr>
 </table>
 
-<h3 id="getpreview-options">PreviewOptions</h3>
+<h3 id="partpagerectangles-event">PartPageRectangles</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>pixelRectangles</b></code></td>
+        <td><code><a href="#bounds">Bounds[]</a></code></td>
+		<td>An array of bounds representing each page's dimension in pixels on the current zoom level.</td>
+	</tr>
+	<tr>
+		<td><code><b>twipsRectangles</b></code></td>
+		<td><code><a href="#bounds">Bounds[]</a></code></td>
+		<td>An array of bounds representing each page's dimension in twips.</td>
+	</tr>
+</table>
+
+<h3 id="permission-event">PermissionEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>perm</b></code></td>
+		<td><code><a href="#documentpermission-values">DocumentPermission</a></code></td>
+		<td>Document permission.</td>
+	</tr>
+</table>
+
+<h3 id="commandstatechanged-event">CommandStateChangedEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>commandName</b></code></td>
+		<td><code><a href="#commandstatechanged-values">CommandStateChangedValues</a></code></td>
+		<td>UNO command.</td>
+	</tr>
+	<tr>
+		<td><code><b>state</b></code></td>
+		<td><code><a href="#commandstate-values">CommandStateValues</a></code></td>
+		<td>UNO command state.</td>
+	</tr>
+</table>
+
+<h3 id="updateparts-event">UpdatePartsEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>selectedPart</b></code></td>
+		<td><code>Number</code></td>
+		<td>The currently selected part.</td>
+	</tr>
+	<tr>
+		<td><code><b>parts</b></code></td>
+		<td><code>Number</code></td>
+		<td>The number of parts in the document.</td>
+	</tr>
+	<tr>
+		<td><code><b>docType</b></code></td>
+		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
+		<td>The document type.</td>
+	</tr>
+	<tr>
+		<td><code><b>partNames</b></code></td>
+		<td><code>String[]</code></td>
+		<td>If present, an array containing slides' / spreadsheets' names.</td>
+	</tr>
+</table>
+
+<h3 id="invalidatepreview-event">InvalidatePreviewEvent</h3>
+<p>Loleaflet specific events.</p>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>id</b></code></td>
+		<td><code>Object</code></td>
+		<td>Preview's id that needs to be invalidated.</td>
+	</tr>
+</table>
+
+<h3 id="tilepreview-event">TilePreviewEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>tile</b></code></td>
+		<td><code>Image</code></td>
+		<td>The actual preview.</td>
+	</tr>
+	<tr>
+		<td><code><b>id</b></code></td>
+		<td><code>Object</code></td>
+		<td>Preview id.</td>
+	</tr>
+	<tr>
+		<td><code><b>width</b></code></td>
+		<td><code>Number</code></td>
+		<td>Image width.</td>
+	</tr>
+	<tr>
+		<td><code><b>height</b></code></td>
+		<td><code>Number</code></td>
+		<td>Image height.</td>
+	</tr>
+	<tr>
+		<td><code><b>docType</b></code></td>
+		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
+		<td>The document type.</td>
+	</tr>
+	<tr>
+		<td><code><b>part</b></code></td>
+		<td><code>Number</code></td>
+		<td>If the preview is for a whole part.</td>
+	</tr>
+</table>
+
+<h3 id="statusindicator-event">StatusIndicatorEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>statusType</b></code></td>
+		<td><code><a href="#statusindicator-values">StatusIndicatorValues</a></code></td>
+		<td>Status type.</td>
+	</tr>
+	<tr>
+		<td><code><b>value</b></code></td>
+		<td><code>Number</code></td>
+		<td>If present, a number for 0 to 100 represending the loading status.<td>
+	</tr>
+</table>
+
+<h3 id="docsize-event">DocumentSizeEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>x</b></code></td>
+		<td><code>Number</code></td>
+		<td>Document width in pixels.</td>
+	</tr>
+	<tr>
+		<td><code><b>y</b></code></td>
+		<td><code>Number</code></td>
+		<td>Document height in pixels.</td>
+	</tr>
+</table>
+
+<h3 id="updatescrolloffset-event">UpdateScrollOffsetEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>x</b></code></td>
+		<td><code>Number</code></td>
+		<td>Difference in pixels between the document's left border and view's left border.</td>
+	</tr>
+	<tr>
+		<td><code><b>y</b></code></td>
+		<td><code>Number</code></td>
+		<td>Difference in pixels between the document's top border and view's top border.</td>
+	</tr>
+</table>
+
+<h3 id="scrollto-event">ScrollToEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>x</b></code></td>
+		<td><code>Number</code></td>
+		<td>View's left border position in pixels.</td>
+	</tr>
+	<tr>
+		<td><code><b>y</b></code></td>
+		<td><code>Number</code></td>
+		<td>View's top border position in pixels.</td>
+	</tr>
+</table>
+
+<h3 id="scrollby-event">ScrollByEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>x</b></code></td>
+		<td><code>Number</code></td>
+		<td>Scroll right by x pixels, or left if negative.</td>
+	</tr>
+	<tr>
+		<td><code><b>y</b></code></td>
+		<td><code>Number</code></td>
+		<td>Scroll down by y pixels, or up if negative.</td>
+	</tr>
+</table>
+
+<h3 id="pagenumberchanged-event">PageNumberChangedEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>currentPage</b></code></td>
+		<td><code>Number</code></td>
+		<td>The current page in the document.</td>
+	</tr>
+	<tr>
+		<td><code><b>pages</b></code></td>
+		<td><code>Number</code></td>
+		<td>The number of pages.</td>
+	</tr>
+	<tr>
+		<td><code><b>docType</b></code></td>
+		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
+		<td>The document type.</td>
+	</tr>
+</table>
+
+<h3 id="error-event">ErrorEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>msg</b></code></td>
+		<td><code>String</code></td>
+		<td>If present, the error message.</td>
+	</tr>
+	<tr>
+		<td><code><b>cmd</b></code></td>
+		<td><code>String</code></td>
+		<td>If present, the server command that caused the error.</td>
+	</tr>
+	<tr>
+		<td><code><b>kind</b></code></td>
+		<td><code>String</code></td>
+		<td>If present, the kind of error associated with the command.</td>
+	</tr>
+</table>
+
+<h3 id="updatetoolbarcommandvalues-event">UpdateToolbarCommandValuesEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>commandName</b></code></td>
+		<td><code><a href="#toolbarcommand-values">ToolbarCommandValues</a></code></td>
+		<td>UNO command.</td>
+	</tr>
+	<tr>
+		<td><code><b>commandValues</b></code></td>
+		<td><code>Object</code></td>
+		<td>JSON mapping of the possible values.</td>
+	</tr>
+</table>
+
+<h2 id="loleaflet-object-values">Object values</h2>
+
+<p>A list of possible values for different event object properties.</p>
+
+<h3 id="documentpermission-values">DocumentPermissionValues</h3>
 
 <table data-id='values'>
 	<tr>
-		<th class="width100">property</th>
+		<th class="width100">value</th>
 		<th class="width100">type</th>
 		<th>description</th>
 	</tr>
 	<tr>
-		<td><code><b>autoUpdate</b></code></td>
-		<td><code>Boolean</code></td>
-        <td>Whether a new preview is generated automatically when it becomes invalid.</td>
+		<td><code><b>'edit'</b></code></td>
+		<td><code>String</code></td>
+		<td>The document can be edited, dragging is disabled and mouse selection is active.</td>
+	</tr>
+	<tr>
+		<td><code><b>'view'</b></code></td>
+		<td><code>String</code></td>
+		<td>The document is in viewing mode, dragging is enabled by default and by clicking in it, editing mode is entered.</td>
+	</tr>
+    <tr>
+		<td><code><b>'readonly'</b></code></td>
+		<td><code>String</code></td>
+		<td>The document is in read-only mode, dragging is enabled by default.</td>
+	</tr>
+</table>
+
+<h3 id="commandstatechanged-values">CommandStateChangedValues</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">value</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:Bold'</b></code></td>
+		<td><code>String</code></td>
+		<td>Bold.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:Italic'</b></code></td>
+		<td><code>String</code></td>
+		<td>Italic.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:Underline'</b></code></td>
+		<td><code>String</code></td>
+		<td>Underline.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:Strikeout'</b></code></td>
+		<td><code>String</code></td>
+		<td>Strikeout.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:LeftPara'</b></code></td>
+		<td><code>String</code></td>
+		<td>Align left.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:CenterPara'</b></code></td>
+		<td><code>String</code></td>
+		<td>Center horizontaly.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:RightPara'</b></code></td>
+		<td><code>String</code></td>
+		<td>Align right.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:JustifyPara'</b></code></td>
+		<td><code>String</code></td>
+		<td>Justified.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:IncrementIndent'</b></code></td>
+		<td><code>String</code></td>
+		<td>Increment indent.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:DecrementIndent'</b></code></td>
+		<td><code>String</code></td>
+		<td>Decrement indent.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:StyleApply'</b></code></td>
+		<td><code>String</code></td>
+		<td>Style related uno command.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:CharFontName'</b></code></td>
+		<td><code>String</code></td>
+		<td>Font related uno command.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:FontHeight'</b></code></td>
+		<td><code>String</code></td>
+		<td>Font size related uno command.</td>
+	</tr>
+</table>
+
+<h3 id="commandstate-values">CommandStateValues</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">value</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>'true'</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:Bold', '.uno:Italic', etc.</td>
+	</tr>
+	<tr>
+		<td><code><b>'false'</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:Bold', '.uno:Italic', etc.</td>
+	</tr>
+	<tr>
+		<td><code><b>styleName</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:StyleApply'.</td>
+	</tr>
+	<tr>
+		<td><code><b>fontName</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:CharFontName'.</td>
+	</tr>
+	<tr>
+		<td><code><b>fontSize</b></code></td>
+		<td><code>String</code></td>
+		<td>For '.uno:FontHeight'.</td>
+	</tr>
+</table>
+
+<h3 id="documenttype-values">DocumentTypeValues</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">value</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>'text'</b></code></td>
+		<td><code>String</code></td>
+		<td>Text document, usually handled by Writer.</td>
+	</tr>
+	<tr>
+		<td><code><b>'presentation'</b></code></td>
+		<td><code>String</code></td>
+		<td>Text document, usually handled by Impress.</td>
+	</tr>
+	<tr>
+		<td><code><b>'spreadsheet'</b></code></td>
+		<td><code>String</code></td>
+		<td>Text document, usually handled by Calc.</td>
+	</tr>
+	<tr>
+		<td><code><b>'drawing'</b></code></td>
+		<td><code>String</code></td>
+		<td>Text document, usually handled by Draw.</td>
+	</tr>
+	<tr>
+		<td><code><b>'other'</b></code></td>
+		<td><code>String</code></td>
+		<td>Other document type.</td>
+	</tr>
+</table>
+
+<h3 id="statusindicator-values">StatusIndicatorValues</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">value</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>'start'</b></code></td>
+		<td><code>String</code></td>
+		<td>Fired when the progress broadcast is being started.</td>
+	</tr>
+	<tr>
+		<td><code><b>'setvalue'</b></code></td>
+		<td><code>String</code></td>
+		<td>Set a value between 0 and 100.</td>
+	</tr>
+	<tr>
+		<td><code><b>'finish'</b></code></td>
+		<td><code>String</code></td>
+		<td>The progress is at 100%.</td>
+	</tr>
+	<tr>
+		<td><code><b>'loleafletloaded'</b></code></td>
+		<td><code>String</code></td>
+		<td>Fired when the code has been initialized.</td>
+	</tr>
+	<tr>
+		<td><code><b>'alltilesloaded'</b></code></td>
+		<td><code>String</code></td>
+		<td>Fired when all empty tiles have been loaded (fired several times).</td>
+	</tr>
+</table>
+
+<h3 id="toolbarcommand-values">ToolbarCommandValues</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">value</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:StyleApply'</b></code></td>
+		<td><code>String</code></td>
+		<td>Style related uno command.</td>
+	</tr>
+	<tr>
+		<td><code><b>'.uno:CharFontName'</b></code></td>
+		<td><code>String</code></td>
+		<td>Font related uno command.</td>
 	</tr>
 </table>
 
@@ -6805,341 +7368,6 @@ map.addControl(new MyControl());
 	</tr>
 </table>
 
-<h3 id="search-event">SearchEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>originalPhrase</b></code></td>
-		<td><code>String</code></td>
-		<td>The phrase that has been searched for</td>
-	</tr>
-	<tr>
-		<td><code><b>count</b></code></td>
-		<td><code>Number</code></td>
-		<td>Number of search results</td>
-	</tr>
-	<tr>
-		<td><code><b>results</b></code></td>
-		<td><code><a href="#bounds">Bounds[]</a></code></td>
-		<td>An array of bounds representing the selections of the search results in the document.</td>
-	</tr>
-</table>
-
-<h3 id="partpagerectangles-event">PartPageRectangles</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>pixelRectangles</b></code></td>
-        <td><code><a href="#bounds">Bounds[]</a></code></td>
-		<td>An array of bounds representing each page's dimension in pixels on the current zoom level.</td>
-	</tr>
-	<tr>
-		<td><code><b>twipsRectangles</b></code></td>
-		<td><code><a href="#bounds">Bounds[]</a></code></td>
-		<td>An array of bounds representing each page's dimension in twips.</td>
-	</tr>
-</table>
-
-<h3 id="permission-event">PermissionEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>perm</b></code></td>
-		<td><code><a href="#documentpermission-values">DocumentPermission</a></code></td>
-		<td>Document permission.</td>
-	</tr>
-</table>
-
-<h3 id="commandstatechanged-event">CommandStateChangedEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>commandName</b></code></td>
-		<td><code><a href="#commandstatechanged-values">CommandStateChangedValues</a></code></td>
-		<td>UNO command.</td>
-	</tr>
-	<tr>
-		<td><code><b>state</b></code></td>
-		<td><code><a href="#commandstate-values">CommandStateValues</a></code></td>
-		<td>UNO command state.</td>
-	</tr>
-</table>
-
-<h3 id="updateparts-event">UpdatePartsEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>selectedPart</b></code></td>
-		<td><code>Number</code></td>
-		<td>The currently selected part.</td>
-	</tr>
-	<tr>
-		<td><code><b>parts</b></code></td>
-		<td><code>Number</code></td>
-		<td>The number of parts in the document.</td>
-	</tr>
-	<tr>
-		<td><code><b>docType</b></code></td>
-		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
-		<td>The document type.</td>
-	</tr>
-	<tr>
-		<td><code><b>partNames</b></code></td>
-		<td><code>String[]</code></td>
-		<td>If present, an array containing slides' / spreadsheets' names.</td>
-	</tr>
-</table>
-
-<h3 id="invalidatepreview-event">InvalidatePreviewEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>id</b></code></td>
-		<td><code>Object</code></td>
-		<td>Preview's id that needs to be invalidated.</td>
-	</tr>
-</table>
-
-<h3 id="tilepreview-event">TilePreviewEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>tile</b></code></td>
-		<td><code>Image</code></td>
-		<td>The actual preview.</td>
-	</tr>
-	<tr>
-		<td><code><b>id</b></code></td>
-		<td><code>Object</code></td>
-		<td>Preview id.</td>
-	</tr>
-	<tr>
-		<td><code><b>width</b></code></td>
-		<td><code>Number</code></td>
-		<td>Image width.</td>
-	</tr>
-	<tr>
-		<td><code><b>height</b></code></td>
-		<td><code>Number</code></td>
-		<td>Image height.</td>
-	</tr>
-	<tr>
-		<td><code><b>docType</b></code></td>
-		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
-		<td>The document type.</td>
-	</tr>
-	<tr>
-		<td><code><b>part</b></code></td>
-		<td><code>Number</code></td>
-		<td>If the preview is for a whole part.</td>
-	</tr>
-</table>
-
-<h3 id="statusindicator-event">StatusIndicatorEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>statusType</b></code></td>
-		<td><code><a href="#statusindicator-values">StatusIndicatorValues</a></code></td>
-		<td>Status type.</td>
-	</tr>
-	<tr>
-		<td><code><b>value</b></code></td>
-		<td><code>Number</code></td>
-		<td>If present, a number for 0 to 100 represending the loading status.<td>
-	</tr>
-</table>
-
-<h3 id="docsize-event">DocumentSizeEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>x</b></code></td>
-		<td><code>Number</code></td>
-		<td>Document width in pixels.</td>
-	</tr>
-	<tr>
-		<td><code><b>y</b></code></td>
-		<td><code>Number</code></td>
-		<td>Document height in pixels.</td>
-	</tr>
-</table>
-
-<h3 id="updatescrolloffset-event">UpdateScrollOffsetEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>x</b></code></td>
-		<td><code>Number</code></td>
-		<td>Difference in pixels between the document's left border and view's left border.</td>
-	</tr>
-	<tr>
-		<td><code><b>y</b></code></td>
-		<td><code>Number</code></td>
-		<td>Difference in pixels between the document's top border and view's top border.</td>
-	</tr>
-</table>
-
-<h3 id="scrollto-event">ScrollToEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>x</b></code></td>
-		<td><code>Number</code></td>
-		<td>View's left border position in pixels.</td>
-	</tr>
-	<tr>
-		<td><code><b>y</b></code></td>
-		<td><code>Number</code></td>
-		<td>View's top border position in pixels.</td>
-	</tr>
-</table>
-
-<h3 id="scrollby-event">ScrollByEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>x</b></code></td>
-		<td><code>Number</code></td>
-		<td>Scroll right by x pixels, or left if negative.</td>
-	</tr>
-	<tr>
-		<td><code><b>y</b></code></td>
-		<td><code>Number</code></td>
-		<td>Scroll down by y pixels, or up if negative.</td>
-	</tr>
-</table>
-
-<h3 id="pagenumberchanged-event">PageNumberChangedEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>currentPage</b></code></td>
-		<td><code>Number</code></td>
-		<td>The current page in the document.</td>
-	</tr>
-	<tr>
-		<td><code><b>pages</b></code></td>
-		<td><code>Number</code></td>
-		<td>The number of pages.</td>
-	</tr>
-	<tr>
-		<td><code><b>docType</b></code></td>
-		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
-		<td>The document type.</td>
-	</tr>
-</table>
-
-<h3 id="error-event">ErrorEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>msg</b></code></td>
-		<td><code>String</code></td>
-		<td>If present, the error message.</td>
-	</tr>
-	<tr>
-		<td><code><b>cmd</b></code></td>
-		<td><code>String</code></td>
-		<td>If present, the server command that caused the error.</td>
-	</tr>
-	<tr>
-		<td><code><b>kind</b></code></td>
-		<td><code>String</code></td>
-		<td>If present, the kind of error associated with the command.</td>
-	</tr>
-</table>
-
-<h3 id="updatetoolbarcommandvalues-event">UpdateToolbarCommandValuesEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>commandName</b></code></td>
-		<td><code><a href="#toolbarcommand-values">ToolbarCommandValues</a></code></td>
-		<td>UNO command.</td>
-	</tr>
-	<tr>
-		<td><code><b>commandValues</b></code></td>
-		<td><code>Object</code></td>
-		<td>JSON mapping of the possible values.</td>
-	</tr>
-</table>
-
 <h3 id="mouse-event">MouseEvent</h3>
 
 <table data-id='events'>
@@ -7382,235 +7610,6 @@ map.addControl(new MyControl());
 		<td><code><b>distance</b></code></td>
 		<td><code>Number</code></td>
 		<td>The distance in pixels the draggable element was moved by.</td>
-	</tr>
-</table>
-
-<h2 id="object-values">Object values</h2>
-
-<p>A list of possible values for different event object properties.</p>
-
-<h3 id="documentpermission-values">DocumentPermissionValues</h3>
-
-<table data-id='values'>
-	<tr>
-		<th class="width100">value</th>
-		<th class="width100">type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>'edit'</b></code></td>
-		<td><code>String</code></td>
-		<td>The document can be edited, dragging is disabled and mouse selection is active.</td>
-	</tr>
-	<tr>
-		<td><code><b>'view'</b></code></td>
-		<td><code>String</code></td>
-		<td>The document is in viewing mode, dragging is enabled by default and by clicking in it, editing mode is entered.</td>
-	</tr>
-    <tr>
-		<td><code><b>'readonly'</b></code></td>
-		<td><code>String</code></td>
-		<td>The document is in read-only mode, dragging is enabled by default.</td>
-	</tr>
-</table>
-
-<h3 id="commandstatechanged-values">CommandStateChangedValues</h3>
-
-<table data-id='values'>
-	<tr>
-		<th class="width100">value</th>
-		<th class="width100">type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:Bold'</b></code></td>
-		<td><code>String</code></td>
-		<td>Bold.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:Italic'</b></code></td>
-		<td><code>String</code></td>
-		<td>Italic.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:Underline'</b></code></td>
-		<td><code>String</code></td>
-		<td>Underline.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:Strikeout'</b></code></td>
-		<td><code>String</code></td>
-		<td>Strikeout.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:LeftPara'</b></code></td>
-		<td><code>String</code></td>
-		<td>Align left.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:CenterPara'</b></code></td>
-		<td><code>String</code></td>
-		<td>Center horizontaly.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:RightPara'</b></code></td>
-		<td><code>String</code></td>
-		<td>Align right.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:JustifyPara'</b></code></td>
-		<td><code>String</code></td>
-		<td>Justified.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:IncrementIndent'</b></code></td>
-		<td><code>String</code></td>
-		<td>Increment indent.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:DecrementIndent'</b></code></td>
-		<td><code>String</code></td>
-		<td>Decrement indent.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:StyleApply'</b></code></td>
-		<td><code>String</code></td>
-		<td>Style related uno command.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:CharFontName'</b></code></td>
-		<td><code>String</code></td>
-		<td>Font related uno command.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:FontHeight'</b></code></td>
-		<td><code>String</code></td>
-		<td>Font size related uno command.</td>
-	</tr>
-</table>
-
-<h3 id="commandstate-values">CommandStateValues</h3>
-
-<table data-id='values'>
-	<tr>
-		<th class="width100">value</th>
-		<th class="width100">type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>'true'</b></code></td>
-		<td><code>String</code></td>
-		<td>For '.uno:Bold', '.uno:Italic', etc.</td>
-	</tr>
-	<tr>
-		<td><code><b>'false'</b></code></td>
-		<td><code>String</code></td>
-		<td>For '.uno:Bold', '.uno:Italic', etc.</td>
-	</tr>
-	<tr>
-		<td><code><b>styleName</b></code></td>
-		<td><code>String</code></td>
-		<td>For '.uno:StyleApply'.</td>
-	</tr>
-	<tr>
-		<td><code><b>fontName</b></code></td>
-		<td><code>String</code></td>
-		<td>For '.uno:CharFontName'.</td>
-	</tr>
-	<tr>
-		<td><code><b>fontSize</b></code></td>
-		<td><code>String</code></td>
-		<td>For '.uno:FontHeight'.</td>
-	</tr>
-</table>
-
-<h3 id="documenttype-values">DocumentTypeValues</h3>
-
-<table data-id='values'>
-	<tr>
-		<th class="width100">value</th>
-		<th class="width100">type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>'text'</b></code></td>
-		<td><code>String</code></td>
-		<td>Text document, usually handled by Writer.</td>
-	</tr>
-	<tr>
-		<td><code><b>'presentation'</b></code></td>
-		<td><code>String</code></td>
-		<td>Text document, usually handled by Impress.</td>
-	</tr>
-	<tr>
-		<td><code><b>'spreadsheet'</b></code></td>
-		<td><code>String</code></td>
-		<td>Text document, usually handled by Calc.</td>
-	</tr>
-	<tr>
-		<td><code><b>'drawing'</b></code></td>
-		<td><code>String</code></td>
-		<td>Text document, usually handled by Draw.</td>
-	</tr>
-	<tr>
-		<td><code><b>'other'</b></code></td>
-		<td><code>String</code></td>
-		<td>Other document type.</td>
-	</tr>
-</table>
-
-<h3 id="statusindicator-values">StatusIndicatorValues</h3>
-
-<table data-id='values'>
-	<tr>
-		<th class="width100">value</th>
-		<th class="width100">type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>'start'</b></code></td>
-		<td><code>String</code></td>
-		<td>Fired when the progress broadcast is being started.</td>
-	</tr>
-	<tr>
-		<td><code><b>'setvalue'</b></code></td>
-		<td><code>String</code></td>
-		<td>Set a value between 0 and 100.</td>
-	</tr>
-	<tr>
-		<td><code><b>'finish'</b></code></td>
-		<td><code>String</code></td>
-		<td>The progress is at 100%.</td>
-	</tr>
-	<tr>
-		<td><code><b>'loleafletloaded'</b></code></td>
-		<td><code>String</code></td>
-		<td>Fired when the code has been initialized.</td>
-	</tr>
-	<tr>
-		<td><code><b>'alltilesloaded'</b></code></td>
-		<td><code>String</code></td>
-		<td>Fired when all empty tiles have been loaded (fired several times).</td>
-	</tr>
-</table>
-
-<h3 id="toolbarcommand-values">ToolbarCommandValues</h3>
-
-<table data-id='values'>
-	<tr>
-		<th class="width100">value</th>
-		<th class="width100">type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:StyleApply'</b></code></td>
-		<td><code>String</code></td>
-		<td>Style related uno command.</td>
-	</tr>
-	<tr>
-		<td><code><b>'.uno:CharFontName'</b></code></td>
-		<td><code>String</code></td>
-		<td>Font related uno command.</td>
 	</tr>
 </table>
 
