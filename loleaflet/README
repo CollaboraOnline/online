@@ -55,6 +55,10 @@ check the loolwsd console for the debugging output.
 API & events
 ------------
 
+######################################################################
+# See /loleaflet/reference.html for a better formated documentation. #
+######################################################################
+
 Search:
     - API:
         map.search(text, [backward])
