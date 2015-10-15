@@ -84,6 +84,11 @@ L.CalcTileLayer = L.TileLayer.extend({
 				delete this._tileCache[key];
 			}
 		}
+
+		this._previewInvalidations.push(invalidBounds);
+		// 1s after the last invalidation, update the preview
+		clearTimeout(this._previewInvalidator);
+		this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
 	},
 
 	_onSetPartMsg: function (textMsg) {

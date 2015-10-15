@@ -40,64 +40,66 @@ L.Map.include({
 		}
 	},
 
-	getPartPreview: function (id, part, maxWidth, maxHeight, options) {
+	getPreview: function (id, index, maxWidth, maxHeight, options) {
 		if (!this._docPreviews) {
 			this._docPreviews = {};
 		}
 		var autoUpdate = options ? options.autoUpdate : false;
-		this._docPreviews[id] = {id: id, part: part, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate};
+		this._docPreviews[id] = {id: id, index: index, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate};
 
 		var docLayer = this._docLayer;
-		var docRatio = docLayer._docWidthTwips / docLayer._docHeightTwips;
+		if (docLayer._docType === 'text') {
+			if (index >= docLayer._partPageRectanglesTwips.length) {
+				return;
+			}
+			var part = 0;
+			var tilePosX = docLayer._partPageRectanglesTwips[index].min.x;
+			var tilePosY = docLayer._partPageRectanglesTwips[index].min.y;
+			var tileWidth = docLayer._partPageRectanglesTwips[index].max.x - tilePosX;
+			var tileHeight = docLayer._partPageRectanglesTwips[index].max.y - tilePosY;
+		}
+		else {
+			part = index;
+			tilePosX = 0;
+			tilePosY = 0;
+			tileWidth = docLayer._docWidthTwips;
+			tileHeight = docLayer._docHeightTwips;
+		}
+		var docRatio = tileWidth / tileHeight;
 		var imgRatio = maxWidth / maxHeight;
 		// fit into the given rectangle while maintaining the ratio
 		if (imgRatio > docRatio) {
-			maxWidth = Math.round(docLayer._docWidthTwips * maxHeight / docLayer._docHeightTwips);
+			maxWidth = Math.round(tileWidth * maxHeight / tileHeight);
 		}
 		else {
-			maxHeight = Math.round(docLayer._docHeightTwips * maxWidth / docLayer._docWidthTwips);
+			maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
 		}
 		L.Socket.sendMessage('tile ' +
 							'part=' + part + ' ' +
 							'width=' + maxWidth + ' ' +
 							'height=' + maxHeight + ' ' +
-							'tileposx=0 tileposy=0 ' +
-							'tilewidth=' + docLayer._docWidthTwips + ' ' +
-							'tileheight=' + docLayer._docHeightTwips + ' ' +
+							'tileposx=' + tilePosX + ' ' +
+							'tileposy=' + tilePosY + ' ' +
+							'tilewidth=' + tileWidth + ' ' +
+							'tileheight=' + tileHeight + ' ' +
 							'id=' + id);
 	},
 
-	getDocPreview: function (id, maxWidth, maxHeight, x, y, width, height, options) {
+	getCustomPreview: function (id, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, options) {
 		if (!this._docPreviews) {
 			this._docPreviews = {};
 		}
 		var autoUpdate = options ? options.autoUpdate : false;
-		this._docPreviews[id] = {id: id, maxWidth: maxWidth, maxHeight: maxHeight, x: x, y: y,
-			width: width, height: height, autoUpdate: autoUpdate};
-
-		var docLayer = this._docLayer;
-		var docRatio = width / height;
-		var imgRatio = maxWidth / maxHeight;
-		// fit into the given rectangle while maintaining the ratio
-		if (imgRatio > docRatio) {
-			maxWidth = Math.round(width * maxHeight / height);
-		}
-		else {
-			maxHeight = Math.round(height * maxWidth / width);
-		}
-		x = Math.round(x / docLayer._tileSize * docLayer._tileWidthTwips);
-		width = Math.round(width / docLayer._tileSize * docLayer._tileWidthTwips);
-		y = Math.round(y / docLayer._tileSize * docLayer._tileHeightTwips);
-		height = Math.round(height / docLayer._tileSize * docLayer._tileHeightTwips);
-
+		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
+			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate};
 		L.Socket.sendMessage('tile ' +
-							'part=0 ' +
-							'width=' + maxWidth + ' ' +
-							'height=' + maxHeight + ' ' +
-							'tileposx=' + x + ' ' +
-							'tileposy=' + y + ' ' +
-							'tilewidth=' + width + ' ' +
-							'tileheight=' + height + ' ' +
+							'part=' + part + ' ' +
+							'width=' + width + ' ' +
+							'height=' + height + ' ' +
+							'tileposx=' + tilePosX + ' ' +
+							'tileposy=' + tilePosY + ' ' +
+							'tilewidth=' + tileWidth + ' ' +
+							'tileheight=' + tileHeight + ' ' +
 							'id=' + id);
 	},
 
@@ -160,6 +162,13 @@ L.Map.include({
 
 	getDocSize: function () {
 		return this._docLayer._docPixelSize;
+	},
+
+	getPageSize: function (page) {
+		if (this._docLayer._partPageRectanglesPixels && this._docLayer._partPageRectanglesPixels.length > page) {
+			return this._docLayer._partPageRectanglesPixels[page];
+		}
+		return null;
 	},
 
 	getDocType: function () {

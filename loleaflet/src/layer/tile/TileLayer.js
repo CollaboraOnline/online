@@ -25,7 +25,8 @@ L.TileLayer = L.GridLayer.extend({
 		zoomReverse: false,
 		detectRetina: false,
 		crossOrigin: false,
-		preFetchOtherParts: false
+		preFetchOtherParts: false,
+		previewInvalidationTimeout: 1000
 	},
 
 	initialize: function (url, options) {
@@ -85,6 +86,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._emptyTilesCount = 0;
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
+		this._previewInvalidations = [];
 	},
 
     onAdd: function (map) {
@@ -806,6 +808,74 @@ L.TileLayer = L.GridLayer.extend({
 				twipsRectangles: this._partPageRectanglesTwips
 			});
 		}
+	},
+
+    _invalidatePreviews: function () {
+		if (this._map._docPreviews && this._previewInvalidations.length > 0) {
+			var toInvalidate = {};
+			for (var i = 0; i < this._previewInvalidations.length; i++) {
+				var invalidBounds = this._previewInvalidations[i];
+				for (var key in this._map._docPreviews) {
+					// find preview tiles that need to be updated and add them in a set
+					var preview = this._map._docPreviews[key];
+					if (preview.index >= 0 && this._docType === 'text') {
+						// we have a preview for a page
+						if (this._partPageRectanglesTwips.length > preview.index &&
+								invalidBounds.intersects(this._partPageRectanglesTwips[preview.index])) {
+							toInvalidate[key] = true;
+						}
+					}
+					else if (preview.index >= 0) {
+						// we have a preview for a part
+						if (preview.index === this._selectedPart ||
+								(preview.index === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) {
+							// if the current part needs its preview updated OR
+							// the part has been changed and we need to update the previous part preview
+							if (preview.index === this._prevSelectedPart) {
+								this._prevSelectedPartNeedsUpdate = false;
+							}
+							toInvalidate[key] = true;
+						}
+					}
+					else {
+						// we have a custom preview
+						var bounds = new L.Bounds(
+								new L.Point(preview.tilePosX, preview.tilePosY),
+								new L.Point(preview.tilePosX + preview.tileWidth, preview.tilePosY + preview.tileHeight));
+						if ((preview.part === this._selectedPart ||
+								(preview.part === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) &&
+								invalidBounds.intersects(bounds)) {
+							// if the current part needs its preview updated OR
+							// the part has been changed and we need to update the previous part preview
+							if (preview.index === this._prevSelectedPart) {
+								this._prevSelectedPartNeedsUpdate = false;
+							}
+							toInvalidate[key] = true;
+						}
+
+					}
+				}
+
+			}
+
+			for (key in toInvalidate) {
+				// update invalid preview tiles
+				preview = this._map._docPreviews[key];
+				if (preview.autoUpdate) {
+					if (preview.index >= 0) {
+						this._map.getPreview(preview.id, preview.index, preview.maxWidth, preview.maxHeight, {autoUpdate: true});
+					}
+					else {
+						this._map.getCustomPreview(preview.id, preview.part, preview.width, preview.height, preview.tilePosX,
+								preview.tilePosY, preview.tileWidth, preview.tileHeight, {autoUpdate: true});
+					}
+				}
+				else {
+					this._map.fire('invalidatepreview', {id: preview.id});
+				}
+			}
+		}
+		this._previewInvalidations = [];
 	}
 });
 

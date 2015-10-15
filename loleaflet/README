@@ -93,13 +93,20 @@ Buttons like Bold, Italic, Strike through etc.
 Parts (like slides in presentation, or sheets in spreadsheets):
     - API:
         map.setPart('next' | 'prev' | partNumber)
-        map.getPartPreview(id, part, maxWidth, maxHeight, [options]) where:
-            + id = the ID of the request so that the response can be identified
-            + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
-              image might be returned in order to keep the original ratio of the document
-            + options = {autoUpdate: true} - automatically updates the previews
         map.getNumberOfParts()
         map.getCurrentPartNumber()
+        map.getPreview(id, index, maxWidth, maxHeight, [options])
+            + id = the ID of the request so that the response can be identified
+            + index = the part / page 's number
+            + maxWidth / maxHeight = max dimensions so that the ratio is preserved
+            + options = {autoUpdate: true} - automatically updates the previews
+        map.getCustomPreview(id, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, [options])
+            + id = the ID of the request so that the response can be identified
+            + part = the part containing the desired preview
+            + width / height = the preview's size in pixels
+            + tilePosX / tilePosY = the rectangles's starting position in twips
+            + tileWidth / tileHeight = the rectangle's dimension in twips
+            + options = {autoUpdate: true} - automatically updates the previews
         map.removePreviewUpdate(id)
             + id = the preview's id
 
@@ -178,11 +185,17 @@ Writer pages:
         map.goToPage(page)
         map.getNumberOfPages()
         map.getCurrentPageNumber()
-        map.getDocPreview(id, maxWidth, maxHeight, x, y, width, height, [options])
+        map.getPreview(id, index, maxWidth, maxHeight, [options])
             + id = the ID of the request so that the response can be identified
-            + maxWidth / maxHeight are the desired dimensions of the preview, a smaller
-              image might be returned in order to keep the original ratio of the document
-            + x/y = starting position, where to get the preview from
+            + index = the part / page 's number
+            + maxWidth / maxHeight = max dimensions so that the ratio is preserved
+            + options = {autoUpdate: true} - automatically updates the previews
+        map.getCustomPreview(id, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, [options])
+            + id = the ID of the request so that the response can be identified
+            + part = the part containing the desired preview
+            + width / height = the preview's size in pixels
+            + tilePosX / tilePosY = the rectangles's starting position in twips
+            + tileWidth / tileHeight = the rectangle's dimension in twips
             + options = {autoUpdate: true} - automatically updates the previews
         map.removePreviewUpdate(id)
             + id = the preview's id
