@@ -164,11 +164,10 @@ L.Map.include({
 		return this._docLayer._docPixelSize;
 	},
 
-	getPageSize: function (page) {
-		if (this._docLayer._partPageRectanglesPixels && this._docLayer._partPageRectanglesPixels.length > page) {
-			return this._docLayer._partPageRectanglesPixels[page];
-		}
-		return null;
+	getPageSizes: function () {
+		return {
+			twips: this._docLayer._partPageRectanglesTwips,
+			pixels: this._docLayer._partPageRectanglesPixels};
 	},
 
 	getDocType: function () {

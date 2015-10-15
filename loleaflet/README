@@ -203,6 +203,8 @@ Writer pages:
             + options = {autoUpdate: true} - automatically updates the previews
         map.removePreviewUpdate(id)
             + id = the preview's id
+        map.getPageSizes()
+            + returns {twips: [Bounds], pixels: [Bounds]}
 
     - events
         map.on('pagenumberchanged', function (e) {}) where:
