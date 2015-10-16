@@ -23,26 +23,25 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onFullScreen: function (e) {
-		this._container = L.DomUtil.create('div', '', this._map._container);
-		this._slideShow = L.DomUtil.create('img', 'slide-show', this._container);
+		this._slideShow = L.DomUtil.create('iframe', '', this._map._container);
 		if (this._slideShow.requestFullscreen) {
-		  this._container.requestFullscreen();
+		  this._slideShow.requestFullscreen();
 		}
 		else if (this._slideShow.msRequestFullscreen) {
-		  this._container.msRequestFullscreen();
+		  this._slideShow.msRequestFullscreen();
 		}
 		else if (this._slideShow.mozRequestFullScreen) {
-		  this._container.mozRequestFullScreen();
+		  this._slideShow.mozRequestFullScreen();
 		}
 		else if (this._slideShow.webkitRequestFullscreen) {
-		  this._container.webkitRequestFullscreen();
+		  this._slideShow.webkitRequestFullscreen();
 		}
 
 		L.DomEvent['on'](document, 'fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange',
 				this._onFullScreenChange, this);
 
 		this.fullscreen = true;
-		this._getSlides();
+		L.Socket.sendMessage('downloadas name=slideshow.svg id=slideshow format=svg options=');
 	},
 
 	_onFullScreenChange: function (e) {
@@ -52,54 +51,12 @@ L.Map.SlideShow = L.Handler.extend({
 			document.mozFullScreen ||
 			document.msFullscreenElement;
 		if (!this.fullscreen) {
-			L.DomUtil.remove(this._container);
-		}
-	},
-
-	_getSlides: function () {
-		this._currentSlide = 0;
-		this._slides = [];
-		for (var i = 0; i < this._map.getNumberOfParts(); i++) {
-			// mark the i-th slide as not available yet
-			this._slides.push(null);
-		}
-
-		for (var i = 0; i < this._map.getNumberOfParts(); i++) {
-			L.Socket.sendMessage('downloadas name=' + i + '.svg id=slideshow ' +
-					'part=' + i + ' format=svg options=');
+			L.DomUtil.remove(this._slideShow);
 		}
 	},
 
 	_onSlideDownloadReady: function (e) {
-		var xmlHttp = new XMLHttpRequest();
-		var part = e.part;
-		xmlHttp.onreadystatechange = L.bind(function () {
-			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-				var blob = new Blob([xmlHttp.response], {type: 'image/svg+xml'});
-				var url = URL.createObjectURL(blob);
-				this._slides[part] = url;
-				if (part === this._currentSlide) {
-					this._slideShow.src = url;
-				}
-			}
-		}, this);
-		xmlHttp.open('GET', e.url, true);
-		xmlHttp.responseType = 'blob';
-		xmlHttp.send();
-	},
-
-	_onUserInput: function (e) {
-		if (e.type === 'mousedown' || (e.type === 'keydown' &&
-					e.originalEvent.keyCode === 39)) {
-			this._currentSlide = Math.min(this._currentSlide + 1, this._map.getNumberOfParts() - 1);
-		}
-		else if (e.type === 'keydown' && e.originalEvent.keyCode === 37) {
-			this._currentSlide = Math.max(this._currentSlide - 1, 0);
-		}
-		else {
-			return;
-		}
-		this._slideShow.src = this._slides[this._currentSlide];
+		this._slideShow.src = e.url + '?mime_type=image/svg%2Bxml';
 	}
 });
 
