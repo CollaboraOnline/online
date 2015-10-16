@@ -652,9 +652,9 @@ namespace
     ThreadLocal<Path> destinationForLinkOrCopy;
 
     int linkOrCopyFunction(const char *fpath,
-                           const struct stat *sb,
+                           const struct stat* /*sb*/,
                            int typeflag,
-                           struct FTW *ftwbuf)
+                           struct FTW* /*ftwbuf*/)
     {
         if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
             return 0;
@@ -1111,7 +1111,7 @@ void LOOLWSD::startupDesktop(int nDesktops)
     }
 }
 
-int LOOLWSD::main(const std::vector<std::string>& args)
+int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
 #ifdef __linux
     char *locale = setlocale(LC_ALL, NULL);

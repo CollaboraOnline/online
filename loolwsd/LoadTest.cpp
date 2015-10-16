@@ -367,7 +367,7 @@ void LoadTest::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-int LoadTest::main(const std::vector<std::string>& args)
+int LoadTest::main(const std::vector<std::string>& /*args*/)
 {
     Thread *clients[_numClients];
 
