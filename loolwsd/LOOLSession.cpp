@@ -370,7 +370,7 @@ Path MasterProcessSession::getJailPath(UInt64 childId)
     return Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(childId));
 }
 
-bool MasterProcessSession::invalidateTiles(const char *buffer, int length, StringTokenizer& tokens)
+bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, tilePosX, tilePosY, tileWidth, tileHeight;
 
@@ -393,7 +393,7 @@ bool MasterProcessSession::invalidateTiles(const char *buffer, int length, Strin
     return true;
 }
 
-bool MasterProcessSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
+bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     if (tokens.count() < 2 || tokens.count() > 4)
     {
@@ -912,7 +912,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     return true;
 }
 
-bool ChildProcessSession::getStatus(const char *buffer, int length)
+bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
 {
     std::string status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
     StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -925,7 +925,7 @@ bool ChildProcessSession::getStatus(const char *buffer, int length)
     return true;
 }
 
-bool ChildProcessSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string command;
     if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
@@ -943,7 +943,7 @@ bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*le
     return true;
 }
 
-void ChildProcessSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
+void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
@@ -996,7 +996,7 @@ void ChildProcessSession::sendTile(const char *buffer, int length, StringTokeniz
     sendBinaryFrame(output.data(), output.size());
 }
 
-bool ChildProcessSession::downloadAs(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string name, id, format, filterOptions;
 
@@ -1039,7 +1039,7 @@ bool ChildProcessSession::downloadAs(const char *buffer, int length, StringToken
     return true;
 }
 
-bool ChildProcessSession::getTextSelection(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string mimeType;
 
@@ -1056,7 +1056,7 @@ bool ChildProcessSession::getTextSelection(const char *buffer, int length, Strin
     return true;
 }
 
-bool ChildProcessSession::keyEvent(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, charcode, keycode;
 
@@ -1076,7 +1076,7 @@ bool ChildProcessSession::keyEvent(const char *buffer, int length, StringTokeniz
     return true;
 }
 
-bool ChildProcessSession::mouseEvent(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y, count, buttons, modifier;
 
@@ -1101,7 +1101,7 @@ bool ChildProcessSession::mouseEvent(const char *buffer, int length, StringToken
     return true;
 }
 
-bool ChildProcessSession::unoCommand(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     if (tokens.count() == 1)
     {
@@ -1121,7 +1121,7 @@ bool ChildProcessSession::unoCommand(const char *buffer, int length, StringToken
     return true;
 }
 
-bool ChildProcessSession::selectText(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::selectText(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y;
 
@@ -1143,7 +1143,7 @@ bool ChildProcessSession::selectText(const char *buffer, int length, StringToken
     return true;
 }
 
-bool ChildProcessSession::selectGraphic(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y;
 
@@ -1164,7 +1164,7 @@ bool ChildProcessSession::selectGraphic(const char *buffer, int length, StringTo
     return true;
 }
 
-bool ChildProcessSession::resetSelection(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::resetSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     if (tokens.count() != 1)
     {
@@ -1177,7 +1177,7 @@ bool ChildProcessSession::resetSelection(const char *buffer, int length, StringT
     return true;
 }
 
-bool ChildProcessSession::saveAs(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string url, format, filterOptions;
 
@@ -1203,7 +1203,7 @@ bool ChildProcessSession::saveAs(const char *buffer, int length, StringTokenizer
     return true;
 }
 
-bool ChildProcessSession::setClientPart(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::setClientPart(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     if (tokens.count() < 2 ||
         !getTokenInteger(tokens[1], "part", _clientPart))
@@ -1213,7 +1213,7 @@ bool ChildProcessSession::setClientPart(const char *buffer, int length, StringTo
     return true;
 }
 
-bool ChildProcessSession::setPage(const char *buffer, int length, StringTokenizer& tokens)
+bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int page;
     if (tokens.count() < 2 ||
