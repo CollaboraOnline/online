@@ -201,26 +201,29 @@ public:
         {
             // The user might request a file to download
             StringTokenizer tokens(request.getURI(), "/");
-            if (tokens.count() != 4)
+            if (tokens.count() == 4)
             {
-                response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-                response.setContentLength(0);
-                response.send();
-            }
-            std::string dirPath = LOOLWSD::childRoot + "/" + tokens[1] + LOOLSession::jailDocumentURL + "/" + tokens[2];
-            std::string filePath = dirPath + "/" + tokens[3];
-            std::cout << Util::logPrefix() << "HTTP request for: " << filePath << std::endl;
-            File file(filePath);
-            if (file.exists())
-            {
-                response.set("Access-Control-Allow-Origin", "*");
-                response.sendFile(filePath, "application/octet-stream");
-                File dir(dirPath);
-                dir.remove(true);
+                std::string dirPath = LOOLWSD::childRoot + "/" + tokens[1] + LOOLSession::jailDocumentURL + "/" + tokens[2];
+                std::string filePath = dirPath + "/" + tokens[3];
+                std::cout << Util::logPrefix() << "HTTP request for: " << filePath << std::endl;
+                File file(filePath);
+                if (file.exists())
+                {
+                    response.set("Access-Control-Allow-Origin", "*");
+                    response.sendFile(filePath, "application/octet-stream");
+                    File dir(dirPath);
+                    dir.remove(true);
+                }
+                else
+                {
+                    response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
+                    response.setContentLength(0);
+                    response.send();
+                }
             }
             else
             {
-                response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
+                response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
                 response.setContentLength(0);
                 response.send();
             }
