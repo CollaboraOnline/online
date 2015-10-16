@@ -41,7 +41,6 @@ L.Map.include({
 		L.Socket.sendMessage('downloadas ' +
 			'name=' + name + ' ' +
 			'id=-1 ' + // not a special download
-			'part=-1 ' + // we don't want to export just a single part
 			'format=' + format + ' ' +
 			'options=' + options);
 	},
