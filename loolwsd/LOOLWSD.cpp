@@ -67,6 +67,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <Poco/Exception.h>
 #include <Poco/File.h>
+#include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
@@ -76,7 +77,9 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
+#include <Poco/Net/MessageHeader.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/PartHandler.h>
 #include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/SocketAddress.h>
 #include <Poco/Net/WebSocket.h>
@@ -176,6 +179,24 @@ private:
     tsqueue<std::string>& _queue;
 };
 
+/// Handles the filename part of the convert-to POST request payload.
+class ConvertToPartHandler : public Poco::Net::PartHandler
+{
+    std::vector<char>& _buffer;
+public:
+    ConvertToPartHandler(std::vector<char>& buffer)
+        : _buffer(buffer)
+    {
+    }
+
+    virtual void handlePart(const Poco::Net::MessageHeader& /*header*/, std::istream& stream) override
+    {
+        char c;
+        while (stream.get(c))
+            _buffer.push_back(c);
+    }
+};
+
 class RequestHandler: public HTTPRequestHandler
     /// Handle a WebSocket connection or a simple HTTP request.
 {
@@ -199,10 +220,28 @@ public:
 
         if(!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
         {
-            // The user might request a file to download
             StringTokenizer tokens(request.getURI(), "/");
-            if (tokens.count() == 4)
+            if (tokens.count() == 2 && tokens[1] == "convert-to")
             {
+                std::vector<char> buffer;
+                ConvertToPartHandler handler(buffer);
+                Poco::Net::HTMLForm form(request, request.stream(), handler);
+                std::string format;
+                if (form.has("format"))
+                    format = form.get("format");
+
+                if (!format.empty() && !buffer.empty())
+                {
+                    // TODO implement actual conversion
+                }
+
+                response.setStatus(HTTPResponse::HTTP_OK);
+                response.setContentLength(0);
+                response.send();
+            }
+            else if (tokens.count() == 4)
+            {
+                // The user might request a file to download
                 std::string dirPath = LOOLWSD::childRoot + "/" + tokens[1] + LOOLSession::jailDocumentURL + "/" + tokens[2];
                 std::string filePath = dirPath + "/" + tokens[3];
                 std::cout << Util::logPrefix() << "HTTP request for: " << filePath << std::endl;
