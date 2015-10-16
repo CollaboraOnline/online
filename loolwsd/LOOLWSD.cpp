@@ -262,7 +262,7 @@ public:
                 ws->setReceiveTimeout(0);
                 do
                 {
-                    char buffer[100000];
+                    char buffer[200000];
                     n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
                     if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
@@ -316,7 +316,7 @@ public:
             }
             catch (WebSocketException& exc)
             {
-                Application::instance().logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
+                Application::instance().logger().error(Util::logPrefix() + "RequestHandler::handleRequest(), WebSocketException: " + exc.message());
                 switch (exc.code())
                 {
                 case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
@@ -384,7 +384,7 @@ public:
         {
             do
             {
-                char buffer[100000];
+                char buffer[200000];
                 n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
@@ -399,7 +399,7 @@ public:
         }
         catch (WebSocketException& exc)
         {
-            Application::instance().logger().error(Util::logPrefix() + "WebSocketException: " + exc.message());
+            Application::instance().logger().error(Util::logPrefix() + "TestOutput::run(), WebSocketException: " + exc.message());
             _ws.close();
         }
     }
