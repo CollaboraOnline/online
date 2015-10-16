@@ -220,8 +220,8 @@ public:
 
         if(!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
         {
-            StringTokenizer tokens(request.getURI(), "/");
-            if (tokens.count() == 2 && tokens[1] == "convert-to")
+            StringTokenizer tokens(request.getURI(), "/?");
+            if (tokens.count() >= 2 && tokens[1] == "convert-to")
             {
                 std::vector<char> buffer;
                 ConvertToPartHandler handler(buffer);
@@ -239,7 +239,7 @@ public:
                 response.setContentLength(0);
                 response.send();
             }
-            else if (tokens.count() == 4)
+            else if (tokens.count() >= 4)
             {
                 // The user might request a file to download
                 std::string dirPath = LOOLWSD::childRoot + "/" + tokens[1] + LOOLSession::jailDocumentURL + "/" + tokens[2];
@@ -249,7 +249,11 @@ public:
                 if (file.exists())
                 {
                     response.set("Access-Control-Allow-Origin", "*");
-                    response.sendFile(filePath, "application/octet-stream");
+                    Poco::Net::HTMLForm form(request);
+                    std::string mimeType = "application/octet-stream";
+                    if (form.has("mime_type"))
+                        mimeType = form.get("mime_type");
+                    response.sendFile(filePath, mimeType);
                     File dir(dirPath);
                     dir.remove(true);
                 }
