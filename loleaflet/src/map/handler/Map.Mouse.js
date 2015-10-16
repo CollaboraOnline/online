@@ -41,6 +41,10 @@ L.Map.Mouse = L.Handler.extend({
 			// document not yet loaded
 			return;
 		}
+		if (this._map.slideShow && this._map.slideShow.fullscreen) {
+			this._map.slideShow._onUserInput(e);
+			return;
+		}
 		if (docLayer._graphicMarker && docLayer._graphicMarker.isDragged) {
 			return;
 		}

@@ -180,6 +180,10 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onKeyDown: function (e) {
+		if (this._map.slideShow && this._map.slideShow.fullscreen) {
+			this._map.slideShow._onUserInput(e);
+			return;
+		}
 		var docLayer = this._map._docLayer;
 		this.modifier = 0;
 		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;

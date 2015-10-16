@@ -826,3 +826,9 @@ div .leaflet-bar a:first-child {
 div .leaflet-bar a:last-child {
     border-radius: 0 4px 4px 0;
 }
+
+.slide-show {
+	background: #FFF;
+	display: block;
+	margin: 0 auto;
+}

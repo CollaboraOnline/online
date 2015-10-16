@@ -1041,7 +1041,7 @@ bool ChildProcessSession::downloadAs(const char *buffer, int length, StringToken
             filterOptions.size() == 0 ? NULL : filterOptions.c_str());
 
     sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
-            " port=" + std::to_string(LOOLWSD::portNumber) + " id=" + id);
+            " port=" + std::to_string(LOOLWSD::portNumber) + " id=" + id + " part=" + std::to_string(part));
     return true;
 }
 

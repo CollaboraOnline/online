@@ -276,7 +276,7 @@ L.TileLayer = L.GridLayer.extend({
 		var url = window.location.protocol + '//' + parser.hostname + ':' + command.port + '/' +
 			command.jail + '/' + command.dir + '/' + command.name;
 
-		if (command.id !== '-1') {
+		if (command.id === 'print') {
 			var isFirefox = typeof InstallTrigger !== 'undefined' || navigator.userAgent.search('Firefox') >= 0;
 			if (isFirefox) {
 				// the print dialog doesn't work well on firefox
@@ -285,6 +285,9 @@ L.TileLayer = L.GridLayer.extend({
 			else {
 				this._map.fire('filedownloadready', {url: url, name: name, id: command.id});
 			}
+		}
+		else if (command.id === 'slideshow') {
+			this._map.fire('slidedownloadready', {url: url, part: command.part});
 		}
 		else {
 			this._map._fileDownloader.src = url;

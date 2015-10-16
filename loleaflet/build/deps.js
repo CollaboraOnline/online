@@ -230,6 +230,11 @@ var deps = {
 		desc: 'Handles the print action (ctrl + P).'
 	},
 
+	SlideShow: {
+		src: ['map/handler/Map.SlideShow.js'],
+		desc: 'Creates a presentation slide show.'
+	},
+
 	MarkerDrag: {
 		src: ['layer/marker/Marker.Drag.js'],
 		deps: ['Marker'],

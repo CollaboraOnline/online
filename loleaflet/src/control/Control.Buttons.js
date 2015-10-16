@@ -94,6 +94,9 @@ L.Control.Buttons = L.Control.extend({
 				L.DomUtil.addClass(button.el.firstChild, 'leaflet-control-buttons-active');
 			}
 		}
+		else if (id === 'presentation') {
+			this._map.fire('fullscreen');
+		}
 	},
 
 	_onStateChange: function (e) {
