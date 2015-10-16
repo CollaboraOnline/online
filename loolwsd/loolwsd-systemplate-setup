@@ -31,6 +31,9 @@ cd / || exit 1
 	     var/cache/fontconfig \
 	     etc/fonts \
 	     etc/localtime \
+	     usr/lib/locale/en_US.utf8 \
+	     usr/lib/locale/C.UTF-8 \
+	     usr/lib/locale/locale_archive \
 	     usr/share/zoneinfo/* \
 	     usr/share/liblangtag \
 	     lib/*-linux-gnu/libnss* \
