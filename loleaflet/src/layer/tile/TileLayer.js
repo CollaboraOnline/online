@@ -370,7 +370,10 @@ L.TileLayer = L.GridLayer.extend({
 		var count = obj.searchResultSelection.length;
 		var results = [];
 		for (var i = 0; i < obj.searchResultSelection.length; i++) {
-			results.push(this._twipsRectangleToPixelBounds(obj.searchResultSelection[i]));
+			results.push({
+				part: obj.searchResultSelection[i].part,
+				rectangles: this._twipsRectanglesToPixelBounds(obj.searchResultSelection[i].rectangles)
+			});
 		}
 		this._map.fire('search', {originalPhrase: originalPhrase, count: count, results: results});
 	},

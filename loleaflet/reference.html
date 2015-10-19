@@ -1405,6 +1405,14 @@ var map = L.map('map', {
         Or backwards if specified.</td>
 	</tr>
 	<tr>
+		<td><code><b>searchAll</b>(
+			<nobr>&lt;String&gt; <i>phrase</i>,</nobr>
+			<nobr>&lt;Boolean&gt; <i>backward?</i> )</nobr>
+		</code></td>
+		<td><code>undefined</code></td>
+		<td>Searches for all occurences of the given phrase.</td>
+	</tr>
+	<tr>
 		<td><code><b>setPermission</b>(
 			<nobr>&lt;<a href="#documentpermission-values">DocumentPermissionValues</a>&gt; <i>documenPermission</i>)</nobr>
 		</code></td>
@@ -1667,8 +1675,28 @@ var map = L.map('map', {
 	</tr>
 	<tr>
 		<td><code><b>results</b></code></td>
-		<td><code><a href="#bounds">Bounds[]</a></code></td>
-		<td>An array of bounds representing the selections of the search results in the document.</td>
+		<td><code><a href="#search-result">SearchResult[]</a></code></td>
+		<td>An array representing the selections of the search results in the document.</td>
+	</tr>
+</table>
+
+<h3 id="search-result">SearchResult</h3>
+
+<table data-id='values'>
+	<tr>
+		<th class="width100">property</th>
+		<th class="width100">type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>part</b></code></td>
+		<td><code>Number</code></td>
+        <td>The part in which the selection lies.</td>
+	</tr>
+	<tr>
+		<td><code><b>rectangles</b></code></td>
+        <td><code><a href="#bounds">Bounds[]</a></code></td>
+        <td>Selection bounds in pixels.</td>
 	</tr>
 </table>
 
