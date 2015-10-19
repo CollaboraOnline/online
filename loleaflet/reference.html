@@ -282,7 +282,12 @@ var map = L.map('map', {
 		<td><code><span class="literal">false</span></code></td>
 		<td>Whether the document is read-only.</td>
 	</tr>
-
+	<tr>
+		<td><code><b>print</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">false</span></code></td>
+		<td>Whether the print handler is active (for Chrome).</td>
+	</tr>
 	<tr>
 		<td><code><b>dragging</b></code></td>
 		<td><code>Boolean</code></td>
@@ -1697,6 +1702,21 @@ var map = L.map('map', {
 		<td><code><b>rectangles</b></code></td>
         <td><code><a href="#bounds">Bounds[]</a></code></td>
         <td>Selection bounds in pixels.</td>
+	</tr>
+</table>
+
+<h3 id="print-event">PrintEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>url</b></code></td>
+        <td><code>String</code></td>
+		<td>An url for the PDF exported document.</td>
 	</tr>
 </table>
 

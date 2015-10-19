@@ -238,6 +238,10 @@ CommandValues:
             + e.commandName = '.uno:StyleAplly', etc
             + e.commandValues = a JSON mapping of all possible values for the command
 
+Print:
+    - events
+        map.on('print', function (e) {}) where
+            + e.url = file download url
 Testing
 -------
     - to simulate an editing session and to get the tile loading times
