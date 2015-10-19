@@ -56,32 +56,6 @@ describe('LOLeaflet test', function () {
 			map.toggleCommandState('Bold')
 		});
 
-		it('Get document size', function () {
-			var size = map.getDocSize();
-			expect(Math.round(size.x)).to.be(1064);
-			expect(Math.round(size.y)).to.be(2946);
-		});
-
-		it('Get document type', function () {
-			expect(map.getDocType()).to.be('text');
-		});
-
-		it('Check pages', function () {
-			expect(map.getNumberOfPages()).to.be(2);
-			expect(map.getNumberOfParts()).to.be(1);
-			expect(map.getCurrentPageNumber()).to.be(0);
-		});
-
-		it('Go to the next page', function (done) {
-			map.once('pagenumberchanged', function (e) {
-				expect(e.currentPage).to.be(1);
-				expect(e.pages).to.be(2);
-				expect(e.docType).to.be('text');
-				done();
-			});
-			map.goToPage(1);
-		});
-
 		it('Search backwards', function (done) {
 			map.once('scrollto', function (e) {
 				expect(e.x).to.be(0);
@@ -100,7 +74,6 @@ describe('LOLeaflet test', function () {
 			});
 			map.search('something-not-found');
 		});
-
 
 		it('Scroll to the top', function (done) {
 			map.once('updatescrolloffset', function (e) {
