@@ -278,7 +278,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (command.id !== '-1') {
 			var isFirefox = typeof InstallTrigger !== 'undefined' || navigator.userAgent.search('Firefox') >= 0;
-			if (isFirefox) {
+			if (isFirefox || this._map.options.print === false) {
 				// the print dialog doesn't work well on firefox
 				this._map.fire('print', {url: url});
 			}
