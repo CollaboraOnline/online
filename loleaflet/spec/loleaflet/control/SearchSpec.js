@@ -1,7 +1,6 @@
 describe('Search', function () {
 	this.timeout(10000);
 	var map;
-    var mapSize;
 
 	before(function () {
 		var htmlPath = window.location.pathname;
@@ -25,7 +24,6 @@ describe('Search', function () {
 			map.on('statusindicator', function (e) {
 				if (e.statusType === 'alltilesloaded') {
 					map.off('statusindicator');
-                    mapSize = map.getSize();
 					done();
 				}
 			});
