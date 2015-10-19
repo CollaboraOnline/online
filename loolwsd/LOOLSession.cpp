@@ -106,7 +106,8 @@ LOOLSession::LOOLSession(std::shared_ptr<WebSocket> ws, Kind kind) :
 LOOLSession::~LOOLSession()
 {
     std::cout << Util::logPrefix() << "LOOLSession dtor this=" << this << " " << _kind << std::endl;
-    Util::shutdownWebSocket(*_ws);
+    if (_ws)
+        Util::shutdownWebSocket(*_ws);
 }
 
 void LOOLSession::sendTextFrame(const std::string& text)
@@ -123,10 +124,12 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
     if (length > 1000)
     {
         std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-        _ws->sendFrame(nextmessage.data(), nextmessage.size());
+        if (_ws)
+            _ws->sendFrame(nextmessage.data(), nextmessage.size());
     }
 
-    _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+    if (_ws)
+        _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
@@ -149,7 +152,8 @@ MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind k
 MasterProcessSession::~MasterProcessSession()
 {
     std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer.lock().get() << std::endl;
-    Util::shutdownWebSocket(*_ws);
+    if (_ws)
+        Util::shutdownWebSocket(*_ws);
     auto peer = _peer.lock();
     if (_kind == Kind::ToClient && peer)
     {
