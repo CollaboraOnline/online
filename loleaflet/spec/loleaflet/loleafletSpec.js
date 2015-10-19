@@ -47,36 +47,6 @@ describe('LOLeaflet test', function () {
 			});
 		});
 
-		it('Set permission to "readonly"', function (done) {
-			map.once('updatepermission', function (e) {
-				expect(e.perm).to.be('readonly');
-				done();
-			});
-			map.setPermission('readonly');
-		});
-
-		it('Set permission to "edit"', function (done) {
-			map.once('updatepermission', function (e) {
-				expect(e.perm).to.be('edit');
-				done();
-			});
-			map.setPermission('edit');
-		});
-
-		it('Set permission to "view"', function (done) {
-			map.once('updatepermission', function (e) {
-				expect(e.perm).to.be('view');
-				done();
-			});
-			map.setPermission('view');
-		});
-
-		it('Place the coursor by clicking', function () {
-			map._docLayer._postMouseEvent('buttondown', 2500, 3515, 1);
-			map._docLayer._postMouseEvent('buttonup', 2500, 3515, 1);
-			map.setPermission('edit');
-		});
-
 		it('Make a word Bold', function (done) {
 			map.once('commandstatechanged', function (e) {
 				expect(e.commandName).to.be('.uno:Bold');
