@@ -87,6 +87,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
 		this._previewInvalidations = [];
+		this._partPageRectanglesTwips = [];
+		this._partPageRectanglesPixels = [];
 	},
 
     onAdd: function (map) {
