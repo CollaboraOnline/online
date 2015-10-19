@@ -1,7 +1,10 @@
 L.Map.include({
-	search: function (text, backward) {
+	search: function (text, backward, all) {
 		if (backward === undefined) {
 			backward = false;
+		}
+		if (all === undefined) {
+			all = 0;
 		}
 
 		var searchCmd = {
@@ -29,7 +32,14 @@ L.Map.include({
 		searchCmd['SearchItem.SearchStartPointY'] = {};
 		searchCmd['SearchItem.SearchStartPointY'].type = 'long';
 		searchCmd['SearchItem.SearchStartPointY'].value = topLeftTwips.y;
+		searchCmd['SearchItem.Command'] = {};
+		searchCmd['SearchItem.Command'].type = 'long';
+		searchCmd['SearchItem.Command'].value = all;
 		L.Socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
+	},
+
+	searchAll: function (text, backward) {
+		this.search(text, backward, 1);
 	},
 
 	resetSelection: function () {
