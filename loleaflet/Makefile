@@ -17,7 +17,7 @@ dist: all
 	rm -rf loleaflet-$(VERSION)
 	mkdir loleaflet-$(VERSION)
 	cp README loleaflet-$(VERSION)
-	tar cf - dist plugins/draw-$(DRAW_VERSION)/dist debug/document src/scrollbar | (cd loleaflet-$(VERSION) && tar xf -)
+	tar cf - reference.html dist plugins/draw-$(DRAW_VERSION)/dist debug/document src/scrollbar | (cd loleaflet-$(VERSION) && tar xf -)
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
 	rm -rf loleaflet-$(VERSION)
 
