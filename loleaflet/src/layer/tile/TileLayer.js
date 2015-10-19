@@ -376,7 +376,7 @@ L.TileLayer = L.GridLayer.extend({
 		var results = [];
 		for (var i = 0; i < obj.searchResultSelection.length; i++) {
 			results.push({
-				part: obj.searchResultSelection[i].part,
+				part: parseInt(obj.searchResultSelection[i].part),
 				rectangles: this._twipsRectanglesToPixelBounds(obj.searchResultSelection[i].rectangles)
 			});
 		}
