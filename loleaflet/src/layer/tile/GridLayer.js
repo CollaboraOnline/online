@@ -773,6 +773,19 @@ L.GridLayer = L.Layer.extend({
 				this._twipsToPixels(bottomRightTwips));
 	},
 
+	_twipsRectanglesToPixelBounds: function (strRectangles) {
+		// used when we have more rectangles
+		strRectangles = strRectangles.split(';');
+		var boundsList = [];
+		for (var i = 0; i < strRectangles.length; i++) {
+			var bounds = this._twipsRectangleToPixelBounds(strRectangles[i]);
+			if (bounds) {
+				boundsList.push(bounds);
+			}
+		}
+		return boundsList;
+	},
+
 	_noTilesToLoad: function () {
 		for (var key in this._tiles) {
 			if (!this._tiles[key].loaded) { return false; }
