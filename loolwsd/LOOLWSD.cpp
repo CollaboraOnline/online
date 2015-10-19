@@ -182,15 +182,27 @@ private:
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public Poco::Net::PartHandler
 {
+    std::string& _filename;
     std::vector<char>& _buffer;
 public:
-    ConvertToPartHandler(std::vector<char>& buffer)
-        : _buffer(buffer)
+    ConvertToPartHandler(std::string& filename, std::vector<char>& buffer)
+        : _filename(filename),
+        _buffer(buffer)
     {
     }
 
-    virtual void handlePart(const Poco::Net::MessageHeader& /*header*/, std::istream& stream) override
+    virtual void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream) override
     {
+        std::string disp;
+        Poco::Net::NameValueCollection params;
+        if (header.has("Content-Disposition"))
+        {
+            std::string cd = header.get("Content-Disposition");
+            Poco::Net::MessageHeader::splitParameters(cd, disp, params);
+        }
+        if (params.has("filename"))
+            _filename = params.get("filename");
+
         char c;
         while (stream.get(c))
             _buffer.push_back(c);
@@ -223,8 +235,9 @@ public:
             StringTokenizer tokens(request.getURI(), "/?");
             if (tokens.count() >= 2 && tokens[1] == "convert-to")
             {
+                std::string filename;
                 std::vector<char> buffer;
-                ConvertToPartHandler handler(buffer);
+                ConvertToPartHandler handler(filename, buffer);
                 Poco::Net::HTMLForm form(request, request.stream(), handler);
                 std::string format;
                 if (form.has("format"))
