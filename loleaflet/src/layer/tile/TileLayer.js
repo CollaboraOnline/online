@@ -274,8 +274,9 @@ L.TileLayer = L.GridLayer.extend({
 	_onDownloadAsMsg: function (textMsg) {
 		var command = L.Socket.parseServerCmd(textMsg);
 		var parser = document.createElement('a');
+		var protocol = window.location.protocol === 'file:' ? 'http:' : window.location.protocol;
 		parser.href = this._map.options.server;
-		var url = window.location.protocol + '//' + parser.hostname + ':' + command.port + '/' +
+		var url = protocol + '//' + parser.hostname + ':' + command.port + '/' +
 			command.jail + '/' + command.dir + '/' + command.name;
 
 		if (command.id !== '-1') {
