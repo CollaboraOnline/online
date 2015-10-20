@@ -31,16 +31,17 @@ L.Map.include({
 		return this._docLayer._toolbarCommandValues[command];
 	},
 
-	downloadAs: function (name, format, options) {
+	downloadAs: function (name, format, options, id) {
 		if (format === undefined || format === null) {
 			format = '';
 		}
 		if (options === undefined || options === null) {
 			options = '';
 		}
+		id = id || -1; // not a special download
 		L.Socket.sendMessage('downloadas ' +
 			'name=' + name + ' ' +
-			'id=-1 ' + // not a special download
+			'id=' + id + ' ' +
 			'format=' + format + ' ' +
 			'options=' + options);
 	},
