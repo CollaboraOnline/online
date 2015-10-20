@@ -22,6 +22,7 @@ L.Socket = {
 	close: function () {
 		this.socket.onerror = function () {};
 		this.socket.onclose = function () {};
+		this.socket.onmessage = function () {};
 		this.socket.close();
 	},
 

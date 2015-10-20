@@ -44,7 +44,12 @@ L.GridLayer = L.Layer.extend({
 		this._container = null;
 		this._tileZoom = null;
 		clearTimeout(this._preFetchIdle);
+		clearTimeout(this._previewInvalidator);
 		clearInterval(this._tilesPreFetcher);
+
+		if (this._selections) {
+			this._map.removeLayer(this._selections);
+		}
 		if (this._cursorMarker) {
 			this._cursorMarker.remove();
 		}
