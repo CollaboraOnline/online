@@ -98,6 +98,8 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/ThreadLocal.h>
 #include <Poco/NamedMutex.h>
 #include <Poco/FileStream.h>
+#include <Poco/TemporaryFile.h>
+#include <Poco/StreamCopier.h>
 
 
 #include "LOOLProtocol.hpp"
@@ -183,16 +185,15 @@ private:
 class ConvertToPartHandler : public Poco::Net::PartHandler
 {
     std::string& _filename;
-    std::vector<char>& _buffer;
 public:
-    ConvertToPartHandler(std::string& filename, std::vector<char>& buffer)
-        : _filename(filename),
-        _buffer(buffer)
+    ConvertToPartHandler(std::string& filename)
+        : _filename(filename)
     {
     }
 
     virtual void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream) override
     {
+        // Extract filename and put it to a temporary directory.
         std::string disp;
         Poco::Net::NameValueCollection params;
         if (header.has("Content-Disposition"))
@@ -200,12 +201,19 @@ public:
             std::string cd = header.get("Content-Disposition");
             Poco::Net::MessageHeader::splitParameters(cd, disp, params);
         }
-        if (params.has("filename"))
-            _filename = params.get("filename");
+        if (!params.has("filename"))
+            return;
 
-        char c;
-        while (stream.get(c))
-            _buffer.push_back(c);
+        Path tempPath = Path::forDirectory(Poco::TemporaryFile().tempName() + Path::separator());
+        File(tempPath).createDirectories();
+        tempPath.setFileName(params.get("filename"));
+        _filename = tempPath.toString();
+
+        // Copy the stream to _filename.
+        std::ofstream fileStream;
+        fileStream.open(_filename);
+        Poco::StreamCopier::copyStream(stream, fileStream);
+        fileStream.close();
     }
 };
 
@@ -235,17 +243,20 @@ public:
             StringTokenizer tokens(request.getURI(), "/?");
             if (tokens.count() >= 2 && tokens[1] == "convert-to")
             {
-                std::string filename;
-                std::vector<char> buffer;
-                ConvertToPartHandler handler(filename, buffer);
+                std::string fromPath;
+                ConvertToPartHandler handler(fromPath);
                 Poco::Net::HTMLForm form(request, request.stream(), handler);
                 std::string format;
                 if (form.has("format"))
                     format = form.get("format");
 
-                if (!format.empty() && !buffer.empty())
+                if (!fromPath.empty() && !format.empty())
                 {
                     // TODO implement actual conversion
+
+                    Path tempDirectory(fromPath);
+                    tempDirectory.setFileName("");
+                    File(tempDirectory).remove(/*recursive=*/true);
                 }
 
                 response.setStatus(HTTPResponse::HTTP_OK);
