@@ -30,6 +30,7 @@
 #include <Poco/Types.h>
 
 #include "TileCache.hpp"
+#include "tsqueue.h"
 
 // We have three kinds of Websocket sessions
 // 1) Between the master loolwsd server to the end-user LOOL client
@@ -117,6 +118,12 @@ public:
 
     virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
+    /**
+     * Return the URL of the saved-as document when it's ready. If called
+     * before it's ready, the call blocks till then.
+     */
+    std::string getSaveAs();
+
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
@@ -151,6 +158,8 @@ private:
     static std::mutex _rngMutex;
     int _curPart;
     int _loadPart;
+    /// Kind::ToClient instances store URLs of completed 'save as' documents.
+    tsqueue<std::string> _saveAsQueue;
 };
 
 class ChildProcessSession final : public LOOLSession
