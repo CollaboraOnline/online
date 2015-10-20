@@ -184,6 +184,20 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             {
                 return true;
             }
+
+            if (tokens.count() == 2 && tokens[0] == "saveas:")
+            {
+                std::string url;
+                if (!getTokenString(tokens[1], "url", url))
+                    return true;
+
+                if (peer)
+                    // Save as completed, inform the other (Kind::ToClient)
+                    // MasterProcessSession about it.
+                    peer->_saveAsQueue.put(url);
+
+                return true;
+            }
         }
 
         if (_kind == Kind::ToPrisoner && peer && peer->_tileCache)
@@ -484,6 +498,11 @@ bool MasterProcessSession::getPartPageRectangles(const char *buffer, int length)
         dispatchChild();
     forwardToPeer(buffer, length);
     return true;
+}
+
+std::string MasterProcessSession::getSaveAs()
+{
+    return _saveAsQueue.get();
 }
 
 void MasterProcessSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
@@ -1203,6 +1222,8 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
     _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
             format.size() == 0 ? NULL :format.c_str(),
             filterOptions.size() == 0 ? NULL : filterOptions.c_str());
+
+    sendTextFrame("saveas: url=" + url);
 
     return true;
 }

@@ -181,3 +181,8 @@ nextmessage: size=<upperlimit>
     messages that can be "large".) Once we depend on Poco 1.6.1, where
     one doesn't need to use a pre-allocated buffer when receiving
     WebSocket messages, this will go away.
+
+saveas: url=<url>
+
+    <url> is a URL of the destination, encoded. Sent from the child to the
+    parent after a saveAs() completed.
