@@ -253,15 +253,18 @@ public:
                 if (!fromPath.empty() && !format.empty())
                 {
                     // TODO implement actual conversion
-
-                    Path tempDirectory(fromPath);
-                    tempDirectory.setFileName("");
-                    File(tempDirectory).remove(/*recursive=*/true);
+                }
+                else
+                {
+                    response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+                    response.setContentLength(0);
+                    response.send();
                 }
 
-                response.setStatus(HTTPResponse::HTTP_OK);
-                response.setContentLength(0);
-                response.send();
+                // Clean up the temporary directory the HTMLForm ctor created.
+                Path tempDirectory(fromPath);
+                tempDirectory.setFileName("");
+                File(tempDirectory).remove(/*recursive=*/true);
             }
             else if (tokens.count() >= 4)
             {
