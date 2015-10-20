@@ -246,9 +246,6 @@ L.Map = L.Evented.extend({
 		}
 
 		if (this._docLayer) {
-			if (this._docLayer._selections) {
-				this.removeLayer(this._docLayer._selections);
-			}
 			this.removeLayer(this._docLayer);
 		}
 		this.removeControls();
