@@ -192,9 +192,19 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
                     return true;
 
                 if (peer)
+                {
                     // Save as completed, inform the other (Kind::ToClient)
                     // MasterProcessSession about it.
+
+                    const std::string filePrefix("file:///");
+                    if (url.find(filePrefix) == 0)
+                    {
+                        // Rewrite file:// URLs, as they are visible to the outside world.
+                        Path path(MasterProcessSession::getJailPath(_childId), url.substr(filePrefix.length()));
+                        url = filePrefix + path.toString().substr(1);
+                    }
                     peer->_saveAsQueue.put(url);
+                }
 
                 return true;
             }
