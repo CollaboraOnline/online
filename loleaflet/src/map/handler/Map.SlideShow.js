@@ -41,7 +41,7 @@ L.Map.SlideShow = L.Handler.extend({
 				this._onFullScreenChange, this);
 
 		this.fullscreen = true;
-		L.Socket.sendMessage('downloadas name=slideshow.svg id=slideshow format=svg options=');
+		this._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
 	},
 
 	_onFullScreenChange: function (e) {
