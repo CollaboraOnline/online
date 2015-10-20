@@ -20,6 +20,10 @@ describe('Permissions', function () {
 		});
 	});
 
+	afterEach(function () {
+		map.off('statusindicator');
+	});
+
 	after(function () {
 		map.remove();
 	});
@@ -28,7 +32,6 @@ describe('Permissions', function () {
 		it('Initialize the tile layer', function (done) {
 			map.on('statusindicator', function (e) {
 				if (e.statusType === 'loleafletloaded') {
-					map.off('statusindicator');
 					done();
 				}
 			});

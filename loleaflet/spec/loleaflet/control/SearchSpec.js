@@ -15,6 +15,10 @@ describe('Search', function () {
 		});
 	});
 
+	afterEach(function () {
+		map.off('statusindicator');
+	});
+
 	after(function () {
 		map.remove();
 	});
@@ -23,7 +27,6 @@ describe('Search', function () {
 		it('All tiles loaded', function (done) {
 			map.on('statusindicator', function (e) {
 				if (e.statusType === 'alltilesloaded') {
-					map.off('statusindicator');
 					done();
 				}
 			});
