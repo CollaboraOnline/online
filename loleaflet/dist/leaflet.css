@@ -703,6 +703,7 @@ a.leaflet-control-buttons:hover:first-child {
 	background: #DFDFDF;
 	position: absolute;
 	top: 70px;
+    left: 0px;
 	bottom: 0px;
 	max-width: 195px;
 	overflow: hidden;
