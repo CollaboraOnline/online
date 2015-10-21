@@ -1,3 +1,5 @@
+SUBDIRS = test
+
 bin_PROGRAMS = loolwsd
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup

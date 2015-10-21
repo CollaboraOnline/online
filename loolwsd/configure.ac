@@ -46,6 +46,10 @@ AC_ARG_WITH([libpng-libs],
             AS_HELP_STRING([--with-libpng-libs=<path>],
                            [Path the "lib" directory with the libpng libraries]))
 
+AC_ARG_ENABLE([tests],
+            AS_HELP_STRING([--disable-tests],
+                           [Build and run unit tests]))
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -95,6 +99,9 @@ AS_IF([test `uname -s` = Linux],
                       [],
                       [AC_MSG_ERROR([libcap not available?])])])
 
+AS_IF([test "$enable_tests" != "no"],
+      [PKG_CHECK_MODULES([CPPUNIT], [cppunit])])
+
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX}"
 
 AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
@@ -141,7 +148,10 @@ AC_DEFINE_UNQUOTED([LOOLWSD_CACHEDIR],["$LOOLWSD_CACHEDIR"],[Cache folder])
 AC_SUBST(LOOLWSD_CACHEDIR)
 
 AC_CONFIG_FILES([Makefile
+                 test/Makefile
                  loolwsd.spec])
 AC_OUTPUT
 
 AC_LANG_POP
+
+dnl vim:set shiftwidth=4 softtabstop=4 expandtab:

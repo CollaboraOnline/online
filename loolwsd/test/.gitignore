@@ -1,0 +1,9 @@
+# Autofoo
+/.deps
+/Makefile
+/Makefile.in
+*.log
+*.trs
+
+*.o
+test
