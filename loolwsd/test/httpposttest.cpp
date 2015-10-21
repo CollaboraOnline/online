@@ -30,7 +30,7 @@ class HTTPPostTest : public CPPUNIT_NS::TestFixture
 
 void HTTPPostTest::testConvertTo()
 {
-    Poco::URI uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER) + "/convert-to");
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER));
     Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/convert-to");
