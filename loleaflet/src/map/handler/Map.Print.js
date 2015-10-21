@@ -3,7 +3,7 @@
  */
 
 L.Map.mergeOptions({
-	print: true
+	printHandler: true
 });
 
 L.Map.Print = L.Handler.extend({
@@ -59,4 +59,4 @@ L.Map.Print = L.Handler.extend({
 	}
 });
 
-L.Map.addInitHook('addHandler', 'print', L.Map.Print);
+L.Map.addInitHook('addHandler', 'printHandler', L.Map.Print);

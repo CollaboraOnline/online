@@ -46,6 +46,10 @@ L.Map.include({
 			'options=' + options);
 	},
 
+	print: function () {
+		this.downloadAs('print.pdf', 'pdf', null, 'print');
+	},
+
 	saveAs: function (url, format, options) {
 		if (format === undefined || format === null) {
 			format = '';
@@ -80,5 +84,9 @@ L.Map.include({
 			}
 			L.Socket.sendMessage('uno ' + unoState);
 		}
+	},
+
+	insertFile: function (file) {
+		this.fire('insertfile', {file: file});
 	}
 });

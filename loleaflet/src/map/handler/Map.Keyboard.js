@@ -284,7 +284,7 @@ L.Map.Keyboard = L.Handler.extend({
 				L.Socket.sendMessage('uno .uno:LeftPara');
 				break;
 			case 80: // p
-				this._map.downloadAs('print.pdf', 'pdf', null, 'print');
+				this._map.print();
 				break;
 			case 82: // r
 				L.Socket.sendMessage('uno .uno:RightPara');
