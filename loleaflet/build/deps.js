@@ -235,6 +235,11 @@ var deps = {
 		desc: 'Creates a presentation slide show.'
 	},
 
+	FileInserter: {
+		src: ['map/handler/Map.FileInserter.js'],
+		desc: 'Handles inserting a file (image) in the document.'
+	},
+
 	MarkerDrag: {
 		src: ['layer/marker/Marker.Drag.js'],
 		deps: ['Marker'],
