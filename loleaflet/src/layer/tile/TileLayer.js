@@ -195,6 +195,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('error:')) {
 			this._onErrorMsg(textMsg);
 		}
+		else if (textMsg.startsWith('getchildid:')) {
+			this._onGetChildIdMsg(textMsg);
+		}
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
 		}
@@ -300,6 +303,11 @@ L.TileLayer = L.GridLayer.extend({
 	_onErrorMsg: function (textMsg) {
 		var command = L.Socket.parseServerCmd(textMsg);
 		this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind});
+	},
+
+	_onGetChildIdMsg: function (textMsg) {
+		var command = L.Socket.parseServerCmd(textMsg);
+		this._map.fire('childid', {id: command.id});
 	},
 
 	_onGraphicSelectionMsg: function (textMsg) {
