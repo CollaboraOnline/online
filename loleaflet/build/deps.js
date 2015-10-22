@@ -260,6 +260,13 @@ var deps = {
 		desc: 'Search control with two buttons (previous / next).'
 	},
 
+	ControlInsertImg: {
+		src: ['control/Control.js',
+		      'control/Control.InsertImg.js'],
+		heading: 'Controls',
+		desc: 'Handles inserting an image in the document.'
+	},
+
 	ControlParts: {
 		src: ['control/Control.js',
 		      'control/Control.Parts.js'],
