@@ -319,7 +319,9 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] != "canceltiles" &&
              tokens[0] != "commandvalues" &&
              tokens[0] != "downloadas" &&
+             tokens[0] != "getchildid" &&
              tokens[0] != "gettextselection" &&
+             tokens[0] != "insertfile" &&
              tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
@@ -735,7 +737,9 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         // i.e. need to be handled in a child process.
 
         assert(tokens[0] == "downloadas" ||
+               tokens[0] == "getchildid" ||
                tokens[0] == "gettextselection" ||
+               tokens[0] == "insertfile" ||
                tokens[0] == "key" ||
                tokens[0] == "mouse" ||
                tokens[0] == "uno" ||
@@ -748,13 +752,21 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         {
             _loKitDocument->pClass->setPart(_loKitDocument, _clientPart);
         }
-        if (tokens[0] == "downloadas")
+        if (tokens[0] == "getchildid")
+        {
+            return getChildId();
+        }
+        else if (tokens[0] == "downloadas")
         {
             return downloadAs(buffer, length, tokens);
         }
         else if (tokens[0] == "gettextselection")
         {
             return getTextSelection(buffer, length, tokens);
+        }
+        else if (tokens[0] == "insertfile")
+        {
+            return insertFile(buffer, length, tokens);
         }
         else if (tokens[0] == "key")
         {
@@ -1072,6 +1084,12 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
     return true;
 }
 
+bool ChildProcessSession::getChildId()
+{
+    sendTextFrame("getchildid: id=" + _childId);
+    return true;
+}
+
 bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string mimeType;
@@ -1086,6 +1104,32 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
     char *textSelection = _loKitDocument->pClass->getTextSelection(_loKitDocument, mimeType.c_str(), NULL);
 
     sendTextFrame("textselectioncontent: " + std::string(textSelection));
+    return true;
+}
+
+bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+{
+    std::string name, type;
+
+    if (tokens.count() != 3 ||
+        !getTokenString(tokens[1], "name", name),
+        !getTokenString(tokens[2], "type", type))
+    {
+        sendTextFrame("error: cmd=insertfile kind=syntax");
+        return false;
+    }
+
+    if (type == "graphic") {
+        std::string fileName = "file://" + jailDocumentURL + "/insertfile/" + name;
+        std::string command = ".uno:InsertGraphic";
+        std::string arguments = "{"
+            "\"FileName\":{"
+                "\"type\":\"string\","
+                "\"value\":\"" + fileName + "\""
+            "}}";
+        _loKitDocument->pClass->postUnoCommand(_loKitDocument, command.c_str(), arguments.c_str());
+    }
+
     return true;
 }
 

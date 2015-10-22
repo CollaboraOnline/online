@@ -185,7 +185,9 @@ public:
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     bool downloadAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool getChildId();
     bool getTextSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool insertFile(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens);

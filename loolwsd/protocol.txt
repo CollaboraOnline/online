@@ -22,9 +22,18 @@ downloadas downloadas name=<fileName> id=<id> format=<document format> options=<
     Exports the current document to the desired format and returns a download URL
     The id identifies the request on the client.
 
+getchildid
+
+    Requests the child id so that it knows where the files needs to be sent when it is
+    inserted in the document
+
 gettextselection mimetype=<mimeType>
 
     Request selection's content
+
+insertfile name=<name> type=<type>
+
+    Inserts the file with the name <name> into the document, we currently support type = 'graphic'
 
 invalidatetiles part=<partNumber> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 
@@ -98,6 +107,10 @@ error: cmd=<command> kind=<kind>
     <command> is the command part of the corresponding client->server
     message that caused the error. <kind> is some single-word
     classification
+
+getchildid: id=<id>
+
+    Returns the child id
 
 invalidate: part=<partNumber> x=<x> y=<y> width=<width> height=<height>
 
