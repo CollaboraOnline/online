@@ -201,6 +201,7 @@ public:
             std::string cd = header.get("Content-Disposition");
             Poco::Net::MessageHeader::splitParameters(cd, disp, params);
         }
+
         if (!params.has("filename"))
             return;
 
@@ -285,6 +286,32 @@ public:
                 Path tempDirectory(fromPath);
                 tempDirectory.setFileName("");
                 File(tempDirectory).remove(/*recursive=*/true);
+            }
+            else if (tokens.count() >= 2 && tokens[1] == "insertfile")
+            {
+                response.set("Access-Control-Allow-Origin", "*");
+                response.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+                std::string tmpPath;
+                ConvertToPartHandler handler(tmpPath);
+                Poco::Net::HTMLForm form(request, request.stream(), handler);
+                if (form.has("childid") && form.has("name"))
+                {
+                    std::string dirPath = LOOLWSD::childRoot + Path::separator() + form.get("childid") + LOOLSession::jailDocumentURL +
+                        Path::separator() + "insertfile";
+                    File(dirPath).createDirectory();
+                    std::string fileName = dirPath + Path::separator() + form.get("name");
+                    File(tmpPath).moveTo(fileName);
+
+                    response.setStatus(HTTPResponse::HTTP_OK);
+                    response.send();
+                }
+                else
+                {
+                    response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+                    response.send();
+                }
             }
             else if (tokens.count() >= 4)
             {
