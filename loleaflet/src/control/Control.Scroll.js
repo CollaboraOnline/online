@@ -69,7 +69,12 @@ L.Control.Scroll = L.Control.extend({
 		if (e.y < 0) {
 			y = '-=' + Math.abs(e.y);
 		}
-		$('.scroll-container').mCustomScrollbar('scrollTo', [y, '+=0']);
+		e.x *= (-1);
+		var x = '+=' + e.x;
+		if (e.x < 0) {
+			x = '-=' + Math.abs(e.x);
+		}
+		$('.scroll-container').mCustomScrollbar('scrollTo', [y, x]);
 	},
 
 	_onUpdateSize: function (e) {
