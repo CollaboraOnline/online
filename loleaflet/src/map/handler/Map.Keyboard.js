@@ -247,7 +247,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_handleCtrlCommand: function (e) {
-		if (e.type !== 'keydown') {
+		if (e.type !== 'keydown' && e.originalEvent.key !== 'c') {
 			e.originalEvent.preventDefault();
 			return;
 		};
@@ -302,7 +302,7 @@ L.Map.Keyboard = L.Handler.extend({
 				L.Socket.sendMessage('uno .uno:InsertSoftHyphen');
 				break;
 		}
-		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86) {
+		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.key !== 'c') {
 			// not copy or paste
 			e.originalEvent.preventDefault();
 		}
