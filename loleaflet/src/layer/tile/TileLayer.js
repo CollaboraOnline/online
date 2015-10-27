@@ -644,15 +644,45 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update dragged text selection.
 	_onSelectionHandleDrag: function (e) {
-		var aPos = this._latLngToTwips(e.target.getLatLng());
-
 		if (e.type === 'drag') {
 			e.target.isDragged = true;
+
+			// This is rather hacky, but it seems to be the only way to make the
+			// marker follow the mouse cursor if the document is autoscrolled under
+			// us. (This can happen when we're changing the selection if the cursor
+			// moves somewhere that is considered off screen.)
+
+			// Onscreen position of the cursor, i.e. relative to the browser window
+			var boundingrect = e.target._icon.getBoundingClientRect();
+			var cursorPos = L.point(boundingrect.x - e.target._icon.offsetLeft,
+					      boundingrect.y - e.target._icon.offsetTop);
+
+			var expectedPos = L.point(e.originalEvent.pageX, e.originalEvent.pageY);
+
+			// If the map has been scrolled, but the cursor hasn't been updated yet, then
+			// the current mouse position differs.
+			// In reality there should be a small offset between the top-left of the cursor,
+			// and where the mouse was when the cursor was selected - this is accounted
+			// for by the offset in Draggable, however that gets lost once the map
+			// starts scrolling.
+			// TODO: decide whether we really want to take account of the offset (this
+			// will be even messier, and probably require modifying Draggable too).
+			if (!expectedPos.equals(cursorPos)) {
+				var correction = expectedPos.subtract(cursorPos);
+
+				e.target.dragging._draggable._startPoint = e.target.dragging._draggable._startPoint.add(correction);
+				e.target.dragging._draggable._startPos = e.target.dragging._draggable._startPos.add(correction);
+				e.target.dragging._draggable._newPos = e.target.dragging._draggable._newPos.add(correction);
+
+				e.target.dragging._draggable._updatePosition();
+			}
 		}
 		if (e.type === 'dragend') {
 			e.target.isDragged = false;
 			this._textArea.focus();
 		}
+
+		var aPos = this._latLngToTwips(e.target.getLatLng());
 
 		if (this._selectionHandles.start === e.target) {
 			this._postSelectTextEvent('start', aPos.x, aPos.y);
