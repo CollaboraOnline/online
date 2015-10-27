@@ -321,6 +321,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
              tokens[0] != "downloadas" &&
              tokens[0] != "getchildid" &&
              tokens[0] != "gettextselection" &&
+             tokens[0] != "paste" &&
              tokens[0] != "insertfile" &&
              tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
@@ -739,6 +740,7 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         assert(tokens[0] == "downloadas" ||
                tokens[0] == "getchildid" ||
                tokens[0] == "gettextselection" ||
+               tokens[0] == "paste" ||
                tokens[0] == "insertfile" ||
                tokens[0] == "key" ||
                tokens[0] == "mouse" ||
@@ -763,6 +765,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         else if (tokens[0] == "gettextselection")
         {
             return getTextSelection(buffer, length, tokens);
+        }
+        else if (tokens[0] == "paste")
+        {
+            return paste(buffer, length, tokens);
         }
         else if (tokens[0] == "insertfile")
         {
@@ -1104,6 +1110,24 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
     char *textSelection = _loKitDocument->pClass->getTextSelection(_loKitDocument, mimeType.c_str(), NULL);
 
     sendTextFrame("textselectioncontent: " + std::string(textSelection));
+    return true;
+}
+
+bool ChildProcessSession::paste(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+{
+    std::string mimeType;
+    std::string data;
+
+    if (tokens.count() < 3 || !getTokenString(tokens[1], "mimetype", mimeType) || !getTokenString(tokens[2], "data", data))
+    {
+        sendTextFrame("error: cmd=paste kind=syntax");
+        return false;
+    }
+
+    data = Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).substr(strlen("data="));
+
+    _loKitDocument->pClass->paste(_loKitDocument, mimeType.c_str(), data.c_str(), std::strlen(data.c_str()));
+
     return true;
 }
 
