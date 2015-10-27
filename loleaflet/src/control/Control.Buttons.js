@@ -26,11 +26,13 @@ L.Control.Buttons = L.Control.extend({
 			'decindent':     {title: 'Decrement indent',   uno: 'DecrementIndent',  iconName: 'decrementindent.png'},
 			'save':          {title: 'Save',               uno: 'Save',             iconName: 'save.png'},
 			'saveas':        {title: 'Save As',                                     iconName: 'saveas.png'},
+			'undo':          {title: 'Undo',               uno: 'Undo',             iconName: 'undo.png'},
+			'redo':          {title: 'Redo',               uno: 'Redo',             iconName: 'redo.png'},
 			'edit':          {title: 'Enable editing',                              iconName: 'edit.png'},
 			'selection':     {title: 'Enable selection',                            iconName: 'selection.png'},
 			'presentation':  {title: 'Present',                                     iconName: 'presentation.png'}
 		};
-		var separator = ['alignleft', 'save', 'bullet', 'edit', 'presentation'];
+		var separator = ['alignleft', 'save', 'undo', 'bullet', 'edit', 'presentation'];
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
 			if (separator.indexOf(key) >= 0) {
