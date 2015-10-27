@@ -11,6 +11,7 @@ L.Control.Scroll = L.Control.extend({
 
 		map.on('scrollto', this._onScrollTo, this);
 		map.on('scrollby', this._onScrollBy, this);
+		map.on('scrollvelocity', this._onScrollVelocity, this);
 		map.on('docsize', this._onUpdateSize, this);
 		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
 
@@ -75,6 +76,20 @@ L.Control.Scroll = L.Control.extend({
 			x = '-=' + Math.abs(e.x);
 		}
 		$('.scroll-container').mCustomScrollbar('scrollTo', [y, x]);
+	},
+
+	_onScrollVelocity: function (e) {
+		if (e.vx == 0 && e.vy == 0) {
+			clearInterval(this._autoScrollTimer);
+			this._autoScrollTimer = null;
+			this._map.isAutoScrolling = false;
+		} else {
+			clearInterval(this._autoScrollTimer);
+			this._map.isAutoScrolling = true;
+			this._autoScrollTimer = setInterval(L.bind(function() {
+				this._onScrollBy({x: e.vx, y: e.vy});
+			}, this), 100);
+		}
 	},
 
 	_onUpdateSize: function (e) {
