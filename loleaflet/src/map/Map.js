@@ -574,7 +574,7 @@ L.Map = L.Evented.extend({
 
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
 			'mouseover mouseout mousemove contextmenu keydown keypress keyup', this._handleDOMEvent, this);
-		L.DomEvent[onOff](this._textArea, 'copy keydown keypress keyup', this._handleDOMEvent, this);
+		L.DomEvent[onOff](this._textArea, 'copy paste keydown keypress keyup', this._handleDOMEvent, this);
 
 		if (this.options.trackResize) {
 			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);
@@ -627,7 +627,7 @@ L.Map = L.Evented.extend({
 		var data = {
 			originalEvent: e
 		};
-		if (e.type !== 'keypress' && e.type !== 'keyup' && e.type !== 'keydown' && e.type !== 'copy') {
+		if (e.type !== 'keypress' && e.type !== 'keyup' && e.type !== 'keydown' && e.type !== 'copy' && e.type !== 'paste') {
 			data.containerPoint = target instanceof L.Marker ?
 					this.latLngToContainerPoint(target.getLatLng()) : this.mouseEventToContainerPoint(e);
 			data.layerPoint = this.containerPointToLayerPoint(data.containerPoint);

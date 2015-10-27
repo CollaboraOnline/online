@@ -105,6 +105,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewReset();
 		map.on('drag resize zoomend', this._updateScrollOffset, this);
 		map.on('copy', this._onCopy, this);
+		map.on('paste', this._onPaste, this);
 		map.on('zoomend', this._onUpdateCursor, this);
 		map.on('zoomend', this._onUpdatePartPageRectangles, this);
 		map.on('dragstart', this._onDragStart, this);
@@ -755,6 +756,12 @@ L.TileLayer = L.GridLayer.extend({
 			// Decode UTF-8.
 			e.clipboardData.setData('text/plain', decodeURIComponent(escape(this._selectionTextContent)));
 		}
+	},
+
+	_onPaste: function (e) {
+		e = e.originalEvent;
+		e.preventDefault();
+		L.Socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.clipboardData.getData('text/plain'));
 	},
 
 	_onDragStart: function () {
