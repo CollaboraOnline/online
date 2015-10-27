@@ -62,6 +62,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._isCursorOverlayVisible = false;
 		// Cursor is visible or hidden (e.g. for graphic selection).
 		this._isCursorVisible = true;
+		// Original rectangle graphic selection in twips
+		this._graphicSelectionTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
 		// Rectangle graphic selection
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Position and size of the selection start (as if there would be a cursor caret there).
@@ -313,6 +315,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onGraphicSelectionMsg: function (textMsg) {
 		if (textMsg.match('EMPTY')) {
+			this._graphicSelectionTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
 			this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		}
 		else {
@@ -320,6 +323,7 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
+			this._graphicSelectionTwips = new L.bounds(topLeftTwips, bottomRightTwips);
 			this._graphicSelection = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
@@ -628,7 +632,9 @@ L.TileLayer = L.GridLayer.extend({
 		var aPos = this._latLngToTwips(e.handle.getLatLng());
 		if (e.type === 'editstart') {
 			this._graphicMarker.isDragged = true;
-			this._postSelectGraphicEvent('start', aPos.x, aPos.y);
+			this._postSelectGraphicEvent('start',
+						Math.min(aPos.x, this._graphicSelectionTwips.max.x - 1),
+						Math.min(aPos.y, this._graphicSelectionTwips.max.y - 1));
 		}
 		else if (e.type === 'editend') {
 			this._postSelectGraphicEvent('end', aPos.x, aPos.y);
