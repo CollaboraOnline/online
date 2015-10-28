@@ -270,6 +270,12 @@ L.Map.Keyboard = L.Handler.extend({
 			// Ctrl + Shift
 			if (!e.originalEvent.altKey) {
 				switch (e.originalEvent.keyCode) {
+					case 37: // left arrow
+						L.Socket.sendMessage('uno .uno:WordLeftSel');
+						break;
+					case 39: // right arrow
+						L.Socket.sendMessage('uno .uno:WordRightSel');
+						break;
 					case 66: // b
 						L.Socket.sendMessage('uno .uno:SubScript');
 						break;
