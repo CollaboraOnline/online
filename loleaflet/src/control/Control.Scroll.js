@@ -12,6 +12,7 @@ L.Control.Scroll = L.Control.extend({
 		map.on('scrollto', this._onScrollTo, this);
 		map.on('scrollby', this._onScrollBy, this);
 		map.on('scrollvelocity', this._onScrollVelocity, this);
+		map.on('handleautoscroll', this._onHandleAutoScroll, this);
 		map.on('docsize', this._onUpdateSize, this);
 		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
 
@@ -90,6 +91,24 @@ L.Control.Scroll = L.Control.extend({
 				this._onScrollBy({x: e.vx, y: e.vy});
 			}, this), 100);
 		}
+	},
+
+	_onHandleAutoScroll: function (e) {
+		var vx = 0;
+		var vy = 0;
+
+		if (e.pos.y > e.map._size.y - 50) {
+			vy = 50;
+		} else if (e.pos.y < 50) {
+			vy = -50;
+		}
+		if (e.pos.x > e.map._size.x - 50) {
+			vx = 50;
+		} else if (e.pos.x < 50 + e.map._container.getBoundingClientRect().x) {
+			vx = -50;
+		}
+
+		this._onScrollVelocity({vx: vx, vy: vy});
 	},
 
 	_onUpdateSize: function (e) {

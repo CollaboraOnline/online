@@ -605,7 +605,11 @@ L.TileLayer = L.GridLayer.extend({
 			center = center.subtract(this._map.getSize().divideBy(2));
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
-			this._map.fire('scrollto', {x: center.x, y: center.y});
+
+			if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
+			    !(this._selectionHandles.end && this._selectionHandles.end.isDragged)) {
+				this._map.fire('scrollto', {x: center.x, y: center.y});
+			}
 		}
 
 		if (this._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
@@ -657,16 +661,10 @@ L.TileLayer = L.GridLayer.extend({
 			var cursorPos = L.point(boundingrect.x - e.target._icon.offsetLeft,
 					      boundingrect.y - e.target._icon.offsetTop);
 
-			var expectedPos = L.point(e.originalEvent.pageX, e.originalEvent.pageY);
+			var expectedPos = L.point(e.originalEvent.pageX, e.originalEvent.pageY).subtract(e.target.dragging._draggable.startOffset);
 
 			// If the map has been scrolled, but the cursor hasn't been updated yet, then
 			// the current mouse position differs.
-			// In reality there should be a small offset between the top-left of the cursor,
-			// and where the mouse was when the cursor was selected - this is accounted
-			// for by the offset in Draggable, however that gets lost once the map
-			// starts scrolling.
-			// TODO: decide whether we really want to take account of the offset (this
-			// will be even messier, and probably require modifying Draggable too).
 			if (!expectedPos.equals(cursorPos)) {
 				var correction = expectedPos.subtract(cursorPos);
 
@@ -676,10 +674,16 @@ L.TileLayer = L.GridLayer.extend({
 
 				e.target.dragging._draggable._updatePosition();
 			}
+
+			var containerPos = new L.point(expectedPos.x - this._map._container.getBoundingClientRect().x,
+				expectedPos.y - this._map._container.getBoundingClientRect().y);
+
+			this._map.fire('handleautoscroll', { pos: containerPos, map: this._map });
 		}
 		if (e.type === 'dragend') {
 			e.target.isDragged = false;
 			this._textArea.focus();
+			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
 		}
 
 		var aPos = this._latLngToTwips(e.target.getLatLng());

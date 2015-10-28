@@ -112,6 +112,8 @@ L.Map.Mouse = L.Handler.extend({
 					}
 				}
 			}
+
+			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
 		}
 		else if (e.type === 'mousemove' && this._mouseDown) {
 			if (this._holdMouseEvent) {
@@ -132,12 +134,15 @@ L.Map.Mouse = L.Handler.extend({
 			if (!this._map.dragging.enabled()) {
 				mousePos = docLayer._latLngToTwips(e.latlng);
 				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, buttons, modifier);
+
 				for (key in docLayer._selectionHandles) {
 					handle = docLayer._selectionHandles[key];
 					if (handle._icon) {
 						L.DomUtil.addClass(handle._icon, 'leaflet-not-clickable');
 					}
 				}
+
+				this._map.fire('handleautoscroll', { pos: e.containerPoint, map: this._map });
 			}
 		}
 		else if (e.type === 'dblclick') {
