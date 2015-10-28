@@ -303,58 +303,58 @@ std::vector<std::string> LoadTest::getDocList() const
     return _docList;
 }
 
-void LoadTest::defineOptions(OptionSet& options) 
+void LoadTest::defineOptions(OptionSet& optionSet)
 {
-    Application::defineOptions(options);
+    Application::defineOptions(optionSet);
 
-    options.addOption(Option("help", "", "Display help information on command line arguments.")
-                      .required(false)
-                      .repeatable(false));
+    optionSet.addOption(Option("help", "", "Display help information on command line arguments.")
+                        .required(false)
+                        .repeatable(false));
 
-    options.addOption(Option("doclist", "", "file containing URIs or pathnames of documents to load, - for stdin")
-                      .required(true)
-                      .repeatable(false)
-                      .argument("file"));
+    optionSet.addOption(Option("doclist", "", "file containing URIs or pathnames of documents to load, - for stdin")
+                        .required(true)
+                        .repeatable(false)
+                        .argument("file"));
 
-    options.addOption(Option("numclients", "", "number of simultaneous clients to simulate")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("number"));
+    optionSet.addOption(Option("numclients", "", "number of simultaneous clients to simulate")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("number"));
 
-    options.addOption(Option("numdocs", "", "number of sequential documents per client")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("number"));
+    optionSet.addOption(Option("numdocs", "", "number of sequential documents per client")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("number"));
 
-    options.addOption(Option("duration", "", "duration in hours")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("hours"));
+    optionSet.addOption(Option("duration", "", "duration in hours")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("hours"));
 
-    options.addOption(Option("server", "", "URI of LOOL server")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("uri"));
+    optionSet.addOption(Option("server", "", "URI of LOOL server")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("uri"));
 }
 
-void LoadTest::handleOption(const std::string& name, const std::string& value)
+void LoadTest::handleOption(const std::string& optionName, const std::string& value)
 {
-    Application::handleOption(name, value);
+    Application::handleOption(optionName, value);
 
-    if (name == "help")
+    if (optionName == "help")
     {
         displayHelp();
         exit(Application::EXIT_OK);
     }
-    else if (name == "doclist")
+    else if (optionName == "doclist")
         _docList = readDocList(value);
-    else if (name == "numclients")
+    else if (optionName == "numclients")
         _numClients = std::stoi(value);
-    else if (name == "numdocs")
+    else if (optionName == "numdocs")
         _numDocsPerClient = std::stoi(value);
-    else if (name == "duration")
+    else if (optionName == "duration")
         _duration = std::stoi(value);
-    else if (name == "url")
+    else if (optionName == "url")
         _url = value;
 }
 

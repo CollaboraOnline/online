@@ -58,11 +58,11 @@ void HTTPWSTest::testPaste()
         n = socket.receiveFrame(buffer, sizeof(buffer), flags);
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
-            std::string response = LOOLProtocol::getFirstLine(buffer, n);
+            std::string line = LOOLProtocol::getFirstLine(buffer, n);
             std::string prefix = "textselectioncontent: ";
-            if (response.find(prefix) == 0)
+            if (line.find(prefix) == 0)
             {
-                selection = response.substr(prefix.length());
+                selection = line.substr(prefix.length());
                 break;
             }
         }

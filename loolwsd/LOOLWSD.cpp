@@ -615,103 +615,103 @@ void LOOLWSD::uninitialize()
     ServerApplication::uninitialize();
 }
 
-void LOOLWSD::defineOptions(OptionSet& options)
+void LOOLWSD::defineOptions(OptionSet& optionSet)
 {
-    ServerApplication::defineOptions(options);
+    ServerApplication::defineOptions(optionSet);
 
-    options.addOption(Option("help", "", "Display help information on command line arguments.")
-                      .required(false)
-                      .repeatable(false));
+    optionSet.addOption(Option("help", "", "Display help information on command line arguments.")
+                        .required(false)
+                        .repeatable(false));
 
-    options.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),"
+    optionSet.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),"
                              " must not be " + std::to_string(MASTER_PORT_NUMBER) + ".")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("port number"));
+                        .required(false)
+                        .repeatable(false)
+                        .argument("port number"));
 
-    options.addOption(Option("cache", "", "Path to a directory where to keep the persistent tile cache (default: " + std::string(LOOLWSD_CACHEDIR) + ").")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("directory"));
+    optionSet.addOption(Option("cache", "", "Path to a directory where to keep the persistent tile cache (default: " + std::string(LOOLWSD_CACHEDIR) + ").")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("directory"));
 
-    options.addOption(Option("systemplate", "", "Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes.")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("directory"));
+    optionSet.addOption(Option("systemplate", "", "Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("directory"));
 
-    options.addOption(Option("lotemplate", "", "Path to a LibreOffice installation tree to be copied (linked) into the jails for child processes. Should be on the same file system as systemplate.")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("directory"));
+    optionSet.addOption(Option("lotemplate", "", "Path to a LibreOffice installation tree to be copied (linked) into the jails for child processes. Should be on the same file system as systemplate.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("directory"));
 
-    options.addOption(Option("childroot", "", "Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate.")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("directory"));
+    optionSet.addOption(Option("childroot", "", "Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("directory"));
 
-    options.addOption(Option("losubpath", "", "Relative path where the LibreOffice installation will be copied inside a jail (default: '" + loSubPath + "').")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("relative path"));
+    optionSet.addOption(Option("losubpath", "", "Relative path where the LibreOffice installation will be copied inside a jail (default: '" + loSubPath + "').")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("relative path"));
 
-    options.addOption(Option("numprespawns", "", "Number of child processes to keep started in advance and waiting for new clients.")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("number"));
+    optionSet.addOption(Option("numprespawns", "", "Number of child processes to keep started in advance and waiting for new clients.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("number"));
 
-    options.addOption(Option("test", "", "Interactive testing.")
-                      .required(false)
-                      .repeatable(false));
+    optionSet.addOption(Option("test", "", "Interactive testing.")
+                        .required(false)
+                        .repeatable(false));
 
-    options.addOption(Option("child", "", "For internal use only.")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("child id"));
+    optionSet.addOption(Option("child", "", "For internal use only.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("child id"));
 
-    options.addOption(Option("jail", "", "For internal use only.")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("directory"));
+    optionSet.addOption(Option("jail", "", "For internal use only.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("directory"));
 
 #if ENABLE_DEBUG
-    options.addOption(Option("uid", "", "Uid to assume if running under sudo for debugging purposes.")
-                      .required(false)
-                      .repeatable(false)
-                      .argument("uid"));
+    optionSet.addOption(Option("uid", "", "Uid to assume if running under sudo for debugging purposes.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("uid"));
 #endif
 }
 
-void LOOLWSD::handleOption(const std::string& name, const std::string& value)
+void LOOLWSD::handleOption(const std::string& optionName, const std::string& value)
 {
-    ServerApplication::handleOption(name, value);
+    ServerApplication::handleOption(optionName, value);
 
-    if (name == "help")
+    if (optionName == "help")
     {
         displayHelp();
         exit(Application::EXIT_OK);
     }
-    else if (name == "port")
+    else if (optionName == "port")
         portNumber = std::stoi(value);
-    else if (name == "cache")
+    else if (optionName == "cache")
         cache = value;
-    else if (name == "systemplate")
+    else if (optionName == "systemplate")
         sysTemplate = value;
-    else if (name == "lotemplate")
+    else if (optionName == "lotemplate")
         loTemplate = value;
-    else if (name == "childroot")
+    else if (optionName == "childroot")
         childRoot = value;
-    else if (name == "losubpath")
+    else if (optionName == "losubpath")
         loSubPath = value;
-    else if (name == "numprespawns")
+    else if (optionName == "numprespawns")
         _numPreSpawnedChildren = std::stoi(value);
-    else if (name == "test")
+    else if (optionName == "test")
         LOOLWSD::doTest = true;
-    else if (name == "child")
+    else if (optionName == "child")
         _childId = std::stoull(value);
-    else if (name == "jail")
+    else if (optionName == "jail")
         jail = value;
 #if ENABLE_DEBUG
-    else if (name == "uid")
+    else if (optionName == "uid")
         uid = std::stoull(value);
 #endif
 }

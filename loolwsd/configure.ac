@@ -61,7 +61,7 @@ AS_IF([test "$enable_debug" = yes],
 # Test for build environment
 
 CXXFLAGS="$CXXFLAGS -std=c++11"
-CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror"
+CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow -Werror"
 
 AS_IF([test -n "$with_lokit_path"],
       [CPPFLAGS="$CPPFLAGS -I${with_lokit_path}"])
