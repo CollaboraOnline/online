@@ -403,7 +403,8 @@ public:
                                 // Also forward the "canceltiles" to the child process, if any
                                 session->handleInput(buffer, n);
                             }
-                            else if (!queue.alreadyInQueue(firstLine))
+                            // Filtering out duplicated uno commands would change the meaning of the message sequence.
+                            else if (!queue.alreadyInQueue(firstLine) || firstLine.find("uno") == 0)
                             {
                                 queue.put(firstLine);
                             }
