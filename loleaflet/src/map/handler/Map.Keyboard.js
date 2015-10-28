@@ -252,15 +252,68 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		};
 
+		if (e.originalEvent.altKey || e.originalEvent.shiftKey) {
+
+			// Ctrl + Alt
+			if (!e.originalEvent.shiftKey) {
+				switch (e.originalEvent.keyCode) {
+					case 70: // f
+						L.Socket.sendMessage('uno .uno:InsertFootnote');
+						break;
+					case 67: // c
+					case 77: // m
+						L.Socket.sendMessage('uno .uno:InsertAnnotation');
+						break;
+				}
+			}
+
+			// Ctrl + Shift
+			if (!e.originalEvent.altKey) {
+				switch (e.originalEvent.keyCode) {
+					case 66: // b
+						L.Socket.sendMessage('uno .uno:SubScript');
+						break;
+					case 80: // p
+						L.Socket.sendMessage('uno .uno:SuperScript');
+						break;
+				}
+			}
+
+			e.originalEvent.preventDefault();
+			return;
+		}
+
 		switch (e.originalEvent.keyCode) {
 			case 13: // enter
 				L.Socket.sendMessage('uno .uno:InsertPagebreak');
+				break;
+			case 32: // space
+			case 77: // m
+				L.Socket.sendMessage('uno .uno:ResetAttributes');
 				break;
 			case 37: // left arrow
 				L.Socket.sendMessage('uno .uno:GoToPrevWord');
 				break;
 			case 39: // right arrow
 				L.Socket.sendMessage('uno .uno:GoToNextWord');
+				break;
+			case 48: // 0
+				this._map.applyStyle("Text body", "ParagraphStyles");
+				break;
+			case 49: // 1
+				this._map.applyStyle("Heading 1", "ParagraphStyles");
+				break;
+			case 50: // 2
+				this._map.applyStyle("Heading 2", "ParagraphStyles");
+				break;
+			case 51: // 3
+				this._map.applyStyle("Heading 3", "ParagraphStyles");
+				break;
+			case 52: // 2
+				this._map.applyStyle("Heading 4", "ParagraphStyles");
+				break;
+			case 53: // 2
+				this._map.applyStyle("Heading 5", "ParagraphStyles");
 				break;
 			case 65: // a
 				L.Socket.sendMessage('uno .uno:Selectall');
@@ -298,8 +351,14 @@ L.Map.Keyboard = L.Handler.extend({
 			case 90: // z
 				L.Socket.sendMessage('uno .uno:Undo');
 				break;
+			case 188: // ,
+				L.Socket.sendMessage('uno .uno:SubScript');
+				break;
 			case 189: // -
 				L.Socket.sendMessage('uno .uno:InsertSoftHyphen');
+				break;
+			case 190: // .
+				L.Socket.sendMessage('uno .uno:SuperScript');
 				break;
 		}
 		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v') {
