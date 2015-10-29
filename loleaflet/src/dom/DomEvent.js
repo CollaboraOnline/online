@@ -58,6 +58,9 @@ L.DomEvent = {
 		} else if (L.Browser.touch && (type === 'dblclick') && this.addDoubleTapListener) {
 			this.addDoubleTapListener(obj, handler, id);
 
+		} else if (type === "trplclick" || type === "qdrplclick") {
+			this.addMultiClickListener(obj, handler, id, type);
+
 		} else if ('addEventListener' in obj) {
 
 			if (type === 'mousewheel') {
@@ -104,6 +107,9 @@ L.DomEvent = {
 
 		} else if (L.Browser.touch && (type === 'dblclick') && this.removeDoubleTapListener) {
 			this.removeDoubleTapListener(obj, id);
+
+		} else if (type === 'trplclick' || type === 'qdrplclick') {
+			this.removeMultiClickListener(obj, id, type);
 
 		} else if ('removeEventListener' in obj) {
 

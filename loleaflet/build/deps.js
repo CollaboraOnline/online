@@ -221,7 +221,8 @@ var deps = {
 	},
 
 	Mouse: {
-		src: ['map/handler/Map.Mouse.js'],
+		src: ['dom/DomEvent.MultiClick.js',
+		      'map/handler/Map.Mouse.js'],
 		desc: 'Handles mouse interaction with the document.'
 	},
 
