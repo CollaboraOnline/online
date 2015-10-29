@@ -273,8 +273,14 @@ L.Map.Keyboard = L.Handler.extend({
 					case 37: // left arrow
 						L.Socket.sendMessage('uno .uno:WordLeftSel');
 						break;
+					case 38: // up arrow
+						L.Socket.sendMessage('uno .uno:StartOfParaSel');
+						break;
 					case 39: // right arrow
 						L.Socket.sendMessage('uno .uno:WordRightSel');
+						break;
+					case 40: // down arrow
+						L.Socket.sendMessage('uno .uno:EndOfParaSel');
 						break;
 					case 66: // b
 						L.Socket.sendMessage('uno .uno:SubScript');
