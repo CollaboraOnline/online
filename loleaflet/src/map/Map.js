@@ -573,7 +573,7 @@ L.Map = L.Evented.extend({
 		var onOff = remove ? 'off' : 'on';
 
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
-			'mouseover mouseout mousemove contextmenu keydown keypress keyup', this._handleDOMEvent, this);
+			'mouseover mouseout mousemove contextmenu keydown keypress keyup trplclick qdrplclick', this._handleDOMEvent, this);
 		L.DomEvent[onOff](this._textArea, 'copy paste keydown keypress keyup', this._handleDOMEvent, this);
 
 		if (this.options.trackResize) {

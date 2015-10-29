@@ -14,12 +14,12 @@ L.Map.Mouse = L.Handler.extend({
 	},
 
 	addHooks: function () {
-		this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick',
+		this._map.on('mousedown mouseup mouseover mouseout mousemove dblclick trplclick qdrplclick',
 			this._onMouseEvent, this);
 	},
 
 	removeHooks: function () {
-		this._map.off('mousedown mouseup mouseover mouseout mousemove dblclick',
+		this._map.off('mousedown mouseup mouseover mouseout mousemove dblclick trplclick qdrplclick',
 			this._onMouseEvent, this);
 	},
 
@@ -81,10 +81,22 @@ L.Map.Mouse = L.Handler.extend({
 			if (this._clickTime && Date.now() - this._clickTime <= 250) {
 				// double click, a click was sent already
 				this._mouseEventsQueue = [];
+				this._clickCount++;
+				if (this._clickCount < 4) {
+					// Reset the timer in order to keep resetting until
+					// we could have sent through a quadruple click. After this revert
+					// to normal behaviour so that a following single-click is treated
+					// as a separate click, in order to match LO desktop behaviour.
+					// (Clicking five times results in paragraph selection after 4 clicks,
+					// followed by resetting to a single cursor and no selection on the
+					// fifth click.)
+					this._clickTime = Date.now();
+				}
 				return;
 			}
 			else {
 				this._clickTime = Date.now();
+				this._clickCount = 1;
 				mousePos = docLayer._latLngToTwips(e.latlng);
 				var timeOut = 250;
 				if (docLayer._permission === 'edit') {
@@ -145,10 +157,17 @@ L.Map.Mouse = L.Handler.extend({
 				this._map.fire('handleautoscroll', { pos: e.containerPoint, map: this._map });
 			}
 		}
-		else if (e.type === 'dblclick') {
+		else if (e.type === 'dblclick' || e.type === 'trplclick' || e.type === 'qdrplclick') {
 			mousePos = docLayer._latLngToTwips(e.latlng);
-			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, buttons, modifier);
-			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, buttons, modifier);
+			var clicks = {
+				dblclick: 2,
+				trplclick: 3,
+				qdrplclick: 4
+			};
+			var count = clicks[e.type];
+
+			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, count, buttons, modifier);
+			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, count, buttons, modifier);
 		}
 	},
 
