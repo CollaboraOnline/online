@@ -116,6 +116,7 @@ L.Map.Keyboard = L.Handler.extend({
 		this._setPanOffset(map.options.keyboardPanOffset);
 		this._setZoomOffset(map.options.keyboardZoomOffset);
 		this.modifier = 0;
+		this.dopagejump = 0;
 	},
 
 	addHooks: function () {
@@ -194,6 +195,21 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
+		// page up or page down, handled by this.dopagejump
+		// to jump back to the anchor from footnote/endnote by PgUp
+		// or jump back to the main text from header/footer by PgUp or PgDown
+		if (!this.modifier && (e.originalEvent.keyCode === 33 || e.originalEvent.keyCode === 34)) {
+			if (this.dopagejump === 1) {
+				return;
+			}
+			if (e.type === 'keyup') {
+				this.dopagejump = 1;
+			}
+		}
+		else if (e.type === 'keyup') {
+			this.dopagejump = 0;
+		}
+
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
@@ -264,12 +280,21 @@ L.Map.Keyboard = L.Handler.extend({
 					case 77: // m
 						L.Socket.sendMessage('uno .uno:InsertAnnotation');
 						break;
+					case 68: // d
+						L.Socket.sendMessage('uno .uno:InsertEndnote');
+						break;
 				}
 			}
 
 			// Ctrl + Shift
 			if (!e.originalEvent.altKey) {
 				switch (e.originalEvent.keyCode) {
+					case 35: // end
+						L.Socket.sendMessage('uno .uno:EndOfDocumentSel');
+						break;
+					case 36: // home
+						L.Socket.sendMessage('uno .uno:StartOfDocumentSel');
+						break;
 					case 37: // left arrow
 						L.Socket.sendMessage('uno .uno:WordLeftSel');
 						break;
@@ -303,29 +328,41 @@ L.Map.Keyboard = L.Handler.extend({
 			case 77: // m
 				L.Socket.sendMessage('uno .uno:ResetAttributes');
 				break;
+			case 35: // end
+				L.Socket.sendMessage('uno .uno:GoToEndOfDoc');
+				break;
+			case 36: // home
+				L.Socket.sendMessage('uno .uno:GoToStartOfDoc');
+				break;
 			case 37: // left arrow
 				L.Socket.sendMessage('uno .uno:GoToPrevWord');
+				break;
+			case 38: // up arrow
+				L.Socket.sendMessage('uno .uno:GoToPrevPara');
 				break;
 			case 39: // right arrow
 				L.Socket.sendMessage('uno .uno:GoToNextWord');
 				break;
+			case 40: // down arrow
+				L.Socket.sendMessage('uno .uno:GoToNextPara');
+				break;
 			case 48: // 0
-				this._map.applyStyle("Text body", "ParagraphStyles");
+				this._map.applyStyle('Text body', 'ParagraphStyles');
 				break;
 			case 49: // 1
-				this._map.applyStyle("Heading 1", "ParagraphStyles");
+				this._map.applyStyle('Heading 1', 'ParagraphStyles');
 				break;
 			case 50: // 2
-				this._map.applyStyle("Heading 2", "ParagraphStyles");
+				this._map.applyStyle('Heading 2', 'ParagraphStyles');
 				break;
 			case 51: // 3
-				this._map.applyStyle("Heading 3", "ParagraphStyles");
+				this._map.applyStyle('Heading 3', 'ParagraphStyles');
 				break;
 			case 52: // 2
-				this._map.applyStyle("Heading 4", "ParagraphStyles");
+				this._map.applyStyle('Heading 4', 'ParagraphStyles');
 				break;
 			case 53: // 2
-				this._map.applyStyle("Heading 5", "ParagraphStyles");
+				this._map.applyStyle('Heading 5', 'ParagraphStyles');
 				break;
 			case 65: // a
 				L.Socket.sendMessage('uno .uno:Selectall');
