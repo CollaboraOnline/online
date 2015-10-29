@@ -147,10 +147,8 @@ L.Map.Mouse = L.Handler.extend({
 		}
 		else if (e.type === 'dblclick') {
 			mousePos = docLayer._latLngToTwips(e.latlng);
-			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, buttons, modifier);
 			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, buttons, modifier);
-			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, buttons, modifier);
-			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, buttons, modifier);
+			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, buttons, modifier);
 		}
 	},
 
