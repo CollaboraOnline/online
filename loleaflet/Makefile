@@ -11,6 +11,7 @@ DRAW_VERSION=0.2.4
 all:
 	jake build
 	cd plugins/draw-$(DRAW_VERSION) && jake build
+	cd plugins/contextmenu && npm install && npm run build
 
 .PHONY: dist
 dist: all

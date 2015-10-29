@@ -11,6 +11,7 @@ First you need to install 'jake'.  As root, do:
 
     npm install -g jake
     npm install
+    cd plugins/contextmenu && npm install
 
 npm is provided by the nodejs package.
 Alternatively, you can use the provided zip (as a normal user):
@@ -31,6 +32,8 @@ As a normal user:
     jake build
     cd plugins/draw-0.2.4
     jake build
+    cd ../contextmenu
+    npm run build
 
 Running
 -------

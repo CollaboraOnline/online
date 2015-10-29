@@ -1,0 +1,11 @@
+[*]
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[{.,}*.{js{,*},y{a,}ml}]
+indent_style = tab
+indent_size = 2
+
+[Makefile,*.{less,css}]
+indent_style = tab
