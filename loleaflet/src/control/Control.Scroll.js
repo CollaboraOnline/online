@@ -104,7 +104,7 @@ L.Control.Scroll = L.Control.extend({
 		}
 		if (e.pos.x > e.map._size.x - 50) {
 			vx = 50;
-		} else if (e.pos.x < 50 + e.map._container.getBoundingClientRect().x) {
+		} else if (e.pos.x < 50) {
 			vx = -50;
 		}
 

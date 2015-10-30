@@ -658,8 +658,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			// Onscreen position of the cursor, i.e. relative to the browser window
 			var boundingrect = e.target._icon.getBoundingClientRect();
-			var cursorPos = L.point(boundingrect.x - e.target._icon.offsetLeft,
-					      boundingrect.y - e.target._icon.offsetTop);
+			var cursorPos = L.point(boundingrect.left, boundingrect.top);
 
 			var expectedPos = L.point(e.originalEvent.pageX, e.originalEvent.pageY).subtract(e.target.dragging._draggable.startOffset);
 
@@ -675,9 +674,10 @@ L.TileLayer = L.GridLayer.extend({
 				e.target.dragging._draggable._updatePosition();
 			}
 
-			var containerPos = new L.point(expectedPos.x - this._map._container.getBoundingClientRect().x,
-				expectedPos.y - this._map._container.getBoundingClientRect().y);
+			var containerPos = new L.point(expectedPos.x - this._map._container.getBoundingClientRect().left,
+				expectedPos.y - this._map._container.getBoundingClientRect().top);
 
+			containerPos = containerPos.add(e.target.dragging._draggable.startOffset);
 			this._map.fire('handleautoscroll', { pos: containerPos, map: this._map });
 		}
 		if (e.type === 'dragend') {

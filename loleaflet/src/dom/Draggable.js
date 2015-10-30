@@ -72,7 +72,7 @@ L.Draggable = L.Evented.extend({
 		// We don't use this internally, but it is needed for external
 		// manipulation of the cursor position, e.g. when adjusting
 		// for scrolling during cursor dragging.
-		this.startOffset = this._startPoint.subtract(new L.Point(startBoundingRect.x, startBoundingRect.y));
+		this.startOffset = this._startPoint.subtract(new L.Point(startBoundingRect.left, startBoundingRect.top));
 
 		L.DomEvent
 		    .on(document, L.Draggable.MOVE[e.type], this._onMove, this)
