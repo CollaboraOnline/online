@@ -1,7 +1,3 @@
-L.Map.mergeOptions({
-	contextmenuItems: []
-});
-
 L.Map.ContextMenu = L.Handler.extend({
 
 	_touchstart: L.Browser.msPointer ? 'MSPointerDown' : L.Browser.pointer ? 'pointerdown' : 'touchstart',
@@ -172,7 +168,7 @@ L.Map.ContextMenu = L.Handler.extend({
 	},
 
 	_createItems: function () {
-		var itemOptions = this._map.options.contextmenuItems,
+		var itemOptions = this._map.options.contextmenuItems || [],
 		    item,
 		    i, l;
 
