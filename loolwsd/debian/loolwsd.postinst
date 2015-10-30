@@ -10,14 +10,14 @@ case "$1" in
 	mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
 
 	# We assume that the LibreOffice to be used is built TDF-style
-	# and installs in /opt/libreoffice5.0, and that /opt/lool is
+	# and installs in /opt/collaboraoffice5.0, and that /opt/lool is
 	# on the same file system
 
 	mkdir -p /opt/lool/child-roots
 	chown lool /opt/lool/child-roots
 
 	rm -rf /opt/lool/systemplate
-	su lool --shell=/bin/sh -c "loolwsd-systemplate-setup /opt/lool/systemplate /opt/libreoffice5.0 >/dev/null"
+	su lool --shell=/bin/sh -c "loolwsd-systemplate-setup /opt/lool/systemplate /opt/collaboraoffice5.0 >/dev/null"
 	;;
 
 esac
