@@ -36,8 +36,8 @@ L.Map.Print = L.Handler.extend({
 
 	_onInitPrint: function (e) {
 		var blob = new Blob([e.response], {type: 'application/pdf'});
-		var url = URL.createObjectURL(blob);
-		this._printIframe = L.DomUtil.create('iframe', '', document.body);
+		var url = parent.URL.createObjectURL(blob);
+		this._printIframe = L.DomUtil.create('iframe', '', parent.document.body);
 		this._printIframe.onload = L.bind(this._onIframeLoaded, this);
 		L.DomUtil.setStyle(this._printIframe, 'visibility', 'hidden');
 		L.DomUtil.setStyle(this._printIframe, 'position', 'fixed');
