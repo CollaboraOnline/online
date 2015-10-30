@@ -4,8 +4,6 @@ After=network.target
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/loolwsd
-ExecStartPre=-rm -rf /opt/lool/systemplate
-ExecStartPre=/usr/bin/loolwsd-systemplate-setup /opt/lool/systemplate /opt/libreoffice5.0
 ExecStart=/usr/bin/loolwsd --systemplate=/opt/lool/systemplate --lotemplate=/opt/libreoffice5.0 --childroot=/opt/lool/child-roots --numprespawns=5
 User=lool
 KillMode=process
