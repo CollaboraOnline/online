@@ -53,6 +53,10 @@ L.Map = L.Evented.extend({
 		}
 		this._addLayers(this.options.layers);
 		L.Socket.connect(this);
+
+		// Inhibit the context menu - the browser thinks that the document
+		// is just a bunch of images, hence the context menu is useless (tdf#94599)
+		this.on('contextmenu', function() {});
 	},
 
 
