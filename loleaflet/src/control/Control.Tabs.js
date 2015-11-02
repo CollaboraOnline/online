@@ -25,7 +25,7 @@ L.Control.Tabs = L.Control.extend({
 			if (!this._tabsInitialized) {
 				// make room for the preview
 				var docContainer = L.DomUtil.get('document-container');
-				L.DomUtil.setStyle(docContainer, 'bottom', '20px');
+				L.DomUtil.addClass(docContainer, 'spreadsheet-document');
 				setTimeout(L.bind(function () {
 					this._map.invalidateSize();
 					$('.scroll-container').mCustomScrollbar('update');

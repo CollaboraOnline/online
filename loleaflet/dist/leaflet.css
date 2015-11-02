@@ -699,6 +699,10 @@ a.leaflet-control-buttons:hover:first-child {
     border: none;
 }
 
+.parts-preview-document {
+	left: 195px !important;
+}
+
 .parts-preview {
 	background: #DFDFDF;
 	position: absolute;
@@ -727,6 +731,10 @@ a.leaflet-control-buttons:hover:first-child {
 	max-width: 180px;
 	cursor: pointer;
 	}
+
+.spreadsheet-document {
+	bottom: 20px !important;
+}
 
 .spreadsheet-tab {
 	margin: 0;

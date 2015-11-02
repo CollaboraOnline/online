@@ -29,7 +29,7 @@ L.Control.PartsPreview = L.Control.extend({
 		if (!this._previewInitialized && docType === 'presentation') {
 			// make room for the preview
 			var docContainer = L.DomUtil.get('document-container');
-			L.DomUtil.setStyle(docContainer, 'left', '195px');
+			L.DomUtil.addClass(docContainer, 'parts-preview-document');
 			setTimeout(L.bind(function () {
 				this._map.invalidateSize();
 				$('.scroll-container').mCustomScrollbar('update');
