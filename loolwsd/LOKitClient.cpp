@@ -51,6 +51,7 @@ extern "C"
             CASE(TEXT_SELECTION_END);
             CASE(CURSOR_VISIBLE);
             CASE(GRAPHIC_SELECTION);
+            CASE(CELL_CURSOR);
             CASE(HYPERLINK_CLICKED);
             CASE(STATE_CHANGED);
             CASE(STATUS_INDICATOR_START);

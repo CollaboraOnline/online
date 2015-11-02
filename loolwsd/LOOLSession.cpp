@@ -868,6 +868,9 @@ extern "C"
         case LOK_CALLBACK_GRAPHIC_SELECTION:
             srv->sendTextFrame("graphicselection: " + std::string(pPayload));
             break;
+        case LOK_CALLBACK_CELL_CURSOR:
+            srv->sendTextFrame("cellcursor: " + std::string(pPayload));
+            break;
         case LOK_CALLBACK_HYPERLINK_CLICKED:
             srv->sendTextFrame("hyperlinkclicked: " + std::string(pPayload));
             break;
