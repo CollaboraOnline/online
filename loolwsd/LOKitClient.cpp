@@ -60,6 +60,7 @@ extern "C"
             CASE(SEARCH_RESULT_SELECTION);
             CASE(DOCUMENT_SIZE_CHANGED);
             CASE(SET_PART);
+            CASE(UNO_COMMAND_RESULT);
 #undef CASE
         }
         std::cout << " payload: " << pPayload << std::endl;

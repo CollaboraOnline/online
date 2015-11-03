@@ -891,6 +891,9 @@ extern "C"
         case LOK_CALLBACK_SET_PART:
             srv->sendTextFrame("setpart: " + std::string(pPayload));
             break;
+        case LOK_CALLBACK_UNO_COMMAND_RESULT:
+            srv->sendTextFrame("unocommandresult: " + std::string(pPayload));
+            break;
         }
     }
 }
@@ -1151,7 +1154,7 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
                 "\"type\":\"string\","
                 "\"value\":\"" + fileName + "\""
             "}}";
-        _loKitDocument->pClass->postUnoCommand(_loKitDocument, command.c_str(), arguments.c_str());
+        _loKitDocument->pClass->postUnoCommand(_loKitDocument, command.c_str(), arguments.c_str(), false);
     }
 
     return true;
@@ -1210,13 +1213,16 @@ bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
+    // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
+    bool bNotify = (tokens[1] == ".uno:Save");
+
     if (tokens.count() == 2)
     {
-        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), 0);
+        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), 0, bNotify);
     }
     else
     {
-        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str());
+        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(), bNotify);
     }
 
     return true;
