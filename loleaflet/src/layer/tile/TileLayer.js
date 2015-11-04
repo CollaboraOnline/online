@@ -257,6 +257,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('tile:')) {
 			this._onTileMsg(textMsg, img);
 		}
+		else if (textMsg.startsWith('unocommandresult:')) {
+			this._onUnoCommandResultMsg(textMsg);
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -408,6 +411,19 @@ L.TileLayer = L.GridLayer.extend({
 			state = unoMsg[1];
 		}
 		this._map.fire('commandstatechanged', {commandName : commandName, state : state});
+	},
+
+	_onUnoCommandResultMsg: function (textMsg) {
+		textMsg = textMsg.substring(18);
+		var obj = JSON.parse(textMsg);
+		var commandName = obj.commandName;
+		var success = undefined;
+		if (obj.success === 'true')
+			success = true;
+		else if (obj.success === 'false')
+			success = false;
+		// TODO when implemented in the LOK, add also obj.result
+		this._map.fire('commandresult', {commandName: commandName, success: success});
 	},
 
 	_onStatusIndicatorMsg: function (textMsg) {

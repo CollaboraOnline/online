@@ -1780,6 +1780,28 @@ var map = L.map('map', {
 	</tr>
 </table>
 
+<h3 id="commandresult-event">CommandResult</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>commandName</b></code></td>
+		<td><code><a href="#commandstatechanged-values">CommandStateChangedValues</a></code></td>
+		<td>UNO command.</td>
+	</tr>
+	<tr>
+		<td><code><b>success</b></code></td>
+		<td><code>Boolean or undefined</code></td>
+		<td>Returns the status code of the command execution, or
+		    undefined if the result is not provided, and the command
+		    only indicates that the operation has finished.</td>
+	</tr>
+</table>
+
 <h3 id="updateparts-event">UpdatePartsEvent</h3>
 
 <table data-id='events'>

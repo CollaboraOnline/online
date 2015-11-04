@@ -96,6 +96,9 @@ Buttons like Bold, Italic, Strike through etc.
             + e.commandName == '.uno:' + 'Bold' | 'Italic' | 'StyleApply' | 'CharFontName' | 'FontHeight' etc.
             + e.state = 'true' | 'false'
             + e.state = fontName | fontSize | styleName
+        map.on('commandresult', function (e) {}) where:
+            + e.commandName == '.uno:' + 'Bold' | 'Italic' | 'StyleApply' | 'CharFontName' | 'FontHeight' etc.
+            + e.success = true | false | undefined
 
 Parts (like slides in presentation, or sheets in spreadsheets):
     - API:
