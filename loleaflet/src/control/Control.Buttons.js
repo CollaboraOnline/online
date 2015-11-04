@@ -11,6 +11,8 @@ L.Control.Buttons = L.Control.extend({
 		var buttonsName = 'leaflet-control-buttons',
 		    container = L.DomUtil.create('div', buttonsName + '-container' + ' leaflet-bar');
 
+		var sheetAlign = 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"';
+
 		this._buttons = {
 			'bold':          {title: 'Bold',               uno: 'Bold',             iconName: 'bold.png'},
 			'italic':        {title: 'Italic',             uno: 'Italic',           iconName: 'italic.png'},
@@ -18,10 +20,10 @@ L.Control.Buttons = L.Control.extend({
 			'strikethrough': {title: 'Strike-through',     uno: 'Strikeout',        iconName: 'strikethrough.png'},
 			'bullet'       : {title: 'Bullets ON/OFF',     uno: 'DefaultBullet',    iconName: 'defaultbullet.png'},
 			'numbering'    : {title: 'Numbering ON/OFF',   uno: 'DefaultNumbering', iconName: 'defaultnumbering.png'},
-			'alignleft':     {title: 'Align left',         uno: 'LeftPara',         iconName: 'alignleft.png'},
-			'aligncenter':   {title: 'Center horizontaly', uno: 'CenterPara',       iconName: 'aligncenter.png'},
-			'alignright':    {title: 'Align right',        uno: 'RightPara',        iconName: 'alignright.png'},
-			'alignblock':    {title: 'Justified',          uno: 'JustifyPara',      iconName: 'alignblock.png'},
+			'alignleft':     {title: 'Align left',         uno: 'LeftPara', unosheet: sheetAlign + '1"}}',     iconName: 'alignleft.png'},
+			'aligncenter':   {title: 'Center horizontaly', uno: 'CenterPara', unosheet: sheetAlign + '2"}}',   iconName: 'aligncenter.png'},
+			'alignright':    {title: 'Align right',        uno: 'RightPara', unosheet: sheetAlign + '3"}}',    iconName: 'alignright.png'},
+			'alignblock':    {title: 'Justified',          uno: 'JustifyPara', unosheet: sheetAlign + '4"}}',  iconName: 'alignblock.png'},
 			'incindent':     {title: 'Increment indent',   uno: 'IncrementIndent',  iconName: 'incrementindent.png'},
 			'decindent':     {title: 'Decrement indent',   uno: 'DecrementIndent',  iconName: 'decrementindent.png'},
 			'save':          {title: 'Save',               uno: 'Save',             iconName: 'save.png'},
@@ -76,7 +78,12 @@ L.Control.Buttons = L.Control.extend({
 			});
 		}
 		else if (button.uno && this._map._docLayer._permission === 'edit') {
-			this._map.toggleCommandState(button.uno);
+			if (button.unosheet && this._map.getDocType() === 'spreadsheet') {
+				this._map.toggleCommandState(button.unosheet);
+			}
+			else {
+				this._map.toggleCommandState(button.uno);
+			}
 		}
 		else if (id === 'edit' && !L.DomUtil.hasClass(button.el.firstChild, 'leaflet-control-buttons-disabled')) {
 			if (this._map.getPermission() === 'edit') {
