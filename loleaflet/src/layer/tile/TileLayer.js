@@ -66,6 +66,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._graphicSelectionTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
 		// Rectangle graphic selection
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		// Original rectangle of cell cursor in twips
+		this._cellCursorTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
+		// Rectangle for cell cursor
+		this._cellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
 		this._lastValidPart = -1;
@@ -110,10 +114,21 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('paste', this._onPaste, this);
 		map.on('zoomend', this._onUpdateCursor, this);
 		map.on('zoomend', this._onUpdatePartPageRectangles, this);
+		map.on('zoomend', this._onCellCursorShift, this);
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
 		map.on('resize', this._fitDocumentHorizontally, this);
+		// Retrieve the initial cell cursor position (as LOK only sends us an
+		// updated cell cursor when the selected cell is changed and not the initial
+		// cell).
+		map.on('statusindicator',
+		       function (e) {
+		         if (e.statusType === 'alltilesloaded') {
+		           this._onCellCursorShift(true);
+		         }
+		       },
+		       this);
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
@@ -204,6 +219,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('cellcursor:')) {
+			this._onCellCursorMsg(textMsg);
+		}
 		else if (textMsg.startsWith('hyperlinkclicked:')) {
 			this._onHyperlinkClickedMsg(textMsg);
 		}
@@ -264,7 +282,9 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCommandValuesMsg: function (textMsg) {
 		var obj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-		if (this._map.unoToolbarCommands.indexOf(obj.commandName) !== -1) {
+		if (obj.commandName === ".uno:CellCursor") {
+			this._onCellCursorMsg(obj.commandValues);
+		} else if (this._map.unoToolbarCommands.indexOf(obj.commandName) !== -1) {
 			this._toolbarCommandValues[obj.commandName] = obj.commandValues;
 			this._map.fire('updatetoolbarcommandvalues', {
 				commandName: obj.commandName,
@@ -333,6 +353,25 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateGraphicSelection();
+	},
+
+	_onCellCursorMsg: function (textMsg) {
+		if (textMsg.match('EMPTY')) {
+			this._cellCursorTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
+			this._cellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		}
+		else {
+			var strTwips = textMsg.match(/\d+/g);
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+			this._cellCursorTwips = new L.bounds(topLeftTwips, bottomRightTwips);
+			this._cellCursor = new L.LatLngBounds(
+							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+		}
+
+		this._onUpdateCellCursor();
 	},
 
 	_onHyperlinkClickedMsg: function (textMsg) {
@@ -579,6 +618,8 @@ L.TileLayer = L.GridLayer.extend({
 		// hide the graphic selection
 		this._graphicSelection = null;
 		this._onUpdateGraphicSelection();
+		this._cellCursor = null;
+		this._onUpdateCellCursor();
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
@@ -735,6 +776,23 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_onUpdateCellCursor: function () {
+		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
+			if (this._cellCursorMarker) {
+				this._map.removeLayer(this._cellCursorMarker);
+			}
+			this._cellCursorMarker = L.rectangle(this._cellCursor, {fill: false, color: "#000000", weight: 2});
+			if (!this._cellCursorMarker) {
+				this._map.fire('error', {msg: 'Cell Cursor marker initialization'});
+				return;
+			}
+			this._map.addLayer(this._cellCursorMarker);
+		}
+		else if (this._cellCursor) {
+			this._map.removeLayer(this._cellCursorMarker);
+		}
+	},
+
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
 		var startMarker, endMarker;
@@ -878,6 +936,18 @@ L.TileLayer = L.GridLayer.extend({
 				pixelRectangles: this._partPageRectanglesPixels,
 				twipsRectangles: this._partPageRectanglesTwips
 			});
+		}
+	},
+
+	// Cells can change position during changes of zoom level in calc
+	// hence we need to request an updated cell cursor position for this level.
+	_onCellCursorShift: function (bForce) {
+		if (this._cellCursorMarker || bForce) {
+			L.Socket.sendMessage('commandvalues command=.uno:CellCursor:'
+			                     + '' + this._tileSize + ','
+			                     + '' + this._tileSize + ','
+			                     + '' + this._tileWidthTwips + ','
+			                     + '' + this._tileHeightTwips );
 		}
 	},
 
