@@ -234,7 +234,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             }
             else if (tokens[0] == "commandvalues:")
             {
-                std::string stringMsg(buffer);
+                std::string stringMsg(buffer, length);
                 std::string stringJSON = stringMsg.substr(stringMsg.find_first_of("{"));
                 Parser parser;
                 Var result = parser.parse(stringJSON);
