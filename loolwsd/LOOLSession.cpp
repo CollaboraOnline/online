@@ -627,6 +627,11 @@ void MasterProcessSession::dispatchChild()
 
         }
 
+        // cleanup potential leftovers from the last time
+        File aToCleanup(aDstFile);
+        if (aToCleanup.exists())
+            aToCleanup.remove();
+
 #ifdef __linux
         Application::instance().logger().information(Util::logPrefix() + "Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
         if (link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
