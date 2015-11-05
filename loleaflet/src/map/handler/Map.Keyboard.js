@@ -38,6 +38,42 @@ L.Map.Keyboard = L.Handler.extend({
 		40  : 1024, // down arrow	: DOWN
 		45  : 1285, // insert		: INSERT
 		46  : 1286, // delete		: DELETE
+		48  : 256,  // 0		: NUM0
+		49  : 257,  // 1		: NUM1
+		50  : 258,  // 2		: NUM2
+		51  : 259,  // 3		: NUM3
+		52  : 260,  // 4		: NUM4
+		53  : 261,  // 5		: NUM5
+		54  : 262,  // 6		: NUM6
+		55  : 263,  // 7		: NUM7
+		56  : 264,  // 8		: NUM8
+		57  : 265,  // 9		: NUM9
+		65  : 512,  // A		: A
+		66  : 513,  // B		: B
+		67  : 514,  // C		: C
+		68  : 515,  // D		: D
+		69  : 516,  // E		: E
+		70  : 517,  // F		: F
+		71  : 518,  // G		: G
+		72  : 519,  // H		: H
+		73  : 520,  // I		: I
+		74  : 521,  // J		: J
+		75  : 522,  // K		: K
+		76  : 523,  // L		: L
+		77  : 524,  // M		: M
+		78  : 525,  // N		: N
+		79  : 526,  // O		: O
+		80  : 527,  // P		: P
+		81  : 528,  // Q		: Q
+		82  : 529,  // R		: R
+		83  : 530,  // S		: S
+		84  : 531,  // T		: T
+		85  : 532,  // U		: U
+		86  : 533,  // V		: V
+		87  : 534,  // W		: W
+		88  : 535,  // X		: X
+		89  : 536,  // Y		: Y
+		90  : 537,  // Z		: Z
 		91  : null, // left window key	: UNKOWN
 		92  : null, // right window key	: UNKOWN
 		93  : null, // select key	: UNKOWN
@@ -69,11 +105,11 @@ L.Map.Keyboard = L.Handler.extend({
 		122 : 778,  // f11		: F11
 		144 : 1313, // num lock		: NUMLOCK
 		145 : 1314, // scroll lock	: SCROLLLOCK
-		173 : 5,    // dash		: DASH (on Firefox)
+		173 : 1288, // dash		: DASH (on Firefox)
 		186 : 1317, // semi-colon	: SEMICOLON
 		187 : 1295, // equal sign	: EQUAL
 		188 : 1292, // comma		: COMMA
-		189 : 5,    // dash		: DASH
+		189 : 1288, // dash		: DASH
 		190 : null, // period		: UNKOWN
 		191 : null, // forward slash	: UNKOWN
 		192 : null, // grave accent	: UNKOWN
@@ -191,9 +227,10 @@ L.Map.Keyboard = L.Handler.extend({
 		var ctrl = e.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
 		var alt = e.originalEvent.altKey ? this.keyModifier.alt : 0;
 		this.modifier = shift | ctrl | alt;
+
 		if (ctrl) {
-			this._handleCtrlCommand(e);
-			return;
+			if (this._handleCtrlCommand(e))
+				return;
 		}
 
 		// page up or page down, handled by this.dopagejump
@@ -215,15 +252,12 @@ L.Map.Keyboard = L.Handler.extend({
 		var keyCode = e.originalEvent.keyCode;
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
 
-		if (shift) {
-			unoKeyCode |= this.keyModifier.shift;
-
-			switch (e.originalEvent.keyCode) {
-				case 32: // space
-					if (this._map.getDocType() === 'spreadsheet') {
-						L.Socket.sendMessage('uno .uno:SelectRow');
-						return;
-					}
+		if (this.modifier) {
+			unoKeyCode |= this.modifier;
+			if (e.type !== 'keyup' && (this.modifier !== shift || keyCode === 32)) {
+				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+				e.originalEvent.preventDefault();
+				return;
 			}
 		}
 
@@ -271,16 +305,16 @@ L.Map.Keyboard = L.Handler.extend({
 		L.DomEvent.stopPropagation(e.originalEvent);
 	},
 
-
-    _getUno: function (calc, writer) {
-		return this._map.getDocType() === 'spreadsheet' ? calc : writer;
-	},
-
 	_handleCtrlCommand: function (e) {
 		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v') {
 			e.originalEvent.preventDefault();
-			return;
+			return true;
 		};
+
+		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v') {
+			// not copy or paste
+			e.originalEvent.preventDefault();
+		}
 
 		if (e.originalEvent.altKey || e.originalEvent.shiftKey) {
 
@@ -289,256 +323,44 @@ L.Map.Keyboard = L.Handler.extend({
 				switch (e.originalEvent.keyCode) {
 					case 53: // 5
 						L.Socket.sendMessage('uno .uno:Strikeout');
-						break;
+						return true;
 					case 70: // f
 						L.Socket.sendMessage('uno .uno:InsertFootnote');
-						break;
+						return true;
 					case 67: // c
 					case 77: // m
 						L.Socket.sendMessage('uno .uno:InsertAnnotation');
-						break;
+						return true;
 					case 68: // d
 						L.Socket.sendMessage('uno .uno:InsertEndnote');
-						break;
+						return true;
 				}
 			}
 
-			// Ctrl + Shift
-			if (!e.originalEvent.altKey) {
-				switch (e.originalEvent.keyCode) {
-					case 8: // backspace
-						L.Socket.sendMessage('uno .uno:DelToStartOfSentence');
-					break;
-					case 13: // return
-						L.Socket.sendMessage( this._getUno(
-							'',
-							'uno .uno:InsertColumnBreak'
-						));
-					case 32: // space
-						L.Socket.sendMessage( this._getUno(
-							'uno .uno:SelectColumn',
-							'uno .uno:InsertNonBreakingSpace'
-						));
-						break;
-					case 35: // end
-						L.Socket.sendMessage( this._getUno(
-							'uno .uno:GoToEndOfData {"Sel":{"type":"string", "value": "1"}}',
-							'uno .uno:EndOfDocumentSel'
-						));
-						break;
-					case 36: // home
-						L.Socket.sendMessage( this._getUno(
-							'uno .uno:GoToStart {"Sel":{"type":"string", "value":"1"}}',
-							'uno .uno:StartOfDocumentSel'
-						));
-						break;
-					case 37: // left arrow
-						L.Socket.sendMessage( this._getUno(
-							'uno .uno:GoLeftToStartOfDataSel',
-							'uno .uno:WordLeftSel'
-						));
-						break;
-					case 38: // up arrow
-						L.Socket.sendMessage( this._getUno(
-							'uno .uno:GoUpToStartOfDataSel',
-							'uno .uno:StartOfParaSel'
-						));
-						break;
-					case 39: // right arrow
-						L.Socket.sendMessage( this._getUno(
-							'uno .uno:GoRightToEndOfDataSel',
-							'uno .uno:WordRightSel'
-						));
-						break;
-					case 40: // down arrow
-						L.Socket.sendMessage( this._getUno(
-							'uno .uno:GoDownToEndOfDataSel',
-							'uno .uno:EndOfParaSel'
-						));
-						break;
-					case 46: // delete
-						L.Socket.sendMessage('uno .uno:DelToEndOfSentence');
-						break;
-					case 49: // 1
-						L.Socket.sendMessage('uno .uno:NumberFormatValue {"NumberFormatValue":{"type":"unsigned short", "value":"2"}}');
-						break;
-					case 50: // 2
-						L.Socket.sendMessage('uno .uno:NumberFormatTime');
-						break;
-					case 51: // 3
-						L.Socket.sendMessage('uno .uno:NumberFormatDate');
-						break;
-					case 52: // 4
-						L.Socket.sendMessage('uno .uno:NumberFormatCurrency');
-						break;
-					case 53: // 5
-						L.Socket.sendMessage('uno .uno:NumberFormatPercent');
-						break;
-					case 54: // 6
-						L.Socket.sendMessage('uno .uno:NumberFormatScientific');
-						break;
-					case 66: // b
-						L.Socket.sendMessage('uno .uno:SubScript');
-						break;
-					case 80: // p
-						L.Socket.sendMessage('uno .uno:SuperScript');
-						break;
-					case 173: // -
-					case 189: // -
-						L.Socket.sendMessage('uno .uno:InsertHardHyphen');
-						break;
-				}
-			}
-
-			e.originalEvent.preventDefault();
-			return;
+			return false;
 		}
 
 		switch (e.originalEvent.keyCode) {
-			case 8: // backspace
-				L.Socket.sendMessage('uno .uno:DelToStartOfWord');
-				break;
-			case 13: // enter
-				L.Socket.sendMessage('uno .uno:InsertPagebreak');
-				break;
-			case 32: // space
-			case 77: // m
-				L.Socket.sendMessage('uno .uno:ResetAttributes');
-				break;
-			case 35: // end
-				L.Socket.sendMessage( this._getUno(
-						'uno .uno:GoToEndOfData',
-						'uno .uno:GoToEndOfDoc'
-				));
-				break;
-			case 36: // home
-				L.Socket.sendMessage( this._getUno(
-						'uno .uno:GoToStart',
-						'uno .uno:GoToStartOfDoc'
-				));
-				break;
-			case 37: // left arrow
-				L.Socket.sendMessage( this._getUno(
-						'uno .uno:GoLeftToStartOfData',
-						'uno .uno:GoToPrevWord'
-				));
-				break;
-			case 38: // up arrow
-				L.Socket.sendMessage( this._getUno(
-						'uno .uno:GoUpToStartOfData',
-						'uno .uno:GoToPrevPara'
-				));
-				break;
-			case 39: // right arrow
-				L.Socket.sendMessage( this._getUno(
-						'uno .uno:GoRightToEndOfData',
-						'uno .uno:GoToNextWord'
-				));
-				break;
-			case 40: // down arrow
-				L.Socket.sendMessage( this._getUno(
-						'uno .uno:GoDownToEndOfData',
-						'uno .uno:GoToNextPara'
-				));
-				break;
-			case 46: // delete
-				L.Socket.sendMessage('uno .uno:DelToEndOfWord');
-				break;
-			case 48: // 0
-				this._map.applyStyle('Text body', 'ParagraphStyles');
-				break;
-			case 49: // 1
-				this._map.applyStyle('Heading 1', 'ParagraphStyles');
-				break;
-			case 50: // 2
-				this._map.applyStyle('Heading 2', 'ParagraphStyles');
-				break;
-			case 51: // 3
-				this._map.applyStyle('Heading 3', 'ParagraphStyles');
-				break;
-			case 52: // 4
-				this._map.applyStyle('Heading 4', 'ParagraphStyles');
-				break;
-			case 53: // 5
-				if (this._map.getDocType() === 'spreadsheet') {
-					L.Socket.sendMessage('uno .uno:Strikeout');
-				}
-				else {
-					this._map.applyStyle('Heading 5', 'ParagraphStyles');
-				}
-				break;
-			case 65: // a
-				L.Socket.sendMessage('uno .uno:SelectAll');
-				break;
-			case 66: // b
-				L.Socket.sendMessage('uno .uno:Bold');
-				break;
 			case 67: // c
 				// we prepare for a copy event
 				this._map._docLayer._textArea.value = 'dummy text';
 				this._map._docLayer._textArea.focus();
 				this._map._docLayer._textArea.select();
-				break;
-			case 68: // d
-				L.Socket.sendMessage( this._getUno(
-					'uno .uno:FillDown',
-					'uno .uno:UnderlineDouble'
-				));
-				break;
-			case 69: // e
-				L.Socket.sendMessage( this._getUno(
-					'uno .uno:HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}',
-					'uno .uno:CenterPara'
-				));
-				break;
-			case 73: // i
-				L.Socket.sendMessage('uno .uno:Italic');
-				break;
-			case 74: // j
-				L.Socket.sendMessage( this._getUno(
-					'uno .uno:HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}',
-					'uno .uno:JustifyPara'
-				));
-				break;
-			case 76: // l
-				L.Socket.sendMessage( this._getUno(
-					'uno .uno:HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"1"}}',
-					'uno .uno:LeftPara'
-				));
-				break;
+				return true;
 			case 80: // p
 				this._map.print();
-				break;
-			case 82: // r
-				L.Socket.sendMessage( this._getUno(
-					'uno .uno:HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}',
-					'uno .uno:RightPara'
-				));
-				break;
-			case 85: // u
-				L.Socket.sendMessage('uno .uno:Underline');
-				break;
-			case 89: // y
-				L.Socket.sendMessage('uno .uno:Redo');
-				break;
-			case 90: // z
-				L.Socket.sendMessage('uno .uno:Undo');
-				break;
+				return true;
+			case 86: // v
+				return true;
 			case 188: // ,
 				L.Socket.sendMessage('uno .uno:SubScript');
-				break;
-			case 173: // -
-			case 189: // -
-				L.Socket.sendMessage('uno .uno:InsertSoftHyphen');
-				break;
+				return true;
 			case 190: // .
 				L.Socket.sendMessage('uno .uno:SuperScript');
-				break;
+				return true;
 		}
-		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v') {
-			// not copy or paste
-			e.originalEvent.preventDefault();
-		}
+
+		return false;
 	}
 });
 
