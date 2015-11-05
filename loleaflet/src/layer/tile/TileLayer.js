@@ -943,11 +943,11 @@ L.TileLayer = L.GridLayer.extend({
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (bForce) {
 		if (this._cellCursorMarker || bForce) {
-			L.Socket.sendMessage('commandvalues command=.uno:CellCursor:'
-			                     + '' + this._tileSize + ','
-			                     + '' + this._tileSize + ','
-			                     + '' + this._tileWidthTwips + ','
-			                     + '' + this._tileHeightTwips );
+			L.Socket.sendMessage('commandvalues command=.uno:CellCursor'
+			                     + '?outputHeight=' + this._tileSize
+			                     + '&outputWidth=' + this._tileSize
+			                     + '&tileHeight=' + this._tileWidthTwips
+			                     + '&tileWidth=' + this._tileHeightTwips );
 		}
 	},
 
