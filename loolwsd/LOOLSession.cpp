@@ -1045,7 +1045,10 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument)) {
         _loKitDocument->pClass->setPart(_loKitDocument, part);
     }
+
+    Poco::Timestamp timestamp;
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::cout << Util::logPrefix() << "paintTile called, tile at [" << tilePosX << ", " << tilePosY << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
 
     if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output))
     {
