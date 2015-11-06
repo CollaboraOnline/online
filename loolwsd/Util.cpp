@@ -50,23 +50,23 @@ extern "C"
 
 namespace Util
 {
-    static const Poco::Int64 epochStart = Poco::Timestamp().utcTime();
+    static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
 
     std::string logPrefix()
     {
-        Poco::Int64 nanosec100 = Poco::Timestamp().utcTime() - epochStart;
+        Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - epochStart;
 
-        const Poco::Int64 n100 = 10000000;
-        Poco::Int64 hours = nanosec100 / (n100*60*60);
-        nanosec100 %= (n100*60*60);
-        Poco::Int64 minutes = nanosec100 / (n100*60);
-        nanosec100 %= (n100*60);
-        Poco::Int64 seconds = nanosec100 / (n100);
-        nanosec100 %= (n100);
+        const Poco::Int64 one_s = 1000000;
+        Poco::Int64 hours = usec / (one_s*60*60);
+        usec %= (one_s*60*60);
+        Poco::Int64 minutes = usec / (one_s*60);
+        usec %= (one_s*60);
+        Poco::Int64 seconds = usec / (one_s);
+        usec %= (one_s);
 
         std::ostringstream stream;
         stream << Poco::Process::id() << "," << std::setw(2) << std::setfill('0') << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << "," <<
-            std::setw(2) << hours << ":" << std::setw(2) << minutes << ":" << std::setw(2) << seconds << "." << std::setw(7) << nanosec100 << ",";
+            std::setw(2) << hours << ":" << std::setw(2) << minutes << ":" << std::setw(2) << seconds << "." << std::setw(6) << usec << ",";
 
         return stream.str();
     }
