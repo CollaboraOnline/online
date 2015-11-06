@@ -9,6 +9,8 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <iomanip>
+#include <sstream>
 #include <string>
 
 #include <png.h>
@@ -48,12 +50,25 @@ extern "C"
 
 namespace Util
 {
+    static const Poco::Int64 epochStart = Poco::Timestamp().utcTime();
 
     std::string logPrefix()
     {
-        Poco::Timestamp timestamp;
-        Poco::Int64 now = timestamp.epochMicroseconds();
-        return std::to_string(Poco::Process::id()) + "," + (Poco::Thread::current() ? std::to_string(Poco::Thread::current()->id()) : "0") + "," + std::to_string(now / 1000) + ",";
+        Poco::Int64 nanosec100 = Poco::Timestamp().utcTime() - epochStart;
+
+        const Poco::Int64 n100 = 10000000;
+        Poco::Int64 hours = nanosec100 / (n100*60*60);
+        nanosec100 %= (n100*60*60);
+        Poco::Int64 minutes = nanosec100 / (n100*60);
+        nanosec100 %= (n100*60);
+        Poco::Int64 seconds = nanosec100 / (n100);
+        nanosec100 %= (n100);
+
+        std::ostringstream stream;
+        stream << Poco::Process::id() << "," << std::setw(2) << std::setfill('0') << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << "," <<
+            std::setw(2) << hours << ":" << std::setw(2) << minutes << ":" << std::setw(2) << seconds << "." << std::setw(7) << nanosec100 << ",";
+
+        return stream.str();
     }
 
     bool windowingAvailable()
