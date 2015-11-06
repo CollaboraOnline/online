@@ -404,7 +404,7 @@ public:
                                 session->handleInput(buffer, n);
                             }
                             // Filter out duplicated tile messages.
-                            else if (firstLine.find("tile") != 0 || !queue.alreadyInQueue(firstLine))
+                            else if ((firstLine.compare(0, 5, "tile ") != 0) || !queue.alreadyInQueue(firstLine))
                             {
                                 queue.put(firstLine);
                             }
@@ -958,7 +958,8 @@ void LOOLWSD::componentMain()
                         return (x.find("tile ") == 0 && x.find("id=") == std::string::npos);
                     });
                 }
-                else
+                // Filter out duplicated tile messages.
+                else if ((firstLine.compare(0, 5, "tile ") != 0) || !queue.alreadyInQueue(firstLine))
                 {
                     queue.put(firstLine);
                 }

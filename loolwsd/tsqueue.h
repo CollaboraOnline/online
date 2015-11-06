@@ -55,6 +55,7 @@ public:
     }
 
     bool alreadyInQueue(std::string cmd) {
+        std::unique_lock<std::mutex> lock(_mutex);
         for (auto it = _queue.cbegin(); it != _queue.cend(); ++it) {
             if (cmd == *it) {
                 return true;
