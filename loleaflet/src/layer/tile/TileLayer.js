@@ -124,7 +124,7 @@ L.TileLayer = L.GridLayer.extend({
 		// cell).
 		map.on('statusindicator',
 		       function (e) {
-		         if (e.statusType === 'alltilesloaded') {
+		         if (e.statusType === 'alltilesloaded' && this._docType === 'spreadsheet') {
 		           this._onCellCursorShift(true);
 		         }
 		       },
