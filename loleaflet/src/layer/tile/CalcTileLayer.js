@@ -10,6 +10,7 @@ L.CalcTileLayer = L.TileLayer.extend({
                 this._rows = L.control.rowHeader();
                 map.addControl(this._columns);
                 map.addControl(this._rows);
+                map.addControl(L.control.tabs());
         },
 
 	_onInvalidateTilesMsg: function (textMsg) {
