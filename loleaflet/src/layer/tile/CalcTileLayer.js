@@ -4,6 +4,14 @@
 
 L.CalcTileLayer = L.TileLayer.extend({
 
+        beforeAdd: function (map) {
+                map._addZoomLimit(this);
+                this._columns = L.control.columnHeader();
+                this._rows = L.control.rowHeader();
+                map.addControl(this._columns);
+                map.addControl(this._rows);
+        },
+
 	_onInvalidateTilesMsg: function (textMsg) {
 		var command = L.Socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
