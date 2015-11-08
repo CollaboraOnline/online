@@ -733,7 +733,111 @@ a.leaflet-control-buttons:hover:first-child {
 	}
 
 .spreadsheet-document {
+        border-top: 1px solid #B6B6B6 !important;
+        top: 100px !important;
+        left: 50px !important;
 	bottom: 20px !important;
+}
+
+.spreadsheet-container-column {
+        position: absolute;
+        left: 0px;
+        top: 80px;
+        width: 100%;
+        height: 20px;
+        margin: 0px;
+        padding: 0px;
+        border-width: 0px;
+        overflow: hidden;
+}
+
+.spreadsheet-container-table {
+        table-layout: fixed;
+        width: 100%;
+        height: 100%;
+        border-spacing: 0px;
+        border-collapse: collapse;
+        border-width: 0px;
+        margin: 0px;
+        padding: 0px;
+}
+
+.spreadsheet-container-th-corner {
+        border: 1px solid black;
+        background-color: darkgrey;
+        padding: 0px;
+        margin: 0px;
+        border-width: 1px;
+        width: 47px;  /* 50px - 2px (border) - 1px (border-collapse)*/
+        height: 19px;
+}
+
+.spreadsheet-container-th-column {
+        padding: 0px;
+        margin: 0px;
+        border-width: 0px;
+}
+
+.spreadsheet-container-column-inner {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+}
+
+#spreadsheet-table-column {
+        table-layout: fixed;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        border-spacing: 0px !important;
+        border-collapse: collapse !important;
+        position: relative;
+        margin: 0px;
+        padding: 0px;
+}
+
+.spreadsheet-table-column-cell {
+        border: 1px solid black;
+        background-color: darkgrey;
+        overflow: hidden;
+        min-width: 1px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 90%;
+        padding: 0px;
+        margin: 0px;
+}
+
+.spreadsheet-container-row {
+        position: absolute;
+        left: 0;
+        top: 100px;
+        width: 50px;
+        bottom: 20px;
+        overflow: hidden;
+}
+
+.spreadsheet-container-row-inner {
+        width: 100%;
+}
+
+#spreadsheet-table-row {
+        table-layout: fixed;
+        width: 100%;
+        height: 100%;
+        border-spacing: 0px !important;
+        border-collapse: collapse !important;
+        position: relative;
+}
+
+.spreadsheet-table-row-cell {
+        border: 1px solid black;
+        background-color: darkgrey;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 90%;
+        padding: 0px;
+        margin: 0px;
 }
 
 .spreadsheet-tab {

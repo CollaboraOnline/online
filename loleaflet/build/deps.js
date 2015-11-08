@@ -282,6 +282,20 @@ var deps = {
 		desc: 'Parts preview sidebar'
 	},
 
+        ControlColumnHeader: {
+                src: ['control/Control.js',
+                      'control/Control.ColumnHeader.js'],
+                heading: 'Controls',
+                desc: 'Column Header bar'
+        },
+
+        ControlRowHeader: {
+                src: ['control/Control.js',
+                      'control/Control.RowHeader.js'],
+                heading: 'Controls',
+                desc: 'Row Header bar'
+        },
+
 	ControlTabs: {
 		src: ['control/Control.js',
 		      'control/Control.Tabs.js'],
