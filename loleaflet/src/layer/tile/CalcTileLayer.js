@@ -12,6 +12,7 @@ L.CalcTileLayer = L.TileLayer.extend({
                 map.addControl(this._rows);
                 map.addControl(L.control.tabs());
                 map.on('scroll', this._onScroll, this);
+                map.on('zoomend', this._onZoomRowColumns, this);
         },
 
 	_onInvalidateTilesMsg: function (textMsg) {
@@ -113,6 +114,11 @@ L.CalcTileLayer = L.TileLayer.extend({
         _onScroll: function(point) {
                 this._columns.offsetColumn(point.left);
                 this._rows.offsetRow(point.top);
+        },
+
+        _onZoomRowColumns: function () {
+                this._columns.updateColumns(this._twipsToPixels, this);
+                this._rows.updateRows(this._twipsToPixels, this);
         },
 
 	_onStatusMsg: function (textMsg) {
