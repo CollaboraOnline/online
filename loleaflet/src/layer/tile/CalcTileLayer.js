@@ -136,5 +136,18 @@ L.CalcTileLayer = L.TileLayer.extend({
 				this._preFetchBorder = null;
 			}
 		}
-	}
+
+                L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+	},
+
+        _onCommandValuesMsg: function (textMsg) {
+                if (textMsg.match('.uno:ViewRowColumnHeaders')) {
+                        var data = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+                        this._columns.fillColumns(data.columns, this._twipsToPixels, this);
+                        this._rows.fillRows(data.rows, this._twipsToPixels, this);
+                }
+                else {
+                        L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+                }
+        }
 });
