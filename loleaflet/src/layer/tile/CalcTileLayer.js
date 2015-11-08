@@ -11,6 +11,7 @@ L.CalcTileLayer = L.TileLayer.extend({
                 map.addControl(this._columns);
                 map.addControl(this._rows);
                 map.addControl(L.control.tabs());
+                map.on('scroll', this._onScroll, this);
         },
 
 	_onInvalidateTilesMsg: function (textMsg) {
@@ -108,6 +109,11 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
 		}
 	},
+
+        _onScroll: function(point) {
+                this._columns.offsetColumn(point.left);
+                this._rows.offsetRow(point.top);
+        },
 
 	_onStatusMsg: function (textMsg) {
 		var command = L.Socket.parseServerCmd(textMsg);
