@@ -105,7 +105,7 @@ DEALINGS IN THE SOFTWARE.
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
-#include "tsqueue.h"
+#include "MessageQueue.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -149,7 +149,7 @@ using Poco::NamedMutex;
 class QueueHandler: public Runnable
 {
 public:
-    QueueHandler(tsqueue<std::string>& queue):
+    QueueHandler(MessageQueue& queue):
         _queue(queue)
     {
     }
@@ -178,7 +178,7 @@ public:
 
 private:
     std::shared_ptr<LOOLSession> _session;
-    tsqueue<std::string>& _queue;
+    MessageQueue& _queue;
 };
 
 /// Handles the filename part of the convert-to POST request payload.
@@ -347,7 +347,7 @@ public:
             return;
         }
 
-        tsqueue<std::string> queue;
+        BasicTileQueue queue;
         Thread queueHandlerThread;
         QueueHandler handler(queue);
 
@@ -392,22 +392,7 @@ public:
 
                         if (kind == LOOLSession::Kind::ToClient && firstLine.size() == static_cast<std::string::size_type>(n))
                         {
-                            // Check if it is a "canceltiles" and in that case remove outstanding
-                            // "tile" messages from the queue.
-                            if (tokens.count() == 1 && tokens[0] == "canceltiles")
-                            {
-                                queue.remove_if([](std::string& x) {
-                                    return (x.find("tile ") == 0 && x.find("id=") == std::string::npos);
-                                });
-
-                                // Also forward the "canceltiles" to the child process, if any
-                                session->handleInput(buffer, n);
-                            }
-                            // Filter out duplicated tile messages.
-                            else if ((firstLine.compare(0, 5, "tile ") != 0) || !queue.alreadyInQueue(firstLine))
-                            {
-                                queue.put(firstLine);
-                            }
+                            queue.put(firstLine);
                         }
                         else
                         {
@@ -928,7 +913,7 @@ void LOOLWSD::componentMain()
         std::string hello("child " + std::to_string(_childId) + " " + std::to_string(Process::id()));
         session->sendTextFrame(hello);
 
-        tsqueue<std::string> queue;
+        TileQueue queue;
         Thread queueHandlerThread;
         QueueHandler handler(queue);
 
@@ -950,19 +935,7 @@ void LOOLWSD::componentMain()
                 // The only kind of messages a child process receives are the single-line ones (?)
                 assert(firstLine.size() == static_cast<std::string::size_type>(n));
 
-                // Check if it is a "canceltiles" and in that case remove outstanding
-                // "tile" messages from the queue.
-                if (tokens.count() == 1 && tokens[0] == "canceltiles")
-                {
-                    queue.remove_if([](std::string& x) {
-                        return (x.find("tile ") == 0 && x.find("id=") == std::string::npos);
-                    });
-                }
-                // Filter out duplicated tile messages.
-                else if ((firstLine.compare(0, 5, "tile ") != 0) || !queue.alreadyInQueue(firstLine))
-                {
-                    queue.put(firstLine);
-                }
+                queue.put(firstLine);
             }
         }
         while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);

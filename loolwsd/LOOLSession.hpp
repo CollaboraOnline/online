@@ -29,8 +29,8 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/Types.h>
 
+#include "MessageQueue.hpp"
 #include "TileCache.hpp"
-#include "tsqueue.h"
 
 // We have three kinds of Websocket sessions
 // 1) Between the master loolwsd server to the end-user LOOL client
@@ -159,7 +159,7 @@ private:
     int _curPart;
     int _loadPart;
     /// Kind::ToClient instances store URLs of completed 'save as' documents.
-    tsqueue<std::string> _saveAsQueue;
+    MessageQueue _saveAsQueue;
 };
 
 class ChildProcessSession final : public LOOLSession
