@@ -834,10 +834,24 @@ extern "C"
                 StringTokenizer tokens(std::string(pPayload), " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (tokens.count() == 4)
                 {
-                    int x(std::stoi(tokens[0]));
-                    int y(std::stoi(tokens[1]));
-                    int width(std::stoi(tokens[2]));
-                    int height(std::stoi(tokens[3]));
+                    int x, y, width, height;
+
+                    try {
+                        x = std::stoi(tokens[0]);
+                        y = std::stoi(tokens[1]);
+                        width = std::stoi(tokens[2]);
+                        height = std::stoi(tokens[3]);
+                    }
+                    catch (std::out_of_range&)
+                    {
+                        // something went wrong, invalidate everything
+                        Application::instance().logger().information(Util::logPrefix() + "Ignoring integer values out of range: " + pPayload);
+                        x = 0;
+                        y = 0;
+                        width = INT_MAX;
+                        height = INT_MAX;
+                    }
+
                     srv->sendTextFrame("invalidatetiles:"
                                        " part=" + std::to_string(curPart) +
                                        " x=" + std::to_string(x) +
