@@ -114,7 +114,9 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('paste', this._onPaste, this);
 		map.on('zoomend', this._onUpdateCursor, this);
 		map.on('zoomend', this._onUpdatePartPageRectangles, this);
-		map.on('zoomend', this._onCellCursorShift, this);
+		if (this._docType === 'spreadsheet') {
+			map.on('zoomend', this._onCellCursorShift, this);
+		}
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
