@@ -699,15 +699,21 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
 
     Application::instance().logger().information(Util::logPrefix() + _kindString + ",Input," + getAbbreviatedMessage(buffer, length));
 
-    if (tokens[0] == "commandvalues")
+    if (tokens[0] == "canceltiles")
+    {
+        // this command makes sense only on the command queue level, nothing
+        // to do here
+        return true;
+    }
+    else if (tokens[0] == "commandvalues")
     {
         return getCommandValues(buffer, length, tokens);
     }
-    if (tokens[0] == "partpagerectangles")
+    else if (tokens[0] == "partpagerectangles")
     {
         return getPartPageRectangles(buffer, length);
     }
-    if (tokens[0] == "load")
+    else if (tokens[0] == "load")
     {
         if (_docURL != "")
         {
