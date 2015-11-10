@@ -359,6 +359,13 @@ var deps = {
 		desc: 'Handles fonts selection'
 	},
 
+	ControlFormulaBar: {
+		src: ['control/Control.js',
+		      'control/Control.Formulabar.js'],
+		heading: 'Controls',
+		desc: 'Handles the formula bar in calc'
+	},
+
 	ControlAttrib: {
 		src: ['control/Control.js',
 		      'control/Control.Attribution.js'],

@@ -94,5 +94,15 @@ L.Map.include({
 
 	insertFile: function (file) {
 		this.fire('insertfile', {file: file});
+	},
+
+	cellEnterString: function (string) {
+		var command = {
+			'StringName': {
+				type: 'string',
+				value: string
+			}
+		};
+		L.Socket.sendMessage('uno .uno:EnterString ' + JSON.stringify(command));
 	}
 });

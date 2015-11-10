@@ -897,9 +897,11 @@ extern "C"
         case LOK_CALLBACK_CELL_CURSOR:
             srv->sendTextFrame("cellcursor: " + std::string(pPayload));
             break;
+        case LOK_CALLBACK_CELL_FORMULA:
+            srv->sendTextFrame("cellformula: " + std::string(pPayload));
+            break;
         case LOK_CALLBACK_MOUSE_POINTER:
             srv->sendTextFrame("mousepointer: " + std::string(pPayload));
-            break;
         case LOK_CALLBACK_HYPERLINK_CLICKED:
             srv->sendTextFrame("hyperlinkclicked: " + std::string(pPayload));
             break;

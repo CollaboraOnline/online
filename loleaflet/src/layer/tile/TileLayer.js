@@ -229,6 +229,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('cellcursor:')) {
 			this._onCellCursorMsg(textMsg);
 		}
+		else if (textMsg.startsWith('cellformula:')) {
+			this._onCellFormulaMsg(textMsg);
+		}
 		else if (textMsg.startsWith('hyperlinkclicked:')) {
 			this._onHyperlinkClickedMsg(textMsg);
 		}
@@ -301,6 +304,11 @@ L.TileLayer = L.GridLayer.extend({
 				commandValues: obj.commandValues
 			});
 		}
+	},
+
+	_onCellFormulaMsg: function (textMsg) {
+		var formula = textMsg.substring(13);
+		this._map.fire('cellformula', {formula: formula});
 	},
 
 	_onCursorVisibleMsg: function(textMsg) {
