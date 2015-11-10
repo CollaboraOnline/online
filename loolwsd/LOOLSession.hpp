@@ -184,6 +184,7 @@ public:
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
+    bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool downloadAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool getChildId();
     bool getTextSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);

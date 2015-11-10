@@ -95,6 +95,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._previewInvalidations = [];
 		this._partPageRectanglesTwips = [];
 		this._partPageRectanglesPixels = [];
+		this._clientZoom = 'tilepixelwidth=' + this.options.tileSize + ' ' +
+			'tilepixelheight=' + this.options.tileSize + ' ' +
+			'tiletwipwidth=' + this.options.tileWidthTwips + ' ' +
+			'tiletwipheight=' + this.options.tileHeightTwips;
 	},
 
     onAdd: function (map) {
@@ -117,6 +121,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._docType === 'spreadsheet') {
 			map.on('zoomend', this._onCellCursorShift, this);
 		}
+		map.on('zoomend', this._updateClientZoom, this);
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
@@ -633,12 +638,22 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
+		if (this._clientZoom) {
+			// the zoom level has changed
+			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
+			this._clientZoom = null;
+		}
 		L.Socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
 				' buttons=' + buttons + ' modifier=' + modifier);
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
+		if (this._clientZoom) {
+			// the zoom level has changed
+			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
+			this._clientZoom = null;
+		}
 		L.Socket.sendMessage('key type=' + type +
 				' char=' + charcode + ' key=' + keycode);
 	},
@@ -1027,6 +1042,13 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		this._previewInvalidations = [];
+	},
+
+	_updateClientZoom: function () {
+		this._clientZoom = 'tilepixelwidth=' + this._tileSize + ' ' +
+			'tilepixelheight=' + this._tileSize + ' ' +
+			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
+			'tiletwipheight=' + this._tileHeightTwips;
 	}
 });
 

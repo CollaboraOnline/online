@@ -317,6 +317,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         return loadDocument(buffer, length, tokens);
     }
     else if (tokens[0] != "canceltiles" &&
+             tokens[0] != "clientzoom" &&
              tokens[0] != "commandvalues" &&
              tokens[0] != "downloadas" &&
              tokens[0] != "getchildid" &&
@@ -748,7 +749,8 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         // All other commands are such that they always require a LibreOfficeKitDocument session,
         // i.e. need to be handled in a child process.
 
-        assert(tokens[0] == "downloadas" ||
+        assert(tokens[0] == "clientzoom" ||
+               tokens[0] == "downloadas" ||
                tokens[0] == "getchildid" ||
                tokens[0] == "gettextselection" ||
                tokens[0] == "paste" ||
@@ -765,13 +767,17 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         {
             _loKitDocument->pClass->setPart(_loKitDocument, _clientPart);
         }
-        if (tokens[0] == "getchildid")
+        if (tokens[0] == "clientzoom")
         {
-            return getChildId();
+            return clientZoom(buffer, length, tokens);
         }
         else if (tokens[0] == "downloadas")
         {
             return downloadAs(buffer, length, tokens);
+        }
+        else if (tokens[0] == "getchildid")
+        {
+            return getChildId();
         }
         else if (tokens[0] == "gettextselection")
         {
@@ -1084,6 +1090,23 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     sendBinaryFrame(output.data(), output.size());
 }
 
+bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+{
+    int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+
+    if (tokens.count() != 5 ||
+        !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
+        !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
+        !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
+        !getTokenInteger(tokens[4], "tiletwipheight", tileTwipHeight))
+    {
+        sendTextFrame("error: cmd=clientzoom kind=syntax");
+        return false;
+    }
+
+    _loKitDocument->pClass->setClientZoom(_loKitDocument, tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
+    return true;
+}
 bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string name, id, format, filterOptions;
