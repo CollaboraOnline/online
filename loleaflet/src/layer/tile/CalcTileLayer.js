@@ -11,7 +11,8 @@ L.CalcTileLayer = L.TileLayer.extend({
                 map.addControl(this._columns);
                 map.addControl(this._rows);
                 map.addControl(L.control.tabs());
-                map.on('scroll', this._onScroll, this);
+                map.on('scrolloffset', this._onScrollOffset, this);
+                map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
                 map.on('zoomend', this._onZoomRowColumns, this);
         },
 
@@ -111,9 +112,14 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 	},
 
-        _onScroll: function(point) {
-                this._columns.offsetColumn(point.left);
-                this._rows.offsetRow(point.top);
+        _onScrollOffset: function(offset) {
+                this._columns.offsetScrollPosition(offset.x);
+                this._rows.offsetScrollPosition(offset.y);
+        },
+
+        _onUpdateScrollOffset: function (e) {
+                this._columns.setScrollPosition(-e.x);
+                this._rows.setScrollPosition(-e.y);
         },
 
         _onZoomRowColumns: function () {

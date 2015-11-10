@@ -11,6 +11,8 @@ L.Control.RowHeader = L.Control.extend({
                 this._table.id = 'spreadsheet-table-row';
                 this._rows = L.DomUtil.create('tbody', '', this._table);
 
+                this._position = 0;
+
                 // dummy initial row header
                 var row = L.DomUtil.create('tr', '', this._rows);
                 L.DomUtil.create('th','spreadsheet-table-row-cell', row);
@@ -23,8 +25,14 @@ L.Control.RowHeader = L.Control.extend({
                 this._rows = L.DomUtil.create('tbody', '', this._table);
         },
 
-        offsetRow: function (value) {
-                L.DomUtil.setStyle(this._table, 'top', value + 'px');
+        setScrollPosition: function (position) {
+                this._position = position;
+                L.DomUtil.setStyle(this._table, 'top', this._position + 'px');
+        },
+
+        offsetScrollPosition: function (offset) {
+                this._position = this._position - offset;
+                L.DomUtil.setStyle(this._table, 'top', this._position + 'px');
         },
 
         fillRows: function (rows, converter, context) {

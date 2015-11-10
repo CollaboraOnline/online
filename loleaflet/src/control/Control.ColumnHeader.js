@@ -17,6 +17,8 @@ L.Control.ColumnHeader = L.Control.extend({
                 L.DomUtil.create('tbody', '', this._table);
                 this._columns = L.DomUtil.create('tr','', this._table.firstChild);
 
+                this._position = 0;
+
                 // dummy initial header
                 L.DomUtil.create('th','spreadsheet-table-column-cell', this._columns);
 
@@ -28,8 +30,15 @@ L.Control.ColumnHeader = L.Control.extend({
                 this._columns = L.DomUtil.create('tr', '', this._table.firstChild);
         },
 
-        offsetColumn: function (point) {
-                L.DomUtil.setStyle(this._table, 'left', point + 'px');
+
+        setScrollPosition: function (position) {
+                this._position = position;
+                L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
+        },
+
+        offsetScrollPosition: function (offset) {
+                this._position = this._position - offset;
+                L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
         },
 
         fillColumns: function (columns, converter, context) {

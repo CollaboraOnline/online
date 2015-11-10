@@ -55,14 +55,13 @@ L.Control.Scroll = L.Control.extend({
 			this._prevScrollY = -e.mcs.top;
 			this._prevScrollX = -e.mcs.left;
 			this._map.scroll(offset.x, offset.y);
+                        this._map.fire('scrolloffset', offset);
 		}
-                this._map.fire('scroll', e.mcs);
 	},
 
 	_onScrollEnd: function (e) {
 		this._prevScrollY = -e.mcs.top;
 		this._prevScrollX = -e.mcs.left;
-                this._map.fire('scroll', e.mcs);
 	},
 
 	_onScrollTo: function (e) {
