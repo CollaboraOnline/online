@@ -241,6 +241,9 @@ L.TileLayer = L.GridLayer.extend({
 			msg += 'height=' + this._docHeightTwips;
 			this._onInvalidateTilesMsg(msg);
 		}
+		else if (textMsg.startsWith('mousepointer:')) {
+			this._onMousePointerMsg(textMsg);
+		}
 		else if (textMsg.startsWith('partpagerectangles:')) {
 			this._onPartPageRectanglesMsg(textMsg);
 		}
@@ -374,6 +377,11 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateCellCursor();
+	},
+
+	_onMousePointerMsg: function (textMsg) {
+		textMsg = textMsg.substring(14); // "mousepointer: "
+		this._map._container.style.cursor = textMsg;
 	},
 
 	_onHyperlinkClickedMsg: function (textMsg) {
