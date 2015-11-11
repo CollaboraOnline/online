@@ -49,6 +49,9 @@ L.Control.Styles = L.Control.extend({
 				       this._map.getDocType() === 'drawing') {
 				styles = e.commandValues['Default'];
 			}
+			else if (this._map.getDocType() === 'spreadsheet' ) {
+				styles = e.commandValues['CellStyles'];
+			}
 
 			this._addSeparator();
 			if (e.commandValues['ClearStyle']) {
