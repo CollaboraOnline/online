@@ -73,7 +73,7 @@ Search:
 Zoom:
     - API:
         map.zoomIn(amount)
-        map.zoomOut(amout)
+        map.zoomOut(amount)
         map.getMinZoom()
         map.getMaxZoom()
     - events:
@@ -131,7 +131,7 @@ Parts (like slides in presentation, or sheets in spreadsheets):
         map.on('tilepreview', function (e) {}) where:
             + e.tile - the preview image
             + e.id - the preview id
-            + e.width - widht of the image
+            + e.width - width of the image
             + e.height - height of the image
             + [e.part] - if the preview is for a part
             + e.docType
@@ -161,7 +161,7 @@ Scroll (the following are measured in pixels):
         map.scrollDown(y, options)
             + scroll down by 'y' (or up if negative)
         map.scrollRight(x, options)
-            + scroll right by 'x' (or left if nevative)
+            + scroll right by 'x' (or left if negative)
         map.scrollTop(y, options)
             + scroll to 'y' offset relative to the beginning of the document
         map.scrollLeft(x, options)
@@ -239,7 +239,7 @@ CommandValues:
         map.applyStyle(style, styleFamily)
     - events
         map.on('updatetoolbarcommandvalues', function (e) {}) where
-            + e.commandName = '.uno:StyleAplly', etc
+            + e.commandName = '.uno:StyleApply', etc
             + e.commandValues = a JSON mapping of all possible values for the command
 
 Print:
