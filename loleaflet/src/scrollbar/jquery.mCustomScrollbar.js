@@ -1472,6 +1472,9 @@ and dependencies (minified).
 			mCustomScrollBox.bind("mousewheel."+namespace,function(e,delta){
 				_onMousewheel(e,delta);
 			});
+			$("#document-container").bind("mousewheel",function(e,delta) {
+				_onMousewheel(e,delta);
+			});
 			function _onMousewheel(e,delta){
 				_stop($this);
 				if(_disableMousewheel($this,e.target)){return;} /* disables mouse-wheel when hovering specific elements */
@@ -1693,6 +1696,9 @@ and dependencies (minified).
 				});
 			}
 			mCustomScrollBox.attr("tabindex","0").bind(events[0],function(e){
+				_onKeyboard(e);
+			});
+			$("#document-container").bind('keydown keyup blur', function(e) {
 				_onKeyboard(e);
 			});
 			function _onKeyboard(e){
