@@ -35,14 +35,19 @@ L.Control.Styles = L.Control.extend({
 			var container = this._container;
 			var first = L.DomUtil.create('option', '', container);
 			first.innerHTML = this.options.info;
+
+			var styles = [];
+			var topStyles = [];
 			if (this._map.getDocType() === 'text') {
-				var styles = e.commandValues['ParagraphStyles'].slice(0, 12);
+				// The list contains a total of 100+ styles, the first 7 are
+				// the default styles (as shown on desktop writer), we then
+				// also show a selection of 12 more styles.
+				styles = e.commandValues['ParagraphStyles'].slice(7, 19);
+				topStyles = e.commandValues['ParagraphStyles'].slice(0, 7);
 			}
-			else if (this._map.getDocType() === 'presentation') {
+			else if (this._map.getDocType() === 'presentation' ||
+				       this._map.getDocType() === 'drawing') {
 				styles = e.commandValues['Default'];
-			}
-			else {
-				styles = [];
 			}
 
 			this._addSeparator();
@@ -51,11 +56,26 @@ L.Control.Styles = L.Control.extend({
 				item.value = 'ClearStyle';
 				item.innerHTML = e.commandValues['ClearStyle'];
 			}
-			styles.forEach(function (style) {
-				var item = L.DomUtil.create('option', '', container);
-				item.value = style;
-				item.innerHTML = style;
-			});
+
+			if (topStyles.length > 0) {
+				this._addSeparator();
+
+				topStyles.forEach(function (style) {
+					var item = L.DomUtil.create('option', '', container);
+					item.value = style;
+					item.innerHTML = style;
+				});
+			}
+
+			if (styles.length > 0) {
+				this._addSeparator();
+
+				styles.forEach(function (style) {
+					var item = L.DomUtil.create('option', '', container);
+					item.value = style;
+					item.innerHTML = style;
+				});
+			}
 		}
 	},
 
