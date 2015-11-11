@@ -29,9 +29,6 @@ L.Control.Scroll = L.Control.extend({
 					control._onScroll(this);
 				},
 				alwaysTriggerOffsets: false
-			},
-			advanced: {
-				releaseDraggableSelectors: top.document
 			}
 		});
 		return document.createElement('div');
