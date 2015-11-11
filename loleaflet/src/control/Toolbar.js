@@ -77,6 +77,12 @@ L.Map.include({
 		}
 	},
 
+	clearStyle: function () {
+		if (this._docLayer._permission === 'edit') {
+			L.Socket.sendMessage('uno .uno:ResetAttributes');
+		}
+	},
+
 	toggleCommandState: function (unoState) {
 		if (this._docLayer._permission === 'edit') {
 			if (!unoState.startsWith('.uno:')) {

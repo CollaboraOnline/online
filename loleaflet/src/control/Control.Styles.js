@@ -23,6 +23,13 @@ L.Control.Styles = L.Control.extend({
 		map.off('updatepermission', this._searchResultFound, this);
 	},
 
+	_addSeparator: function () {
+		var item = L.DomUtil.create('option', '', this._container);
+		item.disabled = true;
+		item.value = 'separator';
+		item.innerHTML = '&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;';
+	},
+
 	_initList: function (e) {
 		if (e.commandName === '.uno:StyleApply') {
 			var container = this._container;
@@ -36,6 +43,13 @@ L.Control.Styles = L.Control.extend({
 			}
 			else {
 				styles = [];
+			}
+
+			this._addSeparator();
+			if (e.commandValues['ClearStyle']) {
+				var item = L.DomUtil.create('option', '', container);
+				item.value = 'ClearStyle';
+				item.innerHTML = e.commandValues['ClearStyle'];
 			}
 			styles.forEach(function (style) {
 				var item = L.DomUtil.create('option', '', container);
@@ -59,7 +73,10 @@ L.Control.Styles = L.Control.extend({
 		if (style === this.options.info) {
 			return;
 		}
-		if (this._map.getDocType() === 'text') {
+		if (style === 'ClearStyle') {
+			this._map.clearStyle();
+		}
+		else if (this._map.getDocType() === 'text') {
 			this._map.applyStyle(style, 'ParagraphStyles');
 		}
 		else if (this._map.getDocType() === 'presentation') {
