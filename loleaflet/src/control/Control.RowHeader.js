@@ -39,27 +39,31 @@ L.Control.RowHeader = L.Control.extend({
                 var iterator, twip, height, row, cell;
 
                 this.clearRows();
+                var totalHeight = -1;
                 for (iterator = 0; iterator < rows.length; iterator++) {
                         twip = new L.Point(parseInt(rows[iterator].size),
                                            parseInt(rows[iterator].size));
-                        height =  Math.round(converter.call(context, twip).y) - 2;
+                        height =  Math.round(converter.call(context, twip).y) - 2 - totalHeight;
                         row  = L.DomUtil.create('tr', '', this._rows);
                         cell = L.DomUtil.create('th', 'spreadsheet-table-row-cell', row);
                         cell.innerHTML  = rows[iterator].text;
                         cell.twipHeight = rows[iterator].size;
                         cell.height = height + "px";
+                        totalHeight += height + 1;
                 }
         },
 
         updateRows: function (converter, context) {
                 var iterator, twip, height, row;
 
+                var totalHeight = -1;
                 for (iterator = 0; iterator < this._rows.childNodes.length; iterator++) {
                         row  = this._rows.childNodes[iterator].firstChild;
                         twip = new L.Point(parseInt(row.twipHeight),
                                            parseInt(row.twipHeight));
-                        height =  Math.round(converter.call(context, twip).y) - 1;
+                        height =  Math.round(converter.call(context, twip).y) - 2 - totalHeight;
                         row.height = height + "px";
+                        totalHeight += height + 1;
                 }
         }
 })
