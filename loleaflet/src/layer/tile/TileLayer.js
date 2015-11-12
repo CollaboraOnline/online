@@ -798,7 +798,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			this._map.addLayer(this._cellCursorMarker);
 		}
-		else if (this._cellCursor) {
+		else if (this._cellCursorMarker) {
 			this._map.removeLayer(this._cellCursorMarker);
 		}
 	},
