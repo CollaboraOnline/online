@@ -77,9 +77,9 @@ L.Map.include({
 		}
 	},
 
-	clearStyle: function () {
+	sendUnoCommand: function (command) {
 		if (this._docLayer._permission === 'edit') {
-			L.Socket.sendMessage('uno .uno:ResetAttributes');
+			L.Socket.sendMessage('uno ' + command);
 		}
 	},
 
@@ -88,7 +88,7 @@ L.Map.include({
 			if (!unoState.startsWith('.uno:')) {
 				unoState = '.uno:' + unoState;
 			}
-			L.Socket.sendMessage('uno ' + unoState);
+			sendUnoCommand(unoState);
 		}
 	},
 

@@ -53,11 +53,14 @@ L.Control.Styles = L.Control.extend({
 				styles = e.commandValues['CellStyles'];
 			}
 
-			this._addSeparator();
-			if (e.commandValues['ClearStyle']) {
-				var item = L.DomUtil.create('option', '', container);
-				item.value = 'ClearStyle';
-				item.innerHTML = e.commandValues['ClearStyle'];
+			var commands = e.commandValues['Commands'];
+			if (commands && commands.length > 0) {
+				this._addSeparator();
+				commands.forEach(function (command) {
+					var item = L.DomUtil.create('option', '', container);
+					item.value = command.command;
+					item.innerHTML = command.name;
+				});
 			}
 
 			if (topStyles.length > 0) {
@@ -96,8 +99,8 @@ L.Control.Styles = L.Control.extend({
 		if (style === this.options.info) {
 			return;
 		}
-		if (style === 'ClearStyle') {
-			this._map.clearStyle();
+		if (style.startsWith('.uno:')) {
+			this._map.sendUnoCommand(style);
 		}
 		else if (this._map.getDocType() === 'text') {
 			this._map.applyStyle(style, 'ParagraphStyles');
