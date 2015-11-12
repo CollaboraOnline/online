@@ -53,6 +53,8 @@ L.TileLayer = L.GridLayer.extend({
 		if (!L.Browser.android) {
 			this.on('tileunload', this._onTileRemove);
 		}
+		// text, presentation, spreadsheet, etc
+		this._docType = options.docType;
 		this._documentInfo = '';
 		// View or edit mode.
 		this._permission = 'view';

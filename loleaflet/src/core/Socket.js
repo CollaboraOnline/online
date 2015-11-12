@@ -102,13 +102,15 @@ L.Socket = {
 			if (command.type === 'text') {
 				docLayer = new L.WriterTileLayer('', {
 					edit: this._map.options.edit,
-					readOnly: this._map.options.readOnly
+					readOnly: this._map.options.readOnly,
+					docType: command.type
 				});
 			}
 			else if (command.type === 'spreadsheet') {
 				docLayer = new L.CalcTileLayer('', {
 					edit: this._map.options.edit,
-					readOnly: this._map.options.readOnly
+					readOnly: this._map.options.readOnly,
+					docType: command.type
 				});
 			}
 			else {
@@ -123,7 +125,8 @@ L.Socket = {
 					edit: this._map.options.edit,
 					readOnly: this._map.options.readOnly,
 					tileWidthTwips: tileTwipsSize,
-					tileHeightTwips: tileTwipsSize
+					tileHeightTwips: tileTwipsSize,
+					docType: command.type
 				});
 			}
 
