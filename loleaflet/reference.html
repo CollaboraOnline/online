@@ -64,6 +64,7 @@
 			<li><a href="#loleaflet-part">Part oriented</a></li>
 			<li><a href="#loleaflet-events">Events</a></li>
 			<li><a href="#loleaflet-object-values">Object values</a></li>
+			<li><a href="#loleaflet-uno-commands">Uno commands</a></li>
 		</ul>
 		<h4>UI Layers</h4>
 		<ul>
@@ -2316,6 +2317,18 @@ var map = L.map('map', {
 		<td><code><b>'.uno:CharFontName'</b></code></td>
 		<td><code>String</code></td>
 		<td>Font related uno command.</td>
+	</tr>
+</table>
+
+<h2 id="loleaflet-uno-commands">Object values</h2>
+
+<p>A list of common uno commands with their additional parameters.</p>
+
+<table data-id='values' id='uno-commands-table'>
+	<tr>
+		<th class="width100">command</th>
+		<th class="width100">parameter</th>
+		<th>description</th>
 	</tr>
 </table>
 
@@ -7838,20 +7851,210 @@ for (var i = 0, len = tables.length; i < len; i++) {
 </script>
 
 <script>
-	var _gaq = _gaq || [];
-	_gaq.push([ '_setAccount', 'UA-4147697-4' ]);
-	_gaq.push([ '_trackPageview' ]);
+// I've tried to order them alphabetically, feel free to modify if some are not in the correct order
+var unoCommands = [
+{
+    uno: '.uno:BackColor',
+    parameter: {
+        'BackColor': {
+            type: 'long',
+            value: 16750848
+        }
+    },
+    description: 'Apply a highlighting color (the value can be obtained by converting the base 16 color to base 10).'
+},
 
-	(function() {
-		var ga = document.createElement('script');
-		ga.type = 'text/javascript';
-		ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
-				: 'http://www')
-				+ '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0];
-		s.parentNode.insertBefore(ga, s);
-	})();
+{
+    uno: '.uno:Bold',
+    parameter: null,
+    description: 'Bold.'
+},
+
+{
+    uno: '.uno:CenterPara',
+    parameter: null,
+    description: 'Center horizontaly.'
+},
+
+{
+    uno: '.uno:CharFontName',
+    parameter: {
+        'CharFontName.FamilyName': {
+            type: 'string',
+            value: 'Arial'
+        }
+    },
+    description: 'Apply font.'
+},
+
+{
+    uno: '.uno:DecrementIndent',
+    parameter: null,
+    description: 'Decrement paragraph indentation.'
+},
+
+{
+    uno: '.uno:DefaultBullet',
+    parameter: null,
+    description: 'Bullets ON/OFF.'
+},
+
+{
+    uno: '.uno:DefaultNumbering',
+    parameter: null,
+    description: 'Numbering ON/OFF.'
+},
+
+{
+    uno: '.uno:EnterString',
+    parameter: {
+        'StringName': {
+            type: 'string',
+            value: '=SUM()'
+        }
+    },
+    description: 'Enters the string in the selected cell.'
+},
+
+{
+    uno: '.uno:FontColor',
+    parameter: {
+        'FontColor': {
+            type: 'long',
+            value: 16750848
+        }
+    },
+    description: 'Apply a font color (the value can be obtained by converting the base 16 color to base 10).'
+},
+
+{
+    uno: '.uno:FontHeight',
+    parameter: {
+        'FontHeight.Height': {
+            type: 'float',
+            value: '11.5'
+        }
+    },
+    description: 'Apply font size.'
+},
+
+{
+    uno: '.uno:IncrementIndent',
+    parameter: null,
+    description: 'Increment paragraph indentation.'
+},
+
+{
+    uno: '.uno:Italic',
+    parameter: null,
+    description: 'Italic.'
+},
+
+{
+    uno: '.uno:JustifyPara',
+    parameter: null,
+    description: 'Justified.'
+},
+
+{
+    uno: '.uno:LeftPara',
+    parameter: null,
+    description: 'Align left.'
+},
+
+{
+    uno: '.uno:OutlineFont',
+    parameter: null,
+    description: 'Outline.'
+},
+
+{
+    uno: '.uno:Redo',
+    parameter: null,
+    description: 'Redo.'
+},
+
+{
+    uno: '.uno:ResetAttributes',
+    parameter: null,
+    description: 'Clear direct formating.'
+},
+
+{
+    uno: '.uno:RightPara',
+    parameter: null,
+    description: 'Align right.'
+},
+
+{
+    uno: '.uno:StyleApply',
+    parameter: {
+        'Style': {
+            type: 'string',
+            value: 'Title'
+        },
+        'FamilyName': {
+            type: 'string',
+            value: 'ParagraphStyles'
+        }
+    },
+    description: 'Apply style from style family.'
+},
+
+{
+    uno: '.uno:Save',
+    parameter: null,
+    description: 'Save the document.'
+},
+
+{
+    uno: '.uno:Shadowed',
+    parameter: null,
+    description: 'Shadowed.'
+},
+
+{
+    uno: '.uno:SubScript',
+    parameter: null,
+    description: 'Subscript.'
+},
+
+{
+    uno: '.uno:SuperScript',
+    parameter: null,
+    description: 'Superscript.'
+},
+
+{
+    uno: '.uno:Strikeout',
+    parameter: null,
+    description: 'Strikeout / strike-through.'
+},
+
+{
+    uno: '.uno:Underline',
+    parameter: null,
+    description: 'Underline.'
+},
+
+{
+    uno: '.uno:Undo',
+    parameter: null,
+    description: 'Undo.'
+},
+
+];
+$(document).ready(function() {
+    var table = $('#uno-commands-table');
+    unoCommands.forEach(function (unoCommand) {
+        table.append(
+            '<tr>' +
+            '	<td><code><b>' + unoCommand.uno + '</b></code></td>' +
+            '	<td><code><pre>' + JSON.stringify(unoCommand.parameter, null, 2) + '</pre></code></td>' +
+            '	<td>' + unoCommand.description + '</td>' +
+            '</tr>');
+    });
+});
 </script>
 
 <script type="text/javascript" src="docs/js/docs.js"></script>
