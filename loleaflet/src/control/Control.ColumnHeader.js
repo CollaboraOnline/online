@@ -45,25 +45,29 @@ L.Control.ColumnHeader = L.Control.extend({
                 var twip, width, column;
 
                 this.clearColumns();
+                var totalWidth = -1; // beginning offset 1 due to lack of previous column
                 for (iterator = 0; iterator < columns.length; iterator++) {
                         twip = new L.Point(parseInt(columns[iterator].size),
                                            parseInt(columns[iterator].size));
-                        width =  Math.round(converter.call(context, twip).x) - 1;
+                        width =  Math.round(converter.call(context, twip).x) - 2 - totalWidth;
                         column = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
                         column.innerHTML = columns[iterator].text;
                         column.twipWidth = columns[iterator].size;
                         column.width = width + "px";
+                        totalWidth += width + 1;
                 }
         },
 
         updateColumns: function (converter, context) {
                 var iterator, twip, width, column;
+                var totalWidth = -1;
                 for (iterator = 0; iterator < this._columns.childNodes.length; iterator++) {
                         column = this._columns.childNodes[iterator];
                         twip = new L.Point(parseInt(column.twipWidth),
                                            parseInt(column.twipWidth));
-                        width =  Math.round(converter.call(context, twip).x) - 1;
+                        width =  Math.round(converter.call(context, twip).x) - 2 - totalWidth;
                         column.width = width + "px";
+                        totalWidth += width + 1;
                 }
         }
 })
