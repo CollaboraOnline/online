@@ -46,7 +46,9 @@ L.Socket = {
 	_onOpen: function () {
 		var msg = 'load url=' + this._map.options.doc;
 		if (this._map._docLayer) {
+			// we are reconnecting after a lost connection
 			msg += ' part=' + this._map.getCurrentPartNumber();
+			map.fire('statusindicator', {statusType : 'reconnected'});
 		}
 		if (this._map.options.timestamp) {
 			msg += ' timestamp=' + this._map.options.timestamp;
