@@ -58,8 +58,8 @@ L.Control.Styles = L.Control.extend({
 				this._addSeparator();
 				commands.forEach(function (command) {
 					var item = L.DomUtil.create('option', '', container);
-					item.value = command.command;
-					item.innerHTML = command.name;
+					item.value = command.id;
+					item.innerHTML = command.text;
 				});
 			}
 
