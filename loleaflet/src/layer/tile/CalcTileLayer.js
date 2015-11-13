@@ -4,17 +4,17 @@
 
 L.CalcTileLayer = L.TileLayer.extend({
 
-        beforeAdd: function (map) {
-                map._addZoomLimit(this);
-                this._columns = L.control.columnHeader();
-                this._rows = L.control.rowHeader();
-                map.addControl(this._columns);
-                map.addControl(this._rows);
-                map.addControl(L.control.tabs());
-                map.on('scrolloffset', this._onScrollOffset, this);
-                map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
-                map.on('zoomend', this._onZoomRowColumns, this);
-        },
+	beforeAdd: function (map) {
+		map._addZoomLimit(this);
+		this._columns = L.control.columnHeader();
+		this._rows = L.control.rowHeader();
+		map.addControl(this._columns);
+		map.addControl(this._rows);
+		map.addControl(L.control.tabs());
+		map.on('scrolloffset', this._onScrollOffset, this);
+		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
+		map.on('zoomend', this._onZoomRowColumns, this);
+	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
 		var command = L.Socket.parseServerCmd(textMsg);
@@ -112,20 +112,20 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 	},
 
-        _onScrollOffset: function(offset) {
-                this._columns.offsetScrollPosition(offset.x);
-                this._rows.offsetScrollPosition(offset.y);
-        },
+	_onScrollOffset: function(offset) {
+		this._columns.offsetScrollPosition(offset.x);
+		this._rows.offsetScrollPosition(offset.y);
+	},
 
-        _onUpdateScrollOffset: function (e) {
-                this._columns.setScrollPosition(-e.x);
-                this._rows.setScrollPosition(-e.y);
-        },
+	_onUpdateScrollOffset: function (e) {
+		this._columns.setScrollPosition(-e.x);
+		this._rows.setScrollPosition(-e.y);
+	},
 
-        _onZoomRowColumns: function () {
-                this._columns.updateColumns(this._twipsToPixels, this);
-                this._rows.updateRows(this._twipsToPixels, this);
-        },
+	_onZoomRowColumns: function () {
+		this._columns.updateColumns(this._twipsToPixels, this);
+		this._rows.updateRows(this._twipsToPixels, this);
+	},
 
 	_onStatusMsg: function (textMsg) {
 		var command = L.Socket.parseServerCmd(textMsg);
@@ -155,17 +155,17 @@ L.CalcTileLayer = L.TileLayer.extend({
 			}
 		}
 
-                L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+		L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 	},
 
-        _onCommandValuesMsg: function (textMsg) {
-                if (textMsg.match('.uno:ViewRowColumnHeaders')) {
-                        var data = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-                        this._columns.fillColumns(data.columns, this._twipsToPixels, this);
-                        this._rows.fillRows(data.rows, this._twipsToPixels, this);
-                }
-                else {
-                        L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
-                }
-        }
+	_onCommandValuesMsg: function (textMsg) {
+		if (textMsg.match('.uno:ViewRowColumnHeaders')) {
+			var data = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			this._columns.fillColumns(data.columns, this._twipsToPixels, this);
+			this._rows.fillRows(data.rows, this._twipsToPixels, this);
+		}
+		else {
+			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+		}
+	}
 });
