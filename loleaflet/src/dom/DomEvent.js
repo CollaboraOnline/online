@@ -58,7 +58,7 @@ L.DomEvent = {
 		} else if (L.Browser.touch && (type === 'dblclick') && this.addDoubleTapListener) {
 			this.addDoubleTapListener(obj, handler, id);
 
-		} else if (type === "trplclick" || type === "qdrplclick") {
+		} else if (type === 'trplclick' || type === 'qdrplclick') {
 			this.addMultiClickListener(obj, handler, id, type);
 
 		} else if ('addEventListener' in obj) {

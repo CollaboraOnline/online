@@ -5,7 +5,7 @@
 
 L.extend(L.DomEvent, {
 
-	addMultiClickListener: function (obj, handler, id, type) {
+	addMultiClickListener: function (obj, handler, id) {
 		var last = [],
 		    delay = 250;
 
@@ -58,7 +58,7 @@ L.extend(L.DomEvent, {
 		return this;
 	},
 
-	removeMultiClickListener: function (obj, id, type) {
+	removeMultiClickListener: function (obj, id) {
 		obj.removeEventListener('click', obj['_leaflet_click' + id], false);
 
 		return this;
