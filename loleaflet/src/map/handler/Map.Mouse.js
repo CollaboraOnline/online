@@ -154,14 +154,14 @@ L.Map.Mouse = L.Handler.extend({
 					}
 				}
 
-				this._map.fire('handleautoscroll', { pos: e.containerPoint, map: this._map });
+				this._map.fire('handleautoscroll', {pos: e.containerPoint, map: this._map});
 			}
 		}
 		else if (e.type === 'mousemove' && !this._mouseDown) {
 			clearTimeout(this._mouseOverTimeout);
 			mousePos = docLayer._latLngToTwips(e.latlng);
 			this._mouseOverTimeout = setTimeout(L.bind(function() {
-			    docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 0, modifier);
+				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 0, modifier);
 			  }, this),
 			  100);
 		}

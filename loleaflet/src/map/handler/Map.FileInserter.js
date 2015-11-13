@@ -48,7 +48,6 @@ L.Map.FileInserter = L.Handler.extend({
 
 	_sendFile: function (name, file) {
 		var url = this._url;
-		console.log(url);
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function () {
 			if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {

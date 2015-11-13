@@ -229,8 +229,9 @@ L.Map.Keyboard = L.Handler.extend({
 		this.modifier = shift | ctrl | alt;
 
 		if (ctrl) {
-			if (this._handleCtrlCommand(e))
+			if (this._handleCtrlCommand(e)) {
 				return;
+			}
 		}
 
 		// page up or page down, handled by this.dopagejump
@@ -309,7 +310,7 @@ L.Map.Keyboard = L.Handler.extend({
 		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v') {
 			e.originalEvent.preventDefault();
 			return true;
-		};
+		}
 
 		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v') {
 			// not copy or paste

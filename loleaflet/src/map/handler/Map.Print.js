@@ -25,7 +25,7 @@ L.Map.Print = L.Handler.extend({
 		// object URL, because else we might have cross origin security problems
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = L.bind(function () {
-			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
 				this._onInitPrint(xmlHttp);
 			}
 		}, this);
