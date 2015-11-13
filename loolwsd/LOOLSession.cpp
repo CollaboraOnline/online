@@ -902,6 +902,7 @@ extern "C"
             break;
         case LOK_CALLBACK_MOUSE_POINTER:
             srv->sendTextFrame("mousepointer: " + std::string(pPayload));
+            break;
         case LOK_CALLBACK_HYPERLINK_CLICKED:
             srv->sendTextFrame("hyperlinkclicked: " + std::string(pPayload));
             break;
