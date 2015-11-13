@@ -42,18 +42,18 @@ L.Control.Styles = L.Control.extend({
 				// The list contains a total of 100+ styles, the first 7 are
 				// the default styles (as shown on desktop writer), we then
 				// also show a selection of 12 more styles.
-				styles = e.commandValues['ParagraphStyles'].slice(7, 19);
-				topStyles = e.commandValues['ParagraphStyles'].slice(0, 7);
+				styles = e.commandValues.ParagraphStyles.slice(7, 19);
+				topStyles = e.commandValues.ParagraphStyles.slice(0, 7);
 			}
 			else if (this._map.getDocType() === 'presentation' ||
 				       this._map.getDocType() === 'drawing') {
-				styles = e.commandValues['Default'];
+				styles = e.commandValues.Default;
 			}
-			else if (this._map.getDocType() === 'spreadsheet' ) {
-				styles = e.commandValues['CellStyles'];
+			else if (this._map.getDocType() === 'spreadsheet') {
+				styles = e.commandValues.CellStyles;
 			}
 
-			var commands = e.commandValues['Commands'];
+			var commands = e.commandValues.Commands;
 			if (commands && commands.length > 0) {
 				this._addSeparator();
 				commands.forEach(function (command) {

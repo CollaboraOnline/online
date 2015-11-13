@@ -88,7 +88,7 @@ L.Map.include({
 			if (!unoState.startsWith('.uno:')) {
 				unoState = '.uno:' + unoState;
 			}
-			sendUnoCommand(unoState);
+			this.sendUnoCommand(unoState);
 		}
 	},
 

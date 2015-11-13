@@ -3,10 +3,10 @@
  */
 
 L.Control.InsertImg = L.Control.extend({
-	onAdd: function (map) {
-        this._insertImg = L.DomUtil.create('input', 'leaflet-control-insertimage leaflet-bar');
+	onAdd: function () {
+		this._insertImg = L.DomUtil.create('input', 'leaflet-control-insertimage leaflet-bar');
 		this._insertImg.type = 'file';
-		L.DomEvent['on'](this._insertImg, 'change', this._onChange, this);
+		L.DomEvent.on(this._insertImg, 'change', this._onChange, this);
 		return this._insertImg;
 	},
 

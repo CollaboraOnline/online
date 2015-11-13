@@ -52,7 +52,7 @@ L.Control.Scroll = L.Control.extend({
 			this._prevScrollY = -e.mcs.top;
 			this._prevScrollX = -e.mcs.left;
 			this._map.scroll(offset.x, offset.y);
-                        this._map.fire('scrolloffset', offset);
+			this._map.fire('scrolloffset', offset);
 		}
 	},
 
@@ -81,7 +81,7 @@ L.Control.Scroll = L.Control.extend({
 	},
 
 	_onScrollVelocity: function (e) {
-		if (e.vx == 0 && e.vy == 0) {
+		if (e.vx === 0 && e.vy === 0) {
 			clearInterval(this._autoScrollTimer);
 			this._autoScrollTimer = null;
 			this._map.isAutoScrolling = false;

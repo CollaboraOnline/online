@@ -95,7 +95,7 @@ L.Control.Fonts = L.Control.extend({
 	},
 
 	_setFontSize: function (fontSize) {
-		for (i = 0; i < this._sizeSelect.length; i++) {
+		for (var i = 0; i < this._sizeSelect.length; i++) {
 			var value = this._sizeSelect[i].value;
 			if (value === fontSize) {
 				this._sizeSelect.value = fontSize;
