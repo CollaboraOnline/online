@@ -2,6 +2,7 @@
  * L.Control.Tabs is used to swtich sheets in Calc
  */
 
+/* global $ */
 L.Control.Tabs = L.Control.extend({
 	onAdd: function (map) {
 		this._tabsInitialized = false;

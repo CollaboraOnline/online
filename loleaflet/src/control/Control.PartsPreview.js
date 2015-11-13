@@ -2,6 +2,7 @@
  * L.Control.PartsPreview
  */
 
+/* global $ */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		autoUpdate: true

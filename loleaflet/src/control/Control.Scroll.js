@@ -2,6 +2,7 @@
  * L.Control.Scroll handles scrollbars
  */
 
+/* global $ */
 L.Control.Scroll = L.Control.extend({
 
 	onAdd: function (map) {

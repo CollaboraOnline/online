@@ -2,6 +2,7 @@
  * L.Control.Buttons handles buttons such as bold, italic, etc.
  */
 
+/* global vex */
 L.Control.Buttons = L.Control.extend({
 	options: {
 		position: 'topleft'
