@@ -65,11 +65,11 @@ L.TileLayer = L.GridLayer.extend({
 		// Cursor is visible or hidden (e.g. for graphic selection).
 		this._isCursorVisible = true;
 		// Original rectangle graphic selection in twips
-		this._graphicSelectionTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
+		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle graphic selection
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Original rectangle of cell cursor in twips
-		this._cellCursorTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
+		this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle for cell cursor
 		this._cellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Position and size of the selection start (as if there would be a cursor caret there).
@@ -132,12 +132,12 @@ L.TileLayer = L.GridLayer.extend({
 		// updated cell cursor when the selected cell is changed and not the initial
 		// cell).
 		map.on('statusindicator',
-		       function (e) {
-		         if (e.statusType === 'alltilesloaded' && this._docType === 'spreadsheet') {
-		           this._onCellCursorShift(true);
-		         }
-		       },
-		       this);
+			function (e) {
+				if (e.statusType === 'alltilesloaded' && this._docType === 'spreadsheet') {
+					this._onCellCursorShift(true);
+				}
+			},
+		this);
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
@@ -297,7 +297,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCommandValuesMsg: function (textMsg) {
 		var obj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-		if (obj.commandName === ".uno:CellCursor") {
+		if (obj.commandName === '.uno:CellCursor') {
 			this._onCellCursorMsg(obj.commandValues);
 		} else if (this._map.unoToolbarCommands.indexOf(obj.commandName) !== -1) {
 			this._toolbarCommandValues[obj.commandName] = obj.commandValues;
@@ -358,7 +358,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onGraphicSelectionMsg: function (textMsg) {
 		if (textMsg.match('EMPTY')) {
-			this._graphicSelectionTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
+			this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		}
 		else {
@@ -366,7 +366,7 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			this._graphicSelectionTwips = new L.bounds(topLeftTwips, bottomRightTwips);
+			this._graphicSelectionTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
 			this._graphicSelection = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
@@ -377,7 +377,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCellCursorMsg: function (textMsg) {
 		if (textMsg.match('EMPTY')) {
-			this._cellCursorTwips = new L.bounds(new L.point(0, 0), new L.point(0, 0));
+			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		}
 		else {
@@ -385,7 +385,7 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			this._cellCursorTwips = new L.bounds(topLeftTwips, bottomRightTwips);
+			this._cellCursorTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
 			this._cellCursor = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
@@ -481,11 +481,12 @@ L.TileLayer = L.GridLayer.extend({
 		textMsg = textMsg.substring(18);
 		var obj = JSON.parse(textMsg);
 		var commandName = obj.commandName;
-		var success = undefined;
-		if (obj.success === 'true')
-			success = true;
-		else if (obj.success === 'false')
+		if (obj.success === 'true') {
+			var success = true;
+		}
+		else if (obj.success === 'false') {
 			success = false;
+		}
 		// TODO when implemented in the LOK, add also obj.result
 		this._map.fire('commandresult', {commandName: commandName, success: success});
 	},
@@ -766,11 +767,11 @@ L.TileLayer = L.GridLayer.extend({
 				e.target.dragging._draggable._updatePosition();
 			}
 
-			var containerPos = new L.point(expectedPos.x - this._map._container.getBoundingClientRect().left,
+			var containerPos = new L.Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
 				expectedPos.y - this._map._container.getBoundingClientRect().top);
 
 			containerPos = containerPos.add(e.target.dragging._draggable.startOffset);
-			this._map.fire('handleautoscroll', { pos: containerPos, map: this._map });
+			this._map.fire('handleautoscroll', {pos: containerPos, map: this._map});
 		}
 		if (e.type === 'dragend') {
 			e.target.isDragged = false;
@@ -816,7 +817,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._cellCursorMarker) {
 				this._map.removeLayer(this._cellCursorMarker);
 			}
-			this._cellCursorMarker = L.rectangle(this._cellCursor, {fill: false, color: "#000000", weight: 2});
+			this._cellCursorMarker = L.rectangle(this._cellCursor, {fill: false, color: '#000000', weight: 2});
 			if (!this._cellCursorMarker) {
 				this._map.fire('error', {msg: 'Cell Cursor marker initialization'});
 				return;
@@ -878,7 +879,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			if (!endMarker.isDragged) {
-				var pos = this._map.project(this._textSelectionEnd.getSouthEast());
+				pos = this._map.project(this._textSelectionEnd.getSouthEast());
 				pos = pos.subtract(new L.Point(0, 2));
 				pos = this._map.unproject(pos);
 				endMarker.setLatLng(pos);
@@ -903,7 +904,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else {
 			// Decode UTF-8.
-			e.clipboardData.setData('text/plain', decodeURIComponent(escape(this._selectionTextContent)));
+			e.clipboardData.setData('text/plain', decodeURIComponent(window.escape(this._selectionTextContent)));
 		}
 	},
 
@@ -931,8 +932,8 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			else if (e.newSize.x / this._docPixelSize.x > crsScale) {
 				// we could zoom in
-				var ratio = e.newSize.x / this._docPixelSize.x;
-				var zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
+				ratio = e.newSize.x / this._docPixelSize.x;
+				zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
 				this._map.setZoom(Math.min(10, this._map.getZoom() + zoomDelta), {animate: false});
 			}
 		}
@@ -982,7 +983,7 @@ L.TileLayer = L.GridLayer.extend({
 			                     + '?outputHeight=' + this._tileSize
 			                     + '&outputWidth=' + this._tileSize
 			                     + '&tileHeight=' + this._tileWidthTwips
-			                     + '&tileWidth=' + this._tileHeightTwips );
+			                     + '&tileWidth=' + this._tileHeightTwips);
 		}
 	},
 
