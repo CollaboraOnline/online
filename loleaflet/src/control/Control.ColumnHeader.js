@@ -3,71 +3,77 @@
 */
 
 L.Control.ColumnHeader = L.Control.extend({
-	onAdd: function () {
-		var docContainer = L.DomUtil.get('document-container');
-		var divHeader = L.DomUtil.create('div', 'spreadsheet-container-column', docContainer.parentElement);
-		var tableContainer =  L.DomUtil.create('table', 'spreadsheet-container-table', divHeader);
-		var tbodyContainer = L.DomUtil.create('tbody', '', tableContainer);
-		var trContainer = L.DomUtil.create('tr', '', tbodyContainer);
-		L.DomUtil.create('th', 'spreadsheet-container-th-corner', trContainer);
-		var thColumns = L.DomUtil.create('th', 'spreadsheet-container-th-column', trContainer);
-		var divInner = L.DomUtil.create('div', 'spreadsheet-container-column-inner', thColumns);
-		this._table = L.DomUtil.create('table', '', divInner);
-		this._table.id = 'spreadsheet-table-column';
-		L.DomUtil.create('tbody', '', this._table);
-		this._columns = L.DomUtil.create('tr', '', this._table.firstChild);
+    onAdd: function () {
+	var docContainer = L.DomUtil.get('document-container');
+	var divHeader = L.DomUtil.create('div', 'spreadsheet-container-column', docContainer.parentElement);
+	var tableContainer =  L.DomUtil.create('table', 'spreadsheet-container-table', divHeader);
+	var trContainer = L.DomUtil.create('tr', '', tableContainer);
+	var thCorner = L.DomUtil.create('th', 'spreadsheet-container-th-corner', trContainer);
+	var tableCorner = L.DomUtil.create('table', 'spreadsheet-table-corner', thCorner);
+	var trCorner = L.DomUtil.create('tr', '', tableCorner);
+	L.DomUtil.create('th', '', trCorner);
 
-		this._position = 0;
+	var thColumns = L.DomUtil.create('th', 'spreadsheet-container-th-column', trContainer);
+	this._table = L.DomUtil.create('table', 'spreadsheet-table-column', thColumns);
+	this._columns = L.DomUtil.create('tr', '', this._table);
 
-		// dummy initial header
-		L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
+	this._position = 0;
+	this._totalWidth = 0;
+	this._viewPort = 0;
 
-		return document.createElement('div');
-	},
+	// dummy initial header
+	var dummy = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
+	L.DomUtil.create('div', 'spreadsheet-table-column-cell-text', dummy);
 
-	clearColumns : function () {
-		L.DomUtil.remove(this._columns);
-		this._columns = L.DomUtil.create('tr', '', this._table.firstChild);
-	},
+	return document.createElement('div');
+        },
 
+        clearColumns : function () {
+	    L.DomUtil.remove(this._columns);
+	    this._columns = L.DomUtil.create('tr', '', this._table);
+        },
 
-	setScrollPosition: function (position) {
-		this._position = position;
-		L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
-	},
+        setViewPort: function(totalWidth, viewPort) {
+	    this._viewPort = viewPort;
+	    this._totalWidth = totalWidth;
+        },
 
-	offsetScrollPosition: function (offset) {
-		this._position = this._position - offset;
-		L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
-	},
+        setScrollPosition: function (position) {
+	    this._position = Math.min(0, position);
+	    L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
+        },
 
-	fillColumns: function (columns, converter, context) {
-		var twip, width, column;
+        offsetScrollPosition: function (offset) {
+	    this._position = Math.min(0,
+				      Math.max(this._position - offset,
+					       -(this._totalWidth - this._viewPort - 4)));
+	    L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
+        },
 
-		this.clearColumns();
-		var totalWidth = -1; // beginning offset 1 due to lack of previous column
-		for (var iterator = 0; iterator < columns.length; iterator++) {
-			twip = new L.Point(parseInt(columns[iterator].size), parseInt(columns[iterator].size));
-			width =  Math.round(converter.call(context, twip).x) - 2 - totalWidth;
-			column = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
-			column.innerHTML = columns[iterator].text;
-			column.twipWidth = columns[iterator].size;
-			column.width = width + 'px';
-			totalWidth += width + 1;
-		}
-	},
+        fillColumns: function (columns, converter, context) {
+	    var iterator, twip, width, column, text;
 
-	updateColumns: function (converter, context) {
-		var iterator, twip, width, column;
-		var totalWidth = -1;
-		for (iterator = 0; iterator < this._columns.childNodes.length; iterator++) {
-			column = this._columns.childNodes[iterator];
-			twip = new L.Point(parseInt(column.twipWidth), parseInt(column.twipWidth));
-			width =  Math.round(converter.call(context, twip).x) - 2 - totalWidth;
-			column.width = width + 'px';
-			totalWidth += width + 1;
-		}
-	}
+	    this.clearColumns();
+	    for (iterator = 0; iterator < columns.length; iterator++) {
+		width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
+		twip = new L.Point(width, width);
+		column = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
+		text = L.DomUtil.create('div', 'spreadsheet-table-column-cell-text', column);
+		text.innerHTML = columns[iterator].text;
+		column.width = Math.round(converter.call(context, twip).x) - 1 + 'px';
+	    }
+        },
+
+        updateColumns: function (columns, converter, context) {
+	    var iterator, twip, width, column;
+
+	    for (iterator = 0; iterator < this._columns.childNodes.length; iterator++) {
+		column = this._columns.childNodes[iterator];
+		width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
+		twip = new L.Point(width, width);
+		column.width = Math.round(converter.call(context, twip).x) - 1 + 'px';
+	    }
+        }
 });
 
 L.control.columnHeader = function (options) {
