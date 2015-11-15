@@ -14,6 +14,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.on('scrolloffset', this._onScrollOffset, this);
 		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
 		map.on('zoomend', this._onZoomRowColumns, this);
+		map.on('resize', this._onUpdateViewPort, this);
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
@@ -123,8 +124,21 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onZoomRowColumns: function () {
-		this._columns.updateColumns(this._twipsToPixels, this);
-		this._rows.updateRows(this._twipsToPixels, this);
+		this._isZoomend = true;
+		L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+	},
+
+	_onUpdateViewPort: function () {
+		var hscroll = L.DomUtil.get('mCSB_1_scrollbar_horizontal');
+		var width = parseInt(L.DomUtil.getStyle(hscroll, 'width'));
+		if (!isNaN(width)) {
+			this._columns.setViewPort(this._docPixelSize.x, width);
+		}
+		var vscroll = L.DomUtil.get('mCSB_1_scrollbar_vertical');
+		var height = parseInt(L.DomUtil.getStyle(vscroll, 'height'));
+		if (!isNaN(height)) {
+			this._rows.setViewPort(this._docPixelSize.y, height);
+		}
 	},
 
 	_onStatusMsg: function (textMsg) {
@@ -161,8 +175,16 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onCommandValuesMsg: function (textMsg) {
 		if (textMsg.match('.uno:ViewRowColumnHeaders')) {
 			var data = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			this._columns.fillColumns(data.columns, this._twipsToPixels, this);
-			this._rows.fillRows(data.rows, this._twipsToPixels, this);
+			if (this._isZoomend) {
+				this._columns.updateColumns(data.columns, this._twipsToPixels, this);
+				this._rows.updateRows(data.rows, this._twipsToPixels, this);
+				this._isZoomend = false;
+			}
+			else {
+				this._columns.fillColumns(data.columns, this._twipsToPixels, this);
+				this._rows.fillRows(data.rows, this._twipsToPixels, this);
+			}
+			this._onUpdateViewPort();
 		}
 		else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
