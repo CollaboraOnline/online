@@ -125,6 +125,11 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 	_onZoomRowColumns: function () {
 		this._isZoomend = true;
+		this._updateClientZoom();
+		if (this._clientZoom) {
+			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
+			this._clientZoom = null;
+		}
 		L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 	},
 
@@ -169,7 +174,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 			}
 		}
 
-		L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+		// Force fetching of row/column headers
+		this._onZoomRowColumns();
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
