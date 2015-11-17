@@ -86,6 +86,7 @@ L.Socket = {
 				// if it's not a tile, parse the whole message
 				textMsg = String.fromCharCode.apply(null, imgBytes);
 			}
+			// Decode UTF-8.
 			textMsg = decodeURIComponent(window.escape(textMsg));
 		}
 		else {

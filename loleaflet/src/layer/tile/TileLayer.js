@@ -903,7 +903,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('error', {msg: 'Oops, no content available yet'});
 		}
 		else {
-			// Decode UTF-8.
 			e.clipboardData.setData('text/plain', this._selectionTextContent);
 		}
 	},
