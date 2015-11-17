@@ -100,6 +100,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/FileStream.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
 
 
 #include "LOOLProtocol.hpp"
@@ -145,6 +146,7 @@ using Poco::Net::Socket;
 using Poco::ThreadLocal;
 using Poco::Random;
 using Poco::NamedMutex;
+using Poco::URI;
 
 class QueueHandler: public Runnable
 {
@@ -317,7 +319,9 @@ public:
             {
                 // The user might request a file to download
                 std::string dirPath = LOOLWSD::childRoot + "/" + tokens[1] + LOOLSession::jailDocumentURL + "/" + tokens[2];
-                std::string filePath = dirPath + "/" + tokens[3];
+                std::string fileName;
+                URI::decode(tokens[3], fileName);
+                std::string filePath = dirPath + "/" + fileName;
                 std::cout << Util::logPrefix() << "HTTP request for: " << filePath << std::endl;
                 File file(filePath);
                 if (file.exists())

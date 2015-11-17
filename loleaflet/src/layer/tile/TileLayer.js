@@ -904,7 +904,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else {
 			// Decode UTF-8.
-			e.clipboardData.setData('text/plain', decodeURIComponent(window.escape(this._selectionTextContent)));
+			e.clipboardData.setData('text/plain', this._selectionTextContent);
 		}
 	},
 
