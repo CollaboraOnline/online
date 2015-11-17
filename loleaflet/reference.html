@@ -7906,6 +7906,12 @@ var unoCommands = [
 },
 
 {
+    uno: '.uno:DeleteComment',
+    parameter: null,
+    description: 'Delete comment.'
+},
+
+{
     uno: '.uno:EnterString',
     parameter: {
         'StringName': {
@@ -7942,6 +7948,17 @@ var unoCommands = [
     uno: '.uno:IncrementIndent',
     parameter: null,
     description: 'Increment paragraph indentation.'
+},
+
+{
+    uno: '.uno:InsertAnnotation',
+    parameter: {
+        'Author': {
+            type: 'string',
+            value: 'A U Thor'
+        }
+    },
+    description: 'Insert comment.'
 },
 
 {
