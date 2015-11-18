@@ -53,6 +53,12 @@ L.Socket = {
 		if (this._map.options.timestamp) {
 			msg += ' timestamp=' + this._map.options.timestamp;
 		}
+		if (this._map.options.renderingOptions) {
+			var options = {
+				'rendering': this._map.options.renderingOptions
+			};
+			msg += ' options=' + JSON.stringify(options);
+		}
 		this.socket.send(msg);
 		this.socket.send('status');
 		this.socket.send('partpagerectangles');

@@ -57,8 +57,16 @@
         vex.dialog.alert('Wrong host, usage: host=ws://localhost:9980');
     }
 
+    var renderingOptions = {
+        ".uno:HideWhitespace": {
+            "type": "boolean",
+            "value": "false"
+        }
+    };
+
     var globalMap = L.map('map', {
             doc: filePath,
+            renderingOptions: renderingOptions,
             server: host,
             edit: edit,
             timestamp: timestamp,
