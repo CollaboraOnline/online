@@ -52,7 +52,9 @@ load <pathname>
 
     Deprecated.
 
-load url=<url> [timestamp=<time>]
+load [part=<partNumber>] url=<url> [timestamp=<time>]
+
+    part is an optional parameter. <partNumber> is a number.
 
     timestamp is an optional parameter.  <time> is provided in microseconds
     since the Unix epoch - midnight, January 1, 1970.
