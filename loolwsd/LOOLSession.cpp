@@ -990,7 +990,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         return false;
     }
 
-    _loKitDocument->pClass->initializeForRendering(_loKitDocument);
+    _loKitDocument->pClass->initializeForRendering(_loKitDocument, nullptr);
 
     if ( _docType != "text" && part != -1)
     {

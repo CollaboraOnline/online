@@ -103,7 +103,7 @@ protected:
 
         loKitDocument->pClass->registerCallback(loKitDocument, myCallback, NULL);
 
-        loKitDocument->pClass->initializeForRendering(loKitDocument);
+        loKitDocument->pClass->initializeForRendering(loKitDocument, nullptr);
 
         if (isatty(0))
         {
