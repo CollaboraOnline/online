@@ -900,10 +900,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onCopy: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		if (!this._selectionTextContent) {
-			this._map.fire('error', {msg: 'Oops, no content available yet'});
-		}
-		else {
+		if (this._selectionTextContent) {
 			e.clipboardData.setData('text/plain', this._selectionTextContent);
 		}
 	},
