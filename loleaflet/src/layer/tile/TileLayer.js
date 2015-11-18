@@ -310,6 +310,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCellFormulaMsg: function (textMsg) {
 		var formula = textMsg.substring(13);
+		this._selectionTextContent = formula;
 		this._map.fire('cellformula', {formula: formula});
 	},
 
