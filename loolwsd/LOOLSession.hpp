@@ -77,6 +77,9 @@ protected:
     // The actual URL, also in the child, even if the child never accesses that.
     std::string _docURL;
 
+    /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
+    std::string _docOptions;
+
 private:
     std::mutex _mutex;
 };

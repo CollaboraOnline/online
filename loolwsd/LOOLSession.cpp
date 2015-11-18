@@ -427,22 +427,42 @@ bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*
 
 bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    if (tokens.count() < 2 || tokens.count() > 4)
+    if (tokens.count() < 2)
     {
         sendTextFrame("error: cmd=load kind=syntax");
         return false;
     }
 
-    if (tokens.count() > 2 )
+    // First token is the "load" command itself.
+    size_t offset = 1;
+    if (tokens.count() > 2 && tokens[1].find("part=") == 0)
+    {
         getTokenInteger(tokens[1], "part", _loadPart);
+        ++offset;
+    }
 
     std::string timestamp;
-    for (size_t i = 1; i < tokens.count(); ++i)
+    for (size_t i = offset; i < tokens.count(); ++i)
     {
         if (tokens[i].find("url=") == 0)
+        {
             _docURL = tokens[i].substr(strlen("url="));
+            ++offset;
+        }
         else if (tokens[i].find("timestamp=") == 0)
+        {
             timestamp = tokens[i].substr(strlen("timestamp="));
+            ++offset;
+        }
+    }
+
+    if (tokens.count() > offset)
+    {
+        if (getTokenString(tokens[offset], "options", _docOptions))
+        {
+            if (tokens.count() > offset + 1)
+                _docOptions += Poco::cat(std::string(" "), tokens.begin() + offset + 1, tokens.end());
+        }
     }
 
     try

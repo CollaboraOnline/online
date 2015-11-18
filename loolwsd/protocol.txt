@@ -52,12 +52,14 @@ load <pathname>
 
     Deprecated.
 
-load [part=<partNumber>] url=<url> [timestamp=<time>]
+load [part=<partNumber>] url=<url> [timestamp=<time>] [options=<options>]
 
     part is an optional parameter. <partNumber> is a number.
 
     timestamp is an optional parameter.  <time> is provided in microseconds
     since the Unix epoch - midnight, January 1, 1970.
+
+    options are the whole rest of the line, not URL-encoded
 
 mouse type=<type> x=<x> y=<y> count=<count>
 
