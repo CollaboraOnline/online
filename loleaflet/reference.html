@@ -1707,29 +1707,9 @@ var map = L.map('map', {
 		<th>Description</th>
 	</tr>
 	<tr>
-		<td><code><b>search</b></code></td>
-		<td><code><a href="#search-event">SearchEvent</a></code></td>
-		<td>Fired when the search result is ready.</td>
-	</tr>
-	<tr>
-		<td><code><b>print</b></code></td>
-		<td><code><a href="#print-event">PrintEvent</a></code></td>
-		<td>Fired when the url for the pdf export is ready.</td>
-	</tr>
-	<tr>
-		<td><code><b>partpagerectangles</b></code></td>
-		<td><code><a href="#partpagerectangles-event">PartPageRectanglesEvent</a></code></td>
-		<td>Fired when the document is ready, contains information about the size of each page.</td>
-	</tr>
-	<tr>
-		<td><code><b>updatepermission</b></code></td>
-		<td><code><a href="#permission-event">PermissionEvent</a></code></td>
-		<td>Fired when the document permission changes.</td>
-	</tr>
-	<tr>
-		<td><code><b>commandstatechanged</b></code></td>
-		<td><code><a href="#commandstatechanged-event">CommandStateChangedEvent</a></code></td>
-		<td>Fired when the state of a command such as .uno:Bold changes.</td>
+		<td><code><b>cellformula</b></code></td>
+		<td><code><a href="#cellformula-event">CellFormulaEvent</a></code></td>
+		<td>Fired when the content of the selected cell changes.</td>
 	</tr>
 	<tr>
 		<td><code><b>commandresult</b></code></td>
@@ -1737,24 +1717,9 @@ var map = L.map('map', {
 		<td>Fired when the a dispatched uno command has finished.</td>
 	</tr>
 	<tr>
-		<td><code><b>updateparts</b></code></td>
-		<td><code><a href="#updateparts-event">UpdatePartsEvent</a></code></td>
-		<td>Fired when a new part has been selected.</td>
-	</tr>
-	<tr>
-		<td><code><b>invalidatepreview</b></code></td>
-		<td><code><a href="#invalidatepreview-event">InvalidatePreviewEvent</a></code></td>
-		<td>Fired when a preview needs to be invalidated.</td>
-	</tr>
-	<tr>
-		<td><code><b>tilepreview</b></code></td>
-		<td><code><a href="#tilepreview-event">TilePreviewEvent</a></code></td>
-		<td>Fired when the rendering of a requested preview is ready.</td>
-	</tr>
-	<tr>
-		<td><code><b>statusindicator</b></code></td>
-		<td><code><a href="#statusindicator-event">StatusIndicator</a></code></td>
-		<td>Fired when leaflet is initialized, during document loading or on reconnection.</td>
+		<td><code><b>commandstatechanged</b></code></td>
+		<td><code><a href="#commandstatechanged-event">CommandStateChangedEvent</a></code></td>
+		<td>Fired when the state of a command such as .uno:Bold changes.</td>
 	</tr>
 	<tr>
 		<td><code><b>docsize</b></code></td>
@@ -1762,19 +1727,14 @@ var map = L.map('map', {
 		<td>Fired when the document size changes.</td>
 	</tr>
 	<tr>
-		<td><code><b>updatescrolloffset</b></code></td>
-		<td><code><a href="#updatescrolloffset-event">UpdateScrollOffsetEvent</a></code></td>
-		<td>Fired when the document is panned and the scrollbars should be moved along with the document.</td>
+		<td><code><b>error</b></code></td>
+		<td><code><a href="#error-event">ErrorEvent</a></code></td>
+		<td>Fired on server or client error.</td>
 	</tr>
 	<tr>
-		<td><code><b>scrollto</b></code></td>
-		<td><code><a href="#scrollto-event">ScrollToEvent</a></code></td>
-		<td>Fired when the cursor goes out of the viewing area.</td>
-	</tr>
-	<tr>
-		<td><code><b>scrollby</b></code></td>
-		<td><code><a href="#scrollby-event">ScrollByEvent</a></code></td>
-		<td>Fired when the document is panned with the keyboard.</td>
+		<td><code><b>invalidatepreview</b></code></td>
+		<td><code><a href="#invalidatepreview-event">InvalidatePreviewEvent</a></code></td>
+		<td>Fired when a preview needs to be invalidated.</td>
 	</tr>
 	<tr>
 		<td><code><b>pagenumberchanged</b></code></td>
@@ -1782,19 +1742,59 @@ var map = L.map('map', {
 		<td>Fired when the number of pages changes.</td>
 	</tr>
 	<tr>
-		<td><code><b>error</b></code></td>
-		<td><code><a href="#error-event">ErrorEvent</a></code></td>
-		<td>Fired on server or client error.</td>
+		<td><code><b>partpagerectangles</b></code></td>
+		<td><code><a href="#partpagerectangles-event">PartPageRectanglesEvent</a></code></td>
+		<td>Fired when the document is ready, contains information about the size of each page.</td>
+	</tr>
+	<tr>
+		<td><code><b>print</b></code></td>
+		<td><code><a href="#print-event">PrintEvent</a></code></td>
+		<td>Fired when the url for the pdf export is ready.</td>
+	</tr>
+	<tr>
+		<td><code><b>search</b></code></td>
+		<td><code><a href="#search-event">SearchEvent</a></code></td>
+		<td>Fired when the search result is ready.</td>
+	</tr>
+	<tr>
+		<td><code><b>scrollby</b></code></td>
+		<td><code><a href="#scrollby-event">ScrollByEvent</a></code></td>
+		<td>Fired when the document is panned with the keyboard.</td>
+	</tr>
+	<tr>
+		<td><code><b>scrollto</b></code></td>
+		<td><code><a href="#scrollto-event">ScrollToEvent</a></code></td>
+		<td>Fired when the cursor goes out of the viewing area.</td>
+	</tr>
+	<tr>
+		<td><code><b>statusindicator</b></code></td>
+		<td><code><a href="#statusindicator-event">StatusIndicator</a></code></td>
+		<td>Fired when leaflet is initialized, during document loading or on reconnection.</td>
+	</tr>
+	<tr>
+		<td><code><b>tilepreview</b></code></td>
+		<td><code><a href="#tilepreview-event">TilePreviewEvent</a></code></td>
+		<td>Fired when the rendering of a requested preview is ready.</td>
+	</tr>
+	<tr>
+		<td><code><b>updateparts</b></code></td>
+		<td><code><a href="#updateparts-event">UpdatePartsEvent</a></code></td>
+		<td>Fired when a new part has been selected.</td>
+	</tr>
+	<tr>
+		<td><code><b>updatepermission</b></code></td>
+		<td><code><a href="#permission-event">PermissionEvent</a></code></td>
+		<td>Fired when the document permission changes.</td>
+	</tr>
+	<tr>
+		<td><code><b>updatescrolloffset</b></code></td>
+		<td><code><a href="#updatescrolloffset-event">UpdateScrollOffsetEvent</a></code></td>
+		<td>Fired when the document is panned and the scrollbars should be moved along with the document.</td>
 	</tr>
 	<tr>
 		<td><code><b>updatetoolbarcommandvalues</b></code></td>
 		<td><code><a href="#updatetoolbarcommandvalues-event">UpdateToolbarCommandValuesEvent</a></code></td>
 		<td>Fired when the document is loaded and contains the available command values for Font, FontSize, Style, etc.</td>
-	</tr>
-	<tr>
-		<td><code><b>cellformula</b></code></td>
-		<td><code><a href="#cellformula-event">CellFormulaEvent</a></code></td>
-		<td>Fired when the content of the selected cell changes.</td>
 	</tr>
 </table>
 
