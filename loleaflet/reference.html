@@ -1798,7 +1798,7 @@ var map = L.map('map', {
 	</tr>
 </table>
 
-<h3 id="search-event">SearchEvent</h3>
+<h3 id="cellformula-event">CellFormulaEvent</h3>
 
 <table data-id='events'>
 	<tr>
@@ -1807,90 +1807,9 @@ var map = L.map('map', {
 		<th>description</th>
 	</tr>
 	<tr>
-		<td><code><b>originalPhrase</b></code></td>
+		<td><code><b>formula</b></code></td>
 		<td><code>String</code></td>
-		<td>The phrase that has been searched for</td>
-	</tr>
-	<tr>
-		<td><code><b>count</b></code></td>
-		<td><code>Number</code></td>
-		<td>Number of search results</td>
-	</tr>
-	<tr>
-		<td><code><b>results</b></code></td>
-		<td><code><a href="#search-result">SearchResult[]</a></code></td>
-		<td>An array representing the selections of the search results in the document.</td>
-	</tr>
-</table>
-
-
-<h3 id="print-event">PrintEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>url</b></code></td>
-        <td><code>String</code></td>
-		<td>An url for the PDF exported document.</td>
-	</tr>
-</table>
-
-<h3 id="partpagerectangles-event">PartPageRectangles</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>pixelRectangles</b></code></td>
-        <td><code><a href="#bounds">Bounds[]</a></code></td>
-		<td>An array of bounds representing each page's dimension in pixels on the current zoom level.</td>
-	</tr>
-	<tr>
-		<td><code><b>twipsRectangles</b></code></td>
-		<td><code><a href="#bounds">Bounds[]</a></code></td>
-		<td>An array of bounds representing each page's dimension in twips.</td>
-	</tr>
-</table>
-
-<h3 id="permission-event">PermissionEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>perm</b></code></td>
-		<td><code><a href="#documentpermission-values">DocumentPermission</a></code></td>
-		<td>Document permission.</td>
-	</tr>
-</table>
-
-<h3 id="commandstatechanged-event">CommandStateChangedEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>commandName</b></code></td>
-		<td><code><a href="#commandstatechanged-values">CommandStateChangedValues</a></code></td>
-		<td>UNO command.</td>
-	</tr>
-	<tr>
-		<td><code><b>state</b></code></td>
-		<td><code><a href="#commandstate-values">CommandStateValues</a></code></td>
-		<td>UNO command state.</td>
+		<td>The formula from the selected cell.</td>
 	</tr>
 </table>
 
@@ -1916,7 +1835,7 @@ var map = L.map('map', {
 	</tr>
 </table>
 
-<h3 id="updateparts-event">UpdatePartsEvent</h3>
+<h3 id="commandstatechanged-event">CommandStateChangedEvent</h3>
 
 <table data-id='events'>
 	<tr>
@@ -1925,24 +1844,59 @@ var map = L.map('map', {
 		<th>description</th>
 	</tr>
 	<tr>
-		<td><code><b>selectedPart</b></code></td>
+		<td><code><b>commandName</b></code></td>
+		<td><code><a href="#commandstatechanged-values">CommandStateChangedValues</a></code></td>
+		<td>UNO command.</td>
+	</tr>
+	<tr>
+		<td><code><b>state</b></code></td>
+		<td><code><a href="#commandstate-values">CommandStateValues</a></code></td>
+		<td>UNO command state.</td>
+	</tr>
+</table>
+
+<h3 id="docsize-event">DocumentSizeEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>x</b></code></td>
 		<td><code>Number</code></td>
-		<td>The currently selected part.</td>
+		<td>Document width in pixels.</td>
 	</tr>
 	<tr>
-		<td><code><b>parts</b></code></td>
+		<td><code><b>y</b></code></td>
 		<td><code>Number</code></td>
-		<td>The number of parts in the document.</td>
+		<td>Document height in pixels.</td>
+	</tr>
+</table>
+
+<h3 id="error-event">ErrorEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
 	</tr>
 	<tr>
-		<td><code><b>docType</b></code></td>
-		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
-		<td>The document type.</td>
+		<td><code><b>msg</b></code></td>
+		<td><code>String</code></td>
+		<td>If present, the error message.</td>
 	</tr>
 	<tr>
-		<td><code><b>partNames</b></code></td>
-		<td><code>String[]</code></td>
-		<td>If present, an array containing slides' / spreadsheets' names.</td>
+		<td><code><b>cmd</b></code></td>
+		<td><code>String</code></td>
+		<td>If present, the server command that caused the error.</td>
+	</tr>
+	<tr>
+		<td><code><b>kind</b></code></td>
+		<td><code>String</code></td>
+		<td>If present, the kind of error associated with the command.</td>
 	</tr>
 </table>
 
@@ -1959,6 +1913,151 @@ var map = L.map('map', {
 		<td><code><b>id</b></code></td>
 		<td><code>Object</code></td>
 		<td>Preview's id that needs to be invalidated.</td>
+	</tr>
+</table>
+
+<h3 id="pagenumberchanged-event">PageNumberChangedEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>currentPage</b></code></td>
+		<td><code>Number</code></td>
+		<td>The current page in the document.</td>
+	</tr>
+	<tr>
+		<td><code><b>pages</b></code></td>
+		<td><code>Number</code></td>
+		<td>The number of pages.</td>
+	</tr>
+	<tr>
+		<td><code><b>docType</b></code></td>
+		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
+		<td>The document type.</td>
+	</tr>
+</table>
+
+<h3 id="partpagerectangles-event">PartPageRectangles</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>pixelRectangles</b></code></td>
+        <td><code><a href="#bounds">Bounds[]</a></code></td>
+		<td>An array of bounds representing each page's dimension in pixels on the current zoom level.</td>
+	</tr>
+	<tr>
+		<td><code><b>twipsRectangles</b></code></td>
+		<td><code><a href="#bounds">Bounds[]</a></code></td>
+		<td>An array of bounds representing each page's dimension in twips.</td>
+	</tr>
+</table>
+
+<h3 id="print-event">PrintEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>url</b></code></td>
+        <td><code>String</code></td>
+		<td>An url for the PDF exported document.</td>
+	</tr>
+</table>
+
+<h3 id="search-event">SearchEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>originalPhrase</b></code></td>
+		<td><code>String</code></td>
+		<td>The phrase that has been searched for</td>
+	</tr>
+	<tr>
+		<td><code><b>count</b></code></td>
+		<td><code>Number</code></td>
+		<td>Number of search results</td>
+	</tr>
+	<tr>
+		<td><code><b>results</b></code></td>
+		<td><code><a href="#search-result">SearchResult[]</a></code></td>
+		<td>An array representing the selections of the search results in the document.</td>
+	</tr>
+</table>
+
+<h3 id="scrollby-event">ScrollByEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>x</b></code></td>
+		<td><code>Number</code></td>
+		<td>Scroll right by x pixels, or left if negative.</td>
+	</tr>
+	<tr>
+		<td><code><b>y</b></code></td>
+		<td><code>Number</code></td>
+		<td>Scroll down by y pixels, or up if negative.</td>
+	</tr>
+</table>
+
+<h3 id="scrollto-event">ScrollToEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>x</b></code></td>
+		<td><code>Number</code></td>
+		<td>View's left border position in pixels.</td>
+	</tr>
+	<tr>
+		<td><code><b>y</b></code></td>
+		<td><code>Number</code></td>
+		<td>View's top border position in pixels.</td>
+	</tr>
+</table>
+
+<h3 id="statusindicator-event">StatusIndicatorEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>statusType</b></code></td>
+		<td><code><a href="#statusindicator-values">StatusIndicatorValues</a></code></td>
+		<td>Status type.</td>
+	</tr>
+	<tr>
+		<td><code><b>value</b></code></td>
+		<td><code>Number</code></td>
+		<td>If present, a number for 0 to 100 represending the loading status.<td>
 	</tr>
 </table>
 
@@ -2002,7 +2101,7 @@ var map = L.map('map', {
 	</tr>
 </table>
 
-<h3 id="statusindicator-event">StatusIndicatorEvent</h3>
+<h3 id="updateparts-event">UpdatePartsEvent</h3>
 
 <table data-id='events'>
 	<tr>
@@ -2011,18 +2110,28 @@ var map = L.map('map', {
 		<th>description</th>
 	</tr>
 	<tr>
-		<td><code><b>statusType</b></code></td>
-		<td><code><a href="#statusindicator-values">StatusIndicatorValues</a></code></td>
-		<td>Status type.</td>
+		<td><code><b>selectedPart</b></code></td>
+		<td><code>Number</code></td>
+		<td>The currently selected part.</td>
 	</tr>
 	<tr>
-		<td><code><b>value</b></code></td>
+		<td><code><b>parts</b></code></td>
 		<td><code>Number</code></td>
-		<td>If present, a number for 0 to 100 represending the loading status.<td>
+		<td>The number of parts in the document.</td>
+	</tr>
+	<tr>
+		<td><code><b>docType</b></code></td>
+		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
+		<td>The document type.</td>
+	</tr>
+	<tr>
+		<td><code><b>partNames</b></code></td>
+		<td><code>String[]</code></td>
+		<td>If present, an array containing slides' / spreadsheets' names.</td>
 	</tr>
 </table>
 
-<h3 id="docsize-event">DocumentSizeEvent</h3>
+<h3 id="permission-event">PermissionEvent</h3>
 
 <table data-id='events'>
 	<tr>
@@ -2031,14 +2140,9 @@ var map = L.map('map', {
 		<th>description</th>
 	</tr>
 	<tr>
-		<td><code><b>x</b></code></td>
-		<td><code>Number</code></td>
-		<td>Document width in pixels.</td>
-	</tr>
-	<tr>
-		<td><code><b>y</b></code></td>
-		<td><code>Number</code></td>
-		<td>Document height in pixels.</td>
+		<td><code><b>perm</b></code></td>
+		<td><code><a href="#documentpermission-values">DocumentPermission</a></code></td>
+		<td>Document permission.</td>
 	</tr>
 </table>
 
@@ -2062,96 +2166,6 @@ var map = L.map('map', {
 	</tr>
 </table>
 
-<h3 id="scrollto-event">ScrollToEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>x</b></code></td>
-		<td><code>Number</code></td>
-		<td>View's left border position in pixels.</td>
-	</tr>
-	<tr>
-		<td><code><b>y</b></code></td>
-		<td><code>Number</code></td>
-		<td>View's top border position in pixels.</td>
-	</tr>
-</table>
-
-<h3 id="scrollby-event">ScrollByEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>x</b></code></td>
-		<td><code>Number</code></td>
-		<td>Scroll right by x pixels, or left if negative.</td>
-	</tr>
-	<tr>
-		<td><code><b>y</b></code></td>
-		<td><code>Number</code></td>
-		<td>Scroll down by y pixels, or up if negative.</td>
-	</tr>
-</table>
-
-<h3 id="pagenumberchanged-event">PageNumberChangedEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>currentPage</b></code></td>
-		<td><code>Number</code></td>
-		<td>The current page in the document.</td>
-	</tr>
-	<tr>
-		<td><code><b>pages</b></code></td>
-		<td><code>Number</code></td>
-		<td>The number of pages.</td>
-	</tr>
-	<tr>
-		<td><code><b>docType</b></code></td>
-		<td><code><a href="#documenttype-values">DocumentTypeValues</a></code></td>
-		<td>The document type.</td>
-	</tr>
-</table>
-
-<h3 id="error-event">ErrorEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>msg</b></code></td>
-		<td><code>String</code></td>
-		<td>If present, the error message.</td>
-	</tr>
-	<tr>
-		<td><code><b>cmd</b></code></td>
-		<td><code>String</code></td>
-		<td>If present, the server command that caused the error.</td>
-	</tr>
-	<tr>
-		<td><code><b>kind</b></code></td>
-		<td><code>String</code></td>
-		<td>If present, the kind of error associated with the command.</td>
-	</tr>
-</table>
-
 <h3 id="updatetoolbarcommandvalues-event">UpdateToolbarCommandValuesEvent</h3>
 
 <table data-id='events'>
@@ -2169,21 +2183,6 @@ var map = L.map('map', {
 		<td><code><b>commandValues</b></code></td>
 		<td><code>Object</code></td>
 		<td>JSON mapping of the possible values.</td>
-	</tr>
-</table>
-
-<h3 id="cellformula-event">CellFormulaEvent</h3>
-
-<table data-id='events'>
-	<tr>
-		<th class="width100">property</th>
-		<th>type</th>
-		<th>description</th>
-	</tr>
-	<tr>
-		<td><code><b>formula</b></code></td>
-		<td><code>String</code></td>
-		<td>The formula from the selected cell.</td>
 	</tr>
 </table>
 
