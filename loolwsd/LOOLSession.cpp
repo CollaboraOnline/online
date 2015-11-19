@@ -186,8 +186,7 @@ MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind k
 MasterProcessSession::~MasterProcessSession()
 {
     std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer.lock().get() << std::endl;
-    if (_ws)
-        Util::shutdownWebSocket(*_ws);
+
     auto peer = _peer.lock();
     if (_kind == Kind::ToClient && peer)
     {
