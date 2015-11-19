@@ -682,7 +682,7 @@ void MasterProcessSession::dispatchChild()
     _peer = childSession;
     childSession->_peer = shared_from_this();
 
-    std::string loadRequest = "load" + (_loadPart >= 0 ?  " part=" + std::to_string(_loadPart) : "") + " url=" + _docURL;
+    std::string loadRequest = "load" + (_loadPart >= 0 ?  " part=" + std::to_string(_loadPart) : "") + " url=" + _docURL + (!_docOptions.empty() ? " options=" + _docOptions : "");
     forwardToPeer(loadRequest.c_str(), loadRequest.size());
 }
 
@@ -961,21 +961,37 @@ extern "C"
 bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
 {
     int part = -1;
-    if (tokens.count() < 2 || tokens.count() > 4)
+    if (tokens.count() < 2)
     {
         sendTextFrame("error: cmd=load kind=syntax");
         return false;
     }
 
-    if (tokens.count() > 2 && tokens[2].find("url=") == 0)
+    // First token is the "load" command itself.
+    size_t offset = 1;
+    if (tokens.count() > 2 && tokens[1].find("part=") == 0)
     {
         getTokenInteger(tokens[1], "part", part);
-        _docURL = tokens[2].substr(strlen("url="));
+        ++offset;
     }
-    else if (tokens[1].find("url=") == 0)
-        _docURL = tokens[1].substr(strlen("url="));
-    else
-        _docURL = tokens[1];
+
+    for (size_t i = offset; i < tokens.count(); ++i)
+    {
+        if (tokens[i].find("url=") == 0)
+        {
+            _docURL = tokens[i].substr(strlen("url="));
+            ++offset;
+        }
+    }
+
+    if (tokens.count() > offset)
+    {
+        if (getTokenString(tokens[offset], "options", _docOptions))
+        {
+            if (tokens.count() > offset + 1)
+                _docOptions += Poco::cat(std::string(" "), tokens.begin() + offset + 1, tokens.end());
+        }
+    }
 
     URI aUri;
     try
