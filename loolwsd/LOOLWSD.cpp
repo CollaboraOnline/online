@@ -423,6 +423,10 @@ public:
                     }
                 }
                 while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+
+                queue.clear();
+                queue.put("eof");
+                queueHandlerThread.join();
             }
             catch (WebSocketException& exc)
             {
@@ -446,9 +450,6 @@ public:
         {
             Application::instance().logger().error(Util::logPrefix() + "IOException: " + exc.message());
         }
-        queue.clear();
-        queue.put("eof");
-        queueHandlerThread.join();
     }
 };
 
