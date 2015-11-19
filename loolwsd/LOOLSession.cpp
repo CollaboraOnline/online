@@ -1026,7 +1026,16 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         return false;
     }
 
-    _loKitDocument->pClass->initializeForRendering(_loKitDocument, nullptr);
+    std::string renderingOptions;
+    if (!_docOptions.empty())
+    {
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var var = parser.parse(_docOptions);
+        Poco::JSON::Object::Ptr object = var.extract<Poco::JSON::Object::Ptr>();
+        renderingOptions = object->get("rendering").toString();
+    }
+
+    _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderingOptions.empty() ? nullptr : renderingOptions.c_str()));
 
     if ( _docType != "text" && part != -1)
     {
