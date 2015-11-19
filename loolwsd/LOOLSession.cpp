@@ -1219,7 +1219,7 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
     std::string name, type;
 
     if (tokens.count() != 3 ||
-        !getTokenString(tokens[1], "name", name),
+        !getTokenString(tokens[1], "name", name) ||
         !getTokenString(tokens[2], "type", type))
     {
         sendTextFrame("error: cmd=insertfile kind=syntax");
@@ -1272,8 +1272,8 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
                          type) ||
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y) ||
-        !getTokenInteger(tokens[4], "count", count),
-        !getTokenInteger(tokens[5], "buttons", buttons),
+        !getTokenInteger(tokens[4], "count", count) ||
+        !getTokenInteger(tokens[5], "buttons", buttons) ||
         !getTokenInteger(tokens[6], "modifier", modifier))
     {
         sendTextFrame("error: cmd=mouse kind=syntax");
