@@ -11,6 +11,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -22,9 +23,11 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(HTTPWSTest);
     CPPUNIT_TEST(testPaste);
+    CPPUNIT_TEST(testRenderingOptions);
     CPPUNIT_TEST_SUITE_END();
 
     void testPaste();
+    void testRenderingOptions();
 
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
 };
@@ -70,6 +73,51 @@ void HTTPWSTest::testPaste()
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
     socket.shutdown();
     CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
+}
+
+void HTTPWSTest::testRenderingOptions()
+{
+    // Load a document and get its size.
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/ws");
+    Poco::Net::HTTPResponse response;
+    Poco::Net::WebSocket socket(session, request, response);
+    std::string documentPath = TDOC "/hide-whitespace.odt";
+    std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
+    sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
+    sendTextFrame(socket, "status");
+
+    std::string status;
+    int flags;
+    int n;
+    do
+    {
+        char buffer[100000];
+        n = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+        {
+            std::string line = LOOLProtocol::getFirstLine(buffer, n);
+            std::string prefix = "status: ";
+            if (line.find(prefix) == 0)
+            {
+                status = line.substr(prefix.length());
+                break;
+            }
+        }
+    }
+    while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    socket.shutdown();
+    // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
+    Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+    std::string token = tokens[4];
+    std::string prefix = "height=";
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
+    int height = std::stoi(token.substr(prefix.size()));
+    // HideWhitespace was ignored, this was 32532.
+    CPPUNIT_ASSERT(height < 10000);
 }
 
 void HTTPWSTest::sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
