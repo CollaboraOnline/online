@@ -64,6 +64,9 @@ protected:
 
     void sendBinaryFrame(const char *buffer, int length);
 
+    /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
+    void parseDocOptions(const Poco::StringTokenizer& tokens, int& part, std::string& timestamp);
+
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;

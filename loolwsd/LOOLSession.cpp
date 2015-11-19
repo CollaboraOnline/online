@@ -132,6 +132,40 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
         _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
+void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std::string& timestamp)
+{
+    // First token is the "load" command itself.
+    size_t offset = 1;
+    if (tokens.count() > 2 && tokens[1].find("part=") == 0)
+    {
+        getTokenInteger(tokens[1], "part", part);
+        ++offset;
+    }
+
+    for (size_t i = offset; i < tokens.count(); ++i)
+    {
+        if (tokens[i].find("url=") == 0)
+        {
+            _docURL = tokens[i].substr(strlen("url="));
+            ++offset;
+        }
+        else if (tokens[i].find("timestamp=") == 0)
+        {
+            timestamp = tokens[i].substr(strlen("timestamp="));
+            ++offset;
+        }
+    }
+
+    if (tokens.count() > offset)
+    {
+        if (getTokenString(tokens[offset], "options", _docOptions))
+        {
+            if (tokens.count() > offset + 1)
+                _docOptions += Poco::cat(std::string(" "), tokens.begin() + offset + 1, tokens.end());
+        }
+    }
+}
+
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
 std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
@@ -433,37 +467,8 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
         return false;
     }
 
-    // First token is the "load" command itself.
-    size_t offset = 1;
-    if (tokens.count() > 2 && tokens[1].find("part=") == 0)
-    {
-        getTokenInteger(tokens[1], "part", _loadPart);
-        ++offset;
-    }
-
     std::string timestamp;
-    for (size_t i = offset; i < tokens.count(); ++i)
-    {
-        if (tokens[i].find("url=") == 0)
-        {
-            _docURL = tokens[i].substr(strlen("url="));
-            ++offset;
-        }
-        else if (tokens[i].find("timestamp=") == 0)
-        {
-            timestamp = tokens[i].substr(strlen("timestamp="));
-            ++offset;
-        }
-    }
-
-    if (tokens.count() > offset)
-    {
-        if (getTokenString(tokens[offset], "options", _docOptions))
-        {
-            if (tokens.count() > offset + 1)
-                _docOptions += Poco::cat(std::string(" "), tokens.begin() + offset + 1, tokens.end());
-        }
-    }
+    parseDocOptions(tokens, _loadPart, timestamp);
 
     try
     {
@@ -967,31 +972,8 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         return false;
     }
 
-    // First token is the "load" command itself.
-    size_t offset = 1;
-    if (tokens.count() > 2 && tokens[1].find("part=") == 0)
-    {
-        getTokenInteger(tokens[1], "part", part);
-        ++offset;
-    }
-
-    for (size_t i = offset; i < tokens.count(); ++i)
-    {
-        if (tokens[i].find("url=") == 0)
-        {
-            _docURL = tokens[i].substr(strlen("url="));
-            ++offset;
-        }
-    }
-
-    if (tokens.count() > offset)
-    {
-        if (getTokenString(tokens[offset], "options", _docOptions))
-        {
-            if (tokens.count() > offset + 1)
-                _docOptions += Poco::cat(std::string(" "), tokens.begin() + offset + 1, tokens.end());
-        }
-    }
+    std::string timestamp;
+    parseDocOptions(tokens, part, timestamp);
 
     URI aUri;
     try
