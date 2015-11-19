@@ -21,6 +21,12 @@
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
+    Poco::URI _uri;
+    Poco::Net::HTTPClientSession _session;
+    Poco::Net::HTTPRequest _request;
+    Poco::Net::HTTPResponse _response;
+    Poco::Net::WebSocket _socket;
+
     CPPUNIT_TEST_SUITE(HTTPWSTest);
     CPPUNIT_TEST(testPaste);
     CPPUNIT_TEST(testRenderingOptions);
@@ -30,35 +36,38 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testRenderingOptions();
 
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
+public:
+    HTTPWSTest()
+        : _uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER)),
+        _session(_uri.getHost(), _uri.getPort()),
+        _request(Poco::Net::HTTPRequest::HTTP_POST, "/ws"),
+        _socket(_session, _request, _response)
+    {
+    }
 };
 
 void HTTPWSTest::testPaste()
 {
     // Load a document and make it empty.
-    Poco::URI uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER));
-    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/ws");
-    Poco::Net::HTTPResponse response;
-    Poco::Net::WebSocket socket(session, request, response);
     std::string documentPath = TDOC "/hello.odt";
     std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-    sendTextFrame(socket, "load url=" + documentURL);
-    sendTextFrame(socket, "uno .uno:SelectAll");
-    sendTextFrame(socket, "uno .uno:Delete");
+    sendTextFrame(_socket, "load url=" + documentURL);
+    sendTextFrame(_socket, "uno .uno:SelectAll");
+    sendTextFrame(_socket, "uno .uno:Delete");
 
     // Paste some text into it.
-    sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8 data=aaa bbb ccc");
+    sendTextFrame(_socket, "paste mimetype=text/plain;charset=utf-8 data=aaa bbb ccc");
 
     // Check if the document contains the pasted text.
-    sendTextFrame(socket, "uno .uno:SelectAll");
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    sendTextFrame(_socket, "uno .uno:SelectAll");
+    sendTextFrame(_socket, "gettextselection mimetype=text/plain;charset=utf-8");
     std::string selection;
     int flags;
     int n;
     do
     {
         char buffer[100000];
-        n = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
             std::string line = LOOLProtocol::getFirstLine(buffer, n);
@@ -71,23 +80,18 @@ void HTTPWSTest::testPaste()
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    socket.shutdown();
+    _socket.shutdown();
     CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
 }
 
 void HTTPWSTest::testRenderingOptions()
 {
     // Load a document and get its size.
-    Poco::URI uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER));
-    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/ws");
-    Poco::Net::HTTPResponse response;
-    Poco::Net::WebSocket socket(session, request, response);
     std::string documentPath = TDOC "/hide-whitespace.odt";
     std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
     std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
-    sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
-    sendTextFrame(socket, "status");
+    sendTextFrame(_socket, "load url=" + documentURL + " options=" + options);
+    sendTextFrame(_socket, "status");
 
     std::string status;
     int flags;
@@ -95,7 +99,7 @@ void HTTPWSTest::testRenderingOptions()
     do
     {
         char buffer[100000];
-        n = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
             std::string line = LOOLProtocol::getFirstLine(buffer, n);
@@ -108,7 +112,7 @@ void HTTPWSTest::testRenderingOptions()
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    socket.shutdown();
+    _socket.shutdown();
     // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
     Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
     CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
