@@ -1004,16 +1004,16 @@ void LOOLWSD::desktopMain()
     _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
     rngLock.unlock();
 
-    Path jail = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
-    File(jail).createDirectory();
+    Path jailPath = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
+    File(jailPath).createDirectory();
 
-    Path jailLOInstallation(jail, LOOLWSD::loSubPath);
+    Path jailLOInstallation(jailPath, LOOLWSD::loSubPath);
     jailLOInstallation.makeDirectory();
     File(jailLOInstallation).createDirectory();
 
     // Copy (link) LO installation and other necessary files into it from the template
 
-    linkOrCopy(LOOLWSD::sysTemplate, jail);
+    linkOrCopy(LOOLWSD::sysTemplate, jailPath);
     linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
 
     // We need this because sometimes the hostname is not resolved
@@ -1023,35 +1023,35 @@ void LOOLWSD::desktopMain()
         File networkFile(*it);
         if (networkFile.exists())
         {
-            networkFile.copyTo(Path(jail, "/etc").toString());
+            networkFile.copyTo(Path(jailPath, "/etc").toString());
         }
     }
 #ifdef __linux
     // Create the urandom and random devices
-    File(Path(jail, "/dev")).createDirectory();
-    if (mknod((jail.toString() + "/dev/random").c_str(),
+    File(Path(jailPath, "/dev")).createDirectory();
+    if (mknod((jailPath.toString() + "/dev/random").c_str(),
                 S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                 makedev(1, 8)) != 0)
     {
         Application::instance().logger().error(Util::logPrefix() +
-                "mknod(" + jail.toString() + "/dev/random) failed: " +
+                "mknod(" + jailPath.toString() + "/dev/random) failed: " +
                 strerror(errno));
 
     }
-    if (mknod((jail.toString() + "/dev/urandom").c_str(),
+    if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
                 S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                 makedev(1, 9)) != 0)
     {
         Application::instance().logger().error(Util::logPrefix() +
-                "mknod(" + jail.toString() + "/dev/urandom) failed: " +
+                "mknod(" + jailPath.toString() + "/dev/urandom) failed: " +
                 strerror(errno));
     }
 #endif
 
-    Application::instance().logger().information("desktopMain -> chroot(\"" + jail.toString() + "\")");
-    if (chroot(jail.toString().c_str()) == -1)
+    Application::instance().logger().information("desktopMain -> chroot(\"" + jailPath.toString() + "\")");
+    if (chroot(jailPath.toString().c_str()) == -1)
     {
-        logger().error("chroot(\"" + jail.toString() + "\") failed: " + strerror(errno));
+        logger().error("chroot(\"" + jailPath.toString() + "\") failed: " + strerror(errno));
         exit(Application::EXIT_UNAVAILABLE);
     }
 
