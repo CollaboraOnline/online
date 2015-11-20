@@ -11,6 +11,7 @@ L.Map.Mouse = L.Handler.extend({
 	initialize: function (map) {
 		this._map = map;
 		this._mouseEventsQueue = [];
+		this._prevMousePos = null;
 	},
 
 	addHooks: function () {
@@ -40,8 +41,35 @@ L.Map.Mouse = L.Handler.extend({
 		if (!docLayer || (this._map.slideShow && this._map.slideShow.fullscreen)) {
 			return;
 		}
-		if (docLayer._graphicMarker && docLayer._graphicMarker.isDragged) {
-			return;
+		if (docLayer._graphicMarker) {
+			if (docLayer._graphicMarker.isDragged) {
+				return;
+			}
+			if (!docLayer._isEmptyRectangle(docLayer._graphicSelection) &&
+					docLayer._graphicMarker.getBounds().contains(e.latlng)) {
+				// if we have a graphic selection and the user clicks inside the rectangle
+				if (e.type === 'mousedown') {
+					this._prevMousePos = e.latlng;
+				}
+				else if (e.type === 'mousemove' && this._mouseDown && !this._prevMousePos) {
+					// if the user started to drag the shape before the selection
+					// has been drawn
+					this._prevMousePos = e.latlng;
+				}
+				else if (e.type === 'mousemove' && this._prevMousePos) {
+					// we have a graphic selection and the user started to drag it
+					var delta = L.latLng(e.latlng.lat - this._prevMousePos.lat, e.latlng.lng - this._prevMousePos.lng);
+					this._prevMousePos = e.latlng;
+					var oldSelectionCenter = docLayer._graphicMarker.getBounds().getCenter();
+					var newSelectionCenter = L.latLng(oldSelectionCenter.lat + delta.lat, oldSelectionCenter.lng + delta.lng);
+					if (docLayer._graphicMarker.editing) {
+						docLayer._graphicMarker.editing._move(newSelectionCenter);
+					}
+				}
+				else if (e.type === 'mouseup') {
+					this._prevMousePos = null;
+				}
+			}
 		}
 
 		for (var key in docLayer._selectionHandles) {
