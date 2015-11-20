@@ -26,6 +26,7 @@
 #include <Poco/Util/Application.h>
 
 #include "Util.hpp"
+#include "Png.hpp"
 
 // Callback functions for libpng
 
@@ -99,6 +100,7 @@ namespace Util
 
         png_write_info(png_ptr, info_ptr);
 
+        png_set_write_user_transform_fn (png_ptr, unpremultiply_data);
         for (int y = 0; y < height; ++y)
             png_write_row(png_ptr, pixmap + y * width * 4);
 
