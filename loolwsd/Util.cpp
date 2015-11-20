@@ -104,7 +104,7 @@ namespace Util
 
         png_write_end(png_ptr, info_ptr);
 
-        png_destroy_write_struct(&png_ptr, NULL);
+        png_destroy_write_struct(&png_ptr, &info_ptr);
 
         return true;
     }
