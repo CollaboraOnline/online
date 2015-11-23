@@ -77,9 +77,9 @@ L.Map.include({
 		}
 	},
 
-	sendUnoCommand: function (command) {
+	sendUnoCommand: function (command, json) {
 		if (this._docLayer._permission === 'edit') {
-			L.Socket.sendMessage('uno ' + command);
+			L.Socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 
