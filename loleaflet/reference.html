@@ -8140,6 +8140,22 @@ var unoCommands = [
 },
 
 {
+    uno: '.uno:SetHyperlink',
+    parameter: {
+        'Hyperlink.Text': {
+            type: 'string',
+            value: 'some text'
+        },
+        'Hyperlink.URL': {
+            type: 'string',
+            value: 'url'
+        }
+    },
+    description: 'Creates a hyperlink. If Hyperlink.Text is not specified, the hyperlink will be set for the current ' +
+                     'selection. Hyperlink.URL can be a web URL or a bookmark from the document.'
+},
+
+{
     uno: '.uno:Shadowed',
     parameter: null,
     description: 'Shadowed.'
