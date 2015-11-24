@@ -845,7 +845,8 @@ namespace
             // The program is setuid root. Not normal on Linux where we use setcap, but if this
             // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
             // to do chroot().
-            if (setuid(getuid()) != 0) {
+            if (setuid(getuid()) != 0)
+            {
                 Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
             }
         }
@@ -868,7 +869,8 @@ namespace
                 else
                     LOOLWSD::uid = 65534;
             }
-            if (setuid(LOOLWSD::uid) != 0) {
+            if (setuid(LOOLWSD::uid) != 0)
+            {
                 Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
             }
         }

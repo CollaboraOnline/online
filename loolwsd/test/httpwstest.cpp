@@ -39,9 +39,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 public:
     HTTPWSTest()
         : _uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER)),
-        _session(_uri.getHost(), _uri.getPort()),
-        _request(Poco::Net::HTTPRequest::HTTP_POST, "/ws"),
-        _socket(_session, _request, _response)
+          _session(_uri.getHost(), _uri.getPort()),
+          _request(Poco::Net::HTTPRequest::HTTP_POST, "/ws"),
+          _socket(_session, _request, _response)
     {
     }
 };

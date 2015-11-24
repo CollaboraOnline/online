@@ -47,8 +47,10 @@ namespace LOKitHelper
                 "current=" + std::to_string(loKitDocument->pClass->getPart(loKitDocument)) + " "
                 "width=" + std::to_string(width) + " "
                 "height=" + std::to_string(height));
-        if (typeString == "spreadsheet" || typeString == "presentation") {
-            for (int i = 0; i < parts; i++) {
+        if (typeString == "spreadsheet" || typeString == "presentation")
+        {
+            for (int i = 0; i < parts; i++)
+            {
                 status += "\n";
                 status += loKitDocument->pClass->getPartName(loKitDocument, i);
             }

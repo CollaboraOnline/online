@@ -92,13 +92,16 @@ LOOLSession::LOOLSession(std::shared_ptr<WebSocket> ws, Kind kind) :
     _docURL("")
 {
     std::cout << Util::logPrefix() << "LOOLSession ctor this=" << this << " " << _kind << " ws=" << _ws.get() << std::endl;
-    if (kind == Kind::ToClient) {
+    if (kind == Kind::ToClient)
+    {
         _kindString = "ToClient";
     }
-    else if (kind == Kind::ToMaster) {
+    else if (kind == Kind::ToMaster)
+    {
         _kindString = "ToMaster";
     }
-    else if (kind == Kind::ToPrisoner) {
+    else if (kind == Kind::ToPrisoner)
+    {
         _kindString = "ToPrisoner";
     }
 }
@@ -279,7 +282,8 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             {
                 peer->_tileCache->saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
             }
-            else if (tokens[0] == "invalidatecursor:") {
+            else if (tokens[0] == "invalidatecursor:")
+            {
                 peer->_tileCache->setEditing(true);
             }
             else if (tokens[0] == "invalidatetiles:")
@@ -418,7 +422,8 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             forwardToPeer(buffer, length);
         }
 
-        if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save")) {
+        if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save"))
+        {
            _tileCache->documentSaved();
         }
     }
@@ -895,7 +900,8 @@ extern "C"
                                        " width=" + std::to_string(width) +
                                        " height=" + std::to_string(height));
                 }
-                else {
+                else
+                {
                     srv->sendTextFrame("invalidatetiles: " + std::string(pPayload));
                 }
             }
@@ -1100,7 +1106,8 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     std::memcpy(output.data(), response.data(), response.size());
 
     unsigned char *pixmap = new unsigned char[4 * width * height];
-    if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument)) {
+    if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument))
+    {
         _loKitDocument->pClass->setPart(_loKitDocument, part);
     }
 
@@ -1151,8 +1158,10 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
 
     getTokenString(tokens[3], "format", format);
 
-    if (getTokenString(tokens[4], "options", filterOptions)) {
-        if (tokens.count() > 5) {
+    if (getTokenString(tokens[4], "options", filterOptions))
+    {
+        if (tokens.count() > 5)
+        {
             filterOptions += Poco::cat(std::string(" "), tokens.begin() + 5, tokens.end());
         }
     }
@@ -1233,7 +1242,8 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    if (type == "graphic") {
+    if (type == "graphic")
+    {
         std::string fileName = "file://" + jailDocumentURL + "/insertfile/" + name;
         std::string command = ".uno:InsertGraphic";
         std::string arguments = "{"
@@ -1384,8 +1394,10 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
 
     getTokenString(tokens[2], "format", format);
 
-    if (getTokenString(tokens[3], "options", filterOptions)) {
-        if (tokens.count() > 4) {
+    if (getTokenString(tokens[3], "options", filterOptions))
+    {
+        if (tokens.count() > 4)
+        {
             filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
         }
     }

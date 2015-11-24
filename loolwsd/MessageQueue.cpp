@@ -65,7 +65,8 @@ void BasicTileQueue::put_impl(const std::string& value)
     {
         // remove all the existing tiles from the queue
         _queue.erase(std::remove_if(_queue.begin(), _queue.end(),
-                    [](const std::string& v) {
+                    [](const std::string& v)
+                    {
                         // must not remove the tiles with 'id=', they are special, used
                         // eg. for previews etc.
                         return (v.compare(0, 5, "tile ") == 0) && (v.find("id=") == std::string::npos);

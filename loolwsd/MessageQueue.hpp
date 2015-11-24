@@ -21,7 +21,9 @@
 class MessageQueue
 {
 public:
-    MessageQueue() {}
+    MessageQueue()
+    {
+    }
     virtual ~MessageQueue();
 
     MessageQueue(const MessageQueue&) = delete;
