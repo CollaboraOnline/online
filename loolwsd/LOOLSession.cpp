@@ -1108,7 +1108,8 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     std::cout << Util::logPrefix() << "paintTile called, tile at [" << tilePosX << ", " << tilePosY << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
 
-    if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output))
+    LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
+    if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output, mode))
     {
         sendTextFrame("error: cmd=tile kind=failure");
         return;

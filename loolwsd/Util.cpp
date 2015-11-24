@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
+#include <cassert>
 
 #include <png.h>
 
@@ -81,7 +82,7 @@ namespace Util
         return false;
     }
 
-    bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output)
+    bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode)
     {
         png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
@@ -100,7 +101,17 @@ namespace Util
 
         png_write_info(png_ptr, info_ptr);
 
-        png_set_write_user_transform_fn (png_ptr, unpremultiply_data);
+        switch (mode)
+        {
+        case LOK_TILEMODE_RGBA:
+            break;
+        case LOK_TILEMODE_BGRA:
+            png_set_write_user_transform_fn (png_ptr, unpremultiply_data);
+            break;
+        default:
+            assert(false);
+        }
+
         for (int y = 0; y < height; ++y)
             png_write_row(png_ptr, pixmap + y * width * 4);
 

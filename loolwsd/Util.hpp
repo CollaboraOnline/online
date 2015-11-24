@@ -14,6 +14,9 @@
 
 #include <Poco/Net/WebSocket.h>
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+
 namespace Util
 {
     std::string logPrefix();
@@ -22,7 +25,7 @@ namespace Util
 
     // Sadly, older libpng headers don't use const for the pixmap pointer parameter to
     // png_write_row(), so can't use const here for pixmap.
-    bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output);
+    bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode);
 
     // Call WebSocket::shutdown() ignoring Poco::IOException
     void shutdownWebSocket(Poco::Net::WebSocket& ws);
