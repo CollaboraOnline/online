@@ -33,6 +33,7 @@ public:
     static int portNumber;
     static int timeoutCounter;
     static bool doTest;
+    static bool volatile isShutDown;
     static std::string cache;
     static std::string sysTemplate;
     static std::string loTemplate;

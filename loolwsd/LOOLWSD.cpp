@@ -429,7 +429,8 @@ public:
                         }
                     }
                 }
-                while (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE));
+                while (!LOOLWSD::isShutDown &&
+                        (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)));
 
                 queue.clear();
                 queue.put("eof");
@@ -585,6 +586,7 @@ Poco::SharedMemory LOOLWSD::_sharedForkChild("loolwsd", sizeof(bool), Poco::Shar
 
 int LOOLWSD::_numPreSpawnedChildren = 10;
 bool LOOLWSD::doTest = false;
+volatile bool LOOLWSD::isShutDown = false;
 #if ENABLE_DEBUG
 bool LOOLWSD::runningAsRoot = false;
 int LOOLWSD::uid = 0;
@@ -605,6 +607,7 @@ LOOLWSD::~LOOLWSD()
 void LOOLWSD::handleSignal(int aSignal)
 {
     std::cout << Util::logPrefix() << "Signal received: " << strsignal(aSignal) << std::endl;
+    LOOLWSD::isShutDown = true;
 }
 
 void LOOLWSD::setSignals(bool isIgnored)
@@ -1145,7 +1148,7 @@ void LOOLWSD::desktopMain()
         else if (pid < 0)
             std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
 
-        if ( _sharedForkChild.begin()[0] > 0 )
+        if (!LOOLWSD::isShutDown && _sharedForkChild.begin()[0] > 0 )
         {
             _namedMutexLOOL.lock();
             _sharedForkChild.begin()[0] = _sharedForkChild.begin()[0] - 1;
@@ -1287,7 +1290,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         waitForTerminationRequest();
     }
 
-    while (!LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
+    while (!LOOLWSD::isShutDown && !LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
     {
         int status;
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
