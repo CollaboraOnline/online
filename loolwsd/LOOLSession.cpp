@@ -325,7 +325,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.insert(shared_from_this());
         std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
-        _childId = childId;
+        LOOLWSD::_childId = _childId = childId;
         lock.unlock();
         _availableChildSessionCV.notify_one();
 

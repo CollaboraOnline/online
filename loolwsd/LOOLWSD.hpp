@@ -43,6 +43,7 @@ public:
     static Poco::SharedMemory _sharedForkChild;
     static Poco::NamedMutex _namedMutexLOOL;
     static Poco::Random _rng;
+    static Poco::UInt64 _childId;
 
     static const int DEFAULT_CLIENT_PORT_NUMBER = 9980;
     static const int MASTER_PORT_NUMBER = 9981;
@@ -65,7 +66,6 @@ protected:
 
 private:
     void displayHelp();
-    bool childMode() const;
     void componentMain();
     void desktopMain();
     void startupComponent(int nComponents);
@@ -73,7 +73,6 @@ private:
     int  createComponent();
     int  createDesktop();
 
-    Poco::UInt64 _childId;
     static int _numPreSpawnedChildren;
     static std::mutex _rngMutex;
 

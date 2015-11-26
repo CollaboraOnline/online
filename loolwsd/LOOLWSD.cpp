@@ -573,6 +573,7 @@ private:
 
 int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
 int LOOLWSD::timeoutCounter = 0;
+Poco::UInt64 LOOLWSD::_childId = 0;
 std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
 std::string LOOLWSD::loTemplate;
@@ -595,8 +596,7 @@ const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 const std::string LOOLWSD::LOKIT_PIDLOG = "/tmp/lokit.pid";
 
-LOOLWSD::LOOLWSD() :
-    _childId(0)
+LOOLWSD::LOOLWSD()
 {
 }
 
@@ -1245,10 +1245,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             filePID << Process::id();
     }
 
-    std::unique_lock<std::mutex> rngLock(_rngMutex);
-    _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
-    rngLock.unlock();
-
     _namedMutexLOOL.lock();
 
     startupDesktop(1);
@@ -1338,12 +1334,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
 
-    return Application::EXIT_OK;
-}
+    // remove child root
+    if (LOOLWSD::_childId > 0)
+        File(LOOLWSD::childRoot + Path::separator() + std::to_string(LOOLWSD::_childId)).remove(true);
 
-bool LOOLWSD::childMode() const
-{
-    return _childId != 0;
+    return Application::EXIT_OK;
 }
 
 POCO_SERVER_MAIN(LOOLWSD)
