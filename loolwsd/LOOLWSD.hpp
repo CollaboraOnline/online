@@ -47,6 +47,7 @@ public:
     static const int MASTER_PORT_NUMBER = 9981;
     static const int INTERVAL_PROBES = 10;
     static const int MAINTENANCE_INTERVAL = 1;
+    static const int POLL_TIMEOUT = 1000000;
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
     static const std::string LOKIT_PIDLOG;

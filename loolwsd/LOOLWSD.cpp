@@ -354,6 +354,7 @@ public:
         BasicTileQueue queue;
         Thread queueHandlerThread;
         QueueHandler handler(queue);
+        Poco::Timespan waitTime(LOOLWSD::POLL_TIMEOUT);
 
         try
         {
@@ -383,46 +384,52 @@ public:
                 // process (to be forwarded to the client).
                 int flags;
                 int n;
+                bool pollTimeout = true;
                 ws->setReceiveTimeout(0);
+
                 do
                 {
                     char buffer[200000];
-                    n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
-                    if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                    if ((pollTimeout = ws->poll(waitTime, Socket::SELECT_READ)))
                     {
-                        std::string firstLine = getFirstLine(buffer, n);
-                        StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                        n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
-                        if (kind == LOOLSession::Kind::ToClient && firstLine.size() == static_cast<std::string::size_type>(n))
+                        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                         {
-                            queue.put(firstLine);
-                        }
-                        else
-                        {
-                            // Check if it is a "nextmessage:" and in that case read the large
-                            // follow-up message separately, and handle that only.
-                            int size;
-                            if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                            std::string firstLine = getFirstLine(buffer, n);
+                            StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+                            if (kind == LOOLSession::Kind::ToClient && firstLine.size() == static_cast<std::string::size_type>(n))
                             {
-                                char largeBuffer[size];
-
-                                n = ws->receiveFrame(largeBuffer, size, flags);
-                                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                                {
-                                    if (!session->handleInput(largeBuffer, n))
-                                        n = 0;
-                                }
+                                queue.put(firstLine);
                             }
                             else
                             {
-                                if (!session->handleInput(buffer, n))
-                                    n = 0;
+                                // Check if it is a "nextmessage:" and in that case read the large
+                                // follow-up message separately, and handle that only.
+                                int size;
+                                if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                                {
+                                    char largeBuffer[size];
+
+                                    n = ws->receiveFrame(largeBuffer, size, flags);
+                                    if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                                    {
+                                        if (!session->handleInput(largeBuffer, n))
+                                            n = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!session->handleInput(buffer, n))
+                                        n = 0;
+                                }
                             }
                         }
                     }
                 }
-                while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+                while (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE));
 
                 queue.clear();
                 queue.put("eof");
