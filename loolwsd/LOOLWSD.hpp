@@ -53,6 +53,9 @@ public:
     static const std::string LOKIT_PIDLOG;
 
 protected:
+    static void setSignals(bool bIgnore);
+    static void handleSignal(int nSignal);
+
     void initialize(Poco::Util::Application& self) override;
     void uninitialize() override;
     void defineOptions(Poco::Util::OptionSet& options) override;

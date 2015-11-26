@@ -602,6 +602,27 @@ LOOLWSD::~LOOLWSD()
 {
 }
 
+void LOOLWSD::handleSignal(int aSignal)
+{
+    std::cout << Util::logPrefix() << "Signal received: " << strsignal(aSignal) << std::endl;
+}
+
+void LOOLWSD::setSignals(bool isIgnored)
+{
+#ifdef __linux
+    struct sigaction aSigAction;
+
+    sigemptyset(&aSigAction.sa_mask);
+    aSigAction.sa_flags = 0;
+    aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
+
+    sigaction(SIGTERM, &aSigAction, NULL);
+    sigaction(SIGINT, &aSigAction, NULL);
+    sigaction(SIGQUIT, &aSigAction, NULL);
+    sigaction(SIGHUP, &aSigAction, NULL);
+#endif
+}
+
 void LOOLWSD::initialize(Application& self)
 {
     ServerApplication::initialize(self);
@@ -891,6 +912,8 @@ void LOOLWSD::componentMain()
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+
+    setSignals(true);
 #endif
 
     try
@@ -1007,6 +1030,8 @@ void LOOLWSD::desktopMain()
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("loolbroker"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+
+    setSignals(false);
 #endif
 
     // Initialization
@@ -1184,6 +1209,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     char *locale = setlocale(LC_ALL, NULL);
     if (locale == NULL || std::strcmp(locale, "C") == 0)
         setlocale(LC_ALL, "en_US.utf8");
+
+    setSignals(false);
 #endif
 
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
