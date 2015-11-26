@@ -1166,13 +1166,6 @@ void LOOLWSD::desktopMain()
         }
     }
 
-    // Terminate child processes
-    for (auto i : MasterProcessSession::_childProcesses)
-    {
-        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
-        Process::requestTermination(i.first);
-    }
-
     exit(Application::EXIT_OK);
 }
 
@@ -1208,6 +1201,7 @@ void LOOLWSD::startupDesktop(int nDesktops)
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+    int status;
 #ifdef __linux
     char *locale = setlocale(LC_ALL, NULL);
     if (locale == NULL || std::strcmp(locale, "C") == 0)
@@ -1292,7 +1286,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     while (!LOOLWSD::isShutDown && !LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
     {
-        int status;
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
@@ -1335,12 +1328,15 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (LOOLWSD::doTest)
         inputThread.join();
 
-    // Terminate child processes
-    for (auto i : MasterProcessSession::_childProcesses)
-    {
-        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
-        Process::requestTermination(i.first);
-    }
+    // stop the service, no more request
+    srv.stop();
+    srv2.stop();
+    // close all websockets
+    threadPool.joinAll();
+    threadPool2.joinAll();
+
+    // wait broker process finish
+    waitpid(-1, &status, WUNTRACED);
 
     return Application::EXIT_OK;
 }
