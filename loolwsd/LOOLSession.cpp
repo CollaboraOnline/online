@@ -719,7 +719,6 @@ ChildProcessSession::~ChildProcessSession()
     std::cout << Util::logPrefix() << "ChildProcessSession dtor this=" << this << std::endl;
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, 0, 0);
-    Util::shutdownWebSocket(*_ws);
 }
 
 bool ChildProcessSession::handleInput(const char *buffer, int length)
