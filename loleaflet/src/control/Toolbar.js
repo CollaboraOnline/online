@@ -104,5 +104,9 @@ L.Map.include({
 			}
 		};
 		L.Socket.sendMessage('uno .uno:EnterString ' + JSON.stringify(command));
+	},
+
+	renderFont: function (fontName) {
+		L.Socket.sendMessage('renderfont font=' + window.encodeURIComponent(fontName));
 	}
 });

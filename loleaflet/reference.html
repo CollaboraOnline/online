@@ -1636,6 +1636,12 @@ var map = L.map('map', {
 		<td><code>undefined</code></td>
         <td>Applies a style from a style family.</td>
 	</tr>
+	<tr>
+		<td><code><b>renderFont</b>(
+            <nobr>&lt;String&gt;<i>fontName</i>)</nobr>
+		<td><code>undefined</code></td>
+        <td>Renders the given font in the smallest rectangle it can fit in.</td>
+	</tr>
 </table>
 
 <h2 id="loleaflet-page">Page oriented</h2>
@@ -1750,6 +1756,11 @@ var map = L.map('map', {
 		<td><code><b>print</b></code></td>
 		<td><code><a href="#print-event">PrintEvent</a></code></td>
 		<td>Fired when the url for the pdf export is ready.</td>
+	</tr>
+	<tr>
+		<td><code><b>renderfont</b></code></td>
+		<td><code><a href="#renderfont-event">RenderFontEvent</a></code></td>
+		<td>Fired when the font rendering is ready.</td>
 	</tr>
 	<tr>
 		<td><code><b>search</b></code></td>
@@ -1973,6 +1984,26 @@ var map = L.map('map', {
 		<td><code><b>url</b></code></td>
         <td><code>String</code></td>
 		<td>An url for the PDF exported document.</td>
+	</tr>
+</table>
+
+<h3 id="renderfont-event">RenderFontEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>font</b></code></td>
+        <td><code>String</code></td>
+		<td>Font name.</td>
+	</tr>
+	<tr>
+		<td><code><b>img</b></code></td>
+        <td><code>String</code></td>
+		<td>The image data URL.</td>
 	</tr>
 </table>
 

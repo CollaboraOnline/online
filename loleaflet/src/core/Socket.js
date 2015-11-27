@@ -85,7 +85,7 @@ L.Socket = {
 			textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
 		}
 
-		if (!textMsg.startsWith('tile:')) {
+		if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
 			// log the tile msg separately as we need the tile coordinates
 			L.Log.log(textMsg, L.INCOMING);
 			if (imgBytes !== undefined) {
@@ -221,6 +221,9 @@ L.Socket = {
 			}
 			else if (tokens[i].substring(0, 5) === 'port=') {
 				command.port = tokens[i].substring(5);
+			}
+			else if (tokens[i].substring(0, 5) === 'font=') {
+				command.font = window.decodeURIComponent(tokens[i].substring(5));
 			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {

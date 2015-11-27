@@ -257,6 +257,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('partpagerectangles:')) {
 			this._onPartPageRectanglesMsg(textMsg);
 		}
+		else if (textMsg.startsWith('renderfont:')) {
+			this._onRenderFontMsg(textMsg, img);
+		}
 		else if (textMsg.startsWith('searchnotfound:')) {
 			this._onSearchNotFoundMsg(textMsg);
 		}
@@ -443,6 +446,14 @@ L.TileLayer = L.GridLayer.extend({
 			twipsRectangles: this._partPageRectanglesTwips
 		});
 		this._onCurrentPageUpdate();
+	},
+
+	_onRenderFontMsg: function (textMsg, img) {
+		var command = L.Socket.parseServerCmd(textMsg);
+		this._map.fire('renderfont', {
+			font: command.font,
+			img: img
+		});
 	},
 
 	_onSearchNotFoundMsg: function (textMsg) {
