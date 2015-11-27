@@ -188,6 +188,35 @@ void TileCache::saveTextFile(const std::string& text, std::string fileName)
     textStream.close();
 }
 
+void TileCache::saveRendering(const std::string& name, const std::string& dir, const char *data, size_t size)
+{
+    // can fonts be invalidated?
+    std::string dirName = cacheDirName(false) + "/" + dir;
+
+    File(dirName).createDirectories();
+
+    std::string fileName = dirName + "/" + name;
+
+    std::fstream outStream(fileName, std::ios::out);
+    outStream.write(data, size);
+    outStream.close();
+}
+
+std::unique_ptr<std::fstream> TileCache::lookupRendering(const std::string& name, const std::string& dir)
+{
+    std::string dirName = cacheDirName(false) + "/" + dir;
+    std::string fileName = dirName + "/" + name;
+    File directory(dirName);
+
+    if (directory.exists() && directory.isDirectory() && File(fileName).exists())
+    {
+        std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
+        return result;
+    }
+
+    return nullptr;
+}
+
 void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
 {
     // in the Editing cache, remove immediately

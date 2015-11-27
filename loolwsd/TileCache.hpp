@@ -51,6 +51,12 @@ public:
     // The parameter is a message
     void saveTextFile(const std::string& text, std::string fileName);
 
+    // Saves a font / style / etc rendering
+    // The dir parameter should be the type of rendering, like "font", "style", etc
+    void saveRendering(const std::string& name, const std::string& dir, const char *data, size_t size);
+
+    std::unique_ptr<std::fstream> lookupRendering(const std::string& name, const std::string& dir);
+
     // The tiles parameter is an invalidatetiles: message as sent by the child process
     void invalidateTiles(const std::string& tiles);
 
