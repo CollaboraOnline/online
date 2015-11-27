@@ -295,6 +295,16 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
                 assert(firstLine.size() == static_cast<std::string::size_type>(length));
                 peer->_tileCache->invalidateTiles(firstLine);
             }
+            else if (tokens[0] == "renderfont:")
+            {
+                std::string font;
+                if (tokens.count() < 2 ||
+                    !getTokenString(tokens[1], "font", font))
+                    assert(false);
+
+                assert(firstLine.size() < static_cast<std::string::size_type>(length));
+                peer->_tileCache->saveRendering(font, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+            }
         }
 
         forwardToPeer(buffer, length);
@@ -365,6 +375,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
              tokens[0] != "partpagerectangles" &&
+             tokens[0] != "renderfont" &&
              tokens[0] != "requestloksession" &&
              tokens[0] != "resetselection" &&
              tokens[0] != "saveas" &&
@@ -400,6 +411,10 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] == "invalidatetiles")
     {
         return invalidateTiles(buffer, length, tokens);
+    }
+    else if (tokens[0] == "renderfont")
+    {
+        sendFontRendering(buffer, length, tokens);
     }
     else if (tokens[0] == "status")
     {
@@ -546,6 +561,43 @@ bool MasterProcessSession::getPartPageRectangles(const char *buffer, int length)
 std::string MasterProcessSession::getSaveAs()
 {
     return _saveAsQueue.get();
+}
+
+void MasterProcessSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
+{
+    std::string font;
+
+    if (tokens.count() < 2 ||
+        !getTokenString(tokens[1], "font", font))
+    {
+        sendTextFrame("error: cmd=renderfont kind=syntax");
+        return;
+    }
+
+    std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+
+    std::vector<char> output;
+    output.resize(response.size());
+    std::memcpy(output.data(), response.data(), response.size());
+
+    std::unique_ptr<std::fstream> cachedRendering = _tileCache->lookupRendering(font, "font");
+    if (cachedRendering && cachedRendering->is_open())
+    {
+        cachedRendering->seekg(0, std::ios_base::end);
+        size_t pos = output.size();
+        std::streamsize size = cachedRendering->tellg();
+        output.resize(pos + size);
+        cachedRendering->seekg(0, std::ios_base::beg);
+        cachedRendering->read(output.data() + pos, size);
+        cachedRendering->close();
+
+        sendBinaryFrame(output.data(), output.size());
+        return;
+    }
+
+    if (_peer.expired())
+        dispatchChild();
+    forwardToPeer(buffer, length);
 }
 
 void MasterProcessSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
@@ -755,6 +807,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
+    }
+    else if (tokens[0] == "renderfont")
+    {
+        sendFontRendering(buffer, length, tokens);
     }
     else if (tokens[0] == "setclientpart")
     {
@@ -1035,6 +1091,44 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
 
     return true;
+}
+
+void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+{
+    std::string font, decodedFont;
+    int width, height;
+    unsigned char *pixmap;
+
+    if (tokens.count() < 2 ||
+        !getTokenString(tokens[1], "font", font))
+    {
+        sendTextFrame("error: cmd=renderfont kind=syntax");
+        return;
+    }
+
+    URI::decode(font, decodedFont);
+    std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+
+    std::vector<char> output;
+    output.resize(response.size());
+    std::memcpy(output.data(), response.data(), response.size());
+
+    Poco::Timestamp timestamp;
+    pixmap = _loKitDocument->pClass->renderFont(_loKitDocument, decodedFont.c_str(), &width, &height);
+    std::cout << Util::logPrefix() << "renderFont called, font[" << font << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
+
+    if (pixmap != NULL) {
+        if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output))
+        {
+            sendTextFrame("error: cmd=renderfont kind=failure");
+            delete[] pixmap;
+            return;
+        }
+    }
+
+    delete[] pixmap;
+
+    sendBinaryFrame(output.data(), output.size());
 }
 
 bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)

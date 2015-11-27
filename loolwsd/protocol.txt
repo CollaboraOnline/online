@@ -65,6 +65,11 @@ mouse type=<type> x=<x> y=<y> count=<count>
 
     <type> is 'buttondown', 'buttonup' or 'move', others are numbers.
 
+renderfont font=<font>
+
+    requests the rendering of the given font.
+    The font parameter is URL encoded
+
 requestloksession
 
     requests the initialization of a LOK process in an attempt to predict the user's

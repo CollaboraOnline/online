@@ -71,6 +71,8 @@ protected:
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
+    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
+
     // Fields common to sessions in master and jailed processes:
 
     // In the master process, the websocket to the LOOL client or the jailed child process. In a
@@ -137,6 +139,8 @@ public:
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
+    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
@@ -189,6 +193,8 @@ public:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
+    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool downloadAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
