@@ -342,6 +342,13 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		switch (e.originalEvent.keyCode) {
+			case 51: // 3
+				if (this._map.getDocType() === 'spreadsheet') {
+					L.Socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
+					L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+					return true;
+				}
+				return false;
 			case 53: // 5
 				if (this._map.getDocType() === 'spreadsheet') {
 					L.Socket.sendMessage('uno .uno:Strikeout');
