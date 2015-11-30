@@ -785,6 +785,13 @@ a.leaflet-control-buttons:hover:first-child {
         overflow: hidden;
         }
 
+.spreadsheet-table-noselect {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+         user-select: none;
+        -webkit-user-drag: none;
+        }
+
 .spreadsheet-table-column {
         table-layout: fixed;
         left: 0px;
