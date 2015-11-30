@@ -1372,8 +1372,9 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
 bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y, count, buttons, modifier;
+    std::string targetwindow;
 
-    if (tokens.count() != 7 ||
+    if (((tokens.count() != 7 && tokens.count() != 8)) ||
         !getTokenKeyword(tokens[1], "type",
                          {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
                           {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
@@ -1389,7 +1390,14 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    _loKitDocument->pClass->postMouseEvent(_loKitDocument, type, x, y, count, buttons, modifier);
+    // target window parameter is optional - LOK assumes
+    // document if not specified.
+    if (tokens.count() == 8)
+    {
+        getTokenString(tokens[7], "targetwindow", targetwindow);
+    }
+
+    _loKitDocument->pClass->postMouseEvent(_loKitDocument, type, x, y, count, buttons, modifier, targetwindow.c_str());
 
     return true;
 }
