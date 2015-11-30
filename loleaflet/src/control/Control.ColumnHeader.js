@@ -2,7 +2,8 @@
 * Control.ColumnHeader
 */
 
-L.Control.ColumnHeader = L.Control.extend({
+L.Control.ColumnHeader = L.Control.ColRowHeader.extend({
+
     onAdd: function () {
 	var docContainer = L.DomUtil.get('document-container');
 	var divHeader = L.DomUtil.create('div', 'spreadsheet-container-column', docContainer.parentElement);
@@ -22,8 +23,10 @@ L.Control.ColumnHeader = L.Control.extend({
 	this._viewPort = 0;
 
 	// dummy initial header
-	var dummy = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
-	L.DomUtil.create('div', 'spreadsheet-table-column-cell-text', dummy);
+	var dummy = L.DomUtil.create('th', 'spreadsheet-table-column-cell spreadsheet-table-noselect', this._columns);
+	L.DomUtil.create('div', 'spreadsheet-table-column-cell-text spreadsheet-table-noselect', dummy);
+
+	this._initializeColRowBar('colbar');
 
 	return document.createElement('div');
         },
@@ -57,8 +60,8 @@ L.Control.ColumnHeader = L.Control.extend({
 	    for (iterator = 0; iterator < columns.length; iterator++) {
 		width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
 		twip = new L.Point(width, width);
-		column = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
-		text = L.DomUtil.create('div', 'spreadsheet-table-column-cell-text', column);
+		column = L.DomUtil.create('th', 'spreadsheet-table-column-cell spreadsheet-table-noselect', this._columns);
+		text = L.DomUtil.create('div', 'spreadsheet-table-column-cell-text spreadsheet-table-noselect', column);
 		text.innerHTML = columns[iterator].text;
 		column.width = Math.round(converter.call(context, twip).x) - 1 + 'px';
 	    }
