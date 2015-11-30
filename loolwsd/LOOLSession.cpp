@@ -1117,16 +1117,15 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
     pixmap = _loKitDocument->pClass->renderFont(_loKitDocument, decodedFont.c_str(), &width, &height);
     std::cout << Util::logPrefix() << "renderFont called, font[" << font << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
 
-    if (pixmap != NULL) {
-        if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output))
+    if (pixmap != nullptr) {
+        if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output, LOK_TILEMODE_RGBA))
         {
             sendTextFrame("error: cmd=renderfont kind=failure");
             delete[] pixmap;
             return;
         }
+        delete[] pixmap;
     }
-
-    delete[] pixmap;
 
     sendBinaryFrame(output.data(), output.size());
 }
