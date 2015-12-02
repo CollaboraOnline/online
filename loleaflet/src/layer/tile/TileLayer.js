@@ -660,19 +660,15 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateCellCursor();
 	},
 
-	_postMouseEvent: function(type, x, y, count, buttons, modifier, targetwindow) {
+	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
 		if (this._clientZoom) {
 			// the zoom level has changed
 			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
 			this._clientZoom = null;
 		}
-		var message = 'mouse type=' + type +
-			      ' x=' + x + ' y=' + y + ' count=' + count +
-			      ' buttons=' + buttons + ' modifier=' + modifier;
-		if (targetwindow) {
-		    message += ' targetwindow=' + targetwindow;
-		}
-		L.Socket.sendMessage(message);
+		L.Socket.sendMessage('mouse type=' + type +
+				' x=' + x + ' y=' + y + ' count=' + count +
+				' buttons=' + buttons + ' modifier=' + modifier);
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {

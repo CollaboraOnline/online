@@ -284,7 +284,6 @@ var deps = {
 
         ControlColumnHeader: {
                 src: ['control/Control.js',
-                      'control/Control.ColRowHeader.js',
                       'control/Control.ColumnHeader.js'],
                 heading: 'Controls',
                 desc: 'Column Header bar'
@@ -292,7 +291,6 @@ var deps = {
 
         ControlRowHeader: {
                 src: ['control/Control.js',
-                      'control/Control.ColRowHeader.js',
                       'control/Control.RowHeader.js'],
                 heading: 'Controls',
                 desc: 'Row Header bar'
