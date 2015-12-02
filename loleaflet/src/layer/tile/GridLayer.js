@@ -389,6 +389,36 @@ L.GridLayer = L.Layer.extend({
 		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y});
 	},
 
+	_checkSpreadSheetBounds: function (newZoom) {
+		// for spreadsheets, when the document is smaller than the viewing area
+		// we want it to be glued to the row/column headers instead of being centered
+		// In the future we probably want to remove this and set the bonds only on the
+		// left/upper side of the spreadsheet so that we can have an 'infinite' number of
+		// cells downwards and to the right, like we have on desktop
+		var viewSize = this._map.getSize();
+		var scale = this._map.getZoomScale(newZoom);
+		var width = this._docWidthTwips / this._tileWidthTwips * this._tileSize * scale;
+		var height = this._docHeightTwips / this._tileHeightTwips * this._tileSize * scale;
+		if (width < viewSize.x || height < viewSize.y) {
+			// if after zoomimg the document becomes smaller than the viewing area
+			width = Math.max(width, viewSize.x);
+			height = Math.max(height, viewSize.y);
+			if (!this._map.options._origMaxBounds) {
+				this._map.options._origMaxBounds = this._map.options.maxBounds;
+			}
+			scale = this._map.options.crs.scale(1);
+			this._map.setMaxBounds(new L.LatLngBounds(
+					this._map.unproject(new L.Point(0, 0)),
+					this._map.unproject(new L.Point(width * scale, height * scale))));
+		}
+		else if (this._map.options._origMaxBounds) {
+			// if after zoomimg the document becomes larger than the viewing area
+			// we need to restore the inital bounds
+			this._map.setMaxBounds(this._map.options._origMaxBounds);
+			this._map.options._origMaxBounds = null;
+		}
+	},
+
 	_updateScrollOffset: function () {
 		var centerPixel = this._map.project(this._map.getCenter());
 		var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));

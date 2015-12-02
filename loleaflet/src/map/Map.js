@@ -74,6 +74,11 @@ L.Map = L.Evented.extend({
 			this._zoom = this._limitZoom(zoom);
 			return this;
 		}
+		if (this._docLayer && this._docLayer._docType === 'spreadsheet') {
+			// for spreadsheets, when the document is smaller than the viewing area
+			// we want it to be glued to the row/column headers instead of being centered
+			this._docLayer._checkSpreadSheetBounds(zoom);
+		}
 		return this.setView(this.getCenter(), zoom, {zoom: options});
 	},
 
