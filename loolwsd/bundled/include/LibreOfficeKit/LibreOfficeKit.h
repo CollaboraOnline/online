@@ -148,8 +148,7 @@ struct _LibreOfficeKitDocumentClass
                             int nY,
                             int nCount,
                             int nButtons,
-                            int nModifier,
-                            const char* pTargetWindow);
+                            int nModifier);
 
     /// @see lok::Document::postUnoCommand
     void (*postUnoCommand) (LibreOfficeKitDocument* pThis,
