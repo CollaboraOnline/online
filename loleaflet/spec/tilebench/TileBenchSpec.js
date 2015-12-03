@@ -43,6 +43,7 @@ describe('TileBench', function () {
 
 	after(function () {
 		map.remove();
+        document.getElementById('document-container').style.visibility = 'hidden';
 	});
 
 	describe('Benchmarking', function () {
