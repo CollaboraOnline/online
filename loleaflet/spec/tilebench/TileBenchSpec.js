@@ -11,15 +11,24 @@ describe('TileBench', function () {
 		li.style.class = 'test pass';
 		li.innerHTML = '<h2>' + msg + '</h2>';
 		cont.appendChild(li);
-	}
+	};
+
+	var getParameterByName = function (name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			results = regex.exec(location.search);
+		return results === null ? "" : results[1].replace(/\+/g, " ");
+	};
 
 	before(function () {
 		var htmlPath = window.location.pathname;
 		var dir = htmlPath.substring(0, htmlPath.lastIndexOf('/'));
 		var fileURL = 'file://' + dir + '/data/eval.odt';
+		fileURL = getParameterByName('file_path') || fileURL;
+		var server = getParameterByName('host') || 'ws://localhost:9980';
 		// initialize the map and load the document
 		map = L.map('map', {
-			server: 'ws://localhost:9980',
+			server: server,
 			doc: fileURL,
 			edit: false,
 			readOnly: false
