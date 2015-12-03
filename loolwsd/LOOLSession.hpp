@@ -165,6 +165,8 @@ public:
 private:
     // The id of the child process
     Poco::UInt64 _childId;
+    // The pid of the child process
+    Poco::Process::PID _pidChild;
     static Poco::Random _rng;
     static std::mutex _rngMutex;
     int _curPart;

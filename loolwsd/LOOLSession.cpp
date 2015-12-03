@@ -180,6 +180,7 @@ std::mutex MasterProcessSession::_rngMutex;
 MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind kind) :
     LOOLSession(ws, kind),
     _childId(0),
+    _pidChild(0),
     _curPart(0),
     _loadPart(-1)
 {
@@ -336,6 +337,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         _availableChildSessions.insert(shared_from_this());
         std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
         LOOLWSD::_childId = _childId = childId;
+        _pidChild = pidChild;
         lock.unlock();
         _availableChildSessionCV.notify_one();
 
@@ -693,10 +695,11 @@ void MasterProcessSession::dispatchChild()
 
     if (!aUri.empty() && aUri.getScheme() == "file")
     {
+        std::string aJailDoc = jailDocumentURL.substr(1) + Path::separator() + std::to_string(childSession->_pidChild);
         Path aSrcFile(aUri.getPath());
-        Path aDstFile(Path(getJailPath(childSession->_childId), jailDocumentURL.substr(1)), aSrcFile.getFileName());
-        Path aDstPath(getJailPath(childSession->_childId), jailDocumentURL.substr(1));
-        Path aJailFile(jailDocumentURL, aSrcFile.getFileName());
+        Path aDstFile(Path(getJailPath(childSession->_childId), aJailDoc), aSrcFile.getFileName());
+        Path aDstPath(getJailPath(childSession->_childId), aJailDoc);
+        Path aJailFile(aJailDoc, aSrcFile.getFileName());
 
         try
         {
@@ -1059,7 +1062,8 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         _loKit->pClass->registerCallback(_loKit, myCallback, this);
 
     if (aUri.isRelative() || aUri.getScheme() == "file")
-        aUri = URI( URI("file://"), Path(jailDocumentURL, Path(aUri.getPath()).getFileName()).toString() );
+        aUri = URI( URI("file://"), Path(jailDocumentURL + Path::separator() + std::to_string(Process::id()),
+                    Path(aUri.getPath()).getFileName()).toString() );
 
     if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, aUri.toString().c_str())) == NULL)
     {
