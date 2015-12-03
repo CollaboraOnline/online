@@ -1327,9 +1327,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // stop the service, no more request
     srv.stop();
     srv2.stop();
+
     // close all websockets
     threadPool.joinAll();
     threadPool2.joinAll();
+
+    // Clear sessions to pre-spawned child processes that have connected
+    // but are not yet assigned a document to work on.
+    MasterProcessSession::_availableChildSessions.clear();
 
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
