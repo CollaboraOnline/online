@@ -1126,6 +1126,10 @@ void LOOLWSD::desktopMain()
                 {
                     std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
                     MasterProcessSession::_childProcesses.erase(pid);
+
+                    File aWorkSpace(LOOLSession::jailDocumentURL + Path::separator() + std::to_string(pid));
+                    if (aWorkSpace.exists())
+                        aWorkSpace.remove(true);
                 }
 
                 if ( WCOREDUMP(status) )
