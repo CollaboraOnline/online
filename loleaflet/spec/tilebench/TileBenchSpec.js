@@ -146,6 +146,7 @@ describe('TileBench', function () {
 		done();
 	};
 
+	// since we don't click anywhere, this replay will only work for text documents
 	var keyInput = [
 		[135, 'key type=input char=84 key=0'],
 		[237, 'key type=up char=0 key=16'],
