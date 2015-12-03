@@ -984,6 +984,10 @@ void LOOLWSD::componentMain()
         queue.put("eof");
         queueHandlerThread.join();
 
+        // Destroy lokit document
+        if (session->_loKitDocument)
+            session->_loKitDocument->pClass->destroy(session->_loKitDocument);
+
         // Destroy LibreOfficeKit
         loKit->pClass->destroy(loKit);
     }
