@@ -923,12 +923,6 @@ void LOOLWSD::componentMain()
     {
         _namedMutexLOOL.lock();
 
-        // Initialization
-        std::unique_lock<std::mutex> rngLock(_rngMutex);
-        _rng.seed(Process::id());
-        _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
-        rngLock.unlock();
-
         Path jailPath = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
         File(jailPath).createDirectory();
 
@@ -1083,6 +1077,10 @@ int LOOLWSD::createComponent()
 {
     int pid;
 
+    std::unique_lock<std::mutex> rngLock(_rngMutex);
+    _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
+    rngLock.unlock();
+
     if ((pid = fork()) == -1)
     {
         std::cout << "Fork failed." << std::endl;
@@ -1094,7 +1092,7 @@ int LOOLWSD::createComponent()
         componentMain();
     }
 
-    MasterProcessSession::_childProcesses[pid] = pid;
+    MasterProcessSession::_childProcesses[pid] = _childId;
 
     return Application::EXIT_OK;
 }
@@ -1117,6 +1115,7 @@ void LOOLWSD::desktopMain()
     setSignals(false);
 #endif
 
+    _rng.seed(Process::id());
     startupComponent(_numPreSpawnedChildren);
 
     while (MasterProcessSession::_childProcesses.size() > 0)
@@ -1130,11 +1129,13 @@ void LOOLWSD::desktopMain()
                 if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
                 {
                     std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
-                    MasterProcessSession::_childProcesses.erase(pid);
-
-                    File aWorkSpace(LOOLSession::jailDocumentURL + Path::separator() + std::to_string(pid));
+                    // remove chroot child
+                    File aWorkSpace(LOOLWSD::childRoot + Path::separator() +
+                                    std::to_string(MasterProcessSession::_childProcesses[pid]));
                     if (aWorkSpace.exists())
                         aWorkSpace.remove(true);
+
+                    MasterProcessSession::_childProcesses.erase(pid);
                 }
 
                 if ( WCOREDUMP(status) )
