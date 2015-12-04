@@ -916,12 +916,88 @@ void LOOLWSD::componentMain()
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
 
-    setSignals(true);
+    setSignals(false);
 #endif
 
     try
     {
         _namedMutexLOOL.lock();
+
+        // Initialization
+        std::unique_lock<std::mutex> rngLock(_rngMutex);
+        _rng.seed(Process::id());
+        _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
+        rngLock.unlock();
+
+        Path jailPath = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
+        File(jailPath).createDirectory();
+
+        Path jailLOInstallation(jailPath, LOOLWSD::loSubPath);
+        jailLOInstallation.makeDirectory();
+        File(jailLOInstallation).createDirectory();
+
+        // Copy (link) LO installation and other necessary files into it from the template
+
+        linkOrCopy(LOOLWSD::sysTemplate, jailPath);
+        linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
+
+        // We need this because sometimes the hostname is not resolved
+        std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+        for (std::vector<std::string>::iterator it = networkFiles.begin(); it != networkFiles.end(); ++it)
+        {
+            File networkFile(*it);
+            if (networkFile.exists())
+            {
+                networkFile.copyTo(Path(jailPath, "/etc").toString());
+            }
+        }
+#ifdef __linux
+        // Create the urandom and random devices
+        File(Path(jailPath, "/dev")).createDirectory();
+        if (mknod((jailPath.toString() + "/dev/random").c_str(),
+                    S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                    makedev(1, 8)) != 0)
+        {
+            Application::instance().logger().error(Util::logPrefix() +
+                    "mknod(" + jailPath.toString() + "/dev/random) failed: " +
+                    strerror(errno));
+
+        }
+        if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
+                    S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                    makedev(1, 9)) != 0)
+        {
+            Application::instance().logger().error(Util::logPrefix() +
+                    "mknod(" + jailPath.toString() + "/dev/urandom) failed: " +
+                    strerror(errno));
+        }
+#endif
+
+        Application::instance().logger().information("componentMain -> chroot(\"" + jailPath.toString() + "\")");
+        if (chroot(jailPath.toString().c_str()) == -1)
+        {
+            logger().error("chroot(\"" + jailPath.toString() + "\") failed: " + strerror(errno));
+            exit(Application::EXIT_UNAVAILABLE);
+        }
+
+        if (chdir("/") == -1)
+        {
+            logger().error(std::string("chdir(\"/\") in jail failed: ") + strerror(errno));
+            exit(Application::EXIT_UNAVAILABLE);
+        }
+
+#ifdef __linux
+        dropCapability(CAP_SYS_CHROOT);
+#else
+        dropCapability();
+#endif
+
+        if (std::getenv("SLEEPFORDEBUGGER"))
+        {
+            std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
+                "attach process " << Process::id() << " in debugger now." << std::endl;
+            Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
+        }
 
 #ifdef __APPLE__
         LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
@@ -1040,81 +1116,6 @@ void LOOLWSD::desktopMain()
 
     setSignals(false);
 #endif
-
-    // Initialization
-    std::unique_lock<std::mutex> rngLock(_rngMutex);
-    _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
-    rngLock.unlock();
-
-    Path jailPath = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
-    File(jailPath).createDirectory();
-
-    Path jailLOInstallation(jailPath, LOOLWSD::loSubPath);
-    jailLOInstallation.makeDirectory();
-    File(jailLOInstallation).createDirectory();
-
-    // Copy (link) LO installation and other necessary files into it from the template
-
-    linkOrCopy(LOOLWSD::sysTemplate, jailPath);
-    linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
-
-    // We need this because sometimes the hostname is not resolved
-    std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
-    for (std::vector<std::string>::iterator it = networkFiles.begin(); it != networkFiles.end(); ++it)
-    {
-        File networkFile(*it);
-        if (networkFile.exists())
-        {
-            networkFile.copyTo(Path(jailPath, "/etc").toString());
-        }
-    }
-#ifdef __linux
-    // Create the urandom and random devices
-    File(Path(jailPath, "/dev")).createDirectory();
-    if (mknod((jailPath.toString() + "/dev/random").c_str(),
-                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                makedev(1, 8)) != 0)
-    {
-        Application::instance().logger().error(Util::logPrefix() +
-                "mknod(" + jailPath.toString() + "/dev/random) failed: " +
-                strerror(errno));
-
-    }
-    if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
-                S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                makedev(1, 9)) != 0)
-    {
-        Application::instance().logger().error(Util::logPrefix() +
-                "mknod(" + jailPath.toString() + "/dev/urandom) failed: " +
-                strerror(errno));
-    }
-#endif
-
-    Application::instance().logger().information("desktopMain -> chroot(\"" + jailPath.toString() + "\")");
-    if (chroot(jailPath.toString().c_str()) == -1)
-    {
-        logger().error("chroot(\"" + jailPath.toString() + "\") failed: " + strerror(errno));
-        exit(Application::EXIT_UNAVAILABLE);
-    }
-
-    if (chdir("/") == -1)
-    {
-        logger().error(std::string("chdir(\"/\") in jail failed: ") + strerror(errno));
-        exit(Application::EXIT_UNAVAILABLE);
-    }
-
-#ifdef __linux
-    dropCapability(CAP_SYS_CHROOT);
-#else
-    dropCapability();
-#endif
-
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, " <<
-            "attach process " << Process::id() << " in debugger now." << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
-    }
 
     startupComponent(_numPreSpawnedChildren);
 
