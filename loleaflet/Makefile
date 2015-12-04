@@ -18,7 +18,11 @@ dist: all
 	mkdir loleaflet-$(VERSION)
 	cp README loleaflet-$(VERSION)
 	cp reference.html loleaflet-$(VERSION)
-	tar cf - dist plugins/draw-$(DRAW_VERSION)/dist debug/document src/scrollbar docs | (cd loleaflet-$(VERSION) && tar xf -)
+	tar cf - dist plugins/draw-$(DRAW_VERSION)/dist debug/document src/scrollbar docs spec \
+		node_modules/mocha/mocha.css \
+		node_modules/mocha/mocha.js \
+		node_modules/happen/happen.js \
+		| (cd loleaflet-$(VERSION) && tar xf -)
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
 	rm -rf loleaflet-$(VERSION)
 
