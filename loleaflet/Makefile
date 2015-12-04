@@ -9,6 +9,7 @@ VERSION=1.4.19
 DRAW_VERSION=0.2.4
 
 all:
+	npm install
 	jake build
 	cd plugins/draw-$(DRAW_VERSION) && jake build
 
