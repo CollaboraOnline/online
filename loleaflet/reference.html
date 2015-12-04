@@ -1642,6 +1642,13 @@ var map = L.map('map', {
 		<td><code>undefined</code></td>
         <td>Renders the given font in the smallest rectangle it can fit in.</td>
 	</tr>
+	<tr>
+		<td><code><b>sendUnoCommand</b>(
+			<nobr>&lt;<a href="#loleaflet-uno-commands">String</a>&gt; <i>unoCommand</i>,</nobr>
+			<nobr>&lt;<a href="#loleaflet-uno-commands">Object</a>&gt; <i>param</i>)</nobr>
+		<td><code>undefined</code></td>
+        <td>Sends a <a href="#loleaflet-uno-commands">uno command</a> with the given paramter to LOKit.</td>
+	</tr>
 </table>
 
 <h2 id="loleaflet-page">Page oriented</h2>
@@ -2469,6 +2476,14 @@ var map = L.map('map', {
 <h2 id="loleaflet-uno-commands">Object values</h2>
 
 <p>A list of common uno commands with their additional parameters.</p>
+<pre><code class="javascript">map.sendUnoCommand('.uno:Bold')<code></pre>
+<pre><code class="javascript">map.sendUnoCommand('.uno:Color',
+{
+  "Color": {
+    "type": "long",
+    "value": 16750848
+  }
+})<code></pre>
 
 <table data-id='values' id='uno-commands-table'>
 	<tr>
@@ -8007,7 +8022,18 @@ var unoCommands = [
             value: 16750848
         }
     },
-    description: 'Apply a highlighting color (the value can be obtained by converting the base 16 color to base 10).'
+    description: 'Apply a highlighting color for a text document (the value can be obtained by converting the base 16 color to base 10).'
+},
+
+{
+    uno: '.uno:BackgroundColor',
+    parameter: {
+        'BackgroundColor': {
+            type: 'long',
+            value: 16750848
+        }
+    },
+    description: 'Apply a highlighting color for a spreadsheet document (the value can be obtained by converting the base 16 color to base 10).'
 },
 
 {
@@ -8023,6 +8049,17 @@ var unoCommands = [
 },
 
 {
+    uno: '.uno:CharBackColor',
+    parameter: {
+        'CharBackColor': {
+            type: 'long',
+            value: 16750848
+        }
+    },
+    description: 'Apply a font color for a presentation document (the value can be obtained by converting the base 16 color to base 10).'
+},
+
+{
     uno: '.uno:CharFontName',
     parameter: {
         'CharFontName.FamilyName': {
@@ -8031,6 +8068,17 @@ var unoCommands = [
         }
     },
     description: 'Apply font.'
+},
+
+{
+    uno: '.uno:Color',
+    parameter: {
+        'Color': {
+            type: 'long',
+            value: 16750848
+        }
+    },
+    description: 'Apply a font color for a non-text document, like a spreadsheet, presentation, etc (the value can be obtained by converting the base 16 color to base 10).'
 },
 
 {
@@ -8076,7 +8124,7 @@ var unoCommands = [
             value: 16750848
         }
     },
-    description: 'Apply a font color (the value can be obtained by converting the base 16 color to base 10).'
+    description: 'Apply a font color for a text document (the value can be obtained by converting the base 16 color to base 10).'
 },
 
 {
