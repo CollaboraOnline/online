@@ -30,7 +30,7 @@ clean-cache:
 all-local: loolwsd
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    if test `uname -s` = Linux; then \
-		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolwsd; \
+		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_admin,cap_sys_chroot=ep loolwsd; \
 	    else \
 		sudo chown root loolwsd && sudo chmod u+s loolwsd; \
 	    fi; \
