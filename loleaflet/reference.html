@@ -56,7 +56,7 @@
 		</ul>
 	</div>
 	<div class="toc-col">
-		<h4 style="color:red;">LoLeaflet API</h4>
+		<h4 style="color:red;">LOLeaflet API</h4>
 		<ul>
 			<li><a href="#loleaflet-general">General</a></li>
 			<li><a href="#loleaflet-toolbar">Toolbar</a></li>
@@ -1117,7 +1117,7 @@ var map = L.map('map', {
 		<td><code><b>watch</b></code></td>
 		<td><code>Boolean</code></td>
 		<td><code><span class="literal">false</span></code></td>
-		<td>If <code><span class="literal">true</span></code>, starts continous watching of location changes (instead of detecting it once) using W3C <code>watchPosition</code> method. You can later stop watching using <code><b>map.stopLocate</b>()</code> method.</td>
+		<td>If <code><span class="literal">true</span></code>, starts continuous watching of location changes (instead of detecting it once) using W3C <code>watchPosition</code> method. You can later stop watching using <code><b>map.stopLocate</b>()</code> method.</td>
 	</tr>
 	<tr>
 		<td><code><b>setView</b></code></td>
@@ -1417,7 +1417,7 @@ var map = L.map('map', {
 			<nobr>&lt;Boolean&gt; <i>backward?</i> )</nobr>
 		</code></td>
 		<td><code>undefined</code></td>
-		<td>Searches for all occurences of the given phrase.</td>
+		<td>Searches for all occurrences of the given phrase.</td>
 	</tr>
 	<tr>
 		<td><code><b>setPermission</b>(
@@ -1589,7 +1589,7 @@ var map = L.map('map', {
 			<nobr>&lt;String&gt;<i>options?</i>)</nobr>
 		</code></td>
 		<td><code>undefined</code></td>
-        <td>Save the document as "format" at the given url by applying the filter options.</td>
+        <td>Save the document as "format" at the given URL by applying the filter options.</td>
 	</tr>
 	<tr>
 		<td><code><b>downloadAs</b>(
@@ -1603,7 +1603,7 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>print</b>()</code></td>
 		<td><code>undefined</code></td>
-        <td>Opens the browser's print dialog or promts the user to download a pdf version of the document.</td>
+        <td>Opens the browser's print dialog or prompts the user to download a PDF version of the document.</td>
 	</tr>
 	<tr>
 		<td><code><b>cellEnterString</b>(
@@ -1647,7 +1647,7 @@ var map = L.map('map', {
 			<nobr>&lt;<a href="#loleaflet-uno-commands">String</a>&gt; <i>unoCommand</i>,</nobr>
 			<nobr>&lt;<a href="#loleaflet-uno-commands">Object</a>&gt; <i>param</i>)</nobr>
 		<td><code>undefined</code></td>
-        <td>Sends a <a href="#loleaflet-uno-commands">uno command</a> with the given paramter to LOKit.</td>
+        <td>Sends a <a href="#loleaflet-uno-commands">uno command</a> with the given parameter to LOKit.</td>
 	</tr>
 </table>
 
@@ -1762,7 +1762,7 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>print</b></code></td>
 		<td><code><a href="#print-event">PrintEvent</a></code></td>
-		<td>Fired when the url for the pdf export is ready.</td>
+		<td>Fired when the URL for the PDF export is ready.</td>
 	</tr>
 	<tr>
 		<td><code><b>renderfont</b></code></td>
@@ -1919,7 +1919,7 @@ var map = L.map('map', {
 </table>
 
 <h3 id="invalidatepreview-event">InvalidatePreviewEvent</h3>
-<p>Loleaflet specific events.</p>
+<p>LOLeaflet specific events.</p>
 
 <table data-id='events'>
 	<tr>
@@ -1990,7 +1990,7 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>url</b></code></td>
         <td><code>String</code></td>
-		<td>An url for the PDF exported document.</td>
+		<td>An URL for the PDF exported document.</td>
 	</tr>
 </table>
 
@@ -2095,7 +2095,7 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>value</b></code></td>
 		<td><code>Number</code></td>
-		<td>If present, a number for 0 to 100 represending the loading status.<td>
+		<td>If present, a number for 0 to 100 representing the loading status.<td>
 	</tr>
 </table>
 
@@ -2309,7 +2309,7 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>'.uno:CenterPara'</b></code></td>
 		<td><code>String</code></td>
-		<td>Center horizontaly.</td>
+		<td>Center horizontally.</td>
 	</tr>
 	<tr>
 		<td><code><b>'.uno:RightPara'</b></code></td>
@@ -2839,7 +2839,7 @@ var map = L.map('map', {
 		<td><code><b>closeButton</b></code></td>
 		<td><code>Boolean</code></td>
 		<td><code><span class="literal">true</span></code></td>
-		<td>Controls the presense of a close button in the popup.</td>
+		<td>Controls the presence of a close button in the popup.</td>
 	</tr>
 	<tr>
 		<td><code><b>offset</b></code></td>
@@ -3881,7 +3881,7 @@ var latlngs = [
 
 <h3>Methods</h3>
 
-<p>In addition to <a href="#path-methods">Path methods</a> like <code>redraw()</code> and <code>bringToFront()</code>, <a href="#polyline-methods">Polyline mehtods</a> like <code>setLatLngs()</code> and <code>getLatLngs()</code>, <a href="#layers">shared layer methods</a> like <code>addTo()</code> and <code>remove()</code> and <a href="#popups">popup methods</a> like <code>bindPopup()</code> you can also use the following methods:</p>
+<p>In addition to <a href="#path-methods">Path methods</a> like <code>redraw()</code> and <code>bringToFront()</code>, <a href="#polyline-methods">Polyline methods</a> like <code>setLatLngs()</code> and <code>getLatLngs()</code>, <a href="#layers">shared layer methods</a> like <code>addTo()</code> and <code>remove()</code> and <a href="#popups">popup methods</a> like <code>bindPopup()</code> you can also use the following methods:</p>
 
 <table data-id='polygon'>
 	<tr>
@@ -4470,7 +4470,7 @@ map.fitBounds(bounds);</code></pre>
 
 <h3>Synchronous usage example</h3>
 
-<p>To create a custom layer, extend GridLayer and impliment the <code>createTile()</code> method, which will be passed a <a href="#point">Point</a> object with the <code>x</code>, <code>y</code>, and <code>z</code> (zoom level) coordinates to draw your tile.</p>
+<p>To create a custom layer, extend GridLayer and implement the <code>createTile()</code> method, which will be passed a <a href="#point">Point</a> object with the <code>x</code>, <code>y</code>, and <code>z</code> (zoom level) coordinates to draw your tile.</p>
 
 <pre><code class="javascript">var CanvasLayer = L.GridLayer.extend({
 	createTile: function(coords){
@@ -4490,9 +4490,9 @@ map.fitBounds(bounds);</code></pre>
 	}
 });</code></pre>
 
-<h3>Asyncronous usage example</h3>
+<h3>Asynchronous usage example</h3>
 
-<p>Tile creation can also be asyncronous, this is useful when using a third-party drawing library. Once the tile has finished drawing it must be passed to the <code>done()</code> callback.</p>
+<p>Tile creation can also be asynchronous, this is useful when using a third-party drawing library. Once the tile has finished drawing it must be passed to the <code>done()</code> callback.</p>
 
 <pre><code class="javascript">var CanvasLayer = L.GridLayer.extend({
 	// createTile has a 'done' parameter when on async mode
@@ -4756,7 +4756,7 @@ map.panTo(L.latLng(50, 30));</code></pre>
 		</code></td>
 
 		<td><code>Number</code></td>
-		<td>Returns the distance (in meters) to the given LatLng calculated using the Haversine formula. See <a href="http://en.wikipedia.org/wiki/Haversine_formula">description on wikipedia</a></td>
+		<td>Returns the distance (in meters) to the given LatLng calculated using the Haversine formula. See <a href="http://en.wikipedia.org/wiki/Haversine_formula">description on Wikipedia</a></td>
 	</tr>
 	<tr>
 		<td><code><b>equals</b>(
@@ -4765,7 +4765,7 @@ map.panTo(L.latLng(50, 30));</code></pre>
 		</code></td>
 
 		<td><code>Boolean</code></td>
-		<td>Returns <code><span class="literal">true</span></code> if the given LatLng point is at the same position (within a small margin of error). The margin of error can be overriden by setting <code>maxMargin</code> to a small number.</td>
+		<td>Returns <code><span class="literal">true</span></code> if the given LatLng point is at the same position (within a small margin of error). The margin of error can be overridden by setting <code>maxMargin</code> to a small number.</td>
 	</tr>
 	<tr>
 		<td><code><b>toString</b>()</code></td>
@@ -5911,7 +5911,7 @@ layer.remove();</code></pre>
 
 <h2 id="popups">Popup methods</h2>
 
-A set of methods inherited from the <a href="#layer">Layer</a> base class that all Leaflet layers use. These methods provide convieniant ways of binding popups to any layer.
+A set of methods inherited from the <a href="#layer">Layer</a> base class that all Leaflet layers use. These methods provide convenient ways of binding popups to any layer.
 
 <pre><code class="javascript">var layer = L.Polgon(latlngs).bindPopup('Hi There!').addTo(map);
 layer.openPopup();
@@ -5930,7 +5930,7 @@ Popups will also be automatically opened when the layer is clicked on and closed
 	<tr>
 		<td><code><b>bindPopup</b>(<nobr>&lt;String|HTMLElement|Function|<a href="popup">Popup</a>&gt;</nobr> <i>content</i>, <nobr>&lt;<a href="#popup-options">PopupOptions</a>&gt; <i>options?</i>)</nobr></code></td>
 		<td><code class="javascript"><span class="keyword">this</span></code></td>
-		<td>Binds the passed <code>content</code> to the layer and sets up the neccessary event listeners. If a <code>Function</code> is passed the function will recive a layer as the first argument and should return a <code>String</code> or <code>HTMLElement</code>.</td>
+		<td>Binds the passed <code>content</code> to the layer and sets up the necessary event listeners. If a <code>Function</code> is passed, the function will receive a layer as the first argument and should return a <code>String</code> or <code>HTMLElement</code>.</td>
 		<pre><code class="javascript">featureGroup.bindPopup(function(layer){
 	return "a unique template for this layer.";
 });</code></pre>
@@ -5943,7 +5943,7 @@ Popups will also be automatically opened when the layer is clicked on and closed
 	<tr>
 		<td><code><b>openPopup</b>(<a href="#latlng">LatLng</a> <i>latlng?</i>)</nobr></code></td>
 		<td><code class="javascript"><span class="keyword">this</span></code></td>
-		<td>Opens the bound popup at the specificed <code>latlng</code> or at the default popup anchor if no <code>latlng</code> is passed.</td>
+		<td>Opens the bound popup at the specified <code>latlng</code> or at the default popup anchor if no <code>latlng</code> is passed.</td>
 	</tr>
 	<tr>
 		<td><code><b>closePopup</b>()</nobr></code></td>
@@ -5999,12 +5999,12 @@ Popups will also be automatically opened when the layer is clicked on and closed
 	<tr>
 		<td><code><b>webkit</b></code></td>
 		<td><code>Boolean</code></td>
-		<td><code><span class="literal">true</span></code> for webkit-based browsers like Chrome and Safari (including mobile versions).</td>
+		<td><code><span class="literal">true</span></code> for WebKit-based browsers like Chrome and Safari (including mobile versions).</td>
 	</tr>
 	<tr>
 		<td><code><b>webkit3d</b></code></td>
 		<td><code>Boolean</code></td>
-		<td><code><span class="literal">true</span></code> for webkit-based browsers that support CSS 3D transformations.</td>
+		<td><code><span class="literal">true</span></code> for WebKit-based browsers that support CSS 3D transformations.</td>
 	</tr>
 	<!--<tr>
 		<td><code><b>gecko</b></code></td>
@@ -6034,7 +6034,7 @@ Popups will also be automatically opened when the layer is clicked on and closed
 	<tr>
 		<td><code><b>mobileWebkit</b></code></td>
 		<td><code>Boolean</code></td>
-		<td><code><span class="literal">true</span></code> for mobile webkit-based browsers.</td>
+		<td><code><span class="literal">true</span></code> for mobile WebKit-based browsers.</td>
 	</tr>
 	<tr>
 		<td><code><b>mobileOpera</b></code></td>
@@ -6278,7 +6278,7 @@ Popups will also be automatically opened when the layer is clicked on and closed
 
 <h2 id="lineutil">LineUtil</h2>
 
-<p>Various utility functions for polyine points processing, used by Leaflet internally to make polylines lightning-fast.</p>
+<p>Various utility functions for polyline points processing, used by Leaflet internally to make polylines lightning-fast.</p>
 
 <h3>Methods</h3>
 
@@ -6355,7 +6355,7 @@ Popups will also be automatically opened when the layer is clicked on and closed
 
 		<td><code><a href="#point">Point</a>[]</code></td>
 
-		<td>Clips the polygon geometry defined by the given points by rectangular bounds. Used by Leaflet to only show polygon points that are on the screen or near, increasing performance. Note that polygon points needs different algorithm for clipping than polyline, so there's a seperate method for it.</td>
+		<td>Clips the polygon geometry defined by the given points by rectangular bounds. Used by Leaflet to only show polygon points that are on the screen or near, increasing performance. Note that polygon points needs different algorithm for clipping than polyline, so there's a separate method for it.</td>
 	</tr>
 </table>
 
@@ -6971,7 +6971,7 @@ a.options.myOption1; // 'baz'
 a.options.myOption2; // 'bar'
 a.options.myOption3; // 5</code></pre>
 
-<p>There's also <code>L.Util.setOptions</code>, a method for conveniently merging options passed to constructor with the defauls defines in the class:</p>
+<p>There's also <code>L.Util.setOptions</code>, a method for conveniently merging options passed to constructor with the defaults defined in the class:</p>
 
 <pre><code>var MyClass = L.Class.extend({
 	options: {
@@ -7239,7 +7239,7 @@ var myLayer = new MyCustomLayer(latlng).addTo(map);
 		</code></td>
 
 		<td><code>HTMLElement</code></td>
-		<td>Should contain code that creates all the neccessary DOM elements for the control, adds listeners on relevant map events, and returns the element containing the control. Called on <code>map.addControl(control)</code> or <code>control.addTo(map)</code>.</td>
+		<td>Should contain code that creates all the necessary DOM elements for the control, adds listeners on relevant map events, and returns the element containing the control. Called on <code>map.addControl(control)</code> or <code>control.addTo(map)</code>.</td>
 	</tr>
 	<tr>
 		<td><code><b>onRemove</b>(
@@ -7645,7 +7645,7 @@ map.addControl(new MyControl());
 
 <h2 id="event-objects">Event objects</h2>
 
-<p>Event object is an object that you recieve as an argument in a listener function when some event is fired, containing useful information about that event. For example:</p>
+<p>Event object is an object that you receive as an argument in a listener function when some event is fired, containing useful information about that event. For example:</p>
 
 <pre><code class="javascript">map.on('click', function(e) {
 	alert(e.latlng); // e is an event object (MouseEvent in this case)
@@ -7684,17 +7684,17 @@ map.addControl(new MyControl());
 	<tr>
 		<td><code><b>latlng</b></code></td>
 		<td><code><a href="#latlng">LatLng</a></code></td>
-		<td>The geographical point where the mouse event occured.</td>
+		<td>The geographical point where the mouse event occurred.</td>
 	</tr>
 	<tr>
 		<td><code><b>layerPoint</b></code></td>
 		<td><code><a href="#point">Point</a></code></td>
-		<td>Pixel coordinates of the point where the mouse event occured relative to the map layer.</td>
+		<td>Pixel coordinates of the point where the mouse event occurred relative to the map layer.</td>
 	</tr>
 	<tr>
 		<td><code><b>containerPoint</b></code></td>
 		<td><code><a href="#point">Point</a></code></td>
-		<td>Pixel coordinates of the point where the mouse event occured relative to the map сontainer.</td>
+		<td>Pixel coordinates of the point where the mouse event occurred relative to the map сontainer.</td>
 	</tr>
 	<tr>
 		<td><code><b>originalEvent</b></code></td>
@@ -8045,7 +8045,7 @@ var unoCommands = [
 {
     uno: '.uno:CenterPara',
     parameter: null,
-    description: 'Center horizontaly.'
+    description: 'Center horizontally.'
 },
 
 {
