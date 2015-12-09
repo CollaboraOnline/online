@@ -91,7 +91,11 @@ cd / || exit 1
 # This will now copy the file a symlink points to, but whatever.
 cpio -p -d -L $CHROOT
 
+mkdir -p $CHROOT/lo
 mkdir -p $CHROOT/tmp
+
+echo "Copying: $INSTDIR to $CHROOT/lo";
+cp -lr -t $CHROOT/lo $INSTDIR/. || cp -a -t $CHROOT/lo $INSTDIR/.
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved are for fontconfig to trust
