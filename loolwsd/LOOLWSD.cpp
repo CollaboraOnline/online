@@ -1062,6 +1062,9 @@ void LOOLWSD::componentMain()
 
         // Destroy LibreOfficeKit
         loKit->pClass->destroy(loKit);
+
+        // wait to finish lo_startmain thread
+        pthread_exit(0);
     }
     catch (Exception& exc)
     {
