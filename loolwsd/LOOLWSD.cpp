@@ -50,6 +50,7 @@ DEALINGS IN THE SOFTWARE.
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/prctl.h>
+#include <sys/mount.h>
 #endif
 
 #include <ftw.h>
@@ -926,14 +927,13 @@ void LOOLWSD::componentMain()
         Path jailPath = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
         File(jailPath).createDirectory();
 
-        Path jailLOInstallation(jailPath, LOOLWSD::loSubPath);
-        jailLOInstallation.makeDirectory();
-        File(jailLOInstallation).createDirectory();
-
-        // Copy (link) LO installation and other necessary files into it from the template
-
-        linkOrCopy(LOOLWSD::sysTemplate, jailPath);
-        linkOrCopy(LOOLWSD::loTemplate, jailLOInstallation);
+        if (mount(sysTemplate.c_str(), jailPath.toString().c_str(), NULL, MS_BIND, NULL) < 0 )
+        {
+            std::cout << Util::logPrefix() << "Failed to mount " << sysTemplate
+                      << " on " << jailPath.toString() << " :"<< strerror(errno)
+                      << std::endl;
+            exit(Application::EXIT_UNAVAILABLE);
+        }
 
         // We need this because sometimes the hostname is not resolved
         std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
@@ -1063,6 +1063,9 @@ void LOOLWSD::componentMain()
 
         // Destroy LibreOfficeKit
         loKit->pClass->destroy(loKit);
+
+        // wait to finish lo_startmain thread
+        pthread_exit(0);
     }
     catch (Exception& exc)
     {
@@ -1131,12 +1134,20 @@ void LOOLWSD::desktopMain()
             {
                 if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
                 {
-                    std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
-                    // remove chroot child
-                    File aWorkSpace(LOOLWSD::childRoot + Path::separator() +
+                    std::cout << Util::logPrefix() << "One of our known child processes died :"
+                              << std::to_string(pid)  << std::endl;
+                    Path jailPath = Path::forDirectory(LOOLWSD::childRoot +
+                                    Path::separator() +
                                     std::to_string(MasterProcessSession::_childProcesses[pid]));
-                    if (aWorkSpace.exists())
-                        aWorkSpace.remove(true);
+                    if (umount(jailPath.toString().c_str()) == 0)
+                    {
+                        if (File(jailPath).exists())
+                            File(jailPath).remove(true);
+                    }
+                    else
+                        std::cout << Util::logPrefix() << "Failed to umount "
+                                  << jailPath.toString() << " :"
+                                  << strerror(errno) << std::endl;
 
                     MasterProcessSession::_childProcesses.erase(pid);
                 }
@@ -1354,10 +1365,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
-
-    // remove child root
-    if (LOOLWSD::_childId > 0)
-        File(LOOLWSD::childRoot + Path::separator() + std::to_string(LOOLWSD::_childId)).remove(true);
 
     return Application::EXIT_OK;
 }
