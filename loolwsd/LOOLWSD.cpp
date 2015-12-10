@@ -395,7 +395,11 @@ public:
                     {
                         n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
-                        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                        if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
+                        {
+                            n = 1;
+                        }
+                        else if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                         {
                             std::string firstLine = getFirstLine(buffer, n);
                             StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
