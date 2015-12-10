@@ -102,7 +102,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/TemporaryFile.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
-
+#include <Poco/Process.h>
 
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
@@ -842,13 +842,15 @@ void LOOLWSD::componentMain()
         Path jailPath = Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(_childId));
         File(jailPath).createDirectory();
 
-        if (mount(sysTemplate.c_str(), jailPath.toString().c_str(), NULL, MS_BIND, NULL) < 0 )
-        {
-            std::cout << Util::logPrefix() << "Failed to mount " << sysTemplate
-                      << " on " << jailPath.toString() << " :"<< strerror(errno)
-                      << std::endl;
+        Path aCmdPath(Application::instance().commandPath());
+        Process::Args aArgs;
+        aArgs.push_back("--source=" + sysTemplate);
+        aArgs.push_back("--target=" + jailPath.toString());
+        std::string aExec = aCmdPath.parent().toString() + "loolmount";
+
+        Poco::ProcessHandle aProcess = Process::launch(aExec, aArgs);
+        if (aProcess.wait() < 0)
             exit(Application::EXIT_UNAVAILABLE);
-        }
 
         // We need this because sometimes the hostname is not resolved
         std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
@@ -1043,6 +1045,15 @@ void LOOLWSD::desktopMain()
     setSignals(false);
 #endif
 
+    Path aCmdPath(Application::instance().commandPath());
+    std::string aExec = aCmdPath.parent().toString() + "loolmount";
+
+    if (!File(aExec).exists())
+    {
+        std::cout << Util::logPrefix() << "Application " << aExec << " does not exists" << std::endl;
+        exit(Application::EXIT_UNAVAILABLE);
+    }
+
     _rng.seed(Process::id());
     startupComponent(_numPreSpawnedChildren);
 
@@ -1058,18 +1069,20 @@ void LOOLWSD::desktopMain()
                 {
                     std::cout << Util::logPrefix() << "One of our known child processes died :"
                               << std::to_string(pid)  << std::endl;
+
                     Path jailPath = Path::forDirectory(LOOLWSD::childRoot +
                                     Path::separator() +
                                     std::to_string(MasterProcessSession::_childProcesses[pid]));
-                    if (umount(jailPath.toString().c_str()) == 0)
+
+                    Process::Args aArgs;
+                    aArgs.push_back("--target=" + jailPath.toString());
+
+                    Poco::ProcessHandle aProcess = Process::launch(aExec, aArgs);
+                    if (aProcess.wait() == 0)
                     {
                         if (File(jailPath).exists())
                             File(jailPath).remove(true);
                     }
-                    else
-                        std::cout << Util::logPrefix() << "Failed to umount "
-                                  << jailPath.toString() << " :"
-                                  << strerror(errno) << std::endl;
 
                     MasterProcessSession::_childProcesses.erase(pid);
                 }
