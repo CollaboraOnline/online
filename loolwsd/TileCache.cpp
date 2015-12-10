@@ -108,7 +108,7 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
 
 std::string TileCache::getTextFile(std::string fileName)
 {
-    const char *textFile = std::string("/" + fileName).c_str();
+    const auto textFile = std::string("/" + fileName);
 
     std::string dirName = cacheDirName(false);
     if (_hasUnsavedChanges)
