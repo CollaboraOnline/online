@@ -908,7 +908,6 @@ void LOOLWSD::componentMain()
         dropCapability(CAP_SYS_CHROOT);
         dropCapability(CAP_MKNOD);
         dropCapability(CAP_FOWNER);
-        dropCapability(CAP_SYS_ADMIN);
 #else
         dropCapability();
 #endif
@@ -1212,7 +1211,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     dropCapability(CAP_SYS_CHROOT);
     dropCapability(CAP_MKNOD);
     dropCapability(CAP_FOWNER);
-    dropCapability(CAP_SYS_ADMIN);
 #else
     dropCapability();
 #endif
