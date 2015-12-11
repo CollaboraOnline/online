@@ -133,13 +133,14 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onUpdateViewPort: function () {
-		var hscroll = L.DomUtil.get('mCSB_1_scrollbar_horizontal');
-		var width = parseInt(L.DomUtil.getStyle(hscroll, 'width'));
+		// sadly I don't know what this number 4 is, but without it, it does not work
+		// TODO fix it
+		var offset = 4;
+		var width = parseInt(L.DomUtil.getStyle(this._map._container, 'width')) - offset;
 		if (!isNaN(width)) {
 			this._columns.setViewPort(this._docPixelSize.x, width);
 		}
-		var vscroll = L.DomUtil.get('mCSB_1_scrollbar_vertical');
-		var height = parseInt(L.DomUtil.getStyle(vscroll, 'height'));
+		var height = parseInt(L.DomUtil.getStyle(this._map._container, 'height')) - offset;
 		if (!isNaN(height)) {
 			this._rows.setViewPort(this._docPixelSize.y, height);
 		}
