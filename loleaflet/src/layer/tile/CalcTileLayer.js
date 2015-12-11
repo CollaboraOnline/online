@@ -10,7 +10,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._rows = L.control.rowHeader();
 		map.addControl(this._columns);
 		map.addControl(this._rows);
-		map.addControl(L.control.tabs());
 		map.on('scrolloffset', this._onScrollOffset, this);
 		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
 		map.on('zoomend', this._onZoomRowColumns, this);
