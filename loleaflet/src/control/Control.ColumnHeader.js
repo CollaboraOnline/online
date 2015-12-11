@@ -3,7 +3,18 @@
 */
 
 L.Control.ColumnHeader = L.Control.extend({
-	onAdd: function () {
+	onAdd: function (map) {
+		map.on('updatepermission', this._onUpdatePermission, this);
+		this._initialized = false;
+		return document.createElement('div');
+	},
+
+	_initialize: function () {
+		this._initialized = true;
+		this._map.on('scrolloffset', this.offsetScrollPosition, this);
+		this._map.on('updatescrolloffset', this.setScrollPosition, this);
+		this._map.on('updateviewport', this.setViewPort, this);
+		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
 		var docContainer = L.DomUtil.get('document-container');
 		var divHeader = L.DomUtil.create('div', 'spreadsheet-container-column', docContainer.parentElement);
 		var tableContainer =  L.DomUtil.create('table', 'spreadsheet-container-table', divHeader);
@@ -24,8 +35,6 @@ L.Control.ColumnHeader = L.Control.extend({
 		// dummy initial header
 		var dummy = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
 		L.DomUtil.create('div', 'spreadsheet-table-column-cell-text', dummy);
-
-		return document.createElement('div');
 	},
 
 	clearColumns : function () {
@@ -33,21 +42,32 @@ L.Control.ColumnHeader = L.Control.extend({
 		this._columns = L.DomUtil.create('tr', '', this._table);
 	},
 
-	setViewPort: function(totalWidth, viewPort) {
-		this._viewPort = viewPort;
-		this._totalWidth = totalWidth;
+	setViewPort: function(e) {
+		this._viewPort = e.columns.viewPort;
+		this._totalWidth = e.columns.totalWidth;
 	},
 
-	setScrollPosition: function (position) {
+	setScrollPosition: function (e) {
+		var position = -e.x;
 		this._position = Math.min(0, position);
 		L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
 	},
 
-	offsetScrollPosition: function (offset) {
+	offsetScrollPosition: function (e) {
+		var offset = e.x;
 		this._position = Math.min(0,
 					  Math.max(this._position - offset,
-						   -(this._totalWidth - this._viewPort - 4)));
+						   -(this._totalWidth - this._viewPort)));
 		L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
+	},
+
+	viewRowColumnHeaders: function (e) {
+		if (e.isZoomed) {
+			this.updateColumns(e.data.columns, e.converter, e.context);
+		}
+		else {
+			this.fillColumns(e.data.columns, e.converter, e.context);
+		}
 	},
 
 	fillColumns: function (columns, converter, context) {
@@ -72,6 +92,12 @@ L.Control.ColumnHeader = L.Control.extend({
 			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
 			twip = new L.Point(width, width);
 			column.width = Math.round(converter.call(context, twip).x) - 1 + 'px';
+		}
+	},
+
+	_onUpdatePermission: function () {
+		if (this._map.getDocType() === 'spreadsheet' && !this._initialized) {
+			this._initialize();
 		}
 	}
 });

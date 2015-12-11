@@ -6,12 +6,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 	beforeAdd: function (map) {
 		map._addZoomLimit(this);
-		this._columns = L.control.columnHeader();
-		this._rows = L.control.rowHeader();
-		map.addControl(this._columns);
-		map.addControl(this._rows);
-		map.on('scrolloffset', this._onScrollOffset, this);
-		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
 		map.on('zoomend', this._onZoomRowColumns, this);
 		map.on('resize', this._onUpdateViewPort, this);
 	},
@@ -112,17 +106,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 	},
 
-	_onScrollOffset: function(offset) {
-		this._columns.offsetScrollPosition(offset.x);
-		this._rows.offsetScrollPosition(offset.y);
-	},
-
-	_onUpdateScrollOffset: function (e) {
-		this._columns.setScrollPosition(-e.x);
-		this._rows.setScrollPosition(-e.y);
-	},
-
 	_onZoomRowColumns: function () {
+		// TODO we need to cache those, so that we don't spawn a LOK instance unnecessarily
 		this._isZoomend = true;
 		this._updateClientZoom();
 		if (this._clientZoom) {
@@ -135,15 +120,18 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onUpdateViewPort: function () {
 		// sadly I don't know what this number 4 is, but without it, it does not work
 		// TODO fix it
-		var offset = 4;
-		var width = parseInt(L.DomUtil.getStyle(this._map._container, 'width')) - offset;
-		if (!isNaN(width)) {
-			this._columns.setViewPort(this._docPixelSize.x, width);
-		}
-		var height = parseInt(L.DomUtil.getStyle(this._map._container, 'height')) - offset;
-		if (!isNaN(height)) {
-			this._rows.setViewPort(this._docPixelSize.y, height);
-		}
+		var width = parseInt(L.DomUtil.getStyle(this._map._container, 'width'));
+		var height = parseInt(L.DomUtil.getStyle(this._map._container, 'height'));
+		this._map.fire('updateviewport', {
+			rows: {
+				totalHeight: this._docPixelSize.y,
+				viewPort: height
+			},
+			columns: {
+				totalWidth: this._docPixelSize.x,
+				viewPort: width
+			}
+		});
 	},
 
 	_onStatusMsg: function (textMsg) {
@@ -181,15 +169,12 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onCommandValuesMsg: function (textMsg) {
 		if (textMsg.match('.uno:ViewRowColumnHeaders')) {
 			var data = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			if (this._isZoomend) {
-				this._columns.updateColumns(data.columns, this._twipsToPixels, this);
-				this._rows.updateRows(data.rows, this._twipsToPixels, this);
-				this._isZoomend = false;
-			}
-			else {
-				this._columns.fillColumns(data.columns, this._twipsToPixels, this);
-				this._rows.fillRows(data.rows, this._twipsToPixels, this);
-			}
+			this._map.fire('viewrowcolumnheaders', {
+				data: data,
+				converter: this._twipsToPixels,
+				context: this,
+				isZoomed: this._isZoomed
+			});
 			this._onUpdateViewPort();
 		}
 		else {
