@@ -7,7 +7,7 @@ L.Control.Tabs = L.Control.extend({
 	onAdd: function (map) {
 		this._tabsInitialized = false;
 		this._spreadsheetTabs = {};
-		var docContainer = L.DomUtil.get('document-container');
+		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tab', docContainer.parentElement);
 
 		map.on('updateparts', this._updateDisabled, this);
@@ -25,7 +25,7 @@ L.Control.Tabs = L.Control.extend({
 		if (docType === 'spreadsheet') {
 			if (!this._tabsInitialized) {
 				// make room for the preview
-				var docContainer = L.DomUtil.get('document-container');
+				var docContainer = this._map.options.documentContainer;
 				L.DomUtil.addClass(docContainer, 'spreadsheet-document');
 				setTimeout(L.bind(function () {
 					this._map.invalidateSize();

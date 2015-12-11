@@ -15,7 +15,7 @@ L.Control.RowHeader = L.Control.extend({
 		this._map.on('updatescrolloffset', this.setScrollPosition, this);
 		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
-		var docContainer = L.DomUtil.get('document-container');
+		var docContainer = this._map.options.documentContainer;
 		var divRowHeader = L.DomUtil.create('div', 'spreadsheet-container-row', docContainer.parentElement);
 		this._table = L.DomUtil.create('table', 'spreadsheet-table-row', divRowHeader);
 		this._rows = L.DomUtil.create('tbody', '', this._table);

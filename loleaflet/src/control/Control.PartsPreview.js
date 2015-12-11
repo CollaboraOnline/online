@@ -11,7 +11,7 @@ L.Control.PartsPreview = L.Control.extend({
 	onAdd: function (map) {
 		this._previewInitialized = false;
 		this._previewTiles = {};
-		var docContainer = L.DomUtil.get('document-container');
+		var docContainer = map.options.documentContainer;
 		this._partsPreviewCont = L.DomUtil.create('div', 'parts-preview', docContainer.parentElement);
 
 		map.on('updateparts', this._updateDisabled, this);
@@ -29,7 +29,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 		if (!this._previewInitialized && docType === 'presentation') {
 			// make room for the preview
-			var docContainer = L.DomUtil.get('document-container');
+			var docContainer = this._map.options.documentContainer;
 			L.DomUtil.addClass(docContainer, 'parts-preview-document');
 			setTimeout(L.bind(function () {
 				this._map.invalidateSize();

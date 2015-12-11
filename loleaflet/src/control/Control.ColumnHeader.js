@@ -15,7 +15,7 @@ L.Control.ColumnHeader = L.Control.extend({
 		this._map.on('updatescrolloffset', this.setScrollPosition, this);
 		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
-		var docContainer = L.DomUtil.get('document-container');
+		var docContainer = this._map.options.documentContainer;
 		var divHeader = L.DomUtil.create('div', 'spreadsheet-container-column', docContainer.parentElement);
 		var tableContainer =  L.DomUtil.create('table', 'spreadsheet-container-table', divHeader);
 		var trContainer = L.DomUtil.create('tr', '', tableContainer);
