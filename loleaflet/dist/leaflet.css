@@ -709,13 +709,13 @@ a.leaflet-control-buttons:hover:first-child {
 	top: 70px;
     left: 0px;
 	bottom: 0px;
-	max-width: 195px;
+	max-width: 205px;
 	overflow: hidden;
 	border-top: 2px solid #B6B6B6;
 }
 
 .preview-frame {
-	max-width: 180px;
+	max-width: 190px;
 	white-space: nowrap;
 	text-align: center; margin: 1em 0;
 	}
@@ -730,7 +730,12 @@ a.leaflet-control-buttons:hover:first-child {
 	vertical-align: middle;
 	max-width: 180px;
 	cursor: pointer;
+	border: 2px solid #dfdfdf;
 	}
+
+.preview-img-selected {
+	border-color: #000000;
+}
 
 .spreadsheet-document {
         border-top: 1px solid #B6B6B6 !important;
