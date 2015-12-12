@@ -7,7 +7,7 @@ dist_bin_SCRIPTS = loolwsd-systemplate-setup
 AM_CPPFLAGS = -pthread
 AM_LDFLAGS = -pthread
 
-loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MasterProcessSession.cpp MessageQueue.cpp TileCache.cpp Util.cpp LOOLProtocol.cpp
+loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MasterProcessSession.cpp ChildProcessSession.cpp MessageQueue.cpp TileCache.cpp Util.cpp LOOLProtocol.cpp
 
 noinst_PROGRAMS = loadtest connect lokitclient
 
@@ -17,7 +17,7 @@ connect_SOURCES = Connect.cpp Util.cpp LOOLProtocol.cpp
 
 lokitclient_SOURCES = LOKitClient.cpp Util.cpp
 
-noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessSession.hpp LOOLWSD.hpp LoadTest.hpp MessageQueue.hpp TileCache.hpp Util.hpp Png.hpp \
+noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessSession.hpp ChildProcessSession.hpp LOOLWSD.hpp LoadTest.hpp MessageQueue.hpp TileCache.hpp Util.hpp Png.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h
 
