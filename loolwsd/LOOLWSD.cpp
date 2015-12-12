@@ -105,6 +105,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
+#include "MasterProcessSession.hpp"
 #include "LOOLWSD.hpp"
 #include "MessageQueue.hpp"
 #include "Util.hpp"
