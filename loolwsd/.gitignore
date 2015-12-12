@@ -17,10 +17,13 @@
 /install-sh
 /missing
 /stamp-h1
+/systemplate
 /test-driver
 
 *.o
 *.exe
+cscope*
+.*
 connect
 lokitclient
 loadtest
