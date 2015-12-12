@@ -106,54 +106,6 @@ inline std::basic_ostream<charT, traits> & operator <<(std::basic_ostream<charT,
     }
 }
 
-class ChildProcessSession final : public LOOLSession
-{
-public:
-    ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, LibreOfficeKit *loKit, std::string _childId);
-    virtual ~ChildProcessSession();
-
-    virtual bool handleInput(const char *buffer, int length) override;
-
-    virtual bool getStatus(const char *buffer, int length);
-
-    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    virtual bool getPartPageRectangles(const char *buffer, int length) override;
-
-    LibreOfficeKitDocument *_loKitDocument;
-    std::string _docType;
-
- protected:
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
-    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool downloadAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool getChildId();
-    bool getTextSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool paste(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool insertFile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool selectText(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool setPage(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    std::string _loSubPath;
-    LibreOfficeKit *_loKit;
-    std::string _childId;
-
- private:
-    int _clientPart;
-};
-
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
