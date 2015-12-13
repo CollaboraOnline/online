@@ -1026,7 +1026,7 @@ void LOOLWSD::componentMain()
         HTTPResponse response;
         std::shared_ptr<WebSocket> ws(new WebSocket(cs, request, response));
 
-        std::shared_ptr<ChildProcessSession> session(new ChildProcessSession(ws, loKit, std::to_string(_childId)));
+        std::shared_ptr<ChildProcessSession> session(new ChildProcessSession(ws, loKit, nullptr, std::to_string(_childId)));
 
         ws->setReceiveTimeout(0);
 
