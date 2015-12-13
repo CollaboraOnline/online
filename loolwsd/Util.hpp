@@ -31,6 +31,12 @@ namespace Util
     void shutdownWebSocket(Poco::Net::WebSocket& ws);
 
     std::string signalName(int signo);
+
+    ssize_t writeFIFO(int nPipe, const char* pBuffer, ssize_t nSize);
+
+    ssize_t readFIFO(int nPipe, char* pBuffer, ssize_t nSize);
+
+    ssize_t readMessage(int nPipe, char* pBuffer, ssize_t nSize);
 };
 
 #endif
