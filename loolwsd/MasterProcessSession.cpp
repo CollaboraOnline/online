@@ -9,27 +9,30 @@
 
 #include <iostream>
 
+#include <Poco/FileStream.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Process.h>
 #include <Poco/Random.h>
-#include <Poco/Util/Application.h>
-#include <Poco/FileStream.h>
 #include <Poco/URI.h>
 #include <Poco/URIStreamOpener.h>
+#include <Poco/Util/Application.h>
 
-#include "MasterProcessSession.hpp"
-#include "LOOLSession.hpp"
-#include "Util.hpp"
 #include "LOOLProtocol.hpp"
+#include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
+#include "MasterProcessSession.hpp"
+#include "Util.hpp"
 
 using namespace LOOLProtocol;
+
 using Poco::Dynamic::Var;
+using Poco::Exception;
 using Poco::File;
 using Poco::IOException;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
+using Poco::Net::SocketAddress;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Process;
@@ -40,8 +43,6 @@ using Poco::Thread;
 using Poco::UInt64;
 using Poco::URI;
 using Poco::Util::Application;
-using Poco::Exception;
-using Poco::Net::SocketAddress;
 
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
@@ -51,7 +52,7 @@ std::condition_variable MasterProcessSession::_availableChildSessionCV;
 Random MasterProcessSession::_rng;
 std::mutex MasterProcessSession::_rngMutex;
 
-MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, Kind kind) :
+MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, const Kind kind) :
     LOOLSession(ws, kind),
     _childId(0),
     _pidChild(0),

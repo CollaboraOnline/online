@@ -7,15 +7,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_CHILDPROCESSSESSION_HPP
-#define INCLUDED_CHILDPROCESSSESSION_HPP
+#ifndef INCLUDED_LOOLCHILDPROCESSSESSION_HPP
+#define INCLUDED_LOOLCHILDPROCESSSESSION_HPP
+
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.h>
 
 #include "LOOLSession.hpp"
 
 class ChildProcessSession final : public LOOLSession
 {
 public:
-    ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, LibreOfficeKit *loKit, std::string _childId);
+    ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws,
+                        LibreOfficeKit *loKit,
+                        const std::string& _childId);
     virtual ~ChildProcessSession();
 
     virtual bool handleInput(const char *buffer, int length) override;
@@ -54,7 +59,7 @@ public:
 
     std::string _loSubPath;
     LibreOfficeKit *_loKit;
-    std::string _childId;
+    const std::string _childId;
 
  private:
     int _clientPart;
@@ -62,3 +67,4 @@ public:
 
 #endif
 
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
