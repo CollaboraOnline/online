@@ -7,6 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <sys/poll.h>
+
 #include <cstdlib>
 #include <cstring>
 #include <iomanip>
@@ -192,6 +194,71 @@ namespace Util
         default:
             return std::to_string(signo);
         }
+    }
+
+    ssize_t writeFIFO(int nPipe, const char* pBuffer, ssize_t nSize)
+    {
+        ssize_t nBytes = -1;
+        ssize_t nCount = 0;
+
+        while(true)
+        {
+            nBytes = write(nPipe, pBuffer + nCount, nSize - nCount);
+            if (nBytes < 0)
+            {
+                if (errno == EINTR || errno == EAGAIN)
+                    continue;
+
+                nCount = -1;
+                break;
+            }
+            else if ( nCount + nBytes < nSize )
+            {
+                nCount += nBytes;
+            }
+            else
+            {
+                nCount = nBytes;
+                break;
+            }
+        }
+
+        return nCount;
+    }
+
+    ssize_t readFIFO(int nPipe, char* pBuffer, ssize_t nSize)
+    {
+        ssize_t nBytes;
+        do
+        {
+            nBytes = read(nPipe, pBuffer, nSize);
+        }
+        while ( nBytes < 0 && errno == EINTR );
+
+        return nBytes;
+    }
+
+    ssize_t readMessage(int nPipe, char* pBuffer, ssize_t nSize)
+    {
+        ssize_t nBytes = -1;
+        struct pollfd aPoll;
+
+        aPoll.fd = nPipe;
+        aPoll.events = POLLIN;
+        aPoll.revents = 0;
+
+        int nPoll = poll(&aPoll, 1, 3000);
+        if ( nPoll < 0 )
+            goto ErrorPoll;
+
+        if ( nPoll == 0 )
+            errno = ETIME;
+
+        if( (aPoll.revents & POLLIN) != 0 )
+            nBytes = readFIFO(nPipe, pBuffer, nSize);
+
+    ErrorPoll:
+        return nBytes;
     }
 }
 
