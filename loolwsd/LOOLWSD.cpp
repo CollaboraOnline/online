@@ -101,7 +101,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/TemporaryFile.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
-
+#include <Poco/Environment.h>
 
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
@@ -579,6 +579,7 @@ private:
 
 int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
 int LOOLWSD::timeoutCounter = 0;
+int LOOLWSD::writerBroker = -1;
 Poco::UInt64 LOOLWSD::_childId = 0;
 std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
@@ -601,6 +602,7 @@ int LOOLWSD::uid = 0;
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 const std::string LOOLWSD::LOKIT_PIDLOG = "/tmp/lokit.pid";
+const std::string LOOLWSD::FIFO_FILE = "/tmp/loolwsdfifo";
 
 LOOLWSD::LOOLWSD()
 {
@@ -1150,7 +1152,7 @@ void LOOLWSD::desktopMain()
                 }
 
                 if ( WCOREDUMP(status) )
-                    std::cout << Util::logPrefix() << "The child produced a core dump." << std::endl;
+                    std::cout << Util::logPrefix() << "The child process [" << pid << "] produced a core dump." << std::endl;
 
                 if ( WIFSTOPPED(status) )
                     std::cout << Util::logPrefix() << "The child process was stopped by delivery of a signal." << std::endl;
@@ -1222,6 +1224,9 @@ void LOOLWSD::startupDesktop(int nDesktops)
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+    Poco::Environment::set("LD_BIND_NOW", "1");
+    Poco::Environment::set("LOK_VIEW_CALLBACK", "1");
+
     int status;
 #ifdef __linux
     char *locale = setlocale(LC_ALL, NULL);
@@ -1233,7 +1238,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        std::cout << "Unable to access " << cache <<
+        std::cout << Util::logPrefix() << "Unable to access " << cache <<
             ", please make sure it exists, and has write permission for this user." << std::endl;
         return Application::EXIT_UNAVAILABLE;
     }
@@ -1264,6 +1269,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Poco::FileOutputStream filePID(LOOLWSD::PIDLOG);
         if (filePID.good())
             filePID << Process::id();
+    }
+
+    if (!File(FIFO_FILE).exists() && mkfifo(FIFO_FILE.c_str(), 0666) == -1)
+    {
+        std::cout << Util::logPrefix() << "Fail to create pipe FIFO" << std::endl;
+        return Application::EXIT_UNAVAILABLE;
     }
 
     _namedMutexLOOL.lock();
@@ -1362,6 +1373,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
 
+    std::cout << Util::logPrefix() << "loolwsd finished OK!" << std::endl;
     return Application::EXIT_OK;
 }
 

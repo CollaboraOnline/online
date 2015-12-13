@@ -374,6 +374,10 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
     try
     {
         URI aUri(_docURL);
+
+        // request new URL session
+        std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
+        Util::writeFIFO(LOOLWSD::writerBroker, aMessage.c_str(), aMessage.length());
     }
     catch(Poco::SyntaxException&)
     {
@@ -599,7 +603,7 @@ void MasterProcessSession::dispatchChild()
 
 #ifdef __linux
         Application::instance().logger().information(Util::logPrefix() + "Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
-        if (link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
+        if (!File(aDstFile).exists() && link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
         {
             // Failed
             Application::instance().logger().error( Util::logPrefix() +
