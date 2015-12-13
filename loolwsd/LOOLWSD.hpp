@@ -33,6 +33,7 @@ public:
     static int portNumber;
     static int timeoutCounter;
     static int _numPreSpawnedChildren;
+    static int writerBroker;
     static bool doTest;
     static bool volatile isShutDown;
     static std::string cache;
@@ -53,6 +54,7 @@ public:
     static const int POLL_TIMEOUT = 1000000;
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
+    static const std::string FIFO_FILE;
     static const std::string LOKIT_PIDLOG;
 
 protected:
