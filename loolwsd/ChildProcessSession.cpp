@@ -42,9 +42,11 @@ using Poco::Util::Application;
 
 ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws,
                                          LibreOfficeKit *loKit,
+                                         LibreOfficeKitDocument * loKitDocument,
                                          const std::string& childId) :
     LOOLSession(ws, Kind::ToMaster),
-    _loKitDocument(NULL),
+    _loKitDocument(loKitDocument),
+    _viewId(0),
     _loKit(loKit),
     _childId(childId),
     _clientPart(0)
@@ -57,6 +59,7 @@ ChildProcessSession::~ChildProcessSession()
     std::cout << Util::logPrefix() << "ChildProcessSession dtor this=" << this << std::endl;
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, 0, 0);
+    Util::shutdownWebSocket(*_ws);
 }
 
 bool ChildProcessSession::handleInput(const char *buffer, int length)

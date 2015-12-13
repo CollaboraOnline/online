@@ -18,9 +18,16 @@
 class ChildProcessSession final : public LOOLSession
 {
 public:
+    /// Create a new ChildProcessSession
+    /// ws The socket to our counterparty (Child or Master).
+    /// loKit The LOKit instance.
+    /// loKitDocument The instance to an existing document (when opening
+    ///                 a new view) or nullptr (when first view).
+    /// childId The id of the child, used by downloadas to construct jailed path.
     ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws,
                         LibreOfficeKit *loKit,
-                        const std::string& _childId);
+                        LibreOfficeKitDocument * loKitDocument,
+                        const std::string& childId);
     virtual ~ChildProcessSession();
 
     virtual bool handleInput(const char *buffer, int length) override;
@@ -33,6 +40,8 @@ public:
 
     LibreOfficeKitDocument *_loKitDocument;
     std::string _docType;
+    /// View ID, returned by createView() or 0 by default.
+    int _viewId;
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
