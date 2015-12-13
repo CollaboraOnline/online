@@ -61,11 +61,11 @@ namespace Util
         Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - epochStart;
 
         const Poco::Int64 one_s = 1000000;
-        Poco::Int64 hours = usec / (one_s*60*60);
+        const Poco::Int64 hours = usec / (one_s*60*60);
         usec %= (one_s*60*60);
-        Poco::Int64 minutes = usec / (one_s*60);
+        const Poco::Int64 minutes = usec / (one_s*60);
         usec %= (one_s*60);
-        Poco::Int64 seconds = usec / (one_s);
+        const Poco::Int64 seconds = usec / (one_s);
         usec %= (one_s);
 
         std::ostringstream stream;

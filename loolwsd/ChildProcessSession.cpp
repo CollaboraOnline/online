@@ -40,7 +40,9 @@ using Poco::StringTokenizer;
 using Poco::URI;
 using Poco::Util::Application;
 
-ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws, LibreOfficeKit *loKit, std::string childId) :
+ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws,
+                                         LibreOfficeKit *loKit,
+                                         const std::string& childId) :
     LOOLSession(ws, Kind::ToMaster),
     _loKitDocument(NULL),
     _loKit(loKit),
@@ -817,4 +819,4 @@ bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, String
     return true;
 }
 
-
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
