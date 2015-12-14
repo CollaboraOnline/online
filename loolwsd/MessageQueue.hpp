@@ -38,6 +38,9 @@ public:
     /// Thread safe removal of all the pending messages.
     void clear();
 
+    /// Thread safe remove_if.
+    void remove_if(std::function<bool(const std::string&)> pred);
+
 private:
     std::mutex _mutex;
     std::condition_variable _cv;

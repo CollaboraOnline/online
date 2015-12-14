@@ -37,6 +37,12 @@ void MessageQueue::clear()
     clear_impl();
 }
 
+void MessageQueue::remove_if(std::function<bool(const std::string&)> pred)
+{
+    std::unique_lock<std::mutex> lock(_mutex);
+    std::remove_if(_queue.begin(), _queue.end(), pred);
+}
+
 void MessageQueue::put_impl(const std::string& value)
 {
     _queue.push_back(value);
