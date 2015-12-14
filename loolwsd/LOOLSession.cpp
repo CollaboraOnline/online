@@ -1207,6 +1207,8 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     std::memcpy(output.data(), response.data(), response.size());
 
     unsigned char *pixmap = new unsigned char[4 * width * height];
+    memset(pixmap, 0, 4 * width * height);
+
     if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument))
     {
         _loKitDocument->pClass->setPart(_loKitDocument, part);
