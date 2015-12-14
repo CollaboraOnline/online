@@ -55,12 +55,7 @@ L.Control.RowHeader = L.Control.extend({
 	},
 
 	viewRowColumnHeaders: function (e) {
-		if (e.isZoomEnd) {
-			this.updateRows(e.data.rows, e.converter, e.context);
-		}
-		else {
-			this.fillRows(e.data.rows, e.converter, e.context);
-		}
+		this.fillRows(e.data.rows, e.converter, e.context);
 	},
 
 	fillRows: function (rows, converter, context) {
@@ -74,19 +69,6 @@ L.Control.RowHeader = L.Control.extend({
 			cell = L.DomUtil.create('th', 'spreadsheet-table-row-cell', row);
 			text = L.DomUtil.create('div', 'spreadsheet-table-row-cell-text', cell);
 			text.innerHTML  = rows[iterator].text;
-			height = Math.round(converter.call(context, twip).y) - (iterator > 0 ? 1 : 0) + 'px';
-			L.DomUtil.setStyle(text, 'line-height', height);
-			L.DomUtil.setStyle(text, 'height', height);
-		}
-	},
-
-	updateRows: function (rows, converter, context) {
-		var iterator, twip, height, text;
-
-		for (iterator = 0; iterator < this._rows.childNodes.length; iterator++) {
-			text  = this._rows.childNodes[iterator].firstChild.firstChild;
-			height = rows[iterator].size - (iterator > 0 ? rows[iterator - 1].size : 0);
-			twip = new L.Point(height, height);
 			height = Math.round(converter.call(context, twip).y) - (iterator > 0 ? 1 : 0) + 'px';
 			L.DomUtil.setStyle(text, 'line-height', height);
 			L.DomUtil.setStyle(text, 'height', height);

@@ -107,7 +107,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onZoomRowColumns: function () {
-		this._isZoomEnd = true;
 		this._updateClientZoom();
 		if (this._clientZoom) {
 			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
@@ -169,10 +168,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._map.fire('viewrowcolumnheaders', {
 				data: data,
 				converter: this._twipsToPixels,
-				context: this,
-				isZoomEnd: this._isZoomEnd
+				context: this
 			});
-			this._isZoomEnd = false;
 			this._onUpdateViewPort();
 		}
 		else {

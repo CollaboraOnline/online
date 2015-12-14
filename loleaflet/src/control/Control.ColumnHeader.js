@@ -62,12 +62,7 @@ L.Control.ColumnHeader = L.Control.extend({
 	},
 
 	viewRowColumnHeaders: function (e) {
-		if (e.isZoomEnd) {
-			this.updateColumns(e.data.columns, e.converter, e.context);
-		}
-		else {
-			this.fillColumns(e.data.columns, e.converter, e.context);
-		}
+		this.fillColumns(e.data.columns, e.converter, e.context);
 	},
 
 	fillColumns: function (columns, converter, context) {
@@ -80,17 +75,6 @@ L.Control.ColumnHeader = L.Control.extend({
 			column = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
 			text = L.DomUtil.create('div', 'spreadsheet-table-column-cell-text', column);
 			text.innerHTML = columns[iterator].text;
-			column.width = Math.round(converter.call(context, twip).x) - 1 + 'px';
-		}
-	},
-
-	updateColumns: function (columns, converter, context) {
-		var iterator, twip, width, column;
-
-		for (iterator = 0; iterator < this._columns.childNodes.length; iterator++) {
-			column = this._columns.childNodes[iterator];
-			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
-			twip = new L.Point(width, width);
 			column.width = Math.round(converter.call(context, twip).x) - 1 + 'px';
 		}
 	},
