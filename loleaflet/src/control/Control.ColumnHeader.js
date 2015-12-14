@@ -62,7 +62,7 @@ L.Control.ColumnHeader = L.Control.extend({
 	},
 
 	viewRowColumnHeaders: function (e) {
-		if (e.isZoomed) {
+		if (e.isZoomEnd) {
 			this.updateColumns(e.data.columns, e.converter, e.context);
 		}
 		else {

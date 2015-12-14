@@ -107,8 +107,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onZoomRowColumns: function () {
-		// TODO we need to cache those, so that we don't spawn a LOK instance unnecessarily
-		this._isZoomend = true;
+		this._isZoomEnd = true;
 		this._updateClientZoom();
 		if (this._clientZoom) {
 			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
@@ -118,8 +117,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onUpdateViewPort: function () {
-		// sadly I don't know what this number 4 is, but without it, it does not work
-		// TODO fix it
 		var width = parseInt(L.DomUtil.getStyle(this._map._container, 'width'));
 		var height = parseInt(L.DomUtil.getStyle(this._map._container, 'height'));
 		this._map.fire('updateviewport', {
@@ -173,8 +170,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 				data: data,
 				converter: this._twipsToPixels,
 				context: this,
-				isZoomed: this._isZoomed
+				isZoomEnd: this._isZoomEnd
 			});
+			this._isZoomEnd = false;
 			this._onUpdateViewPort();
 		}
 		else {

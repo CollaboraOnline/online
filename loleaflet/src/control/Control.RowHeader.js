@@ -55,13 +55,12 @@ L.Control.RowHeader = L.Control.extend({
 	},
 
 	viewRowColumnHeaders: function (e) {
-		if (e.isZoomed) {
+		if (e.isZoomEnd) {
 			this.updateRows(e.data.rows, e.converter, e.context);
 		}
 		else {
 			this.fillRows(e.data.rows, e.converter, e.context);
 		}
-		this._map._docLayer._isZoomed = false;
 	},
 
 	fillRows: function (rows, converter, context) {
