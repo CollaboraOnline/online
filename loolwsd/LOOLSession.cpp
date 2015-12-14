@@ -277,7 +277,12 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
                 Var result = parser.parse(stringJSON);
                 Object::Ptr object = result.extract<Object::Ptr>();
                 std::string commandName = object->get("commandName").toString();
-                peer->_tileCache->saveTextFile(std::string(buffer, length), "cmdValues" + commandName + ".txt");
+                if (commandName.find(".uno:CharFontName") != std::string::npos ||
+                    commandName.find(".uno:StyleApply") != std::string::npos)
+                {
+                    // other commands should not be cached
+                    peer->_tileCache->saveTextFile(std::string(buffer, length), "cmdValues" + commandName + ".txt");
+                }
             }
             else if (tokens[0] == "partpagerectangles:")
             {
