@@ -562,62 +562,62 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-cursor {
 	position: absolute;
 	text-align: center;
-}
+	}
 
 .blinking-cursor {
-  background: black;
-  width: 2px;
-  pointer-events: none;
-  -webkit-animation: 1s blink step-end 0s infinite;
-  -moz-animation: 1s blink step-end 0s infinite;
-  -ms-animation: 1s blink step-end 0s infinite;
-  -o-animation: 1s blink step-end 0s infinite;
-  animation: 1s blink step-end 0s infinite;
-}
+	background: black;
+	width: 2px;
+	pointer-events: none;
+	-webkit-animation: 1s blink step-end 0s infinite;
+	-moz-animation: 1s blink step-end 0s infinite;
+	-ms-animation: 1s blink step-end 0s infinite;
+	-o-animation: 1s blink step-end 0s infinite;
+	animation: 1s blink step-end 0s infinite;
+	}
 
 @keyframes "blink" {
-  from, to {
-    background: black;
-  }
-  50% {
-    background: transparent;
-  }
+	from, to {
+		background: black;
+	}
+	50% {
+		background: transparent;
+	}
 }
 
 @-moz-keyframes blink {
-  from, to {
-    background: black;
-  }
-  50% {
-    background: transparent;
-  }
+	from, to {
+		background: black;
+	}
+	50% {
+		background: transparent;
+	}
 }
 
 @-webkit-keyframes "blink" {
-  from, to {
-    background: black;
-  }
-  50% {
-    background: transparent;
-  }
+	from, to {
+		background: black;
+	}
+	50% {
+		background: transparent;
+	}
 }
 
 @-ms-keyframes "blink" {
-  from, to {
-    background: black;
-  }
-  50% {
-    background: transparent;
-  }
+	from, to {
+		background: black;
+	}
+	50% {
+		background: transparent;
+	}
 }
 
 @-o-keyframes "blink" {
-  from, to {
-    background: black;
-  }
-  50% {
-    background: transparent;
-  }
+	from, to {
+		background: black;
+	}
+	50% {
+		background: transparent;
+	}
 }
 
 .clipboard-container {
@@ -628,13 +628,13 @@ a.leaflet-control-buttons:hover:first-child {
 	height: 0px;
 	z-index: 100;
 	opacity: 0;
-}
+	}
 
 .clipboard {
 	width: 1px;
 	height: 1px;
 	padding: 0px;
-}
+	}
 
 .resize-detector {
     position: absolute;
@@ -642,132 +642,132 @@ a.leaflet-control-buttons:hover:first-child {
     height: 100%;
     z-index: 0;
     border: none;
-}
+	}
 
 .spreadsheet-document {
-        border-top: 1px solid #B6B6B6 !important;
-        top: 100px !important;
-        left: 50px !important;
+	border-top: 1px solid #B6B6B6 !important;
+	top: 100px !important;
+	left: 50px !important;
 	bottom: 20px !important;
-        }
+	}
 
 .spreadsheet-container-column {
-        position: absolute;
-        left: 0px;
-        top: 80px;
-        width: 100%;
-        height: 20px;
-        margin: 0px;
-        padding: 0px;
-        }
+	position: absolute;
+	left: 0px;
+	top: 80px;
+	width: 100%;
+	height: 20px;
+	margin: 0px;
+	padding: 0px;
+	}
 
 .spreadsheet-container-table {
-        table-layout: fixed;
-        width: 100%;
-        height: 100%;
-        border-spacing: 0px;
-        border-collapse: collapse;
-        border-width: 0px;
-        margin: 0px;
-        padding: 0px;
-        }
+	table-layout: fixed;
+	width: 100%;
+	height: 100%;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	border-width: 0px;
+	margin: 0px;
+	padding: 0px;
+	}
 
 .spreadsheet-table-corner {
-        table-layout: fixed;
-        width: 100%;
-        height: 100%;
-        border-spacing: 0px;
-        margin: 0px;
-        padding: 0px;
-        border: 1px solid black;
-        background-color: darkgrey;
-        }
+	table-layout: fixed;
+	width: 100%;
+	height: 100%;
+	border-spacing: 0px;
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid black;
+	background-color: darkgrey;
+	}
 
 .spreadsheet-container-th-corner {
-        padding: 0px;
-        margin: 0px;
-        width: 50px;
-        height: 20px;
-        }
+	padding: 0px;
+	margin: 0px;
+	width: 50px;
+	height: 20px;
+	}
 
 .spreadsheet-container-th-column {
-        padding: 0px;
-        margin: 0px;
-        border-width: 0px;
-        overflow: hidden;
-        }
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px;
+	overflow: hidden;
+	}
 
 .spreadsheet-table-column {
-        table-layout: fixed;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        border-spacing: 0px;
-        position: relative;
-        margin: 0px;
-        padding: 0px;
-        }
+	table-layout: fixed;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	border-spacing: 0px;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	}
 
 .spreadsheet-table-column-cell {
-        border-left: 0px;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-        background-color: darkgrey;
-        overflow: hidden;
-        font-size: 90%;
-        padding: 0px;
-        margin: 0px;
-        }
+	border-left: 0px;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color: darkgrey;
+	overflow: hidden;
+	font-size: 90%;
+	padding: 0px;
+	margin: 0px;
+	}
 
 .spreadsheet-table-column-cell-text {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding: 0px;
-        margin: 0px;
-        }
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding: 0px;
+	margin: 0px;
+	}
 
 .spreadsheet-table-row-cell-text {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding: 0px;
-        margin: 0px;
-        height: 100%;
-        }
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+	}
 
 .spreadsheet-container-row {
-        position: absolute;
-        left: 0;
-        top: 100px;
-        width: 50px;
-        bottom: 20px;
-        overflow: hidden;
-        }
+	position: absolute;
+	left: 0;
+	top: 100px;
+	width: 50px;
+	bottom: 20px;
+	overflow: hidden;
+	}
 
 .spreadsheet-table-row {
-        table-layout: fixed;
-        width: 100%;
-        height: 100%;
-        border-spacing: 0px !important;
-        position: relative;
-        margin: 0px;
-        padding: 0px;
-        }
+	table-layout: fixed;
+	width: 100%;
+	height: 100%;
+	border-spacing: 0px !important;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	}
 
 .spreadsheet-table-row-cell {
-        border-top: 0px;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-bottom: 1px solid black;
-        background-color: darkgrey;
-        font-size: 90%;
-        padding: 0px;
-        margin: 0px;
-        overflow: hidden;
-        }
+	border-top: 0px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color: darkgrey;
+	font-size: 90%;
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden;
+	}
 
 .slide-show {
 	background: #FFF;
 	display: block;
 	margin: 0 auto;
-}
+	}
