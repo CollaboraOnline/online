@@ -58,6 +58,7 @@
 	<div class="toc-col">
 		<h4 style="color:red;">LOLeaflet API</h4>
 		<ul>
+			<li><a href="#loleaflet-initialization">Initialization</a></li>
 			<li><a href="#loleaflet-general">General</a></li>
 			<li><a href="#loleaflet-toolbar">Toolbar</a></li>
 			<li><a href="#loleaflet-page">Page oriented</a></li>
@@ -1389,6 +1390,98 @@ var map = L.map('map', {
 		<td><code>HTMLElement</code></td>
 		<td><code class="javascript"><span class="number">7</span></code></td>
 		<td>Pane for popups.</td>
+	</tr>
+</table>
+
+<h2 id="loleaflet-initialization">Initialization</h2>
+
+<h3>Usage example</h3>
+
+<pre><code class="javascript">
+var map = L.map('map', {
+    doc: 'file:///path/to/document',
+    server: 'ws://localhost',
+    edit: true,
+    documentContainer: 'document-container'
+});</code></pre>
+
+<h3 class="left">Creation</h3>
+
+<table data-id='map'>
+	<tr>
+		<th>Factory</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>L.map</b>(
+			<nobr>&lt;HTMLElement|String&gt; <i>id</i>,</nobr>
+			<nobr>&lt;<a href="#map-options">Map options</a>&gt; <i>options?</i> )</nobr>
+		</code></td>
+
+
+		<td>Instantiates a map object given a div element (or its id) and optionally an object literal with map options described below.</td>
+	</tr>
+</table>
+
+<h3>Options</h3>
+
+<h4>These are the options intended to be used for loleaflet, using any additional options from Leaflet might cause some
+unexpected behaviour.</h4>
+
+<table data-id='map'>
+	<tr>
+		<th>Option</th>
+		<th>Type</th>
+		<th>Default</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>doc</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>Document URL, the server should be able to access the document.</td>
+	</tr>
+	<tr>
+		<td><code><b>server</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>The server hosting loolwsd.</td>
+	</tr>
+	<tr>
+		<td><code><b>edit</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">false</span></code></td>
+		<td>Whether the documet starts in viewing or editing mode.</td>
+	</tr>
+	<tr>
+		<td><code><b>readOnly</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">false</span></code></td>
+		<td>Whether the documet is read-only.</td>
+	</tr>
+	<tr>
+		<td><code><b>timestamp</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>A timestamp of the last modification to the document.</td>
+	</tr>
+	<tr>
+		<td><code><b>documentContainer</b></code></td>
+		<td><code>String / DOM element</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>An outer div, containing the map div, that is used internally for the creation of the toolbar.</td>
+	</tr>
+	<tr>
+		<td><code><b>renderingOptions</b></code></td>
+		<td><code>Object</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>Enables the continous, web view, of the document, see the UNO commands below for this parameter.</td>
+	</tr>
+	<tr>
+		<td><code><b>print</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">true</span></code></td>
+		<td>Whether the print handler is active (for Chrome).</td>
 	</tr>
 </table>
 
@@ -8136,6 +8229,15 @@ var unoCommands = [
         }
     },
     description: 'Apply font size.'
+},
+
+{
+    uno: '.uno:HideWhitespace',
+    parameter: {
+        'type': 'boolean',
+        'value': 'false'
+    },
+    description: 'Continous web view of the document'
 },
 
 {
