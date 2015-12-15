@@ -1,0 +1,13 @@
+.leaflet-selection-marker-start {
+	margin-left: -28px;
+	width: 30px;
+	height: 44px;
+	background-image: url(images/handle_start.png);
+	}
+
+.leaflet-selection-marker-end {
+	margin-left: -2px;
+	width: 30px;
+	height: 44px;
+	background-image: url(images/handle_end.png);
+	}

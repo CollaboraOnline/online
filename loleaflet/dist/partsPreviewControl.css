@@ -1,0 +1,37 @@
+.parts-preview-document {
+	left: 195px !important;
+}
+
+.parts-preview {
+	background: #DFDFDF;
+	position: absolute;
+	top: 70px;
+    left: 0px;
+	bottom: 0px;
+	max-width: 205px;
+	overflow: hidden;
+	border-top: 2px solid #B6B6B6;
+}
+
+.preview-frame {
+	max-width: 190px;
+	white-space: nowrap;
+	text-align: center; margin: 1em 0;
+	}
+
+.preview-helper {
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	}
+
+.preview-img {
+	vertical-align: middle;
+	max-width: 180px;
+	cursor: pointer;
+	border: 2px solid #dfdfdf;
+	}
+
+.preview-img-selected {
+	border-color: #000000;
+}

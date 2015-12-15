@@ -1,0 +1,64 @@
+#toolbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding-bottom: 15px;
+	text-align: center;
+}
+
+.leaflet-bar a {
+    float: left;
+}
+
+div .leaflet-bar a:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
+.leaflet-control-zoom.leaflet-bar {
+    margin-left: 0.5em;
+}
+
+div.leaflet-control-zoom leaflet-bar {
+    width: 53px;
+}
+
+div .leaflet-bar a:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+div .leaflet-bar a:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+label.leaflet-control-editviewswitch {
+    padding: 0.2em 0.4em 0.2em 0em;
+}
+
+input.leaflet-control-search-bar {
+    padding: 0.3em;
+	max-width: 100px;
+}
+
+.leaflet-control-fonts-container {
+	display: inline;
+}
+
+select {
+	padding: 0.2em 0.4em 0.4em 0em;
+	background-color: white;
+}
+
+button.leaflet-control-search-prev {
+    margin-left: 0.2em;
+}
+
+button.leaflet-control-search-next
+, leaflet-control-search-cancel {
+    margin-right: 0.2em;
+}
+
+#toolbar label
+, .leaflet-control-search {
+    background-color: #fff;
+}

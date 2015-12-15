@@ -41,20 +41,6 @@
 	display: block;
 	}
 
-.leaflet-selection-marker-start {
-	margin-left: -28px;
-	width: 30px;
-	height: 44px;
-	background-image: url(images/handle_start.png);
-	}
-
-.leaflet-selection-marker-end {
-	margin-left: -2px;
-	width: 30px;
-	height: 44px;
-	background-image: url(images/handle_end.png);
-	}
-
 /* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
 /* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
 .leaflet-container svg,
@@ -573,48 +559,6 @@ a.leaflet-control-buttons:hover:first-child {
 	border: 1px solid #666;
 	}
 
-#document-container {
-	border-top: 2px solid #B6B6B6;
-	background: #DFDFDF;
-	position: absolute;
-	top: 70px;
-	bottom: 0px;
-	right: 0px;
-	left: 0px;
-}
-
-#map
-.scroll-container {
-	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-}
-
-.scroll-container {
-	height: 100%;
-	width: 100%;
-	overflow: auto;
-}
-
-#map {
-	top: 0px;
-	bottom: 16px;
-	left: 0px;
-	right: 16px;
-	z-index: 10;
-}
-
-.search-not-found {
-	background-color: red;
-	-webkit-transition: background-color 0.8s linear;
-	   -moz-transition: background-color 0.8s linear;
-	     -o-transition: background-color 0.8s linear;
-	        transition: background-color 0.8s linear;
-
-}
-
 .leaflet-cursor {
 	position: absolute;
 	text-align: center;
@@ -685,6 +629,7 @@ a.leaflet-control-buttons:hover:first-child {
 	z-index: 100;
 	opacity: 0;
 }
+
 .clipboard {
 	width: 1px;
 	height: 1px;
@@ -697,44 +642,6 @@ a.leaflet-control-buttons:hover:first-child {
     height: 100%;
     z-index: 0;
     border: none;
-}
-
-.parts-preview-document {
-	left: 195px !important;
-}
-
-.parts-preview {
-	background: #DFDFDF;
-	position: absolute;
-	top: 70px;
-    left: 0px;
-	bottom: 0px;
-	max-width: 205px;
-	overflow: hidden;
-	border-top: 2px solid #B6B6B6;
-}
-
-.preview-frame {
-	max-width: 190px;
-	white-space: nowrap;
-	text-align: center; margin: 1em 0;
-	}
-
-.preview-helper {
-	display: inline-block;
-	height: 100%;
-	vertical-align: middle;
-	}
-
-.preview-img {
-	vertical-align: middle;
-	max-width: 180px;
-	cursor: pointer;
-	border: 2px solid #dfdfdf;
-	}
-
-.preview-img-selected {
-	border-color: #000000;
 }
 
 .spreadsheet-document {
@@ -858,106 +765,6 @@ a.leaflet-control-buttons:hover:first-child {
         margin: 0px;
         overflow: hidden;
         }
-
-.spreadsheet-tab {
-	margin: 0;
-	padding: 0;
-	bottom: 0;
-	position: absolute;
-	cursor: pointer;
-	}
-
-.spreadsheet-tab li {
-	float: left;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	margin-left: 2px;
-	}
-
-.spreadsheet-tab li {
-	display: block;
-	border: #B9B9B9 1px solid;
-	background: #A8A8A8;
-	color: #FFFFFF;
-	text-decoration: none;
-	}
-
-.spreadsheet-tab li.selected {
-	background: #FFFFFF;
-	color: #7E7E7E;
-	border-top: #FFF 1px solid;
-	}
-
-#toolbar {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	padding-bottom: 15px;
-	text-align: center;
-}
-
-.leaflet-bar a {
-    float: left;
-}
-
-div .leaflet-bar a:last-child {
-    border-bottom: 1px solid #ccc;
-}
-
-.leaflet-control-editviewswitch.leaflet-bar
-, leaflet-control-search.leaflet-bar {
-
-}
-
-label.leaflet-control-editviewswitch {
-    padding: 0.2em 0.4em 0.2em 0em;
-}
-
-input.leaflet-control-search-bar {
-    padding: 0.3em;
-	max-width: 100px;
-}
-
-.leaflet-control-fonts-container {
-	display: inline;
-}
-
-select {
-	padding: 0.2em 0.4em 0.4em 0em;
-	background-color: white;
-}
-
-.leaflet-control-zoom.leaflet-bar {
-    margin-left: 0.5em;
-}
-
-div.leaflet-control-zoom leaflet-bar {
-    width: 53px;
-}
-
-button.leaflet-control-search-prev {
-    margin-left: 0.2em;
-}
-
-button.leaflet-control-search-next
-, leaflet-control-search-cancel {
-    margin-right: 0.2em;
-}
-
-#toolbar label
-, .leaflet-control-search {
-    background-color: #fff;
-}
-
-div .leaflet-bar a:first-child {
-    border-radius: 4px 0 0 4px;
-}
-
-div .leaflet-bar a:last-child {
-    border-radius: 0 4px 4px 0;
-}
 
 .slide-show {
 	background: #FFF;
