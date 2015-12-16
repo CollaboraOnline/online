@@ -30,7 +30,8 @@ L.Control.Tabs = L.Control.extend({
 				setTimeout(L.bind(function () {
 					this._map.invalidateSize();
 					$('.scroll-container').mCustomScrollbar('update');
-				}, this), 500);
+					$('.scroll-container').mCustomScrollbar('scrollTo', [0, 0]);
+				}, this), 100);
 				for (var i = 0; i < parts; i++) {
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('li', '', this._tabsCont);
