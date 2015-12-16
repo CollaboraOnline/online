@@ -55,7 +55,7 @@
 
     var filePath = getParameterByName('file_path');
     var host = getParameterByName('host');
-    var edit = getParameterByName('edit') === 'true';
+    var permission = getParameterByName('permission');
     var timestamp = getParameterByName('timestamp');
     if (filePath === '') {
         vex.dialog.alert('Wrong file_path, usage: file_path=/path/to/doc/');
@@ -75,10 +75,9 @@
             doc: filePath,
             renderingOptions: renderingOptions,
             server: host,
-            edit: edit,
+            permission: permission,
             timestamp: timestamp,
-            documentContainer: 'document-container',
-            readOnly: false
+            documentContainer: 'document-container'
         });
 
     ////// Controls /////

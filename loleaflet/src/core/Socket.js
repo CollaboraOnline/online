@@ -111,15 +111,13 @@ L.Socket = {
 			var docLayer = null;
 			if (command.type === 'text') {
 				docLayer = new L.WriterTileLayer('', {
-					edit: this._map.options.edit,
-					readOnly: this._map.options.readOnly,
+					permission: this._map.options.permission,
 					docType: command.type
 				});
 			}
 			else if (command.type === 'spreadsheet') {
 				docLayer = new L.CalcTileLayer('', {
-					edit: this._map.options.edit,
-					readOnly: this._map.options.readOnly,
+					permission: this._map.options.permission,
 					docType: command.type
 				});
 			}
@@ -132,8 +130,7 @@ L.Socket = {
 					tileTwipsSize = 3000;
 				}
 				docLayer = new L.ImpressTileLayer('', {
-					edit: this._map.options.edit,
-					readOnly: this._map.options.readOnly,
+					permission: this._map.options.permission,
 					tileWidthTwips: tileTwipsSize,
 					tileHeightTwips: tileTwipsSize,
 					docType: command.type
