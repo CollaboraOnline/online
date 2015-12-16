@@ -6,7 +6,6 @@ L.Control.RowHeader = L.Control.extend({
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
 		this._initialized = false;
-		return document.createElement('div');
 	},
 
 	_initialize: function () {

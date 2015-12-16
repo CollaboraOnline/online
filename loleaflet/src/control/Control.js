@@ -87,12 +87,15 @@ L.Map.include({
 	addControl: function (control) {
 		control._map = this;
 		var controlDiv = control.onAdd(this);
-		var controlContainer = L.DomUtil.get('toolbar');
-		controlContainer.appendChild(controlDiv);
+		var controlContainer = L.DomUtil.get(this.options.toolbarContainer);
 		if (!this._controls) {
 			this._controls = [];
 		}
-		this._controls.push({div: controlDiv});
+
+		if (controlContainer && controlDiv) {
+			controlContainer.appendChild(controlDiv);
+			this._controls.push({div: controlDiv});
+		}
 		return this;
 	},
 

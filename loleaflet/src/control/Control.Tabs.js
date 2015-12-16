@@ -11,7 +11,6 @@ L.Control.Tabs = L.Control.extend({
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tab', docContainer.parentElement);
 
 		map.on('updateparts', this._updateDisabled, this);
-		return document.createElement('div');
 	},
 
 	_updateDisabled: function (e) {
