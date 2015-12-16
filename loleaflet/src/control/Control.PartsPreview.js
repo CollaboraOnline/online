@@ -17,7 +17,6 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('updatepart', this._updatePart, this);
 		map.on('tilepreview', this._updatePreview, this);
-		return document.createElement('div');
 	},
 
 	_updateDisabled: function (e) {

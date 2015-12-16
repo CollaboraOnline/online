@@ -32,7 +32,6 @@ L.Control.Scroll = L.Control.extend({
 				alwaysTriggerOffsets: false
 			}
 		});
-		return document.createElement('div');
 	},
 
 	_onScroll: function (e) {
