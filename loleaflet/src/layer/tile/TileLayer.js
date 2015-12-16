@@ -26,7 +26,8 @@ L.TileLayer = L.GridLayer.extend({
 		detectRetina: false,
 		crossOrigin: false,
 		preFetchOtherParts: false,
-		previewInvalidationTimeout: 1000
+		previewInvalidationTimeout: 1000,
+		defaultPermission: 'view'
 	},
 
 	initialize: function (url, options) {
@@ -56,8 +57,8 @@ L.TileLayer = L.GridLayer.extend({
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
-		// View or edit mode.
-		this._permission = 'view';
+		// View, edit or readonly.
+		this._permission = options.defaultPermission;
 		// Position and size of the visible cursor.
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Cursor overlay is visible or hidden (for blinking).
@@ -143,15 +144,15 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._textArea = map._textArea;
 		this._textArea.focus();
-		if (this.options.readOnly) {
-			map.setPermission('readonly');
-		}
-		else if (this.options.edit) {
-			map.setPermission('edit');
+		if (this.options.permission === 'edit' ||
+				this.options.permission === 'view' ||
+				this.options.permission === 'readonly') {
+			map.setPermission(this.options.permission);
 		}
 		else {
-			map.setPermission('view');
+			map.setPermission(this.options.defaultPermission);
 		}
+
 		map.fire('statusindicator', {statusType: 'loleafletloaded'});
 	},
 

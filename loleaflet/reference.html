@@ -1401,7 +1401,6 @@ var map = L.map('map', {
 var map = L.map('map', {
     doc: 'file:///path/to/document',
     server: 'ws://localhost',
-    edit: true,
     documentContainer: 'document-container'
 });</code></pre>
 
@@ -1448,16 +1447,10 @@ unexpected behaviour.</h4>
 		<td>The server hosting loolwsd.</td>
 	</tr>
 	<tr>
-		<td><code><b>edit</b></code></td>
-		<td><code>Boolean</code></td>
-		<td><code><span class="literal">false</span></code></td>
-		<td>Whether the documet starts in viewing or editing mode.</td>
-	</tr>
-	<tr>
-		<td><code><b>readOnly</b></code></td>
-		<td><code>Boolean</code></td>
-		<td><code><span class="literal">false</span></code></td>
-		<td>Whether the documet is read-only.</td>
+		<td><code><b>permission</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">'view'</span></code></td>
+        <td>The document's <a href="#documentpermission-values">permission</a>.</td>
 	</tr>
 	<tr>
 		<td><code><b>timestamp</b></code></td>
