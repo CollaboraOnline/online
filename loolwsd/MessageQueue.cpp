@@ -8,8 +8,10 @@
  */
 
 #include "MessageQueue.hpp"
+#include "Util.hpp"
 
 #include <algorithm>
+#include <iostream>
 
 MessageQueue::~MessageQueue()
 {
@@ -20,6 +22,7 @@ void MessageQueue::put(const std::string& value)
 {
     std::unique_lock<std::mutex> lock(_mutex);
     put_impl(value);
+    std::cout << Util::logPrefix() << "message put to the queue, size: " << _queue.size() << std::endl;
     lock.unlock();
     _cv.notify_one();
 }
@@ -27,7 +30,9 @@ void MessageQueue::put(const std::string& value)
 std::string MessageQueue::get()
 {
     std::unique_lock<std::mutex> lock(_mutex);
+    std::cout << Util::logPrefix() << "waiting for non-empty queue, current size: " << _queue.size() << std::endl;
     _cv.wait(lock, [this] { return wait_impl(); });
+    std::cout << Util::logPrefix() << "queue became non-empty, current size: " << _queue.size() << std::endl;
     return get_impl();
 }
 
