@@ -4,6 +4,9 @@ bin_PROGRAMS = loolwsd
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
+AM_CPPFLAGS = -pthread
+AM_LDFLAGS = -pthread
+
 loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MessageQueue.cpp TileCache.cpp Util.cpp LOOLProtocol.cpp
 
 noinst_PROGRAMS = loadtest connect lokitclient
