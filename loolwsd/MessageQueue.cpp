@@ -34,7 +34,7 @@ std::string MessageQueue::get()
 void MessageQueue::clear()
 {
     std::unique_lock<std::mutex> lock(_mutex);
-    _queue.clear();
+    clear_impl();
 }
 
 void MessageQueue::put_impl(const std::string& value)
