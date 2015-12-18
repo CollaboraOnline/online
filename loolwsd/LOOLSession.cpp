@@ -1505,11 +1505,15 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
         }
     }
 
-    _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
+    bool success = _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
             format.size() == 0 ? NULL :format.c_str(),
             filterOptions.size() == 0 ? NULL : filterOptions.c_str());
 
     sendTextFrame("saveas: url=" + url);
+    std::string successStr = success ? "true" : "false";
+    sendTextFrame("unocommandresult: {"
+            "\"commandName\":\"saveas\","
+            "\"success\":\"" + successStr + "\"}");
 
     return true;
 }
