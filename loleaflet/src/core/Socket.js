@@ -107,32 +107,45 @@ L.Socket = {
 
 		if (textMsg.startsWith('status:') && !this._map._docLayer) {
 			// first status message, we need to create the document layer
+			var tileWidthTwips = this._map.options.tileWidthTwips;
+			var tileHeightTwips = this._map.options.tileHeightTwips;
+			if (this._map.options.zoom !== this._map.options.defaultZoom) {
+				var scale = this._map.options.crs.scale(this._map.options.defaultZoom - this._map.options.zoom);
+				tileWidthTwips = Math.round(tileWidthTwips * scale);
+				tileHeightTwips = Math.round(tileHeightTwips * scale);
+			}
+
 			var command = this.parseServerCmd(textMsg);
 			var docLayer = null;
 			if (command.type === 'text') {
 				docLayer = new L.WriterTileLayer('', {
 					permission: this._map.options.permission,
+					tileWidthTwips: tileWidthTwips,
+					tileHeightTwips: tileHeightTwips,
 					docType: command.type
 				});
 			}
 			else if (command.type === 'spreadsheet') {
 				docLayer = new L.CalcTileLayer('', {
 					permission: this._map.options.permission,
+					tileWidthTwips: tileWidthTwips,
+					tileHeightTwips: tileHeightTwips,
 					docType: command.type
 				});
 			}
 			else {
-				if (command.type === 'presentation') {
+				if (command.type === 'presentation' &&
+						this._map.options.defaultZoom === this._map.options.zoom) {
+					// If we have a presentation document and the zoom level has not been set
+					// in the options, resize the document so that it fits the viewing area
 					var verticalTiles = this._map.getSize().y / 256;
-					var tileTwipsSize = Math.round(command.height / verticalTiles);
-				}
-				else {
-					tileTwipsSize = 3000;
+					tileWidthTwips = Math.round(command.height / verticalTiles);
+					tileHeightTwips = Math.round(command.height / verticalTiles);
 				}
 				docLayer = new L.ImpressTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileTwipsSize,
-					tileHeightTwips: tileTwipsSize,
+					tileWidthTwips: tileWidthTwips,
+					tileHeightTwips: tileHeightTwips,
 					docType: command.type
 				});
 			}
@@ -224,10 +237,11 @@ L.Socket = {
 			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
+			var defaultZoom = this._map.options.zoom;
 			var scale = command.tileWidth / this._map._docLayer.options.tileWidthTwips;
-			// scale = 1.2 ^ (10 - zoom)
-			// zoom = 10 -log(scale) / log(1.2)
-			command.zoom = Math.round(10 - Math.log(scale) / Math.log(1.2));
+			// scale = 1.2 ^ (defaultZoom - zoom)
+			// zoom = defaultZoom -log(scale) / log(1.2)
+			command.zoom = Math.round(defaultZoom - Math.log(scale) / Math.log(1.2));
 		}
 		return command;
 	}

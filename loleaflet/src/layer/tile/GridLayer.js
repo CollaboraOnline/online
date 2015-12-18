@@ -17,10 +17,8 @@ L.GridLayer = L.Layer.extend({
 		zIndex: null,
 		bounds: null,
 
-		minZoom: 0,
+		minZoom: 0
 		// maxZoom: <Number>
-		tileWidthTwips: 3000,
-		tileHeightTwips: 3000
 	},
 
 	initialize: function (options) {
@@ -359,7 +357,7 @@ L.GridLayer = L.Layer.extend({
 
 	_updateTileTwips: function () {
 		// smaller zoom = zoom in
-		var factor = Math.pow(1.2, (10 - this._tileZoom));
+		var factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
 		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
 	},
