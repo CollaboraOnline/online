@@ -32,6 +32,7 @@ public:
     // statics
     static int portNumber;
     static int timeoutCounter;
+    static int _numPreSpawnedChildren;
     static bool doTest;
     static bool volatile isShutDown;
     static std::string cache;
@@ -73,7 +74,6 @@ private:
     int  createComponent();
     int  createDesktop();
 
-    static int _numPreSpawnedChildren;
     static std::mutex _rngMutex;
 
 #if ENABLE_DEBUG
