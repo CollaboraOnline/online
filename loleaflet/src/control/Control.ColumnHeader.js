@@ -76,6 +76,13 @@ L.Control.ColumnHeader = L.Control.extend({
 			text.innerHTML = columns[iterator].text;
 			column.width = Math.round(converter.call(context, twip).x) - 1 + 'px';
 		}
+		if (this._map.getDocSize().x < this._map.getSize().x) {
+			// the column headers no longer need to strecth to the whole screen
+			L.DomUtil.setStyle(this._table, 'width', 0);
+		}
+		else {
+			L.DomUtil.setStyle(this._table, 'width', '100%');
+		}
 	},
 
 	_onUpdatePermission: function () {
