@@ -72,6 +72,13 @@ L.Control.RowHeader = L.Control.extend({
 			L.DomUtil.setStyle(text, 'line-height', height);
 			L.DomUtil.setStyle(text, 'height', height);
 		}
+		if (this._map.getDocSize().y < this._map.getSize().y) {
+			// the row headers no longer need to strecth to the whole screen
+			L.DomUtil.setStyle(this._table, 'height', 0);
+		}
+		else {
+			L.DomUtil.setStyle(this._table, 'height', '100%');
+		}
 	},
 
 	_onUpdatePermission: function () {
