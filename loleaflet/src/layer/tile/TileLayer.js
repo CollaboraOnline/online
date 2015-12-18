@@ -128,7 +128,9 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
-		map.on('resize', this._fitDocumentHorizontally, this);
+		if (map.options.autoFitWidth !== false) {
+			map.on('resize', this._fitWidthZoom, this);
+		}
 		// Retrieve the initial cell cursor position (as LOK only sends us an
 		// updated cell cursor when the selected cell is changed and not the initial
 		// cell).
@@ -931,19 +933,22 @@ L.TileLayer = L.GridLayer.extend({
 		L.Socket.sendMessage('requestloksession');
 	},
 
-	_fitDocumentHorizontally: function (e) {
-		if (this._docType !== 'spreadsheet') {
+	_fitWidthZoom: function (e, maxZoom) {
+		var size = e ? e.newSize : this._map.getSize();
+		maxZoom = maxZoom ? maxZoom : this._map.options.zoom;
+		if (this._docType !== 'spreadsheet' || !e) {
+			// If it's not a spreadsheet or the method has been invoked manually
 			var crsScale = this._map.options.crs.scale(1);
-			if (this._docPixelSize.x > e.newSize.x) {
-				var ratio = this._docPixelSize.x / e.newSize.x;
+			if (this._docPixelSize.x > size.x) {
+				var ratio = this._docPixelSize.x / size.x;
 				var zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
 				this._map.setZoom(Math.max(1, this._map.getZoom() - zoomDelta), {animate: false});
 			}
-			else if (e.newSize.x / this._docPixelSize.x > crsScale) {
+			else if (size.x / this._docPixelSize.x > crsScale) {
 				// we could zoom in
-				ratio = e.newSize.x / this._docPixelSize.x;
+				ratio = size.x / this._docPixelSize.x;
 				zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
-				this._map.setZoom(Math.min(10, this._map.getZoom() + zoomDelta), {animate: false});
+				this._map.setZoom(Math.min(maxZoom, this._map.getZoom() + zoomDelta), {animate: false});
 			}
 		}
 	},

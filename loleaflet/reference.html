@@ -1484,6 +1484,13 @@ unexpected behaviour.</h4>
 		<td><code><span class="literal">true</span></code></td>
 		<td>Whether the print handler is active (for Chrome).</td>
 	</tr>
+	<tr>
+		<td><code><b>autoFitWidth</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">true</span></code></td>
+		<td>Whether the document is automatically zoomed so that the width fits the viewing area when
+            the window is resized. The document will not be zoomed in more than map.options.zoom.</td>
+	</tr>
 </table>
 
 <h2 id="loleaflet-general">General</h2>
@@ -1619,7 +1626,14 @@ unexpected behaviour.</h4>
 		<td><code>undfined</code></td>
 		<td>Cancels the automatic update for the preview defined by 'id'.</td>
 	</tr>
-
+	<tr>
+		<td><code><b>fitWidthZoom</b>(
+			<nobr>&lt;Number&gt;<i>maxZoom</i>)</nobr>
+        </code></td>
+		<td><code>undfined</code></td>
+		<td>Zooms in or out so that the document's width fits the viewing area. The document will not zoom in more
+            than `maxZoom` if the parameter is provided.</td>
+	</tr>
 </table>
 
 <h3 id="scroll-options">ScrollOptions</h3>
