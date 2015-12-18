@@ -688,7 +688,7 @@ void MasterProcessSession::dispatchChild()
     {
         LOOLWSD::_namedMutexLOOL.lock();
         std::cout << Util::logPrefix() << "No available child sessions, queue new child session" << std::endl;
-        LOOLWSD::_sharedForkChild.begin()[0] = (LOOLWSD::_sharedForkChild.begin()[0] > 0 ? LOOLWSD::_sharedForkChild.begin()[0] + 1 : 1);
+        LOOLWSD::_sharedForkChild.begin()[0] = LOOLWSD::_numPreSpawnedChildren;
         LOOLWSD::_namedMutexLOOL.unlock();
     }
 
