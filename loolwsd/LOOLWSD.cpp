@@ -1360,10 +1360,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
 
-    // remove child root
-    if (LOOLWSD::_childId > 0)
-        File(LOOLWSD::childRoot + Path::separator() + std::to_string(LOOLWSD::_childId)).remove(true);
-
     return Application::EXIT_OK;
 }
 
