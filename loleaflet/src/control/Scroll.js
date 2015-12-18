@@ -46,5 +46,11 @@ L.Map.include({
 		else {
 			this.off('moveend', this._docLayer._updateScrollOffset, this._docLayer);
 		}
+	},
+
+	fitWidthZoom: function (maxZoom) {
+		if (this._docLayer) {
+			this._docLayer._fitWidthZoom(null, maxZoom);
+		}
 	}
 });
