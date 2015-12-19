@@ -587,8 +587,6 @@ std::string LOOLWSD::loTemplate;
 std::string LOOLWSD::childRoot;
 std::string LOOLWSD::loSubPath = "lo";
 std::string LOOLWSD::jail;
-std::mutex LOOLWSD::_rngMutex;
-Random LOOLWSD::_rng;
 Poco::NamedMutex LOOLWSD::_namedMutexLOOL("loolwsd");
 Poco::SharedMemory LOOLWSD::_sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
 
@@ -1090,9 +1088,7 @@ int LOOLWSD::createComponent()
 {
     int pid;
 
-    std::unique_lock<std::mutex> rngLock(_rngMutex);
-    _childId = (((Poco::UInt64)_rng.next()) << 32) | _rng.next() | 1;
-    rngLock.unlock();
+    _childId = Util::rng::getNext();
 
     if ((pid = fork()) == -1)
     {
@@ -1128,7 +1124,6 @@ void LOOLWSD::desktopMain()
     setSignals(false);
 #endif
 
-    _rng.seed(Process::id());
     startupComponent(_numPreSpawnedChildren);
 
     while (MasterProcessSession::_childProcesses.size() > 0)

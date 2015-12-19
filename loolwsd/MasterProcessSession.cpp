@@ -49,8 +49,6 @@ std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::mutex MasterProcessSession::_availableChildSessionMutex;
 std::condition_variable MasterProcessSession::_availableChildSessionCV;
-Random MasterProcessSession::_rng;
-std::mutex MasterProcessSession::_rngMutex;
 
 MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, const Kind kind) :
     LOOLSession(ws, kind),

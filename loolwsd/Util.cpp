@@ -15,6 +15,8 @@
 #include <sstream>
 #include <string>
 #include <cassert>
+#include <random>
+#include <mutex>
 
 #include <png.h>
 
@@ -50,6 +52,21 @@ extern "C"
     static void user_flush_fn(png_structp)
     {
     }
+}
+
+namespace Util
+{
+namespace rng
+{
+    static std::random_device _rd;
+    static std::mutex _rngMutex;
+    static std::mt19937_64 _rng = std::mt19937_64(_rd());
+    unsigned getNext()
+    {
+        std::unique_lock<std::mutex> lock(_rngMutex);
+        return _rng();
+    }
+}
 }
 
 namespace Util

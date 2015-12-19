@@ -558,7 +558,7 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
         {
             delete file;
         }
-        tmpDir = std::to_string((((Poco::UInt64)LOOLWSD::_rng.next()) << 32) | LOOLWSD::_rng.next() | 1);
+        tmpDir = std::to_string(Util::rng::getNext());
         url = jailDocumentURL + "/" + tmpDir + "/" + name;
         file = new File(url);
     } while (file->exists());
