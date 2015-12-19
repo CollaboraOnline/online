@@ -19,6 +19,11 @@
 
 namespace Util
 {
+    namespace rng
+    {
+       unsigned getNext();
+    }
+
     std::string logPrefix();
 
     bool windowingAvailable();
