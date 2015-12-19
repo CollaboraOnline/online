@@ -1,15 +1,15 @@
 SUBDIRS = test
 
-bin_PROGRAMS = loolwsd loolkit
+bin_PROGRAMS = loolwsd loolbroker loolkit
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
 AM_CPPFLAGS = -pthread
 AM_LDFLAGS = -pthread
 
-shared_sources = MessageQueue.cpp Util.cpp
+shared_sources = LOOLProtocol.cpp LOOLSession.cpp MessageQueue.cpp Util.cpp
 
-loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MasterProcessSession.cpp ChildProcessSession.cpp TileCache.cpp LOOLProtocol.cpp $(shared_sources)
+loolwsd_SOURCES = LOOLWSD.cpp ChildProcessSession.cpp MasterProcessSession.cpp TileCache.cpp $(shared_sources)
 
 noinst_PROGRAMS = loadtest connect lokitclient
 
@@ -19,9 +19,11 @@ connect_SOURCES = Connect.cpp Util.cpp LOOLProtocol.cpp
 
 lokitclient_SOURCES = LOKitClient.cpp Util.cpp
 
-broker_shared_sources = ChildProcessSession.cpp LOOLProtocol.cpp LOOLSession.cpp $(shared_sources)
+broker_shared_sources = ChildProcessSession.cpp $(shared_sources)
 
 loolkit_SOURCES = LOOLKit.cpp $(broker_shared_sources)
+
+loolbroker_SOURCES = LOOLBroker.cpp $(broker_shared_sources)
 
 noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessSession.hpp ChildProcessSession.hpp LOOLWSD.hpp LoadTest.hpp MessageQueue.hpp TileCache.hpp Util.hpp Png.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
@@ -40,8 +42,10 @@ all-local: loolwsd
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    if test `uname -s` = Linux; then \
 		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolwsd; \
+		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
 	    else \
 		sudo chown root loolwsd && sudo chmod u+s loolwsd; \
+		sudo chown root loolbroker && sudo chmod u+s loolbroker; \
 	    fi; \
 	fi
 

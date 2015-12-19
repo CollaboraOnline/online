@@ -32,6 +32,7 @@ lokitclient
 loadtest
 loolwsd
 loolkit
+loolbroker
 sockettransporttest
 
 # Debug output
