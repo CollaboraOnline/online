@@ -13,6 +13,7 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 
+#include <Poco/NotificationQueue.h>
 #include "LOOLSession.hpp"
 
 class ChildProcessSession final : public LOOLSession
@@ -42,6 +43,8 @@ public:
     std::string _docType;
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
+    static Poco::NotificationQueue _callbackQueue;
+    static Poco::Mutex _mutex;
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
@@ -72,6 +75,22 @@ public:
 
  private:
     int _clientPart;
+};
+
+class CallBackNotification: public Poco::Notification
+{
+public:
+	typedef Poco::AutoPtr<CallBackNotification> Ptr;
+
+    CallBackNotification(int nType, const std::string& rPayload, void* pSession)
+            : m_nType(nType),
+              m_aPayload(rPayload),
+              m_pSession(pSession)
+    {}
+
+    int m_nType;
+    std::string m_aPayload;
+    void* m_pSession;
 };
 
 #endif

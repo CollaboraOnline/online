@@ -1336,11 +1336,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             }
             else
             {
-                std::cout << Util::logPrefix() << "None of our known child processes died :" << std::to_string(pid)  << std::endl;
+                std::cout << Util::logPrefix() << "None of our known child processes died :" << std::to_string(pid) << std::endl;
             }
         }
         else if (pid < 0)
-            std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
+            std::cout << Util::logPrefix() << "Child error: " << strerror(errno) << std::endl;
 
         ++timeoutCounter;
         if (timeoutCounter == INTERVAL_PROBES)

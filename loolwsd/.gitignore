@@ -19,15 +19,19 @@
 /stamp-h1
 /systemplate
 /test-driver
+/jails
 
 *.o
 *.exe
 cscope*
 .*
+*.orig
+
 connect
 lokitclient
 loadtest
 loolwsd
+loolkit
 sockettransporttest
 
 # Debug output
