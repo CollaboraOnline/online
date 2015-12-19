@@ -184,6 +184,7 @@ protected:
 
 private:
     void displayHelp();
+    void displayVersion();
     void componentMain();
     void desktopMain();
     void startupComponent(int nComponents);

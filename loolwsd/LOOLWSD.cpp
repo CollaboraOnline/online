@@ -718,6 +718,10 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
+    optionSet.addOption(Option("version", "", "Display version information.")
+                        .required(false)
+                        .repeatable(false));
+
     optionSet.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),"
                              " must not be " + std::to_string(MASTER_PORT_NUMBER) + ".")
                         .required(false)
@@ -775,6 +779,11 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
         displayHelp();
         exit(Application::EXIT_OK);
     }
+    else if (optionName == "version")
+    {
+        displayVersion();
+        exit(Application::EXIT_OK);
+    }
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
     else if (optionName == "cache")
@@ -804,6 +813,11 @@ void LOOLWSD::displayHelp()
     helpFormatter.setUsage("OPTIONS");
     helpFormatter.setHeader("LibreOffice On-Line WebSocket server.");
     helpFormatter.format(std::cout);
+}
+
+void LOOLWSD::displayVersion()
+{
+    std::cout << LOOLWSD_VERSION << std::endl;
 }
 
 bool LOOLWSD::createBroker(const std::string& rJailId)
