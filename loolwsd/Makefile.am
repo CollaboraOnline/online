@@ -1,13 +1,15 @@
 SUBDIRS = test
 
-bin_PROGRAMS = loolwsd
+bin_PROGRAMS = loolwsd loolkit
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
 AM_CPPFLAGS = -pthread
 AM_LDFLAGS = -pthread
 
-loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MasterProcessSession.cpp ChildProcessSession.cpp MessageQueue.cpp TileCache.cpp Util.cpp LOOLProtocol.cpp
+shared_sources = MessageQueue.cpp Util.cpp
+
+loolwsd_SOURCES = LOOLWSD.cpp LOOLSession.cpp MasterProcessSession.cpp ChildProcessSession.cpp TileCache.cpp LOOLProtocol.cpp $(shared_sources)
 
 noinst_PROGRAMS = loadtest connect lokitclient
 
@@ -16,6 +18,10 @@ loadtest_SOURCES = LoadTest.cpp Util.cpp LOOLProtocol.cpp
 connect_SOURCES = Connect.cpp Util.cpp LOOLProtocol.cpp
 
 lokitclient_SOURCES = LOKitClient.cpp Util.cpp
+
+broker_shared_sources = ChildProcessSession.cpp LOOLProtocol.cpp LOOLSession.cpp $(shared_sources)
+
+loolkit_SOURCES = LOOLKit.cpp $(broker_shared_sources)
 
 noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessSession.hpp ChildProcessSession.hpp LOOLWSD.hpp LoadTest.hpp MessageQueue.hpp TileCache.hpp Util.hpp Png.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \

@@ -40,6 +40,9 @@ using Poco::StringTokenizer;
 using Poco::URI;
 using Poco::Util::Application;
 
+Poco::NotificationQueue ChildProcessSession::_callbackQueue;
+Poco::Mutex ChildProcessSession::_mutex;
+
 ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws,
                                          LibreOfficeKit *loKit,
                                          LibreOfficeKitDocument * loKitDocument,
@@ -528,6 +531,7 @@ bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, Str
     _loKitDocument->pClass->setClientZoom(_loKitDocument, tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
     return true;
 }
+
 bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string name, id, format, filterOptions;
@@ -568,8 +572,9 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
             format.size() == 0 ? NULL :format.c_str(),
             filterOptions.size() == 0 ? NULL : filterOptions.c_str());
 
-    sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
-            " port=" + std::to_string(LOOLWSD::portNumber) + " id=" + id);
+    //TODO: handle download portNumber.
+    //sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
+    //        " port=" + std::to_string(LOOLWSD::portNumber) + " id=" + id);
     return true;
 }
 
