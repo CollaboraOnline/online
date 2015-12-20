@@ -6,6 +6,7 @@ test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to
 
 CHROOT=$1
 INSTDIR=$2
+POCODIR=/usr/local/lib
 
 test -d "$INSTDIR" || { echo "No such directory: $INSTDIR"; exit 1; }
 
@@ -45,6 +46,9 @@ cd / || exit 1
 	     lib/*-linux-gnu/libnss* \
 		 -type l
 
+	find lib/libnss_* lib64/libnss_* -type l
+	find lib/*-linux-gnu/libnss* -type l
+
 	# Go through the LO shared objects and check what system libraries
 	# they link to.
 	find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |
@@ -52,6 +56,14 @@ cd / || exit 1
 	    ldd $file 2>/dev/null
 	done |
 	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
+
+	# Go through the loolkit
+	find $POCODIR -name '*Poco*.so' -o -name '*.so.[0-9]*' |
+	while read file; do
+	    ldd $file 2>/dev/null
+	done |
+	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
+
     else
 	find usr/lib/dyld  \
 	     usr/lib/*.dylib \
@@ -92,6 +104,67 @@ cd / || exit 1
 cpio -p -d -L $CHROOT
 
 mkdir -p $CHROOT/tmp
+mkdir -p $CHROOT/usr/bin/
+dummy=$CHROOT/usr/bin/dummy
+
+# checking for library containing Poco::Application
+cat <<_ACEOF >$dummy.cpp
+#include <iostream>
+#include <Poco/Util/Application.h>
+
+using Poco::Util::Application;
+
+int main ()
+{
+  std::cout << "Poco functionality OK!" << std::endl;
+  return Application::EXIT_OK;
+}
+_ACEOF
+
+gcc_compile='g++ -o $dummy.o -c $dummy.cpp'
+(eval "$gcc_compile") 2>$dummy.err
+
+if ! test $? = 0; then
+  cat $dummy.err;
+  exit 1;
+fi
+
+gcc_link='g++ -o $dummy -lcap -lpng -ldl  -lPocoNet -lPocoUtil -lPocoXML -lPocoJSON -lPocoFoundation $dummy.o'
+(eval "$gcc_link") 2>$dummy.err
+
+if ! test $? = 0; then
+  cat $dummy.err;
+  exit 1;
+fi
+
+lib_poco=$( echo "$dummy" |
+  while read file; do
+    ldd $file 2>/dev/null
+  done |
+  grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)')
+
+for lib in $lib_poco
+do
+  cp --parent -n $lib $CHROOT
+
+  libs=$( echo $lib |
+  while read file; do
+    ldd $file 2>/dev/null
+  done |
+  grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)')
+
+  for sofile in $libs
+  do
+    cp --parent -n $sofile $CHROOT
+  done
+done
+
+loaders="$(find /lib/ld-* -type l) $(find /lib32/ld-* -type l) $(find /lib64/ld-* -type l)"
+
+for loader in $loaders
+do
+  cp --parent -n $loader $CHROOT
+done
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved are for fontconfig to trust
@@ -108,3 +181,6 @@ if [ `uname -s` = Linux ]; then
 	cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
     fi
 fi
+
+echo "testing if Poco libraries were installed properly"
+sudo chroot $CHROOT /usr/bin/dummy
