@@ -139,10 +139,16 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
                tokens[0] == "resetselection" ||
                tokens[0] == "saveas");
 
-        if (_docType != "text" && _loKitDocument->pClass->getPart(_loKitDocument) != _clientPart)
         {
-            _loKitDocument->pClass->setPart(_loKitDocument, _clientPart);
+            Poco::Mutex::ScopedLock lock(_mutex);
+
+            _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+            if (_docType != "text" && _loKitDocument->pClass->getPart(_loKitDocument) != _clientPart)
+            {
+                _loKitDocument->pClass->setPart(_loKitDocument, _clientPart);
+            }
         }
+
         if (tokens[0] == "clientzoom")
         {
             return clientZoom(buffer, length, tokens);

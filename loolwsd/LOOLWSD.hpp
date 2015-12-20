@@ -75,6 +75,9 @@ private:
     int  createComponent();
     int  createDesktop();
 
+    void startupBroker(int nBroker);
+    int  createBroker();
+
 
 #if ENABLE_DEBUG
 public:

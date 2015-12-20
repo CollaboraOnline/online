@@ -701,16 +701,16 @@ int main(int argc, char** argv)
 
     const Poco::UInt64 _childId = Util::rng::getNext();
 
-    Path jail = Path::forDirectory(childRoot + Path::separator() + std::to_string(_childId));
-    File(jail).createDirectories();
+    Path jailPath = Path::forDirectory(childRoot + Path::separator() + std::to_string(_childId));
+    File(jailPath).createDirectories();
 
-    Path jailLOInstallation(jail, loSubPath);
+    Path jailLOInstallation(jailPath, loSubPath);
     jailLOInstallation.makeDirectory();
     File(jailLOInstallation).createDirectory();
 
     // Copy (link) LO installation and other necessary files into it from the template
 
-    linkOrCopy(sysTemplate, jail);
+    linkOrCopy(sysTemplate, jailPath);
     linkOrCopy(loTemplate, jailLOInstallation);
 
     // It is necessary to deploy loolkit process to chroot jail.
@@ -719,34 +719,45 @@ int main(int argc, char** argv)
         std::cout << Util::logPrefix() << "loolkit does not exists" << std::endl;
         exit(-1);
     }
-    File("loolkit").copyTo(Path(jail, "/usr/bin").toString());
+    File("loolkit").copyTo(Path(jailPath, "/usr/bin").toString());
+
+    // We need this because sometimes the hostname is not resolved
+    std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+    for (std::vector<std::string>::iterator it = networkFiles.begin(); it != networkFiles.end(); ++it)
+    {
+       File networkFile(*it);
+       if (networkFile.exists())
+       {
+           networkFile.copyTo(Path(jailPath, "/etc").toString());
+       }
+    }
 
 #ifdef __linux
     // Create the urandom and random devices
-    File(Path(jail, "/dev")).createDirectory();
-    if (mknod((jail.toString() + "/dev/random").c_str(),
+    File(Path(jailPath, "/dev")).createDirectory();
+    if (mknod((jailPath.toString() + "/dev/random").c_str(),
               S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
               makedev(1, 8)) != 0)
     {
         std::cout << Util::logPrefix() +
-            "mknod(" + jail.toString() + "/dev/random) failed: " +
+            "mknod(" + jailPath.toString() + "/dev/random) failed: " +
             strerror(errno) << std::endl;
 
     }
-    if (mknod((jail.toString() + "/dev/urandom").c_str(),
+    if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
               S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
               makedev(1, 9)) != 0)
     {
         std::cout << Util::logPrefix() +
-            "mknod(" + jail.toString() + "/dev/urandom) failed: " +
+            "mknod(" + jailPath.toString() + "/dev/urandom) failed: " +
             strerror(errno) << std::endl;
     }
 #endif
 
-    std::cout << Util::logPrefix() << "loolbroker -> chroot(\"" + jail.toString() + "\")" << std::endl;
-    if (chroot(jail.toString().c_str()) == -1)
+    std::cout << Util::logPrefix() << "loolbroker -> chroot(\"" + jailPath.toString() + "\")" << std::endl;
+    if (chroot(jailPath.toString().c_str()) == -1)
     {
-        std::cout << Util::logPrefix() << "chroot(\"" + jail.toString() + "\") failed: " + strerror(errno) << std::endl;
+        std::cout << Util::logPrefix() << "chroot(\"" + jailPath.toString() + "\") failed: " + strerror(errno) << std::endl;
         exit(-1);
     }
 
@@ -758,6 +769,8 @@ int main(int argc, char** argv)
 
 #ifdef __linux
     dropCapability(CAP_SYS_CHROOT);
+    dropCapability(CAP_MKNOD);
+    dropCapability(CAP_FOWNER);
 #else
     dropCapability();
 #endif

@@ -42,10 +42,6 @@ public:
      */
     std::string getSaveAs();
 
-    // Sessions to pre-spawned child processes that have connected but are not yet assigned a
-    // document to work on.
-    static std::set<std::shared_ptr<MasterProcessSession>> _availableChildSessions;
-
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
@@ -67,6 +63,9 @@ public:
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
 
+    // Sessions to pre-spawned child processes that have connected but are not yet assigned a
+    // document to work on.
+    static std::map<Poco::Thread::TID, std::shared_ptr<MasterProcessSession>> _availableChildSessions;
     static std::mutex _availableChildSessionMutex;
     static std::condition_variable _availableChildSessionCV;
 
