@@ -251,25 +251,25 @@ namespace
         caps = cap_get_proc();
         if (caps == NULL)
         {
-            Application::instance().logger().error(Util::logPrefix() + "cap_get_proc() failed: " + strerror(errno));
+            Log::error(std::string("cap_get_proc() failed: ") + strerror(errno));
             exit(1);
         }
 
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
-            Application::instance().logger().error(Util::logPrefix() +  "cap_set_flag() failed: " + strerror(errno));
+            Log::error(std::string("cap_set_flag() failed: ") + strerror(errno));
             exit(1);
         }
 
         if (cap_set_proc(caps) == -1)
         {
-            Application::instance().logger().error(std::string("cap_set_proc() failed: ") + strerror(errno));
+            Log::error(std::string("cap_set_proc() failed: ") + strerror(errno));
             exit(1);
         }
 
         char *capText = cap_to_text(caps, NULL);
-        Application::instance().logger().information(Util::logPrefix() + "Capabilities now: " + capText);
+        Log::info(std::string("Capabilities now: ") + capText);
         cap_free(capText);
 
         cap_free(caps);
@@ -283,7 +283,7 @@ namespace
             // to do chroot().
             if (setuid(getuid()) != 0)
             {
-                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+                Log::error(std::string("setuid() failed: ") + strerror(errno));
             }
         }
 #if ENABLE_DEBUG
@@ -307,7 +307,7 @@ namespace
             }
             if (setuid(LOOLWSD::uid) != 0)
             {
-                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+                Log::error(std::string("setuid() failed: ") + strerror(errno));
             }
         }
 #endif
@@ -608,7 +608,7 @@ public:
             }
             catch (WebSocketException& exc)
             {
-                Application::instance().logger().error(Util::logPrefix() + "RequestHandler::handleRequest(), WebSocketException: " + exc.message());
+                Log::error("RequestHandler::handleRequest(), WebSocketException: " + exc.message());
                 switch (exc.code())
                 {
                 case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
@@ -626,7 +626,7 @@ public:
         }
         catch (IOException& exc)
         {
-            Application::instance().logger().error(Util::logPrefix() + "IOException: " + exc.message());
+            Log::error("IOException: " + exc.message());
         }
     }
 };
@@ -651,7 +651,7 @@ public:
             line += " / " + it->first + ": " + it->second;
         }
 
-        Application::instance().logger().information(line);
+        Log::info(line);
         return new RequestHandler();
     }
 };
@@ -688,7 +688,7 @@ public:
         }
         catch (WebSocketException& exc)
         {
-            Application::instance().logger().error(Util::logPrefix() + "TestOutput::run(), WebSocketException: " + exc.message());
+            Log::error("TestOutput::run(), WebSocketException: " + exc.message());
             _ws.close();
         }
     }
@@ -1223,7 +1223,7 @@ int LOOLWSD::createBroker()
 
     const auto msg = Util::logPrefix() + "Launching broker: " + executable + " "
                    + Poco::cat(std::string(" "), args.begin(), args.end());
-    Application::instance().logger().information(msg);
+    Log::info(msg);
 
     ProcessHandle child = Process::launch(executable, args);
 
@@ -1254,6 +1254,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     setSignals(false);
 #endif
+
+    Log::initialize("brk");
 
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
@@ -1394,14 +1396,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Terminate child processes
     for (auto i : MasterProcessSession::_childProcesses)
     {
-        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
+        Log::info("Requesting child process " + std::to_string(i.first) + " to terminate");
         Process::requestTermination(i.first);
     }
 
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
 
-    std::cout << Util::logPrefix() << "loolwsd finished OK!" << std::endl;
+    Log::info("loolwsd finished OK!");
     return Application::EXIT_OK;
 }
 

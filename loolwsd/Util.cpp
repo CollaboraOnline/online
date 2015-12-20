@@ -69,6 +69,38 @@ namespace rng
 }
 }
 
+namespace Log
+{
+    static std::string binname;
+
+    void initialize(const std::string& name)
+    {
+        binname = name;
+        auto& logger = Poco::Logger::get(name);
+        logger.information("Initializing " + name);
+    }
+
+    Poco::Logger& logger()
+    {
+        return Poco::Logger::get(binname);
+    }
+
+    void debug(const std::string& msg)
+    {
+        return logger().debug(Util::logPrefix() + msg);
+    }
+
+    void info(const std::string& msg)
+    {
+        logger().information(Util::logPrefix() + msg);
+    }
+
+    void error(const std::string& msg)
+    {
+        return logger().error(Util::logPrefix() + msg);
+    }
+}
+
 namespace Util
 {
     static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
@@ -86,8 +118,10 @@ namespace Util
         usec %= (one_s);
 
         std::ostringstream stream;
-        stream << Poco::Process::id() << "," << std::setw(2) << std::setfill('0') << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << "," <<
-            std::setw(2) << hours << ":" << std::setw(2) << minutes << ":" << std::setw(2) << seconds << "." << std::setw(6) << usec << ",";
+        stream << Log::binname << ',' << Poco::Process::id() << ',' << std::setw(2) << std::setfill('0')
+               << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ',' << std::setw(2) << ','
+               << hours << ':' << std::setw(2) << minutes << ':' << std::setw(2) << seconds << "." << std::setw(6) << usec
+               << ',';
 
         return stream.str();
     }

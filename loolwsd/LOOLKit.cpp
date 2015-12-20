@@ -14,11 +14,11 @@
 #include <sys/prctl.h>
 #include <sys/poll.h>
 #include <sys/syscall.h>
+#include <signal.h>
 
 #include <memory>
 #include <iostream>
 
-#include <Poco/Util/Application.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -232,15 +232,28 @@ public:
     {
 #ifdef __linux
       if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0)
-        std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+        Log::error(std::string("Cannot set thread name :") + strerror(errno));
 #endif
-        while (true)
+        try
         {
-            std::string input = _queue.get();
-            if (input == "eof")
-                break;
-            if (!_session->handleInput(input.c_str(), input.size()))
-                break;
+            while (true)
+            {
+                std::string input = _queue.get();
+                if (input == "eof")
+                    break;
+                if (!_session->handleInput(input.c_str(), input.size()))
+                    break;
+            }
+        }
+        catch(std::exception& ex)
+        {
+            Log::error(std::string("Exception: ") + ex.what());
+            raise(SIGABRT);
+        }
+        catch(...)
+        {
+            Log::error("Unknown Exception.");
+            raise(SIGABRT);
         }
     }
 
@@ -258,6 +271,7 @@ public:
         _childId(childId),
         _threadId(threadId)
     {
+        std::cout << Util::logPrefix() << "New connection in child: " << _childId << ", thread: " << _threadId << std::endl;
     }
 
     void start()
@@ -332,7 +346,6 @@ public:
             queue.put("eof");
             queueHandlerThread.join();
         }
-
         catch (Exception& exc)
         {
             std::cout << Util::logPrefix() + "Exception: " + exc.what() << std::endl;
@@ -345,6 +358,7 @@ public:
 
     ~Connection()
     {
+        std::cout << Util::logPrefix() << "Closing connection in child: " << _childId << ", thread: " << _threadId << std::endl;
         //_thread.stop();
     }
 
@@ -449,7 +463,6 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                 if ( aChar == '\r' && *pStart == '\n')
                 {
                     pStart++;
-                    //std::cout << Util::logPrefix() << "child receive: " << aMessage << std::endl;
                     StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
                     if (tokens[0] == "search")
@@ -520,9 +533,10 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
             }
         }
 
-
         // Destroy LibreOfficeKit
         loKit->pClass->destroy(loKit);
+
+        std::cout << Util::logPrefix() << "loolkit finished OK!" << std::endl;
 
         pthread_exit(0);
     }
@@ -534,8 +548,6 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
     {
         std::cout << Util::logPrefix() + "Exception: " + exc.what() << std::endl;
     }
-
-    std::cout << Util::logPrefix() << "loolkit finished OK!" << std::endl;
 }
 
 #ifndef LOOLKIT_NO_MAIN
@@ -546,6 +558,8 @@ int main(int argc, char** argv)
     std::string loSubPath;
     Poco::UInt64 _childId = 0;
     std::string _pipe;
+
+    Log::initialize("kit");
 
     for (int i = 1; i < argc; ++i)
     {

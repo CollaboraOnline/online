@@ -18,7 +18,6 @@
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
-#include <Poco/Util/Application.h>
 
 #include "ChildProcessSession.hpp"
 #include "LOKitHelper.hpp"
@@ -38,7 +37,6 @@ using Poco::Process;
 using Poco::ProcessHandle;
 using Poco::StringTokenizer;
 using Poco::URI;
-using Poco::Util::Application;
 
 Poco::NotificationQueue ChildProcessSession::_callbackQueue;
 Poco::Mutex ChildProcessSession::_mutex;
@@ -67,10 +65,10 @@ ChildProcessSession::~ChildProcessSession()
 
 bool ChildProcessSession::handleInput(const char *buffer, int length)
 {
+    Log::info(_kindString + ",Input," + getAbbreviatedMessage(buffer, length));
+
     std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-    Application::instance().logger().information(Util::logPrefix() + _kindString + ",Input," + getAbbreviatedMessage(buffer, length));
 
     if (tokens[0] == "canceltiles")
     {
@@ -363,7 +361,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, aUri.toString().c_str())) == NULL)
     {
         sendTextFrame("error: cmd=load kind=failed");
-        Application::instance().logger().information(Util::logPrefix() + "Failed to load: " + aUri.toString() + ", error is: " + _loKit->pClass->getError(_loKit));
+        Log::error("Failed to load: " + aUri.toString() + ", error is: " + _loKit->pClass->getError(_loKit));
         return false;
     }
 
@@ -435,7 +433,7 @@ bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
     StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     if (!getTokenString(tokens[1], "type", _docType))
     {
-        Application::instance().logger().information(Util::logPrefix() + "failed to get document type from" + status);
+        Log::error("failed to get document type from" + status);
     }
     sendTextFrame(status);
 

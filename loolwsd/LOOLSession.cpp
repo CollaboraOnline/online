@@ -44,7 +44,6 @@
 #include <Poco/ThreadLocal.h>
 #include <Poco/URI.h>
 #include <Poco/URIStreamOpener.h>
-#include <Poco/Util/Application.h>
 #include <Poco/Exception.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/DialogSocket.h>
@@ -77,7 +76,6 @@ using Poco::ThreadLocal;
 using Poco::UInt64;
 using Poco::URI;
 using Poco::URIStreamOpener;
-using Poco::Util::Application;
 using Poco::Exception;
 using Poco::Net::DialogSocket;
 using Poco::Net::SocketAddress;
@@ -107,13 +105,18 @@ LOOLSession::LOOLSession(std::shared_ptr<WebSocket> ws, Kind kind) :
 
 LOOLSession::~LOOLSession()
 {
-    std::cout << Util::logPrefix() << "LOOLSession dtor this=" << this << " " << _kind << std::endl;
+    std::cout << Util::logPrefix() << "loolsession dtor this=" << this << " " << _kind << std::endl;
     if (_ws)
         Util::shutdownWebSocket(*_ws);
 }
 
 void LOOLSession::sendTextFrame(const std::string& text)
 {
+    if (!_ws)
+        Log::error("No socket to send to.");
+    else
+        Log::debug(_kindString + ",Send," + getAbbreviatedMessage(text.c_str(), text.size()));
+
     std::unique_lock<std::mutex> lock(_mutex);
 
     _ws->sendFrame(text.data(), text.size());
@@ -121,6 +124,11 @@ void LOOLSession::sendTextFrame(const std::string& text)
 
 void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
+    if (!_ws)
+        Log::error("No socket to send to.");
+    else
+        Log::debug(_kindString + ",Send," + std::to_string(length) + " bytes");
+
     std::unique_lock<std::mutex> lock(_mutex);
 
     if (length > 1000)
