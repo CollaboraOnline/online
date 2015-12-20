@@ -148,7 +148,171 @@ using Poco::Net::Socket;
 using Poco::ThreadLocal;
 using Poco::Random;
 using Poco::NamedMutex;
+using Poco::ProcessHandle;
 using Poco::URI;
+
+namespace
+{
+    ThreadLocal<std::string> sourceForLinkOrCopy;
+    ThreadLocal<Path> destinationForLinkOrCopy;
+
+    int linkOrCopyFunction(const char *fpath,
+                           const struct stat* /*sb*/,
+                           int typeflag,
+                           struct FTW* /*ftwbuf*/)
+    {
+        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
+            return 0;
+
+        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
+        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
+
+#ifdef __APPLE__
+        if (strcmp(relativeOldPath, "PkgInfo") == 0)
+            return 0;
+#endif
+
+        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
+
+        switch (typeflag)
+        {
+        case FTW_F:
+            File(newPath.parent()).createDirectories();
+            if (link(fpath, newPath.toString().c_str()) == -1)
+            {
+                Application::instance().logger().error(Util::logPrefix() +
+                                                       "link(\"" + fpath + "\",\"" + newPath.toString() + "\") failed: " +
+                                                       strerror(errno));
+                exit(1);
+            }
+            break;
+        case FTW_DP:
+            {
+                struct stat st;
+                if (stat(fpath, &st) == -1)
+                {
+                    Application::instance().logger().error(Util::logPrefix() +
+                                                           "stat(\"" + fpath + "\") failed: " +
+                                                           strerror(errno));
+                    return 1;
+                }
+                File(newPath).createDirectories();
+                struct utimbuf ut;
+                ut.actime = st.st_atime;
+                ut.modtime = st.st_mtime;
+                if (utime(newPath.toString().c_str(), &ut) == -1)
+                {
+                    Application::instance().logger().error(Util::logPrefix() +
+                                                           "utime(\"" + newPath.toString() + "\", &ut) failed: " +
+                                                           strerror(errno));
+                    return 1;
+                }
+            }
+            break;
+        case FTW_DNR:
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "Cannot read directory '" + fpath + "'");
+            return 1;
+        case FTW_NS:
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "nftw: stat failed for '" + fpath + "'");
+            return 1;
+        case FTW_SLN:
+            Application::instance().logger().information(Util::logPrefix() +
+                                                         "nftw: symlink to nonexistent file: '" + fpath + "', ignored");
+            break;
+        default:
+            assert(false);
+        }
+        return 0;
+    }
+
+    void linkOrCopy(const std::string& source, const Path& destination)
+    {
+        *sourceForLinkOrCopy = source;
+        if (sourceForLinkOrCopy->back() == '/')
+            sourceForLinkOrCopy->pop_back();
+        *destinationForLinkOrCopy = destination;
+        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
+            Application::instance().logger().error(Util::logPrefix() +
+                                                   "linkOrCopy: nftw() failed for '" + source + "'");
+    }
+
+    void dropCapability(
+#ifdef __linux
+                        cap_value_t capability
+#endif
+                        )
+    {
+#ifdef __linux
+        cap_t caps;
+        cap_value_t cap_list[] = { capability };
+
+        caps = cap_get_proc();
+        if (caps == NULL)
+        {
+            Application::instance().logger().error(Util::logPrefix() + "cap_get_proc() failed: " + strerror(errno));
+            exit(1);
+        }
+
+        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
+            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
+        {
+            Application::instance().logger().error(Util::logPrefix() +  "cap_set_flag() failed: " + strerror(errno));
+            exit(1);
+        }
+
+        if (cap_set_proc(caps) == -1)
+        {
+            Application::instance().logger().error(std::string("cap_set_proc() failed: ") + strerror(errno));
+            exit(1);
+        }
+
+        char *capText = cap_to_text(caps, NULL);
+        Application::instance().logger().information(Util::logPrefix() + "Capabilities now: " + capText);
+        cap_free(capText);
+
+        cap_free(caps);
+#endif
+        // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
+        // don't own, so drop root.
+        if (geteuid() == 0 && getuid() != 0)
+        {
+            // The program is setuid root. Not normal on Linux where we use setcap, but if this
+            // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
+            // to do chroot().
+            if (setuid(getuid()) != 0)
+            {
+                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+            }
+        }
+#if ENABLE_DEBUG
+        if (geteuid() == 0 && getuid() == 0)
+        {
+#ifdef __linux
+            // Argh, awful hack
+            if (capability == CAP_FOWNER)
+                return;
+#endif
+
+            // Running under sudo, probably because being debugged? Let's drop super-user rights.
+            LOOLWSD::runningAsRoot = true;
+            if (LOOLWSD::uid == 0)
+            {
+                struct passwd *nobody = getpwnam("nobody");
+                if (nobody)
+                    LOOLWSD::uid = nobody->pw_uid;
+                else
+                    LOOLWSD::uid = 65534;
+            }
+            if (setuid(LOOLWSD::uid) != 0)
+            {
+                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+            }
+        }
+#endif
+    }
+}
 
 class QueueHandler: public Runnable
 {
@@ -391,7 +555,7 @@ public:
 
                 do
                 {
-                    char buffer[200000];
+                    char buffer[200000]; //FIXME: Dynamic?
 
                     if ((pollTimeout = ws->poll(waitTime, Socket::SELECT_READ)))
                     {
@@ -752,169 +916,6 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-namespace
-{
-    ThreadLocal<std::string> sourceForLinkOrCopy;
-    ThreadLocal<Path> destinationForLinkOrCopy;
-
-    int linkOrCopyFunction(const char *fpath,
-                           const struct stat* /*sb*/,
-                           int typeflag,
-                           struct FTW* /*ftwbuf*/)
-    {
-        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
-            return 0;
-
-        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
-        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
-
-#ifdef __APPLE__
-        if (strcmp(relativeOldPath, "PkgInfo") == 0)
-            return 0;
-#endif
-
-        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
-
-        switch (typeflag)
-        {
-        case FTW_F:
-            File(newPath.parent()).createDirectories();
-            if (link(fpath, newPath.toString().c_str()) == -1)
-            {
-                Application::instance().logger().error(Util::logPrefix() +
-                                                       "link(\"" + fpath + "\",\"" + newPath.toString() + "\") failed: " +
-                                                       strerror(errno));
-                exit(1);
-            }
-            break;
-        case FTW_DP:
-            {
-                struct stat st;
-                if (stat(fpath, &st) == -1)
-                {
-                    Application::instance().logger().error(Util::logPrefix() +
-                                                           "stat(\"" + fpath + "\") failed: " +
-                                                           strerror(errno));
-                    return 1;
-                }
-                File(newPath).createDirectories();
-                struct utimbuf ut;
-                ut.actime = st.st_atime;
-                ut.modtime = st.st_mtime;
-                if (utime(newPath.toString().c_str(), &ut) == -1)
-                {
-                    Application::instance().logger().error(Util::logPrefix() +
-                                                           "utime(\"" + newPath.toString() + "\", &ut) failed: " +
-                                                           strerror(errno));
-                    return 1;
-                }
-            }
-            break;
-        case FTW_DNR:
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "Cannot read directory '" + fpath + "'");
-            return 1;
-        case FTW_NS:
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "nftw: stat failed for '" + fpath + "'");
-            return 1;
-        case FTW_SLN:
-            Application::instance().logger().information(Util::logPrefix() +
-                                                         "nftw: symlink to nonexistent file: '" + fpath + "', ignored");
-            break;
-        default:
-            assert(false);
-        }
-        return 0;
-    }
-
-    void linkOrCopy(const std::string& source, const Path& destination)
-    {
-        *sourceForLinkOrCopy = source;
-        if (sourceForLinkOrCopy->back() == '/')
-            sourceForLinkOrCopy->pop_back();
-        *destinationForLinkOrCopy = destination;
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
-            Application::instance().logger().error(Util::logPrefix() +
-                                                   "linkOrCopy: nftw() failed for '" + source + "'");
-    }
-
-    void dropCapability(
-#ifdef __linux
-                        cap_value_t capability
-#endif
-                        )
-    {
-#ifdef __linux
-        cap_t caps;
-        cap_value_t cap_list[] = { capability };
-
-        caps = cap_get_proc();
-        if (caps == NULL)
-        {
-            Application::instance().logger().error(Util::logPrefix() + "cap_get_proc() failed: " + strerror(errno));
-            exit(1);
-        }
-
-        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
-            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
-        {
-            Application::instance().logger().error(Util::logPrefix() +  "cap_set_flag() failed: " + strerror(errno));
-            exit(1);
-        }
-
-        if (cap_set_proc(caps) == -1)
-        {
-            Application::instance().logger().error(std::string("cap_set_proc() failed: ") + strerror(errno));
-            exit(1);
-        }
-
-        char *capText = cap_to_text(caps, NULL);
-        Application::instance().logger().information(Util::logPrefix() + "Capabilities now: " + capText);
-        cap_free(capText);
-
-        cap_free(caps);
-#endif
-        // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
-        // don't own, so drop root.
-        if (geteuid() == 0 && getuid() != 0)
-        {
-            // The program is setuid root. Not normal on Linux where we use setcap, but if this
-            // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
-            // to do chroot().
-            if (setuid(getuid()) != 0)
-            {
-                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
-            }
-        }
-#if ENABLE_DEBUG
-        if (geteuid() == 0 && getuid() == 0)
-        {
-#ifdef __linux
-            // Argh, awful hack
-            if (capability == CAP_FOWNER)
-                return;
-#endif
-
-            // Running under sudo, probably because being debugged? Let's drop super-user rights.
-            LOOLWSD::runningAsRoot = true;
-            if (LOOLWSD::uid == 0)
-            {
-                struct passwd *nobody = getpwnam("nobody");
-                if (nobody)
-                    LOOLWSD::uid = nobody->pw_uid;
-                else
-                    LOOLWSD::uid = 65534;
-            }
-            if (setuid(LOOLWSD::uid) != 0)
-            {
-                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
-            }
-        }
-#endif
-    }
-}
-
 // Writer, Impress or Calc
 void LOOLWSD::componentMain()
 {
@@ -1208,11 +1209,34 @@ int LOOLWSD::createDesktop()
     return Application::EXIT_OK;
 }
 
-void LOOLWSD::startupDesktop(int nDesktops)
+int LOOLWSD::createBroker()
 {
-    for (int nCntr = nDesktops; nCntr; nCntr--)
+    Process::Args args;
+
+    args.push_back("--losubpath=" + LOOLWSD::loSubPath);
+    args.push_back("--systemplate=" + sysTemplate);
+    args.push_back("--lotemplate=" + loTemplate);
+    args.push_back("--childroot=" + childRoot);
+    args.push_back("--numprespawns=" + std::to_string(_numPreSpawnedChildren));
+
+    std::string executable = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
+
+    const auto msg = Util::logPrefix() + "Launching broker: " + executable + " "
+                   + Poco::cat(std::string(" "), args.begin(), args.end());
+    Application::instance().logger().information(msg);
+
+    ProcessHandle child = Process::launch(executable, args);
+
+    MasterProcessSession::_childProcesses[child.id()] = child.id();
+
+    return Application::EXIT_OK;
+}
+
+void LOOLWSD::startupBroker(const signed nBrokers)
+{
+    for (signed nCntr = nBrokers; nCntr > 0; --nCntr)
     {
-        if (createDesktop() < 0)
+        if (createBroker() < 0)
             break;
     }
 }
@@ -1274,7 +1298,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     _namedMutexLOOL.lock();
 
-    startupDesktop(1);
+    startupBroker(1);
 
 #ifdef __linux
     dropCapability(CAP_SYS_CHROOT);
@@ -1298,6 +1322,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
 
     srv2.start();
+
+    if ( (writerBroker = open(FIFO_FILE.c_str(), O_WRONLY) ) < 0 )
+    {
+        std::cout << Util::logPrefix() << "Pipe opened for writing" << strerror(errno) << std::endl;
+        return Application::EXIT_UNAVAILABLE;
+    }
 
     _namedMutexLOOL.unlock();
 
@@ -1361,9 +1391,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
     threadPool2.joinAll();
 
-    // Clear sessions to pre-spawned child processes that have connected
-    // but are not yet assigned a document to work on.
-    MasterProcessSession::_availableChildSessions.clear();
+    // Terminate child processes
+    for (auto i : MasterProcessSession::_childProcesses)
+    {
+        logger().information(Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate");
+        Process::requestTermination(i.first);
+    }
 
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);

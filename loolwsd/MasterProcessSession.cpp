@@ -46,7 +46,7 @@ using Poco::Util::Application;
 
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
-std::set<std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
+std::map<Thread::TID, std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::mutex MasterProcessSession::_availableChildSessionMutex;
 std::condition_variable MasterProcessSession::_availableChildSessionCV;
 
@@ -202,17 +202,19 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=child kind=invalid");
             return false;
         }
-        if (tokens.count() != 3)
+        if (tokens.count() != 4)
         {
             sendTextFrame("error: cmd=child kind=syntax");
             return false;
         }
 
         UInt64 childId = std::stoull(tokens[1]);
-        Process::PID pidChild = std::stoull(tokens[2]);
+        Thread::TID tId = std::stoull(tokens[2]);
+        Process::PID pidChild = std::stoull(tokens[3]);
 
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
-        _availableChildSessions.insert(shared_from_this());
+        _availableChildSessions.insert(std::pair<Thread::TID, std::shared_ptr<MasterProcessSession>> (tId, shared_from_this()));
+        std::cout << Util::logPrefix() << _kindString << ",Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
         std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
         _childId = childId;
         _pidChild = pidChild;
@@ -543,30 +545,48 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
 
 void MasterProcessSession::dispatchChild()
 {
+    short nRequest = 3;
+    bool  bFound = false;
+
     // Copy document into jail using the fixed name
 
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
 
-    std::cout << Util::logPrefix() << "_availableChildSessions size=" << _availableChildSessions.size() << std::endl;
-
-    if (_availableChildSessions.size() == 0)
+    std::cout << Util::logPrefix() << "waiting for a child session permission for " << Thread::currentTid() << std::endl;
+    while (nRequest-- && !bFound)
     {
-        std::cout << Util::logPrefix() << "waiting for a child session to become available" << std::endl;
-        _availableChildSessionCV.wait(lock, [] { return _availableChildSessions.size() > 0; });
-        std::cout << Util::logPrefix() << "waiting done" << std::endl;
+        _availableChildSessionCV.wait_for(
+            lock,
+            std::chrono::milliseconds(2000),
+            [&bFound]
+            {
+                return (bFound = _availableChildSessions.find(Thread::currentTid()) != _availableChildSessions.end());
+            });
+
+        if (!bFound)
+        {
+            std::cout << Util::logPrefix() << "trying ..." << nRequest << std::endl;
+            // request again new URL session
+            std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
+            Util::writeFIFO(LOOLWSD::writerBroker, aMessage.c_str(), aMessage.length());
+        }
     }
 
-    childSession = *(_availableChildSessions.begin());
-    _availableChildSessions.erase(childSession);
+    if ( bFound )
+    {
+        std::cout << Util::logPrefix() << "waiting child session permission, done!" << std::endl;
+        childSession = _availableChildSessions[Thread::currentTid()];
+        _availableChildSessions.erase(Thread::currentTid());
+    }
+
     lock.unlock();
 
-    if (_availableChildSessions.size() == 0 && !LOOLWSD::doTest)
+    if ( !nRequest && !bFound )
     {
-        LOOLWSD::_namedMutexLOOL.lock();
-        std::cout << Util::logPrefix() << "No available child sessions, queue new child session" << std::endl;
-        LOOLWSD::_sharedForkChild.begin()[0] = LOOLWSD::_numPreSpawnedChildren;
-        LOOLWSD::_namedMutexLOOL.unlock();
+        // it cannot get connected.  shutdown.
+        Util::shutdownWebSocket(*_ws);
+        return;
     }
 
     // Assume a valid URI
