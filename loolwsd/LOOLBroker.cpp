@@ -233,7 +233,7 @@ namespace
             }
             if (setuid(LOOLWSD::uid) != 0)
             {
-                Application::instance().logger().error(std::string("setuid() failed: ") + strerror(errno));
+                Log::error(std::string("setuid() failed: ") + strerror(errno));
             }
         }
 #endif
@@ -368,7 +368,6 @@ public:
     {
         Process::PID nPID;
 
-        //std::cout << Util::logPrefix() << "Broker,Input," <<  aMessage << std::endl;
         StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         if (tokens[0] == "request" && tokens.count() == 3)
         {
@@ -469,6 +468,7 @@ public:
                     }
                     pStart = aBuffer;
                     pEnd   = aBuffer + nBytes;
+                    std::cout << Util::logPrefix() << "Broker readFIFO [" << std::string(pStart, nBytes) << "]" << std::endl;
                 }
             }
 
@@ -565,6 +565,7 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
 
         ProcessHandle procChild = Process::launch(executable, args);
         child = procChild.id();
+        std::cout << Util::logPrefix() << "Launched kit process: " << child << std::endl;
 
         if ( ( nFIFOWriter = open(pipe.c_str(), O_WRONLY) ) < 0 )
         {
@@ -582,7 +583,9 @@ static int startupLibreOfficeKit(bool sharePages, int nLOKits,
 {
     Process::PID pId = -1;
 
-    std::cout << Util::logPrefix() << "starting " << nLOKits << " LoKit instaces." << std::endl;
+    std::cout << Util::logPrefix() << "starting " << nLOKits << " LoKit instaces."
+              << " Shared: " << sharePages << ", loSubPath: " << loSubPath
+              << ", child: " << child << std::endl;
     for (int nCntr = nLOKits; nCntr; nCntr--)
     {
         if ( (pId = createLibreOfficeKit(sharePages, loSubPath, child)) < 0)
@@ -592,7 +595,7 @@ static int startupLibreOfficeKit(bool sharePages, int nLOKits,
         }
     }
 
-   return pId;
+    return pId;
 }
 
 // Broker process
@@ -604,6 +607,8 @@ int main(int argc, char** argv)
     std::string sysTemplate;
     std::string loTemplate;
     int _numPreSpawnedChildren = 0;
+
+    Log::initialize("brk");
 
     for (int i = 0; i < argc; ++i)
     {
@@ -635,9 +640,7 @@ int main(int argc, char** argv)
         }
         else if (strstr(cmd, "--numprespawns=") == cmd)
         {
-            std::cout << "CMD: " << cmd << std::endl;
             eq = strchrnul(cmd, '=');
-            std::cout << "EQ: " << std::string(eq + 1) << std::endl;
             if (*eq)
                 _numPreSpawnedChildren = std::stoi(std::string(++eq));
         }
@@ -696,8 +699,6 @@ int main(int argc, char** argv)
     {
         std::cout << Util::logPrefix() << aError.what() << std::endl;
     }
-
-    std::cout << "In Broker!" << std::endl;
 
     const Poco::UInt64 _childId = Util::rng::getNext();
 

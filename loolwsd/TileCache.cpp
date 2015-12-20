@@ -27,7 +27,6 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
-#include <Poco/Util/Application.h>
 
 #include "LOOLWSD.hpp"
 #include "LOOLProtocol.hpp"
@@ -42,7 +41,6 @@ using Poco::StringTokenizer;
 using Poco::SyntaxException;
 using Poco::Timestamp;
 using Poco::URI;
-using Poco::Util::Application;
 
 using namespace LOOLProtocol;
 
@@ -384,7 +382,7 @@ void TileCache::setup(const std::string& timestamp)
         Timestamp::TimeVal lastTimeVal;
         std::istringstream(timestamp) >> lastTimeVal;
         lastModified = lastTimeVal;
-        Application::instance().logger().information(Util::logPrefix() + "Timestamp provided externally: " + timestamp);
+        Log::info("Timestamp provided externally: " + timestamp);
 
         cleanEverything = (getLastModified() < Timestamp(lastModified));
     }
@@ -401,7 +399,7 @@ void TileCache::setup(const std::string& timestamp)
         {
             // document changed externally, clean up everything
             cacheDir.remove(true);
-            Application::instance().logger().information(Util::logPrefix() + "Completely cleared cache: " + toplevelCacheDirName());
+            Log::info("Completely cleared cache: " + toplevelCacheDirName());
         }
         else
         {
@@ -410,7 +408,7 @@ void TileCache::setup(const std::string& timestamp)
             if (editingCacheDir.exists())
             {
                 editingCacheDir.remove(true);
-                Application::instance().logger().information(Util::logPrefix() + "Cleared the editing cache: " + cacheDirName(true));
+                Log::info("Cleared the editing cache: " + cacheDirName(true));
             }
         }
     }

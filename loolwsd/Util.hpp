@@ -13,6 +13,7 @@
 #include <string>
 
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Logger.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -43,6 +44,17 @@ namespace Util
 
     ssize_t readMessage(int nPipe, char* pBuffer, ssize_t nSize);
 };
+
+//TODO: Move to own file.
+namespace Log
+{
+    void initialize(const std::string& name);
+    Poco::Logger& logger();
+
+    void debug(const std::string& msg);
+    void info(const std::string& msg);
+    void error(const std::string& msg);
+}
 
 #endif
 

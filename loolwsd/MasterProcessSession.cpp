@@ -16,7 +16,6 @@
 #include <Poco/Random.h>
 #include <Poco/URI.h>
 #include <Poco/URIStreamOpener.h>
-#include <Poco/Util/Application.h>
 
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
@@ -42,7 +41,6 @@ using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::UInt64;
 using Poco::URI;
-using Poco::Util::Application;
 
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
@@ -73,7 +71,7 @@ MasterProcessSession::~MasterProcessSession()
 
 bool MasterProcessSession::handleInput(const char *buffer, int length)
 {
-    Application::instance().logger().information(Util::logPrefix() + _kindString + ",Input," + getAbbreviatedMessage(buffer, length));
+    Log::info(_kindString + ",Recv," + getAbbreviatedMessage(buffer, length));
 
     std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -609,7 +607,7 @@ void MasterProcessSession::dispatchChild()
         }
         catch (Exception& exc)
         {
-            Application::instance().logger().error( Util::logPrefix() +
+            Log::error(
                 "createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
 
         }
@@ -620,11 +618,11 @@ void MasterProcessSession::dispatchChild()
             aToCleanup.remove();
 
 #ifdef __linux
-        Application::instance().logger().information(Util::logPrefix() + "Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
+        Log::info("Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
         if (!File(aDstFile).exists() && link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
         {
             // Failed
-            Application::instance().logger().error( Util::logPrefix() +
+            Log::error(
                 "link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + strerror(errno) );
         }
 #endif
@@ -634,13 +632,13 @@ void MasterProcessSession::dispatchChild()
             //fallback
             if (!File(aDstFile).exists())
             {
-                Application::instance().logger().information(Util::logPrefix() + "Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
+                Log::info(Util::logPrefix() + "Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
                 File(aSrcFile).copyTo(aDstFile.toString());
             }
         }
         catch (Exception& exc)
         {
-            Application::instance().logger().error( Util::logPrefix() +
+            Log::error(
                 "copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
         }
     }
@@ -654,10 +652,13 @@ void MasterProcessSession::dispatchChild()
 
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 {
-    Application::instance().logger().information(Util::logPrefix() + _kindString + ",forwardToPeer," + getAbbreviatedMessage(buffer, length));
+    Log::info(_kindString + ",forwardToPeer," + getAbbreviatedMessage(buffer, length));
     auto peer = _peer.lock();
     if (!peer)
+    {
+        Log::error("no peer to forward to");
         return;
+    }
     peer->sendBinaryFrame(buffer, length);
 }
 
