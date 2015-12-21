@@ -52,6 +52,25 @@ To see an example:
 and you should see the document in the browser.  In case anything goes wrong,
 check the loolwsd console for the debugging output.
 
+Testing
+-------
+    - to run the unit tests
+        + open sepc/loleaflet.html in the browser
+    - to simulate an editing session and to get the tile loading times
+        + open spec/tilebench.html in the browser
+    - to simulate a client opening several documents in the browser
+        + open spec/loadtest.html in the browser
+    - to simulate a client opening several documents in the console
+        + run: mocha headlessLoadTest.js
+    - to simulate multiple clients opening several documents in the console
+        + run: make load-test
+
+The structure of the unit tests:
+Loleaflet unit tets are located under spec/loleaflet. Following Leaflet's testing style, each test's path
+should mirror the source's path, so spec/loleaflet/control/ToolbarSpec.js tests the features from
+src/control/Toolbar.js . Any new test file needs also to be added in spec/leaflet.html
+
+
 API & events
 ------------
 
@@ -246,15 +265,6 @@ Print:
     - events
         map.on('print', function (e) {}) where
             + e.url = file download url
-Testing
--------
-    - to simulate an editing session and to get the tile loading times
-        + open spec/tilebench.html in the browser
-    - to simulate a client opening several documents in the browser
-        + open spec/loadtest.html in the browser
-    - to simulate a client opening several documents in the console
-        + run: mocha headlessLoadTest.js
-
 
 Contributing
 ------------
