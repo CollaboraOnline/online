@@ -211,113 +211,14 @@ extern "C"
 {
     static void myCallback(int nType, const char* pPayload, void* pData)
     {
-        ChildProcessSession *srv = reinterpret_cast<ChildProcessSession *>(pData);
+        /*pid_t tid = syscall(SYS_gettid);
+        std::cout << tid << " callbackWorker : " << priv->m_nViewId << " " << std::string(callbackTypeToString(nType)) << " " << std::string(pPayload ? pPayload : "(nil)") << std::endl;*/
 
-        switch ((LibreOfficeKitCallbackType) nType)
-        {
-        case LOK_CALLBACK_INVALIDATE_TILES:
-            {
-                int curPart = srv->_loKitDocument->pClass->getPart(srv->_loKitDocument);
-                srv->sendTextFrame("curpart: part=" + std::to_string(curPart));
-                if (srv->_docType == "text")
-                {
-                    curPart = 0;
-                }
-                StringTokenizer tokens(std::string(pPayload), " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                if (tokens.count() == 4)
-                {
-                    int x, y, width, height;
-
-                    try {
-                        x = std::stoi(tokens[0]);
-                        y = std::stoi(tokens[1]);
-                        width = std::stoi(tokens[2]);
-                        height = std::stoi(tokens[3]);
-                    }
-                    catch (std::out_of_range&)
-                    {
-                        // something went wrong, invalidate everything
-                        Application::instance().logger().information(Util::logPrefix() + "Ignoring integer values out of range: " + pPayload);
-                        x = 0;
-                        y = 0;
-                        width = INT_MAX;
-                        height = INT_MAX;
-                    }
-
-                    srv->sendTextFrame("invalidatetiles:"
-                                       " part=" + std::to_string(curPart) +
-                                       " x=" + std::to_string(x) +
-                                       " y=" + std::to_string(y) +
-                                       " width=" + std::to_string(width) +
-                                       " height=" + std::to_string(height));
-                }
-                else
-                {
-                    srv->sendTextFrame("invalidatetiles: " + std::string(pPayload));
-                }
-            }
-            break;
-        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
-            srv->sendTextFrame("invalidatecursor: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION:
-            srv->sendTextFrame("textselection: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION_START:
-            srv->sendTextFrame("textselectionstart: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION_END:
-            srv->sendTextFrame("textselectionend: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_CURSOR_VISIBLE:
-            srv->sendTextFrame("cursorvisible: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_GRAPHIC_SELECTION:
-            srv->sendTextFrame("graphicselection: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_CELL_CURSOR:
-            srv->sendTextFrame("cellcursor: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_CELL_FORMULA:
-            srv->sendTextFrame("cellformula: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_MOUSE_POINTER:
-            srv->sendTextFrame("mousepointer: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_HYPERLINK_CLICKED:
-            srv->sendTextFrame("hyperlinkclicked: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_STATE_CHANGED:
-            srv->sendTextFrame("statechanged: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_START:
-            srv->sendTextFrame("statusindicatorstart:");
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-            srv->sendTextFrame("statusindicatorsetvalue: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-            srv->sendTextFrame("statusindicatorfinish:");
-            break;
-        case LOK_CALLBACK_SEARCH_NOT_FOUND:
-            srv->sendTextFrame("searchnotfound: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
-            srv->sendTextFrame("searchresultselection: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-            srv->getStatus("", 0);
-            srv->getPartPageRectangles("", 0);
-            break;
-        case LOK_CALLBACK_SET_PART:
-            srv->sendTextFrame("setpart: " + std::string(pPayload));
-            break;
-        case LOK_CALLBACK_UNO_COMMAND_RESULT:
-            srv->sendTextFrame("unocommandresult: " + std::string(pPayload));
-            break;
-        }
+        ChildProcessSession::_callbackQueue.enqueueNotification(new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData));
+        //std::string aPayLoad(pPayload ? pPayload : "(nil)");
     }
 }
+
 
 bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
 {

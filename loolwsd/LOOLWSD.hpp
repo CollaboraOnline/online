@@ -42,7 +42,6 @@ public:
     static std::string childRoot;
     static std::string loSubPath;
     static std::string jail;
-    static Poco::SharedMemory _sharedForkChild;
     static Poco::NamedMutex _namedMutexLOOL;
     static Poco::UInt64 _childId;
 
