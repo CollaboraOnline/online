@@ -109,25 +109,38 @@ public:
     void callback(int nType, std::string& rPayload, void* pData)
     {
         ChildProcessSession *srv = reinterpret_cast<ChildProcessSession *>(pData);
-        pid_t tid = syscall(SYS_gettid);
 
-        //if ( nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR )
-            std::cout << tid << " callback : " << srv->_viewId << " " << callbackTypeToString(nType) << " " << rPayload << std::endl;
-
-        switch ( nType )
+        switch ((LibreOfficeKitCallbackType) nType)
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
             {
-                //int curPart = srv->_loKitDocument->pClass->getPart(srv->_loKitDocument);
-                int curPart = 0;
+                int curPart = srv->_loKitDocument->pClass->getPart(srv->_loKitDocument);
                 srv->sendTextFrame("curpart: part=" + std::to_string(curPart));
+                if (srv->_docType == "text")
+                {
+                    curPart = 0;
+                }
                 StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (tokens.count() == 4)
                 {
-                    int x(std::stoi(tokens[0]));
-                    int y(std::stoi(tokens[1]));
-                    int width(std::stoi(tokens[2]));
-                    int height(std::stoi(tokens[3]));
+                    int x, y, width, height;
+
+                    try {
+                        x = std::stoi(tokens[0]);
+                        y = std::stoi(tokens[1]);
+                        width = std::stoi(tokens[2]);
+                        height = std::stoi(tokens[3]);
+                    }
+                    catch (std::out_of_range&)
+                    {
+                        // something went wrong, invalidate everything
+                        std::cout << Util::logPrefix() << "Ignoring integer values out of range: " << rPayload << std::endl;
+                        x = 0;
+                        y = 0;
+                        width = INT_MAX;
+                        height = INT_MAX;
+                    }
+
                     srv->sendTextFrame("invalidatetiles:"
                                        " part=" + std::to_string(curPart) +
                                        " x=" + std::to_string(x) +
@@ -135,21 +148,11 @@ public:
                                        " width=" + std::to_string(width) +
                                        " height=" + std::to_string(height));
                 }
-                else {
+                else
+                {
                     srv->sendTextFrame("invalidatetiles: " + rPayload);
                 }
             }
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_START:
-            srv->sendTextFrame("statusindicatorstart:");
-            break;
-
-        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-            srv->sendTextFrame("statusindicatorsetvalue: " + rPayload);
-            break;
-
-        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-            srv->sendTextFrame("statusindicatorfinish:");
             break;
         case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
             srv->sendTextFrame("invalidatecursor: " + rPayload);
@@ -169,24 +172,48 @@ public:
         case LOK_CALLBACK_GRAPHIC_SELECTION:
             srv->sendTextFrame("graphicselection: " + rPayload);
             break;
+        case LOK_CALLBACK_CELL_CURSOR:
+            srv->sendTextFrame("cellcursor: " + rPayload);
+            break;
+        case LOK_CALLBACK_CELL_FORMULA:
+            srv->sendTextFrame("cellformula: " + rPayload);
+            break;
+        case LOK_CALLBACK_MOUSE_POINTER:
+            srv->sendTextFrame("mousepointer: " + rPayload);
+            break;
         case LOK_CALLBACK_HYPERLINK_CLICKED:
             srv->sendTextFrame("hyperlinkclicked: " + rPayload);
             break;
         case LOK_CALLBACK_STATE_CHANGED:
             srv->sendTextFrame("statechanged: " + rPayload);
             break;
+        case LOK_CALLBACK_STATUS_INDICATOR_START:
+            srv->sendTextFrame("statusindicatorstart:");
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+            srv->sendTextFrame("statusindicatorsetvalue: " + rPayload);
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+            srv->sendTextFrame("statusindicatorfinish:");
+            break;
         case LOK_CALLBACK_SEARCH_NOT_FOUND:
             srv->sendTextFrame("searchnotfound: " + rPayload);
             break;
+        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
+            srv->sendTextFrame("searchresultselection: " + rPayload);
+            break;
         case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
             srv->getStatus("", 0);
+            srv->getPartPageRectangles("", 0);
             break;
         case LOK_CALLBACK_SET_PART:
             srv->sendTextFrame("setpart: " + rPayload);
             break;
+        case LOK_CALLBACK_UNO_COMMAND_RESULT:
+            srv->sendTextFrame("unocommandresult: " + rPayload);
+            break;
         }
     }
-
 
     void run()
     {
@@ -389,6 +416,13 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
 #endif
+
+    if (std::getenv("SLEEPFORDEBUGGER"))
+    {
+        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, attach process "
+                  << Process::id() << " in debugger now." << std::endl;
+        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
+    }
 
     try
     {
