@@ -10,13 +10,15 @@ L.Control.PartsPreview = L.Control.extend({
 
 	onAdd: function (map) {
 		this._previewInitialized = false;
-		this._previewTiles = {};
+		this._previewTiles = [];
 		var docContainer = map.options.documentContainer;
 		this._partsPreviewCont = L.DomUtil.create('div', 'parts-preview', docContainer.parentElement);
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('updatepart', this._updatePart, this);
 		map.on('tilepreview', this._updatePreview, this);
+		map.on('insertpage', this._insertPreview, this);
+		map.on('deletepage', this._deletePreview, this);
 	},
 
 	_updateDisabled: function (e) {
@@ -38,36 +40,37 @@ L.Control.PartsPreview = L.Control.extend({
 					$('.scroll-container').mCustomScrollbar('update');
 				}, this), 500);
 				for (var i = 0; i < parts; i++) {
-					var id = 'preview-tile' + i;
-					var frame = L.DomUtil.create('div', 'preview-frame', this._partsPreviewCont);
-					L.DomUtil.create('span', 'preview-helper', frame);
-					var imgClassName = 'preview-img';
-					if (i == 0) {
-						imgClassName += ' preview-img-selected';
-					}
-					var img = L.DomUtil.create('img', imgClassName, frame);
-					img.id = id;
-					this._previewTiles[id] = img;
-					L.DomEvent
-						.on(img, 'click', L.DomEvent.stopPropagation)
-						.on(img, 'click', L.DomEvent.stop)
-						.on(img, 'click', this._setPart, this)
-						.on(img, 'click', this._refocusOnMap, this);
-					this._map.getPreview(i, i, 180, 180, {autoUpdate: this.options.autoUpdate});
+					this._previewTiles.push(this._createPreview(i));
 				}
+				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-selected');
 				this._previewInitialized = true;
 			}
 			else
 			{
 				// change the border style of the selected preview.
 				for (var i = 0; i < parts; i++) {
-					var img = L.DomUtil.get('preview-tile' + i);
-					L.DomUtil.removeClass(img, 'preview-img-selected');
+					L.DomUtil.removeClass(this._previewTiles[i], 'preview-img-selected');
 				}
-				var img = L.DomUtil.get('preview-tile' + selectedPart);
-				L.DomUtil.addClass(img, 'preview-img-selected');
+				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-selected');
 			}
 		}
+	},
+
+	_createPreview: function (i) {
+		var id = 'preview-tile' + i;
+		var frame = L.DomUtil.create('div', 'preview-frame', this._partsPreviewCont);
+		L.DomUtil.create('span', 'preview-helper', frame);
+		var imgClassName = 'preview-img';
+		var img = L.DomUtil.create('img', imgClassName, frame);
+		img.id = id;
+		L.DomEvent
+			.on(img, 'click', L.DomEvent.stopPropagation)
+			.on(img, 'click', L.DomEvent.stop)
+			.on(img, 'click', this._setPart, this)
+			.on(img, 'click', this._refocusOnMap, this);
+		this._map.getPreview(i, i, 180, 180, {autoUpdate: this.options.autoUpdate});
+
+		return img;
 	},
 
 	_setPart: function (e) {
@@ -84,10 +87,9 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_updatePreview: function (e) {
-		var id = 'preview-tile' + e.id;
 		// the scrollbar has to be re-initialized here else it doesn't work
 		// probably a bug from the scrollbar
-		this._previewTiles[id].onload = function () {
+		this._previewTiles[e.id].onload = function () {
 			$('.parts-preview').mCustomScrollbar({
 				axis: 'y',
 				theme: 'dark-thick',
@@ -95,7 +97,39 @@ L.Control.PartsPreview = L.Control.extend({
 				alwaysShowScrollbar: 1});
 		};
 
-		this._previewTiles[id].src = e.tile;
+		this._previewTiles[e.id].src = e.tile;
+	},
+
+	_updatePreviewIds: function () {
+		// TO DO: preview-tileX prefix is unneccessary, can be removed completely
+		// since we have them in this._previewTiles[]
+		for (var i=0; i < this._previewTiles.length; i++) {
+			this._previewTiles[i].id = 'preview-tile' + i;
+		}
+		$('.parts-preview').mCustomScrollbar('update');
+	},
+
+	_insertPreview: function (e) {
+		var newIndex = e.selectedPart + 1;
+		var newPreview = this._createPreview(newIndex);
+
+		// insert newPreview to newIndex position
+		this._previewTiles.splice(newIndex, 0, newPreview);
+
+		var selectedFrame = this._previewTiles[e.selectedPart].parentNode; 
+		var newFrame = newPreview.parentNode;
+
+		// insert after selectedFrame
+		selectedFrame.parentNode.insertBefore(newFrame, selectedFrame.nextSibling);
+		this._updatePreviewIds();
+	},
+
+	_deletePreview: function (e) {
+		var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
+		L.DomUtil.remove(selectedFrame);
+		
+		this._previewTiles.splice(e.selectedPart, 1);
+		this._updatePreviewIds();
 	}
 });
 

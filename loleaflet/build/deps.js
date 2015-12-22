@@ -281,6 +281,13 @@ var deps = {
 		heading: 'Controls',
 		desc: 'Parts preview sidebar'
 	},
+	
+	ControlPresentation: {
+		src: ['control/Control.js',
+		      'control/Control.Presentation.js'],
+		heading: 'Controls',
+		desc: 'Common commands for slides.'
+	},
 
 	ControlColumnHeader: {
 		src: ['control/Control.js',
