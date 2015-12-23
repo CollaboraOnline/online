@@ -13,6 +13,7 @@
 /config.log
 /config.status
 /configure
+/compile
 /depcomp
 /install-sh
 /missing
@@ -20,6 +21,7 @@
 /systemplate
 /test-driver
 /jails
+/loolwsd.spec
 
 *.o
 *.exe
@@ -33,6 +35,7 @@ loadtest
 loolwsd
 loolkit
 loolbroker
+loolmap
 sockettransporttest
 
 # Debug output
