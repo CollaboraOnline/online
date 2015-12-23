@@ -1,6 +1,6 @@
 SUBDIRS = test
 
-bin_PROGRAMS = loolwsd loolbroker loolkit
+bin_PROGRAMS = loolwsd loolbroker loolkit loolmap
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -24,6 +24,8 @@ broker_shared_sources = ChildProcessSession.cpp $(shared_sources)
 loolkit_SOURCES = LOOLKit.cpp $(broker_shared_sources)
 
 loolbroker_SOURCES = LOOLBroker.cpp $(broker_shared_sources)
+
+loolmap_SOURCES = loolmap.c
 
 noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessSession.hpp ChildProcessSession.hpp LOOLWSD.hpp LoadTest.hpp MessageQueue.hpp TileCache.hpp Util.hpp Png.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
