@@ -1,6 +1,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
+#include <error.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -120,15 +121,15 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     error(EXIT_FAILURE, errno, "%s\n", cmdline);
 
   printf("%s\n", cmdline);
-  printf("Process ID    :%20ld\n", proc_id);
+  printf("Process ID    :%20d\n", proc_id);
   printf("--------------------------------------\n");
-  printf("Shared Clean  :%20ld kB\n", total_shared_clean);
-  printf("Shared Dirty  :%20ld kB\n", total_shared_dirty);
-  printf("Private Clean :%20ld kB\n", total_private_clean);
-  printf("Private Dirty :%20ld kB\n", total_private_dirty);
+  printf("Shared Clean  :%20lld kB\n", total_shared_clean);
+  printf("Shared Dirty  :%20lld kB\n", total_shared_dirty);
+  printf("Private Clean :%20lld kB\n", total_private_clean);
+  printf("Private Dirty :%20lld kB\n", total_private_dirty);
   printf("--------------------------------------\n");
-  printf("Shared        :%20ld kB\n", total_shared_clean + total_shared_dirty);
-  printf("Private       :%20ld kB\n\n", total_private_clean + total_private_dirty);
+  printf("Shared        :%20lld kB\n", total_shared_clean + total_shared_dirty);
+  printf("Private       :%20lld kB\n\n", total_private_clean + total_private_dirty);
 }
 
 int main(int argc, char **argv)
@@ -145,7 +146,7 @@ int main(int argc, char **argv)
   getopt(argc, argv, "");
 
   if (argc != 2)
-    error(EXIT_FAILURE, EINVAL);
+    error(EXIT_FAILURE, EINVAL, "incorrect arguments");
 
   root_proc = opendir("/proc");
   if (!root_proc)
@@ -154,7 +155,7 @@ int main(int argc, char **argv)
   while ( ( dir_proc = readdir(root_proc) ) )
   {
     if ( !dir_proc && !dir_proc->d_name )
-      error(EXIT_FAILURE, ENOTDIR );
+      error(EXIT_FAILURE, ENOTDIR, "bad dir");
 
     if ( *dir_proc->d_name > '0' && *dir_proc->d_name <= '9' )
     {
@@ -165,13 +166,15 @@ int main(int argc, char **argv)
           !strstr(cmdline, argv[0]) )
       {
         snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "smaps");
-        total_smaps(pid_proc, path_proc, cmdline);
-      }
+     total_smaps(pid_proc, path_proc, cmdline);
+   }
     }
   }
 
   if ( errno )
-    error(EXIT_FAILURE, errno);
+    error(EXIT_FAILURE, errno, "fail");
 
   return EXIT_SUCCESS;
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
