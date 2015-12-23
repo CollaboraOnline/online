@@ -29,6 +29,7 @@
 #include <Poco/Timestamp.h>
 #include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
+#include <Poco/Environment.h>
 
 #include "Util.hpp"
 #include "Png.hpp"
@@ -77,7 +78,22 @@ namespace Log
     {
         binname = name;
         auto& logger = Poco::Logger::get(name);
+
+        // Configure the logger.
+        // TODO: This should come from a file.
+        try
+        {
+            // See Poco::Logger::setLevel docs for values.
+            // Try: error, information, debug
+            const auto level = Poco::Environment::get("LOOL_LOGLEVEL");
+            logger.setLevel(level);
+        }
+        catch (Poco::NotFoundException& aError)
+        {
+        }
+
         logger.information("Initializing " + name);
+        logger.information("Log level is " + logger.getLevel());
     }
 
     Poco::Logger& logger()
@@ -93,6 +109,11 @@ namespace Log
     void info(const std::string& msg)
     {
         logger().information(Util::logPrefix() + msg);
+    }
+
+    void warn(const std::string& msg)
+    {
+        return logger().warning(Util::logPrefix() + msg);
     }
 
     void error(const std::string& msg)
