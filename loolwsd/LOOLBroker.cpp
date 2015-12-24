@@ -686,18 +686,18 @@ int main(int argc, char** argv)
     {
         Poco::Environment::get("LD_BIND_NOW");
     }
-    catch (Poco::NotFoundException& aError)
+    catch (const Poco::NotFoundException& ex)
     {
-        std::cout << Util::logPrefix() << aError.what() << std::endl;
+        Log::error(std::string("Exception: ") + ex.what());
     }
 
     try
     {
         Poco::Environment::get("LOK_VIEW_CALLBACK");
     }
-    catch (Poco::NotFoundException& aError)
+    catch (const Poco::NotFoundException& ex)
     {
-        std::cout << Util::logPrefix() << aError.what() << std::endl;
+        Log::error(std::string("Exception: ") + ex.what());
     }
 
     const Poco::UInt64 _childId = Util::rng::getNext();

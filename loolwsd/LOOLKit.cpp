@@ -298,7 +298,7 @@ public:
         _childId(childId),
         _threadId(threadId)
     {
-        std::cout << Util::logPrefix() << "New connection in child: " << _childId << ", thread: " << _threadId << std::endl;
+        Log::info("New connection in child: " + std::to_string(_childId) + ", thread: " + _threadId);
     }
 
     void start()
@@ -313,14 +313,14 @@ public:
 
     LibreOfficeKitDocument * getLOKitDocument()
     {
-        return (_session ? _session->_loKitDocument : NULL);
+        return (_session ? _session->_loKitDocument : nullptr);
     };
 
     void run() override
     {
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("lokit_connection"), 0, 0, 0) != 0)
-            std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+            Log::warn("Cannot set thread name: " + std::string(strerror(errno)));
 #endif
         try
         {
@@ -375,17 +375,17 @@ public:
         }
         catch (Exception& exc)
         {
-            std::cout << Util::logPrefix() + "Exception: " + exc.what() << std::endl;
+            Log::error(std::string("Exception: ") + exc.what());
         }
         catch (std::exception& exc)
         {
-            std::cout << Util::logPrefix() + "Exception: " + exc.what() << std::endl;
+            Log::error(std::string("Exception: ") + exc.what());
         }
     }
 
     ~Connection()
     {
-        std::cout << Util::logPrefix() << "Closing connection in child: " << _childId << ", thread: " << _threadId << std::endl;
+        Log::info("Closing connection in child: " + std::to_string(_childId) + ", thread: " + _threadId);
         //_thread.stop();
     }
 
@@ -414,7 +414,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
 
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
-        std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+        Log::warn("Cannot set thread name: " + std::string(strerror(errno)));
 #endif
 
     if (std::getenv("SLEEPFORDEBUGGER"))
@@ -434,7 +434,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
 
         if (!loKit)
         {
-            std::cout << Util::logPrefix() + "LibreOfficeKit initialization failed" << std::endl;
+            Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
             exit(-1);
         }
 
@@ -443,20 +443,22 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
 
         if ( (readerBroker = open(pipe.c_str(), O_RDONLY) ) < 0 )
         {
-            std::cout << Util::logPrefix() << "open pipe read only: " << strerror(errno) << std::endl;
+            Log::error("Error: failed to open pipe [" + pipe + "] read only: " +
+                       std::string(strerror(errno)) + ". Exiting.");
             exit(-1);
         }
 
         if ( (writerBroker = open(LOKIT_BROKER.c_str(), O_WRONLY) ) < 0 )
         {
-            std::cout << Util::logPrefix() << "open pipe write only: " << strerror(errno) << std::endl;
+            Log::error("Error: failed to open pipe [" + LOKIT_BROKER + "] write only: " +
+                       std::string(strerror(errno)) + ". Exiting.");
             exit(-1);
         }
 
         CallBackWorker callbackWorker(ChildProcessSession::_callbackQueue);
         Poco::ThreadPool::defaultPool().start(callbackWorker);
 
-        std::cout << Util::logPrefix() << "child ready!" << std::endl;
+        Log::info("Child [" + std::to_string(_childId) + "] is ready.");
 
         std::string aResponse;
         std::string aMessage;
@@ -476,8 +478,8 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                     nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
                     if (nBytes < 0)
                     {
-                        pStart = pEnd = NULL;
-                        std::cout << Util::logPrefix() << "Error reading message :" << strerror(errno) << std::endl;
+                        pStart = pEnd = nullptr;
+                        Log::warn("Error reading message from FIFO: " + std::string(strerror(errno)));
                         continue;
                     }
                     pStart = aBuffer;
@@ -515,42 +517,48 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                     }
                     else if (tokens[0] == "thread")
                     {
-                        auto aItem = _connections.find(tokens[1]);
+                        const std::string& threadId = tokens[1];
+                        Log::debug("Thread request for [" + threadId + "]");
+                        const auto& aItem = _connections.find(threadId);
                         if (aItem != _connections.end())
-                        { // found item, check if still running
-                            std::cout << Util::logPrefix() << "found thread" << std::endl;
+                        {
+                            // found item, check if still running
+                            Log::debug("Found thread for [" + threadId + "] " +
+                                       (aItem->second->isRunning() ? "Running" : "Stopped"));
+
                             if ( !aItem->second->isRunning() )
-                                std::cout << Util::logPrefix() << "found thread not running!" << std::endl;
+                                Log::warn("Thread [" + threadId + "] is not running.");
                         }
                         else
-                        { // new thread id
-                            //std::cout << Util::logPrefix() << "new thread starting!" << std::endl;
+                        {
+                            // new thread id
+                            Log::debug("Starting new thread for request [" + threadId + "]");
                             std::shared_ptr<Connection> thread;
                             if ( _connections.empty() )
                             {
-                                std::cout << Util::logPrefix() << "create main thread" << std::endl;
-                                thread = std::shared_ptr<Connection>(new Connection(loKit, NULL, _childId, tokens[1]));
+                                Log::info("Creating main thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
+                                thread = std::shared_ptr<Connection>(new Connection(loKit, NULL, _childId, threadId));
                             }
                             else
                             {
-                                std::cout << Util::logPrefix() << "create view thread" << std::endl;
+                                Log::info("Creating view thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
                                 auto aConnection = _connections.begin();
-                                thread = std::shared_ptr<Connection>(new Connection(loKit, aConnection->second->getLOKitDocument(), _childId, tokens[1]));
+                                thread = std::shared_ptr<Connection>(new Connection(loKit, aConnection->second->getLOKitDocument(), _childId, threadId));
                             }
 
                             auto aInserted = _connections.insert(
                                 std::pair<std::string, std::shared_ptr<Connection>>
                                 (
-                                    tokens[1],
+                                    threadId,
                                     thread
                                 ));
 
                             if ( aInserted.second )
                                 thread->start();
                             else
-                                std::cout << Util::logPrefix() << "Connection not created!" << std::endl;
+                                Log::error("Connection not created for child: " + std::to_string(_childId) + ", thread: " + threadId);
 
-                            std::cout << Util::logPrefix() << "connections: " << Process::id() << " " << _connections.size() << std::endl;
+                            Log::debug("Connections: " + std::to_string(_connections.size()));
                         }
                     }
                     else if (tokens[0] == "url")
@@ -570,17 +578,17 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
         // Destroy LibreOfficeKit
         loKit->pClass->destroy(loKit);
 
-        std::cout << Util::logPrefix() << "loolkit finished OK!" << std::endl;
+        Log::info("Kit process " + std::to_string(Process::id()) + " finished OK. ");
 
         pthread_exit(0);
     }
-    catch (Exception& exc)
+    catch (const Exception& ex)
     {
-        std::cout << Util::logPrefix() + "Exception: " + exc.what() << std::endl;
+        Log::error(std::string("Exception: ") + ex.what());
     }
-    catch (std::exception& exc)
+    catch (const std::exception& ex)
     {
-        std::cout << Util::logPrefix() + "Exception: " + exc.what() << std::endl;
+        Log::error(std::string("Exception: ") + ex.what());
     }
 }
 
@@ -621,19 +629,19 @@ int main(int argc, char** argv)
 
     if (loSubPath.empty())
     {
-        std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
+        Log::error("Error: --losubpath is empty");
         exit(1);
     }
 
     if ( !_childId )
     {
-        std::cout << Util::logPrefix() << "--child is 0" << std::endl;
+        Log::error("Error: --child is 0");
         exit(1);
     }
 
     if ( _pipe.empty() )
     {
-        std::cout << Util::logPrefix() << "--pipe is empty" << std::endl;
+        Log::error("Error: --pipe is empty");
         exit(1);
     }
 
@@ -641,18 +649,18 @@ int main(int argc, char** argv)
     {
         Poco::Environment::get("LD_BIND_NOW");
     }
-    catch (Poco::NotFoundException& aError)
+    catch (const Poco::NotFoundException& ex)
     {
-        std::cout << Util::logPrefix() << aError.what() << std::endl;
+        Log::error(std::string("Exception: ") + ex.what());
     }
 
     try
     {
         Poco::Environment::get("LOK_VIEW_CALLBACK");
     }
-    catch (Poco::NotFoundException& aError)
+    catch (const Poco::NotFoundException& ex)
     {
-        std::cout << Util::logPrefix() << aError.what() << std::endl;
+        Log::error(std::string("Exception: ") + ex.what());
     }
 
     run_lok_main(loSubPath, _childId, _pipe);
