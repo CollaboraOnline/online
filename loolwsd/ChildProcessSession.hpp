@@ -20,7 +20,7 @@ class ChildProcessSession final : public LOOLSession
 {
 public:
     /// Create a new ChildProcessSession
-    /// ws The socket to our counterparty (Child or Master).
+    /// ws The socket between master and kit (jailed).
     /// loKit The LOKit instance.
     /// loKitDocument The instance to an existing document (when opening
     ///                 a new view) or nullptr (when first view).
@@ -82,14 +82,15 @@ class CallBackNotification: public Poco::Notification
 public:
 	typedef Poco::AutoPtr<CallBackNotification> Ptr;
 
-    CallBackNotification(int nType, const std::string& rPayload, void* pSession)
-            : m_nType(nType),
-              m_aPayload(rPayload),
-              m_pSession(pSession)
-    {}
+    CallBackNotification(const int nType, const std::string& rPayload, void* pSession)
+      : m_nType(nType),
+        m_aPayload(rPayload),
+        m_pSession(pSession)
+    {
+    }
 
-    int m_nType;
-    std::string m_aPayload;
+    const int m_nType;
+    const std::string m_aPayload;
     void* m_pSession;
 };
 

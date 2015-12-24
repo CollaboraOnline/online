@@ -60,6 +60,8 @@ const int MASTER_PORT_NUMBER = 9981;
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
 
+// This thread handles callbacks from the
+// lokit instance.
 class CallBackWorker: public Runnable
 {
 public:
@@ -68,7 +70,7 @@ public:
     {
     }
 
-    std::string callbackTypeToString (int nType)
+    std::string callbackTypeToString (const int nType)
     {
         switch (nType)
         {
@@ -106,7 +108,7 @@ public:
         return std::string("");
     }
 
-    void callback(int nType, std::string& rPayload, void* pData)
+    void callback(const int nType, const std::string& rPayload, void* pData)
     {
         ChildProcessSession *srv = reinterpret_cast<ChildProcessSession *>(pData);
 
@@ -120,12 +122,14 @@ public:
                 {
                     curPart = 0;
                 }
+
                 StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (tokens.count() == 4)
                 {
                     int x, y, width, height;
 
-                    try {
+                    try
+                    {
                         x = std::stoi(tokens[0]);
                         y = std::stoi(tokens[1]);
                         width = std::stoi(tokens[2]);
@@ -242,6 +246,8 @@ private:
 
 FastMutex CallBackWorker::_mutex;
 
+// This thread handles incoming messages
+// on a given kit instance.
 class QueueHandler: public Runnable
 {
 public:
@@ -265,7 +271,7 @@ public:
         {
             while (true)
             {
-                std::string input = _queue.get();
+                const std::string input = _queue.get();
                 if (input == "eof")
                     break;
                 if (!_session->handleInput(input.c_str(), input.size()))
@@ -334,12 +340,11 @@ public:
             std::shared_ptr<WebSocket> ws(new WebSocket(cs, request, response));
 
             _session.reset(new ChildProcessSession(ws, _loKit, _loKitDocument, std::to_string(_childId)));
-            //std::shared_ptr<ChildProcessSession> session(new ChildProcessSession(ws, _loKit, _loKitDocument));
             ws->setReceiveTimeout(0);
 
             // child Jail TID PID
             std::string hello("child " + std::to_string(_childId) + " " +
-                _threadId + " " + std::to_string(Process::id()));
+                              _threadId + " " + std::to_string(Process::id()));
             _session->sendTextFrame(hello);
 
             TileQueue queue;

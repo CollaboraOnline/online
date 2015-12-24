@@ -214,8 +214,8 @@ extern "C"
         /*pid_t tid = syscall(SYS_gettid);
         std::cout << tid << " callbackWorker : " << priv->m_nViewId << " " << std::string(callbackTypeToString(nType)) << " " << std::string(pPayload ? pPayload : "(nil)") << std::endl;*/
 
-        ChildProcessSession::_callbackQueue.enqueueNotification(new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData));
-        //std::string aPayLoad(pPayload ? pPayload : "(nil)");
+        auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
+        ChildProcessSession::_callbackQueue.enqueueNotification(pNotif);
     }
 }
 
@@ -243,6 +243,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         return false;
     }
 
+    Log::info("Loading URI: " + aUri.toString());
     if (aUri.empty())
     {
         sendTextFrame("error: cmd=load kind=uriempty");
@@ -259,7 +260,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         aUri = URI( URI("file://"), Path(jailDocumentURL + Path::separator() + std::to_string(Process::id()),
                     Path(aUri.getPath()).getFileName()).toString() );
 
-    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, aUri.toString().c_str())) == NULL)
+    if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, aUri.toString().c_str())) == nullptr)
     {
         sendTextFrame("error: cmd=load kind=failed");
         Log::error("Failed to load: " + aUri.toString() + ", error is: " + _loKit->pClass->getError(_loKit));
@@ -315,7 +316,8 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
     pixmap = _loKitDocument->pClass->renderFont(_loKitDocument, decodedFont.c_str(), &width, &height);
     std::cout << Util::logPrefix() << "renderFont called, font[" << font << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
 
-    if (pixmap != nullptr) {
+    if (pixmap != nullptr)
+    {
         if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output, LOK_TILEMODE_RGBA))
         {
             sendTextFrame("error: cmd=renderfont kind=failure");
@@ -460,10 +462,10 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
     }
 
     std::string tmpDir, url;
-    File *file = NULL;
+    File *file = nullptr;
     do
     {
-        if (file != NULL)
+        if (file != nullptr)
         {
             delete file;
         }
@@ -474,8 +476,8 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
     delete file;
 
     _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
-            format.size() == 0 ? NULL :format.c_str(),
-            filterOptions.size() == 0 ? NULL : filterOptions.c_str());
+            format.size() == 0 ? nullptr :format.c_str(),
+            filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
 
     //TODO: handle download portNumber.
     //sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
@@ -500,7 +502,7 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
         return false;
     }
 
-    char *textSelection = _loKitDocument->pClass->getTextSelection(_loKitDocument, mimeType.c_str(), NULL);
+    char *textSelection = _loKitDocument->pClass->getTextSelection(_loKitDocument, mimeType.c_str(), nullptr);
 
     sendTextFrame("textselectioncontent: " + std::string(textSelection));
     return true;
@@ -697,8 +699,8 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
     }
 
     bool success = _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
-            format.size() == 0 ? NULL :format.c_str(),
-            filterOptions.size() == 0 ? NULL : filterOptions.c_str());
+            format.size() == 0 ? nullptr :format.c_str(),
+            filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
 
     sendTextFrame("saveas: url=" + url);
     std::string successStr = success ? "true" : "false";
