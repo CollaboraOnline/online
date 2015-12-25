@@ -166,20 +166,20 @@ namespace
         caps = cap_get_proc();
         if (caps == NULL)
         {
-            Log::error(std::string("cap_get_proc() failed: ") + strerror(errno));
+            Log::error("cap_get_proc() failed.");
             exit(1);
         }
 
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
-            Log::error(std::string("cap_set_flag() failed: ") + strerror(errno));
+            Log::error("cap_set_flag() failed.");
             exit(1);
         }
 
         if (cap_set_proc(caps) == -1)
         {
-            Log::error(std::string("cap_set_proc() failed: ") + strerror(errno));
+            Log::error("cap_set_proc() failed.");
             exit(1);
         }
 
@@ -198,7 +198,7 @@ namespace
             // to do chroot().
             if (setuid(getuid()) != 0)
             {
-                Log::error(std::string("setuid() failed: ") + strerror(errno));
+                Log::error("setuid() failed.");
             }
         }
 #if ENABLE_DEBUG
@@ -222,7 +222,7 @@ namespace
             }
             if (setuid(LOOLWSD::uid) != 0)
             {
-                Log::error(std::string("setuid() failed: ") + strerror(errno));
+                Log::error("setuid() failed.");
             }
         }
 #endif
@@ -246,7 +246,7 @@ public:
     {
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0)
-            std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+            Log::error("Cannot set thread name.");
 #endif
 
         while (true)
@@ -319,7 +319,7 @@ public:
             thread_name = "client_socket";
 
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+            Log::error("Cannot set thread name.");
 #endif
 
         if(!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
@@ -842,9 +842,8 @@ int LOOLWSD::createBroker()
 
     std::string executable = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
 
-    const auto msg = Util::logPrefix() + "Launching broker: " + executable + " "
-                   + Poco::cat(std::string(" "), args.begin(), args.end());
-    Log::info(msg);
+    Log::info("Launching Broker: " + executable + " " +
+              Poco::cat(std::string(" "), args.begin(), args.end()));
 
     ProcessHandle child = Process::launch(executable, args);
 
@@ -876,7 +875,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     setSignals(false);
 #endif
 
-    Log::initialize("brk");
+    Log::initialize("wsd");
 
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
@@ -948,7 +947,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if ( (writerBroker = open(FIFO_FILE.c_str(), O_WRONLY) ) < 0 )
     {
-        std::cout << Util::logPrefix() << "Pipe opened for writing" << strerror(errno) << std::endl;
+        Log::error("Error: failed to open pipe [" + FIFO_FILE + "] write only.");
         return Application::EXIT_UNAVAILABLE;
     }
 
@@ -971,29 +970,29 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             {
                 if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
                 {
-                    std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] processes died.");
                     MasterProcessSession::_childProcesses.erase(pid);
                 }
 
                 if ( WCOREDUMP(status) )
-                    std::cout << Util::logPrefix() << "The child produced a core dump." << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] produced a core dump.");
 
                 if ( WIFSTOPPED(status) )
-                    std::cout << Util::logPrefix() << "The child process was stopped by delivery of a signal." << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] process was stopped by delivery of a signal.");
 
                 if ( WSTOPSIG(status) )
-                    std::cout << Util::logPrefix() << "The child process was stopped." << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] process was stopped.");
 
                 if ( WIFCONTINUED(status) )
-                    std::cout << Util::logPrefix() << "The child process was resumed." << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] process was resumed.");
             }
             else
             {
-                std::cout << Util::logPrefix() << "None of our known child processes died :" << std::to_string(pid) << std::endl;
+                Log::error("None of our known child processes died. PID: " + std::to_string(pid));
             }
         }
         else if (pid < 0)
-            std::cout << Util::logPrefix() << "Child error: " << strerror(errno) << std::endl;
+            Log::error("Error: Child error.");
 
         ++timeoutCounter;
         if (timeoutCounter == INTERVAL_PROBES)

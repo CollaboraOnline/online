@@ -71,7 +71,7 @@ MasterProcessSession::~MasterProcessSession()
 
 bool MasterProcessSession::handleInput(const char *buffer, int length)
 {
-    Log::info(_kindString + ",Recv," + getAbbreviatedMessage(buffer, length));
+    Log::trace(_kindString + ",Recv," + getAbbreviatedMessage(buffer, length));
 
     std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -622,8 +622,7 @@ void MasterProcessSession::dispatchChild()
         if (!File(aDstFile).exists() && link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
         {
             // Failed
-            Log::error(
-                "link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + strerror(errno) );
+            Log::error("link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed.");
         }
 #endif
 
@@ -632,31 +631,31 @@ void MasterProcessSession::dispatchChild()
             //fallback
             if (!File(aDstFile).exists())
             {
-                Log::info(Util::logPrefix() + "Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
+                Log::info("Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
                 File(aSrcFile).copyTo(aDstFile.toString());
             }
         }
         catch (Exception& exc)
         {
-            Log::error(
-                "copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
+            Log::error("copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
         }
     }
 
     _peer = childSession;
     childSession->_peer = shared_from_this();
 
-    std::string loadRequest = "load" + (_loadPart >= 0 ?  " part=" + std::to_string(_loadPart) : "") + " url=" + _docURL + (!_docOptions.empty() ? " options=" + _docOptions : "");
+    const std::string loadRequest = "load" + (_loadPart >= 0 ?  " part=" + std::to_string(_loadPart) : "")
+                                  + " url=" + _docURL + (!_docOptions.empty() ? " options=" + _docOptions : "");
     forwardToPeer(loadRequest.c_str(), loadRequest.size());
 }
 
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 {
-    Log::info(_kindString + ",forwardToPeer," + getAbbreviatedMessage(buffer, length));
+    Log::trace(_kindString + ",forwardToPeer," + getAbbreviatedMessage(buffer, length));
     auto peer = _peer.lock();
     if (!peer)
     {
-        Log::error("no peer to forward to");
+        Log::error("Error: no peer to forward to.");
         return;
     }
     peer->sendBinaryFrame(buffer, length);

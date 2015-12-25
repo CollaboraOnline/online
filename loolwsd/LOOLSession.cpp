@@ -113,9 +113,12 @@ LOOLSession::~LOOLSession()
 void LOOLSession::sendTextFrame(const std::string& text)
 {
     if (!_ws)
-        Log::error("No socket to send to.");
+    {
+        Log::error("Error: No socket to send to.");
+        return;
+    }
     else
-        Log::debug(_kindString + ",Send," + getAbbreviatedMessage(text.c_str(), text.size()));
+        Log::trace(_kindString + ",Send," + getAbbreviatedMessage(text.c_str(), text.size()));
 
     std::unique_lock<std::mutex> lock(_mutex);
 
@@ -125,21 +128,22 @@ void LOOLSession::sendTextFrame(const std::string& text)
 void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
     if (!_ws)
-        Log::error("No socket to send to.");
+    {
+        Log::error("Error: No socket to send to.");
+        return;
+    }
     else
-        Log::debug(_kindString + ",Send," + std::to_string(length) + " bytes");
+        Log::trace(_kindString + ",Send," + std::to_string(length) + " bytes");
 
     std::unique_lock<std::mutex> lock(_mutex);
 
     if (length > 1000)
     {
         std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-        if (_ws)
-            _ws->sendFrame(nextmessage.data(), nextmessage.size());
+        _ws->sendFrame(nextmessage.data(), nextmessage.size());
     }
 
-    if (_ws)
-        _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+    _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
 }
 
 void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std::string& timestamp)

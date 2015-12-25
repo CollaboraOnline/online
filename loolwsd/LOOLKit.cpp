@@ -264,8 +264,8 @@ public:
     void run() override
     {
 #ifdef __linux
-      if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0)
-        Log::error(std::string("Cannot set thread name :") + strerror(errno));
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name.");
 #endif
         try
         {
@@ -326,7 +326,7 @@ public:
     {
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("lokit_connection"), 0, 0, 0) != 0)
-            Log::warn("Cannot set thread name: " + std::string(strerror(errno)));
+            Log::error("Cannot set thread name.");
 #endif
         try
         {
@@ -419,7 +419,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
 
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
-        Log::warn("Cannot set thread name: " + std::string(strerror(errno)));
+        Log::error("Cannot set thread name.");
 #endif
 
     if (std::getenv("SLEEPFORDEBUGGER"))
@@ -448,15 +448,13 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
 
         if ( (readerBroker = open(pipe.c_str(), O_RDONLY) ) < 0 )
         {
-            Log::error("Error: failed to open pipe [" + pipe + "] read only: " +
-                       std::string(strerror(errno)) + ". Exiting.");
+            Log::error("Error: failed to open pipe [" + pipe + "] read only.");
             exit(-1);
         }
 
         if ( (writerBroker = open(LOKIT_BROKER.c_str(), O_WRONLY) ) < 0 )
         {
-            Log::error("Error: failed to open pipe [" + LOKIT_BROKER + "] write only: " +
-                       std::string(strerror(errno)) + ". Exiting.");
+            Log::error("Error: failed to open pipe [" + LOKIT_BROKER + "] write only.");
             exit(-1);
         }
 
@@ -484,7 +482,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                     if (nBytes < 0)
                     {
                         pStart = pEnd = nullptr;
-                        Log::warn("Error reading message from FIFO: " + std::string(strerror(errno)));
+                        Log::error("Error reading message from pipe [" + pipe + "].");
                         continue;
                     }
                     pStart = aBuffer;

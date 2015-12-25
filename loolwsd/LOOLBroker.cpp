@@ -106,9 +106,8 @@ namespace
             File(newPath.parent()).createDirectories();
             if (link(fpath, newPath.toString().c_str()) == -1)
             {
-                std::cout << Util::logPrefix() +
-                                                       "link(\"" + fpath + "\",\"" + newPath.toString() + "\") failed: " +
-                                                       strerror(errno) << std::endl;
+                Log::error("Error: link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
+                           "\") failed. Exiting.");
                 exit(1);
             }
             break;
@@ -117,9 +116,7 @@ namespace
                 struct stat st;
                 if (stat(fpath, &st) == -1)
                 {
-                    std::cout << Util::logPrefix() +
-                                                           "stat(\"" + fpath + "\") failed: " +
-                                                           strerror(errno) << std::endl;
+                    Log::error("Error: stat(\"" + std::string(fpath) + "\") failed.");
                     return 1;
                 }
                 File(newPath).createDirectories();
@@ -128,9 +125,7 @@ namespace
                 ut.modtime = st.st_mtime;
                 if (utime(newPath.toString().c_str(), &ut) == -1)
                 {
-                    std::cout << Util::logPrefix() +
-                                                           "utime(\"" + newPath.toString() + "\", &ut) failed: " +
-                                                           strerror(errno) << std::endl;
+                    Log::error("Error: utime(\"" + newPath.toString() + "\", &ut) failed.");
                     return 1;
                 }
             }
@@ -177,20 +172,20 @@ namespace
         caps = cap_get_proc();
         if (caps == NULL)
         {
-            std::cout << Util::logPrefix() + "cap_get_proc() failed: " + strerror(errno) << std::endl;
+            Log::error("Error: cap_get_proc() failed.");
             exit(1);
         }
 
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
-            std::cout << Util::logPrefix() +  "cap_set_flag() failed: " + strerror(errno) << std::endl;
+            Log::error("Error: cap_set_flag() failed.");
             exit(1);
         }
 
         if (cap_set_proc(caps) == -1)
         {
-            std::cout << Util::logPrefix() << std::string("cap_set_proc() failed: ") + strerror(errno) << std::endl;
+            Log::error("Error: cap_set_proc() failed.");
             exit(1);
         }
 
@@ -209,7 +204,7 @@ namespace
             // to do chroot().
             if (setuid(getuid()) != 0)
             {
-                std::cout << Util::logPrefix() << std::string("setuid() failed: ") + strerror(errno) << std::endl;
+                Log::error("Error: setuid() failed.");
             }
         }
 #if ENABLE_DEBUG
@@ -233,7 +228,7 @@ namespace
             }
             if (setuid(LOOLWSD::uid) != 0)
             {
-                Log::error(std::string("setuid() failed: ") + strerror(errno));
+                Log::error("Error: setuid() failed.");
             }
         }
 #endif
@@ -294,7 +289,7 @@ public:
 
         nBytes = Util::writeFIFO(nPipeWriter, aMessage.c_str(), aMessage.length());
         if ( nBytes < 0 )
-            std::cout << Util::logPrefix() << "Error writting child: " << strerror(errno) << std::endl;
+            Log::error("Error writting to child pipe.");
 
         return nBytes;
     }
@@ -325,25 +320,25 @@ public:
         {
             if ( !(aIterator->first > 0 && aIterator->second > 0) )
             {
-                //std::cout << Util::logPrefix() << "error iterator " << aIterator->second << " " << aMessage << std::endl;
+                //Log::error("error iterator " + aIterator->second + " " + aMessage);
                 continue;
             }
 
             nBytes = Util::writeFIFO(aIterator->second, aMessage.c_str(), aMessage.length());
             if ( nBytes < 0 )
             {
-                std::cout << Util::logPrefix() << "Error writting child: " << aIterator->first << " " << strerror(errno) << std::endl;
+                Log::error("Error writting to child pipe: " + std::to_string(aIterator->first) + ".");
                 break;
             }
 
             nBytes = getResponseLine(readerChild, aResponse);
             if ( nBytes < 0 )
             {
-                std::cout << Util::logPrefix() << "Error reading child: " << aIterator->first << " " << strerror(errno) << std::endl;
+                Log::error("Error reading child response: " + std::to_string(aIterator->first) + ".");
                 break;
             }
 
-            //std::cout << Util::logPrefix() << "response: " << aResponse << std::endl;
+            //Log::trace("response: " << aResponse);
             StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens[1] == "ok")
             {
@@ -378,9 +373,10 @@ public:
             auto aIterURL = _cacheURL.find(aURL);
             if ( aIterURL != _cacheURL.end() )
             {
-                std::cout << Util::logPrefix() << "Cache Found: " << aIterURL->first << std::endl;
+                Log::debug("Cache found URL [" + aURL + "] hosted on child [" + std::to_string(aIterURL->second) +
+                           "]. Creating view for thread [" + aTID + "].");
                 if (createThread(aIterURL->second, aTID) < 0)
-                    std::cout << Util::logPrefix() << "Cache: Error creating thread: " << strerror(errno) << std::endl;
+                    Log::error("Cache: Error creating thread.");
 
                 return;
             }
@@ -392,9 +388,10 @@ public:
 
             if ( nPID > 0 )
             {
-                std::cout << Util::logPrefix() << "Search Found: " << nPID << std::endl;
+                Log::debug("Search found URL [" + aURL + "] hosted by child [" + std::to_string(nPID) +
+                           "]. Creating view for thread [" + aTID + "].");
                 if (createThread(nPID, aTID) < 0)
-                    std::cout << Util::logPrefix() << "Search: Error creating thread: " << strerror(errno) << std::endl;
+                    Log::error("Search: Error creating thread.");
                 else
                     _cacheURL[aURL] = nPID;
 
@@ -404,17 +401,17 @@ public:
             // not found, new URL session.
             if ( _emptyURL.size() > 0 )
             {
-                auto aItem = _emptyURL.front();
-                std::cout << Util::logPrefix() << "Not Found: " << aItem << std::endl;
+                const auto aItem = _emptyURL.front();
+                Log::trace("No child found.");
                 if (updateURL(aItem, aURL) < 0)
                 {
-                    std::cout << Util::logPrefix() << "New: Error update URL: " << strerror(errno) << std::endl;
+                    Log::error("New: Error update URL.");
                     return;
                 }
 
                 if (createThread(aItem, aTID) < 0)
                 {
-                    std::cout << Util::logPrefix() << "New: Error creating thread: " << strerror(errno) << std::endl;
+                    Log::error("New: Error creating thread.");
                     return;
                 }
                 _emptyURL.pop_front();
@@ -423,7 +420,7 @@ public:
 
             /*if (_emptyURL.size() == 0 )
             {
-                std::cout << Util::logPrefix() << "No available childs, fork new one" << std::endl;
+                Log::info("No available childs, fork new one");
                 forkCounter++;
             }*/
         }
@@ -448,7 +445,7 @@ public:
 
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("pipe_reader"), 0, 0, 0) != 0)
-            std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
+            Log::error("Cannot set thread name.");
 #endif
 
         while (true)
@@ -462,13 +459,13 @@ public:
                     nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
                     if (nBytes < 0)
                     {
-                        pStart = pEnd = NULL;
-                        std::cout << Util::logPrefix() << "Error reading message :" << strerror(errno) << std::endl;
+                        pStart = pEnd = nullptr;
+                        Log::error("Error reading message.");
                         continue;
                     }
                     pStart = aBuffer;
                     pEnd   = aBuffer + nBytes;
-                    std::cout << Util::logPrefix() << "Broker readFIFO [" << std::string(pStart, nBytes) << "]" << std::endl;
+                    Log::trace("Broker readFIFO: [" + std::string(pStart, nBytes) + "]");
                 }
             }
 
@@ -510,14 +507,14 @@ static bool globalPreinit(const std::string &loSubPath)
     handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!handle)
     {
-        std::cout << Util::logPrefix() << " Failed to load library :" << LIB_SOFFICEAPP << std::endl;
+        Log::warn("Failed to load " + std::string(LIB_SOFFICEAPP) + " library.");
         return false;
     }
 
     preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
-        std::cout << Util::logPrefix() << " Failed to find lok_preinit hook in library :" << LIB_SOFFICEAPP << std::endl;
+        Log::warn("Failed to find lok_preinit hook in " + std::string(LIB_SOFFICEAPP) + " library.");
         return false;
     }
 
@@ -531,10 +528,9 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
 
     if (sharePages)
     {
+        Log::debug("Forking LibreOfficeKit.");
+
         Poco::UInt64 pid;
-
-        std::cout << Util::logPrefix() + "Forking LibreOfficeKit" << std::endl;
-
         if (!(pid = fork()))
         { // child
             run_lok_main(loSubPath, childID, "");
@@ -553,7 +549,7 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
 
         if (mkfifo(pipe.c_str(), 0666) < 0)
         {
-            std::cout << Util::logPrefix() << "mkfifo :" << strerror(errno) << std::endl;
+            Log::error("Error: mkfifo failed.");
             return -1;
         }
 
@@ -561,15 +557,16 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
         args.push_back("--child=" + std::to_string(childID));
         args.push_back("--pipe=" + pipe);
 
-        std::cout << Util::logPrefix() + "Launching LibreOfficeKit: " + executable + " " + Poco::cat(std::string(" "), args.begin(), args.end()) << std::endl;
+        Log::info("Launching LibreOfficeKit: " + executable + " " +
+                  Poco::cat(std::string(" "), args.begin(), args.end()));
 
         ProcessHandle procChild = Process::launch(executable, args);
         child = procChild.id();
-        std::cout << Util::logPrefix() << "Launched kit process: " << child << std::endl;
+        Log::info("Launched kit process: " + std::to_string(child));
 
         if ( ( nFIFOWriter = open(pipe.c_str(), O_WRONLY) ) < 0 )
         {
-            std::cout << Util::logPrefix() << "open: " << strerror(errno) << std::endl;
+            Log::error("Error: failed to open pipe [" + pipe + "] write only.");
             return -1;
         }
     }
@@ -583,14 +580,15 @@ static int startupLibreOfficeKit(bool sharePages, int nLOKits,
 {
     Process::PID pId = -1;
 
-    std::cout << Util::logPrefix() << "starting " << nLOKits << " LoKit instaces."
-              << " Shared: " << sharePages << ", loSubPath: " << loSubPath
-              << ", child: " << child << std::endl;
+    Log::info() << "Starting " << nLOKits << " LoKit instaces."
+                << " Shared: " << (sharePages ? "true" : "false")
+                << ", loSubPath: " << loSubPath
+                << ", child: " << child << Log::end;
     for (int nCntr = nLOKits; nCntr; nCntr--)
     {
         if ( (pId = createLibreOfficeKit(sharePages, loSubPath, child)) < 0)
         {
-            std::cout << Util::logPrefix() << "startupLibreOfficeKit: " << strerror(errno) << std::endl;
+            Log::error("Error: failed to create LibreOfficeKit.");
             break;
         }
     }
@@ -602,13 +600,13 @@ static int startupLibreOfficeKit(bool sharePages, int nLOKits,
 int main(int argc, char** argv)
 {
     // Initialization
+    Log::initialize("brk");
+
     std::string childRoot;
     std::string loSubPath;
     std::string sysTemplate;
     std::string loTemplate;
     int _numPreSpawnedChildren = 0;
-
-    Log::initialize("brk");
 
     for (int i = 0; i < argc; ++i)
     {
@@ -648,37 +646,37 @@ int main(int argc, char** argv)
 
     if (loSubPath.empty())
     {
-        std::cout << Util::logPrefix() << "--losubpath is empty" << std::endl;
+        Log::error("Error: --losubpath is empty");
         exit(-1);
     }
 
     if (sysTemplate.empty())
     {
-        std::cout << Util::logPrefix() << "--systemplate is empty" << std::endl;
+        Log::error("Error: --losubpath is empty");
         exit(-1);
     }
 
     if (loTemplate.empty())
     {
-        std::cout << Util::logPrefix() << "--lotemplate is empty" << std::endl;
+        Log::error("Error: --lotemplate is empty");
         exit(-1);
     }
 
     if (childRoot.empty())
     {
-        std::cout << Util::logPrefix() << "--childroot is empty" << std::endl;
+        Log::error("Error: --childroot is empty");
         exit(-1);
     }
 
     if ( !_numPreSpawnedChildren )
     {
-        std::cout << Util::logPrefix() << "--numprespawns is 0" << std::endl;
+        Log::error("Error: --numprespawns is 0");
         exit(-1);
     }
 
     if ( (readerBroker = open(FIFO_FILE.c_str(), O_RDONLY) ) < 0 )
     {
-        std::cout << Util::logPrefix() << "pipe error: " << strerror(errno) << std::endl;
+        Log::error("Error: failed to open pipe [" + FIFO_FILE + "] read only. Exiting.");
         exit(-1);
     }
 
@@ -717,7 +715,7 @@ int main(int argc, char** argv)
     // It is necessary to deploy loolkit process to chroot jail.
     if (!File("loolkit").exists())
     {
-        std::cout << Util::logPrefix() << "loolkit does not exists" << std::endl;
+        Log::error("loolkit does not exists");
         exit(-1);
     }
     File("loolkit").copyTo(Path(jailPath, "/usr/bin").toString());
@@ -740,31 +738,27 @@ int main(int argc, char** argv)
               S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
               makedev(1, 8)) != 0)
     {
-        std::cout << Util::logPrefix() +
-            "mknod(" + jailPath.toString() + "/dev/random) failed: " +
-            strerror(errno) << std::endl;
+        Log::error("Error: mknod(" + jailPath.toString() + "/dev/random) failed.");
 
     }
     if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
               S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
               makedev(1, 9)) != 0)
     {
-        std::cout << Util::logPrefix() +
-            "mknod(" + jailPath.toString() + "/dev/urandom) failed: " +
-            strerror(errno) << std::endl;
+        Log::error("Error: mknod(" + jailPath.toString() + "/dev/urandom) failed.");
     }
 #endif
 
-    std::cout << Util::logPrefix() << "loolbroker -> chroot(\"" + jailPath.toString() + "\")" << std::endl;
+    Log::info("loolbroker -> chroot(\"" + jailPath.toString() + "\")");
     if (chroot(jailPath.toString().c_str()) == -1)
     {
-        std::cout << Util::logPrefix() << "chroot(\"" + jailPath.toString() + "\") failed: " + strerror(errno) << std::endl;
+        Log::error("Error: chroot(\"" + jailPath.toString() + "\") failed.");
         exit(-1);
     }
 
     if (chdir("/") == -1)
     {
-        std::cout << Util::logPrefix() << std::string("chdir(\"/\") in jail failed: ") + strerror(errno) << std::endl;
+        Log::error("Error: chdir(\"/\") in jail failed.");
         exit(-1);
     }
 
@@ -778,7 +772,7 @@ int main(int argc, char** argv)
 
     if (mkfifo(FIFO_BROKER.c_str(), 0666) == -1)
     {
-        std::cout << Util::logPrefix() << "Fail to create pipe FIFO " << strerror(errno) << std::endl;
+        Log::error("Error: Failed to create pipe FIFO.");
         exit(-1);
     }
 
@@ -786,13 +780,13 @@ int main(int argc, char** argv)
 
     if ( startupLibreOfficeKit(sharePages, _numPreSpawnedChildren, loSubPath, _childId) < 0 )
     {
-        std::cout << Util::logPrefix() << "fail to create childs: " << strerror(errno) << std::endl;
+        Log::error("Error: failed to create children.");
         exit(-1);
     }
 
     if ( (readerChild = open(FIFO_BROKER.c_str(), O_RDONLY) ) < 0 )
     {
-        std::cout << Util::logPrefix() << "pipe opened for reading: " << strerror(errno) << std::endl;
+        Log::error("Error: pipe opened for reading.");
         exit(-1);
     }
 
@@ -801,7 +795,7 @@ int main(int argc, char** argv)
 
     aPipe.start(pipeHandler);
 
-    std::cout << Util::logPrefix() << "loolwsd ready!" << std::endl;
+    Log::info("loolbroker ready!");
 
     while (_childProcesses.size() > 0)
     {
@@ -813,8 +807,8 @@ int main(int argc, char** argv)
             {
                 if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
                 {
+                    Log::error("Child [" + std::to_string(pid) + "] processes died.");
                     forkMutex.lock();
-                    std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
                     _childProcesses.erase(pid);
                     _cacheURL.clear();
                     _emptyURL.clear();
@@ -822,24 +816,24 @@ int main(int argc, char** argv)
                 }
 
                 if ( WCOREDUMP(status) )
-                    std::cout << Util::logPrefix() << "The child produced a core dump." << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] produced a core dump.");
 
                 if ( WIFSTOPPED(status) )
-                    std::cout << Util::logPrefix() << "The child process was stopped by delivery of a signal." << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] process was stopped by delivery of a signal.");
 
                 if ( WSTOPSIG(status) )
-                    std::cout << Util::logPrefix() << "The child process was stopped." << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] process was stopped.");
 
                 if ( WIFCONTINUED(status) )
-                    std::cout << Util::logPrefix() << "The child process was resumed." << std::endl;
+                    Log::error("Child [" + std::to_string(pid) + "] process was resumed.");
             }
             else
             {
-                std::cout << Util::logPrefix() << "None of our known child processes died :" << std::to_string(pid) << std::endl;
+                Log::error("None of our known child processes died. PID: " + std::to_string(pid));
             }
         }
         else if (pid < 0)
-            std::cout << Util::logPrefix() << "Child error: " << strerror(errno) << std::endl;
+            Log::error("Error: Child error.");
 
         if ( forkCounter > 0 )
         {
@@ -847,7 +841,7 @@ int main(int argc, char** argv)
             forkCounter -= 1;
 
             if (createLibreOfficeKit(sharePages, loSubPath, _childId) < 0 )
-                std::cout << Util::logPrefix() << "fork falied: " << strerror(errno) << std::endl;
+                Log::error("Error: fork falied.");
 
             forkMutex.unlock();
         }
@@ -863,11 +857,11 @@ int main(int argc, char** argv)
     // Terminate child processes
     for (auto i : _childProcesses)
     {
-        std::cout << Util::logPrefix() + "Requesting child process " + std::to_string(i.first) + " to terminate" << std::endl;
+        Log::info("Requesting child process " + std::to_string(i.first) + " to terminate.");
         Process::requestTermination(i.first);
     }
 
-    std::cout << Util::logPrefix() << "loolbroker finished OK!" << std::endl;
+    Log::info("loolbroker finished OK!");
     return 0;
 }
 

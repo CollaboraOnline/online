@@ -52,12 +52,12 @@ ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws,
     _childId(childId),
     _clientPart(0)
 {
-    std::cout << Util::logPrefix() << "ChildProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
+    Log::info() << "ChildProcessSession ctor this:" << this << " ws:" << _ws.get() << Log::end;
 }
 
 ChildProcessSession::~ChildProcessSession()
 {
-    std::cout << Util::logPrefix() << "ChildProcessSession dtor this=" << this << std::endl;
+    Log::info() << "ChildProcessSession dtor this:" << this << " ws: " << _ws.get() << Log::end;
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, 0, 0);
     Util::shutdownWebSocket(*_ws);
@@ -314,7 +314,7 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
 
     Poco::Timestamp timestamp;
     pixmap = _loKitDocument->pClass->renderFont(_loKitDocument, decodedFont.c_str(), &width, &height);
-    std::cout << Util::logPrefix() << "renderFont called, font[" << font << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
+    Log::trace("renderFont [" + font + "] rendered in " + std::to_string(timestamp.elapsed()/1000.) + "ms");
 
     if (pixmap != nullptr)
     {
@@ -407,7 +407,8 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
 
     Poco::Timestamp timestamp;
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    std::cout << Util::logPrefix() << "paintTile called, tile at [" << tilePosX << ", " << tilePosY << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
+    Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
+                 << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
     LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
     if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output, mode))

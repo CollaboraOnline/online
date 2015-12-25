@@ -30,6 +30,7 @@
 #include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Environment.h>
+#include <Poco/ConsoleChannel.h>
 
 #include "Util.hpp"
 #include "Png.hpp"
@@ -72,12 +73,18 @@ namespace rng
 
 namespace Log
 {
-    static std::string binname;
+    static std::string SourceName;
+    static std::string SourceId;
 
     void initialize(const std::string& name)
     {
-        binname = name;
-        auto& logger = Poco::Logger::get(name);
+        SourceName = name;
+        std::ostringstream oss;
+        oss << SourceName << '-'
+            << std::setw(5) << std::setfill('0') << Poco::Process::id();
+        SourceId = oss.str();
+
+        auto& logger = Poco::Logger::create(SourceName, new Poco::ColorConsoleChannel(), Poco::Message::PRIO_INFORMATION);
 
         // Configure the logger.
         // TODO: This should come from a file.
@@ -92,18 +99,23 @@ namespace Log
         {
         }
 
-        logger.information("Initializing " + name);
-        logger.information("Log level is " + logger.getLevel());
+        info("Initializing " + name);
+        info("Log level is [" + std::to_string(logger.getLevel()) + "].");
     }
 
     Poco::Logger& logger()
     {
-        return Poco::Logger::get(binname);
+        return Poco::Logger::get(SourceName);
+    }
+
+    void trace(const std::string& msg)
+    {
+        logger().trace(Util::logPrefix() + msg);
     }
 
     void debug(const std::string& msg)
     {
-        return logger().debug(Util::logPrefix() + msg);
+        logger().debug(Util::logPrefix() + msg);
     }
 
     void info(const std::string& msg)
@@ -113,12 +125,12 @@ namespace Log
 
     void warn(const std::string& msg)
     {
-        return logger().warning(Util::logPrefix() + msg);
+        logger().warning(Util::logPrefix() + msg);
     }
 
     void error(const std::string& msg)
     {
-        return logger().error(Util::logPrefix() + msg);
+        logger().error(Util::logPrefix() + msg + " (" + strerror(errno) + ").");
     }
 }
 
@@ -139,10 +151,11 @@ namespace Util
         usec %= (one_s);
 
         std::ostringstream stream;
-        stream << Log::binname << ',' << Poco::Process::id() << ',' << std::setw(2) << std::setfill('0')
-               << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ',' << std::setw(2) << ','
-               << hours << ':' << std::setw(2) << minutes << ':' << std::setw(2) << seconds << "." << std::setw(6) << usec
-               << ',';
+        stream << Log::SourceId << '-' << std::setw(2) << std::setfill('0')
+               << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ','
+               << std::setw(2) << hours << ':' << std::setw(2) << minutes << ':'
+               << std::setw(2) << seconds << "." << std::setw(6) << usec
+               << ", ";
 
         return stream.str();
     }

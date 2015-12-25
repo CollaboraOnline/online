@@ -11,6 +11,7 @@
 #define INCLUDED_UTIL_HPP
 
 #include <string>
+#include <sstream>
 
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Logger.h>
@@ -51,10 +52,89 @@ namespace Log
     void initialize(const std::string& name);
     Poco::Logger& logger();
 
+    void trace(const std::string& msg);
     void debug(const std::string& msg);
     void info(const std::string& msg);
     void warn(const std::string& msg);
     void error(const std::string& msg);
+
+    // The following is to write streaming logs.
+    // Log::info() << "Value: 0x" << std::hex << value
+    //             << ", pointer: " << this << Log::end;
+
+    static const struct _end_marker
+    {
+    } end;
+
+    class StreamLogger
+    {
+        public:
+            StreamLogger(std::function<void(const std::string&)> func)
+              : _func(func)
+            {
+            }
+
+            void flush() const
+            {
+                _func(Stream.str());
+            }
+
+            std::ostringstream Stream;
+
+        private:
+            std::function<void(const std::string&)> _func;
+    };
+
+    inline
+    StreamLogger trace()
+    {
+        return StreamLogger([](const std::string& msg) { trace(msg);});
+    }
+
+    inline
+    StreamLogger debug()
+    {
+        return StreamLogger([](const std::string& msg) { debug(msg);});
+    }
+
+    inline
+    StreamLogger info()
+    {
+        return StreamLogger([](const std::string& msg) { info(msg);});
+    }
+
+    inline
+    StreamLogger warn()
+    {
+        return StreamLogger([](const std::string& msg) { warn(msg);});
+    }
+
+    inline
+    StreamLogger error()
+    {
+        return StreamLogger([](const std::string& msg) { error(msg);});
+    }
+
+    template <typename U>
+    StreamLogger& operator <<(StreamLogger& lhs, const U& rhs)
+    {
+        lhs.Stream << rhs;
+        return lhs;
+    }
+
+    template <typename U>
+    StreamLogger& operator <<(StreamLogger&& lhs, U&& rhs)
+    {
+        lhs.Stream << rhs;
+        return lhs;
+    }
+
+    inline
+    void operator <<(StreamLogger& lhs, const _end_marker&)
+    {
+        (void)end;
+        lhs.flush();
+    }
 }
 
 #endif
