@@ -474,9 +474,13 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                 aPoll.events = POLLIN;
                 aPoll.revents = 0;
 
-                (void)poll(&aPoll, 1, -1);
-
-                if( (aPoll.revents & POLLIN) != 0 )
+                if (poll(&aPoll, 1, -1) < 0)
+                {
+                    Log::error("Failed to poll pipe [" + pipe + "].");
+                    continue;
+                }
+                else
+                if (aPoll.revents & POLLIN)
                 {
                     nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
                     if (nBytes < 0)
@@ -487,6 +491,12 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                     }
                     pStart = aBuffer;
                     pEnd   = aBuffer + nBytes;
+                }
+                else
+                if (aPoll.revents & (POLLERR | POLLHUP))
+                {
+                    Log::error("Broken pipe [" + pipe + "] with broker.");
+                    break;
                 }
             }
 
