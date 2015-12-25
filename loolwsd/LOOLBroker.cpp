@@ -365,8 +365,10 @@ public:
         StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         if (tokens[0] == "request" && tokens.count() == 3)
         {
-            std::string aTID = tokens[1];
-            std::string aURL = tokens[2];
+            const std::string aTID = tokens[1];
+            const std::string aURL = tokens[2];
+
+            Log::info("Finding kit for URL [" + aURL + "] on thread [" + aTID + "].");
 
             // check cache
             const auto aIterURL = _cacheURL.find(aURL);
@@ -401,7 +403,7 @@ public:
             if ( _emptyURL.size() > 0 )
             {
                 const auto aItem = _emptyURL.front();
-                Log::trace("No child found.");
+                Log::trace("No child found for URL [" + aURL + "].");
                 if (updateURL(aItem, aURL) < 0)
                 {
                     Log::error("New: Error update URL.");

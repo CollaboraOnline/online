@@ -243,12 +243,16 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         return false;
     }
 
-    Log::info("Loading URI: " + aUri.toString());
     if (aUri.empty())
     {
         sendTextFrame("error: cmd=load kind=uriempty");
         return false;
     }
+
+    if (_loKitDocument == nullptr)
+        Log::info("Loading new document from URI: [" + aUri.toString() + "].");
+    else
+        Log::info("Loading view to document from URI: [" + aUri.toString() + "].");
 
     // The URL in the request is the original one, not visible in the chroot jail.
     // The child process uses the fixed name jailDocumentURL.
@@ -260,12 +264,19 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         aUri = URI( URI("file://"), Path(jailDocumentURL + Path::separator() + std::to_string(Process::id()),
                     Path(aUri.getPath()).getFileName()).toString() );
 
+    if (_loKitDocument != nullptr)
+    {
+        _viewId = _loKitDocument->pClass->createView(_loKitDocument);
+    }
+    else
     if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, aUri.toString().c_str())) == nullptr)
     {
         sendTextFrame("error: cmd=load kind=failed");
         Log::error("Failed to load: " + aUri.toString() + ", error is: " + _loKit->pClass->getError(_loKit));
         return false;
     }
+
+    _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
     std::string renderingOptions;
     if (!_docOptions.empty())

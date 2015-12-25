@@ -585,6 +585,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
         }
 
         // Destroy LibreOfficeKit
+        // TODO: destroyView for views.
         loKit->pClass->destroy(loKit);
 
         Log::info("Kit process " + std::to_string(Process::id()) + " finished OK. ");

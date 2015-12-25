@@ -322,7 +322,7 @@ public:
             Log::error("Cannot set thread name.");
 #endif
 
-        if(!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
+        if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
         {
             StringTokenizer tokens(request.getURI(), "/?");
             if (tokens.count() >= 2 && tokens[1] == "convert-to")
@@ -341,7 +341,7 @@ public:
                     LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
                     std::shared_ptr<MasterProcessSession> session(new MasterProcessSession(ws, kind));
                     const std::string filePrefix("file://");
-                    std::string load = "load url=" + filePrefix + fromPath;
+                    const std::string load = "load url=" + filePrefix + fromPath;
                     session->handleInput(load.data(), load.size());
 
                     // Convert it to the requested format.
@@ -515,7 +515,7 @@ public:
                     }
                 }
                 while (!LOOLWSD::isShutDown &&
-                        (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)));
+                       (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)));
 
                 queue.clear();
                 queue.put("eof");
@@ -555,18 +555,17 @@ public:
 
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
-        std::string line = (Util::logPrefix() + "Request from " +
-                            request.clientAddress().toString() + ": " +
-                            request.getMethod() + " " +
-                            request.getURI() + " " +
-                            request.getVersion());
+        auto logger = Log::info();
+        logger << "Request from " << request.clientAddress().toString() << ": "
+               << request.getMethod() << " " << request.getURI() << " "
+               << request.getVersion();
 
         for (HTTPServerRequest::ConstIterator it = request.begin(); it != request.end(); ++it)
         {
-            line += " / " + it->first + ": " + it->second;
+            logger << " / " << it->first << ": " << it->second;
         }
 
-        Log::info(line);
+        logger << Log::end;
         return new RequestHandler();
     }
 };

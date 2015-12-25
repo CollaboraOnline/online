@@ -232,6 +232,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
         // Message from child process to be forwarded to client.
 
         // I think we should never get here
+        Log::error("Unexpected request [" + tokens[0] + "].");
         assert(false);
     }
     else if (tokens[0] == "load")
@@ -374,7 +375,8 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
         URI aUri(_docURL);
 
         // request new URL session
-        std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
+        const std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
+        Log::info("Sending to Broker: " + aMessage);
         Util::writeFIFO(LOOLWSD::writerBroker, aMessage.c_str(), aMessage.length());
     }
     catch(Poco::SyntaxException&)
@@ -551,7 +553,7 @@ void MasterProcessSession::dispatchChild()
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
 
-    std::cout << Util::logPrefix() << "waiting for a child session permission for " << Thread::currentTid() << std::endl;
+    Log::debug() << "Waiting for a child session permission for thead [" << Thread::currentTid() << "]." << Log::end;
     while (nRequest-- && !bFound)
     {
         _availableChildSessionCV.wait_for(
@@ -564,25 +566,25 @@ void MasterProcessSession::dispatchChild()
 
         if (!bFound)
         {
-            std::cout << Util::logPrefix() << "trying ..." << nRequest << std::endl;
+            Log::info() << "Retrying child permission... " << nRequest << Log::end;
             // request again new URL session
-            std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
+            const std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
             Util::writeFIFO(LOOLWSD::writerBroker, aMessage.c_str(), aMessage.length());
         }
     }
 
-    if ( bFound )
+    if (bFound)
     {
-        std::cout << Util::logPrefix() << "waiting child session permission, done!" << std::endl;
+        Log::debug("Waiting child session permission, done!");
         childSession = _availableChildSessions[Thread::currentTid()];
         _availableChildSessions.erase(Thread::currentTid());
     }
 
     lock.unlock();
 
-    if ( !nRequest && !bFound )
+    if (!nRequest && !bFound)
     {
-        // it cannot get connected.  shutdown.
+        Log::error("Failed to connect to child. Shutting down socket.");
         Util::shutdownWebSocket(*_ws);
         return;
     }
@@ -595,7 +597,7 @@ void MasterProcessSession::dispatchChild()
 
     if (!aUri.empty() && aUri.getScheme() == "file")
     {
-        std::string aJailDoc = jailDocumentURL.substr(1) + Path::separator() + std::to_string(childSession->_pidChild);
+        const std::string aJailDoc = jailDocumentURL.substr(1) + Path::separator() + std::to_string(childSession->_pidChild);
         Path aSrcFile(aUri.getPath());
         Path aDstFile(Path(getJailPath(childSession->_childId), aJailDoc), aSrcFile.getFileName());
         Path aDstPath(getJailPath(childSession->_childId), aJailDoc);
@@ -609,7 +611,6 @@ void MasterProcessSession::dispatchChild()
         {
             Log::error(
                 "createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
-
         }
 
         // cleanup potential leftovers from the last time
