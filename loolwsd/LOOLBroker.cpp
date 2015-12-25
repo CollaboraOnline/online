@@ -170,7 +170,7 @@ namespace
         cap_value_t cap_list[] = { capability };
 
         caps = cap_get_proc();
-        if (caps == NULL)
+        if (caps == nullptr)
         {
             Log::error("Error: cap_get_proc() failed.");
             exit(1);
@@ -189,7 +189,7 @@ namespace
             exit(1);
         }
 
-        char *capText = cap_to_text(caps, NULL);
+        char *capText = cap_to_text(caps, nullptr);
         std::cout << Util::logPrefix() + "Capabilities now: " + capText << std::endl;
         cap_free(capText);
 
@@ -255,7 +255,7 @@ public:
                 nBytes = Util::readMessage(nPipeReader, _aBuffer, sizeof(_aBuffer));
                 if ( nBytes < 0 )
                 {
-                    _pStart = _pEnd = NULL;
+                    _pStart = _pEnd = nullptr;
                     break;
                 }
 
@@ -303,7 +303,6 @@ public:
 
     ssize_t updateURL(Process::PID nPID, const std::string& aURL)
     {
-        std::string aResponse;
         std::string aMessage = "url " + aURL + "\r\n";
         return sendMessage(_childProcesses[nPID], aMessage);
     }
@@ -370,7 +369,7 @@ public:
             std::string aURL = tokens[2];
 
             // check cache
-            auto aIterURL = _cacheURL.find(aURL);
+            const auto aIterURL = _cacheURL.find(aURL);
             if ( aIterURL != _cacheURL.end() )
             {
                 Log::debug("Cache found URL [" + aURL + "] hosted on child [" + std::to_string(aIterURL->second) +
@@ -532,20 +531,22 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
 
         Poco::UInt64 pid;
         if (!(pid = fork()))
-        { // child
+        {
+            // child
             run_lok_main(loSubPath, childID, "");
             _exit(0);
         }
         else
-        { // parent
+        {
+            // parent
             child = pid; // (somehow - switch the hash to use real pids or ?) ...
         }
     }
     else
     {
         Process::Args args;
-        std::string executable = "loolkit";
-        std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
+        const std::string executable = "loolkit";
+        const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
 
         if (mkfifo(pipe.c_str(), 0666) < 0)
         {
@@ -599,6 +600,14 @@ static int startupLibreOfficeKit(bool sharePages, int nLOKits,
 // Broker process
 int main(int argc, char** argv)
 {
+    if (std::getenv("SLEEPFORDEBUGGER"))
+    {
+        std::cerr << "Sleeping " << std::getenv("SLEEPFORDEBUGGER")
+                  << " seconds to attach debugger to process "
+                  << Process::id() << std::endl;
+        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
+    }
+
     // Initialization
     Log::initialize("brk");
 
@@ -611,7 +620,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < argc; ++i)
     {
         char *cmd = argv[i];
-        char *eq  = NULL;
+        char *eq  = nullptr;
         if (strstr(cmd, "--losubpath=") == cmd)
         {
             eq = strchrnul(cmd, '=');

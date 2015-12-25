@@ -251,14 +251,10 @@ FastMutex CallBackWorker::_mutex;
 class QueueHandler: public Runnable
 {
 public:
-    QueueHandler(MessageQueue& queue):
-        _queue(queue)
+    QueueHandler(MessageQueue& queue, const std::shared_ptr<LOOLSession>& session):
+        _queue(queue),
+        _session(session)
     {
-    }
-
-    void setSession(std::shared_ptr<LOOLSession> session)
-    {
-        _session = session;
     }
 
     void run() override
@@ -291,8 +287,8 @@ public:
     }
 
 private:
-    std::shared_ptr<LOOLSession> _session;
     MessageQueue& _queue;
+    std::shared_ptr<LOOLSession> _session;
 };
 
 class Connection: public Runnable
@@ -348,10 +344,9 @@ public:
             _session->sendTextFrame(hello);
 
             TileQueue queue;
-            Thread queueHandlerThread;
-            QueueHandler handler(queue);
+            QueueHandler handler(queue, _session);
 
-            handler.setSession(_session);
+            Thread queueHandlerThread;
             queueHandlerThread.start(handler);
 
             int flags;
@@ -405,11 +400,19 @@ private:
 
 void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std::string& pipe)
 {
+    if (std::getenv("SLEEPFORDEBUGGER"))
+    {
+        std::cerr << "Sleeping " << std::getenv("SLEEPFORDEBUGGER")
+                  << " seconds to attach debugger to process "
+                  << Process::id() << std::endl;
+        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
+    }
+
     struct pollfd aPoll;
     ssize_t nBytes = -1;
     char  aBuffer[1024*2];
-    char* pStart = NULL;
-    char* pEnd = NULL;
+    char* pStart = nullptr;
+    char* pEnd = nullptr;
 
     std::string aURL;
     std::map<std::string, std::shared_ptr<Connection>> _connections;
@@ -421,13 +424,6 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
         Log::error("Cannot set thread name.");
 #endif
-
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        std::cout << "Sleeping " << std::getenv("SLEEPFORDEBUGGER") << " seconds, attach process "
-                  << Process::id() << " in debugger now." << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
-    }
 
     try
     {
@@ -550,7 +546,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                             if ( _connections.empty() )
                             {
                                 Log::info("Creating main thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
-                                thread = std::shared_ptr<Connection>(new Connection(loKit, NULL, _childId, threadId));
+                                thread = std::shared_ptr<Connection>(new Connection(loKit, nullptr, _childId, threadId));
                             }
                             else
                             {
@@ -619,7 +615,7 @@ int main(int argc, char** argv)
     for (int i = 1; i < argc; ++i)
     {
         char *cmd = argv[i];
-        char *eq  = NULL;
+        char *eq  = nullptr;
         if (strstr(cmd, "--losubpath=") == cmd)
         {
             eq = strchrnul(cmd, '=');
