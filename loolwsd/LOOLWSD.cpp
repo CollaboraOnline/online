@@ -403,7 +403,7 @@ public:
                 std::string fileName;
                 URI::decode(tokens[3], fileName);
                 std::string filePath = dirPath + "/" + fileName;
-                std::cout << Util::logPrefix() << "HTTP request for: " << filePath << std::endl;
+                Log::info("HTTP request for: " + filePath);
                 File file(filePath);
                 if (file.exists())
                 {
@@ -521,7 +521,7 @@ public:
                 queue.put("eof");
                 queueHandlerThread.join();
             }
-            catch (WebSocketException& exc)
+            catch (const WebSocketException& exc)
             {
                 Log::error("RequestHandler::handleRequest(), WebSocketException: " + exc.message());
                 switch (exc.code())
@@ -539,7 +539,7 @@ public:
                 }
             }
         }
-        catch (IOException& exc)
+        catch (const IOException& exc)
         {
             Log::error("IOException: " + exc.message());
         }
@@ -592,15 +592,13 @@ public:
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
-                    std::cout <<
-                        Util::logPrefix() <<
-                        "Client got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) <<
-                        std::endl;
+                    Log::trace() << "Client got " << n << " bytes: "
+                                 << getAbbreviatedMessage(buffer, n) << Log::end;
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
         }
-        catch (WebSocketException& exc)
+        catch (const WebSocketException& exc)
         {
             Log::error("TestOutput::run(), WebSocketException: " + exc.message());
             _ws.close();
@@ -689,7 +687,7 @@ LOOLWSD::~LOOLWSD()
 
 void LOOLWSD::handleSignal(int aSignal)
 {
-    std::cout << Util::logPrefix() << "Signal received: " << strsignal(aSignal) << std::endl;
+    Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
     LOOLWSD::isShutDown = true;
 }
 
@@ -878,8 +876,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        std::cout << Util::logPrefix() << "Unable to access " << cache <<
-            ", please make sure it exists, and has write permission for this user." << std::endl;
+        Log::error("Unable to access cache [" + cache +
+                   "] please make sure it exists, and has write permission for this user.");
         return Application::EXIT_UNAVAILABLE;
     }
 
@@ -913,7 +911,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (!File(FIFO_FILE).exists() && mkfifo(FIFO_FILE.c_str(), 0666) == -1)
     {
-        std::cout << Util::logPrefix() << "Fail to create pipe FIFO" << std::endl;
+        Log::error("Error: Failed to create pipe FIFO [" + FIFO_FILE + "].");
         return Application::EXIT_UNAVAILABLE;
     }
 

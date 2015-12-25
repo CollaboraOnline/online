@@ -52,12 +52,14 @@ ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws,
     _childId(childId),
     _clientPart(0)
 {
-    Log::info() << "ChildProcessSession ctor this:" << this << " ws:" << _ws.get() << Log::end;
+    Log::info() << "ChildProcessSession ctor " << Kind::ToMaster
+                << " this:" << this << " ws:" << _ws.get() << Log::end;
 }
 
 ChildProcessSession::~ChildProcessSession()
 {
-    Log::info() << "ChildProcessSession dtor this:" << this << " ws: " << _ws.get() << Log::end;
+    Log::info() << "ChildProcessSession ctor " << Kind::ToMaster
+                << " this:" << this << " ws:" << _ws.get() << Log::end;
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, 0, 0);
     Util::shutdownWebSocket(*_ws);
@@ -211,9 +213,6 @@ extern "C"
 {
     static void myCallback(int nType, const char* pPayload, void* pData)
     {
-        /*pid_t tid = syscall(SYS_gettid);
-        std::cout << tid << " callbackWorker : " << priv->m_nViewId << " " << std::string(callbackTypeToString(nType)) << " " << std::string(pPayload ? pPayload : "(nil)") << std::endl;*/
-
         auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
         ChildProcessSession::_callbackQueue.enqueueNotification(pNotif);
     }
@@ -237,7 +236,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     {
         aUri = URI(_docURL);
     }
-    catch(Poco::SyntaxException&)
+    catch (const Poco::SyntaxException&)
     {
         sendTextFrame("error: cmd=load kind=uriinvalid");
         return false;

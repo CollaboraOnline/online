@@ -88,7 +88,6 @@ LOOLSession::LOOLSession(std::shared_ptr<WebSocket> ws, Kind kind) :
     _ws(ws),
     _docURL("")
 {
-    std::cout << Util::logPrefix() << "LOOLSession ctor this=" << this << " " << _kind << " ws=" << _ws.get() << std::endl;
     if (kind == Kind::ToClient)
     {
         _kindString = "ToClient";
@@ -105,7 +104,6 @@ LOOLSession::LOOLSession(std::shared_ptr<WebSocket> ws, Kind kind) :
 
 LOOLSession::~LOOLSession()
 {
-    std::cout << Util::logPrefix() << "loolsession dtor this=" << this << " " << _kind << std::endl;
     if (_ws)
         Util::shutdownWebSocket(*_ws);
 }

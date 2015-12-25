@@ -88,6 +88,16 @@ public:
             return std::string("LOK_CALLBACK_CURSOR_VISIBLE");
         case LOK_CALLBACK_GRAPHIC_SELECTION:
             return std::string("LOK_CALLBACK_GRAPHIC_SELECTION");
+        case LOK_CALLBACK_CELL_CURSOR:
+            return std::string("LLOK_CALLBACK_CELL_CURSOR");
+        case LOK_CALLBACK_CELL_FORMULA:
+            return std::string("LOK_CALLBACK_CELL_FORMULA");
+        case LOK_CALLBACK_MOUSE_POINTER:
+            return std::string("LOK_CALLBACK_MOUSE_POINTER");
+        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
+            return std::string("LOK_CALLBACK_SEARCH_RESULT_SELECTION");
+        case LOK_CALLBACK_UNO_COMMAND_RESULT:
+            return std::string("LOK_CALLBACK_UNO_COMMAND_RESULT");
         case LOK_CALLBACK_HYPERLINK_CLICKED:
             return std::string("LOK_CALLBACK_HYPERLINK_CLICKED");
         case LOK_CALLBACK_STATE_CHANGED:
@@ -111,6 +121,9 @@ public:
     void callback(const int nType, const std::string& rPayload, void* pData)
     {
         ChildProcessSession *srv = reinterpret_cast<ChildProcessSession *>(pData);
+        Log::debug() << "Callback [" << srv->_viewId << "] "
+                     << std::string(callbackTypeToString(nType))
+                     << " " << rPayload << Log::end;
 
         switch ((LibreOfficeKitCallbackType) nType)
         {
@@ -135,10 +148,10 @@ public:
                         width = std::stoi(tokens[2]);
                         height = std::stoi(tokens[3]);
                     }
-                    catch (std::out_of_range&)
+                    catch (const std::out_of_range&)
                     {
                         // something went wrong, invalidate everything
-                        std::cout << Util::logPrefix() << "Ignoring integer values out of range: " << rPayload << std::endl;
+                        Log::warn("Ignoring integer values out of range: " + rPayload);
                         x = 0;
                         y = 0;
                         width = INT_MAX;
@@ -274,14 +287,14 @@ public:
                     break;
             }
         }
-        catch(std::exception& ex)
+        catch (const std::exception& exc)
         {
-            Log::error(std::string("Exception: ") + ex.what());
+            Log::error(std::string("Exception: ") + exc.what());
             raise(SIGABRT);
         }
-        catch(...)
+        catch (...)
         {
-            Log::error("Unknown Exception.");
+            Log::error("Unexpected Exception.");
             raise(SIGABRT);
         }
     }
@@ -373,11 +386,11 @@ public:
             queue.put("eof");
             queueHandlerThread.join();
         }
-        catch (Exception& exc)
+        catch (const Exception& exc)
         {
             Log::error(std::string("Exception: ") + exc.what());
         }
-        catch (std::exception& exc)
+        catch (const std::exception& exc)
         {
             Log::error(std::string("Exception: ") + exc.what());
         }
@@ -592,13 +605,13 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
 
         pthread_exit(0);
     }
-    catch (const Exception& ex)
+    catch (const Exception& exc)
     {
-        Log::error(std::string("Exception: ") + ex.what());
+        Log::error(std::string("Exception: ") + exc.what());
     }
-    catch (const std::exception& ex)
+    catch (const std::exception& exc)
     {
-        Log::error(std::string("Exception: ") + ex.what());
+        Log::error(std::string("Exception: ") + exc.what());
     }
 }
 
@@ -659,18 +672,18 @@ int main(int argc, char** argv)
     {
         Poco::Environment::get("LD_BIND_NOW");
     }
-    catch (const Poco::NotFoundException& ex)
+    catch (const Poco::NotFoundException& exc)
     {
-        Log::error(std::string("Exception: ") + ex.what());
+        Log::error(std::string("Exception: ") + exc.what());
     }
 
     try
     {
         Poco::Environment::get("LOK_VIEW_CALLBACK");
     }
-    catch (const Poco::NotFoundException& ex)
+    catch (const Poco::NotFoundException& exc)
     {
-        Log::error(std::string("Exception: ") + ex.what());
+        Log::error(std::string("Exception: ") + exc.what());
     }
 
     run_lok_main(loSubPath, _childId, _pipe);

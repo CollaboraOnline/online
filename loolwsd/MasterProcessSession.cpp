@@ -55,12 +55,14 @@ MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, const 
     _curPart(0),
     _loadPart(-1)
 {
-    std::cout << Util::logPrefix() << "MasterProcessSession ctor this=" << this << " ws=" << _ws.get() << std::endl;
+    Log::info() << "MasterProcessSession ctor " << _kindString
+                << " this:" << this << " ws:" << _ws.get() << Log::end;
 }
 
 MasterProcessSession::~MasterProcessSession()
 {
-    std::cout << Util::logPrefix() << "MasterProcessSession dtor this=" << this << " _peer=" << _peer.lock().get() << std::endl;
+    Log::info() << "MasterProcessSession ctor " << _kindString
+                << " this:" << this << " ws:" << _ws.get() << Log::end;
 
     auto peer = _peer.lock();
     if (_kind == Kind::ToClient && peer)
@@ -212,8 +214,9 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
 
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.insert(std::pair<Thread::TID, std::shared_ptr<MasterProcessSession>> (tId, shared_from_this()));
-        std::cout << Util::logPrefix() << _kindString << ",Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
-        std::cout << Util::logPrefix() << "Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << std::endl;
+
+        Log::info() << _kindString << ",Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << Log::end;
+
         _childId = childId;
         _pidChild = pidChild;
         lock.unlock();
@@ -379,7 +382,7 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
         Log::info("Sending to Broker: " + aMessage);
         Util::writeFIFO(LOOLWSD::writerBroker, aMessage.c_str(), aMessage.length());
     }
-    catch(Poco::SyntaxException&)
+    catch (const Poco::SyntaxException&)
     {
         sendTextFrame("error: cmd=load kind=uriinvalid");
         return false;
@@ -607,7 +610,7 @@ void MasterProcessSession::dispatchChild()
         {
             File(aDstPath).createDirectories();
         }
-        catch (Exception& exc)
+        catch (const Exception& exc)
         {
             Log::error(
                 "createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
@@ -636,7 +639,7 @@ void MasterProcessSession::dispatchChild()
                 File(aSrcFile).copyTo(aDstFile.toString());
             }
         }
-        catch (Exception& exc)
+        catch (const Exception& exc)
         {
             Log::error("copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
         }

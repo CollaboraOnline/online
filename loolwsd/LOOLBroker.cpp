@@ -131,16 +131,13 @@ namespace
             }
             break;
         case FTW_DNR:
-            std::cout <<Util::logPrefix() +
-                                                   "Cannot read directory '" + fpath + "'" << std::endl;
+            Log::error("Cannot read directory '" + std::string(fpath) + "'");
             return 1;
         case FTW_NS:
-            std::cout <<Util::logPrefix() +
-                                                   "nftw: stat failed for '" + fpath + "'" << std::endl;
+            Log::error("nftw: stat failed for '" + std::string(fpath) + "'");
             return 1;
         case FTW_SLN:
-            std::cout <<Util::logPrefix() +
-                                                         "nftw: symlink to nonexistent file: '" + fpath + "', ignored" << std::endl;
+            Log::error("nftw: symlink to nonexistent file: '" + std::string(fpath) + "', ignored.");
             break;
         default:
             assert(false);
@@ -155,8 +152,7 @@ namespace
             sourceForLinkOrCopy->pop_back();
         *destinationForLinkOrCopy = destination;
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
-            std::cout << Util::logPrefix() +
-                                                   "linkOrCopy: nftw() failed for '" + source + "'" << std::endl;
+            Log::error("linkOrCopy: nftw() failed for '" + source + "'");
     }
 
     void dropCapability(
@@ -190,7 +186,7 @@ namespace
         }
 
         char *capText = cap_to_text(caps, nullptr);
-        std::cout << Util::logPrefix() + "Capabilities now: " + capText << std::endl;
+        Log::info("Capabilities now: " + std::string(capText));
         cap_free(capText);
 
         cap_free(caps);
@@ -695,18 +691,18 @@ int main(int argc, char** argv)
     {
         Poco::Environment::get("LD_BIND_NOW");
     }
-    catch (const Poco::NotFoundException& ex)
+    catch (const Poco::NotFoundException& exc)
     {
-        Log::error(std::string("Exception: ") + ex.what());
+        Log::error(std::string("Exception: ") + exc.what());
     }
 
     try
     {
         Poco::Environment::get("LOK_VIEW_CALLBACK");
     }
-    catch (const Poco::NotFoundException& ex)
+    catch (const Poco::NotFoundException& exc)
     {
-        Log::error(std::string("Exception: ") + ex.what());
+        Log::error(std::string("Exception: ") + exc.what());
     }
 
     const Poco::UInt64 _childId = Util::rng::getNext();
@@ -783,7 +779,7 @@ int main(int argc, char** argv)
 
     if (mkfifo(FIFO_BROKER.c_str(), 0666) == -1)
     {
-        Log::error("Error: Failed to create pipe FIFO.");
+        Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
         exit(-1);
     }
 

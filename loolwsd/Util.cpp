@@ -215,7 +215,7 @@ namespace Util
         {
             ws.shutdown();
         }
-        catch (Poco::IOException& exc)
+        catch (const Poco::IOException& exc)
         {
             Poco::Util::Application::instance().logger().error(logPrefix() + "IOException: " + exc.message());
         }
