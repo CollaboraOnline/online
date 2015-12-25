@@ -31,8 +31,6 @@ public:
                         const std::string& childId);
     virtual ~ChildProcessSession();
 
-    virtual bool handleInput(const char *buffer, int length) override;
-
     virtual bool getStatus(const char *buffer, int length);
 
     virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -73,7 +71,11 @@ public:
     LibreOfficeKit *_loKit;
     const std::string _childId;
 
- private:
+private:
+
+    virtual bool _handleInput(const char *buffer, int length) override;
+
+private:
     int _clientPart;
 };
 

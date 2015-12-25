@@ -178,4 +178,29 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
     }
 }
 
+bool LOOLSession::handleInput(const char *buffer, int length)
+{
+    assert(buffer != nullptr);
+
+    Log::trace(_kindString + ",Recv," + getAbbreviatedMessage(buffer, length));
+
+    try
+    {
+        return _handleInput(buffer, length);
+    }
+    catch (const Exception& exc)
+    {
+        Log::error(std::string("Exception: ") + exc.what());
+    }
+    catch (const std::exception& exc)
+    {
+        Log::error(std::string("Exception: ") + exc.what());
+    }
+    catch (...)
+    {
+        Log::error("Unexpected Exception.");
+    }
+
+    return false;
+}
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

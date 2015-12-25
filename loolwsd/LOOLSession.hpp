@@ -50,7 +50,7 @@ public:
 
     virtual bool getPartPageRectangles(const char *buffer, int length) = 0;
 
-    virtual bool handleInput(const char *buffer, int length) = 0;
+    bool handleInput(const char *buffer, int length);
 
     static const std::string jailDocumentURL;
 
@@ -84,6 +84,10 @@ protected:
 
     /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
     std::string _docOptions;
+
+private:
+
+    virtual bool _handleInput(const char *buffer, int length) = 0;
 
 private:
     std::mutex _mutex;

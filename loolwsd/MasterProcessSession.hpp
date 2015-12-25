@@ -22,8 +22,6 @@ public:
     MasterProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws, Kind kind);
     virtual ~MasterProcessSession();
 
-    virtual bool handleInput(const char *buffer, int length) override;
-
     bool haveSeparateProcess();
 
     static Poco::Path getJailPath(Poco::UInt64 childId);
@@ -70,6 +68,10 @@ public:
     static std::condition_variable _availableChildSessionCV;
 
     std::unique_ptr<TileCache> _tileCache;
+
+private:
+
+    virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
     // The id of the child process

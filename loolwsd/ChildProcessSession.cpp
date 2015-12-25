@@ -65,11 +65,9 @@ ChildProcessSession::~ChildProcessSession()
     Util::shutdownWebSocket(*_ws);
 }
 
-bool ChildProcessSession::handleInput(const char *buffer, int length)
+bool ChildProcessSession::_handleInput(const char *buffer, int length)
 {
-    Log::info(_kindString + ",Input," + getAbbreviatedMessage(buffer, length));
-
-    std::string firstLine = getFirstLine(buffer, length);
+    const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     if (tokens[0] == "canceltiles")

@@ -71,11 +71,9 @@ MasterProcessSession::~MasterProcessSession()
     }
 }
 
-bool MasterProcessSession::handleInput(const char *buffer, int length)
+bool MasterProcessSession::_handleInput(const char *buffer, int length)
 {
-    Log::trace(_kindString + ",Recv," + getAbbreviatedMessage(buffer, length));
-
-    std::string firstLine = getFirstLine(buffer, length);
+    const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     if (haveSeparateProcess())
