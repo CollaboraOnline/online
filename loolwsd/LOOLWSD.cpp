@@ -339,7 +339,7 @@ public:
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
                     LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
-                    std::shared_ptr<MasterProcessSession> session(new MasterProcessSession(ws, kind));
+                    auto session = std::make_shared<MasterProcessSession>(ws, kind);
                     const std::string filePrefix("file://");
                     const std::string load = "load url=" + filePrefix + fromPath;
                     session->handleInput(load.data(), load.size());
@@ -440,7 +440,7 @@ public:
         {
             try
             {
-                std::shared_ptr<WebSocket> ws(new WebSocket(request, response));
+                auto ws = std::make_shared<WebSocket>(request, response);
 
                 LOOLSession::Kind kind;
 
@@ -449,7 +449,7 @@ public:
                 else
                     kind = LOOLSession::Kind::ToClient;
 
-                std::shared_ptr<MasterProcessSession> session(new MasterProcessSession(ws, kind));
+                auto session = std::make_shared<MasterProcessSession>(ws, kind);
 
                 // For ToClient sessions, we store incoming messages in a queue and have a separate
                 // thread that handles them. This is so that we can empty the queue when we get a

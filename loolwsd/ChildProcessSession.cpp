@@ -261,7 +261,6 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         Log::info("Local URI: [" + aUri.toString() + "].");
     }
 
-
     if (_loKitDocument != nullptr)
     {
         _viewId = _loKitDocument->pClass->createView(_loKitDocument);

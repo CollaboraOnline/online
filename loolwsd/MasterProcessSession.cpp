@@ -211,9 +211,10 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         Process::PID pidChild = std::stoull(tokens[3]);
 
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
-        _availableChildSessions.insert(std::pair<Thread::TID, std::shared_ptr<MasterProcessSession>> (tId, shared_from_this()));
+        _availableChildSessions.emplace(tId, shared_from_this());
 
-        Log::info() << _kindString << ",Inserted " << this << " id=" << childId << " into _availableChildSessions, size=" << _availableChildSessions.size() << Log::end;
+        Log::info() << _kindString << " mapped " << this << " id=" << childId << ", tId=" << tId
+                    << " into _availableChildSessions, size=" << _availableChildSessions.size() << Log::end;
 
         _childId = childId;
         _pidChild = pidChild;
@@ -558,7 +559,7 @@ void MasterProcessSession::dispatchChild()
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
 
-    Log::debug() << "Waiting for a child session permission for thead [" << Thread::currentTid() << "]." << Log::end;
+    Log::debug() << "Waiting for a child session permission for thread [" << Thread::currentTid() << "]." << Log::end;
     while (nRequest-- && !bFound)
     {
         _availableChildSessionCV.wait_for(

@@ -364,7 +364,7 @@ public:
             cs.setTimeout(0);
             HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI);
             HTTPResponse response;
-            std::shared_ptr<WebSocket> ws(new WebSocket(cs, request, response));
+            auto ws = std::make_shared<WebSocket>(cs, request, response);
 
             _session.reset(new ChildProcessSession(ws, _loKit, _loKitDocument, std::to_string(_childId)));
             ws->setReceiveTimeout(0);
@@ -579,21 +579,16 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                             if ( _connections.empty() )
                             {
                                 Log::info("Creating main thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
-                                thread = std::shared_ptr<Connection>(new Connection(loKit, nullptr, _childId, threadId));
+                                thread = std::make_shared<Connection>(loKit, nullptr, _childId, threadId);
                             }
                             else
                             {
                                 Log::info("Creating view thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
                                 auto aConnection = _connections.begin();
-                                thread = std::shared_ptr<Connection>(new Connection(loKit, aConnection->second->getLOKitDocument(), _childId, threadId));
+                                thread = std::make_shared<Connection>(loKit, aConnection->second->getLOKitDocument(), _childId, threadId);
                             }
 
-                            auto aInserted = _connections.insert(
-                                std::pair<std::string, std::shared_ptr<Connection>>
-                                (
-                                    threadId,
-                                    thread
-                                ));
+                            auto aInserted = _connections.emplace(threadId, thread);
 
                             if ( aInserted.second )
                                 thread->start();
