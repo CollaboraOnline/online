@@ -234,6 +234,13 @@ public:
 
     void run()
     {
+        static const std::string thread_name = "lokit_callback_handler";
+#ifdef __linux
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to " + thread_name + ".");
+#endif
+        Log::debug("Thread [" + thread_name + "] started.");
+
         while ( true )
         {
             Notification::Ptr aNotification(_queue.waitDequeueNotification());
@@ -268,6 +275,8 @@ public:
             }
             else break;
         }
+
+        Log::debug("Thread [" + thread_name + "] finished.");
     }
 
 private:
@@ -290,10 +299,13 @@ public:
 
     void run() override
     {
+        static const std::string thread_name = "lokit_queue_handler";
 #ifdef __linux
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name.");
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to " + thread_name + ".");
 #endif
+        Log::debug("Thread [" + thread_name + "] started.");
+
         try
         {
             while (true)
@@ -315,6 +327,8 @@ public:
             Log::error("Unexpected Exception.");
             raise(SIGABRT);
         }
+
+        Log::debug("Thread [" + thread_name + "] finished.");
     }
 
 private:
@@ -351,10 +365,13 @@ public:
 
     void run() override
     {
+        static const std::string thread_name = "lokit_connection";
 #ifdef __linux
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("lokit_connection"), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name.");
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to " + thread_name + ".");
 #endif
+        Log::debug("Thread [" + thread_name + "] started.");
+
         try
         {
             // Open websocket connection between the child process and the
@@ -414,6 +431,8 @@ public:
         {
             Log::error(std::string("Exception: ") + exc.what());
         }
+
+        Log::debug("Thread [" + thread_name + "] finished.");
     }
 
     ~Connection()
@@ -453,10 +472,12 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
     assert (_childId != 0);
     assert (!loSubPath.empty());
 
+    static const std::string thread_name = "libreofficekit";
 #ifdef __linux
-    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
-        Log::error("Cannot set thread name.");
+    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+        Log::error("Cannot set thread name to " + thread_name + ".");
 #endif
+    Log::debug("Thread [" + thread_name + "] started.");
 
     static const std::string instdir_path =
 #ifdef __APPLE__
@@ -644,7 +665,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
     // Destroy LibreOfficeKit
     loKit->pClass->destroy(loKit.get());
 
-    Log::info("Kit process " + std::to_string(Process::id()) + " finished.");
+    Log::debug("Thread [" + thread_name + "] finished.");
 }
 
 #ifndef LOOLKIT_NO_MAIN
@@ -720,6 +741,7 @@ int main(int argc, char** argv)
 
     run_lok_main(loSubPath, _childId, _pipe);
 
+    Log::info("loolkit finished OK!");
     return 0;
 }
 

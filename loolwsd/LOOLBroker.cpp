@@ -440,10 +440,12 @@ public:
         pStart = aBuffer;
         pEnd   = aBuffer;
 
+        static const std::string thread_name = "broker_pipe_reader";
 #ifdef __linux
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("pipe_reader"), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name.");
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to " + thread_name + ".");
 #endif
+        Log::debug("Thread [" + thread_name + "] started.");
 
         while (true)
         {
@@ -497,6 +499,8 @@ public:
                 }
             }
         }
+
+        Log::debug("Thread [" + thread_name + "] finished.");
     }
 
 private:

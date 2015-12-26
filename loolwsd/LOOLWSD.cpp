@@ -244,10 +244,12 @@ public:
 
     void run() override
     {
+        static const std::string thread_name = "wsd_pipe_reader";
 #ifdef __linux
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("queue_handler"), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name.");
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to " + thread_name + ".");
 #endif
+        Log::debug("Thread [" + thread_name + "] started.");
 
         while (true)
         {
@@ -257,6 +259,8 @@ public:
             if (!_session->handleInput(input.c_str(), input.size()))
                 break;
         }
+
+        Log::debug("Thread [" + thread_name + "] finished.");
     }
 
 private:
@@ -301,8 +305,8 @@ public:
     }
 };
 
+/// Handle a WebSocket connection or a simple HTTP request.
 class RequestHandler: public HTTPRequestHandler
-    /// Handle a WebSocket connection or a simple HTTP request.
 {
 public:
     RequestHandler()
@@ -311,16 +315,17 @@ public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
-#ifdef __linux
         std::string thread_name;
         if (request.serverAddress().port() == LOOLWSD::MASTER_PORT_NUMBER)
             thread_name = "prision_socket";
         else
             thread_name = "client_socket";
 
+#ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name.");
+            Log::error("Cannot set thread name to " + thread_name + ".");
 #endif
+        Log::debug("Thread [" + thread_name + "] started.");
 
         if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
         {
@@ -542,6 +547,8 @@ public:
         {
             Log::error("IOException: " + exc.message());
         }
+
+        Log::debug("Thread [" + thread_name + "] finished.");
     }
 };
 
