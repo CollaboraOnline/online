@@ -554,8 +554,7 @@ void MasterProcessSession::dispatchChild()
     short nRequest = 3;
     bool  bFound = false;
 
-    // Copy document into jail using the fixed name
-
+    // Wait until the child has connected with Master.
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
 
@@ -588,7 +587,7 @@ void MasterProcessSession::dispatchChild()
 
     lock.unlock();
 
-    if (!nRequest && !bFound)
+    if (nRequest < 0 && !bFound)
     {
         Log::error("Failed to connect to child. Shutting down socket.");
         Util::shutdownWebSocket(*_ws);
@@ -601,6 +600,7 @@ void MasterProcessSession::dispatchChild()
     if (aUri.isRelative())
         aUri = URI( URI("file://"), aUri.toString() );
 
+    // Copy document into jail using the fixed name
     if (!aUri.empty() && aUri.getScheme() == "file")
     {
         const std::string aJailDoc = jailDocumentURL.substr(1) + Path::separator() + std::to_string(childSession->_pidChild);
