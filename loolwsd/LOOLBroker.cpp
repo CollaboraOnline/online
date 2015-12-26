@@ -451,18 +451,29 @@ public:
             {
                 (void)poll(&aPoll,1,-1);
 
-                if( (aPoll.revents & POLLIN) != 0 )
+                if (poll(&aPoll, 1, -1) < 0)
+                {
+                    Log::error("Failed to poll pipe [" + FIFO_FILE + "].");
+                    continue;
+                }
+                else
+                if (aPoll.revents & POLLIN)
                 {
                     nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
                     if (nBytes < 0)
                     {
                         pStart = pEnd = nullptr;
-                        Log::error("Error reading message.");
+                        Log::error("Error reading message from pipe [" + FIFO_FILE + "].");
                         continue;
                     }
                     pStart = aBuffer;
                     pEnd   = aBuffer + nBytes;
-                    Log::trace("Broker readFIFO: [" + std::string(pStart, nBytes) + "]");
+                }
+                else
+                if (aPoll.revents & (POLLERR | POLLHUP))
+                {
+                    Log::error("Broken pipe [" + FIFO_FILE + "] with broker.");
+                    break;
                 }
             }
 
