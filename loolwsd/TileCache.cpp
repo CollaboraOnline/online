@@ -147,7 +147,7 @@ void TileCache::documentSaved()
     // first remove the invalidated tiles from the Persistent cache
     std::string persistentDirName = cacheDirName(false);
     for (const auto& it : _toBeRemoved)
-        File(persistentDirName + "/" + it).remove();
+        Util::removeFile(persistentDirName + "/" + it);
 
     _cacheMutex.lock();
     // then move the new tiles from the Editing cache to Persistent
@@ -228,7 +228,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
             const std::string fileName = tileIterator.path().getFileName();
             if (intersectsTile(fileName, part, x, y, width, height))
             {
-                File(tileIterator.path()).remove();
+                Util::removeFile(tileIterator.path());
             }
         }
         _cacheMutex.unlock();
@@ -392,27 +392,22 @@ void TileCache::setup(const std::string& timestamp)
         lastModified = Timestamp();
     }
 
-    File cacheDir(toplevelCacheDirName());
-    if (cacheDir.exists())
+    if (cleanEverything)
     {
-        if (cleanEverything)
-        {
-            // document changed externally, clean up everything
-            cacheDir.remove(true);
-            Log::info("Completely cleared cache: " + toplevelCacheDirName());
-        }
-        else
-        {
-            // remove only the Editing cache
-            File editingCacheDir(cacheDirName(true));
-            if (editingCacheDir.exists())
-            {
-                editingCacheDir.remove(true);
-                Log::info("Cleared the editing cache: " + cacheDirName(true));
-            }
-        }
+        // document changed externally, clean up everything
+        const auto path = toplevelCacheDirName();
+        Util::removeFile(path, true);
+        Log::info("Completely cleared cache: " + path);
+    }
+    else
+    {
+        // remove only the Editing cache
+        const auto path = cacheDirName(true);
+        Util::removeFile(path, true);
+        Log::info("Cleared the editing cache: " + path);
     }
 
+    File cacheDir(toplevelCacheDirName());
     cacheDir.createDirectories();
 
     saveLastModified(lastModified);

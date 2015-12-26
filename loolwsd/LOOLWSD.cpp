@@ -368,7 +368,7 @@ public:
                 // Clean up the temporary directory the HTMLForm ctor created.
                 Path tempDirectory(fromPath);
                 tempDirectory.setFileName("");
-                File(tempDirectory).remove(/*recursive=*/true);
+                Util::removeFile(tempDirectory, /*recursive=*/true);
             }
             else if (tokens.count() >= 2 && tokens[1] == "insertfile")
             {
@@ -413,8 +413,7 @@ public:
                     if (form.has("mime_type"))
                         mimeType = form.get("mime_type");
                     response.sendFile(filePath, mimeType);
-                    File dir(dirPath);
-                    dir.remove(true);
+                    Util::removeFile(dirPath, true);
                 }
                 else
                 {

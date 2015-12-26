@@ -13,6 +13,8 @@
 #include <string>
 #include <sstream>
 
+#include <Poco/File.h>
+#include <Poco/Path.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Logger.h>
 
@@ -44,6 +46,29 @@ namespace Util
     ssize_t readFIFO(int nPipe, char* pBuffer, ssize_t nSize);
 
     ssize_t readMessage(int nPipe, char* pBuffer, ssize_t nSize);
+
+    /// Safely remove a file or directory.
+    /// Supresses exception when the file is already removed.
+    /// This can happen when there is a race (unavoidable) or when
+    /// we don't care to check before we remove (when no race exists).
+    inline
+    void removeFile(const std::string& path, const bool recursive = false)
+    {
+        try
+        {
+            Poco::File(path).remove(recursive);
+        }
+        catch (const std::exception&)
+        {
+            // Already removed, nothing more to do.
+        }
+    }
+
+    inline
+    void removeFile(const Poco::Path& path, const bool recursive = false)
+    {
+        removeFile(path.toString(), recursive);
+    }
 };
 
 //TODO: Move to own file.
