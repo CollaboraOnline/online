@@ -60,8 +60,15 @@ ChildProcessSession::~ChildProcessSession()
 {
     Log::info() << "ChildProcessSession dtor " << Kind::ToMaster
                 << " this:" << this << " ws:" << _ws.get() << Log::end;
+
+    if (_loKitDocument != nullptr)
+    {
+        _loKitDocument->pClass->destroyView(_loKitDocument, _viewId);
+    }
+
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, 0, 0);
+
     Util::shutdownWebSocket(*_ws);
 }
 

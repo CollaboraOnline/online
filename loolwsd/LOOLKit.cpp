@@ -458,20 +458,23 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
         Log::error("Cannot set thread name.");
 #endif
 
-    try
-    {
+    static const std::string instdir_path =
 #ifdef __APPLE__
-        LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/Frameworks").c_str(), "file:///user"));
+                    ("/" + loSubPath + "/Frameworks");
 #else
-        LibreOfficeKit *loKit(lok_init_2(("/" + loSubPath + "/program").c_str(), "file:///user"));
+                    ("/" + loSubPath + "/program");
 #endif
 
-        if (!loKit)
-        {
-            Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
-            exit(-1);
-        }
+    std::unique_ptr<LibreOfficeKit> loKit(lok_init_2(instdir_path.c_str(), "file:///user"));
 
+    if (!loKit)
+    {
+        Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
+        exit(-1);
+    }
+
+    try
+    {
         int writerBroker;
         int readerBroker;
 
@@ -495,7 +498,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
         std::string aResponse;
         std::string aMessage;
 
-        while ( true )
+        while (true)
         {
             if ( pStart == pEnd )
             {
@@ -579,13 +582,13 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                             if ( _connections.empty() )
                             {
                                 Log::info("Creating main thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
-                                thread = std::make_shared<Connection>(loKit, nullptr, _childId, threadId);
+                                thread = std::make_shared<Connection>(loKit.get(), nullptr, _childId, threadId);
                             }
                             else
                             {
                                 Log::info("Creating view thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
                                 auto aConnection = _connections.begin();
-                                thread = std::make_shared<Connection>(loKit, aConnection->second->getLOKitDocument(), _childId, threadId);
+                                thread = std::make_shared<Connection>(loKit.get(), aConnection->second->getLOKitDocument(), _childId, threadId);
                             }
 
                             auto aInserted = _connections.emplace(threadId, thread);
@@ -593,7 +596,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                             if ( aInserted.second )
                                 thread->start();
                             else
-                                Log::error("Connection not created for child: " + std::to_string(_childId) + ", thread: " + threadId);
+                                Log::error("Connection already exists for child: " + std::to_string(_childId) + ", thread: " + threadId);
 
                             Log::debug("Connections: " + std::to_string(_connections.size()));
                         }
@@ -612,13 +615,6 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
             }
         }
 
-        // Destroy LibreOfficeKit
-        // TODO: destroyView for views.
-        loKit->pClass->destroy(loKit);
-
-        Log::info("Kit process " + std::to_string(Process::id()) + " finished OK. ");
-
-        pthread_exit(0);
     }
     catch (const Exception& exc)
     {
@@ -630,6 +626,25 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
     {
         Log::error(std::string("Exception: ") + exc.what());
     }
+
+    // Get the document to destroy later.
+    auto loKitDocument = _connections.size() > 0
+                        ? _connections.begin()->second->getLOKitDocument()
+                        : nullptr;
+
+    // Destroy all connections and views.
+    _connections.clear();
+
+    // Destroy the document.
+    if (loKitDocument != nullptr)
+    {
+        loKitDocument->pClass->destroy(loKitDocument);
+    }
+
+    // Destroy LibreOfficeKit
+    loKit->pClass->destroy(loKit.get());
+
+    Log::info("Kit process " + std::to_string(Process::id()) + " finished.");
 }
 
 #ifndef LOOLKIT_NO_MAIN
