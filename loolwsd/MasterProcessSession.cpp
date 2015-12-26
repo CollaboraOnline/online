@@ -61,7 +61,7 @@ MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, const 
 
 MasterProcessSession::~MasterProcessSession()
 {
-    Log::info() << "MasterProcessSession ctor " << _kindString
+    Log::info() << "MasterProcessSession dtor " << _kindString
                 << " this:" << this << " ws:" << _ws.get() << Log::end;
 
     auto peer = _peer.lock();

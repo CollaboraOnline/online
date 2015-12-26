@@ -218,14 +218,14 @@ std::unique_ptr<std::fstream> TileCache::lookupRendering(const std::string& name
 void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
 {
     // in the Editing cache, remove immediately
-    std::string editingDirName = cacheDirName(true);
+    const std::string editingDirName = cacheDirName(true);
     File editingDir(editingDirName);
     if (editingDir.exists() && editingDir.isDirectory())
     {
         _cacheMutex.lock();
         for (auto tileIterator = DirectoryIterator(editingDir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
-            std::string fileName = tileIterator.path().getFileName();
+            const std::string fileName = tileIterator.path().getFileName();
             if (intersectsTile(fileName, part, x, y, width, height))
             {
                 File(tileIterator.path()).remove();
@@ -235,13 +235,13 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
     }
 
     // in the Persistent cache, add to _toBeRemoved for removal on save
-    std::string persistentDirName = cacheDirName(false);
+    const std::string persistentDirName = cacheDirName(false);
     File persistentDir(persistentDirName);
     if (persistentDir.exists() && persistentDir.isDirectory())
     {
         for (auto tileIterator = DirectoryIterator(persistentDir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
-            std::string fileName = tileIterator.path().getFileName();
+            const std::string fileName = tileIterator.path().getFileName();
             if (_toBeRemoved.find(fileName) == _toBeRemoved.end() && intersectsTile(fileName, part, x, y, width, height))
             {
                 _toBeRemoved.insert(fileName);
@@ -304,12 +304,12 @@ std::string TileCache::cacheFileName(int part, int width, int height, int tilePo
             std::to_string(tileWidth) + "x" + std::to_string(tileHeight) + ".png");
 }
 
-bool TileCache::parseCacheFileName(std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight)
+bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight)
 {
     return (std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d.png", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7);
 }
 
-bool TileCache::intersectsTile(std::string& fileName, int part, int x, int y, int width, int height)
+bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height)
 {
     int tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight;
 

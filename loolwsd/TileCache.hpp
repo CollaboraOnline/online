@@ -70,10 +70,10 @@ private:
     std::string cacheDirName(bool useEditingCache);
 
     std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
-    bool parseCacheFileName(std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
+    bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
-    bool intersectsTile(std::string& fileName, int part, int x, int y, int width, int height);
+    bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height);
 
     /// Load the timestamp from modtime.txt.
     Poco::Timestamp getLastModified();

@@ -121,9 +121,9 @@ public:
     void callback(const int nType, const std::string& rPayload, void* pData)
     {
         ChildProcessSession *srv = reinterpret_cast<ChildProcessSession *>(pData);
-        Log::debug() << "Callback [" << srv->_viewId << "] "
-                     << std::string(callbackTypeToString(nType))
-                     << " " << rPayload << Log::end;
+        Log::trace() << "Callback [" << srv->_viewId << "] "
+                     << callbackTypeToString(nType)
+                     << " [" << rPayload << "]." << Log::end;
 
         switch ((LibreOfficeKitCallbackType) nType)
         {
@@ -242,9 +242,27 @@ public:
                 CallBackNotification::Ptr aCallBackNotification = aNotification.cast<CallBackNotification>();
                 if (aCallBackNotification)
                 {
+                    const auto nType = aCallBackNotification->m_nType;
+                    try
                     {
                         FastMutex::ScopedLock lock(_mutex);
-                        callback(aCallBackNotification->m_nType, aCallBackNotification->m_aPayload, aCallBackNotification->m_pSession);
+                        callback(nType, aCallBackNotification->m_aPayload, aCallBackNotification->m_pSession);
+                    }
+                    catch (const Exception& exc)
+                    {
+                        Log::error() << "Error while handling callback [" << callbackTypeToString(nType) << "]. "
+                                     << exc.displayText()
+                                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                                     << Log::end;
+                    }
+                    catch (const std::exception& exc)
+                    {
+                        Log::error("Error while handling callback [" + callbackTypeToString(nType) + "]. " +
+                                   std::string("Exception: ") + exc.what());
+                    }
+                    catch (...)
+                    {
+                        Log::error("Unexpected Exception while handling callback [" + callbackTypeToString(nType) + "].");
                     }
                 }
             }
@@ -388,7 +406,9 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error(std::string("Exception: ") + exc.what());
+            Log::error() << exc.displayText()
+                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                         << Log::end;
         }
         catch (const std::exception& exc)
         {
@@ -607,7 +627,9 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
     }
     catch (const Exception& exc)
     {
-        Log::error(std::string("Exception: ") + exc.what());
+        Log::error() << exc.name() << ": " << exc.displayText()
+                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                     << Log::end;
     }
     catch (const std::exception& exc)
     {
