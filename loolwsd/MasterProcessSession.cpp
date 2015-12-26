@@ -388,6 +388,10 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
 
     _tileCache.reset(new TileCache(_docURL, timestamp));
 
+    // Finally, wait for the Child to connect to Master,
+    // link the document in jail and dispatch load to child.
+    dispatchChild();
+
     return true;
 }
 
