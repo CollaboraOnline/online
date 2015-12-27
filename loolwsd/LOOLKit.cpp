@@ -37,6 +37,7 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
+#include "Common.hpp"
 #include "MessageQueue.hpp"
 #include "Util.hpp"
 #include "ChildProcessSession.hpp"
@@ -56,7 +57,6 @@ using Poco::Notification;
 using Poco::NotificationQueue;
 using Poco::FastMutex;
 
-const int MASTER_PORT_NUMBER = 9981;
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
 

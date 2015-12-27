@@ -207,4 +207,5 @@ bool LOOLSession::handleInput(const char *buffer, int length)
 
     return false;
 }
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -103,6 +103,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/URI.h>
 #include <Poco/Environment.h>
 
+#include "Common.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "MasterProcessSession.hpp"
@@ -316,7 +317,7 @@ public:
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         std::string thread_name;
-        if (request.serverAddress().port() == LOOLWSD::MASTER_PORT_NUMBER)
+        if (request.serverAddress().port() == MASTER_PORT_NUMBER)
             thread_name = "prision_socket";
         else
             thread_name = "client_socket";
@@ -439,7 +440,7 @@ public:
         BasicTileQueue queue;
         Thread queueHandlerThread;
         QueueHandler handler(queue);
-        Poco::Timespan waitTime(LOOLWSD::POLL_TIMEOUT);
+        Poco::Timespan waitTime(POLL_TIMEOUT);
 
         try
         {
@@ -449,7 +450,7 @@ public:
 
                 LOOLSession::Kind kind;
 
-                if (request.getURI() == LOOLWSD::CHILD_URI && request.serverAddress().port() == LOOLWSD::MASTER_PORT_NUMBER)
+                if (request.getURI() == LOOLWSD::CHILD_URI && request.serverAddress().port() == MASTER_PORT_NUMBER)
                     kind = LOOLSession::Kind::ToPrisoner;
                 else
                     kind = LOOLSession::Kind::ToClient;

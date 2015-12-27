@@ -32,6 +32,7 @@
 #include <Poco/Thread.h>
 #include <Poco/NamedMutex.h>
 
+#include "Common.hpp"
 #include "Util.hpp"
 
 // First include the grist of the helper process - ideally

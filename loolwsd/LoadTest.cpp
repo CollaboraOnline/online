@@ -38,6 +38,7 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
+#include "Common.hpp"
 #include "LoadTest.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLWSD.hpp"
@@ -271,7 +272,7 @@ LoadTest::LoadTest() :
     _numClients(20),
     _numDocsPerClient(500),
     _duration(6),
-    _url("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
+    _url("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
 {
 }
 

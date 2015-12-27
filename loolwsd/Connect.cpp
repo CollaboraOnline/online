@@ -32,6 +32,7 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
+#include "Common.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLWSD.hpp"
 #include "Util.hpp"
@@ -115,7 +116,7 @@ class Connect: public Poco::Util::Application
 {
 public:
     Connect() :
-        _uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
+        _uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
     {
     }
 
