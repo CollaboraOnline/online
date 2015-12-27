@@ -28,8 +28,6 @@ namespace Util
        unsigned getNext();
     }
 
-    std::string logPrefix();
-
     bool windowingAvailable();
 
     // Sadly, older libpng headers don't use const for the pixmap pointer parameter to

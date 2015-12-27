@@ -73,8 +73,32 @@ namespace rng
 
 namespace Log
 {
+    static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
     static std::string SourceName;
     static std::string SourceId;
+
+    std::string logPrefix()
+    {
+        Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - epochStart;
+
+        const Poco::Int64 one_s = 1000000;
+        const Poco::Int64 hours = usec / (one_s*60*60);
+        usec %= (one_s*60*60);
+        const Poco::Int64 minutes = usec / (one_s*60);
+        usec %= (one_s*60);
+        const Poco::Int64 seconds = usec / (one_s);
+        usec %= (one_s);
+
+        std::ostringstream stream;
+        stream << Log::SourceId << '-' << std::setw(2) << std::setfill('0')
+               << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ','
+               << std::setw(2) << hours << ':' << std::setw(2) << minutes << ':'
+               << std::setw(2) << seconds << "." << std::setw(6) << usec
+               << ", ";
+
+        return stream.str();
+    }
+
 
     void initialize(const std::string& name)
     {
@@ -110,56 +134,32 @@ namespace Log
 
     void trace(const std::string& msg)
     {
-        logger().trace(Util::logPrefix() + msg);
+        logger().trace(logPrefix() + msg);
     }
 
     void debug(const std::string& msg)
     {
-        logger().debug(Util::logPrefix() + msg);
+        logger().debug(logPrefix() + msg);
     }
 
     void info(const std::string& msg)
     {
-        logger().information(Util::logPrefix() + msg);
+        logger().information(logPrefix() + msg);
     }
 
     void warn(const std::string& msg)
     {
-        logger().warning(Util::logPrefix() + msg);
+        logger().warning(logPrefix() + msg);
     }
 
     void error(const std::string& msg)
     {
-        logger().error(Util::logPrefix() + msg + " (" + strerror(errno) + ").");
+        logger().error(logPrefix() + msg + " (" + strerror(errno) + ").");
     }
 }
 
 namespace Util
 {
-    static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
-
-    std::string logPrefix()
-    {
-        Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - epochStart;
-
-        const Poco::Int64 one_s = 1000000;
-        const Poco::Int64 hours = usec / (one_s*60*60);
-        usec %= (one_s*60*60);
-        const Poco::Int64 minutes = usec / (one_s*60);
-        usec %= (one_s*60);
-        const Poco::Int64 seconds = usec / (one_s);
-        usec %= (one_s);
-
-        std::ostringstream stream;
-        stream << Log::SourceId << '-' << std::setw(2) << std::setfill('0')
-               << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ','
-               << std::setw(2) << hours << ':' << std::setw(2) << minutes << ':'
-               << std::setw(2) << seconds << "." << std::setw(6) << usec
-               << ", ";
-
-        return stream.str();
-    }
-
     bool windowingAvailable()
     {
 #ifdef __linux
@@ -217,7 +217,7 @@ namespace Util
         }
         catch (const Poco::IOException& exc)
         {
-            Poco::Util::Application::instance().logger().error(logPrefix() + "IOException: " + exc.message());
+            Log::error("IOException: " + exc.message());
         }
     }
 

@@ -96,10 +96,8 @@ public:
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
 #if 0
-                    std::cout <<
-                        Util::logPrefix() <<
-                        "Client got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) <<
-                        std::endl;
+                    Log::debug() << "Client got " << n << " bytes: "
+                                 << getAbbreviatedMessage(buffer, n) << Log::end;
 #endif
                     std::string response = getFirstLine(buffer, n);
                     StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -112,10 +110,8 @@ public:
                         n = _ws.receiveFrame(largeBuffer, size, flags);
 
 #if 0
-                        std::cout <<
-                            Util::logPrefix() <<
-                            "Client got " << n << " bytes: " << getAbbreviatedMessage(largeBuffer, n) <<
-                            std::endl;
+                        Log::debug() << "Client got " << n << " bytes: "
+                                     << getAbbreviatedMessage(largeBuffer, n) << Log::end;
 #endif
                         response = getFirstLine(buffer, n);
                     }
@@ -137,7 +133,7 @@ public:
             Application::instance().logger().error("WebSocketException: " + exc.message());
             _ws.close();
         }
-        std::cout << Util::logPrefix() << "Got " << tileCount << " tiles" << std::endl;
+        Log::debug() << "Got " << tileCount << " tiles" << Log::end;
     }
 
     WebSocket& _ws;
@@ -192,7 +188,7 @@ private:
 
         URI uri(_app.getURL());
 
-        std::cout << Util::logPrefix() << "Starting client for '" << document << "'" << std::endl;
+        Log::debug() << "Starting client for '" << document << "'" << Log::end;
 
         HTTPClientSession cs(uri.getHost(), uri.getPort());
         HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
@@ -219,7 +215,7 @@ private:
         cond.wait(mutex);
         mutex.unlock();
 
-        std::cout << Util::logPrefix() << "Got status, size=" << output._width << "x" << output._height << std::endl;
+        Log::debug() << "Got status, size=" << output._width << "x" << output._height << Log::end;
 
         int y = 0;
         const int DOCTILESIZE = 5000;
@@ -253,7 +249,7 @@ private:
 
         Thread::sleep(10000);
 
-        std::cout << Util::logPrefix() << "Sent " << requestCount << " tile requests, shutting down client for '" << document << "'" << std::endl;
+        Log::debug() << "Sent " << requestCount << " tile requests, shutting down client for '" << document << "'" << Log::end;
 
         ws.shutdown();
         thread.join();
