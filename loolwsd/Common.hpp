@@ -17,5 +17,8 @@ static const int INTERVAL_PROBES = 10;
 static const int MAINTENANCE_INTERVAL = 1;
 static const int POLL_TIMEOUT = 1000000;
 
+// The client port number, which is changed via loolwsd args.
+static int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+
 #endif
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

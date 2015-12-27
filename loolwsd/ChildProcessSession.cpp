@@ -19,6 +19,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
+#include "Common.hpp"
 #include "ChildProcessSession.hpp"
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
@@ -520,9 +521,8 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
             format.size() == 0 ? nullptr :format.c_str(),
             filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
 
-    //TODO: handle download portNumber.
-    //sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
-    //        " port=" + std::to_string(LOOLWSD::portNumber) + " id=" + id);
+    sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
+            " port=" + std::to_string(ClientPortNumber) + " id=" + id);
     return true;
 }
 

@@ -30,7 +30,6 @@ public:
 
     // An Application is a singleton anyway, so just keep these as
     // statics
-    static int portNumber;
     static int timeoutCounter;
     static int _numPreSpawnedChildren;
     static int writerBroker;

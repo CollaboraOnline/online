@@ -701,6 +701,12 @@ int main(int argc, char** argv)
             if (*eq)
                 _pipe = std::string(++eq);
         }
+        else if (strstr(cmd, "--clientport=") == cmd)
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                ClientPortNumber = std::stoll(std::string(++eq));
+        }
     }
 
     if (loSubPath.empty())

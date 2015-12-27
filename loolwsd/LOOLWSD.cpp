@@ -660,7 +660,6 @@ private:
     HTTPServer& _srv;
 };
 
-int LOOLWSD::portNumber = DEFAULT_CLIENT_PORT_NUMBER;
 int LOOLWSD::timeoutCounter = 0;
 int LOOLWSD::writerBroker = -1;
 Poco::UInt64 LOOLWSD::_childId = 0;
@@ -800,7 +799,7 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
         exit(Application::EXIT_OK);
     }
     else if (optionName == "port")
-        portNumber = std::stoi(value);
+        ClientPortNumber = std::stoi(value);
     else if (optionName == "cache")
         cache = value;
     else if (optionName == "systemplate")
@@ -843,6 +842,7 @@ int LOOLWSD::createBroker()
     args.push_back("--lotemplate=" + loTemplate);
     args.push_back("--childroot=" + childRoot);
     args.push_back("--numprespawns=" + std::to_string(_numPreSpawnedChildren));
+    args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
     std::string executable = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
 
@@ -903,7 +903,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         throw IncompatibleOptionsException("child");
     if (jail != "")
         throw IncompatibleOptionsException("jail");
-    if (portNumber == MASTER_PORT_NUMBER)
+    if (ClientPortNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
 
     if (LOOLWSD::doTest)
@@ -935,7 +935,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
 
     // Start a server listening on the port for clients
-    ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
+    ServerSocket svs(ClientPortNumber, _numPreSpawnedChildren*10);
     ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
     HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
 

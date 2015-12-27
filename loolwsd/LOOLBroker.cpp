@@ -558,7 +558,6 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
     }
     else
     {
-        Process::Args args;
         const std::string executable = "loolkit";
         const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
 
@@ -568,9 +567,11 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
             return -1;
         }
 
+        Process::Args args;
         args.push_back("--losubpath=" + loSubPath);
         args.push_back("--child=" + std::to_string(childID));
         args.push_back("--pipe=" + pipe);
+        args.push_back("--clientport=" + ClientPortNumber);
 
         Log::info("Launching LibreOfficeKit: " + executable + " " +
                   Poco::cat(std::string(" "), args.begin(), args.end()));
@@ -664,6 +665,12 @@ int main(int argc, char** argv)
             eq = strchrnul(cmd, '=');
             if (*eq)
                 _numPreSpawnedChildren = std::stoi(std::string(++eq));
+        }
+        else if (strstr(cmd, "--clientport=") == cmd)
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                ClientPortNumber = std::stoll(std::string(++eq));
         }
     }
 
