@@ -339,13 +339,14 @@ private:
 class Connection: public Runnable
 {
 public:
-    Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument, Poco::UInt64 childId, const std::string& threadId) :
+    Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument,
+               const std::string& childId, const std::string& threadId) :
         _loKit(loKit),
         _loKitDocument(loKitDocument),
         _childId(childId),
         _threadId(threadId)
     {
-        Log::info("New connection in child: " + std::to_string(_childId) + ", thread: " + _threadId);
+        Log::info("New connection in child: " + childId + ", thread: " + _threadId);
     }
 
     void start()
@@ -383,11 +384,11 @@ public:
             HTTPResponse response;
             auto ws = std::make_shared<WebSocket>(cs, request, response);
 
-            _session.reset(new ChildProcessSession(ws, _loKit, _loKitDocument, std::to_string(_childId)));
+            _session.reset(new ChildProcessSession(ws, _loKit, _loKitDocument, _childId));
             ws->setReceiveTimeout(0);
 
             // child Jail TID PID
-            std::string hello("child " + std::to_string(_childId) + " " +
+            std::string hello("child " + _childId + " " +
                               _threadId + " " + std::to_string(Process::id()));
             _session->sendTextFrame(hello);
 
@@ -437,20 +438,20 @@ public:
 
     ~Connection()
     {
-        Log::info("Closing connection in child: " + std::to_string(_childId) + ", thread: " + _threadId);
+        Log::info("Closing connection in child: " + _childId + ", thread: " + _threadId);
         //_thread.stop();
     }
 
 private:
     LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
-    Poco::UInt64 _childId;
+    const std::string _childId;
     std::string _threadId;
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
 };
 
-void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std::string& pipe)
+void run_lok_main(const std::string &loSubPath, const std::string& childId, const std::string& pipe)
 {
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
@@ -469,8 +470,8 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
     std::string aURL;
     std::map<std::string, std::shared_ptr<Connection>> _connections;
 
-    assert (_childId != 0);
-    assert (!loSubPath.empty());
+    assert(!childId.empty());
+    assert(!loSubPath.empty());
 
     static const std::string thread_name = "libreofficekit";
 #ifdef __linux
@@ -514,7 +515,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
         CallBackWorker callbackWorker(ChildProcessSession::_callbackQueue);
         Poco::ThreadPool::defaultPool().start(callbackWorker);
 
-        Log::info("Child [" + std::to_string(_childId) + "] is ready.");
+        Log::info("Child [" + childId + "] is ready.");
 
         std::string aResponse;
         std::string aMessage;
@@ -602,14 +603,14 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                             std::shared_ptr<Connection> thread;
                             if ( _connections.empty() )
                             {
-                                Log::info("Creating main thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
-                                thread = std::make_shared<Connection>(loKit.get(), nullptr, _childId, threadId);
+                                Log::info("Creating main thread for child: " + childId + ", thread: " + threadId);
+                                thread = std::make_shared<Connection>(loKit.get(), nullptr, childId, threadId);
                             }
                             else
                             {
-                                Log::info("Creating view thread for child: " + std::to_string(_childId) + ", thread: " + threadId);
+                                Log::info("Creating view thread for child: " + childId + ", thread: " + threadId);
                                 auto aConnection = _connections.begin();
-                                thread = std::make_shared<Connection>(loKit.get(), aConnection->second->getLOKitDocument(), _childId, threadId);
+                                thread = std::make_shared<Connection>(loKit.get(), aConnection->second->getLOKitDocument(), childId, threadId);
                             }
 
                             auto aInserted = _connections.emplace(threadId, thread);
@@ -617,7 +618,7 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
                             if ( aInserted.second )
                                 thread->start();
                             else
-                                Log::error("Connection already exists for child: " + std::to_string(_childId) + ", thread: " + threadId);
+                                Log::error("Connection already exists for child: " + childId + ", thread: " + threadId);
 
                             Log::debug("Connections: " + std::to_string(_connections.size()));
                         }
@@ -674,8 +675,8 @@ void run_lok_main(const std::string &loSubPath, Poco::UInt64 _childId, const std
 int main(int argc, char** argv)
 {
     std::string loSubPath;
-    Poco::UInt64 _childId = 0;
-    std::string _pipe;
+    std::string childId;
+    std::string pipe;
 
     Log::initialize("kit");
 
@@ -693,13 +694,13 @@ int main(int argc, char** argv)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
-                _childId = std::stoll(std::string(++eq));
+                childId = std::string(++eq);
         }
         else if (strstr(cmd, "--pipe=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
-                _pipe = std::string(++eq);
+                pipe = std::string(++eq);
         }
         else if (strstr(cmd, "--clientport=") == cmd)
         {
@@ -715,13 +716,13 @@ int main(int argc, char** argv)
         exit(1);
     }
 
-    if ( !_childId )
+    if ( childId.empty() )
     {
         Log::error("Error: --child is 0");
         exit(1);
     }
 
-    if ( _pipe.empty() )
+    if ( pipe.empty() )
     {
         Log::error("Error: --pipe is empty");
         exit(1);
@@ -745,7 +746,7 @@ int main(int argc, char** argv)
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    run_lok_main(loSubPath, _childId, _pipe);
+    run_lok_main(loSubPath, childId, pipe);
 
     Log::info("loolkit finished OK!");
     return 0;

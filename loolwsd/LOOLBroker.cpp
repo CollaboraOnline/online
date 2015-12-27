@@ -534,7 +534,8 @@ static bool globalPreinit(const std::string &loSubPath)
     return preInit(("/" + loSubPath + "/program").c_str(), "file:///user") == 0;
 }
 
-static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UInt64 childID)
+static int createLibreOfficeKit(const bool sharePages, const std::string& loSubPath,
+                                const std::string& childId)
 {
     Poco::UInt64 child;
     int nFIFOWriter = -1;
@@ -547,7 +548,7 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
         if (!(pid = fork()))
         {
             // child
-            run_lok_main(loSubPath, childID, "");
+            run_lok_main(loSubPath, childId, childId);
             _exit(0);
         }
         else
@@ -569,7 +570,7 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
 
         Process::Args args;
         args.push_back("--losubpath=" + loSubPath);
-        args.push_back("--child=" + std::to_string(childID));
+        args.push_back("--child=" + childId);
         args.push_back("--pipe=" + pipe);
         args.push_back("--clientport=" + ClientPortNumber);
 
@@ -591,18 +592,15 @@ static int createLibreOfficeKit(bool sharePages, std::string loSubPath, Poco::UI
     return child;
 }
 
-static int startupLibreOfficeKit(bool sharePages, int nLOKits,
-                                  std::string loSubPath, Poco::UInt64 child)
+static int startupLibreOfficeKit(const bool sharePages, const int nLOKits,
+                                 const std::string& loSubPath, const std::string& childId)
 {
     Process::PID pId = -1;
 
-    Log::info() << "Starting " << nLOKits << " LoKit instaces."
-                << " Shared: " << (sharePages ? "true" : "false")
-                << ", loSubPath: " << loSubPath
-                << ", child: " << child << Log::end;
+    Log::info() << "Starting " << nLOKits << " LoKit instaces." << Log::end;
     for (int nCntr = nLOKits; nCntr; nCntr--)
     {
-        if ( (pId = createLibreOfficeKit(sharePages, loSubPath, child)) < 0)
+        if ((pId = createLibreOfficeKit(sharePages, loSubPath, childId)) < 0)
         {
             Log::error("Error: failed to create LibreOfficeKit.");
             break;
@@ -630,7 +628,7 @@ int main(int argc, char** argv)
     std::string loSubPath;
     std::string sysTemplate;
     std::string loTemplate;
-    int _numPreSpawnedChildren = 0;
+    int numPreSpawnedChildren = 0;
 
     for (int i = 0; i < argc; ++i)
     {
@@ -664,7 +662,7 @@ int main(int argc, char** argv)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
-                _numPreSpawnedChildren = std::stoi(std::string(++eq));
+                numPreSpawnedChildren = std::stoi(std::string(++eq));
         }
         else if (strstr(cmd, "--clientport=") == cmd)
         {
@@ -698,7 +696,7 @@ int main(int argc, char** argv)
         exit(-1);
     }
 
-    if ( !_numPreSpawnedChildren )
+    if ( !numPreSpawnedChildren )
     {
         Log::error("Error: --numprespawns is 0");
         exit(-1);
@@ -728,9 +726,9 @@ int main(int argc, char** argv)
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    const Poco::UInt64 _childId = Util::rng::getNext();
+    const std::string childId = std::to_string(Util::rng::getNext());
 
-    Path jailPath = Path::forDirectory(childRoot + Path::separator() + std::to_string(_childId));
+    Path jailPath = Path::forDirectory(childRoot + Path::separator() + childId);
     File(jailPath).createDirectories();
 
     Path jailLOInstallation(jailPath, loSubPath);
@@ -806,9 +804,9 @@ int main(int argc, char** argv)
         exit(-1);
     }
 
-    bool sharePages = globalPreinit(loSubPath);
+    const bool sharePages = globalPreinit(loSubPath);
 
-    if ( startupLibreOfficeKit(sharePages, _numPreSpawnedChildren, loSubPath, _childId) < 0 )
+    if ( startupLibreOfficeKit(sharePages, numPreSpawnedChildren, loSubPath, childId) < 0 )
     {
         Log::error("Error: failed to create children.");
         exit(-1);
@@ -870,7 +868,7 @@ int main(int argc, char** argv)
             forkMutex.lock();
             forkCounter -= 1;
 
-            if (createLibreOfficeKit(sharePages, loSubPath, _childId) < 0 )
+            if (createLibreOfficeKit(sharePages, loSubPath, childId) < 0)
                 Log::error("Error: fork falied.");
 
             forkMutex.unlock();
