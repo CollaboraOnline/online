@@ -99,6 +99,12 @@ namespace Log
             {
             }
 
+            StreamLogger(StreamLogger&& sl)
+              : Stream(std::move(sl.Stream.str()))
+              , _func(std::move(sl._func))
+            {
+            }
+
             void flush() const
             {
                 _func(Stream.str());
