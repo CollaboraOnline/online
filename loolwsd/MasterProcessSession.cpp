@@ -69,6 +69,11 @@ MasterProcessSession::~MasterProcessSession()
     {
         Util::shutdownWebSocket(*(peer->_ws));
     }
+    else
+    if (_kind == Kind::ToPrisoner && peer)
+    {
+        Util::shutdownWebSocket(*(peer->_ws));
+    }
 }
 
 bool MasterProcessSession::_handleInput(const char *buffer, int length)
