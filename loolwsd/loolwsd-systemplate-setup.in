@@ -129,7 +129,7 @@ if ! test $? = 0; then
   exit 1;
 fi
 
-gcc_link='g++ -o $dummy -lcap -lpng -ldl  -lPocoNet -lPocoUtil -lPocoXML -lPocoJSON -lPocoFoundation $dummy.o'
+gcc_link='g++ -o $dummy @LIBS@ $dummy.o'
 (eval "$gcc_link") 2>$dummy.err
 
 if ! test $? = 0; then

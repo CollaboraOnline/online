@@ -52,7 +52,7 @@ AC_ARG_ENABLE([tests],
                            [Build and run unit tests]))
 
 # Handle options
-AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
+AS_IF([test "$enable_debug" = yes],
       [POCO_DEBUG_SUFFIX=d],
       [POCO_DEBUG_SUFFIX=])
 
@@ -151,6 +151,7 @@ AC_DEFINE_UNQUOTED([LOOLWSD_CACHEDIR],["$LOOLWSD_CACHEDIR"],[Cache folder])
 AC_SUBST(LOOLWSD_CACHEDIR)
 
 AC_CONFIG_FILES([Makefile
+                 loolwsd-systemplate-setup
                  test/Makefile
                  loolwsd.spec])
 AC_OUTPUT
