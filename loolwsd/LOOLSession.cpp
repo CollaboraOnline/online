@@ -89,7 +89,8 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _kindString(kind == Kind::ToClient ? "ToClient" :
                 kind == Kind::ToMaster ? "ToMaster" : "ToPrisoner"),
     _ws(ws),
-    _docURL("")
+    _docURL(""),
+    _bShutdown(false)
 {
     setId(id);
 }
