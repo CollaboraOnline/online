@@ -204,31 +204,6 @@ namespace
                 Log::error("Error: setuid() failed.");
             }
         }
-#if ENABLE_DEBUG
-        if (geteuid() == 0 && getuid() == 0)
-        {
-#ifdef __linux
-            // Argh, awful hack
-            if (capability == CAP_FOWNER)
-                return;
-#endif
-
-            // Running under sudo, probably because being debugged? Let's drop super-user rights.
-            LOOLWSD::runningAsRoot = true;
-            if (LOOLWSD::uid == 0)
-            {
-                struct passwd *nobody = getpwnam("nobody");
-                if (nobody)
-                    LOOLWSD::uid = nobody->pw_uid;
-                else
-                    LOOLWSD::uid = 65534;
-            }
-            if (setuid(LOOLWSD::uid) != 0)
-            {
-                Log::error("Error: setuid() failed.");
-            }
-        }
-#endif
     }
 }
 
