@@ -48,8 +48,8 @@ L.Control.PartsPreview = L.Control.extend({
 			else
 			{
 				// change the border style of the selected preview.
-				for (var i = 0; i < parts; i++) {
-					L.DomUtil.removeClass(this._previewTiles[i], 'preview-img-selected');
+				for (var j = 0; j < parts; j++) {
+					L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selected');
 				}
 				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-selected');
 			}
@@ -103,7 +103,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_updatePreviewIds: function () {
 		// TO DO: preview-tileX prefix is unneccessary, can be removed completely
 		// since we have them in this._previewTiles[]
-		for (var i=0; i < this._previewTiles.length; i++) {
+		for (var i = 0; i < this._previewTiles.length; i++) {
 			this._previewTiles[i].id = 'preview-tile' + i;
 		}
 		$('.parts-preview').mCustomScrollbar('update');
@@ -116,7 +116,7 @@ L.Control.PartsPreview = L.Control.extend({
 		// insert newPreview to newIndex position
 		this._previewTiles.splice(newIndex, 0, newPreview);
 
-		var selectedFrame = this._previewTiles[e.selectedPart].parentNode; 
+		var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
 		var newFrame = newPreview.parentNode;
 
 		// insert after selectedFrame
@@ -127,7 +127,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_deletePreview: function (e) {
 		var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
 		L.DomUtil.remove(selectedFrame);
-		
+
 		this._previewTiles.splice(e.selectedPart, 1);
 		this._updatePreviewIds();
 	}

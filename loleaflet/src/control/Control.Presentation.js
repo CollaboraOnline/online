@@ -4,7 +4,7 @@
 
 L.Control.Presentation = L.Control.extend({
 	options: {
-		position: 'topleft',
+		position: 'topleft'
 	},
 
 	onAdd: function (map) {
@@ -14,8 +14,8 @@ L.Control.Presentation = L.Control.extend({
 		this._buttons = {
 			'insertpage':    {title: 'Insert Page',          uno: 'InsertPage',        iconName: 'insertpage.png'},
 			'duplicatepage': {title: 'Duplicate Page',       uno: 'DuplicatePage',     iconName: 'duplicatepage.png'},
-			'deletepage':    {title: 'Delete Page',          uno: 'DeletePage',        iconName: 'deletepage.png'},
-		}
+			'deletepage':    {title: 'Delete Page',          uno: 'DeletePage',        iconName: 'deletepage.png'}
+		};
 
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
@@ -23,7 +23,7 @@ L.Control.Presentation = L.Control.extend({
 				buttonsName, container, this._onButtonClick);
 		}
 
-		map.on('updateparts', this._updateDisabled, this)
+		map.on('updateparts', this._updateDisabled, this);
 
 		return container;
 	},
@@ -36,7 +36,7 @@ L.Control.Presentation = L.Control.extend({
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
 			L.DomUtil.addClass(button.el, 'leaflet-disabled');
-			L.DomUtil.addClass(button.el, 'leaflet-control-buttons-disabled');		
+			L.DomUtil.addClass(button.el, 'leaflet-control-buttons-disabled');
 		}
 	},
 
@@ -79,7 +79,7 @@ L.Control.Presentation = L.Control.extend({
 		if (id === 'insertpage' || id === 'duplicatepage') {
 			this._map.fire('insertpage', {
 				selectedPart: docLayer._selectedPart,
-				parts: 		  docLayer._parts,
+				parts: 		  docLayer._parts
 			});
 
 			docLayer._parts++;
@@ -88,18 +88,17 @@ L.Control.Presentation = L.Control.extend({
 		else if (id === 'deletepage') {
 			this._map.fire('deletepage', {
 				selectedPart: docLayer._selectedPart,
-				parts: 		  docLayer._parts,
+				parts: 		  docLayer._parts
 			});
 
 			docLayer._parts--;
-			
 			if (docLayer._selectedPart >= docLayer._parts) {
 				docLayer._selectedPart--;
 			}
 
 			this._map.setPart(docLayer._selectedPart);
 		}
-	},
+	}
 });
 
 L.control.presentation = function (options) {
