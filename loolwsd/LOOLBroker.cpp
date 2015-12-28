@@ -42,9 +42,6 @@
 #define LOOLKIT_NO_MAIN 1
 #include "LOOLKit.cpp"
 
-#define INTERVAL_PROBES 10
-#define MAINTENANCE_INTERVAL 1
-
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_SCLO        "lib" "sclo" ".so"
 #define LIB_SWLO        "lib" "swlo" ".so"
@@ -66,7 +63,6 @@ const std::string BROKER_PREFIX = "/tmp/lokit";
 
 static int readerChild = -1;
 static int readerBroker = -1;
-static int timeoutCounter = 0;
 
 static unsigned int forkCounter = 0;
 static unsigned int childCounter = 0;
@@ -75,8 +71,6 @@ static std::mutex forkMutex;
 static std::deque<Process::PID> _emptyURL;
 static std::map<Process::PID, int> _childProcesses;
 static std::map<std::string, Process::PID> _cacheURL;
-
-Poco::NamedMutex _namedMutexLOOL("loolwsd");
 
 namespace
 {
@@ -800,6 +794,8 @@ int main(int argc, char** argv)
 
     Log::info("loolbroker ready!");
 
+
+    unsigned timeoutCounter = 0;
     while (_childProcesses.size() > 0)
     {
         int status;
@@ -849,8 +845,7 @@ int main(int argc, char** argv)
             forkMutex.unlock();
         }
 
-        ++timeoutCounter;
-        if (timeoutCounter == INTERVAL_PROBES)
+        if (timeoutCounter++ == INTERVAL_PROBES)
         {
             timeoutCounter = 0;
             sleep(MAINTENANCE_INTERVAL);

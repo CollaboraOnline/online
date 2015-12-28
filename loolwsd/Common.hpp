@@ -11,11 +11,11 @@
 #ifndef INCLUDED_COMMON_HPP
 #define INCLUDED_COMMON_HPP
 
-static const int DEFAULT_CLIENT_PORT_NUMBER = 9980;
-static const int MASTER_PORT_NUMBER = 9981;
-static const int INTERVAL_PROBES = 10;
-static const int MAINTENANCE_INTERVAL = 1;
-static const int POLL_TIMEOUT = 1000000;
+constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
+constexpr int MASTER_PORT_NUMBER = 9981;
+constexpr int INTERVAL_PROBES = 10;
+constexpr int MAINTENANCE_INTERVAL = 1;
+constexpr int POLL_TIMEOUT = 1000000;
 
 // The client port number, which is changed via loolwsd args.
 static int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;

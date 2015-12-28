@@ -23,7 +23,6 @@
 #include "ChildProcessSession.hpp"
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
-#include "LOOLWSD.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;

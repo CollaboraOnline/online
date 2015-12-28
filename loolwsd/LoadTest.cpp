@@ -41,7 +41,6 @@
 #include "Common.hpp"
 #include "LoadTest.hpp"
 #include "LOOLProtocol.hpp"
-#include "LOOLWSD.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;

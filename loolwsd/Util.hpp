@@ -12,6 +12,7 @@
 
 #include <string>
 #include <sstream>
+#include <functional>
 
 #include <Poco/File.h>
 #include <Poco/Path.h>

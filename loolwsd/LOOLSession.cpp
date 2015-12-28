@@ -52,7 +52,6 @@
 
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
-#include "LOOLWSD.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
 

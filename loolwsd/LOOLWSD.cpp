@@ -212,7 +212,6 @@ namespace
 #endif
 
             // Running under sudo, probably because being debugged? Let's drop super-user rights.
-            LOOLWSD::runningAsRoot = true;
             if (LOOLWSD::uid == 0)
             {
                 struct passwd *nobody = getpwnam("nobody");
@@ -668,22 +667,18 @@ private:
 };
 
 std::atomic<unsigned> LOOLWSD::NextSessionId;
-int LOOLWSD::timeoutCounter = 0;
-int LOOLWSD::writerBroker = -1;
-Poco::UInt64 LOOLWSD::_childId = 0;
+int LOOLWSD::BrokerWritePipe = -1;
 std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
 std::string LOOLWSD::loTemplate;
 std::string LOOLWSD::childRoot;
 std::string LOOLWSD::loSubPath = "lo";
-std::string LOOLWSD::jail;
-Poco::NamedMutex LOOLWSD::_namedMutexLOOL("loolwsd");
+Poco::NamedMutex LOOLWSD::NamedMutexLOOL("loolwsd");
 
-int LOOLWSD::_numPreSpawnedChildren = 10;
+int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::doTest = false;
 volatile bool LOOLWSD::isShutDown = false;
 #if ENABLE_DEBUG
-bool LOOLWSD::runningAsRoot = false;
 int LOOLWSD::uid = 0;
 #endif
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
@@ -779,16 +774,6 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
-    optionSet.addOption(Option("child", "", "For internal use only.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("child id"));
-
-    optionSet.addOption(Option("jail", "", "For internal use only.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("directory"));
-
 #if ENABLE_DEBUG
     optionSet.addOption(Option("uid", "", "Uid to assume if running under sudo for debugging purposes.")
                         .required(false)
@@ -819,13 +804,9 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
     else if (optionName == "losubpath")
         loSubPath = value;
     else if (optionName == "numprespawns")
-        _numPreSpawnedChildren = std::stoi(value);
+        NumPreSpawnedChildren = std::stoi(value);
     else if (optionName == "test")
         LOOLWSD::doTest = true;
-    else if (optionName == "child")
-        _childId = std::stoull(value);
-    else if (optionName == "jail")
-        jail = value;
 #if ENABLE_DEBUG
     else if (optionName == "uid")
         uid = std::stoull(value);
@@ -849,7 +830,7 @@ int LOOLWSD::createBroker()
     args.push_back("--systemplate=" + sysTemplate);
     args.push_back("--lotemplate=" + loTemplate);
     args.push_back("--childroot=" + childRoot);
-    args.push_back("--numprespawns=" + std::to_string(_numPreSpawnedChildren));
+    args.push_back("--numprespawns=" + std::to_string(NumPreSpawnedChildren));
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
     std::string executable = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
@@ -907,15 +888,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (childRoot == "")
         throw MissingOptionException("childroot");
 
-    if (_childId != 0)
-        throw IncompatibleOptionsException("child");
-    if (jail != "")
-        throw IncompatibleOptionsException("jail");
     if (ClientPortNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
 
     if (LOOLWSD::doTest)
-        _numPreSpawnedChildren = 1;
+        NumPreSpawnedChildren = 1;
 
     // log pid information
     {
@@ -930,7 +907,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_UNAVAILABLE;
     }
 
-    _namedMutexLOOL.lock();
+    NamedMutexLOOL.lock();
 
     startupBroker(1);
 
@@ -943,27 +920,27 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
 
     // Start a server listening on the port for clients
-    ServerSocket svs(ClientPortNumber, _numPreSpawnedChildren*10);
-    ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    ServerSocket svs(ClientPortNumber, NumPreSpawnedChildren*10);
+    ThreadPool threadPool(NumPreSpawnedChildren*2, NumPreSpawnedChildren*5);
     HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
 
     srv.start();
 
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
-    ServerSocket svs2(addr2, _numPreSpawnedChildren);
-    ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    ServerSocket svs2(addr2, NumPreSpawnedChildren);
+    ThreadPool threadPool2(NumPreSpawnedChildren*2, NumPreSpawnedChildren*5);
     HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
 
     srv2.start();
 
-    if ( (writerBroker = open(FIFO_FILE.c_str(), O_WRONLY) ) < 0 )
+    if ( (BrokerWritePipe = open(FIFO_FILE.c_str(), O_WRONLY) ) < 0 )
     {
         Log::error("Error: failed to open pipe [" + FIFO_FILE + "] write only.");
         return Application::EXIT_UNAVAILABLE;
     }
 
-    _namedMutexLOOL.unlock();
+    NamedMutexLOOL.unlock();
 
     TestInput input(*this, svs, srv);
     Thread inputThread;
@@ -973,6 +950,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         waitForTerminationRequest();
     }
 
+    unsigned timeoutCounter = 0;
     while (!LOOLWSD::isShutDown && !LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
     {
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
@@ -1006,8 +984,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         else if (pid < 0)
             Log::error("Error: Child error.");
 
-        ++timeoutCounter;
-        if (timeoutCounter == INTERVAL_PROBES)
+        if (timeoutCounter++ == INTERVAL_PROBES)
         {
             timeoutCounter = 0;
             sleep(MAINTENANCE_INTERVAL*2);

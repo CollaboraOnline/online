@@ -34,9 +34,8 @@ public:
     // An Application is a singleton anyway, so just keep these as
     // statics
     static std::atomic<unsigned> NextSessionId;
-    static int timeoutCounter;
-    static int _numPreSpawnedChildren;
-    static int writerBroker;
+    static int NumPreSpawnedChildren;
+    static int BrokerWritePipe;
     static bool doTest;
     static bool volatile isShutDown;
     static std::string cache;
@@ -44,9 +43,7 @@ public:
     static std::string loTemplate;
     static std::string childRoot;
     static std::string loSubPath;
-    static std::string jail;
-    static Poco::NamedMutex _namedMutexLOOL;
-    static Poco::UInt64 _childId;
+    static Poco::NamedMutex NamedMutexLOOL;
 
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
@@ -83,7 +80,6 @@ private:
 
 #if ENABLE_DEBUG
 public:
-    static bool runningAsRoot;
     static int uid;
 #endif
 };
