@@ -402,7 +402,6 @@ public:
     void run() override
     {
         std::string aMessage;
-        char  aBuffer[1024*2];
         char* pStart;
         char* pEnd;
 
@@ -413,8 +412,8 @@ public:
         aPoll.events = POLLIN;
         aPoll.revents = 0;
 
-        pStart = aBuffer;
-        pEnd   = aBuffer;
+        pStart = _aBuffer;
+        pEnd   = _aBuffer;
 
         static const std::string thread_name = "broker_pipe_reader";
 #ifdef __linux
@@ -437,15 +436,15 @@ public:
                 else
                 if (aPoll.revents & POLLIN)
                 {
-                    nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
+                    nBytes = Util::readFIFO(readerBroker, _aBuffer, sizeof(_aBuffer));
                     if (nBytes < 0)
                     {
                         pStart = pEnd = nullptr;
                         Log::error("Error reading message from pipe [" + FIFO_FILE + "].");
                         continue;
                     }
-                    pStart = aBuffer;
-                    pEnd   = aBuffer + nBytes;
+                    pStart = _aBuffer;
+                    pEnd   = _aBuffer + nBytes;
                 }
                 else
                 if (aPoll.revents & (POLLERR | POLLHUP))
