@@ -54,14 +54,12 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
     _childId(childId),
     _clientPart(0)
 {
-    Log::info() << "ChildProcessSession ctor " << Kind::ToMaster
-                << " this:" << this << " ws:" << _ws.get() << Log::end;
+    Log::info("ChildProcessSession ctor [" + getName() + "].");
 }
 
 ChildProcessSession::~ChildProcessSession()
 {
-    Log::info() << "ChildProcessSession dtor " << Kind::ToMaster
-                << " this:" << this << " ws:" << _ws.get() << Log::end;
+    Log::info("~ChildProcessSession dtor [" + getName() + "].");
 
     if (_loKitDocument != nullptr)
     {

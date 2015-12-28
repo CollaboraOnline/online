@@ -340,13 +340,13 @@ class Connection: public Runnable
 {
 public:
     Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument,
-               const std::string& childId, const std::string& threadId) :
+               const std::string& childId, const std::string& sessionId) :
         _loKit(loKit),
         _loKitDocument(loKitDocument),
         _childId(childId),
-        _threadId(threadId)
+        _sessionId(sessionId)
     {
-        Log::info("New connection in child: " + childId + ", thread: " + _threadId);
+        Log::info("New connection in child: " + childId + ", thread: " + _sessionId);
     }
 
     void start()
@@ -384,12 +384,12 @@ public:
             HTTPResponse response;
             auto ws = std::make_shared<WebSocket>(cs, request, response);
 
-            _session.reset(new ChildProcessSession(_threadId, ws, _loKit, _loKitDocument, _childId));
+            _session.reset(new ChildProcessSession(_sessionId, ws, _loKit, _loKitDocument, _childId));
             ws->setReceiveTimeout(0);
 
             // child Jail TID PID
             std::string hello("child " + _childId + " " +
-                              _threadId + " " + std::to_string(Process::id()));
+                              _sessionId + " " + std::to_string(Process::id()));
             _session->sendTextFrame(hello);
 
             TileQueue queue;
@@ -438,7 +438,7 @@ public:
 
     ~Connection()
     {
-        Log::info("Closing connection in child: " + _childId + ", thread: " + _threadId);
+        Log::info("Closing connection in child: " + _childId + ", thread: " + _sessionId);
         //_thread.stop();
     }
 
@@ -446,7 +446,7 @@ private:
     LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
     const std::string _childId;
-    std::string _threadId;
+    std::string _sessionId;
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
 };
@@ -584,41 +584,49 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
                     }
                     else if (tokens[0] == "thread")
                     {
-                        const std::string& threadId = tokens[1];
-                        Log::debug("Thread request for [" + threadId + "]");
-                        const auto& aItem = _connections.find(threadId);
+                        const std::string& sessionId = tokens[1];
+                        Log::debug("Thread request for [" + sessionId + "]");
+                        const auto& aItem = _connections.find(sessionId);
                         if (aItem != _connections.end())
                         {
                             // found item, check if still running
-                            Log::debug("Found thread for [" + threadId + "] " +
+                            Log::debug("Found thread for [" + sessionId + "] " +
                                        (aItem->second->isRunning() ? "Running" : "Stopped"));
 
-                            if ( !aItem->second->isRunning() )
-                                Log::warn("Thread [" + threadId + "] is not running.");
+                            if (!aItem->second->isRunning())
+                            {
+                                // Restore thread.
+                                Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
+                                _connections.erase(sessionId);
+
+                                auto thread = std::make_shared<Connection>(loKit.get(), aItem->second->getLOKitDocument(), childId, sessionId);
+                                _connections.emplace(sessionId, thread);
+                                thread->start();
+                            }
                         }
                         else
                         {
                             // new thread id
-                            Log::debug("Starting new thread for request [" + threadId + "]");
+                            Log::debug("Starting new thread for request [" + sessionId + "]");
                             std::shared_ptr<Connection> thread;
                             if ( _connections.empty() )
                             {
-                                Log::info("Creating main thread for child: " + childId + ", thread: " + threadId);
-                                thread = std::make_shared<Connection>(loKit.get(), nullptr, childId, threadId);
+                                Log::info("Creating main thread for child: " + childId + ", thread: " + sessionId);
+                                thread = std::make_shared<Connection>(loKit.get(), nullptr, childId, sessionId);
                             }
                             else
                             {
-                                Log::info("Creating view thread for child: " + childId + ", thread: " + threadId);
+                                Log::info("Creating view thread for child: " + childId + ", thread: " + sessionId);
                                 auto aConnection = _connections.begin();
-                                thread = std::make_shared<Connection>(loKit.get(), aConnection->second->getLOKitDocument(), childId, threadId);
+                                thread = std::make_shared<Connection>(loKit.get(), aConnection->second->getLOKitDocument(), childId, sessionId);
                             }
 
-                            auto aInserted = _connections.emplace(threadId, thread);
+                            auto aInserted = _connections.emplace(sessionId, thread);
 
                             if ( aInserted.second )
                                 thread->start();
                             else
-                                Log::error("Connection already exists for child: " + childId + ", thread: " + threadId);
+                                Log::error("Connection already exists for child: " + childId + ", thread: " + sessionId);
 
                             Log::debug("Connections: " + std::to_string(_connections.size()));
                         }

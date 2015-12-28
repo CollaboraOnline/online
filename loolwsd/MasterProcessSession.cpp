@@ -57,14 +57,12 @@ MasterProcessSession::MasterProcessSession(const std::string& id,
     _curPart(0),
     _loadPart(-1)
 {
-    Log::info() << "MasterProcessSession ctor " << _kindString
-                << " this:" << this << " ws:" << _ws.get() << Log::end;
+    Log::info("MasterProcessSession ctor [" + getName() + "].");
 }
 
 MasterProcessSession::~MasterProcessSession()
 {
-    Log::info() << "MasterProcessSession dtor " << _kindString
-                << " this:" << this << " ws:" << _ws.get() << Log::end;
+    Log::info("~MasterProcessSession dtor [" + getName() + "].");
 
     auto peer = _peer.lock();
     if (_kind == Kind::ToClient && peer)
@@ -236,7 +234,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         // Message from child process to be forwarded to client.
 
         // I think we should never get here
-        Log::error("Unexpected request [" + tokens[0] + "].");
+        Log::error(getName() + ": Unexpected request [" + tokens[0] + "].");
         assert(false);
     }
     else if (tokens[0] == "load")
@@ -591,7 +589,7 @@ void MasterProcessSession::dispatchChild()
 
     if (nRequest < 0 && !bFound)
     {
-        Log::error("Failed to connect to child. Shutting down socket.");
+        Log::error(getName() + ": Failed to connect to child. Shutting down socket.");
         Util::shutdownWebSocket(*_ws);
         return;
     }
@@ -617,8 +615,7 @@ void MasterProcessSession::dispatchChild()
         }
         catch (const Exception& exc)
         {
-            Log::error(
-                "createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
+            Log::error(getName() + ": createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
         }
 
         // cleanup potential leftovers from the last time
@@ -629,7 +626,7 @@ void MasterProcessSession::dispatchChild()
         if (!File(aDstFile).exists() && link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
         {
             // Failed
-            Log::error("link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed.");
+            Log::error(getName() + ": link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed.");
         }
 #endif
 
@@ -644,7 +641,7 @@ void MasterProcessSession::dispatchChild()
         }
         catch (const Exception& exc)
         {
-            Log::error("copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
+            Log::error(getName() + ": copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
         }
     }
 
@@ -658,11 +655,13 @@ void MasterProcessSession::dispatchChild()
 
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 {
-    Log::trace(_kindString + ",forwardToPeer," + getAbbreviatedMessage(buffer, length));
+    const auto message = getAbbreviatedMessage(buffer, length);
+    Log::trace(_kindString + ",forwardToPeer," + message);
+
     auto peer = _peer.lock();
     if (!peer)
     {
-        Log::error("Error: no peer to forward to.");
+        Log::error(getName() + ": no peer to forward to.");
         return;
     }
     peer->sendBinaryFrame(buffer, length);

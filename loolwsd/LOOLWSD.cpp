@@ -318,7 +318,7 @@ public:
     {
         std::string thread_name;
         if (request.serverAddress().port() == MASTER_PORT_NUMBER)
-            thread_name = "prision_socket";
+            thread_name = "prison_socket";
         else
             thread_name = "client_socket";
 
@@ -492,10 +492,11 @@ public:
                         }
                         else if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                         {
-                            std::string firstLine = getFirstLine(buffer, n);
+                            const std::string firstLine = getFirstLine(buffer, n);
                             StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-                            if (kind == LOOLSession::Kind::ToClient && firstLine.size() == static_cast<std::string::size_type>(n))
+                            if (kind == LOOLSession::Kind::ToClient &&
+                                firstLine.size() == static_cast<std::string::size_type>(n))
                             {
                                 queue.put(firstLine);
                             }
@@ -504,9 +505,10 @@ public:
                                 // Check if it is a "nextmessage:" and in that case read the large
                                 // follow-up message separately, and handle that only.
                                 int size;
-                                if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                                if (tokens.count() == 2 &&
+                                    tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
                                 {
-                                    char largeBuffer[size];
+                                    char largeBuffer[size];     //FIXME: Security risk! Flooding may segfault us.
 
                                     n = ws->receiveFrame(largeBuffer, size, flags);
                                     if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
