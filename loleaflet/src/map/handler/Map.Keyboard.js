@@ -139,6 +139,11 @@ L.Map.Keyboard = L.Handler.extend({
 		46  : true // delete
 	},
 
+	keyCodes: {
+		pageUp:   33,
+		pageDown: 34
+	},
+
 	navigationKeyCodes: {
 		left:    [37],
 		right:   [39],
@@ -231,6 +236,22 @@ L.Map.Keyboard = L.Handler.extend({
 		if (ctrl) {
 			if (this._handleCtrlCommand(e)) {
 				return;
+			}
+		}
+
+		// Change slides with PgUp/PgDown in Presentation
+		if (this._map.getDocType() === 'presentation' && !this.modifier && e.type === 'keyup') {
+			var _keyCode = e.originalEvent.keyCode;
+			if (_keyCode === this.keyCodes.pageUp || _keyCode === this.keyCodes.pageDown) {
+				e.originalEvent.preventDefault();
+				e.originalEvent.stopPropagation();
+
+				if (_keyCode === this.keyCodes.pageUp) {
+					this._map.setPart('prev');
+				}
+				else if (_keyCode === this.keyCodes.pageDown) {
+					this._map.setPart('next');
+				}
 			}
 		}
 
