@@ -245,7 +245,7 @@ public:
 
     void run() override
     {
-        static const std::string thread_name = "wsd_pipe_reader";
+        static const std::string thread_name = "wsd_queue_handler";
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
