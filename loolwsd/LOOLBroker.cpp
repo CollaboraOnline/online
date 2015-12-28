@@ -46,6 +46,7 @@
 #define LIB_SCLO        "lib" "sclo" ".so"
 #define LIB_SWLO        "lib" "swlo" ".so"
 #define LIB_SDLO        "lib" "sdlo" ".so"
+#define JAILED_LOOLKIT_PATH    "/usr/bin/loolkit"
 
 typedef int (LokHookPreInit)  ( const char *install_path, const char *user_profile_path );
 
@@ -528,7 +529,6 @@ static int createLibreOfficeKit(const bool sharePages, const std::string& loSubP
     }
     else
     {
-        const std::string executable = "loolkit";
         const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
 
         if (mkfifo(pipe.c_str(), 0666) < 0)
@@ -541,22 +541,30 @@ static int createLibreOfficeKit(const bool sharePages, const std::string& loSubP
         args.push_back("--losubpath=" + loSubPath);
         args.push_back("--child=" + childId);
         args.push_back("--pipe=" + pipe);
-        args.push_back("--clientport=" + ClientPortNumber);
+        args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
-        Log::info("Launching LibreOfficeKit: " + executable + " " +
+        Log::info("Launching LibreOfficeKit #" + std::to_string(childCounter) +
+                  ": " + JAILED_LOOLKIT_PATH + " " +
                   Poco::cat(std::string(" "), args.begin(), args.end()));
 
-        ProcessHandle procChild = Process::launch(executable, args);
+        ProcessHandle procChild = Process::launch(JAILED_LOOLKIT_PATH, args);
         child = procChild.id();
-        Log::info("Launched kit process: " + std::to_string(child));
-
-        if ( ( nFIFOWriter = open(pipe.c_str(), O_WRONLY) ) < 0 )
+        if (!Process::isRunning(procChild))
         {
-            Log::error("Error: failed to open pipe [" + pipe + "] write only.");
+            // This can happen if we fail to copy it, or bad chroot etc.
+            Log::error("Error: loolkit was stillborn.");
+            return -1;
+        }
+
+        if ( (nFIFOWriter = open(pipe.c_str(), O_WRONLY)) < 0 )
+        {
+            Log::error("Error: failed to open pipe [" + pipe + "] write only. Abandoning child.");
+            Poco::Process::requestTermination(child);
             return -1;
         }
     }
 
+    Log::info() << "Adding Kit #" << childCounter << " PID " << child << Log::end;
     _childProcesses[child] = nFIFOWriter;
     return child;
 }
@@ -695,27 +703,31 @@ int main(int argc, char** argv)
         Log::error(std::string("Exception: ") + exc.what());
     }
 
+    // The loolkit binary must be in our directory.
+    const std::string loolkitPath = Poco::Path(argv[0]).parent().toString() + "loolkit";
+    if (!File(loolkitPath).exists())
+    {
+        Log::error("Error: loolkit does not exists at [" + loolkitPath + "].");
+        exit(-1);
+    }
+
     const std::string childId = std::to_string(Util::rng::getNext());
 
-    Path jailPath = Path::forDirectory(childRoot + Path::separator() + childId);
+    const Path jailPath = Path::forDirectory(childRoot + Path::separator() + childId);
+    Log::info("Jail path: " + jailPath.toString());
+
     File(jailPath).createDirectories();
 
     Path jailLOInstallation(jailPath, loSubPath);
     jailLOInstallation.makeDirectory();
     File(jailLOInstallation).createDirectory();
 
-    // Copy (link) LO installation and other necessary files into it from the template
-
+    // Copy (link) LO installation and other necessary files into it from the template.
     linkOrCopy(sysTemplate, jailPath);
     linkOrCopy(loTemplate, jailLOInstallation);
 
     // It is necessary to deploy loolkit process to chroot jail.
-    if (!File("loolkit").exists())
-    {
-        Log::error("loolkit does not exists");
-        exit(-1);
-    }
-    File("loolkit").copyTo(Path(jailPath, "/usr/bin").toString());
+    File(loolkitPath).copyTo(Path(jailPath, JAILED_LOOLKIT_PATH).toString());
 
     // We need this because sometimes the hostname is not resolved
     std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};

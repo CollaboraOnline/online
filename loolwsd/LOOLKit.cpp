@@ -453,14 +453,6 @@ private:
 
 void run_lok_main(const std::string &loSubPath, const std::string& childId, const std::string& pipe)
 {
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        std::cerr << "Sleeping " << std::getenv("SLEEPFORDEBUGGER")
-                  << " seconds to attach debugger to process "
-                  << Process::id() << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
-    }
-
     struct pollfd aPoll;
     ssize_t nBytes = -1;
     char  aBuffer[1024*2];
@@ -682,11 +674,19 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
 /// Simple argument parsing wrapper / helper for the above.
 int main(int argc, char** argv)
 {
+    if (std::getenv("SLEEPFORDEBUGGER"))
+    {
+        std::cerr << "Sleeping " << std::getenv("SLEEPFORDEBUGGER")
+                  << " seconds to attach debugger to process "
+                  << Process::id() << std::endl;
+        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
+    }
+
+    Log::initialize("kit");
+
     std::string loSubPath;
     std::string childId;
     std::string pipe;
-
-    Log::initialize("kit");
 
     for (int i = 1; i < argc; ++i)
     {
