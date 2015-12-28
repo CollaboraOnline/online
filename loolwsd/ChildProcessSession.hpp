@@ -24,8 +24,9 @@ public:
     /// loKit The LOKit instance.
     /// loKitDocument The instance to an existing document (when opening
     ///                 a new view) or nullptr (when first view).
-    /// childId The id of the child, used by downloadas to construct jailed path.
-    ChildProcessSession(std::shared_ptr<Poco::Net::WebSocket> ws,
+    /// childId The id of the lokit instance, used by downloadas to construct jailed path.
+    ChildProcessSession(const std::string& id,
+                        std::shared_ptr<Poco::Net::WebSocket> ws,
                         LibreOfficeKit *loKit,
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& childId);

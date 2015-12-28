@@ -344,8 +344,9 @@ public:
                 {
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
-                    LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
-                    auto session = std::make_shared<MasterProcessSession>(ws, kind);
+                    const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
+                    const auto id = LOOLWSD::GenSessionId();
+                    auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
                     const std::string filePrefix("file://");
                     const std::string load = "load url=" + filePrefix + fromPath;
                     session->handleInput(load.data(), load.size());
@@ -449,13 +450,17 @@ public:
                 auto ws = std::make_shared<WebSocket>(request, response);
 
                 LOOLSession::Kind kind;
+                std::string id;
 
                 if (request.getURI() == LOOLWSD::CHILD_URI && request.serverAddress().port() == MASTER_PORT_NUMBER)
                     kind = LOOLSession::Kind::ToPrisoner;
                 else
+                {
                     kind = LOOLSession::Kind::ToClient;
+                    id = LOOLWSD::GenSessionId();
+                }
 
-                auto session = std::make_shared<MasterProcessSession>(ws, kind);
+                auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
 
                 // For ToClient sessions, we store incoming messages in a queue and have a separate
                 // thread that handles them. This is so that we can empty the queue when we get a
@@ -660,6 +665,7 @@ private:
     HTTPServer& _srv;
 };
 
+std::atomic<unsigned> LOOLWSD::NextSessionId;
 int LOOLWSD::timeoutCounter = 0;
 int LOOLWSD::writerBroker = -1;
 Poco::UInt64 LOOLWSD::_childId = 0;

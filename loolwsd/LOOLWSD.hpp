@@ -14,6 +14,7 @@
 
 #include <string>
 #include <mutex>
+#include <atomic>
 
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Random.h>
@@ -21,6 +22,8 @@
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/SharedMemory.h>
 #include <Poco/NamedMutex.h>
+
+#include "Util.hpp"
 
 class LOOLWSD: public Poco::Util::ServerApplication
 {
@@ -30,6 +33,7 @@ public:
 
     // An Application is a singleton anyway, so just keep these as
     // statics
+    static std::atomic<unsigned> NextSessionId;
     static int timeoutCounter;
     static int _numPreSpawnedChildren;
     static int writerBroker;
@@ -48,6 +52,12 @@ public:
     static const std::string PIDLOG;
     static const std::string FIFO_FILE;
     static const std::string LOKIT_PIDLOG;
+
+    static
+    std::string GenSessionId()
+    {
+        return Util::encodeId(++NextSessionId, 4);
+    }
 
 protected:
     static void setSignals(bool bIgnore);
@@ -70,7 +80,6 @@ private:
 
     void startupBroker(int nBroker);
     int  createBroker();
-
 
 #if ENABLE_DEBUG
 public:

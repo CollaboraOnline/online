@@ -384,7 +384,7 @@ public:
             HTTPResponse response;
             auto ws = std::make_shared<WebSocket>(cs, request, response);
 
-            _session.reset(new ChildProcessSession(ws, _loKit, _loKitDocument, _childId));
+            _session.reset(new ChildProcessSession(_threadId, ws, _loKit, _loKitDocument, _childId));
             ws->setReceiveTimeout(0);
 
             // child Jail TID PID

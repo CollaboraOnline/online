@@ -28,6 +28,9 @@ namespace Util
        unsigned getNext();
     }
 
+    /// Encode an integral ID into a string, with padding support.
+    std::string encodeId(const unsigned number, const int padding = 5);
+
     bool windowingAvailable();
 
     // Sadly, older libpng headers don't use const for the pixmap pointer parameter to

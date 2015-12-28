@@ -42,6 +42,9 @@ class LOOLSession
 public:
     enum class Kind { ToClient, ToPrisoner, ToMaster };
 
+    const std::string& getId() const { return _id; }
+    const std::string& getName() const { return _name; }
+
     void sendTextFrame(const std::string& text);
 
     virtual bool getStatus(const char *buffer, int length) = 0;
@@ -55,12 +58,15 @@ public:
     static const std::string jailDocumentURL;
 
 protected:
-    LOOLSession(std::shared_ptr<Poco::Net::WebSocket> ws, Kind kind);
+    LOOLSession(const std::string& id, const Kind kind,
+                std::shared_ptr<Poco::Net::WebSocket> ws);
     virtual ~LOOLSession();
 
-    const Kind _kind;
-
-    std::string _kindString;
+    void setId(const std::string& id)
+    {
+        _id = id;
+        _name = _kindString + '-' + id;
+    }
 
     void sendBinaryFrame(const char *buffer, int length);
 
@@ -74,6 +80,12 @@ protected:
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
     // Fields common to sessions in master and jailed processes:
+
+    // Our kind signifies to what we are connected to.
+    const Kind _kind;
+
+    // The kind cached as a string.
+    const std::string _kindString;
 
     // In the master process, the websocket to the LOOL client or the jailed child process. In a
     // jailed process, the websocket to the parent.
@@ -90,6 +102,11 @@ private:
     virtual bool _handleInput(const char *buffer, int length) = 0;
 
 private:
+    // A session ID specific to an end-to-end connection (from user to lokit).
+    std::string _id;
+    // A readable name that identifies our peer and ID.
+    std::string _name;
+
     std::mutex _mutex;
 };
 

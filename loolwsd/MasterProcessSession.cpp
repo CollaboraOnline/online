@@ -44,12 +44,14 @@ using Poco::URI;
 
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
-std::map<Thread::TID, std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
+std::map<std::string, std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
 std::mutex MasterProcessSession::_availableChildSessionMutex;
 std::condition_variable MasterProcessSession::_availableChildSessionCV;
 
-MasterProcessSession::MasterProcessSession(std::shared_ptr<WebSocket> ws, const Kind kind) :
-    LOOLSession(ws, kind),
+MasterProcessSession::MasterProcessSession(const std::string& id,
+                                           const Kind kind,
+                                           std::shared_ptr<Poco::Net::WebSocket> ws) :
+    LOOLSession(id, kind, ws),
     _childId(0),
     _pidChild(0),
     _curPart(0),
@@ -206,14 +208,14 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        UInt64 childId = std::stoull(tokens[1]);
-        Thread::TID tId = std::stoull(tokens[2]);
-        Process::PID pidChild = std::stoull(tokens[3]);
+        const UInt64 childId = std::stoull(tokens[1]);
+        setId(tokens[2]);
+        const Process::PID pidChild = std::stoull(tokens[3]);
 
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
-        _availableChildSessions.emplace(tId, shared_from_this());
+        _availableChildSessions.emplace(getId(), shared_from_this());
 
-        Log::info() << _kindString << " mapped " << this << " id=" << childId << ", tId=" << tId
+        Log::info() << _kindString << " mapped " << this << " childId=" << childId << ", id=" << getId()
                     << " into _availableChildSessions, size=" << _availableChildSessions.size() << Log::end;
 
         _childId = childId;
@@ -377,7 +379,7 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
         URI aUri(_docURL);
 
         // request new URL session
-        const std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
+        const std::string aMessage = "request " + getId() + " " + _docURL + "\r\n";
         Log::info("Sending to Broker: " + aMessage);
         Util::writeFIFO(LOOLWSD::writerBroker, aMessage.c_str(), aMessage.length());
     }
@@ -558,22 +560,22 @@ void MasterProcessSession::dispatchChild()
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
 
-    Log::debug() << "Waiting for a child session permission for thread [" << Thread::currentTid() << "]." << Log::end;
+    Log::debug() << "Waiting for a child session permission for thread [" << getId() << "]." << Log::end;
     while (nRequest-- && !bFound)
     {
         _availableChildSessionCV.wait_for(
             lock,
             std::chrono::milliseconds(2000),
-            [&bFound]
+            [&bFound, this]
             {
-                return (bFound = _availableChildSessions.find(Thread::currentTid()) != _availableChildSessions.end());
+                return (bFound = _availableChildSessions.find(getId()) != _availableChildSessions.end());
             });
 
         if (!bFound)
         {
             Log::info() << "Retrying child permission... " << nRequest << Log::end;
             // request again new URL session
-            const std::string aMessage = "request " + std::to_string(Thread::currentTid()) + " " + _docURL + "\r\n";
+            const std::string aMessage = "request " + getId() + " " + _docURL + "\r\n";
             Util::writeFIFO(LOOLWSD::writerBroker, aMessage.c_str(), aMessage.length());
         }
     }
@@ -581,8 +583,8 @@ void MasterProcessSession::dispatchChild()
     if (bFound)
     {
         Log::debug("Waiting child session permission, done!");
-        childSession = _availableChildSessions[Thread::currentTid()];
-        _availableChildSessions.erase(Thread::currentTid());
+        childSession = _availableChildSessions[getId()];
+        _availableChildSessions.erase(getId());
     }
 
     lock.unlock();

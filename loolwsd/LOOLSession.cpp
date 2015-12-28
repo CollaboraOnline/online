@@ -83,23 +83,15 @@ using Poco::Net::WebSocketException;
 
 const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
 
-LOOLSession::LOOLSession(std::shared_ptr<WebSocket> ws, Kind kind) :
+LOOLSession::LOOLSession(const std::string& id, const Kind kind,
+                         std::shared_ptr<Poco::Net::WebSocket> ws) :
     _kind(kind),
+    _kindString(kind == Kind::ToClient ? "ToClient" :
+                kind == Kind::ToMaster ? "ToMaster" : "ToPrisoner"),
     _ws(ws),
     _docURL("")
 {
-    if (kind == Kind::ToClient)
-    {
-        _kindString = "ToClient";
-    }
-    else if (kind == Kind::ToMaster)
-    {
-        _kindString = "ToMaster";
-    }
-    else if (kind == Kind::ToPrisoner)
-    {
-        _kindString = "ToPrisoner";
-    }
+    setId(id);
 }
 
 LOOLSession::~LOOLSession()

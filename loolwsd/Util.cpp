@@ -160,6 +160,13 @@ namespace Log
 
 namespace Util
 {
+    std::string encodeId(const unsigned number, const int padding)
+    {
+        std::ostringstream oss;
+        oss << std::hex << std::setw(padding) << std::setfill('0') << number;
+        return oss.str();
+    }
+
     bool windowingAvailable()
     {
 #ifdef __linux

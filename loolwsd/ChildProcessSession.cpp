@@ -42,11 +42,12 @@ using Poco::URI;
 Poco::NotificationQueue ChildProcessSession::_callbackQueue;
 Poco::Mutex ChildProcessSession::_mutex;
 
-ChildProcessSession::ChildProcessSession(std::shared_ptr<WebSocket> ws,
+ChildProcessSession::ChildProcessSession(const std::string& id,
+                                         std::shared_ptr<Poco::Net::WebSocket> ws,
                                          LibreOfficeKit *loKit,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& childId) :
-    LOOLSession(ws, Kind::ToMaster),
+    LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
     _viewId(0),
     _loKit(loKit),
