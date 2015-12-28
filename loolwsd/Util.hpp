@@ -62,7 +62,7 @@ namespace Util
         }
         catch (const std::exception&)
         {
-            // Already removed, nothing more to do.
+            // Already removed or we don't care about failures.
         }
     }
 

@@ -62,6 +62,7 @@ const std::string FIFO_BROKER = "/tmp/loolbroker.fifo";
 const std::string BROKER_SUFIX = ".fifo";
 const std::string BROKER_PREFIX = "/tmp/lokit";
 
+static volatile bool TerminationFlag = false;
 static int readerChild = -1;
 static int readerBroker = -1;
 
@@ -75,6 +76,28 @@ static std::map<std::string, Process::PID> _cacheURL;
 
 namespace
 {
+    void handleSignal(int aSignal)
+    {
+        Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
+        TerminationFlag = true;
+    }
+
+    void setSignals(bool isIgnored)
+    {
+#ifdef __linux
+        struct sigaction aSigAction;
+
+        sigemptyset(&aSigAction.sa_mask);
+        aSigAction.sa_flags = 0;
+        aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
+
+        sigaction(SIGTERM, &aSigAction, NULL);
+        sigaction(SIGINT, &aSigAction, NULL);
+        sigaction(SIGQUIT, &aSigAction, NULL);
+        sigaction(SIGHUP, &aSigAction, NULL);
+#endif
+    }
+
     ThreadLocal<std::string> sourceForLinkOrCopy;
     ThreadLocal<Path> destinationForLinkOrCopy;
 
@@ -601,6 +624,10 @@ int main(int argc, char** argv)
     // Initialization
     Log::initialize("brk");
 
+#ifdef __linux
+    setSignals(false);
+#endif
+
     std::string childRoot;
     std::string loSubPath;
     std::string sysTemplate;
@@ -808,7 +835,7 @@ int main(int argc, char** argv)
 
 
     unsigned timeoutCounter = 0;
-    while (_childProcesses.size() > 0)
+    while (!TerminationFlag && !_childProcesses.empty())
     {
         int status;
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);

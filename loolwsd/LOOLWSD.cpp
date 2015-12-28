@@ -859,10 +859,11 @@ void LOOLWSD::startupBroker(const signed nBrokers)
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+    Log::initialize("wsd");
+
     Poco::Environment::set("LD_BIND_NOW", "1");
     Poco::Environment::set("LOK_VIEW_CALLBACK", "1");
 
-    int status;
 #ifdef __linux
     char *locale = setlocale(LC_ALL, NULL);
     if (locale == NULL || std::strcmp(locale, "C") == 0)
@@ -870,8 +871,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     setSignals(false);
 #endif
-
-    Log::initialize("wsd");
 
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
@@ -953,6 +952,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         waitForTerminationRequest();
     }
 
+    int status = 0;
     unsigned timeoutCounter = 0;
     while (!LOOLWSD::isShutDown && !LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
     {
@@ -1014,6 +1014,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
+
+    Log::info("Cleaning up childroot directory [" + childRoot + "].");
+    Util::removeFile(childRoot, true);
 
     Log::info("loolwsd finished OK!");
     return Application::EXIT_OK;
