@@ -68,8 +68,6 @@ ChildProcessSession::~ChildProcessSession()
 
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, 0, 0);
-
-    Util::shutdownWebSocket(*_ws);
 }
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
