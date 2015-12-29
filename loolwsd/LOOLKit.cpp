@@ -740,6 +740,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
     // Destroy all connections and views.
     _connections.clear();
 
+    // TODO. check what is happening when destroying lokit document
     // Destroy the document.
     if (loKitDocument != nullptr)
     {

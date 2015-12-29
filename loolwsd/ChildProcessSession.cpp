@@ -63,6 +63,7 @@ ChildProcessSession::~ChildProcessSession()
     if (_loKitDocument != nullptr)
     {
         _loKitDocument->pClass->destroyView(_loKitDocument, _viewId);
+        Log::debug("Destroy view [" + getName() + "]-> [" + std::to_string(_viewId) + "]");
     }
 
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
