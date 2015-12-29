@@ -739,6 +739,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
 
     // Destroy LibreOfficeKit
     loKit->pClass->destroy(loKit.get());
+    loKit.release();
 
     Log::debug("Thread [" + thread_name + "] finished.");
 }
