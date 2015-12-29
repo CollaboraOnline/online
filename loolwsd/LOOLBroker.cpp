@@ -62,7 +62,6 @@ const std::string FIFO_BROKER = "/tmp/loolbroker.fifo";
 const std::string BROKER_SUFIX = ".fifo";
 const std::string BROKER_PREFIX = "/tmp/lokit";
 
-static volatile bool TerminationFlag = false;
 static int readerChild = -1;
 static int readerBroker = -1;
 
@@ -76,28 +75,6 @@ static std::map<std::string, Process::PID> _cacheURL;
 
 namespace
 {
-    void handleSignal(int aSignal)
-    {
-        Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
-        TerminationFlag = true;
-    }
-
-    void setSignals(bool isIgnored)
-    {
-#ifdef __linux
-        struct sigaction aSigAction;
-
-        sigemptyset(&aSigAction.sa_mask);
-        aSigAction.sa_flags = 0;
-        aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
-
-        sigaction(SIGTERM, &aSigAction, NULL);
-        sigaction(SIGINT, &aSigAction, NULL);
-        sigaction(SIGQUIT, &aSigAction, NULL);
-        sigaction(SIGHUP, &aSigAction, NULL);
-#endif
-    }
-
     ThreadLocal<std::string> sourceForLinkOrCopy;
     ThreadLocal<Path> destinationForLinkOrCopy;
 

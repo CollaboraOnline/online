@@ -60,6 +60,66 @@ using Poco::FastMutex;
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
 
+#ifndef LOOLKIT_NO_MAIN
+// handle the signals when we are not using shared pages, execv() system call
+static volatile bool TerminationFlag = false;
+
+namespace
+{
+    void handleSignal(int aSignal)
+    {
+        Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
+        TerminationFlag = true;
+    }
+
+    void setSignals(bool isIgnored)
+    {
+#ifdef __linux
+        struct sigaction aSigAction;
+
+        sigemptyset(&aSigAction.sa_mask);
+        aSigAction.sa_flags = 0;
+        aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
+
+        sigaction(SIGTERM, &aSigAction, NULL);
+        sigaction(SIGINT, &aSigAction, NULL);
+        sigaction(SIGQUIT, &aSigAction, NULL);
+        sigaction(SIGHUP, &aSigAction, NULL);
+#endif
+    }
+}
+
+#else
+// handle the signals when we are using shared pages, fork() system call
+static volatile bool TerminationFlag = false;
+
+namespace
+{
+    void handleSignal(int aSignal)
+    {
+        Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
+        TerminationFlag = true;
+    }
+
+    void setSignals(bool isIgnored)
+    {
+#ifdef __linux
+        struct sigaction aSigAction;
+
+        sigemptyset(&aSigAction.sa_mask);
+        aSigAction.sa_flags = 0;
+        aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
+
+        sigaction(SIGTERM, &aSigAction, NULL);
+        sigaction(SIGINT, &aSigAction, NULL);
+        sigaction(SIGQUIT, &aSigAction, NULL);
+        sigaction(SIGHUP, &aSigAction, NULL);
+#endif
+    }
+}
+
+#endif
+
 // This thread handles callbacks from the
 // lokit instance.
 class CallBackWorker: public Runnable
@@ -241,7 +301,7 @@ public:
 #endif
         Log::debug("Thread [" + thread_name + "] started.");
 
-        while ( true )
+        while (!TerminationFlag)
         {
             Notification::Ptr aNotification(_queue.waitDequeueNotification());
             if (aNotification)
@@ -359,6 +419,11 @@ public:
         return _thread.isRunning();
     }
 
+    void join()
+    {
+        _thread.join();
+    }
+
     LibreOfficeKitDocument * getLOKitDocument()
     {
         return (_session ? _session->_loKitDocument : nullptr);
@@ -439,7 +504,6 @@ public:
     ~Connection()
     {
         Log::info("Closing connection in child: " + _childId + ", thread: " + _sessionId);
-        //_thread.stop();
     }
 
 private:
@@ -455,7 +519,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
 {
     struct pollfd aPoll;
     ssize_t nBytes = -1;
-    char  aBuffer[1024*2];
+    char  aBuffer[1024];
     char* pStart = nullptr;
     char* pEnd = nullptr;
 
@@ -469,6 +533,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
         Log::error("Cannot set thread name to " + thread_name + ".");
+    setSignals(false);
 #endif
     Log::debug("Thread [" + thread_name + "] started.");
 
@@ -512,7 +577,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
         std::string aResponse;
         std::string aMessage;
 
-        while (true)
+        while (!TerminationFlag)
         {
             if ( pStart == pEnd )
             {
@@ -637,6 +702,8 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
             }
         }
 
+        close(readerBroker);
+        close(writerBroker);
     }
     catch (const Exception& exc)
     {
@@ -647,6 +714,13 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
     catch (const std::exception& exc)
     {
         Log::error(std::string("Exception: ") + exc.what());
+    }
+
+    // wait until loolwsd close all websockets
+    for (auto aIterator : _connections)
+    {
+        if (aIterator.second->isRunning())
+            aIterator.second->join();
     }
 
     // Get the document to destroy later.
