@@ -529,13 +529,13 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
     assert(!childId.empty());
     assert(!loSubPath.empty());
 
-    static const std::string thread_name = "libreofficekit";
+    static const std::string process_name = "loolkit";
 #ifdef __linux
-    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-        Log::error("Cannot set thread name to " + thread_name + ".");
+    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(process_name.c_str()), 0, 0, 0) != 0)
+        Log::error("Cannot set process name to " + process_name + ".");
     setSignals(false);
 #endif
-    Log::debug("Thread [" + thread_name + "] started.");
+    Log::debug("Process [" + process_name + "] started.");
 
     static const std::string instdir_path =
 #ifdef __APPLE__
@@ -741,7 +741,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
     loKit->pClass->destroy(loKit.get());
     loKit.release();
 
-    Log::debug("Thread [" + thread_name + "] finished.");
+    Log::info("Process [" + process_name + "] finished.");
 }
 
 #ifndef LOOLKIT_NO_MAIN
@@ -831,7 +831,6 @@ int main(int argc, char** argv)
 
     run_lok_main(loSubPath, childId, pipe);
 
-    Log::info("loolkit finished OK!");
     return 0;
 }
 

@@ -875,7 +875,7 @@ int main(int argc, char** argv)
         Process::requestTermination(i.first);
     }
 
-    Log::info("loolbroker finished OK!");
+    Log::info("Process [loolbroker] finished.");
     return 0;
 }
 

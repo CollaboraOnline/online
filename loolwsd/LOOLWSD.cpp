@@ -1018,7 +1018,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Log::info("Cleaning up childroot directory [" + childRoot + "].");
     Util::removeFile(childRoot, true);
 
-    Log::info("loolwsd finished OK!");
+    Log::info("Process [loolwsd] finished.");
     return Application::EXIT_OK;
 }
 
