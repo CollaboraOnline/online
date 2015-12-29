@@ -304,7 +304,7 @@ public:
         while (!TerminationFlag)
         {
             Notification::Ptr aNotification(_queue.waitDequeueNotification());
-            if (aNotification)
+            if (!TerminationFlag && aNotification)
             {
                 CallBackNotification::Ptr aCallBackNotification = aNotification.cast<CallBackNotification>();
                 if (aCallBackNotification)
@@ -337,6 +337,11 @@ public:
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");
+    }
+
+    void wakeUpAll()
+    {
+        _queue.wakeUpAll();
     }
 
 private:
@@ -702,8 +707,12 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
             }
         }
 
-        close(readerBroker);
+        // wait callback worker finish
+        callbackWorker.wakeUpAll();
+        Poco::ThreadPool::defaultPool().joinAll();
+
         close(writerBroker);
+        close(readerBroker);
     }
     catch (const Exception& exc)
     {
