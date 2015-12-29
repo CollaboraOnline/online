@@ -144,6 +144,63 @@ L.Map.include({
 		});
 	},
 
+	insertPage: function() {
+		if (this.getDocType() !== 'presentation') {
+			return;
+		}
+		L.Socket.sendMessage('uno .uno:InsertPage');
+		var docLayer = this._docLayer;
+
+		this.fire('insertpage', {
+			selectedPart: docLayer._selectedPart,
+			parts:        docLayer._parts
+		});
+
+		docLayer._parts++;
+		this.setPart('next');
+	},
+
+	duplicatePage: function() {
+		if (this.getDocType() !== 'presentation') {
+			return;
+		}
+		L.Socket.sendMessage('uno .uno:DuplicatePage');
+		var docLayer = this._docLayer;
+
+		this.fire('insertpage', {
+			selectedPart: docLayer._selectedPart,
+			parts:        docLayer._parts
+		});
+
+		docLayer._parts++;
+		this.setPart('next');
+	},
+
+	deletePage: function () {
+		if (this.getDocType() !== 'presentation') {
+			return;
+		}
+
+		L.Socket.sendMessage('uno .uno:DeletePage');
+		var docLayer = this._docLayer;
+		// TO DO: Deleting all the pages causes problem.
+		if (docLayer._parts === 1) {
+			return;
+		}
+
+		this.fire('deletepage', {
+			selectedPart: docLayer._selectedPart,
+			parts:        docLayer._parts
+		});
+
+		docLayer._parts--;
+		if (docLayer._selectedPart >= docLayer._parts) {
+			docLayer._selectedPart--;
+		}
+
+		this.setPart(docLayer._selectedPart);
+	},
+
 	getNumberOfPages: function () {
 		return this._docLayer._pages;
 	},

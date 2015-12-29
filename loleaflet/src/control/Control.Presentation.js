@@ -12,9 +12,9 @@ L.Control.Presentation = L.Control.extend({
 		    container = L.DomUtil.create('div', buttonsName + '-container' + ' leaflet-bar');
 
 		this._buttons = {
-			'insertpage':    {title: 'Insert Page',          uno: 'InsertPage',        iconName: 'insertpage.png'},
-			'duplicatepage': {title: 'Duplicate Page',       uno: 'DuplicatePage',     iconName: 'duplicatepage.png'},
-			'deletepage':    {title: 'Delete Page',          uno: 'DeletePage',        iconName: 'deletepage.png'}
+			'insertpage':    {title: 'Insert Page',     iconName: 'insertpage.png'},
+			'duplicatepage': {title: 'Duplicate Page',  iconName: 'duplicatepage.png'},
+			'deletepage':    {title: 'Delete Page',     iconName: 'deletepage.png'}
 		};
 
 		for (var key in this._buttons) {
@@ -62,41 +62,15 @@ L.Control.Presentation = L.Control.extend({
 			return;
 		}
 		var id = e.target.id;
-		var button = this._buttons[id];
-		var docLayer = this._map._docLayer;
 
-		// TO DO: Deleting all the pages causes problem.
-		if (id === 'deletepage' && docLayer._parts === 1) {
-			return;
+		if (id === 'insertpage') {
+			this._map.insertPage();
 		}
-
-		if (button.uno) {
-			L.Socket.sendMessage('uno .uno:' + button.uno);
-		}
-
-		// TO DO: We should fire these events after server response
-		// Unfortunately server does not send any response.
-		if (id === 'insertpage' || id === 'duplicatepage') {
-			this._map.fire('insertpage', {
-				selectedPart: docLayer._selectedPart,
-				parts: 		  docLayer._parts
-			});
-
-			docLayer._parts++;
-			this._map.setPart('next');
+		else if (id === 'duplicatepage') {
+			this._map.duplicatePage();
 		}
 		else if (id === 'deletepage') {
-			this._map.fire('deletepage', {
-				selectedPart: docLayer._selectedPart,
-				parts: 		  docLayer._parts
-			});
-
-			docLayer._parts--;
-			if (docLayer._selectedPart >= docLayer._parts) {
-				docLayer._selectedPart--;
-			}
-
-			this._map.setPart(docLayer._selectedPart);
+			this._map.deletePage();
 		}
 	}
 });
