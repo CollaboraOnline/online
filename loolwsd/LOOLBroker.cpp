@@ -9,7 +9,6 @@
 
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <sys/capability.h>
 
 #include <utime.h>
 #include <ftw.h>
@@ -33,6 +32,7 @@
 #include <Poco/NamedMutex.h>
 
 #include "Common.hpp"
+#include "Capabilities.hpp"
 #include "Util.hpp"
 
 // First include the grist of the helper process - ideally
@@ -149,56 +149,6 @@ namespace
         *destinationForLinkOrCopy = destination;
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
             Log::error("linkOrCopy: nftw() failed for '" + source + "'");
-    }
-
-    void dropCapability(
-#ifdef __linux
-                        cap_value_t capability
-#endif
-                        )
-    {
-#ifdef __linux
-        cap_t caps;
-        cap_value_t cap_list[] = { capability };
-
-        caps = cap_get_proc();
-        if (caps == nullptr)
-        {
-            Log::error("Error: cap_get_proc() failed.");
-            exit(1);
-        }
-
-        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
-            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
-        {
-            Log::error("Error: cap_set_flag() failed.");
-            exit(1);
-        }
-
-        if (cap_set_proc(caps) == -1)
-        {
-            Log::error("Error: cap_set_proc() failed.");
-            exit(1);
-        }
-
-        char *capText = cap_to_text(caps, nullptr);
-        Log::info("Capabilities now: " + std::string(capText));
-        cap_free(capText);
-
-        cap_free(caps);
-#endif
-        // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
-        // don't own, so drop root.
-        if (geteuid() == 0 && getuid() != 0)
-        {
-            // The program is setuid root. Not normal on Linux where we use setcap, but if this
-            // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
-            // to do chroot().
-            if (setuid(getuid()) != 0)
-            {
-                Log::error("Error: setuid() failed.");
-            }
-        }
     }
 }
 

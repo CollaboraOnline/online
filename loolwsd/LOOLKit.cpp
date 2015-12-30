@@ -77,10 +77,10 @@ namespace
         aSigAction.sa_flags = 0;
         aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
 
-        sigaction(SIGTERM, &aSigAction, NULL);
-        sigaction(SIGINT, &aSigAction, NULL);
-        sigaction(SIGQUIT, &aSigAction, NULL);
-        sigaction(SIGHUP, &aSigAction, NULL);
+        sigaction(SIGTERM, &aSigAction, nullptr);
+        sigaction(SIGINT, &aSigAction, nullptr);
+        sigaction(SIGQUIT, &aSigAction, nullptr);
+        sigaction(SIGHUP, &aSigAction, nullptr);
 #endif
     }
 }

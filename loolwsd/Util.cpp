@@ -170,7 +170,7 @@ namespace Util
     bool windowingAvailable()
     {
 #ifdef __linux
-        return std::getenv("DISPLAY") != NULL;
+        return std::getenv("DISPLAY") != nullptr;
 #endif
 
         return false;
@@ -178,13 +178,13 @@ namespace Util
 
     bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode)
     {
-        png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
 
         png_infop info_ptr = png_create_info_struct(png_ptr);
 
         if (setjmp(png_jmpbuf(png_ptr)))
         {
-            png_destroy_write_struct(&png_ptr, NULL);
+            png_destroy_write_struct(&png_ptr, nullptr);
             return false;
         }
 

@@ -46,7 +46,6 @@ DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 
 #ifdef __linux
-#include <sys/capability.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/prctl.h>
@@ -104,6 +103,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Environment.h>
 
 #include "Common.hpp"
+#include "Capabilities.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "MasterProcessSession.hpp"
@@ -151,83 +151,6 @@ using Poco::Random;
 using Poco::NamedMutex;
 using Poco::ProcessHandle;
 using Poco::URI;
-
-namespace
-{
-    void dropCapability(
-#ifdef __linux
-                        cap_value_t capability
-#endif
-                        )
-    {
-#ifdef __linux
-        cap_t caps;
-        cap_value_t cap_list[] = { capability };
-
-        caps = cap_get_proc();
-        if (caps == NULL)
-        {
-            Log::error("cap_get_proc() failed.");
-            exit(1);
-        }
-
-        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
-            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
-        {
-            Log::error("cap_set_flag() failed.");
-            exit(1);
-        }
-
-        if (cap_set_proc(caps) == -1)
-        {
-            Log::error("cap_set_proc() failed.");
-            exit(1);
-        }
-
-        char *capText = cap_to_text(caps, NULL);
-        Log::info(std::string("Capabilities now: ") + capText);
-        cap_free(capText);
-
-        cap_free(caps);
-#endif
-        // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
-        // don't own, so drop root.
-        if (geteuid() == 0 && getuid() != 0)
-        {
-            // The program is setuid root. Not normal on Linux where we use setcap, but if this
-            // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
-            // to do chroot().
-            if (setuid(getuid()) != 0)
-            {
-                Log::error("setuid() failed.");
-            }
-        }
-#if ENABLE_DEBUG
-        if (geteuid() == 0 && getuid() == 0)
-        {
-#ifdef __linux
-            // Argh, awful hack
-            if (capability == CAP_FOWNER)
-                return;
-#endif
-
-            // Running under sudo, probably because being debugged? Let's drop super-user rights.
-            if (LOOLWSD::uid == 0)
-            {
-                struct passwd *nobody = getpwnam("nobody");
-                if (nobody)
-                    LOOLWSD::uid = nobody->pw_uid;
-                else
-                    LOOLWSD::uid = 65534;
-            }
-            if (setuid(LOOLWSD::uid) != 0)
-            {
-                Log::error("setuid() failed.");
-            }
-        }
-#endif
-    }
-}
 
 class QueueHandler: public Runnable
 {
@@ -708,10 +631,10 @@ void LOOLWSD::setSignals(bool isIgnored)
     aSigAction.sa_flags = 0;
     aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
 
-    sigaction(SIGTERM, &aSigAction, NULL);
-    sigaction(SIGINT, &aSigAction, NULL);
-    sigaction(SIGQUIT, &aSigAction, NULL);
-    sigaction(SIGHUP, &aSigAction, NULL);
+    sigaction(SIGTERM, &aSigAction, nullptr);
+    sigaction(SIGINT, &aSigAction, nullptr);
+    sigaction(SIGQUIT, &aSigAction, nullptr);
+    sigaction(SIGHUP, &aSigAction, nullptr);
 #endif
 }
 
@@ -864,8 +787,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Poco::Environment::set("LOK_VIEW_CALLBACK", "1");
 
 #ifdef __linux
-    char *locale = setlocale(LC_ALL, NULL);
-    if (locale == NULL || std::strcmp(locale, "C") == 0)
+    char *locale = setlocale(LC_ALL, nullptr);
+    if (locale == nullptr || std::strcmp(locale, "C") == 0)
         setlocale(LC_ALL, "en_US.utf8");
 
     setSignals(false);
