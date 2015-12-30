@@ -8,6 +8,9 @@
  */
 
 #include <sys/poll.h>
+#ifdef __linux
+#include <sys/prctl.h>
+#endif
 
 #include <cstdlib>
 #include <cstring>
@@ -95,6 +98,12 @@ namespace Log
                << std::setw(2) << hours << ':' << std::setw(2) << minutes << ':'
                << std::setw(2) << seconds << "." << std::setw(6) << usec
                << ", ";
+
+#ifdef __linux
+        char buf[32]; // we really need only 16
+        if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(buf), 0, 0, 0) == 0)
+            stream << '[' << buf << "] ";
+#endif
 
         return stream.str();
     }

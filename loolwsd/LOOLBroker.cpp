@@ -393,7 +393,7 @@ public:
                 else
                 if (aPoll.revents & (POLLERR | POLLHUP))
                 {
-                    Log::error("Broken pipe [" + FIFO_FILE + "] with broker.");
+                    Log::error("Broken pipe [" + FIFO_FILE + "] with wsd.");
                     break;
                 }
             }
