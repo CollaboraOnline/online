@@ -418,12 +418,10 @@ public:
 #endif
         Log::debug("Thread [" + thread_name + "] started.");
 
-        while (true)
+        while (!TerminationFlag)
         {
             if ( pStart == pEnd )
             {
-                (void)poll(&aPoll,1,-1);
-
                 if (poll(&aPoll, 1, -1) < 0)
                 {
                     Log::error("Failed to poll pipe [" + FIFO_FILE + "].");
@@ -558,6 +556,8 @@ static int createLibreOfficeKit(const bool sharePages, const std::string& loSubP
 
         if ( (nFIFOWriter = open(pipe.c_str(), O_WRONLY)) < 0 )
         {
+            // TODO.  ill process state, that state should force close prison websockets and
+            // kill, currently we have only "stop server state".
             Log::error("Error: failed to open pipe [" + pipe + "] write only. Abandoning child.");
             Poco::Process::requestTermination(child);
             return -1;
@@ -808,8 +808,7 @@ int main(int argc, char** argv)
 
     aPipe.start(pipeHandler);
 
-    Log::info("loolbroker ready!");
-
+    Log::info("loolbroker is ready.");
 
     unsigned timeoutCounter = 0;
     while (!TerminationFlag && !_childProcesses.empty())
@@ -823,6 +822,7 @@ int main(int argc, char** argv)
                 if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
                 {
                     Log::error("Child [" + std::to_string(pid) + "] processes died.");
+
                     forkMutex.lock();
                     _childProcesses.erase(pid);
                     _cacheURL.clear();
@@ -873,7 +873,12 @@ int main(int argc, char** argv)
     {
         Log::info("Requesting child process " + std::to_string(i.first) + " to terminate.");
         Process::requestTermination(i.first);
+        close(i.second);
     }
+
+    aPipe.join();
+    close(readerChild);
+    close(readerBroker);
 
     Log::info("Process [loolbroker] finished.");
     return 0;

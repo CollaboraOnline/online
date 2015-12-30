@@ -997,6 +997,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (LOOLWSD::doTest)
         inputThread.join();
 
+    close(BrokerWritePipe);
+
     // stop the service, no more request
     srv.stop();
     srv2.stop();
