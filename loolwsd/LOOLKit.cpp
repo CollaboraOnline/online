@@ -60,8 +60,6 @@ using Poco::FastMutex;
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
 
-static volatile bool TerminationFlag = false;
-
 namespace
 {
     void handleSignal(int aSignal)

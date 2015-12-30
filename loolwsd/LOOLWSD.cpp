@@ -525,7 +525,7 @@ public:
                         }
                     }
                 }
-                while (!LOOLWSD::isShutDown &&
+                while (!TerminationFlag &&
                        (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)));
 
                 queue.clear();
@@ -677,7 +677,6 @@ Poco::NamedMutex LOOLWSD::NamedMutexLOOL("loolwsd");
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::doTest = false;
-volatile bool LOOLWSD::isShutDown = false;
 #if ENABLE_DEBUG
 int LOOLWSD::uid = 0;
 #endif
@@ -697,7 +696,7 @@ LOOLWSD::~LOOLWSD()
 void LOOLWSD::handleSignal(int aSignal)
 {
     Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
-    LOOLWSD::isShutDown = true;
+    TerminationFlag = true;
 }
 
 void LOOLWSD::setSignals(bool isIgnored)
@@ -954,7 +953,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     int status = 0;
     unsigned timeoutCounter = 0;
-    while (!LOOLWSD::isShutDown && !LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
+    while (!TerminationFlag && !LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
     {
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
