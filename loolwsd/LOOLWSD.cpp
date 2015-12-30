@@ -176,7 +176,7 @@ public:
 
         while (true)
         {
-            std::string input = _queue.get();
+            const std::string input = _queue.get();
             if (input == "eof")
                 break;
             if (!_session->handleInput(input.c_str(), input.size()))
@@ -415,6 +415,9 @@ public:
                         else if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                         {
                             const std::string firstLine = getFirstLine(buffer, n);
+                            if (firstLine == "eof")
+                                break;
+
                             StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
                             if (kind == LOOLSession::Kind::ToClient &&

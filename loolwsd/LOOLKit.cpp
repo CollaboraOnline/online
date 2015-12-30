@@ -374,9 +374,23 @@ public:
         _loKit(loKit),
         _loKitDocument(loKitDocument),
         _childId(childId),
-        _sessionId(sessionId)
+        _sessionId(sessionId),
+        _stop(false)
     {
-        Log::info("New connection in child: " + childId + ", thread: " + _sessionId);
+        Log::info("Connection ctor in child: " + childId + ", thread: " + _sessionId);
+    }
+
+    ~Connection()
+    {
+        Log::info("~Connection dtor in child: " + _childId + ", thread: " + _sessionId);
+        stop();
+    }
+
+    const std::string& getSessionId() const { return _sessionId; }
+
+    LibreOfficeKitDocument * getLOKitDocument()
+    {
+        return (_session ? _session->_loKitDocument : nullptr);
     }
 
     void start()
@@ -389,15 +403,15 @@ public:
         return _thread.isRunning();
     }
 
+    void stop()
+    {
+        _stop = true;
+    }
+
     void join()
     {
         _thread.join();
     }
-
-    LibreOfficeKitDocument * getLOKitDocument()
-    {
-        return (_session ? _session->_loKitDocument : nullptr);
-    };
 
     void run() override
     {
@@ -443,6 +457,9 @@ public:
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     std::string firstLine = getFirstLine(buffer, n);
+                    if (firstLine == "eof")
+                        break;
+
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
                     // The only kind of messages a child process receives are the single-line ones (?)
@@ -451,11 +468,13 @@ public:
                     queue.put(firstLine);
                 }
             }
-            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && !_stop);
 
             queue.clear();
             queue.put("eof");
             queueHandlerThread.join();
+
+            _session->sendTextFrame("eof");
         }
         catch (const Exception& exc)
         {
@@ -471,18 +490,14 @@ public:
         Log::debug("Thread [" + thread_name + "] finished.");
     }
 
-    ~Connection()
-    {
-        Log::info("Closing connection in child: " + _childId + ", thread: " + _sessionId);
-    }
-
 private:
     LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
     const std::string _childId;
-    std::string _sessionId;
+    const std::string _sessionId;
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
+    volatile bool _stop;
 };
 
 // A document container.

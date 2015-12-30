@@ -67,7 +67,7 @@ MasterProcessSession::~MasterProcessSession()
     auto peer = _peer.lock();
     if (_kind == Kind::ToClient && peer)
     {
-        Util::shutdownWebSocket(*(peer->_ws));
+        peer->sendTextFrame("eof");
     }
     else
     if (_kind == Kind::ToPrisoner && peer)

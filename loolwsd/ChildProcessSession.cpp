@@ -67,7 +67,7 @@ ChildProcessSession::~ChildProcessSession()
     }
 
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
-        _loKit->pClass->registerCallback(_loKit, 0, 0);
+        _loKit->pClass->registerCallback(_loKit, nullptr, this);
 }
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
