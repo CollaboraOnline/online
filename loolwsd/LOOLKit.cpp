@@ -485,6 +485,109 @@ private:
     std::shared_ptr<ChildProcessSession> _session;
 };
 
+// A document container.
+// Owns LOKitDocument instance and connections.
+// Manages the lifetime of a document.
+// Technically, we can host multiple documents
+// per process. But for security reasons don't.
+// However, we could have a loolkit instance
+// per user or group of users (a trusted circle).
+class Document
+{
+public:
+    Document(LibreOfficeKit *loKit, const std::string& childId,
+             const std::string& url)
+      : _loKit(loKit),
+        _childId(childId),
+        _url(url)
+    {
+    }
+
+    ~Document()
+    {
+        // Destroy all connections and views.
+        // wait until loolwsd close all websockets
+        for (auto aIterator : _connections)
+        {
+            if (aIterator.second->isRunning())
+                aIterator.second->join();
+        }
+
+        // Get the document to destroy later.
+        auto loKitDocument = _connections.size() > 0
+                            ? _connections.begin()->second->getLOKitDocument()
+                            : nullptr;
+
+        // Destroy all connections and views.
+        _connections.clear();
+
+        // TODO. check what is happening when destroying lokit document
+        // Destroy the document.
+        if (loKitDocument != nullptr)
+        {
+            loKitDocument->pClass->destroy(loKitDocument);
+        }
+    }
+
+    void createSession(const std::string& sessionId)
+    {
+        const auto& aItem = _connections.find(sessionId);
+        if (aItem != _connections.end())
+        {
+            // found item, check if still running
+            Log::debug("Found thread for [" + sessionId + "] " +
+                       (aItem->second->isRunning() ? "Running" : "Stopped"));
+
+            if (!aItem->second->isRunning())
+            {
+                // Restore thread.
+                Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
+                _connections.erase(sessionId);
+
+                auto thread = std::make_shared<Connection>(_loKit, aItem->second->getLOKitDocument(), _childId, sessionId);
+                _connections.emplace(sessionId, thread);
+                thread->start();
+            }
+        }
+        else
+        {
+            // new thread id
+            Log::debug("Starting new thread for request [" + sessionId + "]");
+            std::shared_ptr<Connection> thread;
+            if ( _connections.empty() )
+            {
+                Log::info("Creating main thread for child: " + _childId + ", thread: " + sessionId);
+                thread = std::make_shared<Connection>(_loKit, nullptr, _childId, sessionId);
+            }
+            else
+            {
+                Log::info("Creating view thread for child: " + _childId + ", thread: " + sessionId);
+                auto aConnection = _connections.begin();
+                thread = std::make_shared<Connection>(_loKit, aConnection->second->getLOKitDocument(), _childId, sessionId);
+            }
+
+            auto aInserted = _connections.emplace(sessionId, thread);
+
+            if ( aInserted.second )
+                thread->start();
+            else
+                Log::error("Connection already exists for child: " + _childId + ", thread: " + sessionId);
+
+            Log::debug("Connections: " + std::to_string(_connections.size()));
+        }
+    }
+
+private:
+
+    LibreOfficeKit *_loKit;
+    const std::string _childId;
+    const std::string _url;
+
+    LibreOfficeKitDocument *_loKitDocument;
+
+    std::map<std::string, std::shared_ptr<Connection>> _connections;
+};
+
 void run_lok_main(const std::string &loSubPath, const std::string& childId, const std::string& pipe)
 {
     struct pollfd aPoll;
@@ -494,7 +597,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
     char* pEnd = nullptr;
 
     std::string aURL;
-    std::map<std::string, std::shared_ptr<Connection>> _connections;
+    std::map<std::string, std::shared_ptr<Document>> _documents;
 
     assert(!childId.empty());
     assert(!loSubPath.empty());
@@ -597,70 +700,36 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
 
                     if (tokens[0] == "search")
                     {
-                        if ( !_connections.empty() )
+                        aResponse = std::to_string(Process::id()) + " ";
+                        if (_documents.empty())
                         {
-                            aResponse = std::to_string(Process::id()) + ( aURL == tokens[1] ? " ok \r\n" : " no \r\n");
-                            Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length() );
+                            aResponse += "empty \r\n";
                         }
                         else
                         {
-                            aURL.clear();
-                            aResponse = std::to_string(Process::id()) + " empty \r\n";
-                            Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length() );
+                            const auto& it = _documents.find(tokens[1]);
+                            aResponse += (it != _documents.end() ? "ok \r\n" : "no \r\n");
                         }
+
+                        Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length());
                     }
                     else if (tokens[0] == "thread")
                     {
                         const std::string& sessionId = tokens[1];
                         Log::debug("Thread request for [" + sessionId + "]");
-                        const auto& aItem = _connections.find(sessionId);
-                        if (aItem != _connections.end())
-                        {
-                            // found item, check if still running
-                            Log::debug("Found thread for [" + sessionId + "] " +
-                                       (aItem->second->isRunning() ? "Running" : "Stopped"));
 
-                            if (!aItem->second->isRunning())
-                            {
-                                // Restore thread.
-                                Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
-                                _connections.erase(sessionId);
+                        //FIXME: for now we expect only one document per process.
+                        assert(_documents.size() == 1);
+                        assert(_documents[aURL]);
 
-                                auto thread = std::make_shared<Connection>(loKit.get(), aItem->second->getLOKitDocument(), childId, sessionId);
-                                _connections.emplace(sessionId, thread);
-                                thread->start();
-                            }
-                        }
-                        else
-                        {
-                            // new thread id
-                            Log::debug("Starting new thread for request [" + sessionId + "]");
-                            std::shared_ptr<Connection> thread;
-                            if ( _connections.empty() )
-                            {
-                                Log::info("Creating main thread for child: " + childId + ", thread: " + sessionId);
-                                thread = std::make_shared<Connection>(loKit.get(), nullptr, childId, sessionId);
-                            }
-                            else
-                            {
-                                Log::info("Creating view thread for child: " + childId + ", thread: " + sessionId);
-                                auto aConnection = _connections.begin();
-                                thread = std::make_shared<Connection>(loKit.get(), aConnection->second->getLOKitDocument(), childId, sessionId);
-                            }
-
-                            auto aInserted = _connections.emplace(sessionId, thread);
-
-                            if ( aInserted.second )
-                                thread->start();
-                            else
-                                Log::error("Connection already exists for child: " + childId + ", thread: " + sessionId);
-
-                            Log::debug("Connections: " + std::to_string(_connections.size()));
-                        }
+                        _documents[aURL]->createSession(sessionId);
                     }
                     else if (tokens[0] == "url")
                     {
+                        // When multi-documents per-process is supported
+                        // this will need to move to search or thread.
                         aURL = tokens[1];
+                        _documents.emplace(aURL, std::make_shared<Document>(loKit.get(), childId, aURL));
                     }
                     else
                     {
@@ -690,27 +759,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    // wait until loolwsd close all websockets
-    for (auto aIterator : _connections)
-    {
-        if (aIterator.second->isRunning())
-            aIterator.second->join();
-    }
-
-    // Get the document to destroy later.
-    auto loKitDocument = _connections.size() > 0
-                        ? _connections.begin()->second->getLOKitDocument()
-                        : nullptr;
-
-    // Destroy all connections and views.
-    _connections.clear();
-
-    // TODO. check what is happening when destroying lokit document
-    // Destroy the document.
-    if (loKitDocument != nullptr)
-    {
-        loKitDocument->pClass->destroy(loKitDocument);
-    }
+    _documents.clear();
 
     // Destroy LibreOfficeKit
     loKit->pClass->destroy(loKit.get());
