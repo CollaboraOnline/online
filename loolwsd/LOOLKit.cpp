@@ -60,8 +60,6 @@ using Poco::FastMutex;
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
 
-#ifndef LOOLKIT_NO_MAIN
-// handle the signals when we are not using shared pages, execv() system call
 static volatile bool TerminationFlag = false;
 
 namespace
@@ -88,37 +86,6 @@ namespace
 #endif
     }
 }
-
-#else
-// handle the signals when we are using shared pages, fork() system call
-static volatile bool TerminationFlag = false;
-
-namespace
-{
-    void handleSignal(int aSignal)
-    {
-        Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
-        TerminationFlag = true;
-    }
-
-    void setSignals(bool isIgnored)
-    {
-#ifdef __linux
-        struct sigaction aSigAction;
-
-        sigemptyset(&aSigAction.sa_mask);
-        aSigAction.sa_flags = 0;
-        aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
-
-        sigaction(SIGTERM, &aSigAction, NULL);
-        sigaction(SIGINT, &aSigAction, NULL);
-        sigaction(SIGQUIT, &aSigAction, NULL);
-        sigaction(SIGHUP, &aSigAction, NULL);
-#endif
-    }
-}
-
-#endif
 
 // This thread handles callbacks from the
 // lokit instance.
