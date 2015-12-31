@@ -16,6 +16,9 @@ constexpr int MASTER_PORT_NUMBER = 9981;
 constexpr int INTERVAL_PROBES = 10;
 constexpr int MAINTENANCE_INTERVAL = 1;
 constexpr int POLL_TIMEOUT = 1000000;
+// Pipe buffer is in function of URL size, a big URL will be handled in several
+// work loads.
+constexpr int PIPE_BUFFER = 1024;
 
 // The client port number, which is changed via loolwsd args.
 static int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;

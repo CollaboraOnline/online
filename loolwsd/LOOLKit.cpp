@@ -491,7 +491,7 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
 {
     struct pollfd aPoll;
     ssize_t nBytes = -1;
-    char  aBuffer[1024];
+    char  aBuffer[PIPE_BUFFER];
     char* pStart = nullptr;
     char* pEnd = nullptr;
 
