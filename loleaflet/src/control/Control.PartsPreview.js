@@ -63,6 +63,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var imgClassName = 'preview-img';
 		var img = L.DomUtil.create('img', imgClassName, frame);
 		img.id = id;
+		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
 		L.DomEvent
 			.on(img, 'click', L.DomEvent.stopPropagation)
 			.on(img, 'click', L.DomEvent.stop)

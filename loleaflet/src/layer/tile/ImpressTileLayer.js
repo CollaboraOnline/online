@@ -113,6 +113,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
 			L.Socket.sendMessage('setclientpart part=' + this._selectedPart);
+			this._resetPreFetching(true);
+			this._update();
+			if (this._preFetchPart !== this._selectedPart) {
+				this._preFetchPart = this._selectedPart;
+				this._preFetchBorder = null;
+			}
 			var partNames = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
 			partNames = partNames.slice(partNames.length - this._parts);
@@ -122,12 +128,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				docType: this._docType,
 				partNames: partNames
 			});
-			this._resetPreFetching(true);
-			this._update();
-			if (this._preFetchPart !== this._selectedPart) {
-				this._preFetchPart = this._selectedPart;
-				this._preFetchBorder = null;
-			}
 		}
 	}
 });
