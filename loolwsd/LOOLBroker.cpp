@@ -156,8 +156,9 @@ class PipeRunnable: public Runnable
 {
 public:
     PipeRunnable()
+      : _pStart(nullptr),
+        _pEnd(nullptr)
     {
-        _pStart = _pEnd = nullptr;
     }
 
     ssize_t getResponseLine(int nPipeReader, std::string& aLine)
@@ -211,16 +212,10 @@ public:
         return nBytes;
     }
 
-    ssize_t createThread(Process::PID nPID, const std::string& aTID)
+    ssize_t createThread(Process::PID nPID, const std::string& aTID, const std::string& aURL)
     {
         std::string aResponse;
-        std::string aMessage = "thread " + aTID + "\r\n";
-        return sendMessage(_childProcesses[nPID], aMessage);
-    }
-
-    ssize_t updateURL(Process::PID nPID, const std::string& aURL)
-    {
-        std::string aMessage = "url " + aURL + "\r\n";
+        std::string aMessage = "thread " + aTID + " " + aURL + "\r\n";
         return sendMessage(_childProcesses[nPID], aMessage);
     }
 
@@ -293,7 +288,7 @@ public:
             {
                 Log::debug("Cache found URL [" + aURL + "] hosted on child [" + std::to_string(aIterURL->second) +
                            "]. Creating view for thread [" + aTID + "].");
-                if (createThread(aIterURL->second, aTID) < 0)
+                if (createThread(aIterURL->second, aTID, aURL) < 0)
                     Log::error("Cache: Error creating thread.");
 
                 return;
@@ -308,7 +303,7 @@ public:
             {
                 Log::debug("Search found URL [" + aURL + "] hosted by child [" + std::to_string(nPID) +
                            "]. Creating view for thread [" + aTID + "].");
-                if (createThread(nPID, aTID) < 0)
+                if (createThread(nPID, aTID, aURL) < 0)
                     Log::error("Search: Error creating thread.");
                 else
                     _cacheURL[aURL] = nPID;
@@ -321,13 +316,8 @@ public:
             {
                 const auto aItem = _emptyURL.front();
                 Log::trace("No child found for URL [" + aURL + "].");
-                if (updateURL(aItem, aURL) < 0)
-                {
-                    Log::error("New: Error update URL.");
-                    return;
-                }
 
-                if (createThread(aItem, aTID) < 0)
+                if (createThread(aItem, aTID, aURL) < 0)
                 {
                     Log::error("New: Error creating thread.");
                     return;
@@ -361,7 +351,7 @@ public:
         pStart = aBuffer;
         pEnd   = aBuffer;
 
-        static const std::string thread_name = "broker_pipe_reader";
+        static const std::string thread_name = "brk_pipe_reader";
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");

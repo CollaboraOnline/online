@@ -640,7 +640,6 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
     char* pStart = nullptr;
     char* pEnd = nullptr;
 
-    std::string aURL;
     std::map<std::string, std::shared_ptr<Document>> _documents;
 
     assert(!childId.empty());
@@ -760,20 +759,14 @@ void run_lok_main(const std::string &loSubPath, const std::string& childId, cons
                     else if (tokens[0] == "thread")
                     {
                         const std::string& sessionId = tokens[1];
-                        Log::debug("Thread request for [" + sessionId + "]");
+                        const std::string& url = tokens[2];
+                        Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
 
-                        //FIXME: for now we expect only one document per process.
-                        assert(_documents.size() == 1);
-                        assert(_documents[aURL]);
+                        auto it = _documents.lower_bound(url);
+                        if (it == _documents.end())
+                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit.get(), childId, url));
 
-                        _documents[aURL]->createSession(sessionId);
-                    }
-                    else if (tokens[0] == "url")
-                    {
-                        // When multi-documents per-process is supported
-                        // this will need to move to search or thread.
-                        aURL = tokens[1];
-                        _documents.emplace(aURL, std::make_shared<Document>(loKit.get(), childId, aURL));
+                        it->second->createSession(sessionId);
                     }
                     else
                     {
