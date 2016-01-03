@@ -45,13 +45,17 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::shared_ptr<Poco::Net::WebSocket> ws,
                                          LibreOfficeKit *loKit,
                                          LibreOfficeKitDocument * loKitDocument,
-                                         const std::string& childId) :
+                                         const std::string& childId,
+                                         std::function<void(LibreOfficeKitDocument*, int)> onLoad,
+                                         std::function<void(int)> onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
     _loKit(loKit),
     _childId(childId),
     _viewId(0),
-    _clientPart(0)
+    _clientPart(0),
+    _onLoad(onLoad),
+    _onUnload(onUnload)
 {
     Log::info("ChildProcessSession ctor [" + getName() + "].");
 }
@@ -62,12 +66,16 @@ ChildProcessSession::~ChildProcessSession()
 
     if (_loKitDocument != nullptr)
     {
+        _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, this);
+
         _loKitDocument->pClass->destroyView(_loKitDocument, _viewId);
         Log::debug("Destroy view [" + getName() + "]-> [" + std::to_string(_viewId) + "]");
     }
 
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
         _loKit->pClass->registerCallback(_loKit, nullptr, this);
+
+    _onUnload(_viewId);
 }
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
@@ -234,7 +242,7 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
 
     std::string timestamp;
     parseDocOptions(tokens, part, timestamp);
-
+    Log::info("docURL: [" + _docURL + "].");
     URI aUri;
     try
     {
@@ -306,6 +314,8 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
 
     if (!getStatus(buffer, length))
         return false;
+
+    _onLoad(_loKitDocument, _viewId);
 
     return true;
 }

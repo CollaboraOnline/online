@@ -29,7 +29,9 @@ public:
                         std::shared_ptr<Poco::Net::WebSocket> ws,
                         LibreOfficeKit *loKit,
                         LibreOfficeKitDocument * loKitDocument,
-                        const std::string& childId);
+                        const std::string& childId,
+                        std::function<void(LibreOfficeKitDocument*, int)> onLoad,
+                        std::function<void(int)> onUnload);
     virtual ~ChildProcessSession();
 
     virtual bool getStatus(const char *buffer, int length);
@@ -80,6 +82,8 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     int _clientPart;
+    std::function<void(LibreOfficeKitDocument*, int)> _onLoad;
+    std::function<void(int)> _onUnload;
 };
 
 class CallBackNotification: public Poco::Notification

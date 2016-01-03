@@ -259,7 +259,7 @@ public:
 
     void run()
     {
-        static const std::string thread_name = "lokit_callback_handler";
+        static const std::string thread_name = "kit_callback";
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
@@ -329,7 +329,7 @@ public:
 
     void run() override
     {
-        static const std::string thread_name = "lokit_queue_handler";
+        static const std::string thread_name = "kit_queue_" + _session->getId();
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
@@ -370,12 +370,16 @@ class Connection: public Runnable
 {
 public:
     Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument,
-               const std::string& childId, const std::string& sessionId) :
+               const std::string& childId, const std::string& sessionId,
+               std::function<void(LibreOfficeKitDocument*, int)> onLoad,
+               std::function<void(int)> onUnload) :
         _loKit(loKit),
         _loKitDocument(loKitDocument),
         _childId(childId),
         _sessionId(sessionId),
-        _stop(false)
+        _stop(false),
+        _onLoad(onLoad),
+        _onUnload(onUnload)
     {
         Log::info("Connection ctor in child: " + childId + ", thread: " + _sessionId);
     }
@@ -415,7 +419,7 @@ public:
 
     void run() override
     {
-        static const std::string thread_name = "lokit_connection";
+        static const std::string thread_name = "kit_socket_" + _sessionId;
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
@@ -433,7 +437,7 @@ public:
             HTTPResponse response;
             auto ws = std::make_shared<WebSocket>(cs, request, response);
 
-            _session.reset(new ChildProcessSession(_sessionId, ws, _loKit, _loKitDocument, _childId));
+            _session.reset(new ChildProcessSession(_sessionId, ws, _loKit, _loKitDocument, _childId, _onLoad, _onUnload));
             ws->setReceiveTimeout(0);
 
             // child Jail TID PID
@@ -498,6 +502,8 @@ private:
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
     volatile bool _stop;
+    std::function<void(LibreOfficeKitDocument*, int)> _onLoad;
+    std::function<void(int)> _onUnload;
 };
 
 // A document container.
@@ -514,8 +520,10 @@ public:
              const std::string& url)
       : _loKit(loKit),
         _childId(childId),
-        _url(url)
+        _url(url),
+        _loKitDocument(nullptr)
     {
+        Log::info("Document ctor for url [" + url + "] on child [" + childId + "].");
     }
 
     ~Document()
@@ -559,7 +567,9 @@ public:
                 Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
                 _connections.erase(sessionId);
 
-                auto thread = std::make_shared<Connection>(_loKit, aItem->second->getLOKitDocument(), _childId, sessionId);
+                auto thread = std::make_shared<Connection>(_loKit, aItem->second->getLOKitDocument(), _childId, sessionId,
+                                                           [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
+                                                           [this](const int viewId) { onUnload(viewId); });
                 _connections.emplace(sessionId, thread);
                 thread->start();
             }
@@ -572,13 +582,17 @@ public:
             if ( _connections.empty() )
             {
                 Log::info("Creating main thread for child: " + _childId + ", thread: " + sessionId);
-                thread = std::make_shared<Connection>(_loKit, nullptr, _childId, sessionId);
+                thread = std::make_shared<Connection>(_loKit, nullptr, _childId, sessionId,
+                                                      [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
+                                                      [this](const int viewId) { onUnload(viewId); });
             }
             else
             {
                 Log::info("Creating view thread for child: " + _childId + ", thread: " + sessionId);
                 auto aConnection = _connections.begin();
-                thread = std::make_shared<Connection>(_loKit, aConnection->second->getLOKitDocument(), _childId, sessionId);
+                thread = std::make_shared<Connection>(_loKit, aConnection->second->getLOKitDocument(), _childId, sessionId,
+                                                      [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
+                                                      [this](const int viewId) { onUnload(viewId); });
             }
 
             auto aInserted = _connections.emplace(sessionId, thread);
@@ -590,6 +604,21 @@ public:
 
             Log::debug("Connections: " + std::to_string(_connections.size()));
         }
+    }
+
+private:
+
+    void onLoad(LibreOfficeKitDocument *loKitDocument, const int viewId)
+    {
+        Log::info("Document [" + _url + "] loaded as view #" + std::to_string(viewId) + ".");
+        if (_loKitDocument != nullptr)
+            assert(_loKitDocument == loKitDocument);
+        _loKitDocument = loKitDocument;
+    }
+
+    void onUnload(const int viewId)
+    {
+        Log::info("Document [" + _url + "] view #" + std::to_string(viewId)+ " unloaded.");
     }
 
 private:
