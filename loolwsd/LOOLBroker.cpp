@@ -655,7 +655,8 @@ int main(int argc, char** argv)
         exit(-1);
     }
 
-    const std::string childId = std::to_string(Util::rng::getNext());
+    //TODO: Why not use our PID?
+    const std::string childId = Util::encodeId(Util::rng::getNext());
 
     const Path jailPath = Path::forDirectory(childRoot + Path::separator() + childId);
     Log::info("Jail path: " + jailPath.toString());
@@ -674,10 +675,10 @@ int main(int argc, char** argv)
     File(loolkitPath).copyTo(Path(jailPath, JAILED_LOOLKIT_PATH).toString());
 
     // We need this because sometimes the hostname is not resolved
-    std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
-    for (std::vector<std::string>::iterator it = networkFiles.begin(); it != networkFiles.end(); ++it)
+    const std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+    for (const auto& filename : networkFiles)
     {
-       File networkFile(*it);
+       const File networkFile(filename);
        if (networkFile.exists())
        {
            networkFile.copyTo(Path(jailPath, "/etc").toString());

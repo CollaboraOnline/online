@@ -26,8 +26,6 @@ public:
 
     bool haveSeparateProcess();
 
-    static Poco::Path getJailPath(Poco::UInt64 childId);
-
     static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
 
     virtual bool getStatus(const char *buffer, int length);
@@ -73,11 +71,14 @@ public:
 
 private:
 
+    static
+    Poco::Path getJailPath(const std::string& childId);
+
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
     // The id of the child process
-    Poco::UInt64 _childId;
+    std::string _childId;
     // The pid of the child process
     Poco::Process::PID _pidChild;
     int _curPart;

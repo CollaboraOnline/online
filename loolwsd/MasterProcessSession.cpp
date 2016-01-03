@@ -52,7 +52,6 @@ MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
                                            std::shared_ptr<Poco::Net::WebSocket> ws) :
     LOOLSession(id, kind, ws),
-    _childId(0),
     _pidChild(0),
     _curPart(0),
     _loadPart(-1)
@@ -212,7 +211,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        const UInt64 childId = std::stoull(tokens[1]);
+        const auto childId = tokens[1];
         setId(tokens[2]);
         const Process::PID pidChild = std::stoull(tokens[3]);
 
@@ -336,12 +335,12 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
 bool MasterProcessSession::haveSeparateProcess()
 {
-    return _childId != 0;
+    return !_childId.empty();
 }
 
-Path MasterProcessSession::getJailPath(UInt64 childId)
+Poco::Path MasterProcessSession::getJailPath(const std::string& childId)
 {
-    return Path::forDirectory(LOOLWSD::childRoot + Path::separator() + std::to_string(childId));
+    return Path::forDirectory(LOOLWSD::childRoot + Path::separator() + childId);
 }
 
 bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
@@ -384,7 +383,7 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
 
         // request new URL session
         const std::string aMessage = "request " + getId() + " " + _docURL + "\r\n";
-        Log::info("Sending to Broker: " + aMessage);
+        Log::debug("Sending to Broker: " + aMessage);
         Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage.c_str(), aMessage.length());
     }
     catch (const Poco::SyntaxException&)
@@ -613,10 +612,16 @@ void MasterProcessSession::dispatchChild()
     if (!aUri.empty() && aUri.getScheme() == "file")
     {
         const std::string aJailDoc = jailDocumentURL.substr(1) + Path::separator() + std::to_string(childSession->_pidChild);
-        Path aSrcFile(aUri.getPath());
-        Path aDstFile(Path(getJailPath(childSession->_childId), aJailDoc), aSrcFile.getFileName());
-        Path aDstPath(getJailPath(childSession->_childId), aJailDoc);
-        Path aJailFile(aJailDoc, aSrcFile.getFileName());
+        const Path aSrcFile(aUri.getPath());
+        const Path aDstPath(getJailPath(childSession->_childId), aJailDoc);
+        const Path aDstFile(aDstPath, aSrcFile.getFileName());
+        const Path aJailFile(aJailDoc, aSrcFile.getFileName());
+
+        Log::debug("JailDoc: " + aJailDoc);
+        Log::debug("SrcFile: " + aSrcFile.toString());
+        Log::debug("DstPath: " + aDstPath.toString());
+        Log::debug("DstFile: " + aDstFile.toString());
+        Log::debug("JailFile: " + aJailFile.toString());
 
         try
         {

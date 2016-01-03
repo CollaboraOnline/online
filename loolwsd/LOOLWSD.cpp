@@ -310,8 +310,9 @@ public:
                 Poco::Net::HTMLForm form(request, request.stream(), handler);
                 if (form.has("childid") && form.has("name"))
                 {
-                    std::string dirPath = LOOLWSD::childRoot + Path::separator() + form.get("childid") + LOOLSession::jailDocumentURL +
-                        Path::separator() + "insertfile";
+                    const std::string dirPath = LOOLWSD::childRoot + Path::separator() + form.get("childid")
+                                              + LOOLSession::jailDocumentURL
+                                              + Path::separator() + "insertfile";
                     File(dirPath).createDirectory();
                     std::string fileName = dirPath + Path::separator() + form.get("name");
                     File(tmpPath).moveTo(fileName);
