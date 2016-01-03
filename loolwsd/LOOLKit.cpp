@@ -146,7 +146,7 @@ public:
     void callback(const int nType, const std::string& rPayload, void* pData)
     {
         ChildProcessSession *srv = reinterpret_cast<ChildProcessSession *>(pData);
-        Log::trace() << "Callback [" << srv->_viewId << "] "
+        Log::trace() << "Callback [" << srv->getViewId() << "] "
                      << callbackTypeToString(nType)
                      << " [" << rPayload << "]." << Log::end;
 

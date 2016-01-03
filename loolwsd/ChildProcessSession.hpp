@@ -38,10 +38,10 @@ public:
 
     virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
+    int getViewId() const  { return _viewId; }
+
     LibreOfficeKitDocument *_loKitDocument;
     std::string _docType;
-    /// View ID, returned by createView() or 0 by default.
-    int _viewId;
     static Poco::NotificationQueue _callbackQueue;
     static Poco::Mutex _mutex;
 
@@ -77,6 +77,8 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
+    /// View ID, returned by createView() or 0 by default.
+    int _viewId;
     int _clientPart;
 };
 

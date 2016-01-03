@@ -48,9 +48,9 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          const std::string& childId) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
-    _viewId(0),
     _loKit(loKit),
     _childId(childId),
+    _viewId(0),
     _clientPart(0)
 {
     Log::info("ChildProcessSession ctor [" + getName() + "].");
