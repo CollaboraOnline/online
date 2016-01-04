@@ -52,7 +52,7 @@ AC_ARG_ENABLE([tests],
                            [Build and run unit tests]))
 
 # Handle options
-AS_IF([test "$enable_debug" = yes],
+AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
       [POCO_DEBUG_SUFFIX=])
 
