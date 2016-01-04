@@ -656,7 +656,7 @@ int main(int argc, char** argv)
     }
 
     //TODO: Why not use our PID?
-    const std::string childId = Util::encodeId(Util::rng::getNext());
+    const std::string childId = std::to_string(Util::rng::getNext());
 
     const Path jailPath = Path::forDirectory(childRoot + Path::separator() + childId);
     Log::info("Jail path: " + jailPath.toString());
