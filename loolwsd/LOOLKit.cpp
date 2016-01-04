@@ -632,8 +632,13 @@ private:
     std::map<std::string, std::shared_ptr<Connection>> _connections;
 };
 
-void run_lok_main(const std::string &loSubPath, const std::string& childId, const std::string& pipe)
+void lokit_main(const std::string &loSubPath, const std::string& childId, const std::string& pipe)
 {
+#ifdef LOOLKIT_NO_MAIN
+    // Reinitialize logging when forked.
+    Log::initialize("kit");
+#endif
+
     struct pollfd aPoll;
     ssize_t nBytes = -1;
     char  aBuffer[PIPE_BUFFER];
@@ -890,7 +895,7 @@ int main(int argc, char** argv)
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    run_lok_main(loSubPath, childId, pipe);
+    lokit_main(loSubPath, childId, pipe);
 
     return 0;
 }

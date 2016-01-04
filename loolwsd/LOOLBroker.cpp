@@ -448,6 +448,14 @@ static int createLibreOfficeKit(const bool sharePages, const std::string& loSubP
     Poco::UInt64 child;
     int nFIFOWriter = -1;
 
+    const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
+
+    if (mkfifo(pipe.c_str(), 0666) < 0)
+    {
+        Log::error("Error: mkfifo failed.");
+        return -1;
+    }
+
     if (sharePages)
     {
         Log::debug("Forking LibreOfficeKit.");
@@ -456,25 +464,18 @@ static int createLibreOfficeKit(const bool sharePages, const std::string& loSubP
         if (!(pid = fork()))
         {
             // child
-            run_lok_main(loSubPath, childId, childId);
+            lokit_main(loSubPath, childId, pipe);
             _exit(0);
         }
         else
         {
             // parent
             child = pid; // (somehow - switch the hash to use real pids or ?) ...
+            Log::info("Forked kit [" + std::to_string(child) + "].");
         }
     }
     else
     {
-        const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
-
-        if (mkfifo(pipe.c_str(), 0666) < 0)
-        {
-            Log::error("Error: mkfifo failed.");
-            return -1;
-        }
-
         Process::Args args;
         args.push_back("--losubpath=" + loSubPath);
         args.push_back("--child=" + childId);
@@ -487,21 +488,23 @@ static int createLibreOfficeKit(const bool sharePages, const std::string& loSubP
 
         ProcessHandle procChild = Process::launch(JAILED_LOOLKIT_PATH, args);
         child = procChild.id();
+        Log::info("Spawned kit [" + std::to_string(child) + "].");
+
         if (!Process::isRunning(procChild))
         {
             // This can happen if we fail to copy it, or bad chroot etc.
-            Log::error("Error: loolkit was stillborn.");
+            Log::error("Error: loolkit [" + std::to_string(child) + "] was stillborn.");
             return -1;
         }
+    }
 
-        if ( (nFIFOWriter = open(pipe.c_str(), O_WRONLY)) < 0 )
-        {
-            // TODO.  ill process state, that state should force close prison websockets and
-            // kill, currently we have only "stop server state".
-            Log::error("Error: failed to open pipe [" + pipe + "] write only. Abandoning child.");
-            Poco::Process::requestTermination(child);
-            return -1;
-        }
+    if ( (nFIFOWriter = open(pipe.c_str(), O_WRONLY)) < 0 )
+    {
+        // TODO.  ill process state, that state should force close prison websockets and
+        // kill, currently we have only "stop server state".
+        Log::error("Error: failed to open write pipe [" + pipe + "] with kit. Abandoning child.");
+        Poco::Process::requestTermination(child);
+        return -1;
     }
 
     Log::info() << "Adding Kit #" << childCounter << " PID " << child << Log::end;
