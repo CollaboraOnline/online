@@ -323,7 +323,7 @@ public:
                 Poco::Net::HTMLForm form(request, request.stream(), handler);
                 if (form.has("childid") && form.has("name"))
                 {
-                    const std::string dirPath = LOOLWSD::childRoot + Path::separator() + form.get("childid")
+                    const std::string dirPath = LOOLWSD::childRoot + form.get("childid")
                                               + LOOLSession::jailDocumentURL
                                               + Path::separator() + "insertfile";
                     File(dirPath).createDirectory();
@@ -342,10 +342,12 @@ public:
             else if (tokens.count() >= 4)
             {
                 // The user might request a file to download
-                std::string dirPath = LOOLWSD::childRoot + "/" + tokens[1] + LOOLSession::jailDocumentURL + "/" + tokens[2];
+                const std::string dirPath = LOOLWSD::childRoot + tokens[1]
+                                          + LOOLSession::jailDocumentURL
+                                          + Path::separator() + tokens[2];
                 std::string fileName;
                 URI::decode(tokens[3], fileName);
-                std::string filePath = dirPath + "/" + fileName;
+                const std::string filePath = dirPath + Path::separator() + fileName;
                 Log::info("HTTP request for: " + filePath);
                 File file(filePath);
                 if (file.exists())
@@ -822,12 +824,15 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // so must check options required in the parent (but not in the
     // child) separately now. Also check for options that are
     // meaningless for the parent.
-    if (sysTemplate == "")
+    if (sysTemplate.empty())
         throw MissingOptionException("systemplate");
-    if (loTemplate == "")
+    if (loTemplate.empty())
         throw MissingOptionException("lotemplate");
-    if (childRoot == "")
+
+    if (childRoot.empty())
         throw MissingOptionException("childroot");
+    else if (childRoot[childRoot.size() - 1] != Path::separator())
+        childRoot += Path::separator();
 
     if (ClientPortNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
@@ -957,7 +962,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     waitpid(-1, &status, WUNTRACED);
 
     Log::info("Cleaning up childroot directory [" + childRoot + "].");
-    Util::removeFile(childRoot, true);
+    std::vector<std::string> jails;
+    File(childRoot).list(jails);
+    for (auto& jail : jails)
+    {
+        const auto path = childRoot + jail;
+        Log::info("Removing jail [" + path + "].");
+        Util::removeFile(path, true);
+    }
 
     Log::info("Process [loolwsd] finished.");
     return Application::EXIT_OK;
