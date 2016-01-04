@@ -231,7 +231,12 @@ L.Map.Keyboard = L.Handler.extend({
 		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
 		var ctrl = e.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
 		var alt = e.originalEvent.altKey ? this.keyModifier.alt : 0;
-		this.modifier = shift | ctrl | alt;
+		var cmd = e.originalEvent.metaKey ? this.keyModifier.ctrlMac : 0;
+		this.modifier = shift | ctrl | alt | cmd;
+
+		if (cmd) {
+			return;
+		}
 
 		if (ctrl) {
 			if (this._handleCtrlCommand(e)) {
