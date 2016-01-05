@@ -76,11 +76,6 @@ private:
 
     void startupBroker(int nBroker);
     int  createBroker();
-
-#if ENABLE_DEBUG
-public:
-    static int uid;
-#endif
 };
 
 #endif

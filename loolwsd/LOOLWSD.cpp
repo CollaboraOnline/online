@@ -42,7 +42,6 @@ DEALINGS IN THE SOFTWARE.
 
 #include <errno.h>
 #include <locale.h>
-#include <pwd.h>
 #include <unistd.h>
 
 #ifdef __linux
@@ -623,9 +622,6 @@ Poco::NamedMutex LOOLWSD::NamedMutexLOOL("loolwsd");
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::doTest = false;
-#if ENABLE_DEBUG
-int LOOLWSD::uid = 0;
-#endif
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 const std::string LOOLWSD::LOKIT_PIDLOG = "/tmp/lokit.pid";

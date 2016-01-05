@@ -16,6 +16,13 @@
 
 #include "Util.hpp"
 
+#if ENABLE_DEBUG
+#include <sys/types.h>
+#include <pwd.h>
+
+static int uid = 0;
+#endif
+
 static
 void dropCapability(
 #ifdef __linux
@@ -75,15 +82,15 @@ void dropCapability(
 #endif
 
         // Running under sudo, probably because being debugged? Let's drop super-user rights.
-        if (LOOLWSD::uid == 0)
+        if (uid == 0)
         {
             struct passwd *nobody = getpwnam("nobody");
             if (nobody)
-                LOOLWSD::uid = nobody->pw_uid;
+                uid = nobody->pw_uid;
             else
-                LOOLWSD::uid = 65534;
+                uid = 65534;
         }
-        if (setuid(LOOLWSD::uid) != 0)
+        if (setuid(uid) != 0)
         {
             Log::error("setuid() failed.");
         }
