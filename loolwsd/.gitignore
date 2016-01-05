@@ -22,7 +22,6 @@
 /test-driver
 /jails
 /loolwsd.spec
-/loolwsd-systemplate-setup
 
 *.o
 *.exe

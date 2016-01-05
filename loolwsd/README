@@ -71,7 +71,6 @@ Now you need to set up a minimal chroot system, and directory for the jails:
     ROOTFORJAILS=`pwd`/jails       # or tweak for your system
 
     rm -Rf ${SYSTEMPLATE} # clean
-    chmod +x loolwsd-systemplate-setup
     ./loolwsd-systemplate-setup ${SYSTEMPLATE} ${MASTER}/instdir # build template
     mkdir -p ${ROOTFORJAILS} # create location for transient jails.
 

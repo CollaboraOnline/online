@@ -151,7 +151,6 @@ AC_DEFINE_UNQUOTED([LOOLWSD_CACHEDIR],["$LOOLWSD_CACHEDIR"],[Cache folder])
 AC_SUBST(LOOLWSD_CACHEDIR)
 
 AC_CONFIG_FILES([Makefile
-                 loolwsd-systemplate-setup
                  test/Makefile
                  loolwsd.spec])
 AC_OUTPUT
