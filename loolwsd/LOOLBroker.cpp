@@ -67,6 +67,7 @@ static int readerBroker = -1;
 
 static unsigned int forkCounter = 0;
 static unsigned int childCounter = 0;
+static unsigned int numPreSpawnedChildren = 0;
 
 static std::mutex forkMutex;
 static std::map<Process::PID, int> _childProcesses;
@@ -307,8 +308,8 @@ public:
             }
             else
             {
-                Log::info("No children available, creating a new one.");
-                forkCounter++;
+                Log::info("No children available, creating [" + std::to_string(numPreSpawnedChildren) + "] childs");
+                forkCounter = numPreSpawnedChildren;
             }
         }
     }
@@ -531,7 +532,6 @@ int main(int argc, char** argv)
     std::string loSubPath;
     std::string sysTemplate;
     std::string loTemplate;
-    int numPreSpawnedChildren = 0;
 
     for (int i = 0; i < argc; ++i)
     {
@@ -772,10 +772,10 @@ int main(int argc, char** argv)
         else if (pid < 0)
             Log::error("Error: Child error.");
 
-        if ( forkCounter > 0 )
+        if (forkCounter > 0)
         {
             forkMutex.lock();
-            forkCounter -= 1;
+            forkCounter--;
 
             if (createLibreOfficeKit(sharePages, loSubPath, childId) < 0)
                 Log::error("Error: fork falied.");
