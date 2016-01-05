@@ -11,12 +11,13 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Path.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <LOOLProtocol.hpp>
-#include <LOOLWSD.hpp>
+#include <Common.hpp>
 
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
@@ -38,7 +39,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
 public:
     HTTPWSTest()
-        : _uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER)),
+        : _uri("http://127.0.0.1:" + std::to_string(ClientPortNumber)),
           _session(_uri.getHost(), _uri.getPort()),
           _request(Poco::Net::HTTPRequest::HTTP_POST, "/ws"),
           _socket(_session, _request, _response)

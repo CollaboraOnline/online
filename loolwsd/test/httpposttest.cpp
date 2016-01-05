@@ -16,7 +16,7 @@
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <LOOLWSD.hpp>
+#include <Common.hpp>
 
 /// Tests the HTTP POST API of loolwsd. The server has to be started manually before running this test.
 class HTTPPostTest : public CPPUNIT_NS::TestFixture
@@ -30,7 +30,7 @@ class HTTPPostTest : public CPPUNIT_NS::TestFixture
 
 void HTTPPostTest::testConvertTo()
 {
-    Poco::URI uri("http://127.0.0.1:" + std::to_string(LOOLWSD::DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(ClientPortNumber));
     Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/convert-to");
