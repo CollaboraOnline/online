@@ -27,6 +27,8 @@ cd / || exit 1
 	find etc/passwd etc/group etc/hosts \
 	     etc/resolv.conf \
 	     lib/ld-* lib64/ld-* \
+	     lib/libcap* lib/*-linux-gnu/libcap* \
+	     lib/libattr* lib/*-linux-gnu/libattr* \
 	     etc/ld.so.* \
 	     lib/libnss_* lib64/libnss_* \
 	     var/cache/fontconfig \
@@ -42,8 +44,11 @@ cd / || exit 1
 
 	find etc/fonts \
 	     lib/libnss_* \
+	     lib/ld-* lib64/ld-* \
 	     lib64/libnss_* \
 	     lib/*-linux-gnu/libnss* \
+	     lib/libcap* lib/*-linux-gnu/libcap* \
+	     lib/libattr* lib/*-linux-gnu/libattr* \
 		 -type l
 
 	find lib/libnss_* lib64/libnss_* -type l
