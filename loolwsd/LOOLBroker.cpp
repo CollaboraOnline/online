@@ -69,7 +69,6 @@ static unsigned int forkCounter = 0;
 static unsigned int childCounter = 0;
 
 static std::mutex forkMutex;
-static std::deque<Process::PID> _emptyURL;
 static std::map<Process::PID, int> _childProcesses;
 static std::map<std::string, Process::PID> _cacheURL;
 
@@ -221,66 +220,62 @@ public:
 
     Process::PID searchURL(const std::string& aURL)
     {
-        ssize_t nBytes = -1;
-        Process::PID nPID = 0;
-        std::string aResponse;
-        std::string aMessage = "search " + aURL + "\r\n";
+        const std::string aMessage = "search " + aURL + "\r\n";
 
-        auto aIterator = _childProcesses.begin();
-        for ( ; aIterator!=_childProcesses.end(); ++aIterator)
+        Process::PID nPID = -1;
+        for (auto& it : _childProcesses)
         {
-            if ( !(aIterator->first > 0 && aIterator->second > 0) )
-            {
-                //Log::error("error iterator " + aIterator->second + " " + aMessage);
-                continue;
-            }
+            assert(it.first > 0 && it.second > 0);
 
-            nBytes = Util::writeFIFO(aIterator->second, aMessage.c_str(), aMessage.length());
+            Log::trace("Query to kit [" + std::to_string(it.first) + "]: " + aMessage);
+            ssize_t nBytes = Util::writeFIFO(it.second, aMessage.c_str(), aMessage.length());
             if ( nBytes < 0 )
             {
-                Log::error("Error writting to child pipe: " + std::to_string(aIterator->first) + ".");
+                //TODO: Cleanup broken children.
+                Log::error("Error writting to child pipe: " + std::to_string(it.first) + ". Clearing cache.");
+                _cacheURL.clear();
                 break;
             }
 
+            std::string aResponse;
             nBytes = getResponseLine(readerChild, aResponse);
+            Log::trace("Response from kit [" + std::to_string(it.first) + "]: " + aResponse);
             if ( nBytes < 0 )
             {
-                Log::error("Error reading child response: " + std::to_string(aIterator->first) + ".");
+                //TODO: Cleanup broken children.
+                Log::error("Error reading child response: " + std::to_string(it.first) + ". Clearing cache.");
+                _cacheURL.clear();
                 break;
             }
 
-            //Log::trace("response: " << aResponse);
             StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens[1] == "ok")
             {
-                nPID = aIterator->first;
+                // Found, but find all empty instances.
+                nPID = it.first;
+                Log::debug("Kit [" + std::to_string(nPID) + "] hosts URL [" + aURL + "].");
+                break;
             }
             else if (tokens[1] == "empty")
             {
-                _emptyURL.push_back(aIterator->first);
+                // Remember the last empty.
+                nPID = it.first;
+                Log::debug("Kit [" + std::to_string(nPID) + "] is empty.");
             }
         }
 
-        if ( aIterator != _childProcesses.end() )
-        {
-            _cacheURL.clear();
-            _emptyURL.clear();
-        }
-
-        return (nBytes > 0 ? nPID : -1);
+        return nPID;
     }
 
     void handleInput(const std::string& aMessage)
     {
-        Process::PID nPID;
-
         StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         if (tokens[0] == "request" && tokens.count() == 3)
         {
             const std::string aTID = tokens[1];
             const std::string aURL = tokens[2];
 
-            Log::info("Finding kit for URL [" + aURL + "] on thread [" + aTID + "].");
+            Log::debug("Finding kit for URL [" + aURL + "] on thread [" + aTID + "].");
 
             // check cache
             const auto aIterURL = _cacheURL.find(aURL);
@@ -293,44 +288,28 @@ public:
 
                 return;
             }
+            else
+            {
+                Log::debug("URL [" + aURL + "] is not in cache, searching " +
+                           std::to_string(_childProcesses.size()) + " kits.");
+            }
 
             // not found in cache, full search.
-            nPID = searchURL(aURL);
-            if ( nPID < 0)
-                return;
-
+            const Process::PID nPID = searchURL(aURL);
             if ( nPID > 0 )
             {
-                Log::debug("Search found URL [" + aURL + "] hosted by child [" + std::to_string(nPID) +
-                           "]. Creating view for thread [" + aTID + "].");
+                Log::debug("Creating view for URL [" + aURL + "] for thread [" +
+                           aTID + "] on kit [" + std::to_string(nPID) + "].");
                 if (createThread(nPID, aTID, aURL) < 0)
                     Log::error("Search: Error creating thread.");
                 else
                     _cacheURL[aURL] = nPID;
-
-                return;
             }
-
-            // not found, new URL session.
-            if ( _emptyURL.size() > 0 )
+            else
             {
-                const auto aItem = _emptyURL.front();
-                Log::trace("No child found for URL [" + aURL + "].");
-
-                if (createThread(aItem, aTID, aURL) < 0)
-                {
-                    Log::error("New: Error creating thread.");
-                    return;
-                }
-                _emptyURL.pop_front();
-                _cacheURL[aURL] = aItem;
-            }
-
-            /*if (_emptyURL.size() == 0 )
-            {
-                Log::info("No available childs, fork new one");
+                Log::info("No children available, creating a new one.");
                 forkCounter++;
-            }*/
+            }
         }
     }
 
@@ -758,7 +737,7 @@ int main(int argc, char** argv)
     while (!TerminationFlag && !_childProcesses.empty())
     {
         int status;
-        pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
+        const pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
             if ( _childProcesses.find(pid) != _childProcesses.end() )
@@ -770,7 +749,6 @@ int main(int argc, char** argv)
                     forkMutex.lock();
                     _childProcesses.erase(pid);
                     _cacheURL.clear();
-                    _emptyURL.clear();
                     forkMutex.unlock();
                 }
 
