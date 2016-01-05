@@ -38,10 +38,10 @@ clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
 
-# After building loolwsd, set its capabilities to allow chroot(). Dot
+# After building loolwsd, set its capabilities to allow chroot(). Do
 # it already after a plain 'make' to allow for testing without
 # installing.
-all-local: loolwsd
+all-local: loolwsd loolbroker
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    if test `uname -s` = Linux; then \
 		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolwsd; \
