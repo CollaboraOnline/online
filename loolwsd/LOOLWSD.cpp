@@ -424,7 +424,11 @@ public:
                     {
                         n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
-                        if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
+                        if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
+                        {
+                            ws->sendFrame("", 0, WebSocket::FRAME_OP_PONG);
+                        }
+                        else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
                         {
                             n = 1;
                         }
