@@ -785,7 +785,7 @@ int main(int argc, char** argv)
             forkCounter--;
 
             if (createLibreOfficeKit(sharePages, loSubPath, childId) < 0)
-                Log::error("Error: fork falied.");
+                Log::error("Error: fork failed.");
 
             forkMutex.unlock();
         }
