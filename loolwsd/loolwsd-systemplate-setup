@@ -63,7 +63,7 @@ cd / || exit 1
 	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
 
 	# Go through the loolkit
-	find $POCODIR -name '*Poco*.so' -o -name '*.so.[0-9]*' |
+	find $POCODIR usr/lib64 -name '*Poco*.so' -o -name '*.so.[0-9]*' |
 	while read file; do
 	    echo $file
 	    ldd $file 2>/dev/null
