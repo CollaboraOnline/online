@@ -62,6 +62,22 @@ namespace LOOLProtocol
         TILE,
     };
 
+    // Protocol Version Number.
+    // See protocol.txt.
+    constexpr unsigned ProtocolMajorVersionNumber = 0;
+    constexpr unsigned ProtocolMinorVersionNumber = 1;
+
+    inline
+    std::string GetProtocolVersion()
+    {
+        return std::to_string(ProtocolMajorVersionNumber) + '.'
+             + std::to_string(ProtocolMinorVersionNumber);
+    }
+
+    // Parse a string into a version tuple.
+    // Negative numbers for error.
+    std::tuple<signed, signed, std::string> ParseVersion(const std::string& version);
+
     bool getTokenInteger(const std::string& token, const std::string& name, int& value);
     bool getTokenString(const std::string& token, const std::string& name, std::string& value);
     bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value);

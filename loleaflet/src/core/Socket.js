@@ -3,6 +3,8 @@
  */
 
 L.Socket = {
+	ProtocolVersionNumber: '0.1',
+
 	connect: function (map) {
 		try {
 			this.socket = new WebSocket(map.options.server);
@@ -44,6 +46,10 @@ L.Socket = {
 	},
 
 	_onOpen: function () {
+		// Always send the protocol version number.
+		// TODO: Move the version number somewhere sensible.
+		this.socket.send('loolclient ' + this.ProtocolVersionNumber);
+
 		var msg = 'load url=' + this._map.options.doc;
 		if (this._map._docLayer) {
 			// we are reconnecting after a lost connection
@@ -85,7 +91,17 @@ L.Socket = {
 			textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
 		}
 
-		if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
+		if (textMsg.startsWith('loolserver ')) {
+			// This must be the first message.
+			if (this._map._docLayer) {
+				this.fire('error', {msg: 'Unexpected loolserver message.'});
+			}
+			// TODO: For now we expect perfect match.
+			if (textMsg.substring(11) !== this.ProtocolVersionNumber) {
+				this.fire('error', {msg: 'Unsupported server version.'});
+			}
+		}
+		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
 			// log the tile msg separately as we need the tile coordinates
 			L.Log.log(textMsg, L.INCOMING);
 			if (imgBytes !== undefined) {

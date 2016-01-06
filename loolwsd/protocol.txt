@@ -11,6 +11,16 @@ tiles proactively (guessing what the client might need). Etc.
 client -> server
 ================
 
+loolclient <major.minor[-patch]>
+
+    Upon connection, a client must announce the version number it supports.
+    Major: an integer that must always match between client and server,
+           otherwise there are no guarantees of any sensible
+           compatibility. This is bumped when API changes.
+    Minor: an integer is more flexible and is at the discretion of either party.
+           Security fixes that do not alter the API would bump the minor version number.
+    Patch: an optional string that is informational.
+
 canceltiles
 
     All outstanding tile messages from the client to the server are
@@ -108,6 +118,16 @@ partpagerectangles
 
 server -> client
 ================
+
+loolserver <major.minor[-patch]>
+
+    Upon connection, the server must announce the version number it supports.
+    Major: an integer that must always match between client and server,
+           otherwise there are no guarantees of any sensible
+           compatibility. This is bumped when API changes.
+    Minor: an integer is more flexible and is at the discretion of either party.
+           Security fixes that do not alter the API would bump the minor version number.
+    Patch: an optional string that is informational.
 
 downloadas: jail=<jail directory> dir=<a tmp dir> name=<name> port=<port>
 

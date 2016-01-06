@@ -115,6 +115,20 @@ public:
 #endif
                         response = getFirstLine(buffer, n);
                     }
+                    else if (tokens[0] == "loolclient")
+                    {
+                        const auto versionTuple = ParseVersion(tokens[1]);
+                        if (std::get<0>(versionTuple) != ProtocolMajorVersionNumber ||
+                            std::get<1>(versionTuple) != ProtocolMinorVersionNumber)
+                        {
+                            const std::string error = "error: cmd=loolclient kind=badversion";
+                            _ws.sendFrame(error.c_str(), error.size());
+                            break;
+                        }
+
+                        const auto version = "loolserver " + GetProtocolVersion();
+                        _ws.sendFrame(version.c_str(), version.size());
+                    }
                     if (response.find("status:") == 0)
                     {
                         parseStatus(response, _type, _numParts, _currentPart, _width, _height);
@@ -202,6 +216,8 @@ private:
         Output output(ws, cond, mutex);
 
         thread.start(output);
+
+        sendTextFrame(ws, "loolclient " + GetProtocolVersion());
 
         if (document[0] == '/')
             sendTextFrame(ws, "load " + document);

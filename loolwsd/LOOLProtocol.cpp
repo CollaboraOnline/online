@@ -23,6 +23,27 @@ using Poco::StringTokenizer;
 
 namespace LOOLProtocol
 {
+    std::tuple<signed, signed, std::string> ParseVersion(const std::string& version)
+    {
+        signed major = -1;
+        signed minor = -1;
+        std::string patch;
+
+        StringTokenizer firstTokens(version, ".", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        if (firstTokens.count() > 0)
+        {
+            major = std::stoi(firstTokens[0]);
+
+            StringTokenizer secondTokens(firstTokens[1], "-", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            minor = std::stoi(secondTokens[0]);
+
+            if (secondTokens.count() > 1)
+                patch = secondTokens[1];
+        }
+
+        return std::make_tuple(major, minor, patch);
+    }
+
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
     {
         size_t nextIdx;

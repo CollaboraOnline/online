@@ -81,6 +81,20 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
+    if (tokens[0] == "loolclient")
+    {
+        const auto versionTuple = ParseVersion(tokens[1]);
+        if (std::get<0>(versionTuple) != ProtocolMajorVersionNumber ||
+            std::get<1>(versionTuple) != ProtocolMinorVersionNumber)
+        {
+            sendTextFrame("error: cmd=loolclient kind=badversion");
+            return false;
+        }
+
+        sendTextFrame("loolserver " + GetProtocolVersion());
+        return true;
+    }
+
     if (haveSeparateProcess())
     {
         // Note that this handles both forwarding requests from the client to the child process, and
