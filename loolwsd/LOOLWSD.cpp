@@ -445,7 +445,8 @@ public:
                     // FIXME: There is a race here when a request A gets in the queue and
                     // is processed _after_ a later request B, because B gets processed
                     // synchronously and A is waiting in the queue thread.
-                    // Fix is to push everything into the queue.
+                    // The fix is to push everything into the queue
+                    // (i.e. change MessageQueue to vector<char>).
                     if (singleLine)
                     {
                         const std::string firstLine = getFirstLine(data, size);
@@ -462,9 +463,19 @@ public:
             queue.put("eof");
             queueHandlerThread.join();
         }
-        catch (const IOException& exc)
+        catch (const Exception& exc)
         {
-            Log::error("IOException: " + exc.message());
+            Log::error() << "Error: " << exc.displayText()
+                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                         << Log::end;
+        }
+        catch (const std::exception& exc)
+        {
+            Log::error(std::string("Exception: ") + exc.what());
+        }
+        catch (...)
+        {
+            Log::error("Unexpected Exception.");
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");
@@ -501,9 +512,19 @@ public:
                     return session->handleInput(data, size);
                 });
         }
-        catch (const IOException& exc)
+        catch (const Exception& exc)
         {
-            Log::error("IOException: " + exc.message());
+            Log::error() << "Error: " << exc.displayText()
+                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                         << Log::end;
+        }
+        catch (const std::exception& exc)
+        {
+            Log::error(std::string("Exception: ") + exc.what());
+        }
+        catch (...)
+        {
+            Log::error("Unexpected Exception.");
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");

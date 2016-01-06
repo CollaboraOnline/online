@@ -432,13 +432,17 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error() << exc.displayText()
+            Log::error() << "Error: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                          << Log::end;
         }
         catch (const std::exception& exc)
         {
             Log::error(std::string("Exception: ") + exc.what());
+        }
+        catch (...)
+        {
+            Log::error("Unexpected Exception.");
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");

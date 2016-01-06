@@ -48,12 +48,10 @@ public:
         catch (const std::exception& exc)
         {
             Log::error(std::string("Exception: ") + exc.what());
-            raise(SIGABRT);
         }
         catch (...)
         {
             Log::error("Unexpected Exception.");
-            raise(SIGABRT);
         }
 
         Log::debug("Thread [" + _name + "] finished.");
