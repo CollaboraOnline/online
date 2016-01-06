@@ -938,16 +938,16 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._docType !== 'spreadsheet' || !e) {
 			// If it's not a spreadsheet or the method has been invoked manually
 			var crsScale = this._map.options.crs.scale(1);
-			if (this._docPixelSize.x > size.x) {
-				var ratio = this._docPixelSize.x / size.x;
-				var zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
-				this._map.setZoom(Math.max(1, this._map.getZoom() - zoomDelta), {animate: false});
-			}
-			else if (size.x / this._docPixelSize.x > crsScale) {
+			if (size.x / this._docPixelSize.x > crsScale) {
 				// we could zoom in
-				ratio = size.x / this._docPixelSize.x;
-				zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
+				var ratio = size.x / this._docPixelSize.x;
+				var zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
 				this._map.setZoom(Math.min(maxZoom, this._map.getZoom() + zoomDelta), {animate: false});
+			}
+			if (this._docPixelSize.x > size.x) {
+				ratio = this._docPixelSize.x / size.x;
+				zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
+				this._map.setZoom(Math.max(1, this._map.getZoom() - zoomDelta), {animate: false});
 			}
 		}
 	},
