@@ -27,7 +27,7 @@ cd / || exit 1
 	find etc/passwd etc/group etc/hosts \
 	     etc/resolv.conf \
 	     lib/ld-* lib64/ld-* \
-	     lib/libcap* lib/*-linux-gnu/libcap* \
+	     lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
 	     lib/libattr* lib/*-linux-gnu/libattr* \
 	     etc/ld.so.* \
 	     lib/libnss_* lib64/libnss_* \
@@ -47,7 +47,7 @@ cd / || exit 1
 	     lib/ld-* lib64/ld-* \
 	     lib64/libnss_* \
 	     lib/*-linux-gnu/libnss* \
-	     lib/libcap* lib/*-linux-gnu/libcap* \
+	     lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
 	     lib/libattr* lib/*-linux-gnu/libattr* \
 		 -type l
 
