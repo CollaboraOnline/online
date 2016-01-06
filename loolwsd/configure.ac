@@ -29,23 +29,23 @@ AC_ARG_ENABLE([debug],
 
 AC_ARG_WITH([lokit-path],
             AS_HELP_STRING([--with-lokit-path=<path>],
-                           [Path the "include" directory with the LibreOfficeKit headers]))
+                           [Path to the "include" directory with the LibreOfficeKit headers]))
 
 AC_ARG_WITH([poco-includes],
             AS_HELP_STRING([--with-poco-includes=<path>],
-                           [Path the "include" directory with the Poco headers]))
+                           [Path to the "include" directory with the Poco headers]))
 
 AC_ARG_WITH([poco-libs],
             AS_HELP_STRING([--with-poco-libs=<path>],
-                           [Path the "lib" directory with the Poco libraries]))
+                           [Path to the "lib" directory with the Poco libraries]))
 
 AC_ARG_WITH([libpng-includes],
             AS_HELP_STRING([--with-libpng-includes=<path>],
-                           [Path the "include" directory with the libpng headers]))
+                           [Path to the "include" directory with the libpng headers]))
 
 AC_ARG_WITH([libpng-libs],
             AS_HELP_STRING([--with-libpng-libs=<path>],
-                           [Path the "lib" directory with the libpng libraries]))
+                           [Path to the "lib" directory with the libpng libraries]))
 
 AC_ARG_ENABLE([tests],
             AS_HELP_STRING([--disable-tests],
@@ -66,6 +66,7 @@ CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror"
 AS_IF([test -z "$with_poco_libs"],
       [CXXFLAGS="$CXXFLAGS -Wshadow"])
 
+with_lokit_path=`readlink -f $with_lokit_path`
 AS_IF([test -n "$with_lokit_path"],
       [CPPFLAGS="$CPPFLAGS -I${with_lokit_path}"])
 
