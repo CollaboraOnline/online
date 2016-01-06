@@ -43,6 +43,7 @@
 #include "LOOLKit.cpp"
 
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
+#define LIB_MERGED      "lib" "mergedlo" ".so"
 #define LIB_SCLO        "lib" "sclo" ".so"
 #define LIB_SWLO        "lib" "swlo" ".so"
 #define LIB_SDLO        "lib" "sdlo" ".so"
@@ -408,8 +409,14 @@ static bool globalPreinit(const std::string &loSubPath)
     handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!handle)
     {
-        Log::warn("Failed to load " + std::string(LIB_SOFFICEAPP) + " library.");
-        return false;
+        Log::warn("Failed to load " + std::string(LIB_SOFFICEAPP) + " library. Trying " + std::string(LIB_MERGED));
+        fname = "/" + loSubPath + "/program/" LIB_MERGED;
+        handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
+        if (!handle)
+        {
+            Log::warn("Failed to load " + std::string(LIB_MERGED) + " library.");
+            return false;
+        }
     }
 
     preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
