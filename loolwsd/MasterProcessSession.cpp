@@ -17,6 +17,7 @@
 #include <Poco/URI.h>
 #include <Poco/URIStreamOpener.h>
 
+#include "Common.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
@@ -625,7 +626,7 @@ void MasterProcessSession::dispatchChild()
     // Copy document into jail using the fixed name
     if (!aUri.empty() && aUri.getScheme() == "file")
     {
-        const std::string aJailDoc = jailDocumentURL.substr(1) + Path::separator() + std::to_string(childSession->_pidChild);
+        const std::string aJailDoc = JailedDocumentRoot.substr(1) + Path::separator() + std::to_string(childSession->_pidChild);
         const Path aSrcFile(aUri.getPath());
         const Path aDstPath(getJailPath(childSession->_childId), aJailDoc);
         const Path aDstFile(aDstPath, aSrcFile.getFileName());
@@ -633,7 +634,6 @@ void MasterProcessSession::dispatchChild()
 
         Log::debug("JailDoc: " + aJailDoc);
         Log::debug("SrcFile: " + aSrcFile.toString());
-        Log::debug("DstPath: " + aDstPath.toString());
         Log::debug("DstFile: " + aDstFile.toString());
         Log::debug("JailFile: " + aJailFile.toString());
 

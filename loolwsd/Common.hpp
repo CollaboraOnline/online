@@ -11,6 +11,8 @@
 #ifndef INCLUDED_COMMON_HPP
 #define INCLUDED_COMMON_HPP
 
+#include <string>
+
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 constexpr int MASTER_PORT_NUMBER = 9981;
 constexpr int INTERVAL_PROBES = 10;
@@ -19,6 +21,8 @@ constexpr int POLL_TIMEOUT = 1000000;
 // Pipe buffer is in function of URL size, a big URL will be handled in several
 // work loads.
 constexpr int PIPE_BUFFER = 1024;
+
+static const std::string JailedDocumentRoot = "/user/doc/";
 
 // Flag to stop pump loops.
 static volatile bool TerminationFlag = false;

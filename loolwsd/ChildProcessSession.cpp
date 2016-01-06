@@ -266,10 +266,10 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         Log::info("Loading view to document from URI: [" + aUri.toString() + "].");
 
     // The URL in the request is the original one, not visible in the chroot jail.
-    // The child process uses the fixed name jailDocumentURL.
+    // The child process uses the fixed name JailedDocumentRoot.
     if (aUri.isRelative() || aUri.getScheme() == "file")
     {
-        aUri = URI( URI("file://"), Path(jailDocumentURL + Path::separator() + std::to_string(Process::id()),
+        aUri = URI( URI("file://"), Path(JailedDocumentRoot + std::to_string(Process::id()),
                     Path(aUri.getPath()).getFileName()).toString() );
         Log::info("Local URI: [" + aUri.toString() + "].");
     }
@@ -519,7 +519,7 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
             delete file;
         }
         tmpDir = std::to_string(Util::rng::getNext());
-        url = jailDocumentURL + "/" + tmpDir + "/" + name;
+        url = JailedDocumentRoot + tmpDir + "/" + name;
         file = new File(url);
     } while (file->exists());
     delete file;
@@ -596,7 +596,7 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
 
     if (type == "graphic")
     {
-        std::string fileName = "file://" + jailDocumentURL + "/insertfile/" + name;
+        std::string fileName = "file://" + JailedDocumentRoot + "insertfile/" + name;
         std::string command = ".uno:InsertGraphic";
         std::string arguments = "{"
             "\"FileName\":{"

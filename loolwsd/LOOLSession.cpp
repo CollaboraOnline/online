@@ -80,8 +80,6 @@ using Poco::Net::DialogSocket;
 using Poco::Net::SocketAddress;
 using Poco::Net::WebSocketException;
 
-const std::string LOOLSession::jailDocumentURL = "/user/thedocument";
-
 LOOLSession::LOOLSession(const std::string& id, const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws) :
     _kind(kind),

@@ -338,7 +338,7 @@ public:
                     // Convert it to the requested format.
                     Path toPath(fromPath);
                     toPath.setExtension(format);
-                    std::string toJailURL = filePrefix + LOOLSession::jailDocumentURL + Path::separator() + toPath.getFileName();
+                    std::string toJailURL = filePrefix + JailedDocumentRoot + toPath.getFileName();
                     std::string saveas = "saveas url=" + toJailURL + " format=" + format + " options=";
                     session->handleInput(saveas.data(), saveas.size());
                     std::string toURL = session->getSaveAs();
@@ -373,8 +373,7 @@ public:
                 if (form.has("childid") && form.has("name"))
                 {
                     const std::string dirPath = LOOLWSD::childRoot + form.get("childid")
-                                              + LOOLSession::jailDocumentURL
-                                              + Path::separator() + "insertfile";
+                                              + JailedDocumentRoot + "insertfile";
                     File(dirPath).createDirectory();
                     std::string fileName = dirPath + Path::separator() + form.get("name");
                     File(tmpPath).moveTo(fileName);
@@ -392,8 +391,7 @@ public:
             {
                 // The user might request a file to download
                 const std::string dirPath = LOOLWSD::childRoot + tokens[1]
-                                          + LOOLSession::jailDocumentURL
-                                          + Path::separator() + tokens[2];
+                                          + JailedDocumentRoot + tokens[2];
                 std::string fileName;
                 URI::decode(tokens[3], fileName);
                 const std::string filePath = dirPath + Path::separator() + fileName;

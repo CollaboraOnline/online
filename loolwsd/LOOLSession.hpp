@@ -55,8 +55,6 @@ public:
 
     bool handleInput(const char *buffer, int length);
 
-    static const std::string jailDocumentURL;
-
 protected:
     LOOLSession(const std::string& id, const Kind kind,
                 std::shared_ptr<Poco::Net::WebSocket> ws);
