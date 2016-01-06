@@ -216,7 +216,8 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 
                 if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
                 {
-                    ws->sendFrame("", 0, WebSocket::FRAME_OP_PONG);
+                    ws->sendFrame("PONG", 4);
+                    continue;
                 }
                 else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
                 {
