@@ -383,7 +383,7 @@ public:
                 // Loop, receiving WebSocket messages either from the client, or from the child
                 // process (to be forwarded to the client).
                 int flags;
-                int n;
+                int n = 0;
                 bool pollTimeout = true;
                 ws->setReceiveTimeout(0);
 
@@ -397,7 +397,8 @@ public:
 
                         if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
                         {
-                            ws->sendFrame("", 0, WebSocket::FRAME_OP_PONG);
+                            ws->sendFrame("PONG", 4);
+                            n = 1;
                         }
                         else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
                         {
