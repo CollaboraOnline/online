@@ -207,6 +207,9 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         {
             char buffer[200000]; //FIXME: Dynamic?
 
+            // We should care about timeout only when we have heartbeat
+            // support. For now, we can't predict when the next message
+            // should arrive.
             if ((pollTimeout = ws->poll(waitTime, Socket::SELECT_READ)))
             {
                 n = ws->receiveFrame(buffer, sizeof(buffer), flags);
@@ -267,7 +270,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             }
         }
         while (!TerminationFlag &&
-               (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)));
+               (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
         Log::debug() << "Finishing SocketProcessor. TerminationFlag: " << TerminationFlag
                      << ", pollTimeout: " << pollTimeout << ", payload size: " << n << Log::end;
     }
