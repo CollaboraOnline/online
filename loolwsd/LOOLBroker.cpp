@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <dlfcn.h>
 
+#include <atomic>
 #include <mutex>
 #include <cstring>
 #include <cassert>
@@ -66,7 +67,7 @@ const std::string BROKER_PREFIX = "/tmp/lokit";
 static int readerChild = -1;
 static int readerBroker = -1;
 
-static unsigned int forkCounter = 0;
+static std::atomic<unsigned> forkCounter;
 static unsigned int childCounter = 0;
 static unsigned int numPreSpawnedChildren = 0;
 
@@ -782,7 +783,7 @@ int main(int argc, char** argv)
         if (forkCounter > 0)
         {
             forkMutex.lock();
-            forkCounter--;
+            --forkCounter;
 
             if (createLibreOfficeKit(sharePages, loSubPath, childId) < 0)
                 Log::error("Error: fork failed.");
