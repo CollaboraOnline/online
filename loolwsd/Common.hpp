@@ -20,9 +20,6 @@ constexpr int POLL_TIMEOUT = 1000000;
 // work loads.
 constexpr int PIPE_BUFFER = 1024;
 
-// The client port number, which is changed via loolwsd args.
-static int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-
 // Flag to stop pump loops.
 static volatile bool TerminationFlag = false;
 

@@ -16,6 +16,9 @@
 #include <Poco/NotificationQueue.h>
 #include "LOOLSession.hpp"
 
+// The client port number, which is changed via loolwsd args.
+static int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+
 class ChildProcessSession final : public LOOLSession
 {
 public:

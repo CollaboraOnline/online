@@ -18,6 +18,7 @@
 
 #include <LOOLProtocol.hpp>
 #include <Common.hpp>
+#include <ChildProcessSession.hpp>
 
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
