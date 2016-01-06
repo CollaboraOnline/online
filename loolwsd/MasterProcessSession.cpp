@@ -233,7 +233,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
         _availableChildSessions.emplace(getId(), shared_from_this());
 
-        Log::info() << _kindString << " mapped " << this << " childId=" << childId << ", id=" << getId()
+        Log::info() << getName() << " mapped " << this << " childId=" << childId << ", id=" << getId()
                     << " into _availableChildSessions, size=" << _availableChildSessions.size() << Log::end;
 
         _childId = childId;

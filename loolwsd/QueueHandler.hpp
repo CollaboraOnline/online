@@ -40,9 +40,16 @@ public:
             {
                 const std::string input = _queue.get();
                 if (input == "eof")
+                {
+                    Log::info("Recieved EOF. Finishing.");
                     break;
+                }
+
                 if (!_session->handleInput(input.c_str(), input.size()))
+                {
+                    Log::info("Socket handler flagged for finishing.");
                     break;
+                }
             }
         }
         catch (const std::exception& exc)
