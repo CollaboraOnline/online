@@ -108,7 +108,7 @@ void LOOLSession::sendTextFrame(const std::string& text)
         return;
     }
     else
-        Log::trace(_kindString + ",Send," + getAbbreviatedMessage(text.c_str(), text.size()));
+        Log::trace(getName() + " Send: " + getAbbreviatedMessage(text.c_str(), text.size()));
 
     std::unique_lock<std::mutex> lock(_mutex);
 
@@ -123,13 +123,13 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
         return;
     }
     else
-        Log::trace(_kindString + ",Send," + std::to_string(length) + " bytes");
+        Log::trace(getName() + " Send: " + std::to_string(length) + " bytes");
 
     std::unique_lock<std::mutex> lock(_mutex);
 
     if (length > 1000)
     {
-        std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+        const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
         _ws->sendFrame(nextmessage.data(), nextmessage.size());
     }
 
@@ -174,7 +174,7 @@ bool LOOLSession::handleInput(const char *buffer, int length)
 {
     assert(buffer != nullptr);
 
-    Log::trace(_kindString + ",Recv," + getAbbreviatedMessage(buffer, length));
+    Log::trace(getName() + " Recv: " + getAbbreviatedMessage(buffer, length));
 
     try
     {
