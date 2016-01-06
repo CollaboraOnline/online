@@ -18,20 +18,21 @@
 class QueueHandler: public Poco::Runnable
 {
 public:
-    QueueHandler(MessageQueue& queue, const std::shared_ptr<LOOLSession>& session):
+    QueueHandler(MessageQueue& queue, const std::shared_ptr<LOOLSession>& session,
+                 const std::string& name):
         _queue(queue),
-        _session(session)
+        _session(session),
+        _name(name)
     {
     }
 
     void run() override
     {
-        static const std::string thread_name = "kit_queue_" + _session->getId();
 #ifdef __linux
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to " + thread_name + ".");
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(_name.c_str()), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to " + _name + ".");
 #endif
-        Log::debug("Thread [" + thread_name + "] started.");
+        Log::debug("Thread [" + _name + "] started.");
 
         try
         {
@@ -55,12 +56,13 @@ public:
             raise(SIGABRT);
         }
 
-        Log::debug("Thread [" + thread_name + "] finished.");
+        Log::debug("Thread [" + _name + "] finished.");
     }
 
 private:
     MessageQueue& _queue;
     std::shared_ptr<LOOLSession> _session;
+    const std::string _name;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

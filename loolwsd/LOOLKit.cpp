@@ -396,7 +396,7 @@ public:
             _session->sendTextFrame(hello);
 
             TileQueue queue;
-            QueueHandler handler(queue, _session);
+            QueueHandler handler(queue, _session, "kit_queue_" + _session->getId());
 
             Thread queueHandlerThread;
             queueHandlerThread.start(handler);
