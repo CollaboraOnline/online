@@ -791,7 +791,7 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-bool LOOLWSD::createBroker(const std::string& jailId)
+bool LOOLWSD::createBroker(const std::string& rJailId)
 {
     Process::Args args;
 
@@ -799,7 +799,7 @@ bool LOOLWSD::createBroker(const std::string& jailId)
     args.push_back("--systemplate=" + sysTemplate);
     args.push_back("--lotemplate=" + loTemplate);
     args.push_back("--childroot=" + childRoot);
-    args.push_back("--jailid=" + jailId);
+    args.push_back("--jailid=" + rJailId);
     args.push_back("--numprespawns=" + std::to_string(NumPreSpawnedChildren));
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
