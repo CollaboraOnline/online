@@ -7,6 +7,8 @@ L.Control.Zoom = L.Control.extend({
 		position: 'topleft',
 		zoomInText: '+',
 		zoomInTitle: 'Zoom in',
+		fitWidthText: '↔',
+		fitWidthTitle: 'Fit Width',
 		zoomOutText: '-',
 		zoomOutTitle: 'Zoom out'
 	},
@@ -18,6 +20,8 @@ L.Control.Zoom = L.Control.extend({
 
 		this._zoomInButton  = this._createButton(options.zoomInText, options.zoomInTitle,
 		        zoomName + '-in',  container, this._zoomIn);
+		this._fitWidthButton  = this._createButton(options.fitWidthText, options.fitWidthTitle,
+		        zoomName + '-fitwidth',  container, this._fitWidth);
 		this._zoomOutButton = this._createButton(options.zoomOutText, options.zoomOutTitle,
 		        zoomName + '-out', container, this._zoomOut);
 
@@ -49,6 +53,12 @@ L.Control.Zoom = L.Control.extend({
 		}
 	},
 
+	_fitWidth: function (e) {
+		if (!this._disabled) {
+			this._map.fitWidthZoom();
+		}
+	},
+
 	_zoomOut: function (e) {
 		if (!this._disabled) {
 			this._map.zoomOut(e.shiftKey ? 3 : 1);
@@ -75,6 +85,7 @@ L.Control.Zoom = L.Control.extend({
 			className = 'leaflet-disabled';
 
 		L.DomUtil.removeClass(this._zoomInButton, className);
+		L.DomUtil.removeClass(this._fitWidthButton, className);
 		L.DomUtil.removeClass(this._zoomOutButton, className);
 
 		if (this._disabled || map._zoom === map.getMinZoom()) {
