@@ -242,37 +242,14 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
 
     std::string timestamp;
     parseDocOptions(tokens, part, timestamp);
-    Log::info("docURL: [" + _docURL + "].");
-    URI aUri;
-    try
-    {
-        aUri = URI(_docURL);
-    }
-    catch (const Poco::SyntaxException&)
-    {
-        sendTextFrame("error: cmd=load kind=uriinvalid");
-        return false;
-    }
 
-    if (aUri.empty())
-    {
-        sendTextFrame("error: cmd=load kind=uriempty");
-        return false;
-    }
+    assert(!_docURL.empty());
+    assert(!_jailedFilePath.empty());
 
     if (_loKitDocument == nullptr)
-        Log::info("Loading new document from URI: [" + aUri.toString() + "].");
+        Log::info("Loading new document from URI: [" + _jailedFilePath + "].");
     else
-        Log::info("Loading view to document from URI: [" + aUri.toString() + "].");
-
-    // The URL in the request is the original one, not visible in the chroot jail.
-    // The child process uses the fixed name JailedDocumentRoot.
-    if (aUri.isRelative() || aUri.getScheme() == "file")
-    {
-        aUri = URI( URI("file://"), Path(JailedDocumentRoot + std::to_string(Process::id()),
-                    Path(aUri.getPath()).getFileName()).toString() );
-        Log::info("Local URI: [" + aUri.toString() + "].");
-    }
+        Log::info("Loading view to document from URI: [" + _jailedFilePath + "].");
 
     if (_loKitDocument != nullptr)
     {
@@ -283,9 +260,9 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
         if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
             _loKit->pClass->registerCallback(_loKit, myCallback, this);
 
-        if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, aUri.toString().c_str())) == nullptr)
+        if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _jailedFilePath.c_str())) == nullptr)
         {
-            Log::error("Failed to load: " + aUri.toString() + ", error: " + _loKit->pClass->getError(_loKit));
+            Log::error("Failed to load: " + _jailedFilePath + ", error: " + _loKit->pClass->getError(_loKit));
             sendTextFrame("error: cmd=load kind=failed");
             return false;
         }

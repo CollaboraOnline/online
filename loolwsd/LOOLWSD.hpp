@@ -75,7 +75,8 @@ public:
             // chroot/jailId/user/doc/childId/file.ext
             const auto jailedFilePath = Poco::Path(docPath, filename).toString();
 
-            uriJailed = Poco::URI(Poco::URI("file://"), jailedFilePath);
+            const auto localPath = Poco::Path(JailedDocumentRoot, childId);
+            uriJailed = Poco::URI(Poco::URI("file://"), Poco::Path(localPath, filename).toString());
 
             Log::info("Public URI [" + uriPublic.toString() +
                       "] jailed to [" + uriJailed.toString() + "].");
