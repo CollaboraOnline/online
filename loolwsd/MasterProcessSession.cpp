@@ -631,7 +631,7 @@ void MasterProcessSession::dispatchChild()
     oss << " jail=" << document->getJailedUri().toString();
 
     if (_loadPart >= 0)
-        oss << " part=" + _loadPart;
+        oss << " part=" + std::to_string(_loadPart);
 
     if (!_docOptions.empty())
         oss << " options=" << _docOptions;
