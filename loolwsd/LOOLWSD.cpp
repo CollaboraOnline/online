@@ -786,7 +786,7 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-int LOOLWSD::createBroker()
+bool LOOLWSD::createBroker()
 {
     Process::Args args;
 
@@ -809,16 +809,7 @@ int LOOLWSD::createBroker()
     Log::info() << "Adding Broker #" << childIndex << " PID " << child.id() << Log::end;
     MasterProcessSession::_childProcesses[child.id()] = child.id();
 
-    return Application::EXIT_OK;
-}
-
-void LOOLWSD::startupBroker(const signed nBrokers)
-{
-    for (signed nCntr = nBrokers; nCntr > 0; --nCntr)
-    {
-        if (createBroker() < 0)
-            break;
-    }
+    return true;
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -878,7 +869,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     NamedMutexLOOL.lock();
 
-    startupBroker(1);
+    if (!createBroker())
+    {
+        Log::error("Failed to spawn loolBroker.");
+        return Application::EXIT_UNAVAILABLE;
+    }
 
 #ifdef __linux
     dropCapability(CAP_SYS_CHROOT);

@@ -74,8 +74,7 @@ private:
     int  createComponent();
     int  createDesktop();
 
-    void startupBroker(int nBroker);
-    int  createBroker();
+    bool createBroker();
 };
 
 #endif
