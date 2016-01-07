@@ -38,9 +38,9 @@ public:
                         std::function<void(int)> onUnload);
     virtual ~ChildProcessSession();
 
-    virtual bool getStatus(const char *buffer, int length);
+    virtual bool getStatus(const char *buffer, int length) override;
 
-    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
@@ -54,9 +54,9 @@ public:
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
-    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
-    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool downloadAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
