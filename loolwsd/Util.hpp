@@ -96,6 +96,9 @@ namespace Log
 
     static const struct _end_marker
     {
+        _end_marker()
+        {
+        }
     } end;
 
     class StreamLogger
