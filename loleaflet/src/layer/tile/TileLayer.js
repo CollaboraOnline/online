@@ -332,7 +332,7 @@ L.TileLayer = L.GridLayer.extend({
 		var parser = document.createElement('a');
 		var protocol = window.location.protocol === 'file:' ? 'http:' : window.location.protocol;
 		parser.href = this._map.options.server;
-		var url = protocol + '//' + parser.hostname + ':' + command.port + '/' +
+		var url = this._map.options.webserver + '/' +
 			command.jail + '/' + command.dir + '/' + command.name;
 
 		if (command.id === 'print') {
