@@ -1444,7 +1444,16 @@ unexpected behaviour.</h4>
 		<td><code><b>server</b></code></td>
 		<td><code>String</code></td>
 		<td><code><span class="literal">undefined</span></code></td>
-		<td>The server hosting loolwsd.</td>
+		<td>The websocket server hosting loolwsd using the <code>ws:</code> protocol.
+		    Example: ws://localhost:9980</td>
+	</tr>
+	<tr>
+		<td><code><b>webserver</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>The webserver access to hosting loolwsd.  Normally it is
+		    derived from 'server', but can be overridden with an own
+		    value in case of proxying.  Example: http://localhost:9980</td>
 	</tr>
 	<tr>
 		<td><code><b>permission</b></code></td>
