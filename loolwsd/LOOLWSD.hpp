@@ -23,7 +23,125 @@
 #include <Poco/SharedMemory.h>
 #include <Poco/NamedMutex.h>
 
+#include "Common.hpp"
 #include "Util.hpp"
+
+// A Document as mananged by us.
+// Contains URI, physical path, etc.
+class Document
+{
+public:
+
+    static
+    std::shared_ptr<Document> create(const std::string& url,
+                                     const std::string& jailRoot,
+                                     const std::string& childId)
+    {
+        // TODO: Sanitize the url and limit access!
+        auto uriPublic = Poco::URI(url);
+        uriPublic.normalize();
+
+        const auto publicFilePath = uriPublic.getPath();
+
+        if (publicFilePath.empty())
+            throw std::runtime_error("Invalid URL.");
+
+        // This lock could become a bottleneck.
+        // In that case, we can use a pool and index by publicPath.
+        std::unique_lock<std::mutex> lock(DocumentsMutex);
+
+        // Find the document if already open.
+        auto it = UriToDocumentMap.lower_bound(publicFilePath);
+        if (it != UriToDocumentMap.end())
+        {
+            Log::info("Document [" + it->first + "] found.");
+            return it->second;
+        }
+
+        // The URL is the publicly visible one, not visible in the chroot jail.
+        // We need to map it to a jailed path and copy the file there.
+        auto uriJailed = uriPublic;
+        if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+        {
+            // chroot/jailId/user/doc
+            const auto jailedDocRoot = Poco::Path(jailRoot, JailedDocumentRoot);
+
+            // chroot/jailId/user/doc/childId
+            const auto docPath = Poco::Path(jailedDocRoot, childId);
+            Poco::File(docPath).createDirectories();
+
+            const auto filename = Poco::Path(uriPublic.getPath()).getFileName();
+
+            // chroot/jailId/user/doc/childId/file.ext
+            const auto jailedFilePath = Poco::Path(docPath, filename).toString();
+
+            uriJailed = Poco::URI(Poco::URI("file://"), jailedFilePath);
+
+            Log::info("Public URI [" + uriPublic.toString() +
+                      "] jailed to [" + uriJailed.toString() + "].");
+
+#ifdef __linux
+            Log::info("Linking " + publicFilePath + " to " + jailedFilePath);
+            if (!Poco::File(jailedFilePath).exists() && link(publicFilePath.c_str(), jailedFilePath.c_str()) == -1)
+            {
+                // Failed
+                Log::error("link(\"" + publicFilePath + "\", \"" + jailedFilePath + "\") failed.");
+            }
+#endif
+
+            try
+            {
+                // Fallback to copying.
+                if (!Poco::File(jailedFilePath).exists())
+                {
+                    Log::info("Copying " + publicFilePath + " to " + jailedFilePath);
+                    Poco::File(publicFilePath).copyTo(jailedFilePath);
+                }
+            }
+            catch (const Poco::Exception& exc)
+            {
+                Log::error("copyTo(\"" + publicFilePath + "\", \"" + jailedFilePath + "\") failed: " + exc.displayText());
+                throw;
+            }
+        }
+        else
+        {
+            Log::info("Public URI [" + uriPublic.toString() +
+                      "] is not a file.");
+        }
+
+        auto document = std::shared_ptr<Document>(new Document(uriPublic, uriJailed, childId));
+
+        Log::info("Document [" + publicFilePath + "] created.");
+        it = UriToDocumentMap.emplace_hint(it, publicFilePath, document);
+        return it->second;
+    }
+
+    Poco::URI getPublicUri() const { return _uriPublic; }
+    Poco::URI getJailedUri() const { return _uriJailed; }
+    std::string getChildId() const { return _childId; }
+
+private:
+    Document(const Poco::URI& uriPublic,
+             const Poco::URI& uriJailed,
+             const std::string& childId) :
+       _uriPublic(uriPublic),
+       _uriJailed(uriJailed),
+       _childId(childId)
+    {
+    }
+
+private:
+
+    // Document management mutex.
+    static std::mutex DocumentsMutex;
+    static std::map<std::string, std::shared_ptr<Document>> UriToDocumentMap;
+
+private:
+    const Poco::URI _uriPublic;
+    const Poco::URI _uriJailed;
+    const std::string _childId;
+};
 
 class LOOLWSD: public Poco::Util::ServerApplication
 {

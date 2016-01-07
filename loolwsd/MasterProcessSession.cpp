@@ -617,67 +617,26 @@ void MasterProcessSession::dispatchChild()
         return;
     }
 
-    // Assume a valid URI
-    URI aUri(_docURL);
+    const auto jailRoot = Poco::Path(LOOLWSD::childRoot, LOOLWSD::jailId);
+    const auto childId = std::to_string(childSession->_pidChild);
 
-    if (aUri.isRelative())
-        aUri = URI( URI("file://"), aUri.toString() );
-
-    // Copy document into jail using the fixed name
-    if (!aUri.empty() && aUri.getScheme() == "file")
-    {
-        const std::string aJailDoc = JailedDocumentRoot.substr(1) + Path::separator() + std::to_string(childSession->_pidChild);
-        const Path aSrcFile(aUri.getPath());
-        const Path aDstPath(getJailPath(childSession->_childId), aJailDoc);
-        const Path aDstFile(aDstPath, aSrcFile.getFileName());
-        const Path aJailFile(aJailDoc, aSrcFile.getFileName());
-
-        Log::debug("JailDoc: " + aJailDoc);
-        Log::debug("SrcFile: " + aSrcFile.toString());
-        Log::debug("DstFile: " + aDstFile.toString());
-        Log::debug("JailFile: " + aJailFile.toString());
-
-        try
-        {
-            File(aDstPath).createDirectories();
-        }
-        catch (const Exception& exc)
-        {
-            Log::error(getName() + ": createDirectories(\"" + aDstPath.toString() + "\") failed: " + exc.displayText() );
-        }
-
-        // cleanup potential leftovers from the last time
-        Util::removeFile(aDstFile);
-
-#ifdef __linux
-        Log::info("Linking " + aSrcFile.toString() + " to " + aDstFile.toString());
-        if (!File(aDstFile).exists() && link(aSrcFile.toString().c_str(), aDstFile.toString().c_str()) == -1)
-        {
-            // Failed
-            Log::error(getName() + ": link(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed.");
-        }
-#endif
-
-        try
-        {
-            //fallback
-            if (!File(aDstFile).exists())
-            {
-                Log::info("Copying " + aSrcFile.toString() + " to " + aDstFile.toString());
-                File(aSrcFile).copyTo(aDstFile.toString());
-            }
-        }
-        catch (const Exception& exc)
-        {
-            Log::error(getName() + ": copyTo(\"" + aSrcFile.toString() + "\",\"" + aDstFile.toString() + "\") failed: " + exc.displayText());
-        }
-    }
+    auto document = Document::create(_docURL, jailRoot.toString(), childId);
 
     _peer = childSession;
     childSession->_peer = shared_from_this();
 
-    const std::string loadRequest = "load" + (_loadPart >= 0 ?  " part=" + std::to_string(_loadPart) : "")
-                                  + " url=" + _docURL + (!_docOptions.empty() ? " options=" + _docOptions : "");
+    std::ostringstream oss;
+    oss << "load";
+    oss << " url=" << document->getPublicUri().toString();
+    oss << " jail=" << document->getJailedUri().toString();
+
+    if (_loadPart >= 0)
+        oss << " part=" + _loadPart;
+
+    if (!_docOptions.empty())
+        oss << " options=" << _docOptions;
+
+    const auto loadRequest = oss.str();
     forwardToPeer(loadRequest.c_str(), loadRequest.size());
 }
 
