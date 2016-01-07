@@ -786,7 +786,7 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-bool LOOLWSD::createBroker()
+bool LOOLWSD::createBroker(const std::string& jailId)
 {
     Process::Args args;
 
@@ -794,6 +794,7 @@ bool LOOLWSD::createBroker()
     args.push_back("--systemplate=" + sysTemplate);
     args.push_back("--lotemplate=" + loTemplate);
     args.push_back("--childroot=" + childRoot);
+    args.push_back("--jailid=" + jailId);
     args.push_back("--numprespawns=" + std::to_string(NumPreSpawnedChildren));
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
@@ -869,7 +870,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     NamedMutexLOOL.lock();
 
-    if (!createBroker())
+    const auto jailId = Util::createRandomDir(childRoot);
+    if (!createBroker(jailId))
     {
         Log::error("Failed to spawn loolBroker.");
         return Application::EXIT_UNAVAILABLE;

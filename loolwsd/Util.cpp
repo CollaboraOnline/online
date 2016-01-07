@@ -176,6 +176,34 @@ namespace Util
         return oss.str();
     }
 
+    std::string createRandomDir(const std::string& path)
+    {
+        Poco::File(path).createDirectories();
+        for (;;)
+        {
+            const auto name = Util::encodeId(rng::getNext());
+            Poco::File dir(Poco::Path(path, name));
+            if (dir.createDirectory())
+            {
+                return name;
+            }
+        }
+    }
+
+    std::string createRandomFile(const std::string& path)
+    {
+        Poco::File(path).createDirectories();
+        for (;;)
+        {
+            const auto name = Util::encodeId(rng::getNext());
+            Poco::File file(Poco::Path(path, name));
+            if (file.createFile())
+            {
+                return name;
+            }
+        }
+    }
+
     bool windowingAvailable()
     {
 #ifdef __linux

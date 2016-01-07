@@ -45,13 +45,13 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::shared_ptr<Poco::Net::WebSocket> ws,
                                          LibreOfficeKit *loKit,
                                          LibreOfficeKitDocument * loKitDocument,
-                                         const std::string& childId,
+                                         const std::string& jailId,
                                          std::function<void(LibreOfficeKitDocument*, int)> onLoad,
                                          std::function<void(int)> onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
     _loKit(loKit),
-    _childId(childId),
+    _jailId(jailId),
     _viewId(0),
     _clientPart(0),
     _onLoad(onLoad),
@@ -528,14 +528,14 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
             format.size() == 0 ? nullptr :format.c_str(),
             filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
 
-    sendTextFrame("downloadas: jail=" + _childId + " dir=" + tmpDir + " name=" + name +
+    sendTextFrame("downloadas: jail=" + _jailId + " dir=" + tmpDir + " name=" + name +
             " port=" + std::to_string(ClientPortNumber) + " id=" + id);
     return true;
 }
 
 bool ChildProcessSession::getChildId()
 {
-    sendTextFrame("getchildid: id=" + _childId);
+    sendTextFrame("getchildid: id=" + _jailId);
     return true;
 }
 

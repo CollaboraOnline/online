@@ -32,6 +32,11 @@ namespace Util
     /// Encode an integral ID into a string, with padding support.
     std::string encodeId(const unsigned number, const int padding = 5);
 
+    /// Creates a randomly name directory within path and returns the name.
+    std::string createRandomDir(const std::string& path);
+    /// Creates a randomly name file within path and returns the name.
+    std::string createRandomFile(const std::string& path);
+
     bool windowingAvailable();
 
     // Sadly, older libpng headers don't use const for the pixmap pointer parameter to

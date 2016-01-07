@@ -74,7 +74,7 @@ private:
     int  createComponent();
     int  createDesktop();
 
-    bool createBroker();
+    bool createBroker(const std::string& jailId);
 };
 
 #endif

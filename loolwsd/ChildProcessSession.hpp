@@ -27,12 +27,13 @@ public:
     /// loKit The LOKit instance.
     /// loKitDocument The instance to an existing document (when opening
     ///                 a new view) or nullptr (when first view).
-    /// childId The id of the lokit instance, used by downloadas to construct jailed path.
+    /// jailId The JailID of the jail root directory,
+    //         used by downloadas to construct jailed path.
     ChildProcessSession(const std::string& id,
                         std::shared_ptr<Poco::Net::WebSocket> ws,
                         LibreOfficeKit *loKit,
                         LibreOfficeKitDocument * loKitDocument,
-                        const std::string& childId,
+                        const std::string& jailId,
                         std::function<void(LibreOfficeKitDocument*, int)> onLoad,
                         std::function<void(int)> onUnload);
     virtual ~ChildProcessSession();
@@ -75,7 +76,7 @@ public:
 
     std::string _loSubPath;
     LibreOfficeKit *_loKit;
-    const std::string _childId;
+    const std::string _jailId;
 
 private:
 

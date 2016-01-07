@@ -320,23 +320,23 @@ class Connection: public Runnable
 {
 public:
     Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument,
-               const std::string& childId, const std::string& sessionId,
+               const std::string& jailId, const std::string& sessionId,
                std::function<void(LibreOfficeKitDocument*, int)> onLoad,
                std::function<void(int)> onUnload) :
         _loKit(loKit),
         _loKitDocument(loKitDocument),
-        _childId(childId),
+        _jailId(jailId),
         _sessionId(sessionId),
         _stop(false),
         _onLoad(onLoad),
         _onUnload(onUnload)
     {
-        Log::info("Connection ctor in child: " + childId + ", thread: " + _sessionId);
+        Log::info("Connection ctor in child: " + jailId + ", thread: " + _sessionId);
     }
 
     ~Connection()
     {
-        Log::info("~Connection dtor in child: " + _childId + ", thread: " + _sessionId);
+        Log::info("~Connection dtor in child: " + _jailId + ", thread: " + _sessionId);
         stop();
     }
 
@@ -387,11 +387,11 @@ public:
             HTTPResponse response;
             auto ws = std::make_shared<WebSocket>(cs, request, response);
 
-            _session.reset(new ChildProcessSession(_sessionId, ws, _loKit, _loKitDocument, _childId, _onLoad, _onUnload));
+            _session.reset(new ChildProcessSession(_sessionId, ws, _loKit, _loKitDocument, _jailId, _onLoad, _onUnload));
             ws->setReceiveTimeout(0);
 
             // child Jail TID PID
-            std::string hello("child " + _childId + " " +
+            std::string hello("child " + _jailId + " " +
                               _sessionId + " " + std::to_string(Process::id()));
             _session->sendTextFrame(hello);
 
@@ -451,7 +451,7 @@ public:
 private:
     LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
-    const std::string _childId;
+    const std::string _jailId;
     const std::string _sessionId;
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
@@ -470,14 +470,14 @@ private:
 class Document
 {
 public:
-    Document(LibreOfficeKit *loKit, const std::string& childId,
+    Document(LibreOfficeKit *loKit, const std::string& jailId,
              const std::string& url)
       : _loKit(loKit),
-        _childId(childId),
+        _jailId(jailId),
         _url(url),
         _loKitDocument(nullptr)
     {
-        Log::info("Document ctor for url [" + url + "] on child [" + childId + "].");
+        Log::info("Document ctor for url [" + url + "] on child [" + jailId + "].");
     }
 
     ~Document()
@@ -521,7 +521,7 @@ public:
                 Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
                 _connections.erase(sessionId);
 
-                auto thread = std::make_shared<Connection>(_loKit, aItem->second->getLOKitDocument(), _childId, sessionId,
+                auto thread = std::make_shared<Connection>(_loKit, aItem->second->getLOKitDocument(), _jailId, sessionId,
                                                            [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
                                                            [this](const int viewId) { onUnload(viewId); });
                 _connections.emplace(sessionId, thread);
@@ -535,16 +535,16 @@ public:
             std::shared_ptr<Connection> thread;
             if ( _connections.empty() )
             {
-                Log::info("Creating main thread for child: " + _childId + ", thread: " + sessionId);
-                thread = std::make_shared<Connection>(_loKit, nullptr, _childId, sessionId,
+                Log::info("Creating main thread for child: " + _jailId + ", thread: " + sessionId);
+                thread = std::make_shared<Connection>(_loKit, nullptr, _jailId, sessionId,
                                                       [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
                                                       [this](const int viewId) { onUnload(viewId); });
             }
             else
             {
-                Log::info("Creating view thread for child: " + _childId + ", thread: " + sessionId);
+                Log::info("Creating view thread for child: " + _jailId + ", thread: " + sessionId);
                 auto aConnection = _connections.begin();
-                thread = std::make_shared<Connection>(_loKit, aConnection->second->getLOKitDocument(), _childId, sessionId,
+                thread = std::make_shared<Connection>(_loKit, aConnection->second->getLOKitDocument(), _jailId, sessionId,
                                                       [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
                                                       [this](const int viewId) { onUnload(viewId); });
             }
@@ -554,7 +554,7 @@ public:
             if ( aInserted.second )
                 thread->start();
             else
-                Log::error("Connection already exists for child: " + _childId + ", thread: " + sessionId);
+                Log::error("Connection already exists for child: " + _jailId + ", thread: " + sessionId);
 
             Log::debug("Connections: " + std::to_string(_connections.size()));
         }
@@ -578,7 +578,7 @@ private:
 private:
 
     LibreOfficeKit *_loKit;
-    const std::string _childId;
+    const std::string _jailId;
     const std::string _url;
 
     LibreOfficeKitDocument *_loKitDocument;
@@ -586,7 +586,7 @@ private:
     std::map<std::string, std::shared_ptr<Connection>> _connections;
 };
 
-void lokit_main(const std::string &loSubPath, const std::string& childId, const std::string& pipe)
+void lokit_main(const std::string &loSubPath, const std::string& jailId, const std::string& pipe)
 {
 #ifdef LOOLKIT_NO_MAIN
     // Reinitialize logging when forked.
@@ -601,7 +601,7 @@ void lokit_main(const std::string &loSubPath, const std::string& childId, const 
 
     std::map<std::string, std::shared_ptr<Document>> _documents;
 
-    assert(!childId.empty());
+    assert(!jailId.empty());
     assert(!loSubPath.empty());
 
     static const std::string process_name = "loolkit";
@@ -647,7 +647,7 @@ void lokit_main(const std::string &loSubPath, const std::string& childId, const 
         CallBackWorker callbackWorker(ChildProcessSession::_callbackQueue);
         Poco::ThreadPool::defaultPool().start(callbackWorker);
 
-        Log::info("Child [" + childId + "] is ready.");
+        Log::info("Child [" + jailId + "] is ready.");
 
         std::string aResponse;
         std::string aMessage;
@@ -723,7 +723,7 @@ void lokit_main(const std::string &loSubPath, const std::string& childId, const 
 
                         auto it = _documents.lower_bound(url);
                         if (it == _documents.end())
-                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit.get(), childId, url));
+                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit.get(), jailId, url));
 
                         it->second->createSession(sessionId);
                     }
@@ -780,7 +780,7 @@ int main(int argc, char** argv)
     Log::initialize("kit");
 
     std::string loSubPath;
-    std::string childId;
+    std::string jailId;
     std::string pipe;
 
     for (int i = 1; i < argc; ++i)
@@ -793,11 +793,11 @@ int main(int argc, char** argv)
             if (*eq)
                 loSubPath = std::string(++eq);
         }
-        else if (strstr(cmd, "--child=") == cmd)
+        else if (strstr(cmd, "--jailid=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
-                childId = std::string(++eq);
+                jailId = std::string(++eq);
         }
         else if (strstr(cmd, "--pipe=") == cmd)
         {
@@ -819,9 +819,9 @@ int main(int argc, char** argv)
         exit(1);
     }
 
-    if ( childId.empty() )
+    if (jailId.empty())
     {
-        Log::error("Error: --child is 0");
+        Log::error("Error: --jailid is empty");
         exit(1);
     }
 
@@ -849,7 +849,7 @@ int main(int argc, char** argv)
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    lokit_main(loSubPath, childId, pipe);
+    lokit_main(loSubPath, jailId, pipe);
 
     return 0;
 }
