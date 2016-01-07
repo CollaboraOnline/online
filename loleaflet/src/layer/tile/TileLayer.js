@@ -934,20 +934,19 @@ L.TileLayer = L.GridLayer.extend({
 
 	_fitWidthZoom: function (e, maxZoom) {
 		var size = e ? e.newSize : this._map.getSize();
+		var widthTwips = size.x * this._map.options.tileWidthTwips / this._tileSize;
 		maxZoom = maxZoom ? maxZoom : this._map.options.zoom;
 		if (this._docType !== 'spreadsheet' || !e) {
 			// If it's not a spreadsheet or the method has been invoked manually
 			var crsScale = this._map.options.crs.scale(1);
-			if (size.x / this._docPixelSize.x > crsScale) {
-				// we could zoom in
-				var ratio = size.x / this._docPixelSize.x;
-				var zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
-				this._map.setZoom(Math.min(maxZoom, this._map.getZoom() + zoomDelta), {animate: false});
-			}
-			if (this._docPixelSize.x > size.x) {
-				ratio = this._docPixelSize.x / size.x;
-				zoomDelta = Math.ceil(Math.log(ratio) / Math.log(crsScale));
-				this._map.setZoom(Math.max(1, this._map.getZoom() - zoomDelta), {animate: false});
+			if (this._docWidthTwips > 0)
+			{
+				var ratio = widthTwips / this._docWidthTwips;
+				var zoom = this._map.options.zoom + Math.floor(Math.log(ratio) / Math.log(crsScale));
+
+				zoom = Math.max(1, zoom);
+				zoom = Math.min(maxZoom, zoom);
+				this._map.setZoom(zoom, {animate: false});
 			}
 		}
 	},
