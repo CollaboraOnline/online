@@ -343,6 +343,7 @@ bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
 {
     Poco::Mutex::ScopedLock lock(_mutex);
 
+    _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     std::string status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
     StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     if (!getTokenString(tokens[1], "type", _docType))
@@ -356,14 +357,16 @@ bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
 
 bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     std::string command;
     if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
     {
         sendTextFrame("error: cmd=commandvalues kind=syntax");
         return false;
     }
+
+    Poco::Mutex::ScopedLock lock(_mutex);
+
+    _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     sendTextFrame("commandvalues: " + std::string(_loKitDocument->pClass->getCommandValues(_loKitDocument, command.c_str())));
     return true;
 }
@@ -372,15 +375,13 @@ bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*le
 {
     Poco::Mutex::ScopedLock lock(_mutex);
 
-   _loKitDocument->pClass->setView(_loKitDocument, _viewId);
-   sendTextFrame("partpagerectangles: " + std::string(_loKitDocument->pClass->getPartPageRectangles(_loKitDocument)));
+    _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+    sendTextFrame("partpagerectangles: " + std::string(_loKitDocument->pClass->getPartPageRectangles(_loKitDocument)));
     return true;
 }
 
 void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
     if (tokens.count() < 8 ||
@@ -408,17 +409,19 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
         return;
     }
 
+    Poco::Mutex::ScopedLock lock(_mutex);
+
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+    const std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
     std::vector<char> output;
-    output.reserve(4 * width * height);
+    output.reserve(response.size() + (4 * width * height));
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    unsigned char *pixmap = new unsigned char[4 * width * height];
-    memset(pixmap, 0, 4 * width * height);
+    std::vector<unsigned char> pixmap;
+    pixmap.resize(4 * width * height);
 
     if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument))
     {
@@ -426,26 +429,22 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     }
 
     Poco::Timestamp timestamp;
-    _loKitDocument->pClass->paintTile(_loKitDocument, pixmap, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    _loKitDocument->pClass->paintTile(_loKitDocument, pixmap.data(), width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
                  << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
     LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
-    if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output, mode))
+    if (!Util::encodePNGAndAppendToBuffer(pixmap.data(), width, height, output, mode))
     {
         sendTextFrame("error: cmd=tile kind=failure");
         return;
     }
-
-    delete[] pixmap;
 
     sendBinaryFrame(output.data(), output.size());
 }
 
 bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
    int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
 
     if (tokens.count() != 5 ||
@@ -458,6 +457,8 @@ bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
+    Poco::Mutex::ScopedLock lock(_mutex);
+
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     _loKitDocument->pClass->setClientZoom(_loKitDocument, tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
     return true;
@@ -465,8 +466,6 @@ bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, Str
 
 bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     std::string name, id, format, filterOptions;
 
     if (tokens.count() < 5 ||
@@ -487,26 +486,18 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
         }
     }
 
-    std::string tmpDir, url;
-    File *file = nullptr;
-    do
-    {
-        if (file != nullptr)
-        {
-            delete file;
-        }
-        tmpDir = std::to_string(Util::rng::getNext());
-        url = JailedDocumentRoot + tmpDir + "/" + name;
-        file = new File(url);
-    } while (file->exists());
-    delete file;
+    const auto tmpDir = Util::createRandomDir(JailedDocumentRoot);
+    const auto url = JailedDocumentRoot + tmpDir + "/" + name;
 
+    Poco::Mutex::ScopedLock lock(_mutex);
+
+    //TODO: Cleanup the file after downloading.
     _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
             format.size() == 0 ? nullptr :format.c_str(),
             filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
 
     sendTextFrame("downloadas: jail=" + _jailId + " dir=" + tmpDir + " name=" + name +
-            " port=" + std::to_string(ClientPortNumber) + " id=" + id);
+                  " port=" + std::to_string(ClientPortNumber) + " id=" + id);
     return true;
 }
 
@@ -518,8 +509,6 @@ bool ChildProcessSession::getChildId()
 
 bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     std::string mimeType;
 
     if (tokens.count() != 2 ||
@@ -528,6 +517,8 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
         sendTextFrame("error: cmd=gettextselection kind=syntax");
         return false;
     }
+
+    Poco::Mutex::ScopedLock lock(_mutex);
 
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     char *textSelection = _loKitDocument->pClass->getTextSelection(_loKitDocument, mimeType.c_str(), nullptr);
@@ -589,8 +580,6 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
 
 bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     int type, charcode, keycode;
 
     if (tokens.count() != 4 ||
@@ -604,6 +593,8 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
         return false;
     }
 
+    Poco::Mutex::ScopedLock lock(_mutex);
+
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     _loKitDocument->pClass->postKeyEvent(_loKitDocument, type, charcode, keycode);
 
@@ -612,8 +603,6 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
 
 bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     int type, x, y, count, buttons, modifier;
 
     if (tokens.count() != 7 ||
@@ -632,6 +621,8 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
+    Poco::Mutex::ScopedLock lock(_mutex);
+
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     _loKitDocument->pClass->postMouseEvent(_loKitDocument, type, x, y, count, buttons, modifier);
 
@@ -640,13 +631,13 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
 
 bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     if (tokens.count() == 1)
     {
         sendTextFrame("error: cmd=uno kind=syntax");
         return false;
     }
+
+    Poco::Mutex::ScopedLock lock(_mutex);
 
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
@@ -667,8 +658,6 @@ bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, Str
 
 bool ChildProcessSession::selectText(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     int type, x, y;
 
     if (tokens.count() != 4 ||
@@ -684,6 +673,8 @@ bool ChildProcessSession::selectText(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
+    Poco::Mutex::ScopedLock lock(_mutex);
+
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     _loKitDocument->pClass->setTextSelection(_loKitDocument, type, x, y);
 
@@ -692,8 +683,6 @@ bool ChildProcessSession::selectText(const char* /*buffer*/, int /*length*/, Str
 
 bool ChildProcessSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     int type, x, y;
 
     if (tokens.count() != 4 ||
@@ -708,6 +697,8 @@ bool ChildProcessSession::selectGraphic(const char* /*buffer*/, int /*length*/, 
         return false;
     }
 
+    Poco::Mutex::ScopedLock lock(_mutex);
+
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     _loKitDocument->pClass->setGraphicSelection(_loKitDocument, type, x, y);
 
@@ -716,13 +707,13 @@ bool ChildProcessSession::selectGraphic(const char* /*buffer*/, int /*length*/, 
 
 bool ChildProcessSession::resetSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     if (tokens.count() != 1)
     {
         sendTextFrame("error: cmd=resetselection kind=syntax");
         return false;
     }
+
+    Poco::Mutex::ScopedLock lock(_mutex);
 
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     _loKitDocument->pClass->resetSelection(_loKitDocument);
@@ -732,8 +723,6 @@ bool ChildProcessSession::resetSelection(const char* /*buffer*/, int /*length*/,
 
 bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     std::string url, format, filterOptions;
 
     if (tokens.count() < 4 ||
@@ -752,6 +741,8 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
             filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
         }
     }
+
+    Poco::Mutex::ScopedLock lock(_mutex);
 
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
@@ -780,8 +771,6 @@ bool ChildProcessSession::setClientPart(const char* /*buffer*/, int /*length*/, 
 
 bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     int page;
     if (tokens.count() < 2 ||
         !getTokenInteger(tokens[1], "page", page))
@@ -789,6 +778,8 @@ bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, String
         sendTextFrame("error: cmd=setpage kind=invalid");
         return false;
     }
+
+    Poco::Mutex::ScopedLock lock(_mutex);
 
     _loKitDocument->pClass->setView(_loKitDocument, _viewId);
     _loKitDocument->pClass->setPart(_loKitDocument, page);

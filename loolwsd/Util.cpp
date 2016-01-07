@@ -49,7 +49,7 @@ extern "C"
     static void user_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
     {
         std::vector<char> *outputp = (std::vector<char> *) png_get_io_ptr(png_ptr);
-        size_t oldsize = outputp->size();
+        const size_t oldsize = outputp->size();
         outputp->resize(oldsize + length);
         memcpy(outputp->data() + oldsize, data, length);
     }

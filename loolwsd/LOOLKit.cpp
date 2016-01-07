@@ -474,7 +474,8 @@ private:
 class Document
 {
 public:
-    Document(LibreOfficeKit *loKit, const std::string& jailId,
+    Document(LibreOfficeKit *loKit,
+             const std::string& jailId,
              const std::string& url)
       : _loKit(loKit),
         _jailId(jailId),
