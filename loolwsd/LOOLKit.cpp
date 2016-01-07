@@ -699,10 +699,10 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                 {
                     pStart++;
                     StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    aResponse = std::to_string(Process::id()) + " ";
 
                     if (tokens[0] == "search")
                     {
-                        aResponse = std::to_string(Process::id()) + " ";
                         if (_documents.empty())
                         {
                             aResponse += "empty \r\n";
@@ -712,26 +712,33 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                             const auto& it = _documents.find(tokens[1]);
                             aResponse += (it != _documents.end() ? "ok \r\n" : "no \r\n");
                         }
-
-                        Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length());
                     }
                     else if (tokens[0] == "thread")
                     {
                         const std::string& sessionId = tokens[1];
                         const std::string& url = tokens[2];
-                        Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
 
                         auto it = _documents.lower_bound(url);
-                        if (it == _documents.end())
-                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit.get(), jailId, url));
+                        if (it == _documents.end() || (it != _documents.end() && it->first == url))
+                        {
+                            Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
+                            if (it == _documents.end())
+                                it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit.get(), jailId, url));
 
-                        it->second->createSession(sessionId);
+                            it->second->createSession(sessionId);
+                            aResponse += "ok \r\n";
+                        }
+                        else
+                        {
+                            aResponse += "no \r\n";
+                        }
                     }
                     else
                     {
-                        aResponse = "bad message \r\n";
-                        Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length() );
+                        aResponse = "bad \r\n";
                     }
+
+                    Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length() );
                     aMessage.clear();
                 }
             }

@@ -203,6 +203,22 @@ public:
         return nBytes;
     }
 
+    bool isOKResponse(int nPID)
+    {
+        std::string aResponse;
+
+        if (getResponseLine(readerChild, aResponse) < 0)
+        {
+            //TODO: Cleanup broken children.
+            Log::error("Error reading child response: " + std::to_string(nPID) + ". Clearing cache.");
+            _cacheURL.clear();
+            return false;
+        }
+
+        StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        return (tokens[1] == "ok" ? true : false);
+    }
+
     ssize_t sendMessage(int nPipeWriter, const std::string& aMessage)
     {
         ssize_t nBytes = -1;
@@ -216,7 +232,6 @@ public:
 
     ssize_t createThread(Process::PID nPID, const std::string& aTID, const std::string& aURL)
     {
-        std::string aResponse;
         std::string aMessage = "thread " + aTID + " " + aURL + "\r\n";
         return sendMessage(_childProcesses[nPID], aMessage);
     }
@@ -289,6 +304,9 @@ public:
                 if (createThread(aIterURL->second, aTID, aURL) < 0)
                     Log::error("Cache: Error creating thread.");
 
+                if (!isOKResponse(aIterURL->second))
+                    Log::error("Cache Failed: Creating view for thread [" + aTID + "].");
+
                 return;
             }
             else
@@ -305,8 +323,10 @@ public:
                            aTID + "] on kit [" + std::to_string(nPID) + "].");
                 if (createThread(nPID, aTID, aURL) < 0)
                     Log::error("Search: Error creating thread.");
-                else
+                else if (isOKResponse(nPID))
                     _cacheURL[aURL] = nPID;
+                else
+                    Log::error("Failed: Creating view for thread [" + aTID + "].");
             }
             else
             {
@@ -799,6 +819,7 @@ int main(int argc, char** argv)
         {
             timeoutCounter = 0;
             sleep(MAINTENANCE_INTERVAL);
+            // TODO. lokit processes maintance
         }
     }
 
