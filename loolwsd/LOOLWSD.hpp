@@ -41,6 +41,7 @@ public:
     static std::string sysTemplate;
     static std::string loTemplate;
     static std::string childRoot;
+    static std::string jailId;
     static std::string loSubPath;
     static Poco::NamedMutex NamedMutexLOOL;
 

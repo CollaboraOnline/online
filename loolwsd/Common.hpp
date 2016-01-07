@@ -22,7 +22,7 @@ constexpr int POLL_TIMEOUT = 1000000;
 // work loads.
 constexpr int PIPE_BUFFER = 1024;
 
-static const std::string JailedDocumentRoot = "/user/doc/";
+static const std::string JailedDocumentRoot = "/user/docs/";
 
 // Flag to stop pump loops.
 static volatile bool TerminationFlag = false;

@@ -640,6 +640,7 @@ std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::sysTemplate;
 std::string LOOLWSD::loTemplate;
 std::string LOOLWSD::childRoot;
+std::string LOOLWSD::jailId;
 std::string LOOLWSD::loSubPath = "lo";
 Poco::NamedMutex LOOLWSD::NamedMutexLOOL("loolwsd");
 
@@ -870,7 +871,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     NamedMutexLOOL.lock();
 
-    const auto jailId = Util::createRandomDir(childRoot);
+    jailId = Util::createRandomDir(childRoot);
     if (!createBroker(jailId))
     {
         Log::error("Failed to spawn loolBroker.");

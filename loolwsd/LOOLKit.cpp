@@ -647,7 +647,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
         CallBackWorker callbackWorker(ChildProcessSession::_callbackQueue);
         Poco::ThreadPool::defaultPool().start(callbackWorker);
 
-        Log::info("Child [" + jailId + "] is ready.");
+        Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
 
         std::string aResponse;
         std::string aMessage;
