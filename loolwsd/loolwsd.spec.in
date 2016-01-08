@@ -72,6 +72,7 @@ getent group %{group} >/dev/null || groupadd -r %{group}
 getent passwd %{owner} >/dev/null || useradd -g %{group} -r %{owner}
 
 mkdir -p /var/cache/loolwsd && chmod og+w /var/cache/loolwsd
+rm -rf /var/cache/loolwsd/*
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system
