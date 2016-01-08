@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 
   while ( ( dir_proc = readdir(root_proc) ) )
   {
-    if ( !dir_proc && !dir_proc->d_name )
+    if ( !dir_proc && !dir_proc->d_name[0] )
       error(EXIT_FAILURE, ENOTDIR, "bad dir");
 
     if ( *dir_proc->d_name > '0' && *dir_proc->d_name <= '9' )
