@@ -68,6 +68,7 @@ static int readerChild = -1;
 static int readerBroker = -1;
 
 static std::atomic<unsigned> forkCounter;
+static std::atomic<std::chrono::seconds> maintenance;
 static unsigned int childCounter = 0;
 static unsigned int numPreSpawnedChildren = 0;
 
@@ -234,6 +235,35 @@ public:
     {
         std::string aMessage = "thread " + aTID + " " + aURL + "\r\n";
         return sendMessage(_childProcesses[nPID], aMessage);
+    }
+
+    void verifyChilds()
+    {
+        std::string aMessage;
+        bool bError = false;
+
+        // sanity cache
+        for (auto it =_cacheURL.cbegin(); it != _cacheURL.cend(); )
+        {
+            aMessage = "search " + it->first + "\r\n";
+            if (sendMessage(_childProcesses[it->second], aMessage) < 0)
+            {
+                bError = true;
+                break;
+            }
+
+            if (!isOKResponse(it->second))
+            {
+                Log::debug() << "Removed expired Kit [" + std::to_string(it->second) + "] hosts URL [" + it->first + "] -> " << Log::end;
+                _cacheURL.erase(it++);
+                continue;
+            }
+
+            it++;
+        }
+
+        if (bError)
+            _cacheURL.clear();
     }
 
     Process::PID searchURL(const std::string& aURL)
@@ -404,6 +434,11 @@ public:
                     pStart++;
 
                     forkMutex.lock();
+                    if (maintenance.load() > std::chrono::seconds(10))
+                    {
+                        maintenance = std::chrono::seconds::zero();
+                        verifyChilds();
+                    }
                     handleInput(aMessage);
                     aMessage.clear();
                     forkMutex.unlock();
@@ -819,7 +854,7 @@ int main(int argc, char** argv)
         {
             timeoutCounter = 0;
             sleep(MAINTENANCE_INTERVAL);
-            // TODO. lokit processes maintance
+            maintenance.store( ++maintenance.load() );
         }
     }
 

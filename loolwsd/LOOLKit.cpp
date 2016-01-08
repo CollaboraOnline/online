@@ -738,7 +738,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         }
                         else
                         {
-                            aResponse += ( pDocument->getURL() == tokens[1] ? "ok \r\n" : "no \r\n");
+                            aResponse += (pDocument->getURL() == tokens[1] ? "ok \r\n" : "no \r\n");
                         }
                     }
                     else if (tokens[0] == "thread")
@@ -746,7 +746,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         const std::string& sessionId = tokens[1];
                         const std::string& url = tokens[2];
 
-                        if ( !pDocument->hasConnections() || (pDocument->getURL() == url))
+                        if (!pDocument->hasConnections() || pDocument->getURL() == url)
                         {
                             Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
                             pDocument->createSession(sessionId, url);
