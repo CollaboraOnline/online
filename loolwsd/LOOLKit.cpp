@@ -16,6 +16,7 @@
 #include <sys/syscall.h>
 #include <signal.h>
 
+#include <atomic>
 #include <memory>
 #include <iostream>
 
@@ -333,7 +334,7 @@ public:
         _onLoad(onLoad),
         _onUnload(onUnload)
     {
-        Log::info("Connection ctor in child: " + jailId + ", thread: " + _sessionId);
+        Log::info("Connection ctor in child: " + _jailId + ", thread: " + _sessionId);
     }
 
     ~Connection()
@@ -480,13 +481,18 @@ public:
       : _loKit(loKit),
         _jailId(jailId),
         _url(url),
-        _loKitDocument(nullptr)
+        _loKitDocument(nullptr),
+        _clientViews(0),
+        _mainViewId(-1)
     {
-        Log::info("Document ctor for url [" + url + "] on child [" + jailId + "].");
+        Log::info("Document ctor for url [" + _url + "] on child [" + _jailId + "].");
     }
 
     ~Document()
     {
+        Log::info("~Document dtor for url [" + _url + "] on child [" + _jailId +
+                  "]. There are " + std::to_string(_mainViewId) + " views.");
+
         // Destroy all connections and views.
         for (auto aIterator : _connections)
         {
@@ -505,75 +511,53 @@ public:
             }
         }
 
-        // Get the document to destroy later.
-        auto loKitDocument = _connections.size() > 0
-                            ? _connections.begin()->second->getLOKitDocument()
-                            : nullptr;
-
         // Destroy all connections and views.
         _connections.clear();
 
         // TODO. check what is happening when destroying lokit document
         // Destroy the document.
-        if (loKitDocument != nullptr)
+        if (_loKitDocument != nullptr)
         {
-            loKitDocument->pClass->destroy(loKitDocument);
+            _loKitDocument->pClass->destroyView(_loKitDocument, _mainViewId);
+            _loKitDocument->pClass->destroy(_loKitDocument);
         }
     }
 
     void createSession(const std::string& sessionId)
     {
-        const auto& aItem = _connections.find(sessionId);
+        std::unique_lock<std::mutex> lock(_mutex);
 
-        if (aItem != _connections.end())
+        const auto& it = _connections.find(sessionId);
+        if (it != _connections.end())
         {
             // found item, check if still running
-            Log::debug("Found thread for [" + sessionId + "] " +
-                       (aItem->second->isRunning() ? "Running" : "Stopped"));
-
-            if (!aItem->second->isRunning())
+            if (it->second->isRunning())
             {
-                // Restore thread.
-                Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
-                _connections.erase(sessionId);
-
-                auto thread = std::make_shared<Connection>(_loKit, aItem->second->getLOKitDocument(), _jailId, sessionId,
-                                                           [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
-                                                           [this](const int viewId) { onUnload(viewId); });
-                _connections.emplace(sessionId, thread);
-                thread->start();
+                Log::warn("Thread [" + sessionId + "] is already running.");
+                return;
             }
+
+            // Restore thread.
+            Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
+            _connections.erase(sessionId);
         }
+
+        Log::info() << "Creating " << (_clientViews ? "new" : "first")
+                    << " view for url: " << _url << "for thread: " << sessionId
+                    << " on child: " << _jailId << Log::end;
+
+        auto thread = std::make_shared<Connection>(_loKit, _loKitDocument, _jailId, sessionId,
+                                                   [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
+                                                   [this](const int viewId) { onUnload(viewId); });
+
+        const auto aInserted = _connections.emplace(sessionId, thread);
+
+        if ( aInserted.second )
+            thread->start();
         else
-        {
-            // new thread id
-            Log::debug("Starting new thread for request [" + sessionId + "]");
-            std::shared_ptr<Connection> thread;
-            if ( _connections.empty() )
-            {
-                Log::info("Creating main thread for child: " + _jailId + ", thread: " + sessionId);
-                thread = std::make_shared<Connection>(_loKit, nullptr, _jailId, sessionId,
-                                                      [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
-                                                      [this](const int viewId) { onUnload(viewId); });
-            }
-            else
-            {
-                Log::info("Creating view thread for child: " + _jailId + ", thread: " + sessionId);
-                auto aConnection = _connections.begin();
-                thread = std::make_shared<Connection>(_loKit, aConnection->second->getLOKitDocument(), _jailId, sessionId,
-                                                      [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
-                                                      [this](const int viewId) { onUnload(viewId); });
-            }
+            Log::error("Connection already exists for child: " + _jailId + ", thread: " + sessionId);
 
-            auto aInserted = _connections.emplace(sessionId, thread);
-
-            if ( aInserted.second )
-                thread->start();
-            else
-                Log::error("Connection already exists for child: " + _jailId + ", thread: " + sessionId);
-
-            Log::debug("Connections: " + std::to_string(_connections.size()));
-        }
+        Log::debug("Connections: " + std::to_string(_connections.size()));
     }
 
     void purgeSessions()
@@ -598,15 +582,36 @@ private:
 
     void onLoad(LibreOfficeKitDocument *loKitDocument, const int viewId)
     {
-        Log::info("Document [" + _url + "] loaded as view #" + std::to_string(viewId) + ".");
+        ++_clientViews;
+        Log::info() << "Document [" << _url << "] view ["
+                    << viewId << "] loaded, leaving "
+                    << _clientViews << " views." << Log::end;
+
+        assert(loKitDocument != nullptr);
+
+        // Check that the document instance doesn't change.
         if (_loKitDocument != nullptr)
             assert(_loKitDocument == loKitDocument);
-        _loKitDocument = loKitDocument;
+
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        if (_loKitDocument == nullptr)
+        {
+            _loKitDocument = loKitDocument;
+
+            // Create a view so we retain the document in memory
+            // when all clients are disconnected.
+            _mainViewId = _loKitDocument->pClass->createView(loKitDocument);
+            Log::info("Created main view [" + std::to_string(_mainViewId) + "].");
+        }
     }
 
     void onUnload(const int viewId)
     {
-        Log::info("Document [" + _url + "] view #" + std::to_string(viewId)+ " unloaded.");
+        --_clientViews;
+        Log::info() << "Document [" << _url << "] view ["
+                    << viewId << "] unloaded, leaving "
+                    << _clientViews << " views." << Log::end;
     }
 
 private:
@@ -617,7 +622,10 @@ private:
 
     LibreOfficeKitDocument *_loKitDocument;
 
+    std::mutex _mutex;
     std::map<std::string, std::shared_ptr<Connection>> _connections;
+    std::atomic<unsigned> _clientViews;
+    int _mainViewId;
 };
 
 void lokit_main(const std::string &loSubPath, const std::string& jailId, const std::string& pipe)

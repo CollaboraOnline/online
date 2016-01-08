@@ -64,16 +64,20 @@ ChildProcessSession::~ChildProcessSession()
 {
     Log::info("~ChildProcessSession dtor [" + getName() + "].");
 
+    Poco::Mutex::ScopedLock lock(_mutex);
+
     if (_loKitDocument != nullptr)
     {
-        _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, this);
+        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+
+        _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, nullptr);
 
         _loKitDocument->pClass->destroyView(_loKitDocument, _viewId);
         Log::debug("Destroy view [" + getName() + "]-> [" + std::to_string(_viewId) + "]");
     }
 
     if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
-        _loKit->pClass->registerCallback(_loKit, nullptr, this);
+        _loKit->pClass->registerCallback(_loKit, nullptr, nullptr);
 
     _onUnload(_viewId);
 }
@@ -104,6 +108,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=load kind=docalreadyloaded");
             return false;
         }
+
         return loadDocument(buffer, length, tokens);
     }
     else if (_docURL == "")
@@ -231,8 +236,6 @@ extern "C"
 
 bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTokenizer& tokens)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     int part = -1;
     if (tokens.count() < 2)
     {
@@ -246,17 +249,18 @@ bool ChildProcessSession::loadDocument(const char *buffer, int length, StringTok
     assert(!_docURL.empty());
     assert(!_jailedFilePath.empty());
 
-    if (_loKitDocument == nullptr)
-        Log::info("Loading new document from URI: [" + _jailedFilePath + "].");
-    else
-        Log::info("Loading view to document from URI: [" + _jailedFilePath + "].");
+    Poco::Mutex::ScopedLock lock(_mutex);
 
     if (_loKitDocument != nullptr)
     {
+        Log::info("Loading view to document from URI: [" + _jailedFilePath + "].");
+
         _viewId = _loKitDocument->pClass->createView(_loKitDocument);
     }
     else
     {
+        Log::info("Loading new document from URI: [" + _jailedFilePath + "].");
+
         if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
             _loKit->pClass->registerCallback(_loKit, myCallback, this);
 
