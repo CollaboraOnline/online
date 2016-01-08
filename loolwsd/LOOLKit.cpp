@@ -739,8 +739,9 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         }
                         else
                         {
-                            const auto& it = _documents.find(tokens[1]);
+                            const auto& it = _documents.begin();
                             aResponse += (it != _documents.end() ? "ok \r\n" : "no \r\n");
+                            // TODO. it exists just one instance Document
                         }
                     }
                     else if (tokens[0] == "thread")
