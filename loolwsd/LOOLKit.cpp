@@ -560,6 +560,24 @@ public:
         }
     }
 
+    void purgeSessions()
+    {
+        for (auto it =_connections.cbegin(); it != _connections.cend(); )
+        {
+            if (!it->second->isRunning())
+            {
+                _connections.erase(it++);
+                continue;
+            }
+            it++;
+        }
+    }
+
+    bool hasConnections()
+    {
+        return _connections.size() > 0;
+    }
+
 private:
 
     void onLoad(LibreOfficeKitDocument *loKitDocument, const int viewId)
@@ -703,6 +721,18 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
 
                     if (tokens[0] == "search")
                     {
+                        // remove document that is unloaded
+                        for (auto it =_documents.cbegin(); it != _documents.cend(); )
+                        {
+                            it->second->purgeSessions();
+                            if (!it->second->hasConnections())
+                            {
+                                _documents.erase(it++);
+                                continue;
+                            }
+                            it++;
+                        }
+
                         if (_documents.empty())
                         {
                             aResponse += "empty \r\n";
