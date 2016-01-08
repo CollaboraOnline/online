@@ -51,6 +51,10 @@ L.Map = L.Evented.extend({
 			options.webserver = options.server.replace(/^ws:/i, protocol);
 		}
 
+		// we are adding components like '/insertfile' at the end which would
+		// lead to URL's of the form <webserver>//insertfile/...
+		options.webserver = options.webserver.replace(/\/*$/, '');
+
 		this._handlers = [];
 		this._layers = {};
 		this._zoomBoundLayers = {};
