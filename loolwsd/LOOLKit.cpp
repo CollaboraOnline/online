@@ -438,6 +438,7 @@ public:
 
             // We should probably send the Client some sensible message and reason.
             _session->sendTextFrame("eof");
+            _session.reset();
         }
         catch (const Exception& exc)
         {

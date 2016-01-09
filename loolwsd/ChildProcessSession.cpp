@@ -66,12 +66,7 @@ ChildProcessSession::~ChildProcessSession()
 
     Poco::Mutex::ScopedLock lock(_mutex);
 
-    if (_loKitDocument != nullptr)
-    {
-        _onUnload(_viewId);
-        Log::debug("Destroy view [" + getName() + "]-> [" + std::to_string(_viewId) + "]");
-    }
-
+    _onUnload(_viewId);
 }
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
