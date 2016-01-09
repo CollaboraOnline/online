@@ -38,7 +38,6 @@ using Poco::ProcessHandle;
 using Poco::StringTokenizer;
 using Poco::URI;
 
-Poco::NotificationQueue ChildProcessSession::_callbackQueue;
 Poco::Mutex ChildProcessSession::_mutex;
 
 ChildProcessSession::ChildProcessSession(const std::string& id,
@@ -69,20 +68,10 @@ ChildProcessSession::~ChildProcessSession()
 
     if (_loKitDocument != nullptr)
     {
-        if (_multiView)
-           _loKitDocument->pClass->setView(_loKitDocument, _viewId);
-
-        _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, nullptr);
-
-        if (_multiView)
-            _loKitDocument->pClass->destroyView(_loKitDocument, _viewId);
+        _onUnload(_viewId);
         Log::debug("Destroy view [" + getName() + "]-> [" + std::to_string(_viewId) + "]");
     }
 
-    if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
-        _loKit->pClass->registerCallback(_loKit, nullptr, nullptr);
-
-    _onUnload(_viewId);
 }
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)

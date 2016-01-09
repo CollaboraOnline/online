@@ -94,7 +94,8 @@ class CallBackWorker: public Runnable
 {
 public:
     CallBackWorker(NotificationQueue& queue):
-        _queue(queue)
+        _queue(queue),
+        _stop(false)
     {
     }
 
@@ -117,7 +118,7 @@ public:
         case LOK_CALLBACK_GRAPHIC_SELECTION:
             return std::string("LOK_CALLBACK_GRAPHIC_SELECTION");
         case LOK_CALLBACK_CELL_CURSOR:
-            return std::string("LLOK_CALLBACK_CELL_CURSOR");
+            return std::string("LOK_CALLBACK_CELL_CURSOR");
         case LOK_CALLBACK_CELL_FORMULA:
             return std::string("LOK_CALLBACK_CELL_FORMULA");
         case LOK_CALLBACK_MOUSE_POINTER:
@@ -269,7 +270,7 @@ public:
 #endif
         Log::debug("Thread [" + thread_name + "] started.");
 
-        while (!TerminationFlag)
+        while (!_stop && !TerminationFlag)
         {
             Notification::Ptr aNotification(_queue.waitDequeueNotification());
             if (!TerminationFlag && aNotification)
@@ -312,8 +313,14 @@ public:
         _queue.wakeUpAll();
     }
 
+    void stop()
+    {
+        _stop = true;
+    }
+
 private:
     NotificationQueue& _queue;
+    bool _stop;
     static FastMutex   _mutex;
 };
 
@@ -429,6 +436,7 @@ public:
             queue.put("eof");
             queueHandlerThread.join();
 
+            // We should probably send the Client some sensible message and reason.
             _session->sendTextFrame("eof");
         }
         catch (const Exception& exc)
@@ -481,16 +489,29 @@ public:
         _url(url),
         _loKitDocument(nullptr),
         _clientViews(0),
-        _mainViewId(-1)
+        _callbackWorker(_callbackQueue)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
+
+        _callbackThread.start(_callbackWorker);
     }
 
     ~Document()
     {
         Log::info("~Document dtor for url [" + _url + "] on child [" + _jailId +
-                  "]. There are " + std::to_string(_mainViewId) + " views.");
+                  "]. There are " + std::to_string(_clientViews) + " views.");
+
+        // Wait for the callback worker to finish.
+        _callbackWorker.stop();
+        _callbackWorker.wakeUpAll();
+        _callbackThread.join();
+
+        // Flag all connections to stop.
+        for (auto aIterator : _connections)
+        {
+            aIterator.second->stop();
+        }
 
         // Destroy all connections and views.
         for (auto aIterator : _connections)
@@ -505,8 +526,7 @@ public:
             else
             {
                 // wait until loolwsd close all websockets
-                if (aIterator.second->isRunning())
-                    aIterator.second->join();
+                aIterator.second->join();
             }
         }
 
@@ -517,8 +537,6 @@ public:
         // Destroy the document.
         if (_loKitDocument != nullptr)
         {
-            if (_multiView)
-                _loKitDocument->pClass->destroyView(_loKitDocument, _mainViewId);
             _loKitDocument->pClass->destroy(_loKitDocument);
         }
     }
@@ -580,6 +598,12 @@ public:
 
 private:
 
+    static void ViewCallback(int nType, const char* pPayload, void* pData)
+    {
+        auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
+        _callbackQueue.enqueueNotification(pNotif);
+    }
+
     static void DocumentCallback(int nType, const char* pPayload, void* pData)
     {
         Document* self = reinterpret_cast<Document*>(pData);
@@ -589,17 +613,10 @@ private:
             {
                 if (it.second->isRunning())
                 {
-                    auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", it.second->getSession().get());
-                    ChildProcessSession::_callbackQueue.enqueueNotification(pNotif);
+                    ViewCallback(nType, pPayload, it.second->getSession().get());
                 }
             }
         }
-    }
-
-    static void ViewCallback(int nType, const char* pPayload, void* pData)
-    {
-        auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
-        ChildProcessSession::_callbackQueue.enqueueNotification(pNotif);
     }
 
     /// Load a document (or view) and register callbacks.
@@ -641,10 +658,17 @@ private:
 
     void onUnload(const int viewId)
     {
-        --_clientViews;
-        Log::info() << "Document [" << _url << "] view ["
-                    << viewId << "] unloaded, leaving "
-                    << _clientViews << " views." << Log::end;
+        if (_multiView && _loKitDocument)
+        {
+            --_clientViews;
+            Log::info() << "Document [" << _url << "] view ["
+                        << viewId << "] unloaded, leaving "
+                        << _clientViews << " views." << Log::end;
+
+            _loKitDocument->pClass->setView(_loKitDocument, viewId);
+            _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, nullptr);
+            _loKitDocument->pClass->destroyView(_loKitDocument, viewId);
+        }
     }
 
 private:
@@ -659,8 +683,13 @@ private:
     std::mutex _mutex;
     std::map<std::string, std::shared_ptr<Connection>> _connections;
     std::atomic<unsigned> _clientViews;
-    int _mainViewId;
+
+    CallBackWorker _callbackWorker;
+    Thread _callbackThread;
+    static Poco::NotificationQueue _callbackQueue;
 };
+
+Poco::NotificationQueue Document::_callbackQueue;
 
 void lokit_main(const std::string &loSubPath, const std::string& jailId, const std::string& pipe)
 {
@@ -719,9 +748,6 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
             Log::error("Error: failed to open pipe [" + LOKIT_BROKER + "] write only.");
             exit(-1);
         }
-
-        CallBackWorker callbackWorker(ChildProcessSession::_callbackQueue);
-        Poco::ThreadPool::defaultPool().start(callbackWorker);
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
 
@@ -813,8 +839,6 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
             }
         }
 
-        // wait callback worker finish
-        callbackWorker.wakeUpAll();
         Poco::ThreadPool::defaultPool().joinAll();
 
         close(writerBroker);

@@ -50,8 +50,6 @@ public:
 
     LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument; }
 
-    static Poco::NotificationQueue _callbackQueue;
-
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
