@@ -153,6 +153,14 @@ namespace
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
             Log::error("linkOrCopy: nftw() failed for '" + source + "'");
     }
+
+    void requestAbnormalTermination(const Process::PID aPID)
+    {
+        if (kill(aPID, SIGTERM) != 0)
+        {
+            Log::info("Cannot terminate lokit [" + std::to_string(aPID) + "]");
+        }
+    }
 }
 
 class PipeRunnable: public Runnable
@@ -210,8 +218,8 @@ public:
 
         if (getResponseLine(readerChild, aResponse) < 0)
         {
-            //TODO: Cleanup broken children.
             Log::error("Error reading child response: " + std::to_string(nPID) + ". Clearing cache.");
+            requestAbnormalTermination(nPID);
             _cacheURL.clear();
             return false;
         }
@@ -279,8 +287,8 @@ public:
             ssize_t nBytes = Util::writeFIFO(it.second, aMessage.c_str(), aMessage.length());
             if ( nBytes < 0 )
             {
-                //TODO: Cleanup broken children.
                 Log::error("Error writting to child pipe: " + std::to_string(it.first) + ". Clearing cache.");
+                requestAbnormalTermination(it.first);
                 _cacheURL.clear();
                 break;
             }
@@ -290,8 +298,8 @@ public:
             Log::trace("Response from kit [" + std::to_string(it.first) + "]: " + aResponse);
             if ( nBytes < 0 )
             {
-                //TODO: Cleanup broken children.
                 Log::error("Error reading child response: " + std::to_string(it.first) + ". Clearing cache.");
+                requestAbnormalTermination(it.first);
                 _cacheURL.clear();
                 break;
             }
@@ -543,10 +551,8 @@ static int createLibreOfficeKit(const bool sharePages, const std::string& loSubP
 
     if ( (nFIFOWriter = open(pipe.c_str(), O_WRONLY)) < 0 )
     {
-        // TODO.  ill process state, that state should force close prison websockets and
-        // kill, currently we have only "stop server state".
         Log::error("Error: failed to open write pipe [" + pipe + "] with kit. Abandoning child.");
-        Poco::Process::requestTermination(child);
+        requestAbnormalTermination(child);
         return -1;
     }
 

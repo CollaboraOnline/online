@@ -13,6 +13,7 @@
 
 #include <string>
 
+enum class LOOLState { LOOL_STARTING, LOOL_STOPPING, LOOL_ABNORMAL };
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 constexpr int MASTER_PORT_NUMBER = 9981;
 constexpr int INTERVAL_PROBES = 10;

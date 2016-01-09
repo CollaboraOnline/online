@@ -59,12 +59,14 @@ using Poco::FastMutex;
 
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
+static LOOLState TerminationState;
 
 namespace
 {
     void handleSignal(int aSignal)
     {
         Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
+        TerminationState = ( aSignal == SIGTERM ? LOOLState::LOOL_ABNORMAL : LOOLState::LOOL_STOPPING );
         TerminationFlag = true;
     }
 
@@ -341,6 +343,7 @@ public:
     }
 
     const std::string& getSessionId() const { return _sessionId; }
+    std::shared_ptr<WebSocket> getWebSocket() const { return _ws; }
 
     LibreOfficeKitDocument * getLOKitDocument()
     {
@@ -385,10 +388,10 @@ public:
             cs.setTimeout(0);
             HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI);
             HTTPResponse response;
-            auto ws = std::make_shared<WebSocket>(cs, request, response);
+            _ws = std::make_shared<WebSocket>(cs, request, response);
 
-            _session.reset(new ChildProcessSession(_sessionId, ws, _loKit, _loKitDocument, _jailId, _onLoad, _onUnload));
-            ws->setReceiveTimeout(0);
+            _session.reset(new ChildProcessSession(_sessionId, _ws, _loKit, _loKitDocument, _jailId, _onLoad, _onUnload));
+            _ws->setReceiveTimeout(0);
 
             // child Jail TID PID
             std::string hello("child " + _jailId + " " +
@@ -406,7 +409,7 @@ public:
             do
             {
                 char buffer[1024];
-                n = ws->receiveFrame(buffer, sizeof(buffer), flags);
+                n = _ws->receiveFrame(buffer, sizeof(buffer), flags);
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
@@ -458,6 +461,7 @@ private:
     volatile bool _stop;
     std::function<void(LibreOfficeKitDocument*, int)> _onLoad;
     std::function<void(int)> _onUnload;
+    std::shared_ptr<WebSocket> _ws;
 };
 
 // A document container.
@@ -483,11 +487,21 @@ public:
     ~Document()
     {
         // Destroy all connections and views.
-        // wait until loolwsd close all websockets
         for (auto aIterator : _connections)
         {
-            if (aIterator.second->isRunning())
-                aIterator.second->join();
+            if (TerminationState == LOOLState::LOOL_ABNORMAL)
+            {
+                // stop all websockets
+                std::shared_ptr<WebSocket> ws = aIterator.second->getWebSocket();
+                if ( ws )
+                    ws->shutdownReceive();
+            }
+            else
+            {
+                // wait until loolwsd close all websockets
+                if (aIterator.second->isRunning())
+                    aIterator.second->join();
+            }
         }
 
         // Get the document to destroy later.
@@ -768,10 +782,12 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
         Log::error() << exc.name() << ": " << exc.displayText()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                      << Log::end;
+        TerminationState = LOOLState::LOOL_ABNORMAL;
     }
     catch (const std::exception& exc)
     {
         Log::error(std::string("Exception: ") + exc.what());
+        TerminationState = LOOLState::LOOL_ABNORMAL;
     }
 
     _documents.clear();
