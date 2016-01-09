@@ -470,13 +470,14 @@ private:
 class Document
 {
 public:
-    Document(LibreOfficeKit *loKit, const std::string& jailId)
+    Document(LibreOfficeKit *loKit, const std::string& jailId,
+             const std::string& url)
       : _loKit(loKit),
         _jailId(jailId),
-        _url(""),
+        _url(url),
         _loKitDocument(nullptr)
     {
-        Log::info("Document ctor on child [" + jailId + "].");
+        Log::info("Document ctor for url [" + url + "] on child [" + jailId + "].");
     }
 
     ~Document()
@@ -505,10 +506,9 @@ public:
         }
     }
 
-    void createSession(const std::string& sessionId, const std::string& url)
+    void createSession(const std::string& sessionId)
     {
         const auto& aItem = _connections.find(sessionId);
-        _url = url;
 
         if (aItem != _connections.end())
         {
@@ -579,19 +579,13 @@ public:
         return _connections.size() > 0;
     }
 
-    const std::string& getURL()
-    {
-        return _url;
-    }
-
 private:
 
     void onLoad(LibreOfficeKitDocument *loKitDocument, const int viewId)
     {
         Log::info("Document [" + _url + "] loaded as view #" + std::to_string(viewId) + ".");
-        // TODO. destroy lokit document when changed URL
-        // if (_loKitDocument != nullptr)
-        //    assert(_loKitDocument == loKitDocument);
+        if (_loKitDocument != nullptr)
+            assert(_loKitDocument == loKitDocument);
         _loKitDocument = loKitDocument;
     }
 
@@ -604,7 +598,7 @@ private:
 
     LibreOfficeKit *_loKit;
     const std::string _jailId;
-    std::string _url;
+    const std::string _url;
 
     LibreOfficeKitDocument *_loKitDocument;
 
@@ -626,6 +620,8 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
 
     assert(!jailId.empty());
     assert(!loSubPath.empty());
+
+    std::map<std::string, std::shared_ptr<Document>> _documents;
 
     static const std::string process_name = "loolkit";
 #ifdef __linux
@@ -649,9 +645,6 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
         Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
         exit(-1);
     }
-
-    // Singlenton instance
-    std::shared_ptr<Document> pDocument(std::make_shared<Document>(loKit.get(), jailId));
 
     try
     {
@@ -729,16 +722,14 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
 
                     if (tokens[0] == "search")
                     {
-                        // remove unloaded documents
-                        pDocument->purgeSessions();
-
-                        if (!pDocument->hasConnections())
+                        if (_documents.empty())
                         {
                             aResponse += "empty \r\n";
                         }
                         else
                         {
-                            aResponse += (pDocument->getURL() == tokens[1] ? "ok \r\n" : "no \r\n");
+                            const auto& it = _documents.find(tokens[1]);
+                            aResponse += (it != _documents.end() ? "ok \r\n" : "no \r\n");
                         }
                     }
                     else if (tokens[0] == "thread")
@@ -746,16 +737,13 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         const std::string& sessionId = tokens[1];
                         const std::string& url = tokens[2];
 
-                        if (!pDocument->hasConnections() || pDocument->getURL() == url)
-                        {
-                            Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
-                            pDocument->createSession(sessionId, url);
-                            aResponse += "ok \r\n";
-                        }
-                        else
-                        {
-                            aResponse += "no \r\n";
-                        }
+                        Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
+                        auto it = _documents.lower_bound(url);
+                        if (it == _documents.end())
+                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit.get(), jailId, url));
+
+                        it->second->createSession(sessionId);
+                        aResponse += "ok \r\n";
                     }
                     else
                     {
@@ -786,7 +774,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    pDocument.reset();
+    _documents.clear();
 
     // Destroy LibreOfficeKit
     loKit->pClass->destroy(loKit.get());
