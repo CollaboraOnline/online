@@ -74,15 +74,14 @@ public:
     bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool setPage(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-    std::string _loSubPath;
-    LibreOfficeKit *_loKit;
-    const std::string _jailId;
-
 private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
+    const bool _multiView;
+    LibreOfficeKit *_loKit;
+    const std::string _jailId;
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     int _clientPart;

@@ -478,14 +478,16 @@ public:
     Document(LibreOfficeKit *loKit,
              const std::string& jailId,
              const std::string& url)
-      : _loKit(loKit),
+      : _multiView(getenv("LOK_VIEW_CALLBACK")),
+        _loKit(loKit),
         _jailId(jailId),
         _url(url),
         _loKitDocument(nullptr),
         _clientViews(0),
         _mainViewId(-1)
     {
-        Log::info("Document ctor for url [" + _url + "] on child [" + _jailId + "].");
+        Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
+                  "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
     }
 
     ~Document()
@@ -518,7 +520,8 @@ public:
         // Destroy the document.
         if (_loKitDocument != nullptr)
         {
-            _loKitDocument->pClass->destroyView(_loKitDocument, _mainViewId);
+            if (_multiView)
+                _loKitDocument->pClass->destroyView(_loKitDocument, _mainViewId);
             _loKitDocument->pClass->destroy(_loKitDocument);
         }
     }
@@ -599,10 +602,13 @@ private:
         {
             _loKitDocument = loKitDocument;
 
-            // Create a view so we retain the document in memory
-            // when all clients are disconnected.
-            _mainViewId = _loKitDocument->pClass->createView(loKitDocument);
-            Log::info("Created main view [" + std::to_string(_mainViewId) + "].");
+            if (_multiView)
+            {
+                // Create a view so we retain the document in memory
+                // when all clients are disconnected.
+                _mainViewId = _loKitDocument->pClass->createView(loKitDocument);
+                Log::info("Created main view [" + std::to_string(_mainViewId) + "].");
+            }
         }
     }
 
@@ -616,6 +622,7 @@ private:
 
 private:
 
+    const bool _multiView;
     LibreOfficeKit *_loKit;
     const std::string _jailId;
     const std::string _url;
