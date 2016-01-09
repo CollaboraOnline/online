@@ -915,7 +915,7 @@ int main(int argc, char** argv)
     }
     catch (const Poco::NotFoundException& exc)
     {
-        Log::error(std::string("Exception: ") + exc.what());
+        Log::warn("Note: LD_BIND_NOW is not set.");
     }
 
     try
@@ -924,7 +924,7 @@ int main(int argc, char** argv)
     }
     catch (const Poco::NotFoundException& exc)
     {
-        Log::error(std::string("Exception: ") + exc.what());
+        Log::warn("Note: LOK_VIEW_CALLBACK is not set.");
     }
 
     lokit_main(loSubPath, jailId, pipe);

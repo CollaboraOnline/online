@@ -486,7 +486,8 @@ static bool globalPreinit(const std::string &loSubPath)
     preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
-        Log::warn("Failed to find lok_preinit hook in " + std::string(LIB_SOFFICEAPP) + " library.");
+        Log::warn("Note: No lok_preinit hook in " + std::string(LIB_SOFFICEAPP) +
+                  " library. Cannot fork, will execv instead.");
         return false;
     }
 
@@ -711,7 +712,7 @@ int main(int argc, char** argv)
     }
     catch (const Poco::NotFoundException& exc)
     {
-        Log::error(std::string("Exception: ") + exc.what());
+        Log::warn("Note: LD_BIND_NOW is not set.");
     }
 
     try
@@ -720,7 +721,7 @@ int main(int argc, char** argv)
     }
     catch (const Poco::NotFoundException& exc)
     {
-        Log::error(std::string("Exception: ") + exc.what());
+        Log::warn("Note: LOK_VIEW_CALLBACK is not set.");
     }
 
     // The loolkit binary must be in our directory.

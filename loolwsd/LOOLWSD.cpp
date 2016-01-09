@@ -823,7 +823,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Log::initialize("wsd");
 
     Poco::Environment::set("LD_BIND_NOW", "1");
-    Poco::Environment::set("LOK_VIEW_CALLBACK", "1");
+    //Poco::Environment::set("LOK_VIEW_CALLBACK", "1");
 
 #ifdef __linux
     char *locale = setlocale(LC_ALL, nullptr);
