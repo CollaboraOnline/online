@@ -51,8 +51,8 @@ public:
         std::unique_lock<std::mutex> lock(DocumentsMutex);
 
         // Find the document if already open.
-        auto it = UriToDocumentMap.find(publicFilePath);
-        if (it != UriToDocumentMap.end())
+        auto it = UriToDocumentMap.lower_bound(publicFilePath);
+        if (it != UriToDocumentMap.end() && it->first == publicFilePath)
         {
             Log::info("Document [" + it->first + "] found.");
             return it->second;
