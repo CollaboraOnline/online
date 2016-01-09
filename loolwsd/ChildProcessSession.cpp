@@ -45,7 +45,7 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          LibreOfficeKit *loKit,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& jailId,
-                                         std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> onLoad,
+                                         std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> onLoad,
                                          std::function<void(int)> onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
@@ -231,7 +231,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
 
     Poco::Mutex::ScopedLock lock(_mutex);
 
-    _loKitDocument = _onLoad(this, _jailedFilePath);
+    _loKitDocument = _onLoad(getId(), _jailedFilePath);
 
     if (_multiView)
         _viewId = _loKitDocument->pClass->getView(_loKitDocument);

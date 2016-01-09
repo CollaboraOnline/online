@@ -34,7 +34,7 @@ public:
                         LibreOfficeKit *loKit,
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& jailId,
-                        std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> onLoad,
+                        std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> onLoad,
                         std::function<void(int)> onUnload);
     virtual ~ChildProcessSession();
 
@@ -87,25 +87,8 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     int _clientPart;
-    std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> _onLoad;
+    std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> _onLoad;
     std::function<void(int)> _onUnload;
-};
-
-class CallBackNotification: public Poco::Notification
-{
-public:
-	typedef Poco::AutoPtr<CallBackNotification> Ptr;
-
-    CallBackNotification(const int nType, const std::string& rPayload, void* pSession)
-      : m_nType(nType),
-        m_aPayload(rPayload),
-        m_pSession(pSession)
-    {
-    }
-
-    const int m_nType;
-    const std::string m_aPayload;
-    void* m_pSession;
 };
 
 #endif

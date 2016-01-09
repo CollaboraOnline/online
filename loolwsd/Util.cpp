@@ -180,6 +180,15 @@ namespace Util
         return oss.str();
     }
 
+    unsigned decodeId(const std::string& str)
+    {
+        unsigned id = 0;
+        std::stringstream ss;
+        ss << std::hex << str;
+        ss >> id;
+        return id;
+    }
+
     std::string createRandomDir(const std::string& path)
     {
         Poco::File(path).createDirectories();

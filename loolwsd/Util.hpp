@@ -38,6 +38,8 @@ namespace Util
 
     /// Encode an integral ID into a string, with padding support.
     std::string encodeId(const unsigned number, const int padding = 5);
+    /// Decode an integral ID from a string.
+    unsigned decodeId(const std::string& str);
 
     /// Creates a randomly name directory within path and returns the name.
     std::string createRandomDir(const std::string& path);

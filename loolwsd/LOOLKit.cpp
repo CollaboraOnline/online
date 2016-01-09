@@ -61,6 +61,23 @@ using Poco::FastMutex;
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
 
+class CallBackNotification: public Poco::Notification
+{
+public:
+    typedef Poco::AutoPtr<CallBackNotification> Ptr;
+
+    CallBackNotification(const int nType, const std::string& rPayload, std::shared_ptr<ChildProcessSession>& pSession)
+      : m_nType(nType),
+        m_aPayload(rPayload),
+        m_pSession(pSession)
+    {
+    }
+
+    const int m_nType;
+    const std::string m_aPayload;
+    const std::shared_ptr<ChildProcessSession> m_pSession;
+};
+
 // This thread handles callbacks from the
 // lokit instance.
 class CallBackWorker: public Runnable
@@ -117,23 +134,22 @@ public:
         case LOK_CALLBACK_SET_PART:
             return std::string("LOK_CALLBACK_SET_PART");
         }
-        return std::string("");
+        return std::to_string(nType);
     }
 
-    void callback(const int nType, const std::string& rPayload, void* pData)
+    void callback(const int nType, const std::string& rPayload, std::shared_ptr<ChildProcessSession> pSession)
     {
-        ChildProcessSession *srv = reinterpret_cast<ChildProcessSession *>(pData);
-        Log::trace() << "Callback [" << srv->getViewId() << "] "
+        Log::trace() << "Callback [" << pSession->getViewId() << "] "
                      << callbackTypeToString(nType)
                      << " [" << rPayload << "]." << Log::end;
 
-        switch ((LibreOfficeKitCallbackType) nType)
+        switch (static_cast<LibreOfficeKitCallbackType>(nType))
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
             {
-                int curPart = srv->getLoKitDocument()->pClass->getPart(srv->getLoKitDocument());
-                srv->sendTextFrame("curpart: part=" + std::to_string(curPart));
-                if (srv->getDocType() == "text")
+                int curPart = pSession->getLoKitDocument()->pClass->getPart(pSession->getLoKitDocument());
+                pSession->sendTextFrame("curpart: part=" + std::to_string(curPart));
+                if (pSession->getDocType() == "text")
                 {
                     curPart = 0;
                 }
@@ -160,7 +176,7 @@ public:
                         height = INT_MAX;
                     }
 
-                    srv->sendTextFrame("invalidatetiles:"
+                    pSession->sendTextFrame("invalidatetiles:"
                                        " part=" + std::to_string(curPart) +
                                        " x=" + std::to_string(x) +
                                        " y=" + std::to_string(y) +
@@ -169,67 +185,67 @@ public:
                 }
                 else
                 {
-                    srv->sendTextFrame("invalidatetiles: " + rPayload);
+                    pSession->sendTextFrame("invalidatetiles: " + rPayload);
                 }
             }
             break;
         case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
-            srv->sendTextFrame("invalidatecursor: " + rPayload);
+            pSession->sendTextFrame("invalidatecursor: " + rPayload);
             break;
         case LOK_CALLBACK_TEXT_SELECTION:
-            srv->sendTextFrame("textselection: " + rPayload);
+            pSession->sendTextFrame("textselection: " + rPayload);
             break;
         case LOK_CALLBACK_TEXT_SELECTION_START:
-            srv->sendTextFrame("textselectionstart: " + rPayload);
+            pSession->sendTextFrame("textselectionstart: " + rPayload);
             break;
         case LOK_CALLBACK_TEXT_SELECTION_END:
-            srv->sendTextFrame("textselectionend: " + rPayload);
+            pSession->sendTextFrame("textselectionend: " + rPayload);
             break;
         case LOK_CALLBACK_CURSOR_VISIBLE:
-            srv->sendTextFrame("cursorvisible: " + rPayload);
+            pSession->sendTextFrame("cursorvisible: " + rPayload);
             break;
         case LOK_CALLBACK_GRAPHIC_SELECTION:
-            srv->sendTextFrame("graphicselection: " + rPayload);
+            pSession->sendTextFrame("graphicselection: " + rPayload);
             break;
         case LOK_CALLBACK_CELL_CURSOR:
-            srv->sendTextFrame("cellcursor: " + rPayload);
+            pSession->sendTextFrame("cellcursor: " + rPayload);
             break;
         case LOK_CALLBACK_CELL_FORMULA:
-            srv->sendTextFrame("cellformula: " + rPayload);
+            pSession->sendTextFrame("cellformula: " + rPayload);
             break;
         case LOK_CALLBACK_MOUSE_POINTER:
-            srv->sendTextFrame("mousepointer: " + rPayload);
+            pSession->sendTextFrame("mousepointer: " + rPayload);
             break;
         case LOK_CALLBACK_HYPERLINK_CLICKED:
-            srv->sendTextFrame("hyperlinkclicked: " + rPayload);
+            pSession->sendTextFrame("hyperlinkclicked: " + rPayload);
             break;
         case LOK_CALLBACK_STATE_CHANGED:
-            srv->sendTextFrame("statechanged: " + rPayload);
+            pSession->sendTextFrame("statechanged: " + rPayload);
             break;
         case LOK_CALLBACK_STATUS_INDICATOR_START:
-            srv->sendTextFrame("statusindicatorstart:");
+            pSession->sendTextFrame("statusindicatorstart:");
             break;
         case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-            srv->sendTextFrame("statusindicatorsetvalue: " + rPayload);
+            pSession->sendTextFrame("statusindicatorsetvalue: " + rPayload);
             break;
         case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-            srv->sendTextFrame("statusindicatorfinish:");
+            pSession->sendTextFrame("statusindicatorfinish:");
             break;
         case LOK_CALLBACK_SEARCH_NOT_FOUND:
-            srv->sendTextFrame("searchnotfound: " + rPayload);
+            pSession->sendTextFrame("searchnotfound: " + rPayload);
             break;
         case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
-            srv->sendTextFrame("searchresultselection: " + rPayload);
+            pSession->sendTextFrame("searchresultselection: " + rPayload);
             break;
         case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-            srv->getStatus("", 0);
-            srv->getPartPageRectangles("", 0);
+            pSession->getStatus("", 0);
+            pSession->getPartPageRectangles("", 0);
             break;
         case LOK_CALLBACK_SET_PART:
-            srv->sendTextFrame("setpart: " + rPayload);
+            pSession->sendTextFrame("setpart: " + rPayload);
             break;
         case LOK_CALLBACK_UNO_COMMAND_RESULT:
-            srv->sendTextFrame("unocommandresult: " + rPayload);
+            pSession->sendTextFrame("unocommandresult: " + rPayload);
             break;
         }
     }
@@ -254,7 +270,6 @@ public:
                     const auto nType = aCallBackNotification->m_nType;
                     try
                     {
-                        FastMutex::ScopedLock lock(_mutex);
                         callback(nType, aCallBackNotification->m_aPayload, aCallBackNotification->m_pSession);
                     }
                     catch (const Exception& exc)
@@ -293,18 +308,15 @@ public:
 
 private:
     NotificationQueue& _queue;
-    bool _stop;
-    static FastMutex   _mutex;
+    volatile bool _stop;
 };
-
-FastMutex CallBackWorker::_mutex;
 
 class Connection: public Runnable
 {
 public:
     Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument,
                const std::string& jailId, const std::string& sessionId,
-               std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> onLoad,
+               std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> onLoad,
                std::function<void(int)> onUnload) :
         _loKit(loKit),
         _loKitDocument(loKitDocument),
@@ -439,7 +451,7 @@ private:
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
     volatile bool _stop;
-    std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> _onLoad;
+    std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> _onLoad;
     std::function<void(int)> _onUnload;
     std::shared_ptr<WebSocket> _ws;
 };
@@ -515,11 +527,11 @@ public:
         }
     }
 
-    void createSession(const std::string& sessionId)
+    void createSession(const std::string& sessionId, const unsigned intSessionId)
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        const auto& it = _connections.find(sessionId);
+        const auto& it = _connections.find(intSessionId);
         if (it != _connections.end())
         {
             // found item, check if still running
@@ -531,7 +543,7 @@ public:
 
             // Restore thread.
             Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
-            _connections.erase(sessionId);
+            _connections.erase(intSessionId);
         }
 
         Log::info() << "Creating " << (_clientViews ? "new" : "first")
@@ -539,10 +551,10 @@ public:
                     << " on child: " << _jailId << Log::end;
 
         auto thread = std::make_shared<Connection>(_loKit, _loKitDocument, _jailId, sessionId,
-                                                   [this](ChildProcessSession* session, const std::string& jailedFilePath) { return onLoad(session, jailedFilePath); },
+                                                   [this](const std::string& id, const std::string& uri) { return onLoad(id, uri); },
                                                    [this](const int viewId) { onUnload(viewId); });
 
-        const auto aInserted = _connections.emplace(sessionId, thread);
+        const auto aInserted = _connections.emplace(intSessionId, thread);
 
         if ( aInserted.second )
             thread->start();
@@ -572,10 +584,12 @@ public:
 
 private:
 
-    static void ViewCallback(int nType, const char* pPayload, void* pData)
+    static void ViewCallback(int , const char* , void* )
     {
-        auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
-        _callbackQueue.enqueueNotification(pNotif);
+        //TODO: Delegate the callback.
+        //const unsigned intSessionId = reinterpret_cast<unsigned>(pData);
+        //auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
+        //_callbackQueue.enqueueNotification(pNotif);
     }
 
     static void DocumentCallback(int nType, const char* pPayload, void* pData)
@@ -587,35 +601,48 @@ private:
             {
                 if (it.second->isRunning())
                 {
-                    ViewCallback(nType, pPayload, it.second->getSession().get());
+                    auto session = it.second->getSession();
+                    if (session)
+                    {
+                        auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", session);
+                        _callbackQueue.enqueueNotification(pNotif);
+                    }
                 }
             }
         }
     }
 
     /// Load a document (or view) and register callbacks.
-    LibreOfficeKitDocument* onLoad(ChildProcessSession* session, const std::string& jailedFilePath)
+    LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri)
     {
+        const unsigned intSessionId = Util::decodeId(sessionId);
+        const auto it = _connections.find(intSessionId);
+        if (it == _connections.end() || !it->second)
+        {
+            Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
+            return nullptr;
+        }
+
         if (_loKitDocument == nullptr)
         {
-            Log::info("Loading new document from URI: [" + jailedFilePath + "].");
+            Log::info("Loading new document from URI: [" + uri + "] for session [" + sessionId + "].");
 
             if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
                 _loKit->pClass->registerCallback(_loKit, DocumentCallback, this);
 
-            if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, jailedFilePath.c_str())) == nullptr)
+            if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str())) == nullptr)
             {
-                Log::error("Failed to load: " + jailedFilePath + ", error: " + _loKit->pClass->getError(_loKit));
+                Log::error("Failed to load: " + uri + ", error: " + _loKit->pClass->getError(_loKit));
                 return nullptr;
             }
         }
 
         if (_multiView)
         {
-            Log::info("Loading view to document from URI: [" + jailedFilePath + "].");
+            Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
             const auto viewId = _loKitDocument->pClass->createView(_loKitDocument);
 
-            _loKitDocument->pClass->registerCallback(_loKitDocument, ViewCallback, session);
+            _loKitDocument->pClass->registerCallback(_loKitDocument, ViewCallback, reinterpret_cast<void*>(intSessionId));
 
             ++_clientViews;
             Log::info() << "Document [" << _url << "] view ["
@@ -655,7 +682,7 @@ private:
     LibreOfficeKitDocument *_loKitDocument;
 
     std::mutex _mutex;
-    std::map<std::string, std::shared_ptr<Connection>> _connections;
+    std::map<unsigned, std::shared_ptr<Connection>> _connections;
     std::atomic<unsigned> _clientViews;
 
     CallBackWorker _callbackWorker;
@@ -792,6 +819,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                     else if (tokens[0] == "thread")
                     {
                         const std::string& sessionId = tokens[1];
+                        const unsigned intSessionId = Util::decodeId(sessionId);
                         const std::string& url = tokens[2];
 
                         Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
@@ -799,7 +827,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         if (it == _documents.end())
                             it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit.get(), jailId, url));
 
-                        it->second->createSession(sessionId);
+                        it->second->createSession(sessionId, intSessionId);
                         aResponse += "ok \r\n";
                     }
                     else
