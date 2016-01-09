@@ -573,6 +573,24 @@ static int startupLibreOfficeKit(const bool sharePages, const int nLOKits,
     return pId;
 }
 
+
+static bool waitForTerminationChild(const Process::PID aPID)
+{
+    int status;
+    short nCntr = 3;
+
+    while (nCntr-- > 0)
+    {
+        waitpid(aPID, &status, WUNTRACED | WNOHANG);
+        if (WIFEXITED(status))
+            break;
+
+        sleep(MAINTENANCE_INTERVAL);
+    }
+
+    return nCntr;
+}
+
 // Broker process
 int main(int argc, char** argv)
 {
@@ -862,8 +880,13 @@ int main(int argc, char** argv)
     for (auto i : _childProcesses)
     {
         Log::info("Requesting child process " + std::to_string(i.first) + " to terminate.");
-        Process::requestTermination(i.first);
         close(i.second);
+        Process::requestTermination(i.first);
+        if (!waitForTerminationChild(i.first))
+        {
+            Log::info("Forcing a child process " + std::to_string(i.first) + " to terminate.");
+            Process::kill(i.first);
+        }
     }
 
     aPipe.join();
