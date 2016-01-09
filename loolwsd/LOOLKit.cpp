@@ -157,9 +157,9 @@ public:
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
             {
-                int curPart = srv->_loKitDocument->pClass->getPart(srv->_loKitDocument);
+                int curPart = srv->getLoKitDocument()->pClass->getPart(srv->getLoKitDocument());
                 srv->sendTextFrame("curpart: part=" + std::to_string(curPart));
-                if (srv->_docType == "text")
+                if (srv->getDocType() == "text")
                 {
                     curPart = 0;
                 }
@@ -345,11 +345,6 @@ public:
 
     const std::string& getSessionId() const { return _sessionId; }
     std::shared_ptr<WebSocket> getWebSocket() const { return _ws; }
-
-    LibreOfficeKitDocument * getLOKitDocument()
-    {
-        return (_session ? _session->_loKitDocument : nullptr);
-    }
 
     void start()
     {

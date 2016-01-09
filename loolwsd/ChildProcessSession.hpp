@@ -46,10 +46,11 @@ public:
 
     int getViewId() const  { return _viewId; }
 
-    LibreOfficeKitDocument *_loKitDocument;
-    std::string _docType;
+    const std::string& getDocType() const { return _docType; }
+
+    LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument; }
+
     static Poco::NotificationQueue _callbackQueue;
-    static Poco::Mutex _mutex;
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
@@ -79,6 +80,9 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
+    LibreOfficeKitDocument *_loKitDocument;
+    std::string _docType;
+    static Poco::Mutex _mutex;
     const bool _multiView;
     LibreOfficeKit *_loKit;
     const std::string _jailId;
