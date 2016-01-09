@@ -663,28 +663,6 @@ LOOLWSD::~LOOLWSD()
 {
 }
 
-void LOOLWSD::handleSignal(int aSignal)
-{
-    Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
-    TerminationFlag = true;
-}
-
-void LOOLWSD::setSignals(bool isIgnored)
-{
-#ifdef __linux
-    struct sigaction aSigAction;
-
-    sigemptyset(&aSigAction.sa_mask);
-    aSigAction.sa_flags = 0;
-    aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
-
-    sigaction(SIGTERM, &aSigAction, nullptr);
-    sigaction(SIGINT, &aSigAction, nullptr);
-    sigaction(SIGQUIT, &aSigAction, nullptr);
-    sigaction(SIGHUP, &aSigAction, nullptr);
-#endif
-}
-
 void LOOLWSD::initialize(Application& self)
 {
     ServerApplication::initialize(self);
@@ -829,9 +807,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     char *locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
         setlocale(LC_ALL, "en_US.utf8");
-
-    setSignals(false);
 #endif
+
+    Util::setSignals(false);
 
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {

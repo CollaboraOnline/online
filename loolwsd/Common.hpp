@@ -13,7 +13,6 @@
 
 #include <string>
 
-enum class LOOLState { LOOL_STARTING, LOOL_STOPPING, LOOL_ABNORMAL };
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 constexpr int MASTER_PORT_NUMBER = 9981;
 constexpr int INTERVAL_PROBES = 10;
@@ -24,9 +23,6 @@ constexpr int POLL_TIMEOUT = 1000000;
 constexpr int PIPE_BUFFER = 1024;
 
 static const std::string JailedDocumentRoot = "/user/docs/";
-
-// Flag to stop pump loops.
-static volatile bool TerminationFlag = false;
 
 #endif
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

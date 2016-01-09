@@ -60,33 +60,6 @@ using Poco::FastMutex;
 
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
-static LOOLState TerminationState;
-
-namespace
-{
-    void handleSignal(int aSignal)
-    {
-        Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
-        TerminationState = ( aSignal == SIGTERM ? LOOLState::LOOL_ABNORMAL : LOOLState::LOOL_STOPPING );
-        TerminationFlag = true;
-    }
-
-    void setSignals(bool isIgnored)
-    {
-#ifdef __linux
-        struct sigaction aSigAction;
-
-        sigemptyset(&aSigAction.sa_mask);
-        aSigAction.sa_flags = 0;
-        aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
-
-        sigaction(SIGTERM, &aSigAction, nullptr);
-        sigaction(SIGINT, &aSigAction, nullptr);
-        sigaction(SIGQUIT, &aSigAction, nullptr);
-        sigaction(SIGHUP, &aSigAction, nullptr);
-#endif
-    }
-}
 
 // This thread handles callbacks from the
 // lokit instance.
@@ -714,7 +687,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(process_name.c_str()), 0, 0, 0) != 0)
         Log::error("Cannot set process name to " + process_name + ".");
-    setSignals(false);
+    Util::setSignals(false);
 #endif
     Log::debug("Process [" + process_name + "] started.");
 

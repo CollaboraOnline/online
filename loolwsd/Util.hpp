@@ -22,6 +22,13 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
+// Possible states of LOOL processes.
+enum class LOOLState { LOOL_RUNNING, LOOL_STOPPING, LOOL_ABNORMAL };
+extern volatile LOOLState TerminationState;
+
+/// Flag to stop pump loops.
+extern volatile bool TerminationFlag;
+
 namespace Util
 {
     namespace rng
@@ -76,6 +83,9 @@ namespace Util
     {
         removeFile(path.toString(), recursive);
     }
+
+    /// Trap signals to cleanup and exit the process gracefully.
+    void setSignals(bool isIgnored);
 };
 
 //TODO: Move to own file.

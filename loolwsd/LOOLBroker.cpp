@@ -612,9 +612,7 @@ int main(int argc, char** argv)
     // Initialization
     Log::initialize("brk");
 
-#ifdef __linux
-    setSignals(false);
-#endif
+    Util::setSignals(false);
 
     std::string childRoot;
     std::string jailId;

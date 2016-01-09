@@ -35,6 +35,7 @@
 #include <Poco/Environment.h>
 #include <Poco/ConsoleChannel.h>
 
+#include <Common.hpp>
 #include "Util.hpp"
 #include "Png.hpp"
 
@@ -58,6 +59,9 @@ extern "C"
     {
     }
 }
+
+volatile LOOLState TerminationState = LOOLState::LOOL_RUNNING;
+volatile bool TerminationFlag = false;
 
 namespace Util
 {
@@ -388,6 +392,41 @@ namespace Util
 
     ErrorPoll:
         return nBytes;
+    }
+
+    static
+    void handleSignal(int aSignal)
+    {
+        Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
+        TerminationFlag = true;
+        TerminationState = ( aSignal == SIGTERM ? LOOLState::LOOL_ABNORMAL : LOOLState::LOOL_STOPPING );
+
+        if (aSignal == SIGSEGV || aSignal == SIGBUS)
+        {
+            Log::error() << "\nSegfault! Stalling for 10 seconds to attach debugger. Use:\n"
+                         << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
+                         << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
+                         << Poco::Process::id() << "\n" << Log::end;
+            sleep(10);
+        }
+    }
+
+    void setSignals(bool isIgnored)
+    {
+#ifdef __linux
+        struct sigaction aSigAction;
+
+        sigemptyset(&aSigAction.sa_mask);
+        aSigAction.sa_flags = 0;
+        aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
+
+        sigaction(SIGTERM, &aSigAction, nullptr);
+        sigaction(SIGINT, &aSigAction, nullptr);
+        sigaction(SIGQUIT, &aSigAction, nullptr);
+        sigaction(SIGHUP, &aSigAction, nullptr);
+        sigaction(SIGBUS, &aSigAction, nullptr);
+        sigaction(SIGSEGV, &aSigAction, nullptr);
+#endif
     }
 }
 
