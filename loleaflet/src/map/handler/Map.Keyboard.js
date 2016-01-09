@@ -153,7 +153,6 @@ L.Map.Keyboard = L.Handler.extend({
 		this._setPanOffset(map.options.keyboardPanOffset);
 		this._setZoomOffset(map.options.keyboardZoomOffset);
 		this.modifier = 0;
-		this.dopagejump = 0;
 	},
 
 	addHooks: function () {
@@ -234,21 +233,6 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		// page up or page down, handled by this.dopagejump
-		// to jump back to the anchor from footnote/endnote by PgUp
-		// or jump back to the main text from header/footer by PgUp or PgDown
-		if (!this.modifier && (e.originalEvent.keyCode === 33 || e.originalEvent.keyCode === 34)) {
-			if (this.dopagejump === 1) {
-				return;
-			}
-			if (e.type === 'keyup') {
-				this.dopagejump = 1;
-			}
-		}
-		else if (e.type === 'keyup') {
-			this.dopagejump = 0;
-		}
-
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
@@ -284,6 +268,10 @@ L.Map.Keyboard = L.Handler.extend({
 				// tab would change focus to other DOM elements
 				e.originalEvent.preventDefault();
 			}
+		}
+		else if (!this.modifier && (e.originalEvent.keyCode === 33 || e.originalEvent.keyCode === 34)) {
+			// let the scrollbar handle page up / page down when viewing
+			return;
 		}
 		else if (e.type === 'keydown') {
 			var key = e.originalEvent.keyCode;
