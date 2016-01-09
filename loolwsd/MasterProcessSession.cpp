@@ -7,13 +7,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <iostream>
-
 #include <Poco/FileStream.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Process.h>
-#include <Poco/Random.h>
 #include <Poco/URI.h>
 #include <Poco/URIStreamOpener.h>
 
@@ -26,22 +23,12 @@
 
 using namespace LOOLProtocol;
 
-using Poco::Dynamic::Var;
-using Poco::Exception;
-using Poco::File;
-using Poco::IOException;
-using Poco::JSON::Object;
-using Poco::JSON::Parser;
 using Poco::Net::SocketAddress;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Process;
-using Poco::ProcessHandle;
-using Poco::Random;
 using Poco::StringTokenizer;
-using Poco::Thread;
 using Poco::UInt64;
-using Poco::URI;
 
 std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
 
@@ -162,17 +149,21 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             }
             else if (tokens[0] == "commandvalues:")
             {
-                std::string stringMsg(buffer, length);
-                std::string stringJSON = stringMsg.substr(stringMsg.find_first_of("{"));
-                Parser parser;
-                Var result = parser.parse(stringJSON);
-                Object::Ptr object = result.extract<Object::Ptr>();
-                std::string commandName = object->get("commandName").toString();
-                if (commandName.find(".uno:CharFontName") != std::string::npos ||
-                    commandName.find(".uno:StyleApply") != std::string::npos)
+                const std::string stringMsg(buffer, length);
+                const auto index = stringMsg.find_first_of("{");
+                if (index != std::string::npos)
                 {
-                    // other commands should not be cached
-                    peer->_tileCache->saveTextFile(std::string(buffer, length), "cmdValues" + commandName + ".txt");
+                    const std::string stringJSON = stringMsg.substr(index);
+                    Poco::JSON::Parser parser;
+                    const auto result = parser.parse(stringJSON);
+                    const auto object = result.extract<Poco::JSON::Object::Ptr>();
+                    const std::string commandName = object->get("commandName").toString();
+                    if (commandName.find(".uno:CharFontName") != std::string::npos ||
+                        commandName.find(".uno:StyleApply") != std::string::npos)
+                    {
+                        // other commands should not be cached
+                        peer->_tileCache->saveTextFile(stringMsg, "cmdValues" + commandName + ".txt");
+                    }
                 }
             }
             else if (tokens[0] == "partpagerectangles:")
@@ -394,7 +385,7 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
 
     try
     {
-        URI aUri(_docURL);
+        Poco::URI aUri(_docURL);
 
         // request new URL session
         const std::string aMessage = "request " + getId() + " " + _docURL + "\r\n";
