@@ -46,7 +46,7 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          LibreOfficeKit *loKit,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& jailId,
-                                         std::function<void(LibreOfficeKitDocument*, int)> onLoad,
+                                         std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> onLoad,
                                          std::function<void(int)> onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
@@ -230,15 +230,6 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
     return true;
 }
 
-extern "C"
-{
-    static void myCallback(int nType, const char* pPayload, void* pData)
-    {
-        auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
-        ChildProcessSession::_callbackQueue.enqueueNotification(pNotif);
-    }
-}
-
 bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part = -1;
@@ -256,29 +247,10 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
 
     Poco::Mutex::ScopedLock lock(_mutex);
 
-    if (_loKitDocument != nullptr)
-    {
-        Log::info("Loading view to document from URI: [" + _jailedFilePath + "].");
-
-        _viewId = _loKitDocument->pClass->createView(_loKitDocument);
-    }
-    else
-    {
-        Log::info("Loading new document from URI: [" + _jailedFilePath + "].");
-
-        if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
-            _loKit->pClass->registerCallback(_loKit, myCallback, this);
-
-        if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, _jailedFilePath.c_str())) == nullptr)
-        {
-            Log::error("Failed to load: " + _jailedFilePath + ", error: " + _loKit->pClass->getError(_loKit));
-            sendTextFrame("error: cmd=load kind=failed");
-            return false;
-        }
-    }
+    _loKitDocument = _onLoad(this, _jailedFilePath);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _viewId = _loKitDocument->pClass->getView(_loKitDocument);
 
     std::string renderingOptions;
     if (!_docOptions.empty())
@@ -297,13 +269,10 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
         _loKitDocument->pClass->setPart(_loKitDocument, part);
     }
 
-    _loKitDocument->pClass->registerCallback(_loKitDocument, myCallback, this);
 
-    // Respond by the document status, whih has no arguments.
+    // Respond by the document status, which has no arguments.
     if (!getStatus(nullptr, 0))
         return false;
-
-    _onLoad(_loKitDocument, _viewId);
 
     return true;
 }

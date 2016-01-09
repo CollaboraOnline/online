@@ -324,7 +324,7 @@ class Connection: public Runnable
 public:
     Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument,
                const std::string& jailId, const std::string& sessionId,
-               std::function<void(LibreOfficeKitDocument*, int)> onLoad,
+               std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> onLoad,
                std::function<void(int)> onUnload) :
         _loKit(loKit),
         _loKitDocument(loKitDocument),
@@ -345,6 +345,8 @@ public:
 
     const std::string& getSessionId() const { return _sessionId; }
     std::shared_ptr<WebSocket> getWebSocket() const { return _ws; }
+
+    std::shared_ptr<ChildProcessSession> getSession() { return _session; }
 
     void start()
     {
@@ -455,7 +457,7 @@ private:
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
     volatile bool _stop;
-    std::function<void(LibreOfficeKitDocument*, int)> _onLoad;
+    std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> _onLoad;
     std::function<void(int)> _onUnload;
     std::shared_ptr<WebSocket> _ws;
 };
@@ -545,7 +547,7 @@ public:
                     << " on child: " << _jailId << Log::end;
 
         auto thread = std::make_shared<Connection>(_loKit, _loKitDocument, _jailId, sessionId,
-                                                   [this](LibreOfficeKitDocument *loKitDocument, const int viewId) { onLoad(loKitDocument, viewId); },
+                                                   [this](ChildProcessSession* session, const std::string& jailedFilePath) { return onLoad(session, jailedFilePath); },
                                                    [this](const int viewId) { onUnload(viewId); });
 
         const auto aInserted = _connections.emplace(sessionId, thread);
@@ -578,33 +580,63 @@ public:
 
 private:
 
-    void onLoad(LibreOfficeKitDocument *loKitDocument, const int viewId)
+    static void DocumentCallback(int nType, const char* pPayload, void* pData)
     {
-        ++_clientViews;
-        Log::info() << "Document [" << _url << "] view ["
-                    << viewId << "] loaded, leaving "
-                    << _clientViews << " views." << Log::end;
-
-        assert(loKitDocument != nullptr);
-
-        // Check that the document instance doesn't change.
-        if (_loKitDocument != nullptr)
-            assert(_loKitDocument == loKitDocument);
-
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        if (_loKitDocument == nullptr)
+        Document* self = reinterpret_cast<Document*>(pData);
+        if (self)
         {
-            _loKitDocument = loKitDocument;
-
-            if (_multiView)
+            for (auto& it: self->_connections)
             {
-                // Create a view so we retain the document in memory
-                // when all clients are disconnected.
-                _mainViewId = _loKitDocument->pClass->createView(loKitDocument);
-                Log::info("Created main view [" + std::to_string(_mainViewId) + "].");
+                if (it.second->isRunning())
+                {
+                    auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", it.second->getSession().get());
+                    ChildProcessSession::_callbackQueue.enqueueNotification(pNotif);
+                }
             }
         }
+    }
+
+    static void ViewCallback(int nType, const char* pPayload, void* pData)
+    {
+        auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
+        ChildProcessSession::_callbackQueue.enqueueNotification(pNotif);
+    }
+
+    /// Load a document (or view) and register callbacks.
+    LibreOfficeKitDocument* onLoad(ChildProcessSession* session, const std::string& jailedFilePath)
+    {
+        if (_loKitDocument == nullptr)
+        {
+            Log::info("Loading new document from URI: [" + jailedFilePath + "].");
+
+            if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
+                _loKit->pClass->registerCallback(_loKit, DocumentCallback, this);
+
+            if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, jailedFilePath.c_str())) == nullptr)
+            {
+                Log::error("Failed to load: " + jailedFilePath + ", error: " + _loKit->pClass->getError(_loKit));
+                return nullptr;
+            }
+        }
+
+        if (_multiView)
+        {
+            Log::info("Loading view to document from URI: [" + jailedFilePath + "].");
+            const auto viewId = _loKitDocument->pClass->createView(_loKitDocument);
+
+            _loKitDocument->pClass->registerCallback(_loKitDocument, ViewCallback, session);
+
+            ++_clientViews;
+            Log::info() << "Document [" << _url << "] view ["
+                        << viewId << "] loaded, leaving "
+                        << _clientViews << " views." << Log::end;
+        }
+        else
+        {
+            _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
+        }
+
+        return _loKitDocument;
     }
 
     void onUnload(const int viewId)

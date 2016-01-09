@@ -34,7 +34,7 @@ public:
                         LibreOfficeKit *loKit,
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& jailId,
-                        std::function<void(LibreOfficeKitDocument*, int)> onLoad,
+                        std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> onLoad,
                         std::function<void(int)> onUnload);
     virtual ~ChildProcessSession();
 
@@ -89,7 +89,7 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     int _clientPart;
-    std::function<void(LibreOfficeKitDocument*, int)> _onLoad;
+    std::function<LibreOfficeKitDocument*(ChildProcessSession*, const std::string&)> _onLoad;
     std::function<void(int)> _onUnload;
 };
 
