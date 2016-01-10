@@ -308,7 +308,8 @@ public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
-        const std::string thread_name = "client_socket";
+        const auto id = LOOLWSD::GenSessionId();
+        const std::string thread_name = "client_ws_" + id;
 
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
@@ -333,7 +334,6 @@ public:
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
                     const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
-                    const auto id = LOOLWSD::GenSessionId();
                     auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
                     const std::string filePrefix("file://");
                     const std::string load = "load url=" + filePrefix + fromPath;
@@ -430,8 +430,6 @@ public:
         try
         {
             auto ws = std::make_shared<WebSocket>(request, response);
-
-            const std::string id = LOOLWSD::GenSessionId();
             auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws);
 
             // For ToClient sessions, we store incoming messages in a queue and have a separate
@@ -493,21 +491,23 @@ public:
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         assert(request.serverAddress().port() == MASTER_PORT_NUMBER);
-        assert(request.getURI() == LOOLWSD::CHILD_URI);
+        assert(request.getURI().find(LOOLWSD::CHILD_URI) == 0);
 
-        const std::string thread_name = "prison_socket";
-
-#ifdef __linux
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to " + thread_name + ".");
-#endif
-        Log::debug("Thread [" + thread_name + "] started.");
-
+        std::string thread_name = "prison_ws_";
         try
         {
-            auto ws = std::make_shared<WebSocket>(request, response);
+            const auto index = request.getURI().find_last_of('/');
+            const auto id = request.getURI().substr(index + 1);
 
-            const std::string id;
+            thread_name += id;
+
+#ifdef __linux
+            if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+                Log::error("Cannot set thread name to " + thread_name + ".");
+#endif
+            Log::debug("Thread [" + thread_name + "] started.");
+
+            auto ws = std::make_shared<WebSocket>(request, response);
             auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToPrisoner, ws);
 
             SocketProcessor(ws, response, [&session](const char* data, const int size, bool)

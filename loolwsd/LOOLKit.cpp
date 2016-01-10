@@ -362,7 +362,7 @@ public:
 
     void run() override
     {
-        static const std::string thread_name = "kit_socket_" + _sessionId;
+        static const std::string thread_name = "kit_ws_" + _sessionId;
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
@@ -376,7 +376,7 @@ public:
 
             HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
             cs.setTimeout(0);
-            HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI);
+            HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI + _sessionId);
             HTTPResponse response;
             _ws = std::make_shared<WebSocket>(cs, request, response);
 
