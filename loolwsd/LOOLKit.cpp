@@ -317,7 +317,7 @@ public:
     Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument,
                const std::string& jailId, const std::string& sessionId,
                std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> onLoad,
-               std::function<void(int)> onUnload) :
+               std::function<void(const std::string&)> onUnload) :
         _loKit(loKit),
         _loKitDocument(loKitDocument),
         _jailId(jailId),
@@ -452,7 +452,7 @@ private:
     std::shared_ptr<ChildProcessSession> _session;
     volatile bool _stop;
     std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> _onLoad;
-    std::function<void(int)> _onUnload;
+    std::function<void(const std::string&)> _onUnload;
     std::shared_ptr<WebSocket> _ws;
 };
 
@@ -552,7 +552,7 @@ public:
 
         auto thread = std::make_shared<Connection>(_loKit, _loKitDocument, _jailId, sessionId,
                                                    [this](const std::string& id, const std::string& uri) { return onLoad(id, uri); },
-                                                   [this](const int viewId) { onUnload(viewId); });
+                                                   [this](const std::string& id) { onUnload(id); });
 
         const auto aInserted = _connections.emplace(intSessionId, thread);
 
@@ -657,16 +657,30 @@ private:
         return _loKitDocument;
     }
 
-    void onUnload(const int viewId)
+    void onUnload(const std::string& sessionId)
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews - 1) + " views left.");
+
+        const unsigned intSessionId = Util::decodeId(sessionId);
+        const auto it = _connections.find(intSessionId);
+        if (it == _connections.end() || !it->second)
+        {
+            Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
+            return;
+        }
+
+        --_clientViews;
+
         if (_multiView && _loKitDocument)
         {
             --_clientViews;
             Log::info() << "Document [" << _url << "] view ["
-                        << viewId << "] unloaded, leaving "
+                        << sessionId << "] unloaded, leaving "
                         << _clientViews << " views." << Log::end;
 
-            _loKitDocument->pClass->setView(_loKitDocument, viewId);
+            const auto viewId = _loKitDocument->pClass->getView(_loKitDocument);
             _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, nullptr);
             _loKitDocument->pClass->destroyView(_loKitDocument, viewId);
         }

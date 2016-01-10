@@ -35,7 +35,7 @@ public:
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& jailId,
                         std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> onLoad,
-                        std::function<void(int)> onUnload);
+                        std::function<void(const std::string&)> onUnload);
     virtual ~ChildProcessSession();
 
     virtual bool getStatus(const char *buffer, int length) override;
@@ -88,7 +88,7 @@ private:
     int _viewId;
     int _clientPart;
     std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> _onLoad;
-    std::function<void(int)> _onUnload;
+    std::function<void(const std::string&)> _onUnload;
 };
 
 #endif
