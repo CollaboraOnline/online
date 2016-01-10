@@ -485,6 +485,8 @@ public:
 
     ~Document()
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         Log::info("~Document dtor for url [" + _url + "] on child [" + _jailId +
                   "]. There are " + std::to_string(_clientViews) + " views.");
 
@@ -597,6 +599,8 @@ private:
         Document* self = reinterpret_cast<Document*>(pData);
         if (self)
         {
+            std::unique_lock<std::mutex> lock(self->_mutex);
+
             for (auto& it: self->_connections)
             {
                 if (it.second->isRunning())
@@ -615,6 +619,10 @@ private:
     /// Load a document (or view) and register callbacks.
     LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri)
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views loaded.");
+
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
@@ -644,16 +652,16 @@ private:
 
             _loKitDocument->pClass->registerCallback(_loKitDocument, ViewCallback, reinterpret_cast<void*>(intSessionId));
 
-            ++_clientViews;
             Log::info() << "Document [" << _url << "] view ["
                         << viewId << "] loaded, leaving "
-                        << _clientViews << " views." << Log::end;
+                        << (_clientViews + 1) << " views." << Log::end;
         }
         else
         {
             _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
         }
 
+        ++_clientViews;
         return _loKitDocument;
     }
 
@@ -675,8 +683,7 @@ private:
 
         if (_multiView && _loKitDocument)
         {
-            --_clientViews;
-            Log::info() << "Document [" << _url << "] view ["
+            Log::info() << "Document [" << _url << "] session ["
                         << sessionId << "] unloaded, leaving "
                         << _clientViews << " views." << Log::end;
 
