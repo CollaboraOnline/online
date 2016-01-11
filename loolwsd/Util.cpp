@@ -433,8 +433,12 @@ namespace Util
         sigaction(SIGINT, &aSigAction, nullptr);
         sigaction(SIGQUIT, &aSigAction, nullptr);
         sigaction(SIGHUP, &aSigAction, nullptr);
-        sigaction(SIGBUS, &aSigAction, nullptr);
-        sigaction(SIGSEGV, &aSigAction, nullptr);
+
+        if (getenv("LOOL_DEBUG"))
+        {
+            sigaction(SIGBUS, &aSigAction, nullptr);
+            sigaction(SIGSEGV, &aSigAction, nullptr);
+        }
 #endif
     }
 }

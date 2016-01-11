@@ -141,6 +141,8 @@ sudo ln -s ~/libreoffice/master/lool-child-roots/1046829984599121011/lo /lo
 
 Use the ps command to find out exactly the path to use.
 
+Set LOOL_DEBUG=1 to trap SIGSEGV and SEGBUS and prompt for debugger.
+
 Protocol description
 --------------------
 
