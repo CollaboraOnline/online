@@ -576,6 +576,12 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
         return false;
     }
 
+    // Don't close LO window!
+    constexpr auto KEY_CTRL = 0x2000;
+    constexpr auto KEY_W    = 0x0216;
+    if (keycode == (KEY_CTRL | KEY_W))
+        return true;
+
     Poco::Mutex::ScopedLock lock(_mutex);
 
     if (_multiView)
