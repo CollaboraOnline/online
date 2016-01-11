@@ -139,6 +139,8 @@ public:
 
     void callback(const int nType, const std::string& rPayload, std::shared_ptr<ChildProcessSession> pSession)
     {
+        auto lock = pSession->lock();
+
         Log::trace() << "Callback [" << pSession->getViewId() << "] "
                      << callbackTypeToString(nType)
                      << " [" << rPayload << "]." << Log::end;
@@ -623,19 +625,17 @@ private:
     /// Load a document (or view) and register callbacks.
     LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri)
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
 
         const unsigned intSessionId = Util::decodeId(sessionId);
-
-        std::unique_lock<std::mutex> lock(_mutex);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
         {
             Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
             return nullptr;
         }
-
-        lock.unlock();
 
         if (_loKitDocument == nullptr)
         {
@@ -644,11 +644,16 @@ private:
             if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
                 _loKit->pClass->registerCallback(_loKit, DocumentCallback, this);
 
+            // documentLoad will trigger callback, which needs to take the lock.
+            lock.unlock();
             if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str())) == nullptr)
             {
                 Log::error("Failed to load: " + uri + ", error: " + _loKit->pClass->getError(_loKit));
                 return nullptr;
             }
+
+            // Retake the lock.
+            lock.lock();
         }
 
         if (_multiView)
@@ -673,19 +678,17 @@ private:
 
     void onUnload(const std::string& sessionId)
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews - 1) + " views left.");
 
         const unsigned intSessionId = Util::decodeId(sessionId);
-
-        std::unique_lock<std::mutex> lock(_mutex);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
         {
             Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
             return;
         }
-
-        lock.unlock();
 
         --_clientViews;
 

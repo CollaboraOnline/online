@@ -10,6 +10,8 @@
 #ifndef INCLUDED_LOOLCHILDPROCESSSESSION_HPP
 #define INCLUDED_LOOLCHILDPROCESSSESSION_HPP
 
+#include <mutex>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 
@@ -50,6 +52,8 @@ public:
 
     LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument; }
 
+    std::unique_lock<std::mutex> lock() { return std::unique_lock<std::mutex>(_mutex); }
+
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
@@ -72,6 +76,7 @@ public:
     bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool setPage(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool getStatus_Impl(const char* buffer, int length);
 
 private:
 
@@ -80,7 +85,6 @@ private:
 private:
     LibreOfficeKitDocument *_loKitDocument;
     std::string _docType;
-    static Poco::Mutex _mutex;
     const bool _multiView;
     LibreOfficeKit *_loKit;
     const std::string _jailId;
@@ -89,6 +93,8 @@ private:
     int _clientPart;
     std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> _onLoad;
     std::function<void(const std::string&)> _onUnload;
+
+    static std::mutex _mutex;
 };
 
 #endif

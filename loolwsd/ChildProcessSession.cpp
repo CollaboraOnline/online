@@ -38,7 +38,7 @@ using Poco::ProcessHandle;
 using Poco::StringTokenizer;
 using Poco::URI;
 
-Poco::Mutex ChildProcessSession::_mutex;
+std::mutex ChildProcessSession::_mutex;
 
 ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::shared_ptr<Poco::Net::WebSocket> ws,
@@ -64,7 +64,7 @@ ChildProcessSession::~ChildProcessSession()
 {
     Log::info("~ChildProcessSession dtor [" + getName() + "].");
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -146,7 +146,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                tokens[0] == "saveas");
 
         {
-            Poco::Mutex::ScopedLock lock(_mutex);
+            std::unique_lock<std::mutex> lock(_mutex);
 
             if (_multiView)
                 _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -232,9 +232,9 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     assert(!_docURL.empty());
     assert(!_jailedFilePath.empty());
 
-    Poco::Mutex::ScopedLock lock(_mutex);
-
     _loKitDocument = _onLoad(getId(), _jailedFilePath);
+
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _viewId = _loKitDocument->pClass->getView(_loKitDocument);
@@ -257,7 +257,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     }
 
     // Respond by the document status, which has no arguments.
-    if (!getStatus(nullptr, 0))
+    if (!getStatus_Impl(nullptr, 0))
         return false;
 
     Log::info("Loaded session " + getId());
@@ -275,7 +275,7 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
         return;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -306,18 +306,24 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
     sendBinaryFrame(output.data(), output.size());
 }
 
-bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
+bool ChildProcessSession::getStatus(const char* buffer, int length)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
+    return getStatus_Impl(buffer, length);
+}
+
+bool ChildProcessSession::getStatus_Impl(const char* /*buffer*/, int /*length*/)
+{
     std::string status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
     StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     if (!getTokenString(tokens[1], "type", _docType))
     {
         Log::error("failed to get document type from status [" + status + "].");
+        return false;
     }
 
     sendTextFrame(status);
@@ -334,7 +340,7 @@ bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -345,7 +351,7 @@ bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*
 
 bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
 {
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -383,7 +389,7 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
         return;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -432,7 +438,7 @@ bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -466,7 +472,7 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
     const auto tmpDir = Util::createRandomDir(JailedDocumentRoot);
     const auto url = JailedDocumentRoot + tmpDir + "/" + name;
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     //TODO: Cleanup the file after downloading.
     _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
@@ -495,7 +501,7 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -519,7 +525,7 @@ bool ChildProcessSession::paste(const char* /*buffer*/, int /*length*/, StringTo
 
     data = Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).substr(strlen("data="));
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -541,7 +547,7 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (type == "graphic")
     {
@@ -582,7 +588,7 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
     if (keycode == (KEY_CTRL | KEY_W))
         return true;
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -612,7 +618,7 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -630,7 +636,7 @@ bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -667,7 +673,7 @@ bool ChildProcessSession::selectText(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -693,7 +699,7 @@ bool ChildProcessSession::selectGraphic(const char* /*buffer*/, int /*length*/, 
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -711,7 +717,7 @@ bool ChildProcessSession::resetSelection(const char* /*buffer*/, int /*length*/,
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -742,7 +748,7 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
         }
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -780,7 +786,7 @@ bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, String
         return false;
     }
 
-    Poco::Mutex::ScopedLock lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
