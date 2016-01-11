@@ -86,7 +86,6 @@ private:
     LibreOfficeKitDocument *_loKitDocument;
     std::string _docType;
     const bool _multiView;
-    LibreOfficeKit *_loKit;
     const std::string _jailId;
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
