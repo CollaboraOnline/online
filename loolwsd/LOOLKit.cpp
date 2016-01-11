@@ -568,6 +568,8 @@ public:
 
     void purgeSessions()
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         for (auto it =_connections.cbegin(); it != _connections.cend(); )
         {
             if (!it->second->isRunning())
@@ -581,7 +583,9 @@ public:
 
     bool hasConnections()
     {
-        return _connections.size() > 0;
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        return !_connections.empty();
     }
 
 private:
@@ -619,17 +623,19 @@ private:
     /// Load a document (or view) and register callbacks.
     LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views loaded.");
+        Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
 
         const unsigned intSessionId = Util::decodeId(sessionId);
+
+        std::unique_lock<std::mutex> lock(_mutex);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
         {
             Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
             return nullptr;
         }
+
+        lock.unlock();
 
         if (_loKitDocument == nullptr)
         {
@@ -667,17 +673,19 @@ private:
 
     void onUnload(const std::string& sessionId)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
         Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews - 1) + " views left.");
 
         const unsigned intSessionId = Util::decodeId(sessionId);
+
+        std::unique_lock<std::mutex> lock(_mutex);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
         {
             Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
             return;
         }
+
+        lock.unlock();
 
         --_clientViews;
 

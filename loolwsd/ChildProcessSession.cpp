@@ -256,11 +256,11 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
         _loKitDocument->pClass->setPart(_loKitDocument, part);
     }
 
-
     // Respond by the document status, which has no arguments.
     if (!getStatus(nullptr, 0))
         return false;
 
+    Log::info("Loaded session " + getId());
     return true;
 }
 
