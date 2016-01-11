@@ -120,8 +120,8 @@ void HTTPWSTest::testRenderingOptions()
     std::string prefix = "height=";
     CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
     int height = std::stoi(token.substr(prefix.size()));
-    // HideWhitespace was ignored, this was 32532.
-    CPPUNIT_ASSERT(height < 10000);
+    // HideWhitespace was ignored, this was 32532, should be around 16706.
+    CPPUNIT_ASSERT(height < 20000);
 }
 
 void HTTPWSTest::sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
