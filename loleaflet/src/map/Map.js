@@ -601,7 +601,7 @@ L.Map = L.Evented.extend({
 			'mouseover mouseout mousemove contextmenu keydown keypress keyup trplclick qdrplclick', this._handleDOMEvent, this);
 		L.DomEvent[onOff](this._textArea, 'copy paste keydown keypress keyup', this._handleDOMEvent, this);
 
-		if (this.options.trackResize) {
+		if (this.options.trackResize && this._resizeDetector.contentWindow) {
 			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);
 		}
 	},
