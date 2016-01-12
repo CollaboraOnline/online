@@ -293,7 +293,7 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
 
     if (pixmap != nullptr)
     {
-        if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output, LOK_TILEMODE_RGBA))
+        if (!Util::encodeBufferToPNG(pixmap, width, height, output, LOK_TILEMODE_RGBA))
         {
             sendTextFrame("error: cmd=renderfont kind=failure");
             delete[] pixmap;
@@ -414,7 +414,7 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
                  << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
     LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
-    if (!Util::encodePNGAndAppendToBuffer(pixmap.data(), width, height, output, mode))
+    if (!Util::encodeBufferToPNG(pixmap.data(), width, height, output, mode))
     {
         sendTextFrame("error: cmd=tile kind=failure");
         return;

@@ -50,7 +50,11 @@ namespace Util
 
     // Sadly, older libpng headers don't use const for the pixmap pointer parameter to
     // png_write_row(), so can't use const here for pixmap.
-    bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode);
+    bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
+                           std::vector<char>& output, LibreOfficeKitTileMode mode);
+    bool encodeSubBufferToPNG(unsigned char* pixmap, int startX, int startY, int width, int height,
+                              int bufferWidth, int bufferHeight,
+                              std::vector<char>& output, LibreOfficeKitTileMode mode);
 
     // Call WebSocket::shutdown() ignoring Poco::IOException
     void shutdownWebSocket(Poco::Net::WebSocket& ws);
