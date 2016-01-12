@@ -316,30 +316,22 @@ private:
 class Connection: public Runnable
 {
 public:
-    Connection(LibreOfficeKit *loKit, LibreOfficeKitDocument *loKitDocument,
-               const std::string& jailId, const std::string& sessionId,
-               std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> onLoad,
-               std::function<void(const std::string&)> onUnload) :
-        _loKit(loKit),
-        _loKitDocument(loKitDocument),
-        _jailId(jailId),
-        _sessionId(sessionId),
-        _stop(false),
-        _onLoad(onLoad),
-        _onUnload(onUnload)
+    Connection(std::shared_ptr<ChildProcessSession> session,
+               std::shared_ptr<WebSocket> ws) :
+        _session(session),
+        _ws(ws),
+        _stop(false)
     {
-        Log::info("Connection ctor in child: " + _jailId + ", thread: " + _sessionId);
+        Log::info("Connection ctor in child for " + _session->getId());
     }
 
     ~Connection()
     {
-        Log::info("~Connection dtor in child: " + _jailId + ", thread: " + _sessionId);
+        Log::info("~Connection dtor in child for " + _session->getId());
         stop();
     }
 
-    const std::string& getSessionId() const { return _sessionId; }
     std::shared_ptr<WebSocket> getWebSocket() const { return _ws; }
-
     std::shared_ptr<ChildProcessSession> getSession() { return _session; }
 
     void start()
@@ -364,7 +356,7 @@ public:
 
     void run() override
     {
-        static const std::string thread_name = "kit_ws_" + _sessionId;
+        static const std::string thread_name = "kit_ws_" + _session->getId();
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
@@ -373,23 +365,6 @@ public:
 
         try
         {
-            // Open websocket connection between the child process and the
-            // parent. The parent forwards us requests that it can't handle.
-
-            HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
-            cs.setTimeout(0);
-            HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI + _sessionId);
-            HTTPResponse response;
-            _ws = std::make_shared<WebSocket>(cs, request, response);
-
-            _session.reset(new ChildProcessSession(_sessionId, _ws, _loKit, _loKitDocument, _jailId, _onLoad, _onUnload));
-            _ws->setReceiveTimeout(0);
-
-            // child Jail TID PID
-            std::string hello("child " + _jailId + " " +
-                              _sessionId + " " + std::to_string(Process::id()));
-            _session->sendTextFrame(hello);
-
             TileQueue queue;
             QueueHandler handler(queue, _session, "kit_queue_" + _session->getId());
 
@@ -405,9 +380,12 @@ public:
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
-                    std::string firstLine = getFirstLine(buffer, n);
+                    const std::string firstLine = getFirstLine(buffer, n);
                     if (firstLine == "eof")
+                    {
+                        Log::info("Recieved EOF. Finishing.");
                         break;
+                    }
 
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -446,16 +424,10 @@ public:
     }
 
 private:
-    LibreOfficeKit *_loKit;
-    LibreOfficeKitDocument *_loKitDocument;
-    const std::string _jailId;
-    const std::string _sessionId;
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
-    volatile bool _stop;
-    std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> _onLoad;
-    std::function<void(const std::string&)> _onUnload;
     std::shared_ptr<WebSocket> _ws;
+    volatile bool _stop;
 };
 
 // A document container.
@@ -554,10 +526,26 @@ public:
                     << " view for url: " << _url << "for thread: " << sessionId
                     << " on child: " << _jailId << Log::end;
 
-        auto thread = std::make_shared<Connection>(_loKit, _loKitDocument, _jailId, sessionId,
-                                                   [this](const std::string& id, const std::string& uri) { return onLoad(id, uri); },
-                                                   [this](const std::string& id) { onUnload(id); });
+        // Open websocket connection between the child process and the
+        // parent. The parent forwards us requests that it can't handle.
 
+        HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+        cs.setTimeout(0);
+        HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI + sessionId);
+        HTTPResponse response;
+
+        auto ws = std::make_shared<WebSocket>(cs, request, response);
+        ws->setReceiveTimeout(0);
+
+        auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKit, _loKitDocument, _jailId,
+                            [this](const std::string& id, const std::string& uri) { return onLoad(id, uri); },
+                            [this](const std::string& id) { onUnload(id); });
+        // child Jail TID PID
+        std::string hello("child " + _jailId + " " +
+                          sessionId + " " + std::to_string(Process::id()));
+        session->sendTextFrame(hello);
+
+        auto thread = std::make_shared<Connection>(session, ws);
         const auto aInserted = _connections.emplace(intSessionId, thread);
 
         if ( aInserted.second )

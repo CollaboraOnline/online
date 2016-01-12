@@ -277,7 +277,8 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         while (!TerminationFlag &&
                (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
         Log::debug() << "Finishing SocketProcessor. TerminationFlag: " << TerminationFlag
-                     << ", pollTimeout: " << pollTimeout << ", payload size: " << n << Log::end;
+                     << ", pollTimeout: " << pollTimeout << ", payload size: " << n
+                     << ", flags: " << std::hex << flags << Log::end;
     }
     catch (const WebSocketException& exc)
     {
