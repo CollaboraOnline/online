@@ -177,7 +177,8 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             }
             else if (tokens[0] == "partpagerectangles:")
             {
-                peer->_tileCache->saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
+                if (tokens.count() > 1 && !tokens[1].empty())
+                    peer->_tileCache->saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
             }
             else if (tokens[0] == "invalidatecursor:")
             {
