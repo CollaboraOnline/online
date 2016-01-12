@@ -8318,6 +8318,21 @@ var unoCommands = [
 },
 
 {
+    uno: '.uno:InsertTable',
+    parameter: {
+	'Columns': {
+		'type': 'long',
+		'value': 6
+	},
+	'Rows': {
+		'type': "long",
+		'value': 10
+	}
+    },
+    description: 'Insert table with the given dimensions.'
+},
+
+{
     uno: '.uno:Italic',
     parameter: null,
     description: 'Italic.'
