@@ -71,6 +71,8 @@ protected:
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
+    virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
+
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
     // Fields common to sessions in master and jailed processes:
@@ -143,6 +145,8 @@ public:
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
+    virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
+
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     void dispatchChild();
@@ -196,6 +200,8 @@ public:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
+    virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 

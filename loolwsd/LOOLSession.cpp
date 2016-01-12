@@ -57,6 +57,7 @@
 #include "LOOLWSD.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
+#include "Rectangle.hpp"
 
 using namespace LOOLProtocol;
 
@@ -392,6 +393,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
              tokens[0] != "setpage" &&
              tokens[0] != "status" &&
              tokens[0] != "tile" &&
+             tokens[0] != "tilecombine" &&
              tokens[0] != "uno")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
@@ -430,6 +432,10 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] == "tile")
     {
         sendTile(buffer, length, tokens);
+    }
+    else if (tokens[0] == "tilecombine")
+    {
+        sendCombinedTiles(buffer, length, tokens);
     }
     else
     {
@@ -664,6 +670,14 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
     forwardToPeer(buffer, length);
 }
 
+void MasterProcessSession::sendCombinedTiles(const char *buffer, int length, StringTokenizer& /*tokens*/)
+{
+    // This is for invalidation - we should not have cached tiles
+    if (_peer.expired())
+        dispatchChild();
+    forwardToPeer(buffer, length);
+}
+
 void MasterProcessSession::dispatchChild()
 {
     // Copy document into jail using the fixed name
@@ -835,6 +849,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
     else if (tokens[0] == "tile")
     {
         sendTile(buffer, length, tokens);
+    }
+    else if (tokens[0] == "tilecombine")
+    {
+        sendCombinedTiles(buffer, length, tokens);
     }
     else
     {
@@ -1228,6 +1246,133 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     delete[] pixmap;
 
     sendBinaryFrame(output.data(), output.size());
+}
+
+void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+{
+    int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
+    std::string tilePositionsX, tilePositionsY;
+
+    if (tokens.count() < 8 ||
+        !getTokenInteger(tokens[1], "part", part) ||
+        !getTokenInteger(tokens[2], "width", pixelWidth) ||
+        !getTokenInteger(tokens[3], "height", pixelHeight) ||
+        !getTokenString (tokens[4], "tileposx", tilePositionsX) ||
+        !getTokenString (tokens[5], "tileposy", tilePositionsY) ||
+        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
+        !getTokenInteger(tokens[7], "tileheight", tileHeight))
+    {
+        sendTextFrame("error: cmd=tilecombine kind=syntax");
+        return;
+    }
+
+    if (part < 0 || pixelWidth <= 0 || pixelHeight <= 0
+       || tileWidth <= 0 || tileHeight <= 0
+       || tilePositionsX.empty() || tilePositionsY.empty())
+    {
+        sendTextFrame("error: cmd=tilecombine kind=invalid");
+        return;
+    }
+
+    Util::Rectangle renderArea;
+
+    StringTokenizer positionXtokens(tilePositionsX, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    StringTokenizer positionYtokens(tilePositionsY, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+    size_t numberOfPositions = positionYtokens.count();
+
+    // check that number of positions for X and Y is the same
+    if (numberOfPositions != positionYtokens.count())
+    {
+        sendTextFrame("error: cmd=tilecombine kind=invalid");
+        return;
+    }
+
+    std::vector<Util::Rectangle> tiles;
+    tiles.reserve(numberOfPositions);
+
+    for (size_t i = 0; i < numberOfPositions; i++)
+    {
+        int x, y;
+
+        if (!stringToInteger(positionXtokens[i], x))
+        {
+            sendTextFrame("error: cmd=tilecombine kind=syntax");
+            return;
+        }
+        if (!stringToInteger(positionYtokens[i], y))
+        {
+            sendTextFrame("error: cmd=tilecombine kind=syntax");
+            return;
+        }
+
+        Util::Rectangle rectangle(x, y, tileWidth, tileHeight);
+
+        if (tiles.empty())
+        {
+            renderArea = rectangle;
+        }
+        else
+        {
+            renderArea.extend(rectangle);
+        }
+
+        tiles.push_back(rectangle);
+    }
+
+    if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument))
+    {
+        _loKitDocument->pClass->setPart(_loKitDocument, part);
+    }
+
+    LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
+
+    int tilesByX = renderArea.getWidth() / tileWidth;
+    int tilesByY = renderArea.getHeight() / tileHeight;
+
+    int pixmapWidth = tilesByX * pixelWidth;
+    int pixmapHeight = tilesByY * pixelHeight;
+
+    const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
+
+    std::vector<unsigned char> pixmap(pixmapSize, 0);
+
+    Poco::Timestamp timestamp;
+    _loKitDocument->pClass->paintTile(_loKitDocument, pixmap.data(), pixmapWidth, pixmapHeight,
+                                      renderArea.getLeft(), renderArea.getTop(),
+                                      renderArea.getWidth(), renderArea.getHeight());
+
+    std::cout << Util::logPrefix() << "paintTile (Multiple) called, tile at [" << renderArea.getLeft() << ", " << renderArea.getTop() << "]"
+                << " (" << renderArea.getWidth() << ", " << renderArea.getHeight() << ") rendered in "
+                << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
+
+    for (Util::Rectangle& tileRect : tiles)
+    {
+        std::string response = "tile: part=" + std::to_string(part) +
+                               " width=" + std::to_string(pixelWidth) +
+                               " height=" + std::to_string(pixelHeight) +
+                               " tileposx=" + std::to_string(tileRect.getLeft()) +
+                               " tileposy=" + std::to_string(tileRect.getTop()) +
+                               " tilewidth=" + std::to_string(tileWidth) +
+                               " tileheight=" + std::to_string(tileHeight) + "\n";
+
+        std::vector<char> output;
+        output.reserve(pixelWidth * pixelHeight * 4 + response.size());
+        output.resize(response.size());
+
+        std::copy(response.begin(), response.end(), output.begin());
+
+        int positionX = (tileRect.getLeft() - renderArea.getLeft()) / tileWidth;
+        int positionY = (tileRect.getTop() - renderArea.getTop())  / tileHeight;
+
+        if (!Util::encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight, pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode))
+        {
+            sendTextFrame("error: cmd=tile kind=failure");
+            return;
+        }
+
+        sendBinaryFrame(output.data(), output.size());
+    }
 }
 
 bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
