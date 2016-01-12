@@ -51,16 +51,25 @@ MasterProcessSession::~MasterProcessSession()
 {
     Log::info("~MasterProcessSession dtor [" + getName() + "].");
 
-    auto peer = _peer.lock();
-    if (_kind == Kind::ToClient && peer)
+    try
     {
-        peer->sendTextFrame("eof");
+        // We could be unwinding because our peer's connection
+        // died. Handle I/O errors in that case.
+        auto peer = _peer.lock();
+        if (_kind == Kind::ToClient && peer)
+        {
+            peer->sendTextFrame("eof");
+        }
+        else
+        if (_kind == Kind::ToPrisoner && peer)
+        {
+            peer->_bShutdown = true;
+            Util::shutdownWebSocket(*(peer->_ws));
+        }
     }
-    else
-    if (_kind == Kind::ToPrisoner && peer)
+    catch (const std::exception& exc)
     {
-        peer->_bShutdown = true;
-        Util::shutdownWebSocket(*(peer->_ws));
+        Log::error(std::string("Exception: ") + exc.what());
     }
 }
 

@@ -185,7 +185,8 @@ bool LOOLSession::handleInput(const char *buffer, int length)
     }
     catch (const Exception& exc)
     {
-        Log::error() << "Error while handling [" + getFirstLine(buffer, length) + "]. "
+        Log::error() << "Error while handling [" + getFirstLine(buffer, length) + "] in "
+                     << getName() << ". "
                      << exc.displayText()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                      << Log::end;
