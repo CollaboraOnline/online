@@ -40,8 +40,21 @@ namespace LOOLProtocol
             if (secondTokens.count() > 1)
                 patch = secondTokens[1];
         }
-
         return std::make_tuple(major, minor, patch);
+    }
+
+    bool stringToInteger(const std::string& input, int& value)
+    {
+        try
+        {
+            value = std::stoi(input);
+        }
+        catch (std::invalid_argument&)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
