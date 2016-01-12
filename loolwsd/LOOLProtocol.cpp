@@ -23,6 +23,20 @@ using Poco::StringTokenizer;
 
 namespace LOOLProtocol
 {
+    bool stringToInteger(const std::string& input, int& value)
+    {
+        try
+        {
+            value = std::stoi(input);
+        }
+        catch (std::invalid_argument&)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
     {
         size_t nextIdx;

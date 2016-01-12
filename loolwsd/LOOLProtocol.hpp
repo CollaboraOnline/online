@@ -62,6 +62,7 @@ namespace LOOLProtocol
         TILE,
     };
 
+    bool stringToInteger(const std::string& input, int& value);
     bool getTokenInteger(const std::string& token, const std::string& name, int& value);
     bool getTokenString(const std::string& token, const std::string& name, std::string& value);
     bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value);
