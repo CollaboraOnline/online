@@ -139,7 +139,7 @@ public:
 
     void callback(const int nType, const std::string& rPayload, std::shared_ptr<ChildProcessSession> pSession)
     {
-        auto lock = pSession->lock();
+        auto lock = pSession->getLock();
 
         Log::trace() << "Callback [" << pSession->getViewId() << "] "
                      << callbackTypeToString(nType)

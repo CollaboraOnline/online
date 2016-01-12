@@ -52,7 +52,7 @@ public:
 
     LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument; }
 
-    std::unique_lock<std::mutex> lock() { return std::unique_lock<std::mutex>(_mutex); }
+    std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
