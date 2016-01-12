@@ -634,7 +634,7 @@ void MasterProcessSession::dispatchChild()
     const auto jailRoot = Poco::Path(LOOLWSD::childRoot, LOOLWSD::jailId);
     const auto childId = std::to_string(childSession->_pidChild);
 
-    auto document = Document::create(_docURL, jailRoot.toString(), childId);
+    auto document = DocumentURI::create(_docURL, jailRoot.toString(), childId);
 
     _peer = childSession;
     childSession->_peer = shared_from_this();

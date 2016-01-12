@@ -26,14 +26,14 @@
 #include "Common.hpp"
 #include "Util.hpp"
 
-// A Document as mananged by us.
+// A DocumentURI as mananged by us.
 // Contains URI, physical path, etc.
-class Document
+class DocumentURI
 {
 public:
 
     static
-    std::shared_ptr<Document> create(const std::string& url,
+    std::shared_ptr<DocumentURI> create(const std::string& url,
                                      const std::string& jailRoot,
                                      const std::string& childId)
     {
@@ -48,13 +48,13 @@ public:
 
         // This lock could become a bottleneck.
         // In that case, we can use a pool and index by publicPath.
-        std::unique_lock<std::mutex> lock(DocumentsMutex);
+        std::unique_lock<std::mutex> lock(DocumentURIMutex);
 
         // Find the document if already open.
-        auto it = UriToDocumentMap.lower_bound(publicFilePath);
-        if (it != UriToDocumentMap.end() && it->first == publicFilePath)
+        auto it = UriToDocumentURIMap.lower_bound(publicFilePath);
+        if (it != UriToDocumentURIMap.end() && it->first == publicFilePath)
         {
-            Log::info("Document [" + it->first + "] found.");
+            Log::info("DocumentURI [" + it->first + "] found.");
             return it->second;
         }
 
@@ -111,10 +111,10 @@ public:
                       "] is not a file.");
         }
 
-        auto document = std::shared_ptr<Document>(new Document(uriPublic, uriJailed, childId));
+        auto document = std::shared_ptr<DocumentURI>(new DocumentURI(uriPublic, uriJailed, childId));
 
-        Log::info("Document [" + publicFilePath + "] created.");
-        it = UriToDocumentMap.emplace_hint(it, publicFilePath, document);
+        Log::info("DocumentURI [" + publicFilePath + "] created.");
+        it = UriToDocumentURIMap.emplace_hint(it, publicFilePath, document);
         return it->second;
     }
 
@@ -123,7 +123,7 @@ public:
     std::string getChildId() const { return _childId; }
 
 private:
-    Document(const Poco::URI& uriPublic,
+    DocumentURI(const Poco::URI& uriPublic,
              const Poco::URI& uriJailed,
              const std::string& childId) :
        _uriPublic(uriPublic),
@@ -134,9 +134,9 @@ private:
 
 private:
 
-    // Document management mutex.
-    static std::mutex DocumentsMutex;
-    static std::map<std::string, std::shared_ptr<Document>> UriToDocumentMap;
+    // DocumentURI management mutex.
+    static std::mutex DocumentURIMutex;
+    static std::map<std::string, std::shared_ptr<DocumentURI>> UriToDocumentURIMap;
 
 private:
     const Poco::URI _uriPublic;

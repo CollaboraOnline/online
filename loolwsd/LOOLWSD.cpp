@@ -152,8 +152,8 @@ using Poco::ProcessHandle;
 using Poco::URI;
 
 // Document management mutex.
-std::mutex Document::DocumentsMutex;
-std::map<std::string, std::shared_ptr<Document>> Document::UriToDocumentMap;
+std::mutex DocumentURI::DocumentURIMutex;
+std::map<std::string, std::shared_ptr<DocumentURI>> DocumentURI::UriToDocumentURIMap;
 
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public Poco::Net::PartHandler
