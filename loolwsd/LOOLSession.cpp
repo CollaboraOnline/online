@@ -1127,7 +1127,7 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
     std::cout << Util::logPrefix() << "renderFont called, font[" << font << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
 
     if (pixmap != nullptr) {
-        if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output, LOK_TILEMODE_RGBA))
+        if (!Util::encodeBufferToPNG(pixmap, width, height, output, LOK_TILEMODE_RGBA))
         {
             sendTextFrame("error: cmd=renderfont kind=failure");
             delete[] pixmap;
@@ -1219,7 +1219,7 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     std::cout << Util::logPrefix() << "paintTile called, tile at [" << tilePosX << ", " << tilePosY << "] rendered in " << double(timestamp.elapsed())/1000 <<  "ms" << std::endl;
 
     LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
-    if (!Util::encodePNGAndAppendToBuffer(pixmap, width, height, output, mode))
+    if (!Util::encodeBufferToPNG(pixmap, width, height, output, mode))
     {
         sendTextFrame("error: cmd=tile kind=failure");
         return;

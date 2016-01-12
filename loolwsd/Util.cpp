@@ -82,8 +82,18 @@ namespace Util
         return false;
     }
 
-    bool encodePNGAndAppendToBuffer(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode)
+    bool encodeBufferToPNG(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode)
     {
+       
+        return encodeSubBufferToPNG(pixmap, 0, 0, width, height, width, height, output, mode);
+    }
+
+    bool encodeSubBufferToPNG(unsigned char *pixmap, int startX, int startY, int width, int height,
+                              int bufferWidth, int bufferHeight, std::vector<char>& output, LibreOfficeKitTileMode mode)
+    {
+        if (bufferWidth < width || bufferHeight < height)
+            return false;
+
         png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
         png_infop info_ptr = png_create_info_struct(png_ptr);
@@ -101,19 +111,16 @@ namespace Util
 
         png_write_info(png_ptr, info_ptr);
 
-        switch (mode)
+        if (mode == LOK_TILEMODE_BGRA)
         {
-        case LOK_TILEMODE_RGBA:
-            break;
-        case LOK_TILEMODE_BGRA:
             png_set_write_user_transform_fn (png_ptr, unpremultiply_data);
-            break;
-        default:
-            assert(false);
         }
 
         for (int y = 0; y < height; ++y)
-            png_write_row(png_ptr, pixmap + y * width * 4);
+        {
+            size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
+            png_write_row(png_ptr, pixmap + position);
+        }
 
         png_write_end(png_ptr, info_ptr);
 
