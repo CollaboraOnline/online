@@ -22,7 +22,10 @@ L.WriterTileLayer = L.TileLayer.extend({
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
-		var toRequest = [];
+
+		var tilePositionsX = "";
+		var tilePositionsY = "";
+		var needsNewTiles = false;
 
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
@@ -37,15 +40,14 @@ L.WriterTileLayer = L.TileLayer.extend({
 					this._tiles[key]._invalidCount = 1;
 				}
 				if (visibleArea.intersects(bounds)) {
-					var msg = 'tile ' +
-							'part=' + coords.part + ' ' +
-							'width=' + this._tileSize + ' ' +
-							'height=' + this._tileSize + ' ' +
-							'tileposx=' + tileTopLeft.x + ' '    +
-							'tileposy=' + tileTopLeft.y + ' ' +
-							'tilewidth=' + this._tileWidthTwips + ' ' +
-							'tileheight=' + this._tileHeightTwips;
-					toRequest.push({msg: msg, key: key, coords: coords});
+					if (tilePositionsX !== "")
+						tilePositionsX += ',';
+					tilePositionsX += tileTopLeft.x;
+
+					if (tilePositionsY !== "")
+						tilePositionsY += ',';
+					tilePositionsY += tileTopLeft.y;
+					needsNewTiles = true;
 				}
 				else {
 					// tile outside of the visible area, just remove it
@@ -55,12 +57,18 @@ L.WriterTileLayer = L.TileLayer.extend({
 			}
 		}
 
-		// Sort tiles so that we request those closer to the cursor first
-		var cursorPos = this._map.project(this._visibleCursor.getNorthWest());
-		cursorPos = cursorPos.divideBy(this._tileSize);
-		toRequest.sort(function(x, y) {return x.coords.distanceTo(cursorPos) - y.coords.distanceTo(cursorPos);});
-		for (var i = 0; i < toRequest.length; i++) {
-			this._map._socket.sendMessage(toRequest[i].msg, toRequest[i].key);
+		if (needsNewTiles)
+		{
+			var message = 'tilecombine ' +
+				'part=' + command.part + ' ' +
+				'width=' + this._tileSize + ' ' +
+				'height=' + this._tileSize + ' ' +
+				'tileposx=' + tilePositionsX + ' ' +
+				'tileposy=' + tilePositionsY + ' ' +
+				'tilewidth=' + this._tileWidthTwips + ' ' +
+				'tileheight=' + this._tileHeightTwips;
+
+			this._map._socket.sendMessage(message, "");
 		}
 
 		for (key in this._tileCache) {
