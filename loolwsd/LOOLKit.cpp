@@ -625,11 +625,11 @@ private:
     /// Load a document (or view) and register callbacks.
     LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri)
     {
+        Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
+        const unsigned intSessionId = Util::decodeId(sessionId);
+
         std::unique_lock<std::mutex> lock(_mutex);
 
-        Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
-
-        const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
         {
@@ -678,11 +678,11 @@ private:
 
     void onUnload(const std::string& sessionId)
     {
+        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews - 1) + " views left.");
+        const unsigned intSessionId = Util::decodeId(sessionId);
+
         std::unique_lock<std::mutex> lock(_mutex);
 
-        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews - 1) + " views left.");
-
-        const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
         {
