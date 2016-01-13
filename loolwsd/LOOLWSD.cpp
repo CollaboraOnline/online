@@ -302,7 +302,7 @@ public:
                 {
                     std::string dirPath = LOOLWSD::childRoot + Path::separator() + form.get("childid") + LOOLSession::jailDocumentURL +
                         Path::separator() + "insertfile";
-                    File(dirPath).createDirectory();
+                    File(dirPath).createDirectories();
                     std::string fileName = dirPath + Path::separator() + form.get("name");
                     File(tmpPath).moveTo(fileName);
 
