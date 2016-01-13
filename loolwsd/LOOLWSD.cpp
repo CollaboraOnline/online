@@ -300,16 +300,18 @@ public:
                 Poco::Net::HTMLForm form(request, request.stream(), handler);
 
                 bool goodRequest = form.has("childid") && form.has("name");
+                std::string formChildid(form.get("childid"));
                 std::string formName(form.get("name"));
 
-                if (goodRequest && formName.find('/') != std::string::npos)
+                // protect against attempts to inject something funny here
+                if (goodRequest && formChildid.find('/') != std::string::npos && formName.find('/') != std::string::npos)
                     goodRequest = false;
 
                 if (goodRequest)
                 {
                     try {
-                        std::cout << Util::logPrefix() << "Perform insertfile: " << form.get("childid") << ", " << form.get("name") << std::endl;
-                        std::string dirPath = LOOLWSD::childRoot + Path::separator() + form.get("childid") + LOOLSession::jailDocumentURL +
+                        std::cout << Util::logPrefix() << "Perform insertfile: " << formChildid << ", " << formName << std::endl;
+                        std::string dirPath = LOOLWSD::childRoot + Path::separator() + formChildid + LOOLSession::jailDocumentURL +
                             Path::separator() + "insertfile";
                         File(dirPath).createDirectories();
                         std::string fileName = dirPath + Path::separator() + formName;
