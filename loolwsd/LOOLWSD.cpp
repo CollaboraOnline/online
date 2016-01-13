@@ -378,7 +378,7 @@ public:
                 {
                     const std::string dirPath = LOOLWSD::childRoot + form.get("childid")
                                               + JailedDocumentRoot + "insertfile";
-                    File(dirPath).createDirectory();
+                    File(dirPath).createDirectories();
                     std::string fileName = dirPath + Path::separator() + form.get("name");
                     File(tmpPath).moveTo(fileName);
 
