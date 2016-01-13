@@ -374,16 +374,34 @@ public:
                 std::string tmpPath;
                 ConvertToPartHandler handler(tmpPath);
                 Poco::Net::HTMLForm form(request, request.stream(), handler);
-                if (form.has("childid") && form.has("name"))
-                {
-                    const std::string dirPath = LOOLWSD::childRoot + form.get("childid")
-                                              + JailedDocumentRoot + "insertfile";
-                    File(dirPath).createDirectories();
-                    std::string fileName = dirPath + Path::separator() + form.get("name");
-                    File(tmpPath).moveTo(fileName);
 
-                    response.setStatus(HTTPResponse::HTTP_OK);
-                    response.send();
+                bool goodRequest = form.has("childid") && form.has("name");
+                std::string formChildid(form.get("childid"));
+                std::string formName(form.get("name"));
+
+                // protect against attempts to inject something funny here
+                if (goodRequest && formChildid.find('/') != std::string::npos && formName.find('/') != std::string::npos)
+                    goodRequest = false;
+
+                if (goodRequest)
+                {
+                    try {
+                        Log::info() << "Perform insertfile: " << formChildid << ", " << formName << Log::end;
+                        const std::string dirPath = LOOLWSD::childRoot + formChildid
+                                                  + JailedDocumentRoot + "insertfile";
+                        File(dirPath).createDirectories();
+                        std::string fileName = dirPath + Path::separator() + form.get("name");
+                        File(tmpPath).moveTo(fileName);
+
+                        response.setStatus(HTTPResponse::HTTP_OK);
+                        response.send();
+                    }
+                    catch (const IOException& exc)
+                    {
+                        Log::info() << "IOException: " << exc.message() << Log::end;
+                        response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+                        response.send();
+                    }
                 }
                 else
                 {
