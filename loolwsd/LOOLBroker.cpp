@@ -215,7 +215,6 @@ public:
     bool isOKResponse(int nPID)
     {
         std::string aResponse;
-
         if (getResponseLine(readerChild, aResponse) < 0)
         {
             Log::error("Error reading child response: " + std::to_string(nPID) + ". Clearing cache.");
@@ -225,7 +224,7 @@ public:
         }
 
         StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        return (tokens[1] == "ok" ? true : false);
+        return (tokens.count() == 2 && tokens[1] == "ok");
     }
 
     ssize_t sendMessage(int nPipeWriter, const std::string& aMessage)
@@ -241,7 +240,7 @@ public:
 
     ssize_t createThread(Process::PID nPID, const std::string& aTID, const std::string& aURL)
     {
-        std::string aMessage = "thread " + aTID + " " + aURL + "\r\n";
+        const std::string aMessage = "thread " + aTID + " " + aURL + "\r\n";
         return sendMessage(_childProcesses[nPID], aMessage);
     }
 
@@ -262,7 +261,7 @@ public:
 
             if (!isOKResponse(it->second))
             {
-                Log::debug() << "Removed expired Kit [" + std::to_string(it->second) + "] hosts URL [" + it->first + "] -> " << Log::end;
+                Log::debug() << "Removed expired Kit [" << it->second << "] hosts URL [" << it->first << "]." << Log::end;
                 _cacheURL.erase(it++);
                 continue;
             }

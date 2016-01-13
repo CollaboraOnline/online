@@ -78,7 +78,6 @@ public:
     bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool setPage(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool getStatus_Impl(const char* buffer, int length);
 
 private:
 

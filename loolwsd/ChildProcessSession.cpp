@@ -261,7 +261,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     }
 
     // Respond by the document status, which has no arguments.
-    if (!getStatus_Impl(nullptr, 0))
+    if (!getStatus(nullptr, 0))
         return false;
 
     Log::info("Loaded session " + getId());
@@ -310,19 +310,14 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
     sendBinaryFrame(output.data(), output.size());
 }
 
-bool ChildProcessSession::getStatus(const char* buffer, int length)
+bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
 {
     std::unique_lock<std::recursive_mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    return getStatus_Impl(buffer, length);
-}
-
-bool ChildProcessSession::getStatus_Impl(const char* /*buffer*/, int /*length*/)
-{
-    std::string status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
+    const std::string status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
     StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     if (!getTokenString(tokens[1], "type", _docType))
     {
@@ -772,15 +767,17 @@ bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, Str
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
-    bool bNotify = (tokens[1] == ".uno:Save");
+    const bool bNotify = (tokens[1] == ".uno:Save");
 
     if (tokens.count() == 2)
     {
-        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), 0, bNotify);
+        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), nullptr, bNotify);
     }
     else
     {
-        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(), bNotify);
+        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(),
+                                               Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
+                                               bNotify);
     }
 
     return true;

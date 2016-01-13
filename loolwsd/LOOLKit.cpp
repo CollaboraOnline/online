@@ -855,7 +855,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         aResponse = "bad \r\n";
                     }
 
-                    Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length() );
+                    Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length());
                     aMessage.clear();
                 }
             }
