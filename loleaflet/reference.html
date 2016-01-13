@@ -8563,6 +8563,21 @@ var unoCommands = [
 },
 
 {
+    uno: '.uno:Insert',
+    parameter: {
+        'Name': {
+            'type': 'string',
+            'value': 'Sheet Name'
+        },
+        'Index': {
+            'type': 'long',
+            'value': 0
+        }
+    },
+    description: 'Inserts a new sheet to the spreadsheet. The "Name" parameter can be left as empty string, in that case the sheet name will be generated. The "Index" parameter means the position where it should be inserted - "1" means adding as the 1st sheet, etc. 0 is special, and means adding as the last sheet.'
+},
+
+{
     header: 'Appearance options',
 },
 
