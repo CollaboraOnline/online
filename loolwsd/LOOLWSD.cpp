@@ -298,16 +298,32 @@ public:
                 std::string tmpPath;
                 ConvertToPartHandler handler(tmpPath);
                 Poco::Net::HTMLForm form(request, request.stream(), handler);
-                if (form.has("childid") && form.has("name"))
-                {
-                    std::string dirPath = LOOLWSD::childRoot + Path::separator() + form.get("childid") + LOOLSession::jailDocumentURL +
-                        Path::separator() + "insertfile";
-                    File(dirPath).createDirectories();
-                    std::string fileName = dirPath + Path::separator() + form.get("name");
-                    File(tmpPath).moveTo(fileName);
 
-                    response.setStatus(HTTPResponse::HTTP_OK);
-                    response.send();
+                bool goodRequest = form.has("childid") && form.has("name");
+                std::string formName(form.get("name"));
+
+                if (goodRequest && formName.find('/') != std::string::npos)
+                    goodRequest = false;
+
+                if (goodRequest)
+                {
+                    try {
+                        std::cout << Util::logPrefix() << "Perform insertfile: " << form.get("childid") << ", " << form.get("name") << std::endl;
+                        std::string dirPath = LOOLWSD::childRoot + Path::separator() + form.get("childid") + LOOLSession::jailDocumentURL +
+                            Path::separator() + "insertfile";
+                        File(dirPath).createDirectories();
+                        std::string fileName = dirPath + Path::separator() + formName;
+                        File(tmpPath).moveTo(fileName);
+
+                        response.setStatus(HTTPResponse::HTTP_OK);
+                        response.send();
+                    }
+                    catch (const IOException& exc)
+                    {
+                        Application::instance().logger().error(Util::logPrefix() + "IOException: " + exc.message());
+                        response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+                        response.send();
+                    }
                 }
                 else
                 {
