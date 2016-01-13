@@ -137,7 +137,6 @@ int main(int argc, char **argv)
   DIR *root_proc;
   struct dirent *dir_proc;
 
-  unsigned pid_curr;
   unsigned pid_proc;
   char path_proc[PATH_SIZE];
   char cmdline[BUFFER_SIZE];
