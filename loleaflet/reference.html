@@ -8156,8 +8156,33 @@ for (var i = 0, len = tables.length; i < len; i++) {
 </script>
 
 <script>
-// I've tried to order them alphabetically, feel free to modify if some are not in the correct order
 var unoCommands = [
+{
+    header: 'Global operations',
+},
+
+{
+    uno: '.uno:Redo',
+    parameter: null,
+    description: 'Redo.'
+},
+
+{
+    uno: '.uno:Save',
+    parameter: null,
+    description: 'Save the document.'
+},
+
+{
+    uno: '.uno:Undo',
+    parameter: null,
+    description: 'Undo.'
+},
+
+{
+    header: 'Text formatting',
+},
+
 {
     uno: '.uno:BackColor',
     parameter: {
@@ -8184,12 +8209,6 @@ var unoCommands = [
     uno: '.uno:Bold',
     parameter: null,
     description: 'Bold.'
-},
-
-{
-    uno: '.uno:CenterPara',
-    parameter: null,
-    description: 'Center horizontally.'
 },
 
 {
@@ -8226,41 +8245,6 @@ var unoCommands = [
 },
 
 {
-    uno: '.uno:DecrementIndent',
-    parameter: null,
-    description: 'Decrement paragraph indentation.'
-},
-
-{
-    uno: '.uno:DefaultBullet',
-    parameter: null,
-    description: 'Bullets ON/OFF.'
-},
-
-{
-    uno: '.uno:DefaultNumbering',
-    parameter: null,
-    description: 'Numbering ON/OFF.'
-},
-
-{
-    uno: '.uno:DeleteComment',
-    parameter: null,
-    description: 'Delete comment.'
-},
-
-{
-    uno: '.uno:EnterString',
-    parameter: {
-        'StringName': {
-            type: 'string',
-            value: '=SUM()'
-        }
-    },
-    description: 'Enters the string in the selected cell.'
-},
-
-{
     uno: '.uno:FontColor',
     parameter: {
         'FontColor': {
@@ -8283,132 +8267,15 @@ var unoCommands = [
 },
 
 {
-    uno: '.uno:HideWhitespace',
-    parameter: {
-        'type': 'boolean',
-        'value': 'false'
-    },
-    description: 'Continous web view of the document'
-},
-
-{
-    uno: '.uno:ShowBorderShadow',
-    parameter: {
-        'type': 'boolean',
-        'value': 'true'
-    },
-    description: 'Paint a shadow around Write page / Impress slide border.'
-},
-
-{
-    uno: '.uno:IncrementIndent',
-    parameter: null,
-    description: 'Increment paragraph indentation.'
-},
-
-{
-    uno: '.uno:InsertAnnotation',
-    parameter: {
-        'Author': {
-            type: 'string',
-            value: 'A U Thor'
-        }
-    },
-    description: 'Insert comment.'
-},
-
-{
-    uno: '.uno:InsertTable',
-    parameter: {
-	'Columns': {
-		'type': 'long',
-		'value': 6
-	},
-	'Rows': {
-		'type': "long",
-		'value': 10
-	}
-    },
-    description: 'Insert table with the given dimensions.'
-},
-
-{
     uno: '.uno:Italic',
     parameter: null,
     description: 'Italic.'
 },
 
 {
-    uno: '.uno:JustifyPara',
-    parameter: null,
-    description: 'Justified.'
-},
-
-{
-    uno: '.uno:LeftPara',
-    parameter: null,
-    description: 'Align left.'
-},
-
-{
     uno: '.uno:OutlineFont',
     parameter: null,
     description: 'Outline.'
-},
-
-{
-    uno: '.uno:Redo',
-    parameter: null,
-    description: 'Redo.'
-},
-
-{
-    uno: '.uno:ResetAttributes',
-    parameter: null,
-    description: 'Clear direct formating.'
-},
-
-{
-    uno: '.uno:RightPara',
-    parameter: null,
-    description: 'Align right.'
-},
-
-{
-    uno: '.uno:StyleApply',
-    parameter: {
-        'Style': {
-            type: 'string',
-            value: 'Title'
-        },
-        'FamilyName': {
-            type: 'string',
-            value: 'ParagraphStyles'
-        }
-    },
-    description: 'Apply style from style family.'
-},
-
-{
-    uno: '.uno:Save',
-    parameter: null,
-    description: 'Save the document.'
-},
-
-{
-    uno: '.uno:SetHyperlink',
-    parameter: {
-        'Hyperlink.Text': {
-            type: 'string',
-            value: 'some text'
-        },
-        'Hyperlink.URL': {
-            type: 'string',
-            value: 'url'
-        }
-    },
-    description: 'Creates a hyperlink. If Hyperlink.Text is not specified, the hyperlink will be set for the current ' +
-                     'selection. Hyperlink.URL can be a web URL or a bookmark from the document.'
 },
 
 {
@@ -8442,21 +8309,300 @@ var unoCommands = [
 },
 
 {
-    uno: '.uno:Undo',
+    header: 'Paragraph formatting',
+},
+
+{
+    uno: '.uno:CenterPara',
     parameter: null,
-    description: 'Undo.'
+    description: 'Center horizontally.'
+},
+
+{
+    uno: '.uno:DecrementIndent',
+    parameter: null,
+    description: 'Decrement paragraph indentation.'
+},
+
+{
+    uno: '.uno:DefaultBullet',
+    parameter: null,
+    description: 'Bullets ON/OFF.'
+},
+
+{
+    uno: '.uno:DefaultNumbering',
+    parameter: null,
+    description: 'Numbering ON/OFF.'
+},
+
+{
+    uno: '.uno:IncrementIndent',
+    parameter: null,
+    description: 'Increment paragraph indentation.'
+},
+
+{
+    uno: '.uno:JustifyPara',
+    parameter: null,
+    description: 'Justified.'
+},
+
+{
+    uno: '.uno:LeftPara',
+    parameter: null,
+    description: 'Align left.'
+},
+
+{
+    uno: '.uno:RightPara',
+    parameter: null,
+    description: 'Align right.'
+},
+
+{
+    uno: '.uno:SetHyperlink',
+    parameter: {
+        'Hyperlink.Text': {
+            type: 'string',
+            value: 'some text'
+        },
+        'Hyperlink.URL': {
+            type: 'string',
+            value: 'url'
+        }
+    },
+    description: 'Creates a hyperlink. If Hyperlink.Text is not specified, the hyperlink will be set for the current ' +
+                     'selection. Hyperlink.URL can be a web URL or a bookmark from the document.'
+},
+
+{
+    header: 'Comments',
+},
+
+{
+    uno: '.uno:DeleteComment',
+    parameter: null,
+    description: 'Delete comment.'
+},
+
+{
+    uno: '.uno:InsertAnnotation',
+    parameter: {
+        'Author': {
+            type: 'string',
+            value: 'A U Thor'
+        }
+    },
+    description: 'Insert comment.'
+},
+
+{
+    header: 'Fields',
+},
+
+{
+    uno: '.uno:InsertPageNumberField',
+    parameter: null,
+    description: 'Insert Page Number field.'
+},
+
+{
+    uno: '.uno:InsertPageCountField',
+    parameter: null,
+    description: 'Insert Page Count field.'
+},
+
+{
+    uno: ' DateField',
+    parameter: null,
+    description: 'Insert Date field.'
+},
+
+{
+    uno: ' TimeField',
+    parameter: null,
+    description: 'Insert Time field.'
+},
+
+{
+    uno: ' TitleField',
+    parameter: null,
+    description: 'Insert Title field.'
+},
+
+{
+    uno: ' AuthorField',
+    parameter: null,
+    description: 'Insert Author field.'
+},
+
+{
+    uno: ' TopicField',
+    parameter: null,
+    description: 'Insert Topic field.'
+},
+
+{
+    header: 'Styles',
+},
+
+{
+    uno: '.uno:DeleteStyle',
+    parameter: null,
+    description: 'Delete the current style.'
+},
+
+{
+    uno: '.uno:FormatPaintbrush',
+    parameter: null,
+    description: 'Copy format of the selected text to another text.'
+},
+
+{
+    uno: '.uno:ResetAttributes',
+    parameter: null,
+    description: 'Clear direct formating.'
+},
+
+{
+    uno: '.uno:StyleApply',
+    parameter: {
+        'Style': {
+            type: 'string',
+            value: 'Title'
+        },
+        'FamilyName': {
+            type: 'string',
+            value: 'ParagraphStyles'
+        }
+    },
+    description: 'Apply style from style family.'
+},
+
+{
+    uno: '.uno:StyleUpdateByExample',
+    parameter: null,
+    description: 'Update the current style to match the selected text.'
+},
+
+{
+    header: 'Tables',
+},
+
+{
+    uno: '.uno:InsertColumnsAfter',
+    parameter: null,
+    description: 'Insert column after the current cursor position.',
+},
+
+{
+    uno: '.uno:InsertColumnsBefore',
+    parameter: null,
+    description: 'Insert column before the current cursor position.',
+},
+
+{
+    uno: '.uno:InsertRowsAfter',
+    parameter: null,
+    description: 'Insert row after the current cursor position.',
+},
+
+{
+    uno: '.uno:InsertRowsBefore',
+    parameter: null,
+    description: 'Insert row before the current cursor position.',
+},
+
+{
+    uno: '.uno:InsertTable',
+    parameter: {
+	'Columns': {
+		'type': 'long',
+		'value': 6
+	},
+	'Rows': {
+		'type': "long",
+		'value': 10
+	}
+    },
+    description: 'Insert table with the given dimensions.'
+},
+
+{
+    uno: '.uno:DeleteTable',
+    parameter: null,
+    description: 'Delete table at the current cursor position.'
+},
+
+{
+    uno: '.uno:DeleteColumns',
+    parameter: null,
+    description: 'Delete the current column.'
+},
+
+{
+    uno: '.uno:DeleteRows',
+    parameter: null,
+    description: 'Delete the current row.'
+},
+
+{
+    header: 'Spreadsheet-related',
+},
+
+{
+    uno: '.uno:EnterString',
+    parameter: {
+        'StringName': {
+            type: 'string',
+            value: '=SUM()'
+        }
+    },
+    description: 'Enters the string in the selected cell.'
+},
+
+{
+    header: 'Appearance options',
+},
+
+{
+    uno: '.uno:HideWhitespace',
+    parameter: {
+        'type': 'boolean',
+        'value': 'false'
+    },
+    description: 'Continous web view of the document.'
+},
+
+{
+    uno: '.uno:ShowBorderShadow',
+    parameter: {
+        'type': 'boolean',
+        'value': 'true'
+    },
+    description: 'Paint a shadow around Write page / Impress slide border.'
 },
 
 ];
 $(document).ready(function() {
     var table = $('#uno-commands-table');
     unoCommands.forEach(function (unoCommand) {
-        table.append(
-            '<tr>' +
-            '	<td><code><b>' + unoCommand.uno + '</b></code></td>' +
-            '	<td><code><pre>' + JSON.stringify(unoCommand.parameter, null, 2) + '</pre></code></td>' +
-            '	<td>' + unoCommand.description + '</td>' +
-            '</tr>');
+	if ('header' in unoCommand) {
+
+            table.append(
+                '<tr>' +
+                '	<td colspan="3"><b>' + unoCommand.header + '</b></td>' +
+                '</tr>');
+	}
+	else {
+            table.append(
+                '<tr>' +
+                '	<td><code><b>' + unoCommand.uno + '</b></code></td>' +
+                '	<td><code><pre>' + JSON.stringify(unoCommand.parameter, null, 2) + '</pre></code></td>' +
+                '	<td>' + unoCommand.description + '</td>' +
+                '</tr>');
+	}
     });
 });
 </script>
