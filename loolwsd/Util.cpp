@@ -98,15 +98,15 @@ namespace Log
 
         std::ostringstream stream;
         stream << Log::SourceId << '-' << std::setw(2) << std::setfill('0')
-               << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ','
+               << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ' '
                << std::setw(2) << hours << ':' << std::setw(2) << minutes << ':'
                << std::setw(2) << seconds << "." << std::setw(6) << usec
-               << ", ";
+               << ' ';
 
 #ifdef __linux
         char buf[32]; // we really need only 16
         if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(buf), 0, 0, 0) == 0)
-            stream << '[' << buf << "] ";
+            stream << '[' << std::setw(15) << std::setfill(' ') << std::left << buf << "] ";
 #endif
 
         return stream.str();
@@ -160,14 +160,20 @@ namespace Log
         logger().information(logPrefix() + msg);
     }
 
-    void warn(const std::string& msg)
+    void warn(const std::string& msg, const bool append_errno)
     {
-        logger().warning(logPrefix() + msg);
+        logger().warning(logPrefix() + msg +
+                         (append_errno
+                          ? (std::string(" (errno: ") + strerror(errno) + ").")
+                          : std::string(".")));
     }
 
-    void error(const std::string& msg)
+    void error(const std::string& msg, const bool append_errno)
     {
-        logger().error(logPrefix() + msg + " (" + strerror(errno) + ").");
+        logger().error(logPrefix() + msg +
+                       (append_errno
+                        ? (std::string(" (errno: ") + strerror(errno) + ").")
+                        : std::string(".")));
     }
 }
 
@@ -285,7 +291,7 @@ namespace Util
         }
     }
 
-    std::string signalName(int signo)
+    std::string signalName(const int signo)
     {
         switch (signo)
         {

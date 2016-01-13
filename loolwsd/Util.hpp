@@ -59,8 +59,6 @@ namespace Util
     // Call WebSocket::shutdown() ignoring Poco::IOException
     void shutdownWebSocket(Poco::Net::WebSocket& ws);
 
-    std::string signalName(int signo);
-
     ssize_t writeFIFO(int nPipe, const char* pBuffer, ssize_t nSize);
 
     ssize_t readFIFO(int nPipe, char* pBuffer, ssize_t nSize);
@@ -90,6 +88,9 @@ namespace Util
         removeFile(path.toString(), recursive);
     }
 
+    /// Returns the name of the signal.
+    std::string signalName(int signo);
+
     /// Trap signals to cleanup and exit the process gracefully.
     void setSignals(bool isIgnored);
 };
@@ -103,8 +104,8 @@ namespace Log
     void trace(const std::string& msg);
     void debug(const std::string& msg);
     void info(const std::string& msg);
-    void warn(const std::string& msg);
-    void error(const std::string& msg);
+    void warn(const std::string& msg, const bool append_errno = false);
+    void error(const std::string& msg, const bool append_errno = true);
 
     // The following is to write streaming logs.
     // Log::info() << "Value: 0x" << std::hex << value
