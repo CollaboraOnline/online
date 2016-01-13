@@ -17,7 +17,6 @@ L.Control.Tabs = L.Control.extend({
 		var parts = e.parts;
 		var selectedPart = e.selectedPart;
 		var docType = e.docType;
-		var partNames = e.partNames;
 		if (docType === 'text') {
 			return;
 		}
@@ -31,10 +30,16 @@ L.Control.Tabs = L.Control.extend({
 					$('.scroll-container').mCustomScrollbar('update');
 					$('.scroll-container').mCustomScrollbar('scrollTo', [0, 0]);
 				}, this), 100);
+				this._tabsInitialized = true;
+			}
+			if ('partNames' in e) {
+				while (this._tabsCont.firstChild) {
+					this._tabsCont.removeChild(this._tabsCont.firstChild);
+				}
 				for (var i = 0; i < parts; i++) {
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('li', '', this._tabsCont);
-					tab.innerHTML = partNames[i];
+					tab.innerHTML = e.partNames[i];
 					tab.id = id;
 					L.DomEvent
 						.on(tab, 'click', L.DomEvent.stopPropagation)
@@ -43,7 +48,6 @@ L.Control.Tabs = L.Control.extend({
 						.on(tab, 'click', this._refocusOnMap, this);
 					this._spreadsheetTabs[id] = tab;
 				}
-				this._tabsInitialized = true;
 			}
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
