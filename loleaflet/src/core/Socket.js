@@ -10,7 +10,7 @@ L.Socket = L.Class.extend({
 		try {
 			this.socket = new WebSocket(map.options.server);
 		} catch (e) {
-			this._map.fire('error', {msg: 'Socket connection error', cmd: 'socket', kind: 'failed', id: 3});
+			this.fire('error', {msg: 'Socket connection error', cmd: 'socket', kind: 'failed', id: 3});
 			return null;
 		}
 		this._msgQueue = [];
@@ -54,7 +54,7 @@ L.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			// we are reconnecting after a lost connection
 			msg += ' part=' + this._map.getCurrentPartNumber();
-			this._map.fire('statusindicator', {statusType : 'reconnected'});
+			this.fire('statusindicator', {statusType : 'reconnected'});
 		}
 		if (this._map.options.timestamp) {
 			msg += ' timestamp=' + this._map.options.timestamp;
@@ -175,11 +175,11 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketError: function () {
-		this._map.fire('error', {msg: 'Socket connection error', cmd: 'socket', kind: 'failed', id: 3});
+		this.fire('error', {msg: 'Socket connection error', cmd: 'socket', kind: 'failed', id: 3});
 	},
 
 	_onSocketClose: function () {
-		this._map.fire('error', {msg: 'Socket connection closed', cmd: 'socket', kind: 'closed', id: 4});
+		this.fire('error', {msg: 'Socket connection closed', cmd: 'socket', kind: 'closed', id: 4});
 	},
 
 	parseServerCmd: function (msg) {
