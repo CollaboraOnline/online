@@ -1889,6 +1889,11 @@ unexpected behaviour.</h4>
 		<td>Fired on server or client error.</td>
 	</tr>
 	<tr>
+		<td><code><b>hyperlinkclicked</b></code></td>
+		<td><code><a href="#hyperlinkclicked-event">HyperlinkClickedEvent</a></code></td>
+		<td>Fired when the user clicks a hyperlink in the document.</td>
+	</tr>
+	<tr>
 		<td><code><b>invalidatepreview</b></code></td>
 		<td><code><a href="#invalidatepreview-event">InvalidatePreviewEvent</a></code></td>
 		<td>Fired when a preview needs to be invalidated.</td>
@@ -2091,6 +2096,22 @@ The <code>id</code> property of ErrorEvent can have the following values:
 	<tr>
 		<td><code><b>4</b></code></td>
 		<td>Socket connection was closed.</td>
+	</tr>
+</table>
+
+<h3 id="hyperlinkclicked-event">HyperlinkClickedEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>url</b></code></td>
+		<td><code>String</code></td>
+		<td>Target URL of the hyperlink that the user clicked in the
+		    document.</td>
 	</tr>
 </table>
 
