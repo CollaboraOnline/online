@@ -111,6 +111,9 @@ L.TileLayer = L.GridLayer.extend({
 		this._selections = new L.LayerGroup();
 		map.addLayer(this._selections);
 
+		this._searchResultsLayer = new L.LayerGroup();
+		map.addLayer(this._searchResultsLayer);
+
 		this._levels = {};
 		this._tiles = {};
 		this._tileCache = {};
@@ -472,11 +475,13 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onSearchNotFoundMsg: function (textMsg) {
+		this._clearSearchResults();
 		var originalPhrase = textMsg.substring(16);
 		this._map.fire('search', {originalPhrase: originalPhrase, count: 0});
 	},
 
 	_onSearchResultSelection: function (textMsg) {
+		this._clearSearchResults();
 		textMsg = textMsg.substring(23);
 		var obj = JSON.parse(textMsg);
 		var originalPhrase = obj.searchString;
@@ -485,10 +490,64 @@ L.TileLayer = L.GridLayer.extend({
 		for (var i = 0; i < obj.searchResultSelection.length; i++) {
 			results.push({
 				part: parseInt(obj.searchResultSelection[i].part),
-				rectangles: this._twipsRectanglesToPixelBounds(obj.searchResultSelection[i].rectangles)
+				rectangles: this._twipsRectanglesToPixelBounds(obj.searchResultSelection[i].rectangles),
+				twipsRectangles: obj.searchResultSelection[i].rectangles
 			});
 		}
+		// do not cache search results if there is only one result.
+		// this way regular searches works fine
+		if (this._docType === 'presentation' && count > 1)
+		{
+			this._map._socket.sendMessage('resetselection');
+			this._searchResults = results;
+			this._searchTerm = originalPhrase;
+			this._searchIndex = 0;
+
+			this._map.setPart(results[0].part); // go to first result.
+		}
 		this._map.fire('search', {originalPhrase: originalPhrase, count: count, results: results});
+	},
+
+	_clearSearchResults: function() {
+		this._searchResults = null;
+		this._searchTerm = null;
+		this._searchIndex = null;
+		this._searchResultsLayer.clearLayers();
+	},
+
+	_drawSearchResuls: function() {
+		if (!this._searchResults) {
+			return;
+		}
+		this._searchResultsLayer.clearLayers();
+		for (var k=0; k < this._searchResults.length; k++)
+		{
+			var result = this._searchResults[k];
+			if (result.part === this._selectedPart)
+			{
+				var _fillColor = (k === this._searchIndex) ? '#43ACE8' : '#CCCCCC';
+				var strTwips = result.twipsRectangles.match(/\d+/g);
+				var rectangles = [];
+				for (var i = 0; i < strTwips.length; i += 4) {
+					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
+					var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
+					var topRightTwips = topLeftTwips.add(new L.Point(offset.x, 0));
+					var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
+					var bottomRightTwips = topLeftTwips.add(offset);
+					rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
+				}
+				var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
+				for (var j = 0; j < polygons.length; j++) {
+					var selection = new L.Polygon(polygons[j], {
+						pointerEvents: 'none',
+						fillColor: _fillColor,
+						fillOpacity: 0.25,
+						weight: 2,
+						opacity: 0.25});
+					this._searchResultsLayer.addLayer(selection);
+				}
+			}
+		}
 	},
 
 	_onStateChangedMsg: function (textMsg) {
@@ -685,6 +744,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._map._socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
 				' buttons=' + buttons + ' modifier=' + modifier);
+
+		if (type === 'buttondown') {
+			this._clearSearchResults();
+		}
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
