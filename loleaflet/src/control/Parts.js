@@ -23,14 +23,14 @@ L.Map.include({
 		}
 		if (docLayer._isCursorOverlayVisible) {
 			// a click outside the slide to clear any selection
-			L.Socket.sendMessage('resetselection');
+			this._socket.sendMessage('resetselection');
 		}
 		this.fire('updateparts', {
 			selectedPart: docLayer._selectedPart,
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
-		L.Socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
+		this._socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
 		docLayer._clearSelections();
 		docLayer._update();
 		docLayer._pruneTiles();
@@ -74,7 +74,7 @@ L.Map.include({
 		else {
 			maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
 		}
-		L.Socket.sendMessage('tile ' +
+		this._socket.sendMessage('tile ' +
 							'part=' + part + ' ' +
 							'width=' + maxWidth + ' ' +
 							'height=' + maxHeight + ' ' +
@@ -92,7 +92,7 @@ L.Map.include({
 		var autoUpdate = options ? options.autoUpdate : false;
 		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
 			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate};
-		L.Socket.sendMessage('tile ' +
+		this._socket.sendMessage('tile ' +
 							'part=' + part + ' ' +
 							'width=' + width + ' ' +
 							'height=' + height + ' ' +
@@ -135,7 +135,7 @@ L.Map.include({
 			this.scrollLeft(pos.x, {update: true});
 		}
 		else {
-			L.Socket.sendMessage('setpage page=' + docLayer._currentPage);
+			this._socket.sendMessage('setpage page=' + docLayer._currentPage);
 		}
 		this.fire('pagenumberchanged', {
 			currentPage: docLayer._currentPage,

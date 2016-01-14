@@ -5,7 +5,7 @@
 L.WriterTileLayer = L.TileLayer.extend({
 
 	_onInvalidateTilesMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
 			var strTwips = textMsg.match(/\d+/g);
 			command.x = parseInt(strTwips[0]);
@@ -60,7 +60,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 		cursorPos = cursorPos.divideBy(this._tileSize);
 		toRequest.sort(function(x, y) {return x.coords.distanceTo(cursorPos) - y.coords.distanceTo(cursorPos);});
 		for (var i = 0; i < toRequest.length; i++) {
-			L.Socket.sendMessage(toRequest[i].msg, toRequest[i].key);
+			this._map._socket.sendMessage(toRequest[i].msg, toRequest[i].key);
 		}
 
 		for (key in this._tileCache) {
@@ -97,7 +97,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;

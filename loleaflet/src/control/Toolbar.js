@@ -14,7 +14,7 @@ L.Map.include({
 			var msg = 'uno .uno:CharFontName {' +
 				'"CharFontName.FamilyName": ' +
 					'{"type": "string", "value": "' + fontName + '"}}';
-			L.Socket.sendMessage(msg);
+			this._socket.sendMessage(msg);
 		}
 	},
 
@@ -23,7 +23,7 @@ L.Map.include({
 			var msg = 'uno .uno:FontHeight {' +
 				'"FontHeight.Height": ' +
 				'{"type": "float", "value": "' + fontSize + '"}}';
-			L.Socket.sendMessage(msg);
+			this._socket.sendMessage(msg);
 		}
 	},
 
@@ -39,7 +39,7 @@ L.Map.include({
 			options = '';
 		}
 		id = id || -1; // not a special download
-		L.Socket.sendMessage('downloadas ' +
+		this._socket.sendMessage('downloadas ' +
 			'name=' + name + ' ' +
 			'id=' + id + ' ' +
 			'format=' + format + ' ' +
@@ -57,7 +57,7 @@ L.Map.include({
 		if (options === undefined || options === null) {
 			options = '';
 		}
-		L.Socket.sendMessage('saveas ' +
+		this._socket.sendMessage('saveas ' +
 			'url=' + url + ' ' +
 			'format=' + format + ' ' +
 			'options=' + options);
@@ -73,13 +73,13 @@ L.Map.include({
 					'"Style":{"type":"string", "value": "' + style + '"},' +
 					'"FamilyName":{"type":"string", "value":"' + familyName + '"}' +
 					'}';
-			L.Socket.sendMessage(msg);
+			this._socket.sendMessage(msg);
 		}
 	},
 
 	sendUnoCommand: function (command, json) {
 		if (this._docLayer._permission === 'edit') {
-			L.Socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
+			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 
@@ -103,10 +103,10 @@ L.Map.include({
 				value: string
 			}
 		};
-		L.Socket.sendMessage('uno .uno:EnterString ' + JSON.stringify(command));
+		this._socket.sendMessage('uno .uno:EnterString ' + JSON.stringify(command));
 	},
 
 	renderFont: function (fontName) {
-		L.Socket.sendMessage('renderfont font=' + window.encodeURIComponent(fontName));
+		this._socket.sendMessage('renderfont font=' + window.encodeURIComponent(fontName));
 	}
 });

@@ -208,7 +208,7 @@ L.TileLayer = L.GridLayer.extend({
 	_getToolbarCommandsValues: function() {
 		for (var i = 0; i < this._map.unoToolbarCommands.length; i++) {
 			var command = this._map.unoToolbarCommands[i];
-			L.Socket.sendMessage('commandvalues command=' + command);
+			this._map._socket.sendMessage('commandvalues command=' + command);
 		}
 	},
 
@@ -328,7 +328,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onDownloadAsMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		var parser = document.createElement('a');
 		parser.href = this._map.options.server;
 		var url = this._map.options.webserver + '/' +
@@ -353,12 +353,12 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onErrorMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind});
 	},
 
 	_onGetChildIdMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		this._map.fire('childid', {id: command.id});
 	},
 
@@ -451,7 +451,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onRenderFontMsg: function (textMsg, img) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		this._map.fire('renderfont', {
 			font: command.font,
 			img: img
@@ -549,7 +549,7 @@ L.TileLayer = L.GridLayer.extend({
 				clearTimeout(this._selectionContentRequest);
 			}
 			this._selectionContentRequest = setTimeout(L.bind(function () {
-				L.Socket.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
+				this._map._socket.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
 		}
 		this._onUpdateTextSelection();
 	},
@@ -590,7 +590,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onTileMsg: function (textMsg, img) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		var coords = this._twipsToCoords(command);
 		coords.z = command.zoom;
 		coords.part = command.part;
@@ -665,10 +665,10 @@ L.TileLayer = L.GridLayer.extend({
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
 		if (this._clientZoom) {
 			// the zoom level has changed
-			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
+			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
 			this._clientZoom = null;
 		}
-		L.Socket.sendMessage('mouse type=' + type +
+		this._map._socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
 				' buttons=' + buttons + ' modifier=' + modifier);
 	},
@@ -676,20 +676,20 @@ L.TileLayer = L.GridLayer.extend({
 	_postKeyboardEvent: function(type, charcode, keycode) {
 		if (this._clientZoom) {
 			// the zoom level has changed
-			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
+			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
 			this._clientZoom = null;
 		}
-		L.Socket.sendMessage('key type=' + type +
+		this._map._socket.sendMessage('key type=' + type +
 				' char=' + charcode + ' key=' + keycode);
 	},
 
 	_postSelectGraphicEvent: function(type, x, y) {
-		L.Socket.sendMessage('selectgraphic type=' + type +
+		this._map._socket.sendMessage('selectgraphic type=' + type +
 				' x=' + x + ' y=' + y);
 	},
 
 	_postSelectTextEvent: function(type, x, y) {
-		L.Socket.sendMessage('selecttext type=' + type +
+		this._map._socket.sendMessage('selecttext type=' + type +
 				' x=' + x + ' y=' + y);
 	},
 
@@ -921,7 +921,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onPaste: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		L.Socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.clipboardData.getData('text/plain'));
+		this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.clipboardData.getData('text/plain'));
 	},
 
 	_onDragStart: function () {
@@ -929,7 +929,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onRequestLOKSession: function () {
-		L.Socket.sendMessage('requestloksession');
+		this._map._socket.sendMessage('requestloksession');
 	},
 
 	_fitWidthZoom: function (e, maxZoom) {
@@ -991,7 +991,7 @@ L.TileLayer = L.GridLayer.extend({
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (force) {
 		if (this._cellCursorMarker || force) {
-			L.Socket.sendMessage('commandvalues command=.uno:CellCursor'
+			this._map._socket.sendMessage('commandvalues command=.uno:CellCursor'
 			                     + '?outputHeight=' + this._tileSize
 			                     + '&outputWidth=' + this._tileSize
 			                     + '&tileHeight=' + this._tileWidthTwips

@@ -35,7 +35,7 @@ L.Map.include({
 		searchCmd['SearchItem.Command'] = {};
 		searchCmd['SearchItem.Command'].type = 'long';
 		searchCmd['SearchItem.Command'].value = all;
-		L.Socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
+		this._socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
 	},
 
 	searchAll: function (text, backward) {
@@ -43,6 +43,6 @@ L.Map.include({
 	},
 
 	resetSelection: function () {
-		L.Socket.sendMessage('resetselection');
+		this._socket.sendMessage('resetselection');
 	}
 });

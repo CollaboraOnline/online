@@ -5,7 +5,7 @@ L.Map.include({
 	setPermission: function (perm) {
 		this._docLayer._permission = perm;
 		if (perm === 'edit') {
-			L.Socket.sendMessage('requestloksession');
+			this._socket.sendMessage('requestloksession');
 			this.dragging.disable();
 		}
 		else if (perm === 'view' || perm === 'readonly') {
@@ -22,7 +22,7 @@ L.Map.include({
 		if (this._docLayer._permission === 'edit') {
 			return;
 		}
-		L.Socket.sendMessage('requestloksession');
+		this._socket.sendMessage('requestloksession');
 		this.dragging.disable();
 	},
 

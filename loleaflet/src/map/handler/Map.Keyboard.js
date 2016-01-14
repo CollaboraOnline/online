@@ -343,17 +343,17 @@ L.Map.Keyboard = L.Handler.extend({
 			if (!e.originalEvent.shiftKey) {
 				switch (e.originalEvent.keyCode) {
 					case 53: // 5
-						L.Socket.sendMessage('uno .uno:Strikeout');
+						this._map._socket.sendMessage('uno .uno:Strikeout');
 						return true;
 					case 70: // f
-						L.Socket.sendMessage('uno .uno:InsertFootnote');
+						this._map._socket.sendMessage('uno .uno:InsertFootnote');
 						return true;
 					case 67: // c
 					case 77: // m
-						L.Socket.sendMessage('uno .uno:InsertAnnotation');
+						this._map._socket.sendMessage('uno .uno:InsertAnnotation');
 						return true;
 					case 68: // d
-						L.Socket.sendMessage('uno .uno:InsertEndnote');
+						this._map._socket.sendMessage('uno .uno:InsertEndnote');
 						return true;
 				}
 			}
@@ -364,14 +364,14 @@ L.Map.Keyboard = L.Handler.extend({
 		switch (e.originalEvent.keyCode) {
 			case 51: // 3
 				if (this._map.getDocType() === 'spreadsheet') {
-					L.Socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
-					L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+					this._map._socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
+					this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 					return true;
 				}
 				return false;
 			case 53: // 5
 				if (this._map.getDocType() === 'spreadsheet') {
-					L.Socket.sendMessage('uno .uno:Strikeout');
+					this._map._socket.sendMessage('uno .uno:Strikeout');
 					return true;
 				}
 				return false;
@@ -389,10 +389,10 @@ L.Map.Keyboard = L.Handler.extend({
 			case 112: // f1
 				L.Socket.sendMessage('uno .uno:NoteVisible');
 			case 188: // ,
-				L.Socket.sendMessage('uno .uno:SubScript');
+				this._map._socket.sendMessage('uno .uno:SubScript');
 				return true;
 			case 190: // .
-				L.Socket.sendMessage('uno .uno:SuperScript');
+				this._map._socket.sendMessage('uno .uno:SuperScript');
 				return true;
 		}
 		if (e.type === 'keypress' && e.originalEvent.key === 'c' && e.originalEvent.ctrlKey) {

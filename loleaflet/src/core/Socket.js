@@ -2,10 +2,10 @@
  * L.Socket contains methods for the communication with the server
  */
 
-L.Socket = {
+L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 
-	connect: function (map) {
+	initialize: function (map) {
 		try {
 			this.socket = new WebSocket(map.options.server);
 		} catch (e) {
@@ -261,10 +261,8 @@ L.Socket = {
 		}
 		return command;
 	}
-};
+});
 
-if (typeof String.prototype.startsWith !== 'function') {
-	String.prototype.startsWith = function (str) {
-		return this.slice(0, str.length) === str;
-	};
-}
+L.socket = function (map) {
+    return new L.Socket(map);
+};

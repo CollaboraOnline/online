@@ -11,7 +11,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
 			var strTwips = textMsg.match(/\d+/g);
 			command.x = parseInt(strTwips[0]);
@@ -68,7 +68,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		cursorPos = cursorPos.divideBy(this._tileSize);
 		toRequest.sort(function(x, y) {return x.coords.distanceTo(cursorPos) - y.coords.distanceTo(cursorPos);});
 		for (var i = 0; i < toRequest.length; i++) {
-			L.Socket.sendMessage(toRequest[i].msg, toRequest[i].key);
+			this._map._socket.sendMessage(toRequest[i].msg, toRequest[i].key);
 		}
 
 		for (key in this._tileCache) {
@@ -109,10 +109,10 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onZoomRowColumns: function () {
 		this._updateClientZoom();
 		if (this._clientZoom) {
-			L.Socket.sendMessage('clientzoom ' + this._clientZoom);
+			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
 			this._clientZoom = null;
 		}
-		L.Socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+		this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 	},
 
 	_onUpdateViewPort: function () {
@@ -131,7 +131,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
@@ -140,7 +140,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._documentInfo = textMsg;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
-			L.Socket.sendMessage('setclientpart part=' + this._selectedPart);
+			this._map._socket.sendMessage('setclientpart part=' + this._selectedPart);
 			var partNames = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
 			partNames = partNames.slice(partNames.length - this._parts);

@@ -5,7 +5,7 @@
 L.ImpressTileLayer = L.TileLayer.extend({
 
 	_onInvalidateTilesMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
 			var strTwips = textMsg.match(/\d+/g);
 			command.x = parseInt(strTwips[0]);
@@ -59,7 +59,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		cursorPos = cursorPos.divideBy(this._tileSize);
 		toRequest.sort(function(x, y) {return x.coords.distanceTo(cursorPos) - y.coords.distanceTo(cursorPos);});
 		for (var i = 0; i < toRequest.length; i++) {
-			L.Socket.sendMessage(toRequest[i].msg, toRequest[i].key);
+			this._map._socket.sendMessage(toRequest[i].msg, toRequest[i].key);
 		}
 
 		for (key in this._tileCache) {
@@ -103,7 +103,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
@@ -112,7 +112,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._documentInfo = textMsg;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
-			L.Socket.sendMessage('setclientpart part=' + this._selectedPart);
+			this._map._socket.sendMessage('setclientpart part=' + this._selectedPart);
 			this._resetPreFetching(true);
 			this._update();
 			if (this._preFetchPart !== this._selectedPart) {
