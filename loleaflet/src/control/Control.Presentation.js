@@ -70,6 +70,15 @@ L.Control.Presentation = L.Control.extend({
 			this._map.duplicatePage();
 		}
 		else if (id === 'deletepage') {
+			vex.dialog.confirm({
+				message: 'Are you sure you want to delete this page?',
+				callback: L.bind(this._onDelete, this)
+			});
+		}
+	},
+
+	_onDelete: function (e) {
+		if (e !== false) {
 			this._map.deletePage();
 		}
 	}
