@@ -414,7 +414,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onHyperlinkClickedMsg: function (textMsg) {
 		var link = textMsg.substring(18);
-		window.open(link, '_blank');
+		this._map.fire('hyperlinkclicked', {url: link});
 	},
 
 	_onInvalidateCursorMsg: function (textMsg) {

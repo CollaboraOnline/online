@@ -104,5 +104,7 @@
     globalMap.addControl(L.control.rowHeader());
     globalMap.addControl(L.control.presentation());
 
+    // handle the click on a hyperlink in the document
+    globalMap.on('hyperlinkclicked', function (e) { window.open(e.url, '_blank'); });
     </script>
 </body></html>
