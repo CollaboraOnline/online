@@ -69,10 +69,6 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
   FILE *file_pointer;
   char buffer[BUFFER_SIZE];
 
-  unsigned long long private_dirty = 0ull;
-  unsigned long long private_clean = 0ull;
-  unsigned long long shared_dirty = 0ull;
-  unsigned long long shared_clean = 0ull;
   unsigned long long total_private_dirty = 0ull;
   unsigned long long total_private_clean = 0ull;
   unsigned long long total_shared_dirty = 0ull;
@@ -91,25 +87,21 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
       {
         if (strncmp("Shared_Dirty", smap_key, 12) == 0)
         {
-          shared_dirty = smap_value;
           total_shared_dirty += smap_value;
           continue;
         }
         if (strncmp("Shared_Clean", smap_key, 12) == 0)
         {
-          shared_clean = smap_value;
           total_shared_clean += smap_value;
           continue;
         }
         if (strncmp("Private_Dirty", smap_key, 13) == 0)
         {
-          private_dirty = smap_value;
           total_private_dirty += smap_value;
           continue;
         }
         if (strncmp("Private_Clean", smap_key, 13) == 0)
         {
-          private_clean = smap_value;
           total_private_clean += smap_value;
           continue;
         }
