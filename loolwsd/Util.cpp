@@ -402,9 +402,9 @@ namespace Util
         aPoll.events = POLLIN;
         aPoll.revents = 0;
 
-        int nPoll = poll(&aPoll, 1, 3000);
+        const int nPoll = poll(&aPoll, 1, CHILD_TIMEOUT_SECS * 1000);
         if ( nPoll < 0 )
-            goto ErrorPoll;
+            return -1;
 
         if ( nPoll == 0 )
             errno = ETIME;
@@ -412,7 +412,6 @@ namespace Util
         if( (aPoll.revents & POLLIN) != 0 )
             nBytes = readFIFO(nPipe, pBuffer, nSize);
 
-    ErrorPoll:
         return nBytes;
     }
 
