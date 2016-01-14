@@ -63,6 +63,7 @@ AS_IF([test "$enable_debug" = yes],
 
 CXXFLAGS="$CXXFLAGS -std=c++11"
 CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror"
+CFLAGS="$CFLAGS -Wall -Wextra -Werror"
 AS_IF([test -z "$with_poco_libs"],
       [CXXFLAGS="$CXXFLAGS -Wshadow"])
 
