@@ -7,6 +7,28 @@ L.Map.include({
 			all = 0;
 		}
 
+		// check if there is a cached searchAll result for this phrase
+		// if there is update index for next/prev iteration
+		if (this._docLayer._searchResults && text === this._docLayer._searchTerm) {
+			if (backward) {
+				if (this._docLayer._searchIndex > 0) {
+					this._docLayer._searchIndex--;
+				}
+				else {
+					this._docLayer._searchIndex = this._docLayer._searchResults.length - 1;
+				}
+			} else {
+				if (this._docLayer._searchIndex < this._docLayer._searchResults.length - 1) {
+					this._docLayer._searchIndex++;
+				}
+				else {
+					this._docLayer._searchIndex = 0;
+				}
+			}
+			this.setPart(this._docLayer._searchResults[this._docLayer._searchIndex].part);
+			return;
+		}
+
 		var searchCmd = {
 			'SearchItem.SearchString': {
 				'type': 'string'
@@ -43,6 +65,7 @@ L.Map.include({
 	},
 
 	resetSelection: function () {
+		this._docLayer._clearSearchResults();
 		this._socket.sendMessage('resetselection');
 	}
 });
