@@ -4,13 +4,13 @@
 
 L.Socket = L.Class.extend({
 	initialize: function (map) {
+		this._map = map;
 		try {
 			this.socket = new WebSocket(map.options.server);
 		} catch (e) {
-			this.fire('error', {msg: 'Socket connection error'});
+			this._map.fire('error', {msg: 'Socket connection error', cmd: 'socket', kind: 'failed', id: 3});
 			return null;
 		}
-		this._map = map;
 		this._msgQueue = [];
 		this.socket.onerror = L.bind(this._onSocketError, map);
 		this.socket.onclose = L.bind(this._onSocketClose, map);
@@ -159,11 +159,11 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketError: function () {
-		this.fire('error', {msg: 'Socket connection error'});
+		this._map.fire('error', {msg: 'Socket connection error', cmd: 'socket', kind: 'failed', id: 3});
 	},
 
 	_onSocketClose: function () {
-		this.fire('error', {msg: 'Socket connection closed'});
+		this._map.fire('error', {msg: 'Socket connection closed', cmd: 'socket', kind: 'closed', id: 4});
 	},
 
 	parseServerCmd: function (msg) {
