@@ -18,87 +18,51 @@ INSTDIR=`cd $INSTDIR && /bin/pwd`
 cd / || exit 1
 
 (
-    # Produce a list of file names, one per line, that will be copied
-    # into the template tree of system files for the chroot jails.
+# Produce a list of file names, one per line, that will be copied
+# into the template tree of system files for the chroot jails.
 
-    if [ `uname -s` = Linux ]; then
+# First essential files and shared objects
+find etc/passwd etc/group etc/hosts \
+     etc/resolv.conf \
+     lib/ld-* lib64/ld-* \
+     lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
+     lib/libattr* lib/*-linux-gnu/libattr* \
+     etc/ld.so.* \
+     lib/libnss_* lib64/libnss_* lib/*-linux-gnu/libnss*\
+     var/cache/fontconfig \
+     etc/fonts \
+     etc/localtime \
+     usr/lib/locale/en_US.utf8 \
+     usr/lib/locale/C.UTF-8 \
+     usr/lib/locale/locale_archive \
+     usr/share/zoneinfo/* \
+     usr/share/liblangtag \
+     usr/lib/libpng* usr/lib64/libpng* \
+	 -type f
 
-	# First essential files and shared objects
-	find etc/passwd etc/group etc/hosts \
-	     etc/resolv.conf \
-	     lib/ld-* lib64/ld-* \
-	     lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
-	     lib/libattr* lib/*-linux-gnu/libattr* \
-	     etc/ld.so.* \
-	     lib/libnss_* lib64/libnss_* lib/*-linux-gnu/libnss*\
-	     var/cache/fontconfig \
-	     etc/fonts \
-	     etc/localtime \
-	     usr/lib/locale/en_US.utf8 \
-	     usr/lib/locale/C.UTF-8 \
-	     usr/lib/locale/locale_archive \
-	     usr/share/zoneinfo/* \
-	     usr/share/liblangtag \
-	     usr/lib/libpng* usr/lib64/libpng* \
-		 -type f
+find etc/fonts \
+     lib/ld-* lib64/ld-* \
+     lib/libnss_* lib64/libnss_* lib/*-linux-gnu/libnss*\
+     lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
+     lib/libattr* lib/*-linux-gnu/libattr* \
+     usr/lib/libpng* usr/lib64/libpng* \
+	 -type l
 
-	find etc/fonts \
-	     lib/ld-* lib64/ld-* \
-	     lib/libnss_* lib64/libnss_* lib/*-linux-gnu/libnss*\
-	     lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
-	     lib/libattr* lib/*-linux-gnu/libattr* \
-	     usr/lib/libpng* usr/lib64/libpng* \
-		 -type l
+# Go through the LO shared objects and check what system libraries
+# they link to.
+find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |
+while read file; do
+    ldd $file 2>/dev/null
+done |
+grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
 
-	# Go through the LO shared objects and check what system libraries
-	# they link to.
-	find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' |
-	while read file; do
-	    ldd $file 2>/dev/null
-	done |
-	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
-
-	# Go through the loolkit
-	find $POCODIR /usr/lib64 -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*' |
-	while read file; do
-	    echo $file
-	    ldd $file 2>/dev/null
-	done |
-	grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
-
-    else
-	find usr/lib/dyld  \
-	     usr/lib/*.dylib \
-	     usr/lib/system/*.dylib \
-	     System/Library/Frameworks/Accelerate.framework \
-	     System/Library/Frameworks/ApplicationServices.framework \
-	     System/Library/Frameworks/CFNetwork.framework \
-	     System/Library/Frameworks/Carbon.framework \
-	     System/Library/Frameworks/CoreFoundation.framework \
-	     System/Library/Frameworks/CoreGraphics.framework \
-	     System/Library/Frameworks/CoreServices.framework \
-	     System/Library/Frameworks/CoreText.framework \
-	     System/Library/Frameworks/DiskArbitration.framework \
-	     System/Library/Frameworks/Foundation.framework \
-	     System/Library/Frameworks/ImageIO.framework \
-	     System/Library/Frameworks/IOKit.framework \
-	     System/Library/Frameworks/IOSurface.framework \
-	     System/Library/Frameworks/NetFS.framework \
-	     System/Library/Frameworks/OpenDirectory.framework \
-	     System/Library/Frameworks/Security.framework \
-	     System/Library/Frameworks/SystemConfiguration.framework \
-	     System/Library/PrivateFrameworks/DataDetectorsCore.framework \
-	     System/Library/PrivateFrameworks/MultitouchSupport.framework \
-	     System/Library/PrivateFrameworks/NetAuth.framework \
-	     System/Library/PrivateFrameworks/login.framework \
-	         -type f
-
-	find $INSTDIR -name '*.dylib' |
-	while read file; do
-	    otool -L $file 2>/dev/null
-	done |
-	sed -e 's/^[ 	]//' | grep -E '^/(lib|usr/lib)/' | cut -d' ' -f1 | sort -u | sed -e 's,^/,,'
-    fi
+# Go through the loolkit
+find $POCODIR /usr/lib64 -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*' |
+while read file; do
+    echo $file
+    ldd $file 2>/dev/null
+done |
+grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
 ) |
 
 # Can't use -l because then symlinks won't be handled well enough.
