@@ -113,6 +113,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._levels = {};
 		this._tiles = {};
 		this._tileCache = {};
+		this._transientInvalidationKeys = {};
 
 		map._fadeAnimated = false;
 		this._viewReset();
@@ -590,6 +591,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onTileMsg: function (textMsg, img) {
+		this._transientInvalidationKeys = {};
 		var command = this._map._socket.parseServerCmd(textMsg);
 		var coords = this._twipsToCoords(command);
 		coords.z = command.zoom;
