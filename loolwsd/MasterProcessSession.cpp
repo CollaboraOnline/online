@@ -289,6 +289,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
              tokens[0] != "setpage" &&
              tokens[0] != "status" &&
              tokens[0] != "tile" &&
+             tokens[0] != "tilecombine" &&
              tokens[0] != "uno")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
@@ -327,6 +328,10 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "tile")
     {
         sendTile(buffer, length, tokens);
+    }
+    else if (tokens[0] == "tilecombine")
+    {
+        sendCombinedTiles(buffer, length, tokens);
     }
     else
     {
@@ -565,6 +570,14 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         return;
     }
 
+    if (_peer.expired())
+        dispatchChild();
+    forwardToPeer(buffer, length);
+}
+
+void MasterProcessSession::sendCombinedTiles(const char *buffer, int length, StringTokenizer& /*tokens*/)
+{
+    // This is for invalidation - we should not have cached tiles
     if (_peer.expired())
         dispatchChild();
     forwardToPeer(buffer, length);
