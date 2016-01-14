@@ -396,6 +396,9 @@ public:
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && !_stop);
+            Log::debug() << "Finishing " << thread_name << ". stop " << _stop
+                         << ", payload size: " << n
+                         << ", flags: " << std::hex << flags << Log::end;
 
             queue.clear();
             queue.put("eof");
@@ -403,7 +406,6 @@ public:
 
             // We should probably send the Client some sensible message and reason.
             _session->sendTextFrame("eof");
-            _session.reset();
         }
         catch (const Exception& exc)
         {
@@ -459,7 +461,7 @@ public:
 
     ~Document()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
+        std::unique_lock<std::recursive_mutex> lock(_mutex);
 
         Log::info("~Document dtor for url [" + _url + "] on child [" + _jailId +
                   "]. There are " + std::to_string(_clientViews) + " views.");
@@ -505,7 +507,7 @@ public:
 
     void createSession(const std::string& sessionId, const unsigned intSessionId)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
+        std::unique_lock<std::recursive_mutex> lock(_mutex);
 
         const auto& it = _connections.find(intSessionId);
         if (it != _connections.end())
@@ -556,26 +558,41 @@ public:
         Log::debug("Connections: " + std::to_string(_connections.size()));
     }
 
-    void purgeSessions()
+    /// Purges dead connections and returns
+    /// the remaining number of clients.
+    size_t purgeSessions()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
+        std::unique_lock<std::recursive_mutex> lock(_mutex);
 
         for (auto it =_connections.cbegin(); it != _connections.cend(); )
         {
             if (!it->second->isRunning())
             {
-                _connections.erase(it++);
-                continue;
+                onUnload(it->second->getSession()->getId());
+                it = _connections.erase(it);
             }
-            it++;
+            else
+            {
+                ++it;
+            }
         }
+
+        return _connections.size();
     }
 
+    /// Returns true if at least one *live* connection exists.
+    /// Does not consider user activity, just socket status.
     bool hasConnections()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
+        return purgeSessions() > 0;
+    }
 
-        return !_connections.empty();
+    /// Returns true if there is no activity and
+    /// the document is saved.
+    bool canDiscard()
+    {
+        //TODO: Implement proper time-out on inactivity.
+        return !hasConnections();
     }
 
 private:
@@ -593,7 +610,7 @@ private:
         Document* self = reinterpret_cast<Document*>(pData);
         if (self)
         {
-            std::unique_lock<std::mutex> lock(self->_mutex);
+            std::unique_lock<std::recursive_mutex> lock(self->_mutex);
 
             for (auto& it: self->_connections)
             {
@@ -616,7 +633,7 @@ private:
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
         const unsigned intSessionId = Util::decodeId(sessionId);
 
-        std::unique_lock<std::mutex> lock(_mutex);
+        std::unique_lock<std::recursive_mutex> lock(_mutex);
 
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
@@ -666,19 +683,18 @@ private:
 
     void onUnload(const std::string& sessionId)
     {
-        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews - 1) + " views left.");
+        std::unique_lock<std::recursive_mutex> lock(_mutex);
+
         const unsigned intSessionId = Util::decodeId(sessionId);
-
-        std::unique_lock<std::mutex> lock(_mutex);
-
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
         {
-            Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
+            // Nothing to do.
             return;
         }
 
         --_clientViews;
+        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
 
         if (_multiView && _loKitDocument)
         {
@@ -701,7 +717,7 @@ private:
 
     LibreOfficeKitDocument *_loKitDocument;
 
-    std::mutex _mutex;
+    std::recursive_mutex _mutex;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
     std::atomic<unsigned> _clientViews;
 
@@ -824,8 +840,14 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                     StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                     aResponse = std::to_string(Process::id()) + " ";
 
+                    Log::trace("Recv: " + aMessage);
                     if (tokens[0] == "search")
                     {
+                        for (auto it = _documents.cbegin(); it != _documents.cend(); )
+                        {
+                            it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
+                        }
+
                         if (_documents.empty())
                         {
                             aResponse += "empty \r\n";
@@ -855,6 +877,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         aResponse = "bad \r\n";
                     }
 
+                    Log::trace("Send: " + aResponse);
                     Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length());
                     aMessage.clear();
                 }
