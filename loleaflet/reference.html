@@ -2046,6 +2046,12 @@ unexpected behaviour.</h4>
 		<th>description</th>
 	</tr>
 	<tr>
+		<td><code><b>id</b></code></td>
+		<td><code>Number</code></td>
+		<td>Identificator of the error that can be used as indication
+		of error message to present to the user.</td>
+	</tr>
+	<tr>
 		<td><code><b>msg</b></code></td>
 		<td><code>String</code></td>
 		<td>If present, the error message.</td>
@@ -2059,6 +2065,32 @@ unexpected behaviour.</h4>
 		<td><code><b>kind</b></code></td>
 		<td><code>String</code></td>
 		<td>If present, the kind of error associated with the command.</td>
+	</tr>
+</table>
+
+The <code>id</code> property of ErrorEvent can have the following values:
+
+<table data-id='events'>
+	<tr>
+		<th>value</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>1</b></code></td>
+		<td>Internal error. Things still may work to some extent, but
+		the session becomes unreliable.</td>
+	</tr>
+	<tr>
+		<td><code><b>2</b></code></td>
+		<td>Document couldn't be loaded.</td>
+	</tr>
+	<tr>
+		<td><code><b>3</b></code></td>
+		<td>Socket connection error.</td>
+	</tr>
+	<tr>
+		<td><code><b>4</b></code></td>
+		<td>Socket connection was closed.</td>
 	</tr>
 </table>
 

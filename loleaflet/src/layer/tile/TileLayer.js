@@ -354,7 +354,14 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onErrorMsg: function (textMsg) {
 		var command = this._map._socket.parseServerCmd(textMsg);
-		this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind});
+
+		// let's provide some convenience error codes for the UI
+		var errorId = 1; // internal error
+		if (command.errorCmd === 'load') {
+		    errorId = 2; // document cannot be loaded
+		}
+
+		this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind, id: errorId});
 	},
 
 	_onGetChildIdMsg: function (textMsg) {
@@ -812,7 +819,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			this._graphicMarker = L.rectangle(this._graphicSelection, {fill: false});
 			if (!this._graphicMarker) {
-				this._map.fire('error', {msg: 'Graphic marker initialization'});
+				this._map.fire('error', {msg: 'Graphic marker initialization', cmd: 'marker', kind: 'failed', id: 1});
 				return;
 			}
 			this._graphicMarker.editing.enable();
@@ -833,7 +840,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			this._cellCursorMarker = L.rectangle(this._cellCursor, {fill: false, color: '#000000', weight: 2});
 			if (!this._cellCursorMarker) {
-				this._map.fire('error', {msg: 'Cell Cursor marker initialization'});
+				this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
 				return;
 			}
 			this._map.addLayer(this._cellCursorMarker);
