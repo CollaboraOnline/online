@@ -532,7 +532,7 @@ L.GridLayer = L.Layer.extend({
 			if (newView) {
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
-				L.Socket.sendMessage('canceltiles');
+				this._map._socket.sendMessage('canceltiles');
 				for (key in this._tiles) {
 					if (!this._tiles[key].loaded) {
 						L.DomUtil.remove(this._tiles[key].el);
@@ -694,7 +694,7 @@ L.GridLayer = L.Layer.extend({
 			if (coords.part !== this._selectedPart) {
 				msg += ' prefetch=true';
 			}
-			L.Socket.sendMessage(msg, key);
+			this._map._socket.sendMessage(msg, key);
 		}
 		else {
 			tile.src = this._tileCache[key];

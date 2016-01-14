@@ -36,14 +36,14 @@ describe('TileBench', function () {
 
 		// add a timestamp to tile messages so we can identify
 		// the response
-		L.Socket.sendMessage = L.bind(function (msg, coords) {
+		map._socket.sendMessage = L.bind(function (msg, coords) {
 			var now = Date.now();
 			if (msg.startsWith('tile')) {
 				msg += ' timestamp=' + now;
 			}
 			L.Log.log(msg, L.OUTGOING, coords, now);
 			this.socket.send(msg);
-		}, L.Socket);
+		}, map._socket);
 	});
 
 	afterEach(function () {
@@ -100,7 +100,7 @@ describe('TileBench', function () {
 
 			for (var i = 0; i < keyInput.length; i++) {
 				setTimeout(L.bind(function () {
-					L.Socket.sendMessage(keyInput[this][1]);
+					map._socket.sendMessage(keyInput[this][1]);
 				}, i), keyInput[i][0]);
 			}
 		});

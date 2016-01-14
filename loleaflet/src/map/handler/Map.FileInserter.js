@@ -29,7 +29,7 @@ L.Map.FileInserter = L.Handler.extend({
 
 	_onInsertFile: function (e) {
 		if (!this._childId) {
-			L.Socket.sendMessage('getchildid');
+			this._map._socket.sendMessage('getchildid');
 			this._toInsert[Date.now()] = e.file;
 		}
 		else {
@@ -50,7 +50,7 @@ L.Map.FileInserter = L.Handler.extend({
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function () {
 			if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-				L.Socket.sendMessage('insertfile name=' + name + ' type=graphic');
+				this._map._socket.sendMessage('insertfile name=' + name + ' type=graphic');
 			}
 		};
 		xmlHttp.open('POST', url, true);

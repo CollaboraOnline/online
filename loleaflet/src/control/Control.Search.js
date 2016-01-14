@@ -47,7 +47,7 @@ L.Control.Search = L.Control.extend({
 			this._refocusOnMap();
 		}
 		else {
-			L.Socket.sendMessage('requestloksession');
+			this._map._socket.sendMessage('requestloksession');
 		}
 	},
 

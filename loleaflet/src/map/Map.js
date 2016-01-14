@@ -67,7 +67,7 @@ L.Map = L.Evented.extend({
 			L.Icon.Default.imagePath = this.options.imagePath;
 		}
 		this._addLayers(this.options.layers);
-		L.Socket.connect(this);
+		this._socket = L.socket(this);
 
 		// Inhibit the context menu - the browser thinks that the document
 		// is just a bunch of images, hence the context menu is useless (tdf#94599)
@@ -273,7 +273,7 @@ L.Map = L.Evented.extend({
 			this.removeLayer(this._docLayer);
 		}
 		this.removeControls();
-		L.Socket.close();
+		this._socket.close();
 		return this;
 	},
 

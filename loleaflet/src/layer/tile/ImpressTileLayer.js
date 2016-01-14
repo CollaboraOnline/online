@@ -5,7 +5,7 @@
 L.ImpressTileLayer = L.TileLayer.extend({
 
 	_onInvalidateTilesMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
 			var strTwips = textMsg.match(/\d+/g);
 			command.x = parseInt(strTwips[0]);
@@ -67,7 +67,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				'tilewidth=' + this._tileWidthTwips + ' ' +
 				'tileheight=' + this._tileHeightTwips;
 
-			L.Socket.sendMessage(message, "");
+			this._map._socket.sendMessage(message, "");
 		}
 
 		for (key in this._tileCache) {
@@ -111,7 +111,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = L.Socket.parseServerCmd(textMsg);
+		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
@@ -120,7 +120,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._documentInfo = textMsg;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
-			L.Socket.sendMessage('setclientpart part=' + this._selectedPart);
+			this._map._socket.sendMessage('setclientpart part=' + this._selectedPart);
 			var partNames = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
 			partNames = partNames.slice(partNames.length - this._parts);

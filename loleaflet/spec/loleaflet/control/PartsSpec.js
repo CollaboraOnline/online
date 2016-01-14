@@ -71,7 +71,7 @@ describe('Parts and Pages', function () {
 					done();
 				}
 			});
-			L.Socket.sendMessage('uno .uno:LeftPara');
+			map._socket.sendMessage('uno .uno:LeftPara');
 		});
 
 		it('Remove the first preview', function (done) {
@@ -81,7 +81,7 @@ describe('Parts and Pages', function () {
 				done();
 			});
 			map.removePreviewUpdate(1);
-			L.Socket.sendMessage('uno .uno:CenterPara');
+			map._socket.sendMessage('uno .uno:CenterPara');
 		});
 	});
 
