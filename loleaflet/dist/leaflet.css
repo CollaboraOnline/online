@@ -727,25 +727,22 @@ a.leaflet-control-buttons:hover:first-child {
 	margin: 0px;
 	}
 
-.spreadsheet-table-row-cell-text {
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	padding: 0px;
-	margin: 0px;
-	height: 100%;
-	}
+.spreadsheet-rows-container {
+	border-top: 1px solid darkgrey;
+	border-left: 1px solid darkgrey;
+	border-right: 1px solid darkgrey;
+	border-bottom: 1px solid darkgrey;
+	background-color: lightgrey;
 
-.spreadsheet-container-row {
 	position: absolute;
 	left: 0;
 	top: 100px;
-	width: 50px;
+	width: 48px;
 	bottom: 20px;
 	overflow: hidden;
 	}
 
-.spreadsheet-table-row {
-	table-layout: fixed;
+.spreadsheet-rows {
 	width: 100%;
 	height: 100%;
 	border-spacing: 0px !important;
@@ -754,16 +751,15 @@ a.leaflet-control-buttons:hover:first-child {
 	padding: 0px;
 	}
 
-.spreadsheet-table-row-cell {
-	border-top: 0px;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-bottom: 1px solid black;
-	background-color: darkgrey;
-	font-size: 90%;
+.spreadsheet-row {
+	border-bottom: 1px solid darkgrey;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	padding: 0px;
+	padding-left: 8px;
 	margin: 0px;
-	overflow: hidden;
+	height: 100%;
 	}
 
 .slide-show {
