@@ -243,7 +243,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         _availableChildSessionCV.notify_one();
 
         // log first lokit child pid information
-        if ( LOOLWSD::doTest )
+        if ( LOOLWSD::DoTest )
         {
             Poco::FileOutputStream filePID(LOOLWSD::LOKIT_PIDLOG);
             if (filePID.good())
@@ -361,7 +361,7 @@ bool MasterProcessSession::haveSeparateProcess()
 
 Poco::Path MasterProcessSession::getJailPath(const std::string& childId)
 {
-    return Path::forDirectory(LOOLWSD::childRoot + Path::separator() + childId);
+    return Path::forDirectory(LOOLWSD::ChildRoot + Path::separator() + childId);
 }
 
 bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
@@ -631,7 +631,7 @@ void MasterProcessSession::dispatchChild()
         return;
     }
 
-    const auto jailRoot = Poco::Path(LOOLWSD::childRoot, LOOLWSD::jailId);
+    const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, LOOLWSD::JailId);
     const auto childId = std::to_string(childSession->_pidChild);
 
     auto document = DocumentURI::create(_docURL, jailRoot.toString(), childId);

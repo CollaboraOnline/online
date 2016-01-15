@@ -284,7 +284,7 @@ std::string TileCache::toplevelCacheDirName()
 
     digestEngine.update(_docURL.c_str(), _docURL.size());
 
-    return (LOOLWSD::cache + "/" +
+    return (LOOLWSD::Cache + "/" +
             DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
 }
 

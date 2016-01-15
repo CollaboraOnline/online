@@ -388,7 +388,7 @@ public:
                 {
                     try {
                         Log::info() << "Perform insertfile: " << formChildid << ", " << formName << Log::end;
-                        const std::string dirPath = LOOLWSD::childRoot + formChildid
+                        const std::string dirPath = LOOLWSD::ChildRoot + formChildid
                                                   + JailedDocumentRoot + "insertfile";
                         File(dirPath).createDirectories();
                         std::string fileName = dirPath + Path::separator() + form.get("name");
@@ -413,7 +413,7 @@ public:
             else if (tokens.count() >= 4)
             {
                 // The user might request a file to download
-                const std::string dirPath = LOOLWSD::childRoot + tokens[1]
+                const std::string dirPath = LOOLWSD::ChildRoot + tokens[1]
                                           + JailedDocumentRoot + tokens[2];
                 std::string fileName;
                 URI::decode(tokens[3], fileName);
@@ -659,16 +659,16 @@ private:
 
 std::atomic<unsigned> LOOLWSD::NextSessionId;
 int LOOLWSD::BrokerWritePipe = -1;
-std::string LOOLWSD::cache = LOOLWSD_CACHEDIR;
-std::string LOOLWSD::sysTemplate;
-std::string LOOLWSD::loTemplate;
-std::string LOOLWSD::childRoot;
-std::string LOOLWSD::jailId;
-std::string LOOLWSD::loSubPath = "lo";
+std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
+std::string LOOLWSD::SysTemplate;
+std::string LOOLWSD::LoTemplate;
+std::string LOOLWSD::ChildRoot;
+std::string LOOLWSD::JailId;
+std::string LOOLWSD::LoSubPath = "lo";
 Poco::NamedMutex LOOLWSD::NamedMutexLOOL("loolwsd");
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
-bool LOOLWSD::doTest = false;
+bool LOOLWSD::DoTest = false;
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 const std::string LOOLWSD::LOKIT_PIDLOG = "/tmp/lokit.pid";
@@ -726,7 +726,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("directory"));
 
-    optionSet.addOption(Option("losubpath", "", "Relative path where the LibreOffice installation will be copied inside a jail (default: '" + loSubPath + "').")
+    optionSet.addOption(Option("losubpath", "", "Relative path where the LibreOffice installation will be copied inside a jail (default: '" + LoSubPath + "').")
                         .required(false)
                         .repeatable(false)
                         .argument("relative path"));
@@ -760,19 +760,19 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
     else if (optionName == "cache")
-        cache = value;
+        Cache = value;
     else if (optionName == "systemplate")
-        sysTemplate = value;
+        SysTemplate = value;
     else if (optionName == "lotemplate")
-        loTemplate = value;
+        LoTemplate = value;
     else if (optionName == "childroot")
-        childRoot = value;
+        ChildRoot = value;
     else if (optionName == "losubpath")
-        loSubPath = value;
+        LoSubPath = value;
     else if (optionName == "numprespawns")
         NumPreSpawnedChildren = std::stoi(value);
     else if (optionName == "test")
-        LOOLWSD::doTest = true;
+        LOOLWSD::DoTest = true;
 #if ENABLE_DEBUG
     else if (optionName == "uid")
         uid = std::stoull(value);
@@ -792,10 +792,10 @@ bool LOOLWSD::createBroker(const std::string& rJailId)
 {
     Process::Args args;
 
-    args.push_back("--losubpath=" + LOOLWSD::loSubPath);
-    args.push_back("--systemplate=" + sysTemplate);
-    args.push_back("--lotemplate=" + loTemplate);
-    args.push_back("--childroot=" + childRoot);
+    args.push_back("--losubpath=" + LOOLWSD::LoSubPath);
+    args.push_back("--systemplate=" + SysTemplate);
+    args.push_back("--lotemplate=" + LoTemplate);
+    args.push_back("--childroot=" + ChildRoot);
     args.push_back("--jailid=" + rJailId);
     args.push_back("--numprespawns=" + std::to_string(NumPreSpawnedChildren));
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
@@ -830,9 +830,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     Util::setSignals(false);
 
-    if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
+    if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        Log::error("Unable to access cache [" + cache +
+        Log::error("Unable to access cache [" + Cache +
                    "] please make sure it exists, and has write permission for this user.");
         return Application::EXIT_UNAVAILABLE;
     }
@@ -841,20 +841,20 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // so must check options required in the parent (but not in the
     // child) separately now. Also check for options that are
     // meaningless for the parent.
-    if (sysTemplate.empty())
+    if (SysTemplate.empty())
         throw MissingOptionException("systemplate");
-    if (loTemplate.empty())
+    if (LoTemplate.empty())
         throw MissingOptionException("lotemplate");
 
-    if (childRoot.empty())
+    if (ChildRoot.empty())
         throw MissingOptionException("childroot");
-    else if (childRoot[childRoot.size() - 1] != Path::separator())
-        childRoot += Path::separator();
+    else if (ChildRoot[ChildRoot.size() - 1] != Path::separator())
+        ChildRoot += Path::separator();
 
     if (ClientPortNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
 
-    if (LOOLWSD::doTest)
+    if (LOOLWSD::DoTest)
         NumPreSpawnedChildren = 1;
 
     // log pid information
@@ -872,8 +872,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     NamedMutexLOOL.lock();
 
-    jailId = Util::createRandomDir(childRoot);
-    if (!createBroker(jailId))
+    JailId = Util::createRandomDir(ChildRoot);
+    if (!createBroker(JailId))
     {
         Log::error("Failed to spawn loolBroker.");
         return Application::EXIT_UNAVAILABLE;
@@ -912,7 +912,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     TestInput input(*this, svs, srv);
     Thread inputThread;
-    if (LOOLWSD::doTest)
+    if (LOOLWSD::DoTest)
     {
         inputThread.start(input);
         waitForTerminationRequest();
@@ -920,7 +920,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     int status = 0;
     unsigned timeoutCounter = 0;
-    while (!TerminationFlag && !LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
+    while (!TerminationFlag && !LOOLWSD::DoTest && MasterProcessSession::_childProcesses.size() > 0)
     {
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
@@ -960,7 +960,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         }
     }
 
-    if (LOOLWSD::doTest)
+    if (LOOLWSD::DoTest)
         inputThread.join();
 
     close(BrokerWritePipe);
@@ -983,12 +983,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
 
-    Log::info("Cleaning up childroot directory [" + childRoot + "].");
+    Log::info("Cleaning up childroot directory [" + ChildRoot + "].");
     std::vector<std::string> jails;
-    File(childRoot).list(jails);
+    File(ChildRoot).list(jails);
     for (auto& jail : jails)
     {
-        const auto path = childRoot + jail;
+        const auto path = ChildRoot + jail;
         Log::info("Removing jail [" + path + "].");
         Util::removeFile(path, true);
     }

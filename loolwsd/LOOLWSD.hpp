@@ -155,13 +155,13 @@ public:
     static std::atomic<unsigned> NextSessionId;
     static int NumPreSpawnedChildren;
     static int BrokerWritePipe;
-    static bool doTest;
-    static std::string cache;
-    static std::string sysTemplate;
-    static std::string loTemplate;
-    static std::string childRoot;
-    static std::string jailId;
-    static std::string loSubPath;
+    static bool DoTest;
+    static std::string Cache;
+    static std::string SysTemplate;
+    static std::string LoTemplate;
+    static std::string ChildRoot;
+    static std::string JailId;
+    static std::string LoSubPath;
     static Poco::NamedMutex NamedMutexLOOL;
 
     static const std::string CHILD_URI;
