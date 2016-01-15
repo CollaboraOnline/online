@@ -15,30 +15,19 @@ L.Control.ColumnHeader = L.Control.extend({
 		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
 		var docContainer = this._map.options.documentContainer;
-		var divHeader = L.DomUtil.create('div', 'spreadsheet-container-column', docContainer.parentElement);
-		var tableContainer =  L.DomUtil.create('table', 'spreadsheet-container-table', divHeader);
-		var trContainer = L.DomUtil.create('tr', '', tableContainer);
-		var thCorner = L.DomUtil.create('th', 'spreadsheet-container-th-corner', trContainer);
-		var tableCorner = L.DomUtil.create('table', 'spreadsheet-table-corner', thCorner);
-		var trCorner = L.DomUtil.create('tr', '', tableCorner);
-		L.DomUtil.create('th', '', trCorner);
-
-		var thColumns = L.DomUtil.create('th', 'spreadsheet-container-th-column', trContainer);
-		this._table = L.DomUtil.create('table', 'spreadsheet-table-column', thColumns);
-		this._columns = L.DomUtil.create('tr', '', this._table);
+		L.DomUtil.create('div', 'spreadsheet-corner', docContainer.parentElement);
+		var headersContainer = L.DomUtil.create('div', 'spreadsheet-columns-container', docContainer.parentElement);
+		this._columns = L.DomUtil.create('div', 'spreadsheet-columns', headersContainer);
 
 		this._position = 0;
 		this._totalWidth = 0;
 		this._viewPort = 0;
-
-		// dummy initial header
-		var dummy = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
-		L.DomUtil.create('div', 'spreadsheet-table-column-cell-text', dummy);
 	},
 
 	clearColumns : function () {
-		L.DomUtil.remove(this._columns);
-		this._columns = L.DomUtil.create('tr', '', this._table);
+		while (this._columns.firstChild) {
+			this._columns.removeChild(this._columns.firstChild);
+		}
 	},
 
 	setViewPort: function(e) {
@@ -49,7 +38,7 @@ L.Control.ColumnHeader = L.Control.extend({
 	setScrollPosition: function (e) {
 		var position = -e.x;
 		this._position = Math.min(0, position);
-		L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
+		L.DomUtil.setStyle(this._columns, 'left', this._position + 'px');
 	},
 
 	offsetScrollPosition: function (e) {
@@ -57,7 +46,7 @@ L.Control.ColumnHeader = L.Control.extend({
 		this._position = Math.min(0,
 					  Math.max(this._position - offset,
 						   -(this._totalWidth - this._viewPort)));
-		L.DomUtil.setStyle(this._table, 'left', this._position + 'px');
+		L.DomUtil.setStyle(this._columns, 'left', this._position + 'px');
 	},
 
 	viewRowColumnHeaders: function (e) {
@@ -65,23 +54,16 @@ L.Control.ColumnHeader = L.Control.extend({
 	},
 
 	fillColumns: function (columns, converter, context) {
-		var iterator, twip, width, column, text;
+		var iterator, twip, width, text;
 
 		this.clearColumns();
 		for (iterator = 0; iterator < columns.length; iterator++) {
 			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
 			twip = new L.Point(width, width);
-			column = L.DomUtil.create('th', 'spreadsheet-table-column-cell', this._columns);
-			text = L.DomUtil.create('div', 'spreadsheet-table-column-cell-text', column);
+			text = L.DomUtil.create('div', 'spreadsheet-column', this._columns);
 			text.innerHTML = columns[iterator].text;
-			column.width = Math.round(converter.call(context, twip).x) - 1 + 'px';
-		}
-		if (this._map.getDocSize().x < this._map.getSize().x) {
-			// the column headers no longer need to strecth to the whole screen
-			L.DomUtil.setStyle(this._table, 'width', 0);
-		}
-		else {
-			L.DomUtil.setStyle(this._table, 'width', '100%');
+			width = Math.round(converter.call(context, twip).x) - 1 + 'px';
+			L.DomUtil.setStyle(text, 'width', width);
 		}
 	},
 
