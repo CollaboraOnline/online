@@ -651,7 +651,7 @@ a.leaflet-control-buttons:hover:first-child {
 	bottom: 20px !important;
 	}
 
-.spreadsheet-corner {
+.spreadsheet-header-corner {
 	border-top: 1px solid darkgrey;
 	border-left: 1px solid darkgrey;
 	border-right: 1px solid darkgrey;
@@ -667,7 +667,7 @@ a.leaflet-control-buttons:hover:first-child {
 	height: 19px;
 	}
 
-.spreadsheet-columns-container {
+.spreadsheet-header-columns-container {
 	border-top: 1px solid darkgrey;
 	border-left: 1px solid darkgrey;
 	border-right: 1px solid darkgrey;
@@ -684,7 +684,7 @@ a.leaflet-control-buttons:hover:first-child {
 	overflow: hidden;
 	}
 
-.spreadsheet-columns {
+.spreadsheet-header-columns {
 	display: inline-block;
 	white-space: nowrap;
 	width: 100%;
@@ -694,7 +694,7 @@ a.leaflet-control-buttons:hover:first-child {
 	padding: 0px;
 	}
 
-.spreadsheet-column {
+.spreadsheet-header-column {
 	border-right: 1px solid darkgrey;
 
 	display: inline-block;
@@ -709,7 +709,7 @@ a.leaflet-control-buttons:hover:first-child {
 	line-height: 100%;
 	}
 
-.spreadsheet-rows-container {
+.spreadsheet-header-rows-container {
 	border-top: 1px solid darkgrey;
 	border-left: 1px solid darkgrey;
 	border-right: 1px solid darkgrey;
@@ -724,7 +724,7 @@ a.leaflet-control-buttons:hover:first-child {
 	overflow: hidden;
 	}
 
-.spreadsheet-rows {
+.spreadsheet-header-rows {
 	width: 100%;
 	height: 100%;
 	border-spacing: 0px !important;
@@ -733,7 +733,7 @@ a.leaflet-control-buttons:hover:first-child {
 	padding: 0px;
 	}
 
-.spreadsheet-row {
+.spreadsheet-header-row {
 	border-bottom: 1px solid darkgrey;
 
 	text-overflow: ellipsis;
