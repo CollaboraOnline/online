@@ -651,80 +651,62 @@ a.leaflet-control-buttons:hover:first-child {
 	bottom: 20px !important;
 	}
 
-.spreadsheet-container-column {
+.spreadsheet-corner {
+	border-top: 1px solid darkgrey;
+	border-left: 1px solid darkgrey;
+	border-right: 1px solid darkgrey;
+	border-bottom: 1px solid darkgrey;
+	background-color: lightgrey;
+
 	position: absolute;
+	padding: 0px;
+	margin: 0px;
 	left: 0px;
 	top: 80px;
+	width: 49px;
+	height: 19px;
+	}
+
+.spreadsheet-columns-container {
+	border-top: 1px solid darkgrey;
+	border-left: 1px solid darkgrey;
+	border-right: 1px solid darkgrey;
+	border-bottom: 1px solid darkgrey;
+	background-color: lightgrey;
+
+	position: absolute;
+	display: inline-block;
+	white-space: nowrap;
+	left: 49px;
+	top: 80px;
 	width: 100%;
-	height: 20px;
-	margin: 0px;
-	padding: 0px;
-	}
-
-.spreadsheet-container-table {
-	table-layout: fixed;
-	width: 100%;
-	height: 100%;
-	border-spacing: 0px;
-	border-collapse: collapse;
-	border-width: 0px;
-	margin: 0px;
-	padding: 0px;
-	}
-
-.spreadsheet-table-corner {
-	table-layout: fixed;
-	width: 100%;
-	height: 100%;
-	border-spacing: 0px;
-	margin: 0px;
-	padding: 0px;
-	border: 1px solid black;
-	background-color: darkgrey;
-	}
-
-.spreadsheet-container-th-corner {
-	padding: 0px;
-	margin: 0px;
-	width: 50px;
-	height: 20px;
-	}
-
-.spreadsheet-container-th-column {
-	padding: 0px;
-	margin: 0px;
-	border-width: 0px;
+	height: 19px;
 	overflow: hidden;
 	}
 
-.spreadsheet-table-column {
-	table-layout: fixed;
-	left: 0px;
+.spreadsheet-columns {
+	display: inline-block;
+	white-space: nowrap;
 	width: 100%;
 	height: 100%;
-	border-spacing: 0px;
 	position: relative;
 	margin: 0px;
 	padding: 0px;
 	}
 
-.spreadsheet-table-column-cell {
-	border-left: 0px;
-	border-right: 1px solid black;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-	background-color: darkgrey;
-	overflow: hidden;
-	font-size: 90%;
-	padding: 0px;
-	margin: 0px;
-	}
+.spreadsheet-column {
+	border-right: 1px solid darkgrey;
 
-.spreadsheet-table-column-cell-text {
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	padding: 0px;
+	padding-top: 4px;
 	margin: 0px;
+	height: 100%;
+	line-height: 100%;
 	}
 
 .spreadsheet-rows-container {
