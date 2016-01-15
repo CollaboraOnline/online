@@ -148,7 +148,7 @@ L.Map.include({
 		if (this.getDocType() !== 'presentation') {
 			return;
 		}
-		L.Socket.sendMessage('uno .uno:InsertPage');
+		this._socket.sendMessage('uno .uno:InsertPage');
 		var docLayer = this._docLayer;
 
 		this.fire('insertpage', {
@@ -164,7 +164,7 @@ L.Map.include({
 		if (this.getDocType() !== 'presentation') {
 			return;
 		}
-		L.Socket.sendMessage('uno .uno:DuplicatePage');
+		this._socket.sendMessage('uno .uno:DuplicatePage');
 		var docLayer = this._docLayer;
 
 		this.fire('insertpage', {
@@ -181,7 +181,7 @@ L.Map.include({
 			return;
 		}
 
-		L.Socket.sendMessage('uno .uno:DeletePage');
+		this._socket.sendMessage('uno .uno:DeletePage');
 		var docLayer = this._docLayer;
 		// TO DO: Deleting all the pages causes problem.
 		if (docLayer._parts === 1) {
