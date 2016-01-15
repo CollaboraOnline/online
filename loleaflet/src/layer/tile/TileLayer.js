@@ -943,7 +943,39 @@ L.TileLayer = L.GridLayer.extend({
 	_onDrop: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.dataTransfer.getData("text/plain"));
+
+		// handle content
+		var types = e.dataTransfer.types;
+		var handled = false;
+		for (var t = 0; !handled && t < types.length; t++) {
+			var type = types[t];
+			if (type === 'text/html') {
+				// TODO this needs loolwsd fixing, to support multiline data (blob)
+				// this._map._socket.sendMessage('paste mimetype=text/html data=' + e.dataTransfer.getData(type));
+				// handled = true;
+			}
+			else if (type === 'text/plain') {
+				this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.dataTransfer.getData(type));
+				handled = true;
+			}
+			else if (type === 'Files') {
+				var files = e.dataTransfer.files;
+				for (var i = 0; i < files.length; ++i) {
+					var file = files[i];
+					if (file.type.match(/image.*/)) {
+						// TODO this needs loolwsd fixing, to support multiline data (blob)
+						// var reader = new FileReader();
+						// reader.onload = (function(aImg) { return function(e) {
+						//     this._map._socket.sendMessageWithData('paste mimetype=' + file.type + 'length=' + ..., e.target.result);
+						// }; })(img);
+						//
+						// reader.readAsArrayBuffer();
+						//
+						// handled = true;
+					}
+				}
+			}
+		}
 	},
 
 	_onDragStart: function () {
