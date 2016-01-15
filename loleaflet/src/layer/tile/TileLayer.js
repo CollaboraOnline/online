@@ -117,8 +117,12 @@ L.TileLayer = L.GridLayer.extend({
 		map._fadeAnimated = false;
 		this._viewReset();
 		map.on('drag resize zoomend', this._updateScrollOffset, this);
+
 		map.on('copy', this._onCopy, this);
 		map.on('paste', this._onPaste, this);
+		map.on('dragover', this._onDragOver, this);
+		map.on('drop', this._onDrop, this);
+
 		map.on('zoomend', this._onUpdateCursor, this);
 		map.on('zoomend', this._onUpdatePartPageRectangles, this);
 		if (this._docType === 'spreadsheet') {
@@ -929,6 +933,17 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 		this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.clipboardData.getData('text/plain'));
+	},
+
+	_onDragOver: function (e) {
+		e = e.originalEvent;
+		e.preventDefault();
+	},
+
+	_onDrop: function (e) {
+		e = e.originalEvent;
+		e.preventDefault();
+		this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.dataTransfer.getData("text/plain"));
 	},
 
 	_onDragStart: function () {
