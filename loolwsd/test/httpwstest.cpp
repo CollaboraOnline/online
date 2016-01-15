@@ -56,7 +56,7 @@ void HTTPWSTest::testPaste()
     sendTextFrame(_socket, "uno .uno:Delete");
 
     // Paste some text into it.
-    sendTextFrame(_socket, "paste mimetype=text/plain;charset=utf-8 data=aaa bbb ccc");
+    sendTextFrame(_socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
 
     // Check if the document contains the pasted text.
     sendTextFrame(_socket, "uno .uno:SelectAll");

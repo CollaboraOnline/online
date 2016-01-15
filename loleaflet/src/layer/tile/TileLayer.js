@@ -934,7 +934,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onPaste: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.clipboardData.getData('text/plain'));
+		this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + e.clipboardData.getData('text/plain'));
 	},
 
 	_onDragOver: function (e) {

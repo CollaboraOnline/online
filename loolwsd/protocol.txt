@@ -31,7 +31,8 @@ gettextselection mimetype=<mimeType>
 
     Request selection's content
 
-paste mimetype=<mimeType> data=<data>
+paste mimetype=<mimeType>
+<binaryPasteData>
 
     Paste content at the current cursor position.
 
