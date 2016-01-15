@@ -948,8 +948,14 @@ L.TileLayer = L.GridLayer.extend({
 
 		// handle content
 		var types = e.dataTransfer.types;
+		var hasHTML = false;
+		for (var t = 0; !hasHTML && t < types.length; t++) {
+			if (types[t] === 'text/html') {
+				hasHTML = true;
+			}
+		}
+
 		var handled = false;
-		var hasHTML = types.indexOf('text/html') > -1;
 		for (var t = 0; !handled && t < types.length; t++) {
 			var type = types[t];
 			if (type === 'text/html') {
