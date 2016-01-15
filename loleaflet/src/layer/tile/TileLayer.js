@@ -952,12 +952,11 @@ L.TileLayer = L.GridLayer.extend({
 		for (var t = 0; !handled && t < types.length; t++) {
 			var type = types[t];
 			if (type === 'text/html') {
-				// TODO this needs loolwsd fixing, to support multiline data (blob)
-				// this._map._socket.sendMessage('paste mimetype=text/html data=' + e.dataTransfer.getData(type));
+				this._map._socket.sendMessage('paste mimetype=text/html\n' + e.dataTransfer.getData(type));
 				// handled = true;
 			}
 			else if (type === 'text/plain') {
-				this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8 data=' + e.dataTransfer.getData(type));
+				this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + e.dataTransfer.getData(type));
 				handled = true;
 			}
 			else if (type === 'Files') {
