@@ -954,28 +954,48 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     unsigned timeoutCounter = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest && MasterProcessSession::ChildProcesses.size() > 0)
     {
-        pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
+        const pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
             if ( MasterProcessSession::ChildProcesses.find(pid) != MasterProcessSession::ChildProcesses.end() )
             {
-                if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
+                if (WIFEXITED(status))
                 {
-                    Log::error("Child [" + std::to_string(pid) + "] processes died.");
+                    Log::info() << "Child process [" << pid << "] exited with code: "
+                                << WEXITSTATUS(status) << "." << Log::end;
+
                     MasterProcessSession::ChildProcesses.erase(pid);
                 }
+                else
+                if (WIFSIGNALED(status))
+                {
+                    std::string fate = "died";
+#ifdef WCOREDUMP
+                    if (WCOREDUMP(status))
+                        fate = "core-dumped";
+#endif
+                    Log::error() << "Child process [" << pid << "] " << fate
+                                 << " with " << Util::signalName(WTERMSIG(status))
+                                 << " signal. " << Log::end;
 
-                if ( WCOREDUMP(status) )
-                    Log::error("Child [" + std::to_string(pid) + "] produced a core dump.");
-
-                if ( WIFSTOPPED(status) )
-                    Log::error("Child [" + std::to_string(pid) + "] process was stopped by delivery of a signal.");
-
-                if ( WSTOPSIG(status) )
-                    Log::error("Child [" + std::to_string(pid) + "] process was stopped.");
-
-                if ( WIFCONTINUED(status) )
-                    Log::error("Child [" + std::to_string(pid) + "] process was resumed.");
+                    MasterProcessSession::ChildProcesses.erase(pid);
+                }
+                else if (WIFSTOPPED(status))
+                {
+                    Log::info() << "Child process [" << pid << "] stopped with "
+                                << Util::signalName(WSTOPSIG(status))
+                                << " signal. " << Log::end;
+                }
+                else if (WIFCONTINUED(status))
+                {
+                    Log::info() << "Child process [" << pid << "] resumed with SIGCONT."
+                                << Log::end;
+                }
+                else
+                {
+                    Log::warn() << "Unknown status returned by waitpid: "
+                                << std::hex << status << "." << Log::end;
+                }
             }
             else
             {
@@ -983,7 +1003,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             }
         }
         else if (pid < 0)
-            Log::error("Error: Child error.");
+            Log::error("Error: waitpid failed.");
 
         if (timeoutCounter++ == INTERVAL_PROBES)
         {
