@@ -257,9 +257,8 @@ The style is roughly as follows, in rough order of importance:
 - As in LO, the braces { and } of the block of if, switch, and while
   statements go on separate lines.
 
-- Following Poco conventions, member variables are prefixed with an
-  underscore. But I am not opposed to changing this to 'm_' for
-  instance.
+- Following Poco conventions, non-static member variables are prefixed
+  with an underscore. Static members have a CamelCase name.
 
 - Do use C++11. I admit in some places (out of laziness or ignorance)
   I use Poco API even if there probably is an equivalent std::
