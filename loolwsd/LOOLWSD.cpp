@@ -467,10 +467,10 @@ public:
                     // synchronously and A is waiting in the queue thread.
                     // The fix is to push everything into the queue
                     // (i.e. change MessageQueue to vector<char>).
-                    if (singleLine)
+                    const std::string firstLine = getFirstLine(data, size);
+                    if (singleLine || firstLine.find("paste") == 0)
                     {
-                        const std::string firstLine = getFirstLine(data, size);
-                        queue.put(firstLine);
+                        queue.put(std::string(data, size));
                         return true;
                     }
                     else

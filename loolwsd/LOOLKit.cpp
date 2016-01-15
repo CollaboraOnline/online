@@ -389,10 +389,14 @@ public:
 
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-                    // The only kind of messages a child process receives are the single-line ones (?)
-                    assert(firstLine.size() == static_cast<std::string::size_type>(n));
-
-                    queue.put(firstLine);
+                    if (firstLine.find("paste") != 0)
+                    {
+                        // Everything else is expected to be a single line.
+                        assert(firstLine.size() == static_cast<std::string::size_type>(n));
+                        queue.put(firstLine);
+                    }
+                    else
+                        queue.put(std::string(buffer, n));
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && !_stop);

@@ -637,25 +637,26 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
     return true;
 }
 
-bool ChildProcessSession::paste(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildProcessSession::paste(const char* buffer, int length, StringTokenizer& tokens)
 {
     std::string mimeType;
-    std::string data;
 
-    if (tokens.count() < 3 || !getTokenString(tokens[1], "mimetype", mimeType) || !getTokenString(tokens[2], "data", data))
+    if (tokens.count() < 2 || !getTokenString(tokens[1], "mimetype", mimeType))
     {
         sendTextFrame("error: cmd=paste kind=syntax");
         return false;
     }
 
-    data = Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).substr(strlen("data="));
+    const std::string firstLine = getFirstLine(buffer, length);
+    const char* data = buffer + firstLine.size() + 1;
+    size_t size = length - firstLine.size() - 1;
 
     std::unique_lock<std::recursive_mutex> lock(_mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    _loKitDocument->pClass->paste(_loKitDocument, mimeType.c_str(), data.c_str(), std::strlen(data.c_str()));
+    _loKitDocument->pClass->paste(_loKitDocument, mimeType.c_str(), data, size);
 
     return true;
 }
