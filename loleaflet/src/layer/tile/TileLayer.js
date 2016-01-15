@@ -949,13 +949,14 @@ L.TileLayer = L.GridLayer.extend({
 		// handle content
 		var types = e.dataTransfer.types;
 		var handled = false;
+		var hasHTML = types.indexOf('text/html') > -1;
 		for (var t = 0; !handled && t < types.length; t++) {
 			var type = types[t];
 			if (type === 'text/html') {
 				this._map._socket.sendMessage('paste mimetype=text/html\n' + e.dataTransfer.getData(type));
-				// handled = true;
+				handled = true;
 			}
-			else if (type === 'text/plain') {
+			else if (type === 'text/plain' && !hasHTML) {
 				this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + e.dataTransfer.getData(type));
 				handled = true;
 			}
