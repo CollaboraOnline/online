@@ -113,6 +113,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._selectedPart = part;
 			this._update();
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
+			this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 		}
 	},
 
