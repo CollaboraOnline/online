@@ -15,8 +15,8 @@ L.Control.RowHeader = L.Control.extend({
 		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
 		var docContainer = this._map.options.documentContainer;
-		var headersContainer = L.DomUtil.create('div', 'spreadsheet-rows-container', docContainer.parentElement);
-		this._rows = L.DomUtil.create('div', 'spreadsheet-rows', headersContainer);
+		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-rows-container', docContainer.parentElement);
+		this._rows = L.DomUtil.create('div', 'spreadsheet-header-rows', headersContainer);
 
 		this._position = 0;
 		this._totalHeight = 0;
@@ -59,7 +59,7 @@ L.Control.RowHeader = L.Control.extend({
 		for (iterator = 0; iterator < rows.length; iterator++) {
 			height = rows[iterator].size - (iterator > 0 ? rows[iterator - 1].size : 0);
 			twip = new L.Point(height, height);
-			text = L.DomUtil.create('div', 'spreadsheet-row', this._rows);
+			text = L.DomUtil.create('div', 'spreadsheet-header-row', this._rows);
 			text.innerHTML = rows[iterator].text;
 			height = Math.round(converter.call(context, twip).y) - 1 + 'px';
 			L.DomUtil.setStyle(text, 'line-height', height);

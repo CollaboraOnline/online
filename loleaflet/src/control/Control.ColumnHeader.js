@@ -15,9 +15,9 @@ L.Control.ColumnHeader = L.Control.extend({
 		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
 		var docContainer = this._map.options.documentContainer;
-		L.DomUtil.create('div', 'spreadsheet-corner', docContainer.parentElement);
-		var headersContainer = L.DomUtil.create('div', 'spreadsheet-columns-container', docContainer.parentElement);
-		this._columns = L.DomUtil.create('div', 'spreadsheet-columns', headersContainer);
+		L.DomUtil.create('div', 'spreadsheet-header-corner', docContainer.parentElement);
+		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-columns-container', docContainer.parentElement);
+		this._columns = L.DomUtil.create('div', 'spreadsheet-header-columns', headersContainer);
 
 		this._position = 0;
 		this._totalWidth = 0;
@@ -60,7 +60,7 @@ L.Control.ColumnHeader = L.Control.extend({
 		for (iterator = 0; iterator < columns.length; iterator++) {
 			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
 			twip = new L.Point(width, width);
-			text = L.DomUtil.create('div', 'spreadsheet-column', this._columns);
+			text = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
 			text.innerHTML = columns[iterator].text;
 			width = Math.round(converter.call(context, twip).x) - 1 + 'px';
 			L.DomUtil.setStyle(text, 'width', width);
