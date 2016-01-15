@@ -361,7 +361,7 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map._socket.sendMessage('uno .uno:SuperScript');
 				return true;
 		}
-		if (e.type === 'keypress' && e.originalEvent.key === 'c' && e.originalEvent.ctrlKey) {
+		if (e.type === 'keypress' && e.originalEvent.ctrlKey && (e.originalEvent.key === 'c' || e.originalEvent.key === 'v')) {
 			// need to handle this separately for Firefox
 			return true;
 		}
