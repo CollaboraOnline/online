@@ -61,7 +61,7 @@ L.Control.RowHeader = L.Control.extend({
 			twip = new L.Point(height, height);
 			text = L.DomUtil.create('div', 'spreadsheet-row', this._rows);
 			text.innerHTML = rows[iterator].text;
-			height = Math.round(converter.call(context, twip).y) - (iterator > 0 ? 1 : 0) + 'px';
+			height = Math.round(converter.call(context, twip).y) - 1 + 'px';
 			L.DomUtil.setStyle(text, 'line-height', height);
 			L.DomUtil.setStyle(text, 'height', height);
 		}
