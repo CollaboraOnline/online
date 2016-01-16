@@ -149,10 +149,24 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
 			this._docType = command.type;
-			this._updateMaxBounds(true);
-			this._documentInfo = textMsg;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
+			var mapSize = this._map.getSize();
+			var width = this._docWidthTwips / this._tileWidthTwips * this._tileSize;
+			var height = this._docHeightTwips / this._tileHeightTwips * this._tileSize;
+			if (width < mapSize.x || height < mapSize.y) {
+				width = Math.max(width, mapSize.x);
+				height = Math.max(height, mapSize.y);
+				var topLeft = this._map.unproject(new L.Point(0, 0));
+				var bottomRight = this._map.unproject(new L.Point(width, height));
+				this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
+				this._docPixelSize = {x: width, y: height};
+				this._map.fire('docsize', {x: width, y: height});
+			}
+			else {
+				this._updateMaxBounds(true);
+			}
+			this._documentInfo = textMsg;
 			this._map._socket.sendMessage('setclientpart part=' + this._selectedPart);
 			var partNames = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
