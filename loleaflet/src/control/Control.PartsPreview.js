@@ -23,6 +23,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var parts = e.parts;
 		var selectedPart = e.selectedPart;
 		var docType = e.docType;
+		var i, img;
 		if (docType === 'text') {
 			return;
 		}
@@ -37,15 +38,15 @@ L.Control.PartsPreview = L.Control.extend({
 					this._map.invalidateSize();
 					$('.scroll-container').mCustomScrollbar('update');
 				}, this), 500);
-				for (var i = 0; i < parts; i++) {
+				for (i = 0; i < parts; i++) {
 					var id = 'preview-tile' + i;
 					var frame = L.DomUtil.create('div', 'preview-frame', this._partsPreviewCont);
 					L.DomUtil.create('span', 'preview-helper', frame);
 					var imgClassName = 'preview-img';
-					if (i == 0) {
+					if (i === 0) {
 						imgClassName += ' preview-img-selected';
 					}
-					var img = L.DomUtil.create('img', imgClassName, frame);
+					img = L.DomUtil.create('img', imgClassName, frame);
 					img.id = id;
 					this._previewTiles[id] = img;
 					L.DomEvent
@@ -60,11 +61,11 @@ L.Control.PartsPreview = L.Control.extend({
 			else
 			{
 				// change the border style of the selected preview.
-				for (var i = 0; i < parts; i++) {
-					var img = L.DomUtil.get('preview-tile' + i);
+				for (i = 0; i < parts; i++) {
+					img = L.DomUtil.get('preview-tile' + i);
 					L.DomUtil.removeClass(img, 'preview-img-selected');
 				}
-				var img = L.DomUtil.get('preview-tile' + selectedPart);
+				img = L.DomUtil.get('preview-tile' + selectedPart);
 				L.DomUtil.addClass(img, 'preview-img-selected');
 			}
 		}
