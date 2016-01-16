@@ -53,7 +53,7 @@ L.Control.Zoom = L.Control.extend({
 		}
 	},
 
-	_fitWidth: function (e) {
+	_fitWidth: function () {
 		if (!this._disabled) {
 			this._map.fitWidthZoom();
 		}

@@ -139,6 +139,11 @@ L.Map.Keyboard = L.Handler.extend({
 		46  : true // delete
 	},
 
+	keyCodes: {
+		pageUp:   33,
+		pageDown: 34
+	},
+
 	navigationKeyCodes: {
 		left:    [37],
 		right:   [39],
@@ -225,11 +230,32 @@ L.Map.Keyboard = L.Handler.extend({
 		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
 		var ctrl = e.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
 		var alt = e.originalEvent.altKey ? this.keyModifier.alt : 0;
-		this.modifier = shift | ctrl | alt;
+		var cmd = e.originalEvent.metaKey ? this.keyModifier.ctrlMac : 0;
+		this.modifier = shift | ctrl | alt | cmd;
+
+		if (cmd) {
+			return;
+		}
 
 		if (ctrl) {
 			if (this._handleCtrlCommand(e)) {
 				return;
+			}
+		}
+
+		// Change slides with PgUp/PgDown in Presentation
+		if (this._map.getDocType() === 'presentation' && !this.modifier && e.type === 'keyup') {
+			var _keyCode = e.originalEvent.keyCode;
+			if (_keyCode === this.keyCodes.pageUp || _keyCode === this.keyCodes.pageDown) {
+				e.originalEvent.preventDefault();
+				e.originalEvent.stopPropagation();
+
+				if (_keyCode === this.keyCodes.pageUp) {
+					this._map.setPart('prev');
+				}
+				else if (_keyCode === this.keyCodes.pageDown) {
+					this._map.setPart('next');
+				}
 			}
 		}
 
@@ -307,6 +333,12 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (e.originalEvent.altKey || e.originalEvent.shiftKey) {
 
+			// need to handle Ctrl + Alt + C separately for Firefox
+			if (e.originalEvent.key === 'c' && e.originalEvent.altKey) {
+				this._map._socket.sendMessage('uno .uno:InsertAnnotation');
+				return true;
+			}
+
 			// Ctrl + Alt
 			if (!e.originalEvent.shiftKey) {
 				switch (e.originalEvent.keyCode) {
@@ -353,6 +385,9 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map.print();
 				return true;
 			case 86: // v
+				return true;
+			case 112: // f1
+				this._map._socket.sendMessage('uno .uno:NoteVisible');
 				return true;
 			case 188: // ,
 				this._map._socket.sendMessage('uno .uno:SubScript');
