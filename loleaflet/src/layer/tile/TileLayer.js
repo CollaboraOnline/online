@@ -5,6 +5,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
+/*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
 		return this.slice(0, str.length) === str;
@@ -363,7 +364,7 @@ L.TileLayer = L.GridLayer.extend({
 		// let's provide some convenience error codes for the UI
 		var errorId = 1; // internal error
 		if (command.errorCmd === 'load') {
-		    errorId = 2; // document cannot be loaded
+			errorId = 2; // document cannot be loaded
 		}
 
 		this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind, id: errorId});
@@ -956,7 +957,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		var handled = false;
-		for (var t = 0; !handled && t < types.length; t++) {
+		for (t = 0; !handled && t < types.length; t++) {
 			var type = types[t];
 			if (type === 'text/html') {
 				this._map._socket.sendMessage('paste mimetype=text/html\n' + e.dataTransfer.getData(type));
@@ -980,6 +981,7 @@ L.TileLayer = L.GridLayer.extend({
 						// reader.readAsArrayBuffer();
 						//
 						// handled = true;
+						handled = false;
 					}
 				}
 			}
