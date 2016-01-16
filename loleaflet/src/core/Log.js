@@ -31,7 +31,7 @@ L.Log = {
 	},
 
 	print: function () {
-		console.log(this._getEntries());
+		// console.log(this._getEntries());
 	},
 
 	save: function () {

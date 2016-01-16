@@ -388,6 +388,7 @@ L.Map.Keyboard = L.Handler.extend({
 				return true;
 			case 112: // f1
 				this._map._socket.sendMessage('uno .uno:NoteVisible');
+				return true;
 			case 188: // ,
 				this._map._socket.sendMessage('uno .uno:SubScript');
 				return true;

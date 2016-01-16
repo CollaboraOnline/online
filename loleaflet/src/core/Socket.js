@@ -264,5 +264,5 @@ L.Socket = L.Class.extend({
 });
 
 L.socket = function (map) {
-    return new L.Socket(map);
+	return new L.Socket(map);
 };
