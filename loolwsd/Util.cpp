@@ -165,7 +165,7 @@ namespace Log
         logger().warning(logPrefix() + msg +
                          (append_errno
                           ? (std::string(" (errno: ") + strerror(errno) + ").")
-                          : std::string(".")));
+                          : std::string("")));
     }
 
     void error(const std::string& msg, const bool append_errno)
@@ -173,7 +173,7 @@ namespace Log
         logger().error(logPrefix() + msg +
                        (append_errno
                         ? (std::string(" (errno: ") + strerror(errno) + ").")
-                        : std::string(".")));
+                        : std::string("")));
     }
 }
 
