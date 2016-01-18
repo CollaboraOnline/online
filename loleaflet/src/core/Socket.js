@@ -29,7 +29,7 @@ L.Socket = L.Class.extend({
 	sendMessage: function (msg, coords) {
 		var socketState = this.socket.readyState;
 		if (socketState === 2 || socketState === 3) {
-			this.connect(this._map);
+			this.initialize(this._map);
 			this._msgQueue.push({msg: msg, coords: coords});
 		}
 
