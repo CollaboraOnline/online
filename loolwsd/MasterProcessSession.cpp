@@ -30,11 +30,11 @@ using Poco::Process;
 using Poco::StringTokenizer;
 using Poco::UInt64;
 
-std::map<Process::PID, UInt64> MasterProcessSession::_childProcesses;
+std::map<Process::PID, UInt64> MasterProcessSession::ChildProcesses;
 
-std::map<std::string, std::shared_ptr<MasterProcessSession>> MasterProcessSession::_availableChildSessions;
-std::mutex MasterProcessSession::_availableChildSessionMutex;
-std::condition_variable MasterProcessSession::_availableChildSessionCV;
+std::map<std::string, std::shared_ptr<MasterProcessSession>> MasterProcessSession::AvailableChildSessions;
+std::mutex MasterProcessSession::AvailableChildSessionMutex;
+std::condition_variable MasterProcessSession::AvailableChildSessionCV;
 
 MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
@@ -231,16 +231,16 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         setId(tokens[2]);
         const Process::PID pidChild = std::stoull(tokens[3]);
 
-        std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
-        _availableChildSessions.emplace(getId(), shared_from_this());
+        std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
+        AvailableChildSessions.emplace(getId(), shared_from_this());
 
         Log::info() << getName() << " mapped " << this << " childId=" << childId << ", id=" << getId()
-                    << " into _availableChildSessions, size=" << _availableChildSessions.size() << Log::end;
+                    << " into _availableChildSessions, size=" << AvailableChildSessions.size() << Log::end;
 
         _childId = childId;
         _pidChild = pidChild;
         lock.unlock();
-        _availableChildSessionCV.notify_one();
+        AvailableChildSessionCV.notify_one();
 
         // log first lokit child pid information
         if ( LOOLWSD::DoTest )
@@ -593,17 +593,17 @@ void MasterProcessSession::dispatchChild()
 
     // Wait until the child has connected with Master.
     std::shared_ptr<MasterProcessSession> childSession;
-    std::unique_lock<std::mutex> lock(_availableChildSessionMutex);
+    std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
 
     Log::debug() << "Waiting for a child session permission for thread [" << getId() << "]." << Log::end;
     while (nRequest-- && !bFound)
     {
-        _availableChildSessionCV.wait_for(
+        AvailableChildSessionCV.wait_for(
             lock,
             std::chrono::milliseconds(2000),
             [&bFound, this]
             {
-                return (bFound = _availableChildSessions.find(getId()) != _availableChildSessions.end());
+                return (bFound = AvailableChildSessions.find(getId()) != AvailableChildSessions.end());
             });
 
         if (!bFound)
@@ -618,8 +618,8 @@ void MasterProcessSession::dispatchChild()
     if (bFound)
     {
         Log::debug("Waiting child session permission, done!");
-        childSession = _availableChildSessions[getId()];
-        _availableChildSessions.erase(getId());
+        childSession = AvailableChildSessions[getId()];
+        AvailableChildSessions.erase(getId());
     }
 
     lock.unlock();

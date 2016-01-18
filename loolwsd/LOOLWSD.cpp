@@ -802,7 +802,7 @@ bool LOOLWSD::createBroker(const std::string& rJailId)
 
     const std::string brokerPath = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
 
-    const auto childIndex = MasterProcessSession::_childProcesses.size() + 1;
+    const auto childIndex = MasterProcessSession::ChildProcesses.size() + 1;
     Log::info("Launching Broker #" + std::to_string(childIndex) +
               ": " + brokerPath + " " +
               Poco::cat(std::string(" "), args.begin(), args.end()));
@@ -810,7 +810,7 @@ bool LOOLWSD::createBroker(const std::string& rJailId)
     ProcessHandle child = Process::launch(brokerPath, args);
 
     Log::info() << "Adding Broker #" << childIndex << " PID " << child.id() << Log::end;
-    MasterProcessSession::_childProcesses[child.id()] = child.id();
+    MasterProcessSession::ChildProcesses[child.id()] = child.id();
 
     return true;
 }
@@ -920,17 +920,17 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     int status = 0;
     unsigned timeoutCounter = 0;
-    while (!TerminationFlag && !LOOLWSD::DoTest && MasterProcessSession::_childProcesses.size() > 0)
+    while (!TerminationFlag && !LOOLWSD::DoTest && MasterProcessSession::ChildProcesses.size() > 0)
     {
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
-            if ( MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end() )
+            if ( MasterProcessSession::ChildProcesses.find(pid) != MasterProcessSession::ChildProcesses.end() )
             {
                 if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
                 {
                     Log::error("Child [" + std::to_string(pid) + "] processes died.");
-                    MasterProcessSession::_childProcesses.erase(pid);
+                    MasterProcessSession::ChildProcesses.erase(pid);
                 }
 
                 if ( WCOREDUMP(status) )
@@ -974,7 +974,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool2.joinAll();
 
     // Terminate child processes
-    for (auto i : MasterProcessSession::_childProcesses)
+    for (auto i : MasterProcessSession::ChildProcesses)
     {
         Log::info("Requesting child process " + std::to_string(i.first) + " to terminate");
         Process::requestTermination(i.first);

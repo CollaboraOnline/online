@@ -26,7 +26,7 @@ public:
 
     bool haveSeparateProcess();
 
-    static std::map<Poco::Process::PID, Poco::UInt64> _childProcesses;
+    static std::map<Poco::Process::PID, Poco::UInt64> ChildProcesses;
 
     virtual bool getStatus(const char *buffer, int length) override;
 
@@ -65,9 +65,9 @@ public:
 
     // Sessions to pre-spawned child processes that have connected but are not yet assigned a
     // document to work on.
-    static std::map<std::string, std::shared_ptr<MasterProcessSession>> _availableChildSessions;
-    static std::mutex _availableChildSessionMutex;
-    static std::condition_variable _availableChildSessionCV;
+    static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChildSessions;
+    static std::mutex AvailableChildSessionMutex;
+    static std::condition_variable AvailableChildSessionCV;
 
     std::unique_ptr<TileCache> _tileCache;
 
