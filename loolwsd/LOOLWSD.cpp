@@ -236,7 +236,25 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                         break;
                     }
 
-                    if (firstLine.size() == static_cast<std::string::size_type>(n))
+                    if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
+                    {
+                        // One WS message split into multiple frames.
+                        std::vector<char> message(buffer, buffer + n);
+                        while (true)
+                        {
+                            n = ws->receiveFrame(buffer, sizeof(buffer), flags);
+                            message.insert(message.end(), buffer, buffer + n);
+                            if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) == WebSocket::FrameFlags::FRAME_FLAG_FIN)
+                            {
+                                // No more frames: invoke the handler. Assume
+                                // for now that this is always a multi-line
+                                // message.
+                                handler(message.data(), message.size(), false);
+                                break;
+                            }
+                        }
+                    }
+                    else if (firstLine.size() == static_cast<std::string::size_type>(n))
                     {
                         handler(firstLine.c_str(), firstLine.size(), true);
                     }
