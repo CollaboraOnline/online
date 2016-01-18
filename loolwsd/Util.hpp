@@ -127,17 +127,17 @@ namespace Log
             }
 
             StreamLogger(StreamLogger&& sl)
-              : Stream(std::move(sl.Stream.str()))
+              : _stream(std::move(sl._stream.str()))
               , _func(std::move(sl._func))
             {
             }
 
             void flush() const
             {
-                _func(Stream.str());
+                _func(_stream.str());
             }
 
-            std::ostringstream Stream;
+            std::ostringstream _stream;
 
         private:
             std::function<void(const std::string&)> _func;
@@ -176,14 +176,14 @@ namespace Log
     template <typename U>
     StreamLogger& operator <<(StreamLogger& lhs, const U& rhs)
     {
-        lhs.Stream << rhs;
+        lhs._stream << rhs;
         return lhs;
     }
 
     template <typename U>
     StreamLogger& operator <<(StreamLogger&& lhs, U&& rhs)
     {
-        lhs.Stream << rhs;
+        lhs._stream << rhs;
         return lhs;
     }
 
