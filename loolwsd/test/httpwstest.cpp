@@ -31,10 +31,12 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
     CPPUNIT_TEST(testPaste);
+    CPPUNIT_TEST(testLargePaste);
     CPPUNIT_TEST(testRenderingOptions);
     CPPUNIT_TEST_SUITE_END();
 
     void testPaste();
+    void testLargePaste();
     void testRenderingOptions();
 
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
@@ -84,6 +86,42 @@ void HTTPWSTest::testPaste()
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
     _socket.shutdown();
     CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
+}
+
+void HTTPWSTest::testLargePaste()
+{
+    // Load a document and make it empty.
+    std::string documentPath = TDOC "/hello.odt";
+    std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    sendTextFrame(_socket, "load url=" + documentURL);
+    sendTextFrame(_socket, "uno .uno:SelectAll");
+    sendTextFrame(_socket, "uno .uno:Delete");
+
+    // Paste some text into it.
+    std::ifstream documentStream(documentPath);
+    std::string documentContents((std::istreambuf_iterator<char>(documentStream)), std::istreambuf_iterator<char>());
+    sendTextFrame(_socket, "paste mimetype=text/html\n" + documentContents);
+
+    // Check if the server is still alive.
+    // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
+    sendTextFrame(_socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    std::string selection;
+    int flags;
+    int n;
+    do
+    {
+        char buffer[100000];
+        n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
+        if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+        {
+            std::string line = LOOLProtocol::getFirstLine(buffer, n);
+            std::string prefix = "textselectioncontent: ";
+            if (line.find(prefix) == 0)
+                break;
+        }
+    }
+    while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    _socket.shutdown();
 }
 
 void HTTPWSTest::testRenderingOptions()
