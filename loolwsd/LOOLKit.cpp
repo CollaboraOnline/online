@@ -455,7 +455,7 @@ public:
         _url(url),
         _loKitDocument(nullptr),
         _clientViews(0),
-        _callbackWorker(_callbackQueue)
+        _callbackWorker(CallbackQueue)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
@@ -624,7 +624,7 @@ private:
                     if (session)
                     {
                         auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", session);
-                        _callbackQueue.enqueueNotification(pNotif);
+                        CallbackQueue.enqueueNotification(pNotif);
                     }
                 }
             }
@@ -727,10 +727,10 @@ private:
 
     CallBackWorker _callbackWorker;
     Thread _callbackThread;
-    static Poco::NotificationQueue _callbackQueue;
+    static Poco::NotificationQueue CallbackQueue;
 };
 
-Poco::NotificationQueue Document::_callbackQueue;
+Poco::NotificationQueue Document::CallbackQueue;
 
 void lokit_main(const std::string &loSubPath, const std::string& jailId, const std::string& pipe)
 {
