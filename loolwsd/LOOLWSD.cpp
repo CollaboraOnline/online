@@ -427,7 +427,23 @@ public:
                             std::string firstLine = getFirstLine(buffer, n);
                             StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-                            if (kind == LOOLSession::Kind::ToClient && firstLine.size() == static_cast<std::string::size_type>(n))
+                            if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
+                            {
+                                // One WS message split into multiple frames.
+                                std::vector<char> message(buffer, buffer + n);
+                                while (true)
+                                {
+                                    n = ws->receiveFrame(buffer, sizeof(buffer), flags);
+                                    message.insert(message.end(), buffer, buffer + n);
+                                    if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) == WebSocket::FrameFlags::FRAME_FLAG_FIN)
+                                    {
+                                        // No more frames: invoke the handler.
+                                        session->handleInput(message.data(), message.size());
+                                        break;
+                                    }
+                                }
+                            }
+                            else if (kind == LOOLSession::Kind::ToClient && firstLine.size() == static_cast<std::string::size_type>(n))
                             {
                                 queue.put(firstLine);
                             }
