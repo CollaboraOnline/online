@@ -679,7 +679,7 @@ a.leaflet-control-buttons:hover:first-child {
 	white-space: nowrap;
 	left: 49px;
 	top: 80px;
-	width: 100%;
+	right: 0;
 	height: 19px;
 	overflow: hidden;
 	}
@@ -696,17 +696,15 @@ a.leaflet-control-buttons:hover:first-child {
 
 .spreadsheet-header-column {
 	border-right: 1px solid darkgrey;
+	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
 
 	display: inline-block;
 	text-align: center;
-	vertical-align: middle;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	padding: 0px;
-	padding-top: 4px;
 	margin: 0px;
 	height: 100%;
-	line-height: 100%;
 	}
 
 .spreadsheet-header-rows-container {
@@ -735,11 +733,12 @@ a.leaflet-control-buttons:hover:first-child {
 
 .spreadsheet-header-row {
 	border-bottom: 1px solid darkgrey;
+	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
 
 	text-overflow: ellipsis;
+	text-align: center;
 	white-space: nowrap;
 	padding: 0px;
-	padding-left: 8px;
 	margin: 0px;
 	height: 100%;
 	}
