@@ -52,7 +52,7 @@ public:
 
     LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument; }
 
-    std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(_mutex); }
+    std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
@@ -96,7 +96,7 @@ private:
 
     /// Synchronize _loKitDocument acess.
     /// This should be inside LoKit.
-    static std::recursive_mutex _mutex;
+    static std::recursive_mutex Mutex;
 };
 
 #endif

@@ -39,7 +39,7 @@ using Poco::ProcessHandle;
 using Poco::StringTokenizer;
 using Poco::URI;
 
-std::recursive_mutex ChildProcessSession::_mutex;
+std::recursive_mutex ChildProcessSession::Mutex;
 
 ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::shared_ptr<Poco::Net::WebSocket> ws,
@@ -64,7 +64,7 @@ ChildProcessSession::~ChildProcessSession()
 {
     Log::info("~ChildProcessSession dtor [" + getName() + "].");
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -150,7 +150,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                tokens[0] == "saveas");
 
         {
-            std::unique_lock<std::recursive_mutex> lock(_mutex);
+            std::unique_lock<std::recursive_mutex> lock(Mutex);
 
             if (_multiView)
                 _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -238,7 +238,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
 
     _loKitDocument = _onLoad(getId(), _jailedFilePath);
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _viewId = _loKitDocument->pClass->getView(_loKitDocument);
@@ -279,7 +279,7 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
         return;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -312,7 +312,7 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
 
 bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
 {
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -339,7 +339,7 @@ bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -350,7 +350,7 @@ bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*
 
 bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
 {
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -388,7 +388,7 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
         return;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -563,7 +563,7 @@ bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -597,7 +597,7 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
     const auto tmpDir = Util::createRandomDir(JailedDocumentRoot);
     const auto url = JailedDocumentRoot + tmpDir + "/" + name;
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     //TODO: Cleanup the file after downloading.
     _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
@@ -626,7 +626,7 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -651,7 +651,7 @@ bool ChildProcessSession::paste(const char* buffer, int length, StringTokenizer&
     const char* data = buffer + firstLine.size() + 1;
     size_t size = length - firstLine.size() - 1;
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -673,7 +673,7 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (type == "graphic")
     {
@@ -714,7 +714,7 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
     if (keycode == (KEY_CTRL | KEY_W))
         return true;
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -744,7 +744,7 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -762,7 +762,7 @@ bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -801,7 +801,7 @@ bool ChildProcessSession::selectText(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -827,7 +827,7 @@ bool ChildProcessSession::selectGraphic(const char* /*buffer*/, int /*length*/, 
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -845,7 +845,7 @@ bool ChildProcessSession::resetSelection(const char* /*buffer*/, int /*length*/,
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -876,7 +876,7 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
         }
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
@@ -914,7 +914,7 @@ bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, String
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(_mutex);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
