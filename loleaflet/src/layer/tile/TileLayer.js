@@ -1035,16 +1035,16 @@ L.TileLayer = L.GridLayer.extend({
 				for (var i = 0; i < files.length; ++i) {
 					var file = files[i];
 					if (file.type.match(/image.*/)) {
-						// TODO this needs loolwsd fixing, to support multiline data (blob)
-						// var reader = new FileReader();
-						// reader.onload = (function(aImg) { return function(e) {
-						//     this._map._socket.sendMessageWithData('paste mimetype=' + file.type + 'length=' + ..., e.target.result);
-						// }; })(img);
-						//
-						// reader.readAsArrayBuffer();
-						//
-						// handled = true;
-						handled = false;
+						var reader = new FileReader();
+						var socket = this._map._socket;
+						reader.onload = (function(aImg) {
+							return function(e) {
+								var blob = new Blob(['paste mimetype=' + file.type + '\n', e.target.result]);
+								socket.sendMessage(blob);
+							};
+						})(file);
+						reader.readAsArrayBuffer(file);
+						handled = true;
 					}
 				}
 			}
