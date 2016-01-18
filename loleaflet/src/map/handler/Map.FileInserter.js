@@ -48,9 +48,10 @@ L.Map.FileInserter = L.Handler.extend({
 	_sendFile: function (name, file) {
 		var url = this._url;
 		var xmlHttp = new XMLHttpRequest();
+		var socket = this._map._socket;
 		xmlHttp.onreadystatechange = function () {
 			if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-				this._map._socket.sendMessage('insertfile name=' + name + ' type=graphic');
+				socket.sendMessage('insertfile name=' + name + ' type=graphic');
 			}
 		};
 		xmlHttp.open('POST', url, true);
