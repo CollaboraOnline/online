@@ -41,7 +41,9 @@ L.Socket = L.Class.extend({
 		}
 		else if (socketState === 1) {
 			this.socket.send(msg);
-			L.Log.log(msg, L.OUTGOING, coords);
+			// Only attempt to log text frames, not binary ones.
+			if (typeof msg === 'string')
+				L.Log.log(msg, L.OUTGOING, coords);
 		}
 	},
 
