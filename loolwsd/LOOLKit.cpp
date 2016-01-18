@@ -354,6 +354,18 @@ public:
         _thread.join();
     }
 
+    void handle(TileQueue& queue, const std::string& firstLine, char* buffer, int n)
+    {
+        if (firstLine.find("paste") != 0)
+        {
+            // Everything else is expected to be a single line.
+            assert(firstLine.size() == static_cast<std::string::size_type>(n));
+            queue.put(firstLine);
+        }
+        else
+            queue.put(std::string(buffer, n));
+    }
+
     void run() override
     {
         static const std::string thread_name = "kit_ws_" + _session->getId();
@@ -380,7 +392,7 @@ public:
 
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
-                    const std::string firstLine = getFirstLine(buffer, n);
+                    std::string firstLine = getFirstLine(buffer, n);
                     if (firstLine == "eof")
                     {
                         Log::info("Recieved EOF. Finishing.");
@@ -389,14 +401,21 @@ public:
 
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-                    if (firstLine.find("paste") != 0)
+                    // Check if it is a "nextmessage:" and in that case read the large
+                    // follow-up message separately, and handle that only.
+                    int size;
+                    if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
                     {
-                        // Everything else is expected to be a single line.
-                        assert(firstLine.size() == static_cast<std::string::size_type>(n));
-                        queue.put(firstLine);
+                        char largeBuffer[size];
+                        n = _ws->receiveFrame(largeBuffer, size, flags);
+                        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                        {
+                            firstLine = getFirstLine(largeBuffer, n);
+                            handle(queue, firstLine, largeBuffer, n);
+                        }
                     }
                     else
-                        queue.put(std::string(buffer, n));
+                        handle(queue, firstLine, buffer, n);
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && !_stop);

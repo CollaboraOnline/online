@@ -668,3 +668,4 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
     peer->sendBinaryFrame(buffer, length);
 }
 
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
