@@ -60,7 +60,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			}
 		}
 
-		if (needsNewTiles)
+		if (needsNewTiles && command.part === this._selectedPart)
 		{
 			var message = 'tilecombine ' +
 				'part=' + command.part + ' ' +

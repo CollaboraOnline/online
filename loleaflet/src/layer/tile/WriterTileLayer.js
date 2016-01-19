@@ -63,6 +63,9 @@ L.WriterTileLayer = L.TileLayer.extend({
 
 		if (needsNewTiles)
 		{
+			// CalcTileLayer.js and ImpressTileLayer.js avoid this when
+			// command.part !== this._selectedPart; but in Writer, the part is
+			// always 0 anyway
 			var message = 'tilecombine ' +
 				'part=' + command.part + ' ' +
 				'width=' + this._tileSize + ' ' +
