@@ -112,8 +112,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (part !== this._selectedPart) {
-			this._selectedPart = part;
-			this._update();
+			this._map.setPart(part);
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 		}
