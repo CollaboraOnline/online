@@ -264,48 +264,40 @@ public:
         while (!_stop && !TerminationFlag)
         {
             Notification::Ptr aNotification(_queue.waitDequeueNotification());
-            if (!TerminationFlag && aNotification)
+            if (!_stop && !TerminationFlag && aNotification)
             {
                 CallBackNotification::Ptr aCallBackNotification = aNotification.cast<CallBackNotification>();
-                if (aCallBackNotification)
+                assert(aCallBackNotification);
+
+                const auto nType = aCallBackNotification->m_nType;
+                try
                 {
-                    const auto nType = aCallBackNotification->m_nType;
-                    try
-                    {
-                        callback(nType, aCallBackNotification->m_aPayload, aCallBackNotification->m_pSession);
-                    }
-                    catch (const Exception& exc)
-                    {
-                        Log::error() << "Error while handling callback [" << callbackTypeToString(nType) << "]. "
-                                     << exc.displayText()
-                                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                                     << Log::end;
-                    }
-                    catch (const std::exception& exc)
-                    {
-                        Log::error("Error while handling callback [" + callbackTypeToString(nType) + "]. " +
-                                   std::string("Exception: ") + exc.what());
-                    }
-                    catch (...)
-                    {
-                        Log::error("Unexpected Exception while handling callback [" + callbackTypeToString(nType) + "].");
-                    }
+                    callback(nType, aCallBackNotification->m_aPayload, aCallBackNotification->m_pSession);
+                }
+                catch (const Exception& exc)
+                {
+                    Log::error() << "Error while handling callback [" << callbackTypeToString(nType) << "]. "
+                                 << exc.displayText()
+                                 << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                                 << Log::end;
+                }
+                catch (const std::exception& exc)
+                {
+                    Log::error("Error while handling callback [" + callbackTypeToString(nType) + "]. " +
+                               std::string("Exception: ") + exc.what());
                 }
             }
-            else break;
+            else
+                break;
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");
     }
 
-    void wakeUpAll()
-    {
-        _queue.wakeUpAll();
-    }
-
     void stop()
     {
         _stop = true;
+        _queue.wakeUpAll();
     }
 
 private:
@@ -491,7 +483,6 @@ public:
 
         // Wait for the callback worker to finish.
         _callbackWorker.stop();
-        _callbackWorker.wakeUpAll();
         _callbackThread.join();
 
         // Flag all connections to stop.
