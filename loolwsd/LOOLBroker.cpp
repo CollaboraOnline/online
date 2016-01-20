@@ -262,9 +262,7 @@ public:
 
     ssize_t sendMessage(int nPipeWriter, const std::string& aMessage)
     {
-        ssize_t nBytes = -1;
-
-        nBytes = Util::writeFIFO(nPipeWriter, aMessage.c_str(), aMessage.length());
+        const ssize_t nBytes = Util::writeFIFO(nPipeWriter, aMessage);
         if ( nBytes < 0 )
             Log::error("Error writting to child pipe.");
 
@@ -317,7 +315,7 @@ public:
             assert(it.first > 0 && it.second > 0);
 
             Log::trace("Query to kit [" + std::to_string(it.first) + "]: " + aMessage);
-            ssize_t nBytes = Util::writeFIFO(it.second, aMessage.c_str(), aMessage.length());
+            ssize_t nBytes = Util::writeFIFO(it.second, aMessage);
             if ( nBytes < 0 )
             {
                 Log::error("Error writting to child pipe: " + std::to_string(it.first) + ". Clearing cache.");

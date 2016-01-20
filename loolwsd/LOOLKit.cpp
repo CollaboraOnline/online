@@ -901,7 +901,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                     }
 
                     Log::trace("Send: " + aResponse);
-                    Util::writeFIFO(writerBroker, aResponse.c_str(), aResponse.length());
+                    Util::writeFIFO(writerBroker, aResponse);
                     aMessage.clear();
                 }
             }

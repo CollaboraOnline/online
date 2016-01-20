@@ -59,7 +59,12 @@ namespace Util
     // Call WebSocket::shutdown() ignoring Poco::IOException
     void shutdownWebSocket(Poco::Net::WebSocket& ws);
 
-    ssize_t writeFIFO(int nPipe, const char* pBuffer, ssize_t nSize);
+    ssize_t writeFIFO(const int nPipe, const char* pBuffer, ssize_t nSize);
+    inline
+    ssize_t writeFIFO(const int nPipe, const std::string& message)
+    {
+        return writeFIFO(nPipe, message.c_str(), message.size());
+    }
 
     ssize_t readFIFO(int nPipe, char* pBuffer, ssize_t nSize);
 
