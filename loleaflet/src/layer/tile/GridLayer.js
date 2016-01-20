@@ -558,6 +558,139 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
+	_updateOnChangePart: function () {
+		var map = this._map;
+		if (!map || this._documentInfo === '') {
+			return;
+		}
+
+		var center = map.getCenter();
+		var zoom = Math.round(map.getZoom());
+
+		var pixelBounds = map.getPixelBounds(center, zoom),
+			tileRange = this._pxBoundsToTileRange(pixelBounds),
+			queue = [];
+
+		for (var key in this._tiles) {
+			if (this._keyToTileCoords(key).z !== zoom ||
+					this._keyToTileCoords(key).part !== this._selectedPart) {
+				this._tiles[key].current = false;
+			}
+		}
+
+		// if there is no exiting tile in the current view
+		var newView = true;
+		// create a queue of coordinates to load tiles from
+		for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
+			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
+				var coords = new L.Point(i, j);
+				coords.z = zoom;
+				coords.part = this._selectedPart;
+
+				if (!this._isValidTile(coords)) { continue; }
+
+				key = this._tileCoordsToKey(coords);
+				var tile = this._tiles[key];
+				if (tile) {
+					tile.current = true;
+					newView = false;
+				} else {
+					queue.push(coords);
+				}
+			}
+		}
+
+		if (queue.length !== 0) {
+			if (newView) {
+				// we know that a new set of tiles that cover the whole view has been requested
+				// so we're able to cancel the previous requests that are being processed
+				this._map._socket.sendMessage('canceltiles');
+				for (key in this._tiles) {
+					var tile = this._tiles[key];
+					if (!tile.loaded) {
+						L.DomUtil.remove(tile.el);
+						delete this._tiles[key];
+					}
+				}
+				this._emptyTilesCount = 0;
+			}
+
+			// if its the first batch of tiles to load
+			if (this._noTilesToLoad()) {
+				this.fire('loading');
+			}
+
+			// create DOM fragment to append tiles in one batch
+			var fragment = document.createDocumentFragment();
+			var tilePositionsX = '';
+			var tilePositionsY = '';
+
+			for (i = 0; i < queue.length; i++) {
+				var coords = queue[i];
+				var tilePos = this._getTilePos(coords),
+				key = this._tileCoordsToKey(coords);
+
+				if (coords.part === this._selectedPart) {
+					var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+
+					this._initTile(tile);
+
+					// if createTile is defined with a second argument ("done" callback),
+					// we know that tile is async and will be ready later; otherwise
+					if (this.createTile.length < 2) {
+						// mark tile as ready, but delay one frame for opacity animation to happen
+						setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
+					}
+
+					// we prefer top/left over translate3d so that we don't create a HW-accelerated layer from each tile
+					// which is slow, and it also fixes gaps between tiles in Safari
+					L.DomUtil.setPosition(tile, tilePos, true);
+
+					// save tile in cache
+					this._tiles[key] = {
+						el: tile,
+						coords: coords,
+						current: true
+					};
+
+					fragment.appendChild(tile);
+
+					this.fire('tileloadstart', {
+						tile: tile,
+						coords: coords
+					});
+				}
+				if (!this._tileCache[key]) {
+					var twips = this._coordsToTwips(coords);
+					if (tilePositionsX !== '')
+						tilePositionsX += ',';
+					tilePositionsX += twips.x;
+					if (tilePositionsY !== '')
+						tilePositionsY += ',';
+					tilePositionsY += twips.y;
+				}
+				else {
+					tile.src = this._tileCache[key];
+				}
+			}
+
+			if (tilePositionsX !== '' && tilePositionsY !== '') {
+				var message = 'tilecombine ' +
+					'part=' + this._selectedPart + ' ' +
+					'width=' + this._tileSize + ' ' +
+					'height=' + this._tileSize + ' ' +
+					'tileposx=' + tilePositionsX + ' ' +
+					'tileposy=' + tilePositionsY + ' ' +
+					'tilewidth=' + this._tileWidthTwips + ' ' +
+					'tileheight=' + this._tileHeightTwips;
+
+				this._map._socket.sendMessage(message, "");
+			}
+
+			this._level.el.appendChild(fragment);
+		}
+	},
+
 	_isValidTile: function (coords) {
 		if (coords.x < 0 || coords.y < 0) {
 			return false;
