@@ -20,6 +20,7 @@
 #include "LOOLWSD.hpp"
 #include "MasterProcessSession.hpp"
 #include "Util.hpp"
+#include "Rectangle.hpp"
 
 using namespace LOOLProtocol;
 
@@ -575,12 +576,118 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
     forwardToPeer(buffer, length);
 }
 
-void MasterProcessSession::sendCombinedTiles(const char *buffer, int length, StringTokenizer& /*tokens*/)
+
+void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    // This is for invalidation - we should not have cached tiles
+    int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
+    std::string tilePositionsX, tilePositionsY;
+
+    if (tokens.count() < 8 ||
+        !getTokenInteger(tokens[1], "part", part) ||
+        !getTokenInteger(tokens[2], "width", pixelWidth) ||
+        !getTokenInteger(tokens[3], "height", pixelHeight) ||
+        !getTokenString (tokens[4], "tileposx", tilePositionsX) ||
+        !getTokenString (tokens[5], "tileposy", tilePositionsY) ||
+        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
+        !getTokenInteger(tokens[7], "tileheight", tileHeight))
+    {
+        sendTextFrame("error: cmd=tilecombine kind=syntax");
+        return;
+    }
+
+    if (part < 0 || pixelWidth <= 0 || pixelHeight <= 0
+       || tileWidth <= 0 || tileHeight <= 0
+       || tilePositionsX.empty() || tilePositionsY.empty())
+    {
+        sendTextFrame("error: cmd=tilecombine kind=invalid");
+        return;
+    }
+
+    Util::Rectangle renderArea;
+
+    StringTokenizer positionXtokens(tilePositionsX, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    StringTokenizer positionYtokens(tilePositionsY, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+    size_t numberOfPositions = positionYtokens.count();
+
+    // check that number of positions for X and Y is the same
+    if (numberOfPositions != positionYtokens.count())
+    {
+        sendTextFrame("error: cmd=tilecombine kind=invalid");
+        return;
+    }
+
+    std::string forwardTileX;
+    std::string forwardTileY;
+
+    for (size_t i = 0; i < numberOfPositions; i++)
+    {
+        int x, y;
+
+        if (!stringToInteger(positionXtokens[i], x))
+        {
+            sendTextFrame("error: cmd=tilecombine kind=syntax");
+            return;
+        }
+        if (!stringToInteger(positionYtokens[i], y))
+        {
+            sendTextFrame("error: cmd=tilecombine kind=syntax");
+            return;
+        }
+
+        std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
+
+        if (cachedTile && cachedTile->is_open())
+        {
+            std::string response = "tile: part=" + std::to_string(part) +
+                               " width=" + std::to_string(pixelWidth) +
+                               " height=" + std::to_string(pixelHeight) +
+                               " tileposx=" + std::to_string(x) +
+                               " tileposy=" + std::to_string(y) +
+                               " tilewidth=" + std::to_string(tileWidth) +
+                               " tileheight=" + std::to_string(tileHeight) + "\n";
+
+            std::vector<char> output;
+            output.reserve(4 * pixelWidth * pixelHeight);
+            output.resize(response.size());
+            std::memcpy(output.data(), response.data(), response.size());
+            cachedTile->seekg(0, std::ios_base::end);
+            size_t pos = output.size();
+            std::streamsize size = cachedTile->tellg();
+            output.resize(pos + size);
+            cachedTile->seekg(0, std::ios_base::beg);
+            cachedTile->read(output.data() + pos, size);
+            cachedTile->close();
+
+            sendBinaryFrame(output.data(), output.size());
+        }
+        else
+        {
+            if (!forwardTileX.empty())
+                forwardTileX += ",";
+            forwardTileX += std::to_string(x);
+
+            if (!forwardTileY.empty())
+                forwardTileY += ",";
+            forwardTileY += std::to_string(y);
+        }
+    }
+
+    if (forwardTileX.empty() && forwardTileY.empty())
+        return;
+
     if (_peer.expired())
         dispatchChild();
-    forwardToPeer(buffer, length);
+
+    std::string forward = "tilecombine part=" + std::to_string(part) +
+                               " width=" + std::to_string(pixelWidth) +
+                               " height=" + std::to_string(pixelHeight) +
+                               " tileposx=" + forwardTileX +
+                               " tileposy=" + forwardTileY +
+                               " tilewidth=" + std::to_string(tileWidth) +
+                               " tileheight=" + std::to_string(tileHeight);
+
+    forwardToPeer(forward.c_str(), forward.size());
 }
 
 void MasterProcessSession::dispatchChild()
