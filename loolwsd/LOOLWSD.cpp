@@ -404,7 +404,8 @@ public:
 
                 if (goodRequest)
                 {
-                    try {
+                    try
+                    {
                         Log::info() << "Perform insertfile: " << formChildid << ", " << formName << Log::end;
                         const std::string dirPath = LOOLWSD::ChildRoot + formChildid
                                                   + JailedDocumentRoot + "insertfile";
@@ -577,6 +578,11 @@ class RequestHandlerFactory: public HTTPRequestHandlerFactory
 public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
+#ifdef __linux
+            if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
+                Log::error("Cannot set thread name to request_handler.");
+#endif
+
         auto logger = Log::info();
         logger << "Request from " << request.clientAddress().toString() << ": "
                << request.getMethod() << " " << request.getURI() << " "
