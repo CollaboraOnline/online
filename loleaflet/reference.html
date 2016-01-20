@@ -8660,6 +8660,32 @@ var unoCommands = [
 },
 
 {
+    uno: '.uno:Name',
+    parameter: {
+        'Name': {
+            'type': 'string',
+            'value': 'Sheet Name'
+        },
+        'Index': {
+            'type': 'long',
+            'value': 1
+        }
+    },
+    description: 'Rename the given sheet in the spreadsheet. The "Index" parameter means the position of the sheet - "1" means the 1st sheet, etc.'
+},
+
+{
+    uno: '.uno:Remove',
+    parameter: {
+        'Index': {
+            'type': 'long',
+            'value': 5
+        }
+    },
+    description: 'Remove the given sheet from the spreadsheet. The "Index" parameter means the position - "1" means the 1st sheet, etc.'
+},
+
+{
     header: 'Appearance options',
 },
 
