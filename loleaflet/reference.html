@@ -8545,7 +8545,7 @@ var unoCommands = [
 },
 
 {
-    header: 'Tables',
+    header: 'Tables (in a text document)',
 },
 
 {
@@ -8610,6 +8610,18 @@ var unoCommands = [
 },
 
 {
+    uno: '.uno:DeleteColumns',
+    parameter: null,
+    description: 'Delete the current column.'
+},
+
+{
+    uno: '.uno:DeleteRows',
+    parameter: null,
+    description: 'Delete the current row.'
+},
+
+{
     uno: '.uno:EnterString',
     parameter: {
         'StringName': {
@@ -8633,6 +8645,18 @@ var unoCommands = [
         }
     },
     description: 'Inserts a new sheet to the spreadsheet. The "Name" parameter can be left as empty string, in that case the sheet name will be generated. The "Index" parameter means the position where it should be inserted - "1" means adding as the 1st sheet, etc. 0 is special, and means adding as the last sheet.'
+},
+
+{
+    uno: '.uno:InsertColumns',
+    parameter: null,
+    description: 'Insert column after the current cursor position.',
+},
+
+{
+    uno: '.uno:InsertRows',
+    parameter: null,
+    description: 'Insert row before the current cursor position.',
 },
 
 {
