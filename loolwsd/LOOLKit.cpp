@@ -784,9 +784,8 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                     ("/" + loSubPath + "/program");
 #endif
 
-    std::unique_ptr<LibreOfficeKit> loKit(lok_init_2(instdir_path.c_str(), "file:///user"));
-
-    if (!loKit)
+    LibreOfficeKit* loKit(lok_init_2(instdir_path.c_str(), "file:///user"));
+    if (loKit == nullptr)
     {
         Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
         exit(-1);
@@ -890,7 +889,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
                         auto it = _documents.lower_bound(url);
                         if (it == _documents.end())
-                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit.get(), jailId, url));
+                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit, jailId, url));
 
                         it->second->createSession(sessionId, intSessionId);
                         aResponse += "ok \r\n";
@@ -925,11 +924,12 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
         TerminationState = LOOLState::LOOL_ABNORMAL;
     }
 
+    Log::debug("Destroying documents.");
     _documents.clear();
 
     // Destroy LibreOfficeKit
-    loKit->pClass->destroy(loKit.get());
-    loKit.release();
+    Log::debug("Destroying LibreOfficeKit.");
+    loKit->pClass->destroy(loKit);
 
     Log::info("Process [" + process_name + "] finished.");
 }
