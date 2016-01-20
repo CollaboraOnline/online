@@ -418,17 +418,23 @@ namespace Util
     static
     void handleSignal(int aSignal)
     {
-        Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
-        TerminationFlag = true;
-        TerminationState = ( aSignal == SIGTERM ? LOOLState::LOOL_ABNORMAL : LOOLState::LOOL_STOPPING );
-
-        if (aSignal == SIGSEGV || aSignal == SIGBUS)
+        if (!TerminationFlag)
         {
-            Log::error() << "\nSegfault! Stalling for 10 seconds to attach debugger. Use:\n"
-                         << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
-                         << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
-                         << Poco::Process::id() << "\n" << Log::end;
-            sleep(10);
+            // Poco::Log takes a lock that isn't recursive.
+            // If we are signaled while having that lock,
+            // logging again will deadlock on it.
+            TerminationFlag = true;
+            TerminationState = ( aSignal == SIGTERM ? LOOLState::LOOL_ABNORMAL : LOOLState::LOOL_STOPPING );
+
+            Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
+            if (aSignal == SIGSEGV || aSignal == SIGBUS)
+            {
+                Log::error() << "\nSegfault! Attach debugger with:\n"
+                             << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
+                             << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
+                             << Poco::Process::id() << "\n" << Log::end;
+                sleep(10);
+            }
         }
     }
 
