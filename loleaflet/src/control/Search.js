@@ -6,27 +6,9 @@ L.Map.include({
 		if (all === undefined) {
 			all = 0;
 		}
-
-		// check if there is a cached searchAll result for this phrase
-		// if there is update index for next/prev iteration
-		if (this._docLayer._searchResults && text === this._docLayer._searchTerm) {
-			if (backward) {
-				if (this._docLayer._searchIndex > 0) {
-					this._docLayer._searchIndex--;
-				}
-				else {
-					this._docLayer._searchIndex = this._docLayer._searchResults.length - 1;
-				}
-			} else {
-				if (this._docLayer._searchIndex < this._docLayer._searchResults.length - 1) {
-					this._docLayer._searchIndex++;
-				}
-				else {
-					this._docLayer._searchIndex = 0;
-				}
-			}
-			this.setPart(this._docLayer._searchResults[this._docLayer._searchIndex].part);
-			return;
+		if (this._docLayer._searchResults && text !== this._docLayer._searchTerm)
+		{
+			this._docLayer._clearSearchResults();
 		}
 
 		var searchCmd = {
@@ -61,6 +43,9 @@ L.Map.include({
 	},
 
 	searchAll: function (text, backward) {
+		if (this._docLayer._searchResults && text === this._docLayer._searchTerm) {
+			return;
+		}
 		this.search(text, backward, 1);
 	},
 

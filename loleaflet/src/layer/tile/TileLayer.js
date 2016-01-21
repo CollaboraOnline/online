@@ -482,7 +482,6 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onSearchResultSelection: function (textMsg) {
-		this._clearSearchResults();
 		textMsg = textMsg.substring(23);
 		var obj = JSON.parse(textMsg);
 		var originalPhrase = obj.searchString;
@@ -497,22 +496,19 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		// do not cache search results if there is only one result.
 		// this way regular searches works fine
-		if (this._docType === 'presentation' && count > 1)
+		if (count > 1)
 		{
-			this._map._socket.sendMessage('resetselection');
+			this._clearSearchResults();
 			this._searchResults = results;
-			this._searchTerm = originalPhrase;
-			this._searchIndex = 0;
-
 			this._map.setPart(results[0].part); // go to first result.
 		}
+		this._searchTerm = originalPhrase;
 		this._map.fire('search', {originalPhrase: originalPhrase, count: count, results: results});
 	},
 
 	_clearSearchResults: function() {
 		this._searchResults = null;
 		this._searchTerm = null;
-		this._searchIndex = null;
 		this._searchResultsLayer.clearLayers();
 	},
 
@@ -521,12 +517,12 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 		this._searchResultsLayer.clearLayers();
-		for (var k=0; k < this._searchResults.length; k++)
+		for (var k = 0; k < this._searchResults.length; k++)
 		{
 			var result = this._searchResults[k];
 			if (result.part === this._selectedPart)
 			{
-				var _fillColor = (k === this._searchIndex) ? '#43ACE8' : '#CCCCCC';
+				var _fillColor = '#CCCCCC';
 				var strTwips = result.twipsRectangles.match(/\d+/g);
 				var rectangles = [];
 				for (var i = 0; i < strTwips.length; i += 4) {
