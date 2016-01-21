@@ -321,12 +321,13 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_handleCtrlCommand: function (e) {
-		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v') {
+		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x') {
 			e.originalEvent.preventDefault();
 			return true;
 		}
 
-		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v') {
+		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.keyCode !== 88 &&
+				e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x') {
 			// not copy or paste
 			e.originalEvent.preventDefault();
 		}
@@ -376,7 +377,8 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 				return false;
 			case 67: // c
-				// we prepare for a copy event
+			case 88: // x
+				// we prepare for a copy or cut event
 				this._map._docLayer._textArea.value = 'dummy text';
 				this._map._docLayer._textArea.focus();
 				this._map._docLayer._textArea.select();
@@ -396,7 +398,7 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map._socket.sendMessage('uno .uno:SuperScript');
 				return true;
 		}
-		if (e.type === 'keypress' && e.originalEvent.ctrlKey && (e.originalEvent.key === 'c' || e.originalEvent.key === 'v')) {
+		if (e.type === 'keypress' && e.originalEvent.ctrlKey && (e.originalEvent.key === 'c' || e.originalEvent.key === 'v' || e.originalEvent.key === 'x')) {
 			// need to handle this separately for Firefox
 			return true;
 		}
