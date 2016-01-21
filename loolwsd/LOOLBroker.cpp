@@ -598,8 +598,11 @@ static bool waitForTerminationChild(const Process::PID aPID, signed count = CHIL
     {
         int status;
         waitpid(aPID, &status, WUNTRACED | WNOHANG);
-        if (WIFEXITED(status))
+        if (WIFEXITED(status) || WIFSIGNALED(status))
+        {
+            Log::info("Child " + std::to_string(aPID) + " terminated.");
             return true;
+        }
 
         sleep(MAINTENANCE_INTERVAL);
     }
