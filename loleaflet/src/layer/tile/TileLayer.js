@@ -12,6 +12,27 @@ if (typeof String.prototype.startsWith !== 'function') {
 	};
 }
 
+L.Compatibility = {
+	clipboardGet: function (event) {
+		var text = null;
+		if (event.clipboardData) { // Standard
+			text = event.clipboardData.getData('text/plain');
+		}
+		else if (window.clipboardData) { // IE 11
+			text = window.clipboardData.getData('Text');
+		}
+		return text;
+	},
+	clipboardSet: function (event, text) {
+		if (event.clipboardData) { // Standard
+			event.clipboardData.setData('text/plain', text);
+		}
+		else if (window.clipboardData) { // IE 11
+			window.clipboardData.setData('Text', text);
+		}
+	}
+};
+
 L.TileLayer = L.GridLayer.extend({
 
 	options: {
@@ -929,12 +950,7 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 		if (this._selectionTextContent) {
-			if (e.clipboardData) { // Standard
-				e.clipboardData.setData('text/plain', this._selectionTextContent);
-			}
-			else if (window.clipboardData) { // IE 11
-				window.clipboardData.setData('Text', this._selectionTextContent);
-			}
+			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 		}
 	},
 
@@ -942,12 +958,7 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 		if (this._selectionTextContent) {
-			if (e.clipboardData) { // Standard
-				e.clipboardData.setData('text/plain', this._selectionTextContent);
-			}
-			else if (window.clipboardData) { // IE 11
-				window.clipboardData.setData('Text', this._selectionTextContent);
-			}
+			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 			this._map._socket.sendMessage('uno .uno:Cut');
 		}
 	},
@@ -955,13 +966,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onPaste: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		var pasteString = null;
-		if (e.clipboardData) { // Standard
-			pasteString = e.clipboardData.getData('text/plain');
-		}
-		else if (window.clipboardData) { // IE 11
-			pasteString = window.clipboardData.getData('Text');
-		}
+		var pasteString = L.Compatibility.clipboardGet(e);
 		if (pasteString) {
 			this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + pasteString);
 		}
