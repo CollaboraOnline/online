@@ -223,8 +223,14 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                 {
                     continue;
                 }
-                else if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                else if (n <= 0)
                 {
+                    // Connection closed.
+                    break;
+                }
+                else
+                {
+                    assert(n > 0);
                     const std::string firstLine = getFirstLine(buffer, n);
                     if (firstLine == "eof")
                     {
@@ -267,13 +273,10 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                             char largeBuffer[size];     //FIXME: Security risk! Flooding may segfault us.
 
                             n = ws->receiveFrame(largeBuffer, size, flags);
-                            if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                            if (n > 0 && !handler(largeBuffer, n, false))
                             {
-                                if (!handler(largeBuffer, n, false))
-                                {
-                                    Log::info("Socket handler flagged for finishing.");
-                                    break;
-                                }
+                                Log::info("Socket handler flagged for finishing.");
+                                break;
                             }
                         }
                         else
@@ -613,8 +616,7 @@ public:
             {
                 char buffer[200000];
                 n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
-
-                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                if (n > 0)
                 {
                     Log::trace() << "Client got " << n << " bytes: "
                                  << getAbbreviatedMessage(buffer, n) << Log::end;

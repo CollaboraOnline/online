@@ -72,7 +72,7 @@ void HTTPWSTest::testPaste()
     {
         char buffer[100000];
         n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+        if (n > 0)
         {
             const std::string line = LOOLProtocol::getFirstLine(buffer, n);
             const std::string prefix = "textselectioncontent: ";
@@ -140,7 +140,7 @@ void HTTPWSTest::testRenderingOptions()
     {
         char buffer[100000];
         n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+        if (n > 0)
         {
             std::string line = LOOLProtocol::getFirstLine(buffer, n);
             std::string prefix = "status: ";

@@ -381,8 +381,7 @@ public:
             {
                 char buffer[1024];
                 n = _ws->receiveFrame(buffer, sizeof(buffer), flags);
-
-                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                if (n > 0)
                 {
                     std::string firstLine = getFirstLine(buffer, n);
                     if (firstLine == "eof")
@@ -410,7 +409,7 @@ public:
                         handle(queue, firstLine, buffer, n);
                 }
             }
-            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && !_stop);
+            while (!_stop && n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
             Log::debug() << "Finishing " << thread_name << ". stop " << _stop
                          << ", payload size: " << n
                          << ", flags: " << std::hex << flags << Log::end;
