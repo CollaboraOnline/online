@@ -216,11 +216,13 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 
                 if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
                 {
-                    ws->sendFrame("PONG", 4);
+                    // Echo back the ping payload as pong.
+                    ws->sendFrame(buffer, n, WebSocket::FRAME_OP_PONG);
                     continue;
                 }
                 else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
                 {
+                    // In case we do send pings in the future.
                     continue;
                 }
                 else if (n <= 0)
