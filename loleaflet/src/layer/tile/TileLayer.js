@@ -1013,6 +1013,9 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onDrop: function (e) {
+		// The original event doesn't contain the coordinates.
+		var latlng = e.latlng;
+
 		e = e.originalEvent;
 		e.preventDefault();
 
@@ -1041,6 +1044,15 @@ L.TileLayer = L.GridLayer.extend({
 				for (var i = 0; i < files.length; ++i) {
 					var file = files[i];
 					if (file.type.match(/image.*/)) {
+						// Move the cursor, so that the insert position is as close to the drop coordinates as possible.
+						var docLayer = this._map._docLayer;
+						var mousePos = docLayer._latLngToTwips(latlng);
+						var count = 1;
+						var buttons = 1;
+						var modifier = this._map.keyboard.modifier;
+						this._postMouseEvent('buttondown', mousePos.x, mousePos.y, count, buttons, modifier);
+						this._postMouseEvent('buttonup', mousePos.x, mousePos.y, count, buttons, modifier);
+
 						var reader = new FileReader();
 						var socket = this._map._socket;
 						reader.onload = (function(aImg) {
