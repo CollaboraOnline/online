@@ -929,7 +929,12 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 		if (this._selectionTextContent) {
-			e.clipboardData.setData('text/plain', this._selectionTextContent);
+			if (e.clipboardData) { // Standard
+				e.clipboardData.setData('text/plain', this._selectionTextContent);
+			}
+			else if (window.clipboardData) { // IE 11
+				window.clipboardData.setData('Text', this._selectionTextContent);
+			}
 		}
 	},
 
@@ -945,7 +950,16 @@ L.TileLayer = L.GridLayer.extend({
 	_onPaste: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + e.clipboardData.getData('text/plain'));
+		var pasteString = null;
+		if (e.clipboardData) { // Standard
+			pasteString = e.clipboardData.getData('text/plain');
+		}
+		else if (window.clipboardData) { // IE 11
+			pasteString = window.clipboardData.getData('Text');
+		}
+		if (pasteString) {
+			this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + pasteString);
+		}
 	},
 
 	_onDragOver: function (e) {
