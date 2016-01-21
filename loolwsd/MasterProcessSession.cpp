@@ -763,7 +763,7 @@ void MasterProcessSession::dispatchChild()
     if (nRequest < 0 && !bFound)
     {
         Log::error(getName() + ": Failed to connect to child. Shutting down socket.");
-        Util::shutdownWebSocket(*_ws);
+        Util::shutdownWebSocket(_ws);
         return;
     }
 

@@ -13,6 +13,7 @@
 #include <string>
 #include <sstream>
 #include <functional>
+#include <memory>
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -56,8 +57,8 @@ namespace Util
                               int bufferWidth, int bufferHeight,
                               std::vector<char>& output, LibreOfficeKitTileMode mode);
 
-    // Call WebSocket::shutdown() ignoring Poco::IOException
-    void shutdownWebSocket(Poco::Net::WebSocket& ws);
+    /// Call WebSocket::shutdown() ignoring Poco::IOException.
+    void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws);
 
     ssize_t writeFIFO(const int nPipe, const char* pBuffer, ssize_t nSize);
     inline

@@ -98,8 +98,7 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
 
 LOOLSession::~LOOLSession()
 {
-    if (_ws)
-        Util::shutdownWebSocket(*_ws);
+    Util::shutdownWebSocket(_ws);
 }
 
 void LOOLSession::sendTextFrame(const std::string& text)
@@ -183,12 +182,14 @@ void LOOLSession::disconnect(const std::string& reason)
     {
         sendTextFrame("disconnect " + reason);
         _disconnected = true;
+        Util::shutdownWebSocket(_ws);
     }
 }
 
 bool LOOLSession::handleDisconnect(Poco::StringTokenizer& /*tokens*/)
 {
     _disconnected = true;
+    Util::shutdownWebSocket(_ws);
     return false;
 }
 

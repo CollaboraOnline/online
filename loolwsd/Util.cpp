@@ -279,15 +279,16 @@ namespace Util
         return true;
     }
 
-    void shutdownWebSocket(Poco::Net::WebSocket& ws)
+    void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws)
     {
         try
         {
-            ws.shutdown();
+            if (ws)
+                ws->shutdown();
         }
         catch (const Poco::IOException& exc)
         {
-            Log::error("IOException: " + exc.message());
+            Log::warn("IOException while socket shutdown: " + exc.message());
         }
     }
 
