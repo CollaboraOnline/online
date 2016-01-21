@@ -19,9 +19,11 @@ constexpr int INTERVAL_PROBES = 10;
 constexpr int MAINTENANCE_INTERVAL = 1;
 constexpr int CHILD_TIMEOUT_SECS = 10;
 constexpr int POLL_TIMEOUT = 1000000;
-// Pipe buffer is in function of URL size, a big URL will be handled in several
-// work loads.
-constexpr int PIPE_BUFFER = 1024;
+
+/// Pipe and Socket read buffer size.
+/// Should be large enough for ethernet packets
+/// which can be 1500 bytes long.
+constexpr int READ_BUFFER_SIZE = 2048;
 
 static const std::string JailedDocumentRoot = "/user/docs/";
 

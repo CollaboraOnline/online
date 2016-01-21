@@ -404,7 +404,7 @@ public:
     void run() override
     {
         std::string aMessage;
-        char  aBuffer[PIPE_BUFFER];
+        char  aBuffer[READ_BUFFER_SIZE];
         char* pStart;
         char* pEnd;
 
@@ -488,7 +488,7 @@ public:
 private:
     char* _pStart;
     char* _pEnd;
-    char  _aBuffer[PIPE_BUFFER];
+    char  _aBuffer[READ_BUFFER_SIZE];
 };
 
 /// Initializes LibreOfficeKit for cross-fork re-use.

@@ -751,7 +751,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
 
     struct pollfd aPoll;
     ssize_t nBytes = -1;
-    char  aBuffer[PIPE_BUFFER];
+    char  aBuffer[READ_BUFFER_SIZE];
     char* pStart = nullptr;
     char* pEnd = nullptr;
 
