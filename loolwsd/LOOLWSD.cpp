@@ -260,22 +260,28 @@ public:
                     LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
                     std::shared_ptr<MasterProcessSession> session(new MasterProcessSession(ws, kind));
                     const std::string filePrefix("file://");
-                    std::string load = "load url=" + filePrefix + fromPath;
+                    std::string encodedFrom;
+                    URI::encode(filePrefix + fromPath, std::string(), encodedFrom);
+                    std::string load = "load url=" + encodedFrom;
                     session->handleInput(load.data(), load.size());
 
                     // Convert it to the requested format.
                     Path toPath(fromPath);
                     toPath.setExtension(format);
                     std::string toJailURL = filePrefix + LOOLSession::jailDocumentURL + Path::separator() + toPath.getFileName();
-                    std::string saveas = "saveas url=" + toJailURL + " format=" + format + " options=";
+                    std::string encodedTo;
+                    URI::encode(toJailURL, std::string(), encodedTo);
+                    std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
                     session->handleInput(saveas.data(), saveas.size());
                     std::string toURL = session->getSaveAs();
+                    std::string resultingURL;
+                    URI::decode(toURL, resultingURL);
 
                     // Send it back to the client.
                     std::string mimeType = "application/octet-stream";
-                    if (toURL.find(filePrefix) == 0)
-                        toURL = toURL.substr(filePrefix.length());
-                    response.sendFile(toURL, mimeType);
+                    if (resultingURL.find(filePrefix) == 0)
+                        resultingURL = resultingURL.substr(filePrefix.length());
+                    response.sendFile(resultingURL, mimeType);
                 }
                 else
                 {
