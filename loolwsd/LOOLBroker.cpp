@@ -72,7 +72,7 @@ static std::chrono::steady_clock::time_point lastMaintenanceTime = std::chrono::
 static unsigned int childCounter = 0;
 static signed numPreSpawnedChildren = 0;
 
-static std::mutex forkMutex;
+static std::recursive_mutex forkMutex;
 static std::map<Process::PID, int> _childProcesses;
 static std::map<std::string, Process::PID> _cacheURL;
 
@@ -82,7 +82,7 @@ namespace
     /// of a child. Returns -1 on error.
     int getChildPipe(const Process::PID pid)
     {
-        std::lock_guard<std::mutex> lock(forkMutex);
+        std::lock_guard<std::recursive_mutex> lock(forkMutex);
         const auto it = _childProcesses.find(pid);
         return (it != _childProcesses.end() ? it->second : -1);
     }
@@ -91,7 +91,7 @@ namespace
     /// invalidates the URL cache.
     void removeChild(const Process::PID pid)
     {
-        std::lock_guard<std::mutex> lock(forkMutex);
+        std::lock_guard<std::recursive_mutex> lock(forkMutex);
         const auto it = _childProcesses.find(pid);
         if (it != _childProcesses.end())
         {
@@ -277,6 +277,8 @@ public:
 
     void verifyChilds()
     {
+        std::lock_guard<std::recursive_mutex> lock(forkMutex);
+
         Log::trace("Verifying Childs.");
         std::string aMessage;
         bool bError = false;
@@ -307,8 +309,9 @@ public:
 
     Process::PID searchURL(const std::string& aURL)
     {
-        const std::string aMessage = "search " + aURL + "\r\n";
+        std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
+        const std::string aMessage = "search " + aURL + "\r\n";
         Process::PID nPID = -1;
         for (auto& it : _childProcesses)
         {
@@ -356,6 +359,8 @@ public:
 
     void handleInput(const std::string& aMessage)
     {
+        std::lock_guard<std::recursive_mutex> lock(forkMutex);
+
         StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         if (tokens[0] == "request" && tokens.count() == 3)
         {
@@ -842,7 +847,7 @@ int main(int argc, char** argv)
     {
         if (forkCounter > 0)
         {
-            std::lock_guard<std::mutex> lock(forkMutex);
+            std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
             // Figure out how many children we need.
             const signed total = _childProcesses.size();
