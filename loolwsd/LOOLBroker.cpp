@@ -429,13 +429,13 @@ public:
         {
             if ( pStart == pEnd )
             {
-                if (poll(&aPoll, 1, -1) < 0)
+                if (poll(&aPoll, 1, POLL_TIMEOUT_MS) < 0)
                 {
                     Log::error("Failed to poll pipe [" + FIFO_FILE + "].");
                     continue;
                 }
                 else
-                if (aPoll.revents & POLLIN)
+                if (aPoll.revents & (POLLIN | POLLPRI))
                 {
                     nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
                     if (nBytes < 0)

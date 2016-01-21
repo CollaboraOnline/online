@@ -200,21 +200,17 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 {
     Log::info("Starting Socket Processor.");
 
-    const Poco::Timespan waitTime(POLL_TIMEOUT);
+    const Poco::Timespan waitTime(POLL_TIMEOUT_MS);
     try
     {
         int flags = 0;
         int n = 0;
-        bool pollTimeout = true;
         ws->setReceiveTimeout(0);
         do
         {
             char buffer[200000]; //FIXME: Dynamic?
 
-            // We should care about timeout only when we have heartbeat
-            // support. For now, we can't predict when the next message
-            // should arrive.
-            if ((pollTimeout = ws->poll(waitTime, Socket::SELECT_READ)))
+            if (ws->poll(waitTime, Socket::SELECT_READ))
             {
                 n = ws->receiveFrame(buffer, sizeof(buffer), flags);
 
@@ -295,7 +291,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         while (!TerminationFlag &&
                (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
         Log::debug() << "Finishing SocketProcessor. TerminationFlag: " << TerminationFlag
-                     << ", pollTimeout: " << pollTimeout << ", payload size: " << n
+                     << ", payload size: " << n
                      << ", flags: " << std::hex << flags << Log::end;
     }
     catch (const WebSocketException& exc)
