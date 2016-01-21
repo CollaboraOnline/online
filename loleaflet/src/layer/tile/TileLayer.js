@@ -1001,7 +1001,12 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 		if (this._selectionTextContent) {
-			e.clipboardData.setData('text/plain', this._selectionTextContent);
+			if (e.clipboardData) { // Standard
+				e.clipboardData.setData('text/plain', this._selectionTextContent);
+			}
+			else if (window.clipboardData) { // IE 11
+				window.clipboardData.setData('Text', this._selectionTextContent);
+			}
 			this._map._socket.sendMessage('uno .uno:Cut');
 		}
 	},
