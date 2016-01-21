@@ -11,16 +11,6 @@ tiles proactively (guessing what the client might need). Etc.
 client -> server
 ================
 
-loolclient <major.minor[-patch]>
-
-    Upon connection, a client must announce the version number it supports.
-    Major: an integer that must always match between client and server,
-           otherwise there are no guarantees of any sensible
-           compatibility. This is bumped when API changes.
-    Minor: an integer is more flexible and is at the discretion of either party.
-           Security fixes that do not alter the API would bump the minor version number.
-    Patch: an optional string that is informational.
-
 canceltiles
 
     All outstanding tile messages from the client to the server are
@@ -77,6 +67,16 @@ load [part=<partNumber>] url=<url> [timestamp=<time>] [options=<options>]
 
     options are the whole rest of the line, not URL-encoded
 
+loolclient <major.minor[-patch]>
+
+    Upon connection, a client must announce the version number it supports.
+    Major: an integer that must always match between client and server,
+           otherwise there are no guarantees of any sensible
+           compatibility. This is bumped when API changes.
+    Minor: an integer is more flexible and is at the discretion of either party.
+           Security fixes that do not alter the API would bump the minor version number.
+    Patch: an optional string that is informational.
+
 mouse type=<type> x=<x> y=<y> count=<count>
 
     <type> is 'buttondown', 'buttonup' or 'move', others are numbers.
@@ -113,6 +113,15 @@ styles
 tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
 
     All parameters are numbers.
+
+unload [save|force]
+
+    unloads the document.
+
+    if 'save' is specified, the document is saved before unloading,
+    otherwise, changes are discarded.
+    if other users have the document open, and save not specified,
+    'force' is necessary to discard changes.
 
 uno <command>
 

@@ -315,6 +315,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
              tokens[0] != "status" &&
              tokens[0] != "tile" &&
              tokens[0] != "tilecombine" &&
+             tokens[0] != "unload" &&
              tokens[0] != "uno")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
