@@ -86,9 +86,13 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _kindString(kind == Kind::ToClient ? "ToClient" :
                 kind == Kind::ToMaster ? "ToMaster" : "ToPrisoner"),
     _ws(ws),
-    _docURL(""),
-    _bShutdown(false)
+    _bShutdown(false),
+    _disconnected(false)
 {
+    // Only a post request can have a null ws.
+    if (_kind != Kind::ToClient)
+        assert(_ws);
+
     setId(id);
 }
 
@@ -171,6 +175,21 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
                 _docOptions += Poco::cat(std::string(" "), tokens.begin() + offset + 1, tokens.end());
         }
     }
+}
+
+void LOOLSession::disconnect(const std::string& reason)
+{
+    if (!_disconnected)
+    {
+        sendTextFrame("disconnect " + reason);
+        _disconnected = true;
+    }
+}
+
+bool LOOLSession::handleDisconnect(Poco::StringTokenizer& /*tokens*/)
+{
+    _disconnected = true;
+    return false;
 }
 
 bool LOOLSession::handleInput(const char *buffer, int length)

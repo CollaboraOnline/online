@@ -392,6 +392,12 @@ public:
 
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
+                    if (firstLine == "disconnect")
+                    {
+                        Log::info("Client disconnected [" + (tokens.count() == 2 ? tokens[1] : std::string("no reason")) + "].");
+                        break;
+                    }
+
                     // Check if it is a "nextmessage:" and in that case read the large
                     // follow-up message separately, and handle that only.
                     int size;
@@ -418,7 +424,7 @@ public:
             queue.put("eof");
             queueHandlerThread.join();
 
-            // We should probably send the Client some sensible message and reason.
+            _session->sendTextFrame("disconnect");
             _session->sendTextFrame("eof");
         }
         catch (const Exception& exc)

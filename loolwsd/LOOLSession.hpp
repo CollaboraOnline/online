@@ -44,6 +44,7 @@ public:
 
     const std::string& getId() const { return _id; }
     const std::string& getName() const { return _name; }
+    bool isDisconnected() const { return _disconnected; }
 
     void sendTextFrame(const std::string& text);
 
@@ -54,6 +55,12 @@ public:
     virtual bool getPartPageRectangles(const char *buffer, int length) = 0;
 
     bool handleInput(const char *buffer, int length);
+
+    /// Invoked when we want to disconnect a session.
+    virtual void disconnect(const std::string& reason = "");
+
+    /// Called to handle disconnection command from socket.
+    virtual bool handleDisconnect(Poco::StringTokenizer& tokens);
 
 protected:
     LOOLSession(const std::string& id, const Kind kind,
@@ -108,10 +115,12 @@ private:
     virtual bool _handleInput(const char *buffer, int length) = 0;
 
 private:
-    // A session ID specific to an end-to-end connection (from user to lokit).
+    /// A session ID specific to an end-to-end connection (from user to lokit).
     std::string _id;
-    // A readable name that identifies our peer and ID.
+    /// A readable name that identifies our peer and ID.
     std::string _name;
+    /// True if we have been disconnected.
+    bool _disconnected;
 
     std::mutex _mutex;
 };

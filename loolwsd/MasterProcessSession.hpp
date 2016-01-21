@@ -34,6 +34,9 @@ public:
 
     virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
+    virtual void disconnect(const std::string& reason = "") override;
+    virtual bool handleDisconnect(Poco::StringTokenizer& tokens) override;
+
     /**
      * Return the URL of the saved-as document when it's ready. If called
      * before it's ready, the call blocks till then.

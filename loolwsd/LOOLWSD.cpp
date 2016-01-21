@@ -1021,8 +1021,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (LOOLWSD::DoTest)
         inputThread.join();
 
-    close(BrokerWritePipe);
-
     // stop the service, no more request
     srv.stop();
     srv2.stop();
@@ -1032,6 +1030,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool2.joinAll();
 
     // Terminate child processes
+    Util::writeFIFO(LOOLWSD::BrokerWritePipe, "eof");
     for (auto i : MasterProcessSession::ChildProcesses)
     {
         Log::info("Requesting child process " + std::to_string(i.first) + " to terminate");
@@ -1040,6 +1039,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
+
+    close(BrokerWritePipe);
 
     Log::info("Cleaning up childroot directory [" + ChildRoot + "].");
     std::vector<std::string> jails;

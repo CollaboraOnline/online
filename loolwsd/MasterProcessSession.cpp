@@ -56,22 +56,45 @@ MasterProcessSession::~MasterProcessSession()
     {
         // We could be unwinding because our peer's connection
         // died. Handle I/O errors in that case.
-        auto peer = _peer.lock();
-        if (_kind == Kind::ToClient && peer)
-        {
-            peer->sendTextFrame("eof");
-        }
-        else
-        if (_kind == Kind::ToPrisoner && peer)
-        {
-            peer->_bShutdown = true;
-            Util::shutdownWebSocket(*(peer->_ws));
-        }
+        disconnect();
     }
     catch (const std::exception& exc)
     {
         Log::error(std::string("Exception: ") + exc.what());
     }
+}
+
+void MasterProcessSession::disconnect(const std::string& reason)
+{
+    if (!isDisconnected())
+    {
+        LOOLSession::disconnect(reason);
+
+        auto peer = _peer.lock();
+        if (peer)
+        {
+            peer->disconnect(reason);
+        }
+    }
+}
+
+bool MasterProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
+{
+    Log::info("Graceful disconnect on " + getName() + " [" +
+              (tokens.count() > 1 ? tokens[1] : std::string("no reason")) +
+              "].");
+
+    LOOLSession::handleDisconnect(tokens);
+    disconnect(tokens.count() > 1 ? tokens[1] : std::string());
+
+    auto peer = _peer.lock();
+    if (peer)
+    {
+        const auto reason = (tokens.count() > 1 ? tokens[1] : std::string());
+        peer->disconnect(reason);
+    }
+
+    return false;
 }
 
 bool MasterProcessSession::_handleInput(const char *buffer, int length)
@@ -271,6 +294,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] != "canceltiles" &&
              tokens[0] != "clientzoom" &&
              tokens[0] != "commandvalues" &&
+             tokens[0] != "disconnect" &&
              tokens[0] != "downloadas" &&
              tokens[0] != "getchildid" &&
              tokens[0] != "gettextselection" &&
@@ -350,6 +374,11 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save"))
         {
            _tileCache->documentSaved();
+        }
+        else if (tokens[0] == "disconnect")
+        {
+            // This was the last we would hear from the client on this socket.
+            return handleDisconnect(tokens);
         }
     }
     return true;

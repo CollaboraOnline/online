@@ -27,6 +27,11 @@ canceltiles
     dropped and will not be handled. There is no guarantee of exactly
     which tile: messages might still be sent back to the client.
 
+disconnect [reason]
+
+    Sent before disconnecting gracefully.
+    reason: optional human-readable reason to disconnect.
+
 downloadas downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
     Exports the current document to the desired format and returns a download URL

@@ -84,6 +84,7 @@ void HTTPWSTest::testPaste()
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    sendTextFrame(_socket, "disconnect");
     _socket.shutdown();
     CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
 }
@@ -152,6 +153,7 @@ void HTTPWSTest::testRenderingOptions()
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    sendTextFrame(_socket, "disconnect");
     _socket.shutdown();
     // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
     Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);

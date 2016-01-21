@@ -64,12 +64,28 @@ ChildProcessSession::~ChildProcessSession()
 {
     Log::info("~ChildProcessSession dtor [" + getName() + "].");
 
+    disconnect();
+}
+
+void ChildProcessSession::disconnect(const std::string& reason)
+{
+    if (!isDisconnected())
+    {
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        if (_multiView)
+            _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    _onUnload(getId());
+        //TODO: Handle saving to temp etc.
+        _onUnload(getId());
+
+        LOOLSession::disconnect(reason);
+    }
+}
+
+bool ChildProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
+{
+    return LOOLSession::handleDisconnect(tokens);
 }
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
@@ -136,6 +152,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         // i.e. need to be handled in a child process.
 
         assert(tokens[0] == "clientzoom" ||
+               tokens[0] == "disconnect" ||
                tokens[0] == "downloadas" ||
                tokens[0] == "getchildid" ||
                tokens[0] == "gettextselection" ||
@@ -164,6 +181,11 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         if (tokens[0] == "clientzoom")
         {
             return clientZoom(buffer, length, tokens);
+        }
+        else if (tokens[0] == "disconnect")
+        {
+            // This was the last we would hear from the client on this socket.
+            return handleDisconnect(tokens);
         }
         else if (tokens[0] == "downloadas")
         {
