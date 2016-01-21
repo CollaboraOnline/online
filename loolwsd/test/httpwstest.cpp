@@ -53,8 +53,8 @@ public:
 void HTTPWSTest::testPaste()
 {
     // Load a document and make it empty.
-    std::string documentPath = TDOC "/hello.odt";
-    std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    const std::string documentPath = TDOC "/hello.odt";
+    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
     sendTextFrame(_socket, "load url=" + documentURL);
     sendTextFrame(_socket, "uno .uno:SelectAll");
     sendTextFrame(_socket, "uno .uno:Delete");
@@ -74,8 +74,8 @@ void HTTPWSTest::testPaste()
         n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
-            std::string line = LOOLProtocol::getFirstLine(buffer, n);
-            std::string prefix = "textselectioncontent: ";
+            const std::string line = LOOLProtocol::getFirstLine(buffer, n);
+            const std::string prefix = "textselectioncontent: ";
             if (line.find(prefix) == 0)
             {
                 selection = line.substr(prefix.length());
@@ -127,9 +127,9 @@ void HTTPWSTest::testLargePaste()
 void HTTPWSTest::testRenderingOptions()
 {
     // Load a document and get its size.
-    std::string documentPath = TDOC "/hide-whitespace.odt";
-    std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-    std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
+    const std::string documentPath = TDOC "/hide-whitespace.odt";
+    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
     sendTextFrame(_socket, "load url=" + documentURL + " options=" + options);
     sendTextFrame(_socket, "status");
 
