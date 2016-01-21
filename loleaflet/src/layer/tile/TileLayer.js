@@ -124,6 +124,7 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('drag resize zoomend', this._updateScrollOffset, this);
 
 		map.on('copy', this._onCopy, this);
+		map.on('cut', this._onCut, this);
 		map.on('paste', this._onPaste, this);
 		map.on('dragover', this._onDragOver, this);
 		map.on('drop', this._onDrop, this);
@@ -992,6 +993,15 @@ L.TileLayer = L.GridLayer.extend({
 		e.preventDefault();
 		if (this._selectionTextContent) {
 			e.clipboardData.setData('text/plain', this._selectionTextContent);
+		}
+	},
+
+	_onCut: function (e) {
+		e = e.originalEvent;
+		e.preventDefault();
+		if (this._selectionTextContent) {
+			e.clipboardData.setData('text/plain', this._selectionTextContent);
+			this._map._socket.sendMessage('uno .uno:Cut');
 		}
 	},
 
