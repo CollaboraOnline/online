@@ -396,7 +396,6 @@ namespace Util
 
     ssize_t readMessage(int nPipe, char* pBuffer, ssize_t nSize)
     {
-        ssize_t nBytes = -1;
         struct pollfd aPoll;
 
         aPoll.fd = nPipe;
@@ -411,9 +410,9 @@ namespace Util
             errno = ETIME;
 
         if( (aPoll.revents & POLLIN) != 0 )
-            nBytes = readFIFO(nPipe, pBuffer, nSize);
+            return readFIFO(nPipe, pBuffer, nSize);
 
-        return nBytes;
+        return -1;
     }
 
     static
