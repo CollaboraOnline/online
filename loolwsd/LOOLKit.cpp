@@ -581,21 +581,31 @@ public:
     /// the remaining number of clients.
     size_t purgeSessions()
     {
-        std::unique_lock<std::recursive_mutex> lock(_mutex);
-
-        for (auto it =_connections.cbegin(); it != _connections.cend(); )
+        std::vector<std::shared_ptr<ChildProcessSession>> deadSessions;
         {
-            if (!it->second->isRunning())
+            std::unique_lock<std::recursive_mutex> lock(_mutex);
+
+            for (auto it =_connections.cbegin(); it != _connections.cend(); )
             {
-                onUnload(it->second->getSession()->getId());
-                it = _connections.erase(it);
-            }
-            else
-            {
-                ++it;
+                if (!it->second->isRunning())
+                {
+                    deadSessions.push_back(it->second->getSession());
+                    it = _connections.erase(it);
+                }
+                else
+                {
+                    ++it;
+                }
             }
         }
 
+        // Don't destroy sessions while holding our lock.
+        // We may deadlock if a session is waiting on us
+        // during callback initiated while handling a command
+        // and the dtor tries to take its lock (which is taken).
+        deadSessions.clear();
+
+        std::unique_lock<std::recursive_mutex> lock(_mutex);
         return _connections.size();
     }
 
