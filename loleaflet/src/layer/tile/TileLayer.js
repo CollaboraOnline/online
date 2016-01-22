@@ -1010,6 +1010,10 @@ L.TileLayer = L.GridLayer.extend({
 		e.preventDefault();
 		if (this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
+
+			// remember the copied text, for rich copy/paste inside a document
+			this._selectionTextHash = this._selectionTextContent;
+			this._map._socket.sendMessage('uno .uno:Copy');
 		}
 	},
 
@@ -1018,6 +1022,9 @@ L.TileLayer = L.GridLayer.extend({
 		e.preventDefault();
 		if (this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
+
+			// remember the copied text, for rich copy/paste inside a document
+			this._selectionTextHash = this._selectionTextContent;
 			this._map._socket.sendMessage('uno .uno:Cut');
 		}
 	},
@@ -1027,7 +1034,14 @@ L.TileLayer = L.GridLayer.extend({
 		e.preventDefault();
 		var pasteString = L.Compatibility.clipboardGet(e);
 		if (pasteString) {
-			this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + pasteString);
+			if (pasteString === this._selectionTextHash) {
+				// content of the clipboard did not change, we can do rich
+				// paste
+				this._map._socket.sendMessage('uno .uno:Paste');
+			}
+			else {
+				this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + pasteString);
+			}
 		}
 	},
 
