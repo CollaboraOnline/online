@@ -481,9 +481,13 @@ public:
                 while (!LOOLWSD::isShutDown &&
                         (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)));
 
+                Application::instance().logger().information(Util::logPrefix() + "Finished the websocket handling.");
+
                 queue.clear();
                 queue.put("eof");
                 queueHandlerThread.join();
+
+                Application::instance().logger().information(Util::logPrefix() + "queueHandlerThread joined.");
             }
             catch (WebSocketException& exc)
             {
@@ -632,9 +636,9 @@ std::string LOOLWSD::jail;
 std::mutex LOOLWSD::_rngMutex;
 Random LOOLWSD::_rng;
 Poco::NamedMutex LOOLWSD::_namedMutexLOOL("loolwsd");
-Poco::SharedMemory LOOLWSD::_sharedForkChild("loolwsd", sizeof(bool), Poco::SharedMemory::AM_WRITE);
+Poco::SharedMemory LOOLWSD::_sharedForkChild("loolwsd", sizeof(size_t), Poco::SharedMemory::AM_WRITE);
 
-int LOOLWSD::_numPreSpawnedChildren = 10;
+size_t LOOLWSD::_numPreSpawnedChildren = 10;
 bool LOOLWSD::doTest = false;
 volatile bool LOOLWSD::isShutDown = false;
 #if ENABLE_DEBUG
@@ -1175,13 +1179,14 @@ int LOOLWSD::createComponent()
     return Application::EXIT_OK;
 }
 
-void LOOLWSD::startupComponent(int nComponents)
+bool LOOLWSD::startupComponent(int nComponents)
 {
     for (int nCntr = nComponents; nCntr; nCntr--)
     {
         if (createComponent() < 0)
-            break;
+            return false;
     }
+    return true;
 }
 
 void LOOLWSD::desktopMain()
@@ -1204,7 +1209,7 @@ void LOOLWSD::desktopMain()
         {
             if ( MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end() )
             {
-                if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
+                if ((WIFEXITED(status) || WIFSIGNALED(status)))
                 {
                     std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
                     // remove chroot child
@@ -1236,14 +1241,23 @@ void LOOLWSD::desktopMain()
         else if (pid < 0)
             std::cout << Util::logPrefix() << "Child error: " << strerror(errno);
 
-        if (!LOOLWSD::isShutDown && _sharedForkChild.begin()[0] > 0 )
+        // spawn or pre-spawn new children
+        if (!LOOLWSD::isShutDown)
         {
             _namedMutexLOOL.lock();
-            _sharedForkChild.begin()[0] = _sharedForkChild.begin()[0] - 1;
-            std::cout << Util::logPrefix() << "Create child session, fork new one" << std::endl;
+            size_t toSpawn = reinterpret_cast<size_t*>(_sharedForkChild.begin())[0];
+            reinterpret_cast<size_t*>(_sharedForkChild.begin())[0] = 0;
             _namedMutexLOOL.unlock();
-            if (createComponent() < 0 )
-                break;
+
+            if (MasterProcessSession::_childProcesses.size() + toSpawn < _numPreSpawnedChildren)
+                toSpawn = _numPreSpawnedChildren - MasterProcessSession::_childProcesses.size();
+
+            if (toSpawn > 0)
+            {
+                std::cout << Util::logPrefix() << "Create child session, fork new ones: " << toSpawn << std::endl;
+                if (!startupComponent(toSpawn))
+                    break;
+            }
         }
 
         ++timeoutCounter;
@@ -1377,7 +1391,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         {
             if ( MasterProcessSession::_childProcesses.find(pid) != MasterProcessSession::_childProcesses.end() )
             {
-                if ((WIFEXITED(status) || WIFSIGNALED(status) || WTERMSIG(status) ) )
+                if ((WIFEXITED(status) || WIFSIGNALED(status)))
                 {
                     std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
                     MasterProcessSession::_childProcesses.erase(pid);

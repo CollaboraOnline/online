@@ -32,7 +32,7 @@ public:
     // statics
     static int portNumber;
     static int timeoutCounter;
-    static int _numPreSpawnedChildren;
+    static size_t _numPreSpawnedChildren;
     static bool doTest;
     static bool volatile isShutDown;
     static std::string cache;
@@ -69,7 +69,9 @@ private:
     void displayHelp();
     void componentMain();
     void desktopMain();
-    void startupComponent(int nComponents);
+
+    /// Call createComponent() nComponents-times.
+    bool startupComponent(int nComponents);
     void startupDesktop(int nDesktop);
     int  createComponent();
     int  createDesktop();
