@@ -78,7 +78,13 @@ L.Map.Mouse = L.Handler.extend({
 			}
 		}
 
-		var modifier = this._map.keyboard.modifier;
+		var modifier = 0;
+		var shift = e.originalEvent.shiftKey ? this._map.keyboard.keyModifier.shift : 0;
+		var ctrl = e.originalEvent.ctrlKey ? this._map.keyboard.keyModifier.ctrl : 0;
+		var alt = e.originalEvent.altKey ? this._map.keyboard.keyModifier.alt : 0;
+		var cmd = e.originalEvent.metaKey ? this._map.keyboard.keyModifier.ctrlMac : 0;
+		modifier = shift | ctrl | alt | cmd;
+
 		var buttons = 0;
 		buttons |= e.originalEvent.button === this.JSButtons.left ? this.LOButtons.left : 0;
 		buttons |= e.originalEvent.button === this.JSButtons.middle ? this.LOButtons.middle : 0;
