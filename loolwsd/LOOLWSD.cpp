@@ -200,7 +200,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 {
     Log::info("Starting Socket Processor.");
 
-    const Poco::Timespan waitTime(POLL_TIMEOUT_MS);
+    const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
     try
     {
         int flags = 0;
@@ -217,17 +217,22 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                 if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
                 {
                     // Echo back the ping payload as pong.
-                    ws->sendFrame(buffer, n, WebSocket::FRAME_OP_PONG);
-                    continue;
+                    // Technically, we should send back a PONG control frame.
+                    // However Firefox (probably) or Node.js (possibly) doesn't
+                    // like that and closes the socket when we do.
+                    // Echoing the payload as a normal frame works with Firefox.
+                    ws->sendFrame(buffer, n /*, WebSocket::FRAME_OP_PONG*/);
                 }
                 else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
                 {
                     // In case we do send pings in the future.
-                    continue;
                 }
                 else if (n <= 0)
                 {
                     // Connection closed.
+                    Log::warn() << "Received " << n
+                                << " bytes. Connection closed. Flags: "
+                                << std::hex << flags << Log::end;
                     break;
                 }
                 else

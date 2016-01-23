@@ -18,7 +18,7 @@ constexpr int MASTER_PORT_NUMBER = 9981;
 constexpr int INTERVAL_PROBES = 10;
 constexpr int MAINTENANCE_INTERVAL = 1;
 constexpr int CHILD_TIMEOUT_SECS = 10;
-constexpr int POLL_TIMEOUT_MS = 500;
+constexpr int POLL_TIMEOUT_MS = 1000;
 
 /// Pipe and Socket read buffer size.
 /// Should be large enough for ethernet packets
