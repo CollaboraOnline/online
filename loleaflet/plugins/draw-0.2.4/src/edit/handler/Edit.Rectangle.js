@@ -51,8 +51,6 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 
 		this._toggleCornerMarkers(1);
 
-		this._repositionCornerMarkers();
-
 		L.Edit.SimpleShape.prototype._onMarkerDragEnd.call(this, e);
 	},
 
