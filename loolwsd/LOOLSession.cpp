@@ -696,8 +696,22 @@ void MasterProcessSession::dispatchChild()
     if (_availableChildSessions.size() == 0)
     {
         std::cout << Util::logPrefix() << "waiting for a child session to become available" << std::endl;
-        _availableChildSessionCV.wait(lock, [] { return _availableChildSessions.size() > 0; });
-        std::cout << Util::logPrefix() << "waiting done" << std::endl;
+        if (_availableChildSessionCV.wait_for(lock, std::chrono::minutes(5), [] { return _availableChildSessions.size() > 0; }))
+            std::cout << Util::logPrefix() << "waiting done" << std::endl;
+        else
+        {
+            std::cout << Util::logPrefix() << "waiting for the child session timed out, last try to start a new session" << std::endl;
+            LOOLWSD::_namedMutexLOOL.lock();
+            ++reinterpret_cast<size_t*>(LOOLWSD::_sharedForkChild.begin())[0];
+            LOOLWSD::_namedMutexLOOL.unlock();
+
+            if (!_availableChildSessionCV.wait_for(lock, std::chrono::minutes(5), [] { return _availableChildSessions.size() > 0; }))
+            {
+                std::cout << Util::logPrefix() << "real trouble starting new session, giving up" << std::endl;
+                lock.unlock();
+                return;
+            }
+        }
     }
 
     childSession = *(_availableChildSessions.begin());
