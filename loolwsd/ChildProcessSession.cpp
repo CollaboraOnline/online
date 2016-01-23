@@ -71,7 +71,7 @@ void ChildProcessSession::disconnect(const std::string& reason)
 {
     if (!isDisconnected())
     {
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+        std::unique_lock<std::recursive_mutex> lock(Mutex);
 
         if (_multiView)
             _loKitDocument->pClass->setView(_loKitDocument, _viewId);

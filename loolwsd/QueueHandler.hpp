@@ -41,7 +41,7 @@ public:
                 const std::string input = _queue.get();
                 if (input == "eof")
                 {
-                    Log::info("Recieved EOF. Finishing.");
+                    Log::info("Received EOF. Finishing.");
                     break;
                 }
 

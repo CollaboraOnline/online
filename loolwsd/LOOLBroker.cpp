@@ -471,7 +471,7 @@ public:
                 {
                     pStart++;
 
-                    Log::trace("Recv: " + aMessage);
+                    Log::trace("BrokerFromMaster: " + aMessage);
                     const auto duration = (std::chrono::steady_clock::now() - lastMaintenanceTime);
                     if (duration >= std::chrono::seconds(10))
                     {

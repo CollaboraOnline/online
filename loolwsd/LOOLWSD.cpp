@@ -236,7 +236,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                     const std::string firstLine = getFirstLine(buffer, n);
                     if (firstLine == "eof")
                     {
-                        Log::info("Recieved EOF. Finishing.");
+                        Log::info("Received EOF. Finishing.");
                         break;
                     }
 

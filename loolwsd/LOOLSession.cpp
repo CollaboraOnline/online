@@ -197,10 +197,10 @@ bool LOOLSession::handleInput(const char *buffer, int length)
 {
     assert(buffer != nullptr);
 
-    Log::trace(getName() + " Recv: " + getAbbreviatedMessage(buffer, length));
-
     try
     {
+        Log::trace(getName() + " Recv: " + getAbbreviatedMessage(buffer, length));
+
         return _handleInput(buffer, length);
     }
     catch (const Exception& exc)

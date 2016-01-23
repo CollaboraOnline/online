@@ -386,7 +386,7 @@ public:
                     std::string firstLine = getFirstLine(buffer, n);
                     if (firstLine == "eof")
                     {
-                        Log::info("Recieved EOF. Finishing.");
+                        Log::info("Received EOF. Finishing.");
                         break;
                     }
 
@@ -905,7 +905,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                         aResponse = "bad \r\n";
                     }
 
-                    Log::trace("Send: " + aResponse);
+                    Log::trace("KitToBroker: " + aResponse);
                     Util::writeFIFO(writerBroker, aResponse);
                     aMessage.clear();
                 }
