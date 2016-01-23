@@ -152,6 +152,9 @@ namespace LOOLProtocol
 
     std::string getFirstLine(const char *message, int length)
     {
+        if (message == nullptr || length <= 0)
+            return "";
+
         const char *endOfLine = static_cast<const char *>(std::memchr(message, '\n', length));
         if (endOfLine == nullptr)
             return std::string(message, length);
@@ -161,8 +164,12 @@ namespace LOOLProtocol
 
     std::string getAbbreviatedMessage(const char *message, int length)
     {
-        std::string result = "'" + getFirstLine(message, length) + "'";
-        if (result.size() < static_cast<std::string::size_type>(length))
+        if (message == nullptr || length <= 0)
+            return "";
+
+        const auto firstLine = getFirstLine(message, length);
+        std::string result = "'" + firstLine + "'";
+        if (firstLine.size() < static_cast<std::string::size_type>(length))
             result += "...";
         return result;
     }
