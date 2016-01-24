@@ -15,11 +15,14 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
 
+#include <Poco/Thread.h>
 #include <Poco/NotificationQueue.h>
 #include "LOOLSession.hpp"
 
 // The client port number, which is changed via loolwsd args.
 static int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+
+class CallbackWorker;
 
 class ChildProcessSession final : public LOOLSession
 {
@@ -79,6 +82,8 @@ public:
 
     LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument; }
 
+    void loKitCallback(const int nType, const char* pPayload);
+
     std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
 
     const Statistics& getStatistics() const { return _stats; }
@@ -126,8 +131,12 @@ private:
     /// Statistics and activity tracking.
     Statistics _stats;
 
+    std::unique_ptr<CallbackWorker> _callbackWorker;
+    Poco::Thread _callbackThread;
+    Poco::NotificationQueue _callbackQueue;
+
     /// Synchronize _loKitDocument acess.
-    /// This should be inside LoKit.
+    /// This should be owned by Document.
     static std::recursive_mutex Mutex;
 
     static constexpr auto InactivityThresholdMS = 120 * 1000;

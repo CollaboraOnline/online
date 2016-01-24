@@ -7,12 +7,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <sys/prctl.h>
 #include <iostream>
 
+#include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Notification.h>
+#include <Poco/NotificationQueue.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/String.h>
@@ -28,16 +32,273 @@
 
 using namespace LOOLProtocol;
 
+using Poco::Exception;
 using Poco::File;
 using Poco::IOException;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
+using Poco::Notification;
+using Poco::NotificationQueue;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Process;
 using Poco::ProcessHandle;
 using Poco::StringTokenizer;
 using Poco::URI;
+
+class CallbackNotification: public Poco::Notification
+{
+public:
+    typedef Poco::AutoPtr<CallbackNotification> Ptr;
+
+    CallbackNotification(const int nType, const std::string& rPayload)
+      : _nType(nType),
+        _aPayload(rPayload)
+    {
+    }
+
+    const int _nType;
+    const std::string _aPayload;
+};
+
+// This thread handles callbacks from the
+// lokit instance.
+class CallbackWorker: public Poco::Runnable
+{
+public:
+    CallbackWorker(NotificationQueue& queue, ChildProcessSession& session):
+        _queue(queue),
+        _session(session),
+        _stop(false)
+    {
+    }
+
+    std::string callbackTypeToString (const int nType)
+    {
+        switch (nType)
+        {
+        case LOK_CALLBACK_INVALIDATE_TILES:
+            return std::string("LOK_CALLBACK_INVALIDATE_TILES");
+        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
+            return std::string("LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR");
+        case LOK_CALLBACK_TEXT_SELECTION:
+            return std::string("LOK_CALLBACK_TEXT_SELECTION");
+        case LOK_CALLBACK_TEXT_SELECTION_START:
+            return std::string("LOK_CALLBACK_TEXT_SELECTION_START");
+        case LOK_CALLBACK_TEXT_SELECTION_END:
+            return std::string("LOK_CALLBACK_TEXT_SELECTION_END");
+        case LOK_CALLBACK_CURSOR_VISIBLE:
+            return std::string("LOK_CALLBACK_CURSOR_VISIBLE");
+        case LOK_CALLBACK_GRAPHIC_SELECTION:
+            return std::string("LOK_CALLBACK_GRAPHIC_SELECTION");
+        case LOK_CALLBACK_CELL_CURSOR:
+            return std::string("LOK_CALLBACK_CELL_CURSOR");
+        case LOK_CALLBACK_CELL_FORMULA:
+            return std::string("LOK_CALLBACK_CELL_FORMULA");
+        case LOK_CALLBACK_MOUSE_POINTER:
+            return std::string("LOK_CALLBACK_MOUSE_POINTER");
+        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
+            return std::string("LOK_CALLBACK_SEARCH_RESULT_SELECTION");
+        case LOK_CALLBACK_UNO_COMMAND_RESULT:
+            return std::string("LOK_CALLBACK_UNO_COMMAND_RESULT");
+        case LOK_CALLBACK_HYPERLINK_CLICKED:
+            return std::string("LOK_CALLBACK_HYPERLINK_CLICKED");
+        case LOK_CALLBACK_STATE_CHANGED:
+            return std::string("LOK_CALLBACK_STATE_CHANGED");
+        case LOK_CALLBACK_STATUS_INDICATOR_START:
+            return std::string("LOK_CALLBACK_STATUS_INDICATOR_START");
+        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+            return std::string("LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE");
+        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+            return std::string("LOK_CALLBACK_STATUS_INDICATOR_FINISH");
+        case LOK_CALLBACK_SEARCH_NOT_FOUND:
+            return std::string("LOK_CALLBACK_SEARCH_NOT_FOUND");
+        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
+            return std::string("LOK_CALLBACK_DOCUMENT_SIZE_CHANGED");
+        case LOK_CALLBACK_SET_PART:
+            return std::string("LOK_CALLBACK_SET_PART");
+        }
+        return std::to_string(nType);
+    }
+
+    void callback(const int nType, const std::string& rPayload)
+    {
+        auto lock = _session.getLock();
+
+        Log::trace() << "Callback [" << _session.getViewId() << "] "
+                     << callbackTypeToString(nType)
+                     << " [" << rPayload << "]." << Log::end;
+        if (_session.isDisconnected())
+        {
+            Log::trace("Skipping callback on disconnected session " + _session.getName());
+            return;
+        }
+        else if (_session.isInactive())
+        {
+            Log::trace("Skipping callback on inactive session " + _session.getName());
+            return;
+        }
+
+        switch (static_cast<LibreOfficeKitCallbackType>(nType))
+        {
+        case LOK_CALLBACK_INVALIDATE_TILES:
+            {
+                int curPart = _session.getLoKitDocument()->pClass->getPart(_session.getLoKitDocument());
+                _session.sendTextFrame("curpart: part=" + std::to_string(curPart));
+                if (_session.getDocType() == "text")
+                {
+                    curPart = 0;
+                }
+
+                StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                if (tokens.count() == 4)
+                {
+                    int x, y, width, height;
+
+                    try
+                    {
+                        x = std::stoi(tokens[0]);
+                        y = std::stoi(tokens[1]);
+                        width = std::stoi(tokens[2]);
+                        height = std::stoi(tokens[3]);
+                    }
+                    catch (const std::out_of_range&)
+                    {
+                        // something went wrong, invalidate everything
+                        Log::warn("Ignoring integer values out of range: " + rPayload);
+                        x = 0;
+                        y = 0;
+                        width = INT_MAX;
+                        height = INT_MAX;
+                    }
+
+                    _session.sendTextFrame("invalidatetiles:"
+                                       " part=" + std::to_string(curPart) +
+                                       " x=" + std::to_string(x) +
+                                       " y=" + std::to_string(y) +
+                                       " width=" + std::to_string(width) +
+                                       " height=" + std::to_string(height));
+                }
+                else
+                {
+                    _session.sendTextFrame("invalidatetiles: " + rPayload);
+                }
+            }
+            break;
+        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
+            _session.sendTextFrame("invalidatecursor: " + rPayload);
+            break;
+        case LOK_CALLBACK_TEXT_SELECTION:
+            _session.sendTextFrame("textselection: " + rPayload);
+            break;
+        case LOK_CALLBACK_TEXT_SELECTION_START:
+            _session.sendTextFrame("textselectionstart: " + rPayload);
+            break;
+        case LOK_CALLBACK_TEXT_SELECTION_END:
+            _session.sendTextFrame("textselectionend: " + rPayload);
+            break;
+        case LOK_CALLBACK_CURSOR_VISIBLE:
+            _session.sendTextFrame("cursorvisible: " + rPayload);
+            break;
+        case LOK_CALLBACK_GRAPHIC_SELECTION:
+            _session.sendTextFrame("graphicselection: " + rPayload);
+            break;
+        case LOK_CALLBACK_CELL_CURSOR:
+            _session.sendTextFrame("cellcursor: " + rPayload);
+            break;
+        case LOK_CALLBACK_CELL_FORMULA:
+            _session.sendTextFrame("cellformula: " + rPayload);
+            break;
+        case LOK_CALLBACK_MOUSE_POINTER:
+            _session.sendTextFrame("mousepointer: " + rPayload);
+            break;
+        case LOK_CALLBACK_HYPERLINK_CLICKED:
+            _session.sendTextFrame("hyperlinkclicked: " + rPayload);
+            break;
+        case LOK_CALLBACK_STATE_CHANGED:
+            _session.sendTextFrame("statechanged: " + rPayload);
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_START:
+            _session.sendTextFrame("statusindicatorstart:");
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+            _session.sendTextFrame("statusindicatorsetvalue: " + rPayload);
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+            _session.sendTextFrame("statusindicatorfinish:");
+            break;
+        case LOK_CALLBACK_SEARCH_NOT_FOUND:
+            _session.sendTextFrame("searchnotfound: " + rPayload);
+            break;
+        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
+            _session.sendTextFrame("searchresultselection: " + rPayload);
+            break;
+        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
+            _session.getStatus("", 0);
+            _session.getPartPageRectangles("", 0);
+            break;
+        case LOK_CALLBACK_SET_PART:
+            _session.sendTextFrame("setpart: " + rPayload);
+            break;
+        case LOK_CALLBACK_UNO_COMMAND_RESULT:
+            _session.sendTextFrame("unocommandresult: " + rPayload);
+            break;
+        }
+    }
+
+    void run()
+    {
+        static const std::string thread_name = "kit_callback";
+#ifdef __linux
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to " + thread_name + ".");
+#endif
+        Log::debug("Thread [" + thread_name + "] started.");
+
+        while (!_stop && !TerminationFlag)
+        {
+            Notification::Ptr aNotification(_queue.waitDequeueNotification());
+            if (!_stop && !TerminationFlag && aNotification)
+            {
+                CallbackNotification::Ptr aCallbackNotification = aNotification.cast<CallbackNotification>();
+                assert(aCallbackNotification);
+
+                const auto nType = aCallbackNotification->_nType;
+                try
+                {
+                    callback(nType, aCallbackNotification->_aPayload);
+                }
+                catch (const Exception& exc)
+                {
+                    Log::error() << "Error while handling callback [" << callbackTypeToString(nType) << "]. "
+                                 << exc.displayText()
+                                 << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                                 << Log::end;
+                }
+                catch (const std::exception& exc)
+                {
+                    Log::error("Error while handling callback [" + callbackTypeToString(nType) + "]. " +
+                               std::string("Exception: ") + exc.what());
+                }
+            }
+            else
+                break;
+        }
+
+        Log::debug("Thread [" + thread_name + "] finished.");
+    }
+
+    void stop()
+    {
+        _stop = true;
+        _queue.wakeUpAll();
+    }
+
+private:
+    NotificationQueue& _queue;
+    ChildProcessSession& _session;
+    volatile bool _stop;
+};
 
 std::recursive_mutex ChildProcessSession::Mutex;
 
@@ -55,9 +316,12 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
     _viewId(0),
     _clientPart(0),
     _onLoad(onLoad),
-    _onUnload(onUnload)
+    _onUnload(onUnload),
+    _callbackWorker(new CallbackWorker(_callbackQueue, *this))
 {
     Log::info("ChildProcessSession ctor [" + getName() + "].");
+
+    _callbackThread.start(*_callbackWorker);
 }
 
 ChildProcessSession::~ChildProcessSession()
@@ -65,6 +329,10 @@ ChildProcessSession::~ChildProcessSession()
     Log::info("~ChildProcessSession dtor [" + getName() + "].");
 
     disconnect();
+
+    // Wait for the callback worker to finish.
+    _callbackWorker->stop();
+    _callbackThread.join();
 }
 
 void ChildProcessSession::disconnect(const std::string& reason)
@@ -977,6 +1245,12 @@ bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, String
 
     _loKitDocument->pClass->setPart(_loKitDocument, page);
     return true;
+}
+
+void ChildProcessSession::loKitCallback(const int nType, const char *pPayload)
+{
+    auto pNotif = new CallbackNotification(nType, pPayload ? pPayload : "(nil)");
+    _callbackQueue.enqueueNotification(pNotif);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -61,260 +61,6 @@ using Poco::FastMutex;
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
 
-class CallBackNotification: public Poco::Notification
-{
-public:
-    typedef Poco::AutoPtr<CallBackNotification> Ptr;
-
-    CallBackNotification(const int nType, const std::string& rPayload, std::shared_ptr<ChildProcessSession>& pSession)
-      : m_nType(nType),
-        m_aPayload(rPayload),
-        m_pSession(pSession)
-    {
-    }
-
-    const int m_nType;
-    const std::string m_aPayload;
-    const std::shared_ptr<ChildProcessSession> m_pSession;
-};
-
-// This thread handles callbacks from the
-// lokit instance.
-class CallBackWorker: public Runnable
-{
-public:
-    CallBackWorker(NotificationQueue& queue):
-        _queue(queue),
-        _stop(false)
-    {
-    }
-
-    std::string callbackTypeToString (const int nType)
-    {
-        switch (nType)
-        {
-        case LOK_CALLBACK_INVALIDATE_TILES:
-            return std::string("LOK_CALLBACK_INVALIDATE_TILES");
-        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
-            return std::string("LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR");
-        case LOK_CALLBACK_TEXT_SELECTION:
-            return std::string("LOK_CALLBACK_TEXT_SELECTION");
-        case LOK_CALLBACK_TEXT_SELECTION_START:
-            return std::string("LOK_CALLBACK_TEXT_SELECTION_START");
-        case LOK_CALLBACK_TEXT_SELECTION_END:
-            return std::string("LOK_CALLBACK_TEXT_SELECTION_END");
-        case LOK_CALLBACK_CURSOR_VISIBLE:
-            return std::string("LOK_CALLBACK_CURSOR_VISIBLE");
-        case LOK_CALLBACK_GRAPHIC_SELECTION:
-            return std::string("LOK_CALLBACK_GRAPHIC_SELECTION");
-        case LOK_CALLBACK_CELL_CURSOR:
-            return std::string("LOK_CALLBACK_CELL_CURSOR");
-        case LOK_CALLBACK_CELL_FORMULA:
-            return std::string("LOK_CALLBACK_CELL_FORMULA");
-        case LOK_CALLBACK_MOUSE_POINTER:
-            return std::string("LOK_CALLBACK_MOUSE_POINTER");
-        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
-            return std::string("LOK_CALLBACK_SEARCH_RESULT_SELECTION");
-        case LOK_CALLBACK_UNO_COMMAND_RESULT:
-            return std::string("LOK_CALLBACK_UNO_COMMAND_RESULT");
-        case LOK_CALLBACK_HYPERLINK_CLICKED:
-            return std::string("LOK_CALLBACK_HYPERLINK_CLICKED");
-        case LOK_CALLBACK_STATE_CHANGED:
-            return std::string("LOK_CALLBACK_STATE_CHANGED");
-        case LOK_CALLBACK_STATUS_INDICATOR_START:
-            return std::string("LOK_CALLBACK_STATUS_INDICATOR_START");
-        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-            return std::string("LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE");
-        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-            return std::string("LOK_CALLBACK_STATUS_INDICATOR_FINISH");
-        case LOK_CALLBACK_SEARCH_NOT_FOUND:
-            return std::string("LOK_CALLBACK_SEARCH_NOT_FOUND");
-        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-            return std::string("LOK_CALLBACK_DOCUMENT_SIZE_CHANGED");
-        case LOK_CALLBACK_SET_PART:
-            return std::string("LOK_CALLBACK_SET_PART");
-        }
-        return std::to_string(nType);
-    }
-
-    void callback(const int nType, const std::string& rPayload, std::shared_ptr<ChildProcessSession> pSession)
-    {
-        auto lock = pSession->getLock();
-
-        Log::trace() << "Callback [" << pSession->getViewId() << "] "
-                     << callbackTypeToString(nType)
-                     << " [" << rPayload << "]." << Log::end;
-        if (pSession->isDisconnected())
-        {
-            Log::trace("Skipping callback on disconnected session " + pSession->getName());
-            return;
-        }
-        else if (pSession->isInactive())
-        {
-            Log::trace("Skipping callback on inactive session " + pSession->getName());
-            return;
-        }
-
-        switch (static_cast<LibreOfficeKitCallbackType>(nType))
-        {
-        case LOK_CALLBACK_INVALIDATE_TILES:
-            {
-                int curPart = pSession->getLoKitDocument()->pClass->getPart(pSession->getLoKitDocument());
-                pSession->sendTextFrame("curpart: part=" + std::to_string(curPart));
-                if (pSession->getDocType() == "text")
-                {
-                    curPart = 0;
-                }
-
-                StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                if (tokens.count() == 4)
-                {
-                    int x, y, width, height;
-
-                    try
-                    {
-                        x = std::stoi(tokens[0]);
-                        y = std::stoi(tokens[1]);
-                        width = std::stoi(tokens[2]);
-                        height = std::stoi(tokens[3]);
-                    }
-                    catch (const std::out_of_range&)
-                    {
-                        // something went wrong, invalidate everything
-                        Log::warn("Ignoring integer values out of range: " + rPayload);
-                        x = 0;
-                        y = 0;
-                        width = INT_MAX;
-                        height = INT_MAX;
-                    }
-
-                    pSession->sendTextFrame("invalidatetiles:"
-                                       " part=" + std::to_string(curPart) +
-                                       " x=" + std::to_string(x) +
-                                       " y=" + std::to_string(y) +
-                                       " width=" + std::to_string(width) +
-                                       " height=" + std::to_string(height));
-                }
-                else
-                {
-                    pSession->sendTextFrame("invalidatetiles: " + rPayload);
-                }
-            }
-            break;
-        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
-            pSession->sendTextFrame("invalidatecursor: " + rPayload);
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION:
-            pSession->sendTextFrame("textselection: " + rPayload);
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION_START:
-            pSession->sendTextFrame("textselectionstart: " + rPayload);
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION_END:
-            pSession->sendTextFrame("textselectionend: " + rPayload);
-            break;
-        case LOK_CALLBACK_CURSOR_VISIBLE:
-            pSession->sendTextFrame("cursorvisible: " + rPayload);
-            break;
-        case LOK_CALLBACK_GRAPHIC_SELECTION:
-            pSession->sendTextFrame("graphicselection: " + rPayload);
-            break;
-        case LOK_CALLBACK_CELL_CURSOR:
-            pSession->sendTextFrame("cellcursor: " + rPayload);
-            break;
-        case LOK_CALLBACK_CELL_FORMULA:
-            pSession->sendTextFrame("cellformula: " + rPayload);
-            break;
-        case LOK_CALLBACK_MOUSE_POINTER:
-            pSession->sendTextFrame("mousepointer: " + rPayload);
-            break;
-        case LOK_CALLBACK_HYPERLINK_CLICKED:
-            pSession->sendTextFrame("hyperlinkclicked: " + rPayload);
-            break;
-        case LOK_CALLBACK_STATE_CHANGED:
-            pSession->sendTextFrame("statechanged: " + rPayload);
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_START:
-            pSession->sendTextFrame("statusindicatorstart:");
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-            pSession->sendTextFrame("statusindicatorsetvalue: " + rPayload);
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-            pSession->sendTextFrame("statusindicatorfinish:");
-            break;
-        case LOK_CALLBACK_SEARCH_NOT_FOUND:
-            pSession->sendTextFrame("searchnotfound: " + rPayload);
-            break;
-        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
-            pSession->sendTextFrame("searchresultselection: " + rPayload);
-            break;
-        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-            pSession->getStatus("", 0);
-            pSession->getPartPageRectangles("", 0);
-            break;
-        case LOK_CALLBACK_SET_PART:
-            pSession->sendTextFrame("setpart: " + rPayload);
-            break;
-        case LOK_CALLBACK_UNO_COMMAND_RESULT:
-            pSession->sendTextFrame("unocommandresult: " + rPayload);
-            break;
-        }
-    }
-
-    void run()
-    {
-        static const std::string thread_name = "kit_callback";
-#ifdef __linux
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to " + thread_name + ".");
-#endif
-        Log::debug("Thread [" + thread_name + "] started.");
-
-        while (!_stop && !TerminationFlag)
-        {
-            Notification::Ptr aNotification(_queue.waitDequeueNotification());
-            if (!_stop && !TerminationFlag && aNotification)
-            {
-                CallBackNotification::Ptr aCallBackNotification = aNotification.cast<CallBackNotification>();
-                assert(aCallBackNotification);
-
-                const auto nType = aCallBackNotification->m_nType;
-                try
-                {
-                    callback(nType, aCallBackNotification->m_aPayload, aCallBackNotification->m_pSession);
-                }
-                catch (const Exception& exc)
-                {
-                    Log::error() << "Error while handling callback [" << callbackTypeToString(nType) << "]. "
-                                 << exc.displayText()
-                                 << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                                 << Log::end;
-                }
-                catch (const std::exception& exc)
-                {
-                    Log::error("Error while handling callback [" + callbackTypeToString(nType) + "]. " +
-                               std::string("Exception: ") + exc.what());
-                }
-            }
-            else
-                break;
-        }
-
-        Log::debug("Thread [" + thread_name + "] finished.");
-    }
-
-    void stop()
-    {
-        _stop = true;
-        _queue.wakeUpAll();
-    }
-
-private:
-    NotificationQueue& _queue;
-    volatile bool _stop;
-};
-
 class Connection: public Runnable
 {
 public:
@@ -479,13 +225,10 @@ public:
         _jailId(jailId),
         _url(url),
         _loKitDocument(nullptr),
-        _clientViews(0),
-        _callbackWorker(CallbackQueue)
+        _clientViews(0)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
-
-        _callbackThread.start(_callbackWorker);
     }
 
     ~Document()
@@ -494,10 +237,6 @@ public:
 
         Log::info("~Document dtor for url [" + _url + "] on child [" + _jailId +
                   "]. There are " + std::to_string(_clientViews) + " views.");
-
-        // Wait for the callback worker to finish.
-        _callbackWorker.stop();
-        _callbackThread.join();
 
         // Flag all connections to stop.
         for (auto aIterator : _connections)
@@ -638,9 +377,6 @@ private:
     static void ViewCallback(int , const char* , void* )
     {
         //TODO: Delegate the callback.
-        //const unsigned intSessionId = reinterpret_cast<unsigned>(pData);
-        //auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", pData);
-        //_callbackQueue.enqueueNotification(pNotif);
     }
 
     static void DocumentCallback(int nType, const char* pPayload, void* pData)
@@ -657,8 +393,7 @@ private:
                     auto session = it.second->getSession();
                     if (session)
                     {
-                        auto pNotif = new CallBackNotification(nType, pPayload ? pPayload : "(nil)", session);
-                        CallbackQueue.enqueueNotification(pNotif);
+                        session->loKitCallback(nType, pPayload);
                     }
                 }
             }
@@ -758,13 +493,7 @@ private:
     std::recursive_mutex _mutex;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
     std::atomic<unsigned> _clientViews;
-
-    CallBackWorker _callbackWorker;
-    Thread _callbackThread;
-    static Poco::NotificationQueue CallbackQueue;
 };
-
-Poco::NotificationQueue Document::CallbackQueue;
 
 void lokit_main(const std::string &loSubPath, const std::string& jailId, const std::string& pipe)
 {
