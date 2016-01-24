@@ -329,6 +329,196 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 /// Handle a public connection from a client.
 class ClientRequestHandler: public HTTPRequestHandler
 {
+private:
+
+    void handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
+    {
+        Log::info("Post request.");
+        StringTokenizer tokens(request.getURI(), "/?");
+        if (tokens.count() >= 2 && tokens[1] == "convert-to")
+        {
+            Log::info("Conversion request.");
+            std::string fromPath;
+            ConvertToPartHandler handler(fromPath);
+            Poco::Net::HTMLForm form(request, request.stream(), handler);
+            std::string format;
+            if (form.has("format"))
+                format = form.get("format");
+
+            bool sent = false;
+            if (!fromPath.empty())
+            {
+                if (!format.empty())
+                {
+                    // Load the document.
+                    std::shared_ptr<WebSocket> ws;
+                    const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
+                    auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
+                    const std::string filePrefix("file://");
+                    std::string encodedFrom;
+                    URI::encode(filePrefix + fromPath, std::string(), encodedFrom);
+                    const std::string load = "load url=" + encodedFrom;
+                    session->handleInput(load.data(), load.size());
+
+                    // Convert it to the requested format.
+                    Path toPath(fromPath);
+                    toPath.setExtension(format);
+                    std::string toJailURL = filePrefix + JailedDocumentRoot + toPath.getFileName();
+                    std::string encodedTo;
+                    URI::encode(toJailURL, std::string(), encodedTo);
+                        std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
+                    session->handleInput(saveas.data(), saveas.size());
+
+                    std::string toURL = session->getSaveAs();
+                    std::string resultingURL;
+                    URI::decode(toURL, resultingURL);
+
+                    // Send it back to the client.
+                    if (resultingURL.find(filePrefix) == 0)
+                        resultingURL = resultingURL.substr(filePrefix.length());
+                    if (!resultingURL.empty())
+                    {
+                        const std::string mimeType = "application/octet-stream";
+                        response.sendFile(resultingURL, mimeType);
+                        sent = true;
+                    }
+                }
+
+                // Clean up the temporary directory the HTMLForm ctor created.
+                Path tempDirectory(fromPath);
+                tempDirectory.setFileName("");
+                Util::removeFile(tempDirectory, /*recursive=*/true);
+            }
+
+            if (!sent)
+            {
+                response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+                response.setContentLength(0);
+                response.send();
+            }
+        }
+        else if (tokens.count() >= 2 && tokens[1] == "insertfile")
+        {
+            Log::info("Insert file request.");
+            response.set("Access-Control-Allow-Origin", "*");
+            response.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+            std::string tmpPath;
+            ConvertToPartHandler handler(tmpPath);
+            Poco::Net::HTMLForm form(request, request.stream(), handler);
+
+            bool goodRequest = form.has("childid") && form.has("name");
+            std::string formChildid(form.get("childid"));
+            std::string formName(form.get("name"));
+
+            // protect against attempts to inject something funny here
+            if (goodRequest && formChildid.find('/') != std::string::npos && formName.find('/') != std::string::npos)
+                goodRequest = false;
+
+            if (goodRequest)
+            {
+                try
+                {
+                    Log::info() << "Perform insertfile: " << formChildid << ", " << formName << Log::end;
+                    const std::string dirPath = LOOLWSD::ChildRoot + formChildid
+                                              + JailedDocumentRoot + "insertfile";
+                    File(dirPath).createDirectories();
+                    std::string fileName = dirPath + Path::separator() + form.get("name");
+                    File(tmpPath).moveTo(fileName);
+
+                    response.setStatus(HTTPResponse::HTTP_OK);
+                    response.send();
+                }
+                catch (const IOException& exc)
+                {
+                    Log::info() << "IOException: " << exc.message() << Log::end;
+                    response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+                    response.send();
+                }
+            }
+            else
+            {
+                response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+                response.send();
+            }
+        }
+        else if (tokens.count() >= 4)
+        {
+            Log::info("File download request.");
+            // The user might request a file to download
+            const std::string dirPath = LOOLWSD::ChildRoot + tokens[1]
+                                      + JailedDocumentRoot + tokens[2];
+            std::string fileName;
+            URI::decode(tokens[3], fileName);
+            const std::string filePath = dirPath + Path::separator() + fileName;
+            Log::info("HTTP request for: " + filePath);
+            File file(filePath);
+            if (file.exists())
+            {
+                response.set("Access-Control-Allow-Origin", "*");
+                Poco::Net::HTMLForm form(request);
+                std::string mimeType = "application/octet-stream";
+                if (form.has("mime_type"))
+                    mimeType = form.get("mime_type");
+                response.sendFile(filePath, mimeType);
+                Util::removeFile(dirPath, true);
+            }
+            else
+            {
+                response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
+                response.setContentLength(0);
+                response.send();
+            }
+        }
+        else
+        {
+            Log::info("Bad request.");
+            response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+            response.setContentLength(0);
+            response.send();
+        }
+    }
+
+    void handleGetRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
+    {
+        Log::info("Get request.");
+        auto ws = std::make_shared<WebSocket>(request, response);
+        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws);
+
+        // For ToClient sessions, we store incoming messages in a queue and have a separate
+        // thread that handles them. This is so that we can empty the queue when we get a
+        // "canceltiles" message.
+        BasicTileQueue queue;
+        QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
+
+        Thread queueHandlerThread;
+        queueHandlerThread.start(handler);
+
+        SocketProcessor(ws, response, [&session, &queue](const char* data, const int size, const bool singleLine)
+            {
+                // FIXME: There is a race here when a request A gets in the queue and
+                // is processed _after_ a later request B, because B gets processed
+                // synchronously and A is waiting in the queue thread.
+                // The fix is to push everything into the queue
+                // (i.e. change MessageQueue to vector<char>).
+                const std::string firstLine = getFirstLine(data, size);
+                if (singleLine || firstLine.find("paste") == 0)
+                {
+                    queue.put(std::string(data, size));
+                    return true;
+                }
+                else
+                {
+                    return session->handleInput(data, size);
+                }
+            });
+
+        queue.clear();
+        queue.put("eof");
+        queueHandlerThread.join();
+    }
+
 public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
@@ -342,193 +532,16 @@ public:
 #endif
         Log::debug("Thread [" + thread_name + "] started.");
 
-        if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
+        try
         {
-            Log::info("Post request.");
-            StringTokenizer tokens(request.getURI(), "/?");
-            if (tokens.count() >= 2 && tokens[1] == "convert-to")
+            if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
             {
-                Log::info("Conversion request.");
-                std::string fromPath;
-                ConvertToPartHandler handler(fromPath);
-                Poco::Net::HTMLForm form(request, request.stream(), handler);
-                std::string format;
-                if (form.has("format"))
-                    format = form.get("format");
-
-                bool sent = false;
-                if (!fromPath.empty())
-                {
-                    if (!format.empty())
-                    {
-                        // Load the document.
-                        std::shared_ptr<WebSocket> ws;
-                        const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
-                        auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
-                        const std::string filePrefix("file://");
-                        std::string encodedFrom;
-                        URI::encode(filePrefix + fromPath, std::string(), encodedFrom);
-                        const std::string load = "load url=" + encodedFrom;
-                        session->handleInput(load.data(), load.size());
-
-                        // Convert it to the requested format.
-                        Path toPath(fromPath);
-                        toPath.setExtension(format);
-                        std::string toJailURL = filePrefix + JailedDocumentRoot + toPath.getFileName();
-                        std::string encodedTo;
-                        URI::encode(toJailURL, std::string(), encodedTo);
-                        std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
-                        session->handleInput(saveas.data(), saveas.size());
-
-                        std::string toURL = session->getSaveAs();
-                        std::string resultingURL;
-                        URI::decode(toURL, resultingURL);
-
-                        // Send it back to the client.
-                        if (resultingURL.find(filePrefix) == 0)
-                            resultingURL = resultingURL.substr(filePrefix.length());
-                        if (!resultingURL.empty())
-                        {
-                            const std::string mimeType = "application/octet-stream";
-                            response.sendFile(resultingURL, mimeType);
-                            sent = true;
-                        }
-                    }
-
-                    // Clean up the temporary directory the HTMLForm ctor created.
-                    Path tempDirectory(fromPath);
-                    tempDirectory.setFileName("");
-                    Util::removeFile(tempDirectory, /*recursive=*/true);
-                }
-
-                if (!sent)
-                {
-                    response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-                    response.setContentLength(0);
-                    response.send();
-                }
-            }
-            else if (tokens.count() >= 2 && tokens[1] == "insertfile")
-            {
-                Log::info("Insert file request.");
-                response.set("Access-Control-Allow-Origin", "*");
-                response.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-                std::string tmpPath;
-                ConvertToPartHandler handler(tmpPath);
-                Poco::Net::HTMLForm form(request, request.stream(), handler);
-
-                bool goodRequest = form.has("childid") && form.has("name");
-                std::string formChildid(form.get("childid"));
-                std::string formName(form.get("name"));
-
-                // protect against attempts to inject something funny here
-                if (goodRequest && formChildid.find('/') != std::string::npos && formName.find('/') != std::string::npos)
-                    goodRequest = false;
-
-                if (goodRequest)
-                {
-                    try
-                    {
-                        Log::info() << "Perform insertfile: " << formChildid << ", " << formName << Log::end;
-                        const std::string dirPath = LOOLWSD::ChildRoot + formChildid
-                                                  + JailedDocumentRoot + "insertfile";
-                        File(dirPath).createDirectories();
-                        std::string fileName = dirPath + Path::separator() + form.get("name");
-                        File(tmpPath).moveTo(fileName);
-
-                        response.setStatus(HTTPResponse::HTTP_OK);
-                        response.send();
-                    }
-                    catch (const IOException& exc)
-                    {
-                        Log::info() << "IOException: " << exc.message() << Log::end;
-                        response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-                        response.send();
-                    }
-                }
-                else
-                {
-                    response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-                    response.send();
-                }
-            }
-            else if (tokens.count() >= 4)
-            {
-                Log::info("File download request.");
-                // The user might request a file to download
-                const std::string dirPath = LOOLWSD::ChildRoot + tokens[1]
-                                          + JailedDocumentRoot + tokens[2];
-                std::string fileName;
-                URI::decode(tokens[3], fileName);
-                const std::string filePath = dirPath + Path::separator() + fileName;
-                Log::info("HTTP request for: " + filePath);
-                File file(filePath);
-                if (file.exists())
-                {
-                    response.set("Access-Control-Allow-Origin", "*");
-                    Poco::Net::HTMLForm form(request);
-                    std::string mimeType = "application/octet-stream";
-                    if (form.has("mime_type"))
-                        mimeType = form.get("mime_type");
-                    response.sendFile(filePath, mimeType);
-                    Util::removeFile(dirPath, true);
-                }
-                else
-                {
-                    response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
-                    response.setContentLength(0);
-                    response.send();
-                }
+                handlePostRequest(request, response, id);
             }
             else
             {
-                Log::info("Bad request.");
-                response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-                response.setContentLength(0);
-                response.send();
+                handleGetRequest(request, response, id);
             }
-            return;
-        }
-
-        try
-        {
-            Log::info("Get request.");
-            auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws);
-
-            // For ToClient sessions, we store incoming messages in a queue and have a separate
-            // thread that handles them. This is so that we can empty the queue when we get a
-            // "canceltiles" message.
-            BasicTileQueue queue;
-            QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
-
-            Thread queueHandlerThread;
-            queueHandlerThread.start(handler);
-
-            SocketProcessor(ws, response, [&session, &queue](const char* data, const int size, const bool singleLine)
-                {
-                    // FIXME: There is a race here when a request A gets in the queue and
-                    // is processed _after_ a later request B, because B gets processed
-                    // synchronously and A is waiting in the queue thread.
-                    // The fix is to push everything into the queue
-                    // (i.e. change MessageQueue to vector<char>).
-                    const std::string firstLine = getFirstLine(data, size);
-                    if (singleLine || firstLine.find("paste") == 0)
-                    {
-                        queue.put(std::string(data, size));
-                        return true;
-                    }
-                    else
-                    {
-                        return session->handleInput(data, size);
-                    }
-                });
-
-            queue.clear();
-            queue.put("eof");
-            queueHandlerThread.join();
         }
         catch (const Exception& exc)
         {
