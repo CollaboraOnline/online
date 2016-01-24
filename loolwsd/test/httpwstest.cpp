@@ -23,7 +23,7 @@
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
-    Poco::URI _uri;
+    const Poco::URI _uri;
     Poco::Net::HTTPClientSession _session;
     Poco::Net::HTTPRequest _request;
     Poco::Net::HTTPResponse _response;
@@ -39,14 +39,27 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testLargePaste();
     void testRenderingOptions();
 
+    static
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
+
 public:
     HTTPWSTest()
         : _uri("http://127.0.0.1:" + std::to_string(ClientPortNumber)),
           _session(_uri.getHost(), _uri.getPort()),
-          _request(Poco::Net::HTTPRequest::HTTP_POST, "/ws"),
+          _request(Poco::Net::HTTPRequest::HTTP_GET, "/ws"),
           _socket(_session, _request, _response)
     {
+    }
+
+    void setUp()
+    {
+        _socket.shutdown();
+        _socket = Poco::Net::WebSocket(_session, _request, _response);
+    }
+
+    void tearDown()
+    {
+        _socket.shutdown();
     }
 };
 
@@ -70,7 +83,7 @@ void HTTPWSTest::testPaste()
     int n;
     do
     {
-        char buffer[100000];
+        char buffer[READ_BUFFER_SIZE];
         n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
         if (n > 0)
         {
@@ -111,9 +124,9 @@ void HTTPWSTest::testLargePaste()
     int n;
     do
     {
-        char buffer[100000];
+        char buffer[READ_BUFFER_SIZE];
         n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+        if (n > 0)
         {
             std::string line = LOOLProtocol::getFirstLine(buffer, n);
             std::string prefix = "textselectioncontent: ";
@@ -122,6 +135,7 @@ void HTTPWSTest::testLargePaste()
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    sendTextFrame(_socket, "disconnect");
     _socket.shutdown();
 }
 
@@ -139,7 +153,7 @@ void HTTPWSTest::testRenderingOptions()
     int n;
     do
     {
-        char buffer[100000];
+        char buffer[READ_BUFFER_SIZE];
         n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
         if (n > 0)
         {
@@ -158,10 +172,11 @@ void HTTPWSTest::testRenderingOptions()
     // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
     Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
     CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
-    std::string token = tokens[4];
-    std::string prefix = "height=";
+
+    const std::string token = tokens[4];
+    const std::string prefix = "height=";
     CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
-    int height = std::stoi(token.substr(prefix.size()));
+    const int height = std::stoi(token.substr(prefix.size()));
     // HideWhitespace was ignored, this was 32532, should be around 16706.
     CPPUNIT_ASSERT(height < 20000);
 }
