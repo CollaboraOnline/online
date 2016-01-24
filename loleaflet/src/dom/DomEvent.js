@@ -180,11 +180,20 @@ L.DomEvent = {
 			return new L.Point(e.clientX, e.clientY);
 		}
 
-		var rect = container.getBoundingClientRect();
+		var rect = container.getBoundingClientRect(), // constant object
+			left = rect.left,
+			top = rect.top;
+
+		// iframe mouse coordinates are relative to the frame area
+		// `target`: body element of the iframe; `currentTarget`: content window of the iframe
+		if (e.currentTarget && e.currentTarget.frameElement
+			&& L.DomUtil.hasClass(e.currentTarget.frameElement, 'resize-detector')) {
+			left = top = 0;
+		}
 
 		return new L.Point(
-			e.clientX - rect.left - container.clientLeft,
-			e.clientY - rect.top - container.clientTop);
+			e.clientX - left - container.clientLeft,
+			e.clientY - top - container.clientTop);
 	},
 
 	getWheelDelta: function (e) {
