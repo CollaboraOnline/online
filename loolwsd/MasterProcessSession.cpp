@@ -70,6 +70,9 @@ void MasterProcessSession::disconnect(const std::string& reason)
     {
         LOOLSession::disconnect(reason);
 
+        // Release the save-as queue.
+        _saveAsQueue.put("");
+
         auto peer = _peer.lock();
         if (peer)
         {

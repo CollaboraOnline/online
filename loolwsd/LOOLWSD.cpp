@@ -344,9 +344,11 @@ public:
 
         if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
         {
+            Log::info("Post request.");
             StringTokenizer tokens(request.getURI(), "/?");
             if (tokens.count() >= 2 && tokens[1] == "convert-to")
             {
+                Log::info("Conversion request.");
                 std::string fromPath;
                 ConvertToPartHandler handler(fromPath);
                 Poco::Net::HTMLForm form(request, request.stream(), handler);
@@ -354,51 +356,61 @@ public:
                 if (form.has("format"))
                     format = form.get("format");
 
-                if (!fromPath.empty() && !format.empty())
+                bool sent = false;
+                if (!fromPath.empty())
                 {
-                    // Load the document.
-                    std::shared_ptr<WebSocket> ws;
-                    const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
-                    auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
-                    const std::string filePrefix("file://");
-                    std::string encodedFrom;
-                    URI::encode(filePrefix + fromPath, std::string(), encodedFrom);
-                    const std::string load = "load url=" + encodedFrom;
-                    session->handleInput(load.data(), load.size());
+                    if (!format.empty())
+                    {
+                        // Load the document.
+                        std::shared_ptr<WebSocket> ws;
+                        const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
+                        auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
+                        const std::string filePrefix("file://");
+                        std::string encodedFrom;
+                        URI::encode(filePrefix + fromPath, std::string(), encodedFrom);
+                        const std::string load = "load url=" + encodedFrom;
+                        session->handleInput(load.data(), load.size());
 
-                    // Convert it to the requested format.
-                    Path toPath(fromPath);
-                    toPath.setExtension(format);
-                    std::string toJailURL = filePrefix + JailedDocumentRoot + toPath.getFileName();
-                    std::string encodedTo;
-                    URI::encode(toJailURL, std::string(), encodedTo);
-                    std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
-                    session->handleInput(saveas.data(), saveas.size());
+                        // Convert it to the requested format.
+                        Path toPath(fromPath);
+                        toPath.setExtension(format);
+                        std::string toJailURL = filePrefix + JailedDocumentRoot + toPath.getFileName();
+                        std::string encodedTo;
+                        URI::encode(toJailURL, std::string(), encodedTo);
+                        std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
+                        session->handleInput(saveas.data(), saveas.size());
 
-                    std::string toURL = session->getSaveAs();
-                    std::string resultingURL;
-                    URI::decode(toURL, resultingURL);
+                        std::string toURL = session->getSaveAs();
+                        std::string resultingURL;
+                        URI::decode(toURL, resultingURL);
 
-                    // Send it back to the client.
-                    std::string mimeType = "application/octet-stream";
-                    if (resultingURL.find(filePrefix) == 0)
-                        resultingURL = resultingURL.substr(filePrefix.length());
-                    response.sendFile(resultingURL, mimeType);
+                        // Send it back to the client.
+                        if (resultingURL.find(filePrefix) == 0)
+                            resultingURL = resultingURL.substr(filePrefix.length());
+                        if (!resultingURL.empty())
+                        {
+                            const std::string mimeType = "application/octet-stream";
+                            response.sendFile(resultingURL, mimeType);
+                            sent = true;
+                        }
+                    }
+
+                    // Clean up the temporary directory the HTMLForm ctor created.
+                    Path tempDirectory(fromPath);
+                    tempDirectory.setFileName("");
+                    Util::removeFile(tempDirectory, /*recursive=*/true);
                 }
-                else
+
+                if (!sent)
                 {
                     response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
                     response.setContentLength(0);
                     response.send();
                 }
-
-                // Clean up the temporary directory the HTMLForm ctor created.
-                Path tempDirectory(fromPath);
-                tempDirectory.setFileName("");
-                Util::removeFile(tempDirectory, /*recursive=*/true);
             }
             else if (tokens.count() >= 2 && tokens[1] == "insertfile")
             {
+                Log::info("Insert file request.");
                 response.set("Access-Control-Allow-Origin", "*");
                 response.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
                 response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -444,6 +456,7 @@ public:
             }
             else if (tokens.count() >= 4)
             {
+                Log::info("File download request.");
                 // The user might request a file to download
                 const std::string dirPath = LOOLWSD::ChildRoot + tokens[1]
                                           + JailedDocumentRoot + tokens[2];
@@ -471,6 +484,7 @@ public:
             }
             else
             {
+                Log::info("Bad request.");
                 response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
                 response.setContentLength(0);
                 response.send();
@@ -480,6 +494,7 @@ public:
 
         try
         {
+            Log::info("Get request.");
             auto ws = std::make_shared<WebSocket>(request, response);
             auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws);
 
@@ -592,8 +607,8 @@ public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
 #ifdef __linux
-            if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
-                Log::error("Cannot set thread name to request_handler.");
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to request_handler.");
 #endif
 
         auto logger = Log::info();
