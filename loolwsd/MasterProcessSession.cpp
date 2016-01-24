@@ -88,7 +88,6 @@ bool MasterProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
               "].");
 
     LOOLSession::handleDisconnect(tokens);
-    disconnect(tokens.count() > 1 ? tokens[1] : std::string());
 
     auto peer = _peer.lock();
     if (peer)

@@ -90,6 +90,34 @@ bool ChildProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
 {
+    if (isInactive() && _loKitDocument != nullptr)
+    {
+        Log::debug("Handling message after inactivity of " + std::to_string(_stats.getInactivityMS()) + "ms.");
+
+        // Client is getting active again.
+        // Send invalidation and other sync-up messages.
+        std::unique_lock<std::recursive_mutex> lock(Mutex);
+
+        if (_multiView)
+            _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+
+        int curPart = _loKitDocument->pClass->getPart(_loKitDocument);
+        sendTextFrame("curpart: part=" + std::to_string(curPart));
+        if (getDocType() == "text")
+        {
+            curPart = 0;
+        }
+
+        sendTextFrame("invalidatetiles:"
+                       " part=" + std::to_string(curPart) +
+                       " x=0 y=0"
+                       " width=" + std::to_string(INT_MAX) +
+                       " height=" + std::to_string(INT_MAX));
+
+        //TODO: Sync cursor.
+    }
+
+    _stats.updateLastActivityTime();
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 

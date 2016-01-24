@@ -144,6 +144,16 @@ public:
         Log::trace() << "Callback [" << pSession->getViewId() << "] "
                      << callbackTypeToString(nType)
                      << " [" << rPayload << "]." << Log::end;
+        if (pSession->isDisconnected())
+        {
+            Log::trace("Skipping callback on disconnected session " + pSession->getName());
+            return;
+        }
+        else if (pSession->isInactive())
+        {
+            Log::trace("Skipping callback on inactive session " + pSession->getName());
+            return;
+        }
 
         switch (static_cast<LibreOfficeKitCallbackType>(nType))
         {
@@ -424,8 +434,7 @@ public:
             queue.put("eof");
             queueHandlerThread.join();
 
-            _session->sendTextFrame("disconnect");
-            _session->sendTextFrame("eof");
+            _session->disconnect();
         }
         catch (const Exception& exc)
         {

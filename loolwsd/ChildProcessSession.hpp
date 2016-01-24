@@ -24,6 +24,30 @@ static int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 class ChildProcessSession final : public LOOLSession
 {
 public:
+    class Statistics
+    {
+    public:
+        Statistics() :
+            _lastActivityTime(std::chrono::steady_clock::now())
+        {
+        }
+
+        void updateLastActivityTime()
+        {
+            _lastActivityTime = std::chrono::steady_clock::now();
+        }
+
+        double getInactivityMS() const
+        {
+            const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
+            return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+        }
+
+    private:
+        std::chrono::steady_clock::time_point _lastActivityTime;
+    };
+
+public:
     /// Create a new ChildProcessSession
     /// ws The socket between master and kit (jailed).
     /// loKit The LOKit instance.
@@ -56,6 +80,9 @@ public:
     LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument; }
 
     std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
+
+    const Statistics& getStatistics() const { return _stats; }
+    bool isInactive() const { return _stats.getInactivityMS() >= InactivityThresholdMS; }
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
@@ -96,10 +123,14 @@ private:
     int _clientPart;
     std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> _onLoad;
     std::function<void(const std::string&)> _onUnload;
+    /// Statistics and activity tracking.
+    Statistics _stats;
 
     /// Synchronize _loKitDocument acess.
     /// This should be inside LoKit.
     static std::recursive_mutex Mutex;
+
+    static constexpr auto InactivityThresholdMS = 120 * 1000;
 };
 
 #endif
