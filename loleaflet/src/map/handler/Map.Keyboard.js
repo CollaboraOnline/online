@@ -233,11 +233,7 @@ L.Map.Keyboard = L.Handler.extend({
 		var cmd = e.originalEvent.metaKey ? this.keyModifier.ctrlMac : 0;
 		this.modifier = shift | ctrl | alt | cmd;
 
-		if (cmd) {
-			return;
-		}
-
-		if (ctrl) {
+		if (ctrl || cmd) {
 			if (this._handleCtrlCommand(e)) {
 				return;
 			}
@@ -398,7 +394,8 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map._socket.sendMessage('uno .uno:SuperScript');
 				return true;
 		}
-		if (e.type === 'keypress' && e.originalEvent.ctrlKey && (e.originalEvent.key === 'c' || e.originalEvent.key === 'v' || e.originalEvent.key === 'x')) {
+		if (e.type === 'keypress' && (e.originalEvent.ctrlKey || e.originalEvent.metaKey) &&
+			(e.originalEvent.key === 'c' || e.originalEvent.key === 'v' || e.originalEvent.key === 'x')) {
 			// need to handle this separately for Firefox
 			return true;
 		}
