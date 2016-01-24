@@ -59,7 +59,7 @@ describe('LoadTest', function () {
 				checkTimeOut = setTimeout(function () {
 					expect(map._docLayer._emptyTilesCount).to.eql(0);
 					done();
-				}, 2000);
+				}, 6000);
 			});
 
 			it('Scroll to the bottom', function (done) {
@@ -73,7 +73,7 @@ describe('LoadTest', function () {
 				checkTimeOut = setTimeout(function () {
 					expect(map._docLayer._emptyTilesCount).to.eql(0);
 					done();
-				}, 2000);
+				}, 6000);
 			});
 
 		});
