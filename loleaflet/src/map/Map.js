@@ -595,6 +595,8 @@ L.Map = L.Evented.extend({
 
 		this._targets = {};
 
+		this._mouseOut = false;
+
 		var onOff = remove ? 'off' : 'on';
 
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
@@ -613,6 +615,17 @@ L.Map = L.Evented.extend({
 		        function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
 	},
 
+	_isMouseEnteringLeaving: function (e) {
+		var target = e.target || e.srcElement,
+			related = e.relatedTarget;
+
+		if (!target) { return false; }
+
+		return (L.DomUtil.hasClass(target, 'leaflet-tile')
+			&& !(related && (L.DomUtil.hasClass(related, 'leaflet-tile')
+				|| L.DomUtil.hasClass(related, 'leaflet-cursor'))));
+	},
+
 	_handleDOMEvent: function (e) {
 		if (!this._loaded || L.DomEvent._skipped(e)) { return; }
 
@@ -621,8 +634,21 @@ L.Map = L.Evented.extend({
 			//type = e.type === 'keypress' && e.keyCode === 13 ? 'click' : e.type;
 			type = e.type;
 
+		// we need to keep track if we have entered/left the map
+		this._mouseEnteringLeaving = false;
+		// mouse leaving the map ?
+		if (!target && !this._mouseOut && type === 'mouseout') {
+			this._mouseEnteringLeaving = this._isMouseEnteringLeaving(e);
+			this._mouseOut = this._mouseEnteringLeaving; // event type == mouseout
+		}
+		// mouse entering the map ?
+		if (!target && this._mouseOut && type === 'mouseover') {
+			this._mouseEnteringLeaving = this._isMouseEnteringLeaving(e);
+			this._mouseOut = !this._mouseEnteringLeaving; // event type == mouseover
+		}
+
 		// special case for map mouseover/mouseout events so that they're actually mouseenter/mouseleave
-		if (!target && (type === 'mouseover' || type === 'mouseout') &&
+		if (!target && !this._mouseEnteringLeaving && (type === 'mouseover' || type === 'mouseout') &&
 				!L.DomEvent._checkMouse(this._container, e)) { return; }
 
 		// prevents outline when clicking on keyboard-focusable element

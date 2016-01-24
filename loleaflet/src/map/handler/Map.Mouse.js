@@ -90,7 +90,15 @@ L.Map.Mouse = L.Handler.extend({
 		buttons |= e.originalEvent.button === this.JSButtons.middle ? this.LOButtons.middle : 0;
 		buttons |= e.originalEvent.button === this.JSButtons.right ? this.LOButtons.right : 0;
 
-		if (e.type === 'mousedown') {
+		var mouseEnteringLeavingMap = this._map._mouseEnteringLeaving;
+
+		if (mouseEnteringLeavingMap && e.type === 'mouseover' && this._mouseDown) {
+			L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
+			L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
+			L.DomEvent.off(this._map._resizeDetector.contentWindow, 'mousemove', this._onMouseMoveOutside, this);
+			L.DomEvent.off(this._map._resizeDetector.contentWindow, 'mouseup', this._onMouseUpOutside, this);
+		}
+		else if (e.type === 'mousedown') {
 			docLayer._resetPreFetching();
 			this._mouseDown = true;
 			if (this._holdMouseEvent) {
@@ -211,6 +219,12 @@ L.Map.Mouse = L.Handler.extend({
 			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, count, buttons, modifier);
 			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, count, buttons, modifier);
 		}
+		else if (mouseEnteringLeavingMap && e.type === 'mouseout' && this._mouseDown) {
+			L.DomEvent.on(this._map._resizeDetector.contentWindow, 'mousemove', this._onMouseMoveOutside, this);
+			L.DomEvent.on(this._map._resizeDetector.contentWindow, 'mouseup', this._onMouseUpOutside, this);
+			L.DomEvent.on(document, 'mousemove', this._onMouseMoveOutside, this);
+			L.DomEvent.on(document, 'mouseup', this._onMouseUpOutside, this);
+		}
 	},
 
 	_executeMouseEvents: function () {
@@ -219,6 +233,26 @@ L.Map.Mouse = L.Handler.extend({
 			this._mouseEventsQueue[i]();
 		}
 		this._mouseEventsQueue = [];
+	},
+
+	_onMouseMoveOutside: function (e) {
+		this._map._handleDOMEvent(e);
+		if (this._map.dragging.enabled()) {
+			this._map.dragging._draggable._onMove(e);
+		}
+	},
+
+	_onMouseUpOutside: function (e) {
+		this._mouseDown = false;
+		L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
+		L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
+		L.DomEvent.off(this._map._resizeDetector.contentWindow, 'mousemove', this._onMouseMoveOutside, this);
+		L.DomEvent.off(this._map._resizeDetector.contentWindow, 'mouseup', this._onMouseUpOutside, this);
+
+		this._map._handleDOMEvent(e);
+		if (this._map.dragging.enabled()) {
+			this._map.dragging._draggable._onUp(e);
+		}
 	}
 });
 
