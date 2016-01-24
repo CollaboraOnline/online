@@ -318,7 +318,7 @@ public:
             if ( nBytes < 0 )
             {
                 Log::error("Error sending search message to child pipe: " + std::to_string(it->first) + ". Terminating.");
-                removeChild(it->second);
+                removeChild(it->first);
                 it = _childProcesses.cbegin();
                 continue;
             }
@@ -329,7 +329,7 @@ public:
             if ( nBytes < 0 )
             {
                 Log::error("Error reading response to search message from child [" + std::to_string(it->first) + "]. Terminating.");
-                removeChild(it->second);
+                removeChild(it->first);
                 it = _childProcesses.cbegin();
                 continue;
             }
@@ -591,7 +591,7 @@ static int createLibreOfficeKit(const bool sharePages,
 
     Log::info() << "Adding Kit #" << childCounter << ", PID: " << child << Log::end;
     _childProcesses[child] = nFIFOWriter;
-    ++forkCounter;
+    --forkCounter;
     return child;
 }
 
@@ -847,17 +847,24 @@ int main(int argc, char** argv)
         {
             std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
+            pipeHandler.verifyChilds();
+
             // Figure out how many children we need.
             const signed total = _childProcesses.size();
             const signed used = _cacheURL.size();
             const signed extra = total - used;
-            if (extra < numPreSpawnedChildren)
+            signed spawn = std::min(static_cast<int>(forkCounter), numPreSpawnedChildren);
+            Log::debug() << "Spawning " << spawn << " children. Current Total: " << total
+                         << ", used: " << used << ", extra: " << extra << Log::end;
+            do
             {
                 if (createLibreOfficeKit(sharePages, loSubPath, jailId) < 0)
                     Log::error("Error: fork failed.");
             }
-            else
-                forkCounter = 0;
+            while (--spawn > 0);
+
+            // We've done our best. If need more, retrying will bump the counter.
+            forkCounter = 0;
         }
 
         int status;
