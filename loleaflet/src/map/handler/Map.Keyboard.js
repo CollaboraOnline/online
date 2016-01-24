@@ -317,13 +317,15 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_handleCtrlCommand: function (e) {
-		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x') {
+		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x' &&
+			/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120) {
 			e.originalEvent.preventDefault();
 			return true;
 		}
 
 		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.keyCode !== 88 &&
-				e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x') {
+			/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120 &&
+			e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x') {
 			// not copy or paste
 			e.originalEvent.preventDefault();
 		}
@@ -374,6 +376,8 @@ L.Map.Keyboard = L.Handler.extend({
 				return false;
 			case 67: // c
 			case 88: // x
+			case 99: // c (Safari)
+			case 120: // x (Safari)
 				// we prepare for a copy or cut event
 				this._map._docLayer._textArea.value = 'dummy text';
 				this._map._docLayer._textArea.focus();
@@ -383,6 +387,7 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map.print();
 				return true;
 			case 86: // v
+			case 118: // v (Safari)
 				return true;
 			case 112: // f1
 				this._map._socket.sendMessage('uno .uno:NoteVisible');
