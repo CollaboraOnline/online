@@ -60,7 +60,9 @@ L.Control.RowHeader = L.Control.extend({
 			height = rows[iterator].size - (iterator > 0 ? rows[iterator - 1].size : 0);
 			twip = new L.Point(height, height);
 			text = L.DomUtil.create('div', 'spreadsheet-header-row', this._rows);
-			text.innerHTML = rows[iterator].text;
+			var content = rows[iterator].text;
+			text.setAttribute('rel', 'spreadsheet-row-' + content); // for easy addressing
+			text.innerHTML = content;
 			height = Math.round(converter.call(context, twip).y) - 1 + 'px';
 			L.DomUtil.setStyle(text, 'line-height', height);
 			L.DomUtil.setStyle(text, 'height', height);

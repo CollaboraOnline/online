@@ -61,7 +61,9 @@ L.Control.ColumnHeader = L.Control.extend({
 			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
 			twip = new L.Point(width, width);
 			text = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
-			text.innerHTML = columns[iterator].text;
+			var content = columns[iterator].text;
+			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
+			text.innerHTML = content;
 			width = Math.round(converter.call(context, twip).x) - 1 + 'px';
 			L.DomUtil.setStyle(text, 'width', width);
 		}
