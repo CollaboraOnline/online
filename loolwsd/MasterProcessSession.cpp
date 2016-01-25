@@ -267,14 +267,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         _pidChild = pidChild;
         lock.unlock();
         AvailableChildSessionCV.notify_one();
-
-        // log first lokit child pid information
-        if ( LOOLWSD::DoTest )
-        {
-            Poco::FileOutputStream filePID(LOOLWSD::LOKIT_PIDLOG);
-            if (filePID.good())
-                filePID << pidChild;
-        }
     }
     else if (_kind == Kind::ToPrisoner)
     {
