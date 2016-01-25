@@ -650,8 +650,6 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
             }
         }
 
-        Poco::ThreadPool::defaultPool().joinAll();
-
         close(writerBroker);
         close(readerBroker);
     }
