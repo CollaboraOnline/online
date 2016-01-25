@@ -48,7 +48,11 @@ L.Draggable = L.Evented.extend({
 
 		if (e.shiftKey || ((e.which !== 1) && (e.button !== 0) && !e.touches)) { return; }
 
-		L.DomEvent.stopPropagation(e);
+		// enable propagation of the mousedown event from map pane to parent elements in view mode
+		// see bug bccu1446
+		if (!L.DomUtil.hasClass(this._element, 'leaflet-map-pane')) {
+			L.DomEvent.stopPropagation(e);
+		}
 
 		if (this._preventOutline) {
 			L.DomUtil.preventOutline(this._element);
