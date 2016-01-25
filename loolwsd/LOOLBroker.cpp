@@ -390,7 +390,7 @@ public:
                 Log::debug("Search found child [" + std::to_string(aIterURL->second) +
                            "] to host URL [" + aURL +
                            "]. Creating view for thread [" + aTID + "].");
-                if (createThread(nPID, aTID, aURL) < 0)
+                if (createThread(nPID, aTID, aURL))
                 {
                     _cacheURL[aURL] = nPID;
                     return;
