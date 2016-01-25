@@ -607,12 +607,40 @@ L.Map = L.Evented.extend({
 		if (this.options.trackResize && this._resizeDetector.contentWindow) {
 			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);
 		}
+
+		L.DomEvent[onOff](window, 'blur', this._onLostFocus, this);
+		L.DomEvent[onOff](window, 'focus', this._onGotFocus, this);
 	},
 
 	_onResize: function () {
 		L.Util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = L.Util.requestAnimFrame(
 		        function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
+	},
+
+	_onLostFocus: function () {
+		var doclayer = this._docLayer;
+		if (doclayer._isCursorVisible && doclayer._isCursorOverlayVisible) {
+			doclayer._visibleCursorOnLostFocus = doclayer._visibleCursor;
+			doclayer._isCursorOverlayVisibleOnLostFocus = doclayer._isCursorVisibleOnLostFocus = true;
+			doclayer._isCursorOverlayVisible = false;
+			doclayer._onUpdateCursor();
+		}
+	},
+
+	_onGotFocus: function () {
+		var doclayer = this._docLayer;
+		if (doclayer._isCursorVisibleOnLostFocus && doclayer._isCursorOverlayVisibleOnLostFocus) {
+			// we restore the old cursor position by a small delay, so that if the user clicks
+			// inside the document we skip to restore it, so that the user does not see the cursor
+			// jumping from the old position to the new one
+			setTimeout(function () {
+				if (doclayer._isCursorOverlayVisible) { return; } // user has clicked inside the document
+				doclayer._isCursorOverlayVisible = doclayer._isCursorVisible = true;
+				doclayer._visibleCursor = doclayer._visibleCursorOnLostFocus;
+				doclayer._onUpdateCursor();
+			}, 300);
+		}
 	},
 
 	_isMouseEnteringLeaving: function (e) {
