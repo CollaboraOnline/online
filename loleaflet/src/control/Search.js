@@ -42,11 +42,11 @@ L.Map.include({
 		this._socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
 	},
 
-	searchAll: function (text, backward) {
+	highlightAll: function (text) {
 		if (this._docLayer._searchResults && text === this._docLayer._searchTerm) {
 			return;
 		}
-		this.search(text, backward, 1);
+		this.search(text, false, 1);
 	},
 
 	resetSelection: function () {
