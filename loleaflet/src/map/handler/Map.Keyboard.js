@@ -378,6 +378,8 @@ L.Map.Keyboard = L.Handler.extend({
 			case 88: // x
 			case 99: // c (Safari)
 			case 120: // x (Safari)
+			case 91: // Left Cmd (Safari)
+			case 93: // Right Cmd (Safari)
 				// we prepare for a copy or cut event
 				this._map._docLayer._textArea.value = 'dummy text';
 				this._map._docLayer._textArea.focus();
