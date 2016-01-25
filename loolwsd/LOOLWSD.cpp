@@ -729,7 +729,6 @@ std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::JailId;
 std::string LOOLWSD::LoSubPath = "lo";
-Poco::NamedMutex LOOLWSD::NamedMutexLOOL("loolwsd");
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::DoTest = false;
@@ -948,8 +947,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_UNAVAILABLE;
     }
 
-    NamedMutexLOOL.lock();
-
     JailId = Util::createRandomDir(ChildRoot);
     if (!createBroker(JailId))
     {
@@ -985,8 +982,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::error("Error: failed to open pipe [" + FIFO_FILE + "] write only.");
         return Application::EXIT_UNAVAILABLE;
     }
-
-    NamedMutexLOOL.unlock();
 
     TestInput input(*this, svs, srv);
     Thread inputThread;

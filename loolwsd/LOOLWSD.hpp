@@ -162,7 +162,6 @@ public:
     static std::string ChildRoot;
     static std::string JailId;
     static std::string LoSubPath;
-    static Poco::NamedMutex NamedMutexLOOL;
 
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
