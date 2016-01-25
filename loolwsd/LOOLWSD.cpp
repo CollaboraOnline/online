@@ -1384,8 +1384,19 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         waitForTerminationRequest();
     }
 
+    std::chrono::steady_clock::time_point lastPoolTime = std::chrono::steady_clock::now();
+
     while (!LOOLWSD::isShutDown && !LOOLWSD::doTest && MasterProcessSession::_childProcesses.size() > 0)
     {
+        const auto duration = (std::chrono::steady_clock::now() - lastPoolTime);
+        if (duration >= std::chrono::seconds(10))
+        {
+            if (threadPool.available() ==  0)
+                std::cout << Util::logPrefix() << "The thread pool is full, no more connections are accepted." << std::endl;
+
+            lastPoolTime = std::chrono::steady_clock::now();
+        }
+
         pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
