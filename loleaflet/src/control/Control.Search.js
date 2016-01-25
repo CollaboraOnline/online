@@ -10,6 +10,8 @@ L.Control.Search = L.Control.extend({
 		prevTitle: 'Previous',
 		nextText: '&#x25BC',
 		nextTitle: 'Next',
+		highlightText: '&#x263C',
+		highlightTitle: 'Highlight all',
 		cancelText: '&#x2716',
 		cancelTitle: 'Cancel'
 	},
@@ -25,6 +27,8 @@ L.Control.Search = L.Control.extend({
 				searchName + '-prev', container, this._searchPrev);
 		this._nextButton = this._createButton(options.nextText, options.nextTitle,
 				searchName + '-next', container, this._searchNext);
+		this._highlightButton = this._createButton(options.highlightText, options.highlightTitle,
+				searchName + '-highlight', container, this._highlightAll);
 		this._cancelButton = this._createButton(options.cancelText, options.cancelTitle,
 				searchName + '-cancel', container, this._cancel);
 
@@ -68,6 +72,11 @@ L.Control.Search = L.Control.extend({
 
 	_searchNext: function () {
 		this._map.search(this._searchBar.value);
+		this._refocusOnMap();
+	},
+
+	_highlightAll: function () {
+		this._map.highlightAll(this._searchBar.value);
 		this._refocusOnMap();
 	},
 
