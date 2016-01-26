@@ -157,8 +157,18 @@ namespace
         int _writePipe;
     };
 
-    static std::map<Process::PID, ChildProcess> _childProcesses;
+    static std::map<Process::PID, std::shared_ptr<ChildProcess>> _childProcesses;
 
+    /// Safely looks up a child hosting a URL.
+    std::shared_ptr<ChildProcess> findChild(const std::string& url)
+    {
+        std::lock_guard<std::recursive_mutex> lock(forkMutex);
+
+        const auto it = std::find_if(_childProcesses.begin(), _childProcesses.end(),
+                [&url](const std::pair<Process::PID, std::shared_ptr<ChildProcess>>& pair) { return pair.second->getUrl() == url; });
+
+        return (it != _childProcesses.end() ? it->second : std::shared_ptr<ChildProcess>());
+    }
 
     /// Safely looks up the pipe descriptor
     /// of a child. Returns -1 on error.
@@ -166,7 +176,7 @@ namespace
     {
         std::lock_guard<std::recursive_mutex> lock(forkMutex);
         const auto it = _childProcesses.find(pid);
-        return (it != _childProcesses.end() ? it->second.getWritePipe() : -1);
+        return (it != _childProcesses.end() ? it->second->getWritePipe() : -1);
     }
 
     /// Safely removes a child process and
@@ -178,9 +188,8 @@ namespace
         if (it != _childProcesses.end())
         {
             // Close the child.
-            it->second.close();
+            it->second->close();
             _childProcesses.erase(it);
-            _cacheURL.clear();
             ++forkCounter;
         }
     }
@@ -387,7 +396,7 @@ public:
             assert(it->first > 0);
 
             Log::trace("Query to kit [" + std::to_string(it->first) + "]: " + aMessage);
-            ssize_t nBytes = Util::writeFIFO(it->second.getWritePipe(), aMessage);
+            ssize_t nBytes = Util::writeFIFO(it->second->getWritePipe(), aMessage);
             if ( nBytes < 0 )
             {
                 Log::error("Error sending search message to child pipe: " + std::to_string(it->first) + ". Terminating.");
@@ -447,12 +456,12 @@ public:
             Log::debug("Finding kit for URL [" + aURL + "] on thread [" + aTID + "].");
 
             // Check the cache first.
-            const auto aIterURL = _cacheURL.find(aURL);
-            if ( aIterURL != _cacheURL.end() )
+            const auto child = findChild(aURL);
+            if (child)
             {
-                Log::debug("Cache found URL [" + aURL + "] hosted on child [" + std::to_string(aIterURL->second) +
+                Log::debug("Cache found URL [" + aURL + "] hosted on child [" + std::to_string(child->getPid()) +
                            "]. Creating view for thread [" + aTID + "].");
-                if (createThread(aIterURL->second, aTID, aURL))
+                if (createThread(child->getPid(), aTID, aURL))
                     return;
 
                 Log::error("Cache: Error creating thread [" + aTID + "] for URL [" + aURL + "]. Will search.");
@@ -466,7 +475,7 @@ public:
             const Process::PID nPID = searchURL(aURL);
             if ( nPID > 0 )
             {
-                Log::debug("Search found child [" + std::to_string(aIterURL->second) +
+                Log::debug("Search found child [" + std::to_string(nPID) +
                            "] to host URL [" + aURL +
                            "]. Creating view for thread [" + aTID + "].");
                 if (createThread(nPID, aTID, aURL))
@@ -673,7 +682,7 @@ static int createLibreOfficeKit(const bool sharePages,
 
     Log::info() << "Adding Kit #" << childCounter << ", PID: " << childPID << Log::end;
 
-    _childProcesses[childPID] = ChildProcess(childPID, -1, nFIFOWriter);
+    _childProcesses[childPID] = std::make_shared<ChildProcess>(childPID, -1, nFIFOWriter);
     --forkCounter;
     return childPID;
 }
