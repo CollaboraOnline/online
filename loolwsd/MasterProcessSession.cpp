@@ -31,8 +31,6 @@ using Poco::Process;
 using Poco::StringTokenizer;
 using Poco::UInt64;
 
-std::map<Process::PID, UInt64> MasterProcessSession::ChildProcesses;
-
 std::map<std::string, std::shared_ptr<MasterProcessSession>> MasterProcessSession::AvailableChildSessions;
 std::mutex MasterProcessSession::AvailableChildSessionMutex;
 std::condition_variable MasterProcessSession::AvailableChildSessionCV;

@@ -26,8 +26,6 @@ public:
 
     bool haveSeparateProcess();
 
-    static std::map<Poco::Process::PID, Poco::UInt64> ChildProcesses;
-
     virtual bool getStatus(const char *buffer, int length) override;
 
     virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
