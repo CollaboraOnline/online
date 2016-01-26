@@ -94,6 +94,55 @@ namespace
         {
         }
 
+        ChildProcess(ChildProcess&& other) :
+            _pid(other._pid),
+            _readPipe(other._readPipe),
+            _writePipe(other._writePipe)
+        {
+            other._pid = -1;
+            other._readPipe = -1;
+            other._writePipe = -1;
+        }
+
+        const ChildProcess& operator=(ChildProcess&& other)
+        {
+            _pid = other._pid;
+            other._pid = -1;
+            _readPipe = other._readPipe;
+            other._readPipe = -1;
+            _writePipe = other._writePipe;
+            other._writePipe = -1;
+
+            return *this;
+        }
+
+        ~ChildProcess()
+        {
+            close();
+        }
+
+        void close()
+        {
+            if (_pid != -1)
+            {
+                if (kill(_pid, SIGTERM) != 0 && kill(_pid, 0) != 0)
+                    Log::warn("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+               _pid = -1;
+            }
+
+            if (_readPipe != -1)
+            {
+                ::close(_readPipe);
+                _readPipe = -1;
+            }
+
+            if (_writePipe != -1)
+            {
+                ::close(_writePipe);
+                _writePipe = -1;
+            }
+        }
+
         void setUrl(const std::string& url) { _url = url; }
         const std::string& getUrl() const { return _url; }
 
@@ -120,14 +169,6 @@ namespace
         return (it != _childProcesses.end() ? it->second.getWritePipe() : -1);
     }
 
-    void requestAbnormalTermination(const Process::PID aPID)
-    {
-        if (kill(aPID, SIGTERM) != 0 && kill(aPID, 0) != 0)
-        {
-            Log::info("Cannot terminate lokit [" + std::to_string(aPID) + "].");
-        }
-    }
-
     /// Safely removes a child process and
     /// invalidates the URL cache.
     void removeChild(const Process::PID pid)
@@ -136,9 +177,8 @@ namespace
         const auto it = _childProcesses.find(pid);
         if (it != _childProcesses.end())
         {
-            // Close the write pipe.
-            requestAbnormalTermination(pid);
-            close(it->second.getWritePipe());
+            // Close the child.
+            it->second.close();
             _childProcesses.erase(it);
             _cacheURL.clear();
             ++forkCounter;
@@ -627,7 +667,7 @@ static int createLibreOfficeKit(const bool sharePages,
     if ( (nFIFOWriter = open(pipe.c_str(), O_WRONLY)) < 0 )
     {
         Log::error("Error: failed to open write pipe [" + pipe + "] with kit. Abandoning child.");
-        requestAbnormalTermination(childPID);
+        ChildProcess(childPID, -1, -1);
         return -1;
     }
 
@@ -977,10 +1017,9 @@ int main(int argc, char** argv)
             Log::info("Forcing child process " + std::to_string(it.first) + " to terminate.");
             Process::kill(it.first);
         }
-
-        // Close the write pipe.
-        close(it.second.getWritePipe());
     }
+
+    _childProcesses.clear();
 
     aPipe.join();
     close(readerChild);
