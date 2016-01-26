@@ -482,7 +482,7 @@ private:
 
     void handleGetRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
-        Log::info("Get request.");
+        Log::info("Starting Get request processor for session [" + id + "].");
         auto ws = std::make_shared<WebSocket>(request, response);
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws);
 
@@ -514,6 +514,7 @@ private:
                 }
             });
 
+        Log::info("Get request processor for session [" + id + "] finished. Clearing and joining the queue.");
         queue.clear();
         queue.put("eof");
         queueHandlerThread.join();
