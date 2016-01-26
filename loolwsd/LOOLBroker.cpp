@@ -73,18 +73,51 @@ static unsigned int childCounter = 0;
 static signed numPreSpawnedChildren = 0;
 
 static std::recursive_mutex forkMutex;
-static std::map<Process::PID, int> _childProcesses;
 static std::map<std::string, Process::PID> _cacheURL;
 
 namespace
 {
+    class ChildProcess
+    {
+    public:
+        ChildProcess() :
+            _pid(-1),
+            _readPipe(-1),
+            _writePipe(-1)
+        {
+        }
+
+        ChildProcess(const Poco::Process::PID pid, const int readPipe, const int writePipe) :
+            _pid(pid),
+            _readPipe(readPipe),
+            _writePipe(writePipe)
+        {
+        }
+
+        void setUrl(const std::string& url) { _url = url; }
+        const std::string& getUrl() const { return _url; }
+
+        Poco::Process::PID getPid() const { return _pid; }
+        int getReadPipe() const { return _readPipe; }
+        int getWritePipe() const { return _writePipe; }
+
+    private:
+        std::string _url;
+        Poco::Process::PID _pid;
+        int _readPipe;
+        int _writePipe;
+    };
+
+    static std::map<Process::PID, ChildProcess> _childProcesses;
+
+
     /// Safely looks up the pipe descriptor
     /// of a child. Returns -1 on error.
     int getChildPipe(const Process::PID pid)
     {
         std::lock_guard<std::recursive_mutex> lock(forkMutex);
         const auto it = _childProcesses.find(pid);
-        return (it != _childProcesses.end() ? it->second : -1);
+        return (it != _childProcesses.end() ? it->second.getWritePipe() : -1);
     }
 
     void requestAbnormalTermination(const Process::PID aPID)
@@ -105,7 +138,7 @@ namespace
         {
             // Close the write pipe.
             requestAbnormalTermination(pid);
-            close(it->second);
+            close(it->second.getWritePipe());
             _childProcesses.erase(it);
             _cacheURL.clear();
             ++forkCounter;
@@ -311,10 +344,10 @@ public:
         Process::PID nPID = -1;
         for (auto it = _childProcesses.cbegin(); it != _childProcesses.cend(); )
         {
-            assert(it->first > 0 && it->second > 0);
+            assert(it->first > 0);
 
             Log::trace("Query to kit [" + std::to_string(it->first) + "]: " + aMessage);
-            ssize_t nBytes = Util::writeFIFO(it->second, aMessage);
+            ssize_t nBytes = Util::writeFIFO(it->second.getWritePipe(), aMessage);
             if ( nBytes < 0 )
             {
                 Log::error("Error sending search message to child pipe: " + std::to_string(it->first) + ". Terminating.");
@@ -538,7 +571,7 @@ static int createLibreOfficeKit(const bool sharePages,
                                 const std::string& loSubPath,
                                 const std::string& jailId)
 {
-    Poco::UInt64 child;
+    Poco::UInt64 childPID;
     int nFIFOWriter = -1;
 
     const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
@@ -563,8 +596,8 @@ static int createLibreOfficeKit(const bool sharePages,
         else
         {
             // parent
-            child = pid; // (somehow - switch the hash to use real pids or ?) ...
-            Log::info("Forked kit [" + std::to_string(child) + "].");
+            childPID = pid; // (somehow - switch the hash to use real pids or ?) ...
+            Log::info("Forked kit [" + std::to_string(childPID) + "].");
         }
     }
     else
@@ -580,13 +613,13 @@ static int createLibreOfficeKit(const bool sharePages,
                   Poco::cat(std::string(" "), args.begin(), args.end()));
 
         ProcessHandle procChild = Process::launch(JAILED_LOOLKIT_PATH, args);
-        child = procChild.id();
-        Log::info("Spawned kit [" + std::to_string(child) + "].");
+        childPID = procChild.id();
+        Log::info("Spawned kit [" + std::to_string(childPID) + "].");
 
         if (!Process::isRunning(procChild))
         {
             // This can happen if we fail to copy it, or bad chroot etc.
-            Log::error("Error: loolkit [" + std::to_string(child) + "] was stillborn.");
+            Log::error("Error: loolkit [" + std::to_string(childPID) + "] was stillborn.");
             return -1;
         }
     }
@@ -594,14 +627,15 @@ static int createLibreOfficeKit(const bool sharePages,
     if ( (nFIFOWriter = open(pipe.c_str(), O_WRONLY)) < 0 )
     {
         Log::error("Error: failed to open write pipe [" + pipe + "] with kit. Abandoning child.");
-        requestAbnormalTermination(child);
+        requestAbnormalTermination(childPID);
         return -1;
     }
 
-    Log::info() << "Adding Kit #" << childCounter << ", PID: " << child << Log::end;
-    _childProcesses[child] = nFIFOWriter;
+    Log::info() << "Adding Kit #" << childCounter << ", PID: " << childPID << Log::end;
+
+    _childProcesses[childPID] = ChildProcess(childPID, -1, nFIFOWriter);
     --forkCounter;
-    return child;
+    return childPID;
 }
 
 static bool waitForTerminationChild(const Process::PID aPID, signed count = CHILD_TIMEOUT_SECS)
@@ -945,7 +979,7 @@ int main(int argc, char** argv)
         }
 
         // Close the write pipe.
-        close(it.second);
+        close(it.second.getWritePipe());
     }
 
     aPipe.join();
