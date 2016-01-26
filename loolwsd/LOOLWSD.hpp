@@ -183,13 +183,6 @@ protected:
 private:
     void displayHelp();
     void displayVersion();
-    void componentMain();
-    void desktopMain();
-    void startupComponent(int nComponents);
-    void startupDesktop(int nDesktop);
-    int  createComponent();
-    int  createDesktop();
-
     Poco::Process::PID createBroker(const std::string& jailId);
 };
 
