@@ -20,8 +20,7 @@
 #include <Poco/Random.h>
 #include <Poco/Path.h>
 #include <Poco/Util/ServerApplication.h>
-#include <Poco/SharedMemory.h>
-#include <Poco/NamedMutex.h>
+#include <Poco/Process.h>
 
 #include "Common.hpp"
 #include "Util.hpp"
@@ -191,7 +190,7 @@ private:
     int  createComponent();
     int  createDesktop();
 
-    bool createBroker(const std::string& jailId);
+    Poco::Process::PID createBroker(const std::string& jailId);
 };
 
 #endif

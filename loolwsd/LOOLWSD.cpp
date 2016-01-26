@@ -865,7 +865,7 @@ void LOOLWSD::displayVersion()
     std::cout << LOOLWSD_VERSION << std::endl;
 }
 
-bool LOOLWSD::createBroker(const std::string& rJailId)
+Poco::Process::PID LOOLWSD::createBroker(const std::string& rJailId)
 {
     Process::Args args;
 
@@ -879,17 +879,12 @@ bool LOOLWSD::createBroker(const std::string& rJailId)
 
     const std::string brokerPath = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
 
-    const auto childIndex = MasterProcessSession::ChildProcesses.size() + 1;
-    Log::info("Launching Broker #" + std::to_string(childIndex) +
-              ": " + brokerPath + " " +
+    Log::info("Launching Broker #1: " + brokerPath + " " +
               Poco::cat(std::string(" "), args.begin(), args.end()));
 
     ProcessHandle child = Process::launch(brokerPath, args);
 
-    Log::info() << "Adding Broker #" << childIndex << " PID " << child.id() << Log::end;
-    MasterProcessSession::ChildProcesses[child.id()] = child.id();
-
-    return true;
+    return child.id();
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -948,7 +943,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
 
     JailId = Util::createRandomDir(ChildRoot);
-    if (!createBroker(JailId))
+    const Poco::Process::PID pidBroker = createBroker(JailId);
+    if (pidBroker < 0)
     {
         Log::error("Failed to spawn loolBroker.");
         return Application::EXIT_UNAVAILABLE;
@@ -995,13 +991,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     unsigned timeoutCounter = 0;
     std::chrono::steady_clock::time_point lastPoolTime = std::chrono::steady_clock::now();
 
-    while (!TerminationFlag && !LOOLWSD::DoTest && MasterProcessSession::ChildProcesses.size() > 0)
+    while (!TerminationFlag && !LOOLWSD::DoTest)
     {
         const auto duration = (std::chrono::steady_clock::now() - lastPoolTime);
         if (duration >= std::chrono::seconds(10))
         {
             if (threadPool.available() ==  0)
-                Log::warn("The thread pool is full, no more connections accepted.");
+                Log::warn("The thread pool is full, no more connections are accepted.");
 
             lastPoolTime = std::chrono::steady_clock::now();
         }
@@ -1009,14 +1005,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         const pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
-            if ( MasterProcessSession::ChildProcesses.find(pid) != MasterProcessSession::ChildProcesses.end() )
+            if (pidBroker == pid)
             {
                 if (WIFEXITED(status))
                 {
                     Log::info() << "Child process [" << pid << "] exited with code: "
                                 << WEXITSTATUS(status) << "." << Log::end;
 
-                    MasterProcessSession::ChildProcesses.erase(pid);
+                    break;
                 }
                 else
                 if (WIFSIGNALED(status))
@@ -1030,7 +1026,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                                  << " with " << Util::signalName(WTERMSIG(status))
                                  << " signal. " << Log::end;
 
-                    MasterProcessSession::ChildProcesses.erase(pid);
+                    break;
                 }
                 else if (WIFSTOPPED(status))
                 {
@@ -1077,11 +1073,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Terminate child processes
     Util::writeFIFO(LOOLWSD::BrokerWritePipe, "eof");
-    for (auto i : MasterProcessSession::ChildProcesses)
-    {
-        Log::info("Requesting child process " + std::to_string(i.first) + " to terminate");
-        Process::requestTermination(i.first);
-    }
+    Log::info("Requesting child process " + std::to_string(pidBroker) + " to terminate");
+    Process::requestTermination(pidBroker);
 
     // wait broker process finish
     waitpid(-1, &status, WUNTRACED);
