@@ -472,6 +472,9 @@ public:
                     pStart++;
 
                     Log::trace("BrokerFromMaster: " + aMessage);
+                    if (aMessage == "eof")
+                        break;
+
                     const auto duration = (std::chrono::steady_clock::now() - lastMaintenanceTime);
                     if (duration >= std::chrono::seconds(10))
                     {

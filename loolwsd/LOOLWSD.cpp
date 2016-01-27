@@ -1072,7 +1072,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool2.joinAll();
 
     // Terminate child processes
-    Util::writeFIFO(LOOLWSD::BrokerWritePipe, "eof");
+    Util::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\r\n");
     Log::info("Requesting child process " + std::to_string(pidBroker) + " to terminate");
     Process::requestTermination(pidBroker);
 
