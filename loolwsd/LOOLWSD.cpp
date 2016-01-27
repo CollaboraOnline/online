@@ -239,6 +239,9 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                 {
                     assert(n > 0);
                     const std::string firstLine = getFirstLine(buffer, n);
+                    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    int size;
+
                     if (firstLine == "eof")
                     {
                         Log::info("Received EOF. Finishing.");
@@ -263,37 +266,29 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                             }
                         }
                     }
+                    else if (tokens.count() == 2 &&
+                             tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                    {
+                        // Check if it is a "nextmessage:" and in that case read the large
+                        // follow-up message separately, and handle that only.
+
+                        char largeBuffer[size];     //FIXME: Security risk! Flooding may segfault us.
+
+                        n = ws->receiveFrame(largeBuffer, size, flags);
+                        if (n > 0 && !handler(largeBuffer, n, false))
+                        {
+                            Log::info("Socket handler flagged for finishing.");
+                            break;
+                        }
+                    }
                     else if (firstLine.size() == static_cast<std::string::size_type>(n))
                     {
                         handler(firstLine.c_str(), firstLine.size(), true);
                     }
-                    else
+                    else if (!handler(buffer, n, false))
                     {
-                        // Check if it is a "nextmessage:" and in that case read the large
-                        // follow-up message separately, and handle that only.
-                        StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-                        int size;
-                        if (tokens.count() == 2 &&
-                            tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
-                        {
-                            char largeBuffer[size];     //FIXME: Security risk! Flooding may segfault us.
-
-                            n = ws->receiveFrame(largeBuffer, size, flags);
-                            if (n > 0 && !handler(largeBuffer, n, false))
-                            {
-                                Log::info("Socket handler flagged for finishing.");
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            if (!handler(buffer, n, false))
-                            {
-                                Log::info("Socket handler flagged for finishing.");
-                                break;
-                            }
-                        }
+                        Log::info("Socket handler flagged for finishing.");
+                        break;
                     }
                 }
             }

@@ -50,6 +50,7 @@
 #include <Poco/Net/SocketAddress.h>
 #include <Poco/FileStream.h>
 
+#include "Common.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "TileCache.hpp"
@@ -112,8 +113,14 @@ void LOOLSession::sendTextFrame(const std::string& text)
         Log::trace(getName() + " Send: " + getAbbreviatedMessage(text.c_str(), text.size()));
 
     std::unique_lock<std::mutex> lock(_mutex);
+    const int length = text.size();
+    if ( length > SMALL_MESSAGE_SIZE )
+    {
+        const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+        _ws->sendFrame(nextmessage.data(), nextmessage.size());
+    }
 
-    _ws->sendFrame(text.data(), text.size());
+    _ws->sendFrame(text.data(), length);
 }
 
 void LOOLSession::sendBinaryFrame(const char *buffer, int length)
@@ -128,7 +135,7 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 
     std::unique_lock<std::mutex> lock(_mutex);
 
-    if (length > 1000)
+    if ( length > SMALL_MESSAGE_SIZE )
     {
         const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
         _ws->sendFrame(nextmessage.data(), nextmessage.size());

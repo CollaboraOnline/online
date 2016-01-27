@@ -27,6 +27,11 @@ constexpr int POLL_TIMEOUT_MS = 1000;
 /// Should be large enough for ethernet packets
 /// which can be 1500 bytes long.
 constexpr int READ_BUFFER_SIZE = 2048;
+/// Size after which messages will be sent preceded with
+/// 'nextmessage' frame to let the receiver know in advance
+/// the size of larger coming message. All messages up to this
+/// size are considered small messages.
+constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
 
 static const std::string JailedDocumentRoot = "/user/docs/";
 
