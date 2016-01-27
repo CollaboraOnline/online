@@ -117,8 +117,14 @@ LOOLSession::~LOOLSession()
 void LOOLSession::sendTextFrame(const std::string& text)
 {
     std::unique_lock<std::mutex> lock(_mutex);
+    const int length = text.size();
+    if (length > 1000)
+    {
+        const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+        _ws->sendFrame(nextmessage.data(), nextmessage.size());
+    }
 
-    _ws->sendFrame(text.data(), text.size());
+    _ws->sendFrame(text.data(), length);
 }
 
 void LOOLSession::sendBinaryFrame(const char *buffer, int length)
