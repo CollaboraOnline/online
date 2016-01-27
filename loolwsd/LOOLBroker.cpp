@@ -264,7 +264,7 @@ public:
         }
 
         StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        return (tokens.count() == 2 && tokens[1] == "ok");
+        return (tokens.count() == 2 && tokens[0] == std::to_string(nPID) && tokens[1] == "ok");
     }
 
     void verifyChilds()
@@ -292,7 +292,7 @@ public:
             }
 
             StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (tokens.count() != 2 || tokens[1] != "ok")
+            if (tokens.count() != 2 || tokens[0] != std::to_string(it->second) || tokens[1] != "ok")
             {
                 Log::debug() << "Removed expired Kit [" << it->second << "] hosts URL [" << it->first << "]." << Log::end;
                 it = _cacheURL.erase(it);
@@ -335,6 +335,12 @@ public:
             }
 
             StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            if (tokens.count() != 2 || tokens[0] != std::to_string(it->first))
+            {
+                Log::error("Error wrong child response from child [" + std::to_string(it->first) + "] != [" + tokens[0] + "]");
+                continue;
+            }
+
             if (tokens[1] == "ok")
             {
                 // Found, but find all empty instances.
