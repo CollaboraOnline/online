@@ -243,6 +243,10 @@ public:
         case LOK_CALLBACK_UNO_COMMAND_RESULT:
             _session.sendTextFrame("unocommandresult: " + rPayload);
             break;
+        case LOK_CALLBACK_DOCUMENT_PASSWORD:
+            break;
+        case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+            break;
         }
     }
 
