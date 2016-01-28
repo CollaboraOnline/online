@@ -15,6 +15,7 @@
 namespace Util
 {
 
+/// Holds the position and size of a rectangle.
 struct Rectangle
 {
     int _x1;

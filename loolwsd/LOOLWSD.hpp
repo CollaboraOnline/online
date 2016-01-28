@@ -25,8 +25,8 @@
 #include "Common.hpp"
 #include "Util.hpp"
 
-// A DocumentURI as mananged by us.
-// Contains URI, physical path, etc.
+/// A DocumentURI as mananged by us.
+/// Contains URI, physical path, etc.
 class DocumentURI
 {
 public:

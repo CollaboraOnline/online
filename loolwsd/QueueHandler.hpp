@@ -13,8 +13,7 @@
 #include "LOOLSession.hpp"
 #include "Util.hpp"
 
-// This thread handles incoming messages
-// on a given kit instance.
+/// This thread handles incoming messages on a given kit instance.
 class QueueHandler: public Poco::Runnable
 {
 public:

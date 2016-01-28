@@ -32,14 +32,13 @@
 #include "MessageQueue.hpp"
 #include "TileCache.hpp"
 
-// We have three kinds of Websocket sessions
-// 1) Between the master loolwsd server to the end-user LOOL client
-// 2) Between the master loolwsd server and a jailed loolwsd child process, in the master process
-// 3) Ditto, in the jailed loolwsd process
-
 class LOOLSession
 {
 public:
+    /// We have three kinds of Websocket sessions
+    /// 1) Between the master loolwsd server to the end-user LOOL client
+    /// 2) Between the master loolwsd server and a jailed loolwsd child process, in the master process
+    /// 3) Ditto, in the jailed loolwsd process
     enum class Kind { ToClient, ToPrisoner, ToMaster };
 
     const std::string& getId() const { return _id; }

@@ -61,8 +61,7 @@ public:
     const std::string _aPayload;
 };
 
-// This thread handles callbacks from the
-// lokit instance.
+/// This thread handles callbacks from the lokit instance.
 class CallbackWorker: public Poco::Runnable
 {
 public:

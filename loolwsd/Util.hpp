@@ -113,10 +113,9 @@ namespace Log
     void warn(const std::string& msg, const bool append_errno = false);
     void error(const std::string& msg, const bool append_errno = true);
 
-    // The following is to write streaming logs.
-    // Log::info() << "Value: 0x" << std::hex << value
-    //             << ", pointer: " << this << Log::end;
-
+    /// The following is to write streaming logs.
+    /// Log::info() << "Value: 0x" << std::hex << value
+    ///             << ", pointer: " << this << Log::end;
     static const struct _end_marker
     {
         _end_marker()

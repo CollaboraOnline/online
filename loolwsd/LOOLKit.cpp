@@ -207,13 +207,13 @@ private:
     volatile bool _stop;
 };
 
-// A document container.
-// Owns LOKitDocument instance and connections.
-// Manages the lifetime of a document.
-// Technically, we can host multiple documents
-// per process. But for security reasons don't.
-// However, we could have a loolkit instance
-// per user or group of users (a trusted circle).
+/// A document container.
+/// Owns LOKitDocument instance and connections.
+/// Manages the lifetime of a document.
+/// Technically, we can host multiple documents
+/// per process. But for security reasons don't.
+/// However, we could have a loolkit instance
+/// per user or group of users (a trusted circle).
 class Document
 {
 public:
