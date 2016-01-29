@@ -76,8 +76,7 @@ extern "C"
 
 #else
 
-    #include "prewin.h"
-    #include "postwin.h"
+    #include  <windows.h>
     #define TARGET_LIB        "sofficeapp" ".dll"
     #define TARGET_MERGED_LIB "mergedlo" ".dll"
     #define SEPARATOR         '\\'
@@ -85,7 +84,7 @@ extern "C"
 
     void *lok_loadlib(const char *pFN)
     {
-        return (void *) LoadLibrary(pFN);
+        return (void *) LoadLibraryA(pFN);
     }
 
     char *lok_dlerror(void)
@@ -97,7 +96,7 @@ extern "C"
 
     void *lok_dlsym(void *Hnd, const char *pName)
     {
-        return GetProcAddress((HINSTANCE) Hnd, pName);
+        return reinterpret_cast<void *>(GetProcAddress((HINSTANCE) Hnd, pName));
     }
 
     int lok_dlclose(void *Hnd)
@@ -111,11 +110,11 @@ extern "C"
             return;
 
         char* sEnvPath = NULL;
-        DWORD  cChars = GetEnvironmentVariable("PATH", sEnvPath, 0);
+        DWORD  cChars = GetEnvironmentVariableA("PATH", sEnvPath, 0);
         if (cChars > 0)
         {
             sEnvPath = new char[cChars];
-            cChars = GetEnvironmentVariable("PATH", sEnvPath, cChars);
+            cChars = GetEnvironmentVariableA("PATH", sEnvPath, cChars);
             //If PATH is not set then it is no error
             if (cChars == 0 && GetLastError() != ERROR_ENVVAR_NOT_FOUND)
             {
@@ -125,17 +124,18 @@ extern "C"
         }
         //prepare the new PATH. Add the Ure/bin directory at the front.
         //note also adding ';'
-        char * sNewPath = new char[strlen(sEnvPath) + strlen(pPath) + strlen(UNOPATH) + 2];
+        char * sNewPath = new char[strlen(sEnvPath) + strlen(pPath) * 2 + strlen(UNOPATH) + 4];
         sNewPath[0] = L'\0';
-        strcat(sNewPath, pPath);
-        strcat(sNewPath, UNOPATH);
+        strcat(sNewPath, pPath);     // program to PATH
+        strcat(sNewPath, ";");
+        strcat(sNewPath, UNOPATH);   // UNO to PATH
         if (strlen(sEnvPath))
         {
             strcat(sNewPath, ";");
             strcat(sNewPath, sEnvPath);
         }
 
-        SetEnvironmentVariable("PATH", sNewPath);
+        SetEnvironmentVariableA("PATH", sNewPath);
 
         delete[] sEnvPath;
         delete[] sNewPath;
@@ -154,6 +154,13 @@ static void *lok_dlopen( const char *install_path, char ** _imp_lib )
 
     if (!install_path)
         return NULL;
+
+    struct stat dir_st;
+    if (stat(install_path, &dir_st) != 0)
+    {
+        fprintf(stderr, "installation path \"%s\" does not exist\n", install_path);
+        return NULL;
+    }
 
     // allocate large enough buffer
     partial_length = strlen(install_path);
@@ -220,6 +227,8 @@ static LibreOfficeKit *lok_init_2( const char *install_path,  const char *user_p
     LokHookFunction2 *pSym2;
 
     dlhandle = lok_dlopen(install_path, &imp_lib);
+    if (!dlhandle)
+        return NULL;
 
     pSym2 = (LokHookFunction2 *) lok_dlsym(dlhandle, "libreofficekit_hook_2");
     if (!pSym2)
@@ -253,7 +262,7 @@ static LibreOfficeKit *lok_init_2( const char *install_path,  const char *user_p
 }
 
 static
-#ifdef __GNUC__
+#if defined __GNUC__ || defined __clang__
 __attribute__((used))
 #endif
 LibreOfficeKit *lok_init( const char *install_path )
