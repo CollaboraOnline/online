@@ -15,7 +15,7 @@ extern "C"
 {
 #endif
 
-#ifdef LOK_USE_UNSTABLE_API
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 typedef enum
 {
   LOK_DOCTYPE_TEXT,
@@ -39,6 +39,32 @@ typedef enum
     LOK_TILEMODE_BGRA
 }
 LibreOfficeKitTileMode;
+
+/** Optional features of LibreOfficeKit, in particular callbacks that block
+ *  LibreOfficeKit until the corresponding reply is received, which would
+ *  deadlock if the client does not support the feature.
+ *
+ *  @see lok::Office::setOptionalFeatures().
+ */
+typedef enum
+{
+    /**
+     * Handle LOK_CALLBACK_DOCUMENT_PASSWORD by prompting the user
+     * for a password.
+     *
+     * @see lok::Office::setDocumentPassword().
+     */
+    LOK_FEATURE_DOCUMENT_PASSWORD = (1ULL << 0),
+
+    /**
+     * Handle LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY by prompting the user
+     * for a password.
+     *
+     * @see lok::Office::setDocumentPassword().
+     */
+    LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY = (1ULL << 1),
+}
+LibreOfficeKitOptionalFeatures;
 
 typedef enum
 {
@@ -221,7 +247,24 @@ typedef enum
     /**
      * The text content of the formula bar in Calc.
      */
-    LOK_CALLBACK_CELL_FORMULA
+    LOK_CALLBACK_CELL_FORMULA,
+
+    /**
+     * Loading a document requires a password.
+     *
+     * Loading the document is blocked until the password is provided via
+     * lok::Office::setDocumentPassword().  The document cannot be loaded
+     * without the password.
+     */
+    LOK_CALLBACK_DOCUMENT_PASSWORD,
+
+    /**
+     * Editing a document requires a password.
+     *
+     * Loading the document is blocked until the password is provided via
+     * lok::Office::setDocumentPassword().
+     */
+    LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY,
 }
 LibreOfficeKitCallbackType;
 
@@ -281,7 +324,7 @@ typedef enum
 }
 LibreOfficeKitSetGraphicSelectionType;
 
-#endif // LOK_USE_UNSTABLE_API
+#endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 
 #ifdef __cplusplus
 }
