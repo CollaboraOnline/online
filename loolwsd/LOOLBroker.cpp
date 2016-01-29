@@ -683,7 +683,6 @@ static int createLibreOfficeKit(const bool sharePages,
     Log::info() << "Adding Kit #" << childCounter << ", PID: " << childPID << Log::end;
 
     _childProcesses[childPID] = std::make_shared<ChildProcess>(childPID, -1, nFIFOWriter);
-    --forkCounter;
     return childPID;
 }
 
@@ -918,6 +917,9 @@ int main(int argc, char** argv)
         Log::error("Error: failed to create children.");
         exit(-1);
     }
+
+    if (numPreSpawnedChildren > 1)
+        forkCounter = numPreSpawnedChildren - 1;
 
     if ( (readerChild = open(FIFO_BROKER.c_str(), O_RDONLY) ) < 0 )
     {
