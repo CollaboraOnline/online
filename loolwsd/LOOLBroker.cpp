@@ -164,10 +164,19 @@ namespace
     {
         std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
-        const auto it = std::find_if(_childProcesses.begin(), _childProcesses.end(),
-                [&url](const std::pair<Process::PID, std::shared_ptr<ChildProcess>>& pair) { return pair.second->getUrl() == url; });
+        std::shared_ptr<ChildProcess> child;
+        for (const auto& it : _childProcesses)
+        {
+            if (it.second->getUrl() == url)
+            {
+                return it.second;
+            }
 
-        return (it != _childProcesses.end() ? it->second : std::shared_ptr<ChildProcess>());
+            if (it.second->getUrl().empty())
+                child = it.second;
+        }
+
+        return child;
     }
 
     /// Safely looks up the pipe descriptor
@@ -355,12 +364,12 @@ public:
 
         // Sanitize cache.
         Log::trace("Verifying Childs.");
-        for (auto it = _cacheURL.cbegin(); it != _cacheURL.cend(); )
+        for (auto& it : _childProcesses)
         {
-            const auto aMessage = "search " + it->first + "\r\n";
-            if (Util::writeFIFO(getChildPipe(it->second), aMessage) < 0)
+            const auto aMessage = "query url \r\n";
+            if (Util::writeFIFO(it.second->getWritePipe(), aMessage) < 0)
             {
-                Log::error("Error sending search message to child [" + std::to_string(it->second) + "]. Clearing cache.");
+                Log::error("Error sending query message to child [" + std::to_string(it.second->getPid()) + "]. Clearing cache.");
                 _cacheURL.clear();
                 break;
             }
@@ -368,79 +377,19 @@ public:
             std::string aResponse;
             if (getResponseLine(readerChild, aResponse) < 0)
             {
-                Log::error("Error reading response to thread message from child [" + std::to_string(it->second) + "]. Clearing cache.");
+                Log::error("Error reading response to thread message from child [" + std::to_string(it.second->getPid()) + "]. Clearing cache.");
                 _cacheURL.clear();
                 break;
             }
 
             StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (tokens.count() != 2 || tokens[0] != std::to_string(it->second) || tokens[1] != "ok")
+            if (tokens.count() != 2 || tokens[0] != std::to_string(it.second->getPid()) || tokens[1] != "ok")
             {
-                Log::debug() << "Removed expired Kit [" << it->second << "] hosts URL [" << it->first << "]." << Log::end;
-                it = _cacheURL.erase(it);
+                Log::debug() << "Removed expired Kit [" << it.second->getPid() << "] hosts URL [" << it.second->getUrl() << "]." << Log::end;
+                //it = _cacheURL.erase(it);
                 continue;
             }
-
-            ++it;
         }
-    }
-
-    Process::PID searchURL(const std::string& aURL)
-    {
-        std::lock_guard<std::recursive_mutex> lock(forkMutex);
-
-        const std::string aMessage = "search " + aURL + "\r\n";
-        Process::PID nPID = -1;
-        for (auto it = _childProcesses.cbegin(); it != _childProcesses.cend(); )
-        {
-            assert(it->first > 0);
-
-            Log::trace("Query to kit [" + std::to_string(it->first) + "]: " + aMessage);
-            ssize_t nBytes = Util::writeFIFO(it->second->getWritePipe(), aMessage);
-            if ( nBytes < 0 )
-            {
-                Log::error("Error sending search message to child pipe: " + std::to_string(it->first) + ". Terminating.");
-                removeChild(it->first);
-                it = _childProcesses.cbegin();
-                continue;
-            }
-
-            std::string aResponse;
-            nBytes = getResponseLine(readerChild, aResponse);
-            Log::trace("Response from kit [" + std::to_string(it->first) + "]: " + aResponse);
-            if ( nBytes < 0 )
-            {
-                Log::error("Error reading response to search message from child [" + std::to_string(it->first) + "]. Terminating.");
-                removeChild(it->first);
-                it = _childProcesses.cbegin();
-                continue;
-            }
-
-            StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (tokens.count() != 2 || tokens[0] != std::to_string(it->first))
-            {
-                Log::error("Error wrong child response from child [" + std::to_string(it->first) + "] != [" + tokens[0] + "]");
-                continue;
-            }
-
-            if (tokens[1] == "ok")
-            {
-                // Found, but find all empty instances.
-                nPID = it->first;
-                Log::debug("Kit [" + std::to_string(nPID) + "] hosts URL [" + aURL + "].");
-                break;
-            }
-            else if (tokens[1] == "empty")
-            {
-                // Remember the last empty.
-                nPID = it->first;
-                Log::debug("Kit [" + std::to_string(nPID) + "] is empty.");
-            }
-
-            ++it;
-        }
-
-        return nPID;
     }
 
     void handleInput(const std::string& aMessage)
@@ -455,40 +404,24 @@ public:
 
             Log::debug("Finding kit for URL [" + aURL + "] on thread [" + aTID + "].");
 
-            // Check the cache first.
             const auto child = findChild(aURL);
             if (child)
             {
-                Log::debug("Cache found URL [" + aURL + "] hosted on child [" + std::to_string(child->getPid()) +
-                           "]. Creating view for thread [" + aTID + "].");
-                if (createThread(child->getPid(), aTID, aURL))
-                    return;
+                if (child->getUrl() == aURL)
+                    Log::debug("Found URL [" + aURL + "] hosted on child [" + std::to_string(child->getPid()) + "].");
+                else
+                    Log::debug("URL [" + aURL + "] is not hosted. Using empty child[" + std::to_string(child->getPid()) + "].");
 
-                Log::error("Cache: Error creating thread [" + aTID + "] for URL [" + aURL + "]. Will search.");
+                if (!createThread(child->getPid(), aTID, aURL))
+                {
+                    Log::error("Cache: Error creating thread [" + aTID + "] for URL [" + aURL + "].");
+                }
             }
             else
             {
-                // Not found in cache, do a full search.
-                Log::debug("URL [" + aURL + "] is not in cache. Will search.");
+                Log::info("No children available. Creating more.");
+                ++forkCounter;
             }
-
-            const Process::PID nPID = searchURL(aURL);
-            if ( nPID > 0 )
-            {
-                Log::debug("Search found child [" + std::to_string(nPID) +
-                           "] to host URL [" + aURL +
-                           "]. Creating view for thread [" + aTID + "].");
-                if (createThread(nPID, aTID, aURL))
-                {
-                    _cacheURL[aURL] = nPID;
-                    return;
-                }
-
-                Log::error("Search: Error creating thread [" + aTID + "] for URL [" + aURL + "].");
-            }
-
-            Log::info("No children available. Creating more.");
-            ++forkCounter;
         }
     }
 

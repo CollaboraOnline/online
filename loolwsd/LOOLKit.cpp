@@ -607,21 +607,24 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
                     aResponse = std::to_string(Process::id()) + " ";
 
                     Log::trace("Recv: " + aMessage);
-                    if (tokens[0] == "search")
+                    if (tokens[0] == "query" && tokens.count() > 1)
                     {
-                        for (auto it = _documents.cbegin(); it != _documents.cend(); )
+                        if (tokens[1] == "url")
                         {
-                            it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
-                        }
+                            for (auto it = _documents.cbegin(); it != _documents.cend(); )
+                            {
+                                it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
+                            }
 
-                        if (_documents.empty())
-                        {
-                            aResponse += "empty \r\n";
-                        }
-                        else
-                        {
-                            const auto& it = _documents.find(tokens[1]);
-                            aResponse += (it != _documents.end() ? "ok \r\n" : "no \r\n");
+                            if (_documents.empty())
+                            {
+                                aResponse += "empty \r\n";
+                            }
+                            else
+                            {
+                                // We really only support single URL hosting.
+                                aResponse += _documents.cbegin()->first + "\r\n";
+                            }
                         }
                     }
                     else if (tokens[0] == "thread")
