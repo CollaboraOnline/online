@@ -1065,6 +1065,10 @@ extern "C"
         case LOK_CALLBACK_UNO_COMMAND_RESULT:
             srv->sendTextFrame("unocommandresult: " + std::string(pPayload));
             break;
+        case LOK_CALLBACK_DOCUMENT_PASSWORD:
+            break;
+        case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+            break;
         }
     }
 }
