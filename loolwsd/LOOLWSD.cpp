@@ -959,18 +959,28 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     dropCapability();
 #endif
 
+    // Configure the Server.
+    // Note: TCPServer internally uses the default
+    // ThreadPool to dispatch connections.
+    // The capacity of the default ThreadPool
+    // is increased to match MaxThreads.
+    // We must have sufficient available threads
+    // in the default ThreadPool to dispatch
+    // connections, otherwise we will deadlock.
+    auto params = new HTTPServerParams();
+    params->setMaxThreads(MAX_SESSIONS);
+
     // Start a server listening on the port for clients
-    ServerSocket svs(ClientPortNumber, NumPreSpawnedChildren*10);
-    ThreadPool threadPool(NumPreSpawnedChildren*2, NumPreSpawnedChildren*5);
-    HTTPServer srv(new RequestHandlerFactory<ClientRequestHandler>(), threadPool, svs, new HTTPServerParams);
+    ServerSocket svs(ClientPortNumber);
+    ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
+    HTTPServer srv(new RequestHandlerFactory<ClientRequestHandler>(), threadPool, svs, params);
 
     srv.start();
 
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
-    ServerSocket svs2(addr2, NumPreSpawnedChildren);
-    ThreadPool threadPool2(NumPreSpawnedChildren*2, NumPreSpawnedChildren*5);
-    HTTPServer srv2(new RequestHandlerFactory<PrisonerRequestHandler>(), threadPool2, svs2, new HTTPServerParams);
+    ServerSocket svs2(addr2);
+    HTTPServer srv2(new RequestHandlerFactory<PrisonerRequestHandler>(), threadPool, svs2, params);
 
     srv2.start();
 
@@ -990,19 +1000,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     int status = 0;
     unsigned timeoutCounter = 0;
-    std::chrono::steady_clock::time_point lastPoolTime = std::chrono::steady_clock::now();
-
     while (!TerminationFlag && !LOOLWSD::DoTest)
     {
-        const auto duration = (std::chrono::steady_clock::now() - lastPoolTime);
-        if (duration >= std::chrono::seconds(10))
-        {
-            if (threadPool.available() ==  0)
-                Log::warn("The thread pool is full, no more connections are accepted.");
-
-            lastPoolTime = std::chrono::steady_clock::now();
-        }
-
         const pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
@@ -1070,7 +1069,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // close all websockets
     threadPool.joinAll();
-    threadPool2.joinAll();
 
     // Terminate child processes
     Util::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\r\n");
