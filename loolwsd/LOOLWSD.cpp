@@ -866,7 +866,7 @@ namespace
                 Application::instance().logger().error(Util::logPrefix() +
                                                        "link(\"" + fpath + "\",\"" + newPath.toString() + "\") failed: " +
                                                        strerror(errno));
-                exit(1);
+                exit(Application::EXIT_SOFTWARE);
             }
             break;
         case FTW_DP:
@@ -935,20 +935,20 @@ namespace
         if (caps == NULL)
         {
             Application::instance().logger().error(Util::logPrefix() + "cap_get_proc() failed: " + strerror(errno));
-            exit(1);
+            exit(Application::EXIT_SOFTWARE);
         }
 
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
             Application::instance().logger().error(Util::logPrefix() +  "cap_set_flag() failed: " + strerror(errno));
-            exit(1);
+            exit(Application::EXIT_SOFTWARE);
         }
 
         if (cap_set_proc(caps) == -1)
         {
             Application::instance().logger().error(std::string("cap_set_proc() failed: ") + strerror(errno));
-            exit(1);
+            exit(Application::EXIT_SOFTWARE);
         }
 
         char *capText = cap_to_text(caps, NULL);
@@ -1073,13 +1073,13 @@ void LOOLWSD::componentMain()
         if (chroot(jailPath.toString().c_str()) == -1)
         {
             logger().error("chroot(\"" + jailPath.toString() + "\") failed: " + strerror(errno));
-            exit(Application::EXIT_UNAVAILABLE);
+            exit(Application::EXIT_SOFTWARE);
         }
 
         if (chdir("/") == -1)
         {
             logger().error(std::string("chdir(\"/\") in jail failed: ") + strerror(errno));
-            exit(Application::EXIT_UNAVAILABLE);
+            exit(Application::EXIT_SOFTWARE);
         }
 
 #ifdef __linux
@@ -1106,7 +1106,7 @@ void LOOLWSD::componentMain()
         if (!loKit)
         {
             logger().fatal(Util::logPrefix() + "LibreOfficeKit initialisation failed");
-            exit(Application::EXIT_UNAVAILABLE);
+            exit(Application::EXIT_SOFTWARE);
         }
 
         _namedMutexLOOL.unlock();
