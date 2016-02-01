@@ -46,6 +46,14 @@ L.Map = L.Evented.extend({
 			this.setView(L.latLng(options.center), options.zoom, {reset: true});
 		}
 
+		if (options.cursorURL !== undefined) {
+			L.Cursor.imagePath = options.cursorURL;
+		}
+
+		if (options.cursorHotSpot !== undefined) {
+			L.Cursor.hotSpot = options.cursorHotSpot;
+		}
+
 		if (options.webserver === undefined) {
 			var protocol = window.location.protocol === 'file:' ? 'http:' : window.location.protocol;
 			options.webserver = options.server.replace(/^ws:/i, protocol);
