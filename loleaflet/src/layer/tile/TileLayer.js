@@ -440,7 +440,10 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onMousePointerMsg: function (textMsg) {
 		textMsg = textMsg.substring(14); // "mousepointer: "
-		this._map._container.style.cursor = textMsg;
+		textMsg = L.Cursor.getCustomCursor(textMsg) || textMsg;
+		if (this._map._container.style.cursor != textMsg) {
+			this._map._container.style.cursor = textMsg;
+		}
 	},
 
 	_onHyperlinkClickedMsg: function (textMsg) {
