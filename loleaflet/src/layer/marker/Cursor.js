@@ -90,3 +90,39 @@ L.Cursor = L.Layer.extend({
 L.cursor = function (latlng, options) {
 	return new L.Cursor(latlng, options);
 };
+
+L.Cursor.imagePath = (function () {
+	var scripts = document.getElementsByTagName('script'),
+		leafletRe = /[\/^]leaflet[\-\._]?([\w\-\._]*)\.js\??/;
+
+	var i, len, src, path;
+
+	for (i = 0, len = scripts.length; i < len; i++) {
+		src = scripts[i].src;
+
+		if (src.match(leafletRe)) {
+			path = src.split(leafletRe)[0];
+			return (path ? path + '/' : '') + 'cursors';
+		}
+	}
+}());
+
+L.Cursor.getCustomCursor = function( cursorName ) {
+	var customCursor,
+		isCustomCursor = true,
+		top = 0,
+		left = 0;
+
+	if ( cursorName === 'fill' ) {
+		top = 16; left = 7;
+	} else {
+		isCustomCursor = false;
+	}
+
+	if (isCustomCursor) {
+		customCursor = L.Browser.ie ? // IE10 does not like item with left/top position in the url list
+			'url(' + L.Cursor.imagePath + '/' + cursorName + '.cur), default' :
+			'url(' + L.Cursor.imagePath + '/' + cursorName + '.png) ' + left + ' ' + top + ', default';
+	}
+	return customCursor
+};
