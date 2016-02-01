@@ -107,22 +107,26 @@ L.Cursor.imagePath = (function () {
 	}
 }());
 
-L.Cursor.getCustomCursor = function( cursorName ) {
-	var customCursor,
-		isCustomCursor = true,
-		top = 0,
-		left = 0;
+L.Cursor.hotSpot = {
+	fill: {x: 7, y: 16}
+};
 
-	if ( cursorName === 'fill' ) {
-		top = 16; left = 7;
-	} else {
-		isCustomCursor = false;
-	}
+L.Cursor.customCursors = [
+	'fill'
+];
 
-	if (isCustomCursor) {
+L.Cursor.isCustomCursor = function (cursorName) {
+	return (L.Cursor.customCursors.indexOf(cursorName) !== -1);
+};
+
+L.Cursor.getCustomCursor = function (cursorName) {
+	var customCursor;
+
+	if (L.Cursor.isCustomCursor(cursorName)) {
+		var cursorHotSpot = L.Cursor.hotSpot[cursorName] || {x: 0, y: 0};
 		customCursor = L.Browser.ie ? // IE10 does not like item with left/top position in the url list
 			'url(' + L.Cursor.imagePath + '/' + cursorName + '.cur), default' :
-			'url(' + L.Cursor.imagePath + '/' + cursorName + '.png) ' + left + ' ' + top + ', default';
+			'url(' + L.Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
 	}
-	return customCursor
+	return customCursor;
 };
