@@ -657,25 +657,60 @@ LOOLWSD::~LOOLWSD()
 {
 }
 
-void LOOLWSD::handleSignal(int aSignal)
+void LOOLWSD::handleTerminationSignal(const int aSignal)
 {
-    std::cout << Util::logPrefix() << "Signal received: " << strsignal(aSignal) << std::endl;
+    std::cout << Util::logPrefix() << "Signal received: "
+              << strsignal(aSignal) << std::endl;
     LOOLWSD::isShutDown = true;
 }
 
-void LOOLWSD::setSignals(bool isIgnored)
+void LOOLWSD::handleFatalSignal(const int aSignal)
+{
+    std::cout << Util::logPrefix() << "Fatal signal received: "
+              << strsignal(aSignal) << std::endl;
+ #ifdef __linux
+    struct sigaction aSigAction;
+
+    sigemptyset(&aSigAction.sa_mask);
+    aSigAction.sa_flags = 0;
+    aSigAction.sa_handler = SIG_DFL;
+
+    sigaction(aSignal, &aSigAction, NULL);
+    // let default handler process the signal
+    kill(Process::id(), aSignal);
+#endif
+}
+
+void LOOLWSD::setTerminationSignals()
 {
 #ifdef __linux
     struct sigaction aSigAction;
 
     sigemptyset(&aSigAction.sa_mask);
     aSigAction.sa_flags = 0;
-    aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
+    aSigAction.sa_handler = handleTerminationSignal;
 
     sigaction(SIGTERM, &aSigAction, NULL);
     sigaction(SIGINT, &aSigAction, NULL);
     sigaction(SIGQUIT, &aSigAction, NULL);
     sigaction(SIGHUP, &aSigAction, NULL);
+#endif
+}
+
+void LOOLWSD::setFatalSignals()
+{
+#ifdef __linux
+    struct sigaction aSigAction;
+
+    sigemptyset(&aSigAction.sa_mask);
+    aSigAction.sa_flags = 0;
+    aSigAction.sa_handler = handleFatalSignal;
+
+    sigaction(SIGSEGV, &aSigAction, NULL);
+    sigaction(SIGBUS, &aSigAction, NULL);
+    sigaction(SIGABRT, &aSigAction, NULL);
+    sigaction(SIGILL, &aSigAction, NULL);
+    sigaction(SIGFPE, &aSigAction, NULL);
 #endif
 }
 
@@ -982,7 +1017,8 @@ void LOOLWSD::componentMain()
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("libreofficekit"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
 
-    setSignals(false);
+    setTerminationSignals();
+    setFatalSignals();
 #endif
 
     try
@@ -1195,7 +1231,8 @@ void LOOLWSD::desktopMain()
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("loolbroker"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
 
-    setSignals(false);
+    setTerminationSignals();
+    setFatalSignals();
 #endif
 
     _rng.seed(Process::id());
@@ -1309,7 +1346,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (locale == NULL || std::strcmp(locale, "C") == 0)
         setlocale(LC_ALL, "en_US.utf8");
 
-    setSignals(false);
+    setTerminationSignals();
+    setFatalSignals();
 #endif
 
     if (access(cache.c_str(), R_OK | W_OK | X_OK) != 0)
