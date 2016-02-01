@@ -64,8 +64,8 @@ extern "C"
             CASE(DOCUMENT_SIZE_CHANGED);
             CASE(SET_PART);
             CASE(UNO_COMMAND_RESULT);
-	    CASE(DOCUMENT_PASSWORD);
-	    CASE(DOCUMENT_PASSWORD_TO_MODIFY);
+            CASE(DOCUMENT_PASSWORD);
+            CASE(DOCUMENT_PASSWORD_TO_MODIFY);
 #undef CASE
         }
         std::cout << " payload: " << pPayload << std::endl;
