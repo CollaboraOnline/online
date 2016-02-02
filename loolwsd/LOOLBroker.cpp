@@ -379,6 +379,7 @@ public:
                 }
 
                 log << Log::end;
+                ++it;
                 continue;
             }
 

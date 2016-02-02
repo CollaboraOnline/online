@@ -963,20 +963,22 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // We must have sufficient available threads
     // in the default ThreadPool to dispatch
     // connections, otherwise we will deadlock.
-    auto params = new HTTPServerParams();
-    params->setMaxThreads(MAX_SESSIONS);
+    auto params1 = new HTTPServerParams();
+    params1->setMaxThreads(MAX_SESSIONS);
+    auto params2 = new HTTPServerParams();
+    params2->setMaxThreads(MAX_SESSIONS);
 
     // Start a server listening on the port for clients
     ServerSocket svs(ClientPortNumber);
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
-    HTTPServer srv(new RequestHandlerFactory<ClientRequestHandler>(), threadPool, svs, params);
+    HTTPServer srv(new RequestHandlerFactory<ClientRequestHandler>(), threadPool, svs, params1);
 
     srv.start();
 
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
     ServerSocket svs2(addr2);
-    HTTPServer srv2(new RequestHandlerFactory<PrisonerRequestHandler>(), threadPool, svs2, params);
+    HTTPServer srv2(new RequestHandlerFactory<PrisonerRequestHandler>(), threadPool, svs2, params2);
 
     srv2.start();
 
