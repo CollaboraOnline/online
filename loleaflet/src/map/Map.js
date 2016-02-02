@@ -568,6 +568,7 @@ L.Map = L.Evented.extend({
 
 		if (zoomChanged || afterZoomAnim) {
 			this.fire('zoomend');
+			this.fire('zoomlevelschange');
 		}
 
 		this.fire('moveend', {hard: !preserveMapOffset});

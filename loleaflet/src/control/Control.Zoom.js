@@ -26,13 +26,13 @@ L.Control.Zoom = L.Control.extend({
 		        zoomName + '-out', container, this._zoomOut);
 
 		this._updateDisabled();
-		map.on('zoomend zoomlevelschange', this._updateDisabled, this);
+		map.on('zoomlevelschange', this._updateDisabled, this);
 
 		return container;
 	},
 
 	onRemove: function (map) {
-		map.off('zoomend zoomlevelschange', this._updateDisabled, this);
+		map.off('zoomlevelschange', this._updateDisabled, this);
 	},
 
 	disable: function () {
