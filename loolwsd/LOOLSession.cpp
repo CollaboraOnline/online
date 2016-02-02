@@ -379,6 +379,7 @@ bool MasterProcessSession::handleInput(const char *buffer, int length)
     }
     else if (tokens[0] != "canceltiles" &&
              tokens[0] != "clientzoom" &&
+             tokens[0] != "clientvisiblearea" &&
              tokens[0] != "commandvalues" &&
              tokens[0] != "downloadas" &&
              tokens[0] != "getchildid" &&
@@ -880,6 +881,7 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         // i.e. need to be handled in a child process.
 
         assert(tokens[0] == "clientzoom" ||
+               tokens[0] == "clientvisiblearea" ||
                tokens[0] == "downloadas" ||
                tokens[0] == "getchildid" ||
                tokens[0] == "gettextselection" ||
@@ -900,6 +902,10 @@ bool ChildProcessSession::handleInput(const char *buffer, int length)
         if (tokens[0] == "clientzoom")
         {
             return clientZoom(buffer, length, tokens);
+        }
+        else if (tokens[0] == "clientvisiblearea")
+        {
+            return clientVisibleArea(buffer, length, tokens);
         }
         else if (tokens[0] == "downloadas")
         {
@@ -1416,6 +1422,28 @@ bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, Str
     _loKitDocument->pClass->setClientZoom(_loKitDocument, tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
     return true;
 }
+
+bool ChildProcessSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+{
+    int x;
+    int y;
+    int width;
+    int height;
+
+    if (tokens.count() != 5 ||
+        !getTokenInteger(tokens[1], "x", x) ||
+        !getTokenInteger(tokens[2], "y", y) ||
+        !getTokenInteger(tokens[3], "width", width) ||
+        !getTokenInteger(tokens[4], "height", height))
+    {
+        sendTextFrame("error: cmd=clientvisiblearea kind=syntax");
+        return false;
+    }
+
+    _loKitDocument->pClass->setClientVisibleArea(_loKitDocument, x, y, width, height);
+    return true;
+}
+
 bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string name, id, format, filterOptions;

@@ -206,6 +206,7 @@ public:
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool clientVisibleArea(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool downloadAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool getChildId();
     bool getTextSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
