@@ -131,6 +131,10 @@ partpagerectangles
 
     Invokes lok::Document::getPartPageRectangles().
 
+clientvisiblearea x=<x> y=<y> width=<width> height=<height>
+
+    Invokes lok::Document::setClientVisibleArea().
+
 server -> client
 ================
 
