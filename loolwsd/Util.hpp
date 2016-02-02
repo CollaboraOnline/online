@@ -17,6 +17,21 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
+enum class LOOLExitCode
+{
+    LOOL_NO_ERROR = 0,
+    /* pipe was detected - second office must terminate itself */
+    LOOL_SECOND_OFFICE = 1,
+    /* an uno exception was catched during startup */
+    LOOL_FATAL_ERROR = 77, /* Only the low 8 bits are significant 333 % 256 = 77 */
+    /* user force automatic restart after crash */
+    LOOL_CRASH_WITH_RESTART = 79,
+    /* the office restarts itself */
+    LOOL_NORMAL_RESTART = 81,
+    /* internal software error */
+    LOOL_EXIT_SOFTWARE = 70
+};
+
 namespace Util
 {
     std::string logPrefix();
@@ -35,6 +50,8 @@ namespace Util
     void shutdownWebSocket(Poco::Net::WebSocket& ws);
 
     std::string signalName(int signo);
+    int getChildStatus(const int nCode);
+    int getSignalStatus(const int nCode);
 };
 
 #endif

@@ -1227,6 +1227,8 @@ bool LOOLWSD::startupComponent(int nComponents)
 
 void LOOLWSD::desktopMain()
 {
+    int nChildExitCode = Application::EXIT_OK;
+
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("loolbroker"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
@@ -1248,7 +1250,20 @@ void LOOLWSD::desktopMain()
             {
                 if ((WIFEXITED(status) || WIFSIGNALED(status)))
                 {
-                    std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)  << std::endl;
+                    if (WIFEXITED(status))
+                    {
+                        nChildExitCode = Util::getChildStatus(WEXITSTATUS(status));
+                        std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)
+                                  << " exit code " << std::to_string(WEXITSTATUS(status)) << std::endl;
+                    }
+                    else
+                    if (WIFSIGNALED(status))
+                    {
+                        nChildExitCode = Util::getSignalStatus(WTERMSIG(status));
+                        std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)
+                                  << " signal code " << strsignal(WTERMSIG(status)) << std::endl;
+                    }
+
                     // remove chroot child
                     File aWorkSpace(LOOLWSD::childRoot + Path::separator() +
                                     std::to_string(MasterProcessSession::_childProcesses[pid]));
@@ -1256,6 +1271,7 @@ void LOOLWSD::desktopMain()
                         aWorkSpace.remove(true);
 
                     MasterProcessSession::_childProcesses.erase(pid);
+                    timeoutCounter = -1;
                 }
 
                 if ( WCOREDUMP(status) )
@@ -1289,7 +1305,7 @@ void LOOLWSD::desktopMain()
             if (MasterProcessSession::_childProcesses.size() + toSpawn < _numPreSpawnedChildren)
                 toSpawn = _numPreSpawnedChildren - MasterProcessSession::_childProcesses.size();
 
-            if (toSpawn > 0)
+            if (toSpawn > 0 && nChildExitCode == Application::EXIT_OK)
             {
                 std::cout << Util::logPrefix() << "Create child session, fork new ones: " << toSpawn << std::endl;
                 if (!startupComponent(toSpawn))
@@ -1302,6 +1318,7 @@ void LOOLWSD::desktopMain()
         {
             timeoutCounter = 0;
             sleep(MAINTENANCE_INTERVAL);
+            nChildExitCode = Application::EXIT_OK;
         }
     }
 
