@@ -669,7 +669,8 @@ int main(int argc, char** argv)
     // Initialization
     Log::initialize("brk");
 
-    Util::setSignals(false);
+    Util::setTerminationSignals();
+    Util::setFatalSignals();
 
     std::string childRoot;
     std::string jailId;

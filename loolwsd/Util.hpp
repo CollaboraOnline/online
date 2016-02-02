@@ -98,7 +98,8 @@ namespace Util
     std::string signalName(int signo);
 
     /// Trap signals to cleanup and exit the process gracefully.
-    void setSignals(bool isIgnored);
+    void setTerminationSignals();
+    void setFatalSignals();
 };
 
 //TODO: Move to own file.

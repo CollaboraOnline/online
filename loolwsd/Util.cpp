@@ -416,7 +416,7 @@ namespace Util
     }
 
     static
-    void handleSignal(int aSignal)
+    void handleTerminationSignal(const int aSignal)
     {
         if (!TerminationFlag)
         {
@@ -426,37 +426,69 @@ namespace Util
             TerminationFlag = true;
             TerminationState = ( aSignal == SIGTERM ? LOOLState::LOOL_ABNORMAL : LOOLState::LOOL_STOPPING );
 
-            Log::info() << "Signal received: " << strsignal(aSignal) << Log::end;
-            if (aSignal == SIGSEGV || aSignal == SIGBUS)
-            {
-                Log::error() << "\nSegfault! Attach debugger with:\n"
-                             << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
-                             << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
-                             << Poco::Process::id() << "\n" << Log::end;
-                sleep(10);
-            }
+            Log::info() << "Termination signal received: "
+                        << strsignal(aSignal) << Log::end;
         }
     }
 
-    void setSignals(bool isIgnored)
+    void setTerminationSignals()
     {
 #ifdef __linux
         struct sigaction aSigAction;
 
         sigemptyset(&aSigAction.sa_mask);
         aSigAction.sa_flags = 0;
-        aSigAction.sa_handler = (isIgnored ? SIG_IGN : handleSignal);
+        aSigAction.sa_handler = handleTerminationSignal;
 
         sigaction(SIGTERM, &aSigAction, nullptr);
         sigaction(SIGINT, &aSigAction, nullptr);
         sigaction(SIGQUIT, &aSigAction, nullptr);
         sigaction(SIGHUP, &aSigAction, nullptr);
+#endif
+    }
+
+    static
+    void handleFatalSignal(const int aSignal)
+    {
+        Log::error() << "Fatal signal received: "
+                     << strsignal(aSignal) << Log::end;
 
         if (getenv("LOOL_DEBUG"))
         {
-            sigaction(SIGBUS, &aSigAction, nullptr);
-            sigaction(SIGSEGV, &aSigAction, nullptr);
+            Log::error() << "\nSegfault! Attach debugger with:\n"
+                         << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
+                         << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
+                         << Poco::Process::id() << "\n" << Log::end;
+            sleep(10);
         }
+
+#ifdef __linux
+        struct sigaction aSigAction;
+
+        sigemptyset(&aSigAction.sa_mask);
+        aSigAction.sa_flags = 0;
+        aSigAction.sa_handler = SIG_DFL;
+
+        sigaction(aSignal, &aSigAction, NULL);
+        // let default handler process the signal
+        kill(Poco::Process::id(), aSignal);
+#endif
+    }
+
+    void setFatalSignals()
+    {
+#ifdef __linux
+        struct sigaction aSigAction;
+
+        sigemptyset(&aSigAction.sa_mask);
+        aSigAction.sa_flags = 0;
+        aSigAction.sa_handler = handleFatalSignal;
+
+        sigaction(SIGSEGV, &aSigAction, NULL);
+        sigaction(SIGBUS, &aSigAction, NULL);
+        sigaction(SIGABRT, &aSigAction, NULL);
+        sigaction(SIGILL, &aSigAction, NULL);
+        sigaction(SIGFPE, &aSigAction, NULL);
 #endif
     }
 }

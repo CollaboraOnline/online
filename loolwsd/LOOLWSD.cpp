@@ -896,7 +896,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         setlocale(LC_ALL, "en_US.utf8");
 #endif
 
-    Util::setSignals(false);
+    Util::setTerminationSignals();
+    Util::setFatalSignals();
 
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {

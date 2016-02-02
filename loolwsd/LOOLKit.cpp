@@ -517,7 +517,8 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(process_name.c_str()), 0, 0, 0) != 0)
         Log::error("Cannot set process name to " + process_name + ".");
-    Util::setSignals(false);
+    Util::setTerminationSignals();
+    Util::setFatalSignals();
 #endif
     Log::debug("Process [" + process_name + "] started.");
 
