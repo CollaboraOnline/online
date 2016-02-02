@@ -124,6 +124,8 @@ L.TileLayer = L.GridLayer.extend({
 			'tilepixelheight=' + this.options.tileSize + ' ' +
 			'tiletwipwidth=' + this.options.tileWidthTwips + ' ' +
 			'tiletwipheight=' + this.options.tileHeightTwips;
+		// Mark visible area as dirty by default.
+		this._clientVisibleArea = true;
 	},
 
     onAdd: function (map) {
@@ -777,6 +779,16 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
 			this._clientZoom = null;
 		}
+		if (this._clientVisibleArea) {
+			// Visible area is dirty, update it on the server.
+			var visibleArea = this._map._container.getBoundingClientRect();
+			var pos = this._pixelsToTwips(new L.Point(visibleArea.left, visibleArea.top));
+			var size = this._pixelsToTwips(new L.Point(visibleArea.width, visibleArea.height));
+			var payload = 'clientvisiblearea x=' + Math.round(pos.x) + ' y=' + Math.round(pos.y) +
+				' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
+			this._map._socket.sendMessage(payload);
+			this._clientVisibleArea = null;
+		}
 		this._map._socket.sendMessage('key type=' + type +
 				' char=' + charcode + ' key=' + keycode);
 	},
@@ -1256,6 +1268,8 @@ L.TileLayer = L.GridLayer.extend({
 			'tilepixelheight=' + this._tileSize + ' ' +
 			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
 			'tiletwipheight=' + this._tileHeightTwips;
+		// Zoom changed, mark visible area as dirty.
+		this._clientVisibleArea = true;
 	}
 });
 
