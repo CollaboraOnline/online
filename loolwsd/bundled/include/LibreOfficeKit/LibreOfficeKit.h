@@ -53,9 +53,11 @@ struct _LibreOfficeKitClass
 
     char* (*getError) (LibreOfficeKit* pThis);
 
+    /// @since LibreOffice 5.0
     LibreOfficeKitDocument* (*documentLoadWithOptions) (LibreOfficeKit* pThis,
                                                         const char* pURL,
                                                         const char* pOptions);
+    /// @since LibreOffice 5.2
     void (*freeError) (char* pFree);
 
 #if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
@@ -203,6 +205,8 @@ struct _LibreOfficeKitDocumentClass
             int nTilePixelHeight,
             int nTileTwipWidth,
             int nTileTwipHeight);
+    /// @see lok::Document::setVisibleArea).
+    void (*setClientVisibleArea) (LibreOfficeKitDocument* pThis, int nX, int nY, int nWidth, int nHeight);
 
     /// @see lok::Document::createView().
     int (*createView) (LibreOfficeKitDocument* pThis);
