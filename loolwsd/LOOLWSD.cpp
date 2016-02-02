@@ -903,7 +903,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     {
         Log::error("Unable to access cache [" + Cache +
                    "] please make sure it exists, and has write permission for this user.");
-        return Application::EXIT_UNAVAILABLE;
+        return Application::EXIT_SOFTWARE;
     }
 
     // We use the same option set for both parent and child loolwsd,
@@ -936,7 +936,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (!File(FIFO_FILE).exists() && mkfifo(FIFO_FILE.c_str(), 0666) == -1)
     {
         Log::error("Error: Failed to create pipe FIFO [" + FIFO_FILE + "].");
-        return Application::EXIT_UNAVAILABLE;
+        return Application::EXIT_SOFTWARE;
     }
 
     JailId = Util::createRandomDir(ChildRoot);
@@ -944,7 +944,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (pidBroker < 0)
     {
         Log::error("Failed to spawn loolBroker.");
-        return Application::EXIT_UNAVAILABLE;
+        return Application::EXIT_SOFTWARE;
     }
 
 #ifdef __linux
@@ -985,7 +985,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if ( (BrokerWritePipe = open(FIFO_FILE.c_str(), O_WRONLY) ) < 0 )
     {
         Log::error("Error: failed to open pipe [" + FIFO_FILE + "] write only.");
-        return Application::EXIT_UNAVAILABLE;
+        return Application::EXIT_SOFTWARE;
     }
 
     TestInput input(*this, svs, srv);

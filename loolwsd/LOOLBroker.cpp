@@ -229,7 +229,7 @@ namespace
             {
                 Log::error("Error: link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
                            "\") failed. Exiting.");
-                exit(1);
+                exit(Application::EXIT_SOFTWARE);
             }
             break;
         case FTW_DP:
@@ -592,7 +592,7 @@ static int createLibreOfficeKit(const bool sharePages,
         {
             // child
             lokit_main(loSubPath, jailId, pipe);
-            _exit(0);
+            _exit(Application::EXIT_OK);
         }
         else
         {
@@ -730,37 +730,37 @@ int main(int argc, char** argv)
     if (loSubPath.empty())
     {
         Log::error("Error: --losubpath is empty");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if (sysTemplate.empty())
     {
         Log::error("Error: --losubpath is empty");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if (loTemplate.empty())
     {
         Log::error("Error: --lotemplate is empty");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if (childRoot.empty())
     {
         Log::error("Error: --childroot is empty");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if (numPreSpawnedChildren < 1)
     {
         Log::error("Error: --numprespawns is 0");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if ( (readerBroker = open(FIFO_FILE.c_str(), O_RDONLY) ) < 0 )
     {
         Log::error("Error: failed to open pipe [" + FIFO_FILE + "] read only. Exiting.");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     try
@@ -786,7 +786,7 @@ int main(int argc, char** argv)
     if (!File(loolkitPath).exists())
     {
         Log::error("Error: loolkit does not exists at [" + loolkitPath + "].");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
@@ -838,13 +838,13 @@ int main(int argc, char** argv)
     if (chroot(jailPath.toString().c_str()) == -1)
     {
         Log::error("Error: chroot(\"" + jailPath.toString() + "\") failed.");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if (chdir("/") == -1)
     {
         Log::error("Error: chdir(\"/\") in jail failed.");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
 #ifdef __linux
@@ -858,7 +858,7 @@ int main(int argc, char** argv)
     if (mkfifo(FIFO_BROKER.c_str(), 0666) == -1)
     {
         Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     // Initialize LoKit and hope we can fork and save memory by sharing pages.
@@ -868,7 +868,7 @@ int main(int argc, char** argv)
     if (createLibreOfficeKit(sharePages, loSubPath, jailId) < 0)
     {
         Log::error("Error: failed to create children.");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if (numPreSpawnedChildren > 1)
@@ -877,7 +877,7 @@ int main(int argc, char** argv)
     if ( (readerChild = open(FIFO_BROKER.c_str(), O_RDONLY) ) < 0 )
     {
         Log::error("Error: pipe opened for reading.");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     PipeRunnable pipeHandler;
@@ -991,7 +991,7 @@ int main(int argc, char** argv)
     close(readerBroker);
 
     Log::info("Process [loolbroker] finished.");
-    return 0;
+    return Application::EXIT_OK;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -34,6 +34,7 @@
 #include <Poco/NotificationQueue.h>
 #include <Poco/Notification.h>
 #include <Poco/Mutex.h>
+#include <Poco/Util/ServerApplication.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -57,6 +58,7 @@ using Poco::Process;
 using Poco::Notification;
 using Poco::NotificationQueue;
 using Poco::FastMutex;
+using Poco::Util::Application;
 
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
@@ -533,7 +535,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
     if (loKit == nullptr)
     {
         Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
-        exit(-1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     try
@@ -544,13 +546,13 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
         if ( (readerBroker = open(pipe.c_str(), O_RDONLY) ) < 0 )
         {
             Log::error("Error: failed to open pipe [" + pipe + "] read only.");
-            exit(-1);
+            exit(Application::EXIT_SOFTWARE);
         }
 
         if ( (writerBroker = open(LOKIT_BROKER.c_str(), O_WRONLY) ) < 0 )
         {
             Log::error("Error: failed to open pipe [" + LOKIT_BROKER + "] write only.");
-            exit(-1);
+            exit(Application::EXIT_SOFTWARE);
         }
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
@@ -732,19 +734,19 @@ int main(int argc, char** argv)
     if (loSubPath.empty())
     {
         Log::error("Error: --losubpath is empty");
-        exit(1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if (jailId.empty())
     {
         Log::error("Error: --jailid is empty");
-        exit(1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     if ( pipe.empty() )
     {
         Log::error("Error: --pipe is empty");
-        exit(1);
+        exit(Application::EXIT_SOFTWARE);
     }
 
     try
@@ -767,7 +769,7 @@ int main(int argc, char** argv)
 
     lokit_main(loSubPath, jailId, pipe);
 
-    return 0;
+    return Application::EXIT_OK;
 }
 
 #endif
