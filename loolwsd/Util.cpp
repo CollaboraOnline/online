@@ -491,6 +491,58 @@ namespace Util
         sigaction(SIGFPE, &aSigAction, NULL);
 #endif
     }
+
+    int getChildStatus(const int nCode)
+    {
+        int nRetVal;
+
+        switch (static_cast<const LOOLExitCode>(nCode))
+        {
+            case LOOLExitCode::LOOL_SECOND_OFFICE:
+            case LOOLExitCode::LOOL_FATAL_ERROR:
+            case LOOLExitCode::LOOL_CRASH_WITH_RESTART:
+            case LOOLExitCode::LOOL_NORMAL_RESTART:
+            case LOOLExitCode::LOOL_EXIT_SOFTWARE:
+                nRetVal = EXIT_FAILURE;
+            break;
+
+            case LOOLExitCode::LOOL_NO_ERROR:
+                nRetVal = EXIT_SUCCESS;
+            break;
+
+            default:
+                nRetVal = EXIT_SUCCESS;
+            break;
+        }
+
+        return nRetVal;
+    }
+
+    int getSignalStatus(const int nCode)
+    {
+        int nRetVal;
+
+        switch (nCode)
+        {
+            case SIGSEGV:
+            case SIGBUS:
+            case SIGABRT:
+            case SIGILL:
+            case SIGFPE:
+            case SIGTERM:
+            case SIGINT:
+            case SIGQUIT:
+            case SIGHUP:
+                nRetVal = EXIT_FAILURE;
+            break;
+
+            default:
+                nRetVal = EXIT_SUCCESS;
+            break;
+        }
+
+        return nRetVal;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

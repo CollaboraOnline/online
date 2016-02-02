@@ -25,6 +25,22 @@
 
 // Possible states of LOOL processes.
 enum class LOOLState { LOOL_RUNNING, LOOL_STOPPING, LOOL_ABNORMAL };
+
+enum class LOOLExitCode
+{
+    LOOL_NO_ERROR = 0,
+    /* pipe was detected - second office must terminate itself */
+    LOOL_SECOND_OFFICE = 1,
+    /* an uno exception was catched during startup */
+    LOOL_FATAL_ERROR = 77, /* Only the low 8 bits are significant 333 % 256 = 77 */
+    /* user force automatic restart after crash */
+    LOOL_CRASH_WITH_RESTART = 79,
+    /* the office restarts itself */
+    LOOL_NORMAL_RESTART = 81,
+    /* internal software error */
+    LOOL_EXIT_SOFTWARE = 70
+};
+
 extern volatile LOOLState TerminationState;
 
 /// Flag to stop pump loops.
@@ -100,6 +116,9 @@ namespace Util
     /// Trap signals to cleanup and exit the process gracefully.
     void setTerminationSignals();
     void setFatalSignals();
+
+    int getChildStatus(const int nCode);
+    int getSignalStatus(const int nCode);
 };
 
 //TODO: Move to own file.
