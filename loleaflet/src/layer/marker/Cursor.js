@@ -91,7 +91,7 @@ L.cursor = function (latlng, options) {
 	return new L.Cursor(latlng, options);
 };
 
-L.Cursor.imagePath = (function () {
+L.Cursor.getCursorURL = function (localPath) {
 	var scripts = document.getElementsByTagName('script'),
 		leafletRe = /[\/^]leaflet[\-\._]?([\w\-\._]*)\.js\??/;
 
@@ -102,10 +102,10 @@ L.Cursor.imagePath = (function () {
 
 		if (src.match(leafletRe)) {
 			path = src.split(leafletRe)[0];
-			return (path ? path + '/' : '') + 'cursors';
+			return (path ? path + '/' : '') + localPath;
 		}
 	}
-}());
+};
 
 L.Cursor.hotSpot = {
 	fill: {x: 7, y: 16}
