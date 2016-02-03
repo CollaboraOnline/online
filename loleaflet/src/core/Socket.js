@@ -236,6 +236,9 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 4) === 'cmd=') {
 				command.errorCmd = tokens[i].substring(4);
 			}
+			else if (tokens[i].substring(0, 5) === 'code=') {
+				command.errorCode = tokens[i].substring(5);
+			}
 			else if (tokens[i].substring(0, 5) === 'kind=') {
 				command.errorKind = tokens[i].substring(5);
 			}

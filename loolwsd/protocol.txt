@@ -153,12 +153,15 @@ downloadas: jail=<jail directory> dir=<a tmp dir> name=<name> port=<port>
     The client should then request http://server:port/jail/dir/name in order to download
     the document
 
-error: cmd=<command> kind=<kind>
+error: cmd=<command> kind=<kind> [code=<error_code>]
 <freeErrorText>
 
     <command> is the command part of the corresponding client->server
     message that caused the error. <kind> is some single-word
     classification
+
+    <code> (when provided) further specifies the error as forwarded from
+    LibreOffice
 
 getchildid: id=<id>
 
