@@ -393,8 +393,15 @@ L.TileLayer = L.GridLayer.extend({
 		if (command.errorCmd === 'load') {
 			errorId = 2; // document cannot be loaded
 		}
+		else if (command.errorCmd === 'save') {
+			errorId = 5; // document cannot be saved
+		}
 
-		this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind, id: errorId});
+		var errorCode = -1;
+		if (command.errorCode !== undefined)
+			errorCode = command.errorCode;
+
+		this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind, id: errorId, code: errorCode});
 	},
 
 	_onGetChildIdMsg: function (textMsg) {

@@ -1075,6 +1075,16 @@ extern "C"
             break;
         case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
             break;
+        case LOK_CALLBACK_ERROR:
+            {
+                Poco::JSON::Parser parser;
+                Poco::Dynamic::Var var = parser.parse(pPayload);
+                Poco::JSON::Object::Ptr object = var.extract<Poco::JSON::Object::Ptr>();
+
+                srv->sendTextFrame("error: cmd=" + object->get("cmd").toString() +
+                        " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
+            }
+            break;
         }
     }
 }

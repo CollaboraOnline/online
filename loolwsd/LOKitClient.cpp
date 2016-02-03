@@ -66,6 +66,7 @@ extern "C"
             CASE(UNO_COMMAND_RESULT);
             CASE(DOCUMENT_PASSWORD);
             CASE(DOCUMENT_PASSWORD_TO_MODIFY);
+            CASE(ERROR);
 #undef CASE
         }
         std::cout << " payload: " << pPayload << std::endl;
