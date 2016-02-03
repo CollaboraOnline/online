@@ -994,7 +994,15 @@ int main(int argc, char** argv)
             pipeHandler.syncChilds();
         }
         else if (pid < 0)
+        {
             Log::error("Error: waitpid failed.");
+            // No child processes
+            if (errno == ECHILD)
+            {
+                TerminationFlag = true;
+                continue;
+            }
+        }
 
         if (forkCounter > 0)
         {

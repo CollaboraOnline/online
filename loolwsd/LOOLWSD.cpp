@@ -1049,7 +1049,15 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             }
         }
         else if (pid < 0)
+        {
             Log::error("Error: waitpid failed.");
+            // No child processes
+            if (errno == ECHILD)
+            {
+                TerminationFlag = true;
+                continue;
+            }
+        }
 
         if (timeoutCounter++ == INTERVAL_PROBES)
         {
