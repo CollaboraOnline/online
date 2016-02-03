@@ -965,7 +965,7 @@ int main(int argc, char** argv)
             else
             if (WIFSIGNALED(status))
             {
-                nChildExitCode = Util::getSignalStatus(WEXITSTATUS(status));
+                nChildExitCode = Util::getSignalStatus(WTERMSIG(status));
                 std::string fate = "died";
 #ifdef WCOREDUMP
                 if (WCOREDUMP(status))

@@ -1000,7 +1000,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     unsigned timeoutCounter = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
     {
-        const pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
+        const pid_t pid = waitpid(pidBroker, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
             if (pidBroker == pid)
@@ -1084,7 +1084,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Process::requestTermination(pidBroker);
 
     // wait broker process finish
-    waitpid(-1, &status, WUNTRACED);
+    waitpid(pidBroker, &status, WUNTRACED);
 
     close(BrokerWritePipe);
 
