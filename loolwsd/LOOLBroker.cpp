@@ -898,9 +898,29 @@ int main(int argc, char** argv)
     dropCapability();
 #endif
 
+    int nFlags = O_RDONLY | O_NONBLOCK;
     if (mkfifo(FIFO_BROKER.c_str(), 0666) == -1)
     {
         Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
+        exit(Application::EXIT_SOFTWARE);
+    }
+
+    if ((readerChild = open(FIFO_BROKER.c_str(), nFlags) ) < 0)
+    {
+        Log::error("Error: pipe opened for reading.");
+        exit(Application::EXIT_SOFTWARE);
+    }
+
+    if ((nFlags = fcntl(readerChild, F_GETFL, 0)) < 0)
+    {
+        Log::error("Error: failed to get pipe flags [" + FIFO_BROKER + "].");
+        exit(Application::EXIT_SOFTWARE);
+    }
+
+    nFlags &= ~O_NONBLOCK;
+    if (fcntl(readerChild, F_SETFL, nFlags) < 0)
+    {
+        Log::error("Error: failed to set pipe flags [" + FIFO_BROKER + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 
@@ -917,11 +937,6 @@ int main(int argc, char** argv)
     if (numPreSpawnedChildren > 1)
         forkCounter = numPreSpawnedChildren - 1;
 
-    if ( (readerChild = open(FIFO_BROKER.c_str(), O_RDONLY) ) < 0 )
-    {
-        Log::error("Error: pipe opened for reading.");
-        exit(Application::EXIT_SOFTWARE);
-    }
 
     PipeRunnable pipeHandler;
     Poco::Thread aPipe;
