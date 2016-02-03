@@ -574,6 +574,7 @@ static int createLibreOfficeKit(const bool sharePages,
 {
     Poco::UInt64 childPID;
     int nFIFOWriter = -1;
+    int nFlags = O_WRONLY | O_NONBLOCK;
 
     const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
 
@@ -625,9 +626,51 @@ static int createLibreOfficeKit(const bool sharePages,
         }
     }
 
-    if ( (nFIFOWriter = open(pipe.c_str(), O_WRONLY)) < 0 )
+    // open non-blocking to make sure that a broken lokit process will not
+    // block the loolbroker forever
+    {
+        short nRetries = 5;
+        std::mutex aFIFOMutex;
+        std::condition_variable aFIFOCV;
+        std::unique_lock<std::mutex> lock(aFIFOMutex);
+
+        while(nRetries && nFIFOWriter < 0)
+        {
+            aFIFOCV.wait_for(
+                lock,
+                std::chrono::microseconds(80000),
+                [&nFIFOWriter, &pipe, nFlags]
+                {
+                    return (nFIFOWriter = open(pipe.c_str(), nFlags)) > 0;
+                });
+
+            if (nFIFOWriter < 0)
+            {
+                Log::debug("Retrying to establish pipe connection: " + std::to_string(nRetries));
+            }
+
+            --nRetries;
+        }
+    }
+
+    if (nFIFOWriter < 0)
     {
         Log::error("Error: failed to open write pipe [" + pipe + "] with kit. Abandoning child.");
+        ChildProcess(childPID, -1, -1);
+        return -1;
+    }
+
+    if ((nFlags = fcntl(nFIFOWriter, F_GETFL, 0)) < 0)
+    {
+        Log::error("Error: failed to get pipe flags [" + pipe + "].");
+        ChildProcess(childPID, -1, -1);
+        return -1;
+    }
+
+    nFlags &= ~O_NONBLOCK;
+    if (fcntl(nFIFOWriter, F_SETFL, nFlags) < 0)
+    {
+        Log::error("Error: failed to set pipe flags [" + pipe + "].");
         ChildProcess(childPID, -1, -1);
         return -1;
     }
