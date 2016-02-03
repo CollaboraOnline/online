@@ -427,6 +427,7 @@ namespace Util
             TerminationState = ( aSignal == SIGTERM ? LOOLState::LOOL_ABNORMAL : LOOLState::LOOL_STOPPING );
 
             Log::info() << "Termination signal received: "
+                        << Util::signalName(aSignal) << " "
                         << strsignal(aSignal) << Log::end;
         }
     }
@@ -451,6 +452,7 @@ namespace Util
     void handleFatalSignal(const int aSignal)
     {
         Log::error() << "Fatal signal received: "
+                     << Util::signalName(aSignal) << " "
                      << strsignal(aSignal) << Log::end;
 
         if (getenv("LOOL_DEBUG"))

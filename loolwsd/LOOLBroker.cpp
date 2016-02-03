@@ -970,7 +970,8 @@ int main(int argc, char** argv)
 #endif
                 Log::error() << "Child process [" << pid << "] " << fate
                              << " with " << Util::signalName(WTERMSIG(status))
-                             << " signal. " << Log::end;
+                             << " signal: " << strsignal(WTERMSIG(status))
+                             << Log::end;
 
                 removeChild(pid);
             }
@@ -978,7 +979,8 @@ int main(int argc, char** argv)
             {
                 Log::info() << "Child process [" << pid << "] stopped with "
                             << Util::signalName(WSTOPSIG(status))
-                            << " signal. " << Log::end;
+                            << " signal: " << strsignal(WTERMSIG(status))
+                            << Log::end;
             }
             else if (WIFCONTINUED(status))
             {

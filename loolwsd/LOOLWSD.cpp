@@ -1022,7 +1022,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
                     Log::error() << "Child process [" << pid << "] " << fate
                                  << " with " << Util::signalName(WTERMSIG(status))
-                                 << " signal. " << Log::end;
+                                 << " signal: " << strsignal(WTERMSIG(status))
+                                 << Log::end;
 
                     break;
                 }
@@ -1030,7 +1031,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 {
                     Log::info() << "Child process [" << pid << "] stopped with "
                                 << Util::signalName(WSTOPSIG(status))
-                                << " signal. " << Log::end;
+                                << " signal: " << strsignal(WTERMSIG(status))
+                                << Log::end;
                 }
                 else if (WIFCONTINUED(status))
                 {
