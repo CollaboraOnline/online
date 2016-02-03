@@ -946,6 +946,7 @@ int main(int argc, char** argv)
 
     Log::info("loolbroker is ready.");
 
+    int nChildExitCode = Application::EXIT_OK;
     unsigned timeoutCounter = 0;
     while (!TerminationFlag)
     {
@@ -955,6 +956,7 @@ int main(int argc, char** argv)
         {
             if (WIFEXITED(status))
             {
+                nChildExitCode = Util::getChildStatus(WEXITSTATUS(status));
                 Log::info() << "Child process [" << pid << "] exited with code: "
                             << WEXITSTATUS(status) << "." << Log::end;
 
@@ -963,6 +965,7 @@ int main(int argc, char** argv)
             else
             if (WIFSIGNALED(status))
             {
+                nChildExitCode = Util::getSignalStatus(WEXITSTATUS(status));
                 std::string fate = "died";
 #ifdef WCOREDUMP
                 if (WCOREDUMP(status))
@@ -994,6 +997,7 @@ int main(int argc, char** argv)
             }
 
             pipeHandler.syncChilds();
+            timeoutCounter = 0;
         }
         else if (pid < 0)
         {
@@ -1006,7 +1010,7 @@ int main(int argc, char** argv)
             }
         }
 
-        if (forkCounter > 0)
+        if (forkCounter > 0 && nChildExitCode == Application::EXIT_OK)
         {
             std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
@@ -1032,6 +1036,7 @@ int main(int argc, char** argv)
         if (timeoutCounter++ == INTERVAL_PROBES)
         {
             timeoutCounter = 0;
+            nChildExitCode = Application::EXIT_OK;
             sleep(MAINTENANCE_INTERVAL);
         }
     }
