@@ -949,29 +949,6 @@ int main(int argc, char** argv)
     unsigned timeoutCounter = 0;
     while (!TerminationFlag)
     {
-        if (forkCounter > 0)
-        {
-            std::lock_guard<std::recursive_mutex> lock(forkMutex);
-
-            const signed empty = pipeHandler.syncChilds();
-            const signed total = _childProcesses.size();
-
-            // Figure out how many children we need. Always create at least as many
-            // as configured pre-spawn or one more than requested (whichever is larger).
-            signed spawn = std::max(static_cast<int>(forkCounter) + 1, numPreSpawnedChildren);
-            Log::debug() << "Creating " << spawn << " childs. Current Total: "
-                         << total << ", Empty: " << empty << Log::end;
-            do
-            {
-                if (createLibreOfficeKit(sharePages, loSubPath, jailId) < 0)
-                    Log::error("Error: fork failed.");
-            }
-            while (--spawn > 0);
-
-            // We've done our best. If need more, retrying will bump the counter.
-            forkCounter = 0;
-        }
-
         int status;
         const pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
@@ -1018,6 +995,29 @@ int main(int argc, char** argv)
         }
         else if (pid < 0)
             Log::error("Error: waitpid failed.");
+
+        if (forkCounter > 0)
+        {
+            std::lock_guard<std::recursive_mutex> lock(forkMutex);
+
+            const signed empty = pipeHandler.syncChilds();
+            const signed total = _childProcesses.size();
+
+            // Figure out how many children we need. Always create at least as many
+            // as configured pre-spawn or one more than requested (whichever is larger).
+            signed spawn = std::max(static_cast<int>(forkCounter) + 1, numPreSpawnedChildren);
+            Log::debug() << "Creating " << spawn << " childs. Current Total: "
+                         << total << ", Empty: " << empty << Log::end;
+            do
+            {
+                if (createLibreOfficeKit(sharePages, loSubPath, jailId) < 0)
+                    Log::error("Error: fork failed.");
+            }
+            while (--spawn > 0);
+
+            // We've done our best. If need more, retrying will bump the counter.
+            forkCounter = 0;
+        }
 
         if (timeoutCounter++ == INTERVAL_PROBES)
         {
