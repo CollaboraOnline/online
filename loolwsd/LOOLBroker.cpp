@@ -374,12 +374,13 @@ public:
                 log << "Error querying child [" << std::to_string(it->second->getPid()) << "].";
                 if (it->second->getUrl().empty())
                 {
-                    log << " Removing empty child.";
+                    log << " Removing empty child." << Log::end;
                     it = _childProcesses.erase(it);
                 }
-
-                log << Log::end;
-                ++it;
+                else
+                {
+                    ++it;
+                }
                 continue;
             }
 
