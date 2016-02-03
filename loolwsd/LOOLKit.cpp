@@ -530,13 +530,7 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
 #else
                     ("/" + loSubPath + "/program");
 #endif
-
-    LibreOfficeKit* loKit(lok_init_2(instdir_path.c_str(), "file:///user"));
-    if (loKit == nullptr)
-    {
-        Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
-        exit(Application::EXIT_SOFTWARE);
-    }
+    LibreOfficeKit* loKit = nullptr;
 
     try
     {
@@ -552,6 +546,13 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
         if ( (writerBroker = open(LOKIT_BROKER.c_str(), O_WRONLY) ) < 0 )
         {
             Log::error("Error: failed to open pipe [" + LOKIT_BROKER + "] write only.");
+            exit(Application::EXIT_SOFTWARE);
+        }
+
+        loKit = lok_init_2(instdir_path.c_str(), "file:///user");
+        if (loKit == nullptr)
+        {
+            Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
             exit(Application::EXIT_SOFTWARE);
         }
 
@@ -677,7 +678,8 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
 
     // Destroy LibreOfficeKit
     Log::debug("Destroying LibreOfficeKit.");
-    loKit->pClass->destroy(loKit);
+    if (loKit)
+        loKit->pClass->destroy(loKit);
 
     Log::info("Process [" + process_name + "] finished.");
 }
