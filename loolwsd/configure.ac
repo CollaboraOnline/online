@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.69])
 
-AC_INIT([loolwsd], [1.4.38], [libreoffice@collabora.com])
+AC_INIT([loolwsd], [1.4.39], [libreoffice@collabora.com])
 
 AM_INIT_AUTOMAKE([1.11 silent-rules subdir-objects])
 
