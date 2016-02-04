@@ -1425,7 +1425,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
 
     // Start a server listening on the port for clients
-    ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
+    ServerSocket svs(portNumber);
     ThreadPool threadPool(_numPreSpawnedChildren*2, MAX_SESSIONS);
     HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
 
@@ -1433,7 +1433,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
-    ServerSocket svs2(addr2, _numPreSpawnedChildren);
+    ServerSocket svs2(addr2);
     ThreadPool threadPool2(_numPreSpawnedChildren*2, MAX_SESSIONS);
     HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
 
