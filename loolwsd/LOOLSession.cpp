@@ -87,6 +87,10 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _kindString(kind == Kind::ToClient ? "ToClient" :
                 kind == Kind::ToMaster ? "ToMaster" : "ToPrisoner"),
     _ws(ws),
+    _docPassword(""),
+    _isDocPasswordProvided(false),
+    _isDocLoaded(false),
+    _isDocPasswordProtected(false),
     _bShutdown(false),
     _disconnected(false)
 {
@@ -169,6 +173,12 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
         else if (tokens[i].find("timestamp=") == 0)
         {
             timestamp = tokens[i].substr(strlen("timestamp="));
+            ++offset;
+        }
+        else if (tokens[i].find("password=") == 0)
+        {
+            _docPassword = tokens[i].substr(strlen("password="));
+            _isDocPasswordProvided = true;
             ++offset;
         }
     }

@@ -44,6 +44,7 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include "Common.hpp"
 #include "QueueHandler.hpp"
@@ -518,7 +519,11 @@ private:
             Log::info("Loading new document from URI: [" + uri + "] for session [" + sessionId + "].");
 
             if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
+            {
                 _loKit->pClass->registerCallback(_loKit, DocumentCallback, this);
+                _loKit->pClass->setOptionalFeatures(_loKit, LOK_FEATURE_DOCUMENT_PASSWORD |
+                                                    LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY);
+            }
 
             // documentLoad will trigger callback, which needs to take the lock.
             lock.unlock();

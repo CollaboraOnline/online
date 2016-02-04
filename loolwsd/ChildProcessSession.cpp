@@ -118,6 +118,10 @@ public:
             return std::string("LOK_CALLBACK_SET_PART");
         case LOK_CALLBACK_PARTS_COUNT_CHANGED:
             return std::string("LOK_CALLBACK_PARTS_COUNT_CHANGED");
+        case LOK_CALLBACK_DOCUMENT_PASSWORD:
+            return std::string("LOK_CALLBACK_DOCUMENT_PASSWORD");
+        case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+            return std::string("LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY");
         }
         return std::to_string(nType);
     }
@@ -245,8 +249,8 @@ public:
             _session.sendTextFrame("unocommandresult: " + rPayload);
             break;
         case LOK_CALLBACK_DOCUMENT_PASSWORD:
-            break;
         case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+            _session.setDocumentPassword(nType);
             break;
         case LOK_CALLBACK_ERROR:
             {
@@ -321,12 +325,13 @@ std::recursive_mutex ChildProcessSession::Mutex;
 
 ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::shared_ptr<Poco::Net::WebSocket> ws,
-                                         LibreOfficeKit* /*loKit*/,
+                                         LibreOfficeKit* loKit,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& jailId,
                                          std::function<LibreOfficeKitDocument*(const std::string&, const std::string&)> onLoad,
                                          std::function<void(const std::string&)> onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
+    _loKit(loKit),
     _loKitDocument(loKitDocument),
     _multiView(getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
@@ -422,15 +427,31 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "load")
     {
-        if (_docURL != "")
+        if (_isDocLoaded)
         {
             sendTextFrame("error: cmd=load kind=docalreadyloaded");
             return false;
         }
 
-        return loadDocument(buffer, length, tokens);
+        _isDocLoaded = loadDocument(buffer, length, tokens);
+        if (!_isDocLoaded && _isDocPasswordProtected)
+        {
+            if (!_isDocPasswordProvided)
+            {
+                std::string passwordFrame = "passwordrequired:";
+                if (_docPasswordType == PasswordType::ToView)
+                    passwordFrame += "to-view";
+                else if (_docPasswordType == PasswordType::ToModify)
+                    passwordFrame += "to-modify";
+                sendTextFrame("error: cmd=load kind=" + passwordFrame);
+            }
+            else
+                sendTextFrame("error: cmd=load kind=wrongpassword");
+        }
+
+        return _isDocLoaded;
     }
-    else if (_docURL == "")
+    else if (!_isDocLoaded)
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
@@ -584,6 +605,9 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
 
     _loKitDocument = _onLoad(getId(), _jailedFilePath);
 
+    if (!_loKitDocument)
+        return false;
+
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
@@ -605,6 +629,11 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
         _clientPart = part;
         _loKitDocument->pClass->setPart(_loKitDocument, part);
     }
+
+    // 'statusindicatorfinish:' is used to let clients, and parent process know of successfull document load
+    // Usually, 'statusindicatorfinish:' is already sent when the load document operation finishes,
+    // but in case of multiple sessions accessing the same document, it won't be sent.
+    sendTextFrame("statusindicatorfinish:");
 
     // Respond by the document status, which has no arguments.
     if (!getStatus(nullptr, 0))
@@ -1318,6 +1347,30 @@ bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, String
 
     _loKitDocument->pClass->setPart(_loKitDocument, page);
     return true;
+}
+
+void ChildProcessSession::setDocumentPassword(const int nPasswordType)
+{
+
+    if (_isDocPasswordProtected && _isDocPasswordProvided)
+    {
+        // it means this is the second attempt with the wrong password; abort load operation
+        _loKit->pClass->setDocumentPassword(_loKit, _jailedFilePath.c_str(), nullptr);
+        return;
+    }
+
+    // One thing for sure, this is a password protected document
+    _isDocPasswordProtected = true;
+
+    if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD)
+        _docPasswordType = PasswordType::ToView;
+    else if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY)
+        _docPasswordType = PasswordType::ToModify;
+
+    if (_isDocPasswordProvided)
+        _loKit->pClass->setDocumentPassword(_loKit, _jailedFilePath.c_str(), _docPassword.c_str());
+    else
+        _loKit->pClass->setDocumentPassword(_loKit, _jailedFilePath.c_str(), nullptr);
 }
 
 void ChildProcessSession::loKitCallback(const int nType, const char *pPayload)

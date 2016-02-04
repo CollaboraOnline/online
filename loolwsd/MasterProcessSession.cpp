@@ -125,6 +125,31 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
         if (_kind == Kind::ToPrisoner)
         {
+            if (tokens[0] == "error:")
+            {
+                std::string errorCommand;
+                std::string errorKind;
+                if (getTokenString(tokens[1], "cmd", errorCommand) &&
+                    getTokenString(tokens[2], "kind", errorKind) )
+                {
+                    if (errorCommand == "load")
+                    {
+                        if (errorKind == "passwordrequired:to-view" ||
+                            errorKind == "passwordrequired:to-modify" ||
+                            errorKind == "wrongpassword")
+                        {
+                            _isDocPasswordProtected = true;
+                            // Reset docURL so that client can send another load request with password
+                            peer->_docURL = "";
+                            // disconnect 'ToPrisoner' after letting client know that password is required
+                            forwardToPeer(buffer, length);
+                            LOOLSession::disconnect();
+                            return false;
+                        }
+                    }
+                }
+            }
+
             if (tokens[0] == "curpart:" &&
                 tokens.count() == 2 &&
                 getTokenInteger(tokens[1], "part", _curPart))
@@ -157,7 +182,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             }
         }
 
-        if (_kind == Kind::ToPrisoner && peer && peer->_tileCache)
+        if (_kind == Kind::ToPrisoner && peer && peer->_tileCache && !_isDocPasswordProtected)
         {
             if (tokens[0] == "tile:")
             {
@@ -788,6 +813,9 @@ void MasterProcessSession::dispatchChild()
 
     if (_loadPart >= 0)
         oss << " part=" + std::to_string(_loadPart);
+
+    if (_isDocPasswordProvided)
+        oss << " password=" << _docPassword;
 
     if (!_docOptions.empty())
         oss << " options=" << _docOptions;

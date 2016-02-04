@@ -14,6 +14,7 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/Thread.h>
 #include <Poco/NotificationQueue.h>
@@ -89,6 +90,8 @@ public:
     const Statistics& getStatistics() const { return _stats; }
     bool isInactive() const { return _stats.getInactivityMS() >= InactivityThresholdMS; }
 
+    void setDocumentPassword(const int nPasswordType);
+
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
@@ -120,6 +123,7 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
+    LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
     std::string _docType;
     const bool _multiView;
