@@ -1215,20 +1215,25 @@ int LOOLWSD::createComponent()
     return Application::EXIT_OK;
 }
 
-bool LOOLWSD::startupComponent(int nComponents)
+bool LOOLWSD::startupComponent(int nComponents, int* pSuccessfullyStarted)
 {
     for (int nCntr = nComponents; nCntr; nCntr--)
     {
         if (createComponent() < 0)
+        {
+            if (pSuccessfullyStarted)
+                *pSuccessfullyStarted = nComponents - nCntr;
             return false;
+        }
     }
+
+    if (pSuccessfullyStarted)
+        *pSuccessfullyStarted = nComponents;
     return true;
 }
 
 void LOOLWSD::desktopMain()
 {
-    int nChildExitCode = Application::EXIT_OK;
-
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("loolbroker"), 0, 0, 0) != 0)
         std::cout << Util::logPrefix() << "Cannot set thread name :" << strerror(errno) << std::endl;
@@ -1252,14 +1257,11 @@ void LOOLWSD::desktopMain()
                 {
                     if (WIFEXITED(status))
                     {
-                        nChildExitCode = Util::getChildStatus(WEXITSTATUS(status));
                         std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)
                                   << " exit code " << std::to_string(WEXITSTATUS(status)) << std::endl;
                     }
-                    else
-                    if (WIFSIGNALED(status))
+                    else if (WIFSIGNALED(status))
                     {
-                        nChildExitCode = Util::getSignalStatus(WTERMSIG(status));
                         std::cout << Util::logPrefix() << "One of our known child processes died :" << std::to_string(pid)
                                   << " signal code " << strsignal(WTERMSIG(status)) << std::endl;
                     }
@@ -1305,11 +1307,17 @@ void LOOLWSD::desktopMain()
             if (MasterProcessSession::_childProcesses.size() + toSpawn < _numPreSpawnedChildren)
                 toSpawn = _numPreSpawnedChildren - MasterProcessSession::_childProcesses.size();
 
-            if (toSpawn > 0 && nChildExitCode == Application::EXIT_OK)
+            if (toSpawn > 0)
             {
                 std::cout << Util::logPrefix() << "Create child session, fork new ones: " << toSpawn << std::endl;
-                if (!startupComponent(toSpawn))
+                int spawned;
+                if (!startupComponent(toSpawn, &spawned))
+                {
+                    _namedMutexLOOL.lock();
+                    reinterpret_cast<size_t*>(_sharedForkChild.begin())[0] += toSpawn - spawned;
+                    _namedMutexLOOL.unlock();
                     break;
+                }
             }
         }
 
@@ -1318,7 +1326,6 @@ void LOOLWSD::desktopMain()
         {
             timeoutCounter = 0;
             sleep(MAINTENANCE_INTERVAL);
-            nChildExitCode = Application::EXIT_OK;
         }
     }
 

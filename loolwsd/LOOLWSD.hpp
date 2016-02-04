@@ -73,7 +73,7 @@ private:
     void desktopMain();
 
     /// Call createComponent() nComponents-times.
-    bool startupComponent(int nComponents);
+    bool startupComponent(int nComponents, int* pSuccessfullyStarted = nullptr);
     void startupDesktop(int nDesktop);
     int  createComponent();
     int  createDesktop();
