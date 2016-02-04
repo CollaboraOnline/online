@@ -148,6 +148,9 @@ using Poco::Random;
 using Poco::NamedMutex;
 using Poco::URI;
 
+// The maximum number of client connections we can accept.
+constexpr int MAX_SESSIONS = 1024;
+
 class QueueHandler: public Runnable
 {
 public:
@@ -1423,7 +1426,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Start a server listening on the port for clients
     ServerSocket svs(portNumber, _numPreSpawnedChildren*10);
-    ThreadPool threadPool(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    ThreadPool threadPool(_numPreSpawnedChildren*2, MAX_SESSIONS);
     HTTPServer srv(new RequestHandlerFactory(), threadPool, svs, new HTTPServerParams);
 
     srv.start();
@@ -1431,7 +1434,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
     ServerSocket svs2(addr2, _numPreSpawnedChildren);
-    ThreadPool threadPool2(_numPreSpawnedChildren*2, _numPreSpawnedChildren*5);
+    ThreadPool threadPool2(_numPreSpawnedChildren*2, MAX_SESSIONS);
     HTTPServer srv2(new RequestHandlerFactory(), threadPool2, svs2, new HTTPServerParams);
 
     srv2.start();
