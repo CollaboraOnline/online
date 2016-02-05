@@ -640,7 +640,7 @@ L.Map = L.Evented.extend({
 
 	_onGotFocus: function () {
 		var doclayer = this._docLayer;
-		if (doclayer._isCursorVisibleOnLostFocus && doclayer._isCursorOverlayVisibleOnLostFocus) {
+		if (doclayer !== undefined && doclayer._isCursorVisibleOnLostFocus && doclayer._isCursorOverlayVisibleOnLostFocus) {
 			// we restore the old cursor position by a small delay, so that if the user clicks
 			// inside the document we skip to restore it, so that the user does not see the cursor
 			// jumping from the old position to the new one
