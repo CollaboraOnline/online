@@ -519,6 +519,7 @@ L.TileLayer = L.GridLayer.extend({
 		var obj = JSON.parse(textMsg);
 		var originalPhrase = obj.searchString;
 		var count = obj.searchResultSelection.length;
+		var highlightAll = obj.highlightAll;
 		var results = [];
 		for (var i = 0; i < obj.searchResultSelection.length; i++) {
 			results.push({
@@ -536,7 +537,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.setPart(results[0].part); // go to first result.
 		}
 		this._searchTerm = originalPhrase;
-		this._map.fire('search', {originalPhrase: originalPhrase, count: count, results: results});
+		this._map.fire('search', {originalPhrase: originalPhrase, count: count, highlightAll: highlightAll, results: results});
 	},
 
 	_clearSearchResults: function() {
