@@ -8268,6 +8268,13 @@ var unoCommands = [
 },
 
 {
+    uno: '.uno:CharBackgroundExt',
+    parameter: null,
+    description: '.uno:CharBackgroundExt is supplementary to .uno:BackColor. When .uno:BackColor is set, Writer turns into a "watercan" mode, where the user directly marks parts of the text with the wanted background color. ' +
+                 '.uno:CharBackgroundExt then controls this watercan mode - dispatching it toggles the watercan mode on/off, and also the StateChanged events reflect the on/off mode accordingly.'
+},
+
+{
     uno: '.uno:BackgroundColor',
     parameter: {
         'BackgroundColor': {
