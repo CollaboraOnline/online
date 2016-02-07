@@ -496,48 +496,41 @@ private:
     static void KitCallback(int nType, const char* pPayload, void* pData)
     {
         Document* self = reinterpret_cast<Document*>(pData);
+        Log::trace() << "Callback "
+                     << KitCallbackTypeToString(nType)
+                     << " [" << pPayload << "]." << Log::end;
+
         if (self)
         {
             std::unique_lock<std::recursive_mutex> lock(self->_mutex);
-
-            // Ideally, there would be only one connection at this point of time
-            const auto& it = self->_connections.begin();
-
-            if (!it->second->isRunning())
-                Log::error() << "Error: Connection died unexpectedly" << Log::end;
-
-            auto session = it->second->getSession();
-            auto sessionLock = session->getLock();
-
-            Log::trace() << "Callback [" << session->getViewId() << "] "
-                         << KitCallbackTypeToString(nType)
-                         << " [" << pPayload << "]." << Log::end;
-
-            if (session->isDisconnected())
+            for (auto& it: self->_connections)
             {
-                Log::trace("Skipping callback on disconnected session " + session->getName());
-                return;
-            }
-            else if (session->isInactive())
-            {
-                Log::trace("Skipping callback on inactive session " + session->getName());
-                return;
-            }
+                if (it.second->isRunning())
+                {
+                    auto session = it.second->getSession();
+                    auto sessionLock = session->getLock();
 
-            switch (nType)
-            {
-            case LOK_CALLBACK_STATUS_INDICATOR_START:
-                session->sendTextFrame("statusindicatorstart:");
-                break;
-            case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-                session->sendTextFrame("statusindicatorsetvalue: " + std::string(pPayload));
-                break;
-            case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-                session->sendTextFrame("statusindicatorfinish:");
-                break;
-            case LOK_CALLBACK_DOCUMENT_PASSWORD:
-            case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
-                session->setDocumentPassword(nType);
+                    switch (nType)
+                    {
+                    case LOK_CALLBACK_STATUS_INDICATOR_START:
+                        session->sendTextFrame("statusindicatorstart:");
+                        break;
+                    case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+                        session->sendTextFrame("statusindicatorsetvalue: " + std::string(pPayload));
+                        break;
+                    case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+                        session->sendTextFrame("statusindicatorfinish:");
+                        break;
+                    case LOK_CALLBACK_DOCUMENT_PASSWORD:
+                    case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+                        session->setDocumentPassword(nType);
+                        break;
+                    }
+                }
+
+                // Ideally, there would be only one *live* connection at this point of time
+                // So, just get the first running one and break out.
+                // TODO: Find a better way to find the correct connection.
                 break;
             }
         }
