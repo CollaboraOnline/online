@@ -558,7 +558,7 @@ private:
 
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
-        if (it == _connections.end() || !it->second)
+        if (it == _connections.end() || !it->second || !_loKitDocument)
         {
             // Nothing to do.
             return;
