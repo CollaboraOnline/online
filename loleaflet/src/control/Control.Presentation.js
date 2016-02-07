@@ -2,6 +2,7 @@
  * L.Control.Presentation is used for common commands for slides.
  */
 
+/* global vex */
 L.Control.Presentation = L.Control.extend({
 	options: {
 		position: 'topleft'
@@ -12,9 +13,9 @@ L.Control.Presentation = L.Control.extend({
 		    container = L.DomUtil.create('div', buttonsName + '-container' + ' leaflet-bar');
 
 		this._buttons = {
-			'insertpage':    {title: 'Insert Page',     iconName: 'insertpage.png'},
-			'duplicatepage': {title: 'Duplicate Page',  iconName: 'duplicatepage.png'},
-			'deletepage':    {title: 'Delete Page',     iconName: 'deletepage.png'}
+			'insertpage':    {title: 'Insert Page',     uno: 'InsertPage',		iconName: 'insertpage.png'},
+			'duplicatepage': {title: 'Duplicate Page',  uno: 'DuplicatePage',	iconName: 'duplicatepage.png'},
+			'deletepage':    {title: 'Delete Page',     uno: 'DeletePage',		iconName: 'deletepage.png'}
 		};
 
 		for (var key in this._buttons) {
@@ -23,20 +24,23 @@ L.Control.Presentation = L.Control.extend({
 				buttonsName, container, this._onButtonClick);
 		}
 
-		map.on('updateparts', this._updateDisabled, this);
+		map.on('commandstatechanged', this._onStateChange, this);
+		map.on('updatepermission', this._onPermissionUpdate, this);
 
 		return container;
 	},
 
-	_updateDisabled: function (e) {
-		if (e.docType === 'presentation') {
-			return;
-		}
-
-		for (var key in this._buttons) {
-			var button = this._buttons[key];
-			L.DomUtil.addClass(button.el, 'leaflet-disabled');
-			L.DomUtil.addClass(button.el, 'leaflet-control-buttons-disabled');
+	_onPermissionUpdate: function (e) {
+		for (var id in this._buttons) {
+			var button = this._buttons[id];
+			if (button.uno) {
+				if (e.perm !== 'edit' || this._map.getDocType() !== 'presentation') {
+					L.DomUtil.addClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
+				}
+				else {
+					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
+				}
+			}
 		}
 	},
 
@@ -74,6 +78,22 @@ L.Control.Presentation = L.Control.extend({
 				message: 'Are you sure you want to delete this page?',
 				callback: L.bind(this._onDelete, this)
 			});
+		}
+	},
+
+	_onStateChange: function (e) {
+		var commandName = e.commandName;
+		var enabled = e.state;
+		for (var key in this._buttons) {
+			var button = this._buttons[key];
+			if ('.uno:' + button.uno === commandName) {
+				if (enabled === 'true' && this._map._docLayer._permission === 'edit') {
+					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
+				}
+				else if (enabled === 'false') {
+					L.DomUtil.addClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
+				}
+			}
 		}
 	},
 
