@@ -125,7 +125,7 @@ L.Control.Buttons = L.Control.extend({
 					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
 				}
 				else if (state === 'disabled') {
-					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
+					L.DomUtil.addClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
 				}
 			}
 		}
