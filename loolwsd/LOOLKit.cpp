@@ -516,10 +516,12 @@ private:
 
         if (_loKitDocument == nullptr)
         {
+            // This is the first time we are loading the document
             Log::info("Loading new document from URI: [" + uri + "] for session [" + sessionId + "].");
 
             if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
             {
+                // TODO: Separate the global callback from document callback
                 _loKit->pClass->registerCallback(_loKit, DocumentCallback, this);
                 _loKit->pClass->setOptionalFeatures(_loKit, LOK_FEATURE_DOCUMENT_PASSWORD |
                                                     LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY);
@@ -527,6 +529,7 @@ private:
 
             // documentLoad will trigger callback, which needs to take the lock.
             lock.unlock();
+
             if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str())) == nullptr)
             {
                 Log::error("Failed to load: " + uri + ", error: " + _loKit->pClass->getError(_loKit));
@@ -535,22 +538,22 @@ private:
 
             // Retake the lock.
             lock.lock();
-        }
 
-        if (_multiView)
-        {
-            Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
-            const auto viewId = _loKitDocument->pClass->createView(_loKitDocument);
+            if (_multiView)
+            {
+                Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
+                const auto viewId = _loKitDocument->pClass->createView(_loKitDocument);
 
-            _loKitDocument->pClass->registerCallback(_loKitDocument, ViewCallback, reinterpret_cast<void*>(intSessionId));
+                _loKitDocument->pClass->registerCallback(_loKitDocument, ViewCallback, reinterpret_cast<void*>(intSessionId));
 
-            Log::info() << "Document [" << _url << "] view ["
-                        << viewId << "] loaded, leaving "
-                        << (_clientViews + 1) << " views." << Log::end;
-        }
-        else
-        {
-            _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
+                Log::info() << "Document [" << _url << "] view ["
+                            << viewId << "] loaded, leaving "
+                            << (_clientViews + 1) << " views." << Log::end;
+            }
+            else
+            {
+                _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
+            }
         }
 
         ++_clientViews;
