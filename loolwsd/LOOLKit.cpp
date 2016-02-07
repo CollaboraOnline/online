@@ -473,6 +473,76 @@ public:
 
 private:
 
+    static std::string KitCallbackTypeToString (const int nType)
+    {
+        switch (nType)
+        {
+        case LOK_CALLBACK_STATUS_INDICATOR_START:
+            return std::string("LOK_CALLBACK_STATUS_INDICATOR_START");
+        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+            return std::string("LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE");
+        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+            return std::string("LOK_CALLBACK_STATUS_INDICATOR_FINISH");
+        case LOK_CALLBACK_DOCUMENT_PASSWORD:
+            return std::string("LOK_CALLBACK_DOCUMENT_PASSWORD");
+        case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+            return std::string("LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY");
+        }
+
+        return std::to_string(nType);
+    }
+
+
+    static void KitCallback(int nType, const char* pPayload, void* pData)
+    {
+        Document* self = reinterpret_cast<Document*>(pData);
+        if (self)
+        {
+            std::unique_lock<std::recursive_mutex> lock(self->_mutex);
+
+            // Ideally, there would be only one connection at this point of time
+            const auto& it = self->_connections.begin();
+
+            if (!it->second->isRunning())
+                Log::error() << "Error: Connection died unexpectedly" << Log::end;
+
+            auto session = it->second->getSession();
+            auto sessionLock = session->getLock();
+
+            Log::trace() << "Callback [" << session->getViewId() << "] "
+                         << KitCallbackTypeToString(nType)
+                         << " [" << pPayload << "]." << Log::end;
+
+            if (session->isDisconnected())
+            {
+                Log::trace("Skipping callback on disconnected session " + session->getName());
+                return;
+            }
+            else if (session->isInactive())
+            {
+                Log::trace("Skipping callback on inactive session " + session->getName());
+                return;
+            }
+
+            switch (nType)
+            {
+            case LOK_CALLBACK_STATUS_INDICATOR_START:
+                session->sendTextFrame("statusindicatorstart:");
+                break;
+            case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+                session->sendTextFrame("statusindicatorsetvalue: " + std::string(pPayload));
+                break;
+            case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+                session->sendTextFrame("statusindicatorfinish:");
+                break;
+            case LOK_CALLBACK_DOCUMENT_PASSWORD:
+            case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+                session->setDocumentPassword(nType);
+                break;
+            }
+        }
+    }
+
     static void ViewCallback(int , const char* , void* )
     {
         //TODO: Delegate the callback.
@@ -521,8 +591,7 @@ private:
 
             if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
             {
-                // TODO: Separate the global callback from document callback
-                _loKit->pClass->registerCallback(_loKit, DocumentCallback, this);
+                _loKit->pClass->registerCallback(_loKit, KitCallback, this);
                 _loKit->pClass->setOptionalFeatures(_loKit, LOK_FEATURE_DOCUMENT_PASSWORD |
                                                     LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY);
             }
