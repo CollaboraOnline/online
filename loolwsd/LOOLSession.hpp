@@ -41,11 +41,6 @@ public:
     /// 3) Ditto, in the jailed loolwsd process
     enum class Kind { ToClient, ToPrisoner, ToMaster };
 
-    /// We have two types of password protected documents
-    /// 1) Documents which require password to view
-    /// 2) Document which require password to modify
-    enum class PasswordType { ToView, ToModify };
-
     const std::string& getId() const { return _id; }
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
@@ -119,9 +114,6 @@ protected:
 
     // Whether document is password protected
     bool _isDocPasswordProtected;
-
-    // Whether password is required to view the document, or modify it
-    PasswordType _docPasswordType;
 
     /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
     std::string _docOptions;

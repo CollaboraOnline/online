@@ -310,6 +310,11 @@ private:
 class Document
 {
 public:
+    /// We have two types of password protected documents
+    /// 1) Documents which require password to view
+    /// 2) Document which require password to modify
+    enum class PasswordType { ToView, ToModify };
+
     Document(LibreOfficeKit *loKit,
              const std::string& jailId,
              const std::string& url)
@@ -318,6 +323,11 @@ public:
         _jailId(jailId),
         _url(url),
         _loKitDocument(nullptr),
+        _docPassword(""),
+        _isDocPasswordProvided(false),
+        _isDocLoaded(false),
+        _isDocPasswordProtected(false),
+        _docPasswordType(PasswordType::ToView),
         _clientViews(0)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
@@ -407,8 +417,8 @@ public:
         ws->setReceiveTimeout(0);
 
         auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKit, _loKitDocument, _jailId,
-                            [this](const std::string& id, const std::string& uri) { return onLoad(id, uri); },
-                            [this](const std::string& id) { onUnload(id); });
+                       [this](const std::string& id, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, isDocPasswordProvided); },
+                       [this](const std::string& id) { onUnload(id); });
         // child -> 0,  sessionId -> 1, PID -> 2
         std::string hello("child " + sessionId + " " + std::to_string(Process::id()));
         session->sendTextFrame(hello);
@@ -471,6 +481,30 @@ public:
         return !hasConnections();
     }
 
+    /// Set Document password for given URL
+    void setDocumentPassword(int nPasswordType)
+    {
+        if (_isDocPasswordProtected && _isDocPasswordProvided)
+        {
+            // it means this is the second attempt with the wrong password; abort the load operation
+            _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), nullptr);
+            return;
+        }
+
+        // One thing for sure, this is a password protected document
+        _isDocPasswordProtected = true;
+        if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD)
+            _docPasswordType = PasswordType::ToView;
+        else if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY)
+            _docPasswordType = PasswordType::ToModify;
+
+        if (_isDocPasswordProvided)
+            _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), _docPassword.c_str());
+        else
+            _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), nullptr);
+    }
+
+
 private:
 
     static std::string KitCallbackTypeToString (const int nType)
@@ -523,7 +557,7 @@ private:
                         break;
                     case LOK_CALLBACK_DOCUMENT_PASSWORD:
                     case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
-                        session->setDocumentPassword(nType);
+                        self->setDocumentPassword(nType);
                         break;
                     }
                 }
@@ -563,7 +597,7 @@ private:
     }
 
     /// Load a document (or view) and register callbacks.
-    LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri)
+    LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided)
     {
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
         const unsigned intSessionId = Util::decodeId(sessionId);
@@ -576,6 +610,8 @@ private:
             Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
             return nullptr;
         }
+
+        auto session = it->second->getSession();
 
         if (_loKitDocument == nullptr)
         {
@@ -592,9 +628,31 @@ private:
             // documentLoad will trigger callback, which needs to take the lock.
             lock.unlock();
 
+            // Save the provided password with us and the jailed url
+            _isDocPasswordProvided = isDocPasswordProvided;
+            _docPassword = docPassword;
+            _jailedUrl = uri;
+            _isDocPasswordProtected = false;
             if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str())) == nullptr)
             {
                 Log::error("Failed to load: " + uri + ", error: " + _loKit->pClass->getError(_loKit));
+
+                // Checking if wrong password or no password was reason for failure.
+                if (_isDocPasswordProtected)
+                {
+                    if (!_isDocPasswordProvided)
+                    {
+                        std::string passwordFrame = "passwordrequired:";
+                        if (_docPasswordType == PasswordType::ToView)
+                            passwordFrame += "to-view";
+                        else if (_docPasswordType == PasswordType::ToModify)
+                            passwordFrame += "to-modify";
+                        session->sendTextFrame("error: cmd=load kind=" + passwordFrame);
+                    }
+                    else
+                        session->sendTextFrame("error: cmd=load kind=wrongpassword");
+                }
+
                 return nullptr;
             }
 
@@ -615,6 +673,28 @@ private:
             else
             {
                 _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
+            }
+        }
+        else
+        {
+            // Check if this document requires password
+            if (_isDocPasswordProtected)
+            {
+                if (!isDocPasswordProvided)
+                {
+                    std::string passwordFrame = "passwordrequired:";
+                    if (_docPasswordType == PasswordType::ToView)
+                        passwordFrame += "to-view";
+                    else if (_docPasswordType == PasswordType::ToModify)
+                        passwordFrame += "to-modify";
+                    session->sendTextFrame("error: cmd=load kind=" + passwordFrame);
+                    return nullptr;
+                }
+                else if (docPassword != _docPassword)
+                {
+                    session->sendTextFrame("error: cmd=load kind=wrongpassword");
+                    return nullptr;
+                }
             }
         }
 
@@ -655,8 +735,20 @@ private:
     LibreOfficeKit *_loKit;
     const std::string _jailId;
     const std::string _url;
+    std::string _jailedUrl;
 
     LibreOfficeKitDocument *_loKitDocument;
+
+    // Document password provided
+    std::string _docPassword;
+    // Whether password was provided or not
+    bool _isDocPasswordProvided;
+    // Whether documet has been opened successfully
+    bool _isDocLoaded;
+    // Whether document is password protected
+    bool _isDocPasswordProtected;
+    // Whether password is required to view the document, or modify it
+    PasswordType _docPasswordType;
 
     std::recursive_mutex _mutex;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
