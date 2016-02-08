@@ -538,6 +538,8 @@ map.on('commandstatechanged', function (e) {
 	var state = e.state;
 	var found = false;
 	if (commandName === '.uno:StyleApply') {
+		if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing')
+			return;
 		// Fix 'Text Body' vs 'Text body'
 		$(".styles-select option").each(function () {
 			value = this.value;
@@ -661,12 +663,15 @@ map.on('updatetoolbarcommandvalues', function (e) {
 		}
 		if (map.getDocType() === 'text') {
 			data = data.concat(e.commandValues.ParagraphStyles);
+			$('.styles-select').prop('disabled', false);
 		}
 		else if (map.getDocType() === 'spreadsheet') {
 			data = data.concat(e.commandValues.CellStyles);
+			$('.styles-select').prop('disabled', false);
 		}
 		else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
 			data = data.concat(e.commandValues.Default);
+			$('.styles-select').prop('disabled', true);
 		}
 		$(".styles-select").select2({
 			data: data,
