@@ -311,9 +311,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('status:')) {
 			this._onStatusMsg(textMsg);
 		}
-		else if (textMsg.startsWith('statusindicator')) {
-			this._onStatusIndicatorMsg(textMsg);
-		}
 		else if (textMsg.startsWith('textselection:')) {
 			this._onTextSelectionMsg(textMsg);
 		}
@@ -606,19 +603,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		// TODO when implemented in the LOK, add also obj.result
 		this._map.fire('commandresult', {commandName: commandName, success: success});
-	},
-
-	_onStatusIndicatorMsg: function (textMsg) {
-		if (textMsg.startsWith('statusindicatorstart:')) {
-			this._map.fire('statusindicator', {statusType : 'start'});
-		}
-		else if (textMsg.startsWith('statusindicatorsetvalue:')) {
-			var value = textMsg.match(/\d+/g)[0];
-			this._map.fire('statusindicator', {statusType : 'setvalue', value : value});
-		}
-		else if (textMsg.startsWith('statusindicatorfinish:')) {
-			this._map.fire('statusindicator', {statusType : 'finish'});
-		}
 	},
 
 	_onTextSelectionMsg: function (textMsg) {
