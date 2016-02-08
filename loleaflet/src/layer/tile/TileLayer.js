@@ -395,8 +395,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		var errorCode = -1;
-		if (command.errorCode !== undefined)
+		if (command.errorCode !== undefined) {
 			errorCode = command.errorCode;
+		}
 
 		this._map.fire('error', {cmd: command.errorCmd, kind: command.errorKind, id: errorId, code: errorCode});
 	},
@@ -1098,7 +1099,7 @@ L.TileLayer = L.GridLayer.extend({
 					if (file.type.match(/image.*/)) {
 						var reader = new FileReader();
 						var socket = this._map._socket;
-						reader.onload = (function(aImg) {
+						reader.onload = (function() {
 							return function(e) {
 								var blob = new Blob(['paste mimetype=' + file.type + '\n', e.target.result]);
 								socket.sendMessage(blob);
