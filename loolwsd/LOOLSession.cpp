@@ -1590,9 +1590,14 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
 
 bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    int type, x, y, count, buttons, modifier;
+    int type, x, y, count;
+    bool success = true;
 
-    if (tokens.count() != 7 ||
+    // default values for compatibility reasons with older loleaflets
+    int buttons = 0;
+    int modifier = 0;
+
+    if (tokens.count() < 5 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
                           {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
@@ -1600,9 +1605,20 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
                          type) ||
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y) ||
-        !getTokenInteger(tokens[4], "count", count) ||
-        !getTokenInteger(tokens[5], "buttons", buttons) ||
-        !getTokenInteger(tokens[6], "modifier", modifier))
+        !getTokenInteger(tokens[4], "count", count))
+    {
+        success = false;
+    }
+
+    // compatibility with older loleaflets
+    if (success && tokens.count() > 5 && !getTokenInteger(tokens[5], "buttons", buttons))
+        success = false;
+
+    // compatibility with older loleaflets
+    if (success && tokens.count() > 6 && !getTokenInteger(tokens[6], "modifier", modifier))
+        success = false;
+
+    if (!success)
     {
         sendTextFrame("error: cmd=mouse kind=syntax");
         return false;
