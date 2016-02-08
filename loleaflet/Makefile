@@ -24,8 +24,20 @@ dist: all
 		node_modules/mocha/mocha.js \
 		node_modules/happen/happen.js \
 		| (cd loleaflet-$(VERSION) && tar xf -)
+	util/po2json.py po/*.po
+	mv po/*.json loleaflet-$(VERSION)/dist/l10n
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
 	rm -rf loleaflet-$(VERSION)
+
+pot:
+	xgettext --keyword=_ --output=po/loleaflet-toolbar.pot dist/toolbar/toolbar.js
+	html2po --pot --input=dist/loleaflet-help.html --output=po/loleaflet-help.pot
+
+l10n: pot
+	for i in po/toolbar-*.po; do pot2po --input=po/loleaflet-toolbar.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
+	for i in po/help-*.po; do pot2po --input=po/loleaflet-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
+	rm po/loleaflet-toolbar.pot
+	rm po/loleaflet-help.pot
 
 loleaflet.spec: loleaflet.spec.in Makefile
 	sed -e 's/@PACKAGE_VERSION@/$(VERSION)/g' <loleaflet.spec.in >loleaflet.spec

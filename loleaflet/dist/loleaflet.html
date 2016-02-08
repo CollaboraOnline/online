@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)http://leafletjs.com/examples/quick-start-example.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Document Simple Example</title>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/loleaflet/dist/leaflet.css">
+<link rel="stylesheet" href="/loleaflet/dist/selectionMarkers.css">
+<link rel="stylesheet" href="/loleaflet/dist/loleaflet.css">
+<link rel="stylesheet" href="/loleaflet/dist/toolbar.css">
+<link rel="stylesheet" href="/loleaflet/dist/partsPreviewControl.css">
+<link rel="stylesheet" href="/loleaflet/dist/scrollBar.css">
+<link rel="stylesheet" href="/loleaflet/dist/searchControl.css">
+<link rel="stylesheet" href="/loleaflet/dist/spreadsheet.css">
+<link rel="stylesheet" href="/loleaflet/dist/branding.css"> <!-- add your logo here -->
+<link rel="stylesheet" href="/loleaflet/plugins/draw-0.2.4/dist/leaflet.draw.css">
+<link rel="stylesheet" href="/loleaflet/src/scrollbar/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" href="/loleaflet/dist/dialog/vex.css" />
+<link rel="stylesheet" href="/loleaflet/dist/dialog/vex-theme-plain.css" />
+<link rel="stylesheet" href="/loleaflet/dist/toolbar/w2ui.min.css" />
+<link rel="stylesheet" href="/loleaflet/dist/toolbar/select2.min.css" />
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-lightness/jquery-ui.css">
+<link rel="stylesheet" href="/loleaflet/dist/toolbar/evol.colorpicker.min.css">
+<link rel="localizations" href="/loleaflet/dist/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+<style type="text/css"></style></head>
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="/loleaflet/dist/l10n/json2.min.js"></script>
+    <script src="/loleaflet/dist/l10n/l10n.min.js"></script>
+    <script src="/loleaflet/dist/toolbar/w2ui.min.js"></script>
+    <script src="/loleaflet/dist/toolbar/select2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <script src="/loleaflet/dist/toolbar/evol.colorpicker.min.js"></script>
+    <script src="/loleaflet/dist/toolbar/jquery.simplemodal.1.4.4.min.js"></script>
+    <script src="/loleaflet/dist/leaflet-src.js"></script>
+    <script src="/loleaflet/plugins/draw-0.2.4/dist/leaflet.draw.js"></script>
+    <script src="/loleaflet/src/scrollbar/jquery.mCustomScrollbar.js"></script>
+    <script src="/loleaflet/dist/dialog/vex.combined.min.js"></script>
+    <script src="/loleaflet/dist/branding.js"></script> <!-- logo onclick handler -->
+    <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
+    <script>var _ = function (string) {return string.toLocaleString();};</script>
+
+    <!--The "controls" div holds map controls such as the Zoom button and
+        it's separated from the map in order to have the controls on the top
+        of the page all the time.
+
+        The "document-container" div is the actual display of the document, is
+        what the user sees and it should be no larger than the screen size.
+
+        The "map" div is the actual document and it has the document's size
+        and width, this being inside the smaller "document-container" will
+        cause the content to overflow, creating scrollbars -->
+    <div id="logo" class="logo"></div>
+    <div>
+        <div id="toolbar" style="visibility: hidden;"></div>
+        <div id="toolbar-up"></div>
+        <div id="formulabar"></div>
+        <div id="toolbar-up-more"></div>
+    </div>
+    <input id="insertgraphic" type="file" onchange="onInsertFile()" style="position: fixed; top: -100em">
+
+    <div id="document-container">
+        <div id="map"></div>
+    </div>
+
+    <div id="toolbar-down"></div>
+    <style type="text/css">
+        #toolbar-up {
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #toolbar-down {
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 0;
+            position: fixed;
+            bottom: 0;
+        }
+
+        #toolbar-up-more {
+            position: absolute;
+            right: 10px;
+            width: 200px;
+            top: 40px;
+            border: 1px solid black;
+            z-index: 8000;
+            display: none;
+        }
+
+        #zoomlevel {
+            min-width: 36px;
+            font-size: 12px;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .w2ui-tb-image {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* center the toolbar */
+        #tb_toolbar-up_item_left,
+        #tb_formulabar_item_left {
+            width: 50%;
+        }
+
+        #tb_toolbar-up_item_right {
+            width: 100%;
+        }
+
+        #tb_toolbar-down_item_left {
+            width: 45%;
+        }
+        #tb_toolbar-down_item_right {
+            width: 100%;
+        }
+        .search-not-found {
+            background-color: red !important;
+            -webkit-transition: background-color 0.8s linear;
+               -moz-transition: background-color 0.8s linear;
+                 -o-transition: background-color 0.8s linear;
+                    transition: background-color 0.8s linear;
+
+        }
+        #formulaInput {
+            height: 29px;
+            width: 800px;
+        }
+
+        #document-container,
+        .parts-preview {
+            top: 47px;
+            bottom: 29px;
+        }
+
+        .spreadsheet-document {
+            top: 100px !important;
+            bottom: 49px !important;
+        }
+
+	.spreadsheet-header-rows-container {
+            bottom: 49px;
+        }
+
+        .spreadsheet-tab {
+            bottom: 29px;
+        }
+
+        /* select box */
+        .select2-results__option {
+            padding: 5px;
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .styles-select {
+            width: 180px;
+        }
+        .fonts-select {
+            width: 150px;
+        }
+        .fontsizes-select {
+            width: 70px;
+        }
+        .evo-cp-wrap {
+            /* hide the color pick div */
+            width: 1px !important;
+        }
+        .font-color-indicator,
+        .back-color-indicator {
+            width: 16px;
+            height: 5px;
+            margin-top: -7px;
+            margin-left: 5px;
+            position: fixed;
+            background: transparent;
+        }
+        .back-color-indicator {
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .w2ui-icon.accepttrackedchanges{ background: url('/loleaflet/dist/images/sc_accepttrackedchanges.png') no-repeat center !important; }
+        .w2ui-icon.alignblock{ background: url('/loleaflet/dist/images/sc_alignblock.png') no-repeat center !important; }
+        .w2ui-icon.alignhorizontal{ background: url('/loleaflet/dist/images/sc_alignhorizontal.png') no-repeat center !important; }
+        .w2ui-icon.alignleft{ background: url('/loleaflet/dist/images/sc_alignleft.png') no-repeat center !important; }
+        .w2ui-icon.alignright{ background: url('/loleaflet/dist/images/sc_alignright.png') no-repeat center !important; }
+        .w2ui-icon.autosum{ background: url('/loleaflet/dist/images/sc_autosum.png') no-repeat center !important; }
+        .w2ui-icon.backcolor{ background: url('/loleaflet/dist/images/sc_backcolor.png') no-repeat center !important; }
+        .w2ui-icon.bold{ background: url('/loleaflet/dist/images/sc_bold.png') no-repeat center !important; }
+        .w2ui-icon.bullet{ background: url('/loleaflet/dist/images/sc_bullet.png') no-repeat center !important; }
+        .w2ui-icon.cancel{ background: url('/loleaflet/dist/images/sc_cancel.png') no-repeat center !important; }
+        .w2ui-icon.color{ background: url('/loleaflet/dist/images/sc_color.png') no-repeat center !important; }
+        .w2ui-icon.closedoc{ background: url('/loleaflet/dist/images/sc_closedoc.png') no-repeat center !important; }
+        .w2ui-icon.decrementindent{ background: url('/loleaflet/dist/images/sc_decrementindent.png') no-repeat center !important; }
+        .w2ui-icon.deletepage{ background: url('/loleaflet/dist/images/sc_deletepage.png') no-repeat center !important; }
+        .w2ui-icon.duplicatepage{ background: url('/loleaflet/dist/images/sc_duplicatepage.png') no-repeat center !important; }
+        .w2ui-icon.edit{ background: url('/loleaflet/dist/images/sc_edit.png') no-repeat center !important; }
+        .w2ui-icon.equal{ background: url('/loleaflet/dist/images/sc_equal.png') no-repeat center !important; }
+        .w2ui-icon.help{ background: url('/loleaflet/dist/images/sc_help.png') no-repeat center !important; }
+        .w2ui-icon.incrementindent{ background: url('/loleaflet/dist/images/sc_incrementindent.png') no-repeat center !important; }
+        .w2ui-icon.insertpage{ background: url('/loleaflet/dist/images/sc_insertpage.png') no-repeat center !important; }
+        .w2ui-icon.italic{ background: url('/loleaflet/dist/images/sc_italic.png') no-repeat center !important; }
+        .w2ui-icon.insertgraphic{ background: url('/loleaflet/dist/images/sc_gallery.png') no-repeat center !important; }
+        .w2ui-icon.next{ background: url('/loleaflet/dist/images/sc_next.png') no-repeat center !important; }
+        .w2ui-icon.numbering{ background: url('/loleaflet/dist/images/sc_numbering.png') no-repeat center !important; }
+        .w2ui-icon.presentation{ background: url('/loleaflet/dist/images/sc_presentation.png') no-repeat center !important; }
+        .w2ui-icon.prev{ background: url('/loleaflet/dist/images/sc_prev.png') no-repeat center !important; }
+        .w2ui-icon.print{ background: url('/loleaflet/dist/images/sc_print.png') no-repeat center !important; }
+        .w2ui-icon.redo{ background: url('/loleaflet/dist/images/sc_redo.png') no-repeat center !important; }
+        .w2ui-icon.save{ background: url('/loleaflet/dist/images/sc_save.png') no-repeat center !important; }
+        .w2ui-icon.saveas{ background: url('/loleaflet/dist/images/sc_saveas.png') no-repeat center !important; }
+        .w2ui-icon.select{ background: url('/loleaflet/dist/images/sc_select.png') no-repeat center !important; }
+        .w2ui-icon.strikeout{ background: url('/loleaflet/dist/images/sc_strikeout.png') no-repeat center !important; }
+        .w2ui-icon.underline{ background: url('/loleaflet/dist/images/sc_underline.png') no-repeat center !important; }
+        .w2ui-icon.undo{ background: url('/loleaflet/dist/images/sc_undo.png') no-repeat center !important; }
+        .w2ui-icon.zoomin{ background: url('/loleaflet/dist/images/sc_zoomin.png') no-repeat center !important; }
+        .w2ui-icon.zoomout{ background: url('/loleaflet/dist/images/sc_zoomout.png') no-repeat center !important; }
+        .w2ui-icon.zoomreset{ background: url('/loleaflet/dist/images/sc_view100.png') no-repeat center !important; }
+        .w2ui-icon.more{ background: url('/loleaflet/dist/images/sc_next.png') no-repeat center !important; }
+
+	#simplemodal-container a.modalCloseImg {
+		background:url('/loleaflet/dist/images/sc_closedoc.png') no-repeat;
+		width:25px;
+		height:29px;
+		display:inline;
+		z-index:3200;
+		position:absolute;
+		top:0px;
+		right:-10px;
+		cursor:pointer;
+	}
+    </style>
+	<script>
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : results[1].replace(/\+/g, " ");
+    }
+
+    var filePath = getParameterByName('file_path');
+    var fileName = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
+    var host = getParameterByName('host');
+    var permission = getParameterByName('permission');
+    var timestamp = getParameterByName('timestamp');
+    if (filePath === '') {
+        vex.dialog.alert('Wrong file_path, usage: file_path=/path/to/doc/');
+    }
+    if (host === '') {
+        vex.dialog.alert('Wrong host, usage: host=ws://localhost:9980');
+    }
+    document.title = fileName;
+    var map = L.map('map', {
+            server: host,
+			doc: filePath,
+			permission: permission,
+			timestamp: timestamp,
+			documentContainer: 'document-container'
+	});
+
+    ////// Controls /////
+    map.addControl(L.control.scroll());
+    map.addControl(L.control.dialog());
+    map.addControl(L.control.partsPreview());
+    map.addControl(L.control.tabs());
+    map.addControl(L.control.columnHeader());
+    map.addControl(L.control.rowHeader());
+
+    </script>
+
+    <script src="/loleaflet/dist/toolbar/toolbar.js"></script>
+</body></html>

@@ -1,0 +1,240 @@
+# Collabora CloudSuite Toolbar Hungarian translation
+# Copyright (C) 2015
+# This file is distributed under the same license as the cloudsuite package.
+# Andras Timar <andras.timar@collabora.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: CloudSuite Toolbar\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-08 16:02+0100\n"
+"PO-Revision-Date: 2016-01-10 22:11+0100\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Hungarian <hu@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.5\n"
+
+#: dist/toolbar/toolbar.js:21 dist/toolbar/toolbar.js:29
+#: dist/toolbar/toolbar.js:37 dist/toolbar/toolbar.js:45
+msgid "File"
+msgstr "Fájl"
+
+#: dist/toolbar/toolbar.js:22 dist/toolbar/toolbar.js:30
+#: dist/toolbar/toolbar.js:38 dist/toolbar/toolbar.js:46
+msgid "Download as PDF document (.pdf)"
+msgstr "Letöltés PDF dokumentumként (.pdf)"
+
+#: dist/toolbar/toolbar.js:23
+msgid "Download as ODF Text document (.odt)"
+msgstr "Letöltés ODF dokumentumként (.odt)"
+
+#: dist/toolbar/toolbar.js:24
+msgid "Download as Microsoft Word 2003 (.doc)"
+msgstr "Letöltés Microsoft Word 2003 dokumentumként (.doc)"
+
+#: dist/toolbar/toolbar.js:25
+msgid "Download as Microsoft Word (.docx)"
+msgstr "Letöltés Microsoft Word dokumentumként (.docx)"
+
+#: dist/toolbar/toolbar.js:26 dist/toolbar/toolbar.js:34
+#: dist/toolbar/toolbar.js:42 dist/toolbar/toolbar.js:47
+msgid "Print"
+msgstr "Nyomtatás"
+
+#: dist/toolbar/toolbar.js:31
+msgid "Download as ODF Presentation (.odp)"
+msgstr "Letöltés ODF bemutatóként (.odp)"
+
+#: dist/toolbar/toolbar.js:32
+msgid "Download as Microsoft Powerpoint 2003 (.ppt)"
+msgstr "Letöltés Microsoft Powerpoint 2003 dokumentumként (.ppt)"
+
+#: dist/toolbar/toolbar.js:33
+msgid "Download as Microsoft Powerpoint (.pptx)"
+msgstr "Letöltés Microsoft PowerPoint dokumentumként (.pptx)"
+
+#: dist/toolbar/toolbar.js:39
+msgid "Download as ODF Spreadsheet (.ods)"
+msgstr "Letöltés ODF munkafüzetként (.ods)"
+
+#: dist/toolbar/toolbar.js:40
+msgid "Download as Microsoft Excel 2003 (.xls)"
+msgstr "Letöltés Microsoft Excel 2003 dokumentumként (.xls)"
+
+#: dist/toolbar/toolbar.js:41
+msgid "Download as Microsoft Excel (.xlsx)"
+msgstr "Letöltés Microsoft Excel dokumentumként (.xlsx)"
+
+#: dist/toolbar/toolbar.js:50
+msgid "Save"
+msgstr "Mentés"
+
+#: dist/toolbar/toolbar.js:52
+msgid "Undo"
+msgstr "Visszavonás"
+
+#: dist/toolbar/toolbar.js:53
+msgid "Redo"
+msgstr "Újra"
+
+#: dist/toolbar/toolbar.js:59
+msgid "Bold"
+msgstr "Félkövér"
+
+#: dist/toolbar/toolbar.js:60
+msgid "Italic"
+msgstr "Dőlt"
+
+#: dist/toolbar/toolbar.js:61
+msgid "Underline"
+msgstr "Aláhúzott"
+
+#: dist/toolbar/toolbar.js:62
+msgid "Strikeout"
+msgstr "Áthúzott"
+
+#: dist/toolbar/toolbar.js:65
+msgid "Font Color"
+msgstr "Betűszín"
+
+#: dist/toolbar/toolbar.js:67
+msgid "Highlighting"
+msgstr "Kiemelés"
+
+#: dist/toolbar/toolbar.js:69
+msgid "Align left"
+msgstr "Balra igazítás"
+
+#: dist/toolbar/toolbar.js:70
+msgid "Center horizontaly"
+msgstr "Középre igazítás"
+
+#: dist/toolbar/toolbar.js:71
+msgid "Align right"
+msgstr "Jobbra igazítás"
+
+#: dist/toolbar/toolbar.js:72
+msgid "Justified"
+msgstr "Sorkizárás"
+
+#: dist/toolbar/toolbar.js:74
+msgid "Bullets on/off"
+msgstr "Felsorolás be/ki"
+
+#: dist/toolbar/toolbar.js:75
+msgid "Numbering on/off"
+msgstr "Számozás be/ki"
+
+#: dist/toolbar/toolbar.js:77
+msgid "Increase Indent"
+msgstr "Behúzás növelése"
+
+#: dist/toolbar/toolbar.js:78
+msgid "Decrease Indent"
+msgstr "Behúzás csökkentése"
+
+#: dist/toolbar/toolbar.js:80
+msgid "Insert Graphic"
+msgstr "Kép beszúrása"
+
+#: dist/toolbar/toolbar.js:82
+msgid "Help"
+msgstr "Súgó"
+
+#: dist/toolbar/toolbar.js:84
+msgid "More"
+msgstr "További ikonok"
+
+#: dist/toolbar/toolbar.js:85
+msgid "Close Document"
+msgstr "Dokumentum bezárása"
+
+#: dist/toolbar/toolbar.js:96
+msgid "Sum"
+msgstr "Összeg"
+
+#: dist/toolbar/toolbar.js:97
+msgid "Function"
+msgstr "Függvény"
+
+#: dist/toolbar/toolbar.js:98
+msgid "Cancel"
+msgstr "Mégse"
+
+#: dist/toolbar/toolbar.js:99
+msgid "Accept"
+msgstr "Elfogadás"
+
+#: dist/toolbar/toolbar.js:117
+msgid "Search backwards"
+msgstr "Keresés visszafelé"
+
+#: dist/toolbar/toolbar.js:118
+msgid "Search forward"
+msgstr "Keresés előre"
+
+#: dist/toolbar/toolbar.js:119
+msgid "Cancel the search"
+msgstr "Keresés leállítása"
+
+#: dist/toolbar/toolbar.js:121
+msgid "Enable editing"
+msgstr "Szerkesztés engedélyezése"
+
+#: dist/toolbar/toolbar.js:122
+msgid "Enable selection"
+msgstr "Kijelölés engedélyezése"
+
+#: dist/toolbar/toolbar.js:123
+msgid "Fullscreen presentation"
+msgstr "Teljes képernyős bemutató"
+
+#: dist/toolbar/toolbar.js:124
+msgid "Insert Page"
+msgstr "Dia beszúrása"
+
+#: dist/toolbar/toolbar.js:125
+msgid "Duplicate Page"
+msgstr "Dia megkettőzése"
+
+#: dist/toolbar/toolbar.js:126
+msgid "Delete Page"
+msgstr "Dia törlése"
+
+#: dist/toolbar/toolbar.js:128
+msgid "Previous page/part"
+msgstr "Előző oldal/rész"
+
+#: dist/toolbar/toolbar.js:129
+msgid "Next page/part"
+msgstr "Következő oldal/rész"
+
+#: dist/toolbar/toolbar.js:131
+msgid "Reset"
+msgstr "Alaphelyzet"
+
+#: dist/toolbar/toolbar.js:132
+msgid "Zoom out"
+msgstr "Kicsinyítés"
+
+#: dist/toolbar/toolbar.js:134
+msgid "Zoom in"
+msgstr "Nagyítás"
+
+#: dist/toolbar/toolbar.js:285
+msgid "Are you sure you want to delete this page?"
+msgstr "Biztosan törli ezt az oldalt?"
+
+#: dist/toolbar/toolbar.js:398 dist/toolbar/toolbar.js:686
+msgid "Size"
+msgstr "Méret"
+
+#: dist/toolbar/toolbar.js:673
+msgid "Style"
+msgstr "Stílus"
+
+#: dist/toolbar/toolbar.js:681
+msgid "Font"
+msgstr "Betűkészlet"
