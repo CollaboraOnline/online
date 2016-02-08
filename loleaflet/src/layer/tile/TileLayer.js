@@ -124,8 +124,9 @@ L.TileLayer = L.GridLayer.extend({
 			'tilepixelheight=' + this.options.tileSize + ' ' +
 			'tiletwipwidth=' + this.options.tileWidthTwips + ' ' +
 			'tiletwipheight=' + this.options.tileHeightTwips;
+
 		// Mark visible area as dirty by default.
-		this._clientVisibleArea = true;
+		this._invalidateClientVisibleArea();
 	},
 
     onAdd: function (map) {
@@ -158,6 +159,7 @@ L.TileLayer = L.GridLayer.extend({
 			map.on('zoomend', this._onCellCursorShift, this);
 		}
 		map.on('zoomend', this._updateClientZoom, this);
+		map.on('resize zoomend', this._invalidateClientVisibleArea, this);
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
@@ -779,7 +781,7 @@ L.TileLayer = L.GridLayer.extend({
 			var payload = 'clientvisiblearea x=' + Math.round(pos.x) + ' y=' + Math.round(pos.y) +
 				' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
 			this._map._socket.sendMessage(payload);
-			this._clientVisibleArea = null;
+			this._clientVisibleArea = false;
 		}
 		this._map._socket.sendMessage('key type=' + type +
 				' char=' + charcode + ' key=' + keycode);
@@ -1260,7 +1262,9 @@ L.TileLayer = L.GridLayer.extend({
 			'tilepixelheight=' + this._tileSize + ' ' +
 			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
 			'tiletwipheight=' + this._tileHeightTwips;
-		// Zoom changed, mark visible area as dirty.
+	},
+
+	_invalidateClientVisibleArea: function() {
 		this._clientVisibleArea = true;
 	}
 });
