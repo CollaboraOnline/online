@@ -390,7 +390,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (command.errorCmd === 'load') {
 			errorId = 2; // document cannot be loaded
 		}
-		else if (command.errorCmd === 'save') {
+		else if (command.errorCmd === 'save' || command.errorCmd === 'saveas') {
 			errorId = 5; // document cannot be saved
 		}
 
