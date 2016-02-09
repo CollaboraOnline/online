@@ -210,7 +210,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onMouseDown: function () {
-		if (this._map._docLayer._permission === 'edit') {
+		if (this._map._permission === 'edit') {
 			return;
 		}
 		this._map._container.focus();
@@ -268,7 +268,7 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		if (docLayer._permission === 'edit') {
+		if (this._map._permission === 'edit') {
 			docLayer._resetPreFetching();
 			if (e.type === 'keydown' && this.handleOnKeyDown[keyCode] && charCode === 0) {
 				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);

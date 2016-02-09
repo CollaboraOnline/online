@@ -141,7 +141,7 @@ L.Map.Mouse = L.Handler.extend({
 				this._clickCount = 1;
 				mousePos = docLayer._latLngToTwips(e.latlng);
 				var timeOut = 250;
-				if (docLayer._permission === 'edit') {
+				if (this._map._permission === 'edit') {
 					timeOut = 0;
 				}
 				this._mouseEventsQueue.push(L.bind(function() {
@@ -149,7 +149,7 @@ L.Map.Mouse = L.Handler.extend({
 					// if it's a click or mouseup after selecting
 					if (this._mouseEventsQueue.length > 1) {
 						// it's a click
-						if (docLayer._permission === 'view') {
+						if (this._map._permission === 'view') {
 							docLayer._map.setPermission('edit');
 						}
 					}

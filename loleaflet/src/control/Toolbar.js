@@ -68,7 +68,7 @@ L.Map.include({
 			this.fire('error', {cmd: 'setStyle', kind: 'incorrectparam'});
 			return;
 		}
-		if (this._docLayer._permission === 'edit') {
+		if (this._permission === 'edit') {
 			var msg = 'uno .uno:StyleApply {' +
 					'"Style":{"type":"string", "value": "' + style + '"},' +
 					'"FamilyName":{"type":"string", "value":"' + familyName + '"}' +
@@ -78,13 +78,13 @@ L.Map.include({
 	},
 
 	sendUnoCommand: function (command, json) {
-		if (this._docLayer._permission === 'edit') {
+		if (this._permission === 'edit') {
 			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 
 	toggleCommandState: function (unoState) {
-		if (this._docLayer._permission === 'edit') {
+		if (this._permission === 'edit') {
 			if (!unoState.startsWith('.uno:')) {
 				unoState = '.uno:' + unoState;
 			}

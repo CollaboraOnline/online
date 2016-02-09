@@ -87,7 +87,7 @@ L.Control.Presentation = L.Control.extend({
 		for (var key in this._buttons) {
 			var button = this._buttons[key];
 			if ('.uno:' + button.uno === commandName) {
-				if (enabled === 'true' && this._map._docLayer._permission === 'edit') {
+				if (enabled === 'true' && this._map._permission === 'edit') {
 					L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-disabled');
 				}
 				else if (enabled === 'false') {
