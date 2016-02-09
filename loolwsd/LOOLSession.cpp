@@ -1594,7 +1594,7 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
     bool success = true;
 
     // default values for compatibility reasons with older loleaflets
-    int buttons = 0;
+    int buttons = 1; // left button
     int modifier = 0;
 
     if (tokens.count() < 5 ||
