@@ -1,0 +1,1895 @@
+# All these style translations are taken from LibreOffice translation submodule
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_STANDARD\n"
+"string.text"
+msgid "Default"
+msgstr "ነባር"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT\n"
+"string.text"
+msgid "Result"
+msgstr "ውጤት"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT1\n"
+"string.text"
+msgid "Result2"
+msgstr "ውጤት2"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "ራስጌ"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "ራስጌ1"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT\n"
+"string.text"
+msgid "Report"
+msgstr "ውጤት"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT1\n"
+"string.text"
+msgid "Report1"
+msgstr "ውጤት1"
+
+#: tbcontrl.src
+msgctxt ""
+"tbcontrl.src\n"
+"RID_SVXSTR_CLEARFORM\n"
+"string.text"
+msgid "Clear formatting"
+msgstr "አቀራረብ ማጽጃ"
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE\n"
+"string.text"
+msgid "Footnote Characters"
+msgstr "የግርጌ ማስታወሻ ባህሪዎች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_PAGENO\n"
+"string.text"
+msgid "Page Number"
+msgstr "የ ገጽ ቁጥር"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LABEL\n"
+"string.text"
+msgid "Caption Characters"
+msgstr "የመግለጫ ጽሁፍ ባህሪዎች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_DROPCAPS\n"
+"string.text"
+msgid "Drop Caps"
+msgstr "ፊደል በትልቁ መጻፊያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_NUM_LEVEL\n"
+"string.text"
+msgid "Numbering Symbols"
+msgstr "ቁጥር መስጫ ምልክቶች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_BUL_LEVEL\n"
+"string.text"
+msgid "Bullets"
+msgstr "ነጥቦች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_NORMAL\n"
+"string.text"
+msgid "Internet Link"
+msgstr "ኢንተርኔት አገናኝ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_VISIT\n"
+"string.text"
+msgid "Visited Internet Link"
+msgstr "የተጎበኘ የኢንተርኔት አገናኝ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_JUMPEDIT\n"
+"string.text"
+msgid "Placeholder"
+msgstr "ቦታ ያዢ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_TOXJUMP\n"
+"string.text"
+msgid "Index Link"
+msgstr "የአገናኝ ማውጫ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE\n"
+"string.text"
+msgid "Endnote Characters"
+msgstr "የመጨረሻ ማስታወሻ ባህሪዎች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LANDSCAPE\n"
+"string.text"
+msgid "Landscape"
+msgstr "በመሬት አቀማመጥ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LINENUM\n"
+"string.text"
+msgid "Line Numbering"
+msgstr "መስመር ቁጥር መስጫ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_IDX_MAIN_ENTRY\n"
+"string.text"
+msgid "Main Index Entry"
+msgstr "ዋናው የማውጫ ማስገቢያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE_ANCHOR\n"
+"string.text"
+msgid "Footnote Anchor"
+msgstr "የ ግርጌ ማስታወሻ ማስቆሚያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE_ANCHOR\n"
+"string.text"
+msgid "Endnote Anchor"
+msgstr "የ መጨረሻ ማስታወሻ ማስቆሚያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_EMPHASIS\n"
+"string.text"
+msgid "Emphasis"
+msgstr "ማጋነኛ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CITIATION\n"
+"string.text"
+msgid "Quotation"
+msgstr "ጥቅሶች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_STRONG\n"
+"string.text"
+msgid "Strong Emphasis"
+msgstr "ጠንካራ ማጋነኛ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CODE\n"
+"string.text"
+msgid "Source Text"
+msgstr "የ ጽሁፉ ምንጭ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_SAMPLE\n"
+"string.text"
+msgid "Example"
+msgstr "ለምሳሌ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_KEYBOARD\n"
+"string.text"
+msgid "User Entry"
+msgstr "የተጠቃሚ ማስገቢያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_VARIABLE\n"
+"string.text"
+msgid "Variable"
+msgstr "ተለዋዋጭ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_DEFINSTANCE\n"
+"string.text"
+msgid "Definition"
+msgstr "መግለጫ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_TELETYPE\n"
+"string.text"
+msgid "Teletype"
+msgstr "Teletype"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FRAME\n"
+"string.text"
+msgid "Frame"
+msgstr "ክፈፍ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_GRAPHIC\n"
+"string.text"
+msgid "Graphics"
+msgstr "ንድፎች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_OLE\n"
+"string.text"
+msgid "OLE"
+msgstr "OLE"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FORMEL\n"
+"string.text"
+msgid "Formula"
+msgstr "መቀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr "Marginalia"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_WATERSIGN\n"
+"string.text"
+msgid "Watermark"
+msgstr "የዉሀ ምልክት"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_LABEL\n"
+"string.text"
+msgid "Labels"
+msgstr "ምልክቶች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr "ነባር ዘዴ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT\n"
+"string.text"
+msgid "Text Body"
+msgstr "የጽሁፍ ሰውነት"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_IDENT\n"
+"string.text"
+msgid "First Line Indent"
+msgstr "የመጀመሪያ መስመር ማስረጊያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_NEGIDENT\n"
+"string.text"
+msgid "Hanging Indent"
+msgstr "ተንሳፋፊ ማስረጊያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_MOVE\n"
+"string.text"
+msgid "Text Body Indent"
+msgstr "የጽሁፍ ሰውነት ማስረጊያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_GREETING\n"
+"string.text"
+msgid "Complimentary Close"
+msgstr "አስተያየት መዝጊያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SIGNATURE\n"
+"string.text"
+msgid "Signature"
+msgstr "ፊርማ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE_BASE\n"
+"string.text"
+msgid "Heading"
+msgstr "ራስጌ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUMBUL_BASE\n"
+"string.text"
+msgid "List"
+msgstr "ዝርዝር"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_REGISTER_BASE\n"
+"string.text"
+msgid "Index"
+msgstr "ማውጫ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_CONFRONTATION\n"
+"string.text"
+msgid "List Indent"
+msgstr "የማስረጊያ ዝርዝር"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr "Marginalia"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE1\n"
+"string.text"
+msgid "Heading 1"
+msgstr "ራስጌ 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE2\n"
+"string.text"
+msgid "Heading 2"
+msgstr "ራስጌ 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE3\n"
+"string.text"
+msgid "Heading 3"
+msgstr "ራስጌ 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE4\n"
+"string.text"
+msgid "Heading 4"
+msgstr "ራስጌ 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE5\n"
+"string.text"
+msgid "Heading 5"
+msgstr "ራስጌ 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE6\n"
+"string.text"
+msgid "Heading 6"
+msgstr "ራስጌ 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE7\n"
+"string.text"
+msgid "Heading 7"
+msgstr "ራስጌ 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE8\n"
+"string.text"
+msgid "Heading 8"
+msgstr "ራስጌ 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE9\n"
+"string.text"
+msgid "Heading 9"
+msgstr "ራስጌ 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE10\n"
+"string.text"
+msgid "Heading 10"
+msgstr "ራስጌ 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1S\n"
+"string.text"
+msgid "Numbering 1 Start"
+msgstr "ቁጥር መስጫ 1 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "ቁጥር መስጫ 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1E\n"
+"string.text"
+msgid "Numbering 1 End"
+msgstr "ቁጥር መስጫ 1 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM1\n"
+"string.text"
+msgid "Numbering 1 Cont."
+msgstr "ቁጥር መስጫ 1 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2S\n"
+"string.text"
+msgid "Numbering 2 Start"
+msgstr "ቁጥር መስጫ 2 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "ቁጥር መስጫ 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2E\n"
+"string.text"
+msgid "Numbering 2 End"
+msgstr "ቁጥር መስጫ 2 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM2\n"
+"string.text"
+msgid "Numbering 2 Cont."
+msgstr "ቁጥር መስጫ 2 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3S\n"
+"string.text"
+msgid "Numbering 3 Start"
+msgstr "ቁጥር መስጫ 3 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "ቁጥር መስጫ 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3E\n"
+"string.text"
+msgid "Numbering 3 End"
+msgstr "ቁጥር መስጫ 3 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM3\n"
+"string.text"
+msgid "Numbering 3 Cont."
+msgstr "ቁጥር መስጫ 3 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4S\n"
+"string.text"
+msgid "Numbering 4 Start"
+msgstr "ቁጥር መስጫ 4 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "ቁጥር መስጫ 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4E\n"
+"string.text"
+msgid "Numbering 4 End"
+msgstr "ቁጥር መስጫ 4 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM4\n"
+"string.text"
+msgid "Numbering 4 Cont."
+msgstr "ቁጥር መስጫ 4 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5S\n"
+"string.text"
+msgid "Numbering 5 Start"
+msgstr "ቁጥር መስጫ 5 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "ቁጥር መስጫ 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5E\n"
+"string.text"
+msgid "Numbering 5 End"
+msgstr "ቁጥር መስጫ 5 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM5\n"
+"string.text"
+msgid "Numbering 5 Cont."
+msgstr "ቁጥር መስጫ 5 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1S\n"
+"string.text"
+msgid "List 1 Start"
+msgstr "ዝርዝር 1 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1\n"
+"string.text"
+msgid "List 1"
+msgstr "ዝርዝር 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1E\n"
+"string.text"
+msgid "List 1 End"
+msgstr "ዝርዝር 1 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM1\n"
+"string.text"
+msgid "List 1 Cont."
+msgstr "ዝርዝር 1 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2S\n"
+"string.text"
+msgid "List 2 Start"
+msgstr "ዝርዝር 2 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2\n"
+"string.text"
+msgid "List 2"
+msgstr "ዝርዝር 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2E\n"
+"string.text"
+msgid "List 2 End"
+msgstr "ዝርዝር 2 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM2\n"
+"string.text"
+msgid "List 2 Cont."
+msgstr "ዝርዝር 2 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3S\n"
+"string.text"
+msgid "List 3 Start"
+msgstr "ዝርዝር 3 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3\n"
+"string.text"
+msgid "List 3"
+msgstr "ዝርዝር 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3E\n"
+"string.text"
+msgid "List 3 End"
+msgstr "ዝርዝር 3 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM3\n"
+"string.text"
+msgid "List 3 Cont."
+msgstr "ዝርዝር 3 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4S\n"
+"string.text"
+msgid "List 4 Start"
+msgstr "ዝርዝር 4 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4\n"
+"string.text"
+msgid "List 4"
+msgstr "ዝርዝር 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4E\n"
+"string.text"
+msgid "List 4 End"
+msgstr "ዝርዝር 4 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM4\n"
+"string.text"
+msgid "List 4 Cont."
+msgstr "ዝርዝር 4 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5S\n"
+"string.text"
+msgid "List 5 Start"
+msgstr "ዝርዝር 5 መጀመሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5\n"
+"string.text"
+msgid "List 5"
+msgstr "ዝርዝር 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5E\n"
+"string.text"
+msgid "List 5 End"
+msgstr "ዝርዝር 5 መጨረሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM5\n"
+"string.text"
+msgid "List 5 Cont."
+msgstr "ዝርዝር 5 የቀጠለ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERL\n"
+"string.text"
+msgid "Header Left"
+msgstr "ራስጌ በ ግራ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERR\n"
+"string.text"
+msgid "Header Right"
+msgstr "ራስጌ በ ቀኝ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTER\n"
+"string.text"
+msgid "Footer"
+msgstr "ግርጌ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERL\n"
+"string.text"
+msgid "Footer Left"
+msgstr "ግርጌ በ ግራ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERR\n"
+"string.text"
+msgid "Footer Right"
+msgstr "ግርጌ በ ቀኝ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE\n"
+"string.text"
+msgid "Table Contents"
+msgstr "የሰንጠረዥ ይዞታዎች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE_HDLN\n"
+"string.text"
+msgid "Table Heading"
+msgstr "የ ሰንጠረዥ ራስጌ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FRAME\n"
+"string.text"
+msgid "Frame Contents"
+msgstr "የክፈፍ ይዞታዎች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "የግርጌ ማስታወሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "የመጨረሻ ማስታወሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL\n"
+"string.text"
+msgid "Caption"
+msgstr "መግለጫ ጽሁፍ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_ABB\n"
+"string.text"
+msgid "Illustration"
+msgstr "ማብራሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_TABLE\n"
+"string.text"
+msgid "Table"
+msgstr "ሰንጠረዥ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_FRAME\n"
+"string.text"
+msgid "Text"
+msgstr "ጽሁፍ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_DRAWING\n"
+"string.text"
+msgid "Drawing"
+msgstr "መሳያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_JAKETADRESS\n"
+"string.text"
+msgid "Addressee"
+msgstr "ተቀባይ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SENDADRESS\n"
+"string.text"
+msgid "Sender"
+msgstr "ላኪው"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXH\n"
+"string.text"
+msgid "Index Heading"
+msgstr "የ ራስጌ ማውጫ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX1\n"
+"string.text"
+msgid "Index 1"
+msgstr "ማውጫ 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX2\n"
+"string.text"
+msgid "Index 2"
+msgstr "ማውጫ 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX3\n"
+"string.text"
+msgid "Index 3"
+msgstr "ማውጫ 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXBREAK\n"
+"string.text"
+msgid "Index Separator"
+msgstr "ማውጫ መለያያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNTH\n"
+"string.text"
+msgid "Contents Heading"
+msgstr "የ ይዞታዎች ራስጌ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT1\n"
+"string.text"
+msgid "Contents 1"
+msgstr "ይዞታዎች 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT2\n"
+"string.text"
+msgid "Contents 2"
+msgstr "ይዞታዎች 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT3\n"
+"string.text"
+msgid "Contents 3"
+msgstr "ይዞታዎች 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT4\n"
+"string.text"
+msgid "Contents 4"
+msgstr "ይዞታዎች 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT5\n"
+"string.text"
+msgid "Contents 5"
+msgstr "ይዞታዎች 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT6\n"
+"string.text"
+msgid "Contents 6"
+msgstr "ይዞታዎች 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT7\n"
+"string.text"
+msgid "Contents 7"
+msgstr "ይዞታዎች 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT8\n"
+"string.text"
+msgid "Contents 8"
+msgstr "ይዞታዎች 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT9\n"
+"string.text"
+msgid "Contents 9"
+msgstr "ይዞታዎች 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT10\n"
+"string.text"
+msgid "Contents 10"
+msgstr "ይዞታዎች 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USERH\n"
+"string.text"
+msgid "User Index Heading"
+msgstr "የ ተጠቃሚ ራስጌ ማውጫ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER1\n"
+"string.text"
+msgid "User Index 1"
+msgstr "የተጠቃሚ ማውጫ 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER2\n"
+"string.text"
+msgid "User Index 2"
+msgstr "የተጠቃሚ ማውጫ 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER3\n"
+"string.text"
+msgid "User Index 3"
+msgstr "የተጠቃሚ ማውጫ 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER4\n"
+"string.text"
+msgid "User Index 4"
+msgstr "የተጠቃሚ ማውጫ 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER5\n"
+"string.text"
+msgid "User Index 5"
+msgstr "የተጠቃሚ ማውጫ 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER6\n"
+"string.text"
+msgid "User Index 6"
+msgstr "የተጠቃሚ ማውጫ 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER7\n"
+"string.text"
+msgid "User Index 7"
+msgstr "የተጠቃሚ ማውጫ 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER8\n"
+"string.text"
+msgid "User Index 8"
+msgstr "የተጠቃሚ ማውጫ 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER9\n"
+"string.text"
+msgid "User Index 9"
+msgstr "የተጠቃሚ ማውጫ 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER10\n"
+"string.text"
+msgid "User Index 10"
+msgstr "የተጠቃሚ ማውጫ 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CITATION\n"
+"string.text"
+msgid "Citation"
+msgstr "ጥቅስ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUSH\n"
+"string.text"
+msgid "Illustration Index Heading"
+msgstr "የ ማውጫ ራስጌ ማብራሪያ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUS1\n"
+"string.text"
+msgid "Illustration Index 1"
+msgstr "የማውጫ ማብራሪያ 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECTH\n"
+"string.text"
+msgid "Object Index Heading"
+msgstr "የ ማውጫ ራስጌ እቃ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECT1\n"
+"string.text"
+msgid "Object Index 1"
+msgstr "የማውጫ እቃ 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLESH\n"
+"string.text"
+msgid "Table Index Heading"
+msgstr "የ ሰንጠረዥ አርእስት ማውጫ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLES1\n"
+"string.text"
+msgid "Table Index 1"
+msgstr "የሰንጠረዥ ማውጫ 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIESH\n"
+"string.text"
+msgid "Bibliography Heading"
+msgstr "Bibliography ራስጌ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIES1\n"
+"string.text"
+msgid "Bibliography 1"
+msgstr "Bibliography 1"
+
+
+#. Document title style, not to be confused with Heading style
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_TITEL\n"
+"string.text"
+msgid "Title"
+msgstr "አርእስት"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_SUBTITEL\n"
+"string.text"
+msgid "Subtitle"
+msgstr "ንዑስ አርእስት"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_BLOCKQUOTE\n"
+"string.text"
+msgid "Quotations"
+msgstr "ጥቅሶች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_PRE\n"
+"string.text"
+msgid "Preformatted Text"
+msgstr "Preformatted ጽሁፍ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_HR\n"
+"string.text"
+msgid "Horizontal Line"
+msgstr "የ አግድም መስመር"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DD\n"
+"string.text"
+msgid "List Contents"
+msgstr "ዝርዝር ይዞታዎች"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DT\n"
+"string.text"
+msgid "List Heading"
+msgstr "ዝርዝር ራስጌ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr "ነባር ዘዴ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FIRST\n"
+"string.text"
+msgid "First Page"
+msgstr "የመጀመሪያው ገጽ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LEFT\n"
+"string.text"
+msgid "Left Page"
+msgstr "የ ግራ ገጽ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_RIGHT\n"
+"string.text"
+msgid "Right Page"
+msgstr "የ ቀኝ ገጽ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_JAKET\n"
+"string.text"
+msgid "Envelope"
+msgstr "ፖስታ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_REGISTER\n"
+"string.text"
+msgid "Index"
+msgstr "ማውጫ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_HTML\n"
+"string.text"
+msgid "HTML"
+msgstr "HTML"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "የግርጌ ማስታወሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "የመጨረሻ ማስታወሻ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "ቁጥር መስጫ 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "ቁጥር መስጫ 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "ቁጥር መስጫ 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "ቁጥር መስጫ 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "ቁጥር መስጫ 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL1\n"
+"string.text"
+msgid "List 1"
+msgstr "ዝርዝር 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL2\n"
+"string.text"
+msgid "List 2"
+msgstr "ዝርዝር 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL3\n"
+"string.text"
+msgid "List 3"
+msgstr "ዝርዝር 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL4\n"
+"string.text"
+msgid "List 4"
+msgstr "ዝርዝር 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL5\n"
+"string.text"
+msgid "List 5"
+msgstr "ዝርዝር 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_RUBYTEXT\n"
+"string.text"
+msgid "Rubies"
+msgstr "Rubies"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_VERT_NUM\n"
+"string.text"
+msgid "Vertical Numbering Symbols"
+msgstr "በ ቁመት ቁጥር መስጫ ምልክቶች"
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_STANDARD_STYLESHEET_NAME\n"
+"string.text"
+msgid "Default"
+msgstr "ነባር"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_MEASURE\n"
+"string.text"
+msgid "Dimension Line"
+msgstr "የ ወርድ ፡ ስፋት ፡ ቁመት መስመር"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJNOLINENOFILL\n"
+"string.text"
+msgid "Object with no fill and no line"
+msgstr "መሙያ እና መስመር የሌለው እቃ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHARROW\n"
+"string.text"
+msgid "Object with arrow"
+msgstr "እቃዎች ከቀስት ጋር"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHSHADOW\n"
+"string.text"
+msgid "Object with shadow"
+msgstr "እቃዎች ከጥላ ጋር"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHOUTFILL\n"
+"string.text"
+msgid "Object without fill"
+msgstr "መሙያ የሌላቸው እቃዎች"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXT\n"
+"string.text"
+msgid "Text"
+msgstr "ጽሁፍ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY\n"
+"string.text"
+msgid "Text body"
+msgstr "የጽሁፍ ሰውነት"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_JUSTIFY\n"
+"string.text"
+msgid "Text body justified"
+msgstr "የጽሁፍ ሰውነት እኩል ማካፈያ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_INDENT\n"
+"string.text"
+msgid "First line indent"
+msgstr "የመጀመሪያ መስመር ማስረጊያ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "አርእስት"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE1\n"
+"string.text"
+msgid "Title1"
+msgstr "አርእስት1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE2\n"
+"string.text"
+msgid "Title2"
+msgstr "አርእስት2"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "ራስጌ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "ራስጌ1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE2\n"
+"string.text"
+msgid "Heading2"
+msgstr "ራስጌ2"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "አርእስት"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_SUBTITLE\n"
+"string.text"
+msgid "Subtitle"
+msgstr "ንዑስ አርእስት"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_OUTLINE\n"
+"string.text"
+msgid "Outline"
+msgstr "ረቂቅ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUNDOBJECTS\n"
+"string.text"
+msgid "Background objects"
+msgstr "የመደቡ እቃዎች"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUND\n"
+"string.text"
+msgid "Background"
+msgstr "መደቡ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_NOTES\n"
+"string.text"
+msgid "Notes"
+msgstr "ማስታወሻዎች"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_BANDED_CELL\n"
+"string.text"
+msgid "Banding cell"
+msgstr "ክፍል ማጣመሪያ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "ራስጌ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TOTAL\n"
+"string.text"
+msgid "Total line"
+msgstr "ጠቅላላ መስመር"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_FIRST_COLUMN\n"
+"string.text"
+msgid "First column"
+msgstr "የመጀመሪያው አምድ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_LAST_COLUMN\n"
+"string.text"
+msgid "Last column"
+msgstr "የመጨረሻው አምድ"

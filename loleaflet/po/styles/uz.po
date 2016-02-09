@@ -1,0 +1,1927 @@
+# All these style translations are taken from LibreOffice translation submodule
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_STANDARD\n"
+"string.text"
+msgid "Default"
+msgstr "Andoza"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT\n"
+"string.text"
+msgid "Result"
+msgstr "Natija"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT1\n"
+"string.text"
+msgid "Result2"
+msgstr "Natija2"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "Sarlavha"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "Sarlavha 1"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT\n"
+"string.text"
+msgid "Report"
+msgstr "Hisobot"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT1\n"
+"string.text"
+msgid "Report1"
+msgstr "Hisobot1"
+
+#: tbcontrl.src
+msgctxt ""
+"tbcontrl.src\n"
+"RID_SVXSTR_CLEARFORM\n"
+"string.text"
+msgid "Clear formatting"
+msgstr "Formatlashni tozalash"
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE\n"
+"string.text"
+msgid "Footnote Characters"
+msgstr "Izohlar belgilari"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_PAGENO\n"
+"string.text"
+msgid "Page Number"
+msgstr "Sahifaning soni"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LABEL\n"
+"string.text"
+msgid "Caption Characters"
+msgstr "Sarlavha belgilari"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_DROPCAPS\n"
+"string.text"
+msgid "Drop Caps"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_NUM_LEVEL\n"
+"string.text"
+msgid "Numbering Symbols"
+msgstr "Raqamlash belgilari"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_BUL_LEVEL\n"
+"string.text"
+msgid "Bullets"
+msgstr "Belgilar"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_NORMAL\n"
+"string.text"
+msgid "Internet Link"
+msgstr "Internet bogʻlama"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_VISIT\n"
+"string.text"
+msgid "Visited Internet Link"
+msgstr "Koʻrilgan internet bogʻlamasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_JUMPEDIT\n"
+"string.text"
+msgid "Placeholder"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_TOXJUMP\n"
+"string.text"
+msgid "Index Link"
+msgstr "Indeks bogʻlamasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE\n"
+"string.text"
+msgid "Endnote Characters"
+msgstr "Yakuniy izoh belgilari"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LANDSCAPE\n"
+"string.text"
+msgid "Landscape"
+msgstr "Eniga"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LINENUM\n"
+"string.text"
+msgid "Line Numbering"
+msgstr "Qatorni raqamlash"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_IDX_MAIN_ENTRY\n"
+"string.text"
+msgid "Main Index Entry"
+msgstr "Indeksning asosiy elmenti"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE_ANCHOR\n"
+"string.text"
+msgid "Footnote Anchor"
+msgstr "Izoh tutashtiruvchisi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE_ANCHOR\n"
+"string.text"
+msgid "Endnote Anchor"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_EMPHASIS\n"
+"string.text"
+msgid "Emphasis"
+msgstr "Urgʻu"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CITIATION\n"
+"string.text"
+msgid "Quotation"
+msgstr "Iqtibos"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_STRONG\n"
+"string.text"
+msgid "Strong Emphasis"
+msgstr "Qattiq urgʻu"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CODE\n"
+"string.text"
+msgid "Source Text"
+msgstr "Manba matni"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_SAMPLE\n"
+"string.text"
+msgid "Example"
+msgstr "Misol"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_KEYBOARD\n"
+"string.text"
+msgid "User Entry"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_VARIABLE\n"
+"string.text"
+msgid "Variable"
+msgstr "Oʻzgaruvchi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_DEFINSTANCE\n"
+"string.text"
+msgid "Definition"
+msgstr "Aniqlash"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_TELETYPE\n"
+"string.text"
+msgid "Teletype"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FRAME\n"
+"string.text"
+msgid "Frame"
+msgstr "Freym"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_GRAPHIC\n"
+"string.text"
+msgid "Graphics"
+msgstr "Rasmlar"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_OLE\n"
+"string.text"
+msgid "OLE"
+msgstr "OLE"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FORMEL\n"
+"string.text"
+msgid "Formula"
+msgstr "Formula"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_WATERSIGN\n"
+"string.text"
+msgid "Watermark"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_LABEL\n"
+"string.text"
+msgid "Labels"
+msgstr "Yorliqlar"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr ""
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT\n"
+"string.text"
+msgid "Text Body"
+msgstr "Asosiy matn"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_IDENT\n"
+"string.text"
+msgid "First Line Indent"
+msgstr "Birinchi satr chekinishi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_NEGIDENT\n"
+"string.text"
+msgid "Hanging Indent"
+msgstr ""
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_MOVE\n"
+"string.text"
+msgid "Text Body Indent"
+msgstr "Asosiy matn chekinishi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_GREETING\n"
+"string.text"
+msgid "Complimentary Close"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SIGNATURE\n"
+"string.text"
+msgid "Signature"
+msgstr "Imzo"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE_BASE\n"
+"string.text"
+msgid "Heading"
+msgstr "Sarlavha"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUMBUL_BASE\n"
+"string.text"
+msgid "List"
+msgstr "Roʻyxat"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_REGISTER_BASE\n"
+"string.text"
+msgid "Index"
+msgstr "~Indeks"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_CONFRONTATION\n"
+"string.text"
+msgid "List Indent"
+msgstr "Roʻyxat chekinishi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr ""
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE1\n"
+"string.text"
+msgid "Heading 1"
+msgstr "Sarlavha 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE2\n"
+"string.text"
+msgid "Heading 2"
+msgstr "Sarlavha 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE3\n"
+"string.text"
+msgid "Heading 3"
+msgstr "Sarlavha 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE4\n"
+"string.text"
+msgid "Heading 4"
+msgstr "Sarlavha 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE5\n"
+"string.text"
+msgid "Heading 5"
+msgstr "Sarlavha 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE6\n"
+"string.text"
+msgid "Heading 6"
+msgstr "Sarlavha 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE7\n"
+"string.text"
+msgid "Heading 7"
+msgstr "Sarlavha 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE8\n"
+"string.text"
+msgid "Heading 8"
+msgstr "Sarlavha 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE9\n"
+"string.text"
+msgid "Heading 9"
+msgstr "Sarlavha 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE10\n"
+"string.text"
+msgid "Heading 10"
+msgstr "Sarlavha 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1S\n"
+"string.text"
+msgid "Numbering 1 Start"
+msgstr "Raqamlash 1 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "Raqamlash 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1E\n"
+"string.text"
+msgid "Numbering 1 End"
+msgstr "Raqamlash 1 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM1\n"
+"string.text"
+msgid "Numbering 1 Cont."
+msgstr "Raqamlash 1 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2S\n"
+"string.text"
+msgid "Numbering 2 Start"
+msgstr "Raqamlash 2 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "Raqamlash 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2E\n"
+"string.text"
+msgid "Numbering 2 End"
+msgstr "Raqamlash 2 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM2\n"
+"string.text"
+msgid "Numbering 2 Cont."
+msgstr "Raqamlash 2 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3S\n"
+"string.text"
+msgid "Numbering 3 Start"
+msgstr "Raqamlash 3 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "Raqamlash 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3E\n"
+"string.text"
+msgid "Numbering 3 End"
+msgstr "Raqamlash 3 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM3\n"
+"string.text"
+msgid "Numbering 3 Cont."
+msgstr "Raqamlash 3 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4S\n"
+"string.text"
+msgid "Numbering 4 Start"
+msgstr "Raqamlash 4 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "Raqamlash 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4E\n"
+"string.text"
+msgid "Numbering 4 End"
+msgstr "Raqamlash 4 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM4\n"
+"string.text"
+msgid "Numbering 4 Cont."
+msgstr "Raqamlash 4 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5S\n"
+"string.text"
+msgid "Numbering 5 Start"
+msgstr "Raqamlash 5 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "Raqamlash 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5E\n"
+"string.text"
+msgid "Numbering 5 End"
+msgstr "Raqamlash 5 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM5\n"
+"string.text"
+msgid "Numbering 5 Cont."
+msgstr "Raqamlash 5 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1S\n"
+"string.text"
+msgid "List 1 Start"
+msgstr "Roʻyxat 1 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1\n"
+"string.text"
+msgid "List 1"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1E\n"
+"string.text"
+msgid "List 1 End"
+msgstr "Roʻyxat 1 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM1\n"
+"string.text"
+msgid "List 1 Cont."
+msgstr "Roʻyxat 1 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2S\n"
+"string.text"
+msgid "List 2 Start"
+msgstr "Roʻyxat 2 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2\n"
+"string.text"
+msgid "List 2"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2E\n"
+"string.text"
+msgid "List 2 End"
+msgstr "Roʻyxat 2 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM2\n"
+"string.text"
+msgid "List 2 Cont."
+msgstr "Roʻyxat 2 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3S\n"
+"string.text"
+msgid "List 3 Start"
+msgstr "Roʻyxat 3 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3\n"
+"string.text"
+msgid "List 3"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3E\n"
+"string.text"
+msgid "List 3 End"
+msgstr "Roʻyxat 3 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM3\n"
+"string.text"
+msgid "List 3 Cont."
+msgstr "Roʻyxat 3 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4S\n"
+"string.text"
+msgid "List 4 Start"
+msgstr "Roʻyxat 4 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4\n"
+"string.text"
+msgid "List 4"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4E\n"
+"string.text"
+msgid "List 4 End"
+msgstr "Roʻyxat 4 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM4\n"
+"string.text"
+msgid "List 4 Cont."
+msgstr "Roʻyxat 4 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5S\n"
+"string.text"
+msgid "List 5 Start"
+msgstr "Roʻyxat 5 ning boshi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5\n"
+"string.text"
+msgid "List 5"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5E\n"
+"string.text"
+msgid "List 5 End"
+msgstr "Roʻyxat 5 ning oxiri"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM5\n"
+"string.text"
+msgid "List 5 Cont."
+msgstr "Roʻyxat 5 ning davomi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "Ustgi kolontitul"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERL\n"
+"string.text"
+msgid "Header Left"
+msgstr "Ustgi kolontitul chapda"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERR\n"
+"string.text"
+msgid "Header Right"
+msgstr "Ustgi kolontitul oʻngda"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTER\n"
+"string.text"
+msgid "Footer"
+msgstr "Ostgi kolontitul"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERL\n"
+"string.text"
+msgid "Footer Left"
+msgstr "Ostgi kolontitul chapda"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERR\n"
+"string.text"
+msgid "Footer Right"
+msgstr "Ostgi kolontitul oʻngda"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE\n"
+"string.text"
+msgid "Table Contents"
+msgstr "Jadval tarkibi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE_HDLN\n"
+"string.text"
+msgid "Table Heading"
+msgstr "Jadval sarlavhasi"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FRAME\n"
+"string.text"
+msgid "Frame Contents"
+msgstr "Freym tarkibi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "Izoh"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "Yakuniy izoh"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL\n"
+"string.text"
+msgid "Caption"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_ABB\n"
+"string.text"
+msgid "Illustration"
+msgstr "Namoyish"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_TABLE\n"
+"string.text"
+msgid "Table"
+msgstr "Jadval"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_FRAME\n"
+"string.text"
+msgid "Text"
+msgstr "Matn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_DRAWING\n"
+"string.text"
+msgid "Drawing"
+msgstr "Chizma"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_JAKETADRESS\n"
+"string.text"
+msgid "Addressee"
+msgstr "Oluvchi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SENDADRESS\n"
+"string.text"
+msgid "Sender"
+msgstr "Joʻnatuvchi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXH\n"
+"string.text"
+msgid "Index Heading"
+msgstr "Indeks sarlavhasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX1\n"
+"string.text"
+msgid "Index 1"
+msgstr "Indeks 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX2\n"
+"string.text"
+msgid "Index 2"
+msgstr "Indeks 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX3\n"
+"string.text"
+msgid "Index 3"
+msgstr "Indeks 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXBREAK\n"
+"string.text"
+msgid "Index Separator"
+msgstr "Indeks ajratuvchisi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNTH\n"
+"string.text"
+msgid "Contents Heading"
+msgstr "Mundarija sarlavhasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT1\n"
+"string.text"
+msgid "Contents 1"
+msgstr "Mundarija 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT2\n"
+"string.text"
+msgid "Contents 2"
+msgstr "Mundarija 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT3\n"
+"string.text"
+msgid "Contents 3"
+msgstr "Mundarija 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT4\n"
+"string.text"
+msgid "Contents 4"
+msgstr "Mundarija 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT5\n"
+"string.text"
+msgid "Contents 5"
+msgstr "Mundarija 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT6\n"
+"string.text"
+msgid "Contents 6"
+msgstr "Mundarija 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT7\n"
+"string.text"
+msgid "Contents 7"
+msgstr "Mundarija 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT8\n"
+"string.text"
+msgid "Contents 8"
+msgstr "Mundarija 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT9\n"
+"string.text"
+msgid "Contents 9"
+msgstr "Mundarija 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT10\n"
+"string.text"
+msgid "Contents 10"
+msgstr "Mundarija 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USERH\n"
+"string.text"
+msgid "User Index Heading"
+msgstr "Foydalanuvchi indeksi sarlavhasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER1\n"
+"string.text"
+msgid "User Index 1"
+msgstr "Foydalanuvchi indeksi 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER2\n"
+"string.text"
+msgid "User Index 2"
+msgstr "Foydalanuvchi indeksi 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER3\n"
+"string.text"
+msgid "User Index 3"
+msgstr "Foydalanuvchi indeksi 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER4\n"
+"string.text"
+msgid "User Index 4"
+msgstr "Foydalanuvchi indeksi 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER5\n"
+"string.text"
+msgid "User Index 5"
+msgstr "Foydalanuvchi indeksi 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER6\n"
+"string.text"
+msgid "User Index 6"
+msgstr "Foydalanuvchi indeksi 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER7\n"
+"string.text"
+msgid "User Index 7"
+msgstr "Foydalanuvchi indeksi 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER8\n"
+"string.text"
+msgid "User Index 8"
+msgstr "Foydalanuvchi indeksi 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER9\n"
+"string.text"
+msgid "User Index 9"
+msgstr "Foydalanuvchi indeksi 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER10\n"
+"string.text"
+msgid "User Index 10"
+msgstr "Foydalanuvchi indeksi 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CITATION\n"
+"string.text"
+msgid "Citation"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUSH\n"
+"string.text"
+msgid "Illustration Index Heading"
+msgstr "Namoyish roʻyxati sarlavhasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUS1\n"
+"string.text"
+msgid "Illustration Index 1"
+msgstr "Namoyish roʻyxati 1"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECTH\n"
+"string.text"
+msgid "Object Index Heading"
+msgstr "Obyekt roʻyxati sarlavhasi"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECT1\n"
+"string.text"
+msgid "Object Index 1"
+msgstr "Obyekt roʻyxati 1"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLESH\n"
+"string.text"
+msgid "Table Index Heading"
+msgstr "Jadval roʻyxati sarlavhasi"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLES1\n"
+"string.text"
+msgid "Table Index 1"
+msgstr "Jadvallar roʻyxati 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIESH\n"
+"string.text"
+msgid "Bibliography Heading"
+msgstr "Adabiyotlar roʻyxati sarlavhasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIES1\n"
+"string.text"
+msgid "Bibliography 1"
+msgstr "Aabiyotlar roʻyxati 1"
+
+
+#. Document title style, not to be confused with Heading style
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_TITEL\n"
+"string.text"
+msgid "Title"
+msgstr "Sarlavhasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_SUBTITEL\n"
+"string.text"
+msgid "Subtitle"
+msgstr "Qoʻshimcha sarlavha:"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_BLOCKQUOTE\n"
+"string.text"
+msgid "Quotations"
+msgstr "Iqtibos"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_PRE\n"
+"string.text"
+msgid "Preformatted Text"
+msgstr "Oldindan formatlangan matn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_HR\n"
+"string.text"
+msgid "Horizontal Line"
+msgstr "Gorizontal chiziq"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DD\n"
+"string.text"
+msgid "List Contents"
+msgstr "Roʻyxat tarkibi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DT\n"
+"string.text"
+msgid "List Heading"
+msgstr "Roʻyxat sarlavhasi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FIRST\n"
+"string.text"
+msgid "First Page"
+msgstr "Birinchi sahifa"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LEFT\n"
+"string.text"
+msgid "Left Page"
+msgstr "Chapdagi sahifa"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_RIGHT\n"
+"string.text"
+msgid "Right Page"
+msgstr "Oʻngdagi sahifa"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_JAKET\n"
+"string.text"
+msgid "Envelope"
+msgstr "Konvert"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_REGISTER\n"
+"string.text"
+msgid "Index"
+msgstr "~Indeks"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_HTML\n"
+"string.text"
+msgid "HTML"
+msgstr "HTML"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "Izoh"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "Yakuniy izoh"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "Raqamlash 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "Raqamlash 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "Raqamlash 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "Raqamlash 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "Raqamlash 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL1\n"
+"string.text"
+msgid "List 1"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL2\n"
+"string.text"
+msgid "List 2"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL3\n"
+"string.text"
+msgid "List 3"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL4\n"
+"string.text"
+msgid "List 4"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL5\n"
+"string.text"
+msgid "List 5"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_RUBYTEXT\n"
+"string.text"
+msgid "Rubies"
+msgstr "Transliteratsiya"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_VERT_NUM\n"
+"string.text"
+msgid "Vertical Numbering Symbols"
+msgstr "Vertikal raqamlash belgilari"
+
+#: glob.src
+#, fuzzy
+msgctxt ""
+"glob.src\n"
+"STR_STANDARD_STYLESHEET_NAME\n"
+"string.text"
+msgid "Default"
+msgstr "Andoza"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_MEASURE\n"
+"string.text"
+msgid "Dimension Line"
+msgstr "Oʻlchamli chiziq"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJNOLINENOFILL\n"
+"string.text"
+msgid "Object with no fill and no line"
+msgstr ""
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHARROW\n"
+"string.text"
+msgid "Object with arrow"
+msgstr "Soyali obyektlar"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHSHADOW\n"
+"string.text"
+msgid "Object with shadow"
+msgstr "Soyali obyektlar"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHOUTFILL\n"
+"string.text"
+msgid "Object without fill"
+msgstr ""
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXT\n"
+"string.text"
+msgid "Text"
+msgstr "Matn"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY\n"
+"string.text"
+msgid "Text body"
+msgstr "Asosiy matn"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_JUSTIFY\n"
+"string.text"
+msgid "Text body justified"
+msgstr "Asosiy matnni eniga tekislash"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_INDENT\n"
+"string.text"
+msgid "First line indent"
+msgstr "Birinchi satr chekinishi"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "Sarlavha1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE1\n"
+"string.text"
+msgid "Title1"
+msgstr "Sarlavha1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE2\n"
+"string.text"
+msgid "Title2"
+msgstr "Sarlavha2"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "Sarlavha"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "Sarlavha 1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE2\n"
+"string.text"
+msgid "Heading2"
+msgstr "Sarlavha 2"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "Sarlavha1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_SUBTITLE\n"
+"string.text"
+msgid "Subtitle"
+msgstr "Qoʻshimcha sarlavha:"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_OUTLINE\n"
+"string.text"
+msgid "Outline"
+msgstr "Kontur"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUNDOBJECTS\n"
+"string.text"
+msgid "Background objects"
+msgstr ""
+
+
+#: glob.src
+#, fuzzy
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUND\n"
+"string.text"
+msgid "Background"
+msgstr "Orqa fon"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_NOTES\n"
+"string.text"
+msgid "Notes"
+msgstr "Izohlar"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_BANDED_CELL\n"
+"string.text"
+msgid "Banding cell"
+msgstr ""
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "Ustgi kolontitul"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TOTAL\n"
+"string.text"
+msgid "Total line"
+msgstr ""
+
+
+#: glob.src
+#, fuzzy
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_FIRST_COLUMN\n"
+"string.text"
+msgid "First column"
+msgstr "Birinchi ustun"
+
+
+#: glob.src
+#, fuzzy
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_LAST_COLUMN\n"
+"string.text"
+msgid "Last column"
+msgstr "Oxirgi ustun"

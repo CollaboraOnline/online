@@ -1,0 +1,1915 @@
+# All these style translations are taken from LibreOffice translation submodule
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_STANDARD\n"
+"string.text"
+msgid "Default"
+msgstr "Аслӣ"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT\n"
+"string.text"
+msgid "Result"
+msgstr "Натиҷа"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT1\n"
+"string.text"
+msgid "Result2"
+msgstr "Натиҷаи2"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "Сарлавҳа"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "Сарлавҳаи1"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT\n"
+"string.text"
+msgid "Report"
+msgstr "Ҳисобот"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT1\n"
+"string.text"
+msgid "Report1"
+msgstr "Ҳисоботи1"
+
+#: tbcontrl.src
+msgctxt ""
+"tbcontrl.src\n"
+"RID_SVXSTR_CLEARFORM\n"
+"string.text"
+msgid "Clear formatting"
+msgstr "Тозакунии форматкунӣ"
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE\n"
+"string.text"
+msgid "Footnote Characters"
+msgstr "Рамзҳои зерэзоҳ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_PAGENO\n"
+"string.text"
+msgid "Page Number"
+msgstr "Рақами саҳифа"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LABEL\n"
+"string.text"
+msgid "Caption Characters"
+msgstr "Рамзҳои навишт"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_DROPCAPS\n"
+"string.text"
+msgid "Drop Caps"
+msgstr "Сарҳарф"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_NUM_LEVEL\n"
+"string.text"
+msgid "Numbering Symbols"
+msgstr "Рамзи рақамгузорӣ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_BUL_LEVEL\n"
+"string.text"
+msgid "Bullets"
+msgstr "Тирчаҳо"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_NORMAL\n"
+"string.text"
+msgid "Internet Link"
+msgstr "Интернет-ҳавола"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_VISIT\n"
+"string.text"
+msgid "Visited Internet Link"
+msgstr "Гиперҳаволаи истифодашуда"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_JUMPEDIT\n"
+"string.text"
+msgid "Placeholder"
+msgstr "Ҷойнишин"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_TOXJUMP\n"
+"string.text"
+msgid "Index Link"
+msgstr "Ҳаволаи индекс"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE\n"
+"string.text"
+msgid "Endnote Characters"
+msgstr "Рамзи зерэзоҳ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LANDSCAPE\n"
+"string.text"
+msgid "Landscape"
+msgstr "Манзаравӣ"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LINENUM\n"
+"string.text"
+msgid "Line Numbering"
+msgstr "Рақамгузории сатрҳо"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_IDX_MAIN_ENTRY\n"
+"string.text"
+msgid "Main Index Entry"
+msgstr "Навишти асосии индекс"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE_ANCHOR\n"
+"string.text"
+msgid "Footnote Anchor"
+msgstr "Лангари сарэзоҳ"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE_ANCHOR\n"
+"string.text"
+msgid "Endnote Anchor"
+msgstr "Лангари зерэзоҳ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_EMPHASIS\n"
+"string.text"
+msgid "Emphasis"
+msgstr "Ҷудокуниҳо"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CITIATION\n"
+"string.text"
+msgid "Quotation"
+msgstr "Порча"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_STRONG\n"
+"string.text"
+msgid "Strong Emphasis"
+msgstr "Ҷудокуни бо ғавс"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CODE\n"
+"string.text"
+msgid "Source Text"
+msgstr "Матни ибтидоӣ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_SAMPLE\n"
+"string.text"
+msgid "Example"
+msgstr "Намуна"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_KEYBOARD\n"
+"string.text"
+msgid "User Entry"
+msgstr "Навишти истифодабар"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_VARIABLE\n"
+"string.text"
+msgid "Variable"
+msgstr "Тағирёбанда"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_DEFINSTANCE\n"
+"string.text"
+msgid "Definition"
+msgstr "Шарҳ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_TELETYPE\n"
+"string.text"
+msgid "Teletype"
+msgstr "Матни ғайри пропортсионалӣ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FRAME\n"
+"string.text"
+msgid "Frame"
+msgstr "Ҳошия"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_GRAPHIC\n"
+"string.text"
+msgid "Graphics"
+msgstr "Графика"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_OLE\n"
+"string.text"
+msgid "OLE"
+msgstr "OLE"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FORMEL\n"
+"string.text"
+msgid "Formula"
+msgstr "Формула"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr "Эзоҳ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_WATERSIGN\n"
+"string.text"
+msgid "Watermark"
+msgstr "Аломати обӣ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_LABEL\n"
+"string.text"
+msgid "Labels"
+msgstr "Дурӯшҳо"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr ""
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT\n"
+"string.text"
+msgid "Text Body"
+msgstr "Матни асосӣ"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_IDENT\n"
+"string.text"
+msgid "First Line Indent"
+msgstr "Сатри аввал бо фосила"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_NEGIDENT\n"
+"string.text"
+msgid "Hanging Indent"
+msgstr "Фосилаи баръакс"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_MOVE\n"
+"string.text"
+msgid "Text Body Indent"
+msgstr "Матни асосӣ бо фосила"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_GREETING\n"
+"string.text"
+msgid "Complimentary Close"
+msgstr "Дуруди хотимавӣ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SIGNATURE\n"
+"string.text"
+msgid "Signature"
+msgstr "Имзо"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE_BASE\n"
+"string.text"
+msgid "Heading"
+msgstr "Сарлавҳа"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUMBUL_BASE\n"
+"string.text"
+msgid "List"
+msgstr "Рӯйхат"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_REGISTER_BASE\n"
+"string.text"
+msgid "Index"
+msgstr "Индекс"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_CONFRONTATION\n"
+"string.text"
+msgid "List Indent"
+msgstr "Фосилаҳо"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr "Эзоҳ"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE1\n"
+"string.text"
+msgid "Heading 1"
+msgstr "Сарлавҳаи 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE2\n"
+"string.text"
+msgid "Heading 2"
+msgstr "Сарлавҳаи 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE3\n"
+"string.text"
+msgid "Heading 3"
+msgstr "Сарлавҳаи 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE4\n"
+"string.text"
+msgid "Heading 4"
+msgstr "Сарлавҳаи 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE5\n"
+"string.text"
+msgid "Heading 5"
+msgstr "Сарлавҳаи 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE6\n"
+"string.text"
+msgid "Heading 6"
+msgstr "Сарлавҳаи 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE7\n"
+"string.text"
+msgid "Heading 7"
+msgstr "Сарлавҳаи 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE8\n"
+"string.text"
+msgid "Heading 8"
+msgstr "Сарлавҳаи 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE9\n"
+"string.text"
+msgid "Heading 9"
+msgstr "Сарлавҳаи 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE10\n"
+"string.text"
+msgid "Heading 10"
+msgstr "Сарлавҳаи 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1S\n"
+"string.text"
+msgid "Numbering 1 Start"
+msgstr "Оғози рақамгузории 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "Рақамгузории 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1E\n"
+"string.text"
+msgid "Numbering 1 End"
+msgstr "Охири рақамгузории 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM1\n"
+"string.text"
+msgid "Numbering 1 Cont."
+msgstr "Давоми рақамгузории 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2S\n"
+"string.text"
+msgid "Numbering 2 Start"
+msgstr "Оғози рақамгузории 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "Рақамгузории 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2E\n"
+"string.text"
+msgid "Numbering 2 End"
+msgstr "Охири рақамгузории 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM2\n"
+"string.text"
+msgid "Numbering 2 Cont."
+msgstr "Давоми рақамгузории 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3S\n"
+"string.text"
+msgid "Numbering 3 Start"
+msgstr "Оғози рақамгузории 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "Рақамгузории 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3E\n"
+"string.text"
+msgid "Numbering 3 End"
+msgstr "Охири рақамгузории 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM3\n"
+"string.text"
+msgid "Numbering 3 Cont."
+msgstr "Давоми рақамгузории 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4S\n"
+"string.text"
+msgid "Numbering 4 Start"
+msgstr "Оғози рақамгузории 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "Рақамгузории 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4E\n"
+"string.text"
+msgid "Numbering 4 End"
+msgstr "Охири рақамгузории 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM4\n"
+"string.text"
+msgid "Numbering 4 Cont."
+msgstr "Давоми рақамгузории 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5S\n"
+"string.text"
+msgid "Numbering 5 Start"
+msgstr "Оғози рақамгузории 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "Рақамгузории 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5E\n"
+"string.text"
+msgid "Numbering 5 End"
+msgstr "Охири рақамгузории 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM5\n"
+"string.text"
+msgid "Numbering 5 Cont."
+msgstr "Давоми рақамгузории 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1S\n"
+"string.text"
+msgid "List 1 Start"
+msgstr "Оғози рӯйхати 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1\n"
+"string.text"
+msgid "List 1"
+msgstr "Рӯйхати 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1E\n"
+"string.text"
+msgid "List 1 End"
+msgstr "Охири рӯйхати 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM1\n"
+"string.text"
+msgid "List 1 Cont."
+msgstr "Давомии рӯйхати 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2S\n"
+"string.text"
+msgid "List 2 Start"
+msgstr "Оғози рӯйхати 2 "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2\n"
+"string.text"
+msgid "List 2"
+msgstr "Рӯйхати 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2E\n"
+"string.text"
+msgid "List 2 End"
+msgstr "Охири рӯйхати 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM2\n"
+"string.text"
+msgid "List 2 Cont."
+msgstr "Давоми рӯйхати 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3S\n"
+"string.text"
+msgid "List 3 Start"
+msgstr "Оғози рӯйхати 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3\n"
+"string.text"
+msgid "List 3"
+msgstr "Рӯйхати 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3E\n"
+"string.text"
+msgid "List 3 End"
+msgstr "Охири рӯйхати 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM3\n"
+"string.text"
+msgid "List 3 Cont."
+msgstr "Давоми рӯйхати 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4S\n"
+"string.text"
+msgid "List 4 Start"
+msgstr "Оғози рӯйхати 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4\n"
+"string.text"
+msgid "List 4"
+msgstr "Рӯйхати 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4E\n"
+"string.text"
+msgid "List 4 End"
+msgstr "Охири рӯйхати 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM4\n"
+"string.text"
+msgid "List 4 Cont."
+msgstr "Давоми рӯйхати 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5S\n"
+"string.text"
+msgid "List 5 Start"
+msgstr "Оғози рӯйхати 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5\n"
+"string.text"
+msgid "List 5"
+msgstr "Рӯйхати 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5E\n"
+"string.text"
+msgid "List 5 End"
+msgstr "Охири рӯйхати 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM5\n"
+"string.text"
+msgid "List 5 Cont."
+msgstr "Давоми рӯйхати 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "Колонтитули болоӣ"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERL\n"
+"string.text"
+msgid "Header Left"
+msgstr "Колонтитули болоӣ аз чап"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERR\n"
+"string.text"
+msgid "Header Right"
+msgstr "Колонтитули болоӣ аз рост"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTER\n"
+"string.text"
+msgid "Footer"
+msgstr "Колонтитули поёнӣ"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERL\n"
+"string.text"
+msgid "Footer Left"
+msgstr "Колонтитули поёнӣ аз чап"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERR\n"
+"string.text"
+msgid "Footer Right"
+msgstr "Колонтитули поёнӣ аз рост"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE\n"
+"string.text"
+msgid "Table Contents"
+msgstr "Таркиби ҷадвал"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE_HDLN\n"
+"string.text"
+msgid "Table Heading"
+msgstr "Сарлавҳаи ҷадвал"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FRAME\n"
+"string.text"
+msgid "Frame Contents"
+msgstr "Таркиби фрейм"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "Зерлавҳа"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "Зерэзоҳ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL\n"
+"string.text"
+msgid "Caption"
+msgstr "Ном"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_ABB\n"
+"string.text"
+msgid "Illustration"
+msgstr "Иллюстратсия"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_TABLE\n"
+"string.text"
+msgid "Table"
+msgstr "Ҷадвал"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_FRAME\n"
+"string.text"
+msgid "Text"
+msgstr "Матн"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_DRAWING\n"
+"string.text"
+msgid "Drawing"
+msgstr "Расм"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_JAKETADRESS\n"
+"string.text"
+msgid "Addressee"
+msgstr "Номагир"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SENDADRESS\n"
+"string.text"
+msgid "Sender"
+msgstr "Номафирист"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXH\n"
+"string.text"
+msgid "Index Heading"
+msgstr "Сарлавҳаи индекс"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX1\n"
+"string.text"
+msgid "Index 1"
+msgstr "Индекс 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX2\n"
+"string.text"
+msgid "Index 2"
+msgstr "Индекс 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX3\n"
+"string.text"
+msgid "Index 3"
+msgstr "Индекс 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXBREAK\n"
+"string.text"
+msgid "Index Separator"
+msgstr "Ҷудокуники индекс"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNTH\n"
+"string.text"
+msgid "Contents Heading"
+msgstr "Сарлавҳаи мундариҷаҳо"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT1\n"
+"string.text"
+msgid "Contents 1"
+msgstr "Мундариҷаи 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT2\n"
+"string.text"
+msgid "Contents 2"
+msgstr "Мундариҷаи 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT3\n"
+"string.text"
+msgid "Contents 3"
+msgstr "Мундариҷаи 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT4\n"
+"string.text"
+msgid "Contents 4"
+msgstr "Мундариҷаи 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT5\n"
+"string.text"
+msgid "Contents 5"
+msgstr "Мундариҷаи 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT6\n"
+"string.text"
+msgid "Contents 6"
+msgstr "Мундариҷаи 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT7\n"
+"string.text"
+msgid "Contents 7"
+msgstr "Мундариҷаи 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT8\n"
+"string.text"
+msgid "Contents 8"
+msgstr "Мундариҷаи 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT9\n"
+"string.text"
+msgid "Contents 9"
+msgstr "Мундариҷаи 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT10\n"
+"string.text"
+msgid "Contents 10"
+msgstr "Мундариҷаи 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USERH\n"
+"string.text"
+msgid "User Index Heading"
+msgstr "Сарлавҳаи индекси истифодабар"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER1\n"
+"string.text"
+msgid "User Index 1"
+msgstr "Индекси истифодабари 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER2\n"
+"string.text"
+msgid "User Index 2"
+msgstr "Индекси истифодабари 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER3\n"
+"string.text"
+msgid "User Index 3"
+msgstr "Индекси истифодабари 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER4\n"
+"string.text"
+msgid "User Index 4"
+msgstr "Индекси истифодабари 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER5\n"
+"string.text"
+msgid "User Index 5"
+msgstr "Индекси истифодабари 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER6\n"
+"string.text"
+msgid "User Index 6"
+msgstr "Индекси истифодабари 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER7\n"
+"string.text"
+msgid "User Index 7"
+msgstr "Индекси истифодабари 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER8\n"
+"string.text"
+msgid "User Index 8"
+msgstr "Индекси истифодабари 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER9\n"
+"string.text"
+msgid "User Index 9"
+msgstr "Индекси истифодабари 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER10\n"
+"string.text"
+msgid "User Index 10"
+msgstr "Индекси истифодабари 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CITATION\n"
+"string.text"
+msgid "Citation"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUSH\n"
+"string.text"
+msgid "Illustration Index Heading"
+msgstr "Сарлавҳаи индекси иллюстратсияҳо"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUS1\n"
+"string.text"
+msgid "Illustration Index 1"
+msgstr "Рӯйхати иллюстратсияҳо 1"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECTH\n"
+"string.text"
+msgid "Object Index Heading"
+msgstr "Сарлавҳаи рӯйхати объектҳо"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECT1\n"
+"string.text"
+msgid "Object Index 1"
+msgstr "Рӯйхати объектҳо 1"
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLESH\n"
+"string.text"
+msgid "Table Index Heading"
+msgstr "Сарлавҳаи индекси ҷадвал "
+
+
+#: poolfmt.src
+#, fuzzy
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLES1\n"
+"string.text"
+msgid "Table Index 1"
+msgstr "Индекси ҷадвал 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIESH\n"
+"string.text"
+msgid "Bibliography Heading"
+msgstr "Сарлавҳаи библиография"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIES1\n"
+"string.text"
+msgid "Bibliography 1"
+msgstr "Библиография 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_SUBTITEL\n"
+"string.text"
+msgid "Subtitle"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_BLOCKQUOTE\n"
+"string.text"
+msgid "Quotations"
+msgstr "Иқтибос"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_PRE\n"
+"string.text"
+msgid "Preformatted Text"
+msgstr "Матни форматнок"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_HR\n"
+"string.text"
+msgid "Horizontal Line"
+msgstr "Хати уфуқӣ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DD\n"
+"string.text"
+msgid "List Contents"
+msgstr "Таркиби рӯйхат"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DT\n"
+"string.text"
+msgid "List Heading"
+msgstr "Сарлавҳаи рӯйхат"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr ""
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FIRST\n"
+"string.text"
+msgid "First Page"
+msgstr "Саҳифаи аввал"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LEFT\n"
+"string.text"
+msgid "Left Page"
+msgstr "Саҳифаи чап"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_RIGHT\n"
+"string.text"
+msgid "Right Page"
+msgstr "Саҳифаи рост"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_JAKET\n"
+"string.text"
+msgid "Envelope"
+msgstr "Мактуб"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_REGISTER\n"
+"string.text"
+msgid "Index"
+msgstr "Индекс"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_HTML\n"
+"string.text"
+msgid "HTML"
+msgstr "HTML"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "Зерлавҳа"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "Зерэзоҳ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "Рақамгузории 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "Рақамгузории 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "Рақамгузории 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "Рақамгузории 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "Рақамгузории 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL1\n"
+"string.text"
+msgid "List 1"
+msgstr "Рӯйхати 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL2\n"
+"string.text"
+msgid "List 2"
+msgstr "Рӯйхати 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL3\n"
+"string.text"
+msgid "List 3"
+msgstr "Рӯйхати 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL4\n"
+"string.text"
+msgid "List 4"
+msgstr "Рӯйхати 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL5\n"
+"string.text"
+msgid "List 5"
+msgstr "Рӯйхати 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_RUBYTEXT\n"
+"string.text"
+msgid "Rubies"
+msgstr "Транслитератсия"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_VERT_NUM\n"
+"string.text"
+msgid "Vertical Numbering Symbols"
+msgstr "Рамзҳои рақамгузории амудӣ"
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_STANDARD_STYLESHEET_NAME\n"
+"string.text"
+msgid "Default"
+msgstr "Аслӣ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_MEASURE\n"
+"string.text"
+msgid "Dimension Line"
+msgstr "Хати ченакӣ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJNOLINENOFILL\n"
+"string.text"
+msgid "Object with no fill and no line"
+msgstr ""
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHARROW\n"
+"string.text"
+msgid "Object with arrow"
+msgstr "Объект бо тирча"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHSHADOW\n"
+"string.text"
+msgid "Object with shadow"
+msgstr "Объект бо соя"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHOUTFILL\n"
+"string.text"
+msgid "Object without fill"
+msgstr "Объект бе пуркунӣ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXT\n"
+"string.text"
+msgid "Text"
+msgstr "Матн"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY\n"
+"string.text"
+msgid "Text body"
+msgstr "Матни асосӣ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_JUSTIFY\n"
+"string.text"
+msgid "Text body justified"
+msgstr "Баробаркунии Матни асосӣ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_INDENT\n"
+"string.text"
+msgid "First line indent"
+msgstr "Сатри аввал бо фосила"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "Сарлавҳа"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE1\n"
+"string.text"
+msgid "Title1"
+msgstr "Сарлавҳаи 1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE2\n"
+"string.text"
+msgid "Title2"
+msgstr "Сарлавҳаи 2"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "Сарлавҳа"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "Сарлавҳаи 1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE2\n"
+"string.text"
+msgid "Heading2"
+msgstr "Сарлавҳаи 2"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "Сарлавҳа"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_SUBTITLE\n"
+"string.text"
+msgid "Subtitle"
+msgstr "Зерлавҳа"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_OUTLINE\n"
+"string.text"
+msgid "Outline"
+msgstr "Сохтор"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUNDOBJECTS\n"
+"string.text"
+msgid "Background objects"
+msgstr "Объектҳои манзар"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUND\n"
+"string.text"
+msgid "Background"
+msgstr "Манзар"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_NOTES\n"
+"string.text"
+msgid "Notes"
+msgstr "Эзоҳ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_BANDED_CELL\n"
+"string.text"
+msgid "Banding cell"
+msgstr ""
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "Колонтитули болоӣ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TOTAL\n"
+"string.text"
+msgid "Total line"
+msgstr ""
+
+
+#: glob.src
+#, fuzzy
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_FIRST_COLUMN\n"
+"string.text"
+msgid "First column"
+msgstr "Ранги аввал"
+
+
+#: glob.src
+#, fuzzy
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_LAST_COLUMN\n"
+"string.text"
+msgid "Last column"
+msgstr "Сутун аз ~боло"

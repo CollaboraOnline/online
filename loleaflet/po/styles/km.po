@@ -1,0 +1,1904 @@
+# All these style translations are taken from LibreOffice translation submodule
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_STANDARD\n"
+"string.text"
+msgid "Default"
+msgstr "លំនាំដើម"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT\n"
+"string.text"
+msgid "Result"
+msgstr "លទ្ធផល"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT1\n"
+"string.text"
+msgid "Result2"
+msgstr "លទ្ធផលទី ២"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "ក្បាល"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "ក្បាល ១"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT\n"
+"string.text"
+msgid "Report"
+msgstr "របាយការណ៍"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT1\n"
+"string.text"
+msgid "Report1"
+msgstr "របាយការណ៍ ១"
+
+#: tbcontrl.src
+msgctxt ""
+"tbcontrl.src\n"
+"RID_SVXSTR_CLEARFORM\n"
+"string.text"
+msgid "Clear formatting"
+msgstr "ជម្រះ​ទ្រង់ទ្រាយ"
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE\n"
+"string.text"
+msgid "Footnote Characters"
+msgstr "តួអក្សរ​លេខ​យោង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_PAGENO\n"
+"string.text"
+msgid "Page Number"
+msgstr "លេខ​ទំព័រ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LABEL\n"
+"string.text"
+msgid "Caption Characters"
+msgstr "តួអក្សរ​ចំណងជើង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_DROPCAPS\n"
+"string.text"
+msgid "Drop Caps"
+msgstr "អក្សរ​ធំ​ដើម​អត្ថបទ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_NUM_LEVEL\n"
+"string.text"
+msgid "Numbering Symbols"
+msgstr "និមិត្ត​​​សញ្ញា​​​​លេខរៀង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_BUL_LEVEL\n"
+"string.text"
+msgid "Bullets"
+msgstr "ចំណុច"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_NORMAL\n"
+"string.text"
+msgid "Internet Link"
+msgstr "តំណ​អ៊ីនធឺណិត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_VISIT\n"
+"string.text"
+msgid "Visited Internet Link"
+msgstr "តំណ​​អ៊ីនធឺណិត​​​​ដែល​​បាន​​ទស្សនា"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_JUMPEDIT\n"
+"string.text"
+msgid "Placeholder"
+msgstr "កន្លែង​ដាក់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_TOXJUMP\n"
+"string.text"
+msgid "Index Link"
+msgstr "តំណ​​លិបិក្រម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE\n"
+"string.text"
+msgid "Endnote Characters"
+msgstr "តួអក្សរ​លេខ​យោង​ចុង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LANDSCAPE\n"
+"string.text"
+msgid "Landscape"
+msgstr "ទេសភាព"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LINENUM\n"
+"string.text"
+msgid "Line Numbering"
+msgstr "​លេខរៀង​បន្ទាត់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_IDX_MAIN_ENTRY\n"
+"string.text"
+msgid "Main Index Entry"
+msgstr "ធាតុ​​លិបិក្រម​​សំខាន់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE_ANCHOR\n"
+"string.text"
+msgid "Footnote Anchor"
+msgstr "យុថ្កា​លេខ​យោង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE_ANCHOR\n"
+"string.text"
+msgid "Endnote Anchor"
+msgstr "យុថ្កា​លេខ​យោង​ចុង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_EMPHASIS\n"
+"string.text"
+msgid "Emphasis"
+msgstr "ការ​សង្កត់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CITIATION\n"
+"string.text"
+msgid "Quotation"
+msgstr "សម្រង់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_STRONG\n"
+"string.text"
+msgid "Strong Emphasis"
+msgstr "សង្កត់​ខ្លាំង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CODE\n"
+"string.text"
+msgid "Source Text"
+msgstr "អត្ថបទ​ប្រភព"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_SAMPLE\n"
+"string.text"
+msgid "Example"
+msgstr "ឧទាហរណ៍"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_KEYBOARD\n"
+"string.text"
+msgid "User Entry"
+msgstr "ធាតុ​បញ្ចូល​របស់​អ្នក​ប្រើ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_VARIABLE\n"
+"string.text"
+msgid "Variable"
+msgstr "អថេរ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_DEFINSTANCE\n"
+"string.text"
+msgid "Definition"
+msgstr "និយមន័យ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_TELETYPE\n"
+"string.text"
+msgid "Teletype"
+msgstr "ទូរលិខ​អង្គុលីលេខ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FRAME\n"
+"string.text"
+msgid "Frame"
+msgstr "ស៊ុម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_GRAPHIC\n"
+"string.text"
+msgid "Graphics"
+msgstr "ក្រាហ្វិក"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_OLE\n"
+"string.text"
+msgid "OLE"
+msgstr "OLE"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FORMEL\n"
+"string.text"
+msgid "Formula"
+msgstr "រូបមន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr "ចំណាំ​ក្នុង​រឹម​ទំព័រ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_WATERSIGN\n"
+"string.text"
+msgid "Watermark"
+msgstr "ព្រាល​ៗ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_LABEL\n"
+"string.text"
+msgid "Labels"
+msgstr "ស្លាក"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr "រចនាប័ទ្ម​លំនាំដើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT\n"
+"string.text"
+msgid "Text Body"
+msgstr "តួ​អត្ថបទ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_IDENT\n"
+"string.text"
+msgid "First Line Indent"
+msgstr "ចូល​បន្ទាត់ ​បន្ទាត់​ទី​មួយ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_NEGIDENT\n"
+"string.text"
+msgid "Hanging Indent"
+msgstr "ព្យួរ​ការ​ចូល​បន្ទាត់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_MOVE\n"
+"string.text"
+msgid "Text Body Indent"
+msgstr "ចូល​​បន្ទាត់​​តួ​​អត្ថបទ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_GREETING\n"
+"string.text"
+msgid "Complimentary Close"
+msgstr "បញ្ចប់​ដោយ​ការ​គួរសម​"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SIGNATURE\n"
+"string.text"
+msgid "Signature"
+msgstr "ហត្ថលេខា"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE_BASE\n"
+"string.text"
+msgid "Heading"
+msgstr "ក្បាល"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUMBUL_BASE\n"
+"string.text"
+msgid "List"
+msgstr "បញ្ជី"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_REGISTER_BASE\n"
+"string.text"
+msgid "Index"
+msgstr "លិបិក្រម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_CONFRONTATION\n"
+"string.text"
+msgid "List Indent"
+msgstr "ការ​ចូល​បន្ទាត់​បញ្ជី"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr "ចំណាំ​ក្នុង​រឹម​ទំព័រ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE1\n"
+"string.text"
+msgid "Heading 1"
+msgstr "ក្បាល ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE2\n"
+"string.text"
+msgid "Heading 2"
+msgstr "ក្បាល ២"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE3\n"
+"string.text"
+msgid "Heading 3"
+msgstr "ក្បាល ៣"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE4\n"
+"string.text"
+msgid "Heading 4"
+msgstr "ក្បាល ៤"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE5\n"
+"string.text"
+msgid "Heading 5"
+msgstr "ក្បាល ៥"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE6\n"
+"string.text"
+msgid "Heading 6"
+msgstr "ក្បាល ៦"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE7\n"
+"string.text"
+msgid "Heading 7"
+msgstr "ក្បាល ៧"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE8\n"
+"string.text"
+msgid "Heading 8"
+msgstr "ក្បាល ៨"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE9\n"
+"string.text"
+msgid "Heading 9"
+msgstr "ក្បាល ៩"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE10\n"
+"string.text"
+msgid "Heading 10"
+msgstr "ក្បាល ១០"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1S\n"
+"string.text"
+msgid "Numbering 1 Start"
+msgstr "លេខរៀង​​ ១​ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "លេខរៀង ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1E\n"
+"string.text"
+msgid "Numbering 1 End"
+msgstr "លេខរៀង ១ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM1\n"
+"string.text"
+msgid "Numbering 1 Cont."
+msgstr "លេខរៀង​ ១ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2S\n"
+"string.text"
+msgid "Numbering 2 Start"
+msgstr "លេខរៀង ២ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "​លេខរៀង​ ២ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2E\n"
+"string.text"
+msgid "Numbering 2 End"
+msgstr "លេខរៀង​ ២ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM2\n"
+"string.text"
+msgid "Numbering 2 Cont."
+msgstr "លេខរៀង​ ២ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3S\n"
+"string.text"
+msgid "Numbering 3 Start"
+msgstr "លេខរៀង ៣ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "លេខរៀង ៣ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3E\n"
+"string.text"
+msgid "Numbering 3 End"
+msgstr "លេខរៀង ៣ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM3\n"
+"string.text"
+msgid "Numbering 3 Cont."
+msgstr "លេខរៀង ៣ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4S\n"
+"string.text"
+msgid "Numbering 4 Start"
+msgstr "លេខរៀង ៤​ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "លេខរៀង​ ៤"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4E\n"
+"string.text"
+msgid "Numbering 4 End"
+msgstr "លេខរៀង​ ៤ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM4\n"
+"string.text"
+msgid "Numbering 4 Cont."
+msgstr "លេខរៀង ៤ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5S\n"
+"string.text"
+msgid "Numbering 5 Start"
+msgstr "លេខរៀង ៥ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "លេខរៀង ៥ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5E\n"
+"string.text"
+msgid "Numbering 5 End"
+msgstr "លេខរៀង ៥ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM5\n"
+"string.text"
+msgid "Numbering 5 Cont."
+msgstr "លេខរៀង ៥ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1S\n"
+"string.text"
+msgid "List 1 Start"
+msgstr "បញ្ជី​​ ១ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1\n"
+"string.text"
+msgid "List 1"
+msgstr "បញ្ជី​ ១ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1E\n"
+"string.text"
+msgid "List 1 End"
+msgstr "បញ្ជី​​ ១ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM1\n"
+"string.text"
+msgid "List 1 Cont."
+msgstr "បញ្ជី​ ១ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2S\n"
+"string.text"
+msgid "List 2 Start"
+msgstr "បញ្ជី​​ ២ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2\n"
+"string.text"
+msgid "List 2"
+msgstr "បញ្ជី ២"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2E\n"
+"string.text"
+msgid "List 2 End"
+msgstr "បញ្ជី​​ ២ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM2\n"
+"string.text"
+msgid "List 2 Cont."
+msgstr "បញ្ជី​ ២ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3S\n"
+"string.text"
+msgid "List 3 Start"
+msgstr "បញ្ជី​ ៣ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3\n"
+"string.text"
+msgid "List 3"
+msgstr "បញ្ជី​ ៣ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3E\n"
+"string.text"
+msgid "List 3 End"
+msgstr "បញ្ជី​ ៣ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM3\n"
+"string.text"
+msgid "List 3 Cont."
+msgstr "បញ្ជី​ ៣ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4S\n"
+"string.text"
+msgid "List 4 Start"
+msgstr "បញ្ជី​ ៤ ចាប់ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4\n"
+"string.text"
+msgid "List 4"
+msgstr "បញ្ជី​ ៤"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4E\n"
+"string.text"
+msgid "List 4 End"
+msgstr "បញ្ជី​ ៤ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM4\n"
+"string.text"
+msgid "List 4 Cont."
+msgstr "បញ្ជី​ ៤ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5S\n"
+"string.text"
+msgid "List 5 Start"
+msgstr "បញ្ជី ៥ ចាប់​ផ្តើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5\n"
+"string.text"
+msgid "List 5"
+msgstr "បញ្ជី ៥ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5E\n"
+"string.text"
+msgid "List 5 End"
+msgstr "បញ្ជី​ ៥ បញ្ចប់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM5\n"
+"string.text"
+msgid "List 5 Cont."
+msgstr "បញ្ជី ៥ បន្ត"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "បឋមកថា​"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERL\n"
+"string.text"
+msgid "Header Left"
+msgstr "ខាង​​ឆ្វេង​​បឋមកថា"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERR\n"
+"string.text"
+msgid "Header Right"
+msgstr "ខាង​ស្តាំ​​បឋមកថា"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTER\n"
+"string.text"
+msgid "Footer"
+msgstr "បាតកថា​"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERL\n"
+"string.text"
+msgid "Footer Left"
+msgstr "ខាង​​ឆ្វេង​បាតកថា"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERR\n"
+"string.text"
+msgid "Footer Right"
+msgstr "ខាង​ស្តាំ​​បាតកថា"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE\n"
+"string.text"
+msgid "Table Contents"
+msgstr "មាតិកា​តារាង​"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE_HDLN\n"
+"string.text"
+msgid "Table Heading"
+msgstr "ក្បាល​តារាង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FRAME\n"
+"string.text"
+msgid "Frame Contents"
+msgstr "មាតិកា​ស៊ុម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "លេខ​យោង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "លេខ​យោង​ចុង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL\n"
+"string.text"
+msgid "Caption"
+msgstr "ចំណងជើង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_ABB\n"
+"string.text"
+msgid "Illustration"
+msgstr "រូបភាព​លម្អ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_TABLE\n"
+"string.text"
+msgid "Table"
+msgstr "តារាង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_FRAME\n"
+"string.text"
+msgid "Text"
+msgstr "អត្ថបទ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_DRAWING\n"
+"string.text"
+msgid "Drawing"
+msgstr "គំនូរ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_JAKETADRESS\n"
+"string.text"
+msgid "Addressee"
+msgstr "អ្នក​​ទទួល​​សំបុត្រ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SENDADRESS\n"
+"string.text"
+msgid "Sender"
+msgstr "អ្នក​ផ្ញើ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXH\n"
+"string.text"
+msgid "Index Heading"
+msgstr "ក្បាល​​លិបិក្រម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX1\n"
+"string.text"
+msgid "Index 1"
+msgstr "លិបិក្រម ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX2\n"
+"string.text"
+msgid "Index 2"
+msgstr "លិបិក្រម ២"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX3\n"
+"string.text"
+msgid "Index 3"
+msgstr "លិបិក្រម ៣"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXBREAK\n"
+"string.text"
+msgid "Index Separator"
+msgstr "បន្ទាត់​​ខណ្ឌចែក​​លិបិក្រម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNTH\n"
+"string.text"
+msgid "Contents Heading"
+msgstr "ក្បាល​​​មាតិកា"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT1\n"
+"string.text"
+msgid "Contents 1"
+msgstr "មាតិកា ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT2\n"
+"string.text"
+msgid "Contents 2"
+msgstr "មាតិកា ២"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT3\n"
+"string.text"
+msgid "Contents 3"
+msgstr "មាតិកា ៣"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT4\n"
+"string.text"
+msgid "Contents 4"
+msgstr "មាតិកា ៤"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT5\n"
+"string.text"
+msgid "Contents 5"
+msgstr "មាតិកា​ ៥"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT6\n"
+"string.text"
+msgid "Contents 6"
+msgstr "មាតិកា ៦"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT7\n"
+"string.text"
+msgid "Contents 7"
+msgstr "មាតិកា ៧"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT8\n"
+"string.text"
+msgid "Contents 8"
+msgstr "មាតិកា​ ៨"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT9\n"
+"string.text"
+msgid "Contents 9"
+msgstr "មាតិកា ៩"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT10\n"
+"string.text"
+msgid "Contents 10"
+msgstr "មាតិកា​ ១០"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USERH\n"
+"string.text"
+msgid "User Index Heading"
+msgstr "ក្បាល​លិបិក្រម​របស់​អ្នក​ប្រើ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER1\n"
+"string.text"
+msgid "User Index 1"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​ ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER2\n"
+"string.text"
+msgid "User Index 2"
+msgstr "លិបិក្រម​​អ្នក​ប្រើ​​ ២"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER3\n"
+"string.text"
+msgid "User Index 3"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​​ ៣"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER4\n"
+"string.text"
+msgid "User Index 4"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​​ ៤"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER5\n"
+"string.text"
+msgid "User Index 5"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​ ៥"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER6\n"
+"string.text"
+msgid "User Index 6"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​ ៦"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER7\n"
+"string.text"
+msgid "User Index 7"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​ ៧"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER8\n"
+"string.text"
+msgid "User Index 8"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​​ ៨"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER9\n"
+"string.text"
+msgid "User Index 9"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​​ ៩"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER10\n"
+"string.text"
+msgid "User Index 10"
+msgstr "លិបិក្រម​អ្នក​ប្រើ​​ ១០"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CITATION\n"
+"string.text"
+msgid "Citation"
+msgstr "សេចក្ដី​ស្រង់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUSH\n"
+"string.text"
+msgid "Illustration Index Heading"
+msgstr "ក្បាល​លិបិក្រម​​​រូបភាព​លម្អ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUS1\n"
+"string.text"
+msgid "Illustration Index 1"
+msgstr "លិបិក្រម​រូបភាព​លម្អ ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECTH\n"
+"string.text"
+msgid "Object Index Heading"
+msgstr "ក្បាល​លិបិក្រម​វត្ថុ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECT1\n"
+"string.text"
+msgid "Object Index 1"
+msgstr "លិបិក្រម​វត្ថុ ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLESH\n"
+"string.text"
+msgid "Table Index Heading"
+msgstr "ក្បាល​​លិបិក្រម​​តារាង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLES1\n"
+"string.text"
+msgid "Table Index 1"
+msgstr "លិបិក្រម​​តារាង ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIESH\n"
+"string.text"
+msgid "Bibliography Heading"
+msgstr "ក្បាល​​គន្ថនិទ្ទេស"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIES1\n"
+"string.text"
+msgid "Bibliography 1"
+msgstr "គន្ថនិទ្ទេស​ ១"
+
+
+#. Document title style, not to be confused with Heading style
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_TITEL\n"
+"string.text"
+msgid "Title"
+msgstr "ចំណង​ជើង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_SUBTITEL\n"
+"string.text"
+msgid "Subtitle"
+msgstr "ចំណងជើង​រង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_BLOCKQUOTE\n"
+"string.text"
+msgid "Quotations"
+msgstr "សម្រង់"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_PRE\n"
+"string.text"
+msgid "Preformatted Text"
+msgstr "អត្ថបទ​ដែល​បាន​ធ្វើ​ទ្រង់ទ្រាយ​ជា​មុន"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_HR\n"
+"string.text"
+msgid "Horizontal Line"
+msgstr "បន្ទាត់​ផ្ដេក​"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DD\n"
+"string.text"
+msgid "List Contents"
+msgstr "មាតិកា​​បញ្ជី"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DT\n"
+"string.text"
+msgid "List Heading"
+msgstr "ក្បាល​​បញ្ជី"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr "រចនាប័ទ្ម​លំនាំដើម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FIRST\n"
+"string.text"
+msgid "First Page"
+msgstr "ទំព័រ​ទី​មួយ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LEFT\n"
+"string.text"
+msgid "Left Page"
+msgstr "ទំព័រ​​​ឆ្វេង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_RIGHT\n"
+"string.text"
+msgid "Right Page"
+msgstr "ទំព័រ​​​ស្តាំ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_JAKET\n"
+"string.text"
+msgid "Envelope"
+msgstr "ស្រោម​សំបុត្រ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_REGISTER\n"
+"string.text"
+msgid "Index"
+msgstr "លិបិក្រម"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_HTML\n"
+"string.text"
+msgid "HTML"
+msgstr "HTML"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "លេខ​យោង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "លេខ​យោង​ចុង"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "លេខរៀង ១"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "​លេខរៀង​ ២ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "លេខរៀង ៣ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "លេខរៀង​ ៤"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "លេខរៀង ៥ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL1\n"
+"string.text"
+msgid "List 1"
+msgstr "បញ្ជី​ ១ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL2\n"
+"string.text"
+msgid "List 2"
+msgstr "បញ្ជី ២"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL3\n"
+"string.text"
+msgid "List 3"
+msgstr "បញ្ជី​ ៣ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL4\n"
+"string.text"
+msgid "List 4"
+msgstr "បញ្ជី​ ៤"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL5\n"
+"string.text"
+msgid "List 5"
+msgstr "បញ្ជី ៥ "
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_RUBYTEXT\n"
+"string.text"
+msgid "Rubies"
+msgstr "មគ្គុទេ្ទសក៍​សូរសព្ទ"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_VERT_NUM\n"
+"string.text"
+msgid "Vertical Numbering Symbols"
+msgstr "និមិត្ត​​សញ្ញា​​​​លេខរៀង​​បញ្ឈរ"
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_STANDARD_STYLESHEET_NAME\n"
+"string.text"
+msgid "Default"
+msgstr "លំនាំដើម"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_MEASURE\n"
+"string.text"
+msgid "Dimension Line"
+msgstr "បន្ទាត់​វិមាត្រ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJNOLINENOFILL\n"
+"string.text"
+msgid "Object with no fill and no line"
+msgstr "វត្ថុ​ដោយ​មិន​បំពេញ និង​គ្មាន​បន្ទាត់"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHARROW\n"
+"string.text"
+msgid "Object with arrow"
+msgstr "វត្ថុ​មាន​​ព្រួញ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHSHADOW\n"
+"string.text"
+msgid "Object with shadow"
+msgstr "វត្ថុ​មាន​​ស្រមោល"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHOUTFILL\n"
+"string.text"
+msgid "Object without fill"
+msgstr "វត្ថុ​ដែល​មិន​បំពេញ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXT\n"
+"string.text"
+msgid "Text"
+msgstr "អត្ថបទ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY\n"
+"string.text"
+msgid "Text body"
+msgstr "តួ​អត្ថបទ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_JUSTIFY\n"
+"string.text"
+msgid "Text body justified"
+msgstr "តួ​អត្ថបទ​​បាន​តម្រឹម​សងខាង"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_INDENT\n"
+"string.text"
+msgid "First line indent"
+msgstr "ចូល​បន្ទាត់ ​បន្ទាត់​ទី​មួយ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "ចំណងជើង"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE1\n"
+"string.text"
+msgid "Title1"
+msgstr "ចំណងជើង ១"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE2\n"
+"string.text"
+msgid "Title2"
+msgstr "ចំណងជើង ២"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "ក្បាល"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "ក្បាល ១"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE2\n"
+"string.text"
+msgid "Heading2"
+msgstr "ក្បាល ២"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "ចំណងជើង"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_SUBTITLE\n"
+"string.text"
+msgid "Subtitle"
+msgstr "ចំណងជើង​រង"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_OUTLINE\n"
+"string.text"
+msgid "Outline"
+msgstr "គ្រោង​"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUNDOBJECTS\n"
+"string.text"
+msgid "Background objects"
+msgstr "វត្ថុ​ផ្ទៃ​ខាងក្រោយ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUND\n"
+"string.text"
+msgid "Background"
+msgstr "ផ្ទៃ​ខាងក្រោយ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_NOTES\n"
+"string.text"
+msgid "Notes"
+msgstr "ចំណាំ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_BANDED_CELL\n"
+"string.text"
+msgid "Banding cell"
+msgstr "បញ្ចូល​ក្រឡា​ចូលគ្នា"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "បឋមកថា"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TOTAL\n"
+"string.text"
+msgid "Total line"
+msgstr "ជួរ​សរុប"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_FIRST_COLUMN\n"
+"string.text"
+msgid "First column"
+msgstr "ជួរឈរ​ទី​មួយ"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_LAST_COLUMN\n"
+"string.text"
+msgid "Last column"
+msgstr "ជួរ​ឈរ​ចុងក្រោយ"

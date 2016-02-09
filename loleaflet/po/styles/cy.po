@@ -1,0 +1,1904 @@
+# All these style translations are taken from LibreOffice translation submodule
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_STANDARD\n"
+"string.text"
+msgid "Default"
+msgstr "Rhagosodedig"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT\n"
+"string.text"
+msgid "Result"
+msgstr "Canlyniad"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_RESULT1\n"
+"string.text"
+msgid "Result2"
+msgstr "Canlyniad2"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "Pennawd"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "Pennawd1"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT\n"
+"string.text"
+msgid "Report"
+msgstr "Adroddiad"
+
+
+#: globstr.src
+msgctxt ""
+"globstr.src\n"
+"RID_GLOBSTR\n"
+"STR_STYLENAME_REPORT1\n"
+"string.text"
+msgid "Report1"
+msgstr "Adroddiad1"
+
+#: tbcontrl.src
+msgctxt ""
+"tbcontrl.src\n"
+"RID_SVXSTR_CLEARFORM\n"
+"string.text"
+msgid "Clear formatting"
+msgstr "Clirio fformatio"
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE\n"
+"string.text"
+msgid "Footnote Characters"
+msgstr "Nodau Troednodyn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_PAGENO\n"
+"string.text"
+msgid "Page Number"
+msgstr "Rhif Tudalen"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LABEL\n"
+"string.text"
+msgid "Caption Characters"
+msgstr "Nodau Egluryn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_DROPCAPS\n"
+"string.text"
+msgid "Drop Caps"
+msgstr "Priflythrennau Bach"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_NUM_LEVEL\n"
+"string.text"
+msgid "Numbering Symbols"
+msgstr "Symbolau Rhifo"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_BUL_LEVEL\n"
+"string.text"
+msgid "Bullets"
+msgstr "Bwledi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_NORMAL\n"
+"string.text"
+msgid "Internet Link"
+msgstr "Cyswllt Rhyngrwyd"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_INET_VISIT\n"
+"string.text"
+msgid "Visited Internet Link"
+msgstr "Cyswllt Rhyngrwyd Ymwelwyd"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_JUMPEDIT\n"
+"string.text"
+msgid "Placeholder"
+msgstr "Dalfan"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_TOXJUMP\n"
+"string.text"
+msgid "Index Link"
+msgstr "Cyswllt Mynegai"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE\n"
+"string.text"
+msgid "Endnote Characters"
+msgstr "Nodau Troednodyn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LANDSCAPE\n"
+"string.text"
+msgid "Landscape"
+msgstr "Tirlun"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_LINENUM\n"
+"string.text"
+msgid "Line Numbering"
+msgstr "Rhifo Llinell"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_IDX_MAIN_ENTRY\n"
+"string.text"
+msgid "Main Index Entry"
+msgstr "Prif Gofnod Mynegai"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_FOOTNOTE_ANCHOR\n"
+"string.text"
+msgid "Footnote Anchor"
+msgstr "Angor Troednodyn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_ENDNOTE_ANCHOR\n"
+"string.text"
+msgid "Endnote Anchor"
+msgstr "Angor Diweddnod"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_EMPHASIS\n"
+"string.text"
+msgid "Emphasis"
+msgstr "Pwyslais"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CITIATION\n"
+"string.text"
+msgid "Quotation"
+msgstr "Dyfyniad"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_STRONG\n"
+"string.text"
+msgid "Strong Emphasis"
+msgstr "Pwyslais cryf"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_CODE\n"
+"string.text"
+msgid "Source Text"
+msgstr "Testun Ffynhonnell"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_SAMPLE\n"
+"string.text"
+msgid "Example"
+msgstr "Esiampl"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_KEYBOARD\n"
+"string.text"
+msgid "User Entry"
+msgstr "Cofnod Defnyddiwr"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_VARIABLE\n"
+"string.text"
+msgid "Variable"
+msgstr "Newidyn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_DEFINSTANCE\n"
+"string.text"
+msgid "Definition"
+msgstr "Diffiniad"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_HTML_TELETYPE\n"
+"string.text"
+msgid "Teletype"
+msgstr "Teleteip"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FRAME\n"
+"string.text"
+msgid "Frame"
+msgstr "Ffrâm"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_GRAPHIC\n"
+"string.text"
+msgid "Graphics"
+msgstr "Graffigau"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_OLE\n"
+"string.text"
+msgid "OLE"
+msgstr "OLE"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_FORMEL\n"
+"string.text"
+msgid "Formula"
+msgstr "Fformiwla"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr "Ymylnodau"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_WATERSIGN\n"
+"string.text"
+msgid "Watermark"
+msgstr "Dyfrnod"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLFRM_LABEL\n"
+"string.text"
+msgid "Labels"
+msgstr "Labeli"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr "Arddull Ragosodedig"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT\n"
+"string.text"
+msgid "Text Body"
+msgstr "Corff Testun"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_IDENT\n"
+"string.text"
+msgid "First Line Indent"
+msgstr "Mewnoliad y Llinell Gyntaf"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_NEGIDENT\n"
+"string.text"
+msgid "Hanging Indent"
+msgstr "Mewnoliad Crog"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TEXT_MOVE\n"
+"string.text"
+msgid "Text Body Indent"
+msgstr "Mewnoliad Corff Testun"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_GREETING\n"
+"string.text"
+msgid "Complimentary Close"
+msgstr "Cyfarchion wrth Gloi"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SIGNATURE\n"
+"string.text"
+msgid "Signature"
+msgstr "Llofnod"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE_BASE\n"
+"string.text"
+msgid "Heading"
+msgstr "Pennawd"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUMBUL_BASE\n"
+"string.text"
+msgid "List"
+msgstr "Rhestr"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_REGISTER_BASE\n"
+"string.text"
+msgid "Index"
+msgstr "Mynegai"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_CONFRONTATION\n"
+"string.text"
+msgid "List Indent"
+msgstr "Mewnoliad Rhestr"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_MARGINAL\n"
+"string.text"
+msgid "Marginalia"
+msgstr "Ymylnodau"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE1\n"
+"string.text"
+msgid "Heading 1"
+msgstr "Pennawd 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE2\n"
+"string.text"
+msgid "Heading 2"
+msgstr "Pennawd 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE3\n"
+"string.text"
+msgid "Heading 3"
+msgstr "Pennawd 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE4\n"
+"string.text"
+msgid "Heading 4"
+msgstr "Pennawd 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE5\n"
+"string.text"
+msgid "Heading 5"
+msgstr "Pennawd 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE6\n"
+"string.text"
+msgid "Heading 6"
+msgstr "Pennawd 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE7\n"
+"string.text"
+msgid "Heading 7"
+msgstr "Pennawd 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE8\n"
+"string.text"
+msgid "Heading 8"
+msgstr "Pennawd 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE9\n"
+"string.text"
+msgid "Heading 9"
+msgstr "Pennawd 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADLINE10\n"
+"string.text"
+msgid "Heading 10"
+msgstr "Pennawd 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1S\n"
+"string.text"
+msgid "Numbering 1 Start"
+msgstr "Cychwyn Rhifo 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "Rhifo 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL1E\n"
+"string.text"
+msgid "Numbering 1 End"
+msgstr "Rhifo Diwedd 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM1\n"
+"string.text"
+msgid "Numbering 1 Cont."
+msgstr "Parhau Rhifo 1."
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2S\n"
+"string.text"
+msgid "Numbering 2 Start"
+msgstr "Cychwyn Rhifo 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "Rhifo 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL2E\n"
+"string.text"
+msgid "Numbering 2 End"
+msgstr "Rhifo Diwedd 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM2\n"
+"string.text"
+msgid "Numbering 2 Cont."
+msgstr "Parhau Rhifo 2."
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3S\n"
+"string.text"
+msgid "Numbering 3 Start"
+msgstr "Cychwyn Rhifo 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "Rhifo 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL3E\n"
+"string.text"
+msgid "Numbering 3 End"
+msgstr "Rhifo Diwedd 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM3\n"
+"string.text"
+msgid "Numbering 3 Cont."
+msgstr "Parhau Rhifo 3."
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4S\n"
+"string.text"
+msgid "Numbering 4 Start"
+msgstr "Cychwyn Rhifo 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "Rhifo 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL4E\n"
+"string.text"
+msgid "Numbering 4 End"
+msgstr "Rhifo Diwedd 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM4\n"
+"string.text"
+msgid "Numbering 4 Cont."
+msgstr "Parhau Rhifo 4."
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5S\n"
+"string.text"
+msgid "Numbering 5 Start"
+msgstr "Cychwyn Rhifo 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "Rhifo 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_LEVEL5E\n"
+"string.text"
+msgid "Numbering 5 End"
+msgstr "Rhifo Diwedd 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_NUM_NONUM5\n"
+"string.text"
+msgid "Numbering 5 Cont."
+msgstr "Parhau Rhifo 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1S\n"
+"string.text"
+msgid "List 1 Start"
+msgstr "Rhestr Cychwyn 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1\n"
+"string.text"
+msgid "List 1"
+msgstr "Rhestr 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL1E\n"
+"string.text"
+msgid "List 1 End"
+msgstr "Diwedd Rhestr 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM1\n"
+"string.text"
+msgid "List 1 Cont."
+msgstr "Parhau Rhestr 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2S\n"
+"string.text"
+msgid "List 2 Start"
+msgstr "Cychwyn Rhestr 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2\n"
+"string.text"
+msgid "List 2"
+msgstr "Rhestr 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL2E\n"
+"string.text"
+msgid "List 2 End"
+msgstr "Diwedd Rhestr 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM2\n"
+"string.text"
+msgid "List 2 Cont."
+msgstr "Parhau Rhestr 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3S\n"
+"string.text"
+msgid "List 3 Start"
+msgstr "Cychwyn Rhestr 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3\n"
+"string.text"
+msgid "List 3"
+msgstr "Rhestr 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL3E\n"
+"string.text"
+msgid "List 3 End"
+msgstr "Diwedd Rhestr 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM3\n"
+"string.text"
+msgid "List 3 Cont."
+msgstr "Parhau Rhestr 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4S\n"
+"string.text"
+msgid "List 4 Start"
+msgstr "Cychwyn Rhestr 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4\n"
+"string.text"
+msgid "List 4"
+msgstr "Rhestr 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL4E\n"
+"string.text"
+msgid "List 4 End"
+msgstr "Diwedd Rhestr 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM4\n"
+"string.text"
+msgid "List 4 Cont."
+msgstr "Parhau Rhestr 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5S\n"
+"string.text"
+msgid "List 5 Start"
+msgstr "Cychwyn Rhestr 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5\n"
+"string.text"
+msgid "List 5"
+msgstr "Rhestr 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_LEVEL5E\n"
+"string.text"
+msgid "List 5 End"
+msgstr "Diwedd Rhestr 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_BUL_NONUM5\n"
+"string.text"
+msgid "List 5 Cont."
+msgstr "Parhau Rhestr 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "Pennyn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERL\n"
+"string.text"
+msgid "Header Left"
+msgstr "Pennyn i'r Chwith"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HEADERR\n"
+"string.text"
+msgid "Header Right"
+msgstr "Pennyn i'r Dde"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTER\n"
+"string.text"
+msgid "Footer"
+msgstr "Troedyn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERL\n"
+"string.text"
+msgid "Footer Left"
+msgstr "Troedyn i'r Chwith"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTERR\n"
+"string.text"
+msgid "Footer Right"
+msgstr "Troedyn i'r Dde"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE\n"
+"string.text"
+msgid "Table Contents"
+msgstr "Cynnwys Tabl"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TABLE_HDLN\n"
+"string.text"
+msgid "Table Heading"
+msgstr "Pennawd Tabl"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FRAME\n"
+"string.text"
+msgid "Frame Contents"
+msgstr "Cynnwys Ffrâm"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "Troednodyn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "Diweddnod"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL\n"
+"string.text"
+msgid "Caption"
+msgstr "Egluryn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_ABB\n"
+"string.text"
+msgid "Illustration"
+msgstr "Darlun"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_TABLE\n"
+"string.text"
+msgid "Table"
+msgstr "Tabl"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_FRAME\n"
+"string.text"
+msgid "Text"
+msgstr "Testun"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_LABEL_DRAWING\n"
+"string.text"
+msgid "Drawing"
+msgstr "Lluniadu"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_JAKETADRESS\n"
+"string.text"
+msgid "Addressee"
+msgstr "Cyfeiriad"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_SENDADRESS\n"
+"string.text"
+msgid "Sender"
+msgstr "Anfonwr"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXH\n"
+"string.text"
+msgid "Index Heading"
+msgstr "Mynegai Pennawd"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX1\n"
+"string.text"
+msgid "Index 1"
+msgstr "Mynegai 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX2\n"
+"string.text"
+msgid "Index 2"
+msgstr "Mynegai 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDX3\n"
+"string.text"
+msgid "Index 3"
+msgstr "Mynegai 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_IDXBREAK\n"
+"string.text"
+msgid "Index Separator"
+msgstr "Ymwahanydd Mynegai"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNTH\n"
+"string.text"
+msgid "Contents Heading"
+msgstr "Pennawd Cynnwys"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT1\n"
+"string.text"
+msgid "Contents 1"
+msgstr "Cynnwys 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT2\n"
+"string.text"
+msgid "Contents 2"
+msgstr "Cynnwys 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT3\n"
+"string.text"
+msgid "Contents 3"
+msgstr "Cynnwys 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT4\n"
+"string.text"
+msgid "Contents 4"
+msgstr "Cynnwys 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT5\n"
+"string.text"
+msgid "Contents 5"
+msgstr "Cynnwys 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT6\n"
+"string.text"
+msgid "Contents 6"
+msgstr "Cynnwys 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT7\n"
+"string.text"
+msgid "Contents 7"
+msgstr "Cynnwys 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT8\n"
+"string.text"
+msgid "Contents 8"
+msgstr "Cynnwys 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT9\n"
+"string.text"
+msgid "Contents 9"
+msgstr "Cynnwys 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CNTNT10\n"
+"string.text"
+msgid "Contents 10"
+msgstr "Cynnwys 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USERH\n"
+"string.text"
+msgid "User Index Heading"
+msgstr "Pennawd Mynegai Defnyddiwr"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER1\n"
+"string.text"
+msgid "User Index 1"
+msgstr "Mynegai Defnyddiwr 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER2\n"
+"string.text"
+msgid "User Index 2"
+msgstr "Mynegai Defnyddiwr 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER3\n"
+"string.text"
+msgid "User Index 3"
+msgstr "Mynegai Defnyddiwr 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER4\n"
+"string.text"
+msgid "User Index 4"
+msgstr "Mynegai Defnyddiwr 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER5\n"
+"string.text"
+msgid "User Index 5"
+msgstr "Mynegai Defnyddiwr 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER6\n"
+"string.text"
+msgid "User Index 6"
+msgstr "Mynegai Defnyddiwr 6"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER7\n"
+"string.text"
+msgid "User Index 7"
+msgstr "Mynegai Defnyddiwr 7"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER8\n"
+"string.text"
+msgid "User Index 8"
+msgstr "Mynegai Defnyddiwr 8"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER9\n"
+"string.text"
+msgid "User Index 9"
+msgstr "Mynegai Defnyddiwr 9"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_USER10\n"
+"string.text"
+msgid "User Index 10"
+msgstr "Mynegai Defnyddiwr 10"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_CITATION\n"
+"string.text"
+msgid "Citation"
+msgstr "Dyfyniad"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUSH\n"
+"string.text"
+msgid "Illustration Index Heading"
+msgstr "Pennawd Mynegai Darluniau"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_ILLUS1\n"
+"string.text"
+msgid "Illustration Index 1"
+msgstr "Mynegai Darluniau 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECTH\n"
+"string.text"
+msgid "Object Index Heading"
+msgstr "Pennawd Mynegai Gwrthrych"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_OBJECT1\n"
+"string.text"
+msgid "Object Index 1"
+msgstr "Mynegai Gwrthrych 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLESH\n"
+"string.text"
+msgid "Table Index Heading"
+msgstr "Pennawd Mynegai Tabl"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_TABLES1\n"
+"string.text"
+msgid "Table Index 1"
+msgstr "Mynegai Tabl 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIESH\n"
+"string.text"
+msgid "Bibliography Heading"
+msgstr "Pennawd Llyfryddiaeth"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_TOX_AUTHORITIES1\n"
+"string.text"
+msgid "Bibliography 1"
+msgstr "Llyfryddiaeth 1"
+
+
+#. Document title style, not to be confused with Heading style
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_TITEL\n"
+"string.text"
+msgid "Title"
+msgstr "Teitl"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_DOC_SUBTITEL\n"
+"string.text"
+msgid "Subtitle"
+msgstr "Is deitl"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_BLOCKQUOTE\n"
+"string.text"
+msgid "Quotations"
+msgstr "Dyfyniadau"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_PRE\n"
+"string.text"
+msgid "Preformatted Text"
+msgstr "Testun Rhagffomatiwyd"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_HR\n"
+"string.text"
+msgid "Horizontal Line"
+msgstr "Llinell Lorweddol"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DD\n"
+"string.text"
+msgid "List Contents"
+msgstr "Rhestr Cynnwys"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCOLL_HTML_DT\n"
+"string.text"
+msgid "List Heading"
+msgstr "Rhestr Pennawd"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_STANDARD\n"
+"string.text"
+msgid "Default Style"
+msgstr "Arddull Ragosodedig"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FIRST\n"
+"string.text"
+msgid "First Page"
+msgstr "Tudalen Gyntaf"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_LEFT\n"
+"string.text"
+msgid "Left Page"
+msgstr "Tudalen Chwith"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_RIGHT\n"
+"string.text"
+msgid "Right Page"
+msgstr "Tudalen Dde"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_JAKET\n"
+"string.text"
+msgid "Envelope"
+msgstr "Amlen"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_REGISTER\n"
+"string.text"
+msgid "Index"
+msgstr "Mynegai"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_HTML\n"
+"string.text"
+msgid "HTML"
+msgstr "HTML"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_FOOTNOTE\n"
+"string.text"
+msgid "Footnote"
+msgstr "Troednodyn"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLPAGE_ENDNOTE\n"
+"string.text"
+msgid "Endnote"
+msgstr "Diweddnod"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM1\n"
+"string.text"
+msgid "Numbering 1"
+msgstr "Rhifo 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM2\n"
+"string.text"
+msgid "Numbering 2"
+msgstr "Rhifo 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM3\n"
+"string.text"
+msgid "Numbering 3"
+msgstr "Rhifo 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM4\n"
+"string.text"
+msgid "Numbering 4"
+msgstr "Rhifo 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_NUM5\n"
+"string.text"
+msgid "Numbering 5"
+msgstr "Rhifo 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL1\n"
+"string.text"
+msgid "List 1"
+msgstr "Rhestr 1"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL2\n"
+"string.text"
+msgid "List 2"
+msgstr "Rhestr 2"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL3\n"
+"string.text"
+msgid "List 3"
+msgstr "Rhestr 3"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL4\n"
+"string.text"
+msgid "List 4"
+msgstr "Rhestr 4"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLNUMRULE_BUL5\n"
+"string.text"
+msgid "List 5"
+msgstr "Rhestr 5"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_RUBYTEXT\n"
+"string.text"
+msgid "Rubies"
+msgstr "Rubies"
+
+
+#: poolfmt.src
+msgctxt ""
+"poolfmt.src\n"
+"STR_POOLCHR_VERT_NUM\n"
+"string.text"
+msgid "Vertical Numbering Symbols"
+msgstr "Symbolau Rhifo Fertigol"
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_STANDARD_STYLESHEET_NAME\n"
+"string.text"
+msgid "Default"
+msgstr "Rhagosodedig"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_MEASURE\n"
+"string.text"
+msgid "Dimension Line"
+msgstr "Llinell Dimensiwn"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJNOLINENOFILL\n"
+"string.text"
+msgid "Object with no fill and no line"
+msgstr "Gwrthrych heb lanw na llinell"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHARROW\n"
+"string.text"
+msgid "Object with arrow"
+msgstr "Gwrthrych gyda saeth"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHSHADOW\n"
+"string.text"
+msgid "Object with shadow"
+msgstr "Gwrthrych gyda chysgod"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_OBJWITHOUTFILL\n"
+"string.text"
+msgid "Object without fill"
+msgstr "Gwrthrych heb lenwad"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXT\n"
+"string.text"
+msgid "Text"
+msgstr "Testun"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY\n"
+"string.text"
+msgid "Text body"
+msgstr "Corff testun"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_JUSTIFY\n"
+"string.text"
+msgid "Text body justified"
+msgstr "Testun"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TEXTBODY_INDENT\n"
+"string.text"
+msgid "First line indent"
+msgstr "Mewnoliad y llinell gyntaf"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "Teitl"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE1\n"
+"string.text"
+msgid "Title1"
+msgstr "Teitl1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TITLE2\n"
+"string.text"
+msgid "Title2"
+msgstr "Teitl2"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE\n"
+"string.text"
+msgid "Heading"
+msgstr "Pennawd"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE1\n"
+"string.text"
+msgid "Heading1"
+msgstr "Pennawd1"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADLINE2\n"
+"string.text"
+msgid "Heading2"
+msgstr "Pennawd2"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_TITLE\n"
+"string.text"
+msgid "Title"
+msgstr "Teitl"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_SUBTITLE\n"
+"string.text"
+msgid "Subtitle"
+msgstr "Is deitl"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_OUTLINE\n"
+"string.text"
+msgid "Outline"
+msgstr "Amlinell"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUNDOBJECTS\n"
+"string.text"
+msgid "Background objects"
+msgstr "Gwrthrych cefndir"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_BACKGROUND\n"
+"string.text"
+msgid "Background"
+msgstr "Cefndir"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_PSEUDOSHEET_NOTES\n"
+"string.text"
+msgid "Notes"
+msgstr "Nodiadau"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_BANDED_CELL\n"
+"string.text"
+msgid "Banding cell"
+msgstr "Cell bandio"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_HEADER\n"
+"string.text"
+msgid "Header"
+msgstr "Pennyn"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_TOTAL\n"
+"string.text"
+msgid "Total line"
+msgstr "Llinell gyfanswm"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_FIRST_COLUMN\n"
+"string.text"
+msgid "First column"
+msgstr "Colofn gyntaf"
+
+
+#: glob.src
+msgctxt ""
+"glob.src\n"
+"STR_POOLSHEET_LAST_COLUMN\n"
+"string.text"
+msgid "Last column"
+msgstr "Colofn olaf"

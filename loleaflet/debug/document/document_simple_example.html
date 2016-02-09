@@ -19,6 +19,8 @@
 <link rel="stylesheet" href="../../src/contextMenu/jquery.contextMenu.css">
 <link rel="stylesheet" href="../../dist/dialog/vex.css" />
 <link rel="stylesheet" href="../../dist/dialog/vex-theme-plain.css" />
+<link rel="localizations" href="../../dist/l10n/localizations.json" type="application/vnd.oftn.l10n+json" />
+<link rel="localizations" href="../../dist/l10n/styles-localizations.json" type="application/vnd.oftn.l10n+json" />
 <style type="text/css"></style></head>
 <body>
     <script src="../../dist/leaflet-src.js"></script>
@@ -29,7 +31,11 @@
     <script src="../../src/contextMenu/jquery.ui.position.min.js"></script>
     <script src="../../src/contextMenu/jquery.contextMenu.js"></script>
     <script src="../../dist/dialog/vex.combined.min.js"></script>
+    <script src="../../dist/l10n/json2.min.js"></script>
+    <script src="../../dist/l10n/l10n.min.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
+
+    <script> var _ = function (string) { return string.toLocaleString();}; </script>
 
     <!--The "controls" div holds map controls suchs as the Zoom button and
         it's separated from the map in order to have the controls on the top

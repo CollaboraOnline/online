@@ -26,6 +26,9 @@ dist: all
 		| (cd loleaflet-$(VERSION) && tar xf -)
 	util/po2json.py po/*.po
 	mv po/*.json loleaflet-$(VERSION)/dist/l10n
+	util/po2json.py po/styles/*.po
+	mkdir -p loleaflet-$(VERSION)/dist/l10n/styles/
+	mv po/styles/*.json loleaflet-$(VERSION)/dist/l10n/styles/
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
 	rm -rf loleaflet-$(VERSION)
 

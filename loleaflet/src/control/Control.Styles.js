@@ -59,7 +59,7 @@ L.Control.Styles = L.Control.extend({
 				commands.forEach(function (command) {
 					var item = L.DomUtil.create('option', '', container);
 					item.value = command.id;
-					item.innerHTML = command.text;
+					item.innerHTML = command.text.toLocaleString();
 				});
 			}
 
@@ -69,7 +69,7 @@ L.Control.Styles = L.Control.extend({
 				topStyles.forEach(function (style) {
 					var item = L.DomUtil.create('option', '', container);
 					item.value = style;
-					item.innerHTML = style;
+					item.innerHTML = style.toLocaleString();
 				});
 			}
 
@@ -79,7 +79,7 @@ L.Control.Styles = L.Control.extend({
 				styles.forEach(function (style) {
 					var item = L.DomUtil.create('option', '', container);
 					item.value = style;
-					item.innerHTML = style;
+					item.innerHTML = style.toLocaleString();
 				});
 			}
 		}
