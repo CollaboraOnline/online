@@ -81,7 +81,7 @@ L.Map = L.Evented.extend({
 		// is just a bunch of images, hence the context menu is useless (tdf#94599)
 		this.on('contextmenu', function() {});
 
-		// When all these conditions are met, fire statusindicator:initializationComplete
+		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
 			'docLayer': false,
 			'statusindicatorfinish': false,
@@ -513,7 +513,7 @@ L.Map = L.Evented.extend({
 				return;
 			}
 		}
-		this.fire('statusindicator', {statusType: 'initializationComplete'});
+		this.fire('statusindicator', {statusType: 'initializationcomplete'});
 		this.initComplete = true;
 	},
 
