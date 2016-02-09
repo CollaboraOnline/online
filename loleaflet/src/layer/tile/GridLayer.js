@@ -835,7 +835,7 @@ L.GridLayer = L.Layer.extend({
 		var tilesToFetch = 10;
 		var maxBorderWidth = 5;
 
-		if (this._permission === 'edit') {
+		if (this._map._permission === 'edit') {
 			tilesToFetch = 5;
 			maxBorderWidth = 3;
 		}

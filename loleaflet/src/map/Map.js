@@ -72,10 +72,7 @@ L.Map = L.Evented.extend({
 		this._socket = L.socket(this);
 
 		// when editing, we need the LOK session right away
-		if (options.permission === 'edit') {
-			this._socket.sendMessage('requestloksession');
-			this.dragging.disable();
-		}
+		this.setPermission(options.permission);
 
 		// Inhibit the context menu - the browser thinks that the document
 		// is just a bunch of images, hence the context menu is useless (tdf#94599)

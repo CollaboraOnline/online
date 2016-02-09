@@ -3,7 +3,7 @@
  */
 L.Map.include({
 	setPermission: function (perm) {
-		this._docLayer._permission = perm;
+		this._permission = perm;
 		if (perm === 'edit') {
 			this._socket.sendMessage('requestloksession');
 			this.dragging.disable();
@@ -19,7 +19,7 @@ L.Map.include({
 	},
 
 	enableSelection: function () {
-		if (this._docLayer._permission === 'edit') {
+		if (this._permission === 'edit') {
 			return;
 		}
 		this._socket.sendMessage('requestloksession');
@@ -27,7 +27,7 @@ L.Map.include({
 	},
 
 	disableSelection: function () {
-		if (this._docLayer._permission === 'edit') {
+		if (this._permission === 'edit') {
 			return;
 		}
 		this.dragging.enable();
@@ -38,6 +38,6 @@ L.Map.include({
 	},
 
 	getPermission: function () {
-		return this._docLayer._permission;
+		return this._permission;
 	}
 });

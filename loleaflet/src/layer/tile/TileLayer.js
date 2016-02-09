@@ -79,8 +79,6 @@ L.TileLayer = L.GridLayer.extend({
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
-		// View, edit or readonly.
-		this._permission = options.defaultPermission;
 		// Position and size of the visible cursor.
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Cursor overlay is visible or hidden (for blinking).
@@ -824,7 +822,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 
-		if (this._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
+		if (this._map._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
 				&& !this._isEmptyRectangle(this._visibleCursor)) {
 			if (this._cursorMarker) {
 				this._map.removeLayer(this._cursorMarker);
