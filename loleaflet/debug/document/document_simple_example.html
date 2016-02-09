@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="../../src/scrollbar/jquery.mCustomScrollbar.css">
 <link rel="stylesheet" href="../../dist/dialog/vex.css" />
 <link rel="stylesheet" href="../../dist/dialog/vex-theme-plain.css" />
+<link rel="localizations" href="../../dist/l10n/styles-localizations.json" type="application/vnd.oftn.l10n+json" />
 <style type="text/css"></style></head>
 <body>
     <script src="../../dist/leaflet-src.js"></script>
@@ -26,7 +27,11 @@
     <script>window.jQuery || document.write('<script src="../../src/scrollbar/jquery-1.11.0.min.js"><\/script>')</script>
     <script src="../../src/scrollbar/jquery.mCustomScrollbar.js"></script>
     <script src="../../dist/dialog/vex.combined.min.js"></script>
+    <script src="../../dist/l10n/json2.min.js"></script>
+    <script src="../../dist/l10n/l10n.min.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
+
+    <script> var _ = function (string) { return string.toLocaleString();}; </script>
 
     <!--The "controls" div holds map controls suchs as the Zoom button and
         it's separated from the map in order to have the controls on the top
