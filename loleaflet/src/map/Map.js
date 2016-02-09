@@ -80,6 +80,34 @@ L.Map = L.Evented.extend({
 		// Inhibit the context menu - the browser thinks that the document
 		// is just a bunch of images, hence the context menu is useless (tdf#94599)
 		this.on('contextmenu', function() {});
+
+		// When all these conditions are met, fire statusindicator:initializationComplete
+		this.initConditions = {
+			'docLayer': false,
+			'statusindicatorfinish': false,
+			'StyleApply': false,
+			'CharFontName': false,
+			'updatepermission': false
+		};
+		this.initComplete = false;
+
+		this.on('updatepermission', function(e){
+			if (this.initComplete) {
+				return;
+			}
+			this._fireInitComplete('updatepermission');
+		});
+		this.on('commandstatechanged', function(e){
+			if (this.initComplete) {
+				return;
+			}
+			if (e.commandName === '.uno:StyleApply') {
+				this._fireInitComplete('StyleApply');
+			}
+			else if (e.commandName === '.uno:CharFontName') {
+				this._fireInitComplete('CharFontName');
+			}
+		});
 	},
 
 
@@ -473,6 +501,20 @@ L.Map = L.Evented.extend({
 		if (this._docLayer) {
 			this._docLayer._textArea.focus();
 		}
+	},
+
+	_fireInitComplete: function (condition) {
+		if (this.initComplete)
+			return;
+
+		this.initConditions[condition] = true;
+		for (var key in this.initConditions) {
+			if (!this.initConditions[key]) {
+				return;
+			}
+		}
+		this.fire('statusindicator', {statusType: 'initializationComplete'});
+		this.initComplete = true;
 	},
 
 	_initContainer: function (id) {
