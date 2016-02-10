@@ -94,7 +94,7 @@ L.Map = L.Evented.extend({
 			}
 			this._fireInitComplete('updatepermission');
 		});
-		this.on('commandstatechanged', function(e){
+		this.on('updatetoolbarcommandvalues', function(e){
 			if (this.initComplete) {
 				return;
 			}
