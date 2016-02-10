@@ -57,10 +57,14 @@ L.Map.include({
 		if (options === undefined || options === null) {
 			options = '';
 		}
+
+		// TakeOwnership: we are performing a 'real' save-as, the document
+		// is just getting a new place, ie. it will get the
+		// '.uno:ModifiedStatus' upon completion.
 		this._socket.sendMessage('saveas ' +
 			'url=' + url + ' ' +
 			'format=' + format + ' ' +
-			'options=' + options);
+			'options=TakeOwnership,' + options);
 	},
 
 	applyStyle: function (style, familyName) {
