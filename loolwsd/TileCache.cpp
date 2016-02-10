@@ -278,6 +278,15 @@ void TileCache::invalidateTiles(const std::string& tiles)
     }
 }
 
+void TileCache::removeFile(const std::string fileName)
+{
+    const std::string textFile = cacheDirName(false) + "/" + fileName;
+    const std::string editingTextFile = cacheDirName(true) + "/" + fileName;
+
+    Util::removeFile(textFile);
+    Util::removeFile(editingTextFile);
+}
+
 std::string TileCache::toplevelCacheDirName()
 {
     SHA1Engine digestEngine;

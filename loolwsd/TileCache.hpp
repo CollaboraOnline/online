@@ -62,6 +62,9 @@ public:
 
     void invalidateTiles(int part, int x, int y, int width, int height);
 
+    // Removes the given file from both editing and persistent cache
+    void removeFile(const std::string fileName);
+
 private:
     /// Toplevel cache dirname.
     std::string toplevelCacheDirName();

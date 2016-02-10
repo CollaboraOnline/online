@@ -360,6 +360,10 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
         if (_peer.expired())
             dispatchChild();
+
+        if (tokens[0] == "setclientpart")
+            _tileCache->removeFile("status.txt");
+
         if (tokens[0] != "requestloksession")
         {
             forwardToPeer(buffer, length);
