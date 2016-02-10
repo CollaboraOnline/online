@@ -148,11 +148,26 @@ L.Map.include({
 		});
 	},
 
-	insertPage: function() {
-		if (this.getDocType() !== 'presentation') {
-			return;
+	insertPage: function(nPos) {
+		if (this.getDocType() === 'presentation')
+			this._socket.sendMessage('uno .uno:InsertPage');
+		else if (this.getDocType() === 'spreadsheet') {
+			var command = {
+				'Name': {
+					'type': 'string',
+					'value': ''
+				},
+				'Index': {
+					'type': 'long',
+					'value': nPos + 1
+				}
+			};
+
+			this._socket.sendMessage('uno .uno:Insert ' + JSON.stringify(command));
 		}
-		this._socket.sendMessage('uno .uno:InsertPage');
+		else
+			return;
+
 		var docLayer = this._docLayer;
 
 		this.fire('insertpage', {
@@ -161,7 +176,12 @@ L.Map.include({
 		});
 
 		docLayer._parts++;
-		this.setPart('next');
+
+		// Since we know which part we want to set, use the index (instead of 'next', 'prev')
+		if (typeof nPos === 'number')
+			this.setPart(nPos);
+		else
+			this.setPart('next');
 	},
 
 	duplicatePage: function() {
@@ -180,12 +200,22 @@ L.Map.include({
 		this.setPart('next');
 	},
 
-	deletePage: function () {
-		if (this.getDocType() !== 'presentation') {
-			return;
-		}
+	deletePage: function (nPos) {
+		if (this.getDocType() === 'presentation' )
+			this._socket.sendMessage('uno .uno:DeletePage');
+		else if (this.getDocType() === 'spreadsheet') {
+			var command = {
+				'Index': {
+					'type': 'long',
+					'value': nPos + 1
+				}
+			};
 
-		this._socket.sendMessage('uno .uno:DeletePage');
+			this._socket.sendMessage('uno .uno:Remove ' + JSON.stringify(command));
+		}
+		else
+			return;
+
 		var docLayer = this._docLayer;
 		// TO DO: Deleting all the pages causes problem.
 		if (docLayer._parts === 1) {
@@ -202,7 +232,28 @@ L.Map.include({
 			docLayer._selectedPart--;
 		}
 
-		this.setPart(docLayer._selectedPart);
+		if (typeof nPos === 'number')
+			this.setPart(nPos);
+		else
+			this.setPart(docLayer._selectedPart);
+	},
+
+	renamePage: function (name, nPos) {
+		if (this.getDocType() === 'spreadsheet') {
+			var command = {
+				'Name': {
+					'type': 'string',
+					'value': name
+				},
+				'Index': {
+					'type': 'long',
+					'value': nPos + 1
+				}
+			};
+
+			this._socket.sendMessage('uno .uno:Name ' + JSON.stringify(command));
+			this.setPart(this._docLayer, nPos);
+		}
 	},
 
 	getNumberOfPages: function () {

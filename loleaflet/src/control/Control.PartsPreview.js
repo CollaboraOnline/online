@@ -88,17 +88,19 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_updatePreview: function (e) {
-		// the scrollbar has to be re-initialized here else it doesn't work
-		// probably a bug from the scrollbar
-		this._previewTiles[e.id].onload = function () {
-			$('.parts-preview').mCustomScrollbar({
-				axis: 'y',
-				theme: 'dark-thick',
-				scrollInertia: 0,
-				alwaysShowScrollbar: 1});
-		};
+		if (this._map.getDocType() === 'presentation') {
+			// the scrollbar has to be re-initialized here else it doesn't work
+			// probably a bug from the scrollbar
+			this._previewTiles[e.id].onload = function () {
+				$('.parts-preview').mCustomScrollbar({
+					axis: 'y',
+					theme: 'dark-thick',
+					scrollInertia: 0,
+					alwaysShowScrollbar: 1});
+			};
 
-		this._previewTiles[e.id].src = e.tile;
+			this._previewTiles[e.id].src = e.tile;
+		}
 	},
 
 	_updatePreviewIds: function () {
@@ -111,26 +113,30 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_insertPreview: function (e) {
-		var newIndex = e.selectedPart + 1;
-		var newPreview = this._createPreview(newIndex);
+		if (this._map.getDocType() === 'presentation') {
+			var newIndex = e.selectedPart + 1;
+			var newPreview = this._createPreview(newIndex);
 
-		// insert newPreview to newIndex position
-		this._previewTiles.splice(newIndex, 0, newPreview);
+			// insert newPreview to newIndex position
+			this._previewTiles.splice(newIndex, 0, newPreview);
 
-		var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
-		var newFrame = newPreview.parentNode;
+			var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
+			var newFrame = newPreview.parentNode;
 
-		// insert after selectedFrame
-		selectedFrame.parentNode.insertBefore(newFrame, selectedFrame.nextSibling);
-		this._updatePreviewIds();
+			// insert after selectedFrame
+			selectedFrame.parentNode.insertBefore(newFrame, selectedFrame.nextSibling);
+			this._updatePreviewIds();
+		}
 	},
 
 	_deletePreview: function (e) {
-		var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
-		L.DomUtil.remove(selectedFrame);
+		if (this._map.getDocType() === 'presentation') {
+			var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
+			L.DomUtil.remove(selectedFrame);
 
-		this._previewTiles.splice(e.selectedPart, 1);
-		this._updatePreviewIds();
+			this._previewTiles.splice(e.selectedPart, 1);
+			this._updatePreviewIds();
+		}
 	}
 });
 

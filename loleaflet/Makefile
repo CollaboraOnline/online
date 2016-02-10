@@ -19,7 +19,7 @@ dist: all
 	mkdir loleaflet-$(VERSION)
 	cp README loleaflet-$(VERSION)
 	cp reference.html loleaflet-$(VERSION)
-	tar cf - dist plugins/draw-$(DRAW_VERSION)/dist debug/document src/scrollbar docs spec \
+	tar cf - dist plugins/draw-$(DRAW_VERSION)/dist debug/document src/scrollbar src/contextMenu docs spec \
 		node_modules/mocha/mocha.css \
 		node_modules/mocha/mocha.js \
 		node_modules/happen/happen.js \

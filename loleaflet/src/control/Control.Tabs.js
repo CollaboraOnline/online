@@ -10,6 +10,46 @@ L.Control.Tabs = L.Control.extend({
 		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tab', docContainer.parentElement);
 
+		$.contextMenu({
+			selector: '.spreadsheet-context-menu',
+			callback: function(key, options) {
+				var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
+
+				if (key === 'insertsheetbefore')
+					map.insertPage(nPos);
+				if (key === 'insertsheetafter')
+					map.insertPage(nPos + 1);
+			},
+			items: {
+				'insertsheetbefore': {name: 'Insert sheet before this'},
+				'insertsheetafter': {name: 'Insert sheet after this'},
+				'deletesheet': {name: 'Delete sheet',
+						callback: function(key, options) {
+							var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
+							vex.dialog.confirm({
+								message: 'Are you sure you want to delete this sheet?',
+								callback: function(data) {
+									if (data)
+										map.deletePage(nPos);
+								}
+							});
+						}
+				 },
+				'renamesheet': {name: 'Rename sheet',
+							callback: function(key, options){
+							var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
+							vex.dialog.open({
+								message: 'Enter new sheet name',
+								input: '<input name="sheetname" type="text" required />',
+								callback: function(data){
+									map.renamePage(data.sheetname, nPos);
+								}
+							});
+						}}
+			},
+			zIndex: 10
+		});
+
 		map.on('updateparts', this._updateDisabled, this);
 	},
 
@@ -38,9 +78,10 @@ L.Control.Tabs = L.Control.extend({
 				}
 				for (var i = 0; i < parts; i++) {
 					var id = 'spreadsheet-tab' + i;
-					var tab = L.DomUtil.create('li', '', this._tabsCont);
+					var tab = L.DomUtil.create('li', 'spreadsheet-context-menu', this._tabsCont);
 					tab.innerHTML = e.partNames[i];
 					tab.id = id;
+
 					L.DomEvent
 						.on(tab, 'click', L.DomEvent.stopPropagation)
 						.on(tab, 'click', L.DomEvent.stop)
