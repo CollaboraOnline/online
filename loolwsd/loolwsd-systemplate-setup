@@ -6,7 +6,7 @@ test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to
 
 CHROOT=$1
 INSTDIR=$2
-POCODIR=/usr/local/lib
+POCODIR="/usr/local/lib /opt/poco/lib"
 
 test -d "$INSTDIR" || { echo "No such directory: $INSTDIR"; exit 1; }
 
@@ -57,6 +57,8 @@ done |
 grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
 
 # Go through the loolkit
+find $POCODIR -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*'
+
 find $POCODIR /usr/lib64 -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*' |
 while read file; do
     echo $file
