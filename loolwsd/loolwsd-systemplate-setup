@@ -56,9 +56,8 @@ while read file; do
 done |
 grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
 
-# Go through the loolkit
+# Poco libraries and their dependencies
 find $POCODIR -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*'
-
 find $POCODIR /usr/lib64 -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*' |
 while read file; do
     echo $file
