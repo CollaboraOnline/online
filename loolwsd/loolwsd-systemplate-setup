@@ -6,7 +6,7 @@ test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to
 
 CHROOT=$1
 INSTDIR=$2
-POCODIR="/usr/local/lib /opt/poco/lib"
+POCOLIBDIRS="/usr/local/lib /opt/poco/lib"
 
 test -d "$INSTDIR" || { echo "No such directory: $INSTDIR"; exit 1; }
 
@@ -57,8 +57,8 @@ done |
 grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
 
 # Poco libraries and their dependencies
-find $POCODIR -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*'
-find $POCODIR /usr/lib64 -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*' |
+find $POCOLIBDIRS -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*'
+find $POCOLIBDIRS /usr/lib64 -name '*Poco*.so' -o -name '*Poco*.so.[0-9]*' |
 while read file; do
     echo $file
     ldd $file 2>/dev/null
