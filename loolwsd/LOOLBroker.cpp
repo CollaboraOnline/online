@@ -639,7 +639,7 @@ static int createLibreOfficeKit(const bool sharePages,
                 std::chrono::microseconds(80000),
                 [&nFIFOWriter, &pipe, nFlags]
                 {
-                    return (nFIFOWriter = open(pipe.c_str(), nFlags)) > 0;
+                    return (nFIFOWriter = open(pipe.c_str(), nFlags)) >= 0;
                 });
 
             if (nFIFOWriter < 0)
