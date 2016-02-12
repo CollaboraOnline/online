@@ -45,9 +45,6 @@
 
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_MERGED      "lib" "mergedlo" ".so"
-#define LIB_SCLO        "lib" "sclo" ".so"
-#define LIB_SWLO        "lib" "swlo" ".so"
-#define LIB_SDLO        "lib" "sdlo" ".so"
 #define JAILED_LOOLKIT_PATH    "/usr/bin/loolkit"
 
 typedef int (LokHookPreInit)  ( const char *install_path, const char *user_profile_path );
