@@ -1103,9 +1103,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Util::removeFile(path, true);
     }
 
-    Log::debug("Cleaning up pipe directory [" + pipePath.toString() + "].");
-    Util::removeFile(pipePath, true);
-
     Log::info("Process [loolwsd] finished.");
     return Application::EXIT_OK;
 }

@@ -400,9 +400,8 @@ public:
         auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKit, _loKitDocument, _jailId,
                             [this](const std::string& id, const std::string& uri) { return onLoad(id, uri); },
                             [this](const std::string& id) { onUnload(id); });
-        // child Jail TID PID
-        std::string hello("child " + _jailId + " " +
-                          sessionId + " " + std::to_string(Process::id()));
+        // child -> 0,  sessionId -> 1, PID -> 2
+        std::string hello("child " + sessionId + " " + std::to_string(Process::id()));
         session->sendTextFrame(hello);
 
         auto thread = std::make_shared<Connection>(session, ws);
@@ -590,7 +589,6 @@ void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
-                const std::string& jailId,
                 const std::string& pipe)
 {
 #ifdef LOOLKIT_NO_MAIN
@@ -607,13 +605,14 @@ void lokit_main(const std::string& childRoot,
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
     assert(!loTemplate.empty());
-    assert(!jailId.empty());
     assert(!loSubPath.empty());
     assert(!pipe.empty());
 
     std::map<std::string, std::shared_ptr<Document>> _documents;
 
+    static const std::string jailId = std::to_string(Process::id());
     static const std::string process_name = "loolkit";
+
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(process_name.c_str()), 0, 0, 0) != 0)
         Log::error("Cannot set process name to " + process_name + ".");
@@ -898,12 +897,6 @@ int main(int argc, char** argv)
             if (*eq)
                 loSubPath = std::string(++eq);
         }
-        else if (strstr(cmd, "--jailid=") == cmd)
-        {
-            eq = strchrnul(cmd, '=');
-            if (*eq)
-                jailId = std::string(++eq);
-        }
         else if (strstr(cmd, "--pipe=") == cmd)
         {
             eq = strchrnul(cmd, '=');
@@ -921,12 +914,6 @@ int main(int argc, char** argv)
     if (loSubPath.empty())
     {
         Log::error("Error: --losubpath is empty");
-        exit(Application::EXIT_SOFTWARE);
-    }
-
-    if (jailId.empty())
-    {
-        Log::error("Error: --jailid is empty");
         exit(Application::EXIT_SOFTWARE);
     }
 
@@ -954,7 +941,7 @@ int main(int argc, char** argv)
         Log::warn("Note: LOK_VIEW_CALLBACK is not set.");
     }
 
-    lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, jailId, pipe);
+    lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipe);
 
     return Application::EXIT_OK;
 }

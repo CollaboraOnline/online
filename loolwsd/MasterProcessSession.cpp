@@ -39,7 +39,6 @@ MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
                                            std::shared_ptr<Poco::Net::WebSocket> ws) :
     LOOLSession(id, kind, ws),
-    _pidChild(0),
     _curPart(0),
     _loadPart(-1)
 {
@@ -148,7 +147,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     if (url.find(filePrefix) == 0)
                     {
                         // Rewrite file:// URLs, as they are visible to the outside world.
-                        Path path(MasterProcessSession::getJailPath(_jailId), url.substr(filePrefix.length()));
+                        Path path(MasterProcessSession::getJailPath(_childId), url.substr(filePrefix.length()));
                         url = filePrefix + path.toString().substr(1);
                     }
                     peer->_saveAsQueue.put(url);
@@ -245,24 +244,22 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=child kind=invalid");
             return false;
         }
-        if (tokens.count() != 4)
+        if (tokens.count() != 3)
         {
             sendTextFrame("error: cmd=child kind=syntax");
             return false;
         }
 
-        const auto jailId = tokens[1];
-        setId(tokens[2]);
-        const Process::PID pidChild = std::stoull(tokens[3]);
+        // child -> 0,  sessionId -> 1, PID -> 2
+        setId(tokens[1]);
+        _childId = tokens[2];
 
         std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
         AvailableChildSessions.emplace(getId(), shared_from_this());
 
-        Log::info() << getName() << " mapped " << this << " jailId=" << jailId << ", id=" << getId()
+        Log::info() << getName() << " mapped " << this << " jailId=" << _childId << ", id=" << getId()
                     << " into _availableChildSessions, size=" << AvailableChildSessions.size() << Log::end;
 
-        _jailId = jailId;
-        _pidChild = pidChild;
         lock.unlock();
         AvailableChildSessionCV.notify_one();
     }
@@ -384,7 +381,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
 bool MasterProcessSession::haveSeparateProcess()
 {
-    return !_jailId.empty();
+    return !_childId.empty();
 }
 
 Poco::Path MasterProcessSession::getJailPath(const std::string& childId)
@@ -766,10 +763,8 @@ void MasterProcessSession::dispatchChild()
         return;
     }
 
-    const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, childSession->_jailId);
-    const auto childId = std::to_string(childSession->_pidChild);
-
-    auto document = DocumentURI::create(_docURL, jailRoot.toString(), childId);
+    const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, childSession->_childId);
+    auto document = DocumentURI::create(_docURL, jailRoot.toString(), childSession->_childId);
 
     _peer = childSession;
     childSession->_peer = shared_from_this();

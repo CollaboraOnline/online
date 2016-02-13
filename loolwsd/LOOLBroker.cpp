@@ -473,7 +473,6 @@ static int createLibreOfficeKit(const bool sharePages,
 
     const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
     const std::string pipeKit = Path(pipePath, BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX).toString();
-    const std::string jailId = Util::createRandomDir(childRoot);
 
     if (mkfifo(pipeKit.c_str(), 0666) < 0)
     {
@@ -489,7 +488,7 @@ static int createLibreOfficeKit(const bool sharePages,
         if (!(pid = fork()))
         {
             // child
-            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, jailId, pipeKit);
+            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit);
             _exit(Application::EXIT_OK);
         }
         else
@@ -506,7 +505,6 @@ static int createLibreOfficeKit(const bool sharePages,
         args.push_back("--systemplate=" + sysTemplate);
         args.push_back("--lotemplate=" + loTemplate);
         args.push_back("--losubpath=" + loSubPath);
-        args.push_back("--jailid=" + jailId);
         args.push_back("--pipe=" + pipeKit);
         args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
