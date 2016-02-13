@@ -7,30 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <sys/types.h>
 #include <sys/wait.h>
-
-#include <utime.h>
-#include <ftw.h>
-#include <unistd.h>
-#include <dlfcn.h>
-
-#include <atomic>
-#include <mutex>
-#include <cstring>
-#include <cassert>
-#include <iostream>
-#include <fstream>
-#include <deque>
-
-#include <Poco/Types.h>
-#include <Poco/Random.h>
-#include <Poco/Path.h>
-#include <Poco/File.h>
-#include <Poco/ThreadLocal.h>
-#include <Poco/Process.h>
-#include <Poco/Thread.h>
-#include <Poco/NamedMutex.h>
 
 #include "Common.hpp"
 #include "Capabilities.hpp"
@@ -45,15 +22,9 @@
 
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_MERGED      "lib" "mergedlo" ".so"
-#define JAILED_LOOLKIT_PATH    "/usr/bin/loolkit"
 
 typedef int (LokHookPreInit)  ( const char *install_path, const char *user_profile_path );
 
-using Poco::Path;
-using Poco::File;
-using Poco::ThreadLocal;
-using Poco::Process;
-using Poco::Thread;
 using Poco::ProcessHandle;
 
 const std::string FIFO_FILE = "/tmp/loolwsdfifo";
@@ -64,6 +35,7 @@ const std::string BROKER_PREFIX = "/tmp/lokit";
 static int readerChild = -1;
 static int readerBroker = -1;
 
+static std::string loolkitPath;
 static std::atomic<unsigned> forkCounter;
 static std::chrono::steady_clock::time_point lastMaintenanceTime = std::chrono::steady_clock::now();
 static unsigned int childCounter = 0;
@@ -195,82 +167,6 @@ namespace
             it->second->close();
             _childProcesses.erase(it);
         }
-    }
-
-    ThreadLocal<std::string> sourceForLinkOrCopy;
-    ThreadLocal<Path> destinationForLinkOrCopy;
-
-    int linkOrCopyFunction(const char *fpath,
-                           const struct stat* /*sb*/,
-                           int typeflag,
-                           struct FTW* /*ftwbuf*/)
-    {
-        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
-            return 0;
-
-        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
-        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
-
-#ifdef __APPLE__
-        if (strcmp(relativeOldPath, "PkgInfo") == 0)
-            return 0;
-#endif
-
-        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
-
-        switch (typeflag)
-        {
-        case FTW_F:
-            File(newPath.parent()).createDirectories();
-            if (link(fpath, newPath.toString().c_str()) == -1)
-            {
-                Log::error("Error: link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
-                           "\") failed. Exiting.");
-                exit(Application::EXIT_SOFTWARE);
-            }
-            break;
-        case FTW_DP:
-            {
-                struct stat st;
-                if (stat(fpath, &st) == -1)
-                {
-                    Log::error("Error: stat(\"" + std::string(fpath) + "\") failed.");
-                    return 1;
-                }
-                File(newPath).createDirectories();
-                struct utimbuf ut;
-                ut.actime = st.st_atime;
-                ut.modtime = st.st_mtime;
-                if (utime(newPath.toString().c_str(), &ut) == -1)
-                {
-                    Log::error("Error: utime(\"" + newPath.toString() + "\", &ut) failed.");
-                    return 1;
-                }
-            }
-            break;
-        case FTW_DNR:
-            Log::error("Cannot read directory '" + std::string(fpath) + "'");
-            return 1;
-        case FTW_NS:
-            Log::error("nftw: stat failed for '" + std::string(fpath) + "'");
-            return 1;
-        case FTW_SLN:
-            Log::error("nftw: symlink to nonexistent file: '" + std::string(fpath) + "', ignored.");
-            break;
-        default:
-            assert(false);
-        }
-        return 0;
-    }
-
-    void linkOrCopy(const std::string& source, const Path& destination)
-    {
-        *sourceForLinkOrCopy = source;
-        if (sourceForLinkOrCopy->back() == '/')
-            sourceForLinkOrCopy->pop_back();
-        *destinationForLinkOrCopy = destination;
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
-            Log::error("linkOrCopy: nftw() failed for '" + source + "'");
     }
 }
 
@@ -567,18 +463,21 @@ static bool globalPreinit(const std::string &loSubPath)
 }
 
 static int createLibreOfficeKit(const bool sharePages,
-                                const std::string& loSubPath,
-                                const std::string& jailId)
+                                const std::string& childRoot,
+                                const std::string& sysTemplate,
+                                const std::string& loTemplate,
+                                const std::string& loSubPath)
 {
     Poco::UInt64 childPID;
     int nFIFOWriter = -1;
     int nFlags = O_WRONLY | O_NONBLOCK;
 
     const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
+    const std::string jailId = Util::createRandomDir(childRoot);
 
-    if (mkfifo(pipe.c_str(), 0666) < 0)
+    if (!File(pipe).exists() && mkfifo(pipe.c_str(), 0666) < 0)
     {
-        Log::error("Error: mkfifo failed.");
+        Log::error("Error: Failed to create pipe FIFO [" + pipe + "].");
         return -1;
     }
 
@@ -590,7 +489,7 @@ static int createLibreOfficeKit(const bool sharePages,
         if (!(pid = fork()))
         {
             // child
-            lokit_main(loSubPath, jailId, pipe);
+            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, jailId, pipe);
             _exit(Application::EXIT_OK);
         }
         else
@@ -603,16 +502,19 @@ static int createLibreOfficeKit(const bool sharePages,
     else
     {
         Process::Args args;
+        args.push_back("--childroot=" + childRoot);
+        args.push_back("--systemplate=" + sysTemplate);
+        args.push_back("--lotemplate=" + loTemplate);
         args.push_back("--losubpath=" + loSubPath);
         args.push_back("--jailid=" + jailId);
         args.push_back("--pipe=" + pipe);
         args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
         Log::info("Launching LibreOfficeKit #" + std::to_string(childCounter) +
-                  ": " + JAILED_LOOLKIT_PATH + " " +
+                  ": " + loolkitPath + " " +
                   Poco::cat(std::string(" "), args.begin(), args.end()));
 
-        ProcessHandle procChild = Process::launch(JAILED_LOOLKIT_PATH, args);
+        ProcessHandle procChild = Process::launch(loolkitPath, args);
         childPID = procChild.id();
         Log::info("Spawned kit [" + std::to_string(childPID) + "].");
 
@@ -748,12 +650,6 @@ int main(int argc, char** argv)
             if (*eq)
                 childRoot = std::string(++eq);
         }
-        else if (strstr(cmd, "--jailid=") == cmd)
-        {
-            eq = strchrnul(cmd, '=');
-            if (*eq)
-                jailId = std::string(++eq);
-        }
         else if (strstr(cmd, "--numprespawns=") == cmd)
         {
             eq = strchrnul(cmd, '=');
@@ -768,6 +664,8 @@ int main(int argc, char** argv)
         }
     }
 
+    loolkitPath = Poco::Path(argv[0]).parent().toString() + "loolkit";
+
     if (loSubPath.empty())
     {
         Log::error("Error: --losubpath is empty");
@@ -776,7 +674,7 @@ int main(int argc, char** argv)
 
     if (sysTemplate.empty())
     {
-        Log::error("Error: --losubpath is empty");
+        Log::error("Error: --systemplate is empty");
         exit(Application::EXIT_SOFTWARE);
     }
 
@@ -822,82 +720,8 @@ int main(int argc, char** argv)
         Log::warn("Note: LOK_VIEW_CALLBACK is not set.");
     }
 
-    // The loolkit binary must be in our directory.
-    const std::string loolkitPath = Poco::Path(argv[0]).parent().toString() + "loolkit";
-    if (!File(loolkitPath).exists())
-    {
-        Log::error("Error: loolkit does not exists at [" + loolkitPath + "].");
-        exit(Application::EXIT_SOFTWARE);
-    }
-
-    const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
-    Log::info("Jail path: " + jailPath.toString());
-
-    File(jailPath).createDirectories();
-
-    Path jailLOInstallation(jailPath, loSubPath);
-    jailLOInstallation.makeDirectory();
-    File(jailLOInstallation).createDirectory();
-
-    // Copy (link) LO installation and other necessary files into it from the template.
-    linkOrCopy(sysTemplate, jailPath);
-    linkOrCopy(loTemplate, jailLOInstallation);
-
-    // It is necessary to deploy loolkit process to chroot jail.
-    File(loolkitPath).copyTo(Path(jailPath, JAILED_LOOLKIT_PATH).toString());
-
-    // We need this because sometimes the hostname is not resolved
-    const std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
-    for (const auto& filename : networkFiles)
-    {
-       const File networkFile(filename);
-       if (networkFile.exists())
-       {
-           networkFile.copyTo(Path(jailPath, "/etc").toString());
-       }
-    }
-
-#ifdef __linux
-    // Create the urandom and random devices
-    File(Path(jailPath, "/dev")).createDirectory();
-    if (mknod((jailPath.toString() + "/dev/random").c_str(),
-              S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-              makedev(1, 8)) != 0)
-    {
-        Log::error("Error: mknod(" + jailPath.toString() + "/dev/random) failed.");
-
-    }
-    if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
-              S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-              makedev(1, 9)) != 0)
-    {
-        Log::error("Error: mknod(" + jailPath.toString() + "/dev/urandom) failed.");
-    }
-#endif
-
-    Log::info("loolbroker -> chroot(\"" + jailPath.toString() + "\")");
-    if (chroot(jailPath.toString().c_str()) == -1)
-    {
-        Log::error("Error: chroot(\"" + jailPath.toString() + "\") failed.");
-        exit(Application::EXIT_SOFTWARE);
-    }
-
-    if (chdir("/") == -1)
-    {
-        Log::error("Error: chdir(\"/\") in jail failed.");
-        exit(Application::EXIT_SOFTWARE);
-    }
-
-#ifdef __linux
-    dropCapability(CAP_SYS_CHROOT);
-    dropCapability(CAP_MKNOD);
-    dropCapability(CAP_FOWNER);
-#else
-    dropCapability();
-#endif
-
     int nFlags = O_RDONLY | O_NONBLOCK;
-    if (mkfifo(FIFO_BROKER.c_str(), 0666) == -1)
+    if (!File(FIFO_BROKER).exists() && mkfifo(FIFO_BROKER.c_str(), 0666) == -1)
     {
         Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
         exit(Application::EXIT_SOFTWARE);
@@ -926,7 +750,8 @@ int main(int argc, char** argv)
     const bool sharePages = globalPreinit(loSubPath);
 
     // We must have at least one child, more is created dynamically.
-    if (createLibreOfficeKit(sharePages, loSubPath, jailId) < 0)
+    if (createLibreOfficeKit(sharePages, childRoot, sysTemplate,
+                             loTemplate, loSubPath) < 0)
     {
         Log::error("Error: failed to create children.");
         exit(Application::EXIT_SOFTWARE);
@@ -1021,7 +846,8 @@ int main(int argc, char** argv)
                          << total << ", Empty: " << empty << Log::end;
             do
             {
-                if (createLibreOfficeKit(sharePages, loSubPath, jailId) < 0)
+                if (createLibreOfficeKit(sharePages, childRoot, sysTemplate,
+                                         loTemplate, loSubPath) < 0)
                     Log::error("Error: fork failed.");
             }
             while (--spawn > 0);

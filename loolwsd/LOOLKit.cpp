@@ -15,6 +15,10 @@
 #include <sys/poll.h>
 #include <sys/syscall.h>
 #include <signal.h>
+#include <ftw.h>
+#include <utime.h>
+#include <unistd.h>
+#include <dlfcn.h>
 
 #include <atomic>
 #include <memory>
@@ -26,6 +30,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Thread.h>
 #include <Poco/ThreadPool.h>
+#include <Poco/ThreadLocal.h>
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Exception.h>
@@ -44,6 +49,7 @@
 #include "Util.hpp"
 #include "ChildProcessSession.hpp"
 #include "LOOLProtocol.hpp"
+#include "Capabilities.hpp"
 
 using namespace LOOLProtocol;
 using Poco::Net::WebSocket;
@@ -59,9 +65,91 @@ using Poco::Notification;
 using Poco::NotificationQueue;
 using Poco::FastMutex;
 using Poco::Util::Application;
+using Poco::File;
+using Poco::Path;
+using Poco::ThreadLocal;
 
 const std::string CHILD_URI = "/loolws/child/";
 const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
+
+namespace
+{
+    ThreadLocal<std::string> sourceForLinkOrCopy;
+    ThreadLocal<Path> destinationForLinkOrCopy;
+
+    int linkOrCopyFunction(const char *fpath,
+                           const struct stat* /*sb*/,
+                           int typeflag,
+                           struct FTW* /*ftwbuf*/)
+    {
+        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
+            return 0;
+
+        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
+        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
+
+#ifdef __APPLE__
+        if (strcmp(relativeOldPath, "PkgInfo") == 0)
+            return 0;
+#endif
+
+        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
+
+        switch (typeflag)
+        {
+        case FTW_F:
+            File(newPath.parent()).createDirectories();
+            if (link(fpath, newPath.toString().c_str()) == -1)
+            {
+                Log::error("Error: link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
+                           "\") failed. Exiting.");
+                exit(Application::EXIT_SOFTWARE);
+            }
+            break;
+        case FTW_DP:
+            {
+                struct stat st;
+                if (stat(fpath, &st) == -1)
+                {
+                    Log::error("Error: stat(\"" + std::string(fpath) + "\") failed.");
+                    return 1;
+                }
+                File(newPath).createDirectories();
+                struct utimbuf ut;
+                ut.actime = st.st_atime;
+                ut.modtime = st.st_mtime;
+                if (utime(newPath.toString().c_str(), &ut) == -1)
+                {
+                    Log::error("Error: utime(\"" + newPath.toString() + "\", &ut) failed.");
+                    return 1;
+                }
+            }
+            break;
+        case FTW_DNR:
+            Log::error("Cannot read directory '" + std::string(fpath) + "'");
+            return 1;
+        case FTW_NS:
+            Log::error("nftw: stat failed for '" + std::string(fpath) + "'");
+            return 1;
+        case FTW_SLN:
+            Log::error("nftw: symlink to nonexistent file: '" + std::string(fpath) + "', ignored.");
+            break;
+        default:
+            assert(false);
+        }
+        return 0;
+    }
+
+    void linkOrCopy(const std::string& source, const Path& destination)
+    {
+        *sourceForLinkOrCopy = source;
+        if (sourceForLinkOrCopy->back() == '/')
+            sourceForLinkOrCopy->pop_back();
+        *destinationForLinkOrCopy = destination;
+        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
+            Log::error("linkOrCopy: nftw() failed for '" + source + "'");
+    }
+}
 
 class Connection: public Runnable
 {
@@ -497,7 +585,12 @@ private:
     std::atomic<unsigned> _clientViews;
 };
 
-void lokit_main(const std::string &loSubPath, const std::string& jailId, const std::string& pipe)
+void lokit_main(const std::string& childRoot,
+                const std::string& sysTemplate,
+                const std::string& loTemplate,
+                const std::string& loSubPath,
+                const std::string& jailId,
+                const std::string& pipe)
 {
 #ifdef LOOLKIT_NO_MAIN
     // Reinitialize logging when forked.
@@ -510,8 +603,12 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
     char* pStart = nullptr;
     char* pEnd = nullptr;
 
+    assert(!childRoot.empty());
+    assert(!sysTemplate.empty());
+    assert(!loTemplate.empty());
     assert(!jailId.empty());
     assert(!loSubPath.empty());
+    assert(!pipe.empty());
 
     std::map<std::string, std::shared_ptr<Document>> _documents;
 
@@ -548,6 +645,69 @@ void lokit_main(const std::string &loSubPath, const std::string& jailId, const s
             Log::error("Error: failed to open pipe [" + LOKIT_BROKER + "] write only.");
             exit(Application::EXIT_SOFTWARE);
         }
+
+        const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
+        Log::info("Jail path: " + jailPath.toString());
+
+        File(jailPath).createDirectories();
+
+        Path jailLOInstallation(jailPath, loSubPath);
+        jailLOInstallation.makeDirectory();
+        File(jailLOInstallation).createDirectory();
+
+        // Copy (link) LO installation and other necessary files into it from the template.
+        linkOrCopy(sysTemplate, jailPath);
+        linkOrCopy(loTemplate, jailLOInstallation);
+
+        // We need this because sometimes the hostname is not resolved
+        const std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+        for (const auto& filename : networkFiles)
+        {
+            const File networkFile(filename);
+            if (networkFile.exists())
+            {
+                networkFile.copyTo(Path(jailPath, "/etc").toString());
+            }
+        }
+
+#ifdef __linux
+        // Create the urandom and random devices
+        File(Path(jailPath, "/dev")).createDirectory();
+        if (mknod((jailPath.toString() + "/dev/random").c_str(),
+                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                  makedev(1, 8)) != 0)
+        {
+            Log::error("Error: mknod(" + jailPath.toString() + "/dev/random) failed.");
+
+        }
+        if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
+                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                  makedev(1, 9)) != 0)
+        {
+            Log::error("Error: mknod(" + jailPath.toString() + "/dev/urandom) failed.");
+        }
+#endif
+
+        Log::info("loolbroker -> chroot(\"" + jailPath.toString() + "\")");
+        if (chroot(jailPath.toString().c_str()) == -1)
+        {
+            Log::error("Error: chroot(\"" + jailPath.toString() + "\") failed.");
+            exit(Application::EXIT_SOFTWARE);
+        }
+
+        if (chdir("/") == -1)
+        {
+            Log::error("Error: chdir(\"/\") in jail failed.");
+            exit(Application::EXIT_SOFTWARE);
+        }
+
+#ifdef __linux
+        dropCapability(CAP_SYS_CHROOT);
+        dropCapability(CAP_MKNOD);
+        dropCapability(CAP_FOWNER);
+#else
+        dropCapability();
+#endif
 
         loKit = lok_init_2(instdir_path.c_str(), "file:///user");
         if (loKit == nullptr)
@@ -699,6 +859,9 @@ int main(int argc, char** argv)
 
     Log::initialize("kit");
 
+    std::string childRoot;
+    std::string sysTemplate;
+    std::string loTemplate;
     std::string loSubPath;
     std::string jailId;
     std::string pipe;
@@ -707,7 +870,26 @@ int main(int argc, char** argv)
     {
         char *cmd = argv[i];
         char *eq  = nullptr;
-        if (strstr(cmd, "--losubpath=") == cmd)
+
+        if (strstr(cmd, "--childroot=") == cmd)
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                childRoot = std::string(++eq);
+        }
+        else if (strstr(cmd, "--systemplate=") == cmd)
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                sysTemplate = std::string(++eq);
+        }
+        else if (strstr(cmd, "--lotemplate=") == cmd)
+        {
+            eq = strchrnul(cmd, '=');
+            if (*eq)
+                loTemplate = std::string(++eq);
+        }
+        else if (strstr(cmd, "--losubpath=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
@@ -769,7 +951,7 @@ int main(int argc, char** argv)
         Log::warn("Note: LOK_VIEW_CALLBACK is not set.");
     }
 
-    lokit_main(loSubPath, jailId, pipe);
+    lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, jailId, pipe);
 
     return Application::EXIT_OK;
 }

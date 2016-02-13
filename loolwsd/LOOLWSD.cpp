@@ -723,7 +723,6 @@ std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
-std::string LOOLWSD::JailId;
 std::string LOOLWSD::LoSubPath = "lo";
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
@@ -861,7 +860,7 @@ void LOOLWSD::displayVersion()
     std::cout << LOOLWSD_VERSION << std::endl;
 }
 
-Poco::Process::PID LOOLWSD::createBroker(const std::string& rJailId)
+Poco::Process::PID LOOLWSD::createBroker()
 {
     Process::Args args;
 
@@ -869,7 +868,6 @@ Poco::Process::PID LOOLWSD::createBroker(const std::string& rJailId)
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
-    args.push_back("--jailid=" + rJailId);
     args.push_back("--numprespawns=" + std::to_string(NumPreSpawnedChildren));
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
@@ -939,8 +937,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    JailId = Util::createRandomDir(ChildRoot);
-    const Poco::Process::PID pidBroker = createBroker(JailId);
+    const Poco::Process::PID pidBroker = createBroker();
     if (pidBroker < 0)
     {
         Log::error("Failed to spawn loolBroker.");

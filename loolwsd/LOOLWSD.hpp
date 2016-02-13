@@ -119,15 +119,15 @@ public:
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
-    std::string getChildId() const { return _childId; }
+    std::string getJailId() const { return _jailId; }
 
 private:
     DocumentURI(const Poco::URI& uriPublic,
              const Poco::URI& uriJailed,
-             const std::string& childId) :
+             const std::string& jailId) :
        _uriPublic(uriPublic),
        _uriJailed(uriJailed),
-       _childId(childId)
+       _jailId(jailId)
     {
     }
 
@@ -140,7 +140,7 @@ private:
 private:
     const Poco::URI _uriPublic;
     const Poco::URI _uriJailed;
-    const std::string _childId;
+    const std::string _jailId;
 };
 
 class LOOLWSD: public Poco::Util::ServerApplication
@@ -159,7 +159,6 @@ public:
     static std::string SysTemplate;
     static std::string LoTemplate;
     static std::string ChildRoot;
-    static std::string JailId;
     static std::string LoSubPath;
 
     static const std::string CHILD_URI;
@@ -183,7 +182,7 @@ protected:
 private:
     void displayHelp();
     void displayVersion();
-    Poco::Process::PID createBroker(const std::string& jailId);
+    Poco::Process::PID createBroker();
 };
 
 #endif

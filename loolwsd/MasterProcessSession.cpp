@@ -148,7 +148,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     if (url.find(filePrefix) == 0)
                     {
                         // Rewrite file:// URLs, as they are visible to the outside world.
-                        Path path(MasterProcessSession::getJailPath(_childId), url.substr(filePrefix.length()));
+                        Path path(MasterProcessSession::getJailPath(_jailId), url.substr(filePrefix.length()));
                         url = filePrefix + path.toString().substr(1);
                     }
                     peer->_saveAsQueue.put(url);
@@ -251,17 +251,17 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        const auto childId = tokens[1];
+        const auto jailId = tokens[1];
         setId(tokens[2]);
         const Process::PID pidChild = std::stoull(tokens[3]);
 
         std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
         AvailableChildSessions.emplace(getId(), shared_from_this());
 
-        Log::info() << getName() << " mapped " << this << " childId=" << childId << ", id=" << getId()
+        Log::info() << getName() << " mapped " << this << " jailId=" << jailId << ", id=" << getId()
                     << " into _availableChildSessions, size=" << AvailableChildSessions.size() << Log::end;
 
-        _childId = childId;
+        _jailId = jailId;
         _pidChild = pidChild;
         lock.unlock();
         AvailableChildSessionCV.notify_one();
@@ -384,7 +384,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
 bool MasterProcessSession::haveSeparateProcess()
 {
-    return !_childId.empty();
+    return !_jailId.empty();
 }
 
 Poco::Path MasterProcessSession::getJailPath(const std::string& childId)
@@ -766,7 +766,7 @@ void MasterProcessSession::dispatchChild()
         return;
     }
 
-    const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, LOOLWSD::JailId);
+    const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, childSession->_jailId);
     const auto childId = std::to_string(childSession->_pidChild);
 
     auto document = DocumentURI::create(_docURL, jailRoot.toString(), childId);

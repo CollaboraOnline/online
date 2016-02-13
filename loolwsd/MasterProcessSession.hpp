@@ -80,8 +80,8 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
-    // The id of the child process
-    std::string _childId;
+    // The jail id of the child process
+    std::string _jailId;
     // The pid of the child process
     Poco::Process::PID _pidChild;
     int _curPart;
