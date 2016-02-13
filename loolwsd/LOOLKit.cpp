@@ -70,7 +70,8 @@ using Poco::Path;
 using Poco::ThreadLocal;
 
 const std::string CHILD_URI = "/loolws/child/";
-const std::string LOKIT_BROKER = "/tmp/loolbroker.fifo";
+const std::string FIFO_PATH = "pipe";
+const std::string FIFO_BROKER = "loolbroker.fifo";
 
 namespace
 {
@@ -640,9 +641,11 @@ void lokit_main(const std::string& childRoot,
             exit(Application::EXIT_SOFTWARE);
         }
 
-        if ( (writerBroker = open(LOKIT_BROKER.c_str(), O_WRONLY) ) < 0 )
+        const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
+        const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
+        if ( (writerBroker = open(pipeBroker.c_str(), O_WRONLY) ) < 0 )
         {
-            Log::error("Error: failed to open pipe [" + LOKIT_BROKER + "] write only.");
+            Log::error("Error: failed to open pipe [" + FIFO_BROKER + "] write only.");
             exit(Application::EXIT_SOFTWARE);
         }
 

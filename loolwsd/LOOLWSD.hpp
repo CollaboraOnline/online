@@ -163,7 +163,8 @@ public:
 
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
-    static const std::string FIFO_FILE;
+    static const std::string FIFO_PATH;
+    static const std::string FIFO_LOOLWSD;
     static const std::string LOKIT_PIDLOG;
 
     static

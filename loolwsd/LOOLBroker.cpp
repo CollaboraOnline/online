@@ -27,10 +27,9 @@ typedef int (LokHookPreInit)  ( const char *install_path, const char *user_profi
 
 using Poco::ProcessHandle;
 
-const std::string FIFO_FILE = "/tmp/loolwsdfifo";
-const std::string FIFO_BROKER = "/tmp/loolbroker.fifo";
+const std::string FIFO_LOOLWSD = "loolwsdfifo";
 const std::string BROKER_SUFIX = ".fifo";
-const std::string BROKER_PREFIX = "/tmp/lokit";
+const std::string BROKER_PREFIX = "lokit";
 
 static int readerChild = -1;
 static int readerBroker = -1;
@@ -368,7 +367,7 @@ public:
             {
                 if (poll(&aPoll, 1, POLL_TIMEOUT_MS) < 0)
                 {
-                    Log::error("Failed to poll pipe [" + FIFO_FILE + "].");
+                    Log::error("Failed to poll pipe [" + FIFO_LOOLWSD + "].");
                     continue;
                 }
                 else
@@ -378,7 +377,7 @@ public:
                     if (nBytes < 0)
                     {
                         pStart = pEnd = nullptr;
-                        Log::error("Error reading message from pipe [" + FIFO_FILE + "].");
+                        Log::error("Error reading message from pipe [" + FIFO_LOOLWSD + "].");
                         continue;
                     }
                     pStart = aBuffer;
@@ -387,7 +386,7 @@ public:
                 else
                 if (aPoll.revents & (POLLERR | POLLHUP))
                 {
-                    Log::error("Broken pipe [" + FIFO_FILE + "] with wsd.");
+                    Log::error("Broken pipe [" + FIFO_LOOLWSD + "] with wsd.");
                     break;
                 }
             }
@@ -472,12 +471,13 @@ static int createLibreOfficeKit(const bool sharePages,
     int nFIFOWriter = -1;
     int nFlags = O_WRONLY | O_NONBLOCK;
 
-    const std::string pipe = BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX;
+    const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
+    const std::string pipeKit = Path(pipePath, BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX).toString();
     const std::string jailId = Util::createRandomDir(childRoot);
 
-    if (!File(pipe).exists() && mkfifo(pipe.c_str(), 0666) < 0)
+    if (mkfifo(pipeKit.c_str(), 0666) < 0)
     {
-        Log::error("Error: Failed to create pipe FIFO [" + pipe + "].");
+        Log::error("Error: Failed to create pipe FIFO [" + pipeKit + "].");
         return -1;
     }
 
@@ -489,7 +489,7 @@ static int createLibreOfficeKit(const bool sharePages,
         if (!(pid = fork()))
         {
             // child
-            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, jailId, pipe);
+            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, jailId, pipeKit);
             _exit(Application::EXIT_OK);
         }
         else
@@ -507,7 +507,7 @@ static int createLibreOfficeKit(const bool sharePages,
         args.push_back("--lotemplate=" + loTemplate);
         args.push_back("--losubpath=" + loSubPath);
         args.push_back("--jailid=" + jailId);
-        args.push_back("--pipe=" + pipe);
+        args.push_back("--pipe=" + pipeKit);
         args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
         Log::info("Launching LibreOfficeKit #" + std::to_string(childCounter) +
@@ -539,9 +539,9 @@ static int createLibreOfficeKit(const bool sharePages,
             aFIFOCV.wait_for(
                 lock,
                 std::chrono::microseconds(80000),
-                [&nFIFOWriter, &pipe, nFlags]
+                [&nFIFOWriter, &pipeKit, nFlags]
                 {
-                    return (nFIFOWriter = open(pipe.c_str(), nFlags)) >= 0;
+                    return (nFIFOWriter = open(pipeKit.c_str(), nFlags)) >= 0;
                 });
 
             if (nFIFOWriter < 0)
@@ -555,14 +555,14 @@ static int createLibreOfficeKit(const bool sharePages,
 
     if (nFIFOWriter < 0)
     {
-        Log::error("Error: failed to open write pipe [" + pipe + "] with kit. Abandoning child.");
+        Log::error("Error: failed to open write pipe [" + pipeKit + "] with kit. Abandoning child.");
         ChildProcess(childPID, -1, -1);
         return -1;
     }
 
     if ((nFlags = fcntl(nFIFOWriter, F_GETFL, 0)) < 0)
     {
-        Log::error("Error: failed to get pipe flags [" + pipe + "].");
+        Log::error("Error: failed to get pipe flags [" + pipeKit + "].");
         ChildProcess(childPID, -1, -1);
         return -1;
     }
@@ -570,7 +570,7 @@ static int createLibreOfficeKit(const bool sharePages,
     nFlags &= ~O_NONBLOCK;
     if (fcntl(nFIFOWriter, F_SETFL, nFlags) < 0)
     {
-        Log::error("Error: failed to set pipe flags [" + pipe + "].");
+        Log::error("Error: failed to set pipe flags [" + pipeKit + "].");
         ChildProcess(childPID, -1, -1);
         return -1;
     }
@@ -696,9 +696,11 @@ int main(int argc, char** argv)
         exit(Application::EXIT_SOFTWARE);
     }
 
-    if ( (readerBroker = open(FIFO_FILE.c_str(), O_RDONLY) ) < 0 )
+    const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
+    const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
+    if ( (readerBroker = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
     {
-        Log::error("Error: failed to open pipe [" + FIFO_FILE + "] read only. Exiting.");
+        Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] read only. Exiting.");
         exit(Application::EXIT_SOFTWARE);
     }
 
@@ -721,13 +723,14 @@ int main(int argc, char** argv)
     }
 
     int nFlags = O_RDONLY | O_NONBLOCK;
-    if (!File(FIFO_BROKER).exists() && mkfifo(FIFO_BROKER.c_str(), 0666) == -1)
+    const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
+    if (mkfifo(pipeBroker.c_str(), 0666) == -1)
     {
         Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 
-    if ((readerChild = open(FIFO_BROKER.c_str(), nFlags) ) < 0)
+    if ((readerChild = open(pipeBroker.c_str(), nFlags) ) < 0)
     {
         Log::error("Error: pipe opened for reading.");
         exit(Application::EXIT_SOFTWARE);

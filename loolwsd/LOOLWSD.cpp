@@ -729,8 +729,8 @@ int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::DoTest = false;
 const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
-const std::string LOOLWSD::LOKIT_PIDLOG = "/tmp/lokit.pid";
-const std::string LOOLWSD::FIFO_FILE = "/tmp/loolwsdfifo";
+const std::string LOOLWSD::FIFO_PATH = "pipe";
+const std::string LOOLWSD::FIFO_LOOLWSD = "loolwsdfifo";
 
 LOOLWSD::LOOLWSD()
 {
@@ -931,9 +931,17 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             filePID << Process::id();
     }
 
-    if (!File(FIFO_FILE).exists() && mkfifo(FIFO_FILE.c_str(), 0666) == -1)
+    const Path pipePath = Path::forDirectory(ChildRoot + Path::separator() + FIFO_PATH);
+    if (!File(pipePath).createDirectory())
     {
-        Log::error("Error: Failed to create pipe FIFO [" + FIFO_FILE + "].");
+        Log::error("Error: Failed to create pipe directory [" + pipePath.toString() + "].");
+        return Application::EXIT_SOFTWARE;
+    }
+
+    const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
+    if (mkfifo(pipeLoolwsd.c_str(), 0666) == -1)
+    {
+        Log::error("Error: Failed to create pipe FIFO [" + pipeLoolwsd + "].");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -979,9 +987,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     srv2.start();
 
-    if ( (BrokerWritePipe = open(FIFO_FILE.c_str(), O_WRONLY) ) < 0 )
+    if ( (BrokerWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
     {
-        Log::error("Error: failed to open pipe [" + FIFO_FILE + "] write only.");
+        Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] write only.");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -1094,6 +1102,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::info("Removing jail [" + path + "].");
         Util::removeFile(path, true);
     }
+
+    Log::debug("Cleaning up pipe directory [" + pipePath.toString() + "].");
+    Util::removeFile(pipePath, true);
 
     Log::info("Process [loolwsd] finished.");
     return Application::EXIT_OK;
