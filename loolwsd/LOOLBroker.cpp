@@ -761,6 +761,16 @@ int main(int argc, char** argv)
     if (numPreSpawnedChildren > 1)
         forkCounter = numPreSpawnedChildren - 1;
 
+    if (!sharePages)
+    {
+#ifdef __linux
+        dropCapability(CAP_SYS_CHROOT);
+        dropCapability(CAP_MKNOD);
+        dropCapability(CAP_FOWNER);
+#else
+        dropCapability();
+#endif
+    }
 
     PipeRunnable pipeHandler;
     Poco::Thread aPipe;
