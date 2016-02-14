@@ -325,8 +325,6 @@ public:
 
     ~Document()
     {
-        std::unique_lock<std::recursive_mutex> lock(_mutex);
-
         Log::info("~Document dtor for url [" + _url + "] on child [" + _jailId +
                   "]. There are " + std::to_string(_clientViews) + " views.");
 
@@ -359,6 +357,8 @@ public:
                              << Log::end;
             }
         }
+
+        std::unique_lock<std::recursive_mutex> lock(_mutex);
 
         // Destroy all connections and views.
         _connections.clear();
