@@ -79,7 +79,13 @@ L.Control.Styles = L.Control.extend({
 				styles.forEach(function (style) {
 					var item = L.DomUtil.create('option', '', container);
 					item.value = style;
-					item.innerHTML = style.toLocaleString();
+
+					if (style.startsWith('Outline')) {
+						var outlineLevel = style.split('Outline')[1];
+						var localeString = 'Outline'.toLocaleString() + outlineLevel;
+						item.innerHTML = localeString;
+					} else
+						item.innerHTML = style.toLocaleString();
 				});
 			}
 		}
