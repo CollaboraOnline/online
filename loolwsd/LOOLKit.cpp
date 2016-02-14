@@ -40,6 +40,7 @@
 #include <Poco/Notification.h>
 #include <Poco/Mutex.h>
 #include <Poco/Util/ServerApplication.h>
+#include <Poco/Net/NetException.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -338,17 +339,24 @@ public:
         // Destroy all connections and views.
         for (auto aIterator : _connections)
         {
-            if (TerminationState == LOOLState::LOOL_ABNORMAL)
+            try
             {
                 // stop all websockets
-                std::shared_ptr<WebSocket> ws = aIterator.second->getWebSocket();
-                if ( ws )
-                    ws->shutdownReceive();
+                if (aIterator.second->isRunning())
+                {
+                    std::shared_ptr<WebSocket> ws = aIterator.second->getWebSocket();
+                    if ( ws )
+                    {
+                        ws->shutdownReceive();
+                        aIterator.second->join();
+                    }
+                }
             }
-            else
+            catch(Poco::Net::NetException& exc)
             {
-                // wait until loolwsd close all websockets
-                aIterator.second->join();
+                Log::error() << "Error: " << exc.displayText()
+                             << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                             << Log::end;
             }
         }
 
