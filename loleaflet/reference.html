@@ -600,27 +600,27 @@ var map = L.map('map', {
 	</tr>
 	<tr>
 		<td><code><b>baselayerchange</b></code></td>
-		<td><code><a href="#layer-event">LayerEvent</a></code>
+		<td><code><a href="#layer-event">LayerEvent</a></code></td>
 		<td>Fired when the base layer is changed through the <a href="#control-layers">layer control</a>.</td>
 	</tr>
 	<tr>
 		<td><code><b>overlayadd</b></code></td>
-		<td><code><a href="#layer-event">LayerEvent</a></code>
+		<td><code><a href="#layer-event">LayerEvent</a></code></td>
 		<td>Fired when an overlay is selected through the <a href="#control-layers">layer control</a>.</td>
 	</tr>
 	<tr>
 		<td><code><b>overlayremove</b></code></td>
-		<td><code><a href="#layer-event">LayerEvent</a></code>
+		<td><code><a href="#layer-event">LayerEvent</a></code></td>
 		<td>Fired when an overlay is deselected through the <a href="#control-layers">layer control</a>.</td>
 	</tr>
 	<tr>
 		<td><code><b>locationfound</b></code></td>
-		<td><code><a href="#location-event">LocationEvent</a></code>
+		<td><code><a href="#location-event">LocationEvent</a></code></td>
 		<td>Fired when geolocation (using the <a href="#map-locate">locate</a> method) went successfully.</td>
 	</tr>
 	<tr>
 		<td><code><b>locationerror</b></code></td>
-		<td><code><a href="#error-event">ErrorEvent</a></code>
+		<td><code><a href="#error-event">ErrorEvent</a></code></td>
 		<td>Fired when geolocation (using the <a href="map-locate">locate</a> method) failed.</td>
 	</tr>
 	<tr>
@@ -937,6 +937,7 @@ var map = L.map('map', {
 		<td><code><span class="keyword">this</span></code></td>
 		<td>Removes the given control from the map.</td>
 	</tr>
+	<tr>
 		<td><code><b>getRenderer</b>(
 			<nobr>&lt;<a href="#layer">Layer</a>&gt; <i>layer</i>)</nobr>
 		</code></td>
@@ -1035,7 +1036,7 @@ var map = L.map('map', {
 		</code></td>
 
 		<td><code><a href="#point">Point</a></code></td>
-		<td>Returns the pixel coordinates of a mouse click relative to the map layer given its event object.
+		<td>Returns the pixel coordinates of a mouse click relative to the map layer given its event object.</td>
 	</tr>
 	<tr>
 		<td><code><b>mouseEventToLatLng</b>(
@@ -1079,16 +1080,16 @@ var map = L.map('map', {
 	</tr>
 	<tr>
 		<td><code><b>createPane</b>(
-			<nobr>&lt;String&gt; <i>name</i>, </nobr> <nobr>&lt;HTMLElement&gt; <i>contianer?</i>
+			<nobr>&lt;String&gt; <i>name</i>, </nobr> <nobr>&lt;HTMLElement&gt; <i>container?</i>
 		)</code></td>
-		<td><a href="#map-panes"><code>MapPane</code></td>
+		<td><a href="#map-panes"><code>MapPane</code></a></td>
 		<td>Creates a pane with the given name. Created panes will be given a generated class based on the name like <code class="css"><span class="selector">.leaflet-pane-name</span></code>"</td>
 	</tr>
 	<tr>
 		<td><code><b>getPane</b>(
 			<nobr>&lt;String&gt; <i>name</i>
 		)</code></td>
-		<td><a href="#map-panes"><code>MapPane</code></td>
+		<td><a href="#map-panes"><code>MapPane</code></a></td>
 		<td>Returns the HTML element representing the named map pane.</td>
 	</tr>
 	<tr>
@@ -1254,19 +1255,19 @@ var map = L.map('map', {
 	<tr>
 		<td><code><b>paddingTopLeft</b></code></td>
 		<td><code><a href="#point">Point</a></code></td>
-		<td><code><nobr>[<span class="number">0</span>, <span class="number">0</span>]</nobr>
+		<td><code><nobr>[<span class="number">0</span>, <span class="number">0</span>]</nobr></code></td>
 		<td>Sets the amount of padding in the top left corner of a map container that shouldn't be accounted for when setting the view to fit bounds. Useful if you have some control overlays on the map like a sidebar and you don't want them to obscure objects you're zooming to.</td>
 	</tr>
 	<tr>
 		<td><code><b>paddingBottomRight</b></code></td>
 		<td><code><a href="#point">Point</a></code></td>
-		<td><code><nobr>[<span class="number">0</span>, <span class="number">0</span>]</nobr>
+		<td><code><nobr>[<span class="number">0</span>, <span class="number">0</span>]</nobr></code></td>
 		<td>The same for bottom right corner of the map.</td>
 	</tr>
 	<tr>
 		<td><code><b>padding</b></code></td>
 		<td><code><a href="#point">Point</a></code></td>
-		<td><code><nobr>[<span class="number">0</span>, <span class="number">0</span>]</nobr>
+		<td><code><nobr>[<span class="number">0</span>, <span class="number">0</span>]</nobr></code></td>
 		<td>Equivalent of setting both top left and bottom right padding to the same value.</td>
 	</tr>
 	<tr>
@@ -1344,7 +1345,7 @@ var map = L.map('map', {
 
 <h3 id="map-panes">Map Panes</h3>
 
-<p>Panes are DOM elements used to control the ordering of layers on the map. You can access panes with <a href="#map-getpane">map.getPane</a> or <a href="#map-getpanes">map.getPanes</a>methods. New panes can be created with the <a href="#map-getpane">map.createPane</a> method.<p>
+<p>Panes are DOM elements used to control the ordering of layers on the map. You can access panes with <a href="#map-getpane">map.getPane</a> or <a href="#map-getpanes">map.getPanes</a>methods. New panes can be created with the <a href="#map-getpane">map.createPane</a> method.</p>
 
 <p>Every map has the following panes that differ only in zIndex.</p>
 
@@ -1759,45 +1760,45 @@ unexpected behaviour.</h4>
 	</tr>
 	<tr>
 		<td><code><b>cellEnterString</b>(
-            <nobr>&lt;String&gt;<i>formula</i>)</nobr>
+            <nobr>&lt;String&gt;<i>formula</i>)</nobr></code></td>
 		<td><code>undefined</code></td>
         <td>Enters a string of text in the selected cell.</td>
 	</tr>
 	<tr>
 		<td><code><b>insertFile</b>(
-            <nobr>&lt;File&gt;<i>file</i>)</nobr>
+            <nobr>&lt;File&gt;<i>file</i>)</nobr></code></td>
 		<td><code>undefined</code></td>
         <td>Insert a file (graphic) in the document.</td>
 	</tr>
 	<tr>
 		<td><code><b>applyFont</b>(
-            <nobr>&lt;String&gt;<i>fontName</i>)</nobr>
+            <nobr>&lt;String&gt;<i>fontName</i>)</nobr></code></td>
 		<td><code>undefined</code></td>
         <td>Applies a font.</td>
 	</tr>
 	<tr>
 		<td><code><b>applyFontSize</b>(
-            <nobr>&lt;Number&gt;<i>fontSize</i>)</nobr>
+            <nobr>&lt;Number&gt;<i>fontSize</i>)</nobr></code></td>
 		<td><code>undefined</code></td>
         <td>Applies a font size.</td>
 	</tr>
 	<tr>
 		<td><code><b>applyStyle</b>(
             <nobr>&lt;String&gt;<i>style</i>,</nobr>
-            <nobr>&lt;String&gt;<i>styleFamily</i>)</nobr>
+            <nobr>&lt;String&gt;<i>styleFamily</i>)</nobr></code></td>
 		<td><code>undefined</code></td>
         <td>Applies a style from a style family.</td>
 	</tr>
 	<tr>
 		<td><code><b>renderFont</b>(
-            <nobr>&lt;String&gt;<i>fontName</i>)</nobr>
+            <nobr>&lt;String&gt;<i>fontName</i>)</nobr></code></td>
 		<td><code>undefined</code></td>
         <td>Renders the given font in the smallest rectangle it can fit in.</td>
 	</tr>
 	<tr>
 		<td><code><b>sendUnoCommand</b>(
 			<nobr>&lt;<a href="#loleaflet-uno-commands">String</a>&gt; <i>unoCommand</i>,</nobr>
-			<nobr>&lt;<a href="#loleaflet-uno-commands">Object</a>&gt; <i>param</i>)</nobr>
+			<nobr>&lt;<a href="#loleaflet-uno-commands">Object</a>&gt; <i>param</i>)</nobr></code></td>
 		<td><code>undefined</code></td>
         <td>Sends a <a href="#loleaflet-uno-commands">uno command</a> with the given parameter to LOKit.</td>
 	</tr>
@@ -2304,7 +2305,7 @@ The <code>id</code> property of ErrorEvent can have the following values:
 	<tr>
 		<td><code><b>value</b></code></td>
 		<td><code>Number</code></td>
-		<td>If present, a number for 0 to 100 representing the loading status.<td>
+		<td>If present, a number for 0 to 100 representing the loading status.</td>
 	</tr>
 </table>
 
@@ -2702,14 +2703,14 @@ The <code>id</code> property of ErrorEvent can have the following values:
 <h2 id="loleaflet-uno-commands">Object values</h2>
 
 <p>A list of common uno commands with their additional parameters.</p>
-<pre><code class="javascript">map.sendUnoCommand('.uno:Bold')<code></pre>
+<pre><code class="javascript">map.sendUnoCommand('.uno:Bold')</code></pre>
 <pre><code class="javascript">map.sendUnoCommand('.uno:Color',
 {
   "Color": {
     "type": "long",
     "value": 16750848
   }
-})<code></pre>
+})</code></pre>
 
 <table data-id='values' id='uno-commands-table'>
 	<tr>
@@ -2863,7 +2864,7 @@ The <code>id</code> property of ErrorEvent can have the following values:
 	</tr>
 	<tr>
 		<td><code><b>contextmenu</b></code></td>
-		<td><code><a href="#mouse-event">MouseEvent</a></code>
+		<td><code><a href="#mouse-event">MouseEvent</a></code></td>
 		<td>Fired when the user right-clicks on the marker.</td>
 	</tr>
 	<tr>
@@ -3078,21 +3079,18 @@ The <code>id</code> property of ErrorEvent can have the following values:
 		<td><code><b>autoPanPaddingTopLeft</b></code></td>
 		<td><code><a href="#point">Point</a></code></td>
 		<td><code><span class="literal">null</span></code></td>
-		</code></td>
 		<td>The margin between the popup and the top left corner of the map view after autopanning was performed.</td>
 	</tr>
 	<tr>
 		<td><code><b>autoPanPaddingBottomRight</b></code></td>
 		<td><code><a href="#point">Point</a></code></td>
 		<td><code><span class="literal">null</span></code></td>
-		</code></td>
 		<td>The margin between the popup and the bottom right corner of the map view after autopanning was performed.</td>
 	</tr>
 	<tr>
 		<td><code><b>autoPanPadding</b></code></td>
 		<td><code><a href="#point">Point</a></code></td>
-		<td><code><nobr>Point(<span class="number">5</span>, <span class="number">5</span>)</nobr>
-		</code></td>
+		<td><code><nobr>Point(<span class="number">5</span>, <span class="number">5</span>)</nobr></code></td>
 		<td>Equivalent of setting both top left and bottom right autopan padding to the same value.</td>
 	</tr>
 	<tr>
@@ -3495,9 +3493,7 @@ The <code>id</code> property of ErrorEvent can have the following values:
 	<tr>
 		<td><code><b>L.tileLayer.wms</b>(
 			<nobr>&lt;String&gt; <i>baseUrl</i></nobr>,
-			<nobr>&lt;<a href="#tilelayer-wms-options">TileLayer.WMS options</a>&gt; <i>options</i> )</nobr>
-
-
+			<nobr>&lt;<a href="#tilelayer-wms-options">TileLayer.WMS options</a>&gt; <i>options</i> )</nobr></code></td>
 		<td>Instantiates a WMS tile layer object given a base URL of the WMS service and a WMS parameters/options object.</td>
 	</tr>
 </table>
@@ -3674,7 +3670,7 @@ L.imageOverlay(imageUrl, imageBounds).addTo(map);</code></pre>
 
 
 <h2 id="path">Path</h2>
-<p>An abstract class that contains options and constants shared between vector overlays (Polygon, Polyline, Circle). Do not use it directly. Extends <a href="#layer">Layer</a>.
+<p>An abstract class that contains options and constants shared between vector overlays (Polygon, Polyline, Circle). Do not use it directly. Extends <a href="#layer">Layer</a>.</p>
 
 <h3 id="path-options">Options</h3>
 <table data-id='path'>
@@ -3818,7 +3814,7 @@ L.imageOverlay(imageUrl, imageBounds).addTo(map);</code></pre>
 	</tr>
 	<tr>
 		<td><code><b>add</b></code></td>
-		<td><code><a href="#event">Event</a></code>
+		<td><code><a href="#event">Event</a></code></td>
 		<td>Fired when the path is added to the map.</td>
 	</tr>
 	<tr>
@@ -4182,7 +4178,7 @@ map.fitBounds(bounds);</code></pre>
 
 <p>A class for drawing circle overlays on a map. Extends <a href="#circlemarker">CircleMarker</a>. Use <a href="#map-addlayer">Map#addLayer</a> to add it to the map.</p>
 
-<pre><code class="javascript">L.circle([50.5, 30.5], 200).addTo(map);</pre></code>
+<pre><code class="javascript">L.circle([50.5, 30.5], 200).addTo(map);</code></pre>
 
 <h3>Creation</h3>
 
@@ -4523,12 +4519,12 @@ map.fitBounds(bounds);</code></pre>
 	</tr>
 	<tr>
 		<td><code><b>layeradd</b></code></td>
-		<td><code><a href="#layer-event">LayerEvent</a></code>
+		<td><code><a href="#layer-event">LayerEvent</a></code></td>
 		<td>Fired when a layer is added to the group.</td>
 	</tr>
 	<tr>
 		<td><code><b>layerremove</b></code></td>
-		<td><code><a href="#layer-event">LayerEvent</a></code>
+		<td><code><a href="#layer-event">LayerEvent</a></code></td>
 		<td>Fired when a layer is removed from the map.</td>
 	</tr>
 </table>
@@ -5511,12 +5507,12 @@ L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);</code></pre>
 	</tr>
 	<tr>
 		<td><code><b>iconUrl</b></code></td>
-		<td><code>String</code>
+		<td><code>String</code></td>
 		<td>(required) The URL to the icon image (absolute or relative to your script path).</td>
 	</tr>
 	<tr>
 		<td><code><b>iconRetinaUrl</b></code></td>
-		<td><code>String</code>
+		<td><code>String</code></td>
 		<td>The URL to a retina sized version of the icon image (absolute or relative to your script path). Used for Retina screen devices.</td>
 	</tr>
 	<tr>
@@ -5531,12 +5527,12 @@ L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);</code></pre>
 	</tr>
 	<tr>
 		<td><code><b>shadowUrl</b></code></td>
-		<td><code>String</code>
+		<td><code>String</code></td>
 		<td>The URL to the icon shadow image. If not specified, no shadow image will be created.</td>
 	</tr>
 	<tr>
 		<td><code><b>shadowRetinaUrl</b></code></td>
-		<td><code>String</code>
+		<td><code>String</code></td>
 		<td>The URL to the retina sized version of the icon shadow image. If not specified, no shadow image will be created. Used for Retina screen devices.</td>
 	</tr>
 	<tr>
@@ -5556,7 +5552,7 @@ L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);</code></pre>
 	</tr>
 	<tr>
 		<td><code><b>className</b></code></td>
-		<td><code>String</code>
+		<td><code>String</code></td>
 		<td>A custom class name to assign to both icon and shadow images. Empty by default.</td>
 	</tr>
 </table>
@@ -5617,12 +5613,12 @@ L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);</code></pre>
 	</tr>
 	<tr>
 		<td><code><b>className</b></code></td>
-		<td><code>String</code>
+		<td><code>String</code></td>
 		<td>A custom class name to assign to the icon. <code><span class="string">'leaflet-div-icon'</span></code> by default.</td>
 	</tr>
 	<tr>
 		<td><code><b>html</b></code></td>
-		<td><code>String</code>
+		<td><code>String</code></td>
 		<td>A custom HTML code to put inside the div element, empty by default.</td>
 	</tr>
 </table>
@@ -5659,31 +5655,31 @@ L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);</code></pre>
 	<tr>
 		<td><code><b>position</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'topleft'</span></td>
+		<td><code><span class="string">'topleft'</span></code></td>
 		<td>The position of the control (one of the map corners). See <a href="#control-positions">control positions</a>.</td>
 	</tr>
 	<tr>
 		<td><code><b>zoomInText</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'+'</span></td>
+		<td><code><span class="string">'+'</span></code></td>
 		<td>The text set on the zoom in button.</td>
 	</tr>
 	<tr>
 		<td><code><b>zoomOutText</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'-'</span></td>
+		<td><code><span class="string">'-'</span></code></td>
 		<td>The text set on the zoom out button.</td>
 	</tr>
 	<tr>
 		<td><code><b>zoomInTitle</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'Zoom in'</span></td>
+		<td><code><span class="string">'Zoom in'</span></code></td>
 		<td>The title set on the zoom in button.</td>
 	</tr>
 	<tr>
 		<td><code><b>zoomOutTitle</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'Zoom out'</span></td>
+		<td><code><span class="string">'Zoom out'</span></code></td>
 		<td>The title set on the zoom out button.</td>
 	</tr>
 </table>
@@ -5723,13 +5719,13 @@ L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);</code></pre>
 	<tr>
 		<td><code><b>position</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'bottomright'</span></td>
+		<td><code><span class="string">'bottomright'</span></code></td>
 		<td>The position of the control (one of the map corners). See <a href="#control-positions">control positions</a>.</td>
 	</tr>
 	<tr>
 		<td><code><b>prefix</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'Leaflet'</span></td>
+		<td><code><span class="string">'Leaflet'</span></code></td>
 		<td>The HTML text shown before the attributions. Pass <code><span class="literal">false</span></code> to disable.</td>
 	</tr>
 </table>
@@ -5842,7 +5838,7 @@ L.control.layers(baseLayers, overlays).addTo(map);</code></pre>
 	<tr>
 		<td><code><b>position</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'topright'</span></td>
+		<td><code><span class="string">'topright'</span></code></td>
 		<td>The position of the control (one of the map corners). See <a href="#control-positions">control positions</a>.</td>
 	</tr>
 	<tr>
@@ -5886,17 +5882,17 @@ L.control.layers(baseLayers, overlays).addTo(map);</code></pre>
 	</tr>
 	<tr>
 		<td><code><b>baselayerchange</b></code></td>
-		<td><code><a href="#layers-control-event">LayersControlEvent</a></code>
+		<td><code><a href="#layers-control-event">LayersControlEvent</a></code></td>
 		<td>Fired when the base layer is changed through the control.</td>
 	</tr>
 	<tr>
 		<td><code><b>overlayadd</b></code></td>
-		<td><code><a href="#layers-control-event">LayersControlEvent</a></code>
+		<td><code><a href="#layers-control-event">LayersControlEvent</a></code></td>
 		<td>Fired when an overlay is selected through the control.</td>
 	</tr>
 	<tr>
 		<td><code><b>overlayremove</b></code></td>
-		<td><code><a href="#layers-control-event">LayersControlEvent</a></code>
+		<td><code><a href="#layers-control-event">LayersControlEvent</a></code></td>
 		<td>Fired when an overlay is deselected through the control.</td>
 	</tr>
 </table>
@@ -5938,7 +5934,7 @@ L.control.layers(baseLayers, overlays).addTo(map);</code></pre>
 	<tr>
 		<td><code><b>position</b></code></td>
 		<td><code>String</code></td>
-		<td><code><span class="string">'bottomleft'</span></td>
+		<td><code><span class="string">'bottomleft'</span></code></td>
 		<td>The position of the control (one of the map corners). See <a href="#control-positions">control positions</a>.</td>
 	</tr>
 	<tr>
@@ -6038,7 +6034,7 @@ map.off('click', onClick);</code></pre>
 		</code></td>
 
 		<td><code><span class="keyword">this</span></code></td>
-		<td>Removes a set of type/listener pairs.</code></td>
+		<td>Removes a set of type/listener pairs.</td>
 	</tr>
 	<tr>
 		<td><code><b>off</b>()</code></td>
@@ -6082,7 +6078,7 @@ map.off('click', onClick);</code></pre>
 		<td><code><b>clearAllEventListeners</b>()</code></td>
 
 		<td><code><span class="keyword">this</span></code></td>
-		<td>Alias to <code>off()</code>.</code></td>
+		<td>Alias to <code>off()</code>.</td>
 	</tr>
 	<tr>
 		<td><code><b>hasEventListeners</b>( &hellip; )</code></td>
@@ -6380,7 +6376,7 @@ Popups will also be automatically opened when the layer is clicked on and closed
 		</code></td>
 
 		<td><code>String[]</code></td>
-		<td>Trims and splits the string on whitespace and returns the array of parts.</code></td>
+		<td>Trims and splits the string on whitespace and returns the array of parts.</td>
 	</tr>
 	<tr>
 		<td><code><b>setOptions</b>(
@@ -6642,7 +6638,7 @@ Popups will also be automatically opened when the layer is clicked on and closed
 		</code></td>
 
 		<td><code><span class="keyword">this</span></code></td>
-		<td>Removes a set of type/listener pairs.</code></td>
+		<td>Removes a set of type/listener pairs.</td>
 	</tr>	<tr>
 		<td><code><b>addListener</b>(
 			<nobr>&lt;HTMLElement&gt; <i>el</i></nobr>,
@@ -6683,8 +6679,7 @@ Popups will also be automatically opened when the layer is clicked on and closed
 		</code></td>
 
 		<td><code><span class="keyword">this</span></code></td>
-		<td>Prevents the default action of the event from happening (such as following a link in the <code>href</code> of the <code>a</code> element, or doing a <code>POST</code> request with page reload when <code>form</code> is submitted). Use it inside listener functions.</pre>
-		</td>
+		<td>Prevents the default action of the event from happening (such as following a link in the <code>href</code> of the <code>a</code> element, or doing a <code>POST</code> request with page reload when <code>form</code> is submitted). Use it inside listener functions.</td>
 	</tr>
 	<tr>
 		<td><code><b>stop</b>(
@@ -7216,7 +7211,7 @@ a.options; // {foo: 'bar', bla: 10}</code></pre>
 
 <h3>Includes</h3>
 
-<p><code>includes</code> is a special class property that merges all specified objects into the class (such objects are called mixins).
+<p><code>includes</code> is a special class property that merges all specified objects into the class (such objects are called mixins).</p>
 
 <pre><code> var MyMixin = {
 	foo: function () { ... },
@@ -7525,7 +7520,7 @@ map.addControl(new MyControl());
   <tr>
     <td><code><b>position</b></code></td>
     <td><code>String</code></td>
-    <td><code><span class="string">'topright'</span></td>
+    <td><code><span class="string">'topright'</span></code></td>
     <td>The initial position of the control (one of the map corners). See <a href="#control-positions">control positions</a>.</td>
   </tr>
 </table>
@@ -8172,7 +8167,7 @@ map.addControl(new MyControl());
 
 <h2 id="noconflict">noConflict</h2>
 
-<p>This method restores the L global variable to the original value it had before Leaflet inclusion, and returns the real Leaflet namespace so you can put it elsewhere, like this:<p>
+<p>This method restores the L global variable to the original value it had before Leaflet inclusion, and returns the real Leaflet namespace so you can put it elsewhere, like this:</p>
 
 <pre><code>// L points to some other library
 ...
@@ -8184,7 +8179,7 @@ var Leaflet = L.noConflict();
 
 <h2 id="version">version</h2>
 
-<p>A constant that represents the Leaflet version in use.<p>
+<p>A constant that represents the Leaflet version in use.</p>
 
 <pre><code>L.version // contains "0.5" (or whatever version is currently in use)</code></pre>
 
@@ -8213,9 +8208,7 @@ for (var i = 0, len = tables.length; i < len; i++) {
 <div class="footer">
 	<p>&copy; 2015 <a href="http://agafonkin.com/en">Vladimir Agafonkin</a>. Maps &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors.</p>
 </div>
-
 </div>
-
 <script>
 	hljs.configure({tabReplace: '    '});
 	hljs.initHighlighting();
