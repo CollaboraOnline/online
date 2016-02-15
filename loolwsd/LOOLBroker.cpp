@@ -431,12 +431,12 @@ private:
 };
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
-static bool globalPreinit(const std::string &loSubPath)
+static bool globalPreinit(const std::string &loTemplate)
 {
     void *handle;
     LokHookPreInit* preInit;
 
-    std::string libSofficeapp = "/" + loSubPath + "/program/" LIB_SOFFICEAPP;
+    std::string libSofficeapp = loTemplate + "/program/" LIB_SOFFICEAPP;
     std::string loadedLibrary;
     if (File(libSofficeapp).exists())
     {
@@ -450,7 +450,7 @@ static bool globalPreinit(const std::string &loSubPath)
     }
     else
     {
-        std::string libMerged = "/" + loSubPath + "/program/" LIB_MERGED;
+        std::string libMerged = loTemplate + "/program/" LIB_MERGED;
         if (File(libMerged).exists())
         {
             handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
@@ -475,7 +475,7 @@ static bool globalPreinit(const std::string &loSubPath)
         return false;
     }
 
-    return preInit(("/" + loSubPath + "/program").c_str(), "file:///user") == 0;
+    return preInit((loTemplate + "/program").c_str(), "file:///user") == 0;
 }
 
 static int createLibreOfficeKit(const bool sharePages,
@@ -765,7 +765,7 @@ int main(int argc, char** argv)
     }
 
     // Initialize LoKit and hope we can fork and save memory by sharing pages.
-    const bool sharePages = globalPreinit(loSubPath);
+    const bool sharePages = globalPreinit(loTemplate);
 
     if (!sharePages)
         Log::warn("Cannot fork, will spawn instead.");
