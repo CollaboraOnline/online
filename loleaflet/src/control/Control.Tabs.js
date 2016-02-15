@@ -1,5 +1,5 @@
 /*
- * L.Control.Tabs is used to swtich sheets in Calc
+ * L.Control.Tabs is used to switch sheets in Calc
  */
 
 /* global $ */
