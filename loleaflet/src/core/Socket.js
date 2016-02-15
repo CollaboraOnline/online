@@ -10,7 +10,7 @@ L.Socket = L.Class.extend({
 		try {
 			this.socket = new WebSocket(map.options.server);
 		} catch (e) {
-			this.fire('error', {msg: 'Socket connection error', cmd: 'socket', kind: 'failed', id: 3});
+			this.fire('error', {msg: _('Socket connection error'), cmd: 'socket', kind: 'failed', id: 3});
 			return null;
 		}
 		this._msgQueue = [];
@@ -97,11 +97,11 @@ L.Socket = L.Class.extend({
 		if (textMsg.startsWith('loolserver ')) {
 			// This must be the first message.
 			if (this._map._docLayer) {
-				this.fire('error', {msg: 'Unexpected loolserver message.'});
+				this.fire('error', {msg: _('Unexpected loolserver message.')});
 			}
 			// TODO: For now we expect perfect match.
 			if (textMsg.substring(11) !== this.ProtocolVersionNumber) {
-				this.fire('error', {msg: 'Unsupported server version.'});
+				this.fire('error', {msg: _('Unsupported server version.')});
 			}
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
@@ -196,11 +196,11 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketError: function () {
-		this.fire('error', {msg: 'Socket connection error', cmd: 'socket', kind: 'failed', id: 3});
+		this.fire('error', {msg: _('Socket connection error'), cmd: 'socket', kind: 'failed', id: 3});
 	},
 
 	_onSocketClose: function () {
-		this.fire('error', {msg: 'Socket connection closed', cmd: 'socket', kind: 'closed', id: 4});
+		this.fire('error', {msg: _('Socket connection closed'), cmd: 'socket', kind: 'closed', id: 4});
 	},
 
 	parseServerCmd: function (msg) {

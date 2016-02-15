@@ -30,7 +30,7 @@ dist: all
 	rm -rf loleaflet-$(VERSION)
 
 pot:
-	xgettext --keyword=_ --output=po/loleaflet-toolbar.pot dist/toolbar/toolbar.js src/control/Control.Tabs.js
+	xgettext --keyword=_ --output=po/loleaflet-toolbar.pot dist/toolbar/toolbar.js src/control/Control.Tabs.js src/core/Socket.js
 	html2po --pot --input=dist/loleaflet-help.html --output=po/loleaflet-help.pot
 
 l10n: pot
