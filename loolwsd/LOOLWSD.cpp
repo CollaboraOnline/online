@@ -101,6 +101,8 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/URI.h>
 #include <Poco/Environment.h>
 
+#include "Admin.hpp"
+#include "Auth.hpp"
 #include "Common.hpp"
 #include "Capabilities.hpp"
 #include "LOOLProtocol.hpp"
@@ -110,7 +112,6 @@ DEALINGS IN THE SOFTWARE.
 #include "LOOLWSD.hpp"
 #include "QueueHandler.hpp"
 #include "Util.hpp"
-#include "Admin.hpp"
 
 using namespace LOOLProtocol;
 
@@ -476,9 +477,36 @@ private:
         }
     }
 
+    bool authenticate(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
+    {
+        (void)response;
+        Log::info("Authenticating Get request processor for session [" + id + "].");
+        std::string token;
+        for (auto& pair : Poco::URI(request.getURI()).getQueryParameters())
+        {
+            if (pair.first == "token")
+            {
+                token = pair.second;
+                break;
+            }
+        }
+
+        //TODO:
+        //AuthAgent.verify(token);
+        return true;
+    }
+
     void handleGetRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
         Log::info("Starting Get request processor for session [" + id + "].");
+
+        //TODO: Authenticate the caller.
+        // authenticate(request, response);
+
+        Poco::Net::NameValueCollection cookies;
+        request.getCookies(cookies);
+        Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
+
         auto ws = std::make_shared<WebSocket>(request, response);
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws);
 
@@ -537,6 +565,7 @@ public:
             }
             else
             {
+                //authenticate(request, response, id);
                 handleGetRequest(request, response, id);
             }
         }
@@ -732,6 +761,9 @@ const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 const std::string LOOLWSD::FIFO_PATH = "pipe";
 const std::string LOOLWSD::FIFO_LOOLWSD = "loolwsdfifo";
+
+// Demo Site Verification URL.
+static const std::string DemoAuthVerificationUrl = "http://ec2-54-216-97-44.eu-west-1.compute.amazonaws.com/cloudsuite-demo/verify.php?type&token=";
 
 LOOLWSD::LOOLWSD()
 {

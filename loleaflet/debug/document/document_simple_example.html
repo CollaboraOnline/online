@@ -64,6 +64,7 @@
 
     var filePath = getParameterByName('file_path');
     var host = getParameterByName('host');
+    var token = getParameterByName('token');
     var permission = getParameterByName('permission');
     var timestamp = getParameterByName('timestamp');
     if (filePath === '') {
@@ -88,6 +89,7 @@
             doc: filePath,
             renderingOptions: renderingOptions,
             server: host,
+            token: token,
             //webserver: ..., /* by default derived from 'server' */
             permission: permission,
             timestamp: timestamp,

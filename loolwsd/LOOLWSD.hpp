@@ -22,6 +22,7 @@
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Process.h>
 
+#include "Auth.hpp"
 #include "Common.hpp"
 #include "Util.hpp"
 
@@ -160,6 +161,7 @@ public:
     static std::string LoTemplate;
     static std::string ChildRoot;
     static std::string LoSubPath;
+    //static Auth AuthAgent;
 
     static const std::string CHILD_URI;
     static const std::string PIDLOG;
