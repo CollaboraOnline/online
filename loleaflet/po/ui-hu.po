@@ -1,4 +1,4 @@
-# Collabora CloudSuite Toolbar French translation
+# Collabora CloudSuite Toolbar Hungarian translation
 # Copyright (C) 2015
 # This file is distributed under the same license as the cloudsuite package.
 # Andras Timar <andras.timar@collabora.com>
@@ -6,235 +6,275 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CloudSuite Toolbar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-08 16:02+0100\n"
-"PO-Revision-Date: 2015-12-20 14:14+0100\n"
+"POT-Creation-Date: 2016-02-15 10:31+0100\n"
+"PO-Revision-Date: 2016-02-15 10:39+0100\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: French <fr@li.org>\n"
-"Language: \n"
+"Language-Team: Hungarian <hu@li.org>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #: dist/toolbar/toolbar.js:21 dist/toolbar/toolbar.js:29
 #: dist/toolbar/toolbar.js:37 dist/toolbar/toolbar.js:45
 msgid "File"
-msgstr "Fichier"
+msgstr "Fájl"
 
 #: dist/toolbar/toolbar.js:22 dist/toolbar/toolbar.js:30
 #: dist/toolbar/toolbar.js:38 dist/toolbar/toolbar.js:46
 msgid "Download as PDF document (.pdf)"
-msgstr "Télécharger en PDF (.pdf)"
+msgstr "Letöltés PDF dokumentumként (.pdf)"
 
 #: dist/toolbar/toolbar.js:23
 msgid "Download as ODF Text document (.odt)"
-msgstr "Télécharger en ODF Document texte (.odt)"
+msgstr "Letöltés ODF dokumentumként (.odt)"
 
 #: dist/toolbar/toolbar.js:24
 msgid "Download as Microsoft Word 2003 (.doc)"
-msgstr "Télécharger en Microsoft Word 2003 (.doc)"
+msgstr "Letöltés Microsoft Word 2003 dokumentumként (.doc)"
 
 #: dist/toolbar/toolbar.js:25
 msgid "Download as Microsoft Word (.docx)"
-msgstr "Télécharger en Microsoft Word (.docx)"
+msgstr "Letöltés Microsoft Word dokumentumként (.docx)"
 
 #: dist/toolbar/toolbar.js:26 dist/toolbar/toolbar.js:34
 #: dist/toolbar/toolbar.js:42 dist/toolbar/toolbar.js:47
 msgid "Print"
-msgstr "Impression"
+msgstr "Nyomtatás"
 
 #: dist/toolbar/toolbar.js:31
 msgid "Download as ODF Presentation (.odp)"
-msgstr "Download as ODF Présentation (.odp)"
+msgstr "Letöltés ODF bemutatóként (.odp)"
 
 #: dist/toolbar/toolbar.js:32
 msgid "Download as Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Télécharger en Microsoft Powerpoint 2003 (.ppt)"
+msgstr "Letöltés Microsoft Powerpoint 2003 dokumentumként (.ppt)"
 
 #: dist/toolbar/toolbar.js:33
 msgid "Download as Microsoft Powerpoint (.pptx)"
-msgstr "Télécharger en Microsoft Powerpoint (.pptx)"
+msgstr "Letöltés Microsoft PowerPoint dokumentumként (.pptx)"
 
 #: dist/toolbar/toolbar.js:39
 msgid "Download as ODF Spreadsheet (.ods)"
-msgstr "Télécharger en ODF Classeur (.ods)"
+msgstr "Letöltés ODF munkafüzetként (.ods)"
 
 #: dist/toolbar/toolbar.js:40
 msgid "Download as Microsoft Excel 2003 (.xls)"
-msgstr "Télécharger en Microsoft Excel 2003 (.xls)"
+msgstr "Letöltés Microsoft Excel 2003 dokumentumként (.xls)"
 
 #: dist/toolbar/toolbar.js:41
 msgid "Download as Microsoft Excel (.xlsx)"
-msgstr "Télécharger en Microsoft Excel (.xlsx)"
+msgstr "Letöltés Microsoft Excel dokumentumként (.xlsx)"
 
 #: dist/toolbar/toolbar.js:50
 msgid "Save"
-msgstr "Enregistrer"
+msgstr "Mentés"
 
 #: dist/toolbar/toolbar.js:52
 msgid "Undo"
-msgstr "Annuler"
+msgstr "Visszavonás"
 
 #: dist/toolbar/toolbar.js:53
 msgid "Redo"
-msgstr "Rétablir"
+msgstr "Újra"
 
 #: dist/toolbar/toolbar.js:59
 msgid "Bold"
-msgstr "Gras"
+msgstr "Félkövér"
 
 #: dist/toolbar/toolbar.js:60
 msgid "Italic"
-msgstr "Italique"
+msgstr "Dőlt"
 
 #: dist/toolbar/toolbar.js:61
 msgid "Underline"
-msgstr "Soulignage"
+msgstr "Aláhúzott"
 
 #: dist/toolbar/toolbar.js:62
 msgid "Strikeout"
-msgstr "Barré"
+msgstr "Áthúzott"
 
 #: dist/toolbar/toolbar.js:65
 msgid "Font Color"
-msgstr "Couleur de police"
+msgstr "Betűszín"
 
 #: dist/toolbar/toolbar.js:67
 msgid "Highlighting"
-msgstr "Mise en évidence"
+msgstr "Kiemelés"
 
 #: dist/toolbar/toolbar.js:69
 msgid "Align left"
-msgstr "Aligner à gauche"
+msgstr "Balra igazítás"
 
 #: dist/toolbar/toolbar.js:70
 msgid "Center horizontaly"
-msgstr "Centre horizontal"
+msgstr "Középre igazítás"
 
 #: dist/toolbar/toolbar.js:71
 msgid "Align right"
-msgstr "Aligner à droite"
+msgstr "Jobbra igazítás"
 
 #: dist/toolbar/toolbar.js:72
 msgid "Justified"
-msgstr "Justifié"
+msgstr "Sorkizárás"
 
 #: dist/toolbar/toolbar.js:74
 msgid "Bullets on/off"
-msgstr "(Dés)activer les puces"
+msgstr "Felsorolás be/ki"
 
 #: dist/toolbar/toolbar.js:75
 msgid "Numbering on/off"
-msgstr "(Dés)activer la numérotation"
+msgstr "Számozás be/ki"
 
 #: dist/toolbar/toolbar.js:77
 msgid "Increase Indent"
-msgstr "Augmenter le retrait"
+msgstr "Behúzás növelése"
 
 #: dist/toolbar/toolbar.js:78
 msgid "Decrease Indent"
-msgstr "Réduire le retrait"
+msgstr "Behúzás csökkentése"
 
 #: dist/toolbar/toolbar.js:80
 msgid "Insert Graphic"
-msgstr "Insérer une image"
+msgstr "Kép beszúrása"
 
 #: dist/toolbar/toolbar.js:82
 msgid "Help"
-msgstr "Aide"
+msgstr "Súgó"
 
 #: dist/toolbar/toolbar.js:84
 msgid "More"
-msgstr ""
+msgstr "További ikonok"
 
 #: dist/toolbar/toolbar.js:85
 msgid "Close Document"
-msgstr "Fermer le document"
+msgstr "Dokumentum bezárása"
 
 #: dist/toolbar/toolbar.js:96
 msgid "Sum"
-msgstr "Somme"
+msgstr "Összeg"
 
 #: dist/toolbar/toolbar.js:97
 msgid "Function"
-msgstr "Fonction"
+msgstr "Függvény"
 
 #: dist/toolbar/toolbar.js:98
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Mégse"
 
 #: dist/toolbar/toolbar.js:99
 msgid "Accept"
-msgstr "Accepter"
+msgstr "Elfogadás"
 
 #: dist/toolbar/toolbar.js:117
 msgid "Search backwards"
-msgstr "Recherche vers le haut"
+msgstr "Keresés visszafelé"
 
 #: dist/toolbar/toolbar.js:118
 msgid "Search forward"
-msgstr "Recherche vers le bas"
+msgstr "Keresés előre"
 
 #: dist/toolbar/toolbar.js:119
 msgid "Cancel the search"
-msgstr "Annuler la recherche"
+msgstr "Keresés leállítása"
 
 #: dist/toolbar/toolbar.js:121
 msgid "Enable editing"
-msgstr "Activer l'édition"
+msgstr "Szerkesztés engedélyezése"
 
 #: dist/toolbar/toolbar.js:122
 msgid "Enable selection"
-msgstr "Activer la sélection"
+msgstr "Kijelölés engedélyezése"
 
 #: dist/toolbar/toolbar.js:123
 msgid "Fullscreen presentation"
-msgstr "Présentation en plein écran"
+msgstr "Teljes képernyős bemutató"
 
-#: dist/toolbar/toolbar.js:124
+#: dist/toolbar/toolbar.js:124 src/control/Control.Presentation.js:16
 msgid "Insert Page"
-msgstr ""
+msgstr "Dia beszúrása"
 
-#: dist/toolbar/toolbar.js:125
+#: dist/toolbar/toolbar.js:125 src/control/Control.Presentation.js:17
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Dia megkettőzése"
 
-#: dist/toolbar/toolbar.js:126
+#: dist/toolbar/toolbar.js:126 src/control/Control.Presentation.js:18
 msgid "Delete Page"
-msgstr ""
+msgstr "Dia törlése"
 
 #: dist/toolbar/toolbar.js:128
 msgid "Previous page/part"
-msgstr "Page précédente"
+msgstr "Előző oldal/rész"
 
 #: dist/toolbar/toolbar.js:129
 msgid "Next page/part"
-msgstr "Page suivante"
+msgstr "Következő oldal/rész"
 
 #: dist/toolbar/toolbar.js:131
 msgid "Reset"
-msgstr ""
+msgstr "Alaphelyzet"
 
 #: dist/toolbar/toolbar.js:132
 msgid "Zoom out"
-msgstr "Réduire"
+msgstr "Kicsinyítés"
 
 #: dist/toolbar/toolbar.js:134
 msgid "Zoom in"
-msgstr "Agrandir"
+msgstr "Nagyítás"
 
-#: dist/toolbar/toolbar.js:285
+#: dist/toolbar/toolbar.js:285 src/control/Control.Presentation.js:78
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "Biztosan törli ezt az oldalt?"
 
-#: dist/toolbar/toolbar.js:398 dist/toolbar/toolbar.js:686
+#: dist/toolbar/toolbar.js:398 dist/toolbar/toolbar.js:691
 msgid "Size"
-msgstr "Taille"
+msgstr "Méret"
 
-#: dist/toolbar/toolbar.js:673
+#: dist/toolbar/toolbar.js:678
 msgid "Style"
-msgstr "Style"
+msgstr "Stílus"
 
-#: dist/toolbar/toolbar.js:681
+#: dist/toolbar/toolbar.js:686
 msgid "Font"
-msgstr "Police"
+msgstr "Betűkészlet"
+
+#: src/control/Control.Tabs.js:24
+msgid "Insert sheet before this"
+msgstr "Munkalap beillesztése ez elé"
+
+#: src/control/Control.Tabs.js:25
+msgid "Insert sheet after this"
+msgstr "Munkalap beillesztése e mögé"
+
+#: src/control/Control.Tabs.js:26
+msgid "Delete sheet"
+msgstr "Munkalap törlése"
+
+#: src/control/Control.Tabs.js:30
+msgid "Are you sure you want to delete this sheet?"
+msgstr "Biztosan törli ezt a munkalapot?"
+
+#: src/control/Control.Tabs.js:38
+msgid "Rename sheet"
+msgstr "Munkalap átnevezése"
+
+#: src/control/Control.Tabs.js:42
+msgid "Enter new sheet name"
+msgstr "Adja meg az munkalapnevet"
+
+#: src/core/Socket.js:13 src/core/Socket.js:199
+msgid "Socket connection error"
+msgstr "Socket kapcsolat hiba"
+
+#: src/core/Socket.js:100
+msgid "Unexpected loolserver message."
+msgstr "Váratlan loolserver-üzenet."
+
+#: src/core/Socket.js:104
+msgid "Unsupported server version."
+msgstr "Nem támogatott kiszolgálóverzió."
+
+#: src/core/Socket.js:203
+msgid "Socket connection closed"
+msgstr "Socket kapcsolat bezáródott"

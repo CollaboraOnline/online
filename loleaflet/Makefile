@@ -30,14 +30,14 @@ dist: all
 	rm -rf loleaflet-$(VERSION)
 
 pot:
-	xgettext --keyword=_ --output=po/loleaflet-toolbar.pot dist/toolbar/toolbar.js src/control/Control.Tabs.js \
+	xgettext --keyword=_ --output=po/loleaflet-ui.pot dist/toolbar/toolbar.js src/control/Control.Tabs.js \
 		src/core/Socket.js src/control/Control.Presentation.js
 	html2po --pot --input=dist/loleaflet-help.html --output=po/loleaflet-help.pot
 
 l10n: pot
-	for i in po/toolbar-*.po; do pot2po --input=po/loleaflet-toolbar.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
+	for i in po/ui-*.po; do pot2po --input=po/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 	for i in po/help-*.po; do pot2po --input=po/loleaflet-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
-	rm po/loleaflet-toolbar.pot
+	rm po/loleaflet-ui.pot
 	rm po/loleaflet-help.pot
 
 loleaflet.spec: loleaflet.spec.in Makefile
