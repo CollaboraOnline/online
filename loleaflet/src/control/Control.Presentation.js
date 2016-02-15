@@ -13,9 +13,9 @@ L.Control.Presentation = L.Control.extend({
 		    container = L.DomUtil.create('div', buttonsName + '-container' + ' leaflet-bar');
 
 		this._buttons = {
-			'insertpage':    {title: 'Insert Page',     uno: 'InsertPage',		iconName: 'insertpage.png'},
-			'duplicatepage': {title: 'Duplicate Page',  uno: 'DuplicatePage',	iconName: 'duplicatepage.png'},
-			'deletepage':    {title: 'Delete Page',     uno: 'DeletePage',		iconName: 'deletepage.png'}
+			'insertpage':    {title: _('Insert Page'),     uno: 'InsertPage',		iconName: 'insertpage.png'},
+			'duplicatepage': {title: _('Duplicate Page'),  uno: 'DuplicatePage',	iconName: 'duplicatepage.png'},
+			'deletepage':    {title: _('Delete Page'),     uno: 'DeletePage',		iconName: 'deletepage.png'}
 		};
 
 		for (var key in this._buttons) {
@@ -75,7 +75,7 @@ L.Control.Presentation = L.Control.extend({
 		}
 		else if (id === 'deletepage') {
 			vex.dialog.confirm({
-				message: 'Are you sure you want to delete this page?',
+				message: _('Are you sure you want to delete this page?'),
 				callback: L.bind(this._onDelete, this)
 			});
 		}
