@@ -436,16 +436,34 @@ static bool globalPreinit(const std::string &loSubPath)
     void *handle;
     LokHookPreInit* preInit;
 
-    std::string fname = "/" + loSubPath + "/program/" LIB_SOFFICEAPP;
-    handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
-    if (!handle)
+    std::string libSofficeapp = "/" + loSubPath + "/program/" LIB_SOFFICEAPP;
+    std::string loadedLibrary;
+    if (File(libSofficeapp).exists())
     {
-        Log::warn("Failed to load " + std::string(LIB_SOFFICEAPP) + " library. Trying " + std::string(LIB_MERGED));
-        fname = "/" + loSubPath + "/program/" LIB_MERGED;
-        handle = dlopen(fname.c_str(), RTLD_GLOBAL|RTLD_NOW);
+        handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
         if (!handle)
         {
-            Log::warn("Failed to load " + std::string(LIB_MERGED) + " library.");
+            Log::warn("Failed to load " + libSofficeapp + ": " + std::string(dlerror()));
+            return false;
+        }
+        loadedLibrary = libSofficeapp;
+    }
+    else
+    {
+        std::string libMerged = "/" + loSubPath + "/program/" LIB_MERGED;
+        if (File(libMerged).exists())
+        {
+            handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
+            if (!handle)
+            {
+                Log::warn("Failed to load " + libMerged + ": " + std::string(dlerror()));
+                return false;
+            }
+            loadedLibrary = libMerged;
+        }
+        else
+        {
+            Log::warn("Neither " + libSofficeapp + " or " + libMerged + " exist.");
             return false;
         }
     }
@@ -453,8 +471,7 @@ static bool globalPreinit(const std::string &loSubPath)
     preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
-        Log::warn("Note: No lok_preinit hook in " + std::string(LIB_SOFFICEAPP) +
-                  " library. Cannot fork, will execv instead.");
+        Log::warn("Note: No lok_preinit hook in " + loadedLibrary);
         return false;
     }
 
@@ -749,6 +766,9 @@ int main(int argc, char** argv)
 
     // Initialize LoKit and hope we can fork and save memory by sharing pages.
     const bool sharePages = globalPreinit(loSubPath);
+
+    if (!sharePages)
+        Log::warn("Cannot fork, will spawn instead.");
 
     // We must have at least one child, more is created dynamically.
     if (createLibreOfficeKit(sharePages, childRoot, sysTemplate,
