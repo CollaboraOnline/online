@@ -60,7 +60,6 @@ extern "C"
     }
 }
 
-volatile LOOLState TerminationState = LOOLState::LOOL_RUNNING;
 volatile bool TerminationFlag = false;
 
 namespace Util
@@ -424,7 +423,6 @@ namespace Util
             // If we are signaled while having that lock,
             // logging again will deadlock on it.
             TerminationFlag = true;
-            TerminationState = ( aSignal == SIGTERM ? LOOLState::LOOL_ABNORMAL : LOOLState::LOOL_STOPPING );
 
             Log::info() << "Termination signal received: "
                         << Util::signalName(aSignal) << " "

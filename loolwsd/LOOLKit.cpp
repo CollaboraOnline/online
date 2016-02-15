@@ -835,12 +835,10 @@ void lokit_main(const std::string& childRoot,
         Log::error() << exc.name() << ": " << exc.displayText()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                      << Log::end;
-        TerminationState = LOOLState::LOOL_ABNORMAL;
     }
     catch (const std::exception& exc)
     {
         Log::error(std::string("Exception: ") + exc.what());
-        TerminationState = LOOLState::LOOL_ABNORMAL;
     }
 
     Log::debug("Destroying documents.");
