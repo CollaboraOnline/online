@@ -491,7 +491,7 @@ static int createLibreOfficeKit(const bool sharePages,
     const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
     const std::string pipeKit = Path(pipePath, BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX).toString();
 
-    if (mkfifo(pipeKit.c_str(), 0666) < 0)
+    if (mkfifo(pipeKit.c_str(), 0666) < 0 && errno != EEXIST)
     {
         Log::error("Error: Failed to create pipe FIFO [" + pipeKit + "].");
         return -1;
@@ -750,7 +750,7 @@ int main(int argc, char** argv)
 
     int nFlags = O_RDONLY | O_NONBLOCK;
     const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
-    if (mkfifo(pipeBroker.c_str(), 0666) == -1)
+    if (mkfifo(pipeBroker.c_str(), 0666) < 0 && errno != EEXIST)
     {
         Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
         exit(Application::EXIT_SOFTWARE);

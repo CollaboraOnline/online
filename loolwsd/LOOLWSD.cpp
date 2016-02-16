@@ -941,7 +941,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
 
     const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
-    if (mkfifo(pipeLoolwsd.c_str(), 0666) == -1)
+    if (mkfifo(pipeLoolwsd.c_str(), 0666) < 0 && errno != EEXIST)
     {
         Log::error("Error: Failed to create pipe FIFO [" + pipeLoolwsd + "].");
         return Application::EXIT_SOFTWARE;
