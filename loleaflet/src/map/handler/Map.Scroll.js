@@ -3,7 +3,7 @@
  */
 
 L.Map.mergeOptions({
-	scroll: true,
+	scrollHandler: true,
 	wheelDebounceTime: 40
 });
 
