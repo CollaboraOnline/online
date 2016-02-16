@@ -934,7 +934,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
 
     const Path pipePath = Path::forDirectory(ChildRoot + Path::separator() + FIFO_PATH);
-    if (!File(pipePath).createDirectory())
+    if (!File(pipePath).exists() && !File(pipePath).createDirectory())
     {
         Log::error("Error: Failed to create pipe directory [" + pipePath.toString() + "].");
         return Application::EXIT_SOFTWARE;
