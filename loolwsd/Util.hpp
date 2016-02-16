@@ -17,6 +17,7 @@
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
+#include <Poco/Process.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Logger.h>
 
@@ -119,6 +120,8 @@ namespace Util
 
     int getChildStatus(const int nCode);
     int getSignalStatus(const int nCode);
+
+    void requestTermination(const Poco::Process::PID& aPID);
 };
 
 //TODO: Move to own file.

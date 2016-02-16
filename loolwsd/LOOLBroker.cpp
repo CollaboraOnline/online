@@ -912,7 +912,7 @@ int main(int argc, char** argv)
     for (auto& it : _childProcesses)
     {
         Log::info("Requesting child process " + std::to_string(it.first) + " to terminate.");
-        Process::requestTermination(it.first);
+        Util::requestTermination(it.first);
     }
 
     // Wait and kill child processes

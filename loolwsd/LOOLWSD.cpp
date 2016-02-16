@@ -1088,7 +1088,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Terminate child processes
     Util::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\r\n");
     Log::info("Requesting child process " + std::to_string(pidBroker) + " to terminate");
-    Process::requestTermination(pidBroker);
+    Util::requestTermination(pidBroker);
 
     // wait broker process finish
     waitpid(pidBroker, &status, WUNTRACED);

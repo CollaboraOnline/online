@@ -543,6 +543,18 @@ namespace Util
 
         return nRetVal;
     }
+
+    void requestTermination(const Poco::Process::PID& aPID)
+    {
+        try
+        {
+            Poco::Process::requestTermination(aPID);
+        }
+        catch(const Poco::Exception& exc)
+        {
+            Log::warn("Exception: " + exc.message());
+        }
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
