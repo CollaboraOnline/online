@@ -505,6 +505,14 @@ static int createLibreOfficeKit(const bool sharePages,
         if (!(pid = fork()))
         {
             // child
+            if (std::getenv("SLEEPKITFORDEBUGGER"))
+            {
+                std::cerr << "Sleeping " << std::getenv("SLEEPKITFORDEBUGGER")
+                          << " seconds to give you time to attach debugger to process "
+                          << Process::id() << std::endl;
+                Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
+            }
+
             lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit);
             _exit(Application::EXIT_OK);
         }
@@ -544,10 +552,13 @@ static int createLibreOfficeKit(const bool sharePages,
     // open non-blocking to make sure that a broken lokit process will not
     // block the loolbroker forever
     {
-        short nRetries = 5;
+        int nRetries = 5;
         std::mutex aFIFOMutex;
         std::condition_variable aFIFOCV;
         std::unique_lock<std::mutex> lock(aFIFOMutex);
+
+        if (std::getenv("SLEEPKITFORDEBUGGER"))
+            nRetries = std::numeric_limits<int>::max();
 
         while(nRetries && nFIFOWriter < 0)
         {
@@ -620,7 +631,7 @@ int main(int argc, char** argv)
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
         std::cerr << "Sleeping " << std::getenv("SLEEPFORDEBUGGER")
-                  << " seconds to attach debugger to process "
+                  << " seconds to give you time to attach debugger to process "
                   << Process::id() << std::endl;
         Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
     }
