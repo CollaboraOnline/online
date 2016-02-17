@@ -110,6 +110,7 @@ DEALINGS IN THE SOFTWARE.
 #include "LOOLWSD.hpp"
 #include "QueueHandler.hpp"
 #include "Util.hpp"
+#include "Admin.hpp"
 
 using namespace LOOLProtocol;
 
@@ -988,6 +989,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     HTTPServer srv2(new RequestHandlerFactory<PrisonerRequestHandler>(), threadPool, svs2, params2);
 
     srv2.start();
+
+    // Start the Admin manager.
+    Admin admin(BrokerWritePipe);
+    threadPool.start(admin);
 
     if ( (BrokerWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
     {
