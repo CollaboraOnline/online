@@ -5,6 +5,8 @@ set -e
 case "$1" in
     configure)
 	setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolwsd || true
+	setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolkit || true
+	setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolbroker || true
 
 	adduser --quiet --system --group --home /opt/lool lool
 	mkdir -p /var/cache/loolwsd && chown lool: /var/cache/loolwsd
