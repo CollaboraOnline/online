@@ -661,6 +661,27 @@ void lokit_main(const std::string& childRoot,
 
         File(jailPath).createDirectories();
 
+#ifdef LOOLKIT_NO_MAIN
+        // Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
+        // interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
+        Path symlinkSource(jailPath, Path(loTemplate.substr(1)));
+
+        File(symlinkSource.parent()).createDirectories();
+
+        std::string symlinkTarget;
+        for (auto i = 0; i < Path(loTemplate).depth(); i++)
+            symlinkTarget += "../";
+        symlinkTarget += loSubPath;
+
+        Log::info("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
+
+        if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
+        {
+            Log::error("Error: symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
+            throw Exception("symlink() failed");
+        }
+#endif
+
         Path jailLOInstallation(jailPath, loSubPath);
         jailLOInstallation.makeDirectory();
         File(jailLOInstallation).createDirectory();
