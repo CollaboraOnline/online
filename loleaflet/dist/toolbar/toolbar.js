@@ -544,7 +544,7 @@ map.on('commandstatechanged', function (e) {
 		$(".styles-select option").each(function () {
 			value = this.value;
 			if (value.toLowerCase() === state.toLowerCase()) {
-		state = value;
+				state = value;
 				found = true;
 				return;
 			}
