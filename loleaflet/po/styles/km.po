@@ -128,7 +128,7 @@ msgctxt ""
 "STR_POOLCHR_BUL_LEVEL\n"
 "string.text"
 msgid "Bullets"
-msgstr "ចំណុច"
+msgstr "ចំណុច"
 
 
 #: poolfmt.src
