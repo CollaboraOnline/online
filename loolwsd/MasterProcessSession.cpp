@@ -125,6 +125,12 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
         if (_kind == Kind::ToPrisoner)
         {
+            if (!peer)
+            {
+                LOOLSession::disconnect();
+                return false;
+            }
+
             if (tokens[0] == "error:")
             {
                 std::string errorCommand;
