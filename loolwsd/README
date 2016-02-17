@@ -32,6 +32,8 @@ loolwsd uses autoconf/automake, so build using the usual:
 
 where ${MASTER} is the location of the LibreOffice source tree.
 
+Run 'make check' after each commit. Requires loolwsd to be running.
+
 Note that the loolwsd program needs the CAP_SYS_CHROOT capability,
 thus you will be asked the root password when running make as it
 invokes sudo to run /sbin/setcap.
@@ -250,8 +252,6 @@ detail completely and consistenly all over, please keep to the style
 of the existing code when editing.
 
 The style is roughly as follows, in rough order of importance:
-
-- Run 'make check' after each commit. Requires loolwsd to be running.
 
 - As in LO, no hard TABs in source files. Only spaces. Indentation
   step is four columns.
