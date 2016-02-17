@@ -197,6 +197,7 @@ typedef enum
      *
      * {
      *     "searchString": "...",
+     *     "highlightAll": true|false, // this is a result of 'search all'
      *     "searchResultSelection": [
      *         {
      *             "part": "...",
@@ -279,6 +280,18 @@ typedef enum
      * }
      */
     LOK_CALLBACK_ERROR,
+
+    /**
+     * A part has been added to or removed from the document.
+     *
+     * {
+     *      "action" : "PartInserted" | "PartDeleted"
+     *      "part"   : "Part Index"
+     * }
+     *
+     * Note: this is currently emitted by Impress.
+     */
+    LOK_CALLBACK_PARTS_COUNT_CHANGED
 }
 LibreOfficeKitCallbackType;
 
