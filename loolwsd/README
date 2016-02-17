@@ -251,6 +251,8 @@ of the existing code when editing.
 
 The style is roughly as follows, in rough order of importance:
 
+- Run 'make check' after each commit. Requires loolwsd to be running.
+
 - As in LO, no hard TABs in source files. Only spaces. Indentation
   step is four columns.
 
