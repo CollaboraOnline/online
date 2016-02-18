@@ -10,7 +10,9 @@
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Net/Socket.h>
 #include <Poco/Path.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
@@ -27,7 +29,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     Poco::Net::HTTPClientSession _session;
     Poco::Net::HTTPRequest _request;
     Poco::Net::HTTPResponse _response;
-    Poco::Net::WebSocket _socket;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
     CPPUNIT_TEST(testPaste);
@@ -42,149 +43,231 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     static
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
 
+    static
+    bool isDocumentLoaded(Poco::Net::WebSocket& socket);
+
 public:
     HTTPWSTest()
         : _uri("http://127.0.0.1:" + std::to_string(ClientPortNumber)),
           _session(_uri.getHost(), _uri.getPort()),
-          _request(Poco::Net::HTTPRequest::HTTP_GET, "/ws"),
-          _socket(_session, _request, _response)
+          _request(Poco::Net::HTTPRequest::HTTP_GET, "/ws")
     {
     }
 
     void setUp()
     {
-        _socket.shutdown();
-        _socket = Poco::Net::WebSocket(_session, _request, _response);
     }
 
     void tearDown()
     {
-        _socket.shutdown();
     }
 };
 
 void HTTPWSTest::testPaste()
 {
-    // Load a document and make it empty.
-    const std::string documentPath = TDOC "/hello.odt";
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-    sendTextFrame(_socket, "load url=" + documentURL);
-    sendTextFrame(_socket, "uno .uno:SelectAll");
-    sendTextFrame(_socket, "uno .uno:Delete");
-
-    // Paste some text into it.
-    sendTextFrame(_socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
-
-    // Check if the document contains the pasted text.
-    sendTextFrame(_socket, "uno .uno:SelectAll");
-    sendTextFrame(_socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    std::string selection;
-    int flags;
-    int n;
-    do
+    try
     {
-        char buffer[READ_BUFFER_SIZE];
-        n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (n > 0)
+        Poco::Net::WebSocket socket(_session, _request, _response);
+
+        // Load a document and make it empty.
+        const std::string documentPath = TDOC "/hello.odt";
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        sendTextFrame(socket, "status");
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        sendTextFrame(socket, "uno .uno:SelectAll");
+        sendTextFrame(socket, "uno .uno:Delete");
+
+        // Paste some text into it.
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
+
+        // Check if the document contains the pasted text.
+        sendTextFrame(socket, "uno .uno:SelectAll");
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+        std::string selection;
+        int flags;
+        int n;
+        do
         {
-            const std::string line = LOOLProtocol::getFirstLine(buffer, n);
-            const std::string prefix = "textselectioncontent: ";
-            if (line.find(prefix) == 0)
+            char buffer[READ_BUFFER_SIZE];
+            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            if (n > 0)
             {
-                selection = line.substr(prefix.length());
-                break;
+                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
+                const std::string prefix = "textselectioncontent: ";
+                if (line.find(prefix) == 0)
+                {
+                    selection = line.substr(prefix.length());
+                    break;
+                }
             }
         }
+        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+        sendTextFrame(socket, "disconnect");
+        socket.shutdown();
+        CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
     }
-    while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    sendTextFrame(_socket, "disconnect");
-    _socket.shutdown();
-    CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
+    catch(const Poco::Exception& exc)
+    {
+        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+    }
 }
 
 void HTTPWSTest::testLargePaste()
 {
-    // Load a document and make it empty.
-    std::string documentPath = TDOC "/hello.odt";
-    std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-    sendTextFrame(_socket, "load url=" + documentURL);
-    sendTextFrame(_socket, "uno .uno:SelectAll");
-    sendTextFrame(_socket, "uno .uno:Delete");
-
-    // Paste some text into it.
-    std::ifstream documentStream(documentPath);
-    std::string documentContents((std::istreambuf_iterator<char>(documentStream)), std::istreambuf_iterator<char>());
-    sendTextFrame(_socket, "paste mimetype=text/html\n" + documentContents);
-
-    // Check if the server is still alive.
-    // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
-    sendTextFrame(_socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    std::string selection;
-    int flags;
-    int n;
-    do
+    try
     {
-        char buffer[READ_BUFFER_SIZE];
-        n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (n > 0)
+        Poco::Net::WebSocket socket(_session, _request, _response);
+
+        // Load a document and make it empty.
+        std::string documentPath = TDOC "/hello.odt";
+        std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        sendTextFrame(socket, "status");
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        sendTextFrame(socket, "uno .uno:SelectAll");
+        sendTextFrame(socket, "uno .uno:Delete");
+
+        // Paste some text into it.
+        std::ifstream documentStream(documentPath);
+        std::string documentContents((std::istreambuf_iterator<char>(documentStream)), std::istreambuf_iterator<char>());
+        sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents);
+
+        // Check if the server is still alive.
+        // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+        std::string selection;
+        int flags;
+        int n;
+        do
         {
-            std::string line = LOOLProtocol::getFirstLine(buffer, n);
-            std::string prefix = "textselectioncontent: ";
-            if (line.find(prefix) == 0)
-                break;
+            char buffer[READ_BUFFER_SIZE];
+            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            if (n > 0)
+            {
+                std::string line = LOOLProtocol::getFirstLine(buffer, n);
+                std::string prefix = "textselectioncontent: ";
+                if (line.find(prefix) == 0)
+                    break;
+            }
         }
+        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+        sendTextFrame(socket, "disconnect");
+        socket.shutdown();
     }
-    while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    sendTextFrame(_socket, "disconnect");
-    _socket.shutdown();
+    catch(const Poco::Exception& exc)
+    {
+        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+    }
 }
 
 void HTTPWSTest::testRenderingOptions()
 {
-    // Load a document and get its size.
-    const std::string documentPath = TDOC "/hide-whitespace.odt";
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-    const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
-    sendTextFrame(_socket, "load url=" + documentURL + " options=" + options);
-    sendTextFrame(_socket, "status");
-
-    std::string status;
-    int flags;
-    int n;
-    do
+    try
     {
-        char buffer[READ_BUFFER_SIZE];
-        n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (n > 0)
+        Poco::Net::WebSocket socket(_session, _request, _response);
+
+        // Load a document and get its size.
+        const std::string documentPath = TDOC "/hide-whitespace.odt";
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
+        sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
+        sendTextFrame(socket, "status");
+
+        std::string status;
+        int flags;
+        int n;
+        do
         {
-            std::string line = LOOLProtocol::getFirstLine(buffer, n);
-            std::string prefix = "status: ";
-            if (line.find(prefix) == 0)
+            char buffer[READ_BUFFER_SIZE];
+            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            if (n > 0)
             {
-                status = line.substr(prefix.length());
-                break;
+                std::string line = LOOLProtocol::getFirstLine(buffer, n);
+                std::string prefix = "status: ";
+                if (line.find(prefix) == 0)
+                {
+                    status = line.substr(prefix.length());
+                    break;
+                }
             }
         }
-    }
-    while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    sendTextFrame(_socket, "disconnect");
-    _socket.shutdown();
-    // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
-    Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+        sendTextFrame(socket, "disconnect");
+        socket.shutdown();
+        // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
+        Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
 
-    const std::string token = tokens[4];
-    const std::string prefix = "height=";
-    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
-    const int height = std::stoi(token.substr(prefix.size()));
-    // HideWhitespace was ignored, this was 32532, should be around 16706.
-    CPPUNIT_ASSERT(height < 20000);
+        const std::string token = tokens[4];
+        const std::string prefix = "height=";
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
+        const int height = std::stoi(token.substr(prefix.size()));
+        // HideWhitespace was ignored, this was 32532, should be around 16706.
+        CPPUNIT_ASSERT(height < 20000);
+    }
+    catch(const Poco::Exception& exc)
+    {
+        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+    }
 }
 
 void HTTPWSTest::sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
 {
     socket.sendFrame(string.data(), string.size());
 }
+
+bool HTTPWSTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
+{
+    bool isLoaded = false;
+    try
+    {
+        int flags;
+        int bytes;
+        int retries = 5;
+        const Poco::Timespan waitTime(1000000);
+
+        ws.setReceiveTimeout(0);
+        do
+        {
+            char buffer[READ_BUFFER_SIZE];
+
+            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
+            {
+                bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
+                if (bytes > 0)
+                {
+                    const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
+                    const std::string prefixIndicator = "statusindicatorfinish:";
+                    const std::string prefixStatus = "status:";
+                    std::cout << line << std::endl;
+                    if (line.find(prefixIndicator) == 0 || line.find(prefixStatus) == 0)
+                    {
+                        isLoaded = true;
+                        break;
+                    }
+                }
+                retries = 5;
+            }
+            else
+            {
+                --retries;
+            }
+        }
+        while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    }
+    catch (const Poco::Net::WebSocketException& exc)
+    {
+        std::cout << exc.message();
+    }
+
+    return isLoaded;
+}
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
 
