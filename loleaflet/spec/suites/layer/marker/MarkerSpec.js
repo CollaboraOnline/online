@@ -32,7 +32,7 @@ describe("Marker", function () {
 			var afterIcon = marker._icon;
 
 			expect(beforeIcon).to.be(afterIcon);
-			expect(afterIcon.src.replace(/\.\.\//g, '')).to.be.(icon2._getIconUrl('icon').replace(/\.\.\//g, ''));
+			expect(afterIcon.src.replace(/\.\.\//g, '')).to.be(icon2._getIconUrl('icon').replace(/\.\.\//g, ''));
 		});
 
 		it("preserves draggability", function () {
