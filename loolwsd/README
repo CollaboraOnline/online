@@ -282,4 +282,6 @@ The style is roughly as follows, in rough order of importance:
 - Member functions use camelCaseWithInitialLowerCase. I don't like
   CamelCaseWithInitialUpperCase.
 
-- No kind of Hungarian prefixes.
+- [ No kind of Hungarian prefixes. ] This rule seems to have been
+  totally ignored lately. So now the codebase is inconsistent in
+  naming conventions. Oh well.
