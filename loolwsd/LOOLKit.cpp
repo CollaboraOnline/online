@@ -719,7 +719,7 @@ void lokit_main(const std::string& childRoot,
         }
 #endif
 
-        Log::info("loolbroker -> chroot(\"" + jailPath.toString() + "\")");
+        Log::info("loolkit -> chroot(\"" + jailPath.toString() + "\")");
         if (chroot(jailPath.toString().c_str()) == -1)
         {
             Log::error("Error: chroot(\"" + jailPath.toString() + "\") failed.");

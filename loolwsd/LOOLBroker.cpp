@@ -782,6 +782,8 @@ int main(int argc, char** argv)
 
     if (!sharePages)
         Log::warn("Cannot fork, will spawn instead.");
+    else
+        Log::info("Preinit stage OK.");
 
     // We must have at least one child, more is created dynamically.
     if (createLibreOfficeKit(sharePages, childRoot, sysTemplate,
