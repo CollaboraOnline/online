@@ -173,45 +173,45 @@ class PipeRunnable: public Runnable
 {
 public:
     PipeRunnable()
-      : _pStart(nullptr),
-        _pEnd(nullptr)
+      : _start(nullptr),
+        _end(nullptr)
     {
     }
 
-    ssize_t getResponseLine(int nPipeReader, std::string& aLine)
+    ssize_t getResponseLine(int pipeReader, std::string& response)
     {
-        ssize_t nBytes = -1;
-        aLine.clear();
+        ssize_t bytes = -1;
+        response.clear();
 
         try
         {
             while (true)
             {
-                if ( _pStart == _pEnd )
+                if (_start == _end)
                 {
-                    nBytes = Util::readMessage(nPipeReader, _aBuffer, sizeof(_aBuffer));
-                    if ( nBytes < 0 )
+                    bytes = Util::readMessage(pipeReader, _buffer, sizeof(_buffer));
+                    if ( bytes < 0 )
                     {
-                        _pStart = _pEnd = nullptr;
+                        _start = _end = nullptr;
                         break;
                     }
 
-                    _pStart = _aBuffer;
-                    _pEnd   = _aBuffer + nBytes;
+                    _start = _buffer;
+                    _end   = _buffer + bytes;
                 }
 
-                if ( _pStart != _pEnd )
+                if ( _start != _end )
                 {
-                    char aChar = *_pStart++;
-                    while (_pStart != _pEnd && aChar != '\r' && aChar != '\n')
+                    char byteChar = *_start++;
+                    while (_start != _end && byteChar != '\r' && byteChar != '\n')
                     {
-                        aLine += aChar;
-                        aChar  = *_pStart++;
+                        response += byteChar;
+                        byteChar  = *_start++;
                     }
 
-                    if ( aChar == '\r' && *_pStart == '\n')
+                    if (byteChar == '\r' && *_start == '\n')
                     {
-                        _pStart++;
+                        _start++;
                         break;
                     }
                 }
@@ -220,31 +220,31 @@ public:
         catch (const std::exception& exc)
         {
             Log::error() << "Exception while reading from pipe ["
-                         << nPipeReader << "]: " << exc.what() << Log::end;
+                         << pipeReader << "]: " << exc.what() << Log::end;
             return -1;
         }
 
-        return nBytes;
+        return bytes;
     }
 
-    bool createThread(const Process::PID nPID, const std::string& aTID, const std::string& aURL)
+    bool createThread(const Process::PID pid, const std::string& session, const std::string& url)
     {
-        const std::string aMessage = "thread " + aTID + " " + aURL + "\r\n";
-        if (Util::writeFIFO(getChildPipe(nPID), aMessage) < 0)
+        const std::string message = "thread " + session + " " + url + "\r\n";
+        if (Util::writeFIFO(getChildPipe(pid), message) < 0)
         {
-            Log::error("Error sending thread message to child [" + std::to_string(nPID) + "].");
+            Log::error("Error sending thread message to child [" + std::to_string(pid) + "].");
             return false;
         }
 
-        std::string aResponse;
-        if (getResponseLine(readerChild, aResponse) < 0)
+        std::string response;
+        if (getResponseLine(readerChild, response) < 0)
         {
-            Log::error("Error reading response to thread message from child [" + std::to_string(nPID) + "].");
+            Log::error("Error reading response to thread message from child [" + std::to_string(pid) + "].");
             return false;
         }
 
-        StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        return (tokens.count() == 2 && tokens[0] == std::to_string(nPID) && tokens[1] == "ok");
+        StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        return (tokens.count() == 2 && tokens[0] == std::to_string(pid) && tokens[1] == "ok");
     }
 
     /// Sync ChildProcess instances with its child.
@@ -257,10 +257,10 @@ public:
         size_t empty_count = 0;
         for (auto it = _childProcesses.begin(); it != _childProcesses.end(); )
         {
-            const auto aMessage = "query url \r\n";
-            std::string aResponse;
-            if (Util::writeFIFO(it->second->getWritePipe(), aMessage) < 0 ||
-                getResponseLine(readerChild, aResponse) < 0)
+            const auto message = "query url \r\n";
+            std::string response;
+            if (Util::writeFIFO(it->second->getWritePipe(), message) < 0 ||
+                getResponseLine(readerChild, response) < 0)
             {
                 auto log = Log::error();
                 log << "Error querying child [" << std::to_string(it->second->getPid()) << "].";
@@ -276,7 +276,7 @@ public:
                 continue;
             }
 
-            StringTokenizer tokens(aResponse, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() == 2 && tokens[0] == std::to_string(it->second->getPid()))
             {
                 Log::debug("Child [" + std::to_string(it->second->getPid()) + "] hosts [" + tokens[1] + "].");
@@ -302,32 +302,32 @@ public:
         return empty_count;
     }
 
-    void handleInput(const std::string& aMessage)
+    void handleInput(const std::string& message)
     {
         std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
-        StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         if (tokens[0] == "request" && tokens.count() == 3)
         {
-            const std::string aTID = tokens[1];
-            const std::string aURL = tokens[2];
+            const std::string session = tokens[1];
+            const std::string url = tokens[2];
 
-            Log::debug("Finding kit for URL [" + aURL + "] on thread [" + aTID + "].");
+            Log::debug("Finding kit for URL [" + url + "] on thread [" + session + "].");
 
-            const auto child = findChild(aURL);
+            const auto child = findChild(url);
             if (child)
             {
-                if (child->getUrl() == aURL)
-                    Log::debug("Found URL [" + aURL + "] hosted on child [" + std::to_string(child->getPid()) + "].");
+                if (child->getUrl() == url)
+                    Log::debug("Found URL [" + url + "] hosted on child [" + std::to_string(child->getPid()) + "].");
                 else
-                    Log::debug("URL [" + aURL + "] is not hosted. Using empty child [" + std::to_string(child->getPid()) + "].");
+                    Log::debug("URL [" + url + "] is not hosted. Using empty child [" + std::to_string(child->getPid()) + "].");
 
-                if (!createThread(child->getPid(), aTID, aURL))
+                if (!createThread(child->getPid(), session, url))
                 {
-                    Log::error("Error creating thread [" + aTID + "] for URL [" + aURL + "].");
+                    Log::error("Error creating thread [" + session + "] for URL [" + url + "].");
                 }
 
-                child->setUrl(aURL);
+                child->setUrl(url);
             }
             else
             {
@@ -339,20 +339,20 @@ public:
 
     void run() override
     {
-        std::string aMessage;
-        char  aBuffer[READ_BUFFER_SIZE];
-        char* pStart;
-        char* pEnd;
+        std::string message;
+        char  buffer[READ_BUFFER_SIZE];
+        char* start;
+        char* end;
 
-        struct pollfd aPoll;
-        ssize_t nBytes = -1;
+        struct pollfd pollPipeBroker;
+        ssize_t bytes = -1;
 
-        aPoll.fd = readerBroker;
-        aPoll.events = POLLIN;
-        aPoll.revents = 0;
+        pollPipeBroker.fd = readerBroker;
+        pollPipeBroker.events = POLLIN;
+        pollPipeBroker.revents = 0;
 
-        pStart = aBuffer;
-        pEnd   = aBuffer;
+        start = buffer;
+        end   = buffer;
 
         static const std::string thread_name = "brk_pipe_reader";
 #ifdef __linux
@@ -363,49 +363,49 @@ public:
 
         while (!TerminationFlag)
         {
-            if ( pStart == pEnd )
+            if (start == end)
             {
-                if (poll(&aPoll, 1, POLL_TIMEOUT_MS) < 0)
+                if (poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS) < 0)
                 {
                     Log::error("Failed to poll pipe [" + FIFO_LOOLWSD + "].");
                     continue;
                 }
                 else
-                if (aPoll.revents & (POLLIN | POLLPRI))
+                if (pollPipeBroker.revents & (POLLIN | POLLPRI))
                 {
-                    nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
-                    if (nBytes < 0)
+                    bytes = Util::readFIFO(readerBroker, buffer, sizeof(buffer));
+                    if (bytes < 0)
                     {
-                        pStart = pEnd = nullptr;
+                        start = end = nullptr;
                         Log::error("Error reading message from pipe [" + FIFO_LOOLWSD + "].");
                         continue;
                     }
-                    pStart = aBuffer;
-                    pEnd   = aBuffer + nBytes;
+                    start = buffer;
+                    end   = buffer + bytes;
                 }
                 else
-                if (aPoll.revents & (POLLERR | POLLHUP))
+                if (pollPipeBroker.revents & (POLLERR | POLLHUP))
                 {
                     Log::error("Broken pipe [" + FIFO_LOOLWSD + "] with wsd.");
                     break;
                 }
             }
 
-            if ( pStart != pEnd )
+            if (start != end)
             {
-                char aChar = *pStart++;
-                while (pStart != pEnd && aChar != '\r' && aChar != '\n')
+                char byteChar = *start++;
+                while (start != end && byteChar != '\r' && byteChar != '\n')
                 {
-                    aMessage += aChar;
-                    aChar = *pStart++;
+                    message += byteChar;
+                    byteChar = *start++;
                 }
 
-                if ( aChar == '\r' && *pStart == '\n')
+                if (byteChar == '\r' && *start == '\n')
                 {
-                    pStart++;
+                    start++;
 
-                    Log::trace("BrokerFromMaster: " + aMessage);
-                    if (aMessage == "eof")
+                    Log::trace("BrokerFromMaster: " + message);
+                    if (message == "eof")
                         break;
 
                     const auto duration = (std::chrono::steady_clock::now() - lastMaintenanceTime);
@@ -415,8 +415,8 @@ public:
                         lastMaintenanceTime = std::chrono::steady_clock::now();
                     }
 
-                    handleInput(aMessage);
-                    aMessage.clear();
+                    handleInput(message);
+                    message.clear();
                 }
             }
         }
@@ -425,9 +425,9 @@ public:
     }
 
 private:
-    char* _pStart;
-    char* _pEnd;
-    char  _aBuffer[READ_BUFFER_SIZE];
+    char* _start;
+    char* _end;
+    char  _buffer[READ_BUFFER_SIZE];
 };
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
@@ -484,9 +484,9 @@ static int createLibreOfficeKit(const bool sharePages,
                                 const std::string& loTemplate,
                                 const std::string& loSubPath)
 {
-    Poco::UInt64 childPID;
-    int nFIFOWriter = -1;
-    int nFlags = O_WRONLY | O_NONBLOCK;
+    Process::PID childPID;
+    int fifoWriter = -1;
+    int flags = O_WRONLY | O_NONBLOCK;
 
     const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
     const std::string pipeKit = Path(pipePath, BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX).toString();
@@ -501,7 +501,7 @@ static int createLibreOfficeKit(const bool sharePages,
     {
         Log::debug("Forking LibreOfficeKit.");
 
-        Poco::UInt64 pid;
+        Process::PID pid;
         if (!(pid = fork()))
         {
             // child
@@ -552,49 +552,49 @@ static int createLibreOfficeKit(const bool sharePages,
     // open non-blocking to make sure that a broken lokit process will not
     // block the loolbroker forever
     {
-        int nRetries = 5;
-        std::mutex aFIFOMutex;
-        std::condition_variable aFIFOCV;
-        std::unique_lock<std::mutex> lock(aFIFOMutex);
+        int retries = 5;
+        std::mutex fifoMutex;
+        std::condition_variable fifoCV;
+        std::unique_lock<std::mutex> lock(fifoMutex);
 
         if (std::getenv("SLEEPKITFORDEBUGGER"))
-            nRetries = std::numeric_limits<int>::max();
+            retries = std::numeric_limits<int>::max();
 
-        while(nRetries && nFIFOWriter < 0)
+        while(retries && fifoWriter < 0)
         {
-            aFIFOCV.wait_for(
+            fifoCV.wait_for(
                 lock,
                 std::chrono::microseconds(80000),
-                [&nFIFOWriter, &pipeKit, nFlags]
+                [&fifoWriter, &pipeKit, flags]
                 {
-                    return (nFIFOWriter = open(pipeKit.c_str(), nFlags)) >= 0;
+                    return (fifoWriter = open(pipeKit.c_str(), flags)) >= 0;
                 });
 
-            if (nFIFOWriter < 0)
+            if (fifoWriter < 0)
             {
-                Log::debug("Retrying to establish pipe connection: " + std::to_string(nRetries));
+                Log::debug("Retrying to establish pipe connection: " + std::to_string(retries));
             }
 
-            --nRetries;
+            --retries;
         }
     }
 
-    if (nFIFOWriter < 0)
+    if (fifoWriter < 0)
     {
         Log::error("Error: failed to open write pipe [" + pipeKit + "] with kit. Abandoning child.");
         ChildProcess(childPID, -1, -1);
         return -1;
     }
 
-    if ((nFlags = fcntl(nFIFOWriter, F_GETFL, 0)) < 0)
+    if ((flags = fcntl(fifoWriter, F_GETFL, 0)) < 0)
     {
         Log::error("Error: failed to get pipe flags [" + pipeKit + "].");
         ChildProcess(childPID, -1, -1);
         return -1;
     }
 
-    nFlags &= ~O_NONBLOCK;
-    if (fcntl(nFIFOWriter, F_SETFL, nFlags) < 0)
+    flags &= ~O_NONBLOCK;
+    if (fcntl(fifoWriter, F_SETFL, flags) < 0)
     {
         Log::error("Error: failed to set pipe flags [" + pipeKit + "].");
         ChildProcess(childPID, -1, -1);
@@ -603,19 +603,19 @@ static int createLibreOfficeKit(const bool sharePages,
 
     Log::info() << "Adding Kit #" << childCounter << ", PID: " << childPID << Log::end;
 
-    _childProcesses[childPID] = std::make_shared<ChildProcess>(childPID, -1, nFIFOWriter);
+    _childProcesses[childPID] = std::make_shared<ChildProcess>(childPID, -1, fifoWriter);
     return childPID;
 }
 
-static bool waitForTerminationChild(const Process::PID aPID, signed count = CHILD_TIMEOUT_SECS)
+static bool waitForTerminationChild(const Process::PID pid, signed count = CHILD_TIMEOUT_SECS)
 {
     while (count-- > 0)
     {
         int status;
-        waitpid(aPID, &status, WUNTRACED | WNOHANG);
+        waitpid(pid, &status, WUNTRACED | WNOHANG);
         if (WIFEXITED(status) || WIFSIGNALED(status))
         {
-            Log::info("Child " + std::to_string(aPID) + " terminated.");
+            Log::info("Child " + std::to_string(pid) + " terminated.");
             return true;
         }
 
@@ -643,7 +643,6 @@ int main(int argc, char** argv)
     Util::setFatalSignals();
 
     std::string childRoot;
-    std::string jailId;
     std::string loSubPath;
     std::string sysTemplate;
     std::string loTemplate;
@@ -748,7 +747,7 @@ int main(int argc, char** argv)
         Log::warn("Note: LOK_VIEW_CALLBACK is not set.");
     }
 
-    int nFlags = O_RDONLY | O_NONBLOCK;
+    int pipeFlags = O_RDONLY | O_NONBLOCK;
     const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
     if (mkfifo(pipeBroker.c_str(), 0666) < 0 && errno != EEXIST)
     {
@@ -756,20 +755,20 @@ int main(int argc, char** argv)
         exit(Application::EXIT_SOFTWARE);
     }
 
-    if ((readerChild = open(pipeBroker.c_str(), nFlags) ) < 0)
+    if ((readerChild = open(pipeBroker.c_str(), pipeFlags) ) < 0)
     {
         Log::error("Error: pipe opened for reading.");
         exit(Application::EXIT_SOFTWARE);
     }
 
-    if ((nFlags = fcntl(readerChild, F_GETFL, 0)) < 0)
+    if ((pipeFlags = fcntl(readerChild, F_GETFL, 0)) < 0)
     {
         Log::error("Error: failed to get pipe flags [" + FIFO_BROKER + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 
-    nFlags &= ~O_NONBLOCK;
-    if (fcntl(readerChild, F_SETFL, nFlags) < 0)
+    pipeFlags &= ~O_NONBLOCK;
+    if (fcntl(readerChild, F_SETFL, pipeFlags) < 0)
     {
         Log::error("Error: failed to set pipe flags [" + FIFO_BROKER + "].");
         exit(Application::EXIT_SOFTWARE);
@@ -808,13 +807,13 @@ int main(int argc, char** argv)
     }
 
     PipeRunnable pipeHandler;
-    Poco::Thread aPipe;
+    Poco::Thread pipeThread;
 
-    aPipe.start(pipeHandler);
+    pipeThread.start(pipeHandler);
 
     Log::info("loolbroker is ready.");
 
-    int nChildExitCode = Application::EXIT_OK;
+    int childExitCode = Application::EXIT_OK;
     unsigned timeoutCounter = 0;
     while (!TerminationFlag)
     {
@@ -824,7 +823,7 @@ int main(int argc, char** argv)
         {
             if (WIFEXITED(status))
             {
-                nChildExitCode = Util::getChildStatus(WEXITSTATUS(status));
+                childExitCode = Util::getChildStatus(WEXITSTATUS(status));
                 Log::info() << "Child process [" << pid << "] exited with code: "
                             << WEXITSTATUS(status) << "." << Log::end;
 
@@ -833,7 +832,7 @@ int main(int argc, char** argv)
             else
             if (WIFSIGNALED(status))
             {
-                nChildExitCode = Util::getSignalStatus(WTERMSIG(status));
+                childExitCode = Util::getSignalStatus(WTERMSIG(status));
                 std::string fate = "died";
 #ifdef WCOREDUMP
                 if (WCOREDUMP(status))
@@ -878,7 +877,7 @@ int main(int argc, char** argv)
             }
         }
 
-        if (forkCounter > 0 && nChildExitCode == Application::EXIT_OK)
+        if (forkCounter > 0 && childExitCode == Application::EXIT_OK)
         {
             std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
@@ -905,7 +904,7 @@ int main(int argc, char** argv)
         if (timeoutCounter++ == INTERVAL_PROBES)
         {
             timeoutCounter = 0;
-            nChildExitCode = Application::EXIT_OK;
+            childExitCode = Application::EXIT_OK;
             sleep(MAINTENANCE_INTERVAL);
         }
     }
@@ -929,7 +928,7 @@ int main(int argc, char** argv)
 
     _childProcesses.clear();
 
-    aPipe.join();
+    pipeThread.join();
     close(readerChild);
     close(readerBroker);
 
