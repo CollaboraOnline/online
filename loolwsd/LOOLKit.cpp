@@ -604,11 +604,11 @@ void lokit_main(const std::string& childRoot,
     Log::initialize("kit");
 #endif
 
-    struct pollfd aPoll;
-    ssize_t nBytes = -1;
-    char  aBuffer[READ_BUFFER_SIZE];
-    char* pStart = nullptr;
-    char* pEnd = nullptr;
+    struct pollfd pollPipeBroker;
+    ssize_t bytes = -1;
+    char  buffer[READ_BUFFER_SIZE];
+    char* start = nullptr;
+    char* end = nullptr;
 
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
@@ -624,6 +624,7 @@ void lokit_main(const std::string& childRoot,
 #ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(process_name.c_str()), 0, 0, 0) != 0)
         Log::error("Cannot set process name to " + process_name + ".");
+
     Util::setTerminationSignals();
     Util::setFatalSignals();
 #endif
@@ -642,7 +643,7 @@ void lokit_main(const std::string& childRoot,
         int writerBroker;
         int readerBroker;
 
-        if ( (readerBroker = open(pipe.c_str(), O_RDONLY) ) < 0 )
+        if ((readerBroker = open(pipe.c_str(), O_RDONLY) ) < 0)
         {
             Log::error("Error: failed to open pipe [" + pipe + "] read only.");
             exit(Application::EXIT_SOFTWARE);
@@ -650,7 +651,7 @@ void lokit_main(const std::string& childRoot,
 
         const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
         const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
-        if ( (writerBroker = open(pipeBroker.c_str(), O_WRONLY) ) < 0 )
+        if ((writerBroker = open(pipeBroker.c_str(), O_WRONLY) ) < 0)
         {
             Log::error("Error: failed to open pipe [" + FIFO_BROKER + "] write only.");
             exit(Application::EXIT_SOFTWARE);
@@ -749,59 +750,59 @@ void lokit_main(const std::string& childRoot,
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
 
-        std::string aResponse;
-        std::string aMessage;
+        std::string response;
+        std::string message;
 
         while (!TerminationFlag)
         {
-            if ( pStart == pEnd )
+            if (start == end)
             {
-                aPoll.fd = readerBroker;
-                aPoll.events = POLLIN;
-                aPoll.revents = 0;
+                pollPipeBroker.fd = readerBroker;
+                pollPipeBroker.events = POLLIN;
+                pollPipeBroker.revents = 0;
 
-                if (poll(&aPoll, 1, POLL_TIMEOUT_MS) < 0)
+                if (poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS) < 0)
                 {
                     Log::error("Failed to poll pipe [" + pipe + "].");
                     continue;
                 }
                 else
-                if (aPoll.revents & (POLLIN | POLLPRI))
+                if (pollPipeBroker.revents & (POLLIN | POLLPRI))
                 {
-                    nBytes = Util::readFIFO(readerBroker, aBuffer, sizeof(aBuffer));
-                    if (nBytes < 0)
+                    bytes = Util::readFIFO(readerBroker, buffer, sizeof(buffer));
+                    if (bytes < 0)
                     {
-                        pStart = pEnd = nullptr;
+                        start = end = nullptr;
                         Log::error("Error reading message from pipe [" + pipe + "].");
                         continue;
                     }
-                    pStart = aBuffer;
-                    pEnd   = aBuffer + nBytes;
+                    start = buffer;
+                    end   = buffer + bytes;
                 }
                 else
-                if (aPoll.revents & (POLLERR | POLLHUP))
+                if (pollPipeBroker.revents & (POLLERR | POLLHUP))
                 {
                     Log::error("Broken pipe [" + pipe + "] with broker.");
                     break;
                 }
             }
 
-            if ( pStart != pEnd )
+            if (start != end)
             {
-                char aChar = *pStart++;
-                while (pStart != pEnd && aChar != '\r' && aChar != '\n')
+                char byteChar = *start++;
+                while (start != end && byteChar != '\r' && byteChar != '\n')
                 {
-                    aMessage += aChar;
-                    aChar = *pStart++;
+                    message += byteChar;
+                    byteChar = *start++;
                 }
 
-                if ( aChar == '\r' && *pStart == '\n')
+                if (byteChar == '\r' && *start == '\n')
                 {
-                    pStart++;
-                    StringTokenizer tokens(aMessage, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                    aResponse = std::to_string(Process::id()) + " ";
+                    start++;
+                    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    response = std::to_string(Process::id()) + " ";
 
-                    Log::trace("Recv: " + aMessage);
+                    Log::trace("Recv: " + message);
                     if (tokens[0] == "query" && tokens.count() > 1)
                     {
                         if (tokens[1] == "url")
@@ -813,12 +814,12 @@ void lokit_main(const std::string& childRoot,
 
                             if (_documents.empty())
                             {
-                                aResponse += "empty \r\n";
+                                response += "empty \r\n";
                             }
                             else
                             {
                                 // We really only support single URL hosting.
-                                aResponse += _documents.cbegin()->first + "\r\n";
+                                response += _documents.cbegin()->first + "\r\n";
                             }
                         }
                     }
@@ -834,16 +835,16 @@ void lokit_main(const std::string& childRoot,
                             it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit, jailId, url));
 
                         it->second->createSession(sessionId, intSessionId);
-                        aResponse += "ok \r\n";
+                        response += "ok \r\n";
                     }
                     else
                     {
-                        aResponse = "bad \r\n";
+                        response = "bad \r\n";
                     }
 
-                    Log::trace("KitToBroker: " + aResponse);
-                    Util::writeFIFO(writerBroker, aResponse);
-                    aMessage.clear();
+                    Log::trace("KitToBroker: " + response);
+                    Util::writeFIFO(writerBroker, response);
+                    message.clear();
                 }
             }
         }
@@ -892,7 +893,6 @@ int main(int argc, char** argv)
     std::string sysTemplate;
     std::string loTemplate;
     std::string loSubPath;
-    std::string jailId;
     std::string pipe;
 
     for (int i = 1; i < argc; ++i)
@@ -944,7 +944,7 @@ int main(int argc, char** argv)
         exit(Application::EXIT_SOFTWARE);
     }
 
-    if ( pipe.empty() )
+    if (pipe.empty())
     {
         Log::error("Error: --pipe is empty");
         exit(Application::EXIT_SOFTWARE);
