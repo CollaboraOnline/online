@@ -84,8 +84,9 @@ L.Control.Styles = L.Control.extend({
 						var outlineLevel = style.split('Outline')[1];
 						var localeString = 'Outline'.toLocaleString() + outlineLevel;
 						item.innerHTML = localeString;
-					} else
+					} else {
 						item.innerHTML = style.toLocaleString();
+					}
 				});
 			}
 		}

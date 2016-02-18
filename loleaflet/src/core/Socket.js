@@ -2,6 +2,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
+/* global _ */
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 

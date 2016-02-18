@@ -2,7 +2,7 @@
  * L.Control.Tabs is used to switch sheets in Calc
  */
 
-/* global $ */
+/* global $ vex _ */
 L.Control.Tabs = L.Control.extend({
 	onAdd: function (map) {
 		this._tabsInitialized = false;
@@ -15,10 +15,12 @@ L.Control.Tabs = L.Control.extend({
 			callback: function(key, options) {
 				var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
 
-				if (key === 'insertsheetbefore')
+				if (key === 'insertsheetbefore') {
 					map.insertPage(nPos);
-				if (key === 'insertsheetafter')
+				}
+				if (key === 'insertsheetafter') {
 					map.insertPage(nPos + 1);
+				}
 			},
 			items: {
 				'insertsheetbefore': {name: _('Insert sheet before this')},
@@ -29,19 +31,20 @@ L.Control.Tabs = L.Control.extend({
 							vex.dialog.confirm({
 								message: _('Are you sure you want to delete this sheet?'),
 								callback: function(data) {
-									if (data)
+									if (data) {
 										map.deletePage(nPos);
+									}
 								}
 							});
 						}
 				 },
 				'renamesheet': {name: _('Rename sheet'),
-							callback: function(key, options){
+							callback: function(key, options) {
 							var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
 							vex.dialog.open({
 								message: _('Enter new sheet name'),
 								input: '<input name="sheetname" type="text" required />',
-								callback: function(data){
+								callback: function(data) {
 									map.renamePage(data.sheetname, nPos);
 								}
 							});

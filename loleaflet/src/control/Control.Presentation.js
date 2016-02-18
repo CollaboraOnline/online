@@ -2,7 +2,7 @@
  * L.Control.Presentation is used for common commands for slides.
  */
 
-/* global vex */
+/* global vex _ */
 L.Control.Presentation = L.Control.extend({
 	options: {
 		position: 'topleft'

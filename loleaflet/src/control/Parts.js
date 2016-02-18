@@ -149,8 +149,9 @@ L.Map.include({
 	},
 
 	insertPage: function(nPos) {
-		if (this.getDocType() === 'presentation')
+		if (this.getDocType() === 'presentation') {
 			this._socket.sendMessage('uno .uno:InsertPage');
+		}
 		else if (this.getDocType() === 'spreadsheet') {
 			var command = {
 				'Name': {
@@ -165,8 +166,9 @@ L.Map.include({
 
 			this._socket.sendMessage('uno .uno:Insert ' + JSON.stringify(command));
 		}
-		else
+		else {
 			return;
+		}
 
 		var docLayer = this._docLayer;
 
@@ -178,10 +180,12 @@ L.Map.include({
 		docLayer._parts++;
 
 		// Since we know which part we want to set, use the index (instead of 'next', 'prev')
-		if (typeof nPos === 'number')
+		if (typeof nPos === 'number') {
 			this.setPart(nPos);
-		else
+		}
+		else {
 			this.setPart('next');
+		}
 	},
 
 	duplicatePage: function() {
@@ -201,8 +205,9 @@ L.Map.include({
 	},
 
 	deletePage: function (nPos) {
-		if (this.getDocType() === 'presentation' )
+		if (this.getDocType() === 'presentation') {
 			this._socket.sendMessage('uno .uno:DeletePage');
+		}
 		else if (this.getDocType() === 'spreadsheet') {
 			var command = {
 				'Index': {
@@ -213,8 +218,9 @@ L.Map.include({
 
 			this._socket.sendMessage('uno .uno:Remove ' + JSON.stringify(command));
 		}
-		else
+		else {
 			return;
+		}
 
 		var docLayer = this._docLayer;
 		// TO DO: Deleting all the pages causes problem.
@@ -232,10 +238,12 @@ L.Map.include({
 			docLayer._selectedPart--;
 		}
 
-		if (typeof nPos === 'number')
+		if (typeof nPos === 'number') {
 			this.setPart(nPos);
-		else
+		}
+		else {
 			this.setPart(docLayer._selectedPart);
+		}
 	},
 
 	renamePage: function (name, nPos) {
