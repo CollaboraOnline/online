@@ -114,6 +114,11 @@ tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<y
 
     All parameters are numbers.
 
+tilecombine <parameters>
+
+    Accept same parameters as 'tile' message except parameters 'tileposx' and 'tileposy'
+    can be a comma separated list, and number of elements in both must be same.
+
 unload [save|force]
 
     unloads the document.
