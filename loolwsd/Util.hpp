@@ -77,16 +77,16 @@ namespace Util
     /// Call WebSocket::shutdown() ignoring Poco::IOException.
     void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws);
 
-    ssize_t writeFIFO(const int nPipe, const char* pBuffer, ssize_t nSize);
+    ssize_t writeFIFO(const int pipe, const char* buffer, ssize_t size);
     inline
-    ssize_t writeFIFO(const int nPipe, const std::string& message)
+    ssize_t writeFIFO(const int pipe, const std::string& message)
     {
-        return writeFIFO(nPipe, message.c_str(), message.size());
+        return writeFIFO(pipe, message.c_str(), message.size());
     }
 
-    ssize_t readFIFO(int nPipe, char* pBuffer, ssize_t nSize);
+    ssize_t readFIFO(int pipe, char* buffer, ssize_t size);
 
-    ssize_t readMessage(int nPipe, char* pBuffer, ssize_t nSize);
+    ssize_t readMessage(int pipe, char* buffer, ssize_t size);
 
     /// Safely remove a file or directory.
     /// Supresses exception when the file is already removed.
@@ -118,10 +118,10 @@ namespace Util
     void setTerminationSignals();
     void setFatalSignals();
 
-    int getChildStatus(const int nCode);
-    int getSignalStatus(const int nCode);
+    int getChildStatus(const int code);
+    int getSignalStatus(const int code);
 
-    void requestTermination(const Poco::Process::PID& aPID);
+    void requestTermination(const Poco::Process::PID& pid);
 };
 
 //TODO: Move to own file.

@@ -351,71 +351,71 @@ namespace Util
         }
     }
 
-    ssize_t writeFIFO(int nPipe, const char* pBuffer, ssize_t nSize)
+    ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size)
     {
-        ssize_t nBytes = -1;
-        ssize_t nCount = 0;
+        ssize_t bytes = -1;
+        ssize_t count = 0;
 
         while(true)
         {
-            nBytes = write(nPipe, pBuffer + nCount, nSize - nCount);
-            if (nBytes < 0)
+            bytes = write(pipe, buffer + count, size - count);
+            if (bytes < 0)
             {
                 if (errno == EINTR || errno == EAGAIN)
                     continue;
 
-                nCount = -1;
+                count = -1;
                 break;
             }
-            else if ( nCount + nBytes < nSize )
+            else if (count + bytes < size)
             {
-                nCount += nBytes;
+                count += bytes;
             }
             else
             {
-                nCount = nBytes;
+                count = bytes;
                 break;
             }
         }
 
-        return nCount;
+        return count;
     }
 
-    ssize_t readFIFO(int nPipe, char* pBuffer, ssize_t nSize)
+    ssize_t readFIFO(int pipe, char* buffer, ssize_t size)
     {
-        ssize_t nBytes;
+        ssize_t bytes;
         do
         {
-            nBytes = read(nPipe, pBuffer, nSize);
+            bytes = read(pipe, buffer, size);
         }
-        while ( nBytes < 0 && errno == EINTR );
+        while (bytes < 0 && errno == EINTR);
 
-        return nBytes;
+        return bytes;
     }
 
-    ssize_t readMessage(int nPipe, char* pBuffer, ssize_t nSize)
+    ssize_t readMessage(int pipe, char* buffer, ssize_t size)
     {
-        struct pollfd aPoll;
+        struct pollfd pollPipe;
 
-        aPoll.fd = nPipe;
-        aPoll.events = POLLIN;
-        aPoll.revents = 0;
+        pollPipe.fd = pipe;
+        pollPipe.events = POLLIN;
+        pollPipe.revents = 0;
 
-        const int nPoll = poll(&aPoll, 1, CHILD_TIMEOUT_SECS * 1000);
+        const int nPoll = poll(&pollPipe, 1, CHILD_TIMEOUT_SECS * 1000);
         if ( nPoll < 0 )
             return -1;
 
         if ( nPoll == 0 )
             errno = ETIME;
 
-        if( (aPoll.revents & POLLIN) != 0 )
-            return readFIFO(nPipe, pBuffer, nSize);
+        if( (pollPipe.revents & POLLIN) != 0 )
+            return readFIFO(pipe, buffer, size);
 
         return -1;
     }
 
     static
-    void handleTerminationSignal(const int aSignal)
+    void handleTerminationSignal(const int signal)
     {
         if (!TerminationFlag)
         {
@@ -425,33 +425,33 @@ namespace Util
             TerminationFlag = true;
 
             Log::info() << "Termination signal received: "
-                        << Util::signalName(aSignal) << " "
-                        << strsignal(aSignal) << Log::end;
+                        << Util::signalName(signal) << " "
+                        << strsignal(signal) << Log::end;
         }
     }
 
     void setTerminationSignals()
     {
 #ifdef __linux
-        struct sigaction aSigAction;
+        struct sigaction action;
 
-        sigemptyset(&aSigAction.sa_mask);
-        aSigAction.sa_flags = 0;
-        aSigAction.sa_handler = handleTerminationSignal;
+        sigemptyset(&action.sa_mask);
+        action.sa_flags = 0;
+        action.sa_handler = handleTerminationSignal;
 
-        sigaction(SIGTERM, &aSigAction, nullptr);
-        sigaction(SIGINT, &aSigAction, nullptr);
-        sigaction(SIGQUIT, &aSigAction, nullptr);
-        sigaction(SIGHUP, &aSigAction, nullptr);
+        sigaction(SIGTERM, &action, nullptr);
+        sigaction(SIGINT, &action, nullptr);
+        sigaction(SIGQUIT, &action, nullptr);
+        sigaction(SIGHUP, &action, nullptr);
 #endif
     }
 
     static
-    void handleFatalSignal(const int aSignal)
+    void handleFatalSignal(const int signal)
     {
         Log::error() << "Fatal signal received: "
-                     << Util::signalName(aSignal) << " "
-                     << strsignal(aSignal) << Log::end;
+                     << Util::signalName(signal) << " "
+                     << strsignal(signal) << Log::end;
 
         if (getenv("LOOL_DEBUG"))
         {
@@ -463,66 +463,66 @@ namespace Util
         }
 
 #ifdef __linux
-        struct sigaction aSigAction;
+        struct sigaction action;
 
-        sigemptyset(&aSigAction.sa_mask);
-        aSigAction.sa_flags = 0;
-        aSigAction.sa_handler = SIG_DFL;
+        sigemptyset(&action.sa_mask);
+        action.sa_flags = 0;
+        action.sa_handler = SIG_DFL;
 
-        sigaction(aSignal, &aSigAction, NULL);
+        sigaction(signal, &action, NULL);
         // let default handler process the signal
-        kill(Poco::Process::id(), aSignal);
+        kill(Poco::Process::id(), signal);
 #endif
     }
 
     void setFatalSignals()
     {
 #ifdef __linux
-        struct sigaction aSigAction;
+        struct sigaction action;
 
-        sigemptyset(&aSigAction.sa_mask);
-        aSigAction.sa_flags = 0;
-        aSigAction.sa_handler = handleFatalSignal;
+        sigemptyset(&action.sa_mask);
+        action.sa_flags = 0;
+        action.sa_handler = handleFatalSignal;
 
-        sigaction(SIGSEGV, &aSigAction, NULL);
-        sigaction(SIGBUS, &aSigAction, NULL);
-        sigaction(SIGABRT, &aSigAction, NULL);
-        sigaction(SIGILL, &aSigAction, NULL);
-        sigaction(SIGFPE, &aSigAction, NULL);
+        sigaction(SIGSEGV, &action, NULL);
+        sigaction(SIGBUS, &action, NULL);
+        sigaction(SIGABRT, &action, NULL);
+        sigaction(SIGILL, &action, NULL);
+        sigaction(SIGFPE, &action, NULL);
 #endif
     }
 
-    int getChildStatus(const int nCode)
+    int getChildStatus(const int code)
     {
-        int nRetVal;
+        int retVal;
 
-        switch (static_cast<const LOOLExitCode>(nCode))
+        switch (static_cast<const LOOLExitCode>(code))
         {
             case LOOLExitCode::LOOL_SECOND_OFFICE:
             case LOOLExitCode::LOOL_FATAL_ERROR:
             case LOOLExitCode::LOOL_CRASH_WITH_RESTART:
             case LOOLExitCode::LOOL_NORMAL_RESTART:
             case LOOLExitCode::LOOL_EXIT_SOFTWARE:
-                nRetVal = EXIT_FAILURE;
+                retVal = EXIT_FAILURE;
             break;
 
             case LOOLExitCode::LOOL_NO_ERROR:
-                nRetVal = EXIT_SUCCESS;
+                retVal = EXIT_SUCCESS;
             break;
 
             default:
-                nRetVal = EXIT_SUCCESS;
+                retVal = EXIT_SUCCESS;
             break;
         }
 
-        return nRetVal;
+        return retVal;
     }
 
-    int getSignalStatus(const int nCode)
+    int getSignalStatus(const int code)
     {
-        int nRetVal;
+        int retVal;
 
-        switch (nCode)
+        switch (code)
         {
             case SIGSEGV:
             case SIGBUS:
@@ -533,22 +533,22 @@ namespace Util
             case SIGINT:
             case SIGQUIT:
             case SIGHUP:
-                nRetVal = EXIT_FAILURE;
+                retVal = EXIT_FAILURE;
             break;
 
             default:
-                nRetVal = EXIT_SUCCESS;
+                retVal = EXIT_SUCCESS;
             break;
         }
 
-        return nRetVal;
+        return retVal;
     }
 
-    void requestTermination(const Poco::Process::PID& aPID)
+    void requestTermination(const Poco::Process::PID& pid)
     {
         try
         {
-            Poco::Process::requestTermination(aPID);
+            Poco::Process::requestTermination(pid);
         }
         catch(const Poco::Exception& exc)
         {
