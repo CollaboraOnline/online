@@ -85,13 +85,13 @@ L.Map = L.Evented.extend({
 		};
 		this.initComplete = false;
 
-		this.on('updatepermission', function(e){
+		this.on('updatepermission', function() {
 			if (this.initComplete) {
 				return;
 			}
 			this._fireInitComplete('updatepermission');
 		});
-		this.on('updatetoolbarcommandvalues', function(e){
+		this.on('updatetoolbarcommandvalues', function(e) {
 			if (this.initComplete) {
 				return;
 			}
@@ -503,8 +503,9 @@ L.Map = L.Evented.extend({
 	},
 
 	_fireInitComplete: function (condition) {
-		if (this.initComplete)
+		if (this.initComplete) {
 			return;
+		}
 
 		this.initConditions[condition] = true;
 		for (var key in this.initConditions) {

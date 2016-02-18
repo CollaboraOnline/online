@@ -563,7 +563,7 @@ L.GridLayer = L.Layer.extend({
 		if (!map || this._documentInfo === '') {
 			return;
 		}
-
+		var key, coords, tile;
 		var center = map.getCenter();
 		var zoom = Math.round(map.getZoom());
 
@@ -571,7 +571,7 @@ L.GridLayer = L.Layer.extend({
 			tileRange = this._pxBoundsToTileRange(pixelBounds),
 			queue = [];
 
-		for (var key in this._tiles) {
+		for (key in this._tiles) {
 			if (this._keyToTileCoords(key).z !== zoom ||
 					this._keyToTileCoords(key).part !== this._selectedPart) {
 				this._tiles[key].current = false;
@@ -583,14 +583,14 @@ L.GridLayer = L.Layer.extend({
 		// create a queue of coordinates to load tiles from
 		for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
 			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
-				var coords = new L.Point(i, j);
+				coords = new L.Point(i, j);
 				coords.z = zoom;
 				coords.part = this._selectedPart;
 
 				if (!this._isValidTile(coords)) { continue; }
 
 				key = this._tileCoordsToKey(coords);
-				var tile = this._tiles[key];
+				tile = this._tiles[key];
 				if (tile) {
 					tile.current = true;
 					newView = false;
@@ -606,7 +606,7 @@ L.GridLayer = L.Layer.extend({
 				// so we're able to cancel the previous requests that are being processed
 				this._map._socket.sendMessage('canceltiles');
 				for (key in this._tiles) {
-					var tile = this._tiles[key];
+					tile = this._tiles[key];
 					if (!tile.loaded) {
 						L.DomUtil.remove(tile.el);
 						delete this._tiles[key];
@@ -626,12 +626,12 @@ L.GridLayer = L.Layer.extend({
 			var tilePositionsY = '';
 
 			for (i = 0; i < queue.length; i++) {
-				var coords = queue[i];
-				var tilePos = this._getTilePos(coords),
+				coords = queue[i];
+				var tilePos = this._getTilePos(coords);
 				key = this._tileCoordsToKey(coords);
 
 				if (coords.part === this._selectedPart) {
-					var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+					tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
 					this._initTile(tile);
 
@@ -662,11 +662,13 @@ L.GridLayer = L.Layer.extend({
 				}
 				if (!this._tileCache[key]) {
 					var twips = this._coordsToTwips(coords);
-					if (tilePositionsX !== '')
+					if (tilePositionsX !== '') {
 						tilePositionsX += ',';
+					}
 					tilePositionsX += twips.x;
-					if (tilePositionsY !== '')
+					if (tilePositionsY !== '') {
 						tilePositionsY += ',';
+					}
 					tilePositionsY += twips.y;
 				}
 				else {
@@ -684,7 +686,7 @@ L.GridLayer = L.Layer.extend({
 					'tilewidth=' + this._tileWidthTwips + ' ' +
 					'tileheight=' + this._tileHeightTwips;
 
-				this._map._socket.sendMessage(message, "");
+				this._map._socket.sendMessage(message, '');
 			}
 
 			this._level.el.appendChild(fragment);
