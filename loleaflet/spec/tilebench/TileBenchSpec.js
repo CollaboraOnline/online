@@ -117,6 +117,7 @@ describe('TileBench', function () {
 					incoming.push(logs[i]);
 				}
 				else if (logs[i].direction === L.OUTGOING) {
+					logs[i].msg = logs[i].msg.replace('tilecombine','tile');
 					outgoing.push(logs[i]);
 				}
 			}
@@ -126,6 +127,7 @@ describe('TileBench', function () {
 			for (j = 0; j < incoming.length; j++) {
 				if (outgoing[i].msg === incoming[j].msg) {
 					time_deltas.push(incoming[j].time - outgoing[i].time);
+					break;
 				}
 			}
 		}
