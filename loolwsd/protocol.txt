@@ -22,7 +22,7 @@ disconnect [reason]
     Sent before disconnecting gracefully.
     reason: optional human-readable reason to disconnect.
 
-downloadas downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
+downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
     Exports the current document to the desired format and returns a download URL
     The id identifies the request on the client.
