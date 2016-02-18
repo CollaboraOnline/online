@@ -145,27 +145,27 @@ public:
                             // We need to ask Broker to give us some numbers on docs/clients/etc.
                             // But we can also collect some memory info using system calls.
 
-                            std::string response;
+                            std::string statsResponse;
 
                             const auto cmd = "pstree -a -c -h -A -p " + std::to_string(getpid());
                             FILE* fp = popen(cmd.c_str(), "r");
                             if (fp == nullptr)
                             {
-                                response = "error: failed to collect stats.";
-                                ws->sendFrame(response.data(), response.size());
+                                statsResponse = "error: failed to collect stats.";
+                                ws->sendFrame(statsResponse.data(), statsResponse.size());
                                 continue;
                             }
 
-                            char buffer[1024];
-                            while (fgets(buffer, sizeof(buffer)-1, fp) != nullptr)
+                            char treeBuffer[1024];
+                            while (fgets(treeBuffer, sizeof(treeBuffer)-1, fp) != nullptr)
                             {
-                                response += buffer;
-                                response += "</ BR>\n";
+                                statsResponse += treeBuffer;
+                                statsResponse += "</ BR>\n";
                             }
 
                             pclose(fp);
 
-                            ws->sendFrame(response.data(), response.size());
+                            ws->sendFrame(statsResponse.data(), statsResponse.size());
                         }
                     }
                 }
