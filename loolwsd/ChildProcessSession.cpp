@@ -773,6 +773,7 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
 {
     int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
     std::string tilePositionsX, tilePositionsY;
+    std::string reqTimestamp;
 
     if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
@@ -794,6 +795,9 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
         sendTextFrame("error: cmd=tilecombine kind=invalid");
         return;
     }
+
+    if (tokens.count() > 8)
+        getTokenString(tokens[8], "timestamp", reqTimestamp);
 
     Util::Rectangle renderArea;
 
@@ -874,7 +878,12 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
                                " tileposx=" + std::to_string(tileRect.getLeft()) +
                                " tileposy=" + std::to_string(tileRect.getTop()) +
                                " tilewidth=" + std::to_string(tileWidth) +
-                               " tileheight=" + std::to_string(tileHeight) + "\n";
+                               " tileheight=" + std::to_string(tileHeight);
+
+        if (reqTimestamp != "")
+            response += " timestamp=" + reqTimestamp;
+
+        response += "\n";
 
         std::vector<char> output;
         output.reserve(pixelWidth * pixelHeight * 4 + response.size());

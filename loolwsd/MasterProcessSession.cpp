@@ -605,6 +605,7 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
 {
     int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
     std::string tilePositionsX, tilePositionsY;
+    std::string reqTimestamp;
 
     if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
@@ -626,6 +627,9 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
         sendTextFrame("error: cmd=tilecombine kind=invalid");
         return;
     }
+
+    if (tokens.count() > 8)
+        getTokenString(tokens[8], "timestamp", reqTimestamp);
 
     Util::Rectangle renderArea;
 
@@ -669,7 +673,12 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
                                " tileposx=" + std::to_string(x) +
                                " tileposy=" + std::to_string(y) +
                                " tilewidth=" + std::to_string(tileWidth) +
-                               " tileheight=" + std::to_string(tileHeight) + "\n";
+                               " tileheight=" + std::to_string(tileHeight);
+
+            if (reqTimestamp != "")
+                response += " timestamp=" + reqTimestamp;
+
+            response += "\n";
 
             std::vector<char> output;
             output.reserve(4 * pixelWidth * pixelHeight);
@@ -710,6 +719,9 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
                                " tileposy=" + forwardTileY +
                                " tilewidth=" + std::to_string(tileWidth) +
                                " tileheight=" + std::to_string(tileHeight);
+
+    if (reqTimestamp != "")
+        forward += " timestamp=" + reqTimestamp;
 
     forwardToPeer(forward.c_str(), forward.size());
 }
