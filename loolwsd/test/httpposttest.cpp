@@ -52,7 +52,14 @@ void HTTPPostTest::testConvertTo()
     std::ifstream fileStream(TDOC "/hello.txt");
     std::stringstream expectedStream;
     expectedStream << fileStream.rdbuf();
-    CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualStream.str());
+
+    // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
+    // (U+FEFF). Skip that.
+    std::string actualString = actualStream.str();
+    if (actualString.size() > 3 &&
+        actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
+        actualString = actualString.substr(3);
+    CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualString);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPPostTest);
