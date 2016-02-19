@@ -222,59 +222,66 @@ void HTTPWSTest::testRenderingOptions()
 
 void HTTPWSTest::testPasswordProtectedDocument()
 {
-    // Load a password protected document
-    const std::string documentPath = TDOC "/password-protected.ods";
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-    // Send a load request without password first
-    sendTextFrame(_socket, "load url=" + documentURL);
+    try {
 
-    int flags;
-    int n;
-    int counter = 0;
-    do
-    {
-        char buffer[READ_BUFFER_SIZE];
-        n = _socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (n > 0)
+        Poco::Net::WebSocket socket(_session, _request, _response);
+
+        // Load a password protected document
+        const std::string documentPath = TDOC "/password-protected.ods";
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        // Send a load request without password first
+        sendTextFrame(socket, "load url=" + documentURL);
+
+        int flags;
+        int n;
+        int counter = 0;
+        do
         {
-            std::string line = LOOLProtocol::getFirstLine(buffer, n);
-            StringTokenizer tokens(line, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            std::string errorCommand;
-            std::string errorKind;
-            if (counter == 0 &&
-                tokens[0] == "error:" &&
-                LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand) &&
-                LOOLProtocol::getTokenString(tokens[2], "kind", errorKind) )
+            char buffer[READ_BUFFER_SIZE];
+            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            if (n > 0)
             {
-                CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-                // TODO: Do a test for document requiring password to edit
-                CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
+                std::string line = LOOLProtocol::getFirstLine(buffer, n);
+                StringTokenizer tokens(line, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                std::string errorCommand;
+                std::string errorKind;
+                if (counter == 0 &&
+                    tokens[0] == "error:" &&
+                    LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand) &&
+                    LOOLProtocol::getTokenString(tokens[2], "kind", errorKind) )
+                {
+                    CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
+                    // TODO: Do a test for document requiring password to edit
+                    CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
 
-                // Send another load request with incorrect password
-                sendTextFrame(_socket, "load url=" + documentURL + " password=2");
-                counter++;
-            }
-            else if (counter == 1 &&
-                tokens[0] == "error:" &&
-                LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand) &&
-                LOOLProtocol::getTokenString(tokens[2], "kind", errorKind) )
-            {
-                CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-                CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
+                    // Send another load request with incorrect password
+                    sendTextFrame(socket, "load url=" + documentURL + " password=2");
+                    counter++;
+                }
+                else if (counter == 1 &&
+                         tokens[0] == "error:" &&
+                         LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand) &&
+                         LOOLProtocol::getTokenString(tokens[2], "kind", errorKind) )
+                {
+                    CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
+                    CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
 
-                // Send another load request with correct password
-                sendTextFrame(_socket, "load url=" + documentURL + " password=1");
-                counter++;
+                    // Send another load request with correct password
+                    sendTextFrame(socket, "load url=" + documentURL + " password=1");
+                    counter++;
+                }
+                else if (counter == 2 &&
+                         tokens[0] == "status:")
+                {
+                    // Entering correct password opened the document
+                    break;
+                }
             }
-            else if (counter == 2 &&
-                     tokens[0] == "status:")
-            {
-                // Entering correct password opened the document
-                break;
-            }
-        }
+        } while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
     }
-    while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    catch (const Poco::Exception& exc) {
+        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+    }
 }
 
 void HTTPWSTest::sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
