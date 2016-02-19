@@ -2,7 +2,7 @@ describe('Search', function () {
 	this.timeout(10000);
 	var map;
 
-	before(function () {
+	before(function (done) {
 		var htmlPath = window.location.pathname;
 		var dir = htmlPath.substring(0, htmlPath.lastIndexOf('/'));
 		var fileURL = 'file://' + dir + '/data/eval.odt';
@@ -13,6 +13,14 @@ describe('Search', function () {
 			edit: false,
 			readOnly: false
 		});
+
+		map.once('partpagerectangles', function(e) {
+			done();
+		});
+
+		setTimeout(function() {
+			done(new Error('No response for partpagerectangles'));
+		}, 5000);
 	});
 
 	afterEach(function () {
