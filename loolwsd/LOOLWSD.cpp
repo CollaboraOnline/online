@@ -111,6 +111,7 @@ DEALINGS IN THE SOFTWARE.
 #include "ChildProcessSession.hpp"
 #include "LOOLWSD.hpp"
 #include "QueueHandler.hpp"
+#include "Storage.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
