@@ -109,7 +109,7 @@ void HTTPWSTest::testPaste()
         socket.shutdown();
         CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
     }
-    catch(const Poco::Exception& exc)
+    catch (const Poco::Exception& exc)
     {
         CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
     }
@@ -159,7 +159,7 @@ void HTTPWSTest::testLargePaste()
         sendTextFrame(socket, "disconnect");
         socket.shutdown();
     }
-    catch(const Poco::Exception& exc)
+    catch (const Poco::Exception& exc)
     {
         CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
     }
@@ -210,7 +210,7 @@ void HTTPWSTest::testRenderingOptions()
         // HideWhitespace was ignored, this was 32532, should be around 16706.
         CPPUNIT_ASSERT(height < 20000);
     }
-    catch(const Poco::Exception& exc)
+    catch (const Poco::Exception& exc)
     {
         CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
     }

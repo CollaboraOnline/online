@@ -906,7 +906,7 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
 
 bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-   int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+    int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
 
     if (tokens.count() != 5 ||
         !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
