@@ -92,7 +92,8 @@ L.TileLayer = L.GridLayer.extend({
 		// Original rectangle of cell cursor in twips
 		this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle for cell cursor
-		this._cellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		this._cellCursor =  L.LatLngBounds.createDefault();
+		this._prevCellCursor = L.LatLngBounds.createDefault();
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
 		this._lastValidPart = -1;
@@ -427,9 +428,15 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCellCursorMsg: function (textMsg) {
+		if (!this._cellCursor) {
+			this._cellCursor = L.LatLngBounds.createDefault();
+		}
+		if (!this._prevCellCursor) {
+			this._prevCellCursor = L.LatLngBounds.createDefault();
+		}
 		if (textMsg.match('EMPTY')) {
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
-			this._cellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+			this._cellCursor = L.LatLngBounds.createDefault();
 		}
 		else {
 			var strTwips = textMsg.match(/\d+/g);
@@ -442,7 +449,18 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		}
 
-		this._onUpdateCellCursor();
+		var horizontalDirection = 0,
+			verticalDirection = 0;
+		if (!this._isEmptyRectangle(this._prevCellCursor) && !this._isEmptyRectangle(this._cellCursor)) {
+			horizontalDirection = Math.sign(this._cellCursor.getWest() - this._prevCellCursor.getWest());
+			verticalDirection = Math.sign(this._cellCursor.getNorth() - this._prevCellCursor.getNorth());
+		}
+
+		if (!this._isEmptyRectangle(this._cellCursor) && !this._prevCellCursor.equals(this._cellCursor)) {
+			this._prevCellCursor = new L.LatLngBounds(this._cellCursor.getSouthWest(), this._cellCursor.getNorthEast());
+		}
+
+		this._onUpdateCellCursor(horizontalDirection, verticalDirection);
 	},
 
 	_onMousePointerMsg: function (textMsg) {
@@ -929,30 +947,34 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_onUpdateCellCursor: function () {
+	_onUpdateCellCursor: function (horizontalDirection, verticalDirection) {
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			var mapBounds = this._map.getBounds();
 			if (!mapBounds.contains(this._cellCursor)) {
 				var spacingX = Math.abs((this._cellCursor.getEast() - this._cellCursor.getWest())) / 4.0;
 				var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
 				var scrollX = 0, scrollY = 0;
-				if (this._cellCursor.getWest() < mapBounds.getWest()) {
+				if (horizontalDirection === -1 && this._cellCursor.getWest() < mapBounds.getWest()) {
 					scrollX = this._cellCursor.getWest() - mapBounds.getWest() - spacingX;
-				} else if (this._cellCursor.getEast() > mapBounds.getEast()) {
+				} else if (horizontalDirection === 1 && this._cellCursor.getEast() > mapBounds.getEast()) {
 					scrollX = this._cellCursor.getEast() - mapBounds.getEast() + spacingX;
-				} else if (this._cellCursor.getNorth() > mapBounds.getNorth()) {
+				}
+				if (verticalDirection === 1 && this._cellCursor.getNorth() > mapBounds.getNorth()) {
 					scrollY = this._cellCursor.getNorth() - mapBounds.getNorth() + spacingY;
-				} else if (this._cellCursor.getSouth() < mapBounds.getSouth()) {
+				} else if (verticalDirection === -1 && this._cellCursor.getSouth() < mapBounds.getSouth()) {
 					scrollY = this._cellCursor.getSouth() - mapBounds.getSouth() - spacingY;
 				}
-				var newCenter = mapBounds.getCenter();
-				newCenter.lng += scrollX;
-				newCenter.lat += scrollY;
-				var center = this._map.project(newCenter);
-				center = center.subtract(this._map.getSize().divideBy(2));
-				center.x = Math.round(center.x < 0 ? 0 : center.x);
-				center.y = Math.round(center.y < 0 ? 0 : center.y);
-				this._map.fire('scrollto', {x: center.x, y: center.y});
+
+				if (scrollX !== 0 || scrollY !== 0) {
+					var newCenter = mapBounds.getCenter();
+					newCenter.lng += scrollX;
+					newCenter.lat += scrollY;
+					var center = this._map.project(newCenter);
+					center = center.subtract(this._map.getSize().divideBy(2));
+					center.x = Math.round(center.x < 0 ? 0 : center.x);
+					center.y = Math.round(center.y < 0 ? 0 : center.y);
+					this._map.fire('scrollto', {x: center.x, y: center.y});
+				}
 			}
 
 			if (this._cellCursorMarker) {
