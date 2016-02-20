@@ -244,6 +244,7 @@ public:
             }
             break;
         case LOK_CALLBACK_PARTS_COUNT_CHANGED:
+            _session.sendTextFrame("partscountchanged: " + rPayload);
             break;
         }
     }
