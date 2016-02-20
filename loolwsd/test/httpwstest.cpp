@@ -17,7 +17,9 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
-
+#include <Poco/JSON/JSON.h>
+#include <Poco/JSON/Parser.h>
+#include <Poco/Dynamic/Var.h>
 #include <LOOLProtocol.hpp>
 #include <Common.hpp>
 #include <ChildProcessSession.hpp>
@@ -37,12 +39,14 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLargePaste);
     CPPUNIT_TEST(testRenderingOptions);
     CPPUNIT_TEST(testPasswordProtectedDocument);
+    CPPUNIT_TEST(testImpressPartCountChanged);
     CPPUNIT_TEST_SUITE_END();
 
     void testPaste();
     void testLargePaste();
     void testRenderingOptions();
     void testPasswordProtectedDocument();
+    void testImpressPartCountChanged();
 
     static
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
@@ -50,6 +54,11 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     static
     bool isDocumentLoaded(Poco::Net::WebSocket& socket);
 
+    static
+    void getResponseMessage(Poco::Net::WebSocket& socket,
+                            const std::string& prefix,
+                            std::string& response,
+                            const bool isLine);
 public:
     HTTPWSTest()
         : _uri("http://127.0.0.1:" + std::to_string(ClientPortNumber)),
@@ -284,6 +293,100 @@ void HTTPWSTest::testPasswordProtectedDocument()
     }
 }
 
+void HTTPWSTest::testImpressPartCountChanged()
+{
+    try
+    {
+        Poco::Net::WebSocket socket(_session, _request, _response);
+
+        // Load a document
+        const std::string documentPath = TDOC "/insert-delete.odp";
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        sendTextFrame(socket, "status");
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        std::string response;
+
+        // check total slides 1
+        sendTextFrame(socket, "status");
+        getResponseMessage(socket, "status:", response, true);
+        CPPUNIT_ASSERT_MESSAGE("failed command status: ", !response.empty());
+        {
+            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+
+            // Expected format is something like 'type= parts= current= width= height='.
+            const std::string prefix = "parts=";
+            const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
+            CPPUNIT_ASSERT_EQUAL(totalParts, 1);
+        }
+
+        // insert 10 slides
+        for(unsigned it = 1; it <= 10; it++)
+        {
+            sendTextFrame(socket, "uno .uno:InsertPage");
+            getResponseMessage(socket, "partscountchanged:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("failed command partscountchanged: ", !response.empty());
+            {
+                Poco::JSON::Parser parser;
+                Poco::Dynamic::Var result = parser.parse(response);
+                Poco::DynamicStruct values = *result.extract<Poco::JSON::Object::Ptr>();
+                CPPUNIT_ASSERT(values["action"] == "PartInserted");
+            }
+        }
+
+        // delete 10 slides
+        for(unsigned it = 1; it <= 10; it++)
+        {
+            sendTextFrame(socket, "uno .uno:DeletePage");
+            getResponseMessage(socket, "partscountchanged:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("failed command partscountchanged: ", !response.empty());
+            {
+                Poco::JSON::Parser parser;
+                Poco::Dynamic::Var result = parser.parse(response);
+                Poco::DynamicStruct values = *result.extract<Poco::JSON::Object::Ptr>();
+                CPPUNIT_ASSERT(values["action"] == "PartDeleted");
+            }
+        }
+
+        // undo delete slides
+        for(unsigned it = 1; it <= 10; it++)
+        {
+            sendTextFrame(socket, "uno .uno:Undo");
+            getResponseMessage(socket, "partscountchanged:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("failed command partscountchanged: ", !response.empty());
+            {
+                Poco::JSON::Parser parser;
+                Poco::Dynamic::Var result = parser.parse(response);
+                Poco::DynamicStruct values = *result.extract<Poco::JSON::Object::Ptr>();
+                CPPUNIT_ASSERT(values["action"] == "PartInserted");
+            }
+        }
+
+        // redo inserted slides
+        for(unsigned it = 1; it <= 10; it++)
+        {
+            sendTextFrame(socket, "uno .uno:Redo");
+            getResponseMessage(socket, "partscountchanged:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("failed command partscountchanged: ", !response.empty());
+            {
+                Poco::JSON::Parser parser;
+                Poco::Dynamic::Var result = parser.parse(response);
+                Poco::DynamicStruct values = *result.extract<Poco::JSON::Object::Ptr>();
+                CPPUNIT_ASSERT(values["action"] == "PartDeleted");
+            }
+        }
+
+        socket.shutdown();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+    }
+}
+
 void HTTPWSTest::sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
 {
     socket.sendFrame(string.data(), string.size());
@@ -312,7 +415,6 @@ bool HTTPWSTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
                     const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
                     const std::string prefixIndicator = "statusindicatorfinish:";
                     const std::string prefixStatus = "status:";
-                    std::cout << line << std::endl;
                     if (line.find(prefixIndicator) == 0 || line.find(prefixStatus) == 0)
                     {
                         isLoaded = true;
@@ -336,6 +438,50 @@ bool HTTPWSTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
     return isLoaded;
 }
 
+void HTTPWSTest::getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string& response, const bool isLine)
+{
+    try
+    {
+        int flags;
+        int bytes;
+        int retries = 10;
+        const Poco::Timespan waitTime(1000000);
+
+        response.clear();
+        ws.setReceiveTimeout(0);
+        do
+        {
+            char buffer[READ_BUFFER_SIZE];
+
+            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
+            {
+                bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
+                if (bytes > 0)
+                {
+                    const std::string message = isLine ?
+                                                LOOLProtocol::getFirstLine(buffer, bytes) :
+                                                std::string(buffer, bytes);
+
+                    if (message.find(prefix) == 0)
+                    {
+                        response = message.substr(prefix.length());
+                        break;
+                    }
+                }
+                retries = 10;
+            }
+            else
+            {
+                --retries;
+            }
+        }
+        while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    }
+    catch (const Poco::Net::WebSocketException& exc)
+    {
+        std::cout << exc.message();
+    }
+}
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
 
