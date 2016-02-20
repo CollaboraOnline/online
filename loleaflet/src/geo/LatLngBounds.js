@@ -151,6 +151,10 @@ L.LatLngBounds.prototype = {
 	}
 };
 
+L.LatLngBounds.createDefault = function() {
+	return new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+};
+
 //TODO International date line?
 
 L.latLngBounds = function (a, b) { // (LatLngBounds) or (LatLng, LatLng)
