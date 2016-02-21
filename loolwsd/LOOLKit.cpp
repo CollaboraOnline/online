@@ -768,6 +768,7 @@ void lokit_main(const std::string& childRoot,
 
     struct pollfd pollPipeBroker;
     ssize_t bytes = -1;
+    int   ready = 0;
     char  buffer[READ_BUFFER_SIZE];
     char* start = nullptr;
     char* end = nullptr;
@@ -923,7 +924,17 @@ void lokit_main(const std::string& childRoot,
                 pollPipeBroker.events = POLLIN;
                 pollPipeBroker.revents = 0;
 
-                if (poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS) < 0)
+                ready = poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS);
+                if (ready == 0)
+                {
+                    // time out maintenance
+                    for (auto it = _documents.cbegin(); it != _documents.cend(); )
+                    {
+                        it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
+                    }
+                }
+                else
+                if (ready < 0)
                 {
                     Log::error("Failed to poll pipe [" + pipe + "].");
                     continue;
@@ -965,15 +976,16 @@ void lokit_main(const std::string& childRoot,
                     response = std::to_string(Process::id()) + " ";
 
                     Log::trace("Recv: " + message);
+
+                    for (auto it = _documents.cbegin(); it != _documents.cend(); )
+                    {
+                        it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
+                    }
+
                     if (tokens[0] == "query" && tokens.count() > 1)
                     {
                         if (tokens[1] == "url")
                         {
-                            for (auto it = _documents.cbegin(); it != _documents.cend(); )
-                            {
-                                it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
-                            }
-
                             if (_documents.empty())
                             {
                                 response += "empty \r\n";
@@ -1001,7 +1013,7 @@ void lokit_main(const std::string& childRoot,
                     }
                     else
                     {
-                        response = "bad \r\n";
+                        response += "bad \r\n";
                     }
 
                     Log::trace("KitToBroker: " + response);
