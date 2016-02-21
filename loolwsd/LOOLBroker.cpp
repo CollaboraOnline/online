@@ -872,8 +872,17 @@ int main(int argc, char** argv)
             // No child processes
             if (errno == ECHILD)
             {
-                TerminationFlag = true;
-                continue;
+                if (childExitCode == Application::EXIT_OK)
+                {
+                    Log::warn("Warn: last child exited successfully, fork new one.");
+                    ++forkCounter;
+                }
+                else
+                {
+                    Log::error("Error: last child exited with error code.");
+                    TerminationFlag = true;
+                    continue;
+                }
             }
         }
 
