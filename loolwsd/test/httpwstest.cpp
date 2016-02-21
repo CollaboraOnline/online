@@ -391,7 +391,7 @@ bool HTTPWSTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
     {
         int flags;
         int bytes;
-        int retries = 5;
+        int retries = 10;
         const Poco::Timespan waitTime(1000000);
 
         ws.setReceiveTimeout(0);
@@ -413,7 +413,7 @@ bool HTTPWSTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
                         break;
                     }
                 }
-                retries = 5;
+                retries = 10;
             }
             else
             {

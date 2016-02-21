@@ -92,7 +92,7 @@ namespace
         {
             if (_pid != -1)
             {
-                if (kill(_pid, SIGTERM) != 0 && kill(_pid, 0) != 0)
+                if (kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
                     Log::warn("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
                _pid = -1;
             }
