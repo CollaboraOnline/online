@@ -50,14 +50,6 @@ public:
         // In that case, we can use a pool and index by publicPath.
         std::unique_lock<std::mutex> lock(DocumentURIMutex);
 
-        // Find the document if already open.
-        auto it = UriToDocumentURIMap.lower_bound(publicFilePath);
-        if (it != UriToDocumentURIMap.end() && it->first == publicFilePath)
-        {
-            Log::info("DocumentURI [" + it->first + "] found.");
-            return it->second;
-        }
-
         // The URL is the publicly visible one, not visible in the chroot jail.
         // We need to map it to a jailed path and copy the file there.
         auto uriJailed = uriPublic;
@@ -114,8 +106,7 @@ public:
         auto document = std::shared_ptr<DocumentURI>(new DocumentURI(uriPublic, uriJailed, childId));
 
         Log::info("DocumentURI [" + publicFilePath + "] created.");
-        it = UriToDocumentURIMap.emplace_hint(it, publicFilePath, document);
-        return it->second;
+        return document;
     }
 
     Poco::URI getPublicUri() const { return _uriPublic; }
@@ -136,7 +127,6 @@ private:
 
     // DocumentURI management mutex.
     static std::mutex DocumentURIMutex;
-    static std::map<std::string, std::shared_ptr<DocumentURI>> UriToDocumentURIMap;
 
 private:
     const Poco::URI _uriPublic;
