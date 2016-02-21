@@ -560,12 +560,12 @@ private:
                         self->setDocumentPassword(nType);
                         break;
                     }
-                }
 
-                // Ideally, there would be only one *live* connection at this point of time
-                // So, just get the first running one and break out.
-                // TODO: Find a better way to find the correct connection.
-                break;
+                    // Ideally, there would be only one *live* connection at this point of time
+                    // So, just get the first running one and break out.
+                    // TODO: Find a better way to find the correct connection.
+                    break;
+                }
             }
         }
     }
