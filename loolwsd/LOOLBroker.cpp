@@ -863,6 +863,14 @@ int main(int argc, char** argv)
                             << std::hex << status << "." << Log::end;
             }
 
+            if (WIFEXITED(status) || WIFSIGNALED(status))
+            {
+                // TODO. recovery files
+                const Path childPath = Path::forDirectory(childRoot + Path::separator() + std::to_string(pid));
+                Log::info("Removing jail [" + childPath.toString() + "].");
+                Util::removeFile(childPath, true);
+            }
+
             pipeHandler.syncChilds();
             timeoutCounter = 0;
         }
