@@ -1085,6 +1085,8 @@ extern "C"
                         " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
             }
             break;
+        case LOK_CALLBACK_PARTS_COUNT_CHANGED:
+            break;
         }
     }
 }
