@@ -769,6 +769,7 @@ void lokit_main(const std::string& childRoot,
     struct pollfd pollPipeBroker;
     ssize_t bytes = -1;
     int   ready = 0;
+    bool  isDirtyKit = false;
     char  buffer[READ_BUFFER_SIZE];
     char* start = nullptr;
     char* end = nullptr;
@@ -932,6 +933,9 @@ void lokit_main(const std::string& childRoot,
                     {
                         it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
                     }
+
+                    if (isDirtyKit && _documents.empty())
+                        TerminationFlag = true;
                 }
                 else
                 if (ready < 0)
@@ -982,7 +986,12 @@ void lokit_main(const std::string& childRoot,
                         it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
                     }
 
-                    if (tokens[0] == "query" && tokens.count() > 1)
+                    if (isDirtyKit && _documents.empty())
+                    {
+                        TerminationFlag = true;
+                        response += "down \r\n";
+                    }
+                    else if (tokens[0] == "query" && tokens.count() > 1)
                     {
                         if (tokens[1] == "url")
                         {
@@ -1009,6 +1018,7 @@ void lokit_main(const std::string& childRoot,
                             it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit, jailId, url));
 
                         it->second->createSession(sessionId, intSessionId);
+                        isDirtyKit = true;
                         response += "ok \r\n";
                     }
                     else
