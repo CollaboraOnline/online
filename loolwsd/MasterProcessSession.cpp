@@ -84,7 +84,7 @@ bool MasterProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
     auto peer = _peer.lock();
     if (peer)
     {
-        const auto reason = (tokens.count() > 1 ? tokens[1] : std::string());
+        const auto reason = (tokens.count() > 1 ? Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) : "");
         peer->disconnect(reason);
     }
 
