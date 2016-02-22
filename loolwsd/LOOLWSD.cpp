@@ -348,7 +348,7 @@ private:
                     auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
                     const std::string filePrefix("file://");
                     std::string encodedFrom;
-                    URI::encode(filePrefix + fromPath, std::string(), encodedFrom);
+                    URI::encode(filePrefix + fromPath, "", encodedFrom);
                     const std::string load = "load url=" + encodedFrom;
                     session->handleInput(load.data(), load.size());
 
@@ -357,7 +357,7 @@ private:
                     toPath.setExtension(format);
                     std::string toJailURL = filePrefix + JailedDocumentRoot + toPath.getFileName();
                     std::string encodedTo;
-                    URI::encode(toJailURL, std::string(), encodedTo);
+                    URI::encode(toJailURL, "", encodedTo);
                         std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
                     session->handleInput(saveas.data(), saveas.size());
 
