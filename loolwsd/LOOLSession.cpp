@@ -171,7 +171,10 @@ void LOOLSession::disconnect(const std::string& reason)
 {
     if (!_disconnected)
     {
-        sendTextFrame("disconnect " + reason);
+        if (reason != "")
+            sendTextFrame("disconnect " + reason);
+        else
+            sendTextFrame("disconnect");
         _disconnected = true;
         Util::shutdownWebSocket(_ws);
     }
