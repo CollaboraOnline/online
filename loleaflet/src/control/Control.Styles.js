@@ -30,6 +30,23 @@ L.Control.Styles = L.Control.extend({
 		item.innerHTML = '&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;';
 	},
 
+	_toLocaleStyle: function(text) {
+		var locale = new String(String.locale);
+		String.locale = 'libreoffice';
+		var uiName = text.toLocaleString();
+		String.locale = locale.toString();
+		var localeStyle;
+
+		if (uiName.startsWith('Outline')) {
+			var outlineLevel = uiName.split('Outline')[1];
+			localeStyle = 'Outline'.toLocaleString() + outlineLevel;
+		} else {
+			localeStyle = uiName.toLocaleString();
+		}
+
+		return localeStyle;
+	},
+
 	_initList: function (e) {
 		if (e.commandName === '.uno:StyleApply') {
 			var container = this._container;
@@ -52,42 +69,35 @@ L.Control.Styles = L.Control.extend({
 			else if (this._map.getDocType() === 'spreadsheet') {
 				styles = e.commandValues.CellStyles;
 			}
+			var styleFunc = this._toLocaleStyle;
 
 			var commands = e.commandValues.Commands;
 			if (commands && commands.length > 0) {
 				this._addSeparator();
+
 				commands.forEach(function (command) {
 					var item = L.DomUtil.create('option', '', container);
 					item.value = command.id;
-					item.innerHTML = command.text.toLocaleString();
-				});
+					item.innerHTML = styleFunc(command.text);
+				}, styleFunc);
 			}
 
 			if (topStyles.length > 0) {
 				this._addSeparator();
-
 				topStyles.forEach(function (style) {
 					var item = L.DomUtil.create('option', '', container);
 					item.value = style;
-					item.innerHTML = style.toLocaleString();
-				});
+					item.innerHTML = styleFunc(style);
+				}, styleFunc);
 			}
 
 			if (styles.length > 0) {
 				this._addSeparator();
-
 				styles.forEach(function (style) {
 					var item = L.DomUtil.create('option', '', container);
 					item.value = style;
-
-					if (style.startsWith('Outline')) {
-						var outlineLevel = style.split('Outline')[1];
-						var localeString = 'Outline'.toLocaleString() + outlineLevel;
-						item.innerHTML = localeString;
-					} else {
-						item.innerHTML = style.toLocaleString();
-					}
-				});
+					item.innerHTML = styleFunc(style);
+				}, styleFunc);
 			}
 		}
 	},

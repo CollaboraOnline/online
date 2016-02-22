@@ -1,4 +1,5 @@
 {
+    "libreoffice": "/loleaflet/dist/l10n/styles/libreoffice-styles.json",
     "en": false,
     "ab": "/loleaflet/dist/l10n/styles/ab.json",
     "af": "/loleaflet/dist/l10n/styles/af.json",
