@@ -106,7 +106,7 @@ void HTTPWSTest::testPaste()
         {
             char buffer[READ_BUFFER_SIZE];
             n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            if (n > 0)
+            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
             {
                 const std::string line = LOOLProtocol::getFirstLine(buffer, n);
                 const std::string prefix = "textselectioncontent: ";
@@ -160,7 +160,7 @@ void HTTPWSTest::testLargePaste()
         {
             char buffer[READ_BUFFER_SIZE];
             n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            if (n > 0)
+            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
             {
                 std::string line = LOOLProtocol::getFirstLine(buffer, n);
                 std::string prefix = "textselectioncontent: ";
@@ -198,7 +198,7 @@ void HTTPWSTest::testRenderingOptions()
         {
             char buffer[READ_BUFFER_SIZE];
             n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            if (n > 0)
+            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
             {
                 std::string line = LOOLProtocol::getFirstLine(buffer, n);
                 std::string prefix = "status: ";
@@ -402,7 +402,7 @@ bool HTTPWSTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                if (bytes > 0)
+                if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
                     const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
                     const std::string prefixIndicator = "statusindicatorfinish:";
@@ -448,7 +448,7 @@ void HTTPWSTest::getResponseMessage(Poco::Net::WebSocket& ws, const std::string&
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                if (bytes > 0)
+                if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
                     const std::string message = isLine ?
                                                 LOOLProtocol::getFirstLine(buffer, bytes) :
