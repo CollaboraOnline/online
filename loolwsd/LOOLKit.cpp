@@ -396,7 +396,7 @@ public:
         }
 
         Log::info() << "Creating " << (_clientViews ? "new" : "first")
-                    << " view for url: " << _url << "for thread: " << sessionId
+                    << " view for url: " << _url << " for thread: " << sessionId
                     << " on child: " << _jailId << Log::end;
 
         // Open websocket connection between the child process and the
