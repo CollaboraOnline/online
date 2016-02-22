@@ -84,7 +84,7 @@ void LOOLSession::sendTextFrame(const std::string& text)
 {
     if (!_ws)
     {
-        Log::error("Error: No socket to send to.");
+        Log::error("Error: No socket to send " + getAbbreviatedMessage(text.c_str(), text.size()) + " to.");
         return;
     }
     else
@@ -105,7 +105,7 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
     if (!_ws)
     {
-        Log::error("Error: No socket to send to.");
+        Log::error("Error: No socket to send binary frame of " + std::to_string(length) + " bytes to.");
         return;
     }
     else
