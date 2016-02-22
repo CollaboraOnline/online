@@ -11,18 +11,27 @@
 	bottom: 0;
 	position: absolute;
 	cursor: pointer;
+	height: 20px;
+	width: 90%;
+	overflow-x: hidden;
+	white-space: nowrap;
 	}
 
+.spreadsheet-tab-scroll {
+	width: 90%;
+	overflow-x: auto;
+	}
+
+
 .spreadsheet-tab li {
-	float: left;
-	list-style: none;
 	margin: 0;
 	padding: 0;
 	margin-left: 2px;
 	}
 
+
 .spreadsheet-tab li {
-	display: block;
+	display: inline-block;
 	border: #B9B9B9 1px solid;
 	background: #A8A8A8;
 	color: #FFFFFF;

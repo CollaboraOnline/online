@@ -104,6 +104,18 @@ $(function () {
 			onClick(e.target);
 		}
 	});
+	$('#spreadsheet-toolbar').w2toolbar({
+		name: 'spreadsheet-toolbar',
+		items: [
+			{ type: 'button',  id: 'firstrecord',  img: 'firstrecord', hint: _("First Sheet") },
+			{ type: 'button',  id: 'prevrecord',  img: 'prevrecord', hint: _("Previous Sheet") },
+			{ type: 'button',  id: 'nextrecord',  img: 'nextrecord', hint: _("Next Sheet") },
+			{ type: 'button',  id: 'lastrecord',  img: 'lastrecord', hint: _("Last Sheet") }
+		],
+		onClick: function (e) {
+			onClick(e.target);
+		}
+	});
 	$('#toolbar-down').w2toolbar({
 		name: 'toolbar-down',
 		items: [
@@ -137,6 +149,7 @@ $(function () {
 			onClick(e.target);
 		}
 	});
+
 	$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
 	$("#fontColorPicker").on("change.color", onColorPick);
 	$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
@@ -174,6 +187,10 @@ function onClick(id) {
 	}
 	else if (w2ui['toolbar-down'].get(id) !== null) {
 		toolbar = w2ui['toolbar-down'];
+		item = toolbar.get(id) ;
+	}
+	else if (w2ui['spreadsheet-toolbar'].get(id) !== null) {
+		toolbar = w2ui['spreadsheet-toolbar'];
 		item = toolbar.get(id) ;
 	}
 	else if (id.indexOf(':') >= 0) {
@@ -285,6 +302,19 @@ function onClick(id) {
 			message: _("Are you sure you want to delete this page?"),
 			callback: onDelete
 		});
+	}
+	else if (id === 'firstrecord') {
+		$('#spreadsheet-tab-scroll').scrollLeft(0);
+	}
+	// TODO: We should get visible tab's width instead of 60px
+	else if (id === 'nextrecord') {
+		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft()+60);
+	}
+	else if (id === 'prevrecord') {
+		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft()-60);
+	}
+	else if (id === 'lastrecord') {
+		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').prop("scrollWidth"));
 	}
 	else if (id.startsWith('menu:file:downloadas-')) {
 		var format = id.substring('menu:file:downloadas-'.length);
@@ -730,6 +760,14 @@ map.on('updateparts pagenumberchanged', function (e) {
 		toolbar.hide('incrementindent');
 		toolbar.hide('decrementindent');
 		toolbar.hide('incdecindent');
+	}
+
+	var toolbar = w2ui['spreadsheet-toolbar'];
+	if (e.docType !== 'spreadsheet') {
+		toolbar.hide('firstrecord');
+		toolbar.hide('nextrecord');
+		toolbar.hide('prevrecord');
+		toolbar.hide('lastrecord');
 	}
 });
 

@@ -9,6 +9,7 @@ L.Control.Tabs = L.Control.extend({
 		this._spreadsheetTabs = {};
 		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tab', docContainer.parentElement);
+		this._tabsCont.id = 'spreadsheet-tab';
 
 		$.contextMenu({
 			selector: '.spreadsheet-context-menu',
@@ -79,9 +80,12 @@ L.Control.Tabs = L.Control.extend({
 				while (this._tabsCont.firstChild) {
 					this._tabsCont.removeChild(this._tabsCont.firstChild);
 				}
+				var ssTabScroll = L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
+				ssTabScroll.id = 'spreadsheet-tab-scroll';
+
 				for (var i = 0; i < parts; i++) {
 					var id = 'spreadsheet-tab' + i;
-					var tab = L.DomUtil.create('li', 'spreadsheet-context-menu', this._tabsCont);
+					var tab = L.DomUtil.create('li', 'spreadsheet-context-menu', ssTabScroll);
 					tab.innerHTML = e.partNames[i];
 					tab.id = id;
 

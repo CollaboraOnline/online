@@ -68,7 +68,7 @@
     <div id="document-container">
         <div id="map"></div>
     </div>
-
+    <div id="spreadsheet-toolbar"></div>
     <div id="toolbar-down"></div>
     <style type="text/css">
         #toolbar-up {
@@ -96,6 +96,15 @@
             z-index: 8000;
             display: none;
         }
+
+        #spreadsheet-toolbar {
+            left: 0;
+            text-align: center;
+            bottom: 29px;
+            padding: 0;
+            position: absolute;
+        }
+
 
         #zoomlevel {
             min-width: 36px;
@@ -151,12 +160,13 @@
             bottom: 49px !important;
         }
 
-	.spreadsheet-header-rows-container {
-            bottom: 49px;
+        .spreadsheet-header-rows-container {
+            bottom: 54px;
         }
 
         .spreadsheet-tab {
-            bottom: 29px;
+            left: 108px;
+            bottom: 34px;
         }
 
         /* select box */
@@ -231,6 +241,10 @@
         .w2ui-icon.zoomout{ background: url('/loleaflet/dist/images/sc_zoomout.png') no-repeat center !important; }
         .w2ui-icon.zoomreset{ background: url('/loleaflet/dist/images/sc_view100.png') no-repeat center !important; }
         .w2ui-icon.more{ background: url('/loleaflet/dist/images/sc_next.png') no-repeat center !important; }
+        .w2ui-icon.firstrecord{ background: url('/loleaflet/dist/images/sc_firstrecord.png') no-repeat center !important; }
+        .w2ui-icon.nextrecord{ background: url('/loleaflet/dist/images/sc_nextrecord.png') no-repeat center !important; }
+        .w2ui-icon.prevrecord{ background: url('/loleaflet/dist/images/sc_prevrecord.png') no-repeat center !important; }
+        .w2ui-icon.lastrecord{ background: url('/loleaflet/dist/images/sc_lastrecord.png') no-repeat center !important; }
 
 	#simplemodal-container a.modalCloseImg {
 		background:url('/loleaflet/dist/images/sc_closedoc.png') no-repeat;
