@@ -21,8 +21,6 @@
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Buffer.h>
 #include <Poco/Path.h>
-#include <Poco/Process.h>
-#include <Poco/Random.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Types.h>
 #include <Poco/Net/HTTPServer.h>
@@ -39,8 +37,6 @@ using namespace LOOLProtocol;
 
 using Poco::Exception;
 using Poco::File;
-using Poco::IOException;
-using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
 using Poco::Net::HTTPRequestHandlerFactory;
@@ -50,30 +46,12 @@ using Poco::Net::HTTPServerParams;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::ServerSocket;
-using Poco::Net::SocketAddress;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Path;
-using Poco::Process;
 using Poco::Runnable;
 using Poco::StringTokenizer;
-using Poco::Thread;
-using Poco::ThreadPool;
-using Poco::Util::Application;
-using Poco::Util::HelpFormatter;
-using Poco::Util::IncompatibleOptionsException;
-using Poco::Util::MissingOptionException;
-using Poco::Util::Option;
-using Poco::Util::OptionSet;
-using Poco::Util::ServerApplication;
-using Poco::Net::DialogSocket;
-using Poco::FastMutex;
 using Poco::Net::Socket;
-using Poco::ThreadLocal;
-using Poco::Random;
-using Poco::NamedMutex;
-using Poco::ProcessHandle;
-using Poco::URI;
 
 /// Handle admin requests.
 class AdminRequestHandler: public HTTPRequestHandler
@@ -224,7 +202,7 @@ public:
 };
 
 /// An admin command processor.
-class Admin : public Poco::Runnable
+class Admin : public Runnable
 {
 public:
     Admin(const int brokerPipe) :

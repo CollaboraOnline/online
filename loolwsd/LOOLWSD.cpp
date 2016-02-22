@@ -91,10 +91,8 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Mutex.h>
-#include <Poco/Net/DialogSocket.h>
 #include <Poco/Net/Net.h>
 #include <Poco/ThreadLocal.h>
-#include <Poco/NamedMutex.h>
 #include <Poco/FileStream.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/StreamCopier.h>
@@ -145,12 +143,9 @@ using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
-using Poco::Net::DialogSocket;
-using Poco::FastMutex;
 using Poco::Net::Socket;
 using Poco::ThreadLocal;
 using Poco::Random;
-using Poco::NamedMutex;
 using Poco::ProcessHandle;
 using Poco::URI;
 

@@ -19,8 +19,6 @@
 #include <Poco/Timestamp.h>
 #include <Poco/Mutex.h>
 
-using Poco::FastMutex;
-
 /** Handles the cache for tiles of one document.
 
 The cache consists of 2 cache directories:

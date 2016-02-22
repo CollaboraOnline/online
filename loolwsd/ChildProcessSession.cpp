@@ -235,9 +235,9 @@ public:
             break;
         case LOK_CALLBACK_ERROR:
             {
-                Poco::JSON::Parser parser;
+                Parser parser;
                 Poco::Dynamic::Var var = parser.parse(rPayload);
-                Poco::JSON::Object::Ptr object = var.extract<Poco::JSON::Object::Ptr>();
+                Object::Ptr object = var.extract<Object::Ptr>();
 
                 _session.sendTextFrame("error: cmd=" + object->get("cmd").toString() +
                         " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
@@ -583,9 +583,9 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     std::string renderingOptions;
     if (!_docOptions.empty())
     {
-        Poco::JSON::Parser parser;
+        Parser parser;
         Poco::Dynamic::Var var = parser.parse(_docOptions);
-        Poco::JSON::Object::Ptr object = var.extract<Poco::JSON::Object::Ptr>();
+        Object::Ptr object = var.extract<Object::Ptr>();
         renderingOptions = object->get("rendering").toString();
     }
 

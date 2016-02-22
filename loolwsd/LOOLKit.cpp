@@ -29,18 +29,15 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Thread.h>
-#include <Poco/ThreadPool.h>
 #include <Poco/ThreadLocal.h>
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Exception.h>
 #include <Poco/Process.h>
 #include <Poco/Environment.h>
-#include <Poco/NotificationQueue.h>
-#include <Poco/Notification.h>
 #include <Poco/Mutex.h>
-#include <Poco/Util/ServerApplication.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Util/Application.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -63,9 +60,6 @@ using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Exception;
 using Poco::Process;
-using Poco::Notification;
-using Poco::NotificationQueue;
-using Poco::FastMutex;
 using Poco::Util::Application;
 using Poco::File;
 using Poco::Path;

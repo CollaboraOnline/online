@@ -10,7 +10,6 @@
 #include <Poco/FileStream.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/Process.h>
 #include <Poco/URI.h>
 #include <Poco/URIStreamOpener.h>
 
@@ -24,12 +23,8 @@
 
 using namespace LOOLProtocol;
 
-using Poco::Net::SocketAddress;
-using Poco::Net::WebSocket;
 using Poco::Path;
-using Poco::Process;
 using Poco::StringTokenizer;
-using Poco::UInt64;
 
 std::map<std::string, std::shared_ptr<MasterProcessSession>> MasterProcessSession::AvailableChildSessions;
 std::mutex MasterProcessSession::AvailableChildSessionMutex;

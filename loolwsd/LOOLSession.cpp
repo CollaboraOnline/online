@@ -28,26 +28,15 @@
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-#include <Poco/Dynamic/Var.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
-#include <Poco/Net/HTTPStreamFactory.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
-#include <Poco/Process.h>
-#include <Poco/Random.h>
-#include <Poco/StreamCopier.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/ThreadLocal.h>
 #include <Poco/URI.h>
-#include <Poco/URIStreamOpener.h>
 #include <Poco/Exception.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/DialogSocket.h>
-#include <Poco/Net/SocketAddress.h>
 #include <Poco/FileStream.h>
 
 #include "Common.hpp"
@@ -58,28 +47,13 @@
 
 using namespace LOOLProtocol;
 
-using Poco::Dynamic::Var;
 using Poco::File;
-using Poco::IOException;
-using Poco::JSON::Object;
-using Poco::JSON::Parser;
-using Poco::Net::HTTPStreamFactory;
 using Poco::Net::WebSocket;
 using Poco::Path;
-using Poco::Process;
-using Poco::ProcessHandle;
-using Poco::Random;
-using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::Thread;
-using Poco::ThreadLocal;
-using Poco::UInt64;
 using Poco::URI;
-using Poco::URIStreamOpener;
 using Poco::Exception;
-using Poco::Net::DialogSocket;
-using Poco::Net::SocketAddress;
-using Poco::Net::WebSocketException;
 
 LOOLSession::LOOLSession(const std::string& id, const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws) :
