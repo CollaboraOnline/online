@@ -425,12 +425,20 @@ function updateFontSizeList (font) {
 	data = data.concat(map.getToolbarCommandValues('.uno:CharFontName')[font]);
 	$(".fontsizes-select").select2({
 		data: data,
-		placeholder: _("Size")
+		placeholder: _("Size"),
+		//Allow manually entered font size.
+		createTag:function(query) {
+			return {
+				id: query.term,
+				text: query.term,
+				tag: true
+			}
+		},
+		tags: true,
 	});
-	$(".fontsizes-select option").each(function () {
-		value = this.value;
-		if (value == oldSize) {
-			$(".fontsizes-select").val(value).trigger('change');
+	$(".fontsizes-select option").each(function (i, e) {
+		if ($(e).text() == oldSize) {
+			$(".fontsizes-select").val(oldSize).trigger('change');
 			found = true;
 			return;
 		}
@@ -442,6 +450,24 @@ function updateFontSizeList (font) {
 			.text(oldSize));
 	}
 	$(".fontsizes-select").val(oldSize).trigger('change');
+	sortFontSizes();
+}
+
+function sortFontSizes() {
+	var oldVal = $('.fontsizes-select').val();
+	var selectList = $('.fontsizes-select option');
+	selectList.sort(function (a,b){
+		a = parseFloat($(a).text() * 1);
+		b = parseFloat($(b).text() * 1);
+		if(a > b) {
+		    return 1;
+		} else if (a < b) {
+		    return -1;
+		}
+		return 0;
+	});
+	$('.fontsizes-select').html(selectList);
+	$('.fontsizes-select').val(oldVal).trigger('change');
 }
 
 function onFontSelect (e) {
@@ -453,6 +479,7 @@ function onFontSelect (e) {
 
 function onFontSizeSelect (e) {
 	var size = e.target.value;
+	$(e.target).find('option[data-select2-tag]').removeAttr('data-select2-tag');
 	map.applyFontSize(size);
 		fontcolor = map.getDocType() === 'text' ? 'FontColor' : 'Color';
 		command[fontcolor] = {};
@@ -608,8 +635,8 @@ map.on('commandstatechanged', function (e) {
 		if (state === '0') {
 			state = '';
 		}
-		$(".fontsizes-select option").each(function () {
-			if (e == state) {
+		$(".fontsizes-select option").each(function (i, e) {
+			if ($(e).text() == state) {
 				found = true;
 				return;
 			}
@@ -618,9 +645,10 @@ map.on('commandstatechanged', function (e) {
 			// we need to add the size
 			$('.fontsizes-select')
 				.append($("<option></option>")
-				.text(state));
+				.text(state).val(state));
 		}
 		$(".fontsizes-select").val(state).trigger('change');
+		sortFontSizes();
 	}
 	else if (commandName === '.uno:FontColor' || commandName === '.uno:Color') {
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
