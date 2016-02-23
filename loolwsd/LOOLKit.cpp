@@ -324,6 +324,7 @@ public:
         _docPasswordType(PasswordType::ToView),
         _clientViews(0)
     {
+        (void)_isDocLoaded; // FIXME LOOLBroker.cpp includes LOOLKit.cpp
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
     }
