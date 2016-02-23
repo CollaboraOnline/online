@@ -108,6 +108,7 @@ void HTTPWSTest::testPaste()
             n = socket.receiveFrame(buffer, sizeof(buffer), flags);
             if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
             {
+                std::cerr << "Received message length " << n << ": " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
                 const std::string line = LOOLProtocol::getFirstLine(buffer, n);
                 const std::string prefix = "textselectioncontent: ";
                 if (line.find(prefix) == 0)
@@ -162,6 +163,7 @@ void HTTPWSTest::testLargePaste()
             n = socket.receiveFrame(buffer, sizeof(buffer), flags);
             if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
             {
+                std::cerr << "Received message length " << n << ": " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
                 std::string line = LOOLProtocol::getFirstLine(buffer, n);
                 std::string prefix = "textselectioncontent: ";
                 if (line.find(prefix) == 0)
@@ -200,6 +202,7 @@ void HTTPWSTest::testRenderingOptions()
             n = socket.receiveFrame(buffer, sizeof(buffer), flags);
             if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
             {
+                std::cerr << "Received message length " << n << ": " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
                 std::string line = LOOLProtocol::getFirstLine(buffer, n);
                 std::string prefix = "status: ";
                 if (line.find(prefix) == 0)
@@ -404,6 +407,7 @@ bool HTTPWSTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
+                    std::cerr << "Received message length " << bytes << ": " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << '\n';
                     const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
                     const std::string prefixIndicator = "statusindicatorfinish:";
                     const std::string prefixStatus = "status:";
@@ -450,6 +454,7 @@ void HTTPWSTest::getResponseMessage(Poco::Net::WebSocket& ws, const std::string&
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
+                    std::cerr << "Received message length " << bytes << ": " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << '\n';
                     const std::string message = isLine ?
                                                 LOOLProtocol::getFirstLine(buffer, bytes) :
                                                 std::string(buffer, bytes);
