@@ -42,7 +42,7 @@ public:
         return uri;
     }
 
-    bool restoreFileToURI(const std::string& path, const std::string& uri)
+    bool restoreFileToURI(const std::string& path, const std::string& uri) override
     {
         // Nothing to do.
         (void)path;
@@ -67,7 +67,7 @@ public:
         return uri;
     }
 
-    bool restoreFileToURI(const std::string& path, const std::string& uri)
+    bool restoreFileToURI(const std::string& path, const std::string& uri) override
     {
         // TODO: implement webdav PUT.
         (void)path;
