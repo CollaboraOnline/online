@@ -584,6 +584,8 @@ static int createLibreOfficeKit(const bool sharePages,
     if (fifoWriter < 0)
     {
         Log::error("Error: failed to open write pipe [" + pipeKit + "] with kit. Abandoning child.");
+        // This is an elaborate way to send a SIGINT to childPID: Construct and immediately destroy
+        // a ChildProcess object for it.
         ChildProcess(childPID, -1, -1);
         return -1;
     }
