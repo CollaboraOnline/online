@@ -38,7 +38,7 @@ static std::string loolkitPath;
 static std::atomic<unsigned> forkCounter;
 static std::chrono::steady_clock::time_point lastMaintenanceTime = std::chrono::steady_clock::now();
 static unsigned int childCounter = 0;
-static signed numPreSpawnedChildren = 0;
+static int numPreSpawnedChildren = 0;
 
 static std::recursive_mutex forkMutex;
 
@@ -611,7 +611,7 @@ static int createLibreOfficeKit(const bool sharePages,
     return childPID;
 }
 
-static bool waitForTerminationChild(const Process::PID pid, signed count = CHILD_TIMEOUT_SECS)
+static bool waitForTerminationChild(const Process::PID pid, int count = CHILD_TIMEOUT_SECS)
 {
     while (count-- > 0)
     {
@@ -902,12 +902,12 @@ int main(int argc, char** argv)
         {
             std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
-            const signed empty = pipeHandler.syncChilds();
-            const signed total = _childProcesses.size();
+            const int empty = pipeHandler.syncChilds();
+            const int total = _childProcesses.size();
 
             // Figure out how many children we need. Always create at least as many
             // as configured pre-spawn or one more than requested (whichever is larger).
-            signed spawn = std::max(static_cast<int>(forkCounter) + 1, numPreSpawnedChildren);
+            int spawn = std::max(static_cast<int>(forkCounter) + 1, numPreSpawnedChildren);
             Log::debug() << "Creating " << spawn << " childs. Current Total: "
                          << total << ", Empty: " << empty << Log::end;
             do

@@ -754,8 +754,8 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
 
 void MasterProcessSession::dispatchChild()
 {
-    short nRequest = 3;
-    bool  bFound = false;
+    int nRequest = 3;
+    bool bFound = false;
 
     if (_bShutdown)
         return;

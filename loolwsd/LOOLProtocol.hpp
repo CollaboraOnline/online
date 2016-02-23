@@ -76,7 +76,7 @@ namespace LOOLProtocol
 
     // Parse a string into a version tuple.
     // Negative numbers for error.
-    std::tuple<signed, signed, std::string> ParseVersion(const std::string& version);
+    std::tuple<int, int, std::string> ParseVersion(const std::string& version);
 
     bool stringToInteger(const std::string& input, int& value);
 	

@@ -23,10 +23,10 @@ using Poco::StringTokenizer;
 
 namespace LOOLProtocol
 {
-    std::tuple<signed, signed, std::string> ParseVersion(const std::string& version)
+    std::tuple<int, int, std::string> ParseVersion(const std::string& version)
     {
-        signed major = -1;
-        signed minor = -1;
+        int major = -1;
+        int minor = -1;
         std::string patch;
 
         StringTokenizer firstTokens(version, ".", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
