@@ -486,7 +486,6 @@ static int createLibreOfficeKit(const bool sharePages,
 {
     Process::PID childPID;
     int fifoWriter = -1;
-    int flags = O_WRONLY | O_NONBLOCK;
 
     const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
     const std::string pipeKit = Path(pipePath, BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX).toString();
@@ -567,9 +566,9 @@ static int createLibreOfficeKit(const bool sharePages,
             fifoCV.wait_for(
                 lock,
                 std::chrono::microseconds(80000),
-                [&fifoWriter, &pipeKit, flags]
+                [&fifoWriter, &pipeKit]
                 {
-                    return (fifoWriter = open(pipeKit.c_str(), flags)) >= 0;
+                    return (fifoWriter = open(pipeKit.c_str(), O_WRONLY | O_NONBLOCK)) >= 0;
                 });
 
             if (fifoWriter < 0)
@@ -590,6 +589,7 @@ static int createLibreOfficeKit(const bool sharePages,
         return -1;
     }
 
+    int flags;
     if ((flags = fcntl(fifoWriter, F_GETFL, 0)) < 0)
     {
         Log::error("Error: failed to get pipe flags [" + pipeKit + "].");
