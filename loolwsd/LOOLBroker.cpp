@@ -553,6 +553,8 @@ static int createLibreOfficeKit(const bool sharePages,
     // block the loolbroker forever
     {
         int retries = 5;
+        // Note that the use of a condition variable and mutex here is totally pointless as far as I
+        // see. There is no code that would notify the condition variable.
         std::mutex fifoMutex;
         std::condition_variable fifoCV;
         std::unique_lock<std::mutex> lock(fifoMutex);
