@@ -92,7 +92,7 @@ public:
             {
                 char buffer[100000];
                 n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
-                if (n > 0)
+                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
 #if 0
                     Log::debug() << "Client got " << n << " bytes: "
@@ -112,7 +112,8 @@ public:
                         Log::debug() << "Client got " << n << " bytes: "
                                      << getAbbreviatedMessage(largeBuffer, n) << Log::end;
 #endif
-                        response = getFirstLine(buffer, n);
+                        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+                            response = getFirstLine(largeBuffer, n);
                     }
                     else if (tokens[0] == "loolclient")
                     {

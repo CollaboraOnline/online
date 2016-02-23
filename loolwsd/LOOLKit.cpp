@@ -224,7 +224,7 @@ public:
             {
                 char buffer[1024];
                 n = _ws->receiveFrame(buffer, sizeof(buffer), flags);
-                if (n > 0)
+                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     std::string firstLine = getFirstLine(buffer, n);
                     if (firstLine == "eof")

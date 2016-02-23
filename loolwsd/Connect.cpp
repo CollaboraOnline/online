@@ -76,7 +76,7 @@ public:
             {
                 char buffer[100000];
                 n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
-                if (n > 0)
+                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     std::cout << "Got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) << std::endl;
 

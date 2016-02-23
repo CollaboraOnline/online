@@ -232,7 +232,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                                 << std::hex << flags << Log::end;
                     break;
                 }
-                else
+                else if ((flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     assert(n > 0);
                     const std::string firstLine = getFirstLine(buffer, n);
@@ -252,6 +252,10 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                         while (true)
                         {
                             n = ws->receiveFrame(buffer, sizeof(buffer), flags);
+
+                            if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
+                                break;
+
                             message.insert(message.end(), buffer, buffer + n);
                             if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) == WebSocket::FrameFlags::FRAME_FLAG_FIN)
                             {
@@ -272,7 +276,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                         char largeBuffer[size];     //FIXME: Security risk! Flooding may segfault us.
 
                         n = ws->receiveFrame(largeBuffer, size, flags);
-                        if (n > 0 && !handler(largeBuffer, n, false))
+                        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && !handler(largeBuffer, n, false))
                         {
                             Log::info("Socket handler flagged for finishing.");
                             break;
@@ -679,7 +683,7 @@ public:
             {
                 char buffer[200000];
                 n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
-                if (n > 0)
+                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     Log::trace() << "Client got " << n << " bytes: "
                                  << getAbbreviatedMessage(buffer, n) << Log::end;
