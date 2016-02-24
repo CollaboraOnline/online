@@ -970,6 +970,35 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
+    // Open notify pipe
+    int pipeFlags = O_RDONLY | O_NONBLOCK;
+    int notifyPipe = -1;
+    const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
+    if (mkfifo(pipeNotify.c_str(), 0666) < 0 && errno != EEXIST)
+    {
+        Log::error("Error: Failed to create pipe FIFO [" + FIFO_NOTIFY + "].");
+        exit(Application::EXIT_SOFTWARE);
+    }
+
+    if ((notifyPipe = open(pipeNotify.c_str(), pipeFlags) ) < 0)
+    {
+        Log::error("Error: pipe opened for reading.");
+        exit(Application::EXIT_SOFTWARE);
+    }
+
+    if ((pipeFlags = fcntl(notifyPipe, F_GETFL, 0)) < 0)
+    {
+        Log::error("Error: failed to get pipe flags [" + FIFO_NOTIFY + "].");
+        exit(Application::EXIT_SOFTWARE);
+    }
+
+    pipeFlags &= ~O_NONBLOCK;
+    if (fcntl(notifyPipe, F_SETFL, pipeFlags) < 0)
+    {
+        Log::error("Error: failed to set pipe flags [" + FIFO_NOTIFY + "].");
+        exit(Application::EXIT_SOFTWARE);
+    }
+
     const Process::PID brokerPid = createBroker();
     if (brokerPid < 0)
     {
@@ -1004,15 +1033,15 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     srv2.start();
 
-    // Start the Admin manager.
-    Admin admin(BrokerWritePipe);
-    threadPool.start(admin);
-
     if ( (BrokerWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
     {
         Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] write only.");
         return Application::EXIT_SOFTWARE;
     }
+
+    // Start the Admin manager.
+    Admin admin(BrokerWritePipe, notifyPipe);
+    threadPool.start(admin);
 
     TestInput input(*this, svs, srv);
     Thread inputThread;

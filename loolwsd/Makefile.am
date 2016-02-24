@@ -29,7 +29,7 @@ loolmap_SOURCES = loolmap.c
 
 noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessSession.hpp ChildProcessSession.hpp \
                  LOOLWSD.hpp LoadTest.hpp MessageQueue.hpp TileCache.hpp Util.hpp Png.hpp Common.hpp Capabilities.hpp \
-                 Rectangle.hpp QueueHandler.hpp Admin.hpp Auth.hpp Storage.hpp \
+                 Rectangle.hpp QueueHandler.hpp Admin.hpp Auth.hpp Storage.hpp AdminModel.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h
 
