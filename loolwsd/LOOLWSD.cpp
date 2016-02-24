@@ -63,8 +63,11 @@ DEALINGS IN THE SOFTWARE.
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
+#include <Poco/Environment.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
+#include <Poco/FileStream.h>
+#include <Poco/Mutex.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -76,6 +79,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/MessageHeader.h>
+#include <Poco/Net/Net.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
 #include <Poco/Net/ServerSocket.h>
@@ -83,40 +87,39 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/TemporaryFile.h>
+#include <Poco/ThreadLocal.h>
 #include <Poco/ThreadPool.h>
+#include <Poco/URI.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionException.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
-#include <Poco/Mutex.h>
-#include <Poco/Net/Net.h>
-#include <Poco/ThreadLocal.h>
-#include <Poco/FileStream.h>
-#include <Poco/TemporaryFile.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/URI.h>
-#include <Poco/Environment.h>
 
 #include "Admin.hpp"
 #include "Auth.hpp"
-#include "Common.hpp"
 #include "Capabilities.hpp"
+#include "ChildProcessSession.hpp"
+#include "Common.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
-#include "MasterProcessSession.hpp"
-#include "ChildProcessSession.hpp"
 #include "LOOLWSD.hpp"
+#include "MasterProcessSession.hpp"
 #include "QueueHandler.hpp"
 #include "Storage.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
 
+using Poco::Environment;
 using Poco::Exception;
 using Poco::File;
+using Poco::FileOutputStream;
 using Poco::IOException;
+using Poco::Net::HTMLForm;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
@@ -126,16 +129,27 @@ using Poco::Net::HTTPServer;
 using Poco::Net::HTTPServerParams;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
+using Poco::Net::MessageHeader;
+using Poco::Net::NameValueCollection;
+using Poco::Net::PartHandler;
 using Poco::Net::ServerSocket;
+using Poco::Net::Socket;
 using Poco::Net::SocketAddress;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Path;
 using Poco::Process;
+using Poco::ProcessHandle;
+using Poco::Random;
 using Poco::Runnable;
+using Poco::StreamCopier;
 using Poco::StringTokenizer;
+using Poco::Timespan;
+using Poco::TemporaryFile;
 using Poco::Thread;
+using Poco::ThreadLocal;
 using Poco::ThreadPool;
+using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
 using Poco::Util::IncompatibleOptionsException;
@@ -143,17 +157,12 @@ using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
-using Poco::Net::Socket;
-using Poco::ThreadLocal;
-using Poco::Random;
-using Poco::ProcessHandle;
-using Poco::URI;
 
 // Document management mutex.
 std::mutex DocumentURI::DocumentURIMutex;
 
 /// Handles the filename part of the convert-to POST request payload.
-class ConvertToPartHandler : public Poco::Net::PartHandler
+class ConvertToPartHandler : public PartHandler
 {
     std::string& _filename;
 public:
@@ -162,21 +171,21 @@ public:
     {
     }
 
-    virtual void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream) override
+    virtual void handlePart(const MessageHeader& header, std::istream& stream) override
     {
         // Extract filename and put it to a temporary directory.
         std::string disp;
-        Poco::Net::NameValueCollection params;
+        NameValueCollection params;
         if (header.has("Content-Disposition"))
         {
             std::string cd = header.get("Content-Disposition");
-            Poco::Net::MessageHeader::splitParameters(cd, disp, params);
+            MessageHeader::splitParameters(cd, disp, params);
         }
 
         if (!params.has("filename"))
             return;
 
-        Path tempPath = Path::forDirectory(Poco::TemporaryFile().tempName() + Path::separator());
+        Path tempPath = Path::forDirectory(TemporaryFile().tempName() + Path::separator());
         File(tempPath).createDirectories();
         tempPath.setFileName(params.get("filename"));
         _filename = tempPath.toString();
@@ -184,7 +193,7 @@ public:
         // Copy the stream to _filename.
         std::ofstream fileStream;
         fileStream.open(_filename);
-        Poco::StreamCopier::copyStream(stream, fileStream);
+        StreamCopier::copyStream(stream, fileStream);
         fileStream.close();
     }
 };
@@ -197,7 +206,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 {
     Log::info("Starting Socket Processor.");
 
-    const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+    const Timespan waitTime(POLL_TIMEOUT_MS * 1000);
     try
     {
         int flags = 0;
@@ -336,7 +345,7 @@ private:
             Log::info("Conversion request.");
             std::string fromPath;
             ConvertToPartHandler handler(fromPath);
-            Poco::Net::HTMLForm form(request, request.stream(), handler);
+            HTMLForm form(request, request.stream(), handler);
             std::string format;
             if (form.has("format"))
                 format = form.get("format");
@@ -402,7 +411,7 @@ private:
 
             std::string tmpPath;
             ConvertToPartHandler handler(tmpPath);
-            Poco::Net::HTMLForm form(request, request.stream(), handler);
+            HTMLForm form(request, request.stream(), handler);
 
             bool goodRequest = form.has("childid") && form.has("name");
             std::string formChildid(form.get("childid"));
@@ -453,7 +462,7 @@ private:
             if (file.exists())
             {
                 response.set("Access-Control-Allow-Origin", "*");
-                Poco::Net::HTMLForm form(request);
+                HTMLForm form(request);
                 std::string mimeType = "application/octet-stream";
                 if (form.has("mime_type"))
                     mimeType = form.get("mime_type");
@@ -481,7 +490,7 @@ private:
         (void)response;
         Log::info("Authenticating Get request processor for session [" + id + "].");
         std::string token;
-        for (auto& pair : Poco::URI(request.getURI()).getQueryParameters())
+        for (auto& pair : URI(request.getURI()).getQueryParameters())
         {
             if (pair.first == "token")
             {
@@ -502,7 +511,7 @@ private:
         //TODO: Authenticate the caller.
         // authenticate(request, response);
 
-        Poco::Net::NameValueCollection cookies;
+        NameValueCollection cookies;
         request.getCookies(cookies);
         Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
 
@@ -892,7 +901,7 @@ void LOOLWSD::displayVersion()
     std::cout << LOOLWSD_VERSION << std::endl;
 }
 
-Poco::Process::PID LOOLWSD::createBroker()
+Process::PID LOOLWSD::createBroker()
 {
     Process::Args args;
 
@@ -917,10 +926,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
     Log::initialize("wsd");
 
-    //Poco::Environment::set("LOK_PREINIT", "1");
-    //Poco::Environment::set("LOK_FORK", "1");
-    //Poco::Environment::set("LD_BIND_NOW", "1");
-    //Poco::Environment::set("LOK_VIEW_CALLBACK", "1");
+    //Environment::set("LOK_PREINIT", "1");
+    //Environment::set("LOK_FORK", "1");
+    //Environment::set("LD_BIND_NOW", "1");
+    //Environment::set("LOK_VIEW_CALLBACK", "1");
 
 #ifdef __linux
     char *locale = setlocale(LC_ALL, nullptr);
@@ -960,7 +969,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // log pid information
     {
-        Poco::FileOutputStream filePID(LOOLWSD::PIDLOG);
+        FileOutputStream filePID(LOOLWSD::PIDLOG);
         if (filePID.good())
             filePID << Process::id();
     }
@@ -979,7 +988,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    const Poco::Process::PID pidBroker = createBroker();
+    const Process::PID pidBroker = createBroker();
     if (pidBroker < 0)
     {
         Log::error("Failed to spawn loolBroker.");
