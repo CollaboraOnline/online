@@ -60,9 +60,6 @@ DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include <mutex>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitInit.h>
-
 #include <Poco/Environment.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
