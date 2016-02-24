@@ -985,8 +985,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    const Process::PID pidBroker = createBroker();
-    if (pidBroker < 0)
+    const Process::PID brokerPid = createBroker();
+    if (brokerPid < 0)
     {
         Log::error("Failed to spawn loolBroker.");
         return Application::EXIT_SOFTWARE;
@@ -1049,10 +1049,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     unsigned timeoutCounter = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
     {
-        const pid_t pid = waitpid(pidBroker, &status, WUNTRACED | WNOHANG);
+        const pid_t pid = waitpid(brokerPid, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
-            if (pidBroker == pid)
+            if (brokerPid == pid)
             {
                 if (WIFEXITED(status))
                 {
@@ -1129,11 +1129,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Terminate child processes
     Util::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\r\n");
-    Log::info("Requesting child process " + std::to_string(pidBroker) + " to terminate");
-    Util::requestTermination(pidBroker);
+    Log::info("Requesting child process " + std::to_string(brokerPid) + " to terminate");
+    Util::requestTermination(brokerPid);
 
     // wait broker process finish
-    waitpid(pidBroker, &status, WUNTRACED);
+    waitpid(brokerPid, &status, WUNTRACED);
 
     close(BrokerWritePipe);
 
