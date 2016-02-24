@@ -120,7 +120,7 @@ namespace Log
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
         SourceId = oss.str();
 
-        auto& logger = Poco::Logger::create(SourceName, new Poco::ColorConsoleChannel(), Poco::Message::PRIO_INFORMATION);
+        auto& logger = Poco::Logger::create(SourceName, new Poco::ConsoleChannel(), Poco::Message::PRIO_INFORMATION);
 
         // Configure the logger.
         // TODO: This should come from a file.
