@@ -37,6 +37,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLargePaste);
     CPPUNIT_TEST(testRenderingOptions);
     CPPUNIT_TEST(testPasswordProtectedDocument);
+    CPPUNIT_TEST(testPasswordProtectedDocument2);
+    CPPUNIT_TEST(testPasswordProtectedDocument3);
     CPPUNIT_TEST(testImpressPartCountChanged);
     CPPUNIT_TEST_SUITE_END();
 
@@ -44,6 +46,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testLargePaste();
     void testRenderingOptions();
     void testPasswordProtectedDocument();
+    void testPasswordProtectedDocument2();
+    void testPasswordProtectedDocument3();
     void testImpressPartCountChanged();
 
     static
@@ -252,8 +256,25 @@ void HTTPWSTest::testPasswordProtectedDocument()
             CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
             CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
         }
+        socket.shutdown();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+    }
+}
 
-        // Send another load request with incorrect password
+void HTTPWSTest::testPasswordProtectedDocument2()
+{
+    try {
+
+        Poco::Net::WebSocket socket(_session, _request, _response);
+
+        const std::string documentPath = TDOC "/password-protected.ods";
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string response;
+
+        // Send a load request with incorrect password
         sendTextFrame(socket, "load url=" + documentURL + " password=2");
 
         getResponseMessage(socket, "error:", response, true);
@@ -269,8 +290,25 @@ void HTTPWSTest::testPasswordProtectedDocument()
             CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
             CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
         }
+        socket.shutdown();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+    }
+}
 
-        // Send another load request with correct password
+void HTTPWSTest::testPasswordProtectedDocument3()
+{
+    try {
+
+        Poco::Net::WebSocket socket(_session, _request, _response);
+
+        const std::string documentPath = TDOC "/password-protected.ods";
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string response;
+
+        // Send a load request with correct password
         sendTextFrame(socket, "load url=" + documentURL + " password=1");
 
         CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket));
