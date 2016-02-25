@@ -92,8 +92,6 @@ public:
     const Statistics& getStatistics() const { return _stats; }
     bool isInactive() const { return _stats.getInactivityMS() >= InactivityThresholdMS; }
 
-    void setDocumentPassword(const int nPasswordType);
-
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
