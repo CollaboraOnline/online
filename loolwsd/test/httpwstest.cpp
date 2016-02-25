@@ -428,7 +428,7 @@ bool HTTPWSTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
     {
         int flags;
         int bytes;
-        int retries = 10;
+        int retries = 30;
         const Poco::Timespan waitTime(1000000);
 
         ws.setReceiveTimeout(0);
