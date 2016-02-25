@@ -479,6 +479,8 @@ public:
     /// Set Document password for given URL
     void setDocumentPassword(int nPasswordType)
     {
+        Log::info("setDocumentPassword: passwordProtected=" + std::to_string(_isDocPasswordProtected) + " passwordProvided=" + std::to_string(_isDocPasswordProvided) + " password='" + _docPassword + "'");
+
         if (_isDocPasswordProtected && _isDocPasswordProvided)
         {
             // it means this is the second attempt with the wrong password; abort the load operation
@@ -493,10 +495,12 @@ public:
         else if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY)
             _docPasswordType = PasswordType::ToModify;
 
+        Log::info("Caling _loKit->pClass->setDocumentPassword");
         if (_isDocPasswordProvided)
             _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), _docPassword.c_str());
         else
             _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), nullptr);
+        Log::info("setDocumentPassword returned");
     }
 
 
@@ -628,6 +632,7 @@ private:
             _docPassword = docPassword;
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
+            Log::info("Calling _loKit->pClass->documentLoad");
             if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str())) == nullptr)
             {
                 Log::error("Failed to load: " + uri + ", error: " + _loKit->pClass->getError(_loKit));
@@ -650,7 +655,7 @@ private:
 
                 return nullptr;
             }
-
+            Log::info("documentLoad() returned");
             // Retake the lock.
             lock.lock();
 
