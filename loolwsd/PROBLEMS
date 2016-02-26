@@ -1,0 +1,42 @@
+- The /dev/random and /dev/urandom devices created with mknod() in the
+  chroots don't work as they are not chowned to root:root.
+
+- There is way too much of busy waiting for fairly arbitrarily chosen
+  timeout periods in the code.
+
+- The use of the fifoCV condition variable and its associated mutex
+  fifoMutex in createLibreOfficeKit() in LOOLBroker.cpp are pointless
+  as there is no code that would notify the condition variable
+  anywhere.
+
+- The --clientport= option to a lookit process (when spawning them,
+  not forking) can not work as intended. The ClientPortNumber variable
+  is declared *static* in ChildProcessSession.hpp and thus is a
+  separate variable in each compilation unit (object file) that
+  includes ChildProcessSession.hpp. The variable that is assigned in
+  main() in LOOLKit.cpp is not the variable used in
+  ChildProcessSession::downloadAs() in ChildProcessSession.cpp.
+
+- Recursive mutexes are evil. In general, I think the consensus is
+  that recursive mutexes should be avoided. One should use them only
+  when absolutely necessary because the code-base is so complex that
+  one has no idea how it works. That was hopefully not the case when
+  recursive mutexes were introduced here? But probably it is by now...
+
+- The use of separate "disconnect" messages over the WebSocket
+  connections is not good. It should be perfectly enough to just close
+  the WebSocket connection gracefully using the WebSocket mechanism,
+  i.e. a frame with the CLOSE opcode. Or just tearing down the socket
+  without a CLOSE frame. The code needs to be prepared to handle these
+  situations anyway, especially for the socket talking to the
+  client. For the internal communication in the process tree,
+  "disconnect" messages are barely acceptable, if the code is already
+  written to generate and expect them. But they should never be sent
+  to a client (or expected from it).
+
+- 'make check' does not work, or fails randomly, unless you have a
+  freshly started loolwsd with a --numprespawn option that is big
+  enough, 8 or so. Running 'make check' again without waiting for some
+  time (or re-starting loolwsd) fails most of the times. But
+  occasionally it passes. Clearly this is a sign that things do not
+  work as they should.
