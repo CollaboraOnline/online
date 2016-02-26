@@ -249,6 +249,10 @@ public:
         }
 
         StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        if (tokens.count() > 1 && tokens[1] == "ok")
+        {
+            Util::writeFIFO(writerNotify, "document " + std::to_string(pid) + " "  + url + " \r\n");
+        }
         return (tokens.count() == 2 && tokens[0] == std::to_string(pid) && tokens[1] == "ok");
     }
 

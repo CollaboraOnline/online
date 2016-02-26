@@ -18,6 +18,8 @@
 
 #include <Poco/Thread.h>
 #include <Poco/NotificationQueue.h>
+
+#include "Common.hpp"
 #include "LOOLSession.hpp"
 
 // The client port number, which is changed via loolwsd args.

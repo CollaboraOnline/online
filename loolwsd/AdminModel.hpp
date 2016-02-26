@@ -26,6 +26,25 @@ public:
     {
         Log::info("AdminModel dtor.");
     }
+
+    void addDocument(Poco::Process::PID pid, std::string url)
+    {
+        _documents[pid] = url;
+    }
+
+    std::string getDocuments()
+    {
+        std::string response;
+        for (const auto& it: _documents)
+        {
+            response += std::to_string(it.first)  + " " + it.second + " <BR/>";
+        }
+
+        return response;
+    }
+
+private:
+    std::map<Poco::Process::PID, std::string> _documents;
 };
 
 #endif
