@@ -5,7 +5,7 @@
   timeout periods in the code.
 
 - The use of the fifoCV condition variable and its associated mutex
-  fifoMutex in createLibreOfficeKit() in LOOLBroker.cpp are pointless
+  fifoMutex in createLibreOfficeKit() in LOOLBroker.cpp is pointless
   as there is no code that would notify the condition variable
   anywhere.
 
