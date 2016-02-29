@@ -41,6 +41,10 @@ void dropCapability(
         exit(1);
     }
 
+    char *capText = cap_to_text(caps, nullptr);
+    Log::info("Capabilities first: " + std::string(capText));
+    cap_free(capText);
+
     if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
         cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
     {
@@ -54,7 +58,7 @@ void dropCapability(
         exit(1);
     }
 
-    char *capText = cap_to_text(caps, nullptr);
+    capText = cap_to_text(caps, nullptr);
     Log::info("Capabilities now: " + std::string(capText));
     cap_free(capText);
 
