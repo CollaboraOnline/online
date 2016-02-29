@@ -252,10 +252,10 @@ public:
     void run()
     {
         static const std::string thread_name = "kit_callback";
-#ifdef __linux
+
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
-#endif
+
         Log::debug("Thread [" + thread_name + "] started.");
 
         while (!_stop && !TerminationFlag)

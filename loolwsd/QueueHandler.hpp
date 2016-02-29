@@ -27,10 +27,9 @@ public:
 
     void run() override
     {
-#ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + _name + ".");
-#endif
+
         Log::debug("Thread [" + _name + "] started.");
 
         try

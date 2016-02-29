@@ -82,7 +82,7 @@ public:
 
                     std::string firstLine = getFirstLine(buffer, n);
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-#ifdef __linux
+
                     if (std::getenv("DISPLAY") != nullptr && tokens[0] == "tile:")
                     {
                         TemporaryFile pngFile;
@@ -95,7 +95,6 @@ public:
                             // the developer running it surely notices if nothing shows up...
                         }
                     }
-#endif
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);

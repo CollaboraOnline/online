@@ -65,10 +65,9 @@ public:
         const std::string thread_name = "admin_ws";
         try
         {
-#ifdef __linux
             if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
                 Log::error("Cannot set thread name to " + thread_name + ".");
-#endif
+
             Log::debug("Thread [" + thread_name + "] started.");
 
             auto ws = std::make_shared<WebSocket>(request, response);

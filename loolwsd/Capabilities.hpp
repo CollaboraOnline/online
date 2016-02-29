@@ -10,20 +10,13 @@
 #ifndef INCLUDED_CAPABILITIES
 #define INCLUDED_CAPABILITIES
 
-#ifdef __linux
 #include <sys/capability.h>
-#endif
 
 #include "Util.hpp"
 
 static
-void dropCapability(
-#ifdef __linux
-                    cap_value_t capability
-#endif
-                    )
+void dropCapability(cap_value_t capability)
 {
-#ifdef __linux
     cap_t caps;
     cap_value_t cap_list[] = { capability };
 
@@ -56,20 +49,6 @@ void dropCapability(
     cap_free(capText);
 
     cap_free(caps);
-#else
-    // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
-    // don't own, so drop root.
-    if (geteuid() == 0 && getuid() != 0)
-    {
-        // The program is setuid root. Not normal on Linux where we use setcap, but if this
-        // needs to run on non-Linux Unixes, setuid root is what it will bneed to be to be able
-        // to do chroot().
-        if (setuid(getuid()) != 0)
-        {
-            Log::error("Error: setuid() failed.");
-        }
-    }
-#endif
 }
 
 #endif

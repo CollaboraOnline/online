@@ -73,14 +73,12 @@ public:
             Log::info("Public URI [" + uriPublic.toString() +
                       "] jailed to [" + uriJailed.toString() + "].");
 
-#ifdef __linux
             Log::info("Linking " + publicFilePath + " to " + jailedFilePath);
             if (!Poco::File(jailedFilePath).exists() && link(publicFilePath.c_str(), jailedFilePath.c_str()) == -1)
             {
                 // Failed
                 Log::error("link(\"" + publicFilePath + "\", \"" + jailedFilePath + "\") failed.");
             }
-#endif
 
             try
             {

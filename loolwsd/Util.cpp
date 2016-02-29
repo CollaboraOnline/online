@@ -8,9 +8,7 @@
  */
 
 #include <sys/poll.h>
-#ifdef __linux
 #include <sys/prctl.h>
-#endif
 
 #include <cstdlib>
 #include <cstring>
@@ -102,11 +100,9 @@ namespace Log
                << std::setw(2) << seconds << "." << std::setw(6) << usec
                << ' ';
 
-#ifdef __linux
         char buf[32]; // we really need only 16
         if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(buf), 0, 0, 0) == 0)
             stream << '[' << std::setw(15) << std::setfill(' ') << std::left << buf << "] ";
-#endif
 
         return stream.str();
     }
@@ -224,11 +220,7 @@ namespace Util
 
     bool windowingAvailable()
     {
-#ifdef __linux
         return std::getenv("DISPLAY") != nullptr;
-#endif
-
-        return false;
     }
 
     bool encodeBufferToPNG(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode)
@@ -432,7 +424,6 @@ namespace Util
 
     void setTerminationSignals()
     {
-#ifdef __linux
         struct sigaction action;
 
         sigemptyset(&action.sa_mask);
@@ -443,7 +434,6 @@ namespace Util
         sigaction(SIGINT, &action, nullptr);
         sigaction(SIGQUIT, &action, nullptr);
         sigaction(SIGHUP, &action, nullptr);
-#endif
     }
 
     static
@@ -462,7 +452,6 @@ namespace Util
             sleep(10);
         }
 
-#ifdef __linux
         struct sigaction action;
 
         sigemptyset(&action.sa_mask);
@@ -472,12 +461,10 @@ namespace Util
         sigaction(signal, &action, NULL);
         // let default handler process the signal
         kill(Poco::Process::id(), signal);
-#endif
     }
 
     void setFatalSignals()
     {
-#ifdef __linux
         struct sigaction action;
 
         sigemptyset(&action.sa_mask);
@@ -489,7 +476,6 @@ namespace Util
         sigaction(SIGABRT, &action, NULL);
         sigaction(SIGILL, &action, NULL);
         sigaction(SIGFPE, &action, NULL);
-#endif
     }
 
     int getChildStatus(const int code)

@@ -79,12 +79,10 @@ mkdir -p $CHROOT/usr/bin/
 
 cd $CHROOT || exit 1
 
-if [ `uname -s` = Linux ]; then
-    mkdir -p usr/share || exit 1
-    cp -r -p /usr/share/fonts usr/share
+mkdir -p usr/share || exit 1
+cp -r -p /usr/share/fonts usr/share
 
-    if [ -h usr/share/fonts/ghostscript ]; then
-	mkdir usr/share/ghostscript || exit 1
-	cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
-    fi
+if [ -h usr/share/fonts/ghostscript ]; then
+    mkdir usr/share/ghostscript || exit 1
+    cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
 fi

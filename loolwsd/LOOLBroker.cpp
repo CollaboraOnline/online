@@ -355,10 +355,10 @@ public:
         end   = buffer;
 
         static const std::string thread_name = "brk_pipe_reader";
-#ifdef __linux
+
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
-#endif
+
         Log::debug("Thread [" + thread_name + "] started.");
 
         while (!TerminationFlag)
@@ -801,13 +801,9 @@ int main(int argc, char** argv)
 
     if (!sharePages)
     {
-#ifdef __linux
         dropCapability(CAP_SYS_CHROOT);
         dropCapability(CAP_MKNOD);
         dropCapability(CAP_FOWNER);
-#else
-        dropCapability();
-#endif
     }
 
     PipeRunnable pipeHandler;

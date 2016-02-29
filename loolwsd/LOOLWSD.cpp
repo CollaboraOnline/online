@@ -44,11 +44,9 @@ DEALINGS IN THE SOFTWARE.
 #include <locale.h>
 #include <unistd.h>
 
-#ifdef __linux
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/prctl.h>
-#endif
 
 #include <ftw.h>
 #include <utime.h>
@@ -555,10 +553,9 @@ public:
         const auto id = LOOLWSD::GenSessionId();
         const std::string thread_name = "client_ws_" + id;
 
-#ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
-#endif
+
         Log::debug("Thread [" + thread_name + "] started.");
 
         try
@@ -610,10 +607,9 @@ public:
 
             thread_name += id;
 
-#ifdef __linux
             if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
                 Log::error("Cannot set thread name to " + thread_name + ".");
-#endif
+
             Log::debug("Thread [" + thread_name + "] started.");
 
             auto ws = std::make_shared<WebSocket>(request, response);
@@ -649,10 +645,8 @@ class RequestHandlerFactory: public HTTPRequestHandlerFactory
 public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
-#ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to request_handler.");
-#endif
 
         auto logger = Log::info();
         logger << "Request from " << request.clientAddress().toString() << ": "
@@ -910,23 +904,21 @@ Process::PID LOOLWSD::createBroker()
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
     Log::initialize("wsd");
-#ifdef __linux
+
     if (geteuid() == 0)
     {
         Log::error("Don't run this as root");
         return Application::EXIT_USAGE;
     }
-#endif
+
     //Environment::set("LOK_PREINIT", "1");
     //Environment::set("LOK_FORK", "1");
     //Environment::set("LD_BIND_NOW", "1");
     //Environment::set("LOK_VIEW_CALLBACK", "1");
 
-#ifdef __linux
     char *locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
         setlocale(LC_ALL, "en_US.utf8");
-#endif
 
     Util::setTerminationSignals();
     Util::setFatalSignals();

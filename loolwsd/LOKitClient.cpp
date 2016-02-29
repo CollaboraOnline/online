@@ -178,7 +178,7 @@ protected:
                 std::ofstream pngStream(pngFile.path(), std::ios::binary);
                 pngStream.write(png.data(), png.size());
                 pngStream.close();
-#ifdef __linux
+
                 if (std::getenv("DISPLAY") != nullptr)
                 {
                     if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
@@ -187,7 +187,6 @@ protected:
                         // the developer running it surely notices if nothing shows up...
                     }
                 }
-#endif
             }
             else
             {

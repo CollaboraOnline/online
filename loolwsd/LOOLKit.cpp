@@ -84,12 +84,6 @@ namespace
 
         assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
         const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
-
-#ifdef __APPLE__
-        if (strcmp(relativeOldPath, "PkgInfo") == 0)
-            return 0;
-#endif
-
         Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
 
         switch (typeflag)
@@ -204,10 +198,10 @@ public:
     void run() override
     {
         const std::string thread_name = "kit_ws_" + _session->getId();
-#ifdef __linux
+
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
-#endif
+
         Log::debug("Thread [" + thread_name + "] started.");
 
         try
@@ -785,21 +779,15 @@ void lokit_main(const std::string& childRoot,
     static const std::string jailId = std::to_string(Process::id());
     static const std::string process_name = "loolkit";
 
-#ifdef __linux
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(process_name.c_str()), 0, 0, 0) != 0)
         Log::error("Cannot set process name to " + process_name + ".");
 
     Util::setTerminationSignals();
     Util::setFatalSignals();
-#endif
+
     Log::debug("Process [" + process_name + "] started.");
 
-    static const std::string instdir_path =
-#ifdef __APPLE__
-                    ("/" + loSubPath + "/Frameworks");
-#else
-                    ("/" + loSubPath + "/program");
-#endif
+    static const std::string instdir_path = "/" + loSubPath + "/program";
     LibreOfficeKit* loKit = nullptr;
 
     try
@@ -866,7 +854,6 @@ void lokit_main(const std::string& childRoot,
             }
         }
 
-#ifdef __linux
         // Create the urandom and random devices
         File(Path(jailPath, "/dev")).createDirectory();
         if (mknod((jailPath.toString() + "/dev/random").c_str(),
@@ -900,7 +887,6 @@ void lokit_main(const std::string& childRoot,
         {
             Log::error("Error: chown(" + jailPath.toString() + "/dev/urandom, 0, 0) failed.");
         }
-#endif
 
         Log::info("chroot(\"" + jailPath.toString() + "\")");
         if (chroot(jailPath.toString().c_str()) == -1)
@@ -915,14 +901,10 @@ void lokit_main(const std::string& childRoot,
             exit(Application::EXIT_SOFTWARE);
         }
 
-#ifdef __linux
         dropCapability(CAP_SYS_CHROOT);
         dropCapability(CAP_MKNOD);
         dropCapability(CAP_CHOWN);
         dropCapability(CAP_FOWNER);
-#else
-        dropCapability();
-#endif
 
         loKit = lok_init_2(instdir_path.c_str(), "file:///user");
         if (loKit == nullptr)
