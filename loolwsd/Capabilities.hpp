@@ -16,13 +16,6 @@
 
 #include "Util.hpp"
 
-#if ENABLE_DEBUG
-#include <sys/types.h>
-#include <pwd.h>
-
-static int uid = 0;
-#endif
-
 static
 void dropCapability(
 #ifdef __linux
@@ -63,7 +56,7 @@ void dropCapability(
     cap_free(capText);
 
     cap_free(caps);
-#endif
+#else
     // We assume that on non-Linux we don't need to be root to be able to hardlink to files we
     // don't own, so drop root.
     if (geteuid() == 0 && getuid() != 0)
@@ -74,29 +67,6 @@ void dropCapability(
         if (setuid(getuid()) != 0)
         {
             Log::error("Error: setuid() failed.");
-        }
-    }
-#if ENABLE_DEBUG
-    if (geteuid() == 0 && getuid() == 0)
-    {
-#ifdef __linux
-        // Argh, awful hack
-        if (capability == CAP_FOWNER)
-            return;
-#endif
-
-        // Running under sudo, probably because being debugged? Let's drop super-user rights.
-        if (uid == 0)
-        {
-            struct passwd *nobody = getpwnam("nobody");
-            if (nobody)
-                uid = nobody->pw_uid;
-            else
-                uid = 65534;
-        }
-        if (setuid(uid) != 0)
-        {
-            Log::error("setuid() failed.");
         }
     }
 #endif

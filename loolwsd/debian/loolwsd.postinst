@@ -4,7 +4,6 @@ set -e
 
 case "$1" in
     configure)
-	setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolwsd || true
 	setcap cap_fowner,cap_mknod,cap_chown,cap_sys_chroot=ep /usr/bin/loolkit || true
 	setcap cap_fowner,cap_mknod,cap_chown,cap_sys_chroot=ep /usr/bin/loolbroker || true
 

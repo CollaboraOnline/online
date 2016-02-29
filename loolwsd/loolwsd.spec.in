@@ -69,7 +69,6 @@ echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -ex
 %service_add_pre loolwsd.service
 
 %post
-setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolwsd
 setcap cap_fowner,cap_mknod,cap_chown,cap_sys_chroot=ep /usr/bin/loolbroker
 setcap cap_fowner,cap_mknod,cap_chown,cap_sys_chroot=ep /usr/bin/loolkit
 

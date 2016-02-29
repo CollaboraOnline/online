@@ -44,17 +44,3 @@
 - Occasionally Control-C (SIGINT) doesn't shut fown loolwsd. One has
   to kill it with SIGKILL. Which of course leaves all the chroot jails
   around.
-
-- I don't think the loolwsd program actually any longer does anything
-  that would need any capability. Still it is given cap_fowner,
-  cap_mknod, and cap_sys_chroot in Makefile.am (and the Debian and RPM
-  packaging), and it calls dropCapability() to drop those (without
-  having used them for anything). It would obviously be better to not
-  give it those capabilities in the first place. Unfortunately this is
-  a bit complicated because the dropCapability() function also does a
-  bit of a dance around the possibility that somebody is running
-  loolwsd under sudo. Does anybody actually do that? It seems like a
-  very bad idea. (Yes, I know I added that code myself, as a debugging
-  aid, but I dare not drop it now in case it is somebody's "normal"
-  method of working when debugging this, or even when not debugging.)
-  Also, the Capabilities.hpp defines a *static* variable uid...

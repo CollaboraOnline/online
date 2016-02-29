@@ -98,7 +98,6 @@ DEALINGS IN THE SOFTWARE.
 
 #include "Admin.hpp"
 #include "Auth.hpp"
-#include "Capabilities.hpp"
 #include "ChildProcessSession.hpp"
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
@@ -839,13 +838,6 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
     optionSet.addOption(Option("test", "", "Interactive testing.")
                         .required(false)
                         .repeatable(false));
-
-#if ENABLE_DEBUG
-    optionSet.addOption(Option("uid", "", "Uid to assume if running under sudo for debugging purposes.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("uid"));
-#endif
 }
 
 void LOOLWSD::handleOption(const std::string& optionName, const std::string& value)
@@ -878,10 +870,6 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
         NumPreSpawnedChildren = std::stoi(value);
     else if (optionName == "test")
         LOOLWSD::DoTest = true;
-#if ENABLE_DEBUG
-    else if (optionName == "uid")
-        uid = std::stoull(value);
-#endif
 }
 
 void LOOLWSD::displayHelp()
@@ -922,7 +910,13 @@ Process::PID LOOLWSD::createBroker()
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
     Log::initialize("wsd");
-
+#ifdef __linux
+    if (geteuid() == 0)
+    {
+        Log::error("Don't run this as root");
+        return Application::EXIT_USAGE;
+    }
+#endif
     //Environment::set("LOK_PREINIT", "1");
     //Environment::set("LOK_FORK", "1");
     //Environment::set("LD_BIND_NOW", "1");
@@ -991,14 +985,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::error("Failed to spawn loolBroker.");
         return Application::EXIT_SOFTWARE;
     }
-
-#ifdef __linux
-    dropCapability(CAP_SYS_CHROOT);
-    dropCapability(CAP_MKNOD);
-    dropCapability(CAP_FOWNER);
-#else
-    dropCapability();
-#endif
 
     // Configure the Server.
     // Note: TCPServer internally uses the default
