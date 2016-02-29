@@ -55,13 +55,13 @@ check the loolwsd console for the debugging output.
 Testing
 -------
     - to run the unit tests
-        + open sepc/loleaflet.html in the browser
+        + open spec/loleaflet.html in the browser
     - to simulate an editing session and to get the tile loading times
         + open spec/tilebench.html in the browser
     - to simulate a client opening several documents in the browser
         + open spec/loadtest.html in the browser
     - to simulate a client opening several documents in the console
-        + run: mocha headlessLoadTest.js
+        + run: mocha spec/headlessLoadTest.js
     - to simulate multiple clients opening several documents in the console
         + run: make load-test
 
