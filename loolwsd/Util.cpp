@@ -50,7 +50,7 @@ extern "C"
         std::vector<char> *outputp = (std::vector<char> *) png_get_io_ptr(png_ptr);
         const size_t oldsize = outputp->size();
         outputp->resize(oldsize + length);
-        memcpy(outputp->data() + oldsize, data, length);
+        std::memcpy(outputp->data() + oldsize, data, length);
     }
 
     static void user_flush_fn(png_structp)
@@ -443,7 +443,7 @@ namespace Util
                      << Util::signalName(signal) << " "
                      << strsignal(signal) << Log::end;
 
-        if (getenv("LOOL_DEBUG"))
+        if (std::getenv("LOOL_DEBUG"))
         {
             Log::error() << "\nSegfault! Attach debugger with:\n"
                          << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
