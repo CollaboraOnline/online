@@ -1089,32 +1089,32 @@ int main(int argc, char** argv)
         if (std::strstr(cmd, "--childroot=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            childRoot = std::string(++eq);
+            childRoot = std::string(eq+1);
         }
         else if (std::strstr(cmd, "--systemplate=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            sysTemplate = std::string(++eq);
+            sysTemplate = std::string(eq+1);
         }
         else if (std::strstr(cmd, "--lotemplate=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            loTemplate = std::string(++eq);
+            loTemplate = std::string(eq+1);
         }
         else if (std::strstr(cmd, "--losubpath=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            loSubPath = std::string(++eq);
+            loSubPath = std::string(eq+1);
         }
         else if (std::strstr(cmd, "--pipe=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            pipe = std::string(++eq);
+            pipe = std::string(eq+1);
         }
         else if (std::strstr(cmd, "--clientport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            ClientPortNumber = std::stoll(std::string(++eq));
+            ClientPortNumber = std::stoll(std::string(eq+1));
         }
     }
 
