@@ -405,7 +405,7 @@ public:
         auto ws = std::make_shared<WebSocket>(cs, request, response);
         ws->setReceiveTimeout(0);
 
-        auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKit, _loKitDocument, _jailId,
+        auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId,
                        [this](const std::string& id, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, isDocPasswordProvided); },
                        [this](const std::string& id) { onUnload(id); });
         // child -> 0,  sessionId -> 1, PID -> 2

@@ -63,7 +63,6 @@ public:
     //         used by downloadas to construct jailed path.
     ChildProcessSession(const std::string& id,
                         std::shared_ptr<Poco::Net::WebSocket> ws,
-                        LibreOfficeKit *loKit,
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& jailId,
                         std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> onLoad,
