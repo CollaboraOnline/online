@@ -956,7 +956,7 @@ void lokit_main(const std::string& childRoot,
                         continue;
                     }
                     start = buffer;
-                    end   = buffer + bytes;
+                    end = buffer + bytes;
                 }
                 else
                 if (pollPipeBroker.revents & (POLLERR | POLLHUP))

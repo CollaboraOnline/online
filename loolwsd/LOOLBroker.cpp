@@ -199,7 +199,7 @@ public:
                     }
 
                     _start = _buffer;
-                    _end   = _buffer + bytes;
+                    _end = _buffer + bytes;
                 }
 
                 if ( _start != _end )
@@ -208,7 +208,7 @@ public:
                     while (_start != _end && byteChar != '\r' && byteChar != '\n')
                     {
                         response += byteChar;
-                        byteChar  = *_start++;
+                        byteChar = *_start++;
                     }
 
                     if (byteChar == '\r' && *_start == '\n')
@@ -354,7 +354,7 @@ public:
         pollPipeBroker.revents = 0;
 
         start = buffer;
-        end   = buffer;
+        end = buffer;
 
         static const std::string thread_name = "brk_pipe_reader";
 
@@ -383,7 +383,7 @@ public:
                         continue;
                     }
                     start = buffer;
-                    end   = buffer + bytes;
+                    end = buffer + bytes;
                 }
                 else
                 if (pollPipeBroker.revents & (POLLERR | POLLHUP))
