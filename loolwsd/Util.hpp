@@ -24,6 +24,9 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
+// This is an odd mix of the EExitCodes enum in LibreOffice's desktop/source/inc/exithelper.h and
+// then EX_SOFTWARE (= 70) from the (BSD origin) <sysexits.h>.
+
 enum class LOOLExitCode
 {
     LOOL_NO_ERROR = 0,
