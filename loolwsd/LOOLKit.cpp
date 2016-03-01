@@ -1084,43 +1084,37 @@ int main(int argc, char** argv)
     for (int i = 1; i < argc; ++i)
     {
         char *cmd = argv[i];
-        char *eq  = nullptr;
+        char *eq;
 
         if (std::strstr(cmd, "--childroot=") == cmd)
         {
-            eq = strchrnul(cmd, '=');
-            if (*eq)
-                childRoot = std::string(++eq);
+            eq = std::strchr(cmd, '=');
+            childRoot = std::string(++eq);
         }
         else if (std::strstr(cmd, "--systemplate=") == cmd)
         {
-            eq = strchrnul(cmd, '=');
-            if (*eq)
-                sysTemplate = std::string(++eq);
+            eq = std::strchr(cmd, '=');
+            sysTemplate = std::string(++eq);
         }
         else if (std::strstr(cmd, "--lotemplate=") == cmd)
         {
-            eq = strchrnul(cmd, '=');
-            if (*eq)
-                loTemplate = std::string(++eq);
+            eq = std::strchr(cmd, '=');
+            loTemplate = std::string(++eq);
         }
         else if (std::strstr(cmd, "--losubpath=") == cmd)
         {
-            eq = strchrnul(cmd, '=');
-            if (*eq)
-                loSubPath = std::string(++eq);
+            eq = std::strchr(cmd, '=');
+            loSubPath = std::string(++eq);
         }
         else if (std::strstr(cmd, "--pipe=") == cmd)
         {
-            eq = strchrnul(cmd, '=');
-            if (*eq)
-                pipe = std::string(++eq);
+            eq = std::strchr(cmd, '=');
+            pipe = std::string(++eq);
         }
         else if (std::strstr(cmd, "--clientport=") == cmd)
         {
-            eq = strchrnul(cmd, '=');
-            if (*eq)
-                ClientPortNumber = std::stoll(std::string(++eq));
+            eq = std::strchr(cmd, '=');
+            ClientPortNumber = std::stoll(std::string(++eq));
         }
     }
 
