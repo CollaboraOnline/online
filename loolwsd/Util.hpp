@@ -24,9 +24,6 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-// Possible states of LOOL processes.
-enum class LOOLState { LOOL_RUNNING, LOOL_STOPPING, LOOL_ABNORMAL };
-
 enum class LOOLExitCode
 {
     LOOL_NO_ERROR = 0,
@@ -41,8 +38,6 @@ enum class LOOLExitCode
     /* internal software error */
     LOOL_EXIT_SOFTWARE = 70
 };
-
-extern volatile LOOLState TerminationState;
 
 /// Flag to stop pump loops.
 extern volatile bool TerminationFlag;
