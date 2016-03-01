@@ -864,29 +864,11 @@ void lokit_main(const std::string& childRoot,
             Log::error("Error: mknod(" + jailPath.toString() + "/dev/random) failed.");
 
         }
-        if (chmod((jailPath.toString() + "/dev/random").c_str(), 0666) != 0)
-        {
-            Log::error("Error: chmod(" + jailPath.toString() + "/dev/random, 0666) failed.");
-
-        }
-        if (chown((jailPath.toString() + "/dev/random").c_str(), 0, 0) != 0)
-        {
-            Log::error("Error: chown(" + jailPath.toString() + "/dev/random, 0, 0) failed.");
-
-        }
         if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
                   S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                   makedev(1, 9)) != 0)
         {
             Log::error("Error: mknod(" + jailPath.toString() + "/dev/urandom) failed.");
-        }
-        if (chmod((jailPath.toString() + "/dev/urandom").c_str(), 0666) != 0)
-        {
-            Log::error("Error: chmod(" + jailPath.toString() + "/dev/urandom, 0666) failed.");
-        }
-        if (chown((jailPath.toString() + "/dev/urandom").c_str(), 0, 0) != 0)
-        {
-            Log::error("Error: chown(" + jailPath.toString() + "/dev/urandom, 0, 0) failed.");
         }
 
         Log::info("chroot(\"" + jailPath.toString() + "\")");
@@ -904,7 +886,6 @@ void lokit_main(const std::string& childRoot,
 
         dropCapability(CAP_SYS_CHROOT);
         dropCapability(CAP_MKNOD);
-        dropCapability(CAP_CHOWN);
         dropCapability(CAP_FOWNER);
 
         loKit = lok_init_2(instdir_path.c_str(), "file:///user");
