@@ -123,7 +123,6 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
-    LibreOfficeKit *_loKit;
     LibreOfficeKitDocument *_loKitDocument;
     std::string _docType;
     const bool _multiView;

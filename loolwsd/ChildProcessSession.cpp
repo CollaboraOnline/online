@@ -313,7 +313,6 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> onLoad,
                                          std::function<void(const std::string&)> onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
-    _loKit(loKit),
     _loKitDocument(loKitDocument),
     _multiView(getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
