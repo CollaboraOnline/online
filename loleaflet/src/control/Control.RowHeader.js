@@ -64,8 +64,12 @@ L.Control.RowHeader = L.Control.extend({
 			text.setAttribute('rel', 'spreadsheet-row-' + content); // for easy addressing
 			text.innerHTML = content;
 			height = Math.round(converter.call(context, twip).y) - 1 + 'px';
-			L.DomUtil.setStyle(text, 'line-height', height);
-			L.DomUtil.setStyle(text, 'height', height);
+			if (height === '-1px') {
+				L.DomUtil.setStyle(text, 'display', 'none');
+			} else {
+				L.DomUtil.setStyle(text, 'line-height', height);
+				L.DomUtil.setStyle(text, 'height', height);
+			}
 		}
 	},
 
