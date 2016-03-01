@@ -365,7 +365,7 @@ namespace Util
             }
             else
             {
-                count = bytes;
+                count += bytes;
                 break;
             }
         }
