@@ -275,10 +275,6 @@ The style is roughly as follows, in rough order of importance:
   std;". But it's OK to use "using Poco::Foo;" all over. Maybe that is
   not a good idea? But please no "using" in headers.
 
-- Be as portable as possible, i.e. don't intentionally write Unix-only
-  code if there is a choice. Obviously some parts of the code
-  currently use Unix-only things like chroot() and link() though.
-
 - Member functions use camelCaseWithInitialLowerCase. I don't like
   CamelCaseWithInitialUpperCase.
 
