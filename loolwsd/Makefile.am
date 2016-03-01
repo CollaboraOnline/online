@@ -44,13 +44,8 @@ clean-cache:
 # installing.
 all-local: loolwsd loolbroker
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
-	    if test `uname -s` = Linux; then \
-		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
-		sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolkit; \
-	    else \
-		sudo chown root loolbroker && sudo chmod u+s loolbroker; \
-		sudo chown root loolbroker && sudo chmod u+s loolkit; \
-	    fi; \
+	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
+	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolkit; \
 	fi
 
 tags:
