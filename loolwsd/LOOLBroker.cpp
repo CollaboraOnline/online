@@ -809,7 +809,7 @@ int main(int argc, char** argv)
 
     Log::info("loolbroker is ready.");
 
-    int childExitCode = Application::EXIT_OK;
+    int childExitCode = EXIT_SUCCESS;
     unsigned timeoutCounter = 0;
     while (!TerminationFlag)
     {
@@ -876,7 +876,7 @@ int main(int argc, char** argv)
             // No child processes
             if (errno == ECHILD)
             {
-                if (childExitCode == Application::EXIT_OK)
+                if (childExitCode == EXIT_SUCCESS)
                 {
                     Log::warn("Warn: last child exited successfully, fork new one.");
                     ++forkCounter;
@@ -890,7 +890,7 @@ int main(int argc, char** argv)
             }
         }
 
-        if (forkCounter > 0 && childExitCode == Application::EXIT_OK)
+        if (forkCounter > 0 && childExitCode == EXIT_SUCCESS)
         {
             std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
@@ -917,7 +917,7 @@ int main(int argc, char** argv)
         if (timeoutCounter++ == INTERVAL_PROBES)
         {
             timeoutCounter = 0;
-            childExitCode = Application::EXIT_OK;
+            childExitCode = EXIT_SUCCESS;
             sleep(MAINTENANCE_INTERVAL);
         }
     }

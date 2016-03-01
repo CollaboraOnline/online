@@ -496,6 +496,7 @@ namespace Util
                 retVal = EXIT_SUCCESS;
             break;
 
+            // Why are other non-zero exit codes interpreted as success?
             default:
                 retVal = EXIT_SUCCESS;
             break;
@@ -522,6 +523,8 @@ namespace Util
                 retVal = EXIT_FAILURE;
             break;
 
+            // Why are other signals treated as success? Will this function ever be called when a
+            // child was *not* terminated by a signal?
             default:
                 retVal = EXIT_SUCCESS;
             break;
