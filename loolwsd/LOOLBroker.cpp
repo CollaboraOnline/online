@@ -9,6 +9,8 @@
 
 #include <sys/wait.h>
 
+#include <cstring>
+
 #include "Common.hpp"
 #include "Capabilities.hpp"
 #include "Util.hpp"
@@ -655,37 +657,37 @@ int main(int argc, char** argv)
     {
         char *cmd = argv[i];
         char *eq  = nullptr;
-        if (strstr(cmd, "--losubpath=") == cmd)
+        if (std::strstr(cmd, "--losubpath=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 loSubPath = std::string(++eq);
         }
-        else if (strstr(cmd, "--systemplate=") == cmd)
+        else if (std::strstr(cmd, "--systemplate=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 sysTemplate = std::string(++eq);
         }
-        else if (strstr(cmd, "--lotemplate=") == cmd)
+        else if (std::strstr(cmd, "--lotemplate=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 loTemplate = std::string(++eq);
         }
-        else if (strstr(cmd, "--childroot=") == cmd)
+        else if (std::strstr(cmd, "--childroot=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 childRoot = std::string(++eq);
         }
-        else if (strstr(cmd, "--numprespawns=") == cmd)
+        else if (std::strstr(cmd, "--numprespawns=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
                 numPreSpawnedChildren = std::stoi(std::string(++eq));
         }
-        else if (strstr(cmd, "--clientport=") == cmd)
+        else if (std::strstr(cmd, "--clientport=") == cmd)
         {
             eq = strchrnul(cmd, '=');
             if (*eq)
