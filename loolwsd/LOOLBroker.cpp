@@ -248,12 +248,12 @@ public:
     }
 
     /// Sync ChildProcess instances with its child.
-    /// Returns the number of empty childs.
-    size_t syncChilds()
+    /// Returns the number of empty children.
+    size_t syncChildren()
     {
         std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
-        Log::trace("Synching Childs.");
+        Log::trace("Synching children.");
         size_t empty_count = 0;
         for (auto it = _childProcesses.begin(); it != _childProcesses.end(); )
         {
@@ -411,7 +411,7 @@ public:
                     const auto duration = (std::chrono::steady_clock::now() - lastMaintenanceTime);
                     if (duration >= std::chrono::seconds(10))
                     {
-                        syncChilds();
+                        syncChildren();
                         lastMaintenanceTime = std::chrono::steady_clock::now();
                     }
 
@@ -871,7 +871,7 @@ int main(int argc, char** argv)
                 Util::removeFile(childPath, true);
             }
 
-            pipeHandler.syncChilds();
+            pipeHandler.syncChildren();
             timeoutCounter = 0;
         }
         else if (pid < 0)
@@ -898,13 +898,13 @@ int main(int argc, char** argv)
         {
             std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
-            const int empty = pipeHandler.syncChilds();
+            const int empty = pipeHandler.syncChildren();
             const int total = _childProcesses.size();
 
             // Figure out how many children we need. Always create at least as many
             // as configured pre-spawn or one more than requested (whichever is larger).
             int spawn = std::max(static_cast<int>(forkCounter) + 1, numPreSpawnedChildren);
-            Log::debug() << "Creating " << spawn << " childs. Current Total: "
+            Log::debug() << "Creating " << spawn << (spawn == 1 ? "child" : "children") << ". Current total: "
                          << total << ", Empty: " << empty << Log::end;
             do
             {
