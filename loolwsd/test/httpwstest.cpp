@@ -235,7 +235,8 @@ void HTTPWSTest::testRenderingOptions()
 
 void HTTPWSTest::testPasswordProtectedDocument()
 {
-    try {
+    try
+    {
 
         Poco::Net::WebSocket socket(_session, _request, _response);
 
@@ -268,7 +269,8 @@ void HTTPWSTest::testPasswordProtectedDocument()
 
 void HTTPWSTest::testPasswordProtectedDocument2()
 {
-    try {
+    try
+    {
 
         Poco::Net::WebSocket socket(_session, _request, _response);
 
@@ -302,7 +304,8 @@ void HTTPWSTest::testPasswordProtectedDocument2()
 
 void HTTPWSTest::testPasswordProtectedDocument3()
 {
-    try {
+    try
+    {
 
         Poco::Net::WebSocket socket(_session, _request, _response);
 
@@ -353,7 +356,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         }
 
         // insert 10 slides
-        for(unsigned it = 1; it <= 10; it++)
+        for (unsigned it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:InsertPage");
             getResponseMessage(socket, "partscountchanged:", response, false);
@@ -367,7 +370,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         }
 
         // delete 10 slides
-        for(unsigned it = 1; it <= 10; it++)
+        for (unsigned it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:DeletePage");
             getResponseMessage(socket, "partscountchanged:", response, false);
@@ -381,7 +384,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         }
 
         // undo delete slides
-        for(unsigned it = 1; it <= 10; it++)
+        for (unsigned it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Undo");
             getResponseMessage(socket, "partscountchanged:", response, false);
@@ -395,7 +398,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         }
 
         // redo inserted slides
-        for(unsigned it = 1; it <= 10; it++)
+        for (unsigned it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Redo");
             getResponseMessage(socket, "partscountchanged:", response, false);
