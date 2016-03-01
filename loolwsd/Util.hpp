@@ -14,6 +14,7 @@
 #include <sstream>
 #include <functional>
 #include <memory>
+#include <sys/poll.h>
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -122,6 +123,9 @@ namespace Util
     int getSignalStatus(const int code);
 
     void requestTermination(const Poco::Process::PID& pid);
+
+    void pollPipeForReading(pollfd& pollPipe, const std::string& targetPipeName , const int& targetPipe,
+                            std::function<void(std::string& message)> handler);
 };
 
 //TODO: Move to own file.

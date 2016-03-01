@@ -544,6 +544,66 @@ namespace Util
             Log::warn("Exception: " + exc.message());
         }
     }
+
+    void pollPipeForReading(pollfd& pollPipe, const std::string& targetPipeName , const int& targetPipe,
+                            std::function<void(std::string& message)> handler)
+    {
+        std::string message;
+        char buffer[READ_BUFFER_SIZE];
+        char* start = buffer;
+        char* end = buffer;
+        ssize_t bytes = -1;
+
+        while (!TerminationFlag)
+        {
+            if (start == end)
+            {
+                if (poll(&pollPipe, 1, POLL_TIMEOUT_MS) < 0)
+                {
+                    Log::error("Failed to poll pipe [" + targetPipeName + "].");
+                    continue;
+                }
+                else if (pollPipe.revents & (POLLIN | POLLPRI))
+                {
+                    bytes = Util::readFIFO(targetPipe, buffer, sizeof(buffer));
+                    if (bytes < 0)
+                    {
+                        start = end = nullptr;
+                        Log::error("Error reading message from pipe [" + targetPipeName + "].");
+                        continue;
+                    }
+                    start = buffer;
+                    end = buffer + bytes;
+                }
+                else if (pollPipe.revents & (POLLERR | POLLHUP))
+                {
+                    Log::error("Broken pipe [" + targetPipeName + "] with wsd.");
+                    break;
+                }
+            }
+
+            if (start != end)
+            {
+                char byteChar = *start++;
+                while (start != end && byteChar != '\r' && byteChar != '\n')
+                {
+                    message += byteChar;
+                    byteChar = *start++;
+                }
+
+                if (byteChar == '\r' && *start == '\n')
+                {
+                    start++;
+                    Log::trace(targetPipeName + " recv: " + message);
+                    if (message == "eof")
+                        break;
+
+                    handler(message);
+                    message.clear();
+                }
+            }
+        }
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

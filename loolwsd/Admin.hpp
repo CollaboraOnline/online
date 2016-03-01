@@ -236,21 +236,11 @@ public:
         // Start a server listening on the admin port.
         _srv.start();
 
-        // Start listening for data changes
-        std::string message;
-        char buffer[READ_BUFFER_SIZE];
-        char* start;
-        char* end;
-
         struct pollfd pollPipeNotify;
-        ssize_t bytes = -1;
 
         pollPipeNotify.fd = NotifyPipe;
         pollPipeNotify.events = POLLIN;
         pollPipeNotify.revents = 0;
-
-        start = buffer;
-        end = buffer;
 
         static const std::string thread_name = "admin_thread";
 
@@ -259,55 +249,9 @@ public:
 
         Log::info("Thread [" + thread_name + "] started.");
 
-        while (!TerminationFlag)
-        {
-            if (start == end)
-            {
-                if (poll(&pollPipeNotify, 1, POLL_TIMEOUT_MS) < 0)
-                {
-                    Log::error("Failed to poll pipe [" + FIFO_NOTIFY + "].");
-                    continue;
-                }
-                else if (pollPipeNotify.revents & (POLLIN | POLLPRI))
-                {
-                    bytes = Util::readFIFO(NotifyPipe, buffer, sizeof(buffer));
-                    if (bytes < 0)
-                    {
-                        start = end = nullptr;
-                        Log::error("Error reading message from pipe [" + FIFO_NOTIFY + "].");
-                        continue;
-                    }
-                    start = buffer;
-                    end = buffer + bytes;
-                }
-                else if (pollPipeNotify.revents & (POLLERR | POLLHUP))
-                {
-                    Log::error("Broken pipe [" + FIFO_NOTIFY + "] with wsd.");
-                    break;
-                }
-            }
+        Util::pollPipeForReading(pollPipeNotify, FIFO_NOTIFY, NotifyPipe,
+                                 [this](std::string& message) { return handleInput(message); } );
 
-            if (start != end)
-            {
-                char byteChar = *start++;
-                while (start != end && byteChar != '\r' && byteChar != '\n')
-                {
-                    message += byteChar;
-                    byteChar = *start++;
-                }
-
-                if (byteChar == '\r' && *start == '\n')
-                {
-                    start++;
-                    Log::trace("NotifyData: " + message);
-                    if (message == "eof")
-                        break;
-
-                    handleInput(message);
-                    message.clear();
-                }
-            }
-        }
         Log::debug("Thread [" + thread_name + "] finished.");
     }
 

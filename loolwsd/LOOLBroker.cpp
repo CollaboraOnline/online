@@ -346,20 +346,11 @@ public:
 
     void run() override
     {
-        std::string message;
-        char  buffer[READ_BUFFER_SIZE];
-        char* start;
-        char* end;
-
         struct pollfd pollPipeBroker;
-        ssize_t bytes = -1;
 
         pollPipeBroker.fd = readerBroker;
         pollPipeBroker.events = POLLIN;
         pollPipeBroker.revents = 0;
-
-        start = buffer;
-        end = buffer;
 
         static const std::string thread_name = "brk_pipe_reader";
 
@@ -368,65 +359,8 @@ public:
 
         Log::debug("Thread [" + thread_name + "] started.");
 
-        while (!TerminationFlag)
-        {
-            if (start == end)
-            {
-                if (poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS) < 0)
-                {
-                    Log::error("Failed to poll pipe [" + FIFO_LOOLWSD + "].");
-                    continue;
-                }
-                else
-                if (pollPipeBroker.revents & (POLLIN | POLLPRI))
-                {
-                    bytes = Util::readFIFO(readerBroker, buffer, sizeof(buffer));
-                    if (bytes < 0)
-                    {
-                        start = end = nullptr;
-                        Log::error("Error reading message from pipe [" + FIFO_LOOLWSD + "].");
-                        continue;
-                    }
-                    start = buffer;
-                    end = buffer + bytes;
-                }
-                else
-                if (pollPipeBroker.revents & (POLLERR | POLLHUP))
-                {
-                    Log::error("Broken pipe [" + FIFO_LOOLWSD + "] with wsd.");
-                    break;
-                }
-            }
-
-            if (start != end)
-            {
-                char byteChar = *start++;
-                while (start != end && byteChar != '\r' && byteChar != '\n')
-                {
-                    message += byteChar;
-                    byteChar = *start++;
-                }
-
-                if (byteChar == '\r' && *start == '\n')
-                {
-                    start++;
-
-                    Log::trace("BrokerFromMaster: " + message);
-                    if (message == "eof")
-                        break;
-
-                    const auto duration = (std::chrono::steady_clock::now() - lastMaintenanceTime);
-                    if (duration >= std::chrono::seconds(10))
-                    {
-                        syncChildren();
-                        lastMaintenanceTime = std::chrono::steady_clock::now();
-                    }
-
-                    handleInput(message);
-                    message.clear();
-                }
-            }
-        }
+        Util::pollPipeForReading(pollPipeBroker, FIFO_LOOLWSD, readerBroker,
+                                 [this](std::string& message) {return handleInput(message); } );
 
         Log::debug("Thread [" + thread_name + "] finished.");
     }
