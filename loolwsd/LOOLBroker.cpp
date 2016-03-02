@@ -302,6 +302,8 @@ public:
             ++it;
         }
 
+        Log::trace("Synching children done.");
+
         return empty_count;
     }
 
