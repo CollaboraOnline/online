@@ -841,12 +841,12 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
     if (optionName == "help")
     {
         displayHelp();
-        exit(Application::EXIT_OK);
+        std::exit(Application::EXIT_OK);
     }
     else if (optionName == "version")
     {
         displayVersion();
-        exit(Application::EXIT_OK);
+        std::exit(Application::EXIT_OK);
     }
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);

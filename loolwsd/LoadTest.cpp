@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include <algorithm>
+#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -356,7 +357,7 @@ void LoadTest::handleOption(const std::string& optionName, const std::string& va
     if (optionName == "help")
     {
         displayHelp();
-        exit(Application::EXIT_OK);
+        std::exit(Application::EXIT_OK);
     }
     else if (optionName == "doclist")
         _docList = readDocList(value);

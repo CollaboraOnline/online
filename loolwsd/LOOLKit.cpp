@@ -21,6 +21,7 @@
 #include <dlfcn.h>
 
 #include <atomic>
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <memory>
@@ -95,7 +96,7 @@ namespace
             {
                 Log::error("Error: link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
                            "\") failed. Exiting.");
-                exit(Application::EXIT_SOFTWARE);
+                std::exit(Application::EXIT_SOFTWARE);
             }
             break;
         case FTW_DP:
@@ -307,7 +308,7 @@ public:
     Document(LibreOfficeKit *loKit,
              const std::string& jailId,
              const std::string& url)
-      : _multiView(getenv("LOK_VIEW_CALLBACK")),
+      : _multiView(std::getenv("LOK_VIEW_CALLBACK")),
         _loKit(loKit),
         _jailId(jailId),
         _url(url),
@@ -799,7 +800,7 @@ void lokit_main(const std::string& childRoot,
         if ((readerBroker = open(pipe.c_str(), O_RDONLY) ) < 0)
         {
             Log::error("Error: failed to open pipe [" + pipe + "] read only.");
-            exit(Application::EXIT_SOFTWARE);
+            std::exit(Application::EXIT_SOFTWARE);
         }
 
         const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
@@ -807,7 +808,7 @@ void lokit_main(const std::string& childRoot,
         if ((writerBroker = open(pipeBroker.c_str(), O_WRONLY) ) < 0)
         {
             Log::error("Error: failed to open pipe [" + FIFO_BROKER + "] write only.");
-            exit(Application::EXIT_SOFTWARE);
+            std::exit(Application::EXIT_SOFTWARE);
         }
 
         const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
@@ -875,13 +876,13 @@ void lokit_main(const std::string& childRoot,
         if (chroot(jailPath.toString().c_str()) == -1)
         {
             Log::error("Error: chroot(\"" + jailPath.toString() + "\") failed.");
-            exit(Application::EXIT_SOFTWARE);
+            std::exit(Application::EXIT_SOFTWARE);
         }
 
         if (chdir("/") == -1)
         {
             Log::error("Error: chdir(\"/\") in jail failed.");
-            exit(Application::EXIT_SOFTWARE);
+            std::exit(Application::EXIT_SOFTWARE);
         }
 
         dropCapability(CAP_SYS_CHROOT);
@@ -892,7 +893,7 @@ void lokit_main(const std::string& childRoot,
         if (loKit == nullptr)
         {
             Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
-            exit(Application::EXIT_SOFTWARE);
+            std::exit(Application::EXIT_SOFTWARE);
         }
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
@@ -1102,13 +1103,13 @@ int main(int argc, char** argv)
     if (loSubPath.empty())
     {
         Log::error("Error: --losubpath is empty");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if (pipe.empty())
     {
         Log::error("Error: --pipe is empty");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     try

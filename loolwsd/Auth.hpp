@@ -11,6 +11,7 @@
 #ifndef INCLUDED_AUTH_HPP
 #define INCLUDED_AUTH_HPP
 
+#include <cstdlib>
 #include <string>
 
 #include <Poco/Net/HTTPClientSession.h>
@@ -86,7 +87,7 @@ public:
         //TODO: Parse the response.
         /*
         // This is used for the demo site.
-        const auto lastLogTime = strtoul(reply.c_str(), nullptr, 0);
+        const auto lastLogTime = std::strtoul(reply.c_str(), nullptr, 0);
         if (lastLogTime < 1)
         {
             //TODO: Redirect to login page.

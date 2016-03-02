@@ -313,7 +313,7 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::function<void(const std::string&)> onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
-    _multiView(getenv("LOK_VIEW_CALLBACK")),
+    _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
     _viewId(0),
     _clientPart(0),

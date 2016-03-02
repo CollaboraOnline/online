@@ -9,6 +9,7 @@
 
 #include <sys/wait.h>
 
+#include <cstdlib>
 #include <cstring>
 
 #include "Common.hpp"
@@ -694,31 +695,31 @@ int main(int argc, char** argv)
     if (loSubPath.empty())
     {
         Log::error("Error: --losubpath is empty");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if (sysTemplate.empty())
     {
         Log::error("Error: --systemplate is empty");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if (loTemplate.empty())
     {
         Log::error("Error: --lotemplate is empty");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if (childRoot.empty())
     {
         Log::error("Error: --childroot is empty");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if (numPreSpawnedChildren < 1)
     {
         Log::error("Error: --numprespawns is 0");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
@@ -726,7 +727,7 @@ int main(int argc, char** argv)
     if ( (readerBroker = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
     {
         Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] read only. Exiting.");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     try
@@ -752,26 +753,26 @@ int main(int argc, char** argv)
     if (mkfifo(pipeBroker.c_str(), 0666) < 0 && errno != EEXIST)
     {
         Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if ((readerChild = open(pipeBroker.c_str(), pipeFlags) ) < 0)
     {
         Log::error("Error: pipe opened for reading.");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if ((pipeFlags = fcntl(readerChild, F_GETFL, 0)) < 0)
     {
         Log::error("Error: failed to get pipe flags [" + FIFO_BROKER + "].");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     pipeFlags &= ~O_NONBLOCK;
     if (fcntl(readerChild, F_SETFL, pipeFlags) < 0)
     {
         Log::error("Error: failed to set pipe flags [" + FIFO_BROKER + "].");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     // Initialize LoKit and hope we can fork and save memory by sharing pages.
@@ -789,7 +790,7 @@ int main(int argc, char** argv)
                              loTemplate, loSubPath) < 0)
     {
         Log::error("Error: failed to create children.");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if (numPreSpawnedChildren > 1)

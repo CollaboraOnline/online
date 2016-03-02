@@ -12,6 +12,8 @@
 
 #include <sys/capability.h>
 
+#include <cstdlib>
+
 #include "Util.hpp"
 
 static
@@ -24,7 +26,7 @@ void dropCapability(cap_value_t capability)
     if (caps == nullptr)
     {
         Log::error("Error: cap_get_proc() failed.");
-        exit(1);
+        std::exit(1);
     }
 
     char *capText = cap_to_text(caps, nullptr);
@@ -35,13 +37,13 @@ void dropCapability(cap_value_t capability)
         cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
     {
         Log::error("Error: cap_set_flag() failed.");
-        exit(1);
+        std::exit(1);
     }
 
     if (cap_set_proc(caps) == -1)
     {
         Log::error("Error: cap_set_proc() failed.");
-        exit(1);
+        std::exit(1);
     }
 
     capText = cap_to_text(caps, nullptr);
