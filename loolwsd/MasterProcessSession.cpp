@@ -455,7 +455,7 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
 
         // request new URL session
         const std::string aMessage = "request " + getId() + " " + _docURL + "\r\n";
-        Log::trace("MasterToBroker: " + aMessage);
+        Log::trace("MasterToBroker: " + aMessage.substr(0, aMessage.length()-2));
         Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
     }
     catch (const Poco::SyntaxException&)
@@ -780,7 +780,7 @@ void MasterProcessSession::dispatchChild()
             Log::info() << "Retrying child permission... " << nRequest << Log::end;
             // request again new URL session
             const std::string aMessage = "request " + getId() + " " + _docURL + "\r\n";
-            Log::trace("MasterToBroker: " + aMessage);
+            Log::trace("MasterToBroker: " + aMessage.substr(0, aMessage.length()-2));
             Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
         }
     }
