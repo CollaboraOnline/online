@@ -911,7 +911,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_USAGE;
     }
 
-    //Environment::set("LOK_PREINIT", "1");
     //Environment::set("LOK_FORK", "1");
     //Environment::set("LD_BIND_NOW", "1");
     //Environment::set("LOK_VIEW_CALLBACK", "1");

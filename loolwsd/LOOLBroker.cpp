@@ -775,7 +775,7 @@ int main(int argc, char** argv)
     }
 
     // Initialize LoKit and hope we can fork and save memory by sharing pages.
-    const bool sharePages = std::getenv("LOK_PREINIT") != nullptr
+    const bool sharePages = std::getenv("LOK_NO_PREINIT") == nullptr
                           ? globalPreinit(loTemplate)
                           : std::getenv("LOK_FORK") != nullptr;
 
