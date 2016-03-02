@@ -1010,8 +1010,13 @@ void lokit_main(const std::string& childRoot,
                         response += "bad \r\n";
                     }
 
-                    Log::trace("KitToBroker: " + response);
                     Util::writeFIFO(writerBroker, response);
+
+                    // Don't log the CR LF at end
+                    assert(response.length() > 2);
+                    assert(response[response.length()-1] == '\n');
+                    assert(response[response.length()-2] == '\r');
+                    Log::trace("KitToBroker: " + response.substr(0, response.length()-2));
                     message.clear();
                 }
             }
