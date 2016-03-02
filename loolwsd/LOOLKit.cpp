@@ -527,7 +527,7 @@ private:
         Document* self = reinterpret_cast<Document*>(pData);
         Log::trace() << "Callback "
                      << KitCallbackTypeToString(nType)
-                     << " [" << pPayload << "]." << Log::end;
+                     << " [" << (pPayload ? pPayload : "") << "]." << Log::end;
 
         if (self)
         {
