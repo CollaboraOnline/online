@@ -39,6 +39,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocument);
     CPPUNIT_TEST(testPasswordProtectedDocument2);
     CPPUNIT_TEST(testPasswordProtectedDocument3);
+    CPPUNIT_TEST(testPasswordProtectedDocument3again);
     CPPUNIT_TEST(testImpressPartCountChanged);
     CPPUNIT_TEST_SUITE_END();
 
@@ -48,6 +49,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testPasswordProtectedDocument();
     void testPasswordProtectedDocument2();
     void testPasswordProtectedDocument3();
+    void testPasswordProtectedDocument3again();
     void testImpressPartCountChanged();
 
     static
@@ -323,6 +325,11 @@ void HTTPWSTest::testPasswordProtectedDocument3()
     {
         CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
     }
+}
+
+void HTTPWSTest::testPasswordProtectedDocument3again()
+{
+    testPasswordProtectedDocument3();
 }
 
 void HTTPWSTest::testImpressPartCountChanged()
