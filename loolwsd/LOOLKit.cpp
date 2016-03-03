@@ -658,6 +658,14 @@ private:
             // Retake the lock.
             lock.lock();
 
+            // Notify the Admin thread
+            std::ostringstream message;
+            message << "document" << " "
+                    << Process::id() << " "
+                    << _url << " "
+                    << "\r\n";
+            Util::writeFIFO(writerNotify, message.str());
+
             if (_multiView)
             {
                 Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
@@ -698,6 +706,14 @@ private:
         }
 
         ++_clientViews;
+
+        std::ostringstream message;
+        message << "addview" << " "
+                << Process::id() << " "
+                << sessionId << " "
+                << "\r\n";
+        Util::writeFIFO(writerNotify, message.str());
+
         return _loKitDocument;
     }
 
@@ -714,6 +730,14 @@ private:
         }
 
         --_clientViews;
+
+        std::ostringstream message;
+        message << "rmview" << " "
+                << Process::id() << " "
+                << sessionId << " "
+                << "\r\n";
+        Util::writeFIFO(writerNotify, message.str());
+
         Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
 
         if (_multiView && _loKitDocument)
@@ -1054,6 +1078,13 @@ void lokit_main(const std::string& childRoot,
     Log::debug("Destroying LibreOfficeKit.");
     if (loKit)
         loKit->pClass->destroy(loKit);
+
+    std::ostringstream message;
+    message << "rmdoc" << " "
+            << Process::id() << " "
+            << "\r\n";
+    Util::writeFIFO(writerNotify, message.str());
+    close(writerNotify);
 
     Log::info("Process [" + process_name + "] finished.");
 }

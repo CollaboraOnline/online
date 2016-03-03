@@ -28,9 +28,9 @@ public:
 
     static int getBrokerPid() { return Admin::BrokerPipe; }
 
-    std::string getDocuments();
-
     void run() override;
+
+    AdminModel& getModel();
 
 private:
     void handleInput(std::string& message);

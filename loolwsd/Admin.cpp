@@ -61,6 +61,11 @@ public:
             Log::debug("Thread [" + thread_name + "] started.");
 
             auto ws = std::make_shared<WebSocket>(request, response);
+
+            // Subscribe the websocket of any AdminModel updates
+            AdminModel& model = _admin->getModel();
+            model.subscribe(ws);
+
             const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
             int flags = 0;
             int n = 0;
@@ -138,7 +143,7 @@ public:
                         else if (tokens.count() == 1 && tokens[0] == "documents")
                         {
 
-                            std::string response = "documents " + _admin->getDocuments();
+                            std::string response = "documents " + model.query("documents");
                             ws->sendFrame(response.data(), response.size());
                         }
                     }
@@ -222,21 +227,9 @@ Admin::~Admin()
     _srv.stop();
 }
 
-std::string Admin::getDocuments()
-{
-    return _model.getDocuments();
-}
-
 void Admin::handleInput(std::string& message)
 {
-    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-    if (tokens.count() > 2 && tokens[0] == "document")
-    {
-        std::string pid = tokens[1];
-        std::string url = tokens[2];
-
-        _model.addDocument(std::stoi(pid), url);
-    }
+    _model.update(message);
 }
 
 void Admin::run()
@@ -263,6 +256,11 @@ void Admin::run()
                             [this](std::string& message) { return handleInput(message); } );
 
     Log::debug("Thread [" + thread_name + "] finished.");
+}
+
+AdminModel& Admin::getModel()
+{
+    return _model;
 }
 
 //TODO: Clean up with something more elegant.
