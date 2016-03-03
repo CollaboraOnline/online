@@ -67,7 +67,6 @@ extern "C"
             CASE(DOCUMENT_PASSWORD);
             CASE(DOCUMENT_PASSWORD_TO_MODIFY);
             CASE(ERROR);
-            CASE(PARTS_COUNT_CHANGED);
 #undef CASE
         }
         std::cout << " payload: " << pPayload << std::endl;
