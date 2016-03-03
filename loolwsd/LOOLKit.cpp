@@ -602,9 +602,6 @@ private:
                                                     LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY);
             }
 
-            // documentLoad will trigger callback, which needs to take the lock.
-            lock.unlock();
-
             // Save the provided password with us and the jailed url
             _isDocPasswordProvided = isDocPasswordProvided;
             _docPassword = docPassword;
@@ -634,8 +631,6 @@ private:
                 return nullptr;
             }
             Log::info("documentLoad() returned");
-            // Retake the lock.
-            lock.lock();
 
             // Notify the Admin thread
             std::ostringstream message;
