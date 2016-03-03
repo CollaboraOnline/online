@@ -36,20 +36,20 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPaste);
     CPPUNIT_TEST(testLargePaste);
     CPPUNIT_TEST(testRenderingOptions);
-    CPPUNIT_TEST(testPasswordProtectedDocument);
-    CPPUNIT_TEST(testPasswordProtectedDocument2);
-    CPPUNIT_TEST(testPasswordProtectedDocument3);
-    CPPUNIT_TEST(testPasswordProtectedDocument3again);
+    CPPUNIT_TEST(testPasswordProtectedDocumentWithoutPassword);
+    CPPUNIT_TEST(testPasswordProtectedDocumentWithWrongPassword);
+    CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
+    CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
     CPPUNIT_TEST(testImpressPartCountChanged);
     CPPUNIT_TEST_SUITE_END();
 
     void testPaste();
     void testLargePaste();
     void testRenderingOptions();
-    void testPasswordProtectedDocument();
-    void testPasswordProtectedDocument2();
-    void testPasswordProtectedDocument3();
-    void testPasswordProtectedDocument3again();
+    void testPasswordProtectedDocumentWithoutPassword();
+    void testPasswordProtectedDocumentWithWrongPassword();
+    void testPasswordProtectedDocumentWithCorrectPassword();
+    void testPasswordProtectedDocumentWithCorrectPasswordAgain();
     void testImpressPartCountChanged();
 
     static
@@ -235,7 +235,7 @@ void HTTPWSTest::testRenderingOptions()
     }
 }
 
-void HTTPWSTest::testPasswordProtectedDocument()
+void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
 {
     try
     {
@@ -269,7 +269,7 @@ void HTTPWSTest::testPasswordProtectedDocument()
     }
 }
 
-void HTTPWSTest::testPasswordProtectedDocument2()
+void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
 {
     try
     {
@@ -304,7 +304,7 @@ void HTTPWSTest::testPasswordProtectedDocument2()
     }
 }
 
-void HTTPWSTest::testPasswordProtectedDocument3()
+void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
 {
     try
     {
@@ -327,9 +327,9 @@ void HTTPWSTest::testPasswordProtectedDocument3()
     }
 }
 
-void HTTPWSTest::testPasswordProtectedDocument3again()
+void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPasswordAgain()
 {
-    testPasswordProtectedDocument3();
+    testPasswordProtectedDocumentWithCorrectPassword();
 }
 
 void HTTPWSTest::testImpressPartCountChanged()
