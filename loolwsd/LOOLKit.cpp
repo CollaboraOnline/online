@@ -70,6 +70,9 @@ using Poco::ThreadLocal;
 const std::string CHILD_URI = "/loolws/child/";
 const std::string FIFO_PATH = "pipe";
 const std::string FIFO_BROKER = "loolbroker.fifo";
+const std::string FIFO_NOTIFY = "loolnotify.fifo";
+
+static int writerNotify = -1;
 
 namespace
 {
@@ -809,6 +812,14 @@ void lokit_main(const std::string& childRoot,
         {
             Log::error("Error: failed to open pipe [" + FIFO_BROKER + "] write only.");
             std::exit(Application::EXIT_SOFTWARE);
+        }
+
+        // Open notify pipe
+        const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
+        if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
+        {
+            Log::error("Error: pipe opened for writing.");
+            exit(Application::EXIT_SOFTWARE);
         }
 
         const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);

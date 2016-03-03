@@ -31,13 +31,11 @@ typedef int (LokHookPreInit)  ( const char *install_path, const char *user_profi
 using Poco::ProcessHandle;
 
 const std::string FIFO_LOOLWSD = "loolwsdfifo";
-const std::string FIFO_NOTIFY = "loolnotify.fifo";
 const std::string BROKER_SUFIX = ".fifo";
 const std::string BROKER_PREFIX = "lokit";
 
 static int readerChild = -1;
 static int readerBroker = -1;
-static int writerNotify = -1;
 
 static std::string loolkitPath;
 static std::atomic<unsigned> forkCounter;
