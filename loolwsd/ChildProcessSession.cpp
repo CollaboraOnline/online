@@ -110,8 +110,6 @@ public:
             return std::string("LOK_CALLBACK_DOCUMENT_SIZE_CHANGED");
         case LOK_CALLBACK_SET_PART:
             return std::string("LOK_CALLBACK_SET_PART");
-        case LOK_CALLBACK_PARTS_COUNT_CHANGED:
-            return std::string("LOK_CALLBACK_PARTS_COUNT_CHANGED");
         case LOK_CALLBACK_DOCUMENT_PASSWORD:
             return std::string("LOK_CALLBACK_DOCUMENT_PASSWORD");
         case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
@@ -242,9 +240,6 @@ public:
                 _session.sendTextFrame("error: cmd=" + object->get("cmd").toString() +
                         " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
             }
-            break;
-        case LOK_CALLBACK_PARTS_COUNT_CHANGED:
-            _session.sendTextFrame("partscountchanged: " + rPayload);
             break;
         }
     }

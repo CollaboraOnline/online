@@ -230,18 +230,6 @@ unocommandresult: <payload>
 Callback that an UNO command has finished.
 See LOK_CALLBACK_UNO_COMMAND_RESULT for details.
 
-partscountchanged: action=<PartInserted|PartDeleted> part=<index>
-
-    Callback action performed:
-
-    PartInserted. The document parts has changed by the action
-    Insert.
-
-    PartDeleted. The document parts has changed by the action
-    Delete.
-
-    <index> The index of the part <PartInserted|PartDeleted>
-
 child -> parent
 ===============
 

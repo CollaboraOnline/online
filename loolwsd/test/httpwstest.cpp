@@ -355,6 +355,7 @@ void HTTPWSTest::testImpressPartCountChanged()
             CPPUNIT_ASSERT_EQUAL(totalParts, 1);
         }
 
+        /* FIXME partscountchanged: was removed, update accordingly
         // insert 10 slides
         for (unsigned it = 1; it <= 10; it++)
         {
@@ -410,6 +411,7 @@ void HTTPWSTest::testImpressPartCountChanged()
                 CPPUNIT_ASSERT(values["action"] == "PartDeleted");
             }
         }
+        */
 
         socket.shutdown();
     }
