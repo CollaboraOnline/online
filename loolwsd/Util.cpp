@@ -598,6 +598,37 @@ namespace Util
             }
         }
     }
+
+    unsigned getMemoryUsage(Poco::Process::PID nPid)
+    {
+        //TODO: Instead of RSS, return PSS
+        std::string sResponse;
+        const auto cmd = "ps o rss= -p " + std::to_string(nPid);
+        FILE* fp = popen(cmd.c_str(), "r");
+        if (fp == nullptr)
+        {
+            return 0;
+        }
+
+        char cmdBuffer[1024];
+        while (fgets(cmdBuffer, sizeof(cmdBuffer) - 1, fp) != nullptr)
+        {
+            sResponse += cmdBuffer;
+        }
+        pclose(fp);
+
+        unsigned nMem = 0;
+        try
+        {
+            nMem = std::stoi(sResponse);
+        }
+        catch(std::exception& e)
+        {
+            Log::warn() << "Trying to find memory of invalid/dead PID" << Log::end;
+        }
+
+        return nMem;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

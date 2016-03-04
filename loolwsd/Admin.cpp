@@ -112,7 +112,10 @@ public:
                             break;
                         }
 
-                        if (tokens.count() == 1 && tokens[0] == "stats")
+                        if (tokens.count() < 1)
+                            continue;
+
+                        if (tokens[0] == "stats")
                         {
                             //TODO: Collect stats and reply back to admin.
                             // We need to ask Broker to give us some numbers on docs/clients/etc.
@@ -140,11 +143,31 @@ public:
 
                             ws->sendFrame(statsResponse.data(), statsResponse.size());
                         }
-                        else if (tokens.count() == 1 && tokens[0] == "documents")
+                        else if (tokens[0] == "documents")
                         {
 
                             std::string responseString = "documents " + model.query("documents");
                             ws->sendFrame(responseString.data(), responseString.size());
+                        }
+                        else if (tokens[0] == "total_mem")
+                        {
+                            Poco::Process::PID nBrokerPid = _admin->getBrokerPid();
+                            unsigned totalMem = Util::getMemoryUsage(nBrokerPid);
+                            totalMem += model.getTotalMemoryUsage();
+                            totalMem += Util::getMemoryUsage(Poco::Process::id());
+
+                            std::string response = "total_mem " + std::to_string(totalMem);
+                            ws->sendFrame(response.data(), response.size());
+                        }
+                        else if (tokens[0] == "active_users_count")
+                        {
+                            std::string response = tokens[0] + " " + model.query(tokens[0]);
+                            ws->sendFrame(response.data(), response.size());
+                        }
+                        else if (tokens[0] == "active_docs_count")
+                        {
+                            std::string response = tokens[0] + " " + model.query(tokens[0]);
+                            ws->sendFrame(response.data(), response.size());
                         }
                         else if (tokens[0] == "kill" && tokens.count() == 2)
                         {
@@ -226,10 +249,11 @@ private:
 };
 
 /// An admin command processor.
-Admin::Admin(const int brokerPipe, const int notifyPipe) :
+Admin::Admin(const Poco::Process::PID brokerPid, const int brokerPipe, const int notifyPipe) :
     _srv(new AdminRequestHandlerFactory(this), ServerSocket(ADMIN_PORT_NUMBER), new HTTPServerParams),
     _model(AdminModel())
 {
+    Admin::BrokerPid = brokerPid;
     Admin::BrokerPipe = brokerPipe;
     Admin::NotifyPipe = notifyPipe;
 }
@@ -278,6 +302,7 @@ AdminModel& Admin::getModel()
 }
 
 //TODO: Clean up with something more elegant.
+Poco::Process::PID Admin::BrokerPid;
 int Admin::BrokerPipe;
 int Admin::NotifyPipe;
 

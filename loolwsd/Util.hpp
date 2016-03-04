@@ -126,6 +126,8 @@ namespace Util
 
     void pollPipeForReading(pollfd& pollPipe, const std::string& targetPipeName , const int& targetPipe,
                             std::function<void(std::string& message)> handler);
+
+    unsigned getMemoryUsage(Poco::Process::PID nPid);
 };
 
 //TODO: Move to own file.

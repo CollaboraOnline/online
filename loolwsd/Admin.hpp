@@ -22,11 +22,11 @@ const std::string FIFO_NOTIFY = "loolnotify.fifo";
 class Admin : public Poco::Runnable
 {
 public:
-    Admin(const int brokerPipe, const int notifyPipe);
+    Admin(const Poco::Process::PID brokerPid, const int brokerPipe, const int notifyPipe);
 
     ~Admin();
 
-    static int getBrokerPid() { return Admin::BrokerPipe; }
+    static int getBrokerPid() { return Admin::BrokerPid; }
 
     static int getBrokerPipe() { return Admin::BrokerPipe; }
 
@@ -41,6 +41,7 @@ private:
     Poco::Net::HTTPServer _srv;
     AdminModel _model;
 
+    static Poco::Process::PID BrokerPid;
     static int BrokerPipe;
     static int NotifyPipe;
 };
