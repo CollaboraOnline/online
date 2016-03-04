@@ -208,6 +208,34 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		setInterval(function() {
 			return socketOverview._getBasicStats();
 		}, 5000);
+
+		// Allow table rows to have a context menu for killing children
+		$('body').on('contextmenu', 'table tr', function(ev) {
+			$('#rowContextMenu').css({
+				display: 'block',
+				left: ev.pageX,
+				top: ev.pageY
+			})
+			.data('rowToKill', ev.target.parentElement.id);
+
+			return false;
+		})
+		.click(function() {
+			$('#rowContextMenu').hide();
+		});
+
+		$('#rowContextMenu').on('click', 'a', function(e) {
+			vex.dialog.confirm({
+				message: 'Are you sure you want to kill this child ?',
+				callback: function(value) {
+					if (value) {
+						var killPid = ($('#rowContextMenu').data('rowToKill')).substring('doc'.length);
+						socketOverview.socket.send('kill ' + killPid);
+					}
+					$('#rowContextMenu').hide();
+				}
+			});
+		});
 	},
 
 	onSocketMessage: function(e) {

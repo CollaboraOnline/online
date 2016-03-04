@@ -104,3 +104,12 @@ body {
   border-radius: 50%;
   font-size: 60px;
 }
+
+/*
+ * Custom
+ */
+
+#rowContextMenu {
+  position: absolute;
+  display: none;
+}
