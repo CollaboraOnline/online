@@ -72,58 +72,12 @@ public:
     {
     }
 
-    std::string callbackTypeToString (const int nType)
-    {
-        switch (nType)
-        {
-        case LOK_CALLBACK_INVALIDATE_TILES:
-            return std::string("LOK_CALLBACK_INVALIDATE_TILES");
-        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
-            return std::string("LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR");
-        case LOK_CALLBACK_TEXT_SELECTION:
-            return std::string("LOK_CALLBACK_TEXT_SELECTION");
-        case LOK_CALLBACK_TEXT_SELECTION_START:
-            return std::string("LOK_CALLBACK_TEXT_SELECTION_START");
-        case LOK_CALLBACK_TEXT_SELECTION_END:
-            return std::string("LOK_CALLBACK_TEXT_SELECTION_END");
-        case LOK_CALLBACK_CURSOR_VISIBLE:
-            return std::string("LOK_CALLBACK_CURSOR_VISIBLE");
-        case LOK_CALLBACK_GRAPHIC_SELECTION:
-            return std::string("LOK_CALLBACK_GRAPHIC_SELECTION");
-        case LOK_CALLBACK_CELL_CURSOR:
-            return std::string("LOK_CALLBACK_CELL_CURSOR");
-        case LOK_CALLBACK_CELL_FORMULA:
-            return std::string("LOK_CALLBACK_CELL_FORMULA");
-        case LOK_CALLBACK_MOUSE_POINTER:
-            return std::string("LOK_CALLBACK_MOUSE_POINTER");
-        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
-            return std::string("LOK_CALLBACK_SEARCH_RESULT_SELECTION");
-        case LOK_CALLBACK_UNO_COMMAND_RESULT:
-            return std::string("LOK_CALLBACK_UNO_COMMAND_RESULT");
-        case LOK_CALLBACK_HYPERLINK_CLICKED:
-            return std::string("LOK_CALLBACK_HYPERLINK_CLICKED");
-        case LOK_CALLBACK_STATE_CHANGED:
-            return std::string("LOK_CALLBACK_STATE_CHANGED");
-        case LOK_CALLBACK_SEARCH_NOT_FOUND:
-            return std::string("LOK_CALLBACK_SEARCH_NOT_FOUND");
-        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-            return std::string("LOK_CALLBACK_DOCUMENT_SIZE_CHANGED");
-        case LOK_CALLBACK_SET_PART:
-            return std::string("LOK_CALLBACK_SET_PART");
-        case LOK_CALLBACK_DOCUMENT_PASSWORD:
-            return std::string("LOK_CALLBACK_DOCUMENT_PASSWORD");
-        case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
-            return std::string("LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY");
-        }
-        return std::to_string(nType);
-    }
-
     void callback(const int nType, const std::string& rPayload)
     {
         auto lock = _session.getLock();
 
         Log::trace() << "CallbackWorker::callback [" << _session.getViewId() << "] "
-                     << callbackTypeToString(nType)
+                     << LOKitHelper::kitCallbackTypeToString(nType)
                      << " [" << rPayload << "]." << Log::end;
         if (_session.isDisconnected())
         {
@@ -268,14 +222,14 @@ public:
                 }
                 catch (const Exception& exc)
                 {
-                    Log::error() << "Error while handling callback [" << callbackTypeToString(nType) << "]. "
+                    Log::error() << "Error while handling callback [" << LOKitHelper::kitCallbackTypeToString(nType) << "]. "
                                  << exc.displayText()
                                  << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                                  << Log::end;
                 }
                 catch (const std::exception& exc)
                 {
-                    Log::error("Error while handling callback [" + callbackTypeToString(nType) + "]. " +
+                    Log::error("Error while handling callback [" + LOKitHelper::kitCallbackTypeToString(nType) + "]. " +
                                std::string("Exception: ") + exc.what());
                 }
             }

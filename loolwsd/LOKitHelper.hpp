@@ -37,6 +37,61 @@ namespace LOKitHelper
     }
 
     inline
+    std::string kitCallbackTypeToString (const int nType)
+    {
+        // Keep in the same order as in LibreOfficeKitEnums.h
+        switch (nType)
+        {
+        case LOK_CALLBACK_INVALIDATE_TILES:
+            return "INVALIDATE_TILES";
+        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
+            return "INVALIDATE_VISIBLE_CURSOR";
+        case LOK_CALLBACK_TEXT_SELECTION:
+            return "TEXT_SELECTION";
+        case LOK_CALLBACK_TEXT_SELECTION_START:
+            return "TEXT_SELECTION_START";
+        case LOK_CALLBACK_TEXT_SELECTION_END:
+            return "TEXT_SELECTION_END";
+        case LOK_CALLBACK_CURSOR_VISIBLE:
+            return "CURSOR_VISIBLE";
+        case LOK_CALLBACK_GRAPHIC_SELECTION:
+            return "GRAPHIC_SELECTION";
+        case LOK_CALLBACK_HYPERLINK_CLICKED:
+            return "HYPERLINK_CLICKED";
+        case LOK_CALLBACK_STATE_CHANGED:
+            return "STATE_CHANGED";
+        case LOK_CALLBACK_STATUS_INDICATOR_START:
+            return "STATUS_INDICATOR_START";
+        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+            return "STATUS_INDICATOR_SET_VALUE";
+        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+            return "STATUS_INDICATOR_FINISH";
+        case LOK_CALLBACK_SEARCH_NOT_FOUND:
+            return "SEARCH_NOT_FOUND";
+        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
+            return "DOCUMENT_SIZE_CHANGED";
+        case LOK_CALLBACK_SET_PART:
+            return "SET_PART";
+        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
+            return "SEARCH_RESULT_SELECTION";
+        case LOK_CALLBACK_UNO_COMMAND_RESULT:
+            return "UNO_COMMAND_RESULT";
+        case LOK_CALLBACK_CELL_CURSOR:
+            return "CELL_CURSOR";
+        case LOK_CALLBACK_MOUSE_POINTER:
+            return "MOUSE_POINTER";
+        case LOK_CALLBACK_CELL_FORMULA:
+            return "CELL_FORMULA";
+        case LOK_CALLBACK_DOCUMENT_PASSWORD:
+            return "DOCUMENT_PASSWORD";
+        case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+            return "DOCUMENT_PASSWORD_TO_MODIFY";
+        }
+
+        return std::to_string(nType);
+    }
+
+    inline
     std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
     {
         std::string typeString(documentTypeToString(static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument))));
