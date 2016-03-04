@@ -634,35 +634,11 @@ int main(int argc, char** argv)
 
     loolkitPath = Poco::Path(argv[0]).parent().toString() + "loolkit";
 
-    if (loSubPath.empty())
-    {
-        Log::error("Error: --losubpath is empty");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if (sysTemplate.empty())
-    {
-        Log::error("Error: --systemplate is empty");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if (loTemplate.empty())
-    {
-        Log::error("Error: --lotemplate is empty");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if (childRoot.empty())
-    {
-        Log::error("Error: --childroot is empty");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if (numPreSpawnedChildren < 1)
-    {
-        Log::error("Error: --numprespawns is 0");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
+    assert(!loSubPath.empty());
+    assert(!sysTemplate.empty());
+    assert(!loTemplate.empty());
+    assert(!childRoot.empty());
+    assert(numPreSpawnedChildren >= 1);
 
     const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
     const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
