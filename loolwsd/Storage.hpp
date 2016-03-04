@@ -13,6 +13,8 @@
 
 #include <string>
 
+#include <Poco/Net/HTTPResponse.h>
+
 #include "Auth.hpp"
 #include "Util.hpp"
 
@@ -21,13 +23,20 @@ class StorageBase
 {
 public:
 
-    /// Returns a local file path given a URI.
+    StorageBase(const std::string& localStorePath) :
+        _localStorePath(localStorePath)
+    {
+    }
+
+    /// Returns a local file path given a URI or ID.
     /// If necessary copies the file locally first.
     virtual std::string getFilePathFromURI(const std::string& uri) = 0;
 
-    /// Writes the contents of the file back to the URI.
+    /// Writes the contents of the file back to the source.
     virtual bool restoreFileToURI(const std::string& path, const std::string& uri) = 0;
 
+protected:
+    const std::string _localStorePath;
 };
 
 /// Trivial implementation of local storage that does not need do anything.
@@ -51,11 +60,59 @@ public:
     }
 };
 
+class WopiStorage : public StorageBase
+{
+public:
+    WopiStorage(const std::string& localStorePath) :
+        StorageBase(localStorePath)
+    {
+    }
+
+    /// uri format: http://server/<...>/wopi*/files/<id>/content
+    std::string getFilePathFromURI(const std::string& uri) override
+    {
+        Poco::URI uriObject(uri);
+        Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri, Poco::Net::HTTPMessage::HTTP_1_1);
+        Poco::Net::HTTPResponse response;
+        session.sendRequest(request);
+        std::istream& rs = session.receiveResponse(response);
+        Log::info() << "WOPI::GetFile Status: " <<  response.getStatus() << " " << response.getReason() << Log::end;
+
+        //TODO: Get proper filename.
+        const std::string local_filename = _localStorePath + "/filename";
+        std::ofstream ofs(local_filename);
+        std::copy(std::istreambuf_iterator<char>(rs),
+                  std::istreambuf_iterator<char>(),
+                  std::ostreambuf_iterator<char>(ofs));
+        return local_filename;
+    }
+
+    bool restoreFileToURI(const std::string& path, const std::string& uri) override
+    {
+        Poco::URI uriObject(uri);
+        Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uri, Poco::Net::HTTPMessage::HTTP_1_1);
+
+        std::ifstream ifs(path);
+        request.read(ifs);
+
+        Poco::Net::HTTPResponse response;
+        session.sendRequest(request);
+        Log::info() << "WOPI::PutFile Status: " <<  response.getStatus() << " " << response.getReason() << Log::end;
+
+        return (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
+    }
+};
+
 class WebDAVStorage : public StorageBase
 {
 public:
 
-    WebDAVStorage(const std::string& url, std::unique_ptr<AuthBase> authAgent) :
+    WebDAVStorage(const std::string& localStorePath,
+                  const std::string& url,
+                  std::unique_ptr<AuthBase> authAgent) :
+        StorageBase(localStorePath),
         _url(url),
         _authAgent(std::move(authAgent))
     {

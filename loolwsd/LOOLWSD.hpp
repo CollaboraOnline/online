@@ -100,7 +100,9 @@ public:
         else
         {
             Log::info("Public URI [" + uriPublic.toString() +
-                      "] is not a file.");
+                      "] assuming cloud storage.");
+            //TODO: Configure the storage to use. For now, assume it's WOPI.
+            std::unique_ptr<StorageBase> storage(new WopiStorage(docPath.toString()));
         }
 
         auto document = std::shared_ptr<DocumentURI>(new DocumentURI(uriPublic, uriJailed, childId));
