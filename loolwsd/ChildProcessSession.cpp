@@ -122,7 +122,7 @@ public:
     {
         auto lock = _session.getLock();
 
-        Log::trace() << "Callback [" << _session.getViewId() << "] "
+        Log::trace() << "CallbackWorker::callback [" << _session.getViewId() << "] "
                      << callbackTypeToString(nType)
                      << " [" << rPayload << "]." << Log::end;
         if (_session.isDisconnected())

@@ -528,7 +528,7 @@ private:
     static void KitCallback(int nType, const char* pPayload, void* pData)
     {
         Document* self = reinterpret_cast<Document*>(pData);
-        Log::trace() << "Callback "
+        Log::trace() << "Document::KitCallback "
                      << KitCallbackTypeToString(nType)
                      << " [" << (pPayload ? pPayload : "") << "]." << Log::end;
 
