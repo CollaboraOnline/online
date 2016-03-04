@@ -138,6 +138,7 @@ Base = Base.extend({
 	}
 });
 
+
 /*
 	Abstract class
 */
@@ -154,10 +155,10 @@ var AdminSocketBase = Base.extend({
 		// onSocketMessage and onSocketOpen.
 		if (typeof this.onSocketMessage === 'function' && typeof this.onSocketOpen === 'function') {
 			this.socket = new WebSocket(host);
-			this.socket.onopen = this.onSocketOpen;
-			this.socket.onclose = this.onSocketClose;
-			this.socket.onmessage = this.onSocketMessage;
-			this.socket.onerror = this.onSocketError;
+			this.socket.onopen = this.onSocketOpen.bind(this);
+			this.socket.onclose = this.onSocketClose.bind(this);
+			this.socket.onmessage = this.onSocketMessage.bind(this);
+			this.socket.onerror = this.onSocketError.bind(this);
 			this.socket.binaryType = 'arraybuffer';
 		}
 	},
@@ -190,8 +191,23 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		this.base(host);
 	},
 
+	_basicStatsIntervalId: 0,
+
+	_getBasicStats: function() {
+		this.socket.send('total_mem');
+		this.socket.send('active_docs_count');
+		this.socket.send('active_users_count');
+	},
+
 	onSocketOpen: function() {
-		this.send('documents');
+		this.socket.send('documents');
+
+		this._getBasicStats();
+		var socketOverview = this;
+		this._basicStatsIntervalId =
+		setInterval(function() {
+			return socketOverview._getBasicStats();
+		}, 5000);
 	},
 
 	onSocketMessage: function(e) {
@@ -240,11 +256,15 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			var sPid = textMsg.substring('addview'.length).trim().split(' ')[0];
 			var nViews = parseInt(document.getElementById('docview' + sPid).innerHTML);
 			document.getElementById('docview' + sPid).innerHTML = nViews + 1;
+			var nTotalViews = parseInt(document.getElementById('active_users_count').innerHTML);
+			document.getElementById('active_users_count').innerHTML = nTotalViews + 1;
 		}
 		else if (textMsg.startsWith('rmview')) {
 			var sPid = textMsg.substring('addview'.length).trim().split(' ')[0];
 			var nViews = parseInt(document.getElementById('docview' + sPid).innerHTML);
 			document.getElementById('docview' + sPid).innerHTML = nViews - 1;
+			var nTotalViews = parseInt(document.getElementById('active_users_count').innerHTML);
+			document.getElementById('active_users_count').innerHTML = nTotalViews - 1;
 		}
 		else if (textMsg.startsWith('document')) {
 			textMsg = textMsg.substring('document'.length);
@@ -276,6 +296,19 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			var memEle = document.createElement('td');
 			memEle.innerHTML = sMem;
 			rowContainer.appendChild(memEle);
+
+			var totalUsersEle = document.getElementById('active_docs_count');
+			totalUsersEle.innerHTML = parseInt(totalUsersEle.innerHTML) + 1;
+		}
+		else if (textMsg.startsWith('total_mem') ||
+			textMsg.startsWith('active_docs_count') ||
+			textMsg.startsWith('active_users_count'))
+		{
+			textMsg = textMsg.split(' ');
+			var sCommand = textMsg[0];
+			var nData = parseInt(textMsg[1]);
+
+			document.getElementById(sCommand).innerHTML = nData;
 		}
 		else if (textMsg.startsWith('rmdoc')) {
 			textMsg = textMsg.substring('rmdoc'.length);
@@ -286,5 +319,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				tableContainer.removeChild(docEle);
 			}
 		}
+	},
+
+	onSocketClose: function() {
+		clearInterval(this._basicStatsIntervalId);
 	}
 });
