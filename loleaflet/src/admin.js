@@ -179,7 +179,7 @@ var AdminSocketBase = Base.extend({
 	},
 
 	onSocketError: function() {
-		alert('Connection error');
+		vex.dialog.alert('Connection error');
 	}
 });
 

@@ -45,6 +45,9 @@
 	}
 
 	var host = getParameterByName('host');
+	if (host === '') {
+		vex.dialog.alert('Wrong host, usage: host=ws://localhost:9989');
+	}
 	new AdminSocketOverview(host);
 
     </script>
