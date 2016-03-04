@@ -28,6 +28,8 @@ public:
 
     static int getBrokerPid() { return Admin::BrokerPipe; }
 
+    static int getBrokerPipe() { return Admin::BrokerPipe; }
+
     void run() override;
 
     AdminModel& getModel();

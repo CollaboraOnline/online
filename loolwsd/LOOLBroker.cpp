@@ -346,6 +346,11 @@ public:
                 ++forkCounter;
             }
         }
+        else if (tokens[0] == "kill" && tokens.count() == 2)
+        {
+            Process::PID nPid = static_cast<Process::PID>(std::stoi(tokens[1]));
+            removeChild(nPid);
+        }
     }
 
     void run() override
