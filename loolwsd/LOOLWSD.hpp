@@ -23,6 +23,7 @@
 #include <Poco/Process.h>
 
 #include "Auth.hpp"
+#include "Storage.hpp"
 #include "Common.hpp"
 #include "Util.hpp"
 
@@ -34,8 +35,8 @@ public:
 
     static
     std::shared_ptr<DocumentURI> create(const std::string& url,
-                                     const std::string& jailRoot,
-                                     const std::string& childId)
+                                        const std::string& jailRoot,
+                                        const std::string& childId)
     {
         // TODO: Sanitize the url and limit access!
         auto uriPublic = Poco::URI(url);
@@ -52,16 +53,17 @@ public:
 
         // The URL is the publicly visible one, not visible in the chroot jail.
         // We need to map it to a jailed path and copy the file there.
+
+        // chroot/jailId/user/doc
+        const auto jailedDocRoot = Poco::Path(jailRoot, JailedDocumentRoot);
+
+        // chroot/jailId/user/doc/childId
+        const auto docPath = Poco::Path(jailedDocRoot, childId);
+        Poco::File(docPath).createDirectories();
+
         auto uriJailed = uriPublic;
         if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
         {
-            // chroot/jailId/user/doc
-            const auto jailedDocRoot = Poco::Path(jailRoot, JailedDocumentRoot);
-
-            // chroot/jailId/user/doc/childId
-            const auto docPath = Poco::Path(jailedDocRoot, childId);
-            Poco::File(docPath).createDirectories();
-
             const auto filename = Poco::Path(uriPublic.getPath()).getFileName();
 
             // chroot/jailId/user/doc/childId/file.ext
@@ -113,8 +115,8 @@ public:
 
 private:
     DocumentURI(const Poco::URI& uriPublic,
-             const Poco::URI& uriJailed,
-             const std::string& jailId) :
+                const Poco::URI& uriJailed,
+                const std::string& jailId) :
        _uriPublic(uriPublic),
        _uriJailed(uriJailed),
        _jailId(jailId)

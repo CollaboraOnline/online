@@ -103,7 +103,6 @@ DEALINGS IN THE SOFTWARE.
 #include "LOOLWSD.hpp"
 #include "MasterProcessSession.hpp"
 #include "QueueHandler.hpp"
-#include "Storage.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
