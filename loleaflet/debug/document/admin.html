@@ -27,6 +27,20 @@
   </head>
 
   <body>
+    <script src="../../dist/admin-src.js"></script>
+    <script>
+
+	function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+		return results === null ? "" : results[1].replace(/\+/g, " ");
+	}
+
+	var host = getParameterByName('host');
+	new AdminSocketOverview(host);
+
+    </script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -66,43 +80,37 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Users online</h4>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Documents opened</h4>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Memory consumed</h4>
-            </div>
-          </div>
+	  <div class="row placeholders">
+	    <div class="col-xs-6 col-sm-3 placeholder">
+	      <div class="main-data" id="active_users_count">0</div>
+	      <h4>Users online</h4>
+	    </div>
+	    <div class="col-xs-6 col-sm-3 placeholder">
+	      <div class="main-data" id="active_docs_count">0</div>
+	      <h4>Documents opened</h4>
+	    </div>
+	    <div class="col-xs-6 col-sm-3 placeholder">
+	      <div class="main-data" id="total_mem">0</div>
+	      <h4>Memory consumed</h4>
+	    </div>
+	  </div>
 
-          <h2 class="sub-header">Documents opened</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>PID</th>
-                  <th>Document</th>
-                  <th>Number of views</th>
-                  <th>Memory consumed</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>3456</td>
-                  <td>orig.odt</td>
-                  <td>2</td>
-                  <td>25</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+	  <h2 class="sub-header">Documents opened</h2>
+	  <div class="table-responsive">
+	    <table class="table table-striped">
+	      <thead>
+		<tr>
+		  <th>PID</th>
+		  <th>Document</th>
+		  <th>Number of views</th>
+		  <th>Memory consumed</th>
+		</tr>
+	      </thead>
+	      <tbody id="doclist">
+	      </tbody>
+	    </table>
+	  </div>
+	</div>
       </div>
     </div>
 

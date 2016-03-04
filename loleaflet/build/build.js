@@ -105,6 +105,18 @@ exports.build = function (callback, version, compsBase32, buildName) {
 		console.log('\tSaved to ' + srcPath);
 	}
 
+	// Also copy the admin JS files
+	// For the time being, just copy the file, since there is only one
+	var adminCopy = fs.readFileSync('src/admin.js', 'utf-8'),
+	    adminNewSrc = adminCopy,
+	    adminPath = 'dist/admin-src.js',
+	    adminOldSrc = loadSilently(adminPath);
+
+	if (adminNewSrc != adminOldSrc) {
+		fs.writeFileSync(adminPath, adminNewSrc);
+		console.log('\tAdmin files saved to ' + adminPath);
+	}
+
 	var path = pathPart + '.js',
 	    oldCompressed = loadSilently(path),
 	    newCompressed = copy + UglifyJS.minify(newSrc, {
