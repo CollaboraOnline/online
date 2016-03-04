@@ -65,10 +65,12 @@ L.Control.ColumnHeader = L.Control.extend({
 			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
 			text.innerHTML = content;
 			width = Math.round(converter.call(context, twip).x) - 1 + 'px';
-			if (width === '-1px')
+			if (width === '-1px') {
 				L.DomUtil.setStyle(text, 'display', 'none');
-			else
+			}
+			else {
 				L.DomUtil.setStyle(text, 'width', width);
+			}
 		}
 	},
 
