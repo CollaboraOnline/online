@@ -36,6 +36,8 @@ public:
                                         const std::string& jailRoot,
                                         const std::string& childId)
     {
+        Log::info("DocumentURI: url: " + url + ", jailRoot: " + jailRoot + ", childId: " + childId);
+
         // TODO: Sanitize the url and limit access!
         auto uriPublic = Poco::URI(url);
         uriPublic.normalize();
@@ -52,55 +54,26 @@ public:
         // The URL is the publicly visible one, not visible in the chroot jail.
         // We need to map it to a jailed path and copy the file there.
 
-        // chroot/jailId/user/doc
-        const auto jailedDocRoot = Poco::Path(jailRoot, JailedDocumentRoot);
+        // user/doc/childId
+        const auto jailPath = Poco::Path(JailedDocumentRoot, childId);
 
-        // chroot/jailId/user/doc/childId
-        const auto docPath = Poco::Path(jailedDocRoot, childId);
-        Poco::File(docPath).createDirectories();
+        Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
         auto uriJailed = uriPublic;
         if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
         {
-            const auto filename = Poco::Path(uriPublic.getPath()).getFileName();
-
-            // chroot/jailId/user/doc/childId/file.ext
-            const auto jailedFilePath = Poco::Path(docPath, filename).toString();
-
-            const auto localPath = Poco::Path(JailedDocumentRoot, childId);
-            uriJailed = Poco::URI(Poco::URI("file://"), Poco::Path(localPath, filename).toString());
-
-            Log::info("Public URI [" + uriPublic.toString() +
-                      "] jailed to [" + uriJailed.toString() + "].");
-
-            Log::info("Linking " + publicFilePath + " to " + jailedFilePath);
-            if (!Poco::File(jailedFilePath).exists() && link(publicFilePath.c_str(), jailedFilePath.c_str()) == -1)
-            {
-                // Failed
-                Log::error("link(\"" + publicFilePath + "\", \"" + jailedFilePath + "\") failed.");
-            }
-
-            try
-            {
-                // Fallback to copying.
-                if (!Poco::File(jailedFilePath).exists())
-                {
-                    Log::info("Copying " + publicFilePath + " to " + jailedFilePath);
-                    Poco::File(publicFilePath).copyTo(jailedFilePath);
-                }
-            }
-            catch (const Poco::Exception& exc)
-            {
-                Log::error("copyTo(\"" + publicFilePath + "\", \"" + jailedFilePath + "\") failed: " + exc.displayText());
-                throw;
-            }
+            std::unique_ptr<StorageBase> storage(new LocalStorage(jailRoot, jailPath.toString()));
+            const auto localPath = storage->getFilePathFromURI(uriPublic.getPath());
+            uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         }
         else
         {
             Log::info("Public URI [" + uriPublic.toString() +
                       "] assuming cloud storage.");
             //TODO: Configure the storage to use. For now, assume it's WOPI.
-            std::unique_ptr<StorageBase> storage(new WopiStorage(docPath.toString()));
+            std::unique_ptr<StorageBase> storage(new WopiStorage(jailRoot, jailPath.toString()));
+            const auto localPath = storage->getFilePathFromURI(uriPublic.toString());
+            uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         }
 
         auto document = std::shared_ptr<DocumentURI>(new DocumentURI(uriPublic, uriJailed, childId));
