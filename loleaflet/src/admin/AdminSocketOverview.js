@@ -16,6 +16,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 	onSocketOpen: function() {
 		this.socket.send('documents');
+		this.socket.send('subscribe document addview rmview rmdoc');
 
 		this._getBasicStats();
 		var socketOverview = this;
