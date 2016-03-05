@@ -14,6 +14,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <queue>
 
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
@@ -265,6 +266,22 @@ public:
         {
             return std::to_string(_nActiveDocuments);
         }
+        else if (tokens[0] == "mem_stats")
+        {
+            return getMemStats();
+        }
+        else if (tokens[0] == "mem_stats_size")
+        {
+            return std::to_string(_memStatsSize);
+        }
+        else if (tokens[0] == "cpu_stats")
+        {
+            return getCpuStats();
+        }
+        else if (tokens[0] == "cpu_stats_size")
+        {
+            return std::to_string(_cpuStatsSize);
+        }
 
         return std::string("");
     }
@@ -311,6 +328,92 @@ public:
         subscriber->second.unsubscribe(command);
     }
 
+    void clearMemStats()
+    {
+        _memStats.clear();
+    }
+
+    void clearCpuStats()
+    {
+        _cpuStats.clear();
+    }
+
+    void addMemStats(unsigned memUsage)
+    {
+        _memStats.push_back(memUsage);
+        if (_memStats.size() > _memStatsSize)
+        {
+            _memStats.pop_front();
+        }
+
+        std::ostringstream oss;
+        oss << "mem_stats "
+            << std::to_string(memUsage);
+        notify(oss.str());
+    }
+
+    void addCpuStats(unsigned cpuUsage)
+    {
+        _cpuStats.push_back(cpuUsage);
+        if (_cpuStats.size() > _cpuStatsSize)
+        {
+            _cpuStats.pop_front();
+        }
+
+        std::ostringstream oss;
+        oss << "cpu_stats "
+            << std::to_string(cpuUsage);
+        notify(oss.str());
+    }
+
+    void setCpuStatsSize(unsigned size)
+    {
+        int wasteValuesLen = _cpuStats.size() - size;
+        while (wasteValuesLen-- > 0)
+        {
+            _cpuStats.pop_front();
+        }
+        _cpuStatsSize = size;
+
+        std::ostringstream oss;
+        oss << "settings "
+            << "cpu_stats_size="
+            << std::to_string(_cpuStatsSize);
+        notify(oss.str());
+    }
+
+    void setMemStatsSize(unsigned size)
+    {
+        int wasteValuesLen = _memStats.size() - size;
+        while (wasteValuesLen-- > 0)
+        {
+            _memStats.pop_front();
+        }
+        _memStatsSize = size;
+
+        std::ostringstream oss;
+        oss << "settings "
+            << "mem_stats_size="
+            << std::to_string(_memStatsSize);
+        notify(oss.str());
+    }
+
+    void notify(const std::string& message)
+    {
+        auto it = std::begin(_subscribers);
+        while (it != std::end(_subscribers))
+        {
+            if (!it->second.notify(message))
+            {
+                it = _subscribers.erase(it);
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
 private:
     // FIXME: we have a problem if new document to be added has PID = expired document in the map
     // Prolly, *move* expired documents to another container (?)
@@ -337,20 +440,26 @@ private:
         }
     }
 
-    void notify(const std::string& message)
+    std::string getMemStats()
     {
-        auto it = std::begin(_subscribers);
-        while (it != std::end(_subscribers))
+        std::string response;
+        for (auto& i: _memStats)
         {
-            if (!it->second.notify(message))
-            {
-                it = _subscribers.erase(it);
-            }
-            else
-            {
-                it++;
-            }
+            response += std::to_string(i) + ",";
         }
+
+        return response;
+    }
+
+    std::string getCpuStats()
+    {
+        std::string response;
+        for (auto& i: _cpuStats)
+        {
+            response += std::to_string(i) + ",";
+        }
+
+        return response;
     }
 
     unsigned getTotalActiveViews()
@@ -392,6 +501,12 @@ private:
 private:
     std::map<int, Subscriber> _subscribers;
     std::map<Poco::Process::PID, Document> _documents;
+
+    std::list<unsigned> _memStats;
+    unsigned _memStatsSize = 100;
+
+    std::list<unsigned> _cpuStats;
+    unsigned _cpuStatsSize = 100;
 
     /// Number of active documents
     unsigned _nActiveDocuments = 0;

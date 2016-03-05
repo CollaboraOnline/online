@@ -8,6 +8,7 @@
  */
 
 #include <cassert>
+#include <mutex>
 #include <sys/poll.h>
 #include <sys/prctl.h>
 
@@ -18,6 +19,7 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/Util/Timer.h>
 
 #include "Admin.hpp"
 #include "AdminModel.hpp"
@@ -65,9 +67,12 @@ public:
 
             auto ws = std::make_shared<WebSocket>(request, response);
 
-            // Subscribe the websocket of any AdminModel updates
-            AdminModel& model = _admin->getModel();
-            model.subscribe(nSessionId, ws);
+            {
+                std::lock_guard<std::mutex> modelLock(_admin->modelMutex);
+                // Subscribe the websocket of any AdminModel updates
+                AdminModel& model = _admin->getModel();
+                model.subscribe(nSessionId, ws);
+            }
 
             const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
             int flags = 0;
@@ -117,6 +122,10 @@ public:
 
                         if (tokens.count() < 1)
                             continue;
+
+                        // Lock the model mutex before interacting with it
+                        std::lock_guard<std::mutex> modelLock(_admin->modelMutex);
+                        AdminModel& model = _admin->getModel();
 
                         if (tokens[0] == "stats")
                         {
@@ -168,13 +177,9 @@ public:
                         }
                         else if (tokens[0] == "total_mem")
                         {
-                            Poco::Process::PID nBrokerPid = _admin->getBrokerPid();
-                            unsigned totalMem = Util::getMemoryUsage(nBrokerPid);
-                            totalMem += model.getTotalMemoryUsage();
-                            totalMem += Util::getMemoryUsage(Poco::Process::id());
-
-                            std::string responseFrame = "total_mem " + std::to_string(totalMem);
-                            ws->sendFrame(responseFrame.data(), responseFrame.size());
+                            unsigned totalMem = _admin->getTotalMemoryUsage(model);
+                            std::string response = "total_mem " + std::to_string(totalMem);
+                            ws->sendFrame(response.data(), response.size());
                         }
                         else if (tokens[0] == "active_users_count")
                         {
@@ -197,6 +202,89 @@ public:
                             }
                             catch(std::exception& e) {
                                 Log::warn() << "Could not kill given PID" << Log::end;
+                            }
+                        }
+                        else if (tokens[0] == "mem_stats")
+                        {
+                            std::ostringstream oss;
+                            oss << tokens[0] << " "
+                                << model.query(tokens[0]);
+
+                            std::string response = oss.str();
+                            ws->sendFrame(response.data(), response.size());
+                        }
+                        else if (tokens[0] == "cpu_stats")
+                        {
+                            std::ostringstream oss;
+                            oss << tokens[0] << " "
+                                << model.query(tokens[0]);
+
+                            std::string response = oss.str();
+                            ws->sendFrame(response.data(), response.size());
+                        }
+                        else if (tokens[0] == "settings")
+                        {
+                            // for now, we have only these settings
+                            std::ostringstream oss;
+                            oss << tokens[0] << " "
+                                << "mem_stats_size=" << model.query("mem_stats_size") << " "
+                                << "mem_stats_interval=" << std::to_string(_admin->getMemStatsInterval()) << " "
+                                << "cpu_stats_size="  << model.query("cpu_stats_size") << " "
+                                << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval());
+
+                            std::string response = oss.str();
+                            ws->sendFrame(response.data(), response.size());
+                        }
+                        else if (tokens[0] == "set" && tokens.count() > 1)
+                        {
+                            for (unsigned i = 1; i < tokens.count(); i++)
+                            {
+                                StringTokenizer setting(tokens[i], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                                unsigned settingVal = 0;
+                                try
+                                {
+                                    settingVal = std::stoi(setting[1]);
+                                }
+                                catch (const std::exception& exc)
+                                {
+                                    Log::warn() << "Invalid setting value: "
+                                                << setting[1] << " for "
+                                                << setting[0] << Log::end;
+                                    continue;
+                                }
+
+                                if (setting[0] == "mem_stats_size")
+                                {
+                                    if (settingVal != static_cast<unsigned>(std::stoi(model.query(setting[0]))))
+                                    {
+                                        model.setMemStatsSize(settingVal);
+                                    }
+                                }
+                                else if (setting[0] == "mem_stats_interval")
+                                {
+                                    if (settingVal != _admin->getMemStatsInterval())
+                                    {
+                                        _admin->rescheduleMemTimer(settingVal);
+                                        model.clearMemStats();
+                                        model.notify("settings mem_stats_interval=" + std::to_string(settingVal));
+                                    }
+                                }
+                                else if (setting[0] == "cpu_stats_size")
+                                {
+                                    if (settingVal != static_cast<unsigned>(std::stoi(model.query(setting[0]))))
+                                    {
+                                        model.setCpuStatsSize(settingVal);
+                                    }
+                                }
+                                else if (setting[0] == "cpu_stats_interval")
+                                {
+                                    if (settingVal != _admin->getCpuStatsInterval())
+                                    {
+                                        _admin->rescheduleCpuTimer(settingVal);
+                                        model.clearCpuStats();
+                                        model.notify("settings cpu_stats_interval=" + std::to_string(settingVal));
+                                    }
+                                }
                             }
                         }
                     }
@@ -282,7 +370,63 @@ Admin::~Admin()
 
 void Admin::handleInput(std::string& message)
 {
+    std::lock_guard<std::mutex> modelLock(modelMutex);
     _model.update(message);
+}
+
+void MemoryStats::run()
+{
+    std::lock_guard<std::mutex> modelLock(_admin->modelMutex);
+    AdminModel& model = _admin->getModel();
+    unsigned totalMem = _admin->getTotalMemoryUsage(model);
+
+    Log::trace() << "Total memory used: " << std::to_string(totalMem);
+    model.addMemStats(totalMem);
+}
+
+void CpuStats::run()
+{
+    //TODO: Implement me
+    //std::lock_guard<std::mutex> modelLock(_admin->modelMutex);
+    //model.addCpuStats(totalMem);
+}
+
+void Admin::rescheduleMemTimer(unsigned interval)
+{
+    _memStatsTask->cancel();
+    _memStatsTaskInterval = interval;
+    _memStatsTask = new MemoryStats(this);
+    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
+    Log::info("Memory stats interval changed - New interval: " + std::to_string(interval));
+}
+
+void Admin::rescheduleCpuTimer(unsigned interval)
+{
+    _cpuStatsTask->cancel();
+    _cpuStatsTaskInterval = interval;
+    _cpuStatsTask = new CpuStats(this);
+    _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
+    Log::info("CPU stats interval changed - New interval: " + std::to_string(interval));
+}
+
+unsigned Admin::getTotalMemoryUsage(AdminModel& model)
+{
+    Poco::Process::PID nBrokerPid = getBrokerPid();
+    unsigned totalMem = Util::getMemoryUsage(nBrokerPid);
+    totalMem += model.getTotalMemoryUsage();
+    totalMem += Util::getMemoryUsage(Poco::Process::id());
+
+    return totalMem;
+}
+
+unsigned Admin::getMemStatsInterval()
+{
+    return _memStatsTaskInterval;
+}
+
+unsigned Admin::getCpuStatsInterval()
+{
+    return _cpuStatsTaskInterval;
 }
 
 void Admin::run()
@@ -291,6 +435,12 @@ void Admin::run()
 
     // Start a server listening on the admin port.
     _srv.start();
+
+    _memStatsTask = new MemoryStats(this);
+    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
+
+    _cpuStatsTask = new CpuStats(this);
+    _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
 
     // Start listening for data changes
     struct pollfd pollPipeNotify;

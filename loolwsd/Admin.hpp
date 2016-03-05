@@ -13,6 +13,8 @@
 #include <Poco/Net/HTTPServer.h>
 #include <Poco/Runnable.h>
 #include <Poco/Types.h>
+#include <Poco/Util/Timer.h>
+#include <Poco/Util/TimerTask.h>
 
 #include "AdminModel.hpp"
 
@@ -30,9 +32,23 @@ public:
 
     static int getBrokerPipe() { return Admin::BrokerPipe; }
 
+    unsigned getTotalMemoryUsage(AdminModel&);
+
     void run() override;
 
+    /// Callers must ensure that modelMutex is acquired
     AdminModel& getModel();
+
+    unsigned getMemStatsInterval();
+
+    unsigned getCpuStatsInterval();
+
+    void rescheduleMemTimer(unsigned interval);
+
+    void rescheduleCpuTimer(unsigned interval);
+
+public:
+    std::mutex modelMutex;
 
 private:
     void handleInput(std::string& message);
@@ -41,9 +57,57 @@ private:
     Poco::Net::HTTPServer _srv;
     AdminModel _model;
 
+    Poco::Util::Timer _memStatsTimer;
+    Poco::Util::TimerTask::Ptr _memStatsTask;
+    unsigned _memStatsTaskInterval = 5000;
+
+    Poco::Util::Timer _cpuStatsTimer;
+    Poco::Util::TimerTask::Ptr _cpuStatsTask;
+    unsigned _cpuStatsTaskInterval = 5000;
+
     static Poco::Process::PID BrokerPid;
     static int BrokerPipe;
     static int NotifyPipe;
+};
+
+class MemoryStats : public Poco::Util::TimerTask
+{
+public:
+    MemoryStats(Admin* admin)
+        : _admin(admin)
+    {
+        Log::info("Memory stat ctor");
+    }
+
+    ~MemoryStats()
+    {
+        Log::info("Memory stat dtor");
+    }
+
+    void run() override;
+
+private:
+    Admin* _admin;
+};
+
+class CpuStats : public Poco::Util::TimerTask
+{
+public:
+    CpuStats(Admin* admin)
+        : _admin(admin)
+    {
+        Log::info("Cpu stat ctor");
+    }
+
+    ~CpuStats()
+    {
+        Log::info("Cpu stat dtor");
+    }
+
+    void run() override;
+
+private:
+    Admin* _admin;
 };
 
 #endif
