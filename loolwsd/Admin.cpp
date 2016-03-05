@@ -23,6 +23,7 @@
 #include "AdminModel.hpp"
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
+#include "LOOLWSD.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -52,7 +53,9 @@ public:
     {
         assert(request.serverAddress().port() == ADMIN_PORT_NUMBER);
 
-        const std::string thread_name = "admin_ws";
+        // Different session id pool for admin sessions (?)
+        const auto nSessionId = Util::decodeId(LOOLWSD::GenSessionId());
+        const std::string thread_name = "admin_ws_" + std::to_string(nSessionId);
         try
         {
             if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
@@ -64,7 +67,7 @@ public:
 
             // Subscribe the websocket of any AdminModel updates
             AdminModel& model = _admin->getModel();
-            model.subscribe(ws);
+            model.subscribe(nSessionId, ws);
 
             const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
             int flags = 0;
@@ -142,6 +145,20 @@ public:
                             pclose(fp);
 
                             ws->sendFrame(statsResponse.data(), statsResponse.size());
+                        }
+                        else if (tokens[0] == "subscribe" && tokens.count() > 1)
+                        {
+                            for (unsigned i = 0; i < tokens.count() - 1; i++)
+                            {
+                                model.subscribe(nSessionId, tokens[i + 1]);
+                            }
+                        }
+                        else if (tokens[0] == "unsubscribe" && tokens.count() > 1)
+                        {
+                            for (unsigned i = 0; i < tokens.count() - 1; i++)
+                            {
+                                model.unsubscribe(nSessionId, tokens[i + 1]);
+                            }
                         }
                         else if (tokens[0] == "documents")
                         {

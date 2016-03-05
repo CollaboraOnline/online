@@ -12,6 +12,7 @@
 #define INCLUDED_STORAGE_HPP
 
 #include <string>
+#include <fstream>
 
 #include <Poco/Net/HTTPResponse.h>
 
