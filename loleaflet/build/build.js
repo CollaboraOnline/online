@@ -3,6 +3,7 @@ var fs = require('fs'),
     zlib = require('zlib'),
 
     deps = require('./deps.js').deps;
+    adminDeps = require('./adminDeps.js').adminDeps;
 
 function getFiles(compsBase32) {
 	var memo = {},
@@ -38,6 +39,18 @@ function getFiles(compsBase32) {
 
 	for (var src in memo) {
 		files.push('src/' + src);
+	}
+
+	return files;
+}
+
+function getAdminFiles() {
+	var files = [];
+
+	for (var i in adminDeps) {
+		for (var j = 0, len = adminDeps[i].src.length; j < len; j++) {
+			files.push('src/' + adminDeps[i].src[j]);
+		}
 	}
 
 	return files;
@@ -105,10 +118,9 @@ exports.build = function (callback, version, compsBase32, buildName) {
 		console.log('\tSaved to ' + srcPath);
 	}
 
-	// Also copy the admin JS files
-	// For the time being, just copy the file, since there is only one
-	var adminCopy = fs.readFileSync('src/admin.js', 'utf-8'),
-	    adminNewSrc = adminCopy,
+	// Also combine and copy the admin JS files
+	// TODO: Also minify if admin complexity increases in future
+	var adminNewSrc = combineFiles(getAdminFiles()),
 	    adminPath = 'dist/admin-src.js',
 	    adminOldSrc = loadSilently(adminPath);
 
