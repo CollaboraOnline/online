@@ -1,6 +1,9 @@
 /*
 	Abstract class
 */
+
+/* global vex Base */
+/* exported AdminSocketBase */
 var AdminSocketBase = Base.extend({
 	socket: null,
 

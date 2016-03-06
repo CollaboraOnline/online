@@ -20,6 +20,18 @@ var adminDeps = {
 		src: ['admin/AdminSocketOverview.js'],
 		desc: 'Socket to handle messages in overview page.',
 		deps: ['AdminSocketBase']
+	},
+
+	AdminSocketAnalytics: {
+		src: ['admin/AdminSocketAnalytics.js'],
+		desc: 'Socket to handle messages in analytics page.',
+		deps: ['AdminSocketBase']
+	},
+
+	AdminSocketSettings: {
+		src: ['admin/AdminSocketSettings.js'],
+		desc: 'Socket to handle settings from server',
+		deps: ['AdminSocketBase']
 	}
 };
 

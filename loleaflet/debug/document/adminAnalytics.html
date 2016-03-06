@@ -33,8 +33,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../dist/bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/dialog/vex.combined.min.js"></script>
-    <script src="../../dist/admin-src.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="../../dist/admin-src.js"></script>
     <script>
 
 	function getParameterByName(name) {
@@ -45,10 +46,7 @@
 	}
 
 	var host = getParameterByName('host');
-	if (host === '') {
-		vex.dialog.alert('Wrong host, usage: host=ws://localhost:9989');
-	}
-	new AdminSocketOverview(host);
+	new AdminSocketAnalytics(host);
 
     </script>
 
@@ -65,7 +63,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="admin.html?host=ws://localhost:9989">Dashboard</a></li>
+	    <li><a href="admin.html?host=ws://localhost:9989">Dashboard</a></li>
             <li><a href="adminSettings.html?host=ws://localhost:9989">Settings</a></li>
             <li><a href="#">Help</a></li>
           </ul>
@@ -80,56 +78,26 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="adminAnalytics.html?host=ws://localhost:9989">Analytics</a></li>
+            <li><a href="admin.html?host=ws://localhost:9989">Overview <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="adminAnalytics.html?host=ws://localhost:9989">Analytics</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
-
-	  <div class="row placeholders">
-	    <div class="col-xs-6 col-sm-3 placeholder">
-	      <div class="main-data" id="active_users_count">0</div>
-	      <h4>Users online</h4>
-	    </div>
-	    <div class="col-xs-6 col-sm-3 placeholder">
-	      <div class="main-data" id="active_docs_count">0</div>
-	      <h4>Documents opened</h4>
-	    </div>
-	    <div class="col-xs-6 col-sm-3 placeholder">
-	      <div class="main-data" id="total_mem">0</div>
-	      <h4>Memory consumed</h4>
-	    </div>
-	  </div>
-
-	  <h2 class="sub-header">Documents opened</h2>
-	  <div class="table-responsive">
-	    <table class="table table-striped">
-	      <thead>
-		<tr>
-		  <th>PID</th>
-		  <th>Document</th>
-		  <th>Number of views</th>
-		  <th>Memory consumed</th>
-		</tr>
-	      </thead>
-	      <tbody id="doclist">
-	      </tbody>
-	    </table>
-	  </div>
-	</div>
+          <h1 class="page-header">Graphs</h1>
+		        <div class="graph-container">
+		          <div class="jumbotron">
+		            <svg id="visualisation" width="1000" height="500"></svg>
+		          </div>
+		        </div>
+	      </div>
       </div>
-    </div>
-
-    <div id="rowContextMenu" class="dropdown clearfix">
-      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
-        <li><a tabindex="-1" href="#">Kill</a></li>
-      </ul>
     </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/bootstrap/js/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="../../dist/bootstrap/assets/js/vendor/holder.min.js"></script>

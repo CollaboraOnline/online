@@ -1,6 +1,7 @@
 /*
 	Socket to be intialized on opening the overview page in Admin console
 */
+/* global vex $ Util AdminSocketBase */
 var AdminSocketOverview = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);
@@ -40,7 +41,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			$('#rowContextMenu').hide();
 		});
 
-		$('#rowContextMenu').on('click', 'a', function(e) {
+		$('#rowContextMenu').on('click', 'a', function() {
 			vex.dialog.confirm({
 				message: 'Are you sure you want to kill this child ?',
 				callback: function(value) {
@@ -59,86 +60,100 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		if (typeof e.data === 'string') {
 			textMsg = e.data;
 		}
-		else
+		else {
 			textMsg = '';
+		}
 
 		var tableContainer = document.getElementById('doclist');
+		var rowContainer;
+		var pidEle, urlEle, viewsEle, memEle, docEle;
+		var nViews, nTotalViews;
+		var docProps, sPid, sUrl, sViews, sMem;
 		if (textMsg.startsWith('documents')) {
 			var documents = textMsg.substring('documents'.length);
 			documents = documents.trim().split('\n');
 			for (var i = 0; i < documents.length; i++) {
-				if (documents[i] == '')
+				if (documents[i] === '') {
 					continue;
-				var docProps = documents[i].trim().split(' ');
-				var sPid = docProps[0];
-				var sUrl = docProps[1];
-				var sViews = docProps[2];
-				var sMem = docProps[3];
+				}
+				docProps = documents[i].trim().split(' ');
+				sPid = docProps[0];
+				sUrl = docProps[1];
+				sViews = docProps[2];
+				sMem = docProps[3];
 				if (sUrl === '0') {
 					continue;
 				}
-				var rowContainer = document.createElement('tr');
+				rowContainer = document.createElement('tr');
 				rowContainer.id = 'doc' + sPid;
 				tableContainer.appendChild(rowContainer);
 
-				var pidEle = document.createElement('td');
+				pidEle = document.createElement('td');
 				pidEle.innerHTML = sPid;
 				rowContainer.appendChild(pidEle);
-				var urlEle = document.createElement('td');
+
+				urlEle = document.createElement('td');
 				urlEle.innerHTML = sUrl;
 				rowContainer.appendChild(urlEle);
-				var viewsEle = document.createElement('td');
+
+				viewsEle = document.createElement('td');
 				viewsEle.id = 'docview' + sPid;
 				viewsEle.innerHTML = sViews;
 				rowContainer.appendChild(viewsEle);
-				var memEle = document.createElement('td');
-				memEle.innerHTML = sMem;
+
+				memEle = document.createElement('td');
+				memEle.innerHTML = Util.humanize(parseInt(sMem));
 				rowContainer.appendChild(memEle);
 			}
 		}
 		else if (textMsg.startsWith('addview')) {
-			var sPid = textMsg.substring('addview'.length).trim().split(' ')[0];
-			var nViews = parseInt(document.getElementById('docview' + sPid).innerHTML);
+			sPid = textMsg.substring('addview'.length).trim().split(' ')[0];
+			nViews = parseInt(document.getElementById('docview' + sPid).innerHTML);
 			document.getElementById('docview' + sPid).innerHTML = nViews + 1;
-			var nTotalViews = parseInt(document.getElementById('active_users_count').innerHTML);
+			nTotalViews = parseInt(document.getElementById('active_users_count').innerHTML);
 			document.getElementById('active_users_count').innerHTML = nTotalViews + 1;
 		}
 		else if (textMsg.startsWith('rmview')) {
-			var sPid = textMsg.substring('addview'.length).trim().split(' ')[0];
-			var nViews = parseInt(document.getElementById('docview' + sPid).innerHTML);
+			sPid = textMsg.substring('addview'.length).trim().split(' ')[0];
+			nViews = parseInt(document.getElementById('docview' + sPid).innerHTML);
 			document.getElementById('docview' + sPid).innerHTML = nViews - 1;
-			var nTotalViews = parseInt(document.getElementById('active_users_count').innerHTML);
+			nTotalViews = parseInt(document.getElementById('active_users_count').innerHTML);
 			document.getElementById('active_users_count').innerHTML = nTotalViews - 1;
 		}
 		else if (textMsg.startsWith('document')) {
 			textMsg = textMsg.substring('document'.length);
-			var docProps = textMsg.trim().split(' ');
-			var sPid = docProps[0];
-			var sUrl = docProps[1];
-			var sMem = docProps[2];
-			var docEle = document.getElementById('doc' + sPid);
+			docProps = textMsg.trim().split(' ');
+			sPid = docProps[0];
+			sUrl = docProps[1];
+			sMem = docProps[2];
+
+			docEle = document.getElementById('doc' + sPid);
 			if (docEle) {
 				tableContainer.removeChild(docEle);
 			}
 			if (sUrl === '0') {
 				return;
 			}
-			var rowContainer = document.createElement('tr');
+
+			rowContainer = document.createElement('tr');
 			rowContainer.id = 'doc' + docProps[0];
 			tableContainer.appendChild(rowContainer);
 
-			var pidEle = document.createElement('td');
+			pidEle = document.createElement('td');
 			pidEle.innerHTML = docProps[0];
 			rowContainer.appendChild(pidEle);
-			var urlEle = document.createElement('td');
+
+			urlEle = document.createElement('td');
 			urlEle.innerHTML = docProps[1];
 			rowContainer.appendChild(urlEle);
-			var viewsEle = document.createElement('td');
+
+			viewsEle = document.createElement('td');
 			viewsEle.innerHTML = 0;
 			viewsEle.id = 'docview' + docProps[0];
 			rowContainer.appendChild(viewsEle);
-			var memEle = document.createElement('td');
-			memEle.innerHTML = sMem;
+
+			memEle = document.createElement('td');
+			memEle.innerHTML = Util.humanize(parseInt(sMem));
 			rowContainer.appendChild(memEle);
 
 			var totalUsersEle = document.getElementById('active_docs_count');
@@ -152,13 +167,16 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			var sCommand = textMsg[0];
 			var nData = parseInt(textMsg[1]);
 
+			if (sCommand === 'total_mem') {
+				nData = Util.humanize(nData);
+			}
 			document.getElementById(sCommand).innerHTML = nData;
 		}
 		else if (textMsg.startsWith('rmdoc')) {
 			textMsg = textMsg.substring('rmdoc'.length);
-			var docProps = textMsg.trim().split(' ');
-			var sPid = docProps[0];
-			var docEle = document.getElementById('doc' + sPid);
+			docProps = textMsg.trim().split(' ');
+			sPid = docProps[0];
+			docEle = document.getElementById('doc' + sPid);
 			if (docEle) {
 				tableContainer.removeChild(docEle);
 			}

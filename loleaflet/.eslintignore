@@ -1,2 +1,3 @@
 dist/scrollbar
 dist/contextMenu
+src/admin/Base.js
