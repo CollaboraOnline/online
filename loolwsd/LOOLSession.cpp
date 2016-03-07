@@ -54,6 +54,7 @@ using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::URI;
 using Poco::Exception;
+using Poco::IOException;
 
 LOOLSession::LOOLSession(const std::string& id, const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws) :
@@ -169,14 +170,21 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
 
 void LOOLSession::disconnect(const std::string& reason)
 {
-    if (!_disconnected)
+    try
     {
-        if (reason != "")
-            sendTextFrame("disconnect " + reason);
-        else
-            sendTextFrame("disconnect");
-        _disconnected = true;
-        Util::shutdownWebSocket(_ws);
+        if (!_disconnected)
+        {
+            if (reason != "")
+                sendTextFrame("disconnect " + reason);
+            else
+                sendTextFrame("disconnect");
+            _disconnected = true;
+            Util::shutdownWebSocket(_ws);
+        }
+    }
+    catch (const IOException& exc)
+    {
+        Log::error("LOOLSession::disconnect: Exception: " + exc.displayText() + (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
 }
 
