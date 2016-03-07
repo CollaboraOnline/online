@@ -279,7 +279,7 @@ namespace Util
         }
         catch (const Poco::IOException& exc)
         {
-            Log::warn("IOException while socket shutdown: " + exc.message());
+            Log::warn("Util::shutdownWebSocket: IOException: " + exc.message());
         }
     }
 
@@ -541,7 +541,7 @@ namespace Util
         }
         catch(const Poco::Exception& exc)
         {
-            Log::warn("Exception: " + exc.message());
+            Log::warn("Util::requestTermination: Exception: " + exc.message());
         }
     }
 

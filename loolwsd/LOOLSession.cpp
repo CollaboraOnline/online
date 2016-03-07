@@ -199,20 +199,19 @@ bool LOOLSession::handleInput(const char *buffer, int length)
     }
     catch (const Exception& exc)
     {
-        Log::error() << "Error while handling [" + getFirstLine(buffer, length) + "] in "
-                     << getName() << ". "
+        Log::error() << "LOOLSession::handleInput: Exception while handling [" + getFirstLine(buffer, length) + "] in "
+                     << getName() << ": "
                      << exc.displayText()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                      << Log::end;
     }
     catch (const std::exception& exc)
     {
-        Log::error("Error while handling [" + getFirstLine(buffer, length) + "]. " +
-                   std::string("Exception: ") + exc.what());
+        Log::error("LOOLSession::handleInput: Exception while handling [" + getFirstLine(buffer, length) + "]: " + exc.what());
     }
     catch (...)
     {
-        Log::error("Unexpected Exception.");
+        Log::error("LOOLSession::handleInput: Unexpected exception");
     }
 
     return false;

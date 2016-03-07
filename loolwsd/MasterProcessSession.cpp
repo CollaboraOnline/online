@@ -52,7 +52,7 @@ MasterProcessSession::~MasterProcessSession()
     }
     catch (const std::exception& exc)
     {
-        Log::error(std::string("Exception: ") + exc.what());
+        Log::error(std::string("MasterProcessSession::~MasterProcessSession: Exception: ") + exc.what());
     }
 }
 

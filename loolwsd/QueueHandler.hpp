@@ -52,11 +52,11 @@ public:
         }
         catch (const std::exception& exc)
         {
-            Log::error(std::string("Exception: ") + exc.what());
+            Log::error(std::string("QueueHandler::run: Exception: ") + exc.what());
         }
         catch (...)
         {
-            Log::error("Unexpected Exception.");
+            Log::error("QueueHandler::run: Unexpected exception");
         }
 
         Log::debug("Thread [" + _name + "] finished.");

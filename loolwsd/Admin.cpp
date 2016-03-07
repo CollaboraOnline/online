@@ -157,7 +157,7 @@ public:
         }
         catch (const WebSocketException& exc)
         {
-            Log::error("AdminRequestHandler::handleRequest(), WebSocketException: " + exc.message());
+            Log::error("AdminRequestHandler::handleRequest: WebSocketException: " + exc.message());
             switch (exc.code())
             {
             case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
@@ -174,7 +174,7 @@ public:
         }
         catch (const std::exception& exc)
         {
-            Log::error(std::string("Exception: ") + exc.what());
+            Log::error(std::string("AdminRequestHandler::handleRequest: Exception: ") + exc.what());
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");

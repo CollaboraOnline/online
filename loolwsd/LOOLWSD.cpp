@@ -304,7 +304,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
     }
     catch (const WebSocketException& exc)
     {
-        Log::error("RequestHandler::handleRequest(), WebSocketException: " + exc.message());
+        Log::error("SocketProcessor: WebSocketException: " + exc.message());
         switch (exc.code())
         {
         case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
@@ -430,7 +430,7 @@ private:
                 }
                 catch (const IOException& exc)
                 {
-                    Log::info() << "IOException: " << exc.message() << Log::end;
+                    Log::info() << "ClientRequestHandler::handlePostRequest: IOException: " << exc.message() << Log::end;
                     response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
                     response.send();
                 }
@@ -571,17 +571,17 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error() << "Error: " << exc.displayText()
+            Log::error() << "ClientRequestHandler::handleRequest: Exception: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                          << Log::end;
         }
         catch (const std::exception& exc)
         {
-            Log::error(std::string("Exception: ") + exc.what());
+            Log::error(std::string("ClientRequestHandler::handleRequest: Exception: ") + exc.what());
         }
         catch (...)
         {
-            Log::error("Unexpected Exception.");
+            Log::error("ClientRequestHandler::handleRequest: Unexpected exception");
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");
@@ -621,17 +621,17 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error() << "Error: " << exc.displayText()
+            Log::error() << "PrisonerRequestHandler::handleRequest: Exception: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                          << Log::end;
         }
         catch (const std::exception& exc)
         {
-            Log::error(std::string("Exception: ") + exc.what());
+            Log::error(std::string("PrisonerRequestHandler::handleRequest: Exception: ") + exc.what());
         }
         catch (...)
         {
-            Log::error("Unexpected Exception.");
+            Log::error("PrisonerRequestHandler::handleRequest: Unexpected exception");
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");

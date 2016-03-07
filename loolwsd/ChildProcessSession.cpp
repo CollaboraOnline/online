@@ -222,15 +222,14 @@ public:
                 }
                 catch (const Exception& exc)
                 {
-                    Log::error() << "Error while handling callback [" << LOKitHelper::kitCallbackTypeToString(nType) << "]. "
+                    Log::error() << "CallbackWorker::run: Exception while handling callback [" << LOKitHelper::kitCallbackTypeToString(nType) << "]: "
                                  << exc.displayText()
                                  << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                                  << Log::end;
                 }
                 catch (const std::exception& exc)
                 {
-                    Log::error("Error while handling callback [" + LOKitHelper::kitCallbackTypeToString(nType) + "]. " +
-                               std::string("Exception: ") + exc.what());
+                    Log::error("CallbackWorker::run: Exception while handling callback [" + LOKitHelper::kitCallbackTypeToString(nType) + "]: " + exc.what());
                 }
             }
             else

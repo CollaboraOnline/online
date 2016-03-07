@@ -271,17 +271,17 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error() << "Error: " << exc.displayText()
+            Log::error() << "Connection::run: Exception: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                          << Log::end;
         }
         catch (const std::exception& exc)
         {
-            Log::error(std::string("Exception: ") + exc.what());
+            Log::error(std::string("Connection::run: Exception: ") + exc.what());
         }
         catch (...)
         {
-            Log::error("Unexpected Exception.");
+            Log::error("Connection::run:: Unexpected exception");
         }
 
         Log::debug("Thread [" + thread_name + "] finished.");
@@ -358,7 +358,7 @@ public:
             }
             catch(Poco::Net::NetException& exc)
             {
-                Log::error() << "Error: " << exc.displayText()
+                Log::error() << "Document::~Document: NetException: " << exc.displayText()
                              << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                              << Log::end;
             }
