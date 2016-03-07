@@ -449,7 +449,7 @@ namespace Util
                          << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
                          << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
                          << Poco::Process::id() << "\n" << Log::end;
-            sleep(10);
+            sleep(30);
         }
 
         struct sigaction action;
