@@ -29,15 +29,12 @@
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/Exception.h>
-#include <Poco/File.h>
+#include <Poco/Exception.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/URI.h>
-#include <Poco/Exception.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/FileStream.h>
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
@@ -47,17 +44,14 @@
 
 using namespace LOOLProtocol;
 
-using Poco::File;
+using Poco::Exception;
+using Poco::IOException;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::StringTokenizer;
-using Poco::Thread;
-using Poco::URI;
-using Poco::Exception;
-using Poco::IOException;
 
 LOOLSession::LOOLSession(const std::string& id, const Kind kind,
-                         std::shared_ptr<Poco::Net::WebSocket> ws) :
+                         std::shared_ptr<WebSocket> ws) :
     _kind(kind),
     _kindString(kind == Kind::ToClient ? "ToClient" :
                 kind == Kind::ToMaster ? "ToMaster" : "ToPrisoner"),
@@ -188,7 +182,7 @@ void LOOLSession::disconnect(const std::string& reason)
     }
 }
 
-bool LOOLSession::handleDisconnect(Poco::StringTokenizer& /*tokens*/)
+bool LOOLSession::handleDisconnect(StringTokenizer& /*tokens*/)
 {
     _disconnected = true;
     Util::shutdownWebSocket(_ws);
