@@ -246,7 +246,7 @@ public:
         }
         pclose(fp);
 
-        unsigned nMem;
+        unsigned nMem = 0;
         try
         {
             nMem = std::stoi(sResponse);
