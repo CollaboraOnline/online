@@ -39,10 +39,13 @@ clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
 
-# After building loolwsd, set its capabilities to allow chroot(). Do
-# it already after a plain 'make' to allow for testing without
-# installing.
-all-local: loolwsd loolbroker
+# After building loolbroker and loolkit, set their capabilities as
+# required. Do it already after a plain 'make' to allow for testing
+# without installing. When building for packaging, no need for this,
+# as the capabilities won't survive packaging anyway. Instead, handle
+# it when installing the RPM or Debian package.
+
+all-local: loolbroker loolkit
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolkit; \
