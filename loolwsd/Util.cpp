@@ -445,7 +445,7 @@ namespace Util
 
         if (std::getenv("LOOL_DEBUG"))
         {
-            Log::error() << "\nSegfault! Attach debugger with:\n"
+            Log::error() << "\nFatal signal! Attach debugger with:\n"
                          << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
                          << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
                          << Poco::Process::id() << "\n" << Log::end;
