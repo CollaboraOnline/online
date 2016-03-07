@@ -63,5 +63,5 @@ load-test: spec/data/load-test
 	mkdir load_test_out; \
 	for i in $$(seq 1 20); \
 	do \
-		mocha spec/headlessLoadTest.js > load_test_out/$$i.out 2>&1 & \
+		node_modules/.bin/mocha spec/headlessLoadTest.js > load_test_out/$$i.out 2>&1 & \
 	done;

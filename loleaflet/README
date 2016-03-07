@@ -61,7 +61,7 @@ Testing
     - to simulate a client opening several documents in the browser
         + open spec/loadtest.html in the browser
     - to simulate a client opening several documents in the console
-        + run: mocha spec/headlessLoadTest.js
+        + run: node_modules/.bin/mocha spec/headlessLoadTest.js
     - to simulate multiple clients opening several documents in the console
         + run: make load-test
 
