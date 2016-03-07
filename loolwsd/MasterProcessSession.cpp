@@ -452,10 +452,10 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
     try
     {
         // Strip query params because we need unique URI (need a better solution!).
-        StringTokenizer tokens(_docURL, "?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        StringTokenizer urlTokens(_docURL, "?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
         // request new URL session
-        const std::string aMessage = "request " + getId() + " " + tokens[0] + "\r\n";
+        const std::string aMessage = "request " + getId() + " " + urlTokens[0] + "\r\n";
         Log::trace("MasterToBroker: " + aMessage.substr(0, aMessage.length()-2));
         Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
     }

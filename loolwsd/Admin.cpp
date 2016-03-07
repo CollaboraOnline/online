@@ -143,8 +143,8 @@ public:
                         else if (tokens.count() == 1 && tokens[0] == "documents")
                         {
 
-                            std::string response = "documents " + model.query("documents");
-                            ws->sendFrame(response.data(), response.size());
+                            std::string responseString = "documents " + model.query("documents");
+                            ws->sendFrame(responseString.data(), responseString.size());
                         }
                     }
                 }
