@@ -693,8 +693,6 @@ private:
 
     void onUnload(const std::string& sessionId)
     {
-        std::unique_lock<std::recursive_mutex> lock(_mutex);
-
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second || !_loKitDocument)
@@ -702,6 +700,10 @@ private:
             // Nothing to do.
             return;
         }
+
+        auto session = it->second->getSession();
+        auto sessionLock = session->getLock();
+        std::unique_lock<std::recursive_mutex> lock(_mutex);
 
         --_clientViews;
 
