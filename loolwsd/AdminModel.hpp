@@ -10,8 +10,6 @@
 #ifndef INCLUDED_ADMIN_MODEL_HPP
 #define INCLUDED_ADMIN_MODEL_HPP
 
-#include "config.h"
-
 #include <memory>
 #include <sstream>
 #include <string>
@@ -338,4 +336,5 @@ private:
 };
 
 #endif
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

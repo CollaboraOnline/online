@@ -10,29 +10,29 @@
 #include <sys/poll.h>
 #include <sys/prctl.h>
 
+#include <cassert>
 #include <cstdlib>
 #include <cstring>
 #include <iomanip>
+#include <mutex>
+#include <random>
 #include <sstream>
 #include <string>
-#include <cassert>
-#include <random>
-#include <mutex>
 
 #include <png.h>
 
 #include <signal.h>
 
+#include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
 #include <Poco/Format.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
-#include <Poco/Timestamp.h>
 #include <Poco/Thread.h>
+#include <Poco/Timestamp.h>
 #include <Poco/Util/Application.h>
-#include <Poco/ConsoleChannel.h>
 
-#include <Common.hpp>
+#include "Common.hpp"
 #include "Util.hpp"
 #include "Png.hpp"
 

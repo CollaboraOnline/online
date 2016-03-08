@@ -10,8 +10,6 @@
 #ifndef INCLUDED_MESSAGEQUEUE_HPP
 #define INCLUDED_MESSAGEQUEUE_HPP
 
-#include "config.h"
-
 #include <condition_variable>
 #include <mutex>
 #include <deque>

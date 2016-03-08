@@ -24,13 +24,7 @@
 #include <mutex>
 #include <set>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
-
 #include <Poco/Exception.h>
-#include <Poco/Exception.h>
-#include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/String.h>

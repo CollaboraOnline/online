@@ -11,12 +11,12 @@
 #include <sys/poll.h>
 #include <sys/prctl.h>
 
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 
 #include "Admin.hpp"
@@ -34,10 +34,10 @@ using Poco::Net::HTTPServerParams;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::ServerSocket;
+using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::StringTokenizer;
-using Poco::Net::Socket;
 
 /// Handle admin requests.
 class AdminRequestHandler: public HTTPRequestHandler

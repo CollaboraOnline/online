@@ -18,9 +18,6 @@
 #include <ostream>
 #include <set>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Buffer.h>
 #include <Poco/Path.h>

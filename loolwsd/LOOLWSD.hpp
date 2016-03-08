@@ -10,21 +10,19 @@
 #ifndef INCLUDED_LOOLWSD_HPP
 #define INCLUDED_LOOLWSD_HPP
 
-#include "config.h"
-
-#include <string>
-#include <mutex>
 #include <atomic>
+#include <mutex>
+#include <string>
 
-#include <Poco/Util/OptionSet.h>
-#include <Poco/Random.h>
 #include <Poco/Path.h>
-#include <Poco/Util/ServerApplication.h>
 #include <Poco/Process.h>
+#include <Poco/Random.h>
+#include <Poco/Util/OptionSet.h>
+#include <Poco/Util/ServerApplication.h>
 
 #include "Auth.hpp"
-#include "Storage.hpp"
 #include "Common.hpp"
+#include "Storage.hpp"
 #include "Util.hpp"
 
 /// A DocumentURI as mananged by us.

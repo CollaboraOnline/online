@@ -105,7 +105,6 @@ private:
     const std::string _authVerifyUrl;
 };
 
-
-
 #endif
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

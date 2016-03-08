@@ -8,41 +8,36 @@
  */
 
 #include <sys/prctl.h>
+
 #include <iostream>
 
 #include <Poco/Exception.h>
-#include <Poco/File.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Notification.h>
 #include <Poco/NotificationQueue.h>
 #include <Poco/Path.h>
-#include <Poco/Process.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "Common.hpp"
 #include "ChildProcessSession.hpp"
+#include "Common.hpp"
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
-#include "Util.hpp"
 #include "Rectangle.hpp"
+#include "Util.hpp"
 
 using namespace LOOLProtocol;
 
 using Poco::Exception;
-using Poco::File;
-using Poco::IOException;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
+using Poco::Net::WebSocket;
 using Poco::Notification;
 using Poco::NotificationQueue;
-using Poco::Net::WebSocket;
 using Poco::Path;
-using Poco::Process;
-using Poco::ProcessHandle;
 using Poco::StringTokenizer;
 using Poco::URI;
 

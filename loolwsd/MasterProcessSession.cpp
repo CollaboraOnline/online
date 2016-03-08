@@ -18,8 +18,8 @@
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
 #include "MasterProcessSession.hpp"
-#include "Util.hpp"
 #include "Rectangle.hpp"
+#include "Util.hpp"
 
 using namespace LOOLProtocol;
 

@@ -26,46 +26,47 @@
 #include <iostream>
 #include <memory>
 
-#include <Poco/Net/WebSocket.h>
+#include <Poco/Exception.h>
+#include <Poco/Mutex.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Thread.h>
-#include <Poco/ThreadLocal.h>
+#include <Poco/Net/NetException.h>
+#include <Poco/Net/WebSocket.h>
+#include <Poco/Process.h>
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Exception.h>
-#include <Poco/Process.h>
-#include <Poco/Mutex.h>
-#include <Poco/Net/NetException.h>
+#include <Poco/Thread.h>
+#include <Poco/ThreadLocal.h>
 #include <Poco/Util/Application.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
+#include "Capabilities.hpp"
+#include "ChildProcessSession.hpp"
 #include "Common.hpp"
 #include "LOKitHelper.hpp"
+#include "LOOLProtocol.hpp"
 #include "QueueHandler.hpp"
 #include "Util.hpp"
-#include "ChildProcessSession.hpp"
-#include "LOOLProtocol.hpp"
-#include "Capabilities.hpp"
 
 using namespace LOOLProtocol;
-using Poco::Net::WebSocket;
+
+using Poco::Exception;
+using Poco::File;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
-using Poco::Thread;
+using Poco::Net::WebSocket;
+using Poco::Path;
+using Poco::Process;
 using Poco::Runnable;
 using Poco::StringTokenizer;
-using Poco::Exception;
-using Poco::Process;
-using Poco::Util::Application;
-using Poco::File;
-using Poco::Path;
+using Poco::Thread;
 using Poco::ThreadLocal;
+using Poco::Util::Application;
 
 const std::string CHILD_URI = "/loolws/child/";
 const std::string FIFO_PATH = "pipe";

@@ -55,8 +55,8 @@ DEALINGS IN THE SOFTWARE.
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <sstream>
 #include <mutex>
+#include <sstream>
 
 #include <Poco/Exception.h>
 #include <Poco/File.h>
@@ -135,11 +135,11 @@ using Poco::Random;
 using Poco::Runnable;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
-using Poco::Timespan;
 using Poco::TemporaryFile;
 using Poco::Thread;
 using Poco::ThreadLocal;
 using Poco::ThreadPool;
+using Poco::Timespan;
 using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
