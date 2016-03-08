@@ -278,7 +278,6 @@ Admin::Admin(const Poco::Process::PID brokerPid, const int brokerPipe, const int
 Admin::~Admin()
 {
     Log::info("~Admin dtor.");
-    _srv.stop();
 }
 
 void Admin::handleInput(std::string& message)
