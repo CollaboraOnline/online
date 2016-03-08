@@ -255,6 +255,7 @@ void Admin::run()
     Util::pollPipeForReading(pollPipeNotify, FIFO_NOTIFY, NotifyPipe,
                             [this](std::string& message) { return handleInput(message); } );
 
+    _srv.stopAll();
     Log::debug("Thread [" + thread_name + "] finished.");
 }
 
