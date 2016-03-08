@@ -115,9 +115,6 @@ protected:
     /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
     std::string _docOptions;
 
-    // Flag to stop dispatch chid messages when websocket is shutting down
-    bool _bShutdown;
-
 private:
 
     virtual bool _handleInput(const char *buffer, int length) = 0;

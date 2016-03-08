@@ -54,7 +54,6 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _isDocPasswordProvided(false),
     _isDocLoaded(false),
     _isDocPasswordProtected(false),
-    _bShutdown(false),
     _disconnected(false)
 {
     // Only a post request can have a null ws.

@@ -758,9 +758,6 @@ void MasterProcessSession::dispatchChild()
     int nRequest = 3;
     bool bFound = false;
 
-    if (_bShutdown)
-        return;
-
     // Wait until the child has connected with Master.
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
