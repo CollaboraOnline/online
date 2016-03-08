@@ -30,7 +30,6 @@
 #include <Poco/Timestamp.h>
 #include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
-#include <Poco/Environment.h>
 #include <Poco/ConsoleChannel.h>
 
 #include <Common.hpp>
@@ -120,16 +119,11 @@ namespace Log
 
         // Configure the logger.
         // TODO: This should come from a file.
-        try
-        {
-            // See Poco::Logger::setLevel docs for values.
-            // Try: error, information, debug
-            const auto level = Poco::Environment::get("LOOL_LOGLEVEL");
-            logger.setLevel(level);
-        }
-        catch (Poco::NotFoundException& aError)
-        {
-        }
+        // See Poco::Logger::setLevel docs for values.
+        // Try: error, information, debug
+        char *loglevel = std::getenv("LOOL_LOGLEVEL");
+        if (loglevel)
+            logger.setLevel(std::string(loglevel));
 
         info("Initializing " + name);
         info("Log level is [" + std::to_string(logger.getLevel()) + "].");

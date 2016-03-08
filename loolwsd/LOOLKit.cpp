@@ -36,7 +36,6 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/Exception.h>
 #include <Poco/Process.h>
-#include <Poco/Environment.h>
 #include <Poco/Mutex.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Util/Application.h>
@@ -1133,24 +1132,6 @@ int main(int argc, char** argv)
     {
         Log::error("Error: --pipe is empty");
         std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    try
-    {
-        Poco::Environment::get("LD_BIND_NOW");
-    }
-    catch (const Poco::NotFoundException& exc)
-    {
-        Log::warn("Note: LD_BIND_NOW is not set.");
-    }
-
-    try
-    {
-        Poco::Environment::get("LOK_VIEW_CALLBACK");
-    }
-    catch (const Poco::NotFoundException& exc)
-    {
-        Log::warn("Note: LOK_VIEW_CALLBACK is not set.");
     }
 
     lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipe);

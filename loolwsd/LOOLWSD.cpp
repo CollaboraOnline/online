@@ -58,7 +58,6 @@ DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include <mutex>
 
-#include <Poco/Environment.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
@@ -107,7 +106,6 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace LOOLProtocol;
 
-using Poco::Environment;
 using Poco::Exception;
 using Poco::File;
 using Poco::FileOutputStream;
@@ -909,10 +907,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::error("Don't run this as root");
         return Application::EXIT_USAGE;
     }
-
-    //Environment::set("LOK_FORK", "1");
-    //Environment::set("LD_BIND_NOW", "1");
-    //Environment::set("LOK_VIEW_CALLBACK", "1");
 
     char *locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)

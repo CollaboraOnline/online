@@ -648,23 +648,11 @@ int main(int argc, char** argv)
         std::exit(Application::EXIT_SOFTWARE);
     }
 
-    try
-    {
-        Poco::Environment::get("LD_BIND_NOW");
-    }
-    catch (const Poco::NotFoundException& exc)
-    {
-        Log::warn("Note: LD_BIND_NOW is not set.");
-    }
+    if (!std::getenv("LD_BIND_NOW"))
+        Log::info("Note: LD_BIND_NOW is not set.");
 
-    try
-    {
-        Poco::Environment::get("LOK_VIEW_CALLBACK");
-    }
-    catch (const Poco::NotFoundException& exc)
-    {
-        Log::warn("Note: LOK_VIEW_CALLBACK is not set.");
-    }
+    if (!std::getenv("LOK_VIEW_CALLBACK"))
+        Log::info("Note: LOK_VIEW_CALLBACK is not set.");
 
     int pipeFlags = O_RDONLY | O_NONBLOCK;
     const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
