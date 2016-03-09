@@ -39,12 +39,12 @@ public:
         Log::info("DocumentURI: url: " + url + ", jailRoot: " + jailRoot + ", childId: " + childId);
 
         // TODO: Sanitize the url and limit access!
-        auto uriPublic = Poco::URI(url);
-        uriPublic.normalize();
+        std::string decodedUrl;
+        Poco::URI::decode(url, decodedUrl);
+        auto uriPublic = Poco::URI(decodedUrl);
+        Log::info("Public URI [" + uriPublic.toString() + "].");
 
-        const auto publicFilePath = uriPublic.getPath();
-
-        if (publicFilePath.empty())
+        if (uriPublic.getPath().empty())
             throw std::runtime_error("Invalid URL.");
 
         // This lock could become a bottleneck.
@@ -62,6 +62,8 @@ public:
         auto uriJailed = uriPublic;
         if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
         {
+            uriPublic.normalize();
+            Log::info("Public URI [" + uriPublic.toString() + "] is a file.");
             std::unique_ptr<StorageBase> storage(new LocalStorage(jailRoot, jailPath.toString()));
             const auto localPath = storage->getFilePathFromURI(uriPublic.getPath());
             uriJailed = Poco::URI(Poco::URI("file://"), localPath);
@@ -78,7 +80,7 @@ public:
 
         auto document = std::shared_ptr<DocumentURI>(new DocumentURI(uriPublic, uriJailed, childId));
 
-        Log::info("DocumentURI [" + publicFilePath + "] created.");
+        Log::info("DocumentURI [" + uriPublic.toString() + "] created.");
         return document;
     }
 

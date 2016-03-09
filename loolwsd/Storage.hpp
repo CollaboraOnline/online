@@ -131,21 +131,26 @@ public:
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string getFilePathFromURI(const std::string& uri) override
     {
+        Log::info("Downloading URI [" + uri + "].");
+
         Poco::URI uriObject(uri);
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri, Poco::Net::HTTPMessage::HTTP_1_1);
-        Poco::Net::HTTPResponse response;
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         session.sendRequest(request);
+        Poco::Net::HTTPResponse response;
         std::istream& rs = session.receiveResponse(response);
         Log::info() << "WOPI::GetFile Status: " <<  response.getStatus() << " " << response.getReason() << Log::end;
 
         //TODO: Get proper filename.
-        const std::string local_filename = _localStorePath + "/filename";
+        const auto filename = "filename";
+        const std::string local_filename = Poco::Path(getRootPath(), filename).toString();
         std::ofstream ofs(local_filename);
         std::copy(std::istreambuf_iterator<char>(rs),
                   std::istreambuf_iterator<char>(),
                   std::ostreambuf_iterator<char>(ofs));
-        return local_filename;
+
+        // Now return the jailed path.
+        return Poco::Path(_jailPath, filename).toString();
     }
 
     bool restoreFileToURI(const std::string& path, const std::string& uri) override
