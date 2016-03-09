@@ -9,7 +9,7 @@ L.Socket = L.Class.extend({
 	initialize: function (map) {
 		this._map = map;
 		try {
-			this.socket = new WebSocket(map.options.server + '/?token=' + map.options.token);
+			this.socket = new WebSocket(map.options.server);
 		} catch (e) {
 			this.fire('error', {msg: _('Socket connection error'), cmd: 'socket', kind: 'failed', id: 3});
 			return null;
