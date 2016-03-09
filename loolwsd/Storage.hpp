@@ -28,13 +28,15 @@ public:
     /// localStorePath the absolute root path of the chroot.
     /// jailPath the path within the jail that the child uses.
     StorageBase(const std::string& localStorePath,
-                const std::string& jailPath) :
+                const std::string& jailPath,
+                const std::string& uri) :
         _localStorePath(localStorePath),
-        _jailPath(jailPath)
+        _jailPath(jailPath),
+        _uri(uri)
     {
     }
 
-    std::string getRootPath() const
+    std::string getLocalRootPath() const
     {
         auto localPath = _jailPath;
         if (localPath[0] == '/')
@@ -50,16 +52,20 @@ public:
         return rootPath.toString();
     }
 
+    const std::string& getUri() const { return _uri; }
+
     /// Returns a local file path given a URI or ID.
     /// If necessary copies the file locally first.
-    virtual std::string getFilePathFromURI(const std::string& uri) = 0;
+    virtual std::string getLocalFilePathFromStorage() = 0;
 
     /// Writes the contents of the file back to the source.
-    virtual bool restoreFileToURI(const std::string& path, const std::string& uri) = 0;
+    virtual bool restoreLocalFileToStorage() = 0;
 
 protected:
     const std::string _localStorePath;
     const std::string _jailPath;
+    const std::string _uri;
+    std::string _jailedFilePath;
 };
 
 /// Trivial implementation of local storage that does not need do anything.
@@ -67,42 +73,45 @@ class LocalStorage : public StorageBase
 {
 public:
     LocalStorage(const std::string& localStorePath,
-                 const std::string& jailPath) :
-        StorageBase(localStorePath, jailPath)
+                 const std::string& jailPath,
+                 const std::string& uri) :
+        StorageBase(localStorePath, jailPath, uri),
+        _isCopy(false)
     {
     }
 
-    std::string getFilePathFromURI(const std::string& uri) override
+    std::string getLocalFilePathFromStorage() override
     {
-        const auto rootPath = getRootPath();
+        const auto rootPath = getLocalRootPath();
 
         // /chroot/jailId/user/doc/childId/file.ext
-        const auto filename = Poco::Path(uri).getFileName();
-        const auto jailedFilePath = Poco::Path(rootPath, filename).toString();
+        const auto filename = Poco::Path(_uri).getFileName();
+        _jailedFilePath = Poco::Path(rootPath, filename).toString();
 
-        Log::info("Public URI [" + uri +
-                  "] jailed to [" + jailedFilePath + "].");
+        Log::info("Public URI [" + _uri +
+                  "] jailed to [" + _jailedFilePath + "].");
 
-        const auto publicFilePath = uri;
-        Log::info("Linking " + publicFilePath + " to " + jailedFilePath);
-        if (!Poco::File(jailedFilePath).exists() && link(publicFilePath.c_str(), jailedFilePath.c_str()) == -1)
+        const auto publicFilePath = _uri;
+        Log::info("Linking " + publicFilePath + " to " + _jailedFilePath);
+        if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
         {
             // Failed
-            Log::error("link(\"" + publicFilePath + "\", \"" + jailedFilePath + "\") failed.");
+            Log::error("link(\"" + publicFilePath + "\", \"" + _jailedFilePath + "\") failed.");
         }
 
         try
         {
             // Fallback to copying.
-            if (!Poco::File(jailedFilePath).exists())
+            if (!Poco::File(_jailedFilePath).exists())
             {
-                Log::info("Copying " + publicFilePath + " to " + jailedFilePath);
-                Poco::File(publicFilePath).copyTo(jailedFilePath);
+                Log::info("Copying " + publicFilePath + " to " + _jailedFilePath);
+                Poco::File(publicFilePath).copyTo(_jailedFilePath);
+                _isCopy = true;
             }
         }
         catch (const Poco::Exception& exc)
         {
-            Log::error("copyTo(\"" + publicFilePath + "\", \"" + jailedFilePath + "\") failed: " + exc.displayText());
+            Log::error("copyTo(\"" + publicFilePath + "\", \"" + _jailedFilePath + "\") failed: " + exc.displayText());
             throw;
         }
 
@@ -110,30 +119,47 @@ public:
         return Poco::Path(_jailPath, filename).toString();
     }
 
-    bool restoreFileToURI(const std::string& path, const std::string& uri) override
+    bool restoreLocalFileToStorage() override
     {
-        // Nothing to do.
-        (void)path;
-        (void)uri;
-        return false;
+        try
+        {
+            // Copy the file back.
+            if (_isCopy && Poco::File(_jailedFilePath).exists())
+            {
+                Log::info("Copying " + _jailedFilePath + " to " + _uri);
+                Poco::File(_jailedFilePath).copyTo(_uri);
+            }
+        }
+        catch (const Poco::Exception& exc)
+        {
+            Log::error("copyTo(\"" + _jailedFilePath + "\", \"" + _uri + "\") failed: " + exc.displayText());
+            throw;
+        }
+
+        return true;
     }
+
+private:
+    /// True if the jailed file is not linked but copied.
+    bool _isCopy;
 };
 
 class WopiStorage : public StorageBase
 {
 public:
     WopiStorage(const std::string& localStorePath,
-                 const std::string& jailPath) :
-        StorageBase(localStorePath, jailPath)
+                const std::string& jailPath,
+                const std::string& uri) :
+        StorageBase(localStorePath, jailPath, uri)
     {
     }
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
-    std::string getFilePathFromURI(const std::string& uri) override
+    std::string getLocalFilePathFromStorage() override
     {
-        Log::info("Downloading URI [" + uri + "].");
+        Log::info("Downloading URI [" + _uri + "].");
 
-        Poco::URI uriObject(uri);
+        Poco::URI uriObject(_uri);
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", "LOOLWSD WOPI Agent");
@@ -142,11 +168,11 @@ public:
         Poco::Net::HTTPResponse response;
         std::istream& rs = session.receiveResponse(response);
 
-        Log::info() << "WOPI::GetFile Status for URI [" << uri << "]: "
+        Log::info() << "WOPI::GetFile Status for URI [" << _uri << "]: "
                     << response.getStatus() << " " << response.getReason() << Log::end;
 
         auto logger = Log::debug();
-        logger << "WOPI::GetFile header for URI [" << uri << "]:\n";
+        logger << "WOPI::GetFile header for URI [" << _uri << "]:\n";
         for (auto& pair : response)
         {
             logger << '\t' + pair.first + ": " + pair.second << '\n';
@@ -156,8 +182,8 @@ public:
 
         //TODO: Get proper filename.
         const auto filename = "filename";
-        const std::string local_filename = Poco::Path(getRootPath(), filename).toString();
-        std::ofstream ofs(local_filename);
+        _jailedFilePath = Poco::Path(getLocalRootPath(), filename).toString();
+        std::ofstream ofs(_jailedFilePath);
         std::copy(std::istreambuf_iterator<char>(rs),
                   std::istreambuf_iterator<char>(),
                   std::ostreambuf_iterator<char>(ofs));
@@ -166,13 +192,13 @@ public:
         return Poco::Path(_jailPath, filename).toString();
     }
 
-    bool restoreFileToURI(const std::string& path, const std::string& uri) override
+    bool restoreLocalFileToStorage() override
     {
-        Poco::URI uriObject(uri);
+        Poco::URI uriObject(_uri);
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uri, Poco::Net::HTTPMessage::HTTP_1_1);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, _uri, Poco::Net::HTTPMessage::HTTP_1_1);
 
-        std::ifstream ifs(path);
+        std::ifstream ifs(_jailedFilePath);
         request.read(ifs);
 
         Poco::Net::HTTPResponse response;
@@ -188,30 +214,26 @@ class WebDAVStorage : public StorageBase
 public:
     WebDAVStorage(const std::string& localStorePath,
                   const std::string& jailPath,
-                  const std::string& url,
+                  const std::string& uri,
                   std::unique_ptr<AuthBase> authAgent) :
-        StorageBase(localStorePath, jailPath),
-        _url(url),
+        StorageBase(localStorePath, jailPath, uri),
         _authAgent(std::move(authAgent))
     {
     }
 
-    std::string getFilePathFromURI(const std::string& uri) override
+    std::string getLocalFilePathFromStorage() override
     {
         // TODO: implement webdav GET.
-        return uri;
+        return _uri;
     }
 
-    bool restoreFileToURI(const std::string& path, const std::string& uri) override
+    bool restoreLocalFileToStorage() override
     {
         // TODO: implement webdav PUT.
-        (void)path;
-        (void)uri;
         return false;
     }
 
 private:
-    const std::string _url;
     std::unique_ptr<AuthBase> _authAgent;
 };
 

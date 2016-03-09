@@ -64,8 +64,8 @@ public:
         {
             uriPublic.normalize();
             Log::info("Public URI [" + uriPublic.toString() + "] is a file.");
-            std::unique_ptr<StorageBase> storage(new LocalStorage(jailRoot, jailPath.toString()));
-            const auto localPath = storage->getFilePathFromURI(uriPublic.getPath());
+            std::unique_ptr<StorageBase> storage(new LocalStorage(jailRoot, jailPath.toString(), uriPublic.getPath()));
+            const auto localPath = storage->getLocalFilePathFromStorage();
             uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         }
         else
@@ -73,8 +73,8 @@ public:
             Log::info("Public URI [" + uriPublic.toString() +
                       "] assuming cloud storage.");
             //TODO: Configure the storage to use. For now, assume it's WOPI.
-            std::unique_ptr<StorageBase> storage(new WopiStorage(jailRoot, jailPath.toString()));
-            const auto localPath = storage->getFilePathFromURI(uriPublic.toString());
+            std::unique_ptr<StorageBase> storage(new WopiStorage(jailRoot, jailPath.toString(), uriPublic.toString()));
+            const auto localPath = storage->getLocalFilePathFromStorage();
             uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         }
 
