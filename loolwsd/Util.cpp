@@ -115,7 +115,7 @@ namespace Log
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
         SourceId = oss.str();
 
-        auto channel = (std::getenv("LOOL_LOGCOLOR")
+        auto channel = (isatty(fileno(stdout)) || std::getenv("LOOL_LOGCOLOR")
                      ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
                      : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
         auto& logger = Poco::Logger::create(SourceName, channel, Poco::Message::PRIO_INFORMATION);
