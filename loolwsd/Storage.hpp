@@ -136,10 +136,23 @@ public:
         Poco::URI uriObject(uri);
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("User-Agent", "LOOLWSD WOPI Agent");
         session.sendRequest(request);
+
         Poco::Net::HTTPResponse response;
         std::istream& rs = session.receiveResponse(response);
-        Log::info() << "WOPI::GetFile Status: " <<  response.getStatus() << " " << response.getReason() << Log::end;
+
+        Log::info() << "WOPI::GetFile Status for URI [" << uri << "]: "
+                    << response.getStatus() << " " << response.getReason() << Log::end;
+
+        auto logger = Log::debug();
+        logger << "WOPI::GetFile header for URI [" << uri << "]:\n";
+        for (auto& pair : response)
+        {
+            logger << '\t' + pair.first + ": " + pair.second << '\n';
+        }
+
+        logger << Log::end;
 
         //TODO: Get proper filename.
         const auto filename = "filename";
