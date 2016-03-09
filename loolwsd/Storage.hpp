@@ -34,6 +34,22 @@ public:
     {
     }
 
+    std::string getRootPath() const
+    {
+        auto localPath = _jailPath;
+        if (localPath[0] == '/')
+        {
+            // Remove the leading /
+            localPath.erase(0, 1);
+        }
+
+        // /chroot/jailId/user/doc/childId
+        const auto rootPath = Poco::Path(_localStorePath, localPath);
+        Poco::File(rootPath).createDirectories();
+
+        return rootPath.toString();
+    }
+
     /// Returns a local file path given a URI or ID.
     /// If necessary copies the file locally first.
     virtual std::string getFilePathFromURI(const std::string& uri) = 0;
@@ -58,16 +74,7 @@ public:
 
     std::string getFilePathFromURI(const std::string& uri) override
     {
-        auto localPath = _jailPath;
-        if (localPath[0] == '/')
-        {
-            // Remove the leading /
-            localPath.erase(0, 1);
-        }
-
-        // /chroot/jailId/user/doc/childId
-        const auto rootPath = Poco::Path(_localStorePath, localPath);
-        Poco::File(rootPath).createDirectories();
+        const auto rootPath = getRootPath();
 
         // /chroot/jailId/user/doc/childId/file.ext
         const auto filename = Poco::Path(uri).getFileName();
