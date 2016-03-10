@@ -8710,6 +8710,37 @@ var unoCommands = [
 },
 
 {
+    header: 'Presentation-related',
+},
+
+{
+    uno: '.uno:AssignLayout',
+    parameter: {
+        'WhatLayout': {
+            'type': 'long',
+            'value': 19
+        }
+    },
+    description: 'Changes the layout of the current slide.  Possible values of "WhatLayout" are: <ul>' +
+	'<li>20 - Blank</li>' +
+	'<li>19 - Title</li>' +
+	'<li>0 - Title, Text</li>' +
+	'<li>1 - Title, Content</li>' +
+	'<li>32 - Centered Text</li>' +
+	'<li>3 - Title, 2 Content</li>' +
+	'<li>12 - Title, Content and 2 Content on Right</li>' +
+	'<li>15 - Title, 2 Content on Left and Content</li>' +
+	'<li>14 - Title, Content above Content</li>' +
+	'<li>16 - Title, 2 Content above Content</li>' +
+	'<li>18 - Title, 4 Content</li>' +
+	'<li>34 - Title, 6 Content</li>' +
+	'<li>28 - Title, Content (Vertical)</li>' +
+	'<li>27 - Title, Content over Content (Vertical)</li>' +
+	'<li>29 - Title, Vertical Content</li>' +
+	'<li>30 - Title, 2 Vertical Content</li></ul>'
+},
+
+{
     header: 'Appearance options',
 },
 
