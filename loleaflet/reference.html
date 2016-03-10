@@ -8637,6 +8637,49 @@ var unoCommands = [
 },
 
 {
+    header: 'Tables (in presentations)',
+},
+
+{
+    uno: '.uno:InsertColumns',
+    parameter: null,
+    description: 'Insert column after the current cursor position.',
+},
+
+{
+    uno: '.uno:InsertRows',
+    parameter: null,
+    description: 'Insert row after the current cursor position.',
+},
+
+{
+    uno: '.uno:InsertTable',
+    parameter: {
+	'Columns': {
+		'type': 'long',
+		'value': 6
+	},
+	'Rows': {
+		'type': "long",
+		'value': 10
+	}
+    },
+    description: 'Insert table with the given dimensions.'
+},
+
+{
+    uno: '.uno:DeleteColumns',
+    parameter: null,
+    description: 'Delete the current column.'
+},
+
+{
+    uno: '.uno:DeleteRows',
+    parameter: null,
+    description: 'Delete the current row.'
+},
+
+{
     header: 'Spreadsheet-related',
 },
 
