@@ -754,35 +754,35 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
 
 void MasterProcessSession::dispatchChild()
 {
-    int nRequest = 3;
-    bool bFound = false;
+    int retries = 3;
+    bool isFound = false;
 
     // Wait until the child has connected with Master.
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
 
     Log::debug() << "Waiting for a child session permission for thread [" << getId() << "]." << Log::end;
-    while (nRequest-- && !bFound)
+    while (retries-- && !isFound)
     {
         AvailableChildSessionCV.wait_for(
             lock,
             std::chrono::milliseconds(3000),
-            [&bFound, this]
+            [&isFound, this]
             {
-                return (bFound = AvailableChildSessions.find(getId()) != AvailableChildSessions.end());
+                return (isFound = AvailableChildSessions.find(getId()) != AvailableChildSessions.end());
             });
 
-        if (!bFound)
+        if (!isFound)
         {
-            Log::info() << "Retrying child permission... " << nRequest << Log::end;
+            Log::info() << "Retrying child permission... " << retries << Log::end;
             // request again new URL session
-            const std::string aMessage = "request " + getId() + " " + _docURL + "\r\n";
-            Log::trace("MasterToBroker: " + aMessage.substr(0, aMessage.length()-2));
-            Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
+            const std::string message = "request " + getId() + " " + _docURL + "\r\n";
+            Log::trace("MasterToBroker: " + message.substr(0, message.length()-2));
+            Util::writeFIFO(LOOLWSD::BrokerWritePipe, message);
         }
     }
 
-    if (bFound)
+    if (isFound)
     {
         Log::debug("Waiting child session permission, done!");
         childSession = AvailableChildSessions[getId()];
@@ -791,7 +791,7 @@ void MasterProcessSession::dispatchChild()
 
     lock.unlock();
 
-    if (nRequest < 0 && !bFound)
+    if (retries < 0 && !isFound)
     {
         Log::error(getName() + ": Failed to connect to child. Shutting down socket.");
         Util::shutdownWebSocket(_ws);
