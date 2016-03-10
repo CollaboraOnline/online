@@ -173,18 +173,18 @@ public:
                             totalMem += model.getTotalMemoryUsage();
                             totalMem += Util::getMemoryUsage(Poco::Process::id());
 
-                            std::string response = "total_mem " + std::to_string(totalMem);
-                            ws->sendFrame(response.data(), response.size());
+                            std::string responseFrame = "total_mem " + std::to_string(totalMem);
+                            ws->sendFrame(responseFrame.data(), responseFrame.size());
                         }
                         else if (tokens[0] == "active_users_count")
                         {
-                            std::string response = tokens[0] + " " + model.query(tokens[0]);
-                            ws->sendFrame(response.data(), response.size());
+                            std::string responseFrame = tokens[0] + " " + model.query(tokens[0]);
+                            ws->sendFrame(responseFrame.data(), responseFrame.size());
                         }
                         else if (tokens[0] == "active_docs_count")
                         {
-                            std::string response = tokens[0] + " " + model.query(tokens[0]);
-                            ws->sendFrame(response.data(), response.size());
+                            std::string responseFrame = tokens[0] + " " + model.query(tokens[0]);
+                            ws->sendFrame(responseFrame.data(), responseFrame.size());
                         }
                         else if (tokens[0] == "kill" && tokens.count() == 2)
                         {
