@@ -14,4 +14,5 @@ plugins/draw-0.2.4/dist/*.js
 coverage/
 /load_test_out
 /spec/data/load_test
-
+loleaflet.spec
+*.tar.gz
