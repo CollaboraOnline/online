@@ -1,312 +1,314 @@
-# Collabora CloudSuite Toolbar French translation
-# Copyright (C) 2015
-# This file is distributed under the same license as the cloudsuite package.
-# Andras Timar <andras.timar@collabora.com>
+# #-#-#-#-#  LibreOffice 5.1 Compendium (sl) #-#-#-#-#
+# Martin Srebotnjak <miles@filmsi.net>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: CloudSuite Toolbar\n"
+"Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-10 09:57+0100\n"
-"PO-Revision-Date: 2015-12-20 14:14+0100\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: French <fr@li.org>\n"
+"PO-Revision-Date: 2016-02-28 23:04+0100\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3);\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Accelerator-Marker: ~\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #: dist/toolbar/toolbar.js:21 dist/toolbar/toolbar.js:29
 #: dist/toolbar/toolbar.js:37 dist/toolbar/toolbar.js:45
 msgid "File"
-msgstr "Fichier"
+msgstr "Datoteka"
 
 #: dist/toolbar/toolbar.js:22 dist/toolbar/toolbar.js:30
 #: dist/toolbar/toolbar.js:38 dist/toolbar/toolbar.js:46
 msgid "Download as PDF document (.pdf)"
-msgstr "Télécharger en PDF (.pdf)"
+msgstr "Prenesi kot dokument PDF (.pdf)"
 
 #: dist/toolbar/toolbar.js:23
 msgid "Download as ODF Text document (.odt)"
-msgstr "Télécharger en ODF Document texte (.odt)"
+msgstr "Prenesi kot besedilni dokument ODF (.odt)"
 
 #: dist/toolbar/toolbar.js:24
 msgid "Download as Microsoft Word 2003 (.doc)"
-msgstr "Télécharger en Microsoft Word 2003 (.doc)"
+msgstr "Prenesi kot Microsoft Word 2003 (.doc)"
 
 #: dist/toolbar/toolbar.js:25
 msgid "Download as Microsoft Word (.docx)"
-msgstr "Télécharger en Microsoft Word (.docx)"
+msgstr "Prenesi kot Microsoft Word (.docx)"
 
 #: dist/toolbar/toolbar.js:26 dist/toolbar/toolbar.js:34
 #: dist/toolbar/toolbar.js:42 dist/toolbar/toolbar.js:47
 msgid "Print"
-msgstr "Impression"
+msgstr "Natisni"
 
 #: dist/toolbar/toolbar.js:31
 msgid "Download as ODF Presentation (.odp)"
-msgstr "Download as ODF Présentation (.odp)"
+msgstr "Prenesi kot predstavitev ODF (.odp)"
 
 #: dist/toolbar/toolbar.js:32
 msgid "Download as Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Télécharger en Microsoft Powerpoint 2003 (.ppt)"
+msgstr "Prenesi kot Microsoft Powerpoint 2003 (.ppt)"
 
 #: dist/toolbar/toolbar.js:33
 msgid "Download as Microsoft Powerpoint (.pptx)"
-msgstr "Télécharger en Microsoft Powerpoint (.pptx)"
+msgstr "Prenesi kot Microsoft Powerpoint (.pptx)"
 
 #: dist/toolbar/toolbar.js:39
 msgid "Download as ODF Spreadsheet (.ods)"
-msgstr "Télécharger en ODF Classeur (.ods)"
+msgstr "Prenesi kot preglednico ODF (.ods)"
 
 #: dist/toolbar/toolbar.js:40
 msgid "Download as Microsoft Excel 2003 (.xls)"
-msgstr "Télécharger en Microsoft Excel 2003 (.xls)"
+msgstr "Prenesi kot Microsoft Excel 2003 (.xls)"
 
 #: dist/toolbar/toolbar.js:41
 msgid "Download as Microsoft Excel (.xlsx)"
-msgstr "Télécharger en Microsoft Excel (.xlsx)"
+msgstr "Prenesi kot Microsoft Excel (.xlsx)"
 
 #: dist/toolbar/toolbar.js:50
 msgid "Save"
-msgstr "Enregistrer"
+msgstr "Shrani"
 
 #: dist/toolbar/toolbar.js:52
 msgid "Undo"
-msgstr "Annuler"
+msgstr "Razveljavi"
 
 #: dist/toolbar/toolbar.js:53
 msgid "Redo"
-msgstr "Rétablir"
+msgstr "Ponovi"
 
 #: dist/toolbar/toolbar.js:59
 msgid "Bold"
-msgstr "Gras"
+msgstr "Krepko"
 
 #: dist/toolbar/toolbar.js:60
 msgid "Italic"
-msgstr "Italique"
+msgstr "Ležeče"
 
 #: dist/toolbar/toolbar.js:61
 msgid "Underline"
-msgstr "Soulignage"
+msgstr "Podčrtano"
 
 #: dist/toolbar/toolbar.js:62
 msgid "Strikeout"
-msgstr "Barré"
+msgstr "Prečrtano"
 
 #: dist/toolbar/toolbar.js:65
 msgid "Font Color"
-msgstr "Couleur de police"
+msgstr "Barva pisave"
 
 #: dist/toolbar/toolbar.js:67
 msgid "Highlighting"
-msgstr "Mise en évidence"
+msgstr "Poudarjanje"
 
 #: dist/toolbar/toolbar.js:69
 msgid "Align left"
-msgstr "Aligner à gauche"
+msgstr "Poravnaj levo"
 
 #: dist/toolbar/toolbar.js:70
 msgid "Center horizontaly"
-msgstr "Centre horizontal"
+msgstr "Vodoravno na sredino"
 
 #: dist/toolbar/toolbar.js:71
 msgid "Align right"
-msgstr "Aligner à droite"
+msgstr "Poravnaj desno"
 
 #: dist/toolbar/toolbar.js:72
 msgid "Justified"
-msgstr "Justifié"
+msgstr "Obojestransko"
 
 #: dist/toolbar/toolbar.js:74
 msgid "Bullets on/off"
-msgstr "(Dés)activer les puces"
+msgstr "Oznake vključene/izključene"
 
 #: dist/toolbar/toolbar.js:75
 msgid "Numbering on/off"
-msgstr "(Dés)activer la numérotation"
+msgstr "Oštevilčevanje vključeno/izključeno"
 
 #: dist/toolbar/toolbar.js:77
 msgid "Increase Indent"
-msgstr "Augmenter le retrait"
+msgstr "Povečaj zamik"
 
 #: dist/toolbar/toolbar.js:78
 msgid "Decrease Indent"
-msgstr "Réduire le retrait"
+msgstr "Zmanjšaj zamik"
 
 #: dist/toolbar/toolbar.js:80
 msgid "Insert Graphic"
-msgstr "Insérer une image"
+msgstr "Vstavi sliko"
 
 #: dist/toolbar/toolbar.js:82
 msgid "Help"
-msgstr "Aide"
+msgstr "Pomoč"
 
 #: dist/toolbar/toolbar.js:84
 msgid "More"
-msgstr ""
+msgstr "Dodatno"
 
 #: dist/toolbar/toolbar.js:85
 msgid "Close Document"
-msgstr "Fermer le document"
+msgstr "Zapri dokument"
 
 #: dist/toolbar/toolbar.js:96
 msgid "Sum"
-msgstr "Somme"
+msgstr "Vsota"
 
 #: dist/toolbar/toolbar.js:97
 msgid "Function"
-msgstr "Fonction"
+msgstr "Funkcija"
 
 #: dist/toolbar/toolbar.js:98
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Prekliči"
 
 #: dist/toolbar/toolbar.js:99
 msgid "Accept"
-msgstr "Accepter"
+msgstr "Sprejmi"
 
 #: dist/toolbar/toolbar.js:110
 msgid "First Sheet"
-msgstr ""
+msgstr "Prvi delovni list"
 
 #: dist/toolbar/toolbar.js:111
 msgid "Previous Sheet"
-msgstr ""
+msgstr "Prejšnji delovni list"
 
 #: dist/toolbar/toolbar.js:112
 msgid "Next Sheet"
-msgstr ""
+msgstr "Naslednji delovni list"
 
 #: dist/toolbar/toolbar.js:113
 msgid "Last Sheet"
-msgstr ""
+msgstr "Zadnji delovni list"
 
 #: dist/toolbar/toolbar.js:129
 msgid "Search backwards"
-msgstr "Recherche vers le haut"
+msgstr "Išči nazaj"
 
 #: dist/toolbar/toolbar.js:130
 msgid "Search forward"
-msgstr "Recherche vers le bas"
+msgstr "Išči naprej"
 
 #: dist/toolbar/toolbar.js:131
 msgid "Cancel the search"
-msgstr "Annuler la recherche"
+msgstr "Prekliči iskanje"
 
 #: dist/toolbar/toolbar.js:133
 msgid "Enable editing"
-msgstr "Activer l'édition"
+msgstr "Omogoči urejanje"
 
 #: dist/toolbar/toolbar.js:134
 msgid "Enable selection"
-msgstr "Activer la sélection"
+msgstr "Omogoči izbiranje"
 
 #: dist/toolbar/toolbar.js:135
 msgid "Fullscreen presentation"
-msgstr "Présentation en plein écran"
+msgstr "Celozaslonska predstavitev"
 
 #: dist/toolbar/toolbar.js:136 src/control/Control.Presentation.js:16
 msgid "Insert Page"
-msgstr ""
+msgstr "Vstavi stran"
 
 #: dist/toolbar/toolbar.js:137 src/control/Control.Presentation.js:17
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Podvoji stran"
 
 #: dist/toolbar/toolbar.js:138 src/control/Control.Presentation.js:18
 msgid "Delete Page"
-msgstr ""
+msgstr "Izbriši stran"
 
 #: dist/toolbar/toolbar.js:140
 msgid "Previous page/part"
-msgstr "Page précédente"
+msgstr "Prejšnja stran/del"
 
 #: dist/toolbar/toolbar.js:141
 msgid "Next page/part"
-msgstr "Page suivante"
+msgstr "Naslednja stran/del"
 
 #: dist/toolbar/toolbar.js:143
 msgid "Reset"
-msgstr ""
+msgstr "Ponastavi"
 
 #: dist/toolbar/toolbar.js:144
 msgid "Zoom out"
-msgstr "Réduire"
+msgstr "Približaj"
 
 #: dist/toolbar/toolbar.js:146
 msgid "Zoom in"
-msgstr "Agrandir"
+msgstr "Oddalji"
 
 #: dist/toolbar/toolbar.js:302 src/control/Control.Presentation.js:78
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "Ali ste prepričani, da želite izbrisati to stran?"
 
 #: dist/toolbar/toolbar.js:428 dist/toolbar/toolbar.js:749
 msgid "Size"
-msgstr "Taille"
+msgstr "Velikost"
 
 #: dist/toolbar/toolbar.js:736
 msgid "Style"
-msgstr "Style"
+msgstr "Slog"
 
 #: dist/toolbar/toolbar.js:744
 msgid "Font"
-msgstr "Police"
+msgstr "Pisava"
 
 #: src/control/Control.Tabs.js:27
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "Vstavi delovni list pred tem"
 
 #: src/control/Control.Tabs.js:28
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "Vstavi delovni list za tem"
 
 #: src/control/Control.Tabs.js:29
 msgid "Delete sheet"
-msgstr ""
+msgstr "Izbriši delovni list"
 
 #: src/control/Control.Tabs.js:33
 msgid "Are you sure you want to delete this sheet?"
-msgstr ""
+msgstr "Ali ste prepričani, da želite izbrisati ta delovni list?"
 
 #: src/control/Control.Tabs.js:42
 msgid "Rename sheet"
-msgstr ""
+msgstr "Preimenuj delovni list"
 
 #: src/control/Control.Tabs.js:46
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "Vnesite ime za nov delovni list"
 
 #: src/core/Socket.js:14 src/core/Socket.js:236
 msgid "Socket connection error"
-msgstr ""
+msgstr "Napaka povezave vtiča"
 
 #: src/core/Socket.js:105
 msgid "Unexpected loolserver message."
-msgstr ""
+msgstr "Nepričakovano sporočilo loolserver."
 
 #: src/core/Socket.js:109
 msgid "Unsupported server version."
-msgstr ""
+msgstr "Nepodprta različica strežnika."
 
 #: src/core/Socket.js:120
 msgid "Document requires password to view."
-msgstr ""
+msgstr "Za ogled dokumenta je potrebno geslo."
 
 #: src/core/Socket.js:123
 msgid "Document requires password to modify."
-msgstr ""
+msgstr "Za spreminjanje dokumenta je potrebno geslo."
 
 #: src/core/Socket.js:125
 msgid "Hit Cancel to open in view-only mode."
-msgstr ""
+msgstr "Pritisnite Prekliči za odpiranje v oglednem načinu."
 
 #: src/core/Socket.js:129
 msgid "Wrong password provided. Please try again."
-msgstr ""
+msgstr "Vnesli ste napačno geslo. Poskusite znova."
 
 #: src/core/Socket.js:240
 msgid "Socket connection closed"
-msgstr ""
+msgstr "Povezava vtiča zaprta"

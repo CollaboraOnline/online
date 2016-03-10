@@ -1,600 +1,606 @@
+# #-#-#-#-#  LibreOffice 5.1 Compendium (sl) #-#-#-#-#
+# Martin Srebotnjak <miles@filmsi.net>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: CloudSuite Help\n"
+"Project-Id-Version: LibreOffice Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-10 09:57+0200\n"
-"PO-Revision-Date: 2016-01-10 22:10+0100\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hungarian <hu@li.org>\n"
-"Language: hu\n"
+"PO-Revision-Date: 2016-03-10 00:44+0100\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3);\n"
 "X-Generator: Translate Toolkit 1.13.0\n"
+"X-Accelerator-Marker: ~\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #: dist/loleaflet-help.html+html.head.title:5
 msgid "LOLeaflet Help"
-msgstr "LOLeaflet Súgó"
+msgstr "Pomoč LOLeaflet"
 
 #: dist/loleaflet-help.html+html.body.h1:48
 msgid "Keyboard Shortcuts"
-msgstr "Billentyűparancsok"
+msgstr "Tipke za bližnjice"
 
 #: dist/loleaflet-help.html+html.body.div.h2:50
 msgid "General Keyboard Shortcuts"
-msgstr "Általános billentyűparancsok"
+msgstr "Splošne tipke za bližnjice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:52
 msgid "Undo"
-msgstr "Visszavonás"
+msgstr "Razveljavi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:52
 msgid "Ctrl + Z"
-msgstr "Ctrl + Z"
+msgstr "Krmilka + Z"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:53
 msgid "Redo"
-msgstr "Újra"
+msgstr "Ponovi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:53
 msgid "Ctrl + Y"
-msgstr "Ctrl + Y"
+msgstr "Krmilka + Y"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:54
 msgid "Cut"
-msgstr "Kivágás"
+msgstr "Izreži"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:54
 msgid "Ctrl + X"
-msgstr "Ctrl + X"
+msgstr "Krmilka + X"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:55
 msgid "Paste as unformatted text"
-msgstr "Beillesztés formázatlan szövegként"
+msgstr "Prilepi kot neoblikovano besedilo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:55
 msgid "Ctrl + Alt + Shift + V"
-msgstr "Ctrl + Alt + Shift + V"
+msgstr "Krmilka + izmenjalka + dvigalka + V"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:56
 msgid "Print (Download as PDF)"
-msgstr "Nyomtatás (letöltés PDF-ként)"
+msgstr "Natisni (Prenesi kot dokument PDF)"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:56
 msgid "Ctrl + P"
-msgstr "Ctrl + P"
+msgstr "Krmilka + P"
 
 #: dist/loleaflet-help.html+html.body.div.h2:60
 msgctxt "dist/loleaflet-help.html html.body.div.h2:60"
 msgid "Text formatting"
-msgstr "Szövegformázás"
+msgstr "Oblikovanje besedila"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:62
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
 msgid "Bold"
-msgstr "Félkövér"
+msgstr "Krepko"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:62
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
 msgid "Ctrl + B"
-msgstr "Ctrl + B"
+msgstr "Krmilka + B"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:63
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
 msgid "Italic"
-msgstr "Dőlt"
+msgstr "Ležeče"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:63
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
 msgid "Ctrl + I"
-msgstr "Ctrl + I"
+msgstr "Krmilka + I"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:64
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
 msgid "Underline"
-msgstr "Aláhúzott"
+msgstr "Podčrtano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:64
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
 msgid "Ctrl + U"
-msgstr "Ctrl + U"
+msgstr "Krmilka + U"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:65
 msgid "Double Underline"
-msgstr "Duplán aláhúzott"
+msgstr "Dvojno podčrtano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:65
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:65"
 msgid "Ctrl + D"
-msgstr "Ctrl + D"
+msgstr "Krmilka + D"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:66
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
 msgid "Strikethrough"
-msgstr "Áthúzott"
+msgstr "Prečrtano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:66
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
 msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Alt + 5"
+msgstr "Krmilka + izmenjalka + 5"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:67
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
 msgid "Superscript"
-msgstr "Felső index"
+msgstr "Nadpisano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:67
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
 msgid "Ctrl + Shift + P"
-msgstr "Ctrl + Shift + P"
+msgstr "Krmilka + dvigalka + P"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
 msgid "Subscript"
-msgstr "Alsó index"
+msgstr "Podpisano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
 msgid "Ctrl + Shift + B"
-msgstr "Ctrl + Shift + B"
+msgstr "Krmilka + dvigalka + B"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
 msgid "Remove direct formatting"
-msgstr "Közvetlen formázás törlése"
+msgstr "Odstrani neposredno oblikovanje"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
 msgid "Ctrl + M"
-msgstr "Ctrl + M"
+msgstr "Krmilka + M"
 
 #: dist/loleaflet-help.html+html.body.div.h2:71
 msgctxt "dist/loleaflet-help.html html.body.div.h2:71"
 msgid "Paragraph formatting"
-msgstr "Bekezdésformázás"
+msgstr "Oblikovanje odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
 msgid "Align Center"
-msgstr "Középre igazítás"
+msgstr "Poravnaj na sredino"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
 msgid "Ctrl + E"
-msgstr "Ctrl + E"
+msgstr "Krmilka + E"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:74
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
 msgid "Align Left"
-msgstr "Balra igazítás"
+msgstr "Poravnaj levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:74
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
 msgid "Ctrl + L"
-msgstr "Ctrl + L"
+msgstr "Krmilka + L"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:75
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
 msgid "Align Right"
-msgstr "Jobbra igazítás"
+msgstr "Poravnaj desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:75
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
 msgid "Ctrl + R"
-msgstr "Ctrl + R"
+msgstr "Krmilka + R"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Justify"
-msgstr "Sorkizárás"
+msgstr "Poravnaj obojestransko"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Ctrl + J"
-msgstr "Ctrl + J"
+msgstr "Krmilka + J"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:77
 msgid "Apply Default paragraph style"
-msgstr "Az Alapértelmezett bekezdésstílus alkalmazása"
+msgstr "Uporabi privzeti slog odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:77
 msgid "Ctrl + 0"
-msgstr "Ctrl + 0"
+msgstr "Krmilka + 0"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:78
 msgid "Apply Heading 1 paragraph style"
-msgstr "A Címsor 1 bekezdésstílus alkalmazása"
+msgstr "Uporabi slog odstavka Naslov 1"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:78
 msgid "Ctrl + 1"
-msgstr "Ctrl + 1"
+msgstr "Krmilka + 1"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:79
 msgid "Apply Heading 2 paragraph style"
-msgstr "A Címsor 2 bekezdésstílus alkalmazása"
+msgstr "Uporabi slog odstavka Naslov 2"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:79
 msgid "Ctrl + 2"
-msgstr "Ctrl + 2"
+msgstr "Krmilka + 2"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:80
 msgid "Apply Heading 3 paragraph style"
-msgstr "A Címsor 3 bekezdésstílus alkalmazása"
+msgstr "Uporabi slog odstavka Naslov 3"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:80
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:80"
 msgid "Ctrl + 3"
-msgstr "Ctrl + 3"
+msgstr "Krmilka + 3"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:81
 msgid "Apply Heading 4 paragraph style"
-msgstr "A Címsor 4 bekezdésstílus alkalmazása"
+msgstr "Uporabi slog odstavka Naslov 4"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:81
 msgid "Ctrl + 4"
-msgstr "Ctrl + 4"
+msgstr "Krmilka + 4"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:82
 msgid "Apply Heading 5 paragraph style"
-msgstr "A Címsor 5 bekezdésstílus alkalmazása"
+msgstr "Uporabi slog odstavka Naslov 5"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:82
 msgid "Ctrl + 5"
-msgstr "Ctrl + 5"
+msgstr "Krmilka + 5"
 
 #: dist/loleaflet-help.html+html.body.div.h2:84
 msgid "Text selection and navigation in document"
-msgstr "Szövegkijelölés és navigáció a dokumentumban"
+msgstr "Izbor besedila in krmarjenje po dokumentu"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Select All"
-msgstr "Mindent kijelöl"
+msgstr "Izberi vse"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Ctrl + A"
-msgstr "Ctrl + A"
+msgstr "Krmilka + A"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Move cursor to the left"
-msgstr "Kurzor mozgatása balra"
+msgstr "Premakne kazalko na levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Arrow Left"
-msgstr "Balra nyíl"
+msgstr "Smerna tipka levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Move cursor with selection to the left"
-msgstr "Kurzor mozgatása balra, kijelöléssel"
+msgstr "Premakne kazalko z izbiro vred na levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Shift + Arrow Left"
-msgstr "Shift + Balra nyíl"
+msgstr "Dvigalka + smerna tipka levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Go to beginning of a word"
-msgstr "Ugrás a szó elejére"
+msgstr "Skoči na začetek besede"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + Balra nyíl"
+msgstr "Krmilka + smerna tipka levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Select to the left word by word"
-msgstr "Szavak egyenkénti kijelölése balra"
+msgstr "Izberi na levo, besedo za besedo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ctrl + Shift + Balra nyíl"
+msgstr "Krmilka + dvigalka + smerna tipka levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Move cursor to the right"
-msgstr "Kurzor léptetése jobbra"
+msgstr "Premakni kazalko na desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Arrow Right"
-msgstr "Jobbra nyíl"
+msgstr "Smerna tipka desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:92
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
 msgid "Move cursor with selection to the right"
-msgstr "Kurzor mozgatása jobbra, kijelöléssel"
+msgstr "Premakni kazalko z izbiro na desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:92
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
 msgid "Shift + Arrow Right"
-msgstr "Shift + Jobbra nyíl"
+msgstr "Dvigalka + smerna tipka desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
 msgid "Go to start of the next word"
-msgstr "Ugrás a következő szó elejére"
+msgstr "Skoči na začetek naslednje besede"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
 msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + Jobbra nyíl"
+msgstr "Krmilka + smerna tipka desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:94
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
 msgid "Select to the right word by word"
-msgstr "Szavak egyenkénti kijelölése jobbra"
+msgstr "Izberi na desno, besedo za besedo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:94
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
 msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl + Shift + Jobbra nyíl"
+msgstr "Krmilka + dvigalka + smerna tipka desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:95
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
 msgid "Move cursor up one line"
-msgstr "Kurzor mozgatása egy sorral feljebb"
+msgstr "Premakne kazalko eno vrstico navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:95
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
 msgid "Arrow Up"
-msgstr "Felfelé nyíl"
+msgstr "Smerna tipka navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Select lines in upwards direction"
-msgstr "Sorok kijelölése felfelé"
+msgstr "Izberi vrstice v smeri navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Shift + Arrow Up"
-msgstr "Shift + Felfelé nyíl"
+msgstr "Dvigalka+smerna tipka navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:97
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Kurzor mozgatása az előző bekezdés elejére"
+msgstr "Premakne kazalko na začetek prejšnjega odstavka."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:97
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
 msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + Felfelé nyíl"
+msgstr "Krmilka + smerna tipka navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Select to beginning of paragraph"
-msgstr "Kijelölés a bekezdés elejéig"
+msgstr "Izberi besedilo do začetka odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Shift + Felfelé nyíl"
+msgstr "Krmilka + dvigalka + smerna tipka navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:99
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
 msgid "Move cursor down one line"
-msgstr "Kurzor mozgatása egy sorral lejjebb"
+msgstr "Premakne kazalko navzdol za eno vrstico"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:99
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
 msgid "Arrow Down"
-msgstr "Lefelé nyíl"
+msgstr "Smerna tipka navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Select lines in downwards direction"
-msgstr "Sorok kijelölése felfelé"
+msgstr "Izberi vrstice v smeri navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Shift + Arrow Down"
-msgstr "Shift + Lefelé nyíl"
+msgstr "Dvigalka + smerna tipka navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Move cursor to end of the previous paragraph"
-msgstr "Kurzor mozgatása az előző bekezdés végére"
+msgstr "Premakni kazalko na konec prejšnjega odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + Lefelé nyíl"
+msgstr "Krmilka + smerna tipka navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Select to end of paragraph"
-msgstr "Kijelölés a bekezdés végéig"
+msgstr "Izberi besedilo do konca odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Shift + Lefelé nyíl"
+msgstr "Krmilka + dvigalka + smerna tipka navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Go to beginning of line"
-msgstr "Ugrás a sor elejére"
+msgstr "Skoči na začetek vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Home"
-msgstr "Home"
+msgstr "Začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
 msgid "Go and select to the beginning of a line"
-msgstr "Ugrás a sor elejére kijelöléssel"
+msgstr "Skoči in izberi do začetka vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
 msgid "Shift + Home"
-msgstr "Shift + Home"
+msgstr "Dvigalka + začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Go to start of document"
-msgstr "Ugrás a dokumentum elejére"
+msgstr "Skoči na začetek dokumenta"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
+msgstr "Krmilka + začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:106
 msgid "Go and select text to start of document"
-msgstr "Ugrás a dokumentum elejére kijelöléssel"
+msgstr "Skoči in izbere besedilo do začetka dokumenta"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:106
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:106"
 msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + Home"
+msgstr "Krmilka + dvigalka + začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "Go to end of line"
-msgstr "Ugrás a sor végére"
+msgstr "Skoči na konec vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "End"
-msgstr "End"
+msgstr "Konec"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Go and select to the end of a line"
-msgstr "Ugrás a sor végére kijelöléssel"
+msgstr "Skoči in izberi do konca vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Shift + End"
-msgstr "Shift + End"
+msgstr "Dvigalka + konec"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Go to end of document"
-msgstr "Ugrás a dokumentum végére"
+msgstr "Pojdi na konec dokumenta"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Ctrl + End"
-msgstr "Ctrl + End"
+msgstr "Krmilka + konec"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:110
 msgid "Go and select text to end of document"
-msgstr "Ugrás a dokumentum végére kijelöléssel"
+msgstr "Skoči in izbere besedilo do konca dokumenta"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:110
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:110"
 msgid "Ctrl + Shift + End"
-msgstr "Ctrl + Shift + End"
+msgstr "Krmilka + dvigalka + konec"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:111
 msgid "Move the view up one page"
-msgstr "Ugrás egy oldallal feljebb"
+msgstr "Pomakni pogled eno stran navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:111
 msgid "PageUp"
-msgstr "PageUp"
+msgstr "Prejšnja stran"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:112
 msgid "Switch cursor between text and header"
-msgstr "Kurzor váltása a szöveg és az élőfej között"
+msgstr "Preklopi kazalko med besedilom in glavo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:112
 msgid "Ctrl + PageUp"
-msgstr "Ctrl + PageUp"
+msgstr "Krmilka + prejšnja stran"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:113
 msgid "Extend the selection up one page"
-msgstr "Kijelölés kiterjesztése egy oldallal felfelé"
+msgstr "Razširi izbor eno stran navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:113
 msgid "Shift + PageUp"
-msgstr "Shift + PageUp"
+msgstr "Dvigalka + prejšnja stran"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:114
 msgid "Move the view down one page"
-msgstr "Ugrás egy oldallal lejjebb"
+msgstr "Pomakni pogled eno stran navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:114
 msgid "PageDown"
-msgstr "PageDown"
+msgstr "Naslednja stran"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:115
 msgid "Switch cursor between text and footer"
-msgstr "Kurzor váltása a szöveg és az élőláb között"
+msgstr "Preklopi kazalko med besedilom in nogo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:115
 msgid "Ctrl + PageDown"
-msgstr "Ctrl + PageDown"
+msgstr "Krmilka + naslednja stran"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:116
 msgid "Extend the selection down one page"
-msgstr "Kijelölés kiterjesztése egy oldallal lefelé"
+msgstr "Razširi izbor eno stran navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:116
 msgid "Shift + PageDown"
-msgstr "Shift + PageDown"
+msgstr "Dvigalka + naslednja stran"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:117
 msgid "Delete to beginning of word"
-msgstr "Szöveg törlése a szó elejéig"
+msgstr "Izbriši do začetka besede"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:117
 msgid "Ctrl + Backspace"
-msgstr "Ctrl + Backspace"
+msgstr "Krmilka + vračalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:118
 msgid "Delete to end of word"
-msgstr "Szöveg törlése a szó végéig"
+msgstr "Izbriši do konca besede"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:118
 msgid "Ctrl + Del"
-msgstr "Ctrl + Del"
+msgstr "Krmilka + brisalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:119
 msgid "Delete to beginning of sentence"
-msgstr "Szöveg törlése a mondat elejéig"
+msgstr "Izbriše besedilo do začetka stavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:119
 msgid "Ctrl + Shift + Backspace"
-msgstr "Ctrl + Shift + Backspace"
+msgstr "Krmilka + dvigalka + vračalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:120
 msgid "Delete to end of sentence"
-msgstr "Szöveg törlése a mondat végéig"
+msgstr "Izbriši do konca povedi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:120
 msgid "Ctrl + Shift + Del"
-msgstr "Ctrl + Shift + Del"
+msgstr "Krmilka + dvigalka + brisalka"
 
 #: dist/loleaflet-help.html+html.body.div.h2:122
 msgid "Shortcut Keys for Tables"
-msgstr "Billentyűparancsok táblázatokban"
+msgstr "Tipke za bližnjice za tabele"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:124
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:124"
 msgid "Ctrl + A"
-msgstr "Ctrl + A"
+msgstr "Krmilka + A"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:124
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
-"Ha az aktív cella üres: kijelöli az egész táblázatot. Egyébként: kijelöli az "
-"aktív cella tartalmát. Ha újra megnyomja, kijelöli az egész táblázatot."
+"Če je aktivna celica prazna: izberi celotno tabelo. Drugače: izberi vsebino "
+"aktivne celice. S ponovnim klikom izberi celotno tabelo."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:125
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:125"
 msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
+msgstr "Krmilka + začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:125
 msgid ""
@@ -602,14 +608,14 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
-"Ha az aktív cella üres: a táblázat elejére ugrik. Egyébként: első alkalommal "
-"történő megnyomásakor az aktív cella elejére, másodszorra az aktuális "
-"táblázat ugrik, harmadszorra a dokumentum elejére ugrik."
+"Če je aktivna celica prazna: pojdi na začetek tabele. Drugače: s prvim "
+"klikom pojdi na začetek aktivne celice, z drugim klikom pojdi na začetek "
+"trenutne tabele, s tretjim klikom pojdi na začetek dokumenta."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:126
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:126"
 msgid "Ctrl + End"
-msgstr "Ctrl + End"
+msgstr "Krmilka + konec"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:126
 msgid ""
@@ -617,84 +623,84 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
-"Ha az aktív cella üres: a táblázat végére ugrik. Egyébként: első alkalommal "
-"történő megnyomásakor az aktív cella végére, másodszorra az aktuális "
-"táblázat végére, harmadszorra a dokumentum végére ugrik."
+"Če je aktivna celica prazna: pojdi na konec tabele. Drugače: s prvim klikom "
+"pojdi na konec aktivne celice, z drugim klikom pojdi na konec trenutne "
+"tabele, s tretjim klikom pojdi na konec dokumenta."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:127
 msgid "Ctrl + Tab"
-msgstr "Ctrl + Tab"
+msgstr "Krmilka + tabulatorka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:127
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
 msgstr ""
-"Beszúr egy tabulátort (csak táblázatokba). A használt ablakkezelőtől függően "
-"a Alt+Tab billentyűkombináció is használható."
+"Vstavi tabulatorsko mesto (le v tabelah). Glede na uporabljenega upravitelja "
+"oken je morda potrebno uporabiti kombinacijo tipk izmenjalka + tabulatorka."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:128
 msgid "Alt + Arrow Keys"
-msgstr "Alt + Nyílbillentyűk"
+msgstr "Izmenjalka + smerne tipke"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:128
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr "Növeli/csökkenti a sor/oszlop méretét a jobb/alsó cellaszélen."
+msgstr "Poveča/zmanjša velikost stolpca/vrstice na desnem/spodnjem robu celice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:129
 msgid "Alt + Shift + Arrow Keys"
-msgstr "Alt + Shift + Nyílbillentyűk"
+msgstr "Izmenjalka + dvigalka + smerne tipke"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:129
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr "Növeli/csökkenti a sor/oszlop méretét a bal/felső cellaszélen."
+msgstr "Poveča/zmanjša velikost stolpca/vrstice na levem/vrhnjem robu celice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:130
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr "Alt + Ctrl + Nyílbillentyűk"
+msgstr "Izmenjalka + krmilka + smerne tipke"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:130
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:130"
 msgid "Like Alt, but only the active cell is modified"
-msgstr "Ugyanaz, mint az Alt, de csak az aktív cella módosul"
+msgstr "Tako kot izmenjalka, a spremeni se le aktivna celica"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:131
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr "Ctrl + Alt + Shift + Nyílbillentyűk"
+msgstr "Krmilka + izmenjalka + dvigalka + smerne tipke"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:131
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:131"
 msgid "Like Alt, but only the active cell is modified"
-msgstr "Ugyanaz, mint az Alt, de csak az aktív cella módosul"
+msgstr "Tako kot izmenjalka, a spremeni se le aktivna celica"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:132
 msgid "Alt + Insert"
-msgstr "Alt + Insert"
+msgstr "Izmenjalka + vstavljalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:132
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
 msgstr ""
-"3 másodpercre Beszúrás módba vált: a nyílbillentyűk sort/oszlopot, a Ctrl+"
-"nyílbillentyűk cellát szúrnak be"
+"Po treh sekundah v vstavnem načinu smerna tipka vstavi vrstico/stolpec, "
+"krmilka + smerna tipka vstavita celico"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:133
 msgid "Alt + Del"
-msgstr "Alt + Del"
+msgstr "Izmenjalka + brisalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:133
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
 msgstr ""
-"3 másodpercre Törlés módba vált: a nyílbillentyűk sort/oszlopot törölnek, a "
-"Ctrl+nyílbillentyűk összevonnak szomszédos cellákat"
+"Po treh sekundah v brisalnem načinu smerna tipka izbriše vrstico/stolpec, "
+"krmilka + smerna tipka spoji celico s sosednjo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:134
 msgid "Shift + Ctrl + Del"
-msgstr "Shift + Ctrl + Del"
+msgstr "Dvigalka + krmilka + brisalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td.p:134
 msgid ""
@@ -702,9 +708,9 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
-"Ha nem a teljes cella van kijelölve, a szöveg a kurzortól az aktuális mondat "
-"végéig törlődik. Ha a kurzor a cella végén van, és nem a teljes cella van "
-"kijelölve, a következő cella tartalma törlődik."
+"Če ni izbrana nobena celica v celoti, bo izbrisano besedilo od kazalke do "
+"konca trenutnega stavka. Če je kazalka na koncu celice in ni izbrana nobena "
+"celica, bo izbrisana vsebina naslednje celice."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td.p:135
 msgid ""
@@ -712,9 +718,8 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
-"Ha nincs kijelölve cella, és a kurzor a táblázat végén van, akkor a "
-"táblázatot követő bekezdés törlésre kerül, kivéve ha a dokumentum utolsó "
-"bekezdése."
+"Če ni izbrana nobena celica v celoti in je kazalka na koncu tabele, bo "
+"izbrisan naslednji stavek po tabeli, če ni zadnji odstavek v dokumentu."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td.p:136
 msgid ""
@@ -722,730 +727,728 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
-"Ha egy vagy több cella van kijelölve, a kijelölést tartalmazó teljes sorok "
-"törölve lesznek. Ha minden sor teljesen vagy részben ki van jelölve, akkor "
-"az egész táblázat törlődik."
+"Če je izbrana ena ali več celic, bodo izbrisane vse vrstice, ki vsebujejo ta "
+"izbor celic. Če so vse izbrane vrstice, v celoti ali delno, bo izbrisana "
+"cela tabela."
 
 #: dist/loleaflet-help.html+html.body.div.h2:139
 msgid "Word processor functions"
-msgstr "Szövegszerkesztési funkciók"
+msgstr "Funkcije urejevalnika besedila"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:141
 msgid "Insert footnote"
-msgstr "Lábjegyzet beszúrása"
+msgstr "Vstavi sprotno opombo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:141
 msgid "Ctrl + Alt + F"
-msgstr "Ctrl + Alt + F"
+msgstr "Krmilka + izmenjalka + F"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:142
 msgid "Insert endnote"
-msgstr "Végjegyzet beszúrása"
+msgstr "Vstavi končno opombo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:142
 msgid "Ctrl + Alt + D"
-msgstr "Ctrl + Alt + D"
+msgstr "Krmilka + izmenjalka + D"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:143
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
 msgid "Insert comment"
-msgstr "Megjegyzés beszúrása"
+msgstr "Vstavi komentar"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:143
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
 msgid "Ctrl + Alt + C"
-msgstr "Ctrl + Alt + C"
+msgstr "Krmilka + izmenjalka + C"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:145
 msgid "Insert soft hyphen"
-msgstr "Feltételes elválasztójel beszúrása"
+msgstr "Vstavi delilni vezaj"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:145
 msgid "Ctrl + -"
-msgstr "Ctrl + -"
+msgstr "Krmilka + -"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:146
 msgid "Insert non-breaking hyphen"
-msgstr "Nem törő elválasztójel beillesztése"
+msgstr "Vstavi nedeljivi vezaj"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:146
 msgid "Ctrl + Shift + -"
-msgstr "Ctrl + Shift + -"
+msgstr "Krmilka + dvigalka + -"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:148
 msgid "Insert non-breaking space"
-msgstr "Nem törő szóköz beszúrása"
+msgstr "Vstavi nedeljivi presledek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:148
 msgid "Ctrl + Shift + Space"
-msgstr "Ctrl + Shift + Space"
+msgstr "Krmilka + dvigalka + preslednica"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:149
 msgid "Insert line break"
-msgstr "Sortörés beszúrása"
+msgstr "Vstavi prelom vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:149
 msgid "Shift + Enter"
-msgstr "Shift + Enter"
+msgstr "Dvigalka + vnašalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:150
 msgid "Manual page break"
-msgstr "Kézi oldaltörés"
+msgstr "Ročni prelom strani"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:150
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:150"
 msgid "Ctrl + Enter"
-msgstr "Ctrl + Enter"
+msgstr "Krmilka + vnašalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:151
 msgid "Column break (in multicolumnar text)"
-msgstr "Hasábtörés (többhasábos szövegben)"
+msgstr "Prelom stolpca (v besedilih z več stolpci)"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:151
 msgid "Ctrl + Shift + Enter"
-msgstr "Ctrl + Shift + Enter"
+msgstr "Krmilka + dvigalka + vnašalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:152
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
-msgstr ""
-"Új bekezdés beszúrása közvetlenül egy szakasz elé vagy mögé, vagy egy "
-"táblázat elé"
+msgstr "Vstavi nov odstavek neposredno pred ali za odsek ali pred tabelo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:152
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:152"
 msgid "Alt + Enter"
-msgstr "Alt + Enter"
+msgstr "Izmenjalka + vnašalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:153
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
-"Új bekezdés beszúrása listán belüli számozás nélkül. Nem működik, ha a "
-"kurzor a lista végén van."
+"Vstavi nov odstavek v seznam brez številčenja. Ne deluje, če je kazalka na "
+"koncu seznama."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:153
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:153"
 msgid "Alt + Enter"
-msgstr "Alt + Enter"
+msgstr "Izmenjalka + vnašalka"
 
 #: dist/loleaflet-help.html+html.body.div.h2:157
 msgid "Cell formatting"
-msgstr "Cellaformázás"
+msgstr "Oblikovanje celice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:159
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
 msgid "Bold"
-msgstr "Félkövér"
+msgstr "Krepko"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:159
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
 msgid "Ctrl + B"
-msgstr "Ctrl + B"
+msgstr "Krmilka + B"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:160
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
 msgid "Italic"
-msgstr "Dőlt"
+msgstr "Ležeče"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:160
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
 msgid "Ctrl + I"
-msgstr "Ctrl + I"
+msgstr "Krmilka + I"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:161
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
 msgid "Underline"
-msgstr "Aláhúzott"
+msgstr "Podčrtano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:161
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
 msgid "Ctrl + U"
-msgstr "Ctrl + U"
+msgstr "Krmilka + U"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:162
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
 msgid "Strikethrough"
-msgstr "Áthúzott"
+msgstr "Prečrtano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:162
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
 msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Alt + 5"
+msgstr "Krmilka + izmenjalka + 5"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:163
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
 msgid "Remove direct formatting"
-msgstr "Közvetlen formázás törlése"
+msgstr "Odstrani neposredno oblikovanje"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:163
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
 msgid "Ctrl + M"
-msgstr "Ctrl + M"
+msgstr "Krmilka + M"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:164
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:164"
 msgid "Insert comment"
-msgstr "Megjegyzés beszúrása"
+msgstr "Vstavi komentar"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:164
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:164"
 msgid "Ctrl + Alt + C"
-msgstr "Ctrl + Alt + C"
+msgstr "Krmilka + izmenjalka + C"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:165
 msgid "Display comment"
-msgstr ""
+msgstr "Prikaži komentar"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:165
 msgid "Ctrl + F1"
-msgstr "Ctrl + 1"
+msgstr "Krmilka + F1"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:166
 msgid "Fill Down"
-msgstr "Kitöltés lefelé"
+msgstr "Zapolni navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:166
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:166"
 msgid "Ctrl + D"
-msgstr "Ctrl + D"
+msgstr "Krmilka + D"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:168
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
 msgid "Align Center"
-msgstr "Középre igazítás"
+msgstr "Poravnaj na sredino"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:168
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
 msgid "Ctrl + E"
-msgstr "Ctrl + E"
+msgstr "Krmilka + E"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:169
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
 msgid "Align Left"
-msgstr "Balra igazítás"
+msgstr "Poravnaj levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:169
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
 msgid "Ctrl + L"
-msgstr "Ctrl + L"
+msgstr "Krmilka + L"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:170
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
 msgid "Align Right"
-msgstr "Jobbra igazítás"
+msgstr "Poravnaj desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:170
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
 msgid "Ctrl + R"
-msgstr "Ctrl + R"
+msgstr "Krmilka + R"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:171
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
 msgid "Justify"
-msgstr "Sorkizárás"
+msgstr "Poravnaj obojestransko"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:171
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
 msgid "Ctrl + J"
-msgstr "Ctrl + J"
+msgstr "Krmilka + J"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:172
 msgid "Set Optimal Column Width"
-msgstr "Optimális oszlopszélesség beállítása"
+msgstr "Nastavite širino stolpca optimalno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:172
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:172"
 msgid "Ctrl + 3"
-msgstr "Ctrl + 3"
+msgstr "Krmilka + 3"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:173
 msgid "Two decimal places, thousands separator"
-msgstr "Két tizedesjegy, ezreselválasztó"
+msgstr "Dve decimalni mesti, ločilo tisočic"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:173
 msgid "Ctrl + Shift + 1"
-msgstr "Ctrl + Shift + 1"
+msgstr "Krmilka + dvigalka + 1"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:174
 msgid "Standard exponential format"
-msgstr "Szabványos exponenciális-formátum"
+msgstr "Standardna eksponentna oblika"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:174
 msgid "Ctrl + Shift + 2"
-msgstr "Ctrl + Shift + 2"
+msgstr "Krmilka + dvigalka + 2"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:175
 msgid "Standard date format"
-msgstr "Szabványos dátumformátum"
+msgstr "Standardna oblika datuma"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:175
 msgid "Ctrl + Shift + 3"
-msgstr "Ctrl + Shift + 3"
+msgstr "Krmilka + dvigalka + 3"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:176
 msgid "Standard currency format"
-msgstr "Szabványos pénznemformátum"
+msgstr "Standardna oblika valute"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:176
 msgid "Ctrl + Shift + 4"
-msgstr "Ctrl + Shift + 4"
+msgstr "Krmilka + dvigalka + 4"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:177
 msgid "Standard percentage format (two decimal places)"
-msgstr "Szabványos százalékformátum (két tizedesjeggyel)"
+msgstr "Standardna oblika odstotka (dve decimalni mesti)"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:177
 msgid "Ctrl + Shift + 5"
-msgstr "Ctrl + Shift + 5"
+msgstr "Krmilka + dvigalka + 5"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:178
 msgid "Standard format"
-msgstr "Szabványos formátum"
+msgstr "Standardna oblika"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:178
 msgid "Ctrl + Shift + 6"
-msgstr "Ctrl + Shift + 6"
+msgstr "Krmilka + dvigalka + 6"
 
 #: dist/loleaflet-help.html+html.body.div.h2:182
 msgctxt "dist/loleaflet-help.html html.body.div.h2:182"
 msgid "Text formatting"
-msgstr "Szövegformázás"
+msgstr "Oblikovanje besedila"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:184
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
 msgid "Bold"
-msgstr "Félkövér"
+msgstr "Krepko"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:184
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
 msgid "Ctrl + B"
-msgstr "Ctrl + B"
+msgstr "Krmilka + B"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:185
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
 msgid "Italic"
-msgstr "Dőlt"
+msgstr "Ležeče"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:185
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
 msgid "Ctrl + I"
-msgstr "Ctrl + I"
+msgstr "Krmilka + I"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:186
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
 msgid "Underline"
-msgstr "Aláhúzott"
+msgstr "Podčrtano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:186
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
 msgid "Ctrl + U"
-msgstr "Ctrl + U"
+msgstr "Krmilka + U"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:187
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
 msgid "Strikethrough"
-msgstr "Áthúzott"
+msgstr "Prečrtano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:187
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
 msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Alt + 5"
+msgstr "Krmilka + izmenjalka + 5"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:188
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
 msgid "Superscript"
-msgstr "Felső index"
+msgstr "Nadpisano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:188
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
 msgid "Ctrl + Shift + P"
-msgstr "Ctrl + Shift + P"
+msgstr "Krmilka + dvigalka + P"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:189
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
 msgid "Subscript"
-msgstr "Alsó index"
+msgstr "Podpisano"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:189
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
 msgid "Ctrl + Shift + B"
-msgstr "Ctrl + Shift + B"
+msgstr "Krmilka + dvigalka + B"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:190
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
 msgid "Select All"
-msgstr "Mindent kijelöl"
+msgstr "Izberi vse"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:190
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
 msgid "Ctrl + A"
-msgstr "Ctrl + A"
+msgstr "Krmilka + A"
 
 #: dist/loleaflet-help.html+html.body.div.h2:192
 msgctxt "dist/loleaflet-help.html html.body.div.h2:192"
 msgid "Paragraph formatting"
-msgstr "Bekezdésformázás"
+msgstr "Oblikovanje odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:194
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
 msgid "Align Center"
-msgstr "Középre igazítás"
+msgstr "Poravnaj na sredino"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:194
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
 msgid "Ctrl + E"
-msgstr "Ctrl + E"
+msgstr "Krmilka + E"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:195
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
 msgid "Align Left"
-msgstr "Balra igazítás"
+msgstr "Poravnaj levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:195
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
 msgid "Ctrl + L"
-msgstr "Ctrl + L"
+msgstr "Krmilka + L"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:196
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
 msgid "Align Right"
-msgstr "Jobbra igazítás"
+msgstr "Poravnaj desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:196
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
 msgid "Ctrl + R"
-msgstr "Ctrl + R"
+msgstr "Krmilka + R"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:197
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
 msgid "Justify"
-msgstr "Sorkizárás"
+msgstr "Poravnaj obojestransko"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:197
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
 msgid "Ctrl + J"
-msgstr "Ctrl + J"
+msgstr "Krmilka + J"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:198
 msgid "Demote list item (list item has to be selected)"
-msgstr "Listaelem lefokozása (a listaelemet ki kell jelölni)"
+msgstr "Ponižaj element seznama (slednji mora biti izbran)"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:198
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:198"
 msgid "Tab"
-msgstr "Tab"
+msgstr "Tabulatorka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:199
 msgid "Promote list item (list item has to be selected)"
-msgstr "Listaelem előléptetése (a listaelemet ki kell jelölni)"
+msgstr "Povišaj element seznama (slednji mora biti izbran)"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:199
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:199"
 msgid "Shift + Tab"
-msgstr "Shift + Tab"
+msgstr "Dvigalka + tabulatorka"
 
 #: dist/loleaflet-help.html+html.body.div.h2:201
 msgid "Text selection and navigation in a textbox"
-msgstr "Szövegkijelölés és navigáció szövegdobozban"
+msgstr "Izbor besedila in krmarjenje po besedilnem polju"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:203
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
 msgid "Select All"
-msgstr "Mindent kijelöl"
+msgstr "Izberi vse"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:203
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
 msgid "Ctrl + A"
-msgstr "Ctrl + A"
+msgstr "Krmilka + A"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:204
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:204"
 msgid "Move cursor to the left"
-msgstr "Kurzor mozgatása balra"
+msgstr "Premakne kazalko na levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:204
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:204"
 msgid "Arrow Left"
-msgstr "Balra nyíl"
+msgstr "Smerna tipka levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:205
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:205"
 msgid "Move cursor with selection to the left"
-msgstr "Kurzor mozgatása balra, kijelöléssel"
+msgstr "Premakne kazalko z izbiro vred na levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:205
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:205"
 msgid "Shift + Arrow Left"
-msgstr "Shift + Balra nyíl"
+msgstr "Dvigalka + smerna tipka levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:206
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
 msgid "Go to beginning of a word"
-msgstr "Ugrás a szó elejére"
+msgstr "Skoči na začetek besede"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:206
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
 msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + Balra nyíl"
+msgstr "Krmilka + smerna tipka levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:207
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
 msgid "Select to the left word by word"
-msgstr "Szavak egyenkénti kijelölése balra"
+msgstr "Izberi na levo, besedo za besedo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:207
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
 msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ctrl + Shift + Balra nyíl"
+msgstr "Krmilka + dvigalka + smerna tipka levo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:208
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
 msgid "Move cursor to the right"
-msgstr "Kurzor léptetése jobbra"
+msgstr "Premakni kazalko na desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:208
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
 msgid "Arrow Right"
-msgstr "Jobbra nyíl"
+msgstr "Smerna tipka desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:209
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
 msgid "Move cursor with selection to the right"
-msgstr "Kurzor mozgatása jobbra, kijelöléssel"
+msgstr "Premakni kazalko z izbiro na desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:209
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
 msgid "Shift + Arrow Right"
-msgstr "Shift + Jobbra nyíl"
+msgstr "Dvigalka + smerna tipka desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:210
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Go to start of the next word"
-msgstr "Ugrás a következő szó elejére"
+msgstr "Skoči na začetek naslednje besede"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:210
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + Jobbra nyíl"
+msgstr "Krmilka + smerna tipka desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:211
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Select to the right word by word"
-msgstr "Szavak egyenkénti kijelölése jobbra"
+msgstr "Izberi na desno, besedo za besedo"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:211
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl + Shift + Jobbra nyíl"
+msgstr "Krmilka + dvigalka + smerna tipka desno"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:212
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Move cursor up one line"
-msgstr "Kurzor mozgatása egy sorral feljebb"
+msgstr "Premakne kazalko eno vrstico navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:212
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Arrow Up"
-msgstr "Felfelé nyíl"
+msgstr "Smerna tipka navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:213
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Select lines in upwards direction"
-msgstr "Sorok kijelölése felfelé"
+msgstr "Izberi vrstice v smeri navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:213
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Shift + Arrow Up"
-msgstr "Shift + Felfelé nyíl"
+msgstr "Dvigalka + smerna tipka navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:214
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Kurzor mozgatása az előző bekezdés elejére"
+msgstr "Premakne kazalko na začetek prejšnjega odstavka."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:214
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + Felfelé nyíl"
+msgstr "Krmilka + smerna tipka navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:215
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Select to beginning of paragraph"
-msgstr "Kijelölés a bekezdés elejéig"
+msgstr "Izberi besedilo do začetka odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:215
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Shift + Felfelé nyíl"
+msgstr "Krmilka + dvigalka + smerna tipka navzgor"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:216
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Move cursor down one line"
-msgstr "Kurzor mozgatása egy sorral lejjebb"
+msgstr "Premakne kazalko navzdol za eno vrstico"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:216
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Arrow Down"
-msgstr "Lefelé nyíl"
+msgstr "Smerna tipka navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:217
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
 msgid "Select lines in downwards direction"
-msgstr "Sorok kijelölése felfelé"
+msgstr "Izberi vrstice v smeri navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:217
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
 msgid "Shift + Arrow Down"
-msgstr "Shift + Lefelé nyíl"
+msgstr "Dvigalka + smerna tipka navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to end of the previous paragraph"
-msgstr "Kurzor mozgatása az előző bekezdés végére"
+msgstr "Premakni kazalko na konec prejšnjega odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + Lefelé nyíl"
+msgstr "Krmilka + smerna tipka navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:219
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Select to end of paragraph"
-msgstr "Kijelölés a bekezdés végéig"
+msgstr "Izberi besedilo do konca odstavka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:219
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Shift + Lefelé nyíl"
+msgstr "Krmilka + dvigalka + smerna tipka navzdol"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:220
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
 msgid "Go to beginning of line"
-msgstr "Ugrás a sor elejére"
+msgstr "Skoči na začetek vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:220
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
 msgid "Home"
-msgstr "Home"
+msgstr "Začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:221
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
 msgid "Go and select to the beginning of a line"
-msgstr "Ugrás a sor elejére kijelöléssel"
+msgstr "Skoči in izberi do začetka vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:221
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
 msgid "Shift + Home"
-msgstr "Shift + Home"
+msgstr "Dvigalka + začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:222
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
 msgid "Go to start of document"
-msgstr "Ugrás a dokumentum elejére"
+msgstr "Skoči na začetek dokumenta"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:222
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
 msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
+msgstr "Krmilka + začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:223
 msgid "Go and select text to start of textbox"
-msgstr "Ugrás a szövegdoboz elejére kijelöléssel"
+msgstr "Skoči in izberi besedilo do začetka besedilnega polja"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:223
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:223"
 msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + Home"
+msgstr "Krmilka + dvigalka + začetek"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:224
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
 msgid "Go to end of line"
-msgstr "Ugrás a sor végére"
+msgstr "Skoči na konec vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:224
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
 msgid "End"
-msgstr "End"
+msgstr "Konec"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:225
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
 msgid "Go and select to the end of a line"
-msgstr "Ugrás a sor végére kijelöléssel"
+msgstr "Skoči in izberi do konca vrstice"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:225
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
 msgid "Shift + End"
-msgstr "Shift + End"
+msgstr "Dvigalka + konec"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:226
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
 msgid "Go to end of document"
-msgstr "Ugrás a dokumentum végére"
+msgstr "Pojdi na konec dokumenta"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:226
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
 msgid "Ctrl + End"
-msgstr "Ctrl + End"
+msgstr "Krmilka + konec"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:227
 msgid "Go and select text to end of textbox"
-msgstr "Ugrás a szövegdoboz végére kijelöléssel"
+msgstr "Skoči in izberi besedilo do konca besedilnega polja"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:227
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:227"
 msgid "Ctrl + Shift + End"
-msgstr "Ctrl + Shift + End"
+msgstr "Krmilka + dvigalka + konec"
 
 #: dist/loleaflet-help.html+html.body.div.h2:229
 msgid "Slide / draw page keyboard shortcuts"
-msgstr "Billentyűparancsok diákon / rajzlapokon"
+msgstr "Tipke za bližnjice na prosojnicah/risbah"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:231
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
-"Kilépés az aktuális módból, azaz pl. szerkesztési módból objektumkijelölési "
-"módba váltás, objektumkijelölési módból nézet módba váltás."
+"Zapusti trenutni način, npr. iz urejevalnega načina preklopi na način "
+"izbiranja predmetov, iz načina izbiranja predmetov preklopi na ogledni način."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:231
 msgid "Esc"
-msgstr "Esc"
+msgstr "Ubežnica"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:232
 msgid "Select objects in the order in which they were created"
-msgstr "Kijelöli az objektumokat létrehozásuk sorrendjében"
+msgstr "Izbere predmete v vrstnem redu nastanka."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:232
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:232"
 msgid "Tab"
-msgstr "Tab"
+msgstr "Tabulatorka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:233
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Kijelöli az objektumokat létrehozásuk sorrendjével ellentétesen"
+msgstr "Izbere predmete v obratnem vrstnem redu nastanka."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:233
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:233"
 msgid "Shift + Tab"
-msgstr "Shift + Tab"
+msgstr "Dvigalka + tabulatorka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:234
 msgid "Move to next text object on slide / drawing page"
-msgstr "Ugrás a dia / rajzlap következő objektumára"
+msgstr "Pomakni se na naslednji besedilni predmet na prosojnici/strani"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:234
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:234"
 msgid "Ctrl + Enter"
-msgstr "Ctrl + Enter"
+msgstr "Krmilka + vnašalka"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:235
 msgid "Select all in slide / drawing page"
-msgstr "Minden kijelölése a dián / rajzlapon"
+msgstr "Izberi vse na prosojnici/strani"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:235
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:235"
 msgid "Ctrl + A"
-msgstr "Ctrl + A"
+msgstr "Krmilka + A"
