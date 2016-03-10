@@ -446,39 +446,36 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
         return false;
     }
 
-    std::string timestamp;
-    parseDocOptions(tokens, _loadPart, timestamp);
-
     try
     {
-        // Strip query params because we need unique URI (need a better solution!).
-        StringTokenizer urlTokens(_docURL, "?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        std::string timestamp;
+        parseDocOptions(tokens, _loadPart, timestamp);
 
-        // request new URL session
-        const std::string aMessage = "request " + getId() + " " + urlTokens[0] + "\r\n";
-        Log::trace("MasterToBroker: " + aMessage.substr(0, aMessage.length()-2));
+        // Request a kit process for this doc.
+        Poco::URI uri(_docURL);
+        const std::string aMessage = "request " + getId() + " " + uri.getPath() + "\n";
+        Log::trace("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
         Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
+
+        _tileCache.reset(new TileCache(_docURL, timestamp));
+
+        // Finally, wait for the Child to connect to Master,
+        // link the document in jail and dispatch load to child.
+        dispatchChild();
+
+        return true;
     }
     catch (const Poco::SyntaxException&)
     {
         sendTextFrame("error: cmd=load kind=uriinvalid");
-        return false;
     }
 
-    _tileCache.reset(new TileCache(_docURL, timestamp));
-
-    // Finally, wait for the Child to connect to Master,
-    // link the document in jail and dispatch load to child.
-    dispatchChild();
-
-    return true;
+    return false;
 }
 
 bool MasterProcessSession::getStatus(const char *buffer, int length)
 {
-    std::string status;
-
-    status = _tileCache->getTextFile("status.txt");
+    const std::string status = _tileCache->getTextFile("status.txt");
     if (status.size() > 0)
     {
         sendTextFrame(status);
@@ -500,7 +497,7 @@ bool MasterProcessSession::getCommandValues(const char *buffer, int length, Stri
         return false;
     }
 
-    std::string cmdValues = _tileCache->getTextFile("cmdValues" + command + ".txt");
+    const std::string cmdValues = _tileCache->getTextFile("cmdValues" + command + ".txt");
     if (cmdValues.size() > 0)
     {
         sendTextFrame(cmdValues);
@@ -515,7 +512,7 @@ bool MasterProcessSession::getCommandValues(const char *buffer, int length, Stri
 
 bool MasterProcessSession::getPartPageRectangles(const char *buffer, int length)
 {
-    std::string partPageRectangles = _tileCache->getTextFile("partpagerectangles.txt");
+    const std::string partPageRectangles = _tileCache->getTextFile("partpagerectangles.txt");
     if (partPageRectangles.size() > 0)
     {
         sendTextFrame(partPageRectangles);
@@ -536,7 +533,6 @@ std::string MasterProcessSession::getSaveAs()
 void MasterProcessSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
 {
     std::string font;
-
     if (tokens.count() < 2 ||
         !getTokenString(tokens[1], "font", font))
     {
@@ -544,7 +540,7 @@ void MasterProcessSession::sendFontRendering(const char *buffer, int length, Str
         return;
     }
 
-    std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+    const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
     std::vector<char> output;
     output.resize(response.size());
@@ -627,7 +623,6 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
     forwardToPeer(buffer, length);
 }
 
-
 void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
@@ -694,26 +689,30 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
 
         if (cachedTile && cachedTile->is_open())
         {
-            std::string response = "tile: part=" + std::to_string(part) +
-                               " width=" + std::to_string(pixelWidth) +
-                               " height=" + std::to_string(pixelHeight) +
-                               " tileposx=" + std::to_string(x) +
-                               " tileposy=" + std::to_string(y) +
-                               " tilewidth=" + std::to_string(tileWidth) +
-                               " tileheight=" + std::to_string(tileHeight);
+            std::ostringstream oss;
+            oss << "tile: part=" << part
+                << " width=" << pixelWidth
+                << " height=" << pixelHeight
+                << " tileposx=" << x
+                << " tileposy=" << y
+                << " tilewidth=" << tileWidth
+                << " tileheight=" << tileHeight;
 
-            if (reqTimestamp != "")
-                response += " timestamp=" + reqTimestamp;
+            if (!reqTimestamp.empty())
+            {
+                oss << " timestamp=" << reqTimestamp;
+            }
 
-            response += "\n";
+            oss << "\n";
+            const std::string response = oss.str();
 
             std::vector<char> output;
             output.reserve(4 * pixelWidth * pixelHeight);
             output.resize(response.size());
             std::memcpy(output.data(), response.data(), response.size());
             cachedTile->seekg(0, std::ios_base::end);
-            size_t pos = output.size();
-            std::streamsize size = cachedTile->tellg();
+            const size_t pos = output.size();
+            const std::streamsize size = cachedTile->tellg();
             output.resize(pos + size);
             cachedTile->seekg(0, std::ios_base::beg);
             cachedTile->read(output.data() + pos, size);
@@ -747,7 +746,7 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
                                " tilewidth=" + std::to_string(tileWidth) +
                                " tileheight=" + std::to_string(tileHeight);
 
-    if (reqTimestamp != "")
+    if (!reqTimestamp.empty())
         forward += " timestamp=" + reqTimestamp;
 
     forwardToPeer(forward.c_str(), forward.size());
@@ -767,7 +766,7 @@ void MasterProcessSession::dispatchChild()
     {
         AvailableChildSessionCV.wait_for(
             lock,
-            std::chrono::milliseconds(2000),
+            std::chrono::milliseconds(3000),
             [&bFound, this]
             {
                 return (bFound = AvailableChildSessions.find(getId()) != AvailableChildSessions.end());

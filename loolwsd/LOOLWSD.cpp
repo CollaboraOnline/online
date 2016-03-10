@@ -501,10 +501,9 @@ private:
 
         //TODO: Authenticate the caller.
         // authenticate(request, response);
-
-        NameValueCollection cookies;
-        request.getCookies(cookies);
-        Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
+        // NameValueCollection cookies;
+        // request.getCookies(cookies);
+        // Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
 
         auto ws = std::make_shared<WebSocket>(request, response);
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws);
