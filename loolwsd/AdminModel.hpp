@@ -84,8 +84,7 @@ public:
 
     void addView(int nSessionId)
     {
-        std::pair<std::map<int, View>::iterator, bool > ret;
-        ret = _views.insert(std::pair<int, View>(nSessionId, View(nSessionId)));
+        const auto ret = _views.emplace(nSessionId, View(nSessionId));
         if (!ret.second)
         {
             Log::warn() << "View with SessionID [" + std::to_string(nSessionId) + "] already exists." << Log::end;
@@ -287,7 +286,7 @@ public:
 
     void subscribe(int nSessionId, std::shared_ptr<Poco::Net::WebSocket>& ws)
     {
-        auto ret = _subscribers.insert(std::pair<int, Subscriber>(nSessionId, Subscriber(nSessionId, ws)));
+        const auto ret = _subscribers.emplace(nSessionId, Subscriber(nSessionId, ws));
         if (!ret.second)
         {
             Log::warn() << "Subscriber already exists" << Log::end;
@@ -317,8 +316,7 @@ private:
     // Prolly, *move* expired documents to another container (?)
     void addDocument(Poco::Process::PID pid, std::string url)
     {
-        std::pair<std::map<Poco::Process::PID, Document>::iterator, bool > ret;
-        ret = _documents.insert(std::pair<Poco::Process::PID, Document>(pid, Document(pid, url)));
+        const auto ret = _documents.emplace(pid, Document(pid, url));
         if (!ret.second)
         {
             Log::warn() << "Document with PID [" + std::to_string(pid) + "] already exists." << Log::end;
