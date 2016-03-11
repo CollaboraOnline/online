@@ -15,6 +15,7 @@
 #include <fstream>
 
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/StreamCopier.h>
 
 #include "Common.hpp"
 #include "Auth.hpp"
@@ -61,11 +62,18 @@ public:
     /// Writes the contents of the file back to the source.
     virtual bool saveLocalFileToStorage() = 0;
 
+    static
+    size_t getFileSize(const std::string& filename)
+    {
+        return std::ifstream(filename, std::ifstream::ate | std::ifstream::binary).tellg();
+    }
+
 protected:
     const std::string _localStorePath;
     const std::string _jailPath;
     const std::string _uri;
     std::string _jailedFilePath;
+    std::string _filename;
 };
 
 /// Trivial implementation of local storage that does not need do anything.
@@ -168,10 +176,7 @@ public:
         Poco::Net::HTTPResponse response;
         std::istream& rs = session.receiveResponse(response);
 
-        Log::info() << "WOPI::GetFile Status for URI [" << _uri << "]: "
-                    << response.getStatus() << " " << response.getReason() << Log::end;
-
-        auto logger = Log::debug();
+        auto logger = Log::trace();
         logger << "WOPI::GetFile header for URI [" << _uri << "]:\n";
         for (auto& pair : response)
         {
@@ -181,31 +186,50 @@ public:
         logger << Log::end;
 
         //TODO: Get proper filename.
-        const auto filename = "filename";
-        _jailedFilePath = Poco::Path(getLocalRootPath(), filename).toString();
+        _filename = "filename";
+        _jailedFilePath = Poco::Path(getLocalRootPath(), _filename).toString();
         std::ofstream ofs(_jailedFilePath);
         std::copy(std::istreambuf_iterator<char>(rs),
                   std::istreambuf_iterator<char>(),
                   std::ostreambuf_iterator<char>(ofs));
+        const auto size = getFileSize(_jailedFilePath);
+
+        Log::info() << "WOPI::GetFile downloaded " << size << " bytes from [" << _uri
+                    << "] -> " << _jailedFilePath << ": "
+                    << response.getStatus() << " " << response.getReason() << Log::end;
 
         // Now return the jailed path.
-        return Poco::Path(_jailPath, filename).toString();
+        return Poco::Path(_jailPath, _filename).toString();
     }
 
     bool saveLocalFileToStorage() override
     {
+        Log::info("Uploading URI [" + _uri + "] from [" + _jailedFilePath + "].");
+        const auto size = getFileSize(_jailedFilePath);
+
         Poco::URI uriObject(_uri);
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, _uri, Poco::Net::HTTPMessage::HTTP_1_1);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("X-WOPIOverride", "PUT");
+        request.setContentType("application/octet-stream");
+        request.setContentLength(size);
 
+        std::ostream& os = session.sendRequest(request);
         std::ifstream ifs(_jailedFilePath);
-        request.read(ifs);
+        Poco::StreamCopier::copyStream(ifs, os);
 
         Poco::Net::HTTPResponse response;
-        session.sendRequest(request);
-        Log::info() << "WOPI::PutFile Status: " <<  response.getStatus() << " " << response.getReason() << Log::end;
+        std::istream& rs = session.receiveResponse(response);
+        std::ostringstream oss;
+        Poco::StreamCopier::copyStream(rs, oss);
 
-        return (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
+        Log::info("WOPI::PutFile response: " + oss.str());
+        const auto success = (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
+        Log::info() << "WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath  << "]:"
+                    << "] -> [" << _uri << "]: "
+                    <<  response.getStatus() << " " << response.getReason() << Log::end;
+
+        return success;
     }
 };
 
