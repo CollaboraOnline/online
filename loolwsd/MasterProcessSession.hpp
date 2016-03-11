@@ -10,9 +10,9 @@
 #ifndef INCLUDED_MASTERPROCESSSESSION_HPP
 #define INCLUDED_MASTERPROCESSSESSION_HPP
 
-
 #include <Poco/Random.h>
 
+#include "DocumentStoreManager.hpp"
 #include "LOOLSession.hpp"
 #include "TileCache.hpp"
 

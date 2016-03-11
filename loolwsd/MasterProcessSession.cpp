@@ -799,7 +799,7 @@ void MasterProcessSession::dispatchChild()
     }
 
     const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, childSession->_childId);
-    auto document = DocumentURI::create(_docURL, jailRoot.toString(), childSession->_childId);
+    auto document = DocumentStoreManager::create(_docURL, jailRoot.toString(), childSession->_childId);
 
     _peer = childSession;
     childSession->_peer = shared_from_this();

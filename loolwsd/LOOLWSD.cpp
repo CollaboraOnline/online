@@ -149,8 +149,6 @@ using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
 
-// Document management mutex.
-std::mutex DocumentURI::DocumentURIMutex;
 
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public PartHandler
