@@ -329,23 +329,33 @@ public:
             const auto child = findChild(url);
             if (child)
             {
-                if (child->getUrl() == url)
-                    Log::debug("Found URL [" + url + "] hosted on child [" + std::to_string(child->getPid()) + "].");
+                const auto childPid = std::to_string(child->getPid());
+                const auto isEmptyChild = child->getUrl().empty();
+                if (isEmptyChild)
+                    Log::debug("Found URL [" + url + "] hosted on child [" + childPid + "].");
                 else
-                    Log::debug("URL [" + url + "] is not hosted. Using empty child [" + std::to_string(child->getPid()) + "].");
+                    Log::debug("URL [" + url + "] is not hosted. Using empty child [" + childPid + "].");
 
-                if (!createThread(child->getPid(), session, url))
+                if (createThread(child->getPid(), session, url))
                 {
-                    Log::error("Error creating thread [" + session + "] for URL [" + url + "].");
+                    child->setUrl(url);
+                    Log::debug("Child [" + childPid + "] now hosts [" + url + "] for session [" + session + "].");
+                    return;
                 }
 
-                child->setUrl(url);
+                Log::error("Error creating thread [" + session + "] for URL [" + url + "] on child [" + childPid + "].");
+                if (isEmptyChild)
+                {
+                    // This is probably a child in bad state. Rid of it and create new.
+                    removeChild(child->getPid());
+                }
             }
             else
             {
                 Log::info("No children available. Creating more.");
-                ++forkCounter;
             }
+
+            ++forkCounter;
         }
         else if (tokens[0] == "kill" && tokens.count() == 2)
         {
