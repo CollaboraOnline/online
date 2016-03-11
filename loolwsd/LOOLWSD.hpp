@@ -32,24 +32,65 @@ class DocumentURI
 public:
 
     static
-    std::shared_ptr<DocumentURI> create(const std::string& url,
+    Poco::URI getUri(std::string uri)
+    {
+        // The URI of the document is url-encoded
+        // and passed in our URL.
+        if (uri.size() > 1 && uri[0] == '/')
+        {
+            // Remove leading '/'.
+            uri.erase(0, 1);
+        }
+
+        std::string decodedUri;
+        Poco::URI::decode(uri, decodedUri);
+        auto uriPublic = Poco::URI(decodedUri);
+
+        if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+        {
+            // TODO: Validate and limit access to local paths!
+            uriPublic.normalize();
+        }
+
+        Log::info("Public URI [" + uriPublic.toString() + "].");
+        if (uriPublic.getPath().empty())
+        {
+            throw std::runtime_error("Invalid URI.");
+        }
+
+        return uriPublic;
+    }
+
+    static
+    std::shared_ptr<DocumentURI> create(const std::string& uri,
                                         const std::string& jailRoot,
                                         const std::string& childId)
     {
-        Log::info("DocumentURI: url: " + url + ", jailRoot: " + jailRoot + ", childId: " + childId);
+        std::string decodedUri;
+        Poco::URI::decode(uri, decodedUri);
+        auto uriPublic = Poco::URI(decodedUri);
 
-        // TODO: Sanitize the url and limit access!
-        std::string decodedUrl;
-        Poco::URI::decode(url, decodedUrl);
-        auto uriPublic = Poco::URI(decodedUrl);
+        if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+        {
+            // TODO: Validate and limit access to local paths!
+            uriPublic.normalize();
+        }
+
         Log::info("Public URI [" + uriPublic.toString() + "].");
-
         if (uriPublic.getPath().empty())
-            throw std::runtime_error("Invalid URL.");
+        {
+            throw std::runtime_error("Invalid URI.");
+        }
 
-        // This lock could become a bottleneck.
-        // In that case, we can use a pool and index by publicPath.
-        std::unique_lock<std::mutex> lock(DocumentURIMutex);
+        return create(uriPublic, jailRoot, childId);
+    }
+
+    static
+    std::shared_ptr<DocumentURI> create(const Poco::URI& uriPublic,
+                                        const std::string& jailRoot,
+                                        const std::string& childId)
+    {
+        Log::info("DocumentURI: uri: " + uriPublic.toString() + ", jailRoot: " + jailRoot + ", childId: " + childId);
 
         // The URL is the publicly visible one, not visible in the chroot jail.
         // We need to map it to a jailed path and copy the file there.
@@ -62,7 +103,6 @@ public:
         auto uriJailed = uriPublic;
         if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
         {
-            uriPublic.normalize();
             Log::info("Public URI [" + uriPublic.toString() + "] is a file.");
             std::unique_ptr<StorageBase> storage(new LocalStorage(jailRoot, jailPath.toString(), uriPublic.getPath()));
             const auto localPath = storage->getLocalFilePathFromStorage();
