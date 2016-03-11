@@ -113,7 +113,7 @@ public:
             uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         }
 
-        auto document = std::shared_ptr<DocumentStoreManager>(new DocumentStoreManager(uriPublic, uriJailed, childId, std::move(storage)));
+        auto document = std::shared_ptr<DocumentStoreManager>(new DocumentStoreManager(uriPublic, uriJailed, childId, storage));
 
         return document;
     }
@@ -125,6 +125,7 @@ public:
 
     bool save()
     {
+        assert(_storage);
         return _storage->saveLocalFileToStorage();
     }
 
@@ -136,7 +137,7 @@ private:
     DocumentStoreManager(const Poco::URI& uriPublic,
                          const Poco::URI& uriJailed,
                          const std::string& jailId,
-                         std::unique_ptr<StorageBase> storage) :
+                         std::unique_ptr<StorageBase>& storage) :
        _uriPublic(uriPublic),
        _uriJailed(uriJailed),
        _jailId(jailId),
