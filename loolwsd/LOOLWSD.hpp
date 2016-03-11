@@ -24,6 +24,7 @@
 #include "Common.hpp"
 #include "Util.hpp"
 
+class MasterProcessSession;
 
 class LOOLWSD: public Poco::Util::ServerApplication
 {
@@ -31,8 +32,8 @@ public:
     LOOLWSD();
     ~LOOLWSD();
 
-    // An Application is a singleton anyway, so just keep these as
-    // statics
+    // An Application is a singleton anyway,
+    // so just keep these as statics.
     static std::atomic<unsigned> NextSessionId;
     static int NumPreSpawnedChildren;
     static int BrokerWritePipe;
@@ -49,6 +50,11 @@ public:
     static const std::string FIFO_PATH;
     static const std::string FIFO_LOOLWSD;
     static const std::string LOKIT_PIDLOG;
+
+    // All sessions for a given doc. The URI path (without host, port, or query) is the key.
+    // The value is a map of SessionId => Session instance.
+    static std::map<std::string, std::map<std::string, std::shared_ptr<MasterProcessSession>>> Sessions;
+    static std::mutex SessionsMutex;
 
     static
     std::string GenSessionId()

@@ -149,6 +149,8 @@ using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
 
+std::map<std::string, std::map<std::string, std::shared_ptr<MasterProcessSession>>> LOOLWSD::Sessions;
+std::mutex LOOLWSD::SessionsMutex;
 
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public PartHandler
@@ -347,7 +349,7 @@ private:
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
                     const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
-                    auto session = std::make_shared<MasterProcessSession>(id, kind, ws);
+                    auto session = std::make_shared<MasterProcessSession>(id, kind, ws, nullptr);
                     const std::string filePrefix("file://");
                     std::string encodedFrom;
                     URI::encode(filePrefix + fromPath, "", encodedFrom);
@@ -495,7 +497,7 @@ private:
 
     void handleGetRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
-        Log::info("Starting Get request processor for session [" + id + "].");
+        Log::info("Starting GET request handler for session [" + id + "].");
 
         //TODO: Authenticate the caller.
         // authenticate(request, response);
@@ -503,8 +505,32 @@ private:
         // request.getCookies(cookies);
         // Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
 
+        const auto uri = DocumentStoreManager::getUri(request.getURI());
+        const auto docKey = uri.getPath();
+
+        // This lock could become a bottleneck.
+        // In that case, we can use a pool and index by publicPath.
+        std::unique_lock<std::mutex> lock(LOOLWSD::SessionsMutex);
+
+        // Lookup this document.
+        auto it = LOOLWSD::Sessions.find(docKey);
+        std::shared_ptr<DocumentStoreManager> document;
+        if (it != LOOLWSD::Sessions.end())
+        {
+            // Get the DocumentStoreManager from the first session.
+            auto sessionsMap = it->second;
+            assert(!sessionsMap.empty());
+            document = sessionsMap.begin()->second->getDocumentStoreManager();
+        }
+        else
+        {
+            // Set up the document and its storage.
+            const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, id);
+            document = DocumentStoreManager::create(uri, jailRoot.toString(), id);
+        }
+
         auto ws = std::make_shared<WebSocket>(request, response);
-        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws);
+        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, document);
 
         // For ToClient sessions, we store incoming messages in a queue and have a separate
         // thread that handles them. This is so that we can empty the queue when we get a
@@ -534,7 +560,7 @@ private:
                 }
             });
 
-        Log::info("Get request processor for session [" + id + "] finished. Clearing and joining the queue.");
+        Log::info("Finishing GET request handler for session [" + id + "]. Clearing and joining the queue.");
         queue.clear();
         queue.put("eof");
         queueHandlerThread.join();
@@ -607,7 +633,7 @@ public:
             Log::debug("Thread [" + thread_name + "] started.");
 
             auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToPrisoner, ws);
+            auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToPrisoner, ws, nullptr);
 
             SocketProcessor(ws, response, [&session](const char* data, const int size, bool)
                 {

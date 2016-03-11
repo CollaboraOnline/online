@@ -32,10 +32,12 @@ std::condition_variable MasterProcessSession::AvailableChildSessionCV;
 
 MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
-                                           std::shared_ptr<Poco::Net::WebSocket> ws) :
+                                           std::shared_ptr<Poco::Net::WebSocket> ws,
+                                           std::shared_ptr<DocumentStoreManager> docStoreManager) :
     LOOLSession(id, kind, ws),
     _curPart(0),
-    _loadPart(-1)
+    _loadPart(-1),
+    _docStoreManager(docStoreManager)
 {
     Log::info("MasterProcessSession ctor [" + getName() + "].");
 }
@@ -394,7 +396,8 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
         if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save"))
         {
-           _tileCache->documentSaved();
+            _docStoreManager->save();
+            _tileCache->documentSaved();
         }
         else if (tokens[0] == "disconnect")
         {

@@ -21,7 +21,8 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
 public:
     MasterProcessSession(const std::string& id,
                          const Kind kind,
-                         std::shared_ptr<Poco::Net::WebSocket> ws);
+                         std::shared_ptr<Poco::Net::WebSocket> ws,
+                         std::shared_ptr<DocumentStoreManager> docStoreManager);
     virtual ~MasterProcessSession();
 
     bool haveSeparateProcess();
@@ -40,6 +41,8 @@ public:
      * before it's ready, the call blocks till then.
      */
     std::string getSaveAs();
+
+    std::shared_ptr<DocumentStoreManager> getDocumentStoreManager() const { return _docStoreManager; }
 
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -86,6 +89,7 @@ private:
     int _loadPart;
     /// Kind::ToClient instances store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
+    std::shared_ptr<DocumentStoreManager> _docStoreManager;
 };
 
 #endif

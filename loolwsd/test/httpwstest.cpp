@@ -67,7 +67,7 @@ public:
     HTTPWSTest()
         : _uri("http://127.0.0.1:" + std::to_string(ClientPortNumber)),
           _session(_uri.getHost(), _uri.getPort()),
-          _request(Poco::Net::HTTPRequest::HTTP_GET, "/ws")
+          _request(Poco::Net::HTTPRequest::HTTP_GET, "/")
     {
     }
 
