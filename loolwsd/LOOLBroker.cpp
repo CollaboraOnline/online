@@ -233,6 +233,7 @@ public:
             return -1;
         }
 
+        Log::debug("Recv child response: [" + response + "].");
         return bytes;
     }
 
@@ -369,7 +370,7 @@ public:
         Log::debug("Thread [" + thread_name + "] started.");
 
         Util::pollPipeForReading(pollPipeBroker, FIFO_LOOLWSD, readerBroker,
-                                 [this](std::string& message) {return handleInput(message); } );
+                                 [this](std::string& message) { return handleInput(message); } );
 
         Log::debug("Thread [" + thread_name + "] finished.");
     }

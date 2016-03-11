@@ -415,7 +415,7 @@ public:
                        [this](const std::string& id, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, isDocPasswordProvided); },
                        [this](const std::string& id) { onUnload(id); });
         // child -> 0,  sessionId -> 1, PID -> 2
-        std::string hello("child " + sessionId + " " + std::to_string(Process::id()));
+        const std::string hello("child " + sessionId + " " + std::to_string(Process::id()));
         session->sendTextFrame(hello);
 
         auto thread = std::make_shared<Connection>(session, ws);
@@ -479,7 +479,9 @@ public:
     /// Set Document password for given URL
     void setDocumentPassword(int nPasswordType)
     {
-        Log::info("setDocumentPassword: passwordProtected=" + std::to_string(_isDocPasswordProtected) + " passwordProvided=" + std::to_string(_isDocPasswordProvided) + " password='" + _docPassword + "'");
+        Log::info() << "setDocumentPassword: passwordProtected=" << _isDocPasswordProtected
+                    << " passwordProvided=" << _isDocPasswordProvided
+                    << " password='" << _docPassword <<  "'" << Log::end;
 
         if (_isDocPasswordProtected && _isDocPasswordProvided)
         {
@@ -768,7 +770,7 @@ void lokit_main(const std::string& childRoot,
     struct pollfd pollPipeBroker;
     ssize_t bytes = -1;
     int   ready = 0;
-    bool  isDirtyKit = false;
+    bool  isUsedKit = false;
     char  buffer[READ_BUFFER_SIZE];
     char* start = nullptr;
     char* end = nullptr;
@@ -929,7 +931,7 @@ void lokit_main(const std::string& childRoot,
                         it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
                     }
 
-                    if (isDirtyKit && _documents.empty())
+                    if (isUsedKit && _documents.empty())
                         TerminationFlag = true;
                 }
                 else
@@ -981,7 +983,7 @@ void lokit_main(const std::string& childRoot,
                         it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
                     }
 
-                    if (isDirtyKit && _documents.empty())
+                    if (isUsedKit && _documents.empty())
                     {
                         TerminationFlag = true;
                         response += "down \r\n";
@@ -1013,7 +1015,7 @@ void lokit_main(const std::string& childRoot,
                             it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit, jailId, url));
 
                         it->second->createSession(sessionId, intSessionId);
-                        isDirtyKit = true;
+                        isUsedKit = true;
                         response += "ok \r\n";
                     }
                     else

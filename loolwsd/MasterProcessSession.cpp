@@ -456,8 +456,8 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
 
         // Request a kit process for this doc.
         Poco::URI uri(_docURL);
-        const std::string aMessage = "request " + getId() + " " + uri.getPath() + "\n";
-        Log::trace("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
+        const std::string aMessage = "request " + getId() + " " + uri.getPath() + "\r\n";
+        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
         Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
         _tileCache.reset(new TileCache(_docURL, timestamp));
@@ -828,7 +828,7 @@ void MasterProcessSession::dispatchChild()
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 {
     const auto message = getAbbreviatedMessage(buffer, length);
-    Log::trace(_kindString + ",forwardToPeer," + message);
+    Log::trace(getName() + " Forward: " + message);
 
     auto peer = _peer.lock();
     if (!peer)

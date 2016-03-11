@@ -591,7 +591,7 @@ namespace Util
                 if (byteChar == '\r' && *start == '\n')
                 {
                     start++;
-                    Log::trace(targetPipeName + " recv: " + message);
+                    Log::debug(targetPipeName + " recv: " + message);
                     if (message == "eof")
                         break;
 
