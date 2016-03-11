@@ -50,6 +50,7 @@
 	border-right: 1px solid darkgrey;
 	border-bottom: 1px solid darkgrey;
 	background-color: lightgrey;
+	cursor: pointer;
 
 	position: absolute;
 	padding: 0px;
@@ -98,6 +99,18 @@
 	padding: 0px;
 	margin: 0px;
 	height: 100%;
+	cursor: pointer;
+
+	/* Make the text unselectable for all browsers */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	}
+
+.spreadsheet-header-column:hover {
+	background-color: #DDD;
 	}
 
 .spreadsheet-header-rows-container {
@@ -134,4 +147,16 @@
 	padding: 0px;
 	margin: 0px;
 	height: 100%;
+	cursor: pointer;
+
+	/* Make the text unselectable for all browsers */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	}
+
+.spreadsheet-header-row:hover {
+        background-color: #DDD;
 	}
