@@ -56,10 +56,10 @@ public:
 
     /// Returns a local file path given a URI or ID.
     /// If necessary copies the file locally first.
-    virtual std::string getLocalFilePathFromStorage() = 0;
+    virtual std::string loadStorageFileToLocal() = 0;
 
     /// Writes the contents of the file back to the source.
-    virtual bool restoreLocalFileToStorage() = 0;
+    virtual bool saveLocalFileToStorage() = 0;
 
 protected:
     const std::string _localStorePath;
@@ -80,7 +80,7 @@ public:
     {
     }
 
-    std::string getLocalFilePathFromStorage() override
+    std::string loadStorageFileToLocal() override
     {
         const auto rootPath = getLocalRootPath();
 
@@ -119,7 +119,7 @@ public:
         return Poco::Path(_jailPath, filename).toString();
     }
 
-    bool restoreLocalFileToStorage() override
+    bool saveLocalFileToStorage() override
     {
         try
         {
@@ -155,7 +155,7 @@ public:
     }
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
-    std::string getLocalFilePathFromStorage() override
+    std::string loadStorageFileToLocal() override
     {
         Log::info("Downloading URI [" + _uri + "].");
 
@@ -192,7 +192,7 @@ public:
         return Poco::Path(_jailPath, filename).toString();
     }
 
-    bool restoreLocalFileToStorage() override
+    bool saveLocalFileToStorage() override
     {
         Poco::URI uriObject(_uri);
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
@@ -221,13 +221,13 @@ public:
     {
     }
 
-    std::string getLocalFilePathFromStorage() override
+    std::string loadStorageFileToLocal() override
     {
         // TODO: implement webdav GET.
         return _uri;
     }
 
-    bool restoreLocalFileToStorage() override
+    bool saveLocalFileToStorage() override
     {
         // TODO: implement webdav PUT.
         return false;

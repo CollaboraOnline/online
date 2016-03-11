@@ -95,11 +95,12 @@ public:
         Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
         auto uriJailed = uriPublic;
+        std::unique_ptr<StorageBase> storage;
         if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
         {
             Log::info("Public URI [" + uriPublic.toString() + "] is a file.");
-            std::unique_ptr<StorageBase> storage(new LocalStorage(jailRoot, jailPath.toString(), uriPublic.getPath()));
-            const auto localPath = storage->getLocalFilePathFromStorage();
+            storage.reset(new LocalStorage(jailRoot, jailPath.toString(), uriPublic.getPath()));
+            const auto localPath = storage->loadStorageFileToLocal();
             uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         }
         else
@@ -107,12 +108,12 @@ public:
             Log::info("Public URI [" + uriPublic.toString() +
                       "] assuming cloud storage.");
             //TODO: Configure the storage to use. For now, assume it's WOPI.
-            std::unique_ptr<StorageBase> storage(new WopiStorage(jailRoot, jailPath.toString(), uriPublic.toString()));
-            const auto localPath = storage->getLocalFilePathFromStorage();
+            storage.reset(new WopiStorage(jailRoot, jailPath.toString(), uriPublic.toString()));
+            const auto localPath = storage->loadStorageFileToLocal();
             uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         }
 
-        auto document = std::shared_ptr<DocumentStoreManager>(new DocumentStoreManager(uriPublic, uriJailed, childId));
+        auto document = std::shared_ptr<DocumentStoreManager>(new DocumentStoreManager(uriPublic, uriJailed, childId, std::move(storage)));
 
         return document;
     }
@@ -122,6 +123,11 @@ public:
         Log::info("~DocumentStoreManager [" + _uriPublic.toString() + "] destroyed.");
     }
 
+    bool save()
+    {
+        return _storage->saveLocalFileToStorage();
+    }
+
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
     std::string getJailId() const { return _jailId; }
@@ -129,10 +135,12 @@ public:
 private:
     DocumentStoreManager(const Poco::URI& uriPublic,
                          const Poco::URI& uriJailed,
-                         const std::string& jailId) :
+                         const std::string& jailId,
+                         std::unique_ptr<StorageBase> storage) :
        _uriPublic(uriPublic),
        _uriJailed(uriJailed),
-       _jailId(jailId)
+       _jailId(jailId),
+       _storage(std::move(storage))
     {
         Log::info("DocumentStoreManager [" + _uriPublic.toString() + "] created.");
     }
@@ -141,6 +149,8 @@ private:
     const Poco::URI _uriPublic;
     const Poco::URI _uriJailed;
     const std::string _jailId;
+
+    std::unique_ptr<StorageBase> _storage;
 };
 
 #endif
