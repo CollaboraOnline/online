@@ -88,14 +88,6 @@ L.Map.BoxZoom = L.Handler.extend({
 		this._finish();
 
 		if (!this._moved) { return; }
-
-		var bounds = new L.LatLngBounds(
-		        this._map.containerPointToLatLng(this._startPoint),
-		        this._map.containerPointToLatLng(this._point));
-
-		this._map
-			.fitBounds(bounds)
-			.fire('boxzoomend', {boxZoomBounds: bounds});
 	},
 
 	_onKeyDown: function (e) {
