@@ -39,6 +39,7 @@
 #include <Poco/Thread.h>
 #include <Poco/ThreadLocal.h>
 #include <Poco/Util/Application.h>
+#include <Poco/URI.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -310,10 +311,12 @@ public:
 
     Document(LibreOfficeKit *loKit,
              const std::string& jailId,
+             const std::string& docKey,
              const std::string& url)
       : _multiView(std::getenv("LOK_VIEW_CALLBACK")),
         _loKit(loKit),
         _jailId(jailId),
+        _docKey(docKey),
         _url(url),
         _loKitDocument(nullptr),
         _docPassword(""),
@@ -404,7 +407,7 @@ public:
 
         HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
         cs.setTimeout(0);
-        HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI + "sessionId=" + sessionId + "&jailId=" + _jailId);
+        HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey);
         HTTPResponse response;
 
         auto ws = std::make_shared<WebSocket>(cs, request, response);
@@ -734,6 +737,7 @@ private:
     const bool _multiView;
     LibreOfficeKit *_loKit;
     const std::string _jailId;
+    const std::string _docKey;
     const std::string _url;
     std::string _jailedUrl;
 
@@ -1007,12 +1011,16 @@ void lokit_main(const std::string& childRoot,
                     {
                         const std::string& sessionId = tokens[1];
                         const unsigned intSessionId = Util::decodeId(sessionId);
-                        const std::string& url = tokens[2];
+                        const std::string& docKey = tokens[2];
 
+                        std::string url;
+                        Poco::URI::decode(docKey, url);
                         Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
                         auto it = _documents.lower_bound(url);
                         if (it == _documents.end())
-                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit, jailId, url));
+                        {
+                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit, jailId, docKey, url));
+                        }
 
                         it->second->createSession(sessionId, intSessionId);
                         isUsedKit = true;

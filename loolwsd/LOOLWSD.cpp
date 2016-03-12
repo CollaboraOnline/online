@@ -506,7 +506,8 @@ private:
         // Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
 
         const auto uri = DocumentStoreManager::getUri(request.getURI());
-        const auto docKey = uri.getPath();
+        std::string docKey;
+        Poco::URI::encode(uri.getPath(), "", docKey);
 
         // Request a kit process for this doc.
         const std::string aMessage = "request " + id + " " + docKey + "\r\n";
@@ -609,6 +610,7 @@ public:
             const auto params = Poco::URI(request.getURI()).getQueryParameters();
             std::string sessionId;
             std::string jailId;
+            std::string docKey;
             for (const auto& param : params)
             {
                 if (param.first == "sessionId")
@@ -619,9 +621,11 @@ public:
                 {
                     jailId = param.second;
                 }
+                else if (param.first == "docKey")
+                {
+                    docKey = param.second;
+                }
             }
-
-            Log::debug("Child socket for SessionId: " + sessionId + ", jailId: " + jailId + " connected.");
 
             thread_name += sessionId;
             if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
@@ -629,6 +633,8 @@ public:
 
             Log::debug("Thread [" + thread_name + "] started.");
 
+            Log::debug("Child socket for SessionId: " + sessionId + ", jailId: " + jailId +
+                       ", docKey: " + docKey + " connected.");
             auto ws = std::make_shared<WebSocket>(request, response);
             auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, nullptr);
 
