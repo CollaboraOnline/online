@@ -947,6 +947,8 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
     char *textSelection = _loKitDocument->pClass->getTextSelection(_loKitDocument, mimeType.c_str(), nullptr);
 
     sendTextFrame("textselectioncontent: " + std::string(textSelection));
+
+    free(textSelection);
     return true;
 }
 
