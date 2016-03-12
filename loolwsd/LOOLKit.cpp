@@ -68,7 +68,6 @@ using Poco::Thread;
 using Poco::ThreadLocal;
 using Poco::Util::Application;
 
-const std::string CHILD_URI = "/loolws/child/";
 const std::string FIFO_PATH = "pipe";
 const std::string FIFO_BROKER = "loolbroker.fifo";
 const std::string FIFO_NOTIFY = "loolnotify.fifo";
@@ -405,7 +404,7 @@ public:
 
         HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
         cs.setTimeout(0);
-        HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI + sessionId);
+        HTTPRequest request(HTTPRequest::HTTP_GET, CHILD_URI + "sessionId=" + sessionId + "&jailId=" + _jailId);
         HTTPResponse response;
 
         auto ws = std::make_shared<WebSocket>(cs, request, response);

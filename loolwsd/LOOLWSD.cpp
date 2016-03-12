@@ -617,16 +617,29 @@ public:
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         assert(request.serverAddress().port() == MASTER_PORT_NUMBER);
-        assert(request.getURI().find(LOOLWSD::CHILD_URI) == 0);
+        assert(request.getURI().find(CHILD_URI) == 0);
 
         std::string thread_name = "prison_ws_";
         try
         {
-            const auto index = request.getURI().find_last_of('/');
-            const auto id = request.getURI().substr(index + 1);
+            const auto params = Poco::URI(request.getURI()).getQueryParameters();
+            std::string sessionId;
+            std::string jailId;
+            for (const auto& param : params)
+            {
+                if (param.first == "sessionId")
+                {
+                    sessionId = param.second;
+                }
+                else if (param.first == "jailId")
+                {
+                    jailId = param.second;
+                }
+            }
 
-            thread_name += id;
+            Log::debug("Child socket for SessionId: " + sessionId + ", jailId: " + jailId + " connected.");
 
+            thread_name += sessionId;
             if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
                 Log::error("Cannot set thread name to " + thread_name + ".");
 
@@ -775,7 +788,6 @@ std::string LOOLWSD::LoSubPath = "lo";
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::DoTest = false;
-const std::string LOOLWSD::CHILD_URI = "/loolws/child/";
 const std::string LOOLWSD::PIDLOG = "/tmp/loolwsd.pid";
 const std::string LOOLWSD::FIFO_PATH = "pipe";
 const std::string LOOLWSD::FIFO_LOOLWSD = "loolwsdfifo";

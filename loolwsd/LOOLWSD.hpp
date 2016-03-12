@@ -45,7 +45,6 @@ public:
     static std::string LoSubPath;
     //static Auth AuthAgent;
 
-    static const std::string CHILD_URI;
     static const std::string PIDLOG;
     static const std::string FIFO_PATH;
     static const std::string FIFO_LOOLWSD;
