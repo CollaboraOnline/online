@@ -44,6 +44,12 @@ public:
 
     std::shared_ptr<DocumentStoreManager> getDocumentStoreManager() const { return _docStoreManager; }
 
+    // Sessions to pre-spawned child processes that have connected but are not yet assigned a
+    // document to work on.
+    static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChildSessions;
+    static std::mutex AvailableChildSessionMutex;
+    static std::condition_variable AvailableChildSessionCV;
+
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
@@ -66,12 +72,6 @@ public:
     // obvious have to be rethought when we add collaboration and there can be several LOOL clients
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
-
-    // Sessions to pre-spawned child processes that have connected but are not yet assigned a
-    // document to work on.
-    static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChildSessions;
-    static std::mutex AvailableChildSessionMutex;
-    static std::condition_variable AvailableChildSessionCV;
 
     std::unique_ptr<TileCache> _tileCache;
 

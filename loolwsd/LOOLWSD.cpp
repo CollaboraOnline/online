@@ -508,29 +508,13 @@ private:
         const auto uri = DocumentStoreManager::getUri(request.getURI());
         const auto docKey = uri.getPath();
 
-        // This lock could become a bottleneck.
-        // In that case, we can use a pool and index by publicPath.
-        std::unique_lock<std::mutex> lock(LOOLWSD::SessionsMutex);
-
-        // Lookup this document.
-        auto it = LOOLWSD::Sessions.find(docKey);
-        std::shared_ptr<DocumentStoreManager> document;
-        if (it != LOOLWSD::Sessions.end())
-        {
-            // Get the DocumentStoreManager from the first session.
-            auto sessionsMap = it->second;
-            assert(!sessionsMap.empty());
-            document = sessionsMap.begin()->second->getDocumentStoreManager();
-        }
-        else
-        {
-            // Set up the document and its storage.
-            const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, id);
-            document = DocumentStoreManager::create(uri, jailRoot.toString(), id);
-        }
+        // Request a kit process for this doc.
+        const std::string aMessage = "request " + id + " " + docKey + "\r\n";
+        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 2));
+        Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
         auto ws = std::make_shared<WebSocket>(request, response);
-        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, document);
+        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, nullptr);
 
         // For ToClient sessions, we store incoming messages in a queue and have a separate
         // thread that handles them. This is so that we can empty the queue when we get a
@@ -646,7 +630,16 @@ public:
             Log::debug("Thread [" + thread_name + "] started.");
 
             auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToPrisoner, ws, nullptr);
+            auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, nullptr);
+
+            std::unique_lock<std::mutex> lock(MasterProcessSession::AvailableChildSessionMutex);
+            MasterProcessSession::AvailableChildSessions.emplace(sessionId, session);
+
+            Log::info() << " mapped " << session << " jailId=" << jailId << ", id=" << sessionId
+                        << " into _availableChildSessions, size=" << MasterProcessSession::AvailableChildSessions.size() << Log::end;
+
+            lock.unlock();
+            MasterProcessSession::AvailableChildSessionCV.notify_one();
 
             SocketProcessor(ws, response, [&session](const char* data, const int size, bool)
                 {

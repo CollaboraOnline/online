@@ -117,7 +117,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         // Note that this handles both forwarding requests from the client to the child process, and
         // forwarding replies from the child process to the client. Or does it?
 
-        // Snoop at some  messages and manipulate tile cache information as needed
+        // Snoop at some messages and manipulate tile cache information as needed
         auto peer = _peer.lock();
 
         if (_kind == Kind::ToPrisoner)
@@ -126,6 +126,27 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             {
                 LOOLSession::disconnect();
                 return false;
+            }
+
+            if (tokens[0] == "unocommandresult:")
+            {
+                const std::string stringMsg(buffer, length);
+                Log::info(getName() +"Command: " + stringMsg);
+                const auto index = stringMsg.find_first_of("{");
+                if (index != std::string::npos)
+                {
+                    const std::string stringJSON = stringMsg.substr(index);
+                    Poco::JSON::Parser parser;
+                    const auto result = parser.parse(stringJSON);
+                    const auto object = result.extract<Poco::JSON::Object::Ptr>();
+                    if (object->get("commandName").toString() == ".uno:Save" &&
+                        object->get("success").toString() == "true")
+                    {
+                        Log::info() << getName() << " " << _docStoreManager << Log::end;
+                        _docStoreManager->save();
+                        return true;
+                    }
+                }
             }
 
             if (tokens[0] == "error:")
@@ -282,14 +303,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         setId(tokens[1]);
         _childId = tokens[2];
 
-        std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
-        AvailableChildSessions.emplace(getId(), shared_from_this());
-
-        Log::info() << getName() << " mapped " << this << " jailId=" << _childId << ", id=" << getId()
-                    << " into _availableChildSessions, size=" << AvailableChildSessions.size() << Log::end;
-
-        lock.unlock();
-        AvailableChildSessionCV.notify_one();
+        Log::info() << getName() << " Child jailId=" << _childId << ", sessionId=" << getId() << Log::end;
     }
     else if (_kind == Kind::ToPrisoner)
     {
@@ -396,7 +410,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
         if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save"))
         {
-            _docStoreManager->save();
             _tileCache->documentSaved();
         }
         else if (tokens[0] == "disconnect")
@@ -453,12 +466,6 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
     {
         std::string timestamp;
         parseDocOptions(tokens, _loadPart, timestamp);
-
-        // Request a kit process for this doc.
-        Poco::URI uri(_docURL);
-        const std::string aMessage = "request " + getId() + " " + uri.getPath() + "\r\n";
-        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
-        Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
         _tileCache.reset(new TileCache(_docURL, timestamp));
 
@@ -804,8 +811,10 @@ void MasterProcessSession::dispatchChild()
     const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, childSession->_childId);
     auto document = DocumentStoreManager::create(_docURL, jailRoot.toString(), childSession->_childId);
 
+    _docStoreManager = document;
     _peer = childSession;
     childSession->_peer = shared_from_this();
+    childSession->_docStoreManager = document;
 
     std::ostringstream oss;
     oss << "load";
