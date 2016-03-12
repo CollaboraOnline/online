@@ -414,7 +414,7 @@ public:
                        [this](const std::string& id, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, isDocPasswordProvided); },
                        [this](const std::string& id) { onUnload(id); });
         // child -> 0,  sessionId -> 1, PID -> 2
-        const std::string hello("child " + sessionId + " " + std::to_string(Process::id()));
+        const std::string hello("child " + sessionId + " " + _jailId);
         session->sendTextFrame(hello);
 
         auto thread = std::make_shared<Connection>(session, ws);
@@ -764,6 +764,7 @@ void lokit_main(const std::string& childRoot,
 #ifdef LOOLKIT_NO_MAIN
     // Reinitialize logging when forked.
     Log::initialize("kit");
+    Util::rng::reseed();
 #endif
 
     struct pollfd pollPipeBroker;
@@ -782,7 +783,7 @@ void lokit_main(const std::string& childRoot,
 
     std::map<std::string, std::shared_ptr<Document>> _documents;
 
-    static const std::string jailId = std::to_string(Process::id());
+    static const std::string jailId = Util::encodeId(Util::rng::getNext());
     static const std::string process_name = "loolkit";
 
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(process_name.c_str()), 0, 0, 0) != 0)

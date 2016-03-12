@@ -50,7 +50,8 @@ namespace Util
 {
     namespace rng
     {
-       unsigned getNext();
+        void reseed();
+        unsigned getNext();
     }
 
     /// Encode an integral ID into a string, with padding support.

@@ -65,7 +65,22 @@ namespace rng
 {
     static std::random_device _rd;
     static std::mutex _rngMutex;
-    static std::mt19937_64 _rng = std::mt19937_64(_rd());
+
+    // Create the prng with a random-device for seed.
+    // If we don't have a hardware random-device, we will get the same seed.
+    // In that case we are better off with an arbitrary, but changing, seed.
+    static std::mt19937_64 _rng = std::mt19937_64(_rd.entropy()
+                                                ? _rd()
+                                                : (clock() + getpid()));
+
+    // A new seed is used to shuffle the sequence.
+    // N.B. Always reseed after getting forked!
+    void reseed()
+    {
+        _rng.seed(_rd.entropy() ? _rd() : (clock() + getpid()));
+    }
+
+    // Returns a new random number.
     unsigned getNext()
     {
         std::unique_lock<std::mutex> lock(_rngMutex);
