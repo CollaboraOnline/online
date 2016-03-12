@@ -56,8 +56,8 @@ public:
 
     static
     std::shared_ptr<DocumentStoreManager> create(const std::string& uri,
-                                        const std::string& jailRoot,
-                                        const std::string& childId)
+                                                 const std::string& jailRoot,
+                                                 const std::string& jailId)
     {
         std::string decodedUri;
         Poco::URI::decode(uri, decodedUri);
@@ -75,22 +75,23 @@ public:
             throw std::runtime_error("Invalid URI.");
         }
 
-        return create(uriPublic, jailRoot, childId);
+        return create(uriPublic, jailRoot, jailId);
     }
 
     static
     std::shared_ptr<DocumentStoreManager> create(
                                         const Poco::URI& uriPublic,
                                         const std::string& jailRoot,
-                                        const std::string& childId)
+                                        const std::string& jailId)
     {
-        Log::info("Creating DocumentStoreManager with uri: " + uriPublic.toString() + ", jailRoot: " + jailRoot + ", childId: " + childId);
+        Log::info("Creating DocumentStoreManager with uri: " + uriPublic.toString() +
+                  ", jailRoot: " + jailRoot + ", jailId: " + jailId);
 
         // The URL is the publicly visible one, not visible in the chroot jail.
         // We need to map it to a jailed path and copy the file there.
 
-        // user/doc/childId
-        const auto jailPath = Poco::Path(JailedDocumentRoot, childId);
+        // user/doc/jailId
+        const auto jailPath = Poco::Path(JailedDocumentRoot, jailId);
 
         Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
@@ -113,7 +114,7 @@ public:
             uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         }
 
-        auto document = std::shared_ptr<DocumentStoreManager>(new DocumentStoreManager(uriPublic, uriJailed, childId, storage));
+        auto document = std::shared_ptr<DocumentStoreManager>(new DocumentStoreManager(uriPublic, uriJailed, jailId, storage));
 
         return document;
     }
