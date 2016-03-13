@@ -399,8 +399,8 @@ public:
         }
 
         Log::info() << "Creating " << (_clientViews ? "new" : "first")
-                    << " view for url: " << _url << " for thread: " << sessionId
-                    << " on child: " << _jailId << Log::end;
+                    << " view for url: " << _url << " for sessionId: " << sessionId
+                    << " on jailId: " << _jailId << Log::end;
 
         // Open websocket connection between the child process and the
         // parent. The parent forwards us requests that it can't handle.
@@ -416,9 +416,6 @@ public:
         auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId,
                        [this](const std::string& id, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, isDocPasswordProvided); },
                        [this](const std::string& id) { onUnload(id); });
-        // child -> 0,  sessionId -> 1, PID -> 2
-        const std::string hello("child " + sessionId + " " + _jailId);
-        session->sendTextFrame(hello);
 
         auto thread = std::make_shared<Connection>(session, ws);
         const auto aInserted = _connections.emplace(intSessionId, thread);

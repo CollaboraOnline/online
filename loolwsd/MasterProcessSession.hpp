@@ -25,8 +25,6 @@ public:
                          std::shared_ptr<DocumentBroker> docBroker);
     virtual ~MasterProcessSession();
 
-    bool haveSeparateProcess();
-
     virtual bool getStatus(const char *buffer, int length) override;
 
     virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
@@ -83,8 +81,6 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
-    // The pid of the child process
-    std::string _childId;
     int _curPart;
     int _loadPart;
     /// Kind::ToClient instances store URLs of completed 'save as' documents.

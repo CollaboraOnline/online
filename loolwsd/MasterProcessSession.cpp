@@ -112,7 +112,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         return true;
     }
 
-    if (haveSeparateProcess())
+    if (_kind == Kind::ToPrisoner)
     {
         // Note that this handles both forwarding requests from the client to the child process, and
         // forwarding replies from the child process to the client. Or does it?
@@ -120,7 +120,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         // Snoop at some messages and manipulate tile cache information as needed
         auto peer = _peer.lock();
 
-        if (_kind == Kind::ToPrisoner)
         {
             if (!peer)
             {
@@ -205,7 +204,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             }
         }
 
-        if (_kind == Kind::ToPrisoner && peer && peer->_tileCache && !_isDocPasswordProtected)
+        if (peer && peer->_tileCache && !_isDocPasswordProtected)
         {
             if (tokens[0] == "tile:")
             {
@@ -280,31 +279,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         return true;
     }
 
-    if (tokens[0] == "child")
-    {
-        if (_kind != Kind::ToPrisoner)
-        {
-            sendTextFrame("error: cmd=child kind=invalid");
-            return false;
-        }
-        if (!_peer.expired())
-        {
-            sendTextFrame("error: cmd=child kind=invalid");
-            return false;
-        }
-        if (tokens.count() != 3)
-        {
-            sendTextFrame("error: cmd=child kind=syntax");
-            return false;
-        }
-
-        // child -> 0,  sessionId -> 1, PID -> 2
-        setId(tokens[1]);
-        _childId = tokens[2];
-
-        Log::info() << getName() << " Child jailId=" << _childId << ", sessionId=" << getId() << Log::end;
-    }
-    else if (_kind == Kind::ToPrisoner)
+    if (_kind == Kind::ToPrisoner)
     {
         // Message from child process to be forwarded to client.
 
@@ -420,10 +395,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
     return true;
 }
 
-bool MasterProcessSession::haveSeparateProcess()
-{
-    return !_childId.empty();
-}
 bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, tilePosX, tilePosY, tileWidth, tileHeight;
