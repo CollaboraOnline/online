@@ -681,6 +681,8 @@ public:
                 }
             }
 
+            docBroker->load(jailId);
+
             auto ws = std::make_shared<WebSocket>(request, response);
             auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker);
 

@@ -801,9 +801,6 @@ void MasterProcessSession::dispatchChild()
         return;
     }
 
-    const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, childSession->_childId);
-    _docBroker->load(childSession->_childId);
-
     _peer = childSession;
     childSession->_peer = shared_from_this();
     childSession->_docBroker = _docBroker;
