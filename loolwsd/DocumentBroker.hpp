@@ -148,6 +148,8 @@ public:
     Poco::URI getJailedUri() const { return _uriJailed; }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
+    unsigned decSessions() { return --_sessionsCount; }
+    unsigned incSessions() { return ++_sessionsCount; }
 
     std::string getJailRoot() const
     {
@@ -161,7 +163,8 @@ private:
                    const std::string& childRoot) :
        _uriPublic(uriPublic),
        _docKey(docKey),
-       _childRoot(childRoot)
+       _childRoot(childRoot),
+       _sessionsCount(0)
     {
         assert(!_docKey.empty());
         assert(!_childRoot.empty());
@@ -176,6 +179,7 @@ private:
     std::string _jailId;
     std::unique_ptr<StorageBase> _storage;
     std::mutex _mutex;
+    std::atomic<unsigned> _sessionsCount;
 };
 
 #endif

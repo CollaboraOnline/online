@@ -535,6 +535,7 @@ private:
 
         auto ws = std::make_shared<WebSocket>(request, response);
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker);
+        docBroker->incSessions();
 
         // For ToClient sessions, we store incoming messages in a queue and have a separate
         // thread that handles them. This is so that we can empty the queue when we get a
@@ -569,7 +570,11 @@ private:
         queue.put("eof");
         queueHandlerThread.join();
 
-        //TODO: Cleanup DocumentBroker.
+        std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+        if (docBroker->decSessions() == 0)
+        {
+            LOOLWSD::DocBrokers.erase(docKey);
+        }
     }
 
 public:
