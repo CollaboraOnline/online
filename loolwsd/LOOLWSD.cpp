@@ -505,7 +505,7 @@ private:
         // request.getCookies(cookies);
         // Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
 
-        auto docBroker = DocumentBroker::create(request.getURI());
+        auto docBroker = DocumentBroker::create(request.getURI(), LOOLWSD::ChildRoot);
         const auto docKey = docBroker->getDocKey();
 
         {

@@ -57,7 +57,7 @@ public:
     }
 
     static
-    std::shared_ptr<DocumentBroker> create(const std::string& uri)
+    std::shared_ptr<DocumentBroker> create(const std::string& uri, const std::string& childRoot)
     {
         std::string decodedUri;
         Poco::URI::decode(uri, decodedUri);
@@ -75,18 +75,18 @@ public:
             throw std::runtime_error("Invalid URI.");
         }
 
-        return create(uriPublic);
+        return create(uriPublic, childRoot);
     }
 
     static
-    std::shared_ptr<DocumentBroker> create(const Poco::URI& uriPublic)
+    std::shared_ptr<DocumentBroker> create(const Poco::URI& uriPublic, const std::string& childRoot)
     {
         Log::info("Creating DocumentBroker for uri: " + uriPublic.toString());
 
         std::string docKey;
         Poco::URI::encode(uriPublic.getPath(), "", docKey);
 
-        return std::shared_ptr<DocumentBroker>(new DocumentBroker(uriPublic, docKey));
+        return std::shared_ptr<DocumentBroker>(new DocumentBroker(uriPublic, docKey, childRoot));
     }
 
     ~DocumentBroker()
@@ -148,18 +148,29 @@ public:
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
 
+    std::string getJailRoot() const
+    {
+        assert(!_jailId.empty());
+        return Poco::Path(_childRoot, _jailId).toString();
+    }
+
 private:
     DocumentBroker(const Poco::URI& uriPublic,
-                   const std::string& docKey) :
+                   const std::string& docKey,
+                   const std::string& childRoot) :
        _uriPublic(uriPublic),
-       _docKey(docKey)
+       _docKey(docKey),
+       _childRoot(childRoot)
     {
+        assert(!_docKey.empty());
+        assert(!_childRoot.empty());
         Log::info("DocumentBroker [" + _uriPublic.toString() + "] created.");
     }
 
 private:
     const Poco::URI _uriPublic;
     const std::string _docKey;
+    const std::string _childRoot;
     Poco::URI _uriJailed;
     std::string _jailId;
     std::unique_ptr<StorageBase> _storage;
