@@ -27,8 +27,10 @@ class DocumentBroker
 public:
 
     static
-    Poco::URI getUri(std::string uri)
+    std::shared_ptr<DocumentBroker> create(std::string uri, const std::string& childRoot)
     {
+        Log::info("Creating DocumentBroker for uri: " + uri + ".");
+
         // The URI of the document is url-encoded
         // and passed in our URL.
         if (uri.size() > 1 && uri[0] == '/')
@@ -47,41 +49,10 @@ public:
             uriPublic.normalize();
         }
 
-        Log::info("Public URI [" + uriPublic.toString() + "].");
         if (uriPublic.getPath().empty())
         {
             throw std::runtime_error("Invalid URI.");
         }
-
-        return uriPublic;
-    }
-
-    static
-    std::shared_ptr<DocumentBroker> create(const std::string& uri, const std::string& childRoot)
-    {
-        std::string decodedUri;
-        Poco::URI::decode(uri, decodedUri);
-        auto uriPublic = Poco::URI(decodedUri);
-
-        if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
-        {
-            // TODO: Validate and limit access to local paths!
-            uriPublic.normalize();
-        }
-
-        Log::info("Public URI [" + uriPublic.toString() + "].");
-        if (uriPublic.getPath().empty())
-        {
-            throw std::runtime_error("Invalid URI.");
-        }
-
-        return create(uriPublic, childRoot);
-    }
-
-    static
-    std::shared_ptr<DocumentBroker> create(const Poco::URI& uriPublic, const std::string& childRoot)
-    {
-        Log::info("Creating DocumentBroker for uri: " + uriPublic.toString());
 
         std::string docKey;
         Poco::URI::encode(uriPublic.getPath(), "", docKey);
@@ -168,7 +139,7 @@ private:
     {
         assert(!_docKey.empty());
         assert(!_childRoot.empty());
-        Log::info("DocumentBroker [" + _uriPublic.toString() + "] created.");
+        Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
     }
 
 private:
