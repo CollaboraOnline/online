@@ -195,7 +195,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     if (url.find(filePrefix) == 0)
                     {
                         // Rewrite file:// URLs, as they are visible to the outside world.
-                        Path path(MasterProcessSession::getJailPath(_childId), url.substr(filePrefix.length()));
+                        const Path path(_docBroker->getJailRoot(), url.substr(filePrefix.length()));
                         url = filePrefix + path.toString().substr(1);
                     }
                     peer->_saveAsQueue.put(url);
@@ -424,12 +424,6 @@ bool MasterProcessSession::haveSeparateProcess()
 {
     return !_childId.empty();
 }
-
-Poco::Path MasterProcessSession::getJailPath(const std::string& childId)
-{
-    return Path::forDirectory(LOOLWSD::ChildRoot + Path::separator() + childId);
-}
-
 bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, tilePosX, tilePosY, tileWidth, tileHeight;
@@ -808,7 +802,7 @@ void MasterProcessSession::dispatchChild()
     }
 
     const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, childSession->_childId);
-    _docBroker->load(jailRoot.toString(), childSession->_childId);
+    _docBroker->load(childSession->_childId);
 
     _peer = childSession;
     childSession->_peer = shared_from_this();

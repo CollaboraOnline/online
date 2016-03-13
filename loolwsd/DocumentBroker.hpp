@@ -95,7 +95,7 @@ public:
     }
 
     /// Loads a document from the public URI into the jail.
-    bool load(const std::string& jailRoot, const std::string& jailId)
+    bool load(const std::string& jailId)
     {
         Log::debug("Loading from URI: " + _uriPublic.toString());
 
@@ -114,6 +114,7 @@ public:
 
         // user/doc/jailId
         const auto jailPath = Poco::Path(JailedDocumentRoot, jailId);
+        const std::string jailRoot = getJailRoot();
 
         Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
