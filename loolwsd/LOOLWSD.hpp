@@ -22,6 +22,7 @@
 
 #include "Auth.hpp"
 #include "Common.hpp"
+#include "DocumentBroker.hpp"
 #include "Util.hpp"
 
 class MasterProcessSession;
@@ -50,10 +51,9 @@ public:
     static const std::string FIFO_LOOLWSD;
     static const std::string LOKIT_PIDLOG;
 
-    // All sessions for a given doc. The URI path (without host, port, or query) is the key.
-    // The value is a map of SessionId => Session instance.
-    static std::map<std::string, std::map<std::string, std::shared_ptr<MasterProcessSession>>> Sessions;
-    static std::mutex SessionsMutex;
+    // All DocumentBrokers by their DocKey (the URI path without host, port, or query).
+    static std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
+    static std::mutex DocBrokersMutex;
 
     static
     std::string GenSessionId()

@@ -149,8 +149,8 @@ using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
 
-std::map<std::string, std::map<std::string, std::shared_ptr<MasterProcessSession>>> LOOLWSD::Sessions;
-std::mutex LOOLWSD::SessionsMutex;
+std::map<std::string, std::shared_ptr<DocumentBroker>> LOOLWSD::DocBrokers;
+std::mutex LOOLWSD::DocBrokersMutex;
 
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public PartHandler
@@ -362,7 +362,7 @@ private:
                     std::string toJailURL = filePrefix + JailedDocumentRoot + toPath.getFileName();
                     std::string encodedTo;
                     URI::encode(toJailURL, "", encodedTo);
-                        std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
+                    std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
                     session->handleInput(saveas.data(), saveas.size());
 
                     std::string toURL = session->getSaveAs();
@@ -505,9 +505,28 @@ private:
         // request.getCookies(cookies);
         // Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
 
-        const auto uri = DocumentStoreManager::getUri(request.getURI());
-        std::string docKey;
-        Poco::URI::encode(uri.getPath(), "", docKey);
+        auto docBroker = DocumentBroker::create(request.getURI());
+        const auto docKey = docBroker->getDocKey();
+
+        {
+            // This lock could become a bottleneck.
+            // In that case, we can use a pool and index by publicPath.
+            std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+
+            // Lookup this document.
+            auto it = LOOLWSD::DocBrokers.find(docKey);
+            if (it != LOOLWSD::DocBrokers.end())
+            {
+                // Get the DocumentBroker from the Cache.
+                docBroker = it->second;
+                assert(docBroker);
+            }
+            else
+            {
+                // Set one we just created.
+                LOOLWSD::DocBrokers.emplace(docKey, docBroker);
+            }
+        }
 
         // Request a kit process for this doc.
         const std::string aMessage = "request " + id + " " + docKey + "\r\n";
@@ -515,7 +534,7 @@ private:
         Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
         auto ws = std::make_shared<WebSocket>(request, response);
-        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, nullptr);
+        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker);
 
         // For ToClient sessions, we store incoming messages in a queue and have a separate
         // thread that handles them. This is so that we can empty the queue when we get a
@@ -549,6 +568,8 @@ private:
         queue.clear();
         queue.put("eof");
         queueHandlerThread.join();
+
+        //TODO: Cleanup DocumentBroker.
     }
 
 public:
@@ -635,8 +656,33 @@ public:
 
             Log::debug("Child socket for SessionId: " + sessionId + ", jailId: " + jailId +
                        ", docKey: " + docKey + " connected.");
+
+            std::shared_ptr<DocumentBroker> docBroker;
+            {
+                // This lock could become a bottleneck.
+                // In that case, we can use a pool and index by publicPath.
+                std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+
+                // Lookup this document.
+                auto it = LOOLWSD::DocBrokers.find(docKey);
+                if (it != LOOLWSD::DocBrokers.end())
+                {
+                    // Get the DocumentBroker from the Cache.
+                    docBroker = it->second;
+                    assert(docBroker);
+                }
+                else
+                {
+                    // The client closed before we started,
+                    // or some early failure happened.
+                    Log::error("Failed to find DocumentBroker for docKey [" + docKey +
+                               "] while handling child connection for session [" + sessionId + "].");
+                    throw std::runtime_error("Invalid docKey.");
+                }
+            }
+
             auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, nullptr);
+            auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker);
 
             std::unique_lock<std::mutex> lock(MasterProcessSession::AvailableChildSessionMutex);
             MasterProcessSession::AvailableChildSessions.emplace(sessionId, session);

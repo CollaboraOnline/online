@@ -33,11 +33,11 @@ std::condition_variable MasterProcessSession::AvailableChildSessionCV;
 MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
                                            std::shared_ptr<Poco::Net::WebSocket> ws,
-                                           std::shared_ptr<DocumentStoreManager> docStoreManager) :
+                                           std::shared_ptr<DocumentBroker> docBroker) :
     LOOLSession(id, kind, ws),
     _curPart(0),
     _loadPart(-1),
-    _docStoreManager(docStoreManager)
+    _docBroker(docBroker)
 {
     Log::info("MasterProcessSession ctor [" + getName() + "].");
 }
@@ -142,8 +142,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     if (object->get("commandName").toString() == ".uno:Save" &&
                         object->get("success").toString() == "true")
                     {
-                        Log::info() << getName() << " " << _docStoreManager << Log::end;
-                        _docStoreManager->save();
+                        _docBroker->save();
                         return true;
                     }
                 }
@@ -809,17 +808,16 @@ void MasterProcessSession::dispatchChild()
     }
 
     const auto jailRoot = Poco::Path(LOOLWSD::ChildRoot, childSession->_childId);
-    auto document = DocumentStoreManager::create(_docURL, jailRoot.toString(), childSession->_childId);
+    _docBroker->load(jailRoot.toString(), childSession->_childId);
 
-    _docStoreManager = document;
     _peer = childSession;
     childSession->_peer = shared_from_this();
-    childSession->_docStoreManager = document;
+    childSession->_docBroker = _docBroker;
 
     std::ostringstream oss;
     oss << "load";
-    oss << " url=" << document->getPublicUri().toString();
-    oss << " jail=" << document->getJailedUri().toString();
+    oss << " url=" << _docBroker->getPublicUri().toString();
+    oss << " jail=" << _docBroker->getJailedUri().toString();
 
     if (_loadPart >= 0)
         oss << " part=" + std::to_string(_loadPart);

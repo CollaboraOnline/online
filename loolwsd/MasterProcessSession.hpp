@@ -12,7 +12,7 @@
 
 #include <Poco/Random.h>
 
-#include "DocumentStoreManager.hpp"
+#include "DocumentBroker.hpp"
 #include "LOOLSession.hpp"
 #include "TileCache.hpp"
 
@@ -22,7 +22,7 @@ public:
     MasterProcessSession(const std::string& id,
                          const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws,
-                         std::shared_ptr<DocumentStoreManager> docStoreManager);
+                         std::shared_ptr<DocumentBroker> docBroker);
     virtual ~MasterProcessSession();
 
     bool haveSeparateProcess();
@@ -42,7 +42,7 @@ public:
      */
     std::string getSaveAs();
 
-    std::shared_ptr<DocumentStoreManager> getDocumentStoreManager() const { return _docStoreManager; }
+    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
     // Sessions to pre-spawned child processes that have connected but are not yet assigned a
     // document to work on.
@@ -89,7 +89,7 @@ private:
     int _loadPart;
     /// Kind::ToClient instances store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
-    std::shared_ptr<DocumentStoreManager> _docStoreManager;
+    std::shared_ptr<DocumentBroker> _docBroker;
 };
 
 #endif

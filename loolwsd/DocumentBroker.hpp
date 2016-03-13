@@ -7,8 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_DOCUMENTSTOREMANAGER_HPP
-#define INCLUDED_DOCUMENTSTOREMANAGER_HPP
+#ifndef INCLUDED_DOCUMENTBROKER_HPP
+#define INCLUDED_DOCUMENTBROKER_HPP
 
 #include <atomic>
 #include <mutex>
@@ -18,9 +18,11 @@
 
 #include "Storage.hpp"
 
-/// A DocumentStoreManager as mananged by us.
+/// DocumentBroker is responsible for setting up a document
+/// in jail and brokering loading it from Storage
+/// and saving it back.
 /// Contains URI, physical path, etc.
-class DocumentStoreManager
+class DocumentBroker
 {
 public:
 
@@ -55,9 +57,7 @@ public:
     }
 
     static
-    std::shared_ptr<DocumentStoreManager> create(const std::string& uri,
-                                                 const std::string& jailRoot,
-                                                 const std::string& jailId)
+    std::shared_ptr<DocumentBroker> create(const std::string& uri)
     {
         std::string decodedUri;
         Poco::URI::decode(uri, decodedUri);
@@ -75,17 +75,39 @@ public:
             throw std::runtime_error("Invalid URI.");
         }
 
-        return create(uriPublic, jailRoot, jailId);
+        return create(uriPublic);
     }
 
     static
-    std::shared_ptr<DocumentStoreManager> create(
-                                        const Poco::URI& uriPublic,
-                                        const std::string& jailRoot,
-                                        const std::string& jailId)
+    std::shared_ptr<DocumentBroker> create(const Poco::URI& uriPublic)
     {
-        Log::info("Creating DocumentStoreManager with uri: " + uriPublic.toString() +
-                  ", jailRoot: " + jailRoot + ", jailId: " + jailId);
+        Log::info("Creating DocumentBroker for uri: " + uriPublic.toString());
+
+        std::string docKey;
+        Poco::URI::encode(uriPublic.getPath(), "", docKey);
+
+        return std::shared_ptr<DocumentBroker>(new DocumentBroker(uriPublic, docKey));
+    }
+
+    ~DocumentBroker()
+    {
+        Log::info("~DocumentBroker [" + _uriPublic.toString() + "] destroyed.");
+    }
+
+    /// Loads a document from the public URI into the jail.
+    bool load(const std::string& jailRoot, const std::string& jailId)
+    {
+        Log::debug("Loading from URI: " + _uriPublic.toString());
+
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        if (_storage)
+        {
+            // Already loaded. Just return.
+            return true;
+        }
+
+        _jailId = jailId;
 
         // The URL is the publicly visible one, not visible in the chroot jail.
         // We need to map it to a jailed path and copy the file there.
@@ -95,64 +117,53 @@ public:
 
         Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
-        auto uriJailed = uriPublic;
-        std::unique_ptr<StorageBase> storage;
-        if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+        if (_uriPublic.isRelative() || _uriPublic.getScheme() == "file")
         {
-            Log::info("Public URI [" + uriPublic.toString() + "] is a file.");
-            storage.reset(new LocalStorage(jailRoot, jailPath.toString(), uriPublic.getPath()));
-            const auto localPath = storage->loadStorageFileToLocal();
-            uriJailed = Poco::URI(Poco::URI("file://"), localPath);
+            Log::info("Public URI [" + _uriPublic.toString() + "] is a file.");
+            _storage.reset(new LocalStorage(jailRoot, jailPath.toString(), _uriPublic.getPath()));
         }
         else
         {
-            Log::info("Public URI [" + uriPublic.toString() +
+            Log::info("Public URI [" + _uriPublic.toString() +
                       "] assuming cloud storage.");
             //TODO: Configure the storage to use. For now, assume it's WOPI.
-            storage.reset(new WopiStorage(jailRoot, jailPath.toString(), uriPublic.toString()));
-            const auto localPath = storage->loadStorageFileToLocal();
-            uriJailed = Poco::URI(Poco::URI("file://"), localPath);
+            _storage.reset(new WopiStorage(jailRoot, jailPath.toString(), _uriPublic.toString()));
         }
 
-        auto document = std::shared_ptr<DocumentStoreManager>(new DocumentStoreManager(uriPublic, uriJailed, jailId, storage));
-
-        return document;
-    }
-
-    ~DocumentStoreManager()
-    {
-        Log::info("~DocumentStoreManager [" + _uriPublic.toString() + "] destroyed.");
+        const auto localPath = _storage->loadStorageFileToLocal();
+        _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
+        return true;
     }
 
     bool save()
     {
+        Log::debug("Saving to URI: " + _uriPublic.toString());
+
         assert(_storage);
         return _storage->saveLocalFileToStorage();
     }
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
-    std::string getJailId() const { return _jailId; }
+    const std::string& getJailId() const { return _jailId; }
+    const std::string& getDocKey() const { return _docKey; }
 
 private:
-    DocumentStoreManager(const Poco::URI& uriPublic,
-                         const Poco::URI& uriJailed,
-                         const std::string& jailId,
-                         std::unique_ptr<StorageBase>& storage) :
+    DocumentBroker(const Poco::URI& uriPublic,
+                   const std::string& docKey) :
        _uriPublic(uriPublic),
-       _uriJailed(uriJailed),
-       _jailId(jailId),
-       _storage(std::move(storage))
+       _docKey(docKey)
     {
-        Log::info("DocumentStoreManager [" + _uriPublic.toString() + "] created.");
+        Log::info("DocumentBroker [" + _uriPublic.toString() + "] created.");
     }
 
 private:
     const Poco::URI _uriPublic;
-    const Poco::URI _uriJailed;
-    const std::string _jailId;
-
+    const std::string _docKey;
+    Poco::URI _uriJailed;
+    std::string _jailId;
     std::unique_ptr<StorageBase> _storage;
+    std::mutex _mutex;
 };
 
 #endif
