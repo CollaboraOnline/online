@@ -135,11 +135,11 @@ L.Control.Styles = L.Control.extend({
 		// For impress documents, LOK STATE_CHANGED callback return these internal names
 		// which are different from what is returned by initial .uno:StyleApply.
 		// Convert these names to our stored internal names before processing
-		var impressMapping = {	"Titel":"title","Untertitel":"subtitle",
-					"Gliederung 1":"outline1","Gliederung 2":"outline2","Gliederung 3":"outline3",
-					"Gliederung 4":"outline4","Gliederung 5":"outline5","Gliederung 6":"outline6",
-					"Gliederung 7":"outline7","Gliederung 8":"outline8","Gliederung 9":"outline9",
-					"Hintergrund":"background","Hintergrundobjekte":"backgroundobjects","Notizen":"notes"};
+		var impressMapping = {'Titel':'title', 'Untertitel':'subtitle',
+					'Gliederung 1':'outline1', 'Gliederung 2':'outline2', 'Gliederung 3':'outline3',
+					'Gliederung 4':'outline4', 'Gliederung 5':'outline5', 'Gliederung 6':'outline6',
+					'Gliederung 7':'outline7', 'Gliederung 8':'outline8', 'Gliederung 9':'outline9',
+					'Hintergrund':'background', 'Hintergrundobjekte':'backgroundobjects', 'Notizen':'notes'};
 
 		// For impress documents, template name is prefixed with style name.
 		// Strip the template name until we support it
