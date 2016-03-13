@@ -88,15 +88,17 @@ namespace
 
         ~ChildProcess()
         {
-            close();
+            close(true);
         }
 
-        void close()
+        void close(const bool rude)
         {
             if (_pid != -1)
             {
-                if (kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
-                    Log::warn("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+                if (kill(_pid, SIGINT) != 0 && rude && kill(_pid, 0) != 0)
+                {
+                    Log::error("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+                }
 
                 std::ostringstream message;
                 message << "rmdoc" << " "
@@ -165,14 +167,14 @@ namespace
     }
 
     /// Safely removes a child process.
-    void removeChild(const Process::PID pid)
+    void removeChild(const Process::PID pid, const bool rude)
     {
         std::lock_guard<std::recursive_mutex> lock(forkMutex);
         const auto it = _childProcesses.find(pid);
         if (it != _childProcesses.end())
         {
             // Close the child resources.
-            it->second->close();
+            it->second->close(rude);
             _childProcesses.erase(it);
         }
     }
@@ -347,7 +349,7 @@ public:
                 if (isEmptyChild)
                 {
                     // This is probably a child in bad state. Rid of it and create new.
-                    removeChild(child->getPid());
+                    removeChild(child->getPid(), true);
                 }
             }
             else
@@ -360,7 +362,7 @@ public:
         else if (tokens[0] == "kill" && tokens.count() == 2)
         {
             Process::PID nPid = static_cast<Process::PID>(std::stoi(tokens[1]));
-            removeChild(nPid);
+            removeChild(nPid, true);
         }
     }
 
@@ -754,7 +756,7 @@ int main(int argc, char** argv)
                 Log::info() << "Child process [" << pid << "] exited with code: "
                             << WEXITSTATUS(status) << "." << Log::end;
 
-                removeChild(pid);
+                removeChild(pid, false);
             }
             else
             if (WIFSIGNALED(status))
@@ -770,7 +772,7 @@ int main(int argc, char** argv)
                              << " signal: " << strsignal(WTERMSIG(status))
                              << Log::end;
 
-                removeChild(pid);
+                removeChild(pid, false);
             }
             else if (WIFSTOPPED(status))
             {
@@ -803,21 +805,24 @@ int main(int argc, char** argv)
         }
         else if (pid < 0)
         {
-            Log::error("Error: waitpid failed.");
             // No child processes
             if (errno == ECHILD)
             {
                 if (childExitCode == EXIT_SUCCESS)
                 {
-                    Log::warn("Warn: last child exited successfully, fork new one.");
+                    Log::info("Last child exited successfully, fork new one.");
                     ++forkCounter;
                 }
                 else
                 {
                     Log::error("Error: last child exited with error code.");
-                    TerminationFlag = true;
+                    TerminationFlag = true; //FIXME: Why?
                     continue;
                 }
+            }
+            else
+            {
+                Log::error("waitpid failed.");
             }
         }
 
