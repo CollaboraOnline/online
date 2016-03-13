@@ -29,7 +29,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPClientSession _session;
-    Poco::Net::HTTPRequest _request;
     Poco::Net::HTTPResponse _response;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
@@ -66,8 +65,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 public:
     HTTPWSTest()
         : _uri("http://127.0.0.1:" + std::to_string(ClientPortNumber)),
-          _session(_uri.getHost(), _uri.getPort()),
-          _request(Poco::Net::HTTPRequest::HTTP_GET, "/")
+          _session(_uri.getHost(), _uri.getPort())
     {
     }
 
@@ -84,11 +82,12 @@ void HTTPWSTest::testPaste()
 {
     try
     {
-        Poco::Net::WebSocket socket(_session, _request, _response);
-
         // Load a document and make it empty.
         const std::string documentPath = TDOC "/hello.odt";
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket(_session, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
         sendTextFrame(socket, "status");
@@ -137,11 +136,12 @@ void HTTPWSTest::testLargePaste()
 {
     try
     {
-        Poco::Net::WebSocket socket(_session, _request, _response);
-
         // Load a document and make it empty.
-        std::string documentPath = TDOC "/hello.odt";
-        std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        const std::string documentPath = TDOC "/hello.odt";
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket(_session, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
         sendTextFrame(socket, "status");
@@ -187,12 +187,14 @@ void HTTPWSTest::testRenderingOptions()
 {
     try
     {
-        Poco::Net::WebSocket socket(_session, _request, _response);
-
         // Load a document and get its size.
         const std::string documentPath = TDOC "/hide-whitespace.odt";
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
         const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket(_session, request, _response);
+
         sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
         sendTextFrame(socket, "status");
 
@@ -239,11 +241,12 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
 {
     try
     {
-
-        Poco::Net::WebSocket socket(_session, _request, _response);
-
         const std::string documentPath = TDOC "/password-protected.ods";
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket(_session, request, _response);
+
         // Send a load request without password first
         sendTextFrame(socket, "load url=" + documentURL);
         std::string response;
@@ -273,16 +276,16 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
 {
     try
     {
-
-        Poco::Net::WebSocket socket(_session, _request, _response);
-
         const std::string documentPath = TDOC "/password-protected.ods";
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-        std::string response;
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket(_session, request, _response);
 
         // Send a load request with incorrect password
         sendTextFrame(socket, "load url=" + documentURL + " password=2");
 
+        std::string response;
         getResponseMessage(socket, "error:", response, true);
         CPPUNIT_ASSERT_MESSAGE("failed command load: ", !response.empty());
         {
@@ -308,12 +311,11 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
 {
     try
     {
-
-        Poco::Net::WebSocket socket(_session, _request, _response);
-
         const std::string documentPath = TDOC "/password-protected.ods";
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-        std::string response;
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket(_session, request, _response);
 
         // Send a load request with correct password
         sendTextFrame(socket, "load url=" + documentURL + " password=1");
@@ -336,20 +338,21 @@ void HTTPWSTest::testImpressPartCountChanged()
 {
     try
     {
-        Poco::Net::WebSocket socket(_session, _request, _response);
-
         // Load a document
         const std::string documentPath = TDOC "/insert-delete.odp";
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket(_session, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
         sendTextFrame(socket, "status");
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
-        std::string response;
-
         // check total slides 1
         sendTextFrame(socket, "status");
+
+        std::string response;
         getResponseMessage(socket, "status:", response, true);
         CPPUNIT_ASSERT_MESSAGE("failed command status: ", !response.empty());
         {
