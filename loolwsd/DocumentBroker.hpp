@@ -31,14 +31,7 @@ public:
     {
         Log::info("Creating DocumentBroker for uri: " + uri + ".");
 
-        // The URI of the document is url-encoded
-        // and passed in our URL.
-        if (uri.size() > 0 && uri[0] == '/')
-        {
-            // Remove leading '/'.
-            uri.erase(0, 1);
-        }
-
+        // The URI of the document should be url-encoded.
         std::string decodedUri;
         Poco::URI::decode(uri, decodedUri);
         auto uriPublic = Poco::URI(decodedUri);

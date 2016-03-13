@@ -329,54 +329,66 @@ private:
 
     void handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
-        Log::info("Post request.");
+        Log::info("Post request: " + request.getURI() + "]");
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() >= 2 && tokens[1] == "convert-to")
         {
-            Log::info("Conversion request.");
             std::string fromPath;
             ConvertToPartHandler handler(fromPath);
             HTMLForm form(request, request.stream(), handler);
-            std::string format;
-            if (form.has("format"))
-                format = form.get("format");
+            const std::string format = (form.has("format") ? form.get("format") : "");
 
             bool sent = false;
             if (!fromPath.empty())
             {
                 if (!format.empty())
                 {
+                    Log::info("Conversion request for URI [" + fromPath + "].");
+                    auto docBroker = DocumentBroker::create(fromPath, LOOLWSD::ChildRoot);
+                    const auto docKey = docBroker->getDocKey();
+
+                    // This lock could become a bottleneck.
+                    // In that case, we can use a pool and index by publicPath.
+                    std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+
+                    Log::debug("New DocumentBroker for docKey [" + docKey + "].");
+                    LOOLWSD::DocBrokers.emplace(docKey, docBroker);
+
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
                     const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
-                    auto session = std::make_shared<MasterProcessSession>(id, kind, ws, nullptr);
-                    const std::string filePrefix("file://");
+                    auto session = std::make_shared<MasterProcessSession>(id, kind, ws, docBroker);
+                    docBroker->incSessions();
+                    lock.unlock();
+
                     std::string encodedFrom;
-                    URI::encode(filePrefix + fromPath, "", encodedFrom);
+                    URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
                     const std::string load = "load url=" + encodedFrom;
                     session->handleInput(load.data(), load.size());
 
                     // Convert it to the requested format.
-                    Path toPath(fromPath);
+                    Path toPath(docBroker->getPublicUri().getPath());
                     toPath.setExtension(format);
-                    std::string toJailURL = filePrefix + JailedDocumentRoot + toPath.getFileName();
+                    const std::string toJailURL = "file://" + JailedDocumentRoot + toPath.getFileName();
                     std::string encodedTo;
                     URI::encode(toJailURL, "", encodedTo);
                     std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
                     session->handleInput(saveas.data(), saveas.size());
 
-                    std::string toURL = session->getSaveAs();
-                    std::string resultingURL;
-                    URI::decode(toURL, resultingURL);
-
                     // Send it back to the client.
-                    if (resultingURL.find(filePrefix) == 0)
-                        resultingURL = resultingURL.substr(filePrefix.length());
-                    if (!resultingURL.empty())
+                    Poco::URI resultURL(session->getSaveAs());
+                    if (!resultURL.getPath().empty())
                     {
                         const std::string mimeType = "application/octet-stream";
-                        response.sendFile(resultingURL, mimeType);
+                        response.sendFile(resultURL.getPath(), mimeType);
                         sent = true;
+                    }
+
+                    lock.lock();
+                    if (docBroker->decSessions() == 0)
+                    {
+                        Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
+                        LOOLWSD::DocBrokers.erase(docKey);
                     }
                 }
 
@@ -505,7 +517,14 @@ private:
         // request.getCookies(cookies);
         // Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
 
-        auto docBroker = DocumentBroker::create(request.getURI(), LOOLWSD::ChildRoot);
+        // Remove the leading '/' in the GET URL.
+        std::string uri = request.getURI();
+        if (uri.size() > 0 && uri[0] == '/')
+        {
+            uri.erase(0, 1);
+        }
+
+        auto docBroker = DocumentBroker::create(uri, LOOLWSD::ChildRoot);
         const auto docKey = docBroker->getDocKey();
 
         // This lock could become a bottleneck.
