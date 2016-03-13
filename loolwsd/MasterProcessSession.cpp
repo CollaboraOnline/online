@@ -750,7 +750,7 @@ void MasterProcessSession::dispatchChild()
         {
             Log::info() << "Retrying child permission... " << retries << Log::end;
             // request again new URL session
-            const std::string message = "request " + getId() + " " + _docURL + "\r\n";
+            const std::string message = "request " + getId() + " " + _docBroker->getDocKey() + "\r\n";
             Log::trace("MasterToBroker: " + message.substr(0, message.length()-2));
             Util::writeFIFO(LOOLWSD::BrokerWritePipe, message);
         }

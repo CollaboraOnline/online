@@ -33,7 +33,7 @@ public:
 
         // The URI of the document is url-encoded
         // and passed in our URL.
-        if (uri.size() > 1 && uri[0] == '/')
+        if (uri.size() > 0 && uri[0] == '/')
         {
             // Remove leading '/'.
             uri.erase(0, 1);
