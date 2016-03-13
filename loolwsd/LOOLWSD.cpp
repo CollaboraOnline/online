@@ -508,34 +508,35 @@ private:
         auto docBroker = DocumentBroker::create(request.getURI(), LOOLWSD::ChildRoot);
         const auto docKey = docBroker->getDocKey();
 
-        {
-            // This lock could become a bottleneck.
-            // In that case, we can use a pool and index by publicPath.
-            std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+        // This lock could become a bottleneck.
+        // In that case, we can use a pool and index by publicPath.
+        std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
 
-            // Lookup this document.
-            auto it = LOOLWSD::DocBrokers.find(docKey);
-            if (it != LOOLWSD::DocBrokers.end())
-            {
-                // Get the DocumentBroker from the Cache.
-                docBroker = it->second;
-                assert(docBroker);
-            }
-            else
-            {
-                // Set one we just created.
-                LOOLWSD::DocBrokers.emplace(docKey, docBroker);
-            }
+        // Lookup this document.
+        auto it = LOOLWSD::DocBrokers.find(docKey);
+        if (it != LOOLWSD::DocBrokers.end())
+        {
+            // Get the DocumentBroker from the Cache.
+            Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
+            docBroker = it->second;
+            assert(docBroker);
         }
+        else
+        {
+            // Set one we just created.
+            Log::debug("New DocumentBroker for docKey [" + docKey + "].");
+            LOOLWSD::DocBrokers.emplace(docKey, docBroker);
+        }
+
+        auto ws = std::make_shared<WebSocket>(request, response);
+        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker);
+        docBroker->incSessions();
+        lock.unlock();
 
         // Request a kit process for this doc.
         const std::string aMessage = "request " + id + " " + docKey + "\r\n";
         Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 2));
         Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
-
-        auto ws = std::make_shared<WebSocket>(request, response);
-        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker);
-        docBroker->incSessions();
 
         // For ToClient sessions, we store incoming messages in a queue and have a separate
         // thread that handles them. This is so that we can empty the queue when we get a
@@ -570,9 +571,10 @@ private:
         queue.put("eof");
         queueHandlerThread.join();
 
-        std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+        lock.lock();
         if (docBroker->decSessions() == 0)
         {
+            Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
             LOOLWSD::DocBrokers.erase(docKey);
         }
     }
