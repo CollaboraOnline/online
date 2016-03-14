@@ -382,6 +382,7 @@ public:
         Thread queueHandlerThread;
         QueueHandler handler(queue);
         Poco::Timespan waitTime(LOOLWSD::POLL_TIMEOUT);
+        bool normalShutdown = false;
 
         try
         {
@@ -436,6 +437,9 @@ public:
                             std::string firstLine = getFirstLine(buffer, n);
                             StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
+                            if (tokens.count() == 1 && tokens[0] == "closeconnection")
+                                normalShutdown = true;
+
                             if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
                             {
                                 // One WS message split into multiple frames.
@@ -484,9 +488,19 @@ public:
                 while (!LOOLWSD::isShutDown &&
                         (!pollTimeout || (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)));
 
+                if (normalShutdown)
+                {
+                    Application::instance().logger().information(Util::logPrefix() + "Deliberate shutdown, clearing the queue.");
+                    queue.clear();
+                }
+                else
+                {
+                    Application::instance().logger().information(Util::logPrefix() + "Non-deliberate shutdown, saving the document before tearing down.");
+                    queue.put("uno .uno:Save");
+                }
+
                 Application::instance().logger().information(Util::logPrefix() + "Finished the websocket handling.");
 
-                queue.clear();
                 queue.put("eof");
                 queueHandlerThread.join();
 
