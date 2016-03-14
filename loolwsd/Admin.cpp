@@ -178,8 +178,8 @@ public:
                         else if (tokens[0] == "total_mem")
                         {
                             unsigned totalMem = _admin->getTotalMemoryUsage(model);
-                            std::string response = "total_mem " + std::to_string(totalMem);
-                            ws->sendFrame(response.data(), response.size());
+                            std::string responseFrame = "total_mem " + std::to_string(totalMem);
+                            ws->sendFrame(responseFrame.data(), responseFrame.size());
                         }
                         else if (tokens[0] == "active_users_count")
                         {
@@ -210,8 +210,8 @@ public:
                             oss << tokens[0] << " "
                                 << model.query(tokens[0]);
 
-                            std::string response = oss.str();
-                            ws->sendFrame(response.data(), response.size());
+                            std::string responseFrame = oss.str();
+                            ws->sendFrame(responseFrame.data(), responseFrame.size());
                         }
                         else if (tokens[0] == "cpu_stats")
                         {
@@ -219,8 +219,8 @@ public:
                             oss << tokens[0] << " "
                                 << model.query(tokens[0]);
 
-                            std::string response = oss.str();
-                            ws->sendFrame(response.data(), response.size());
+                            std::string responseFrame = oss.str();
+                            ws->sendFrame(responseFrame.data(), responseFrame.size());
                         }
                         else if (tokens[0] == "settings")
                         {
@@ -232,8 +232,8 @@ public:
                                 << "cpu_stats_size="  << model.query("cpu_stats_size") << " "
                                 << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval());
 
-                            std::string response = oss.str();
-                            ws->sendFrame(response.data(), response.size());
+                            std::string responseFrame = oss.str();
+                            ws->sendFrame(responseFrame.data(), responseFrame.size());
                         }
                         else if (tokens[0] == "set" && tokens.count() > 1)
                         {
