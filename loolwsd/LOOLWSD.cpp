@@ -565,8 +565,9 @@ private:
 
         Thread queueHandlerThread;
         queueHandlerThread.start(handler);
+        bool normalShutdown = false;
 
-        SocketProcessor(ws, response, [&session, &queue](const char* data, const int size, const bool singleLine)
+        SocketProcessor(ws, response, [&session, &queue, &normalShutdown](const char* data, const int size, const bool singleLine)
             {
                 // FIXME: There is a race here when a request A gets in the queue and
                 // is processed _after_ a later request B, because B gets processed
@@ -576,6 +577,9 @@ private:
                 const std::string firstLine = getFirstLine(data, size);
                 if (singleLine || firstLine.find("paste") == 0)
                 {
+                    if (firstLine == "closeconnection")
+                        normalShutdown = true;
+
                     queue.put(std::string(data, size));
                     return true;
                 }
@@ -585,8 +589,18 @@ private:
                 }
             });
 
-        Log::info("Finishing GET request handler for session [" + id + "]. Clearing and joining the queue.");
-        queue.clear();
+        if (docBroker->getSessionsCount() == 1 && !normalShutdown)
+        {
+            Log::info("Non-deliberate shutdown of the last session, saving the document before tearing down.");
+            queue.put("uno .uno:Save");
+        }
+        else
+        {
+            Log::info("Clearing the queue.");
+            queue.clear();
+        }
+
+        Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
         queue.put("eof");
         queueHandlerThread.join();
 

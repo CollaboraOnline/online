@@ -114,6 +114,7 @@ public:
     const std::string& getDocKey() const { return _docKey; }
     unsigned decSessions() { return --_sessionsCount; }
     unsigned incSessions() { return ++_sessionsCount; }
+    unsigned getSessionsCount() { return _sessionsCount; }
 
     std::string getJailRoot() const
     {
