@@ -1,6 +1,3 @@
-- The /dev/random and /dev/urandom devices created with mknod() in the
-  chroots don't work as they are not chowned to root:root.
-
 - There is way too much of busy waiting for fairly arbitrarily chosen
   timeout periods in the code.
 
