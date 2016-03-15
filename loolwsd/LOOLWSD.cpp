@@ -577,8 +577,11 @@ private:
                 const std::string firstLine = getFirstLine(data, size);
                 if (singleLine || firstLine.find("paste") == 0)
                 {
-                    if (firstLine == "closeconnection")
+                    if (firstLine.compare(0, 10, "disconnect") == 0) // starts with "disconnect"
+                    {
                         normalShutdown = true;
+                        return true;
+                    }
 
                     queue.put(std::string(data, size));
                     return true;

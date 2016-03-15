@@ -17,7 +17,7 @@ canceltiles
     dropped and will not be handled. There is no guarantee of exactly
     which tile: messages might still be sent back to the client.
 
-closeconnection
+disconnect
 
     The socket is going to be shut down normally.  This is to distinguish
     deliberate shutdown from the case when the connection was lost, or

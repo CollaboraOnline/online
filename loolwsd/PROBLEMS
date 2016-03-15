@@ -31,8 +31,13 @@
   situations anyway, especially for the socket talking to the
   client. For the internal communication in the process tree,
   "disconnect" messages are barely acceptable, if the code is already
-  written to generate and expect them. But they should never be sent
-  to a client (or expected from it).
+  written to generate and expect them.
+
+  For the moment, we send them from the client too - to distinguish the
+  browser crash or connection loss from a deliberate shutdown.
+  We are saving the document in the case we don't get the explicit
+  'disconnect'.  When we move to actually saving the document all
+  the time automatically, the 'disconnect' message should be removed.
 
 - 'make check' does not work, or fails randomly, unless you have a
   freshly started loolwsd with a --numprespawn option that is big
