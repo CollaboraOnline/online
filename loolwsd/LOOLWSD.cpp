@@ -92,6 +92,13 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Util/OptionException.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
+#include <Poco/DOM/DOMParser.h>
+#include <Poco/DOM/DOMWriter.h>
+#include <Poco/SAX/InputSource.h>
+#include <Poco/DOM/AutoPtr.h>
+#include <Poco/DOM/Document.h>
+#include <Poco/DOM/NodeList.h>
+#include <Poco/DOM/Element.h>
 
 #include "Admin.hpp"
 #include "Auth.hpp"
@@ -148,6 +155,13 @@ using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
+using Poco::XML::InputSource;
+using Poco::XML::AutoPtr;
+using Poco::XML::DOMParser;
+using Poco::XML::DOMWriter;
+using Poco::XML::Node;
+using Poco::XML::NodeList;
+using Poco::XML::Element;
 
 std::map<std::string, std::shared_ptr<DocumentBroker>> LOOLWSD::DocBrokers;
 std::mutex LOOLWSD::DocBrokersMutex;
@@ -329,7 +343,7 @@ private:
 
     void handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
-        Log::info("Post request: " + request.getURI() + "]");
+        Log::info("Post request: [" + request.getURI() + "]");
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() >= 2 && tokens[1] == "convert-to")
         {
@@ -615,6 +629,37 @@ private:
         }
     }
 
+    void handleGetDiscovery(HTTPServerRequest& request, HTTPServerResponse& response)
+    {
+        DOMParser parser;
+        DOMWriter writer;
+        const std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
+        const std::string mediaType = "text/xml";
+        const std::string action = "action";
+        const std::string urlsrc = "urlsrc";
+        const std::string uriValue = "http://" + request.getHost() + LOLEAFLET_PATH;
+
+        InputSource inputSrc(discoveryPath);
+        AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
+        AutoPtr<NodeList> listNodes = docXML->getElementsByTagName(action);
+
+        for (unsigned long it = 0; it < listNodes->length(); it++)
+        {
+            static_cast<Element*>(listNodes->item(it))->setAttribute(urlsrc, uriValue);
+        }
+
+        std::ostringstream ostrXML;
+        writer.writeNode(ostrXML, docXML);
+
+        response.set("User-Agent", "LOOLWSD WOPI Agent");
+        response.setContentLength(ostrXML.str().length());
+        response.setContentType(mediaType);
+        response.setChunkedTransferEncoding(false);
+
+        std::ostream& ostr = response.send();
+        ostr << ostrXML.str();
+    }
+
 public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
@@ -629,7 +674,12 @@ public:
 
         try
         {
-            if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
+            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
+            {
+                // http://server/hosting/discovery
+                handleGetDiscovery(request, response);
+            }
+            else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
             {
                 handlePostRequest(request, response, id);
             }

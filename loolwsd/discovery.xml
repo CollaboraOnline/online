@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wopi-discovery>
+    <net-zone name="external-http">
+        <app name=" ">
+            <action name="edit" ext="odt"/>
+        </app>
+        <app name="application/vnd.oasis.opendocument.presentation">
+            <action name="edit" ext="odp"/>
+        </app>
+        <app name="application/vnd.oasis.opendocument.spreadsheet">
+            <action name="edit" ext="ods"/>
+        </app>
+        <app name="application/vnd.oasis.opendocument.graphics">
+            <action name="edit" ext="odg"/>
+        </app>
+        <app name="application/msword">
+            <action name="edit" ext="doc"/>
+        </app>
+        <app name="application/vnd.lotus-wordpro">
+            <action name="edit" ext="lwp"/>
+        </app>
+        <app name="image/svg+xml">
+            <action name="edit" ext="svg"/>
+        </app>
+        <app name="application/vnd.ms-powerpoint">
+            <action name="edit" ext="pot"/>
+        </app>
+        <app name="application/vnd.ms-excel">
+            <action name="edit" ext="xla"/>
+        </app>
+        <app name="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            <action name="edit" ext="xlsx"/>
+        </app>
+        <app name="application/vnd.visio">
+            <action name="edit" ext="vsd"/>
+        </app>
+        <app name="application/vnd.wordperfect">
+            <action name="edit" ext="wpd"/>
+        </app>
+        <app name="application/vnd.wordperfect">
+            <action name="edit" ext="wpd"/>
+        </app>
+    </net-zone>
+</wopi-discovery>

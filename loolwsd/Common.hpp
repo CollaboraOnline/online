@@ -36,6 +36,7 @@ constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
 
 static const std::string JailedDocumentRoot = "/user/docs/";
 static const std::string CHILD_URI = "/loolws/child?";
+static const std::string LOLEAFLET_PATH = "/loleaflet/dist/loleaflet.html?";
 
 #endif
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
