@@ -437,10 +437,9 @@ public:
                             std::string firstLine = getFirstLine(buffer, n);
                             StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-                            if (tokens.count() == 1 && tokens[0] == "closeconnection")
+                            if (tokens.count() == 1 && tokens[0] == "disconnect")
                                 normalShutdown = true;
-
-                            if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
+                            else if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
                             {
                                 // One WS message split into multiple frames.
                                 std::vector<char> message(buffer, buffer + n);

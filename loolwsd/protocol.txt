@@ -17,13 +17,13 @@ canceltiles
     dropped and will not be handled. There is no guarantee of exactly
     which tile: messages might still be sent back to the client.
 
-closeconnection
+disconnect
 
     The socket is going to be shut down normally.  This is to distinguish
     deliberate shutdown from the case when the connection was lost, or
     the browser was killed etc.
 
-downloadas downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
+downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
     Exports the current document to the desired format and returns a download URL
     The id identifies the request on the client.
