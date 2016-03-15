@@ -633,11 +633,13 @@ private:
     {
         DOMParser parser;
         DOMWriter writer;
+        URI uri("http", request.getHost(), request.getURI());
+
         const std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
-        const std::string uriValue = "http://" + request.getHost() + LOLEAFLET_PATH;
+        const std::string uriValue = "http://" + uri.getHost() + LOLEAFLET_PATH;
 
         InputSource inputSrc(discoveryPath);
         AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);

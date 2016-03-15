@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <wopi-discovery>
     <net-zone name="external-http">
-        <app name=" ">
+        <app name="application/vnd.oasis.opendocument.text">
             <action name="edit" ext="odt"/>
         </app>
         <app name="application/vnd.oasis.opendocument.presentation">
