@@ -629,21 +629,17 @@ private:
         }
     }
 
-    void handleGetDiscovery(HTTPServerResponse& response)
+    void handleGetDiscovery(HTTPServerRequest& request, HTTPServerResponse& response)
     {
         DOMParser parser;
         DOMWriter writer;
+        URI uri("http", request.getHost(), request.getURI());
 
-        LOOLWSD& appSrv = static_cast<LOOLWSD&>(Application::instance());
-        const std::string discoveryPath = Path(appSrv.commandPath()).parent().toString() + "discovery.xml";
+        const std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
-        const std::string uriValue = appSrv.config().getString("loolwsd.wopi.scheme", "http") + "://" +
-                                     appSrv.config().getString("loolwsd.wopi.hostname", "localhost") +
-                                     // TODO. LOOLWSD does not serve loleaflet.html, so set default 80
-                                     //appSrv.config().getString("loolwsd.wopi.port", "9980") +
-                                     LOLEAFLET_PATH;
+        const std::string uriValue = "http://" + uri.getHost() + LOLEAFLET_PATH;
 
         InputSource inputSrc(discoveryPath);
         AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
@@ -683,7 +679,7 @@ public:
             if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
             {
                 // http://server/hosting/discovery
-                handleGetDiscovery(response);
+                handleGetDiscovery(request, response);
             }
             else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
             {
