@@ -93,8 +93,7 @@ private:
 class CpuStats : public Poco::Util::TimerTask
 {
 public:
-    CpuStats(Admin* admin)
-        : _admin(admin)
+    CpuStats(Admin* /*admin*/)
     {
         Log::info("Cpu stat ctor");
     }
@@ -107,7 +106,6 @@ public:
     void run() override;
 
 private:
-    Admin* _admin;
 };
 
 #endif
