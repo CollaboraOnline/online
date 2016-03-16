@@ -947,6 +947,9 @@ LOOLWSD::~LOOLWSD()
 
 void LOOLWSD::initialize(Application& self)
 {
+    // load default configuration files, if present
+    loadConfiguration();
+
     ServerApplication::initialize(self);
 }
 
