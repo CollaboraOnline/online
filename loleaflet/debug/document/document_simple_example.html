@@ -64,17 +64,19 @@
         return results === null ? "" : results[1].replace(/\+/g, " ");
     }
 
+    var wopiSrc = getParameterByName('WOPISrc');
     var filePath = getParameterByName('file_path');
     var host = getParameterByName('host');
     var token = getParameterByName('token');
     var permission = getParameterByName('permission');
     var timestamp = getParameterByName('timestamp');
-    if (filePath === '') {
-        vex.dialog.alert('Wrong file_path, usage: file_path=/path/to/doc/');
+    if (wopiSrc === '' && filePath === '') {
+        vex.dialog.alert('Wrong WOPISrc, usage: WOPISrc=valid encoded URI,  or file_path, usage: file_path=/path/to/doc/');
     }
     if (host === '') {
         vex.dialog.alert('Wrong host, usage: host=ws://localhost:9980');
     }
+    var docURL = wopiSrc !== '' ? wopiSrc : filePath;
 
     var renderingOptions = {
         ".uno:HideWhitespace": {
@@ -88,7 +90,7 @@
     };
 
     var globalMap = L.map('map', {
-            doc: filePath,
+            doc: docURL,
             renderingOptions: renderingOptions,
             server: host,
             token: token,

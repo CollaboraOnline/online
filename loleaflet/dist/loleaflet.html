@@ -267,21 +267,24 @@
         return results === null ? "" : results[1].replace(/\+/g, " ");
     }
 
+    var wopiSrc = getParameterByName('WOPISrc');
     var filePath = getParameterByName('file_path');
     var fileName = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
     var host = getParameterByName('host');
     var permission = getParameterByName('permission');
     var timestamp = getParameterByName('timestamp');
-    if (filePath === '') {
-        vex.dialog.alert('Wrong file_path, usage: file_path=/path/to/doc/');
+    if (wopiSrc === '' && filePath === '') {
+        vex.dialog.alert('Wrong WOPISrc, usage: WOPISrc=valid encoded URI,  or file_path, usage: file_path=/path/to/doc/');
     }
     if (host === '') {
         vex.dialog.alert('Wrong host, usage: host=ws://localhost:9980');
     }
+    var docURL = wopiSrc !== '' ? wopiSrc : filePath;
+
     document.title = fileName;
     var map = L.map('map', {
 			server: host,
-			doc: filePath,
+			doc: docURL,
 			permission: permission,
 			timestamp: timestamp,
 			documentContainer: 'document-container'
