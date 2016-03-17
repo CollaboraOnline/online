@@ -35,6 +35,10 @@ L.Control.Fonts = L.Control.extend({
 			var first = L.DomUtil.create('option', '', container);
 			first.innerHTML = this.options.fontsInfo;
 			var fonts = e.commandValues;
+			if (!fonts) {
+				// in case of empty string, make sure `fonts' is not iterated
+				fonts = [];
+			}
 			for (var font in fonts) {
 				var item = L.DomUtil.create('option', '', container);
 				item.value = font;
@@ -110,6 +114,10 @@ L.Control.Fonts = L.Control.extend({
 	},
 
 	_onStateChange: function (e) {
+		if (!e.state) {
+			return;
+		}
+
 		if (e.commandName === '.uno:CharFontName') {
 			for (var i = 0; i < this._fontSelect.length; i++) {
 				var value = this._fontSelect[i].value;
