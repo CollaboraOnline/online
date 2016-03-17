@@ -2,7 +2,7 @@ SUBDIRS = test
 
 bin_PROGRAMS = loolwsd loolbroker loolkit loolmap
 
-dist_bin_SCRIPTS = loolwsd-systemplate-setup
+dist_bin_SCRIPTS = loolwsd-systemplate-setup discovery.xml
 
 AM_CPPFLAGS = -pthread
 AM_LDFLAGS = -pthread
@@ -33,7 +33,7 @@ noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessS
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h
 
-EXTRA_DIST = loolwsd.service sysconfig.loolwsd
+EXTRA_DIST = loolwsd.service sysconfig.loolwsd discovery.xml
 
 clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
