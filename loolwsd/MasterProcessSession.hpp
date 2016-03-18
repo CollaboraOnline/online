@@ -59,6 +59,7 @@ public:
 
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
+private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
@@ -73,14 +74,11 @@ public:
 
     std::unique_ptr<TileCache> _tileCache;
 
-private:
-
     static
     Poco::Path getJailPath(const std::string& childId);
 
     virtual bool _handleInput(const char *buffer, int length) override;
 
-private:
     int _curPart;
     int _loadPart;
     /// Kind::ToClient instances store URLs of completed 'save as' documents.
