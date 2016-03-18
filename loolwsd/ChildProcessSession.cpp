@@ -971,7 +971,9 @@ bool ChildProcessSession::paste(const char* buffer, int length, StringTokenizer&
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
+    Log::info("Calling _loKit->pClass->paste()");
     _loKitDocument->pClass->paste(_loKitDocument, mimeType.c_str(), data, size);
+    Log::info("paste() returned");
 
     return true;
 }
