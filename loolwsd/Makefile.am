@@ -1,6 +1,6 @@
 SUBDIRS = . test
 
-bin_PROGRAMS = loolwsd loolforkit loolmap loolmount
+bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -68,6 +68,8 @@ loolforkit_SOURCES = LOOLForKit.cpp \
 loolmount_SOURCES = loolmount.c
 
 loolmap_SOURCES = loolmap.c
+
+looltool_SOURCES = LOOLTool.cpp
 
 noinst_HEADERS = Admin.hpp \
                  AdminModel.hpp \
