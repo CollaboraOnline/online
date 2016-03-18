@@ -2,17 +2,32 @@
 
 use strict;
 
-sub check_sessions($)
+sub clear_hash($)
+{
+    my $hash = shift;
+    for my $key (keys %${hash}) {
+	delete $hash->{$key}
+    }
+}
+
+sub clear_state($$$)
 {
     my $sessions = shift;
+    my $lok_starting = shift;
+    my $lok_running = shift;
+
     my @names = keys %{$sessions};
-    if (@names > 0) {
-	print "Leaked sessions:\n\t";
-	for my $s (@names) {
-	    print "$s, ";
-	}
-	print "\n";
-    }
+    print "Leaked sessions:\n\t" . join(',', @names) . "\n" if (@names > 0);
+
+    @names = keys %{$lok_starting};
+    print "Sessions starting:\n\t" . join(',', @names) . "\n" if (@names > 0);
+
+    @names = keys %{$lok_running};
+    print "Sessions running:\n\t" . join(',', @names) . "\n" if (@names > 0);
+
+    clear_hash($sessions);
+    clear_hash($lok_starting);
+    clear_hash($lok_running);
 }
 
 my @input = <STDIN>;
@@ -28,6 +43,8 @@ my $load_avg = 0;
 my $cpu_user = 0;
 my $cpu_sys = 0;
 my %sessions;
+my %lok_starting;
+my %lok_running;
 my $printed_header = 0;
 
 while (my $line = shift @input) {
@@ -68,7 +85,7 @@ while (my $line = shift @input) {
     if ($line =~ m/Session (\S+) is (\S*)loading. (\d+) views/) {
 	my ($skey, $type, $count) = ($1, $2, $3);
 	if ($type eq 'un') {
-	    $pevent = "unload\t$skey";
+	    $pevent = "unload\t\"$skey\"";
 	    if (defined $sessions{$skey}) {
 		$pdetail = $sessions{$skey};
 	    } else {
@@ -83,28 +100,65 @@ while (my $line = shift @input) {
 
     if ($line =~/Initializing wsd/) {
 	print "Re-started\n";
-	check_sessions(\%sessions);
+	clear_state(\%sessions, \%lok_starting, \%lok_running);
+    }
+
+
+    # different PIDs: ...
+    # [loolbroker     ] Spawned kit [1689].
+    # [loolkit        ] loolkit [1689] is ready.
+    # [loolbroker     ] Child 1536 terminated.
+    # [loolbroker     ] Child process [1689] exited with code: 0.
+    if ($line =~ m/loolbroker.*Spawned kit \[(\d+)\]./) {
+	my $pid = $1;
+	$lok_starting{$pid} = 1;
+	$pevent = "newkit\t\"$pid\"";
+	$pdetail = '';
+    }
+    if ($line =~ m/loolkit \[(\d+)\] is ready./) {
+	my $pid = $1;
+	delete $lok_starting{$pid};
+	$lok_running{$pid} = 1;
+	$pevent = "livekit\t\"$pid\"";
+	$pdetail = '';
+    }
+    # [loolbroker     ] Child process [1689] exited with code: 0.
+    if ($line =~ m/loolbroker.*Child process \[(\d+)\]\s+(\S+)\s+.*with /) {
+	my $pid = $1;
+	my $code = $2;
+	$code = 'exit' if ($code eq 'exited');
+	delete $lok_running{$pid};
+	$pevent = $code . "kit\t\"$pid\"";
+	$pdetail = '';
     }
 
     # loolwsd:
     if ($line =~ m/Loading new document from URI: \[([^\]]+)\].*for session \[([^\]]+)\]/) {
 	my ($doc_uri, $session) = ($1, $2);
 	$sessions{$session} = $doc_uri;
-	$pevent = "load\t$session";
+	$pevent = "load\t\"$session\"";
 	$pdetail = $doc_uri;
     }
 
     if (defined $pevent)
     {
 	my $session_count = keys %sessions;
+	my $start_count = keys %lok_starting;
+	my $running_count = keys %lok_running;
 	if ($printed_header++ == 0) {
-	    print "event\tsession\tinodes\tfs_blk\trun\tloadavg\tmem/Kb\tsess\tfile\t\n";
+	    print "event\tkey\tinodes\tfs_blk\t";
+	    print "mem/Kb\trun\t";
+	    print "loadavg\tsess\t";
+	    print "start\tlive\t";
+	    print "file\n";
 	}
-	print "$pevent\t$inodes\t$blocks\t$running\t";
-	print "$load_avg\t$mem_used\t";
-	print "$session_count\t$pdetail\n";
+	print "$pevent\t$inodes\t$blocks\t";
+	print "$mem_used\t$running\t";
+	print "$load_avg\t$session_count\t";
+	print "$start_count\t$running_count\t";
+	print "$pdetail\n";
     }
 }
 
-check_sessions(\%sessions);
+clear_state(\%sessions, \%lok_starting, \%lok_running);
 
