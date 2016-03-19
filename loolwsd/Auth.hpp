@@ -26,8 +26,8 @@ class AuthBase
 {
 public:
 
-    /// Called after securing an authorization code to acquire an access token.
-    virtual bool getAccessToken(const std::string& authorizationCode) = 0;
+    /// Called to acquire an access token.
+    virtual bool getAccessToken() = 0;
 
     /// Used to verify the validity of an access token.
     virtual bool verify(const std::string& token) = 0;
@@ -37,24 +37,26 @@ class OAuth : public AuthBase
 {
 public:
     OAuth(const std::string& clientId,
-         const std::string& clientSecret,
-         const std::string& tokenEndPoint,
-         const std::string& authVerifyUrl) :
+          const std::string& clientSecret,
+          const std::string& tokenEndPoint,
+          const std::string& authVerifyUrl,
+          const std::string& authorizationCode) :
         _clientId(clientId),
         _clientSecret(clientSecret),
         _tokenEndPoint(tokenEndPoint),
-        _authVerifyUrl(authVerifyUrl)
+        _authVerifyUrl(authVerifyUrl),
+        _authorizationCode(authorizationCode)
     {
     }
 
     //TODO: This MUST be done over TLS to protect the token.
-    bool getAccessToken(const std::string& authorizationCode) override
+    bool getAccessToken() override
     {
         std::string url = _tokenEndPoint
                         + "?client_id=" + _clientId
                         + "&client_secret=" + _clientSecret
                         + "&grant_type=authorization_code"
-                        + "&code=" + authorizationCode;
+                        + "&code=" + _authorizationCode;
                         // + "&redirect_uri="
 
         Poco::URI uri(url);
@@ -104,6 +106,7 @@ private:
     const std::string _clientSecret;
     const std::string _tokenEndPoint;
     const std::string _authVerifyUrl;
+    const std::string _authorizationCode;
 };
 
 #endif
