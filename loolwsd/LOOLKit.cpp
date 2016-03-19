@@ -403,7 +403,7 @@ public:
                     << " on jailId: " << _jailId << Log::end;
 
         // Open websocket connection between the child process and the
-        // parent. The parent forwards us requests that it can't handle.
+        // parent. The parent forwards us requests that it can't handle (i.e most).
 
         HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
         cs.setTimeout(0);
@@ -430,11 +430,18 @@ public:
 
     /// Purges dead connections and returns
     /// the remaining number of clients.
+    /// Returns -1 on failure.
     size_t purgeSessions()
     {
         std::vector<std::shared_ptr<ChildProcessSession>> deadSessions;
+        size_t num_connections = 0;
         {
-            std::unique_lock<std::recursive_mutex> lock(_mutex);
+            std::unique_lock<std::recursive_mutex> lock(_mutex, std::defer_lock);
+            if (!lock.try_lock())
+            {
+                // Not a good time, try later.
+                return -1;
+            }
 
             for (auto it =_connections.cbegin(); it != _connections.cend(); )
             {
@@ -448,6 +455,8 @@ public:
                     ++it;
                 }
             }
+
+            num_connections = _connections.size();
         }
 
         // Don't destroy sessions while holding our lock.
@@ -456,15 +465,15 @@ public:
         // and the dtor tries to take its lock (which is taken).
         deadSessions.clear();
 
-        std::unique_lock<std::recursive_mutex> lock(_mutex);
-        return _connections.size();
+        return num_connections;
     }
 
     /// Returns true if at least one *live* connection exists.
     /// Does not consider user activity, just socket status.
     bool hasConnections()
     {
-        return purgeSessions() > 0;
+        // -ve values for failure.
+        return purgeSessions() != 0;
     }
 
     /// Returns true if there is no activity and
