@@ -24,8 +24,10 @@
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Dynamic/Var.h>
-#include <LOOLProtocol.hpp>
+
 #include <Common.hpp>
+#include <Util.hpp>
+#include <LOOLProtocol.hpp>
 #include <ChildProcessSession.hpp>
 
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
@@ -90,7 +92,12 @@ public:
 
     void tearDown()
     {
+        // Remove the temp files.
+        Util::removeFile(_tmpFilePath);
     }
+
+private:
+    std::string _tmpFilePath;
 };
 
 void HTTPWSTest::testPaste()
@@ -98,7 +105,8 @@ void HTTPWSTest::testPaste()
     try
     {
         // Load a document and make it empty.
-        const std::string documentPath = TDOC "/hello.odt";
+        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -152,7 +160,8 @@ void HTTPWSTest::testLargePaste()
     try
     {
         // Load a document and make it empty.
-        const std::string documentPath = TDOC "/hello.odt";
+        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -203,7 +212,8 @@ void HTTPWSTest::testRenderingOptions()
     try
     {
         // Load a document and get its size.
-        const std::string documentPath = TDOC "/hide-whitespace.odt";
+        const std::string documentPath = Util::getTempFilePath(TDOC, "hide-whitespace.odt");
+        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
         const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
 
@@ -256,7 +266,8 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
 {
     try
     {
-        const std::string documentPath = TDOC "/password-protected.ods";
+        const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
+        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -291,7 +302,8 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
 {
     try
     {
-        const std::string documentPath = TDOC "/password-protected.ods";
+        const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
+        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -326,7 +338,8 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
 {
     try
     {
-        const std::string documentPath = TDOC "/password-protected.ods";
+        const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
+        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -354,7 +367,8 @@ void HTTPWSTest::testImpressPartCountChanged()
     try
     {
         // Load a document
-        const std::string documentPath = TDOC "/insert-delete.odp";
+        const std::string documentPath = Util::getTempFilePath(TDOC, "insert-delete.odp");
+        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);

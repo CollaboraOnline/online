@@ -21,6 +21,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <Common.hpp>
+#include <Util.hpp>
 #include <ChildProcessSession.hpp>
 
 /// Tests the HTTP POST API of loolwsd. The server has to be started manually before running this test.
@@ -51,6 +52,8 @@ public:
 
 void HTTPPostTest::testConvertTo()
 {
+    const auto srcPath = Util::getTempFilePath(TDOC, "hello.odt");
+
     Poco::URI uri("https://127.0.0.1:" + std::to_string(ClientPortNumber));
     Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
 
@@ -58,7 +61,7 @@ void HTTPPostTest::testConvertTo()
     Poco::Net::HTMLForm form;
     form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
     form.set("format", "txt");
-    form.addPart("data", new Poco::Net::FilePartSource(TDOC "/hello.odt"));
+    form.addPart("data", new Poco::Net::FilePartSource(srcPath));
     form.prepareSubmit(request);
     // If this results in a Poco::Net::ConnectionRefusedException, loolwsd is not running.
     form.write(session.sendRequest(request));
@@ -72,6 +75,9 @@ void HTTPPostTest::testConvertTo()
     std::ifstream fileStream(TDOC "/hello.txt");
     std::stringstream expectedStream;
     expectedStream << fileStream.rdbuf();
+
+    // Remove the temp files.
+    Util::removeFile(srcPath);
 
     // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
     // (U+FEFF). Skip that.

@@ -104,7 +104,7 @@ public:
         if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
         {
             // Failed
-            Log::error("link(\"" + publicFilePath + "\", \"" + _jailedFilePath + "\") failed.");
+            Log::warn("link(\"" + publicFilePath + "\", \"" + _jailedFilePath + "\") failed. Will copy.");
         }
 
         try

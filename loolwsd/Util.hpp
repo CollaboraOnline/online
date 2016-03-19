@@ -111,6 +111,22 @@ namespace Util
         removeFile(path.toString(), recursive);
     }
 
+    /// Make a temp copy of a file.
+    /// Primarily used by tests to avoid tainting the originals.
+    /// srcDir shouldn't end with '/' and srcFilename shouldn't contain '/'.
+    /// Returns the created file path.
+    inline
+    std::string getTempFilePath(const std::string srcDir, const std::string& srcFilename)
+    {
+        const std::string srcPath = srcDir + '/' + srcFilename;
+
+        std::string dstPath = std::tmpnam(nullptr);
+        dstPath += '_' + srcFilename;
+
+        Poco::File(srcPath).copyTo(dstPath);
+        return dstPath;
+    }
+
     /// Returns the name of the signal.
     std::string signalName(int signo);
 
