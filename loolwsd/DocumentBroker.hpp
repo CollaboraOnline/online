@@ -27,10 +27,8 @@ class DocumentBroker
 public:
 
     static
-    std::shared_ptr<DocumentBroker> create(std::string uri, const std::string& childRoot)
+    Poco::URI sanitizeURI(std::string uri)
     {
-        Log::info("Creating DocumentBroker for uri: " + uri + ".");
-
         // The URI of the document should be url-encoded.
         std::string decodedUri;
         Poco::URI::decode(uri, decodedUri);
@@ -47,10 +45,31 @@ public:
             throw std::runtime_error("Invalid URI.");
         }
 
-        std::string docKey;
-        Poco::URI::encode(uriPublic.getPath(), "", docKey);
+        return uriPublic;
+    }
 
-        return std::shared_ptr<DocumentBroker>(new DocumentBroker(uriPublic, docKey, childRoot));
+    /// Returns a document-specific key based
+    /// on the URI of the document.
+    static
+    std::string getDocKey(const Poco::URI& uri)
+    {
+        // Keep the host as part of the key to close a potential security hole.
+        std::string docKey;
+        Poco::URI::encode(uri.getHost() + uri.getPath(), "", docKey);
+        return docKey;
+    }
+
+    DocumentBroker(const Poco::URI& uriPublic,
+                   const std::string& docKey,
+                   const std::string& childRoot) :
+       _uriPublic(uriPublic),
+       _docKey(docKey),
+       _childRoot(childRoot),
+       _sessionsCount(0)
+    {
+        assert(!_docKey.empty());
+        assert(!_childRoot.empty());
+        Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
     }
 
     ~DocumentBroker()
@@ -67,7 +86,8 @@ public:
 
         if (_storage)
         {
-            // Already loaded. Just return.
+            // Already loaded. Only validate.
+
             return true;
         }
 
@@ -120,20 +140,6 @@ public:
     {
         assert(!_jailId.empty());
         return Poco::Path(_childRoot, _jailId).toString();
-    }
-
-private:
-    DocumentBroker(const Poco::URI& uriPublic,
-                   const std::string& docKey,
-                   const std::string& childRoot) :
-       _uriPublic(uriPublic),
-       _docKey(docKey),
-       _childRoot(childRoot),
-       _sessionsCount(0)
-    {
-        assert(!_docKey.empty());
-        assert(!_childRoot.empty());
-        Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
     }
 
 private:

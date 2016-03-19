@@ -372,8 +372,9 @@ private:
                 if (!format.empty())
                 {
                     Log::info("Conversion request for URI [" + fromPath + "].");
-                    auto docBroker = DocumentBroker::create(fromPath, LOOLWSD::ChildRoot);
-                    const auto docKey = docBroker->getDocKey();
+                    auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
+                    const auto docKey = DocumentBroker::getDocKey(uriPublic);
+                    auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot);
 
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
@@ -552,9 +553,9 @@ private:
             uri.erase(0, 1);
         }
 
-        auto docBroker = DocumentBroker::create(uri, LOOLWSD::ChildRoot);
-        const auto docKey = docBroker->getDocKey();
-
+        const auto uriPublic = DocumentBroker::sanitizeURI(uri);
+        const auto docKey = DocumentBroker::getDocKey(uriPublic);
+        std::shared_ptr<DocumentBroker> docBroker;
         // This lock could become a bottleneck.
         // In that case, we can use a pool and index by publicPath.
         std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
@@ -572,6 +573,7 @@ private:
         {
             // Set one we just created.
             Log::debug("New DocumentBroker for docKey [" + docKey + "].");
+            docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot);
             docBrokers.emplace(docKey, docBroker);
         }
 
