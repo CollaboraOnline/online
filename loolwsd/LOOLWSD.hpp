@@ -44,6 +44,7 @@ public:
     static std::string LoTemplate;
     static std::string ChildRoot;
     static std::string LoSubPath;
+    static std::string FileServerRoot;
     //static Auth AuthAgent;
 
     static const std::string PIDLOG;

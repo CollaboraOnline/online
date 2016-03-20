@@ -935,6 +935,7 @@ std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::LoSubPath = "lo";
+std::string LOOLWSD::FileServerRoot;
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::DoTest = false;
@@ -1009,6 +1010,11 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("relative path"));
 
+    optionSet.addOption(Option("fileserverroot", "", "Path to the directory that should be considered root for the file server (default: '../loleaflet/').")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("directory"));
+
     optionSet.addOption(Option("numprespawns", "", "Number of child processes to keep started in advance and waiting for new clients.")
                         .required(false)
                         .repeatable(false)
@@ -1045,6 +1051,8 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
         ChildRoot = value;
     else if (optionName == "losubpath")
         LoSubPath = value;
+    else if (optionName == "fileserverroot")
+        FileServerRoot = value;
     else if (optionName == "numprespawns")
         NumPreSpawnedChildren = std::stoi(value);
     else if (optionName == "test")
@@ -1139,6 +1147,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         throw MissingOptionException("childroot");
     else if (ChildRoot[ChildRoot.size() - 1] != Path::separator())
         ChildRoot += Path::separator();
+
+    if (FileServerRoot.empty())
+        FileServerRoot = Path(Application::instance().commandPath()).parent().parent().toString();
 
     if (ClientPortNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
