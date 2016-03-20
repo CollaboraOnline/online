@@ -18,7 +18,6 @@ constexpr int MAX_SESSIONS = 1024;
 
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 constexpr int MASTER_PORT_NUMBER = 9981;
-constexpr int ADMIN_PORT_NUMBER = 9989;
 constexpr int INTERVAL_PROBES = 10;
 constexpr int MAINTENANCE_INTERVAL = 1;
 constexpr int CHILD_TIMEOUT_SECS = 10;

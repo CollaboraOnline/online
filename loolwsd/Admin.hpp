@@ -10,6 +10,8 @@
 #ifndef INCLUDED_ADMIN_HPP
 #define INCLUDED_ADMIN_HPP
 
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServer.h>
 #include <Poco/Runnable.h>
 #include <Poco/Types.h>
@@ -20,17 +22,31 @@
 
 const std::string FIFO_NOTIFY = "loolnotify.fifo";
 
+class Admin;
+
+class AdminRequestHandler: public Poco::Net::HTTPRequestHandler
+{
+public:
+    AdminRequestHandler(Admin* adminManager);
+
+    void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) override;
+
+private:
+    void handleWSRequests(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response, int nSessionId);
+
+private:
+    Admin* _admin;
+};
+
 /// An admin command processor.
 class Admin : public Poco::Runnable
 {
 public:
-    Admin(const Poco::Process::PID brokerPid, const int brokerPipe, const int notifyPipe);
+    Admin(const Poco::Process::PID brokerPid, const int notifyPipe);
 
     ~Admin();
 
     static int getBrokerPid() { return Admin::BrokerPid; }
-
-    static int getBrokerPipe() { return Admin::BrokerPipe; }
 
     unsigned getTotalMemoryUsage(AdminModel&);
 
@@ -47,6 +63,8 @@ public:
 
     void rescheduleCpuTimer(unsigned interval);
 
+    AdminRequestHandler* createRequestHandler();
+
 public:
     std::mutex _modelMutex;
 
@@ -54,7 +72,6 @@ private:
     void handleInput(std::string& message);
 
 private:
-    Poco::Net::HTTPServer _srv;
     AdminModel _model;
 
     Poco::Util::Timer _memStatsTimer;
@@ -106,6 +123,7 @@ public:
     void run() override;
 
 private:
+    Admin* _admin;
 };
 
 #endif

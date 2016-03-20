@@ -34,19 +34,11 @@
     <script>window.jQuery || document.write('<script src="../../dist/bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/dialog/vex.combined.min.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="../../dist/admin-src.js"></script>
     <script>
 
-	function getParameterByName(name) {
-		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-		results = regex.exec(location.search);
-		return results === null ? "" : results[1].replace(/\+/g, " ");
-	}
-
-	var host = getParameterByName('host');
-	var settingsSocket = new AdminSocketSettings(host);
+	host = 'wss://' + window.location.hostname + ':9989';
+	new AdminSocketSettings(host);
 
     </script>
 

@@ -78,6 +78,9 @@ public:
                         JWTAuth authAgent(keyPath, "admin", "admin", "admin");
                         const std::string jwtToken = authAgent.getAccessToken();
                         Poco::Net::HTTPCookie cookie("jwt", jwtToken);
+                        cookie.setPath("/adminws/");
+                        cookie.setSecure(true);
+                        cookie.setHttpOnly(true);
                         response.addCookie(cookie);
                         response.setContentType(htmlMimeType);
                         response.sendFile(LOOLWSD::FileServerRoot + requestUri.getPath(), htmlMimeType);

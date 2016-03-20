@@ -111,6 +111,7 @@ DEALINGS IN THE SOFTWARE.
 #include "Auth.hpp"
 #include "ChildProcessSession.hpp"
 #include "Common.hpp"
+#include "FileServer.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
@@ -822,8 +823,63 @@ public:
     }
 };
 
-template <class RequestHandler>
-class RequestHandlerFactory: public HTTPRequestHandlerFactory
+class ClientRequestHandlerFactory: public HTTPRequestHandlerFactory
+{
+public:
+    ClientRequestHandlerFactory(Admin& admin, FileServer& fileServer)
+        : _admin(admin),
+          _fileServer(fileServer)
+        { }
+
+    HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
+    {
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to request_handler.");
+
+        auto logger = Log::info();
+        logger << "Request from " << request.clientAddress().toString() << ": "
+               << request.getMethod() << " " << request.getURI() << " "
+               << request.getVersion();
+
+        for (HTTPServerRequest::ConstIterator it = request.begin(); it != request.end(); ++it)
+        {
+            logger << " / " << it->first << ": " << it->second;
+        }
+
+        logger << Log::end;
+
+        // Routing
+        // FIXME: Some browsers (all?) hit for /favicon.ico. Create a nice favicon and add to routes
+        Poco::URI requestUri(request.getURI());
+        std::vector<std::string> reqPathSegs;
+        requestUri.getPathSegments(reqPathSegs);
+        HTTPRequestHandler* requestHandler;
+
+        // File server
+        if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
+        {
+            requestHandler = _fileServer.createRequestHandler();
+        }
+        // Admin WebSocket Connections
+        else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "adminws")
+        {
+            requestHandler = _admin.createRequestHandler();
+        }
+        // Client post and websocket connections
+        else
+        {
+            requestHandler = new ClientRequestHandler();
+        }
+
+        return requestHandler;
+    }
+
+private:
+    Admin& _admin;
+    FileServer& _fileServer;
+};
+
+class PrisonerRequestHandlerFactory: public HTTPRequestHandlerFactory
 {
 public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
@@ -842,7 +898,7 @@ public:
         }
 
         logger << Log::end;
-        return new RequestHandler();
+        return new PrisonerRequestHandler();
     }
 };
 
@@ -1214,6 +1270,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
+    // Init the Admin manager
+    Admin admin(brokerPid, notifyPipe);
+    // Init the file server
+    FileServer fileServer;
+
     // Configure the Server.
     // Note: TCPServer internally uses the default
     // ThreadPool to dispatch connections.
@@ -1230,14 +1291,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Start a server listening on the port for clients
     SecureServerSocket svs(ClientPortNumber);
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
-    HTTPServer srv(new RequestHandlerFactory<ClientRequestHandler>(), threadPool, svs, params1);
+    HTTPServer srv(new ClientRequestHandlerFactory(admin, fileServer), threadPool, svs, params1);
 
     srv.start();
 
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
     ServerSocket svs2(addr2);
-    HTTPServer srv2(new RequestHandlerFactory<PrisonerRequestHandler>(), threadPool, svs2, params2);
+    HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, svs2, params2);
 
     srv2.start();
 
@@ -1247,8 +1308,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    // Start the Admin manager.
-    Admin admin(brokerPid, BrokerWritePipe, notifyPipe);
     threadPool.start(admin);
 
     TestInput input(*this, svs, srv);

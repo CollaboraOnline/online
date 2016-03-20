@@ -136,6 +136,8 @@ public:
             return false;
         }
 
+        // TODO: Check for expiry etc.
+
         return true;
     }
 
