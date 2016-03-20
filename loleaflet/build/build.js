@@ -121,7 +121,7 @@ exports.build = function (callback, version, compsBase32, buildName) {
 	// Also combine and copy the admin JS files
 	// TODO: Also minify if admin complexity increases in future
 	var adminNewSrc = combineFiles(getAdminFiles()),
-	    adminPath = 'dist/admin-src.js',
+	    adminPath = 'dist/admin/admin-src.js',
 	    adminOldSrc = loadSilently(adminPath);
 
 	if (adminNewSrc != adminOldSrc) {
