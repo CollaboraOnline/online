@@ -12,15 +12,21 @@
 #include <sys/poll.h>
 #include <sys/prctl.h>
 
+#include <Poco/Net/HTTPCookie.h>
+#include <Poco/Net/HTTPBasicCredentials.h>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/SecureServerSocket.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/Timer.h>
 
+#include "Auth.hpp"
 #include "Admin.hpp"
 #include "AdminModel.hpp"
 #include "Common.hpp"
@@ -30,41 +36,31 @@
 
 using namespace LOOLProtocol;
 
+using Poco::StringTokenizer;
+using Poco::Net::HTTPBasicCredentials;
+using Poco::Net::HTTPCookie;
+using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
 using Poco::Net::HTTPRequestHandlerFactory;
 using Poco::Net::HTTPResponse;
 using Poco::Net::HTTPServerParams;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
+using Poco::Net::SecureServerSocket;
 using Poco::Net::ServerSocket;
 using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
-using Poco::StringTokenizer;
+using Poco::Util::Application;
 
 /// Handle admin requests.
 class AdminRequestHandler: public HTTPRequestHandler
 {
-public:
-
-    AdminRequestHandler(Admin* adminManager)
-        : _admin(adminManager)
-    {    }
-
-    void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
+private:
+    void handleWSRequests(HTTPServerRequest& request, HTTPServerResponse& response, int nSessionId)
     {
-        assert(request.serverAddress().port() == ADMIN_PORT_NUMBER);
-
-        // Different session id pool for admin sessions (?)
-        const auto nSessionId = Util::decodeId(LOOLWSD::GenSessionId());
-        const std::string thread_name = "admin_ws_" + std::to_string(nSessionId);
         try
         {
-            if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-                Log::error("Cannot set thread name to " + thread_name + ".");
-
-            Log::debug("Thread [" + thread_name + "] started.");
-
             auto ws = std::make_shared<WebSocket>(request, response);
 
             {
@@ -313,11 +309,90 @@ public:
                 break;
             }
         }
+        catch (const Poco::Net::NotAuthenticatedException& exc)
+        {
+            Log::info("NotAuthenticatedException");
+            response.set("WWW-Authenticate", "Basic realm=\"ws-online\"");
+            response.setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
+            response.setContentLength(0);
+            response.send();
+        }
         catch (const std::exception& exc)
         {
             Log::error(std::string("AdminRequestHandler::handleRequest: Exception: ") + exc.what());
         }
+    }
 
+public:
+
+    AdminRequestHandler(Admin* adminManager)
+        : _admin(adminManager)
+    {    }
+
+    void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
+    {
+        assert(request.serverAddress().port() == ADMIN_PORT_NUMBER);
+
+        // Different session id pool for admin sessions (?)
+        const auto nSessionId = Util::decodeId(LOOLWSD::GenSessionId());
+        const std::string thread_name = "admin_ws_" + std::to_string(nSessionId);
+
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+                Log::error("Cannot set thread name to " + thread_name + ".");
+
+        Log::debug("Thread [" + thread_name + "] started.");
+
+        try
+        {
+            std::string requestURI = request.getURI();
+            StringTokenizer pathTokens(requestURI, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+            if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
+            {
+                if (request.find("Cookie") != request.end())
+                {
+                    // FIXME: Handle other cookie params like '; httponly; secure'
+                    const std::size_t pos = request["Cookie"].find_first_of("=");
+                    if (pos == std::string::npos)
+                        throw Poco::Net::NotAuthenticatedException("Missing JWT");
+
+                    const std::string jwtToken = request["Cookie"].substr(pos + 1);
+                    Log::info("Verifying JWT token: " + jwtToken);
+                    const std::string keyPath = Poco::Path(Application::instance().commandPath()).parent().toString() + SSL_KEY_FILE;
+                    JWTAuth authAgent(keyPath, "admin", "admin", "admin");
+                    if (authAgent.verify(jwtToken))
+                    {
+                        Log::trace("JWT token is valid");
+                        handleWSRequests(request, response, nSessionId);
+                    }
+                    else
+                    {
+                        Log::info("Invalid JWT token");
+                        throw Poco::Net::NotAuthenticatedException("Invalid Token");
+                    }
+                }
+                else
+                {
+                    Log::info("Missing authentication cookie. Handshake declined.");
+                    throw Poco::Net::NotAuthenticatedException("Missing token");
+                }
+            }
+        }
+        catch(const Poco::Net::NotAuthenticatedException& exc)
+        {
+            Log::info("Admin::NotAuthneticated");
+            response.set("WWW-Authenticate", "Basic realm=\"online\"");
+            response.setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
+            response.setContentLength(0);
+            response.send();
+        }
+        catch (const std::exception& exc)
+        {
+            Log::info("Unknown Exception caught");
+            response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
+            response.setContentLength(0);
+            response.send();
+        }
         Log::debug("Thread [" + thread_name + "] finished.");
     }
 
@@ -355,7 +430,7 @@ private:
 
 /// An admin command processor.
 Admin::Admin(const Poco::Process::PID brokerPid, const int brokerPipe, const int notifyPipe) :
-    _srv(new AdminRequestHandlerFactory(this), ServerSocket(ADMIN_PORT_NUMBER), new HTTPServerParams),
+    _srv(new AdminRequestHandlerFactory(this), SecureServerSocket(ADMIN_PORT_NUMBER), new HTTPServerParams),
     _model(AdminModel())
 {
     Admin::BrokerPid = brokerPid;
