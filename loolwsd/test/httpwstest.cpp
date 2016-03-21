@@ -7,12 +7,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <Poco/Net/HTTPClientSession.h>
+#include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Net/Socket.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/Path.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
@@ -28,7 +31,7 @@
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
-    Poco::Net::HTTPClientSession _session;
+    Poco::Net::HTTPSClientSession _session;
     Poco::Net::HTTPResponse _response;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
@@ -64,9 +67,20 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                             const bool isLine);
 public:
     HTTPWSTest()
-        : _uri("http://127.0.0.1:" + std::to_string(ClientPortNumber)),
+        : _uri("https://127.0.0.1:" + std::to_string(ClientPortNumber)),
           _session(_uri.getHost(), _uri.getPort())
     {
+        Poco::Net::initializeSSL();
+        // Just accept the certificate anyway for testing purposes
+        Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
+        Poco::Net::Context::Params sslParams;
+        Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
+        Poco::Net::SSLManager::instance().initializeClient(0, invalidCertHandler, sslContext);
+    }
+
+    ~HTTPWSTest()
+    {
+        Poco::Net::uninitializeSSL();
     }
 
     void setUp()

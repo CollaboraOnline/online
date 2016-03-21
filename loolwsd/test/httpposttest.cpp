@@ -7,11 +7,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/FilePartSource.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPClientSession.h>
+#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -27,12 +31,28 @@ class HTTPPostTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testConvertTo();
+
+public:
+    HTTPPostTest()
+    {
+        Poco::Net::initializeSSL();
+        // Just accept the certificate anyway for testing purposes
+        Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
+        Poco::Net::Context::Params sslParams;
+        Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
+        Poco::Net::SSLManager::instance().initializeClient(0, invalidCertHandler, sslContext);
+    }
+
+    ~HTTPPostTest()
+    {
+        Poco::Net::uninitializeSSL();
+    }
 };
 
 void HTTPPostTest::testConvertTo()
 {
-    Poco::URI uri("http://127.0.0.1:" + std::to_string(ClientPortNumber));
-    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+    Poco::URI uri("https://127.0.0.1:" + std::to_string(ClientPortNumber));
+    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/convert-to");
     Poco::Net::HTMLForm form;
