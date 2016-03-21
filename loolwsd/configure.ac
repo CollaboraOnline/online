@@ -131,8 +131,8 @@ AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
 AC_MSG_CHECKING([POCO version])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 #include <Poco/Version.h>
-#if POCO_VERSION < 0x01060000
-#error Require Poco 1.6.0 or newer
+#if POCO_VERSION < 0x01070100
+#error Require Poco 1.7.1 or newer
 #endif
 ])],
                   [AC_MSG_RESULT([OK])],
