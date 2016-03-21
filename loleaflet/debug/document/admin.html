@@ -33,21 +33,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../dist/bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/dialog/vex.combined.min.js"></script>
-    <script src="../../dist/admin-src.js"></script>
+    <script src="../../dist/admin/admin-src.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
     <script>
 
-	function getParameterByName(name) {
-		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-		results = regex.exec(location.search);
-		return results === null ? "" : results[1].replace(/\+/g, " ");
-	}
-
-	var host = getParameterByName('host');
-	if (host === '') {
-		vex.dialog.alert('Wrong host, usage: host=ws://localhost:9989');
-	}
+	var host = 'wss://' + window.location.host + '/adminws/';
 	new AdminSocketOverview(host);
 
     </script>
@@ -65,8 +55,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="admin.html?host=ws://localhost:9989">Dashboard</a></li>
-            <li><a href="adminSettings.html?host=ws://localhost:9989">Settings</a></li>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="adminSettings.html">Settings</a></li>
             <li><a href="#">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
@@ -81,7 +71,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="adminAnalytics.html?host=ws://localhost:9989">Analytics</a></li>
+            <li><a href="adminAnalytics.html">Analytics</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

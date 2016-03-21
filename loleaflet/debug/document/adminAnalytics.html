@@ -35,10 +35,10 @@
     <script src="../../dist/dialog/vex.combined.min.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="../../dist/admin-src.js"></script>
+    <script src="../../dist/admin/admin-src.js"></script>
     <script>
 
-	host = 'wss://' + window.location.hostname + ':9989';
+	host = 'wss://' + window.location.host + '/adminws/';
 	new AdminSocketAnalytics(host);
 
     </script>
@@ -56,8 +56,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-	    <li><a href="admin.html?host=ws://localhost:9989">Dashboard</a></li>
-            <li><a href="adminSettings.html?host=ws://localhost:9989">Settings</a></li>
+	    <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="adminSettings.html">Settings</a></li>
             <li><a href="#">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
@@ -71,8 +71,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="admin.html?host=ws://localhost:9989">Overview <span class="sr-only">(current)</span></a></li>
-            <li class="active"><a href="adminAnalytics.html?host=ws://localhost:9989">Analytics</a></li>
+            <li><a href="admin.html">Overview <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="adminAnalytics.html">Analytics</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
