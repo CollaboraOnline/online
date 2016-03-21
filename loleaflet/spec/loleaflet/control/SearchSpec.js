@@ -8,7 +8,7 @@ describe('Search', function () {
 		var fileURL = 'file://' + dir + '/data/eval.odt';
 		// initialize the map and load the document
 		map = L.map('map', {
-			server: 'ws://localhost:9980',
+			server: 'wss://localhost:9980',
 			doc: fileURL,
 			edit: false,
 			readOnly: false
