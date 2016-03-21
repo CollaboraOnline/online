@@ -68,7 +68,7 @@ public:
             auto ws = std::make_shared<WebSocket>(request, response);
 
             {
-                std::lock_guard<std::mutex> modelLock(_admin->modelMutex);
+                std::lock_guard<std::mutex> modelLock(_admin->_modelMutex);
                 // Subscribe the websocket of any AdminModel updates
                 AdminModel& model = _admin->getModel();
                 model.subscribe(nSessionId, ws);
@@ -124,7 +124,7 @@ public:
                             continue;
 
                         // Lock the model mutex before interacting with it
-                        std::lock_guard<std::mutex> modelLock(_admin->modelMutex);
+                        std::lock_guard<std::mutex> modelLock(_admin->_modelMutex);
                         AdminModel& model = _admin->getModel();
 
                         if (tokens[0] == "stats")
@@ -370,13 +370,13 @@ Admin::~Admin()
 
 void Admin::handleInput(std::string& message)
 {
-    std::lock_guard<std::mutex> modelLock(modelMutex);
+    std::lock_guard<std::mutex> modelLock(_modelMutex);
     _model.update(message);
 }
 
 void MemoryStats::run()
 {
-    std::lock_guard<std::mutex> modelLock(_admin->modelMutex);
+    std::lock_guard<std::mutex> modelLock(_admin->_modelMutex);
     AdminModel& model = _admin->getModel();
     unsigned totalMem = _admin->getTotalMemoryUsage(model);
 

@@ -48,7 +48,7 @@ public:
     void rescheduleCpuTimer(unsigned interval);
 
 public:
-    std::mutex modelMutex;
+    std::mutex _modelMutex;
 
 private:
     void handleInput(std::string& message);
