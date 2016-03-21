@@ -826,10 +826,9 @@ L.GridLayer = L.Layer.extend({
 					'tileposy=' + twips.y + ' ' +
 					'tilewidth=' + this._tileWidthTwips + ' ' +
 					'tileheight=' + this._tileHeightTwips;
-			if (coords.part !== this._selectedPart) {
-				msg += ' prefetch=true';
+			if (coords.part === this._selectedPart) {
+				this._map._socket.sendMessage(msg, key);
 			}
-			this._map._socket.sendMessage(msg, key);
 		}
 		else {
 			tile.src = this._tileCache[key];
