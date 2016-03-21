@@ -86,8 +86,7 @@ public:
 
         if (_storage)
         {
-            // Already loaded. Only validate.
-
+            // Already loaded. Nothing to do.
             return true;
         }
 

@@ -836,7 +836,7 @@ int main(int argc, char** argv)
             // Figure out how many children we need. Always create at least as many
             // as configured pre-spawn or one more than requested (whichever is larger).
             int spawn = std::max(static_cast<int>(forkCounter) + 1, numPreSpawnedChildren);
-            Log::debug() << "Creating " << spawn << (spawn == 1 ? "child" : "children") << ". Current total: "
+            Log::debug() << "Creating " << spawn << (spawn == 1 ? " child" : " children") << ". Current total: "
                          << total << ", Empty: " << empty << Log::end;
             do
             {

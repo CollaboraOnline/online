@@ -35,6 +35,7 @@ public:
         _jailPath(jailPath),
         _uri(uri)
     {
+        Log::debug("Storage ctor: " + uri);
     }
 
     std::string getLocalRootPath() const
@@ -180,7 +181,7 @@ public:
         logger << "WOPI::GetFile header for URI [" << _uri << "]:\n";
         for (auto& pair : response)
         {
-            logger << '\t' + pair.first + ": " + pair.second << '\n';
+            logger << '\t' + pair.first + ": " + pair.second << " / ";
         }
 
         logger << Log::end;

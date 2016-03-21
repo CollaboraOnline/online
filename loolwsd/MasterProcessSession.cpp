@@ -778,6 +778,7 @@ void MasterProcessSession::dispatchChild()
     _peer = childSession;
     childSession->_peer = shared_from_this();
     childSession->_docBroker = _docBroker;
+    Log::debug("Connected " + getName() + " - " + childSession->getName() + ".");
 
     std::ostringstream oss;
     oss << "load";

@@ -630,6 +630,8 @@ private:
 
         if (docBroker->getSessionsCount() == 1 && !normalShutdown)
         {
+            //TODO: This really should move to the kit, where it
+            // knows if a doc is unsaved, and if other views are open.
             Log::info("Non-deliberate shutdown of the last session, saving the document before tearing down.");
             queue.put("uno .uno:Save");
         }
