@@ -101,18 +101,7 @@ public:
 
         Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
-        if (_uriPublic.isRelative() || _uriPublic.getScheme() == "file")
-        {
-            Log::info("Public URI [" + _uriPublic.toString() + "] is a file.");
-            _storage.reset(new LocalStorage(jailRoot, jailPath.toString(), _uriPublic.getPath()));
-        }
-        else
-        {
-            Log::info("Public URI [" + _uriPublic.toString() +
-                      "] assuming cloud storage.");
-            //TODO: Configure the storage to use. For now, assume it's WOPI.
-            _storage.reset(new WopiStorage(jailRoot, jailPath.toString(), _uriPublic.toString()));
-        }
+        _storage = createStorage(jailRoot, jailPath.toString(), _uriPublic);
 
         const auto localPath = _storage->loadStorageFileToLocal();
         _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
