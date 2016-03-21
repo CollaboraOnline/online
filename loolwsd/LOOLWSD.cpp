@@ -62,6 +62,8 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
 #include <Poco/Mutex.h>
+#include <Poco/Net/ConsoleCertificateHandler.h>
+#include <Poco/Net/Context.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -72,12 +74,17 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/MessageHeader.h>
 #include <Poco/Net/Net.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
+#include <Poco/Net/PrivateKeyPassphraseHandler.h>
+#include <Poco/Net/SecureServerSocket.h>
 #include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/SocketAddress.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
@@ -130,6 +137,7 @@ using Poco::Net::HTTPServerResponse;
 using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Net::PartHandler;
+using Poco::Net::SecureServerSocket;
 using Poco::Net::ServerSocket;
 using Poco::Net::Socket;
 using Poco::Net::SocketAddress;
@@ -1088,6 +1096,22 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_USAGE;
     }
 
+    Poco::Crypto::initializeCrypto();
+
+    // SSL initialize
+    Poco::Net::initializeSSL();
+    Poco::Net::Context::Params sslParams;
+    sslParams.certificateFile = Path(Application::instance().commandPath()).parent().toString() + SSL_CERT_FILE;
+    sslParams.privateKeyFile = Path(Application::instance().commandPath()).parent().toString() + SSL_KEY_FILE;
+    // Don't ask clients for certificate
+    sslParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
+
+    Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleHandler = new Poco::Net::KeyConsoleHandler(true);
+    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::ConsoleCertificateHandler(false);
+
+    Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::SERVER_USE, sslParams);
+    Poco::Net::SSLManager::instance().initializeServer(consoleHandler, invalidCertHandler, sslContext);
+
     char *locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
         setlocale(LC_ALL, "en_US.utf8");
@@ -1193,7 +1217,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     params2->setMaxThreads(MAX_SESSIONS);
 
     // Start a server listening on the port for clients
-    ServerSocket svs(ClientPortNumber);
+    SecureServerSocket svs(ClientPortNumber);
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
     HTTPServer srv(new RequestHandlerFactory<ClientRequestHandler>(), threadPool, svs, params1);
 
@@ -1325,6 +1349,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::info("Removing jail [" + path + "].");
         Util::removeFile(path, true);
     }
+
+    Poco::Net::uninitializeSSL();
+    Poco::Crypto::uninitializeCrypto();
 
     Log::info("Process [loolwsd] finished.");
     return Application::EXIT_OK;
