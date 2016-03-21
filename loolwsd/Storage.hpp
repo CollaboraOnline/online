@@ -16,6 +16,8 @@
 
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 
 #include "Common.hpp"
 #include "Auth.hpp"
@@ -25,6 +27,13 @@
 class StorageBase
 {
 public:
+
+    class FileInfo
+    {
+    public:
+        std::string Filename;
+        size_t Size;
+    };
 
     /// localStorePath the absolute root path of the chroot.
     /// jailPath the path within the jail that the child uses.
@@ -56,11 +65,17 @@ public:
 
     const std::string& getUri() const { return _uri; }
 
-    /// Returns a local file path given a URI or ID.
+    /// Returns information about the file.
+    virtual FileInfo getFileInfo(const std::string& uri) = 0;
+
+    /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
     virtual std::string loadStorageFileToLocal() = 0;
 
     /// Writes the contents of the file back to the source.
+    /// TODO: Should we save to the specific client's URI?
+    /// The advantage is that subseqent views (to the first)
+    /// will not depend on the token of the first.
     virtual bool saveLocalFileToStorage() = 0;
 
     static
@@ -74,7 +89,7 @@ protected:
     const std::string _jailPath;
     const std::string _uri;
     std::string _jailedFilePath;
-    std::string _filename;
+    FileInfo _fileInfo;
 };
 
 /// Trivial implementation of local storage that does not need do anything.
@@ -87,6 +102,13 @@ public:
         StorageBase(localStorePath, jailPath, uri),
         _isCopy(false)
     {
+    }
+
+    FileInfo getFileInfo(const std::string& uri)
+    {
+        const auto filename = Poco::Path(uri).getFileName();
+        const auto size = Poco::File(uri).getSize();
+        return FileInfo({filename, size});
     }
 
     std::string loadStorageFileToLocal() override
@@ -163,14 +185,68 @@ public:
     {
     }
 
+    FileInfo getFileInfo(const std::string& uri)
+    {
+        Log::info("FileInfo for URI [" + uri + "].");
+
+        Poco::URI uriObject(uri);
+        Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("User-Agent", "LOOLWSD WOPI Agent");
+        session.sendRequest(request);
+
+        Poco::Net::HTTPResponse response;
+        std::istream& rs = session.receiveResponse(response);
+
+        auto logger = Log::trace();
+        logger << "WOPI::CheckFileInfo header for URI [" << uri << "]:\n";
+        for (auto& pair : response)
+        {
+            logger << '\t' + pair.first + ": " + pair.second << " / ";
+        }
+
+        logger << Log::end;
+
+        // Parse the response.
+        std::string filename;
+        size_t size = 0;
+        std::string resMsg;
+        Poco::StreamCopier::copyToString(rs, resMsg);
+        Log::debug("WOPI::CheckFileInfo returned: " + resMsg);
+        const auto index = resMsg.find_first_of("{");
+        if (index != std::string::npos)
+        {
+            const std::string stringJSON = resMsg.substr(index);
+            Poco::JSON::Parser parser;
+            const auto result = parser.parse(stringJSON);
+            const auto object = result.extract<Poco::JSON::Object::Ptr>();
+            filename = object->get("BaseFileName").toString();
+            size = std::stoul (object->get("Size").toString(), nullptr, 0);
+        }
+
+        return FileInfo({filename, size});
+    }
+
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal() override
     {
         Log::info("Downloading URI [" + _uri + "].");
 
+        _fileInfo = getFileInfo(_uri);
+        if (_fileInfo.Size == 0 && _fileInfo.Filename.empty())
+        {
+            //TODO: Should throw a more appropriate exception.
+            throw std::runtime_error("Failed to load file from storage.");
+        }
+
+        // WOPI URI to download files ends in '/contents'.
+        // Add it here to get the payload instead of file info.
         Poco::URI uriObject(_uri);
+        const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
+        Log::info("Requesting: " + url);
+
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url, Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", "LOOLWSD WOPI Agent");
         session.sendRequest(request);
 
@@ -186,9 +262,7 @@ public:
 
         logger << Log::end;
 
-        //TODO: Get proper filename.
-        _filename = "filename";
-        _jailedFilePath = Poco::Path(getLocalRootPath(), _filename).toString();
+        _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo.Filename).toString();
         std::ofstream ofs(_jailedFilePath);
         std::copy(std::istreambuf_iterator<char>(rs),
                   std::istreambuf_iterator<char>(),
@@ -200,7 +274,7 @@ public:
                     << response.getStatus() << " " << response.getReason() << Log::end;
 
         // Now return the jailed path.
-        return Poco::Path(_jailPath, _filename).toString();
+        return Poco::Path(_jailPath, _fileInfo.Filename).toString();
     }
 
     bool saveLocalFileToStorage() override
@@ -244,6 +318,13 @@ public:
         StorageBase(localStorePath, jailPath, uri),
         _authAgent(std::move(authAgent))
     {
+    }
+
+    FileInfo getFileInfo(const std::string& uri)
+    {
+        (void)uri;
+        assert(!"Not Implemented!");
+        return FileInfo({"bazinga", 0});
     }
 
     std::string loadStorageFileToLocal() override

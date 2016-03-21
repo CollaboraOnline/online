@@ -577,6 +577,9 @@ private:
             docBrokers.emplace(docKey, docBroker);
         }
 
+        // Validate the URI and Storage before moving on.
+        docBroker->validate(uriPublic);
+
         auto ws = std::make_shared<WebSocket>(request, response);
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker);
         docBroker->incSessions();

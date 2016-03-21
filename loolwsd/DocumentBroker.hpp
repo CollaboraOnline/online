@@ -77,6 +77,13 @@ public:
         Log::info("~DocumentBroker [" + _uriPublic.toString() + "] destroyed.");
     }
 
+    void validate(const Poco::URI& uri)
+    {
+        Log::info("validating: " + uri.toString());
+        auto storage = createStorage("", "", uri);
+        storage->getFileInfo(uri.toString());
+    }
+
     /// Loads a document from the public URI into the jail.
     bool load(const std::string& jailId)
     {
@@ -136,6 +143,7 @@ private:
     const std::string _childRoot;
     Poco::URI _uriJailed;
     std::string _jailId;
+    std::string _filename;
     std::unique_ptr<StorageBase> _storage;
     std::mutex _mutex;
     std::atomic<unsigned> _sessionsCount;
