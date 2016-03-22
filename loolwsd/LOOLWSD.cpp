@@ -58,6 +58,12 @@ DEALINGS IN THE SOFTWARE.
 #include <mutex>
 #include <sstream>
 
+#include <Poco/DOM/AutoPtr.h>
+#include <Poco/DOM/DOMParser.h>
+#include <Poco/DOM/DOMWriter.h>
+#include <Poco/DOM/Document.h>
+#include <Poco/DOM/Element.h>
+#include <Poco/DOM/NodeList.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
@@ -81,13 +87,14 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
 #include <Poco/Net/PrivateKeyPassphraseHandler.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/Net/SecureServerSocket.h>
 #include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/SocketAddress.h>
-#include <Poco/Net/SSLManager.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
+#include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
@@ -99,13 +106,6 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Util/OptionException.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
-#include <Poco/DOM/DOMParser.h>
-#include <Poco/DOM/DOMWriter.h>
-#include <Poco/SAX/InputSource.h>
-#include <Poco/DOM/AutoPtr.h>
-#include <Poco/DOM/Document.h>
-#include <Poco/DOM/NodeList.h>
-#include <Poco/DOM/Element.h>
 
 #include "Admin.hpp"
 #include "Auth.hpp"
@@ -164,13 +164,13 @@ using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
-using Poco::XML::InputSource;
 using Poco::XML::AutoPtr;
 using Poco::XML::DOMParser;
 using Poco::XML::DOMWriter;
+using Poco::XML::Element;
+using Poco::XML::InputSource;
 using Poco::XML::Node;
 using Poco::XML::NodeList;
-using Poco::XML::Element;
 
 std::map<std::string, std::shared_ptr<DocumentBroker>> LOOLWSD::DocBrokers;
 std::mutex LOOLWSD::DocBrokersMutex;
