@@ -7,6 +7,9 @@ dist_bin_SCRIPTS = loolwsd-systemplate-setup discovery.xml
 AM_CPPFLAGS = -pthread
 AM_LDFLAGS = -pthread
 
+AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
+AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
+
 shared_sources = LOOLProtocol.cpp LOOLSession.cpp MessageQueue.cpp Util.cpp
 
 loolwsd_SOURCES = LOOLWSD.cpp ChildProcessSession.cpp MasterProcessSession.cpp TileCache.cpp Admin.cpp $(shared_sources)
@@ -50,6 +53,3 @@ all-local: loolbroker loolkit
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolkit; \
 	fi
-
-tags:
-	ctags --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
