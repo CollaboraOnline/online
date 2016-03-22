@@ -1319,7 +1319,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
 
     int status = 0;
-    unsigned timeoutCounter = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
     {
         const pid_t pid = waitpid(brokerPid, &status, WUNTRACED | WNOHANG);
@@ -1382,10 +1381,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 continue;
             }
         }
-
-        if (timeoutCounter++ == INTERVAL_PROBES)
+        else // pid == 0, no children have died
         {
-            timeoutCounter = 0;
             sleep(MAINTENANCE_INTERVAL*2);
         }
     }
