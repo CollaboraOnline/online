@@ -123,7 +123,6 @@ public:
     void run() override;
 
 private:
-    Admin* _admin;
 };
 
 #endif
