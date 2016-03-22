@@ -66,7 +66,7 @@ public:
     const std::string& getUri() const { return _uri; }
 
     /// Returns information about the file.
-    virtual FileInfo getFileInfo(const std::string& uri) = 0;
+    virtual FileInfo getFileInfo(const Poco::URI& uri) = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
@@ -104,10 +104,12 @@ public:
     {
     }
 
-    FileInfo getFileInfo(const std::string& uri)
+    FileInfo getFileInfo(const Poco::URI& uri)
     {
-        const auto filename = Poco::Path(uri).getFileName();
-        const auto size = Poco::File(uri).getSize();
+        const auto path = uri.getPath();
+        Log::debug("Getting info for local uri [" + uri.toString() + "], path [" + path + "].");
+        const auto filename = Poco::Path(path).getFileName();
+        const auto size = Poco::File(path).getSize();
         return FileInfo({filename, size});
     }
 
@@ -185,9 +187,9 @@ public:
     {
     }
 
-    FileInfo getFileInfo(const std::string& uri)
+    FileInfo getFileInfo(const Poco::URI& uri)
     {
-        Log::info("FileInfo for URI [" + uri + "].");
+        Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
 
         Poco::URI uriObject(uri);
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
@@ -199,7 +201,7 @@ public:
         std::istream& rs = session.receiveResponse(response);
 
         auto logger = Log::trace();
-        logger << "WOPI::CheckFileInfo header for URI [" << uri << "]:\n";
+        logger << "WOPI::CheckFileInfo header for URI [" << uri.toString() << "]:\n";
         for (auto& pair : response)
         {
             logger << '\t' + pair.first + ": " + pair.second << " / ";
@@ -232,7 +234,7 @@ public:
     {
         Log::info("Downloading URI [" + _uri + "].");
 
-        _fileInfo = getFileInfo(_uri);
+        _fileInfo = getFileInfo(Poco::URI(_uri));
         if (_fileInfo.Size == 0 && _fileInfo.Filename.empty())
         {
             //TODO: Should throw a more appropriate exception.
@@ -320,8 +322,9 @@ public:
     {
     }
 
-    FileInfo getFileInfo(const std::string& uri)
+    FileInfo getFileInfo(const Poco::URI& uri)
     {
+        Log::debug("Getting info for webdav uri [" + uri.toString() + "].");
         (void)uri;
         assert(!"Not Implemented!");
         return FileInfo({"bazinga", 0});

@@ -79,9 +79,9 @@ public:
 
     void validate(const Poco::URI& uri)
     {
-        Log::info("validating: " + uri.toString());
+        Log::info("Validating: " + uri.toString());
         auto storage = createStorage("", "", uri);
-        storage->getFileInfo(uri.toString());
+        storage->getFileInfo(uri);
     }
 
     /// Loads a document from the public URI into the jail.
