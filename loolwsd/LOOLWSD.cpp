@@ -1368,7 +1368,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             }
             else
             {
-                Log::error("None of our known child processes died. PID: " + std::to_string(pid));
+                Log::error("An unknown child process died, pid: " + std::to_string(pid));
             }
         }
         else if (pid < 0)
