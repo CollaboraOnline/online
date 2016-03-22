@@ -67,7 +67,6 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
-#include <Poco/Mutex.h>
 #include <Poco/Net/ConsoleCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/HTMLForm.h>
