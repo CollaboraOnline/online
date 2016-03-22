@@ -102,6 +102,25 @@ ${SYSTEMPLATE} and the ${MASTER}/instdir directories into each chroot
 jail, ${SYSTEMPLATE} and ${MASTER}/instdir need to be on the same file
 system as ${ROOTFORJAILS}.
 
+Leaflet files are served itself by loolwsd internal file server. You can specify the
+root of this fileserver using the --fileserverroot flag in loolwsd commandline.
+By default, if you do not specify this flag, the parent directory of loolwsd/
+is assumed to be the fileserverroot. So, for development purposes, you can access
+the leaflet files (using /loleaflet/), but it is advised to explicitly set the
+fileserverroot to prevent any unwanted files from reading, especially when lool
+is deployed for normal public usage on servers.
+
+Please note that it is necessary that all the leaflet files that are meant to be
+served is under a directory named 'loleaflet'. Since, the loleaflet files, in
+lool git repo, are itself in a directory named 'loleaflet', this would work out of
+the box for development purposes.
+
+loolwsd only runs on HTTPS which means you would have to set up your own private
+key and certificate (in PEM format only). Currently, loolwsd assumes files with
+name cert.pem, and key.pem to be certificate and private key respectively.
+Dummy self-signed cert.pem and key.pem are already included, but it is better
+to replace those with your own files.
+
 If you plan to hack on loolwsd, you probably want to familiarize
 yourself with loolwsd's --test and --numprespawns switches, and the
 'connect' test program.
@@ -114,6 +133,12 @@ scripting, etc. For instance:
 
     (echo load /some/where/foo.odt; echo tile part=0 width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) |
     ./loolwsd --test --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
+
+Admin Panel
+-----------
+
+You can access the admin panel by directly acessing the admin.html file from loleaflet directory.
+See loleaflet/README for more details.
 
 Debugging
 ---------

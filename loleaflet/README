@@ -41,16 +41,32 @@ To see an example:
 
     ./loolwsd --systemplate=${SYSTEMPLATE} --lotemplate=${MASTER}/instdir --childroot=${ROOTFORJAILS}
 
-* open debug/document/document_simple_example.html in the browser, like:
+Note that this will, by default, set the loolwsd's file server's root to the parent directory of loolwsd,
+which means you can access all the files in loleaflet using /loleaflet/ path. It is advised to set
+fileserverroot manually for more control. See loolwsd/README for more information.
 
-    firefox debug/document/document_simple_example.html
+* open debug/document/document_simple_example.html or dist/loleaflet.html through loolwsd's fileserver
 
-* modify the URL to allow loleaflet to connect to a server and open a document
-
-    http://web-page/document_simple_example.html?file_path=file:///PATH/TO/DOC&host=ws://localhost:9980
+    https://localhost:9980/loleaflet/dist/loleaflet.html?file_path=file:///PATH/TO_DOC&host=wss://localhost:9980
 
 and you should see the document in the browser.  In case anything goes wrong,
-check the loolwsd console for the debugging output.
+check the loolwsd console for the debugging output. You might be asked to confirm the certificate if you
+are using self-signed certificate for loolwsd.
+
+Admin Panel
+-----------
+
+You can do live monitoring of all the user sessions running on loolwsd instance. To access the admin
+console you need to ask for admin.html file from loolwsd which resides in dist/admin/admin.html.
+
+For example:
+
+    https://localhost:9980/loleaflet/dist/admin/admin.html
+
+It will ask for username and password which, by default, are 'admin', 'admin' respectively. After entering
+the correct password you should be able to monitor the live documents opened, total users, memory consumption,
+document URLs with number of users viewing that document etc. You can also kill the documents directly from
+the panel which would result in closing the socket connection to the respective document.
 
 Testing
 -------
