@@ -10,6 +10,8 @@
 #ifndef INCLUDED_MASTERPROCESSSESSION_HPP
 #define INCLUDED_MASTERPROCESSSESSION_HPP
 
+#include <time.h>
+
 #include <Poco/Random.h>
 
 #include "DocumentBroker.hpp"
@@ -47,6 +49,10 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChildSessions;
     static std::mutex AvailableChildSessionMutex;
     static std::condition_variable AvailableChildSessionCV;
+
+    time_t lastMessageTime;
+    time_t idleSaveTime;
+    time_t autoSaveTime;
 
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);

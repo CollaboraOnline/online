@@ -49,14 +49,17 @@ DEALINGS IN THE SOFTWARE.
 #include <sys/prctl.h>
 
 #include <ftw.h>
+#include <time.h>
 #include <utime.h>
 
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <map>
 #include <mutex>
 #include <sstream>
+#include <unordered_set>
 
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
@@ -173,6 +176,9 @@ using Poco::XML::NodeList;
 
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
+
+static std::unordered_set<std::shared_ptr<MasterProcessSession>> sessions;
+static std::mutex sessionsMutex;
 
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public PartHandler
@@ -551,7 +557,7 @@ private:
 
         // This lock could become a bottleneck.
         // In that case, we can use a pool and index by publicPath.
-        std::unique_lock<std::mutex> lock(docBrokersMutex);
+        std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
 
         // Lookup this document.
         auto it = docBrokers.find(docKey);
@@ -572,7 +578,12 @@ private:
         auto ws = std::make_shared<WebSocket>(request, response);
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker);
         docBroker->incSessions();
-        lock.unlock();
+        docBrokersLock.unlock();
+
+        std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
+        sessions.insert(session);
+        Log::debug("sessions++: " + std::to_string(sessions.size()));
+        sessionsLock.unlock();
 
         // Request a kit process for this doc.
         const std::string aMessage = "request " + id + " " + docKey + "\r\n";
@@ -597,6 +608,7 @@ private:
                 // The fix is to push everything into the queue
                 // (i.e. change MessageQueue to vector<char>).
                 const std::string firstLine = getFirstLine(data, size);
+                time(&session->lastMessageTime);
                 if (singleLine || firstLine.find("paste") == 0)
                 {
                     if (firstLine.compare(0, 10, "disconnect") == 0) // starts with "disconnect"
@@ -625,11 +637,16 @@ private:
             queue.clear();
         }
 
+        sessionsLock.lock();
+        sessions.erase(session);
+        Log::debug("sessions--: " + std::to_string(sessions.size()));
+        sessionsLock.unlock();
+
         Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
         queue.put("eof");
         queueHandlerThread.join();
 
-        lock.lock();
+        docBrokersLock.lock();
         if (docBroker->decSessions() == 0)
         {
             Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
@@ -1317,6 +1334,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         waitForTerminationRequest();
     }
 
+    time_t last30SecCheck = time(NULL);
+    time_t lastFiveMinuteCheck = time(NULL);
+
     int status = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
     {
@@ -1380,6 +1400,44 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         }
         else // pid == 0, no children have died
         {
+            time_t now = time(NULL);
+            if (now >= last30SecCheck + 30)
+            {
+                Log::debug("30-second check");
+                last30SecCheck = now;
+
+                std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
+                for (auto& it : sessions)
+                {
+                    if (it->lastMessageTime > it->idleSaveTime &&
+                        it->lastMessageTime < now - 30)
+                    {
+                        // Trigger a .uno:Save
+                        Log::info("Idle save triggered for session " + it->getId());
+
+                        it->idleSaveTime = now;
+                    }
+                }
+            }
+            if (now >= lastFiveMinuteCheck + 300)
+            {
+                Log::debug("Five-minute check");
+                lastFiveMinuteCheck = now;
+
+                std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
+                for (auto& it : sessions)
+                {
+                    if (it->lastMessageTime >= it->idleSaveTime && 
+                        it->lastMessageTime >= it->autoSaveTime)
+                    {
+                        // Trigger a .uno:Save
+                        Log::info("Auto-save triggered for session " + it->getId());
+
+                        it->autoSaveTime = now;
+                    }
+                }
+            }
+
             sleep(MAINTENANCE_INTERVAL*2);
         }
     }
