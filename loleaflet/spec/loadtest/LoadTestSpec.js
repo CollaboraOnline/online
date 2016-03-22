@@ -34,7 +34,7 @@ describe('LoadTest', function () {
 
 			it('Load the document', function (done) {
 				map = L.map('map-test', {
-					server: 'ws://localhost:9980',
+					server: 'wss://localhost:9980',
 					doc: docPath + testDoc,
 					edit: false,
 					readOnly: false
