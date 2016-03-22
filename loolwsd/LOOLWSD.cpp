@@ -1337,10 +1337,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 if (WIFSIGNALED(status))
                 {
                     std::string fate = "died";
-#ifdef WCOREDUMP
                     if (WCOREDUMP(status))
                         fate = "core-dumped";
-#endif
                     Log::error() << "Child process [" << pid << "] " << fate
                                  << " with " << Util::signalName(WTERMSIG(status))
                                  << " signal: " << strsignal(WTERMSIG(status))
