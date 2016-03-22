@@ -12,25 +12,28 @@
 #include <fstream>
 #include <iostream>
 
-#include <Poco/Net/HTTPClientSession.h>
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/Context.h>
+#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/PrivateKeyPassphraseHandler.h>
 #include <Poco/Net/SocketStream.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Net/TCPServer.h>
 #include <Poco/Net/TCPServerConnection.h>
 #include <Poco/Net/TCPServerConnectionFactory.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
+#include <Poco/SharedPtr.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
-#include <Poco/Util/HelpFormatter.h>
-#include <Poco/Util/Option.h>
-#include <Poco/Util/OptionSet.h>
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
@@ -38,25 +41,26 @@
 
 using namespace LOOLProtocol;
 
-using Poco::Net::HTTPClientSession;
+using Poco::Net::AcceptCertificateHandler;
+using Poco::Net::Context;
+using Poco::Net::HTTPSClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
+using Poco::Net::InvalidCertificateHandler;
 using Poco::Net::Socket;
-using Poco::Net::SocketOutputStream;
+using Poco::Net::SSLManager;
 using Poco::Net::StreamSocket;
 using Poco::Net::TCPServer;
 using Poco::Net::TCPServerConnection;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Runnable;
+using Poco::SharedPtr;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
 using Poco::Thread;
 using Poco::URI;
 using Poco::Util::Application;
-using Poco::Util::HelpFormatter;
-using Poco::Util::Option;
-using Poco::Util::OptionSet;
 
 class Output: public Runnable
 {
@@ -113,7 +117,7 @@ class Connect: public Poco::Util::Application
 {
 public:
     Connect() :
-        _uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
+        _uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
     {
     }
 
@@ -124,11 +128,24 @@ public:
 protected:
     int main(const std::vector<std::string>& args) override
     {
-        if (args.size() > 0)
-            _uri = URI(args[0]);
+        if (args.size() < 1)
+        {
+            Log::error("Usage: connect documentURI [serverURI]");
+            return Application::EXIT_USAGE;
+        }
 
-        HTTPClientSession cs(_uri.getHost(), _uri.getPort());
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
+        if (args.size() > 1)
+            _uri = URI(args[1]);
+
+        Poco::Net::initializeSSL();
+
+        SharedPtr<InvalidCertificateHandler> invalidCertHandler = new AcceptCertificateHandler(false);
+        Context::Params sslParams;
+        Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
+        SSLManager::instance().initializeClient(0, invalidCertHandler, sslContext);
+
+        HTTPSClientSession cs(_uri.getHost(), _uri.getPort());
+        HTTPRequest request(HTTPRequest::HTTP_GET, args[0]);
         HTTPResponse response;
         WebSocket ws(cs, request, response);
 
