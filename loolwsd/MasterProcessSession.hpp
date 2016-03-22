@@ -18,7 +18,7 @@
 
 class MasterProcessSession final : public LOOLSession, public std::enable_shared_from_this<MasterProcessSession>
 {
-public:
+ public:
     MasterProcessSession(const std::string& id,
                          const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws,
@@ -59,7 +59,7 @@ public:
 
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
-private:
+ private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
