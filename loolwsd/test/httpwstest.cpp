@@ -14,6 +14,7 @@
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Net/PrivateKeyPassphraseHandler.h>
 #include <Poco/Net/Socket.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/Path.h>
