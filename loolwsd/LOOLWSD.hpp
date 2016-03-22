@@ -52,10 +52,6 @@ public:
     static const std::string FIFO_LOOLWSD;
     static const std::string LOKIT_PIDLOG;
 
-    // All DocumentBrokers by their DocKey (the URI path without host, port, or query).
-    static std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
-    static std::mutex DocBrokersMutex;
-
     static
     std::string GenSessionId()
     {

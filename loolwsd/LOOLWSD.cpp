@@ -171,8 +171,8 @@ using Poco::XML::InputSource;
 using Poco::XML::Node;
 using Poco::XML::NodeList;
 
-std::map<std::string, std::shared_ptr<DocumentBroker>> LOOLWSD::DocBrokers;
-std::mutex LOOLWSD::DocBrokersMutex;
+static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
+static std::mutex docBrokersMutex;
 
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public PartHandler
@@ -371,10 +371,10 @@ private:
 
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
-                    std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+                    std::unique_lock<std::mutex> lock(docBrokersMutex);
 
                     Log::debug("New DocumentBroker for docKey [" + docKey + "].");
-                    LOOLWSD::DocBrokers.emplace(docKey, docBroker);
+                    docBrokers.emplace(docKey, docBroker);
 
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
@@ -410,7 +410,7 @@ private:
                     if (docBroker->decSessions() == 0)
                     {
                         Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
-                        LOOLWSD::DocBrokers.erase(docKey);
+                        docBrokers.erase(docKey);
                     }
                 }
 
@@ -551,11 +551,11 @@ private:
 
         // This lock could become a bottleneck.
         // In that case, we can use a pool and index by publicPath.
-        std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+        std::unique_lock<std::mutex> lock(docBrokersMutex);
 
         // Lookup this document.
-        auto it = LOOLWSD::DocBrokers.find(docKey);
-        if (it != LOOLWSD::DocBrokers.end())
+        auto it = docBrokers.find(docKey);
+        if (it != docBrokers.end())
         {
             // Get the DocumentBroker from the Cache.
             Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
@@ -566,7 +566,7 @@ private:
         {
             // Set one we just created.
             Log::debug("New DocumentBroker for docKey [" + docKey + "].");
-            LOOLWSD::DocBrokers.emplace(docKey, docBroker);
+            docBrokers.emplace(docKey, docBroker);
         }
 
         auto ws = std::make_shared<WebSocket>(request, response);
@@ -633,7 +633,7 @@ private:
         if (docBroker->decSessions() == 0)
         {
             Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
-            LOOLWSD::DocBrokers.erase(docKey);
+            docBrokers.erase(docKey);
         }
     }
 
@@ -764,11 +764,11 @@ public:
             {
                 // This lock could become a bottleneck.
                 // In that case, we can use a pool and index by publicPath.
-                std::unique_lock<std::mutex> lock(LOOLWSD::DocBrokersMutex);
+                std::unique_lock<std::mutex> lock(docBrokersMutex);
 
                 // Lookup this document.
-                auto it = LOOLWSD::DocBrokers.find(docKey);
-                if (it != LOOLWSD::DocBrokers.end())
+                auto it = docBrokers.find(docKey);
+                if (it != docBrokers.end())
                 {
                     // Get the DocumentBroker from the Cache.
                     docBroker = it->second;
