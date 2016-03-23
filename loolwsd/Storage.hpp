@@ -104,7 +104,7 @@ public:
     {
     }
 
-    FileInfo getFileInfo(const Poco::URI& uri)
+    FileInfo getFileInfo(const Poco::URI& uri) override
     {
         const auto path = uri.getPath();
         Log::debug("Getting info for local uri [" + uri.toString() + "], path [" + path + "].");
@@ -187,7 +187,7 @@ public:
     {
     }
 
-    FileInfo getFileInfo(const Poco::URI& uri)
+    FileInfo getFileInfo(const Poco::URI& uri) override
     {
         Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
 
@@ -322,7 +322,7 @@ public:
     {
     }
 
-    FileInfo getFileInfo(const Poco::URI& uri)
+    FileInfo getFileInfo(const Poco::URI& uri) override
     {
         Log::debug("Getting info for webdav uri [" + uri.toString() + "].");
         (void)uri;
