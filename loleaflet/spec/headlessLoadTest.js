@@ -17,7 +17,7 @@ describe('LoadTest', function () {
 		testsToRun = 500;
 		tileSize = 256,
 		tileSizeTwips = 3000,
-		host = 'ws://localhost:9980';
+		host = 'wss://localhost:9980';
 
 	var _parseServerCmd = function (msg) {
 		var tokens = msg.split(/[ \n]+/);

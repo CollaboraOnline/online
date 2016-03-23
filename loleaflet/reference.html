@@ -173,7 +173,7 @@
 <pre><code class="javascript">// initialize the map on the "map" div with a server and document URL
 var map = L.map('map', {
     doc: 'file:///path/to/document',
-    server: 'ws://localhost'
+    server: 'wss://localhost'
 });</code></pre>
 
 <h3 id="map-constructor" class="left">Creation</h3>
@@ -1401,7 +1401,7 @@ var map = L.map('map', {
 <pre><code class="javascript">
 var map = L.map('map', {
     doc: 'file:///path/to/document',
-    server: 'ws://localhost',
+    server: 'wss://localhost',
     documentContainer: 'document-container'
 });</code></pre>
 
@@ -1446,7 +1446,7 @@ unexpected behaviour.</h4>
 		<td><code>String</code></td>
 		<td><code><span class="literal">undefined</span></code></td>
 		<td>The websocket server hosting loolwsd using the <code>ws:</code> protocol.
-		    Example: ws://localhost:9980</td>
+		    Example: wss://localhost:9980</td>
 	</tr>
 	<tr>
 		<td><code><b>webserver</b></code></td>

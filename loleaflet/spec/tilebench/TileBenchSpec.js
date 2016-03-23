@@ -25,7 +25,7 @@ describe('TileBench', function () {
 		var dir = htmlPath.substring(0, htmlPath.lastIndexOf('/'));
 		var fileURL = 'file://' + dir + '/data/eval.odt';
 		fileURL = getParameterByName('file_path') || fileURL;
-		var server = getParameterByName('host') || 'ws://localhost:9980';
+		var server = getParameterByName('host') || 'wss://localhost:9980';
 		// initialize the map and load the document
 		map = L.map('map', {
 			server: server,
