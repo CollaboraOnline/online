@@ -137,6 +137,10 @@ $(function () {
 			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: _("Duplicate Page") },
 			{ type: 'button',  id: 'deletepage', img: 'deletepage', hint: _("Delete Page") },
 			{ type: 'html', id: 'right' },
+			{ type: 'break' },
+			{ type: 'button',  id: 'takeedit', img: 'edit', hint: _("Take edit lock (others can only view)")},
+			{ type: 'html',    id: 'takeedit_text', html: '<div id="takeedit_text">VIEWING</div>' },
+			{ type: 'break' },
 			{ type: 'button',  id: 'prev', img: 'prev', hint: _("Previous page/part") },
 			{ type: 'button',  id: 'next', img: 'next', hint: _("Next page/part") },
 			{ type: 'break' },
@@ -270,6 +274,11 @@ function onClick(id) {
 			input: dialog,
 			callback: onSaveAs
 		});
+	}
+	else if (id === 'takeedit') {
+		if (!item.checked) {
+			map._socket.sendMessage('takeedit');
+		}
 	}
 	else if (id === 'searchprev') {
 		map.search(L.DomUtil.get('search-input').value, true);
@@ -867,6 +876,33 @@ map.on('zoomend', function (e) {
 
 map.on('hyperlinkclicked', function (e) {
 	window.open(e.url, '_blank');
+});
+
+map.on('editlock', function (e) {
+	var toolbar = w2ui['toolbar-down'];
+	if (e.value) {
+		toolbar.check('takeedit');
+		toolbar.disable('takeedit');
+		toolbar.set('takeedit', {hint: _('You are editing (others can only view)')});
+
+		$('#takeedit_text')
+			.w2tag('You are editing now')
+			.html('EDITING');
+		setTimeout(function() {
+			$('#takeedit_text').w2tag('');
+		}, 5000);
+	}
+	else {
+		toolbar.uncheck('takeedit');
+		toolbar.enable('takeedit');
+		toolbar.set('takeedit', {hint: _('Take edit lock (others can only view)')});
+		$('#takeedit_text')
+			.w2tag('You are viewing now')
+			.html('VIEWING');
+		setTimeout(function() {
+			$('#takeedit_text').w2tag('');
+		}, 5000);
+	}
 });
 
 $(window).resize(function() {

@@ -330,6 +330,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('unocommandresult:')) {
 			this._onUnoCommandResultMsg(textMsg);
 		}
+		else if (textMsg.startsWith('editlock')) {
+			this._onEditLock(textMsg);
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -1234,6 +1237,13 @@ L.TileLayer = L.GridLayer.extend({
 			                     + '&outputWidth=' + this._tileSize
 			                     + '&tileHeight=' + this._tileWidthTwips
 			                     + '&tileWidth=' + this._tileHeightTwips);
+		}
+	},
+
+	_onEditLock: function (textMsg) {
+		var val = parseInt(textMsg.split(' ')[1]);
+		if (!isNaN(val)) {
+			this._map.fire('editlock', {value: val});
 		}
 	},
 
