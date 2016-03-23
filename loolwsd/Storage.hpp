@@ -11,6 +11,7 @@
 #ifndef INCLUDED_STORAGE_HPP
 #define INCLUDED_STORAGE_HPP
 
+#include <cassert>
 #include <string>
 #include <fstream>
 

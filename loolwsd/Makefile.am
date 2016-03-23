@@ -12,7 +12,7 @@ AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
 shared_sources = LOOLProtocol.cpp LOOLSession.cpp MessageQueue.cpp Util.cpp
 
-loolwsd_SOURCES = LOOLWSD.cpp ChildProcessSession.cpp MasterProcessSession.cpp TileCache.cpp Admin.cpp $(shared_sources)
+loolwsd_SOURCES = LOOLWSD.cpp ChildProcessSession.cpp MasterProcessSession.cpp TileCache.cpp Admin.cpp DocumentBroker.cpp $(shared_sources)
 
 noinst_PROGRAMS = loadtest connect lokitclient
 

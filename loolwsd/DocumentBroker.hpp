@@ -14,8 +14,6 @@
 #include <mutex>
 #include <string>
 
-#include <Poco/Path.h>
-
 #include "Storage.hpp"
 
 /// DocumentBroker is responsible for setting up a document
@@ -27,101 +25,28 @@ class DocumentBroker
 public:
 
     static
-    Poco::URI sanitizeURI(std::string uri)
-    {
-        // The URI of the document should be url-encoded.
-        std::string decodedUri;
-        Poco::URI::decode(uri, decodedUri);
-        auto uriPublic = Poco::URI(decodedUri);
-
-        if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
-        {
-            // TODO: Validate and limit access to local paths!
-            uriPublic.normalize();
-        }
-
-        if (uriPublic.getPath().empty())
-        {
-            throw std::runtime_error("Invalid URI.");
-        }
-
-        return uriPublic;
-    }
+    Poco::URI sanitizeURI(std::string uri);
 
     /// Returns a document-specific key based
     /// on the URI of the document.
     static
-    std::string getDocKey(const Poco::URI& uri)
-    {
-        // Keep the host as part of the key to close a potential security hole.
-        std::string docKey;
-        Poco::URI::encode(uri.getHost() + uri.getPath(), "", docKey);
-        return docKey;
-    }
+    std::string getDocKey(const Poco::URI& uri);
 
     DocumentBroker(const Poco::URI& uriPublic,
                    const std::string& docKey,
-                   const std::string& childRoot) :
-       _uriPublic(uriPublic),
-       _docKey(docKey),
-       _childRoot(childRoot),
-       _sessionsCount(0)
-    {
-        assert(!_docKey.empty());
-        assert(!_childRoot.empty());
-        Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
-    }
+                   const std::string& childRoot);
 
     ~DocumentBroker()
     {
         Log::info("~DocumentBroker [" + _uriPublic.toString() + "] destroyed.");
     }
 
-    void validate(const Poco::URI& uri)
-    {
-        Log::info("Validating: " + uri.toString());
-        auto storage = createStorage("", "", uri);
-        storage->getFileInfo(uri);
-    }
+    void validate(const Poco::URI& uri);
 
     /// Loads a document from the public URI into the jail.
-    bool load(const std::string& jailId)
-    {
-        Log::debug("Loading from URI: " + _uriPublic.toString());
+    bool load(const std::string& jailId);
 
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        if (_storage)
-        {
-            // Already loaded. Nothing to do.
-            return true;
-        }
-
-        _jailId = jailId;
-
-        // The URL is the publicly visible one, not visible in the chroot jail.
-        // We need to map it to a jailed path and copy the file there.
-
-        // user/doc/jailId
-        const auto jailPath = Poco::Path(JailedDocumentRoot, jailId);
-        const std::string jailRoot = getJailRoot();
-
-        Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
-
-        _storage = createStorage(jailRoot, jailPath.toString(), _uriPublic);
-
-        const auto localPath = _storage->loadStorageFileToLocal();
-        _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
-        return true;
-    }
-
-    bool save()
-    {
-        Log::debug("Saving to URI: " + _uriPublic.toString());
-
-        assert(_storage);
-        return _storage->saveLocalFileToStorage();
-    }
+    bool save();
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
@@ -131,11 +56,7 @@ public:
     unsigned incSessions() { return ++_sessionsCount; }
     unsigned getSessionsCount() { return _sessionsCount; }
 
-    std::string getJailRoot() const
-    {
-        assert(!_jailId.empty());
-        return Poco::Path(_childRoot, _jailId).toString();
-    }
+    std::string getJailRoot() const;
 
 private:
     const Poco::URI _uriPublic;
