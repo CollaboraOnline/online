@@ -66,6 +66,7 @@ protected:
     int main(const std::vector<std::string>& args) override;
 
 private:
+    void initializeSSL();
     void displayHelp();
     void displayVersion();
     Poco::Process::PID createBroker();

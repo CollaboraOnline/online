@@ -1,0 +1,6 @@
+<config>
+    <ssl desc="SSL settings">
+        <cert_file_path desc="path to the cert file" relative="true">cert.pem</cert_file_path>
+        <key_file_path desc="path to the key file" relative="true">key.pem</key_file_path>
+    </ssl>
+</config>

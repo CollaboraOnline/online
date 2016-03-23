@@ -1042,6 +1042,42 @@ void LOOLWSD::initialize(Application& self)
     ServerApplication::initialize(self);
 }
 
+void LOOLWSD::initializeSSL()
+{
+    auto& conf = config();
+
+    auto ssl_cert_file_path = conf.getString("ssl.cert_file_path");
+    if (conf.getBool("ssl.cert_file_path[@relative]"))
+    {
+        ssl_cert_file_path = Poco::Path(Application::instance().commandPath()).parent().append(ssl_cert_file_path).toString();
+    }
+
+    Log::info("SSL Cert file: " + ssl_cert_file_path);
+
+    auto ssl_key_file_path = conf.getString("ssl.key_file_path");
+    if (conf.getBool("ssl.key_file_path[@relative]"))
+    {
+        ssl_key_file_path = Poco::Path(Application::instance().commandPath()).parent().append(ssl_key_file_path).toString();
+    }
+
+    Log::info("SSL Key file: " + ssl_key_file_path);
+
+    Poco::Crypto::initializeCrypto();
+
+    Poco::Net::initializeSSL();
+    Poco::Net::Context::Params sslParams;
+    sslParams.certificateFile = ssl_cert_file_path;
+    sslParams.privateKeyFile = ssl_key_file_path;
+    // Don't ask clients for certificate
+    sslParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
+
+    Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleHandler = new Poco::Net::KeyConsoleHandler(true);
+    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::ConsoleCertificateHandler(false);
+
+    Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::SERVER_USE, sslParams);
+    Poco::Net::SSLManager::instance().initializeServer(consoleHandler, invalidCertHandler, sslContext);
+}
+
 void LOOLWSD::uninitialize()
 {
     ServerApplication::uninitialize();
@@ -1184,21 +1220,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_USAGE;
     }
 
-    Poco::Crypto::initializeCrypto();
-
-    // SSL initialize
-    Poco::Net::initializeSSL();
-    Poco::Net::Context::Params sslParams;
-    sslParams.certificateFile = Path(Application::instance().commandPath()).parent().toString() + SSL_CERT_FILE;
-    sslParams.privateKeyFile = Path(Application::instance().commandPath()).parent().toString() + SSL_KEY_FILE;
-    // Don't ask clients for certificate
-    sslParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
-
-    Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleHandler = new Poco::Net::KeyConsoleHandler(true);
-    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::ConsoleCertificateHandler(false);
-
-    Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::SERVER_USE, sslParams);
-    Poco::Net::SSLManager::instance().initializeServer(consoleHandler, invalidCertHandler, sslContext);
+    initializeSSL();
 
     char *locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
@@ -1435,7 +1457,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
                 for (auto& it : sessions)
                 {
-                    if (it->lastMessageTime >= it->idleSaveTime && 
+                    if (it->lastMessageTime >= it->idleSaveTime &&
                         it->lastMessageTime >= it->autoSaveTime)
                     {
                         // Trigger a .uno:Save
