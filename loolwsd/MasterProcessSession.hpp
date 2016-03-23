@@ -14,9 +14,10 @@
 
 #include <Poco/Random.h>
 
-#include "DocumentBroker.hpp"
 #include "LOOLSession.hpp"
 #include "TileCache.hpp"
+
+class DocumentBroker;
 
 class MasterProcessSession final : public LOOLSession, public std::enable_shared_from_this<MasterProcessSession>
 {
@@ -44,6 +45,11 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
 
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
+    void setEditLock(const bool value) { _bEditLock = value; }
+
+    bool isEditLocked() const { return _bEditLock; }
+
+public:
     // Sessions to pre-spawned child processes that have connected but are not yet assigned a
     // document to work on.
     static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChildSessions;
@@ -88,6 +94,11 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     /// Kind::ToClient instances store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
     std::shared_ptr<DocumentBroker> _docBroker;
+
+    // If this document holds the edit lock.
+    // An edit lock will only allow the current session to make edits,
+    // while other session opening the same document can only see
+    bool _bEditLock = false;
 };
 
 #endif

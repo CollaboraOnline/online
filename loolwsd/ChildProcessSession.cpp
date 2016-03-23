@@ -334,7 +334,12 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-    if (tokens[0] == "canceltiles")
+    if (tokens[0] == "dummymsg")
+    {
+        // Just to update the activity of view-only mode
+        return true;
+    }
+    else if (tokens[0] == "canceltiles")
     {
         // this command makes sense only on the command queue level, nothing
         // to do here

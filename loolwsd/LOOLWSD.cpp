@@ -178,9 +178,6 @@ using Poco::XML::NodeList;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 
-static std::unordered_set<std::shared_ptr<MasterProcessSession>> sessions;
-static std::mutex sessionsMutex;
-
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public PartHandler
 {
@@ -255,6 +252,7 @@ private:
                     std::shared_ptr<WebSocket> ws;
                     const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
                     auto session = std::make_shared<MasterProcessSession>(id, kind, ws, docBroker);
+                    session->setEditLock(true);
                     docBroker->incSessions();
                     lock.unlock();
 
@@ -455,10 +453,11 @@ private:
         docBroker->incSessions();
         docBrokersLock.unlock();
 
-        std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
-        sessions.insert(session);
-        Log::debug("sessions++: " + std::to_string(sessions.size()));
-        sessionsLock.unlock();
+        docBroker->addWSSession(id, session);
+        unsigned wsSessionsCount = docBroker->getWSSessionsCount();
+        Log::warn(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
+        if (wsSessionsCount == 1)
+            session->setEditLock(true);
 
         // Request a kit process for this doc.
         const std::string aMessage = "request " + id + " " + docKey + "\n";
@@ -509,10 +508,9 @@ private:
             queue.clear();
         }
 
-        sessionsLock.lock();
-        sessions.erase(session);
-        Log::debug("sessions--: " + std::to_string(sessions.size()));
-        sessionsLock.unlock();
+        docBroker->removeWSSession(id);
+        wsSessionsCount = docBroker->getWSSessionsCount();
+        Log::warn(docKey + ", ws_sessions--: " + std::to_string(wsSessionsCount));
 
         Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
         queue.put("eof");
@@ -1327,16 +1325,20 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 Log::debug("30-second check");
                 last30SecCheck = now;
 
-                std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
-                for (auto& it : sessions)
+                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                for (auto& brokerIt : docBrokers)
                 {
-                    if (it->_lastMessageTime > it->_idleSaveTime &&
-                        it->_lastMessageTime < now - 30)
+                    std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
+                    for (auto& sessionIt: brokerIt.second->_wsSessions)
                     {
-                        // Trigger a .uno:Save
-                        Log::info("Idle save triggered for session " + it->getId());
+                        if (sessionIt.second->_lastMessageTime > sessionIt.second->_idleSaveTime &&
+                            sessionIt.second->_lastMessageTime < now - 30)
+                        {
+                            // Trigger a .uno:Save
+                            Log::info("Idle save triggered for session " + sessionIt.second->getId());
 
-                        it->_idleSaveTime = now;
+                            sessionIt.second->_idleSaveTime = now;
+                        }
                     }
                 }
             }
@@ -1345,16 +1347,20 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 Log::debug("Five-minute check");
                 lastFiveMinuteCheck = now;
 
-                std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
-                for (auto& it : sessions)
+                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                for (auto& brokerIt : docBrokers)
                 {
-                    if (it->_lastMessageTime >= it->_idleSaveTime &&
-                        it->_lastMessageTime >= it->_autoSaveTime)
+                    std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
+                    for (auto& sessionIt: brokerIt.second->_wsSessions)
                     {
-                        // Trigger a .uno:Save
-                        Log::info("Auto-save triggered for session " + it->getId());
+                        if (sessionIt.second->_lastMessageTime >= sessionIt.second->_idleSaveTime &&
+                            sessionIt.second->_lastMessageTime >= sessionIt.second->_autoSaveTime)
+                        {
+                            // Trigger a .uno:Save
+                            Log::info("Auto-save triggered for session " + sessionIt.second->getId());
 
-                        it->_autoSaveTime = now;
+                            sessionIt.second->_autoSaveTime = now;
+                        }
                     }
                 }
             }

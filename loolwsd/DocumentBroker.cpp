@@ -137,4 +137,57 @@ std::string DocumentBroker::getJailRoot() const
     return Poco::Path(_childRoot, _jailId).toString();
 }
 
+void DocumentBroker::takeEditLock(const std::string id)
+{
+    std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
+    for (auto& it: _wsSessions)
+    {
+        if (it.first != id)
+        {
+            it.second->setEditLock(false);
+            it.second->sendTextFrame("editlock 0");
+        }
+        else
+        {
+            it.second->setEditLock(true);
+            it.second->sendTextFrame("editlock 1");
+        }
+    }
+}
+
+void DocumentBroker::addWSSession(const std::string id, std::shared_ptr<MasterProcessSession>& ws)
+{
+    std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
+    auto ret = _wsSessions.emplace(id, ws);
+    if (!ret.second)
+    {
+        Log::warn("DocumentBroker: Trying to add already existed session.");
+    }
+}
+
+void DocumentBroker::removeWSSession(const std::string id)
+{
+    std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
+    bool bEditLock = false;
+    auto it = _wsSessions.find(id);
+    if (it != _wsSessions.end())
+    {
+        if (it->second->isEditLocked())
+            bEditLock = true;
+
+        _wsSessions.erase(it);
+    }
+
+    if (bEditLock)
+    {
+        // pass the edit lock to first session in map
+        it = _wsSessions.begin();
+        if (it != _wsSessions.end())
+        {
+            it->second->setEditLock(true);
+            it->second->sendTextFrame("editlock 1");
+        }
+    }
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
