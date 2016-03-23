@@ -1,6 +1,19 @@
 <config>
     <ssl desc="SSL settings">
-        <cert_file_path desc="path to the cert file" relative="true">cert.pem</cert_file_path>
-        <key_file_path desc="path to the key file" relative="true">key.pem</key_file_path>
+        <cert_file_path desc="Path to the cert file" relative="true">cert.pem</cert_file_path>
+        <key_file_path desc="Path to the key file" relative="true">key.pem</key_file_path>
     </ssl>
+    <storage desc="Backend storage">
+        <filesystem allow="true">
+            <path desc="loleaflet is a must" allow="true" recurse="true" relative="true">loleaflet</path>
+            <path desc="/tmp is used for testing" allow="true" recurse="false" relative="false">/tmp</path>
+        </filesystem>
+        <wopi desc="Allow/deny wopi storage. Mutually exclusive with webdav." allow="true">
+            <host desc="Hostname to allow">localhost</host>
+            <max_file_size desc="Maximum document size in bytes to load. 0 for unlimited." type="uint">0</max_file_size>
+        </wopi>
+        <webdav desc="Allow/deny webdav storage. Mutually exclusive with wopi." allow="false">
+            <host desc="Hostname to allow">localhost</host>
+        </webdav>
+    </storage>
 </config>
