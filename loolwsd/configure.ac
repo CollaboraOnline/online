@@ -164,6 +164,12 @@ done
 AC_DEFINE_UNQUOTED([LOOLWSD_CACHEDIR],["$LOOLWSD_CACHEDIR"],[Cache folder])
 AC_SUBST(LOOLWSD_CACHEDIR)
 
+# FIXME
+# LOOLWSD_CONFIGDIR=${sysconfdir}/${PACKAGE} -> #define LOOLWSD_CONFIGDIR "${prefix}/etc/loolwsd" in config.h ???
+LOOLWSD_CONFIGDIR=/etc/${PACKAGE}
+AC_DEFINE_UNQUOTED([LOOLWSD_CONFIGDIR],["$LOOLWSD_CONFIGDIR"],[Config folder])
+AC_SUBST(LOOLWSD_CONFIGDIR)
+
 AC_CONFIG_FILES([Makefile
                  test/Makefile
                  loolwsd.spec])
