@@ -246,7 +246,7 @@ public:
         // Add it here to get the payload instead of file info.
         Poco::URI uriObject(_uri);
         const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
-        Log::info("Requesting: " + url);
+        Log::debug("Wopi requesting: " + url);
 
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url, Poco::Net::HTTPMessage::HTTP_1_1);
@@ -286,8 +286,11 @@ public:
         const auto size = getFileSize(_jailedFilePath);
 
         Poco::URI uriObject(_uri);
+        const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
+        Log::debug("Wopi posting: " + url);
+
         Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, url, Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("X-WOPIOverride", "PUT");
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
