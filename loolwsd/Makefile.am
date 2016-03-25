@@ -53,4 +53,7 @@ all-local: loolbroker loolkit
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolkit; \
+	    echo "Set required capabilities"; \
+	else \
+	    echo "Skipping capability setting"; \
 	fi
