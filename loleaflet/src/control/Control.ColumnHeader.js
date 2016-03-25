@@ -2,7 +2,7 @@
 * Control.ColumnHeader
 */
 
-/* global $ */
+/* global */
 L.Control.ColumnHeader = L.Control.extend({
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);

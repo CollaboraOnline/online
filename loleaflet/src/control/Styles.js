@@ -3,6 +3,7 @@
  */
 
 L.Styles = {
+	/* eslint no-dupe-keys:0 */
 	// Programming names -> UI names mapping
 	styleMappings: {
 		'Default':'Default',

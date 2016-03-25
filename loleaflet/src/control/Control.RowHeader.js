@@ -2,7 +2,7 @@
  * L.Control.RowHeader
 */
 
-/* global $ */
+/* global */
 L.Control.RowHeader = L.Control.extend({
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
