@@ -2,6 +2,7 @@
 	Utility class
 */
 /* global Base */
+/* eslint no-unused-vars:0 */
 var Util = Base.extend({
 	constructor: null
 

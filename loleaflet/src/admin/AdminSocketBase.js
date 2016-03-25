@@ -3,7 +3,7 @@
 */
 
 /* global vex Base */
-/* exported AdminSocketBase */
+/* eslint no-unused-vars:0 */
 var AdminSocketBase = Base.extend({
 	socket: null,
 

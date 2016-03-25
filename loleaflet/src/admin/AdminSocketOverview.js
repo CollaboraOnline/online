@@ -2,6 +2,7 @@
 	Socket to be intialized on opening the overview page in Admin console
 */
 /* global vex $ Util AdminSocketBase */
+/* eslint no-unused-vars:0 */
 var AdminSocketOverview = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);

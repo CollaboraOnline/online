@@ -4,6 +4,7 @@
 */
 
 /* global d3 Util AdminSocketBase */
+/* eslint no-unused-vars:0 */
 var AdminSocketAnalytics = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);
