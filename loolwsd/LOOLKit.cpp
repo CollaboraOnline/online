@@ -21,6 +21,7 @@
 #include <dlfcn.h>
 
 #include <atomic>
+#include <condition_variable>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -324,6 +325,7 @@ public:
         _isDocLoaded(false),
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
+        _isLoading(0),
         _clientViews(0)
     {
         (void)_isDocLoaded; // FIXME LOOLBroker.cpp includes LOOLKit.cpp
@@ -366,7 +368,7 @@ public:
             }
         }
 
-        std::unique_lock<std::recursive_mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lock(_mutex);
 
         // Destroy all connections and views.
         _connections.clear();
@@ -381,7 +383,7 @@ public:
 
     void createSession(const std::string& sessionId, const unsigned intSessionId)
     {
-        std::unique_lock<std::recursive_mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lock(_mutex);
 
         const auto& it = _connections.find(intSessionId);
         if (it != _connections.end())
@@ -436,7 +438,7 @@ public:
         std::vector<std::shared_ptr<ChildProcessSession>> deadSessions;
         size_t num_connections = 0;
         {
-            std::unique_lock<std::recursive_mutex> lock(_mutex, std::defer_lock);
+            std::unique_lock<std::mutex> lock(_mutex, std::defer_lock);
             if (!lock.try_lock())
             {
                 // Not a good time, try later.
@@ -523,7 +525,7 @@ private:
 
         if (self)
         {
-            std::unique_lock<std::recursive_mutex> lock(self->_mutex);
+            std::unique_lock<std::mutex> lock(self->_mutex);
             for (auto& it: self->_connections)
             {
                 if (it.second->isRunning())
@@ -567,7 +569,7 @@ private:
         Document* self = reinterpret_cast<Document*>(pData);
         if (self)
         {
-            std::unique_lock<std::recursive_mutex> lock(self->_mutex);
+            std::unique_lock<std::mutex> lock(self->_mutex);
 
             for (auto& it: self->_connections)
             {
@@ -589,7 +591,15 @@ private:
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
         const unsigned intSessionId = Util::decodeId(sessionId);
 
-        std::unique_lock<std::recursive_mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lock(_mutex);
+        while (_isLoading)
+        {
+            _cvLoading.wait(lock);
+        }
+
+        // Flag and release lock.
+        ++_isLoading;
+        lock.unlock();
 
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
@@ -605,7 +615,7 @@ private:
             // This is the first time we are loading the document
             Log::info("Loading new document from URI: [" + uri + "] for session [" + sessionId + "].");
 
-            if ( LIBREOFFICEKIT_HAS(_loKit, registerCallback))
+            if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
             {
                 _loKit->pClass->registerCallback(_loKit, KitCallback, this);
                 _loKit->pClass->setOptionalFeatures(_loKit, LOK_FEATURE_DOCUMENT_PASSWORD |
@@ -689,7 +699,11 @@ private:
             }
         }
 
+        // Done loading, let the next one in (if any).
+        lock.lock();
         ++_clientViews;
+        --_isLoading;
+        _cvLoading.notify_one();
 
         std::ostringstream message;
         message << "addview" << " "
@@ -713,7 +727,7 @@ private:
 
         auto session = it->second->getSession();
         auto sessionLock = session->getLock();
-        std::unique_lock<std::recursive_mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lock(_mutex);
 
         --_clientViews;
 
@@ -760,9 +774,11 @@ private:
     // Whether password is required to view the document, or modify it
     PasswordType _docPasswordType;
 
-    std::recursive_mutex _mutex;
+    std::mutex _mutex;
+    std::condition_variable _cvLoading;
+    std::atomic_size_t _isLoading;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
-    std::atomic<unsigned> _clientViews;
+    std::atomic_size_t _clientViews;
 };
 
 void lokit_main(const std::string& childRoot,
