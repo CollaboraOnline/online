@@ -35,9 +35,9 @@ MasterProcessSession::MasterProcessSession(const std::string& id,
                                            std::shared_ptr<Poco::Net::WebSocket> ws,
                                            std::shared_ptr<DocumentBroker> docBroker) :
     LOOLSession(id, kind, ws),
-    lastMessageTime(0),
-    idleSaveTime(0),
-    autoSaveTime(0),
+    _lastMessageTime(0),
+    _idleSaveTime(0),
+    _autoSaveTime(0),
     _curPart(0),
     _loadPart(-1),
     _docBroker(docBroker)

@@ -614,7 +614,7 @@ private:
                 // The fix is to push everything into the queue
                 // (i.e. change MessageQueue to vector<char>).
                 const std::string firstLine = getFirstLine(data, size);
-                time(&session->lastMessageTime);
+                time(&session->_lastMessageTime);
                 if (singleLine || firstLine.find("paste") == 0)
                 {
                     if (firstLine.compare(0, 10, "disconnect") == 0) // starts with "disconnect"
@@ -1453,13 +1453,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
                 for (auto& it : sessions)
                 {
-                    if (it->lastMessageTime > it->idleSaveTime &&
-                        it->lastMessageTime < now - 30)
+                    if (it->_lastMessageTime > it->_idleSaveTime &&
+                        it->_lastMessageTime < now - 30)
                     {
                         // Trigger a .uno:Save
                         Log::info("Idle save triggered for session " + it->getId());
 
-                        it->idleSaveTime = now;
+                        it->_idleSaveTime = now;
                     }
                 }
             }
@@ -1471,13 +1471,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 std::unique_lock<std::mutex> sessionsLock(sessionsMutex);
                 for (auto& it : sessions)
                 {
-                    if (it->lastMessageTime >= it->idleSaveTime &&
-                        it->lastMessageTime >= it->autoSaveTime)
+                    if (it->_lastMessageTime >= it->_idleSaveTime &&
+                        it->_lastMessageTime >= it->_autoSaveTime)
                     {
                         // Trigger a .uno:Save
                         Log::info("Auto-save triggered for session " + it->getId());
 
-                        it->autoSaveTime = now;
+                        it->_autoSaveTime = now;
                     }
                 }
             }

@@ -50,9 +50,9 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     static std::mutex AvailableChildSessionMutex;
     static std::condition_variable AvailableChildSessionCV;
 
-    time_t lastMessageTime;
-    time_t idleSaveTime;
-    time_t autoSaveTime;
+    time_t _lastMessageTime;
+    time_t _idleSaveTime;
+    time_t _autoSaveTime;
 
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
