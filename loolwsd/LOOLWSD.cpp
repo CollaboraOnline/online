@@ -672,7 +672,7 @@ private:
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
-        const std::string uriValue = "http://" + uri.getHost() + LOLEAFLET_PATH;
+        const std::string uriValue = "https://" + uri.getHost() + ":" + std::to_string(uri.getPort()) + LOLEAFLET_PATH;
 
         InputSource inputSrc(discoveryPath);
         AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
