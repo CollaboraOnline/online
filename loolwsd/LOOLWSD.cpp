@@ -1067,12 +1067,21 @@ void LOOLWSD::initializeSSL()
 
     Log::info("SSL Key file: " + ssl_key_file_path);
 
+    auto ssl_ca_file_path = conf.getString("ssl.ca_file_path");
+    if (conf.getBool("ssl.ca_file_path[@relative]"))
+    {
+        ssl_ca_file_path = Poco::Path(Application::instance().commandPath()).parent().append(ssl_ca_file_path).toString();
+    }
+
+    Log::info("SSL CA file: " + ssl_ca_file_path);
+
     Poco::Crypto::initializeCrypto();
 
     Poco::Net::initializeSSL();
     Poco::Net::Context::Params sslParams;
     sslParams.certificateFile = ssl_cert_file_path;
     sslParams.privateKeyFile = ssl_key_file_path;
+    sslParams.caLocation = ssl_ca_file_path;
     // Don't ask clients for certificate
     sslParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
 
