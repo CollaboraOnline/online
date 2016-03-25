@@ -143,15 +143,22 @@ namespace
         std::lock_guard<std::recursive_mutex> lock(forkMutex);
 
         std::shared_ptr<ChildProcess> child;
+        Log::trace() << "Finding child for url [" << url << "] in "
+                     << _childProcesses.size() << " childs." << Log::end;
         for (const auto& it : _childProcesses)
         {
+            Log::trace() << "Child [" << it.second->getPid()
+                         << "] url [" << url << "]." << Log::end;
             if (it.second->getUrl() == url)
             {
                 return it.second;
             }
 
             if (it.second->getUrl().empty())
+            {
+                // Empty one, but keep going, we might find ours.
                 child = it.second;
+            }
         }
 
         return child;

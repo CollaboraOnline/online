@@ -368,8 +368,6 @@ public:
             }
         }
 
-        std::unique_lock<std::mutex> lock(_mutex);
-
         // Destroy all connections and views.
         _connections.clear();
 
@@ -961,7 +959,10 @@ void lokit_main(const std::string& childRoot,
                     }
 
                     if (isUsedKit && _documents.empty())
+                    {
+                        Log::info("Document closed. Flagging for termination.");
                         TerminationFlag = true;
+                    }
                 }
                 else
                 if (ready < 0)
@@ -1012,7 +1013,7 @@ void lokit_main(const std::string& childRoot,
                         it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
                     }
 
-                    if (isUsedKit && _documents.empty())
+                    if (TerminationFlag || (isUsedKit && _documents.empty()))
                     {
                         TerminationFlag = true;
                         response += "down \r\n";
@@ -1082,13 +1083,18 @@ void lokit_main(const std::string& childRoot,
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    Log::debug("Destroying documents.");
-    _documents.clear();
+    if (!_documents.empty())
+    {
+        Log::debug("Destroying documents.");
+        _documents.clear();
+    }
 
     // Destroy LibreOfficeKit
-    Log::debug("Destroying LibreOfficeKit.");
     if (loKit)
+    {
+        Log::debug("Destroying LibreOfficeKit.");
         loKit->pClass->destroy(loKit);
+    }
 
     std::ostringstream message;
     message << "rmdoc" << " "
