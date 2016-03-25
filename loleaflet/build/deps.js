@@ -281,7 +281,7 @@ var deps = {
 		heading: 'Controls',
 		desc: 'Parts preview sidebar'
 	},
-	
+
 	ControlPresentation: {
 		src: ['control/Control.js',
 		      'control/Control.Presentation.js'],
@@ -355,6 +355,7 @@ var deps = {
 	ControlStyles: {
 		src: ['control/Control.js',
 		      'control/Control.Styles.js'],
+		deps: ['Styles'],
 		heading: 'Controls',
 		desc: 'Handles styles selection'
 	},
@@ -414,6 +415,11 @@ var deps = {
 	Scroll: {
 		src: ['control/Scroll.js'],
 		desc: 'Scroll handler.'
+	},
+
+	Styles: {
+		src: ['control/Styles.js'],
+		desc: 'Contains LibreOffice programmatic to UI name style mappings'
 	},
 
 	AnimationPan: {

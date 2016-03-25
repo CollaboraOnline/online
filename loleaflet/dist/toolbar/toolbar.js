@@ -595,11 +595,21 @@ map.on('commandstatechanged', function (e) {
 	var state = e.state;
 	var found = false;
 	if (commandName === '.uno:StyleApply') {
-		if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing')
+		if (!state)
 			return;
-		// Fix 'Text Body' vs 'Text body'
+
+		// For impress documents, template name is prefixed with style name.
+		// Strip the template name until we support it
+		if (map.getDocType() === 'presentation') {
+			state = state.split('~LT~')[1];
+			state = L.Styles.impressMapping[state];
+		}
+
 		$(".styles-select option").each(function () {
 			value = this.value;
+			// Sometimes we get UI names; ideally we should be getting only programmatic ones
+			// For eg: 'Text body' vs 'Text Body'
+			// (likely to be fixed in core to make the pattern consistent)
 			if (value.toLowerCase() === state.toLowerCase()) {
 				state = value;
 				found = true;
@@ -612,7 +622,7 @@ map.on('commandstatechanged', function (e) {
 				.append($("<option></option>")
 				.text(state));
 		}
-	$(".styles-select").val(state).trigger('change');
+		$(".styles-select").val(state).trigger('change');
 	}
 	else if (commandName === '.uno:CharFontName') {
 		$(".fonts-select option").each(function () {
@@ -629,7 +639,7 @@ map.on('commandstatechanged', function (e) {
 				.append($("<option></option>")
 				.text(state));
 		}
-	$(".fonts-select").val(state).trigger('change');
+		$(".fonts-select").val(state).trigger('change');
 	}
 	else if (commandName === '.uno:FontHeight') {
 		if (state === '0') {
@@ -711,26 +721,57 @@ map.on('search', function (e) {
 
 map.on('updatetoolbarcommandvalues', function (e) {
 	// we need an empty option for the place holder to work
-	var data = [''];
+	var data = [{text: ''}];
+	var styles = [];
+	var topStyles = [];
 	if (e.commandName === '.uno:StyleApply') {
 		var commands = e.commandValues.Commands;
 		if (commands && commands.length > 0) {
-			data = data.concat(commands);
 			// Inserts a separator element
 			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+
+			commands.forEach(function (command) {
+				data = data.concat({id: command.id, text: L.Styles.styleMappings[command.text].toLocaleString()});
+			}, this);
 		}
+
 		if (map.getDocType() === 'text') {
-			data = data.concat(e.commandValues.ParagraphStyles);
-			$('.styles-select').prop('disabled', false);
+			styles = e.commandValues.ParagraphStyles.slice(7, 19);
+			topStyles = e.commandValues.ParagraphStyles.slice(0, 7);
 		}
 		else if (map.getDocType() === 'spreadsheet') {
-			data = data.concat(e.commandValues.CellStyles);
-			$('.styles-select').prop('disabled', false);
+			styles = e.commandValues.CellStyles;
 		}
 		else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
-			data = data.concat(e.commandValues.Default);
-			$('.styles-select').prop('disabled', true);
+			styles = e.commandValues.Default;
 		}
+
+		if (topStyles.length > 0) {
+			// Inserts a separator element
+			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+
+			topStyles.forEach(function (style) {
+				data = data.concat({id: style, text: L.Styles.styleMappings[style].toLocaleString()});
+			}, this);
+		}
+
+		if (styles.length > 0) {
+			// Inserts a separator element
+			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+
+			styles.forEach(function (style) {
+				var localeStyle;
+				if (style.startsWith('outline')) {
+					var outlineLevel = style.split('outline')[1];
+					localeStyle = 'Outline'.toLocaleString() + ' ' + outlineLevel;
+				} else {
+					localeStyle = L.Styles.styleMappings[style].toLocaleString();
+				}
+
+				data = data.concat({id: style, text: localeStyle});
+			}, this);
+		}
+
 		$(".styles-select").select2({
 			data: data,
 			placeholder: _("Style")
@@ -863,4 +904,3 @@ function resizeToolbar() {
 		toolbar.uncheck('more');
 	}
 }
-
