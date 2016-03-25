@@ -264,7 +264,7 @@ public:
         }
         else if (tokens[0] == "active_docs_count")
         {
-            return std::to_string(_nActiveDocuments);
+            return std::to_string(_documents.size());
         }
         else if (tokens[0] == "mem_stats")
         {
@@ -415,18 +415,12 @@ public:
     }
 
 private:
-    // FIXME: we have a problem if new document to be added has PID = expired document in the map
-    // Prolly, *move* expired documents to another container (?)
     void addDocument(Poco::Process::PID pid, std::string url)
     {
         const auto ret = _documents.emplace(pid, Document(pid, url));
         if (!ret.second)
         {
             Log::warn() << "Document with PID [" + std::to_string(pid) + "] already exists." << Log::end;
-        }
-        else
-        {
-            _nActiveDocuments++;
         }
     }
 
@@ -435,8 +429,11 @@ private:
         auto it = _documents.find(pid);
         if (it != _documents.end() && !it->second.isExpired())
         {
+            // TODO: The idea is to only expire the document and keep the history
+            // of documents open and close, to be able to give a detailed summary
+            // to the admin console with views. For now, just remove the document.
             it->second.expire();
-            _nActiveDocuments--;
+            _documents.erase(it);
         }
     }
 
@@ -507,9 +504,6 @@ private:
 
     std::list<unsigned> _cpuStats;
     unsigned _cpuStatsSize = 100;
-
-    /// Number of active documents
-    unsigned _nActiveDocuments = 0;
 };
 
 #endif
