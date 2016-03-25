@@ -79,9 +79,9 @@ L.Control.Styles = L.Control.extend({
 					var item = L.DomUtil.create('option', '', container);
 					item.value = style;
 					var localeStyle;
-					if (style.startsWith('Outline')) {
-						var outlineLevel = style.split('Outline')[1];
-						localeStyle = 'Outline'.toLocaleString() + outlineLevel;
+					if (style.startsWith('outline')) {
+						var outlineLevel = style.split('outline')[1];
+						localeStyle = 'Outline'.toLocaleString() + ' ' + outlineLevel;
 					} else {
 						localeStyle = L.Styles.styleMappings[style].toLocaleString();
 					}
@@ -132,10 +132,10 @@ L.Control.Styles = L.Control.extend({
 		if (e.commandName === '.uno:StyleApply') {
 			for (var i = 0; i < this._container.length; i++) {
 				var value = this._container[i].value;
-				var innerHTML = this._container[i].innerHTML;
-				// For writer, we get UI names, but for others we seem to get internal names
-				// (likely to be fixed in core to keep it consistent)
-				if (value === e.state || innerHTML === e.state) {
+				// For writer we get UI names; ideally we should be getting only programmatic ones
+				// For eg: 'Text body' vs 'Text Body'
+				// (likely to be fixed in core to make the pattern consistent)
+				if (value.toLowerCase() === e.state.toLowerCase()) {
 					this._container.value = value;
 					return;
 				}

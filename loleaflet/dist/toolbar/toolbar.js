@@ -607,7 +607,7 @@ map.on('commandstatechanged', function (e) {
 
 		$(".styles-select option").each(function () {
 			value = this.value;
-			// Sometimes we get UI names; ideally we should be getting only programmatic ones
+			// For writer we get UI names; ideally we should be getting only programmatic ones
 			// For eg: 'Text body' vs 'Text Body'
 			// (likely to be fixed in core to make the pattern consistent)
 			if (value.toLowerCase() === state.toLowerCase()) {
