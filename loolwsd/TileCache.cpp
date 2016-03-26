@@ -74,6 +74,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
 
         if (dir.exists() && dir.isDirectory() && File(fileName).exists())
         {
+            Log::debug("Found editing tile: " + cachedName);
             std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
             return result;
         }
@@ -82,6 +83,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
     // skip tiles scheduled for removal from the Persistent cache (on save)
     if (_toBeRemoved.find(cachedName) != _toBeRemoved.end())
     {
+        Log::trace("Perishable tile not used: " + cachedName);
         return nullptr;
     }
 
@@ -94,6 +96,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
     }
 
     const std::string fileName = _persCacheDir + "/" + cachedName;
+    Log::debug("Found persistent tile: " + fileName);
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
     return result;
@@ -107,10 +110,12 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
     }
 
     const std::string dirName = cacheDirName(_hasUnsavedChanges);
-
     File(dirName).createDirectories();
 
     const std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    Log::debug() << "Saving "
+                 << (_hasUnsavedChanges ? "editing" : "persistent") <<
+                 " tile: " << fileName << Log::end;
 
     std::fstream outStream(fileName, std::ios::out);
     outStream.write(data, size);
@@ -161,6 +166,8 @@ std::string TileCache::getTextFile(std::string fileName)
 
 void TileCache::documentSaved()
 {
+    Log::debug("Persisting editing tiles.");
+
     // first remove the invalidated tiles from the Persistent cache
     for (const auto& it : _toBeRemoved)
     {
@@ -313,10 +320,11 @@ std::string TileCache::cacheDirName(const bool useEditingCache)
 
 std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
 {
-    return (std::to_string(part) + "_" +
-            std::to_string(width) + "x" + std::to_string(height) + "." +
-            std::to_string(tilePosX) + "," + std::to_string(tilePosY) + "." +
-            std::to_string(tileWidth) + "x" + std::to_string(tileHeight) + ".png");
+    std::ostringstream oss;
+    oss << part << '_' << width << 'x' << height << '.'
+        << tilePosX << ',' << tilePosY << '.'
+        << tileWidth << 'x' << tileHeight << ".png";
+    return oss.str();
 }
 
 bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight)
