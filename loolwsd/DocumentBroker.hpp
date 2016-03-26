@@ -72,6 +72,7 @@ private:
     const Poco::URI _uriPublic;
     const std::string _docKey;
     const std::string _childRoot;
+    const std::string _cacheRoot;
     Poco::URI _uriJailed;
     std::string _jailId;
     std::string _filename;

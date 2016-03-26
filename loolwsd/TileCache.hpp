@@ -34,7 +34,8 @@ public:
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
-    TileCache(const std::string& docURL, const std::string& timestamp);
+    TileCache(const std::string& docURL, const std::string& timestamp, const std::string& rootCacheDir);
+    ~TileCache();
 
     TileCache(const TileCache&) = delete;
 
@@ -88,7 +89,11 @@ private:
     /// For non-file:// protocols, the timestamp has to be provided externally.
     void setup(const std::string& timestamp);
 
-    const std::string& _docURL;
+private:
+    const std::string _docURL;
+    const std::string _rootCacheDir;
+    const std::string _persCacheDir;
+    const std::string _editCacheDir;
 
     /// The document is being edited.
     bool _isEditing;

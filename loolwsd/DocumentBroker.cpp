@@ -8,10 +8,28 @@
  */
 
 #include <Poco/Path.h>
+#include <Poco/SHA1Engine.h>
 
+#include "LOOLWSD.hpp"
 #include "DocumentBroker.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
+
+namespace
+{
+
+/// Returns the cache path for a given document URI.
+std::string getCachePath(const std::string& uri)
+{
+    Poco::SHA1Engine digestEngine;
+
+    digestEngine.update(uri.c_str(), uri.size());
+
+    return (LOOLWSD::Cache + "/" +
+            Poco::DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
+}
+
+}
 
 Poco::URI DocumentBroker::sanitizeURI(std::string uri)
 {
@@ -48,6 +66,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _uriPublic(uriPublic),
     _docKey(docKey),
     _childRoot(childRoot),
+    _cacheRoot(getCachePath(uriPublic.toString())),
     _sessionsCount(0)
 {
     assert(!_docKey.empty());
@@ -86,7 +105,7 @@ bool DocumentBroker::load(const std::string& jailId)
     Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
     const std::string timestamp = ""; //FIXME: Should come from load options.
-    _tileCache.reset(new TileCache(_uriPublic.toString(), timestamp));
+    _tileCache.reset(new TileCache(_uriPublic.toString(), timestamp, _cacheRoot));
 
     _storage = createStorage(jailRoot, jailPath.toString(), _uriPublic);
 

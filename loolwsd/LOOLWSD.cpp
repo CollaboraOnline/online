@@ -150,7 +150,6 @@ using Poco::Net::WebSocketException;
 using Poco::Path;
 using Poco::Process;
 using Poco::ProcessHandle;
-using Poco::Random;
 using Poco::Runnable;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;

@@ -23,7 +23,6 @@
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/Path.h>
-#include <Poco/SHA1Engine.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
@@ -37,7 +36,6 @@
 using Poco::DigestEngine;
 using Poco::DirectoryIterator;
 using Poco::File;
-using Poco::SHA1Engine;
 using Poco::StringTokenizer;
 using Poco::SyntaxException;
 using Poco::Timestamp;
@@ -45,12 +43,23 @@ using Poco::URI;
 
 using namespace LOOLProtocol;
 
-TileCache::TileCache(const std::string& docURL, const std::string& timestamp) :
+TileCache::TileCache(const std::string& docURL,
+                     const std::string& timestamp,
+                     const std::string& rootCacheDir) :
     _docURL(docURL),
+    _rootCacheDir(rootCacheDir),
+    _persCacheDir(Poco::Path(rootCacheDir, "persistent").toString()),
+    _editCacheDir(Poco::Path(rootCacheDir, "editing").toString()),
     _isEditing(false),
     _hasUnsavedChanges(false)
 {
+    Log::info("TileCache ctor.");
     setup(timestamp);
+}
+
+TileCache::~TileCache()
+{
+    Log::info("~TileCache dtor.");
 }
 
 std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
@@ -290,20 +299,12 @@ void TileCache::removeFile(const std::string fileName)
 
 std::string TileCache::toplevelCacheDirName()
 {
-    SHA1Engine digestEngine;
-
-    digestEngine.update(_docURL.c_str(), _docURL.size());
-
-    return (LOOLWSD::Cache + "/" +
-            DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
+    return _rootCacheDir;
 }
 
-std::string TileCache::cacheDirName(bool useEditingCache)
+std::string TileCache::cacheDirName(const bool useEditingCache)
 {
-    if (useEditingCache)
-        return toplevelCacheDirName() + "/editing";
-    else
-        return toplevelCacheDirName() + "/persistent";
+    return (useEditingCache ? _editCacheDir : _persCacheDir);
 }
 
 std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
