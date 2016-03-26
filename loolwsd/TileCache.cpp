@@ -44,7 +44,7 @@ using Poco::URI;
 using namespace LOOLProtocol;
 
 TileCache::TileCache(const std::string& docURL,
-                     const std::string& timestamp,
+                     const Poco::Timestamp& modifiedTime,
                      const std::string& rootCacheDir) :
     _docURL(docURL),
     _rootCacheDir(rootCacheDir),
@@ -54,7 +54,24 @@ TileCache::TileCache(const std::string& docURL,
     _hasUnsavedChanges(false)
 {
     Log::info("TileCache ctor.");
-    setup(timestamp);
+    const bool cleanEverything = (getLastModified() < modifiedTime);
+    if (cleanEverything)
+    {
+        // document changed externally, clean up everything
+        Util::removeFile(_rootCacheDir, true);
+        Log::info("Completely cleared cache: " + _rootCacheDir);
+    }
+    else
+    {
+        // remove only the Editing cache
+        Util::removeFile(_editCacheDir, true);
+        Log::info("Cleared the editing cache: " + _editCacheDir);
+    }
+
+    File cacheDir(_rootCacheDir);
+    cacheDir.createDirectories();
+
+    saveLastModified(modifiedTime);
 }
 
 TileCache::~TileCache()
@@ -372,66 +389,6 @@ void TileCache::saveLastModified(const Poco::Timestamp& timestamp)
     std::fstream modTimeFile(_rootCacheDir + "/modtime.txt", std::ios::out);
     modTimeFile << timestamp.raw() << std::endl;
     modTimeFile.close();
-}
-
-void TileCache::setup(const std::string& timestamp)
-{
-    bool cleanEverything = true;
-    std::string filePath;
-    Timestamp lastModified;
-
-    try
-    {
-        URI uri(_docURL);
-        if (uri.getScheme() == "" ||
-            uri.getScheme() == "file")
-        {
-            filePath = uri.getPath();
-        }
-    }
-    catch (SyntaxException& e)
-    {
-    }
-
-    if (!filePath.empty() && File(filePath).exists() && File(filePath).isFile())
-    {
-        // for files, always use the real path
-        lastModified = File(filePath).getLastModified();
-        cleanEverything = (getLastModified() < lastModified);
-    }
-    else if (!timestamp.empty())
-    {
-        // otherwise try the timestamp provided by the caller
-        Timestamp::TimeVal lastTimeVal;
-        std::istringstream(timestamp) >> lastTimeVal;
-        lastModified = lastTimeVal;
-        Log::info("Timestamp provided externally: " + timestamp);
-
-        cleanEverything = (getLastModified() < Timestamp(lastModified));
-    }
-    else
-    {
-        // when no timestamp, and non-file, assume 'now'
-        lastModified = Timestamp();
-    }
-
-    if (cleanEverything)
-    {
-        // document changed externally, clean up everything
-        Util::removeFile(_rootCacheDir, true);
-        Log::info("Completely cleared cache: " + _rootCacheDir);
-    }
-    else
-    {
-        // remove only the Editing cache
-        Util::removeFile(_editCacheDir, true);
-        Log::info("Cleared the editing cache: " + _editCacheDir);
-    }
-
-    File cacheDir(_rootCacheDir);
-    cacheDir.createDirectories();
-
-    saveLastModified(lastModified);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

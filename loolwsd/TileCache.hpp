@@ -34,7 +34,7 @@ public:
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
-    TileCache(const std::string& docURL, const std::string& timestamp, const std::string& rootCacheDir);
+    TileCache(const std::string& docURL, const Poco::Timestamp& modifiedTime, const std::string& rootCacheDir);
     ~TileCache();
 
     TileCache(const TileCache&) = delete;
@@ -81,10 +81,6 @@ private:
 
     /// Store the timestamp to modtime.txt.
     void saveLastModified(const Poco::Timestamp& timestamp);
-
-    /// Create or cleanup the cache directory.
-    /// For non-file:// protocols, the timestamp has to be provided externally.
-    void setup(const std::string& timestamp);
 
 private:
     const std::string _docURL;

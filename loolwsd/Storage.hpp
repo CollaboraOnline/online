@@ -33,6 +33,7 @@ public:
     {
     public:
         std::string Filename;
+        Poco::Timestamp ModifiedTime;
         size_t Size;
     };
 
@@ -110,8 +111,9 @@ public:
         const auto path = uri.getPath();
         Log::debug("Getting info for local uri [" + uri.toString() + "], path [" + path + "].");
         const auto filename = Poco::Path(path).getFileName();
+        const auto lastModified = Poco::File(path).getLastModified();
         const auto size = Poco::File(path).getSize();
-        return FileInfo({filename, size});
+        return FileInfo({filename, lastModified, size});
     }
 
     std::string loadStorageFileToLocal() override
@@ -227,7 +229,8 @@ public:
             size = std::stoul (object->get("Size").toString(), nullptr, 0);
         }
 
-        return FileInfo({filename, size});
+        // WOPI doesn't support file last modified time.
+        return FileInfo({filename, Poco::Timestamp(), size});
     }
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -331,7 +334,7 @@ public:
         Log::debug("Getting info for webdav uri [" + uri.toString() + "].");
         (void)uri;
         assert(!"Not Implemented!");
-        return FileInfo({"bazinga", 0});
+        return FileInfo({"bazinga", Poco::Timestamp(), 0});
     }
 
     std::string loadStorageFileToLocal() override

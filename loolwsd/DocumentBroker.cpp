@@ -104,8 +104,9 @@ bool DocumentBroker::load(const std::string& jailId)
 
     Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
-    const std::string timestamp = ""; //FIXME: Should come from load options.
-    _tileCache.reset(new TileCache(_uriPublic.toString(), timestamp, _cacheRoot));
+    auto storage = createStorage("", "", _uriPublic);
+    const auto fileInfo = storage->getFileInfo(_uriPublic);
+    _tileCache.reset(new TileCache(_uriPublic.toString(), fileInfo.ModifiedTime, _cacheRoot));
 
     _storage = createStorage(jailRoot, jailPath.toString(), _uriPublic);
 
