@@ -1019,9 +1019,6 @@ int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::DoTest = false;
 static const std::string pidLog = "/tmp/loolwsd.pid";
 
-// Demo Site Verification URL.
-static const std::string DemoAuthVerificationUrl = "http://ec2-54-216-97-44.eu-west-1.compute.amazonaws.com/cloudsuite-demo/verify.php?type&token=";
-
 LOOLWSD::LOOLWSD()
 {
 }
