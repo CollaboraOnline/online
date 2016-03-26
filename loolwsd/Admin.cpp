@@ -30,6 +30,8 @@
 #include "Admin.hpp"
 #include "AdminModel.hpp"
 #include "Common.hpp"
+#include "TileCache.hpp"
+#include "Storage.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLWSD.hpp"
 #include "Util.hpp"

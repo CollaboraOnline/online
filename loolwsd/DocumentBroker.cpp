@@ -10,6 +10,8 @@
 #include <Poco/Path.h>
 
 #include "DocumentBroker.hpp"
+#include "Storage.hpp"
+#include "TileCache.hpp"
 
 Poco::URI DocumentBroker::sanitizeURI(std::string uri)
 {
@@ -82,6 +84,9 @@ bool DocumentBroker::load(const std::string& jailId)
     const std::string jailRoot = getJailRoot();
 
     Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
+
+    const std::string timestamp = ""; //FIXME: Should come from load options.
+    _tileCache.reset(new TileCache(_uriPublic.toString(), timestamp));
 
     _storage = createStorage(jailRoot, jailPath.toString(), _uriPublic);
 

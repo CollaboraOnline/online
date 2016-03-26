@@ -78,8 +78,6 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
 
-    std::unique_ptr<TileCache> _tileCache;
-
     static
     Poco::Path getJailPath(const std::string& childId);
 

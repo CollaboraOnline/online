@@ -11,10 +11,17 @@
 #define INCLUDED_DOCUMENTBROKER_HPP
 
 #include <atomic>
+#include <memory>
 #include <mutex>
 #include <string>
 
-#include "Storage.hpp"
+#include <Poco/URI.h>
+
+#include <Util.hpp>
+
+// Forwards.
+class StorageBase;
+class TileCache;
 
 /// DocumentBroker is responsible for setting up a document
 /// in jail and brokering loading it from Storage
@@ -38,7 +45,9 @@ public:
 
     ~DocumentBroker()
     {
-        Log::info("~DocumentBroker [" + _uriPublic.toString() + "] destroyed.");
+        Log::info() << "~DocumentBroker [" << _uriPublic.toString()
+                    << "] destroyed with " << _sessionsCount
+                    << " sessions." << Log::end;
     }
 
     void validate(const Poco::URI& uri);
@@ -55,6 +64,7 @@ public:
     unsigned decSessions() { return --_sessionsCount; }
     unsigned incSessions() { return ++_sessionsCount; }
     unsigned getSessionsCount() { return _sessionsCount; }
+    TileCache& tileCache() { return *_tileCache; }
 
     std::string getJailRoot() const;
 
@@ -66,6 +76,7 @@ private:
     std::string _jailId;
     std::string _filename;
     std::unique_ptr<StorageBase> _storage;
+    std::unique_ptr<TileCache> _tileCache;
     std::mutex _mutex;
     std::atomic<unsigned> _sessionsCount;
 };

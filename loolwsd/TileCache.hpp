@@ -36,6 +36,8 @@ public:
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
     TileCache(const std::string& docURL, const std::string& timestamp);
 
+    TileCache(const TileCache&) = delete;
+
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
     std::string getTextFile(std::string fileName);

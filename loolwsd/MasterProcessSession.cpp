@@ -19,6 +19,8 @@
 #include "LOOLWSD.hpp"
 #include "MasterProcessSession.hpp"
 #include "Rectangle.hpp"
+#include "Storage.hpp"
+#include "TileCache.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -207,7 +209,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             }
         }
 
-        if (peer && peer->_tileCache && !_isDocPasswordProtected)
+        if (peer && !_isDocPasswordProtected)
         {
             if (tokens[0] == "tile:")
             {
@@ -223,11 +225,11 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     assert(false);
 
                 assert(firstLine.size() < static_cast<std::string::size_type>(length));
-                peer->_tileCache->saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+                _docBroker->tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
             }
             else if (tokens[0] == "status:")
             {
-                peer->_tileCache->saveTextFile(std::string(buffer, length), "status.txt");
+                _docBroker->tileCache().saveTextFile(std::string(buffer, length), "status.txt");
             }
             else if (tokens[0] == "commandvalues:")
             {
@@ -244,27 +246,27 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                         commandName.find(".uno:StyleApply") != std::string::npos)
                     {
                         // other commands should not be cached
-                        peer->_tileCache->saveTextFile(stringMsg, "cmdValues" + commandName + ".txt");
+                        _docBroker->tileCache().saveTextFile(stringMsg, "cmdValues" + commandName + ".txt");
                     }
                 }
             }
             else if (tokens[0] == "partpagerectangles:")
             {
                 if (tokens.count() > 1 && !tokens[1].empty())
-                    peer->_tileCache->saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
+                    _docBroker->tileCache().saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
             }
             else if (tokens[0] == "invalidatecursor:")
             {
-                peer->_tileCache->setEditing(true);
+                _docBroker->tileCache().setEditing(true);
             }
             else if (tokens[0] == "invalidatetiles:")
             {
                 // FIXME temporarily, set the editing on the 1st invalidate, TODO extend
                 // the protocol so that the client can set the editing or view only.
-                peer->_tileCache->setEditing(true);
+                _docBroker->tileCache().setEditing(true);
 
                 assert(firstLine.size() == static_cast<std::string::size_type>(length));
-                peer->_tileCache->invalidateTiles(firstLine);
+                _docBroker->tileCache().invalidateTiles(firstLine);
             }
             else if (tokens[0] == "renderfont:")
             {
@@ -274,7 +276,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     assert(false);
 
                 assert(firstLine.size() < static_cast<std::string::size_type>(length));
-                peer->_tileCache->saveRendering(font, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+                _docBroker->tileCache().saveRendering(font, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
             }
         }
 
@@ -378,7 +380,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             dispatchChild();
 
         if (tokens[0] == "setclientpart")
-            _tileCache->removeFile("status.txt");
+            _docBroker->tileCache().removeFile("status.txt");
 
         if (tokens[0] != "requestloksession")
         {
@@ -387,7 +389,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
         if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save"))
         {
-            _tileCache->documentSaved();
+            _docBroker->tileCache().documentSaved();
         }
         else if (tokens[0] == "disconnect")
         {
@@ -415,9 +417,9 @@ bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*
 
     // FIXME temporarily, set the editing on the 1st invalidate, TODO extend
     // the protocol so that the client can set the editing or view only.
-    _tileCache->setEditing(true);
+    _docBroker->tileCache().setEditing(true);
 
-    _tileCache->invalidateTiles(_curPart, tilePosX, tilePosY, tileWidth, tileHeight);
+    _docBroker->tileCache().invalidateTiles(_curPart, tilePosX, tilePosY, tileWidth, tileHeight);
     return true;
 }
 
@@ -433,8 +435,6 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
     {
         std::string timestamp;
         parseDocOptions(tokens, _loadPart, timestamp);
-
-        _tileCache.reset(new TileCache(_docURL, timestamp));
 
         // Finally, wait for the Child to connect to Master,
         // link the document in jail and dispatch load to child.
@@ -452,7 +452,7 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
 
 bool MasterProcessSession::getStatus(const char *buffer, int length)
 {
-    const std::string status = _tileCache->getTextFile("status.txt");
+    const std::string status = _docBroker->tileCache().getTextFile("status.txt");
     if (status.size() > 0)
     {
         sendTextFrame(status);
@@ -474,7 +474,7 @@ bool MasterProcessSession::getCommandValues(const char *buffer, int length, Stri
         return false;
     }
 
-    const std::string cmdValues = _tileCache->getTextFile("cmdValues" + command + ".txt");
+    const std::string cmdValues = _docBroker->tileCache().getTextFile("cmdValues" + command + ".txt");
     if (cmdValues.size() > 0)
     {
         sendTextFrame(cmdValues);
@@ -489,7 +489,7 @@ bool MasterProcessSession::getCommandValues(const char *buffer, int length, Stri
 
 bool MasterProcessSession::getPartPageRectangles(const char *buffer, int length)
 {
-    const std::string partPageRectangles = _tileCache->getTextFile("partpagerectangles.txt");
+    const std::string partPageRectangles = _docBroker->tileCache().getTextFile("partpagerectangles.txt");
     if (partPageRectangles.size() > 0)
     {
         sendTextFrame(partPageRectangles);
@@ -523,7 +523,7 @@ void MasterProcessSession::sendFontRendering(const char *buffer, int length, Str
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedRendering = _tileCache->lookupRendering(font, "font");
+    std::unique_ptr<std::fstream> cachedRendering = _docBroker->tileCache().lookupRendering(font, "font");
     if (cachedRendering && cachedRendering->is_open())
     {
         cachedRendering->seekg(0, std::ios_base::end);
@@ -579,7 +579,7 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::unique_ptr<std::fstream> cachedTile = _docBroker->tileCache().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     if (cachedTile && cachedTile->is_open())
     {
         cachedTile->seekg(0, std::ios_base::end);
@@ -662,7 +662,7 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
             return;
         }
 
-        std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
+        std::unique_ptr<std::fstream> cachedTile = _docBroker->tileCache().lookupTile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
 
         if (cachedTile && cachedTile->is_open())
         {

@@ -28,6 +28,7 @@
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 
+#include "Storage.hpp"
 #include "LOOLWSD.hpp"
 #include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
