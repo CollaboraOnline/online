@@ -308,11 +308,6 @@ void TileCache::removeFile(const std::string fileName)
     Util::removeFile(editingTextFile);
 }
 
-std::string TileCache::toplevelCacheDirName()
-{
-    return _rootCacheDir;
-}
-
 std::string TileCache::cacheDirName(const bool useEditingCache)
 {
     return (useEditingCache ? _editCacheDir : _persCacheDir);
@@ -354,7 +349,7 @@ bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int
 
 Timestamp TileCache::getLastModified()
 {
-    std::fstream modTimeFile(toplevelCacheDirName() + "/modtime.txt", std::ios::in);
+    std::fstream modTimeFile(_rootCacheDir + "/modtime.txt", std::ios::in);
 
     if (!modTimeFile.is_open())
         return 0;
@@ -368,7 +363,7 @@ Timestamp TileCache::getLastModified()
 
 void TileCache::saveLastModified(const Poco::Timestamp& timestamp)
 {
-    std::fstream modTimeFile(toplevelCacheDirName() + "/modtime.txt", std::ios::out);
+    std::fstream modTimeFile(_rootCacheDir + "/modtime.txt", std::ios::out);
     modTimeFile << timestamp.raw() << std::endl;
     modTimeFile.close();
 }
@@ -417,7 +412,7 @@ void TileCache::setup(const std::string& timestamp)
     if (cleanEverything)
     {
         // document changed externally, clean up everything
-        const auto path = toplevelCacheDirName();
+        const auto path = _rootCacheDir;
         Util::removeFile(path, true);
         Log::info("Completely cleared cache: " + path);
     }
@@ -429,7 +424,7 @@ void TileCache::setup(const std::string& timestamp)
         Log::info("Cleared the editing cache: " + path);
     }
 
-    File cacheDir(toplevelCacheDirName());
+    File cacheDir(_rootCacheDir);
     cacheDir.createDirectories();
 
     saveLastModified(lastModified);

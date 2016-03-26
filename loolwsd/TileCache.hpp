@@ -67,9 +67,6 @@ public:
     void removeFile(const std::string fileName);
 
 private:
-    /// Toplevel cache dirname.
-    std::string toplevelCacheDirName();
-
     /// Path of the (sub-)cache dir, the parameter specifies which (sub-)cache to use.
     std::string cacheDirName(bool useEditingCache);
 
