@@ -4,6 +4,3 @@
 ## Default:	""
 ## ServiceRestart: loolwsd
 #
-# Number of child processes to pre-spawn initially
-#
-LOOLWSD_NUMPRESPAWNS="5"
