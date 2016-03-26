@@ -118,8 +118,14 @@ bool DocumentBroker::save()
 {
     Log::debug("Saving to URI: " + _uriPublic.toString());
 
-    assert(_storage);
-    return _storage->saveLocalFileToStorage();
+    assert(_storage && _tileCache);
+    if (_storage->saveLocalFileToStorage())
+    {
+        _tileCache->documentSaved();
+        return true;
+    }
+
+    return false;
 }
 
 std::string DocumentBroker::getJailRoot() const

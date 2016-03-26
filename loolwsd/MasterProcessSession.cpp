@@ -387,11 +387,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             forwardToPeer(buffer, length);
         }
 
-        if ((tokens.count() > 1 && tokens[0] == "uno" && tokens[1] == ".uno:Save"))
-        {
-            _docBroker->tileCache().documentSaved();
-        }
-        else if (tokens[0] == "disconnect")
+        if (tokens[0] == "disconnect")
         {
             // This was the last we would hear from the client on this socket.
             return handleDisconnect(tokens);
