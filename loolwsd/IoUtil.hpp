@@ -42,7 +42,8 @@ namespace IoUtil
 
     ssize_t readFIFO(int pipe, char* buffer, ssize_t size);
 
-    ssize_t readMessage(int pipe, char* buffer, ssize_t size);
+    ssize_t readMessage(const int pipe, char* buffer, const ssize_t size,
+                        const size_t timeoutSec = CHILD_TIMEOUT_SECS);
 
     void pollPipeForReading(pollfd& pollPipe, const std::string& targetPipeName , const int& targetPipe,
                             std::function<void(std::string& message)> handler);

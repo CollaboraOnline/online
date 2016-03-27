@@ -196,19 +196,19 @@ public:
     {
     }
 
-    ssize_t getResponseLine(int pipeReader, std::string& response)
+    ssize_t getResponseLine(const int pipeReader, std::string& response)
     {
         ssize_t bytes = -1;
         response.clear();
 
         try
         {
-            while (true)
+            for (;;)
             {
                 if (_start == _end)
                 {
                     bytes = IoUtil::readMessage(pipeReader, _buffer, sizeof(_buffer));
-                    if ( bytes < 0 )
+                    if (bytes < 0)
                     {
                         _start = _end = nullptr;
                         break;
@@ -218,7 +218,7 @@ public:
                     _end = _buffer + bytes;
                 }
 
-                if ( _start != _end )
+                if (_start != _end)
                 {
                     char byteChar = *_start++;
                     while (_start != _end && byteChar != '\r' && byteChar != '\n')
@@ -229,7 +229,7 @@ public:
 
                     if (byteChar == '\r' && *_start == '\n')
                     {
-                        _start++;
+                        ++_start;
                         break;
                     }
                 }
@@ -341,9 +341,13 @@ public:
                 const auto childPid = std::to_string(child->getPid());
                 const auto isEmptyChild = child->getUrl().empty();
                 if (isEmptyChild)
-                    Log::debug("Found URL [" + url + "] hosted on child [" + childPid + "].");
-                else
+                {
                     Log::debug("URL [" + url + "] is not hosted. Using empty child [" + childPid + "].");
+                }
+                else
+                {
+                    Log::debug("Found URL [" + url + "] hosted on child [" + childPid + "].");
+                }
 
                 if (createThread(child->getPid(), session, url))
                 {
@@ -710,7 +714,7 @@ int main(int argc, char** argv)
     const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
     if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
     {
-        Log::error("Error: pipe opened for writing.");
+        Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
         exit(Application::EXIT_SOFTWARE);
     }
 

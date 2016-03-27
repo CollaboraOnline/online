@@ -353,7 +353,7 @@ public:
                 if (aIterator.second->isRunning())
                 {
                     std::shared_ptr<WebSocket> ws = aIterator.second->getWebSocket();
-                    if ( ws )
+                    if (ws)
                     {
                         ws->shutdownReceive();
                         aIterator.second->join();
@@ -378,6 +378,8 @@ public:
             _loKitDocument->pClass->destroy(_loKitDocument);
         }
     }
+
+    const std::string& getUrl() const { return _url; }
 
     void createSession(const std::string& sessionId, const unsigned intSessionId)
     {
@@ -753,7 +755,7 @@ private:
 private:
 
     const bool _multiView;
-    LibreOfficeKit *_loKit;
+    LibreOfficeKit* const _loKit;
     const std::string _jailId;
     const std::string _docKey;
     const std::string _url;
@@ -826,10 +828,8 @@ void lokit_main(const std::string& childRoot,
 
     try
     {
-        int writerBroker;
-        int readerBroker;
-
-        if ((readerBroker = open(pipe.c_str(), O_RDONLY) ) < 0)
+        const int readerBroker = open(pipe.c_str(), O_RDONLY);
+        if (readerBroker < 0)
         {
             Log::error("Error: failed to open pipe [" + pipe + "] read only.");
             std::exit(Application::EXIT_SOFTWARE);
@@ -837,9 +837,10 @@ void lokit_main(const std::string& childRoot,
 
         const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
         const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
-        if ((writerBroker = open(pipeBroker.c_str(), O_WRONLY) ) < 0)
+        const int writerBroker = open(pipeBroker.c_str(), O_WRONLY);
+        if (writerBroker < 0)
         {
-            Log::error("Error: failed to open pipe [" + FIFO_BROKER + "] write only.");
+            Log::error("Error: failed to open Broker write pipe [" + FIFO_BROKER + "].");
             std::exit(Application::EXIT_SOFTWARE);
         }
 
@@ -847,7 +848,7 @@ void lokit_main(const std::string& childRoot,
         const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
         if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
         {
-            Log::error("Error: pipe opened for writing.");
+            Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
             exit(Application::EXIT_SOFTWARE);
         }
 

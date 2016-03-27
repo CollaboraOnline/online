@@ -247,7 +247,7 @@ ssize_t readFIFO(int pipe, char* buffer, ssize_t size)
     return bytes;
 }
 
-ssize_t readMessage(int pipe, char* buffer, ssize_t size)
+ssize_t readMessage(const int pipe, char* buffer, const ssize_t size, const size_t timeoutSec)
 {
     struct pollfd pollPipe;
 
@@ -255,7 +255,7 @@ ssize_t readMessage(int pipe, char* buffer, ssize_t size)
     pollPipe.events = POLLIN;
     pollPipe.revents = 0;
 
-    const int nPoll = poll(&pollPipe, 1, CHILD_TIMEOUT_SECS * 1000);
+    const int nPoll = poll(&pollPipe, 1, timeoutSec * 1000);
     if ( nPoll < 0 )
         return -1;
 
