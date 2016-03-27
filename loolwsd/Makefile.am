@@ -10,7 +10,7 @@ AM_LDFLAGS = -pthread
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
-shared_sources = LOOLProtocol.cpp LOOLSession.cpp MessageQueue.cpp Util.cpp
+shared_sources = LOOLProtocol.cpp LOOLSession.cpp MessageQueue.cpp IoUtil.cpp Util.cpp
 
 loolwsd_SOURCES = LOOLWSD.cpp ChildProcessSession.cpp MasterProcessSession.cpp TileCache.cpp Admin.cpp DocumentBroker.cpp $(shared_sources)
 
@@ -20,7 +20,7 @@ loadtest_SOURCES = LoadTest.cpp Util.cpp LOOLProtocol.cpp
 
 connect_SOURCES = Connect.cpp Util.cpp LOOLProtocol.cpp
 
-lokitclient_SOURCES = LOKitClient.cpp Util.cpp
+lokitclient_SOURCES = LOKitClient.cpp IoUtil.cpp Util.cpp
 
 broker_shared_sources = ChildProcessSession.cpp $(shared_sources)
 
@@ -33,7 +33,7 @@ loolmap_SOURCES = loolmap.c
 noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessSession.hpp ChildProcessSession.hpp \
                  LOOLWSD.hpp LoadTest.hpp MessageQueue.hpp TileCache.hpp Util.hpp Png.hpp Common.hpp Capabilities.hpp \
                  Rectangle.hpp QueueHandler.hpp Admin.hpp Auth.hpp Storage.hpp AdminModel.hpp DocumentBroker.hpp \
-                 FileServer.hpp \
+                 FileServer.hpp IoUtil.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h
 

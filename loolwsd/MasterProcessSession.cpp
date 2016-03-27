@@ -21,6 +21,7 @@
 #include "Rectangle.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
+#include "IoUtil.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -752,7 +753,7 @@ void MasterProcessSession::dispatchChild()
             // request again new URL session
             const std::string message = "request " + getId() + " " + _docBroker->getDocKey() + "\r\n";
             Log::trace("MasterToBroker: " + message.substr(0, message.length()-2));
-            Util::writeFIFO(LOOLWSD::BrokerWritePipe, message);
+            IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, message);
         }
     }
 
@@ -768,7 +769,7 @@ void MasterProcessSession::dispatchChild()
     if (retries < 0 && !isFound)
     {
         Log::error(getName() + ": Failed to connect to child. Shutting down socket.");
-        Util::shutdownWebSocket(_ws);
+        IoUtil::shutdownWebSocket(_ws);
         return;
     }
 

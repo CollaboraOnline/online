@@ -120,6 +120,7 @@ DEALINGS IN THE SOFTWARE.
 #include "MasterProcessSession.hpp"
 #include "QueueHandler.hpp"
 #include "Storage.hpp"
+#include "IoUtil.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -602,7 +603,7 @@ private:
         // Request a kit process for this doc.
         const std::string aMessage = "request " + id + " " + docKey + "\r\n";
         Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 2));
-        Util::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
+        IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
         // For ToClient sessions, we store incoming messages in a queue and have a separate
         // thread that handles them. This is so that we can empty the queue when we get a
@@ -1493,7 +1494,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
 
     // Terminate child processes
-    Util::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\r\n");
+    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\r\n");
     Log::info("Requesting child process " + std::to_string(brokerPid) + " to terminate");
     Util::requestTermination(brokerPid);
 

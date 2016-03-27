@@ -52,6 +52,7 @@
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
 #include "QueueHandler.hpp"
+#include "IoUtil.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -655,7 +656,7 @@ private:
                     << Process::id() << " "
                     << _url << " "
                     << "\r\n";
-            Util::writeFIFO(writerNotify, message.str());
+            IoUtil::writeFIFO(writerNotify, message.str());
 
             if (_multiView)
             {
@@ -707,7 +708,7 @@ private:
                 << Process::id() << " "
                 << sessionId << " "
                 << "\r\n";
-        Util::writeFIFO(writerNotify, message.str());
+        IoUtil::writeFIFO(writerNotify, message.str());
 
         return _loKitDocument;
     }
@@ -733,7 +734,7 @@ private:
                 << Process::id() << " "
                 << sessionId << " "
                 << "\r\n";
-        Util::writeFIFO(writerNotify, message.str());
+        IoUtil::writeFIFO(writerNotify, message.str());
 
         Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
 
@@ -972,7 +973,7 @@ void lokit_main(const std::string& childRoot,
                 else
                 if (pollPipeBroker.revents & (POLLIN | POLLPRI))
                 {
-                    bytes = Util::readFIFO(readerBroker, buffer, sizeof(buffer));
+                    bytes = IoUtil::readFIFO(readerBroker, buffer, sizeof(buffer));
                     if (bytes < 0)
                     {
                         start = end = nullptr;
@@ -1056,7 +1057,7 @@ void lokit_main(const std::string& childRoot,
                         response += "bad \r\n";
                     }
 
-                    Util::writeFIFO(writerBroker, response);
+                    IoUtil::writeFIFO(writerBroker, response);
 
                     // Don't log the CR LF at end
                     assert(response.length() > 2);
@@ -1099,7 +1100,7 @@ void lokit_main(const std::string& childRoot,
     message << "rmdoc" << " "
             << Process::id() << " "
             << "\r\n";
-    Util::writeFIFO(writerNotify, message.str());
+    IoUtil::writeFIFO(writerNotify, message.str());
     close(writerNotify);
 
     Log::info("Process [" + process_name + "] finished.");

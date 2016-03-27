@@ -34,6 +34,7 @@
 #include "Storage.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLWSD.hpp"
+#include "IoUtil.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -193,10 +194,11 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                         {
                             if (std::stoi(tokens[1]))
                             {
-                                Util::writeFIFO(LOOLWSD::BrokerWritePipe, firstLine + " \r\n");
+                                IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, firstLine + " \r\n");
                             }
                         }
-                        catch(std::exception& e) {
+                        catch(std::exception& e)
+                        {
                             Log::warn() << "Could not kill given PID" << Log::end;
                         }
                     }
@@ -492,7 +494,7 @@ void Admin::run()
 
     Log::info("Thread [" + thread_name + "] started.");
 
-    Util::pollPipeForReading(pollPipeNotify, FIFO_NOTIFY, NotifyPipe,
+    IoUtil::pollPipeForReading(pollPipeNotify, FIFO_NOTIFY, NotifyPipe,
                             [this](std::string& message) { return handleInput(message); } );
 
     _memStatsTimer.cancel();

@@ -14,7 +14,6 @@
 #include <sstream>
 #include <functional>
 #include <memory>
-#include <sys/poll.h>
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -74,20 +73,6 @@ namespace Util
                               int bufferWidth, int bufferHeight,
                               std::vector<char>& output, LibreOfficeKitTileMode mode);
 
-    /// Call WebSocket::shutdown() ignoring Poco::IOException.
-    void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws);
-
-    ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size);
-    inline
-    ssize_t writeFIFO(int pipe, const std::string& message)
-    {
-        return writeFIFO(pipe, message.c_str(), message.size());
-    }
-
-    ssize_t readFIFO(int pipe, char* buffer, ssize_t size);
-
-    ssize_t readMessage(int pipe, char* buffer, ssize_t size);
-
     /// Safely remove a file or directory.
     /// Supresses exception when the file is already removed.
     /// This can happen when there is a race (unavoidable) or when
@@ -140,9 +125,6 @@ namespace Util
     int getSignalStatus(const int code);
 
     void requestTermination(const Poco::Process::PID& pid);
-
-    void pollPipeForReading(pollfd& pollPipe, const std::string& targetPipeName , const int& targetPipe,
-                            std::function<void(std::string& message)> handler);
 
     unsigned getMemoryUsage(Poco::Process::PID nPid);
 };

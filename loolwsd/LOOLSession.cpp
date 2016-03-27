@@ -34,6 +34,7 @@
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "TileCache.hpp"
+#include "IoUtil.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -65,7 +66,7 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
 
 LOOLSession::~LOOLSession()
 {
-    Util::shutdownWebSocket(_ws);
+    IoUtil::shutdownWebSocket(_ws);
 }
 
 void LOOLSession::sendTextFrame(const std::string& text)
@@ -166,7 +167,7 @@ void LOOLSession::disconnect(const std::string& reason)
             else
                 sendTextFrame("disconnect");
             _disconnected = true;
-            Util::shutdownWebSocket(_ws);
+            IoUtil::shutdownWebSocket(_ws);
         }
     }
     catch (const IOException& exc)
@@ -178,7 +179,7 @@ void LOOLSession::disconnect(const std::string& reason)
 bool LOOLSession::handleDisconnect(StringTokenizer& /*tokens*/)
 {
     _disconnected = true;
-    Util::shutdownWebSocket(_ws);
+    IoUtil::shutdownWebSocket(_ws);
     return false;
 }
 

@@ -14,6 +14,7 @@
 
 #include "Common.hpp"
 #include "Capabilities.hpp"
+#include "IoUtil.hpp"
 #include "Util.hpp"
 
 // First include the grist of the helper process - ideally
@@ -26,7 +27,7 @@
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_MERGED      "lib" "mergedlo" ".so"
 
-typedef int (LokHookPreInit)  ( const char *install_path, const char *user_profile_path );
+typedef int (LokHookPreInit)  (const char *install_path, const char *user_profile_path);
 
 using Poco::ProcessHandle;
 
@@ -103,7 +104,7 @@ namespace
                 message << "rmdoc" << " "
                         << _pid << " "
                         << "\r\n";
-                Util::writeFIFO(writerNotify, message.str());
+                IoUtil::writeFIFO(writerNotify, message.str());
                _pid = -1;
             }
 
@@ -206,7 +207,7 @@ public:
             {
                 if (_start == _end)
                 {
-                    bytes = Util::readMessage(pipeReader, _buffer, sizeof(_buffer));
+                    bytes = IoUtil::readMessage(pipeReader, _buffer, sizeof(_buffer));
                     if ( bytes < 0 )
                     {
                         _start = _end = nullptr;
@@ -248,7 +249,7 @@ public:
     bool createThread(const Process::PID pid, const std::string& session, const std::string& url)
     {
         const std::string message = "thread " + session + " " + url + "\r\n";
-        if (Util::writeFIFO(getChildPipe(pid), message) < 0)
+        if (IoUtil::writeFIFO(getChildPipe(pid), message) < 0)
         {
             Log::error("Error sending thread message to child [" + std::to_string(pid) + "].");
             return false;
@@ -277,7 +278,7 @@ public:
         {
             const auto message = "query url \r\n";
             std::string response;
-            if (Util::writeFIFO(it->second->getWritePipe(), message) < 0 ||
+            if (IoUtil::writeFIFO(it->second->getWritePipe(), message) < 0 ||
                 getResponseLine(readerChild, response) < 0)
             {
                 auto log = Log::error();
@@ -387,7 +388,7 @@ public:
 
         Log::debug("Thread [" + thread_name + "] started.");
 
-        Util::pollPipeForReading(pollPipeBroker, FIFO_LOOLWSD, readerBroker,
+        IoUtil::pollPipeForReading(pollPipeBroker, FIFO_LOOLWSD, readerBroker,
                                  [this](std::string& message) { return handleInput(message); } );
 
         Log::debug("Thread [" + thread_name + "] finished.");
