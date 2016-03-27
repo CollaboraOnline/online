@@ -20,7 +20,7 @@ loadtest_SOURCES = LoadTest.cpp Util.cpp LOOLProtocol.cpp
 
 connect_SOURCES = Connect.cpp Util.cpp LOOLProtocol.cpp
 
-lokitclient_SOURCES = LOKitClient.cpp IoUtil.cpp Util.cpp
+lokitclient_SOURCES = LOKitClient.cpp LOOLProtocol.cpp IoUtil.cpp Util.cpp
 
 broker_shared_sources = ChildProcessSession.cpp $(shared_sources)
 
