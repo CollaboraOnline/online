@@ -793,21 +793,14 @@ void lokit_main(const std::string& childRoot,
     Util::rng::reseed();
 #endif
 
-    struct pollfd pollPipeBroker;
-    ssize_t bytes = -1;
-    int   ready = 0;
-    bool  isUsedKit = false;
-    char  buffer[READ_BUFFER_SIZE];
-    char* start = nullptr;
-    char* end = nullptr;
-
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
     assert(!loTemplate.empty());
     assert(!loSubPath.empty());
     assert(!pipe.empty());
 
-    std::map<std::string, std::shared_ptr<Document>> _documents;
+    // We only host a single document in our lifetime.
+    std::shared_ptr<Document> document;
 
     // Ideally this will be a random ID, but broker will cleanup
     // our jail directory when we die, and it's simpler to know
@@ -939,27 +932,23 @@ void lokit_main(const std::string& childRoot,
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
 
-        std::string response;
-        std::string message;
+        char* start = nullptr;
+        char* end = nullptr;
 
         while (!TerminationFlag)
         {
             if (start == end)
             {
+                struct pollfd pollPipeBroker;
                 pollPipeBroker.fd = readerBroker;
                 pollPipeBroker.events = POLLIN;
                 pollPipeBroker.revents = 0;
 
-                ready = poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS);
+                const int ready = poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS);
                 if (ready == 0)
                 {
                     // time out maintenance
-                    for (auto it = _documents.cbegin(); it != _documents.cend(); )
-                    {
-                        it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
-                    }
-
-                    if (isUsedKit && _documents.empty())
+                    if (document && document->canDiscard())
                     {
                         Log::info("Document closed. Flagging for termination.");
                         TerminationFlag = true;
@@ -974,7 +963,8 @@ void lokit_main(const std::string& childRoot,
                 else
                 if (pollPipeBroker.revents & (POLLIN | POLLPRI))
                 {
-                    bytes = IoUtil::readFIFO(readerBroker, buffer, sizeof(buffer));
+                    char buffer[READ_BUFFER_SIZE];
+                    const auto bytes = IoUtil::readFIFO(readerBroker, buffer, sizeof(buffer));
                     if (bytes < 0)
                     {
                         start = end = nullptr;
@@ -994,6 +984,7 @@ void lokit_main(const std::string& childRoot,
 
             if (start != end)
             {
+                std::string message;
                 char byteChar = *start++;
                 while (start != end && byteChar != '\r' && byteChar != '\n')
                 {
@@ -1004,17 +995,11 @@ void lokit_main(const std::string& childRoot,
                 if (byteChar == '\r' && *start == '\n')
                 {
                     start++;
-                    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                    response = std::to_string(Process::id()) + " ";
-
                     Log::trace("Recv: " + message);
+                    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    auto response = std::to_string(Process::id()) + " ";
 
-                    for (auto it = _documents.cbegin(); it != _documents.cend(); )
-                    {
-                        it = (it->second->canDiscard() ? _documents.erase(it) : ++it);
-                    }
-
-                    if (TerminationFlag || (isUsedKit && _documents.empty()))
+                    if (TerminationFlag || (document && document->canDiscard()))
                     {
                         TerminationFlag = true;
                         response += "down \r\n";
@@ -1023,15 +1008,8 @@ void lokit_main(const std::string& childRoot,
                     {
                         if (tokens[1] == "url")
                         {
-                            if (_documents.empty())
-                            {
-                                response += "empty \r\n";
-                            }
-                            else
-                            {
-                                // We really only support single URL hosting.
-                                response += _documents.cbegin()->first + "\r\n";
-                            }
+                            response += (document ? document->getUrl() : "empty");
+                            response += " \r\n";
                         }
                     }
                     else if (tokens[0] == "thread")
@@ -1042,15 +1020,14 @@ void lokit_main(const std::string& childRoot,
 
                         std::string url;
                         Poco::URI::decode(docKey, url);
-                        Log::debug("Thread request for session [" + sessionId + "], url: [" + url + "].");
-                        auto it = _documents.lower_bound(url);
-                        if (it == _documents.end())
+                        Log::info("Thread request for session [" + sessionId + "], url: [" + url + "].");
+
+                        if (!document)
                         {
-                            it = _documents.emplace_hint(it, url, std::make_shared<Document>(loKit, jailId, docKey, url));
+                            document = std::make_shared<Document>(loKit, jailId, docKey, url);
                         }
 
-                        it->second->createSession(sessionId, intSessionId);
-                        isUsedKit = true;
+                        document->createSession(sessionId, intSessionId);
                         response += "ok \r\n";
                     }
                     else
@@ -1084,10 +1061,10 @@ void lokit_main(const std::string& childRoot,
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    if (!_documents.empty())
+    if (document)
     {
-        Log::debug("Destroying documents.");
-        _documents.clear();
+        Log::info("Destroying document [" + document->getUrl() + "].");
+        document.reset();
     }
 
     // Destroy LibreOfficeKit
