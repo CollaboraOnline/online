@@ -274,7 +274,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 
             assert(n > 0);
 
-            const std::string firstLine = getFirstLine(payload.data(), payload.size());
+            const std::string firstLine = LOOLProtocol::getFirstLine(payload);
             if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
             {
                 // One WS message split into multiple frames.
@@ -616,9 +616,9 @@ private:
 
         SocketProcessor(ws, response, [&session, &queue, &normalShutdown](const std::vector<char>& payload)
             {
-                const auto firstLine = getFirstLine(payload.data(), payload.size());
                 time(&session->_lastMessageTime);
-                if (firstLine.compare(0, 10, "disconnect") == 0) // starts with "disconnect"
+                const auto token = LOOLProtocol::getFirstToken(payload);
+                if (token == "disconnect")
                 {
                     normalShutdown = true;
                 }

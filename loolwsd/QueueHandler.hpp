@@ -38,8 +38,7 @@ public:
             while (true)
             {
                 const auto input = _queue.get();
-                const auto firstLine = LOOLProtocol::getFirstLine(input.data(), input.size());
-                if (firstLine == "eof")
+                if (LOOLProtocol::getFirstToken(input) == "eof")
                 {
                     Log::info("Received EOF. Finishing.");
                     break;
@@ -55,10 +54,6 @@ public:
         catch (const std::exception& exc)
         {
             Log::error(std::string("QueueHandler::run: Exception: ") + exc.what());
-        }
-        catch (...)
-        {
-            Log::error("QueueHandler::run: Unexpected exception");
         }
 
         Log::debug("Thread [" + _name + "] finished.");

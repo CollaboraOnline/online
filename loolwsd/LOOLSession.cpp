@@ -186,9 +186,9 @@ bool LOOLSession::handleInput(const char *buffer, int length)
 {
     assert(buffer != nullptr);
 
+    const auto summary = getAbbreviatedMessage(buffer, length);
     try
     {
-        const auto summary = getAbbreviatedMessage(buffer, length);
         Log::trace(getName() + " Recv: " + summary);
         if (TerminationFlag)
         {
@@ -199,7 +199,7 @@ bool LOOLSession::handleInput(const char *buffer, int length)
     }
     catch (const Exception& exc)
     {
-        Log::error() << "LOOLSession::handleInput: Exception while handling [" + getFirstLine(buffer, length) + "] in "
+        Log::error() << "LOOLSession::handleInput: Exception while handling [" + summary + "] in "
                      << getName() << ": "
                      << exc.displayText()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
@@ -207,11 +207,7 @@ bool LOOLSession::handleInput(const char *buffer, int length)
     }
     catch (const std::exception& exc)
     {
-        Log::error("LOOLSession::handleInput: Exception while handling [" + getFirstLine(buffer, length) + "]: " + exc.what());
-    }
-    catch (...)
-    {
-        Log::error("LOOLSession::handleInput: Unexpected exception");
+        Log::error("LOOLSession::handleInput: Exception while handling [" + summary + "]: " + exc.what());
     }
 
     return false;
