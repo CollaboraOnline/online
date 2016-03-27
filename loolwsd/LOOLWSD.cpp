@@ -221,112 +221,120 @@ public:
 // Handler returns false to end.
 void SocketProcessor(std::shared_ptr<WebSocket> ws,
                      HTTPServerResponse& response,
-                     std::function<bool(const char* data, const int size, const bool singleLine)> handler)
+                     std::function<bool(const char* data, const int size)> handler)
 {
     Log::info("Starting Socket Processor.");
 
     const Timespan waitTime(POLL_TIMEOUT_MS * 1000);
     try
     {
+        ws->setReceiveTimeout(0);
+
         int flags = 0;
         int n = 0;
-        ws->setReceiveTimeout(0);
-        do
+        std::vector<char> payload(READ_BUFFER_SIZE * 100);
+
+        while (!TerminationFlag &&
+               (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
         {
-            char buffer[200000]; //FIXME: Dynamic?
-
-            if (ws->poll(waitTime, Socket::SELECT_READ))
+            if (!ws->poll(waitTime, Socket::SELECT_READ))
             {
-                n = ws->receiveFrame(buffer, sizeof(buffer), flags);
+                // Wait some more.
+                continue;
+            }
 
-                if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
-                {
-                    // Echo back the ping payload as pong.
-                    // Technically, we should send back a PONG control frame.
-                    // However Firefox (probably) or Node.js (possibly) doesn't
-                    // like that and closes the socket when we do.
-                    // Echoing the payload as a normal frame works with Firefox.
-                    ws->sendFrame(buffer, n /*, WebSocket::FRAME_OP_PONG*/);
-                }
-                else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
-                {
-                    // In case we do send pings in the future.
-                }
-                else if (n <= 0)
-                {
-                    // Connection closed.
-                    Log::warn() << "Received " << n
-                                << " bytes. Connection closed. Flags: "
-                                << std::hex << flags << Log::end;
-                    break;
-                }
-                else if ((flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                {
-                    assert(n > 0);
-                    const std::string firstLine = getFirstLine(buffer, n);
-                    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                    int size;
+            payload.resize(payload.capacity());
+            n = ws->receiveFrame(payload.data(), payload.capacity(), flags);
+            if (n >= 0)
+            {
+                payload.resize(n);
+            }
 
-                    if (firstLine == "eof")
+            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
+            {
+                // Echo back the ping payload as pong.
+                // Technically, we should send back a PONG control frame.
+                // However Firefox (probably) or Node.js (possibly) doesn't
+                // like that and closes the socket when we do.
+                // Echoing the payload as a normal frame works with Firefox.
+                ws->sendFrame(payload.data(), n /*, WebSocket::FRAME_OP_PONG*/);
+            }
+            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
+            {
+                // In case we do send pings in the future.
+            }
+            else if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
+            {
+                // Connection closed.
+                Log::warn() << "Received " << n
+                            << " bytes. Connection closed. Flags: "
+                            << std::hex << flags << Log::end;
+                break;
+            }
+
+            assert(n > 0);
+
+            const std::string firstLine = getFirstLine(payload.data(), payload.size());
+            if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
+            {
+                // One WS message split into multiple frames.
+                while (true)
+                {
+                    char buffer[READ_BUFFER_SIZE * 10];
+                    n = ws->receiveFrame(buffer, sizeof(buffer), flags);
+                    if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
                     {
-                        Log::info("Received EOF. Finishing.");
                         break;
                     }
 
-                    if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
+                    payload.insert(payload.end(), buffer, buffer + n);
+                    if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) == WebSocket::FrameFlags::FRAME_FLAG_FIN)
                     {
-                        // One WS message split into multiple frames.
-                        std::vector<char> message(buffer, buffer + n);
-                        while (true)
-                        {
-                            n = ws->receiveFrame(buffer, sizeof(buffer), flags);
-
-                            if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
-                                break;
-
-                            message.insert(message.end(), buffer, buffer + n);
-                            if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) == WebSocket::FrameFlags::FRAME_FLAG_FIN)
-                            {
-                                // No more frames: invoke the handler. Assume
-                                // for now that this is always a multi-line
-                                // message.
-                                handler(message.data(), message.size(), false);
-                                break;
-                            }
-                        }
-                    }
-                    else if (tokens.count() == 2 &&
-                             tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
-                    {
-                        // Check if it is a "nextmessage:" and in that case read the large
-                        // follow-up message separately, and handle that only.
-
-                        char largeBuffer[size];     //FIXME: Security risk! Flooding may segfault us.
-
-                        n = ws->receiveFrame(largeBuffer, size, flags);
-                        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && !handler(largeBuffer, n, false))
-                        {
-                            Log::info("Socket handler flagged for finishing.");
-                            break;
-                        }
-                    }
-                    else if (firstLine.size() == static_cast<std::string::size_type>(n))
-                    {
-                        handler(firstLine.c_str(), firstLine.size(), true);
-                    }
-                    else if (!handler(buffer, n, false))
-                    {
-                        Log::info("Socket handler flagged for finishing.");
+                        // No more frames.
                         break;
                     }
                 }
             }
+            else
+            {
+                int size = 0;
+                StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                if (tokens.count() == 2 &&
+                    tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
+                {
+                    // Check if it is a "nextmessage:" and in that case read the large
+                    // follow-up message separately, and handle that only.
+                    payload.resize(size);
+
+                    n = ws->receiveFrame(payload.data(), size, flags);
+                }
+            }
+
+            if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
+            {
+                break;
+            }
+
+            if (firstLine == "eof")
+            {
+                Log::info("Received EOF. Finishing.");
+                break;
+            }
+
+            // Call the handler.
+            if (!handler(payload.data(), payload.size()))
+            {
+                Log::info("Socket handler flagged for finishing.");
+            }
         }
-        while (!TerminationFlag &&
-               (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+
         Log::debug() << "Finishing SocketProcessor. TerminationFlag: " << TerminationFlag
-                     << ", payload size: " << n
+                     << ", payload size: " << payload.size()
                      << ", flags: " << std::hex << flags << Log::end;
+        if (!payload.empty())
+        {
+            Log::warn("Last message will not be processed: [" + getAbbreviatedMessage(payload.data(), payload.size()) + "].");
+        }
     }
     catch (const WebSocketException& exc)
     {
