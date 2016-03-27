@@ -500,7 +500,8 @@ bool MasterProcessSession::getPartPageRectangles(const char *buffer, int length)
 
 std::string MasterProcessSession::getSaveAs()
 {
-    return _saveAsQueue.get();
+    const auto payload = _saveAsQueue.get();
+    return std::string(payload.data(), payload.size());
 }
 
 void MasterProcessSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)

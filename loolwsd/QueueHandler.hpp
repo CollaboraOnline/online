@@ -11,6 +11,7 @@
 
 #include "MessageQueue.hpp"
 #include "LOOLSession.hpp"
+#include "LOOLProtocol.hpp"
 #include "Util.hpp"
 
 /// This thread handles incoming messages on a given kit instance.
@@ -36,14 +37,15 @@ public:
         {
             while (true)
             {
-                const std::string input = _queue.get();
-                if (input == "eof")
+                const auto input = _queue.get();
+                const auto firstLine = LOOLProtocol::getFirstLine(input.data(), input.size());
+                if (firstLine == "eof")
                 {
                     Log::info("Received EOF. Finishing.");
                     break;
                 }
 
-                if (!_session->handleInput(input.c_str(), input.size()))
+                if (!_session->handleInput(input.data(), input.size()))
                 {
                     Log::info("Socket handler flagged for finishing.");
                     break;

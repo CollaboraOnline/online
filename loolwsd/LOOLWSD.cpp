@@ -221,7 +221,7 @@ public:
 // Handler returns false to end.
 void SocketProcessor(std::shared_ptr<WebSocket> ws,
                      HTTPServerResponse& response,
-                     std::function<bool(const char* data, const int size)> handler)
+                     std::function<bool(const std::vector<char>&)> handler)
 {
     Log::info("Starting Socket Processor.");
 
@@ -322,7 +322,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             }
 
             // Call the handler.
-            if (!handler(payload.data(), payload.size()))
+            if (!handler(payload))
             {
                 Log::info("Socket handler flagged for finishing.");
             }
@@ -614,30 +614,20 @@ private:
         queueHandlerThread.start(handler);
         bool normalShutdown = false;
 
-        SocketProcessor(ws, response, [&session, &queue, &normalShutdown](const char* data, const int size, const bool singleLine)
+        SocketProcessor(ws, response, [&session, &queue, &normalShutdown](const std::vector<char>& payload)
             {
-                // FIXME: There is a race here when a request A gets in the queue and
-                // is processed _after_ a later request B, because B gets processed
-                // synchronously and A is waiting in the queue thread.
-                // The fix is to push everything into the queue
-                // (i.e. change MessageQueue to vector<char>).
-                const std::string firstLine = getFirstLine(data, size);
+                const auto firstLine = getFirstLine(payload.data(), payload.size());
                 time(&session->_lastMessageTime);
-                if (singleLine || firstLine.find("paste") == 0)
+                if (firstLine.compare(0, 10, "disconnect") == 0) // starts with "disconnect"
                 {
-                    if (firstLine.compare(0, 10, "disconnect") == 0) // starts with "disconnect"
-                    {
-                        normalShutdown = true;
-                        return true;
-                    }
-
-                    queue.put(std::string(data, size));
-                    return true;
+                    normalShutdown = true;
                 }
                 else
                 {
-                    return session->handleInput(data, size);
+                    queue.put(payload);
                 }
+
+                return true;
             });
 
         if (docBroker->getSessionsCount() == 1 && !normalShutdown)
@@ -831,9 +821,9 @@ public:
             lock.unlock();
             MasterProcessSession::AvailableChildSessionCV.notify_one();
 
-            SocketProcessor(ws, response, [&session](const char* data, const int size, bool)
+            SocketProcessor(ws, response, [&session](const std::vector<char>& payload)
                 {
-                    return session->handleInput(data, size);
+                    return session->handleInput(payload.data(), payload.size());
                 });
         }
         catch (const Exception& exc)

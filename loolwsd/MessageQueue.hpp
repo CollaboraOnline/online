@@ -21,7 +21,7 @@ class MessageQueue
 {
 public:
 
-    typedef std::string Payload;
+    typedef std::vector<char> Payload;
 
     MessageQueue()
     {
@@ -34,6 +34,10 @@ public:
 
     /// Thread safe insert the message.
     void put(const Payload& value);
+    void put(const std::string& value)
+    {
+        put(Payload(value.data(), value.data() + value.size()));
+    }
 
     /// Thread safe obtaining of the message.
     Payload get();
