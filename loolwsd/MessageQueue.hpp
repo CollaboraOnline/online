@@ -13,46 +13,51 @@
 #include <condition_variable>
 #include <mutex>
 #include <deque>
+#include <vector>
 
 /** Thread-safe message queue (FIFO).
 */
 class MessageQueue
 {
 public:
+
+    typedef std::string Payload;
+
     MessageQueue()
     {
     }
+
     virtual ~MessageQueue();
 
     MessageQueue(const MessageQueue&) = delete;
     MessageQueue& operator=(const MessageQueue&) = delete;
 
     /// Thread safe insert the message.
-    void put(const std::string& value);
+    void put(const Payload& value);
 
     /// Thread safe obtaining of the message.
-    std::string get();
+    Payload get();
 
     /// Thread safe removal of all the pending messages.
     void clear();
 
     /// Thread safe remove_if.
-    void remove_if(std::function<bool(const std::string&)> pred);
+    void remove_if(std::function<bool(const Payload&)> pred);
 
 private:
     std::mutex _mutex;
     std::condition_variable _cv;
 
 protected:
-    virtual void put_impl(const std::string& value);
+    virtual void put_impl(const Payload& value);
 
     virtual bool wait_impl() const;
 
-    virtual std::string get_impl();
+    virtual Payload get_impl();
 
     virtual void clear_impl();
 
-    std::deque<std::string> _queue;
+    std::deque<Payload> _queue;
 };
 
 /** MessageQueue specialized for handling of tiles.
@@ -63,7 +68,7 @@ gets a "canceltiles" command.
 class BasicTileQueue : public MessageQueue
 {
 protected:
-    virtual void put_impl(const std::string& value);
+    virtual void put_impl(const Payload& value);
 };
 
 /** MessageQueue specialized for priority handling of tiles.
@@ -77,7 +82,7 @@ that the ones closest to the cursor position are returned first.
 class TileQueue : public BasicTileQueue
 {
 protected:
-    virtual void put_impl(const std::string& value);
+    virtual void put_impl(const Payload& value);
 };
 
 #endif

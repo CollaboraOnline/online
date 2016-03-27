@@ -16,7 +16,7 @@ MessageQueue::~MessageQueue()
     clear();
 }
 
-void MessageQueue::put(const std::string& value)
+void MessageQueue::put(const Payload& value)
 {
     std::unique_lock<std::mutex> lock(_mutex);
     put_impl(value);
@@ -24,7 +24,7 @@ void MessageQueue::put(const std::string& value)
     _cv.notify_one();
 }
 
-std::string MessageQueue::get()
+MessageQueue::Payload MessageQueue::get()
 {
     std::unique_lock<std::mutex> lock(_mutex);
     _cv.wait(lock, [this] { return wait_impl(); });
@@ -37,13 +37,13 @@ void MessageQueue::clear()
     clear_impl();
 }
 
-void MessageQueue::remove_if(std::function<bool(const std::string&)> pred)
+void MessageQueue::remove_if(std::function<bool(const Payload&)> pred)
 {
     std::unique_lock<std::mutex> lock(_mutex);
     std::remove_if(_queue.begin(), _queue.end(), pred);
 }
 
-void MessageQueue::put_impl(const std::string& value)
+void MessageQueue::put_impl(const Payload& value)
 {
     _queue.push_back(value);
 }
@@ -53,11 +53,11 @@ bool MessageQueue::wait_impl() const
     return _queue.size() > 0;
 }
 
-std::string MessageQueue::get_impl()
+MessageQueue::Payload MessageQueue::get_impl()
 {
-    std::string result = _queue.front();
+    auto result = _queue.front();
     _queue.pop_front();
-    return result;
+    return std::move(result);
 }
 
 void MessageQueue::clear_impl()
@@ -65,17 +65,19 @@ void MessageQueue::clear_impl()
     _queue.clear();
 }
 
-void BasicTileQueue::put_impl(const std::string& value)
+void BasicTileQueue::put_impl(const Payload& value)
 {
-    if (value == "canceltiles")
+    const auto msg = std::string(&value[0], value.size());
+    if (msg == "canceltiles")
     {
         // remove all the existing tiles from the queue
         _queue.erase(std::remove_if(_queue.begin(), _queue.end(),
-                    [](const std::string& v)
+                    [](const Payload& v)
                     {
                         // must not remove the tiles with 'id=', they are special, used
                         // eg. for previews etc.
-                        return (v.compare(0, 5, "tile ") == 0) && (v.find("id=") == std::string::npos);
+                        const auto msg = std::string(&v[0], v.size());
+                        return (msg.compare(0, 5, "tile ") == 0) && (msg.find("id=") == std::string::npos);
                     }
                     ),
                 _queue.end());
@@ -84,12 +86,15 @@ void BasicTileQueue::put_impl(const std::string& value)
         _queue.push_front(value);
     }
     else
+    {
         MessageQueue::put_impl(value);
+    }
 }
 
-void TileQueue::put_impl(const std::string& value)
+void TileQueue::put_impl(const Payload& value)
 {
-    if (value.compare(0, 5, "tile ") == 0)
+    const auto msg = std::string(&value[0], value.size());
+    if (msg.compare(0, 5, "tile ") == 0)
     {
         // TODO: implement a real re-ordering here, so that the tiles closest to
         // the cursor are returned first.
@@ -104,7 +109,9 @@ void TileQueue::put_impl(const std::string& value)
         for (auto it = _queue.cbegin(); it != _queue.cend(); ++it)
         {
             if (value == *it)
+            {
                 return;
+            }
         }
     }
 
