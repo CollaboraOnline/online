@@ -43,7 +43,7 @@ static std::chrono::steady_clock::time_point lastMaintenanceTime = std::chrono::
 static unsigned int childCounter = 0;
 static int numPreSpawnedChildren = 0;
 
-static std::recursive_mutex forkMutex;
+static std::mutex forkMutex;
 
 namespace
 {
@@ -137,14 +137,10 @@ namespace
 
     static std::map<Process::PID, std::shared_ptr<ChildProcess>> _childProcesses;
 
-    /// Safely looks up a child hosting a URL.
+    /// Looks up a child hosting a URL, or returns an empty one.
     std::shared_ptr<ChildProcess> findChild(const std::string& url)
     {
-        std::lock_guard<std::recursive_mutex> lock(forkMutex);
-
         std::shared_ptr<ChildProcess> child;
-        Log::trace() << "Finding child for url [" << url << "] in "
-                     << _childProcesses.size() << " childs." << Log::end;
         for (const auto& it : _childProcesses)
         {
             Log::trace() << "Child [" << it.second->getPid()
@@ -164,19 +160,17 @@ namespace
         return child;
     }
 
-    /// Safely looks up the pipe descriptor
+    /// Looks up the pipe descriptor
     /// of a child. Returns -1 on error.
     int getChildPipe(const Process::PID pid)
     {
-        std::lock_guard<std::recursive_mutex> lock(forkMutex);
         const auto it = _childProcesses.find(pid);
         return (it != _childProcesses.end() ? it->second->getWritePipe() : -1);
     }
 
-    /// Safely removes a child process.
+    /// Removes a child process.
     void removeChild(const Process::PID pid, const bool rude)
     {
-        std::lock_guard<std::recursive_mutex> lock(forkMutex);
         const auto it = _childProcesses.find(pid);
         if (it != _childProcesses.end())
         {
@@ -270,8 +264,6 @@ public:
     /// Returns the number of empty children.
     size_t syncChildren()
     {
-        std::lock_guard<std::recursive_mutex> lock(forkMutex);
-
         Log::trace("Synching children.");
         size_t empty_count = 0;
         for (auto it = _childProcesses.begin(); it != _childProcesses.end(); )
@@ -325,9 +317,10 @@ public:
 
     void handleInput(const std::string& message)
     {
-        std::lock_guard<std::recursive_mutex> lock(forkMutex);
-
         StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+        std::lock_guard<std::mutex> lock(forkMutex);
+
         if (tokens[0] == "request" && tokens.count() == 3)
         {
             const std::string session = tokens[1];
@@ -353,14 +346,15 @@ public:
                 {
                     child->setUrl(url);
                     Log::debug("Child [" + childPid + "] now hosts [" + url + "] for session [" + session + "].");
-                    return;
                 }
-
-                Log::error("Error creating thread [" + session + "] for URL [" + url + "] on child [" + childPid + "].");
-                if (isEmptyChild)
+                else
                 {
-                    // This is probably a child in bad state. Rid of it and create new.
-                    removeChild(child->getPid(), true);
+                    Log::error("Error creating thread [" + session + "] for URL [" + url + "] on child [" + childPid + "].");
+                    if (isEmptyChild)
+                    {
+                        // This is probably a child in bad state. Rid of it and create new.
+                        removeChild(child->getPid(), true);
+                    }
                 }
             }
             else
@@ -761,6 +755,7 @@ int main(int argc, char** argv)
         const pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
+            std::lock_guard<std::mutex> lock(forkMutex);
             if (WIFEXITED(status))
             {
                 childExitCode = Util::getChildStatus(WEXITSTATUS(status));
@@ -826,7 +821,7 @@ int main(int argc, char** argv)
                 }
                 else
                 {
-                    Log::error("Error: last child exited with error code.");
+                    Log::error("Error: last child exited with error code. Terminating.");
                     TerminationFlag = true; //FIXME: Why?
                     continue;
                 }
@@ -839,7 +834,7 @@ int main(int argc, char** argv)
 
         if (forkCounter > 0 && childExitCode == EXIT_SUCCESS)
         {
-            std::lock_guard<std::recursive_mutex> lock(forkMutex);
+            std::lock_guard<std::mutex> lock(forkMutex);
 
             const int empty = pipeHandler.syncChildren();
             const int total = _childProcesses.size();
