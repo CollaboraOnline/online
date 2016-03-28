@@ -240,19 +240,19 @@ public:
         return bytes;
     }
 
-    bool createThread(const Process::PID pid, const std::string& session, const std::string& url)
+    bool createSession(const Process::PID pid, const std::string& session, const std::string& url)
     {
-        const std::string message = "thread " + session + " " + url + "\r\n";
+        const std::string message = "session " + session + " " + url + "\r\n";
         if (IoUtil::writeFIFO(getChildPipe(pid), message) < 0)
         {
-            Log::error("Error sending thread message to child [" + std::to_string(pid) + "].");
+            Log::error("Error sending session message to child [" + std::to_string(pid) + "].");
             return false;
         }
 
         std::string response;
         if (getResponseLine(readerChild, response) < 0)
         {
-            Log::error("Error reading response to thread message from child [" + std::to_string(pid) + "].");
+            Log::error("Error reading response to session message from child [" + std::to_string(pid) + "].");
             return false;
         }
 
@@ -326,7 +326,7 @@ public:
             const std::string session = tokens[1];
             const std::string url = tokens[2];
 
-            Log::debug("Finding kit for URL [" + url + "] on thread [" + session + "].");
+            Log::debug("Finding kit for URL [" + url + "] on session [" + session + "].");
 
             const auto child = findChild(url);
             if (child)
@@ -342,14 +342,14 @@ public:
                     Log::debug("Found URL [" + url + "] hosted on child [" + childPid + "].");
                 }
 
-                if (createThread(child->getPid(), session, url))
+                if (createSession(child->getPid(), session, url))
                 {
                     child->setUrl(url);
                     Log::debug("Child [" + childPid + "] now hosts [" + url + "] for session [" + session + "].");
                 }
                 else
                 {
-                    Log::error("Error creating thread [" + session + "] for URL [" + url + "] on child [" + childPid + "].");
+                    Log::error("Error creating session [" + session + "] for URL [" + url + "] on child [" + childPid + "].");
                     if (isEmptyChild)
                     {
                         // This is probably a child in bad state. Rid of it and create new.

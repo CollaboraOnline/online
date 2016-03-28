@@ -736,7 +736,7 @@ void MasterProcessSession::dispatchChild()
     std::shared_ptr<MasterProcessSession> childSession;
     std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
 
-    Log::debug() << "Waiting for a child session permission for thread [" << getId() << "]." << Log::end;
+    Log::debug() << "Waiting for child session [" << getId() << "] to connect." << Log::end;
     while (retries-- && !isFound)
     {
         AvailableChildSessionCV.wait_for(

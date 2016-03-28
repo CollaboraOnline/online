@@ -1015,7 +1015,7 @@ void lokit_main(const std::string& childRoot,
                         // Too late, we're going down.
                         response += "down \r\n";
                     }
-                    else if (tokens[0] == "thread")
+                    else if (tokens[0] == "session")
                     {
                         const std::string& sessionId = tokens[1];
                         const unsigned intSessionId = Util::decodeId(sessionId);
@@ -1056,7 +1056,7 @@ void lokit_main(const std::string& childRoot,
                     }
                     else
                     {
-                        response += "bad \r\n";
+                        response += "bad unknown token [" + tokens[0] + "] \r\n";
                     }
 
                     IoUtil::writeFIFO(writerBroker, response);
