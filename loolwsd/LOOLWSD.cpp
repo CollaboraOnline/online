@@ -272,6 +272,7 @@ private:
                     session->handleInput(saveas.data(), saveas.size());
 
                     // Send it back to the client.
+                    //TODO: Should have timeout to avoid waiting forever.
                     Poco::URI resultURL(session->getSaveAs());
                     if (!resultURL.getPath().empty())
                     {
@@ -459,8 +460,8 @@ private:
         sessionsLock.unlock();
 
         // Request a kit process for this doc.
-        const std::string aMessage = "request " + id + " " + docKey + "\r\n";
-        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 2));
+        const std::string aMessage = "request " + id + " " + docKey + "\n";
+        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
         IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
         // For ToClient sessions, we store incoming messages in a queue and have a separate
@@ -495,8 +496,9 @@ private:
 
         if (docBroker->getSessionsCount() == 1 && !normalShutdown)
         {
-            //TODO: This really should move to the kit, where it
-            // knows if a doc is unsaved, and if other views are open.
+            //TODO: This isn't this simple. We need to wait for the notification
+            // of save so Storage can persist the save (if necessary).
+            // In addition, we shouldn't issue save when opening of the doc fails.
             Log::info("Non-deliberate shutdown of the last session, saving the document before tearing down.");
             queue.put("uno .uno:Save");
         }
@@ -1360,7 +1362,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
 
     // Terminate child processes
-    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\r\n");
+    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\n");
     Log::info("Requesting child process " + std::to_string(brokerPid) + " to terminate");
     Util::requestTermination(brokerPid);
 

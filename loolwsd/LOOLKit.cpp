@@ -997,15 +997,14 @@ void lokit_main(const std::string& childRoot,
             if (start != end)
             {
                 char byteChar = *start++;
-                while (start != end && byteChar != '\r' && byteChar != '\n')
+                while (start != end && byteChar != '\n')
                 {
                     message += byteChar;
                     byteChar = *start++;
                 }
 
-                if (byteChar == '\r' && *start == '\n')
+                if (byteChar == '\n')
                 {
-                    start++;
                     Log::trace("Recv: " + message);
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                     auto response = std::to_string(Process::id()) + " ";
@@ -1013,7 +1012,7 @@ void lokit_main(const std::string& childRoot,
                     if (TerminationFlag)
                     {
                         // Too late, we're going down.
-                        response += "down \r\n";
+                        response += "down\n";
                     }
                     else if (tokens[0] == "session")
                     {
@@ -1034,29 +1033,29 @@ void lokit_main(const std::string& childRoot,
                         if (url == document->getUrl() &&
                             document->createSession(sessionId, intSessionId))
                         {
-                            response += "ok \r\n";
+                            response += "ok\n";
                         }
                         else
                         {
-                            response += "bad \r\n";
+                            response += "bad\n";
                         }
                     }
                     else if (document && document->canDiscard())
                     {
                         TerminationFlag = true;
-                        response += "down \r\n";
+                        response += "down\n";
                     }
                     else if (tokens[0] == "query" && tokens.count() > 1)
                     {
                         if (tokens[1] == "url")
                         {
                             response += (document ? document->getUrl() : "empty");
-                            response += " \r\n";
+                            response += "\n";
                         }
                     }
                     else
                     {
-                        response += "bad unknown token [" + tokens[0] + "] \r\n";
+                        response += "bad unknown token [" + tokens[0] + "]\n";
                     }
 
                     IoUtil::writeFIFO(writerBroker, response);
@@ -1064,7 +1063,6 @@ void lokit_main(const std::string& childRoot,
                     // Don't log the CR LF at end
                     assert(response.length() > 2);
                     assert(response[response.length()-1] == '\n');
-                    assert(response[response.length()-2] == '\r');
                     Log::trace("KitToBroker: " + response.substr(0, response.length()-2));
                     message.clear();
                 }

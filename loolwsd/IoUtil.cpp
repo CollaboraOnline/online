@@ -207,14 +207,14 @@ void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws)
 
 ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size)
 {
-    ssize_t bytes = -1;
     ssize_t count = 0;
-
     while(true)
     {
-        bytes = write(pipe, buffer + count, size - count);
+        Log::trace("Writing to pipe. Data: [" + std::string(buffer, size) + "].");
+        const auto bytes = write(pipe, buffer + count, size - count);
         if (bytes < 0)
         {
+            Log::error("Failed to write to pipe. Retrying. Data: [" + std::string(buffer, size) + "].");
             if (errno == EINTR || errno == EAGAIN)
                 continue;
 
@@ -281,6 +281,8 @@ int PipeReader::readLine(std::string& line,
         // We have a line cached, return it.
         line += std::string(_data.data(), endOfLine);
         _data.erase(0, endOfLine - _data.data() + 1); // Including the '\n'.
+        Log::trace() << "Read existing line from pipe: " << _name << ", line: ["
+                     << line << "], data: [" << _data << "]." << Log::end;
         return 1;
     }
 
@@ -291,7 +293,7 @@ int PipeReader::readLine(std::string& line,
     {
         if (stopPredicate())
         {
-            Log::info() << "Spot requested for pipe: " << _name << Log::end;
+            Log::info() << "Stop requested for pipe: " << _name << '.' << Log::end;
             return -1;
         }
 
@@ -300,6 +302,7 @@ int PipeReader::readLine(std::string& line,
         pipe.events = POLLIN;
         pipe.revents = 0;
         const int ready = poll(&pipe, 1, pollTimeoutMs);
+        Log::trace() << "Poll for pipe: " << _name << " returned: " << ready << Log::end;
         if (ready == 0)
         {
             // Timeout.
@@ -314,6 +317,7 @@ int PipeReader::readLine(std::string& line,
         {
             char buffer[READ_BUFFER_SIZE];
             const auto bytes = readFIFO(_pipe, buffer, sizeof(buffer));
+            Log::trace() << "readFIFO for pipe: " << _name << " returned: " << bytes << Log::end;
             if (bytes < 0)
             {
                 return -1;
@@ -324,15 +328,18 @@ int PipeReader::readLine(std::string& line,
             {
                 // Got end of line.
                 line = _data;
-                auto tail = std::string(static_cast<const char*>(buffer), endOfLine);
+                const auto tail = std::string(static_cast<const char*>(buffer), endOfLine);
                 line += tail;
-                _data = std::string(endOfLine, bytes - tail.size() - 1); // Exclude the '\n'.
+                _data = std::string(endOfLine + 1, bytes - tail.size() - 1); // Exclude the '\n'.
+                Log::trace() << "Read line from pipe: " << _name << ", line: [" << line
+                            << "], data: [" << _data << "]." << Log::end;
                 return 1;
             }
             else
             {
                 // More data, keep going.
                 _data += std::string(buffer, bytes);
+                Log::trace() << "data appended to pipe: " << _name << ", data: " << _data << Log::end;
             }
         }
         else if (pipe.revents & (POLLERR | POLLHUP | POLLNVAL))

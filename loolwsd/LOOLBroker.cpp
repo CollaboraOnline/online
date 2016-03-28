@@ -184,65 +184,14 @@ namespace
 class PipeRunnable: public Runnable
 {
 public:
-    PipeRunnable()
-      : _start(nullptr),
-        _end(nullptr)
+    PipeRunnable() :
+        _childPipeReader("child_pipe_rd", readerChild)
     {
-    }
-
-    ssize_t getResponseLine(const int pipeReader, std::string& response)
-    {
-        ssize_t bytes = -1;
-        response.clear();
-
-        try
-        {
-            for (;;)
-            {
-                if (_start == _end)
-                {
-                    bytes = IoUtil::readMessage(pipeReader, _buffer, sizeof(_buffer));
-                    if (bytes < 0)
-                    {
-                        _start = _end = nullptr;
-                        break;
-                    }
-
-                    _start = _buffer;
-                    _end = _buffer + bytes;
-                }
-
-                if (_start != _end)
-                {
-                    char byteChar = *_start++;
-                    while (_start != _end && byteChar != '\r' && byteChar != '\n')
-                    {
-                        response += byteChar;
-                        byteChar = *_start++;
-                    }
-
-                    if (byteChar == '\r' && *_start == '\n')
-                    {
-                        ++_start;
-                        break;
-                    }
-                }
-            }
-        }
-        catch (const std::exception& exc)
-        {
-            Log::error() << "Exception while reading from pipe ["
-                         << pipeReader << "]: " << exc.what() << Log::end;
-            return -1;
-        }
-
-        Log::debug("Recv child response: [" + response + "].");
-        return bytes;
     }
 
     bool createSession(const Process::PID pid, const std::string& session, const std::string& url)
     {
-        const std::string message = "session " + session + " " + url + "\r\n";
+        const std::string message = "session " + session + " " + url + "\n";
         if (IoUtil::writeFIFO(getChildPipe(pid), message) < 0)
         {
             Log::error("Error sending session message to child [" + std::to_string(pid) + "].");
@@ -250,7 +199,7 @@ public:
         }
 
         std::string response;
-        if (getResponseLine(readerChild, response) < 0)
+        if (_childPipeReader.readLine(response, [](){ return TerminationFlag; }) < 0)
         {
             Log::error("Error reading response to session message from child [" + std::to_string(pid) + "].");
             return false;
@@ -268,10 +217,10 @@ public:
         size_t empty_count = 0;
         for (auto it = _childProcesses.begin(); it != _childProcesses.end(); )
         {
-            const auto message = "query url \r\n";
+            const auto message = "query url\n";
             std::string response;
             if (IoUtil::writeFIFO(it->second->getWritePipe(), message) < 0 ||
-                getResponseLine(readerChild, response) < 0)
+                _childPipeReader.readLine(response, [](){ return TerminationFlag; }) < 0)
             {
                 auto log = Log::error();
                 log << "Error querying child [" << std::to_string(it->second->getPid()) << "].";
@@ -288,7 +237,7 @@ public:
             }
 
             StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (tokens.count() == 2 && tokens[0] == std::to_string(it->second->getPid()))
+            if (tokens.count() >= 2 && tokens[0] == std::to_string(it->second->getPid()))
             {
                 Log::debug("Child [" + std::to_string(it->second->getPid()) + "] hosts [" + tokens[1] + "].");
                 if (tokens[1] == "empty")
@@ -304,7 +253,7 @@ public:
             else
             {
                 Log::error("Unexpected response from child [" + std::to_string(it->second->getPid()) +
-                           "] to query: [" + tokens[1] + "].");
+                           "] to url query: [" + response + "].");
             }
 
             ++it;
@@ -317,6 +266,8 @@ public:
 
     void handleInput(const std::string& message)
     {
+        Log::info("Broker command: [" + message + "].");
+
         StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
         std::lock_guard<std::mutex> lock(forkMutex);
@@ -388,9 +339,7 @@ public:
     }
 
 private:
-    char* _start;
-    char* _end;
-    char  _buffer[READ_BUFFER_SIZE];
+    IoUtil::PipeReader _childPipeReader;
 };
 
 /// Initializes LibreOfficeKit for cross-fork re-use.

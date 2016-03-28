@@ -441,6 +441,7 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
 
         // Finally, wait for the Child to connect to Master,
         // link the document in jail and dispatch load to child.
+        Log::trace("Dispatching child to handle [load].");
         dispatchChild();
 
         return true;
@@ -463,7 +464,10 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
     }
 
     if (_peer.expired())
+    {
+        Log::trace("Dispatching child to handle [getStatus].");
         dispatchChild();
+    }
     forwardToPeer(buffer, length);
     return true;
 }
@@ -757,8 +761,8 @@ void MasterProcessSession::dispatchChild()
         {
             Log::info() << "Retrying child permission... " << retries << Log::end;
             // request again new URL session
-            const std::string message = "request " + getId() + " " + _docBroker->getDocKey() + "\r\n";
-            Log::trace("MasterToBroker: " + message.substr(0, message.length()-2));
+            const std::string message = "request " + getId() + " " + _docBroker->getDocKey() + '\n';
+            Log::trace("MasterToBroker: " + message.substr(0, message.length()-1));
             IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, message);
         }
     }

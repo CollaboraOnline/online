@@ -59,7 +59,7 @@ namespace IoUtil
         /// On success, line will contain the read message.
         int readLine(std::string& line,
                      std::function<bool()> stopPredicate,
-                     const size_t timeoutMs);
+                     const size_t timeoutMs = POLL_TIMEOUT_MS);
 
         void process(std::function<bool(std::string& message)> handler,
                      std::function<bool()> stopPredicate,
