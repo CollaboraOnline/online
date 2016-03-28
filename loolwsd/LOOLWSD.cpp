@@ -1011,7 +1011,6 @@ private:
 std::atomic<unsigned> LOOLWSD::NextSessionId;
 int LOOLWSD::BrokerWritePipe = -1;
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
-std::string LOOLWSD::Config = LOOLWSD_CONFIGDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
@@ -1040,7 +1039,7 @@ void LOOLWSD::initialize(Application& self)
     // load default configuration files, if present
     if (loadConfiguration() == 0)
     {
-        std::string configPath = LOOLWSD::Config + "/loolwsd.xml";
+        std::string configPath = LOOLWSD_CONFIGDIR "/loolwsd.xml";
         loadConfiguration(configPath);
     }
 

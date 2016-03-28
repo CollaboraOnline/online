@@ -40,7 +40,6 @@ public:
     static int BrokerWritePipe;
     static bool DoTest;
     static std::string Cache;
-    static std::string Config;
     static std::string SysTemplate;
     static std::string LoTemplate;
     static std::string ChildRoot;
