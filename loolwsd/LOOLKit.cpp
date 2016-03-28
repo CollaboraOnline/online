@@ -943,6 +943,8 @@ void lokit_main(const std::string& childRoot,
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
 
+        char buffer[READ_BUFFER_SIZE];
+        std::string message;
         char* start = nullptr;
         char* end = nullptr;
 
@@ -974,7 +976,6 @@ void lokit_main(const std::string& childRoot,
                 else
                 if (pollPipeBroker.revents & (POLLIN | POLLPRI))
                 {
-                    char buffer[READ_BUFFER_SIZE];
                     const auto bytes = IoUtil::readFIFO(readerBroker, buffer, sizeof(buffer));
                     if (bytes < 0)
                     {
@@ -995,7 +996,6 @@ void lokit_main(const std::string& childRoot,
 
             if (start != end)
             {
-                std::string message;
                 char byteChar = *start++;
                 while (start != end && byteChar != '\r' && byteChar != '\n')
                 {

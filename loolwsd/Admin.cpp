@@ -481,12 +481,6 @@ void Admin::run()
     _cpuStatsTask = new CpuStats(this);
     _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
 
-    // Start listening for data changes
-    struct pollfd pollPipeNotify;
-    pollPipeNotify.fd = NotifyPipe;
-    pollPipeNotify.events = POLLIN;
-    pollPipeNotify.revents = 0;
-
     static const std::string thread_name = "admin_thread";
 
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
@@ -494,8 +488,10 @@ void Admin::run()
 
     Log::info("Thread [" + thread_name + "] started.");
 
-    IoUtil::pollPipeForReading(pollPipeNotify, FIFO_NOTIFY, NotifyPipe,
-                            [this](std::string& message) { return handleInput(message); } );
+    // Start listening for data changes.
+    IoUtil::PipeReader pipeReader(FIFO_NOTIFY, NotifyPipe);
+    pipeReader.process([this](std::string& message) { handleInput(message); return true; },
+                       []() { return TerminationFlag; });
 
     _memStatsTimer.cancel();
     _cpuStatsTimer.cancel();

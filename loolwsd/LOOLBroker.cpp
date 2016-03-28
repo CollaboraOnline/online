@@ -373,12 +373,6 @@ public:
 
     void run() override
     {
-        struct pollfd pollPipeBroker;
-
-        pollPipeBroker.fd = readerBroker;
-        pollPipeBroker.events = POLLIN;
-        pollPipeBroker.revents = 0;
-
         static const std::string thread_name = "brk_pipe_reader";
 
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
@@ -386,8 +380,9 @@ public:
 
         Log::debug("Thread [" + thread_name + "] started.");
 
-        IoUtil::pollPipeForReading(pollPipeBroker, FIFO_LOOLWSD, readerBroker,
-                                 [this](std::string& message) { return handleInput(message); } );
+        IoUtil::PipeReader pipeReader(FIFO_LOOLWSD, readerBroker);
+        pipeReader.process([this](std::string& message) { handleInput(message); return true; },
+                           []() { return TerminationFlag; });
 
         Log::debug("Thread [" + thread_name + "] finished.");
     }

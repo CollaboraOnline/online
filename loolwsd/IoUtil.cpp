@@ -268,62 +268,113 @@ ssize_t readMessage(const int pipe, char* buffer, const ssize_t size, const size
     return -1;
 }
 
-void pollPipeForReading(pollfd& pollPipe, const std::string& targetPipeName , const int& targetPipe,
-                        std::function<void(std::string& message)> handler)
+/// Reads a single line from a pipe.
+/// Returns 0 for timeout, <0 for error, and >0 on success.
+/// On success, line will contain the read message.
+int PipeReader::readLine(std::string& line,
+                         std::function<bool()> stopPredicate,
+                         const size_t timeoutMs)
 {
-    std::string message;
-    char buffer[READ_BUFFER_SIZE];
-    char* start = buffer;
-    char* end = buffer;
-    ssize_t bytes = -1;
-
-    while (!TerminationFlag)
+    const char *endOfLine = static_cast<const char *>(std::memchr(_data.data(), '\n', _data.size()));
+    if (endOfLine != nullptr)
     {
-        if (start == end)
+        // We have a line cached, return it.
+        line += std::string(_data.data(), endOfLine);
+        _data.erase(0, endOfLine - _data.data() + 1); // Including the '\n'.
+        return 1;
+    }
+
+    // Poll in short intervals to check for stop condition.
+    const auto pollTimeoutMs = 500;
+    auto maxPollCount = timeoutMs / pollTimeoutMs;
+    while (maxPollCount-- > 0)
+    {
+        if (stopPredicate())
         {
-            if (poll(&pollPipe, 1, POLL_TIMEOUT_MS) < 0)
-            {
-                Log::error("Failed to poll pipe [" + targetPipeName + "].");
-                continue;
-            }
-            else if (pollPipe.revents & (POLLIN | POLLPRI))
-            {
-                bytes = readFIFO(targetPipe, buffer, sizeof(buffer));
-                if (bytes < 0)
-                {
-                    start = end = nullptr;
-                    Log::error("Error reading message from pipe [" + targetPipeName + "].");
-                    continue;
-                }
-                start = buffer;
-                end = buffer + bytes;
-            }
-            else if (pollPipe.revents & (POLLERR | POLLHUP))
-            {
-                Log::error("Broken pipe [" + targetPipeName + "] with wsd.");
-                break;
-            }
+            Log::info() << "Spot requested for pipe: " << _name << Log::end;
+            return -1;
         }
 
-        if (start != end)
+        struct pollfd pipe;
+        pipe.fd = _pipe;
+        pipe.events = POLLIN;
+        pipe.revents = 0;
+        const int ready = poll(&pipe, 1, pollTimeoutMs);
+        if (ready == 0)
         {
-            char byteChar = *start++;
-            while (start != end && byteChar != '\r' && byteChar != '\n')
+            // Timeout.
+            continue;
+        }
+        else if (ready < 0)
+        {
+            // error.
+            return ready;
+        }
+        else if (pipe.revents & (POLLIN | POLLPRI))
+        {
+            char buffer[READ_BUFFER_SIZE];
+            const auto bytes = readFIFO(_pipe, buffer, sizeof(buffer));
+            if (bytes < 0)
             {
-                message += byteChar;
-                byteChar = *start++;
+                return -1;
             }
 
-            if (byteChar == '\r' && *start == '\n')
+            const char *endOfLine = static_cast<const char *>(std::memchr(buffer, '\n', bytes));
+            if (endOfLine != nullptr)
             {
-                start++;
-                Log::debug(targetPipeName + " recv: " + message);
-                if (message == "eof")
-                    break;
-
-                handler(message);
-                message.clear();
+                // Got end of line.
+                line = _data;
+                auto tail = std::string(static_cast<const char*>(buffer), endOfLine);
+                line += tail;
+                _data = std::string(endOfLine, bytes - tail.size() - 1); // Exclude the '\n'.
+                return 1;
             }
+            else
+            {
+                // More data, keep going.
+                _data += std::string(buffer, bytes);
+            }
+        }
+        else if (pipe.revents & (POLLERR | POLLHUP | POLLNVAL))
+        {
+            return -1;
+        }
+    }
+
+    // Timeout.
+    return 0;
+}
+
+void PipeReader::process(std::function<bool(std::string& message)> handler,
+                         std::function<bool()> stopPredicate,
+                         const size_t pollTimeoutMs)
+{
+    bool stop = false;
+    for (;;)
+    {
+        stop = stopPredicate();
+        if (stop)
+        {
+            Log::info("Termination flagged for pipe [" + _name + "].");
+            break;
+        }
+
+        std::string line;
+        const auto ready = readLine(line, stopPredicate, pollTimeoutMs);
+        if (ready == 0)
+        {
+            // Timeout.
+            continue;
+        }
+        else if (ready < 0)
+        {
+            Log::error("Error reading from pipe [" + _name + "].");
+            continue;
+        }
+        else if (!handler(line))
+        {
+            Log::info("Pipe [" + _name + "] handler requested to finish.");
+            break;
         }
     }
 }

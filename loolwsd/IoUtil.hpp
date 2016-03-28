@@ -45,9 +45,32 @@ namespace IoUtil
     ssize_t readMessage(const int pipe, char* buffer, const ssize_t size,
                         const size_t timeoutSec = CHILD_TIMEOUT_SECS);
 
-    void pollPipeForReading(pollfd& pollPipe, const std::string& targetPipeName , const int& targetPipe,
-                            std::function<void(std::string& message)> handler);
-};
+    class PipeReader
+    {
+    public:
+        PipeReader(const std::string& name, const int pipe) :
+            _name(name),
+            _pipe(pipe)
+        {
+        }
+
+        /// Reads a single line from the pipe.
+        /// Returns 0 for timeout, <0 for error, and >0 on success.
+        /// On success, line will contain the read message.
+        int readLine(std::string& line,
+                     std::function<bool()> stopPredicate,
+                     const size_t timeoutMs);
+
+        void process(std::function<bool(std::string& message)> handler,
+                     std::function<bool()> stopPredicate,
+                     const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
+
+    private:
+        const std::string _name;
+        const int _pipe;
+        std::string _data;
+    };
+}
 
 #endif
 
