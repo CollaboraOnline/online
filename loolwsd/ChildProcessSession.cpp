@@ -907,8 +907,8 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
         }
     }
 
-    const auto tmpDir = Util::createRandomDir(JailedDocumentRoot);
-    const auto url = JailedDocumentRoot + tmpDir + "/" + name;
+    const auto tmpDir = Util::createRandomDir(JAILED_DOCUMENT_ROOT);
+    const auto url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + name;
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
@@ -994,7 +994,7 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
 
     if (type == "graphic")
     {
-        std::string fileName = "file://" + JailedDocumentRoot + "insertfile/" + name;
+        std::string fileName = "file://" + std::string(JAILED_DOCUMENT_ROOT) + "insertfile/" + name;
         std::string command = ".uno:InsertGraphic";
         std::string arguments = "{"
             "\"FileName\":{"

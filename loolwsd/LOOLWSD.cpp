@@ -398,7 +398,7 @@ private:
                     // Convert it to the requested format.
                     Path toPath(docBroker->getPublicUri().getPath());
                     toPath.setExtension(format);
-                    const std::string toJailURL = "file://" + JailedDocumentRoot + toPath.getFileName();
+                    const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
                     std::string encodedTo;
                     URI::encode(toJailURL, "", encodedTo);
                     std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
@@ -459,7 +459,7 @@ private:
                 {
                     Log::info() << "Perform insertfile: " << formChildid << ", " << formName << Log::end;
                     const std::string dirPath = LOOLWSD::ChildRoot + formChildid
-                                              + JailedDocumentRoot + "insertfile";
+                                              + JAILED_DOCUMENT_ROOT + "insertfile";
                     File(dirPath).createDirectories();
                     std::string fileName = dirPath + Path::separator() + form.get("name");
                     File(tmpPath).moveTo(fileName);
@@ -485,7 +485,7 @@ private:
             Log::info("File download request.");
             // The user might request a file to download
             const std::string dirPath = LOOLWSD::ChildRoot + tokens[1]
-                                      + JailedDocumentRoot + tokens[2];
+                                      + JAILED_DOCUMENT_ROOT + tokens[2];
             std::string fileName;
             URI::decode(tokens[3], fileName);
             const std::string filePath = dirPath + Path::separator() + fileName;
@@ -672,7 +672,7 @@ private:
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
-        const std::string uriValue = "https://" + uri.getHost() + ":" + std::to_string(uri.getPort()) + LOLEAFLET_PATH;
+        const std::string uriValue = "https://" + uri.getHost() + ":" + std::to_string(uri.getPort()) + "/loleaflet/dist/loleaflet.html?";
 
         InputSource inputSrc(discoveryPath);
         AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
@@ -1020,8 +1020,6 @@ std::string LOOLWSD::FileServerRoot;
 int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::DoTest = false;
 static const std::string pidLog = "/tmp/loolwsd.pid";
-const std::string LOOLWSD::FIFO_PATH = "pipe";
-const std::string LOOLWSD::FIFO_LOOLWSD = "loolwsdfifo";
 
 // Demo Site Verification URL.
 static const std::string DemoAuthVerificationUrl = "http://ec2-54-216-97-44.eu-west-1.compute.amazonaws.com/cloudsuite-demo/verify.php?type&token=";

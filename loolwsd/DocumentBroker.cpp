@@ -99,7 +99,7 @@ bool DocumentBroker::load(const std::string& jailId)
     // We need to map it to a jailed path and copy the file there.
 
     // user/doc/jailId
-    const auto jailPath = Poco::Path(JailedDocumentRoot, jailId);
+    const auto jailPath = Poco::Path(JAILED_DOCUMENT_ROOT, jailId);
     const std::string jailRoot = getJailRoot();
 
     Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);

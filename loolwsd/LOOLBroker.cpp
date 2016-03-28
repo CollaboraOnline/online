@@ -30,7 +30,6 @@ typedef int (LokHookPreInit)  ( const char *install_path, const char *user_profi
 
 using Poco::ProcessHandle;
 
-const std::string FIFO_LOOLWSD = "loolwsdfifo";
 const std::string BROKER_SUFIX = ".fifo";
 const std::string BROKER_PREFIX = "lokit";
 

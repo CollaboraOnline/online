@@ -33,11 +33,11 @@ constexpr int READ_BUFFER_SIZE = 2048;
 /// size are considered small messages.
 constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
 
-static const std::string JailedDocumentRoot = "/user/docs/";
-static const std::string CHILD_URI = "/loolws/child?";
-static const std::string LOLEAFLET_PATH = "/loleaflet/dist/loleaflet.html?";
-static const std::string SSL_CERT_FILE = "cert.pem";
-static const std::string SSL_KEY_FILE = "key.pem";
+constexpr auto CHILD_URI = "/loolws/child?";
+constexpr auto FIFO_LOOLWSD = "loolwsdfifo";
+constexpr auto FIFO_PATH = "pipe";
+constexpr auto JAILED_DOCUMENT_ROOT = "/user/docs/";
+constexpr auto SSL_KEY_FILE = "key.pem";
 
 #endif
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

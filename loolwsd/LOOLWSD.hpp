@@ -47,10 +47,6 @@ public:
     static std::string FileServerRoot;
     //static Auth AuthAgent;
 
-    static const std::string FIFO_PATH;
-    static const std::string FIFO_LOOLWSD;
-    static const std::string LOKIT_PIDLOG;
-
     static
     std::string GenSessionId()
     {
