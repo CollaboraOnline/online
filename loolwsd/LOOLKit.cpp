@@ -381,53 +381,64 @@ public:
 
     const std::string& getUrl() const { return _url; }
 
-    void createSession(const std::string& sessionId, const unsigned intSessionId)
+    bool createSession(const std::string& sessionId, const unsigned intSessionId)
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        const auto& it = _connections.find(intSessionId);
-        if (it != _connections.end())
+        try
         {
-            // found item, check if still running
-            if (it->second->isRunning())
+            const auto& it = _connections.find(intSessionId);
+            if (it != _connections.end())
             {
-                Log::warn("Thread [" + sessionId + "] is already running.");
-                return;
+                // found item, check if still running
+                if (it->second->isRunning())
+                {
+                    Log::warn("Session [" + sessionId + "] is already running.");
+                    return true;
+                }
+
+                // Restore thread. TODO: Review this logic.
+                Log::warn("Session [" + sessionId + "] is not running. Restoring.");
+                _connections.erase(intSessionId);
             }
 
-            // Restore thread.
-            Log::warn("Thread [" + sessionId + "] is not running. Restoring.");
-            _connections.erase(intSessionId);
+            Log::info() << "Creating " << (_clientViews ? "new" : "first")
+                        << " view for url: " << _url << " for sessionId: " << sessionId
+                        << " on jailId: " << _jailId << Log::end;
+
+            // Open websocket connection between the child process and the
+            // parent. The parent forwards us requests that it can't handle (i.e most).
+            HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+            cs.setTimeout(0);
+            HTTPRequest request(HTTPRequest::HTTP_GET, std::string(CHILD_URI) + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey);
+            HTTPResponse response;
+
+            auto ws = std::make_shared<WebSocket>(cs, request, response);
+            ws->setReceiveTimeout(0);
+
+            auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId,
+                           [this](const std::string& id, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, isDocPasswordProvided); },
+                           [this](const std::string& id) { onUnload(id); });
+
+            auto thread = std::make_shared<Connection>(session, ws);
+            const auto aInserted = _connections.emplace(intSessionId, thread);
+            if (aInserted.second)
+            {
+                thread->start();
+            }
+            else
+            {
+                Log::error("Connection already exists for child: " + _jailId + ", session: " + sessionId);
+            }
+
+            Log::debug("Connections: " + std::to_string(_connections.size()));
+            return true;
         }
-
-        Log::info() << "Creating " << (_clientViews ? "new" : "first")
-                    << " view for url: " << _url << " for sessionId: " << sessionId
-                    << " on jailId: " << _jailId << Log::end;
-
-        // Open websocket connection between the child process and the
-        // parent. The parent forwards us requests that it can't handle (i.e most).
-
-        HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
-        cs.setTimeout(0);
-        HTTPRequest request(HTTPRequest::HTTP_GET, std::string(CHILD_URI) + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey);
-        HTTPResponse response;
-
-        auto ws = std::make_shared<WebSocket>(cs, request, response);
-        ws->setReceiveTimeout(0);
-
-        auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId,
-                       [this](const std::string& id, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, isDocPasswordProvided); },
-                       [this](const std::string& id) { onUnload(id); });
-
-        auto thread = std::make_shared<Connection>(session, ws);
-        const auto aInserted = _connections.emplace(intSessionId, thread);
-
-        if ( aInserted.second )
-            thread->start();
-        else
-            Log::error("Connection already exists for child: " + _jailId + ", thread: " + sessionId);
-
-        Log::debug("Connections: " + std::to_string(_connections.size()));
+        catch (const std::exception& ex)
+        {
+            Log::error("Exception while creating session [" + sessionId + "] on url [" + _url + "].");
+            return false;
+        }
     }
 
     /// Purges dead connections and returns
@@ -999,7 +1010,38 @@ void lokit_main(const std::string& childRoot,
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                     auto response = std::to_string(Process::id()) + " ";
 
-                    if (TerminationFlag || (document && document->canDiscard()))
+                    if (TerminationFlag)
+                    {
+                        // Too late, we're going down.
+                        response += "down \r\n";
+                    }
+                    else if (tokens[0] == "thread")
+                    {
+                        const std::string& sessionId = tokens[1];
+                        const unsigned intSessionId = Util::decodeId(sessionId);
+                        const std::string& docKey = tokens[2];
+
+                        std::string url;
+                        Poco::URI::decode(docKey, url);
+                        Log::info("New session [" + sessionId + "] request on url [" + url + "].");
+
+                        if (!document)
+                        {
+                            document = std::make_shared<Document>(loKit, jailId, docKey, url);
+                        }
+
+                        // Validate and create session.
+                        if (url == document->getUrl() &&
+                            document->createSession(sessionId, intSessionId))
+                        {
+                            response += "ok \r\n";
+                        }
+                        else
+                        {
+                            response += "bad \r\n";
+                        }
+                    }
+                    else if (document && document->canDiscard())
                     {
                         TerminationFlag = true;
                         response += "down \r\n";
@@ -1011,24 +1053,6 @@ void lokit_main(const std::string& childRoot,
                             response += (document ? document->getUrl() : "empty");
                             response += " \r\n";
                         }
-                    }
-                    else if (tokens[0] == "thread")
-                    {
-                        const std::string& sessionId = tokens[1];
-                        const unsigned intSessionId = Util::decodeId(sessionId);
-                        const std::string& docKey = tokens[2];
-
-                        std::string url;
-                        Poco::URI::decode(docKey, url);
-                        Log::info("Thread request for session [" + sessionId + "], url: [" + url + "].");
-
-                        if (!document)
-                        {
-                            document = std::make_shared<Document>(loKit, jailId, docKey, url);
-                        }
-
-                        document->createSession(sessionId, intSessionId);
-                        response += "ok \r\n";
                     }
                     else
                     {
