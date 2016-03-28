@@ -103,6 +103,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 {
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    Log::trace(getName() + ": handling [" + firstLine + "].");
 
     if (tokens[0] == "loolclient")
     {
@@ -378,10 +379,15 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         // a child process.
 
         if (_peer.expired())
+        {
+            Log::trace("Dispatching child to handle [" + tokens[0] + "].");
             dispatchChild();
+        }
 
         if (tokens[0] == "setclientpart")
+        {
             _docBroker->tileCache().removeFile("status.txt");
+        }
 
         if (tokens[0] != "requestloksession")
         {
@@ -757,21 +763,16 @@ void MasterProcessSession::dispatchChild()
         }
     }
 
-    if (isFound)
-    {
-        Log::debug("Waiting child session permission, done!");
-        childSession = AvailableChildSessions[getId()];
-        AvailableChildSessions.erase(getId());
-    }
-
-    lock.unlock();
-
-    if (retries < 0 && !isFound)
+    if (!isFound)
     {
         Log::error(getName() + ": Failed to connect to child. Shutting down socket.");
         IoUtil::shutdownWebSocket(_ws);
-        return;
+        throw std::runtime_error("Failed to connect to child.");
     }
+
+    Log::debug("Waiting child session permission, done!");
+    childSession = AvailableChildSessions[getId()];
+    AvailableChildSessions.erase(getId());
 
     _peer = childSession;
     childSession->_peer = shared_from_this();
