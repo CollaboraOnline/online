@@ -49,11 +49,17 @@ clean-cache:
 # as the capabilities won't survive packaging anyway. Instead, handle
 # it when installing the RPM or Debian package.
 
-all-local: loolbroker loolkit
+all-local: loolbroker loolkit certificates
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolkit; \
 	    echo "Set required capabilities"; \
 	else \
 	    echo "Skipping capability setting"; \
+	fi
+
+certificates: etc/cert.pem etc/key.pem etc/CollaboraCloudSuiteCA_ca-chain.cert.pem
+	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
+	    sudo mkdir -p /etc/loolwsd ; \
+	    sudo cp $? /etc/loolwsd/ ; \
 	fi
