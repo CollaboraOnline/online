@@ -57,7 +57,7 @@ MessageQueue::Payload MessageQueue::get_impl()
 {
     auto result = _queue.front();
     _queue.pop_front();
-    return std::move(result);
+    return result;
 }
 
 void MessageQueue::clear_impl()
