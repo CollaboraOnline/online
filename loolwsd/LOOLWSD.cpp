@@ -749,7 +749,11 @@ public:
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         assert(request.serverAddress().port() == MASTER_PORT_NUMBER);
-        assert(request.getURI().find(CHILD_URI) == 0);
+        if (request.getURI().find(CHILD_URI) != 0)
+        {
+            Log::error("Invalid request URI: [" + request.getURI() + "].");
+            return;
+        }
 
         std::string thread_name = "prison_ws_";
         try
