@@ -133,7 +133,7 @@ namespace Log
         auto channel = (isatty(fileno(stdout)) || std::getenv("LOOL_LOGCOLOR")
                      ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
                      : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
-        auto& logger = Poco::Logger::create(SourceName, channel, Poco::Message::PRIO_INFORMATION);
+        auto& logger = Poco::Logger::create(SourceName, channel, Poco::Message::PRIO_TRACE);
 
         // Configure the logger.
         // TODO: This should come from a file.
