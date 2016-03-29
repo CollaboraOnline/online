@@ -76,8 +76,8 @@ void BasicTileQueue::put_impl(const Payload& value)
                     {
                         // must not remove the tiles with 'id=', they are special, used
                         // eg. for previews etc.
-                        const auto msg = std::string(&v[0], v.size());
-                        return (msg.compare(0, 5, "tile ") == 0) && (msg.find("id=") == std::string::npos);
+                        const auto tmp = std::string(&v[0], v.size());
+                        return (tmp.compare(0, 5, "tile ") == 0) && (tmp.find("id=") == std::string::npos);
                     }
                     ),
                 _queue.end());
