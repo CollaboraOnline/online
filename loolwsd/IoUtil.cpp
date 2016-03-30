@@ -168,7 +168,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         if (!payload.empty())
         {
             Log::warn(name + "Last message will not be processed: [" +
-                      LOOLProtocol::getAbbreviatedMessage(payload.data(), payload.size()) + "].");
+                      LOOLProtocol::getFirstLine(payload.data(), payload.size()) + "].");
         }
     }
     catch (const WebSocketException& exc)

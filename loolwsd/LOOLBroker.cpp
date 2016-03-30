@@ -277,7 +277,8 @@ public:
             const std::string session = tokens[1];
             const std::string url = tokens[2];
 
-            Log::debug("Finding kit for URL [" + url + "] on session [" + session + "].");
+            Log::debug("Finding kit for URL [" + url + "] on session [" + session +
+                       "] in " + std::to_string(_childProcesses.size()) + " childs.");
 
             const auto child = findChild(url);
             if (child)

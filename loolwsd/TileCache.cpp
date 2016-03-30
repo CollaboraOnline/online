@@ -52,19 +52,19 @@ TileCache::TileCache(const std::string& docURL,
     _isEditing(false),
     _hasUnsavedChanges(false)
 {
-    Log::info("TileCache ctor.");
+    Log::info("TileCache ctor for uri [" + _docURL + "].");
     const bool cleanEverything = (getLastModified() < modifiedTime);
     if (cleanEverything)
     {
         // document changed externally, clean up everything
         Util::removeFile(_rootCacheDir, true);
-        Log::info("Completely cleared cache: " + _rootCacheDir);
+        Log::info("Completely cleared tilecache: " + _rootCacheDir);
     }
     else
     {
         // remove only the Editing cache
         Util::removeFile(_editCacheDir, true);
-        Log::info("Cleared the editing cache: " + _editCacheDir);
+        Log::info("Cleared the editing tilecache: " + _editCacheDir);
     }
 
     File cacheDir(_rootCacheDir);
@@ -75,7 +75,7 @@ TileCache::TileCache(const std::string& docURL,
 
 TileCache::~TileCache()
 {
-    Log::info("~TileCache dtor.");
+    Log::info("~TileCache dtor for uri [" + _docURL + "].");
 }
 
 std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
