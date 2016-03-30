@@ -323,7 +323,7 @@ int PipeReader::readLine(std::string& line,
                 return -1;
             }
 
-            const char *endOfLine = static_cast<const char *>(std::memchr(buffer, '\n', bytes));
+            endOfLine = static_cast<const char *>(std::memchr(buffer, '\n', bytes));
             if (endOfLine != nullptr)
             {
                 // Got end of line.
