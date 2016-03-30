@@ -27,7 +27,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			return socketOverview._getBasicStats();
 		}, 5000);
 
-		// Allow table rows to have a context menu for killing children
+		// Allow table rows to have a context menu for terminating sessions
 		$('body').on('contextmenu', 'table tr', function(ev) {
 			$('#rowContextMenu').css({
 				display: 'block',
@@ -44,7 +44,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 		$('#rowContextMenu').on('click', 'a', function() {
 			vex.dialog.confirm({
-				message: 'Are you sure you want to kill this child ?',
+				message: 'Are you sure you want to terminate this session?',
 				callback: function(value) {
 					if (value) {
 						var killPid = ($('#rowContextMenu').data('rowToKill')).substring('doc'.length);
