@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CloudSuite Toolbar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-10 09:57+0100\n"
+"POT-Creation-Date: 2016-03-29 15:41+0200\n"
 "PO-Revision-Date: 2015-12-20 14:14+0100\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -243,15 +243,15 @@ msgstr "Agrandir"
 msgid "Are you sure you want to delete this page?"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:428 dist/toolbar/toolbar.js:749
+#: dist/toolbar/toolbar.js:428 dist/toolbar/toolbar.js:790
 msgid "Size"
 msgstr "Taille"
 
-#: dist/toolbar/toolbar.js:736
+#: dist/toolbar/toolbar.js:777
 msgid "Style"
 msgstr "Style"
 
-#: dist/toolbar/toolbar.js:744
+#: dist/toolbar/toolbar.js:785
 msgid "Font"
 msgstr "Police"
 
@@ -279,34 +279,38 @@ msgstr ""
 msgid "Enter new sheet name"
 msgstr ""
 
-#: src/core/Socket.js:14 src/core/Socket.js:236
-msgid "Socket connection error"
+#: src/core/Socket.js:14
+msgid "Socket connection error: "
 msgstr ""
 
-#: src/core/Socket.js:105
+#: src/core/Socket.js:108
 msgid "Unexpected loolserver message."
 msgstr ""
 
-#: src/core/Socket.js:109
+#: src/core/Socket.js:112
 msgid "Unsupported server version."
 msgstr ""
 
-#: src/core/Socket.js:120
+#: src/core/Socket.js:123
 msgid "Document requires password to view."
 msgstr ""
 
-#: src/core/Socket.js:123
+#: src/core/Socket.js:126
 msgid "Document requires password to modify."
 msgstr ""
 
-#: src/core/Socket.js:125
+#: src/core/Socket.js:128
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 
-#: src/core/Socket.js:129
+#: src/core/Socket.js:132
 msgid "Wrong password provided. Please try again."
 msgstr ""
 
-#: src/core/Socket.js:240
+#: src/core/Socket.js:239
+msgid "Socket connection error"
+msgstr ""
+
+#: src/core/Socket.js:243
 msgid "Socket connection closed"
 msgstr ""

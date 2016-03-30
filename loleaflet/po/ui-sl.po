@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-10 09:57+0100\n"
+"POT-Creation-Date: 2016-03-29 15:41+0200\n"
 "PO-Revision-Date: 2016-02-28 23:04+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
@@ -245,15 +245,15 @@ msgstr "Oddalji"
 msgid "Are you sure you want to delete this page?"
 msgstr "Ali ste prepričani, da želite izbrisati to stran?"
 
-#: dist/toolbar/toolbar.js:428 dist/toolbar/toolbar.js:749
+#: dist/toolbar/toolbar.js:428 dist/toolbar/toolbar.js:790
 msgid "Size"
 msgstr "Velikost"
 
-#: dist/toolbar/toolbar.js:736
+#: dist/toolbar/toolbar.js:777
 msgid "Style"
 msgstr "Slog"
 
-#: dist/toolbar/toolbar.js:744
+#: dist/toolbar/toolbar.js:785
 msgid "Font"
 msgstr "Pisava"
 
@@ -281,34 +281,39 @@ msgstr "Preimenuj delovni list"
 msgid "Enter new sheet name"
 msgstr "Vnesite ime za nov delovni list"
 
-#: src/core/Socket.js:14 src/core/Socket.js:236
-msgid "Socket connection error"
+#: src/core/Socket.js:14
+#, fuzzy
+msgid "Socket connection error: "
 msgstr "Napaka povezave vtiča"
 
-#: src/core/Socket.js:105
+#: src/core/Socket.js:108
 msgid "Unexpected loolserver message."
 msgstr "Nepričakovano sporočilo loolserver."
 
-#: src/core/Socket.js:109
+#: src/core/Socket.js:112
 msgid "Unsupported server version."
 msgstr "Nepodprta različica strežnika."
 
-#: src/core/Socket.js:120
+#: src/core/Socket.js:123
 msgid "Document requires password to view."
 msgstr "Za ogled dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:123
+#: src/core/Socket.js:126
 msgid "Document requires password to modify."
 msgstr "Za spreminjanje dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:125
+#: src/core/Socket.js:128
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pritisnite Prekliči za odpiranje v oglednem načinu."
 
-#: src/core/Socket.js:129
+#: src/core/Socket.js:132
 msgid "Wrong password provided. Please try again."
 msgstr "Vnesli ste napačno geslo. Poskusite znova."
 
-#: src/core/Socket.js:240
+#: src/core/Socket.js:239
+msgid "Socket connection error"
+msgstr "Napaka povezave vtiča"
+
+#: src/core/Socket.js:243
 msgid "Socket connection closed"
 msgstr "Povezava vtiča zaprta"
