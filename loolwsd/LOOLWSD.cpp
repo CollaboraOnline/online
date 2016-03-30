@@ -951,7 +951,7 @@ void LOOLWSD::initializeSSL()
     sslParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
 
     Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleHandler = new Poco::Net::KeyConsoleHandler(true);
-    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::ConsoleCertificateHandler(false);
+    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::ConsoleCertificateHandler(true);
 
     Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::SERVER_USE, sslParams);
     Poco::Net::SSLManager::instance().initializeServer(consoleHandler, invalidCertHandler, sslContext);
