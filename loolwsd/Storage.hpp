@@ -16,6 +16,8 @@
 #include <fstream>
 
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
@@ -195,7 +197,7 @@ public:
         Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
 
         Poco::URI uriObject(uri);
-        Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+        Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", "LOOLWSD WOPI Agent");
         session.sendRequest(request);
@@ -251,7 +253,7 @@ public:
         const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
         Log::debug("Wopi requesting: " + url);
 
-        Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+        Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url, Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", "LOOLWSD WOPI Agent");
         session.sendRequest(request);
@@ -292,7 +294,7 @@ public:
         const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
         Log::debug("Wopi posting: " + url);
 
-        Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+        Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, url, Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("X-WOPIOverride", "PUT");
         request.setContentType("application/octet-stream");

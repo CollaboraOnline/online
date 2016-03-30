@@ -70,6 +70,7 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
+#include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/ConsoleCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/HTMLForm.h>
@@ -955,6 +956,17 @@ void LOOLWSD::initializeSSL()
 
     Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::SERVER_USE, sslParams);
     Poco::Net::SSLManager::instance().initializeServer(consoleHandler, invalidCertHandler, sslContext);
+
+    // Init client
+    Poco::Net::Context::Params sslClientParams;
+    // TODO: Be more strict and setup SSL key/certs for owncloud server and us
+    sslClientParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
+
+    Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler = new Poco::Net::KeyConsoleHandler(false);
+    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler = new Poco::Net::AcceptCertificateHandler(false);
+
+    Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
+    Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 }
 
 void LOOLWSD::uninitialize()
