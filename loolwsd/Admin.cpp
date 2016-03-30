@@ -356,7 +356,8 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 
                 const std::string jwtToken = request["Cookie"].substr(pos + 1);
                 Log::info("Verifying JWT token: " + jwtToken);
-                const std::string keyPath = Poco::Path(Application::instance().commandPath()).parent().toString() + SSL_KEY_FILE;
+                // TODO: Read key from configuration file
+                const std::string keyPath = "/etc/loolwsd/" + std::string(SSL_KEY_FILE);
                 JWTAuth authAgent(keyPath, "admin", "admin", "admin");
                 if (authAgent.verify(jwtToken))
                 {

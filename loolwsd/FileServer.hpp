@@ -74,7 +74,8 @@ public:
                     {
                         const std::string htmlMimeType = "text/html";
                         // generate and set the cookie
-                        const std::string keyPath = Poco::Path(Application::instance().commandPath()).parent().toString() + SSL_KEY_FILE;
+                        // TODO: Read key from configuration file
+                        const std::string keyPath = "/etc/loolwsd/" + std::string(SSL_KEY_FILE);
                         JWTAuth authAgent(keyPath, "admin", "admin", "admin");
                         const std::string jwtToken = authAgent.getAccessToken();
                         Poco::Net::HTTPCookie cookie("jwt", jwtToken);
