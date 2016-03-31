@@ -210,7 +210,7 @@ ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size)
     ssize_t count = 0;
     while(true)
     {
-        Log::trace("Writing to pipe. Data: [" + std::string(buffer, size) + "].");
+        Log::trace("Writing to pipe. Data: [" + Util::formatLinesForLog(std::string(buffer, size)) + "].");
         const auto bytes = write(pipe, buffer + count, size - count);
         if (bytes < 0)
         {
@@ -282,7 +282,7 @@ int PipeReader::readLine(std::string& line,
         line += std::string(_data.data(), endOfLine);
         _data.erase(0, endOfLine - _data.data() + 1); // Including the '\n'.
         Log::trace() << "Read existing line from pipe: " << _name << ", line: ["
-                     << line << "], data: [" << _data << "]." << Log::end;
+                     << line << "], data: [" << Util::formatLinesForLog(_data) << "]." << Log::end;
         return 1;
     }
 
@@ -332,7 +332,7 @@ int PipeReader::readLine(std::string& line,
                 line += tail;
                 _data = std::string(endOfLine + 1, bytes - tail.size() - 1); // Exclude the '\n'.
                 Log::trace() << "Read line from pipe: " << _name << ", line: [" << line
-                            << "], data: [" << _data << "]." << Log::end;
+                             << "], data: [" << Util::formatLinesForLog(_data) << "]." << Log::end;
                 return 1;
             }
             else

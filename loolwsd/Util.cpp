@@ -511,6 +511,28 @@ namespace Util
 
         return nMem;
     }
+
+    std::string replace(const std::string& s, const std::string& a, const std::string& b)
+    {
+        std::string result = s;
+        std::string::size_type pos;
+        while ((pos = result.find(a)) != std::string::npos)
+        {
+            result = result.replace(pos, a.size(), b);
+        }
+        return result;
+    }
+
+    std::string formatLinesForLog(const std::string& s)
+    {
+        std::string r;
+        std::string::size_type n = s.size();
+        if (n > 0 && s.back() == '\n')
+            r = s.substr(0, n-1);
+        else
+            r = s;
+        return replace(r, "\n", " / ");
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
