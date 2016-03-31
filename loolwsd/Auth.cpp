@@ -14,8 +14,11 @@
 #include <Poco/Base64Decoder.h>
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
+#include <Poco/Dynamic/Var.h>
 #include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/LineEndingConverter.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -26,9 +29,12 @@
 #include "Auth.hpp"
 #include "Util.hpp"
 
+using Poco::Base64Decoder;
+using Poco::Base64Encoder;
+using Poco::OutputLineEndingConverter;
 
 //////////////
-// OAuth Impl
+// JWTAuth Impl
 //////////////
 const std::string JWTAuth::getAccessToken()
 {
@@ -61,8 +67,8 @@ const std::string JWTAuth::getAccessToken()
     // The signature generated contains CRLF line endings.
     // Use a line ending converter to remove these CRLF
     std::ostringstream ostr;
-    Poco::OutputLineEndingConverter lineEndingConv(ostr, "");
-    Poco::Base64Encoder encoder(lineEndingConv);
+    OutputLineEndingConverter lineEndingConv(ostr, "");
+    Base64Encoder encoder(lineEndingConv);
     encoder << std::string(digest.begin(), digest.end());
     encoder.close();
     std::string encodedSig = ostr.str();
@@ -87,33 +93,59 @@ bool JWTAuth::verify(const std::string& accessToken)
 {
     Poco::StringTokenizer tokens(accessToken, ".", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
 
-    std::string encodedBody = tokens[0] + "." + tokens[1];
-    _digestEngine.update(encodedBody.c_str(), static_cast<unsigned>(encodedBody.length()));
-    Poco::Crypto::DigestEngine::Digest digest = _digestEngine.signature();
-
-    std::ostringstream ostr;
-    Poco::OutputLineEndingConverter lineEndingConv(ostr, "");
-    Poco::Base64Encoder encoder(lineEndingConv);
-
-    encoder << std::string(digest.begin(), digest.end());
-    encoder.close();
-    std::string encodedSig = ostr.str();
-
-    // trim '=' from end of encoded signature.
-    encodedSig.erase(std::find_if(encodedSig.rbegin(), encodedSig.rend(),
-                                  [](char& ch)->bool { return ch != '='; }).base(), encodedSig.end());
-
-    // Make the encoded sig URL and filename safe
-    std::replace(encodedSig.begin(), encodedSig.end(), '+', '-');
-    std::replace(encodedSig.begin(), encodedSig.end(), '/', '_');
-
-    if (encodedSig != tokens[2])
+    try
     {
-        Log::info("JWTAuth::Token verification failed; Expected: " + encodedSig + ", Received: " + tokens[2]);
+        std::string encodedBody = tokens[0] + "." + tokens[1];
+        _digestEngine.update(encodedBody.c_str(), static_cast<unsigned>(encodedBody.length()));
+        Poco::Crypto::DigestEngine::Digest digest = _digestEngine.signature();
+
+        std::ostringstream ostr;
+        OutputLineEndingConverter lineEndingConv(ostr, "");
+        Base64Encoder encoder(lineEndingConv);
+
+        encoder << std::string(digest.begin(), digest.end());
+        encoder.close();
+        std::string encodedSig = ostr.str();
+
+        // trim '=' from end of encoded signature.
+        encodedSig.erase(std::find_if(encodedSig.rbegin(), encodedSig.rend(),
+                                      [](char& ch)->bool { return ch != '='; }).base(), encodedSig.end());
+
+        // Make the encoded sig URL and filename safe
+        std::replace(encodedSig.begin(), encodedSig.end(), '+', '-');
+        std::replace(encodedSig.begin(), encodedSig.end(), '/', '_');
+
+        if (encodedSig != tokens[2])
+        {
+            Log::info("JWTAuth: verification failed; Expected: " + encodedSig + ", Received: " + tokens[2]);
+            return false;
+        }
+
+        std::istringstream istr(tokens[1]);
+        std::string decodedPayload;
+        Base64Decoder decoder(istr);
+        decoder >> decodedPayload;
+
+        Log::info("JWTAuth:verify: decoded payload: " + decodedPayload);
+
+        // Verify if the token is not already expired
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var result = parser.parse(decodedPayload);
+        Poco::JSON::Object::Ptr object = result.extract<Poco::JSON::Object::Ptr>();
+        std::time_t decodedExptime = object->get("exp").convert<std::time_t>();
+
+        std::time_t curtime = Poco::Timestamp().epochTime();
+        if (curtime > decodedExptime)
+        {
+            Log::info("JWTAuth:verify: JWT expired; curtime:" + std::to_string(curtime) + ", exp:" + std::to_string(decodedExptime));
+            return false;
+        }
+    }
+    catch(Poco::Exception& exc)
+    {
+        Log::warn("JWTAuth:verify: Exception: " + exc.displayText());
         return false;
     }
-
-    // TODO: Check for expiry etc.
 
     return true;
 }
@@ -125,8 +157,8 @@ const std::string JWTAuth::createHeader()
 
     Log::info("JWT Header: " + header);
     std::ostringstream ostr;
-    Poco::OutputLineEndingConverter lineEndingConv(ostr, "");
-    Poco::Base64Encoder encoder(lineEndingConv);
+    OutputLineEndingConverter lineEndingConv(ostr, "");
+    Base64Encoder encoder(lineEndingConv);
     encoder << header;
     encoder.close();
 
@@ -136,15 +168,15 @@ const std::string JWTAuth::createHeader()
 const std::string JWTAuth::createPayload()
 {
     std::time_t curtime = Poco::Timestamp().epochTime();
-    std::string exptime = std::to_string(curtime + 3600);
+    std::string exptime = std::to_string(curtime + 1800);
 
     // TODO: Some sane code to represent JSON objects
     std::string payload = "{\"iss\":\""+_iss+"\",\"sub\":\""+_sub+"\",\"aud\":\""+_aud+"\",\"nme\":\""+_name+"\",\"exp\":\""+exptime+"\"}";
 
     Log::info("JWT Payload: " + payload);
     std::ostringstream ostr;
-    Poco::OutputLineEndingConverter lineEndingConv(ostr, "");
-    Poco::Base64Encoder encoder(lineEndingConv);
+    OutputLineEndingConverter lineEndingConv(ostr, "");
+    Base64Encoder encoder(lineEndingConv);
     encoder << payload;
     encoder.close();
 
