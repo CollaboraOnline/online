@@ -12,13 +12,10 @@
 
 #include <memory>
 #include <set>
-#include <sstream>
 #include <string>
-#include <queue>
 
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
-#include <Poco/StringTokenizer.h>
 
 #include "Util.hpp"
 
@@ -30,15 +27,9 @@ public:
           _start(std::time(nullptr))
     {    }
 
-    void expire()
-    {
-        _end = std::time(nullptr);
-    }
+    void expire() { _end = std::time(nullptr); }
 
-    bool isExpired()
-    {
-        return _end != 0 && std::time(nullptr) >= _end;
-    }
+    bool isExpired() { return _end != 0 && std::time(nullptr) >= _end; }
 
 private:
     int _nSessionId;
@@ -63,53 +54,19 @@ public:
         Log::info("Document " + std::to_string(_nPid) + " dtor.");
     }
 
-    Poco::Process::PID getPid() const
-    {
-        return _nPid;
-    }
+    Poco::Process::PID getPid() const { return _nPid; }
 
-    std::string getUrl() const
-    {
-        return _sUrl;
-    }
+    std::string getUrl() const { return _sUrl; }
 
-    void expire()
-    {
-        _end = std::time(nullptr);
-    }
+    void expire() { _end = std::time(nullptr); }
 
-    bool isExpired() const
-    {
-        return _end != 0 && std::time(nullptr) >= _end;
-    }
+    bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
-    void addView(int nSessionId)
-    {
-        const auto ret = _views.emplace(nSessionId, View(nSessionId));
-        if (!ret.second)
-        {
-            Log::warn() << "View with SessionID [" + std::to_string(nSessionId) + "] already exists." << Log::end;
-        }
-        else
-        {
-            _nActiveViews++;
-        }
-    }
+    void addView(int nSessionId);
 
-    void removeView(int nSessionId)
-    {
-        auto it = _views.find(nSessionId);
-        if (it != _views.end())
-        {
-            it->second.expire();
-            _nActiveViews--;
-        }
-    }
+    void removeView(int nSessionId);
 
-    unsigned getActiveViews() const
-    {
-        return _nActiveViews;
-    }
+    unsigned getActiveViews() const { return _nActiveViews; }
 
 private:
     Poco::Process::PID _nPid;
@@ -140,45 +97,15 @@ public:
         Log::info("Subscriber dtor.");
     }
 
-    bool notify(const std::string& message)
-    {
-        Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    bool notify(const std::string& message);
 
-        if (_subscriptions.find(tokens[0]) == _subscriptions.end())
-            return true;
+    bool subscribe(const std::string& command);
 
-        auto webSocket = _ws.lock();
-        if (webSocket)
-        {
-            webSocket->sendFrame(message.data(), message.length());
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    void unsubscribe(const std::string& command);
 
-    bool subscribe(const std::string& command)
-    {
-        auto ret = _subscriptions.insert(command);
-        return ret.second;
-    }
+    void expire() { _end = std::time(nullptr); }
 
-    void unsubscribe(const std::string& command)
-    {
-        _subscriptions.erase(command);
-    }
-
-    void expire()
-    {
-        _end = std::time(nullptr);
-    }
-
-    bool isExpired() const
-    {
-        return _end != 0 && std::time(nullptr) >= _end;
-    }
+    bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
 private:
     /// Admin session Id
@@ -210,290 +137,44 @@ public:
         Log::info("AdminModel dtor.");
     }
 
-    void update(const std::string& data)
-    {
-        Poco::StringTokenizer tokens(data, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    void update(const std::string& data);
 
-        Log::info("AdminModel Recv: " + data);
-
-        if (tokens[0] == "document")
-        {
-            addDocument(std::stoi(tokens[1]), tokens[2]);
-            unsigned mem = Util::getMemoryUsage(std::stoi(tokens[1]));
-            std::string response = data + std::to_string(mem);
-            notify(response);
-            return;
-        }
-        else if (tokens[0] == "addview")
-        {
-            auto it = _documents.find(std::stoi(tokens[1]));
-            if (it != _documents.end())
-            {
-                const unsigned nSessionId = Util::decodeId(tokens[2]);
-                it->second.addView(nSessionId);
-            }
-        }
-        else if (tokens[0] == "rmview")
-        {
-            auto it = _documents.find(std::stoi(tokens[1]));
-            if (it != _documents.end())
-            {
-                const unsigned nSessionId = Util::decodeId(tokens[2]);
-                it->second.removeView(nSessionId);
-            }
-        }
-        else if (tokens[0] == "rmdoc")
-        {
-            removeDocument(std::stoi(tokens[1]));
-        }
-
-        notify(data);
-    }
-
-    std::string query(const std::string command)
-    {
-        Poco::StringTokenizer tokens(command, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-
-        if (tokens[0] == "documents")
-        {
-            return getDocuments();
-        }
-        else if (tokens[0] == "active_users_count")
-        {
-            return std::to_string(getTotalActiveViews());
-        }
-        else if (tokens[0] == "active_docs_count")
-        {
-            return std::to_string(_documents.size());
-        }
-        else if (tokens[0] == "mem_stats")
-        {
-            return getMemStats();
-        }
-        else if (tokens[0] == "mem_stats_size")
-        {
-            return std::to_string(_memStatsSize);
-        }
-        else if (tokens[0] == "cpu_stats")
-        {
-            return getCpuStats();
-        }
-        else if (tokens[0] == "cpu_stats_size")
-        {
-            return std::to_string(_cpuStatsSize);
-        }
-
-        return std::string("");
-    }
+    std::string query(const std::string command);
 
     /// Returns memory consumed by all active loolkit processes
-    unsigned getTotalMemoryUsage()
-    {
-        unsigned totalMem = 0;
-        for (auto& it: _documents)
-        {
-            if (it.second.isExpired())
-                continue;
+    unsigned getTotalMemoryUsage();
 
-            totalMem += Util::getMemoryUsage(it.second.getPid());
-        }
+    void subscribe(int nSessionId, std::shared_ptr<Poco::Net::WebSocket>& ws);
+    void subscribe(int nSessionId, const std::string& command);
 
-        return totalMem;
-    }
+    void unsubscribe(int nSessionId, const std::string& command);
 
-    void subscribe(int nSessionId, std::shared_ptr<Poco::Net::WebSocket>& ws)
-    {
-        const auto ret = _subscribers.emplace(nSessionId, Subscriber(nSessionId, ws));
-        if (!ret.second)
-        {
-            Log::warn() << "Subscriber already exists" << Log::end;
-        }
-    }
+    void clearMemStats() { _memStats.clear(); }
 
-    void subscribe(int nSessionId, const std::string& command)
-    {
-        auto subscriber = _subscribers.find(nSessionId);
-        if (subscriber == _subscribers.end() )
-            return;
+    void clearCpuStats() { _cpuStats.clear(); }
 
-        subscriber->second.subscribe(command);
-    }
+    void addMemStats(unsigned memUsage);
 
-    void unsubscribe(int nSessionId, const std::string& command)
-    {
-        auto subscriber = _subscribers.find(nSessionId);
-        if (subscriber == _subscribers.end())
-            return;
+    void addCpuStats(unsigned cpuUsage);
 
-        subscriber->second.unsubscribe(command);
-    }
+    void setCpuStatsSize(unsigned size);
 
-    void clearMemStats()
-    {
-        _memStats.clear();
-    }
+    void setMemStatsSize(unsigned size);
 
-    void clearCpuStats()
-    {
-        _cpuStats.clear();
-    }
-
-    void addMemStats(unsigned memUsage)
-    {
-        _memStats.push_back(memUsage);
-        if (_memStats.size() > _memStatsSize)
-        {
-            _memStats.pop_front();
-        }
-
-        std::ostringstream oss;
-        oss << "mem_stats "
-            << std::to_string(memUsage);
-        notify(oss.str());
-    }
-
-    void addCpuStats(unsigned cpuUsage)
-    {
-        _cpuStats.push_back(cpuUsage);
-        if (_cpuStats.size() > _cpuStatsSize)
-        {
-            _cpuStats.pop_front();
-        }
-
-        std::ostringstream oss;
-        oss << "cpu_stats "
-            << std::to_string(cpuUsage);
-        notify(oss.str());
-    }
-
-    void setCpuStatsSize(unsigned size)
-    {
-        int wasteValuesLen = _cpuStats.size() - size;
-        while (wasteValuesLen-- > 0)
-        {
-            _cpuStats.pop_front();
-        }
-        _cpuStatsSize = size;
-
-        std::ostringstream oss;
-        oss << "settings "
-            << "cpu_stats_size="
-            << std::to_string(_cpuStatsSize);
-        notify(oss.str());
-    }
-
-    void setMemStatsSize(unsigned size)
-    {
-        int wasteValuesLen = _memStats.size() - size;
-        while (wasteValuesLen-- > 0)
-        {
-            _memStats.pop_front();
-        }
-        _memStatsSize = size;
-
-        std::ostringstream oss;
-        oss << "settings "
-            << "mem_stats_size="
-            << std::to_string(_memStatsSize);
-        notify(oss.str());
-    }
-
-    void notify(const std::string& message)
-    {
-        auto it = std::begin(_subscribers);
-        while (it != std::end(_subscribers))
-        {
-            if (!it->second.notify(message))
-            {
-                it = _subscribers.erase(it);
-            }
-            else
-            {
-                it++;
-            }
-        }
-    }
+    void notify(const std::string& message);
 
 private:
-    void addDocument(Poco::Process::PID pid, std::string url)
-    {
-        const auto ret = _documents.emplace(pid, Document(pid, url));
-        if (!ret.second)
-        {
-            Log::warn() << "Document with PID [" + std::to_string(pid) + "] already exists." << Log::end;
-        }
-    }
+    void addDocument(Poco::Process::PID pid, std::string url);
 
-    void removeDocument(Poco::Process::PID pid)
-    {
-        auto it = _documents.find(pid);
-        if (it != _documents.end() && !it->second.isExpired())
-        {
-            // TODO: The idea is to only expire the document and keep the history
-            // of documents open and close, to be able to give a detailed summary
-            // to the admin console with views. For now, just remove the document.
-            it->second.expire();
-            _documents.erase(it);
-        }
-    }
+    void removeDocument(Poco::Process::PID pid);
 
-    std::string getMemStats()
-    {
-        std::string response;
-        for (auto& i: _memStats)
-        {
-            response += std::to_string(i) + ",";
-        }
+    std::string getMemStats();
 
-        return response;
-    }
+    std::string getCpuStats();
 
-    std::string getCpuStats()
-    {
-        std::string response;
-        for (auto& i: _cpuStats)
-        {
-            response += std::to_string(i) + ",";
-        }
+    unsigned getTotalActiveViews();
 
-        return response;
-    }
-
-    unsigned getTotalActiveViews()
-    {
-        unsigned nTotalViews = 0;
-        for (auto& it: _documents)
-        {
-            if (it.second.isExpired())
-                continue;
-
-            nTotalViews += it.second.getActiveViews();
-        }
-
-        return nTotalViews;
-    }
-
-    std::string getDocuments()
-    {
-        std::ostringstream oss;
-        for (auto& it: _documents)
-        {
-            if (it.second.isExpired())
-                continue;
-
-            std::string sPid = std::to_string(it.second.getPid());
-            std::string sUrl = it.second.getUrl();
-            std::string sViews = std::to_string(it.second.getActiveViews());
-            std::string sMem = std::to_string(Util::getMemoryUsage(it.second.getPid()));
-
-            oss << sPid << " "
-                << sUrl << " "
-                << sViews << " "
-                << sMem << " \n ";
-        }
-
-        return oss.str();
-    }
+    std::string getDocuments();
 
 private:
     std::map<int, Subscriber> _subscribers;

@@ -17,6 +17,7 @@ shared_sources = IoUtil.cpp \
                  Util.cpp
 
 loolwsd_SOURCES = Admin.cpp \
+		  AdminModel.cpp \
                   Auth.cpp \
                   ChildProcessSession.cpp \
                   DocumentBroker.cpp \
