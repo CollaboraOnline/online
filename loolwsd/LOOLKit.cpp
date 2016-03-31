@@ -667,7 +667,7 @@ private:
             std::ostringstream message;
             message << "document" << " "
                     << Process::id() << " "
-                    << _url << " "
+                    << uri.substr(uri.find_last_of("/") + 1) << " "
                     << "\r\n";
             IoUtil::writeFIFO(writerNotify, message.str());
 
