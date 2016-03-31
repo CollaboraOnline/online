@@ -10,34 +10,80 @@ AM_LDFLAGS = -pthread
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
-shared_sources = LOOLProtocol.cpp LOOLSession.cpp MessageQueue.cpp IoUtil.cpp Util.cpp
+shared_sources = IoUtil.cpp \
+                 LOOLProtocol.cpp \
+                 LOOLSession.cpp \
+                 MessageQueue.cpp \
+                 Util.cpp
 
-loolwsd_SOURCES = LOOLWSD.cpp ChildProcessSession.cpp MasterProcessSession.cpp TileCache.cpp Admin.cpp DocumentBroker.cpp Auth.cpp Storage.cpp $(shared_sources)
+loolwsd_SOURCES = Admin.cpp \
+                  Auth.cpp \
+                  ChildProcessSession.cpp \
+                  DocumentBroker.cpp \
+                  LOOLWSD.cpp \
+                  MasterProcessSession.cpp \
+                  Storage.cpp \
+                  TileCache.cpp \
+                  $(shared_sources)
 
-noinst_PROGRAMS = loadtest connect lokitclient
+noinst_PROGRAMS = connect \
+                  loadtest \
+                  lokitclient
 
-loadtest_SOURCES = LoadTest.cpp Util.cpp LOOLProtocol.cpp
+loadtest_SOURCES = LoadTest.cpp \
+                   LOOLProtocol.cpp \
+                   Util.cpp
 
-connect_SOURCES = Connect.cpp Util.cpp LOOLProtocol.cpp
+connect_SOURCES = Connect.cpp \
+                  LOOLProtocol.cpp \
+                  Util.cpp
 
-lokitclient_SOURCES = LOKitClient.cpp LOOLProtocol.cpp IoUtil.cpp Util.cpp
+lokitclient_SOURCES = IoUtil.cpp \
+                      LOKitClient.cpp \
+                      LOOLProtocol.cpp \
+                      Util.cpp
 
-broker_shared_sources = ChildProcessSession.cpp $(shared_sources)
+broker_shared_sources = ChildProcessSession.cpp \
+                        $(shared_sources)
 
-loolkit_SOURCES = LOOLKit.cpp $(broker_shared_sources)
+loolkit_SOURCES = LOOLKit.cpp \
+                  $(broker_shared_sources)
 
-loolbroker_SOURCES = LOOLBroker.cpp $(broker_shared_sources)
+loolbroker_SOURCES = LOOLBroker.cpp \
+                     $(broker_shared_sources)
 
 loolmap_SOURCES = loolmap.c
 
-noinst_HEADERS = LOKitHelper.hpp LOOLProtocol.hpp LOOLSession.hpp MasterProcessSession.hpp ChildProcessSession.hpp \
-                 LOOLWSD.hpp LoadTest.hpp MessageQueue.hpp TileCache.hpp Util.hpp Png.hpp Common.hpp Capabilities.hpp \
-                 Rectangle.hpp QueueHandler.hpp Admin.hpp Auth.hpp Storage.hpp AdminModel.hpp DocumentBroker.hpp \
-                 FileServer.hpp IoUtil.hpp \
-                 bundled/include/LibreOfficeKit/LibreOfficeKit.h bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
-                 bundled/include/LibreOfficeKit/LibreOfficeKitInit.h bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h
+noinst_HEADERS = Admin.hpp \
+                 AdminModel.hpp \
+                 Auth.hpp \
+                 Capabilities.hpp \
+                 ChildProcessSession.hpp \
+                 Common.hpp \
+                 DocumentBroker.hpp \
+                 FileServer.hpp \
+                 IoUtil.hpp \
+                 LoadTest.hpp \
+                 LOKitHelper.hpp \
+                 LOOLProtocol.hpp \
+                 LOOLSession.hpp \
+                 LOOLWSD.hpp \
+                 MasterProcessSession.hpp \
+                 MessageQueue.hpp \
+                 Png.hpp \
+                 QueueHandler.hpp \
+                 Rectangle.hpp \
+                 Storage.hpp \
+                 TileCache.hpp \
+                 Util.hpp \
+                 bundled/include/LibreOfficeKit/LibreOfficeKit.h \
+                 bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
+                 bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
+                 bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h
 
-EXTRA_DIST = loolwsd.service sysconfig.loolwsd discovery.xml
+EXTRA_DIST = discovery.xml \
+             loolwsd.service \
+             sysconfig.loolwsd
 
 clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
