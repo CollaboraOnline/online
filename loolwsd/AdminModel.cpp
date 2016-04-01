@@ -348,11 +348,13 @@ std::string AdminModel::getDocuments()
         std::string sUrl = it.second.getUrl();
         std::string sViews = std::to_string(it.second.getActiveViews());
         std::string sMem = std::to_string(Util::getMemoryUsage(it.second.getPid()));
+        std::string sElapsed = std::to_string(it.second.getElapsedTime());
 
         oss << sPid << " "
             << sUrl << " "
             << sViews << " "
-            << sMem << " \n ";
+            << sMem << " "
+            << sElapsed << " \n ";
     }
 
     return oss.str();

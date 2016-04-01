@@ -10,6 +10,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 	_basicStatsIntervalId: 0,
 
+	_docElapsedTimeIntervalId: 0,
+
 	_getBasicStats: function() {
 		this.socket.send('total_mem');
 		this.socket.send('active_docs_count');
@@ -26,6 +28,15 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		setInterval(function() {
 			return socketOverview._getBasicStats();
 		}, 5000);
+
+		this._docElapsedTimeIntervalId =
+		setInterval(function() {
+			$('td.elapsed_time').each(function() {
+				var newSecs = parseInt($(this).val()) + 1;
+				$(this).val(newSecs);
+				$(this).html(Util.humanizeSecs(newSecs));
+			});
+		}, 1000);
 
 		// Allow table rows to have a context menu for terminating sessions
 		$('body').on('contextmenu', 'table tr', function(ev) {
@@ -67,9 +78,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 		var tableContainer = document.getElementById('doclist');
 		var rowContainer;
-		var pidEle, urlEle, viewsEle, memEle, docEle;
+		var pidEle, urlEle, viewsEle, memEle, sDocTimeEle, docEle;
 		var nViews, nTotalViews;
-		var docProps, sPid, sUrl, sViews, sMem;
+		var docProps, sPid, sUrl, sViews, sMem, sDocTime;
 		if (textMsg.startsWith('documents')) {
 			var documents = textMsg.substring('documents'.length);
 			documents = documents.trim().split('\n');
@@ -82,6 +93,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				sUrl = docProps[1];
 				sViews = docProps[2];
 				sMem = docProps[3];
+				sDocTime = docProps[4];
 				if (sUrl === '0') {
 					continue;
 				}
@@ -103,8 +115,14 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				rowContainer.appendChild(viewsEle);
 
 				memEle = document.createElement('td');
-				memEle.innerHTML = Util.humanize(parseInt(sMem));
+				memEle.innerHTML = Util.humanizeMem(parseInt(sMem));
 				rowContainer.appendChild(memEle);
+
+				sDocTimeEle = document.createElement('td');
+				sDocTimeEle.className = 'elapsed_time';
+				sDocTimeEle.value = parseInt(sDocTime);
+				sDocTimeEle.innerHTML = Util.humanizeSecs(sDocTime);
+				rowContainer.appendChild(sDocTimeEle);
 			}
 		}
 		else if (textMsg.startsWith('addview')) {
@@ -154,8 +172,14 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			rowContainer.appendChild(viewsEle);
 
 			memEle = document.createElement('td');
-			memEle.innerHTML = Util.humanize(parseInt(sMem));
+			memEle.innerHTML = Util.humanizeMem(parseInt(sMem));
 			rowContainer.appendChild(memEle);
+
+			sDocTimeEle = document.createElement('td');
+			sDocTimeEle.className = 'elapsed_time';
+			sDocTimeEle.value = 0;
+			sDocTimeEle.innerHTML = Util.humanizeSecs(0);
+			rowContainer.appendChild(sDocTimeEle);
 
 			var totalUsersEle = document.getElementById('active_docs_count');
 			totalUsersEle.innerHTML = parseInt(totalUsersEle.innerHTML) + 1;
@@ -169,7 +193,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			var nData = parseInt(textMsg[1]);
 
 			if (sCommand === 'total_mem') {
-				nData = Util.humanize(nData);
+				nData = Util.humanizeMem(nData);
 			}
 			document.getElementById(sCommand).innerHTML = nData;
 		}
@@ -186,5 +210,6 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 	onSocketClose: function() {
 		clearInterval(this._basicStatsIntervalId);
+		clearInterval(this._docElapsedTimeIntervalId);
 	}
 });

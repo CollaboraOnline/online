@@ -92,7 +92,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		this._d3yAxis = d3.svg.axis()
 			.scale(this._yScale)
 			.tickFormat(function (d) {
-				return Util.humanize(d);
+				return Util.humanizeMem(d);
 			})
 			.orient('left');
 

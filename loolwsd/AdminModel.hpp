@@ -62,6 +62,8 @@ public:
 
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
+    std::time_t getElapsedTime() const { return std::time(nullptr) - _start; }
+
     void addView(int nSessionId);
 
     void removeView(int nSessionId);
