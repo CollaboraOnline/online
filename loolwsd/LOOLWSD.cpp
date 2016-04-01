@@ -101,7 +101,6 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
-#include <Poco/ThreadLocal.h>
 #include <Poco/ThreadPool.h>
 #include <Poco/URI.h>
 #include <Poco/Util/HelpFormatter.h>
@@ -157,7 +156,6 @@ using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
 using Poco::Thread;
-using Poco::ThreadLocal;
 using Poco::ThreadPool;
 using Poco::URI;
 using Poco::Util::Application;

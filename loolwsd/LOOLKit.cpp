@@ -38,7 +38,6 @@
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
-#include <Poco/ThreadLocal.h>
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
 
@@ -68,7 +67,6 @@ using Poco::Process;
 using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Thread;
-using Poco::ThreadLocal;
 using Poco::Util::Application;
 
 const std::string FIFO_BROKER = "loolbroker.fifo";
@@ -78,20 +76,20 @@ static int writerNotify = -1;
 
 namespace
 {
-    ThreadLocal<std::string> sourceForLinkOrCopy;
-    ThreadLocal<Path> destinationForLinkOrCopy;
+    std::string sourceForLinkOrCopy;
+    Path destinationForLinkOrCopy;
 
     int linkOrCopyFunction(const char *fpath,
                            const struct stat* /*sb*/,
                            int typeflag,
                            struct FTW* /*ftwbuf*/)
     {
-        if (strcmp(fpath, sourceForLinkOrCopy->c_str()) == 0)
+        if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
             return 0;
 
-        assert(fpath[strlen(sourceForLinkOrCopy->c_str())] == '/');
-        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy->c_str()) + 1;
-        Path newPath(*destinationForLinkOrCopy, Path(relativeOldPath));
+        assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
+        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
+        Path newPath(destinationForLinkOrCopy, Path(relativeOldPath));
 
         switch (typeflag)
         {
@@ -153,10 +151,10 @@ namespace
 
     void linkOrCopy(const std::string& source, const Path& destination)
     {
-        *sourceForLinkOrCopy = source;
-        if (sourceForLinkOrCopy->back() == '/')
-            sourceForLinkOrCopy->pop_back();
-        *destinationForLinkOrCopy = destination;
+        sourceForLinkOrCopy = source;
+        if (sourceForLinkOrCopy.back() == '/')
+            sourceForLinkOrCopy.pop_back();
+        destinationForLinkOrCopy = destination;
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL) == -1)
             Log::error("linkOrCopy: nftw() failed for '" + source + "'");
     }
