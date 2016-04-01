@@ -807,7 +807,8 @@ void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
-                const std::string& pipe)
+                const std::string& pipe,
+                bool doBenchmark = false)
 {
 #ifdef LOOLKIT_NO_MAIN
     // Reinitialize logging when forked.
@@ -859,12 +860,15 @@ void lokit_main(const std::string& childRoot,
             std::exit(Application::EXIT_SOFTWARE);
         }
 
-        // Open notify pipe
-        const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
-        if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
+        if (!doBenchmark)
         {
-            Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
-            exit(Application::EXIT_SOFTWARE);
+            // Open notify pipe
+            const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
+            if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
+            {
+                Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
+                exit(Application::EXIT_SOFTWARE);
+            }
         }
 
         const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
@@ -953,6 +957,8 @@ void lokit_main(const std::string& childRoot,
         }
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
+        if (doBenchmark)
+            IoUtil::writeFIFO(writerBroker, "started\n");
 
         char buffer[READ_BUFFER_SIZE];
         std::string message;

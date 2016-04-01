@@ -41,7 +41,7 @@ static std::string loolkitPath;
 static std::atomic<unsigned> forkCounter;
 static std::chrono::steady_clock::time_point lastMaintenanceTime = std::chrono::steady_clock::now();
 static unsigned int childCounter = 0;
-static int numPreSpawnedChildren = 0;
+static int numPreSpawnedChildren = 1;
 
 static std::mutex forkMutex;
 
@@ -202,6 +202,8 @@ public:
                 return false;
             }
 
+            Log::debug("Got message from child ! '" + response + "'");
+
             StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() > 0 && tokens[0] != childPid)
             {
@@ -284,6 +286,16 @@ public:
         Log::debug("Thread [" + thread_name + "] finished.");
     }
 
+    bool waitForResponse()
+    {
+        std::string response;
+        if (_childPipeReader.readLine(response, [](){ return TerminationFlag; }) <= 0)
+            Log::error("Error reading response to benchmark message from child");
+        else
+            Log::debug("got response '" + response + "'");
+        return response == "started";
+    }
+
 private:
     IoUtil::PipeReader _childPipeReader;
 };
@@ -340,7 +352,8 @@ static int createLibreOfficeKit(const bool sharePages,
                                 const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
-                                const std::string& loSubPath)
+                                const std::string& loSubPath,
+                                bool doBenchmark)
 {
     Process::PID childPID;
     int fifoWriter = -1;
@@ -370,7 +383,7 @@ static int createLibreOfficeKit(const bool sharePages,
                 Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
             }
 
-            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit);
+            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit, doBenchmark);
             _exit(Application::EXIT_OK);
         }
         else
@@ -487,6 +500,78 @@ static bool waitForTerminationChild(const Process::PID pid, int count = CHILD_TI
     return false;
 }
 
+static void printArgumentHelp()
+{
+    std::cout << "Usage: loolbroker [OPTION]..." << std::endl;
+    std::cout << "  Single threaded process broker that spawns lok instances" << std::endl;
+    std::cout << "  note: running this standalone is not possible, it is spawned by the loolwsd" << std::endl;
+    std::cout << "        and is controlled via a pipe." << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "  Some parameters are required and passed on to the lok instance:" << std::endl;
+    std::cout << "  --losubpath=<path>        path to chroot for child to live inside." << std::endl;
+    std::cout << "  --childroot=<path>        path to chroot for child to live inside." << std::endl;
+    std::cout << "  --systemplate=<path>      path of system template to pre-populate chroot with." << std::endl;
+    std::cout << "  --lotemplate=<path>       path of libreoffice template to pre-populate chroot with." << std::endl;
+    std::cout << "  --pipe=<path>             path of loolwsd pipe to connect to on startup." << std::endl;
+    std::cout << "  --losubpath=<path>        path to libreoffice install" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "  Some paramaters are optional:" << std::endl;
+    std::cout << "  --numprespawns=<number>   pre-fork at least <number> processes [1]" << std::endl;
+    std::cout << "  --benchmark               pre-fork processes, and print statistics before exiting" << std::endl;
+}
+
+void setupPipes(const std::string &childRoot, bool doBenchmark)
+{
+    const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
+    if (!doBenchmark)
+    {
+        const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
+        if ( (readerBroker = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
+        {
+            Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] read only. Exiting.");
+            std::exit(Application::EXIT_SOFTWARE);
+        }
+    }
+
+    int pipeFlags = O_RDONLY | O_NONBLOCK;
+    const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
+    if (mkfifo(pipeBroker.c_str(), 0666) < 0 && errno != EEXIST)
+    {
+        Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
+        std::exit(Application::EXIT_SOFTWARE);
+    }
+
+    if ((readerChild = open(pipeBroker.c_str(), pipeFlags) ) < 0)
+    {
+        Log::error("Error: pipe opened for reading.");
+        std::exit(Application::EXIT_SOFTWARE);
+    }
+
+    if ((pipeFlags = fcntl(readerChild, F_GETFL, 0)) < 0)
+    {
+        Log::error("Error: failed to get pipe flags [" + FIFO_BROKER + "].");
+        std::exit(Application::EXIT_SOFTWARE);
+    }
+
+    pipeFlags &= ~O_NONBLOCK;
+    if (fcntl(readerChild, F_SETFL, pipeFlags) < 0)
+    {
+        Log::error("Error: failed to set pipe flags [" + FIFO_BROKER + "].");
+        std::exit(Application::EXIT_SOFTWARE);
+    }
+
+    if (!doBenchmark)
+    {
+        // Open notify pipe
+        const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
+        if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
+        {
+            Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
+            exit(Application::EXIT_SOFTWARE);
+        }
+    }
+}
+
 // Broker process
 int main(int argc, char** argv)
 {
@@ -508,6 +593,7 @@ int main(int argc, char** argv)
     std::string loSubPath;
     std::string sysTemplate;
     std::string loTemplate;
+    bool doBenchmark = false;
 
     for (int i = 0; i < argc; ++i)
     {
@@ -543,22 +629,18 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             ClientPortNumber = std::stoll(std::string(eq+1));
         }
+        else if (std::strstr(cmd, "--benchmark"))
+            doBenchmark = true;
     }
 
     loolkitPath = Poco::Path(argv[0]).parent().toString() + "loolkit";
 
-    assert(!loSubPath.empty());
-    assert(!sysTemplate.empty());
-    assert(!loTemplate.empty());
-    assert(!childRoot.empty());
-    assert(numPreSpawnedChildren >= 1);
-
-    const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
-    const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
-    if ( (readerBroker = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
+    if (loSubPath.empty() || sysTemplate.empty() ||
+        loTemplate.empty() || childRoot.empty() ||
+        numPreSpawnedChildren < 1)
     {
-        Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] read only. Exiting.");
-        std::exit(Application::EXIT_SOFTWARE);
+        printArgumentHelp();
+        return 1;
     }
 
     if (!std::getenv("LD_BIND_NOW"))
@@ -567,40 +649,7 @@ int main(int argc, char** argv)
     if (!std::getenv("LOK_VIEW_CALLBACK"))
         Log::info("Note: LOK_VIEW_CALLBACK is not set.");
 
-    int pipeFlags = O_RDONLY | O_NONBLOCK;
-    const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
-    if (mkfifo(pipeBroker.c_str(), 0666) < 0 && errno != EEXIST)
-    {
-        Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if ((readerChild = open(pipeBroker.c_str(), pipeFlags) ) < 0)
-    {
-        Log::error("Error: pipe opened for reading.");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if ((pipeFlags = fcntl(readerChild, F_GETFL, 0)) < 0)
-    {
-        Log::error("Error: failed to get pipe flags [" + FIFO_BROKER + "].");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    pipeFlags &= ~O_NONBLOCK;
-    if (fcntl(readerChild, F_SETFL, pipeFlags) < 0)
-    {
-        Log::error("Error: failed to set pipe flags [" + FIFO_BROKER + "].");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    // Open notify pipe
-    const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
-    if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
-    {
-        Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
-        exit(Application::EXIT_SOFTWARE);
-    }
+    setupPipes(childRoot, doBenchmark);
 
     // Initialize LoKit and hope we can fork and save memory by sharing pages.
     const bool sharePages = std::getenv("LOK_NO_PREINIT") == nullptr
@@ -614,7 +663,7 @@ int main(int argc, char** argv)
 
     // We must have at least one child, more is created dynamically.
     if (createLibreOfficeKit(sharePages, childRoot, sysTemplate,
-                             loTemplate, loSubPath) < 0)
+                             loTemplate, loSubPath, doBenchmark) < 0)
     {
         Log::error("Error: failed to create children.");
         std::exit(Application::EXIT_SOFTWARE);
@@ -636,6 +685,8 @@ int main(int argc, char** argv)
     pipeThread.start(pipeHandler);
 
     Log::info("loolbroker is ready.");
+
+    Poco::Timestamp startTime;
 
     int childExitCode = EXIT_SUCCESS;
     unsigned timeoutCounter = 0;
@@ -741,7 +792,7 @@ int main(int argc, char** argv)
                 do
                 {
                     if (createLibreOfficeKit(sharePages, childRoot, sysTemplate,
-                                             loTemplate, loSubPath) < 0)
+                                             loTemplate, loSubPath, doBenchmark) < 0)
                     {
                         Log::error("Error: fork failed.");
                     }
@@ -770,6 +821,30 @@ int main(int argc, char** argv)
             childExitCode = EXIT_SUCCESS;
             sleep(MAINTENANCE_INTERVAL);
         }
+
+        if (doBenchmark)
+            break;
+    }
+
+    if (doBenchmark)
+    {
+        Log::info("loolbroker benchmark - waiting for kits.");
+
+        int numSpawned = 0;
+        while (numSpawned < numPreSpawnedChildren)
+        {
+            if (pipeHandler.waitForResponse())
+                numSpawned++;
+            Log::info("got children " + std::to_string(numSpawned));
+        }
+
+        sleep (10);
+
+        Poco::Timestamp::TimeDiff elapsed = startTime.elapsed();
+        std::cerr << "Time to launch " << numPreSpawnedChildren << " children: " << (1.0 * elapsed)/Poco::Timestamp::resolution() << std::endl;
+        Log::info("loolbroker benchmark complete.");
+
+        TerminationFlag = true;
     }
 
     // Terminate child processes.
