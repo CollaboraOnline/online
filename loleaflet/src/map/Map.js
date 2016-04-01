@@ -103,6 +103,8 @@ L.Map = L.Evented.extend({
 			}
 		});
 
+		this.on('statusindicator', this._onUpdateProgress, this);
+
 		// when editing, we need the LOK session right away
 		if (options.permission === 'edit') {
 			this.setPermission(options.permission);
@@ -691,6 +693,20 @@ L.Map = L.Evented.extend({
 				doclayer._visibleCursor = doclayer._visibleCursorOnLostFocus;
 				doclayer._onUpdateCursor();
 			}, 300);
+		}
+	},
+
+	_onUpdateProgress: function (e) {
+		if (e.statusType === 'start') {
+			this._progressBar = L.progressOverlay(this.getCenter(), L.point(100, 32));
+			this.addLayer(this._progressBar);
+		}
+		else if (e.statusType === 'setvalue' && this._progressBar) {
+			this._progressBar.setValue(e.value);
+		}
+		else if (e.statusType === 'finish' && this._progressBar) {
+			this.removeLayer(this._progressBar);
+			this._progressOverlay = null;
 		}
 	},
 

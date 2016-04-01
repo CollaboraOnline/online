@@ -9,6 +9,7 @@
 .leaflet-map-pane canvas,
 .leaflet-zoom-box,
 .leaflet-image-layer,
+.leaflet-progress-layer,
 .leaflet-layer {
 	position: absolute;
 	left: 0;
@@ -648,4 +649,39 @@ a.leaflet-control-buttons:hover:first-child {
 	background: #FFF;
 	display: block;
 	margin: 0 auto;
+	}
+
+.leaflet-progress {
+	background: #ebebeb;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	border-radius: 10px;
+	height:100%;
+	}
+
+.leaflet-progress > span {
+	position: relative;
+	float: left;
+	margin: 0 -1px;
+	height: 100%;
+	text-align: right;
+	background: #5aaadb;
+	border: 1px solid;
+	border-color: #459fd6 #3094d2 #277db2;
+	border-radius: 10px;
+	background-image: -webkit-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
+	background-image: -moz-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
+	background-image: -o-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
+	background-image: linear-gradient(to bottom, #aed5ed, #7bbbe2 70%, #5aaadb);
+	-webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+	}
+
+.leaflet-progress > span > span {
+	padding: 0 8px;
+	font-size: 11px;
+	font-weight: bold;
+	color: #404040;
+	color: rgba(0, 0, 0, 0.7);
+	text-shadow: 0 1px rgba(255, 255, 255, 0.4);
 	}

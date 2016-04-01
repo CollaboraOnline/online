@@ -175,6 +175,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			},
 		this);
+
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
@@ -747,7 +748,7 @@ L.TileLayer = L.GridLayer.extend({
 		done(e, tile);
 	},
 
-   _mapOnError: function (e) {
+	_mapOnError: function (e) {
 		if (e.msg) {
 			this._map.setPermission('view');
 		}

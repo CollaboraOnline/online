@@ -74,6 +74,11 @@ var deps = {
 		desc: 'Used to display an image over a particular rectangular area of the map.'
 	},
 
+	ProgressOverlay: {
+		src: ['layer/marker/ProgressOverlay.js'],
+		desc: 'Used to display a progress image over rectangular are of the map.'
+	},
+
 	Marker: {
 		src: ['layer/marker/Icon.js',
 		      'layer/marker/Icon.Default.js',
