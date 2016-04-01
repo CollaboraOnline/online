@@ -55,11 +55,11 @@ private:
 protected:
     virtual void put_impl(const Payload& value);
 
-    virtual bool wait_impl() const;
+    bool wait_impl() const;
 
-    virtual Payload get_impl();
+    Payload get_impl();
 
-    virtual void clear_impl();
+    void clear_impl();
 
     std::deque<Payload> _queue;
 };
