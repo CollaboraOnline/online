@@ -72,7 +72,7 @@ gets a "canceltiles" command.
 class BasicTileQueue : public MessageQueue
 {
 protected:
-    virtual void put_impl(const Payload& value);
+    virtual void put_impl(const Payload& value) override;
 };
 
 /** MessageQueue specialized for priority handling of tiles.
@@ -86,7 +86,7 @@ that the ones closest to the cursor position are returned first.
 class TileQueue : public BasicTileQueue
 {
 protected:
-    virtual void put_impl(const Payload& value);
+    virtual void put_impl(const Payload& value) override;
 };
 
 #endif
