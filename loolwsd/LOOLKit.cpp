@@ -447,7 +447,7 @@ public:
         }
         catch (const std::exception& ex)
         {
-            Log::error("Exception while creating session [" + sessionId + "] on url [" + _url + "].");
+            Log::error("Exception while creating session [" + sessionId + "] on url [" + _url + "] - '" + ex.what() + "'.");
             return false;
         }
     }
