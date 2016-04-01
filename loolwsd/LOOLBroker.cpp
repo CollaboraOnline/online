@@ -213,61 +213,6 @@ public:
         }
     }
 
-    /// Sync ChildProcess instances with its child.
-    /// Returns the number of empty children.
-    size_t syncChildren()
-    {
-        Log::trace("Synching children.");
-        size_t empty_count = 0;
-        for (auto it = _childProcesses.begin(); it != _childProcesses.end(); )
-        {
-            const auto message = "query url\n";
-            std::string response;
-            if (IoUtil::writeFIFO(it->second->getWritePipe(), message) < 0 ||
-                _childPipeReader.readLine(response, [](){ return TerminationFlag; }) < 0)
-            {
-                auto log = Log::error();
-                log << "Error querying child [" << std::to_string(it->second->getPid()) << "].";
-                if (it->second->getUrl().empty())
-                {
-                    log << " Removing empty child." << Log::end;
-                    it = _childProcesses.erase(it);
-                }
-                else
-                {
-                    ++it;
-                }
-                continue;
-            }
-
-            StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (tokens.count() >= 2 && tokens[0] == std::to_string(it->second->getPid()))
-            {
-                Log::debug("Child [" + std::to_string(it->second->getPid()) + "] hosts [" + tokens[1] + "].");
-                if (tokens[1] == "empty")
-                {
-                    it->second->setUrl("");
-                    ++empty_count;
-                }
-                else
-                {
-                    it->second->setUrl(tokens[1]);
-                }
-            }
-            else
-            {
-                Log::error("Unexpected response from child [" + std::to_string(it->second->getPid()) +
-                           "] to url query: [" + response + "].");
-            }
-
-            ++it;
-        }
-
-        Log::trace("Synching children done.");
-
-        return empty_count;
-    }
-
     void handleInput(const std::string& message)
     {
         Log::info("Broker command: [" + message + "].");
@@ -751,7 +696,6 @@ int main(int argc, char** argv)
                 Util::removeFile(childPath, true);
             }
 
-            //pipeHandler.syncChildren();
             timeoutCounter = 0;
         }
         else if (pid < 0)
