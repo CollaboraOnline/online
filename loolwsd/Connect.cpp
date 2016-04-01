@@ -102,10 +102,11 @@ public:
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+            std::cout << "Websocket closed" << std::endl;
         }
         catch (WebSocketException& exc)
         {
-            _ws.close();
+            std::cout << "Got exception " << exc.message() << std::endl;
         }
     }
 
@@ -155,21 +156,30 @@ protected:
         Output output(ws);
         thread.start(output);
 
-        while (!std::cin.eof())
+        while (true)
         {
             std::string line;
             std::getline(std::cin, line);
-            // Accept an input line "sleep <n>" that makes us sleep a number of seconds. Useful for
-            // debugging. Interrupt with Control-C.
-            if (line.find("sleep ") == 0)
+            if (std::cin.eof())
             {
+                break;
+            }
+            else if (line.find("sleep ") == 0)
+            {
+                // Accept an input line "sleep <n>" that makes us sleep a number of seconds.
                 long sleepTime = std::stol(line.substr(std::string("sleep").length()));
+                std::cout << "Sleeping " << sleepTime << " seconds" << std::endl;
                 Thread::sleep(sleepTime * 1000);
             }
             else
+            {
+                std::cout << "Sending: '" << line << "'" << std::endl;
                 ws.sendFrame(line.c_str(), line.size());
+            }
         }
 
+        std::cout << "Shutting down websocket" << std::endl;
+        ws.shutdown();
         thread.join();
 
         return Application::EXIT_OK;
