@@ -270,9 +270,13 @@
     var wopiSrc = getParameterByName('WOPISrc');
     var filePath = getParameterByName('file_path');
     var fileName = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
+    if (wopiSrc !== '') {
+        fileName = getParameterByName('filename');
+    }
     var host = getParameterByName('host');
     var permission = getParameterByName('permission');
     var timestamp = getParameterByName('timestamp');
+    var closebutton = getParameterByName('closebutton');
     if (wopiSrc === '' && filePath === '') {
         vex.dialog.alert('Wrong WOPISrc, usage: WOPISrc=valid encoded URI,  or file_path, usage: file_path=/path/to/doc/');
     }

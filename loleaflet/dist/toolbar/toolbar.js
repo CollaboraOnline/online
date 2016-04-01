@@ -82,7 +82,7 @@ $(function () {
 			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
 			{ type: 'html', id: 'right' },
 			{ type: 'button',  id: 'more', img: 'more', hint: _("More") },
-			{ type: 'button',  id: 'close',  img: 'closedoc', hint: _("Close Document") },
+			{ type: 'button',  id: 'close',  img: 'closedoc', hint: _("Close Document"), hidden: true },
 		],
 		onClick: function (e) {
 			onClick(e.target);
@@ -327,8 +327,6 @@ function onClick(id) {
 	}
 	else if (id.startsWith('menu:file:downloadas-')) {
 		var format = id.substring('menu:file:downloadas-'.length);
-		// try to get the filename from the url
-		var fileName = map.options.doc.replace(/^.*[\\\/]/, '');
 		// remove the extension if any
 		fileName = fileName.substr(0, fileName.lastIndexOf('.')) || fileName;
 		// check if it is empty
@@ -393,6 +391,7 @@ function onClick(id) {
 		});
 	}
 	else if (id === 'close') {
+		window.parent.postMessage('close', '*');
 		map.remove();
 	}
 }
@@ -911,6 +910,10 @@ $(window).resize(function() {
 
 $(document).ready(function() {
 	resizeToolbar();
+	var toolbar = w2ui['toolbar-up'];
+	if (closebutton) {
+		toolbar.show('close');
+	}
 });
 
 function resizeToolbar() {
