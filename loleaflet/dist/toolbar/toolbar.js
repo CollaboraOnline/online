@@ -328,7 +328,7 @@ function onClick(id) {
 	else if (id.startsWith('menu:file:downloadas-')) {
 		var format = id.substring('menu:file:downloadas-'.length);
 		// remove the extension if any
-		fileName = fileName.substr(0, fileName.lastIndexOf('.')) || fileName;
+		var fileName = title.substr(0, title.lastIndexOf('.')) || title;
 		// check if it is empty
 		fileName = fileName === '' ? 'document' : fileName;
 		map.downloadAs(fileName + '.' + format, format);

@@ -269,9 +269,9 @@
 
     var wopiSrc = getParameterByName('WOPISrc');
     var filePath = getParameterByName('file_path');
-    var fileName = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
-    if (wopiSrc !== '') {
-        fileName = getParameterByName('filename');
+    var title = getParameterByName('title');
+    if (title === '') {
+        title = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
     }
     var host = getParameterByName('host');
     var permission = getParameterByName('permission');
@@ -288,7 +288,7 @@
     }
     var docURL = wopiSrc !== '' ? wopiSrc : filePath;
 
-    document.title = fileName;
+    document.title = title;
     var map = L.map('map', {
 			server: host,
 			doc: docURL,
