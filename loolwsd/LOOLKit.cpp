@@ -104,13 +104,24 @@ namespace
                 std::exit(Application::EXIT_SOFTWARE);
             }
             break;
-        case FTW_DP:
+        case FTW_D:
             {
                 struct stat st;
                 if (stat(fpath, &st) == -1)
                 {
                     Log::error("Error: stat(\"" + std::string(fpath) + "\") failed.");
                     return 1;
+                }
+                if (!strcmp(relativeOldPath, "program/wizards") ||
+                    !strcmp(relativeOldPath, "sdk") ||
+                    !strcmp(relativeOldPath, "share/gallery") ||
+                    !strcmp(relativeOldPath, "share/Scripts") ||
+                    !strcmp(relativeOldPath, "share/template") ||
+                    !strcmp(relativeOldPath, "share/config/wizard") ||
+                    !strcmp(relativeOldPath, "share/config/wizard"))
+                {
+                    Log::debug("skip redundant paths " + std::string(relativeOldPath));
+                    return FTW_SKIP_SUBTREE;
                 }
                 File(newPath).createDirectories();
                 struct utimbuf ut;
@@ -133,7 +144,9 @@ namespace
             Log::error("nftw: symlink to nonexistent file: '" + std::string(fpath) + "', ignored.");
             break;
         default:
+            Log::error("nftw: unexpected type: '" + std::to_string(typeflag));
             assert(false);
+            break;
         }
         return 0;
     }
@@ -144,7 +157,7 @@ namespace
         if (sourceForLinkOrCopy->back() == '/')
             sourceForLinkOrCopy->pop_back();
         *destinationForLinkOrCopy = destination;
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_DEPTH) == -1)
+        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL) == -1)
             Log::error("linkOrCopy: nftw() failed for '" + source + "'");
     }
 }
