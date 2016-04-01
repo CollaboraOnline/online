@@ -35,6 +35,7 @@
 using Poco::DigestEngine;
 using Poco::DirectoryIterator;
 using Poco::File;
+using Poco::FileException;
 using Poco::StringTokenizer;
 using Poco::SyntaxException;
 using Poco::Timestamp;
@@ -192,9 +193,19 @@ void TileCache::documentSaved()
 
     _cacheMutex.lock();
     // then move the new tiles from the Editing cache to Persistent
-    for (auto tileIterator = DirectoryIterator(_editCacheDir); tileIterator != DirectoryIterator(); ++tileIterator)
+    try
     {
-        tileIterator->moveTo(_persCacheDir);
+        for (auto tileIterator = DirectoryIterator(_editCacheDir); tileIterator != DirectoryIterator(); ++tileIterator)
+        {
+            tileIterator->moveTo(_persCacheDir);
+        }
+    }
+    catch (const FileException& exc)
+    {
+        // Just log this exception, ignore it otherwise
+        Log::error() << "TileCache::documentSaved: Exception: " << exc.displayText()
+                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                     << Log::end;
     }
 
     _cacheMutex.unlock();
