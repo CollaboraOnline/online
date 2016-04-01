@@ -18,7 +18,8 @@
 class QueueHandler: public Poco::Runnable
 {
 public:
-    QueueHandler(MessageQueue& queue, const std::shared_ptr<LOOLSession>& session,
+    QueueHandler(std::shared_ptr<MessageQueue> queue,
+                 const std::shared_ptr<LOOLSession>& session,
                  const std::string& name):
         _queue(queue),
         _session(session),
@@ -37,7 +38,7 @@ public:
         {
             while (true)
             {
-                const auto input = _queue.get();
+                const auto input = _queue->get();
                 if (LOOLProtocol::getFirstToken(input) == "eof")
                 {
                     Log::info("Received EOF. Finishing.");
@@ -60,7 +61,7 @@ public:
     }
 
 private:
-    MessageQueue& _queue;
+    std::shared_ptr<MessageQueue> _queue;
     std::shared_ptr<LOOLSession> _session;
     const std::string _name;
 };

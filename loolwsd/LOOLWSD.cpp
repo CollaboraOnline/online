@@ -250,8 +250,7 @@ private:
 
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
-                    const LOOLSession::Kind kind = LOOLSession::Kind::ToClient;
-                    auto session = std::make_shared<MasterProcessSession>(id, kind, ws, docBroker);
+                    auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, nullptr);
                     session->setEditLock(true);
                     docBroker->incSessions();
                     lock.unlock();
@@ -448,8 +447,13 @@ private:
         docBroker->validate(uriPublic);
         Log::debug("Validated [" + uriPublic.toString() + "].");
 
+        // For ToClient sessions, we store incoming messages in a queue and have a separate
+        // thread that handles them. This is so that we can empty the queue when we get a
+        // "canceltiles" message.
+        auto queue = std::make_shared<BasicTileQueue>();
+
         auto ws = std::make_shared<WebSocket>(request, response);
-        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker);
+        auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
         docBroker->incSessions();
         docBrokersLock.unlock();
 
@@ -464,10 +468,6 @@ private:
         Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
         IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
-        // For ToClient sessions, we store incoming messages in a queue and have a separate
-        // thread that handles them. This is so that we can empty the queue when we get a
-        // "canceltiles" message.
-        BasicTileQueue queue;
         QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
 
         Thread queueHandlerThread;
@@ -485,7 +485,7 @@ private:
                 }
                 else
                 {
-                    queue.put(payload);
+                    queue->put(payload);
                 }
 
                 return true;
@@ -500,12 +500,12 @@ private:
             // of save so Storage can persist the save (if necessary).
             // In addition, we shouldn't issue save when opening of the doc fails.
             Log::info("Non-deliberate shutdown of the last session, saving the document before tearing down.");
-            queue.put("uno .uno:Save");
+            queue->put("uno .uno:Save");
         }
         else
         {
             Log::info("Clearing the queue.");
-            queue.clear();
+            queue->clear();
         }
 
         docBroker->removeWSSession(id);
@@ -513,7 +513,7 @@ private:
         Log::warn(docKey + ", ws_sessions--: " + std::to_string(wsSessionsCount));
 
         Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
-        queue.put("eof");
+        queue->put("eof");
         queueHandlerThread.join();
 
         docBrokersLock.lock();
@@ -678,7 +678,7 @@ public:
             docBroker->load(jailId);
 
             auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker);
+            auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker, nullptr);
 
             std::unique_lock<std::mutex> lock(MasterProcessSession::AvailableChildSessionMutex);
             MasterProcessSession::AvailableChildSessions.emplace(sessionId, session);
@@ -1334,8 +1334,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         if (sessionIt.second->_lastMessageTime > sessionIt.second->_idleSaveTime &&
                             sessionIt.second->_lastMessageTime < now - 30)
                         {
-                            // Trigger a .uno:Save
                             Log::info("Idle save triggered for session " + sessionIt.second->getId());
+                            sessionIt.second->getQueue()->put("uno .uno:Save");
 
                             sessionIt.second->_idleSaveTime = now;
                         }
@@ -1356,8 +1356,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         if (sessionIt.second->_lastMessageTime >= sessionIt.second->_idleSaveTime &&
                             sessionIt.second->_lastMessageTime >= sessionIt.second->_autoSaveTime)
                         {
-                            // Trigger a .uno:Save
                             Log::info("Auto-save triggered for session " + sessionIt.second->getId());
+                            sessionIt.second->getQueue()->put("uno .uno:Save");
 
                             sessionIt.second->_autoSaveTime = now;
                         }

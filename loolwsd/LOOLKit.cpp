@@ -190,16 +190,16 @@ public:
         _thread.join();
     }
 
-    void handle(TileQueue& queue, const std::string& firstLine, char* buffer, int n)
+    void handle(std::shared_ptr<TileQueue> queue, const std::string& firstLine, char* buffer, int n)
     {
         if (firstLine.find("paste") != 0)
         {
             // Everything else is expected to be a single line.
             assert(firstLine.size() == static_cast<std::string::size_type>(n));
-            queue.put(firstLine);
+            queue->put(firstLine);
         }
         else
-            queue.put(std::string(buffer, n));
+            queue->put(std::string(buffer, n));
     }
 
     void run() override
@@ -213,7 +213,7 @@ public:
 
         try
         {
-            TileQueue queue;
+            auto queue = std::make_shared<TileQueue>();
             QueueHandler handler(queue, _session, "kit_queue_" + _session->getId());
 
             Thread queueHandlerThread;
@@ -264,8 +264,8 @@ public:
                          << ", payload size: " << n
                          << ", flags: " << std::hex << flags << Log::end;
 
-            queue.clear();
-            queue.put("eof");
+            queue->clear();
+            queue->put("eof");
             queueHandlerThread.join();
 
             _session->disconnect();

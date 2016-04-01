@@ -36,14 +36,16 @@ std::condition_variable MasterProcessSession::AvailableChildSessionCV;
 MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
                                            std::shared_ptr<Poco::Net::WebSocket> ws,
-                                           std::shared_ptr<DocumentBroker> docBroker) :
+                                           std::shared_ptr<DocumentBroker> docBroker,
+                                           std::shared_ptr<BasicTileQueue> queue) :
     LOOLSession(id, kind, ws),
     _lastMessageTime(0),
     _idleSaveTime(0),
     _autoSaveTime(0),
     _curPart(0),
     _loadPart(-1),
-    _docBroker(docBroker)
+    _docBroker(docBroker),
+    _queue(queue)
 {
     Log::info("MasterProcessSession ctor [" + getName() + "].");
 }

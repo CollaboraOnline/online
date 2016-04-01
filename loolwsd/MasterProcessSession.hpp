@@ -15,6 +15,7 @@
 #include <Poco/Random.h>
 
 #include "LOOLSession.hpp"
+#include "MessageQueue.hpp"
 #include "TileCache.hpp"
 
 class DocumentBroker;
@@ -25,7 +26,8 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     MasterProcessSession(const std::string& id,
                          const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws,
-                         std::shared_ptr<DocumentBroker> docBroker);
+                         std::shared_ptr<DocumentBroker> docBroker,
+                         std::shared_ptr<BasicTileQueue> queue);
     virtual ~MasterProcessSession();
 
     virtual bool getStatus(const char *buffer, int length) override;
@@ -44,6 +46,8 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     std::string getSaveAs();
 
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
+
+    std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
 
     void setEditLock(const bool value) { _bEditLock = value; }
 
@@ -94,6 +98,7 @@ public:
     /// Kind::ToClient instances store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
     std::shared_ptr<DocumentBroker> _docBroker;
+    std::shared_ptr<BasicTileQueue> _queue;
 
     // If this document holds the edit lock.
     // An edit lock will only allow the current session to make edits,
