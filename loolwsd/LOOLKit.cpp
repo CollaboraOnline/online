@@ -1045,14 +1045,6 @@ void lokit_main(const std::string& childRoot,
                         TerminationFlag = true;
                         response += "down\n";
                     }
-                    else if (tokens[0] == "query" && tokens.count() > 1)
-                    {
-                        if (tokens[1] == "url")
-                        {
-                            response += (document ? document->getUrl() : "empty");
-                            response += "\n";
-                        }
-                    }
                     else
                     {
                         response += "bad unknown token [" + tokens[0] + "]\n";
