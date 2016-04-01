@@ -32,24 +32,23 @@
 #include "TileCache.hpp"
 #include "Util.hpp"
 
-using Poco::DigestEngine;
 using Poco::DirectoryIterator;
 using Poco::File;
 using Poco::FileException;
+using Poco::Path;
 using Poco::StringTokenizer;
-using Poco::SyntaxException;
 using Poco::Timestamp;
 using Poco::URI;
 
 using namespace LOOLProtocol;
 
 TileCache::TileCache(const std::string& docURL,
-                     const Poco::Timestamp& modifiedTime,
+                     const Timestamp& modifiedTime,
                      const std::string& rootCacheDir) :
     _docURL(docURL),
     _rootCacheDir(rootCacheDir),
-    _persCacheDir(Poco::Path(rootCacheDir, "persistent").toString()),
-    _editCacheDir(Poco::Path(rootCacheDir, "editing").toString()),
+    _persCacheDir(Path(rootCacheDir, "persistent").toString()),
+    _editCacheDir(Path(rootCacheDir, "editing").toString()),
     _isEditing(false),
     _hasUnsavedChanges(false)
 {
@@ -394,7 +393,7 @@ Timestamp TileCache::getLastModified()
     return result;
 }
 
-void TileCache::saveLastModified(const Poco::Timestamp& timestamp)
+void TileCache::saveLastModified(const Timestamp& timestamp)
 {
     std::fstream modTimeFile(_rootCacheDir + "/modtime.txt", std::ios::out);
     modTimeFile << timestamp.raw() << std::endl;
