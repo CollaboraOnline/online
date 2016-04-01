@@ -77,7 +77,7 @@ protected:
 
 /** MessageQueue specialized for priority handling of tiles.
 
-This class builds on BasicTileQueuee, and additonaly provides de-duplication
+This class builds on BasicTileQueue, and additonaly provides de-duplication
 of tile requests.
 
 TODO: we'll need to add reordering of the tiles at some stage here too - so
