@@ -1,7 +1,9 @@
 # Collabora CloudSuite Toolbar French translation
 # Copyright (C) 2015
-# This file is distributed under the same license as the cloudsuite package.
 # Andras Timar <andras.timar@collabora.com>
+# This file is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 msgid ""
 msgstr ""
 "Project-Id-Version: CloudSuite Toolbar\n"
