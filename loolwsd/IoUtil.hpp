@@ -54,6 +54,8 @@ namespace IoUtil
         {
         }
 
+        const std::string& getName() const { return _name; }
+
         /// Reads a single line from the pipe.
         /// Returns 0 for timeout, <0 for error, and >0 on success.
         /// On success, line will contain the read message.
@@ -61,6 +63,15 @@ namespace IoUtil
                      std::function<bool()> stopPredicate,
                      const size_t timeoutMs = POLL_TIMEOUT_MS);
 
+        /// Processes a single line read and invoking stopPredicate
+        /// to check for termination condition.
+        /// Intended to be called from a polling loop.
+        bool processOnce(std::function<bool(std::string& message)> handler,
+                         std::function<bool()> stopPredicate,
+                         const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
+
+        /// Designed to be called from a dedicated thread,
+        /// blocks and processes pipe messages in a loop.
         void process(std::function<bool(std::string& message)> handler,
                      std::function<bool()> stopPredicate,
                      const size_t pollTimeoutMs = POLL_TIMEOUT_MS);

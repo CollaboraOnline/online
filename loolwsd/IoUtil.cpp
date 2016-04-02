@@ -352,37 +352,38 @@ int PipeReader::readLine(std::string& line,
     return 0;
 }
 
+bool PipeReader::processOnce(std::function<bool(std::string& message)> handler,
+                             std::function<bool()> stopPredicate,
+                             const size_t pollTimeoutMs)
+{
+    std::string line;
+    const auto ready = readLine(line, stopPredicate, pollTimeoutMs);
+    if (ready == 0)
+    {
+        // Timeout.
+        return true;
+    }
+    else if (ready < 0)
+    {
+        Log::error("Error reading from pipe [" + _name + "].");
+        return false;
+    }
+    else if (!handler(line))
+    {
+        Log::info("Pipe [" + _name + "] handler requested to finish.");
+        return false;
+    }
+
+    return true;
+}
+
 void PipeReader::process(std::function<bool(std::string& message)> handler,
                          std::function<bool()> stopPredicate,
                          const size_t pollTimeoutMs)
 {
-    bool stop = false;
-    for (;;)
+    while (processOnce(handler, stopPredicate, pollTimeoutMs))
     {
-        stop = stopPredicate();
-        if (stop)
-        {
-            Log::info("Termination flagged for pipe [" + _name + "].");
-            break;
-        }
-
-        std::string line;
-        const auto ready = readLine(line, stopPredicate, pollTimeoutMs);
-        if (ready == 0)
-        {
-            // Timeout.
-            continue;
-        }
-        else if (ready < 0)
-        {
-            Log::error("Error reading from pipe [" + _name + "].");
-            continue;
-        }
-        else if (!handler(line))
-        {
-            Log::info("Pipe [" + _name + "] handler requested to finish.");
-            break;
-        }
+        // readLine will call stopPredicate, no need to do it again here.
     }
 }
 

@@ -160,7 +160,7 @@ namespace
     }
 }
 
-class PipeRunnable: public Runnable
+class PipeRunnable
 {
 public:
     PipeRunnable() :
@@ -254,22 +254,6 @@ public:
             Process::PID nPid = static_cast<Process::PID>(std::stoi(tokens[1]));
             removeChild(nPid, true);
         }
-    }
-
-    void run() override
-    {
-        static const std::string thread_name = "brk_pipe_reader";
-
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to " + thread_name + ".");
-
-        Log::debug("Thread [" + thread_name + "] started.");
-
-        IoUtil::PipeReader pipeReader(FIFO_LOOLWSD, readerBroker);
-        pipeReader.process([this](std::string& message) { handleInput(message); return true; },
-                           []() { return TerminationFlag; });
-
-        Log::debug("Thread [" + thread_name + "] finished.");
     }
 
     bool waitForResponse()
@@ -665,18 +649,20 @@ int main(int argc, char** argv)
     }
 
     PipeRunnable pipeHandler;
-    Poco::Thread pipeThread;
-
-    pipeThread.start(pipeHandler);
-
     Log::info("loolbroker is ready.");
 
     Poco::Timestamp startTime;
+    IoUtil::PipeReader pipeReader(FIFO_LOOLWSD, readerBroker);
 
-    int childExitCode = EXIT_SUCCESS;
-    unsigned timeoutCounter = 0;
     while (!TerminationFlag)
     {
+        if (!pipeReader.processOnce([&pipeHandler](std::string& message) { pipeHandler.handleInput(message); return true; },
+                                    []() { return TerminationFlag; }))
+        {
+            Log::info("Reading pipe [" + pipeReader.getName() + "] flagged for termination.");
+            break;
+        }
+
         int status;
         const pid_t pid = waitpid(-1, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
@@ -684,7 +670,6 @@ int main(int argc, char** argv)
             std::lock_guard<std::mutex> lock(forkMutex);
             if (WIFEXITED(status))
             {
-                childExitCode = Util::getChildStatus(WEXITSTATUS(status));
                 Log::info() << "Child process [" << pid << "] exited with code: "
                             << WEXITSTATUS(status) << "." << Log::end;
 
@@ -693,7 +678,6 @@ int main(int argc, char** argv)
             else
             if (WIFSIGNALED(status))
             {
-                childExitCode = Util::getSignalStatus(WTERMSIG(status));
                 std::string fate = "died";
 #ifdef WCOREDUMP
                 if (WCOREDUMP(status))
@@ -731,25 +715,13 @@ int main(int argc, char** argv)
                 Log::info("Removing jail [" + childPath.toString() + "].");
                 Util::removeFile(childPath, true);
             }
-
-            timeoutCounter = 0;
         }
         else if (pid < 0)
         {
             // No child processes
             if (errno == ECHILD)
             {
-                if (childExitCode == EXIT_SUCCESS)
-                {
-                    Log::info("Last child exited successfully, fork new one.");
-                    ++forkCounter;
-                }
-                else
-                {
-                    Log::error("Error: last child exited with error code. Terminating.");
-                    TerminationFlag = true; //FIXME: Why?
-                    continue;
-                }
+                ++forkCounter;
             }
             else
             {
@@ -757,7 +729,7 @@ int main(int argc, char** argv)
             }
         }
 
-        if (forkCounter > 0 && childExitCode == EXIT_SUCCESS)
+        if (forkCounter > 0)
         {
             std::lock_guard<std::mutex> lock(forkMutex);
 
@@ -798,13 +770,6 @@ int main(int argc, char** argv)
                             << (childCount + newChildCount) << ". Will not spawn yet." << Log::end;
                 forkCounter = 0;
             }
-        }
-
-        if (timeoutCounter++ == INTERVAL_PROBES)
-        {
-            timeoutCounter = 0;
-            childExitCode = EXIT_SUCCESS;
-            sleep(MAINTENANCE_INTERVAL);
         }
 
         if (doBenchmark)
@@ -867,7 +832,6 @@ int main(int argc, char** argv)
     _childProcesses.clear();
     _newChildProcesses.clear();
 
-    pipeThread.join();
     close(writerNotify);
     close(readerChild);
     close(readerBroker);
