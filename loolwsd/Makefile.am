@@ -1,6 +1,6 @@
 SUBDIRS = test
 
-bin_PROGRAMS = loolwsd loolbroker loolkit loolmap
+bin_PROGRAMS = loolwsd loolbroker loolkit loolmap loolmount
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup discovery.xml
 
@@ -53,6 +53,8 @@ loolkit_SOURCES = LOOLKit.cpp \
 loolbroker_SOURCES = LOOLBroker.cpp \
                      $(broker_shared_sources)
 
+loolmount_SOURCES = loolmount.c
+
 loolmap_SOURCES = loolmap.c
 
 noinst_HEADERS = Admin.hpp \
@@ -100,6 +102,7 @@ all-local: loolbroker loolkit certificates
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolkit; \
+	    sudo @SETCAP@ cap_sys_admin=ep loolmount; \
 	    echo "Set required capabilities"; \
 	else \
 	    echo "Skipping capability setting"; \

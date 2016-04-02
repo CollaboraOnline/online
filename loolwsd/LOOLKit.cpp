@@ -76,8 +76,32 @@ static int writerNotify = -1;
 
 namespace
 {
+    typedef enum { COPY_ALL, COPY_LO, COPY_NO_USR } LinkOrCopyType;
+    LinkOrCopyType linkOrCopyType;
     std::string sourceForLinkOrCopy;
     Path destinationForLinkOrCopy;
+
+    bool shouldCopyDir(const char *path)
+    {
+        switch (linkOrCopyType)
+        {
+        case COPY_NO_USR:
+            // bind mounted.
+            return strcmp(path,"usr");
+        case COPY_LO:
+            return
+                strcmp(path, "program/wizards") &&
+                strcmp(path, "sdk") &&
+                strcmp(path, "share/basic") &&
+                strcmp(path, "share/gallery") &&
+                strcmp(path, "share/Scripts") &&
+                strcmp(path, "share/template") &&
+                strcmp(path, "share/config/wizard") &&
+                strcmp(path, "share/config/wizard");
+        default: // COPY_ALL
+            return true;
+        }
+    }
 
     int linkOrCopyFunction(const char *fpath,
                            const struct stat* /*sb*/,
@@ -110,13 +134,7 @@ namespace
                     Log::error("Error: stat(\"" + std::string(fpath) + "\") failed.");
                     return 1;
                 }
-                if (!strcmp(relativeOldPath, "program/wizards") ||
-                    !strcmp(relativeOldPath, "sdk") ||
-                    !strcmp(relativeOldPath, "share/gallery") ||
-                    !strcmp(relativeOldPath, "share/Scripts") ||
-                    !strcmp(relativeOldPath, "share/template") ||
-                    !strcmp(relativeOldPath, "share/config/wizard") ||
-                    !strcmp(relativeOldPath, "share/config/wizard"))
+                if (!shouldCopyDir(relativeOldPath))
                 {
                     Log::debug("skip redundant paths " + std::string(relativeOldPath));
                     return FTW_SKIP_SUBTREE;
@@ -149,8 +167,11 @@ namespace
         return 0;
     }
 
-    void linkOrCopy(const std::string& source, const Path& destination)
+    void linkOrCopy(const std::string& source,
+                    const Path& destination,
+                    LinkOrCopyType type)
     {
+        linkOrCopyType = type;
         sourceForLinkOrCopy = source;
         if (sourceForLinkOrCopy.back() == '/')
             sourceForLinkOrCopy.pop_back();
@@ -902,8 +923,26 @@ void lokit_main(const std::string& childRoot,
         File(jailLOInstallation).createDirectory();
 
         // Copy (link) LO installation and other necessary files into it from the template.
-        linkOrCopy(sysTemplate, jailPath);
-        linkOrCopy(loTemplate, jailLOInstallation);
+        bool bLoopMounted = false;
+        if (getenv("LOOL_BIND_MOUNT"))
+        {
+            Path usrSrcPath(sysTemplate, "usr");
+            Path usrDestPath(jailPath, "usr");
+            File(usrDestPath).createDirectory();
+            std::string mountCommand =
+                std::string("loolmount ") +
+                usrSrcPath.toString() +
+                std::string(" ") +
+                usrDestPath.toString();
+            Log::debug("Initializing jail bind mount.");
+            bLoopMounted = !system(mountCommand.c_str());
+            Log::debug("Initialized jail bind mount.");
+        }
+        linkOrCopy(sysTemplate, jailPath,
+                   bLoopMounted ? COPY_NO_USR : COPY_ALL);
+        linkOrCopy(loTemplate, jailLOInstallation, COPY_LO);
+
+        Log::debug("Initialized jail files.");
 
         // We need this because sometimes the hostname is not resolved
         const std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
@@ -948,6 +987,8 @@ void lokit_main(const std::string& childRoot,
         dropCapability(CAP_SYS_CHROOT);
         dropCapability(CAP_MKNOD);
         dropCapability(CAP_FOWNER);
+
+        Log::debug("Initialized jail nodes, dropped caps.");
 
         loKit = lok_init_2(instdir_path.c_str(), "file:///user");
         if (loKit == nullptr)
