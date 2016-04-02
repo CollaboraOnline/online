@@ -160,13 +160,34 @@ namespace
     }
 }
 
-class PipeRunnable
+class ChildDispatcher
 {
 public:
-    PipeRunnable() :
+    ChildDispatcher() :
+        _wsdPipeReader("wsd_pipe_rd", readerBroker),
         _childPipeReader("child_pipe_rd", readerChild)
     {
     }
+
+    /// Polls WSD commands and dispatches them to the appropriate child.
+    bool pollAndDispatch()
+    {
+        return _wsdPipeReader.processOnce([this](std::string& message) { handleInput(message); return true; },
+                                          []() { return TerminationFlag; });
+    }
+
+    /// Used for benchmarking child initialization.
+    bool waitForResponse()
+    {
+        std::string response;
+        if (_childPipeReader.readLine(response, [](){ return TerminationFlag; }) <= 0)
+            Log::error("Error reading response to benchmark message from child");
+        else
+            Log::debug("got response '" + response + "'");
+        return response == "started";
+    }
+
+private:
 
     bool createSession(const std::shared_ptr<ChildProcess>& child, const std::string& session, const std::string& url)
     {
@@ -256,17 +277,8 @@ public:
         }
     }
 
-    bool waitForResponse()
-    {
-        std::string response;
-        if (_childPipeReader.readLine(response, [](){ return TerminationFlag; }) <= 0)
-            Log::error("Error reading response to benchmark message from child");
-        else
-            Log::debug("got response '" + response + "'");
-        return response == "started";
-    }
-
 private:
+    IoUtil::PipeReader _wsdPipeReader;
     IoUtil::PipeReader _childPipeReader;
 };
 
@@ -648,18 +660,16 @@ int main(int argc, char** argv)
         dropCapability(CAP_FOWNER);
     }
 
-    PipeRunnable pipeHandler;
+    ChildDispatcher childDispatcher;
     Log::info("loolbroker is ready.");
 
     Poco::Timestamp startTime;
-    IoUtil::PipeReader pipeReader(FIFO_LOOLWSD, readerBroker);
 
     while (!TerminationFlag)
     {
-        if (!pipeReader.processOnce([&pipeHandler](std::string& message) { pipeHandler.handleInput(message); return true; },
-                                    []() { return TerminationFlag; }))
+        if (!childDispatcher.pollAndDispatch())
         {
-            Log::info("Reading pipe [" + pipeReader.getName() + "] flagged for termination.");
+            Log::info("Child dispatcher flagged for termination.");
             break;
         }
 
@@ -783,7 +793,7 @@ int main(int argc, char** argv)
         int numSpawned = 0;
         while (numSpawned < numPreSpawnedChildren)
         {
-            if (pipeHandler.waitForResponse())
+            if (childDispatcher.waitForResponse())
                 numSpawned++;
             Log::info("got children " + std::to_string(numSpawned));
         }
