@@ -52,25 +52,21 @@ namespace
     public:
         ChildProcess() :
             _pid(-1),
-            _readPipe(-1),
             _writePipe(-1)
         {
         }
 
-        ChildProcess(const Poco::Process::PID pid, const int readPipe, const int writePipe) :
+        ChildProcess(const Poco::Process::PID pid, const int writePipe) :
             _pid(pid),
-            _readPipe(readPipe),
             _writePipe(writePipe)
         {
         }
 
         ChildProcess(ChildProcess&& other) :
             _pid(other._pid),
-            _readPipe(other._readPipe),
             _writePipe(other._writePipe)
         {
             other._pid = -1;
-            other._readPipe = -1;
             other._writePipe = -1;
         }
 
@@ -78,8 +74,6 @@ namespace
         {
             _pid = other._pid;
             other._pid = -1;
-            _readPipe = other._readPipe;
-            other._readPipe = -1;
             _writePipe = other._writePipe;
             other._writePipe = -1;
 
@@ -108,12 +102,6 @@ namespace
                _pid = -1;
             }
 
-            if (_readPipe != -1)
-            {
-                ::close(_readPipe);
-                _readPipe = -1;
-            }
-
             if (_writePipe != -1)
             {
                 ::close(_writePipe);
@@ -125,13 +113,11 @@ namespace
         const std::string& getUrl() const { return _url; }
 
         Poco::Process::PID getPid() const { return _pid; }
-        int getReadPipe() const { return _readPipe; }
         int getWritePipe() const { return _writePipe; }
 
     private:
         std::string _url;
         Poco::Process::PID _pid;
-        int _readPipe;
         int _writePipe;
     };
 
@@ -456,7 +442,7 @@ static int createLibreOfficeKit(const bool sharePages,
         Log::error("Error: failed to open write pipe [" + pipeKit + "] with kit. Abandoning child.");
         // This is an elaborate way to send a SIGINT to childPID: Construct and immediately destroy
         // a ChildProcess object for it.
-        ChildProcess(childPID, -1, -1);
+        ChildProcess(childPID, -1);
         return -1;
     }
 
@@ -464,7 +450,7 @@ static int createLibreOfficeKit(const bool sharePages,
     if ((flags = fcntl(fifoWriter, F_GETFL, 0)) < 0)
     {
         Log::error("Error: failed to get pipe flags [" + pipeKit + "].");
-        ChildProcess(childPID, -1, -1);
+        ChildProcess(childPID, -1);
         return -1;
     }
 
@@ -472,13 +458,13 @@ static int createLibreOfficeKit(const bool sharePages,
     if (fcntl(fifoWriter, F_SETFL, flags) < 0)
     {
         Log::error("Error: failed to set pipe flags [" + pipeKit + "].");
-        ChildProcess(childPID, -1, -1);
+        ChildProcess(childPID, -1);
         return -1;
     }
 
     Log::info() << "Adding Kit #" << childCounter << ", PID: " << childPID << Log::end;
 
-    _newChildProcesses.emplace_back(std::make_shared<ChildProcess>(childPID, -1, fifoWriter));
+    _newChildProcesses.emplace_back(std::make_shared<ChildProcess>(childPID, fifoWriter));
     return childPID;
 }
 
