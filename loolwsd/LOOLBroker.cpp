@@ -289,11 +289,10 @@ private:
 /// Initializes LibreOfficeKit for cross-fork re-use.
 static bool globalPreinit(const std::string &loTemplate)
 {
-    void *handle;
-    LokHookPreInit* preInit;
+    const std::string libSofficeapp = loTemplate + "/program/" LIB_SOFFICEAPP;
 
-    std::string libSofficeapp = loTemplate + "/program/" LIB_SOFFICEAPP;
     std::string loadedLibrary;
+    void *handle;
     if (File(libSofficeapp).exists())
     {
         handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
@@ -324,7 +323,7 @@ static bool globalPreinit(const std::string &loTemplate)
         }
     }
 
-    preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
+    LokHookPreInit* preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
         Log::warn("Note: No lok_preinit hook in " + loadedLibrary);
