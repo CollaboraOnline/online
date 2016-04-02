@@ -56,11 +56,8 @@
 
 using namespace LOOLProtocol;
 
-using Poco::Exception;
 using Poco::File;
-using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPResponse;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Process;
@@ -72,7 +69,7 @@ using Poco::Util::Application;
 const std::string FIFO_BROKER = "loolbroker.fifo";
 const std::string FIFO_NOTIFY = "loolnotify.fifo";
 
-static int writerNotify = -1;
+static int WriterNotify = -1;
 
 namespace
 {
@@ -302,7 +299,7 @@ public:
 
             _session->disconnect();
         }
-        catch (const Exception& exc)
+        catch (const Poco::Exception& exc)
         {
             Log::error() << "Connection::run: Exception: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
@@ -440,10 +437,10 @@ public:
 
             // Open websocket connection between the child process and the
             // parent. The parent forwards us requests that it can't handle (i.e most).
-            HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+            Poco::Net::HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
             cs.setTimeout(0);
             HTTPRequest request(HTTPRequest::HTTP_GET, std::string(CHILD_URI) + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey);
-            HTTPResponse response;
+            Poco::Net::HTTPResponse response;
 
             auto ws = std::make_shared<WebSocket>(cs, request, response);
             ws->setReceiveTimeout(0);
@@ -701,7 +698,7 @@ private:
                     << Process::id() << " "
                     << uri.substr(uri.find_last_of("/") + 1) << " "
                     << "\r\n";
-            IoUtil::writeFIFO(writerNotify, message.str());
+            IoUtil::writeFIFO(WriterNotify, message.str());
 
             if (_multiView)
             {
@@ -753,7 +750,7 @@ private:
                 << Process::id() << " "
                 << sessionId << " "
                 << "\r\n";
-        IoUtil::writeFIFO(writerNotify, message.str());
+        IoUtil::writeFIFO(WriterNotify, message.str());
 
         return _loKitDocument;
     }
@@ -779,7 +776,7 @@ private:
                 << Process::id() << " "
                 << sessionId << " "
                 << "\r\n";
-        IoUtil::writeFIFO(writerNotify, message.str());
+        IoUtil::writeFIFO(WriterNotify, message.str());
 
         Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
 
@@ -885,7 +882,7 @@ void lokit_main(const std::string& childRoot,
         {
             // Open notify pipe
             const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
-            if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
+            if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
             {
                 Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
                 exit(Application::EXIT_SOFTWARE);
@@ -914,7 +911,7 @@ void lokit_main(const std::string& childRoot,
         if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
         {
             Log::error("Error: symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
-            throw Exception("symlink() failed");
+            throw Poco::Exception("symlink() failed");
         }
 #endif
 
@@ -1122,7 +1119,7 @@ void lokit_main(const std::string& childRoot,
         close(writerBroker);
         close(readerBroker);
     }
-    catch (const Exception& exc)
+    catch (const Poco::Exception& exc)
     {
         Log::error() << exc.name() << ": " << exc.displayText()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
@@ -1150,8 +1147,8 @@ void lokit_main(const std::string& childRoot,
     message << "rmdoc" << " "
             << Process::id() << " "
             << "\r\n";
-    IoUtil::writeFIFO(writerNotify, message.str());
-    close(writerNotify);
+    IoUtil::writeFIFO(WriterNotify, message.str());
+    close(WriterNotify);
 
     Log::info("Process [" + process_name + "] finished.");
 }
