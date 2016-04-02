@@ -20,7 +20,7 @@
 
 #include "AdminModel.hpp"
 
-const std::string FIFO_NOTIFY = "loolnotify.fifo";
+const std::string FIFO_ADMIN_NOTIFY = "lool_admin_notify.fifo";
 
 class Admin;
 
@@ -84,7 +84,7 @@ private:
 
     static Poco::Process::PID BrokerPid;
     static int BrokerPipe;
-    static int NotifyPipe;
+    static int AdminNotifyPipe;
 };
 
 class MemoryStats : public Poco::Util::TimerTask

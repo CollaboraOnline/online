@@ -67,7 +67,7 @@ using Poco::Thread;
 using Poco::Util::Application;
 
 const std::string FIFO_BROKER = "loolbroker.fifo";
-const std::string FIFO_NOTIFY = "loolnotify.fifo";
+const std::string FIFO_ADMIN_NOTIFY = "lool_admin_notify.fifo";
 
 static int WriterNotify = -1;
 
@@ -881,10 +881,10 @@ void lokit_main(const std::string& childRoot,
         if (!doBenchmark)
         {
             // Open notify pipe
-            const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
+            const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
             if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
             {
-                Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
+                Log::error("Error: failed to open notify pipe [" + FIFO_ADMIN_NOTIFY + "] for writing.");
                 exit(Application::EXIT_SOFTWARE);
             }
         }

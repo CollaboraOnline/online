@@ -400,7 +400,7 @@ Admin::Admin(const Poco::Process::PID brokerPid, const int notifyPipe) :
     _model(AdminModel())
 {
     Admin::BrokerPid = brokerPid;
-    Admin::NotifyPipe = notifyPipe;
+    Admin::AdminNotifyPipe = notifyPipe;
 }
 
 Admin::~Admin()
@@ -490,7 +490,7 @@ void Admin::run()
     Log::info("Thread [" + thread_name + "] started.");
 
     // Start listening for data changes.
-    IoUtil::PipeReader pipeReader(FIFO_NOTIFY, NotifyPipe);
+    IoUtil::PipeReader pipeReader(FIFO_ADMIN_NOTIFY, AdminNotifyPipe);
     pipeReader.process([this](std::string& message) { handleInput(message); return true; },
                        []() { return TerminationFlag; });
 
@@ -507,6 +507,6 @@ AdminModel& Admin::getModel()
 
 //TODO: Clean up with something more elegant.
 Poco::Process::PID Admin::BrokerPid;
-int Admin::NotifyPipe;
+int Admin::AdminNotifyPipe;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

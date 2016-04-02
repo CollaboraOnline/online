@@ -537,10 +537,10 @@ void setupPipes(const std::string &childRoot, bool doBenchmark)
     if (!doBenchmark)
     {
         // Open notify pipe
-        const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
+        const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
         if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
         {
-            Log::error("Error: failed to open notify pipe [" + FIFO_NOTIFY + "] for writing.");
+            Log::error("Error: failed to open notify pipe [" + FIFO_ADMIN_NOTIFY + "] for writing.");
             exit(Application::EXIT_SOFTWARE);
         }
     }
