@@ -788,9 +788,8 @@ int main(int argc, char** argv)
             Log::info("got children " + std::to_string(numSpawned));
         }
 
-        sleep (10);
-
         Poco::Timestamp::TimeDiff elapsed = startTime.elapsed();
+
         std::cerr << "Time to launch " << numPreSpawnedChildren << " children: " << (1.0 * elapsed)/Poco::Timestamp::resolution() << std::endl;
         Log::info("loolbroker benchmark complete.");
 
