@@ -31,10 +31,6 @@ typedef int (LokHookPreInit)  (const char *install_path, const char *user_profil
 
 using Poco::ProcessHandle;
 
-const std::string BROKER_SUFIX = ".fifo";
-const std::string BROKER_PREFIX = "lokit";
-
-static int readerChild = -1;
 static int readerBroker = -1;
 
 static std::string loolkitPath;
@@ -51,37 +47,28 @@ namespace
     {
     public:
         ChildProcess() :
-            _pid(-1),
-            _readPipe(-1),
-            _writePipe(-1)
+            _pid(-1)
         {
         }
 
-        ChildProcess(const Poco::Process::PID pid, const int readPipe, const int writePipe) :
+        ChildProcess(const Poco::Process::PID pid, std::shared_ptr<DialogSocket> dialog) :
             _pid(pid),
-            _readPipe(readPipe),
-            _writePipe(writePipe)
+            _dialog(dialog)
         {
         }
 
         ChildProcess(ChildProcess&& other) :
             _pid(other._pid),
-            _readPipe(other._readPipe),
-            _writePipe(other._writePipe)
+            _dialog(other._dialog)
         {
             other._pid = -1;
-            other._readPipe = -1;
-            other._writePipe = -1;
         }
 
         const ChildProcess& operator=(ChildProcess&& other)
         {
             _pid = other._pid;
             other._pid = -1;
-            _readPipe = other._readPipe;
-            other._readPipe = -1;
-            _writePipe = other._writePipe;
-            other._writePipe = -1;
+            _dialog = other._dialog;
 
             return *this;
         }
@@ -108,16 +95,9 @@ namespace
                _pid = -1;
             }
 
-            if (_readPipe != -1)
+            if (_dialog)
             {
-                ::close(_readPipe);
-                _readPipe = -1;
-            }
-
-            if (_writePipe != -1)
-            {
-                ::close(_writePipe);
-                _writePipe = -1;
+                _dialog->shutdown();
             }
         }
 
@@ -125,14 +105,12 @@ namespace
         const std::string& getUrl() const { return _url; }
 
         Poco::Process::PID getPid() const { return _pid; }
-        int getReadPipe() const { return _readPipe; }
-        int getWritePipe() const { return _writePipe; }
+        std::shared_ptr<DialogSocket> getSocket() const { return _dialog; }
 
     private:
         std::string _url;
         Poco::Process::PID _pid;
-        int _readPipe;
-        int _writePipe;
+        std::shared_ptr<DialogSocket> _dialog;
     };
 
     static std::map<Process::PID, std::shared_ptr<ChildProcess>> _childProcesses;
@@ -177,40 +155,41 @@ namespace
 class PipeRunnable: public Runnable
 {
 public:
-    PipeRunnable() :
-        _childPipeReader("child_pipe_rd", readerChild)
+    PipeRunnable()
     {
     }
 
     bool createSession(const std::shared_ptr<ChildProcess>& child, const std::string& session, const std::string& url)
     {
-        const std::string message = "session " + session + " " + url + "\n";
+        const std::string message = "session " + session + " " + url;
         const auto childPid = std::to_string(child->getPid());
-        const auto childPipe = child->getWritePipe();
-        if (IoUtil::writeFIFO(childPipe, message) < 0)
+        const auto childSocket = child->getSocket();
+        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+        bool retVal = false;
+
+        try
         {
-            Log::error("Error sending session message to child [" + childPid + "].");
-            return false;
+            if (childSocket)
+            {
+                childSocket->sendMessage(message);
+                std::string response;
+
+                if (childSocket->poll(waitTime, Socket::SELECT_READ))
+                {
+                    childSocket->receiveMessage(response);
+                    StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    retVal = (tokens[0] == "ok");
+                }
+            }
+        }
+        catch (const Exception& exc)
+        {
+            Log::error() << "PipeRunnable::createSession: Exception: " << exc.displayText()
+                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                         << Log::end;
         }
 
-        while (true)
-        {
-            std::string response;
-            if (_childPipeReader.readLine(response, [](){ return TerminationFlag; }) <= 0)
-            {
-                Log::error("Error reading response to session message from child [" + childPid + "].");
-                return false;
-            }
-
-            StringTokenizer tokens(response, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (tokens.count() > 0 && tokens[0] != childPid)
-            {
-                // Not a response from the child in question.
-                continue;
-            }
-
-            return (tokens.count() == 2 && tokens[1] == "ok");
-        }
+        return retVal;
     }
 
     void handleInput(const std::string& message)
@@ -283,9 +262,6 @@ public:
 
         Log::debug("Thread [" + thread_name + "] finished.");
     }
-
-private:
-    IoUtil::PipeReader _childPipeReader;
 };
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
@@ -343,16 +319,6 @@ static int createLibreOfficeKit(const bool sharePages,
                                 const std::string& loSubPath)
 {
     Process::PID childPID;
-    int fifoWriter = -1;
-
-    const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
-    const std::string pipeKit = Path(pipePath, BROKER_PREFIX + std::to_string(childCounter++) + BROKER_SUFIX).toString();
-
-    if (mkfifo(pipeKit.c_str(), 0666) < 0 && errno != EEXIST)
-    {
-        Log::error("Error: Failed to create pipe FIFO [" + pipeKit + "].");
-        return -1;
-    }
 
     if (sharePages)
     {
@@ -370,7 +336,7 @@ static int createLibreOfficeKit(const bool sharePages,
                 Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
             }
 
-            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit);
+            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath);
             _exit(Application::EXIT_OK);
         }
         else
@@ -387,7 +353,6 @@ static int createLibreOfficeKit(const bool sharePages,
         args.push_back("--systemplate=" + sysTemplate);
         args.push_back("--lotemplate=" + loTemplate);
         args.push_back("--losubpath=" + loSubPath);
-        args.push_back("--pipe=" + pipeKit);
         args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
         Log::info("Launching LibreOfficeKit #" + std::to_string(childCounter) +
@@ -406,66 +371,24 @@ static int createLibreOfficeKit(const bool sharePages,
         }
     }
 
-    // open non-blocking to make sure that a broken lokit process will not
-    // block the loolbroker forever
+    ServerSocket srvCommand(COMMAND_PORT_NUMBER);
+    std::shared_ptr<DialogSocket> dialog;
+    const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+
+    if (srvCommand.poll(waitTime, Socket::SELECT_READ))
     {
-        int retries = 5;
-        // Note that the use of a condition variable and mutex here is totally pointless as far as I
-        // see. There is no code that would notify the condition variable.
-        std::mutex fifoMutex;
-        std::condition_variable fifoCV;
-        std::unique_lock<std::mutex> lock(fifoMutex);
-
-        if (std::getenv("SLEEPKITFORDEBUGGER"))
-            retries = std::numeric_limits<int>::max();
-
-        while(retries && fifoWriter < 0)
-        {
-            fifoCV.wait_for(
-                lock,
-                std::chrono::microseconds(80000),
-                [&fifoWriter, &pipeKit]
-                {
-                    return (fifoWriter = open(pipeKit.c_str(), O_WRONLY | O_NONBLOCK)) >= 0;
-                });
-
-            if (fifoWriter < 0)
-            {
-                Log::debug("Retrying to establish pipe connection: " + std::to_string(retries));
-            }
-
-            --retries;
-        }
+        dialog = std::make_shared<DialogSocket>(srvCommand.acceptConnection());
     }
-
-    if (fifoWriter < 0)
+    else
     {
-        Log::error("Error: failed to open write pipe [" + pipeKit + "] with kit. Abandoning child.");
-        // This is an elaborate way to send a SIGINT to childPID: Construct and immediately destroy
-        // a ChildProcess object for it.
-        ChildProcess(childPID, -1, -1);
-        return -1;
-    }
-
-    int flags;
-    if ((flags = fcntl(fifoWriter, F_GETFL, 0)) < 0)
-    {
-        Log::error("Error: failed to get pipe flags [" + pipeKit + "].");
-        ChildProcess(childPID, -1, -1);
-        return -1;
-    }
-
-    flags &= ~O_NONBLOCK;
-    if (fcntl(fifoWriter, F_SETFL, flags) < 0)
-    {
-        Log::error("Error: failed to set pipe flags [" + pipeKit + "].");
-        ChildProcess(childPID, -1, -1);
+        Log::error("Error: failed to socket connection with kit. Abandoning child.");
+        ChildProcess(childPID, nullptr);
         return -1;
     }
 
     Log::info() << "Adding Kit #" << childCounter << ", PID: " << childPID << Log::end;
 
-    _newChildProcesses.emplace_back(std::make_shared<ChildProcess>(childPID, -1, fifoWriter));
+    _newChildProcesses.emplace_back(std::make_shared<ChildProcess>(childPID, dialog));
     return childPID;
 }
 
@@ -567,30 +490,10 @@ int main(int argc, char** argv)
     if (!std::getenv("LOK_VIEW_CALLBACK"))
         Log::info("Note: LOK_VIEW_CALLBACK is not set.");
 
-    int pipeFlags = O_RDONLY | O_NONBLOCK;
     const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
     if (mkfifo(pipeBroker.c_str(), 0666) < 0 && errno != EEXIST)
     {
         Log::error("Error: Failed to create pipe FIFO [" + FIFO_BROKER + "].");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if ((readerChild = open(pipeBroker.c_str(), pipeFlags) ) < 0)
-    {
-        Log::error("Error: pipe opened for reading.");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if ((pipeFlags = fcntl(readerChild, F_GETFL, 0)) < 0)
-    {
-        Log::error("Error: failed to get pipe flags [" + FIFO_BROKER + "].");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    pipeFlags &= ~O_NONBLOCK;
-    if (fcntl(readerChild, F_SETFL, pipeFlags) < 0)
-    {
-        Log::error("Error: failed to set pipe flags [" + FIFO_BROKER + "].");
         std::exit(Application::EXIT_SOFTWARE);
     }
 
@@ -809,7 +712,6 @@ int main(int argc, char** argv)
 
     pipeThread.join();
     close(writerNotify);
-    close(readerChild);
     close(readerBroker);
 
     Log::info("Process [loolbroker] finished.");

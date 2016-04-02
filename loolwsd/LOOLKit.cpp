@@ -34,6 +34,9 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Net/ServerSocket.h>
+#include <Poco/Net/DialogSocket.h>
+#include <Poco/Net/SocketAddress.h>
 #include <Poco/Process.h>
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
@@ -62,7 +65,11 @@ using Poco::File;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
+using Poco::Net::Socket;
 using Poco::Net::WebSocket;
+using Poco::Net::ServerSocket;
+using Poco::Net::DialogSocket;
+using Poco::Net::SocketAddress;
 using Poco::Path;
 using Poco::Process;
 using Poco::Runnable;
@@ -795,8 +802,7 @@ private:
 void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
-                const std::string& loSubPath,
-                const std::string& pipe)
+                const std::string& loSubPath)
 {
 #ifdef LOOLKIT_NO_MAIN
     // Reinitialize logging when forked.
@@ -808,7 +814,6 @@ void lokit_main(const std::string& childRoot,
     assert(!sysTemplate.empty());
     assert(!loTemplate.empty());
     assert(!loSubPath.empty());
-    assert(!pipe.empty());
 
     // We only host a single document in our lifetime.
     std::shared_ptr<Document> document;
@@ -832,23 +837,11 @@ void lokit_main(const std::string& childRoot,
 
     try
     {
-        const int readerBroker = open(pipe.c_str(), O_RDONLY);
-        if (readerBroker < 0)
-        {
-            Log::error("Error: failed to open pipe [" + pipe + "] read only.");
-            std::exit(Application::EXIT_SOFTWARE);
-        }
-
-        const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
-        const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
-        const int writerBroker = open(pipeBroker.c_str(), O_WRONLY);
-        if (writerBroker < 0)
-        {
-            Log::error("Error: failed to open Broker write pipe [" + FIFO_BROKER + "].");
-            std::exit(Application::EXIT_SOFTWARE);
-        }
+        DialogSocket command;
+        command.connect(SocketAddress("localhost", COMMAND_PORT_NUMBER));
 
         // Open notify pipe
+        const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
         const std::string pipeNotify = Path(pipePath, FIFO_NOTIFY).toString();
         if ((writerNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
         {
@@ -943,126 +936,76 @@ void lokit_main(const std::string& childRoot,
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
 
-        char buffer[READ_BUFFER_SIZE];
+        // Timeout given is in microseconds.
+        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
         std::string message;
-        char* start = nullptr;
-        char* end = nullptr;
 
         while (!TerminationFlag)
         {
-            if (start == end)
+            if (!command.poll(waitTime, Socket::SELECT_READ))
             {
-                struct pollfd pollPipeBroker;
-                pollPipeBroker.fd = readerBroker;
-                pollPipeBroker.events = POLLIN;
-                pollPipeBroker.revents = 0;
+                // time out maintenance
+                if (document && document->canDiscard())
+                {
+                    Log::info("Document closed. Flagging for termination.");
+                    TerminationFlag = true;
+                }
 
-                const int ready = poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS);
-                if (ready == 0)
-                {
-                    // time out maintenance
-                    if (document && document->canDiscard())
-                    {
-                        Log::info("Document closed. Flagging for termination.");
-                        TerminationFlag = true;
-                    }
-                }
-                else
-                if (ready < 0)
-                {
-                    Log::error("Failed to poll pipe [" + pipe + "].");
-                    continue;
-                }
-                else
-                if (pollPipeBroker.revents & (POLLIN | POLLPRI))
-                {
-                    const auto bytes = IoUtil::readFIFO(readerBroker, buffer, sizeof(buffer));
-                    if (bytes < 0)
-                    {
-                        start = end = nullptr;
-                        Log::error("Error reading message from pipe [" + pipe + "].");
-                        continue;
-                    }
-                    start = buffer;
-                    end = buffer + bytes;
-                }
-                else
-                if (pollPipeBroker.revents & (POLLERR | POLLHUP))
-                {
-                    Log::error("Broken pipe [" + pipe + "] with broker.");
-                    break;
-                }
+                // Wait some more.
+                continue;
             }
 
-            if (start != end)
+            command.receiveMessage(message);
+            Log::trace("Recv: " + message);
+            StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            std::string response = "";
+
+            if (TerminationFlag)
             {
-                char byteChar = *start++;
-                while (start != end && byteChar != '\n')
+                // Too late, we're going down.
+                response += "down";
+            }
+            else if (tokens[0] == "session")
+            {
+                const std::string& sessionId = tokens[1];
+                const unsigned intSessionId = Util::decodeId(sessionId);
+                const std::string& docKey = tokens[2];
+
+                std::string url;
+                Poco::URI::decode(docKey, url);
+                Log::info("New session [" + sessionId + "] request on url [" + url + "].");
+
+                if (!document)
                 {
-                    message += byteChar;
-                    byteChar = *start++;
+                    document = std::make_shared<Document>(loKit, jailId, docKey, url);
                 }
 
-                if (byteChar == '\n')
+                // Validate and create session.
+                if (url == document->getUrl() &&
+                    document->createSession(sessionId, intSessionId))
                 {
-                    Log::trace("Recv: " + message);
-                    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                    auto response = std::to_string(Process::id()) + " ";
-
-                    if (TerminationFlag)
-                    {
-                        // Too late, we're going down.
-                        response += "down\n";
-                    }
-                    else if (tokens[0] == "session")
-                    {
-                        const std::string& sessionId = tokens[1];
-                        const unsigned intSessionId = Util::decodeId(sessionId);
-                        const std::string& docKey = tokens[2];
-
-                        std::string url;
-                        Poco::URI::decode(docKey, url);
-                        Log::info("New session [" + sessionId + "] request on url [" + url + "].");
-
-                        if (!document)
-                        {
-                            document = std::make_shared<Document>(loKit, jailId, docKey, url);
-                        }
-
-                        // Validate and create session.
-                        if (url == document->getUrl() &&
-                            document->createSession(sessionId, intSessionId))
-                        {
-                            response += "ok\n";
-                        }
-                        else
-                        {
-                            response += "bad\n";
-                        }
-                    }
-                    else if (document && document->canDiscard())
-                    {
-                        TerminationFlag = true;
-                        response += "down\n";
-                    }
-                    else
-                    {
-                        response += "bad unknown token [" + tokens[0] + "]\n";
-                    }
-
-                    IoUtil::writeFIFO(writerBroker, response);
-
-                    // Don't log the CR LF at end
-                    assert(response.length() > 2);
-                    assert(response[response.length()-1] == '\n');
-                    Log::trace("KitToBroker: " + response.substr(0, response.length()-2));
-                    message.clear();
+                    response += "ok";
+                }
+                else
+                {
+                    response += "bad";
                 }
             }
+            else if (document && document->canDiscard())
+            {
+                TerminationFlag = true;
+                response += "down";
+            }
+            else
+            {
+                response += "bad unknown token [" + tokens[0] + "]";
+            }
+
+            command.sendMessage(response);
+
+            Log::trace("KitToBroker: " + response);
+            message.clear();
         }
-
-        close(writerBroker);
-        close(readerBroker);
     }
     catch (const Exception& exc)
     {
@@ -1117,7 +1060,6 @@ int main(int argc, char** argv)
     std::string sysTemplate;
     std::string loTemplate;
     std::string loSubPath;
-    std::string pipe;
 
     for (int i = 1; i < argc; ++i)
     {
@@ -1144,11 +1086,6 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             loSubPath = std::string(eq+1);
         }
-        else if (std::strstr(cmd, "--pipe=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            pipe = std::string(eq+1);
-        }
         else if (std::strstr(cmd, "--clientport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
@@ -1162,13 +1099,7 @@ int main(int argc, char** argv)
         std::exit(Application::EXIT_SOFTWARE);
     }
 
-    if (pipe.empty())
-    {
-        Log::error("Error: --pipe is empty");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipe);
+    lokit_main(childRoot, sysTemplate, loTemplate, loSubPath);
 
     return Application::EXIT_OK;
 }
