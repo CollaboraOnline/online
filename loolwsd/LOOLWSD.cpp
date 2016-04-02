@@ -381,34 +381,9 @@ private:
         }
     }
 
-    bool authenticate(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
-    {
-        (void)response;
-        Log::info("Authenticating Get request processor for session [" + id + "].");
-        std::string token;
-        for (auto& pair : URI(request.getURI()).getQueryParameters())
-        {
-            if (pair.first == "token")
-            {
-                token = pair.second;
-                break;
-            }
-        }
-
-        //TODO:
-        //AuthAgent.verify(token);
-        return true;
-    }
-
     void handleGetRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
         Log::info("Starting GET request handler for session [" + id + "].");
-
-        //TODO: Authenticate the caller.
-        // authenticate(request, response);
-        // NameValueCollection cookies;
-        // request.getCookies(cookies);
-        // Log::info("Cookie: " + cookies.get("PHPSESSID", ""));
 
         // Remove the leading '/' in the GET URL.
         std::string uri = request.getURI();
