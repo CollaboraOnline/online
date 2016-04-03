@@ -183,6 +183,8 @@ public:
     {
     }
 
+    /// pid is the process ID of the child.
+    /// ws is the control WebSocket to the child.
     ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<Poco::Net::WebSocket>& ws) :
         _pid(pid),
         _ws(ws)
@@ -246,6 +248,35 @@ static std::vector<std::shared_ptr<ChildProcess>> newChilds;
 static std::mutex newChildsMutex;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
+
+std::shared_ptr<ChildProcess> getNewChild()
+{
+    std::unique_lock<std::mutex> lock(newChildsMutex);
+
+    const signed available = newChilds.size();
+    signed balance = LOOLWSD::NumPreSpawnedChildren;
+    if (available == 0)
+    {
+        Log::error("No available child. Sending spawn request to Broker and failing.");
+    }
+    else
+    {
+        balance -= available - 1;
+    }
+
+    const std::string aMessage = "spawn " + std::to_string(balance) + "\n";
+    Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
+    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
+
+    if (available > 0)
+    {
+        auto child = newChilds.back();
+        newChilds.pop_back();
+        return child;
+    }
+
+    return nullptr;
+}
 
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public PartHandler

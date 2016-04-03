@@ -268,6 +268,12 @@ private:
             Process::PID nPid = static_cast<Process::PID>(std::stoi(tokens[1]));
             removeChild(nPid, true);
         }
+        else if (tokens[0] == "spawn" && tokens.count() == 2)
+        {
+            const auto count = std::stoi(tokens[1]);
+            Log::info("Spawning " + tokens[1] + " childs per request.");
+            ForkCounter = count;
+        }
     }
 
 private:
