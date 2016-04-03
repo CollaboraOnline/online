@@ -92,7 +92,7 @@ namespace
                 std::ostringstream message;
                 message << "rmdoc" << " "
                         << _pid << " "
-                        << "\r\n";
+                        << "\n";
                 IoUtil::writeFIFO(WriterNotify, message.str());
                _pid = -1;
             }

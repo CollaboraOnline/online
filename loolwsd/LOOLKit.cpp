@@ -697,7 +697,7 @@ private:
             message << "document" << " "
                     << Process::id() << " "
                     << uri.substr(uri.find_last_of("/") + 1) << " "
-                    << "\r\n";
+                    << "\n";
             IoUtil::writeFIFO(WriterNotify, message.str());
 
             if (_multiView)
@@ -1146,7 +1146,7 @@ void lokit_main(const std::string& childRoot,
     std::ostringstream message;
     message << "rmdoc" << " "
             << Process::id() << " "
-            << "\r\n";
+            << "\n";
     IoUtil::writeFIFO(WriterNotify, message.str());
     close(WriterNotify);
 
