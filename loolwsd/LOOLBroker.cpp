@@ -261,25 +261,9 @@ public:
 
         Log::debug("Thread [" + thread_name + "] started.");
 
-        try
-        {
-            while (!TerminationFlag)
-            {
-                if (_dlgWsd->poll(waitTime, Socket::SELECT_READ))
-                {
-                    std::string message;
-                    _dlgWsd->receiveMessage(message);
-                    handleInput(message);
-                }
-            }
-            _dlgWsd->shutdown();
-        }
-        catch (const Exception& exc)
-        {
-            Log::error() << "CommandRunnable::run: Exception: " << exc.displayText()
-                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                         << Log::end;
-        }
+        IoUtil::SocketProcessor(_dlgWsd,
+                                [this](std::string& message) { handleInput(message); return true; },
+                                []() { return TerminationFlag; });
 
         Log::debug("Thread [" + thread_name + "] finished.");
     }

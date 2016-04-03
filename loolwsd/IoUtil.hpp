@@ -17,6 +17,7 @@
 #include <sys/poll.h>
 
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Net/DialogSocket.h>
 #include <Poco/Logger.h>
 
 namespace IoUtil
@@ -29,6 +30,13 @@ namespace IoUtil
                          std::function<bool()> stopPredicate,
                          std::string name = std::string(),
                          const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
+
+    void SocketProcessor(std::shared_ptr<Poco::Net::DialogSocket> ds,
+                         std::function<bool(std::string&)> handler,
+                         std::function<bool()> stopPredicate,
+                         std::string name = std::string(),
+                         const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
+
 
     /// Call WebSocket::shutdown() ignoring Poco::IOException.
     void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws);

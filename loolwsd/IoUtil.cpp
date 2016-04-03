@@ -192,6 +192,60 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
     Log::info(name + "Finished Socket Processor.");
 }
 
+// Synchronously process DialogSocket requests and dispatch to handler.
+// Handler returns false to end.
+void SocketProcessor(std::shared_ptr<Poco::Net::DialogSocket> ds,
+                     std::function<bool(std::string&)> handler,
+                     std::function<bool()> stopPredicate,
+                     std::string name,
+                     const size_t pollTimeoutMs)
+{
+    Log::info(name + "Starting Socket Processor.");
+
+    // Timeout given is in microseconds.
+    const Poco::Timespan waitTime(pollTimeoutMs * 1000);
+    try
+    {
+        bool stop = false;
+
+        for (;;)
+        {
+            stop = stopPredicate();
+            if (stop)
+            {
+                Log::info(name + "Termination flagged. Finishing.");
+                break;
+            }
+
+            if (!ds->poll(waitTime, Poco::Net::Socket::SELECT_READ))
+            {
+                // Wait some more.
+                continue;
+            }
+
+            std::string message;
+            ds->receiveMessage(message);
+             // Call the handler.
+            if (!handler(message))
+            {
+                Log::info(name + "Socket handler flagged to finish.");
+                break;
+            }
+        }
+
+        Log::debug() << name << "Finishing SocketProcessor. TerminationFlag: " << stop << Log::end;
+    }
+    catch (const Poco::Exception& exc)
+    {
+        Log::error() << "CommandRunnable::run: Exception: " << exc.displayText()
+                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                     << Log::end;
+    }
+
+    Log::info(name + "Finished Socket Processor.");
+}
+
+
 void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws)
 {
     try
@@ -302,6 +356,7 @@ int PipeReader::readLine(std::string& line,
         pipe.events = POLLIN;
         pipe.revents = 0;
         const int ready = poll(&pipe, 1, pollTimeoutMs);
+
         if (ready == 0)
         {
             // Timeout.
