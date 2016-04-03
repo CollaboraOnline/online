@@ -173,6 +173,77 @@ using Poco::XML::InputSource;
 using Poco::XML::Node;
 using Poco::XML::NodeList;
 
+/// Represents a new LOK child that is read
+/// to host a document.
+class ChildProcess
+{
+public:
+    ChildProcess() :
+        _pid(-1)
+    {
+    }
+
+    ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<Poco::Net::WebSocket>& ws) :
+        _pid(pid),
+        _ws(ws)
+    {
+    }
+
+    ChildProcess(ChildProcess&& other) :
+        _pid(other._pid),
+        _ws(other._ws)
+    {
+        other._pid = -1;
+        other._ws.reset();
+    }
+
+    const ChildProcess& operator=(ChildProcess&& other)
+    {
+        _pid = other._pid;
+        other._pid = -1;
+        _ws = other._ws;
+        other._ws.reset();
+
+        return *this;
+    }
+
+    ~ChildProcess()
+    {
+        close(true);
+    }
+
+    void close(const bool rude)
+    {
+        if (_pid != -1)
+        {
+            if (kill(_pid, SIGINT) != 0 && rude && kill(_pid, 0) != 0)
+            {
+                Log::error("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+            }
+
+            //TODO: Notify Admin.
+            std::ostringstream message;
+            message << "rmdoc" << " "
+                    << _pid << " "
+                    << "\n";
+            //IoUtil::writeFIFO(WriterNotify, message.str());
+           _pid = -1;
+        }
+
+        _ws.reset();
+    }
+
+    Poco::Process::PID getPid() const { return _pid; }
+    std::shared_ptr<Poco::Net::WebSocket> getWebSocket() const { return _ws; }
+
+private:
+    Poco::Process::PID _pid;
+    std::shared_ptr<Poco::Net::WebSocket> _ws;
+};
+
+/// New LOK child processes ready to host documents.
+static std::vector<std::shared_ptr<ChildProcess>> newChilds;
+static std::mutex newChildsMutex;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 
@@ -597,6 +668,32 @@ public:
         Log::debug("Child connection with URI [" + request.getURI() + "].");
 
         assert(request.serverAddress().port() == MASTER_PORT_NUMBER);
+        if (request.getURI().find(NEW_CHILD_URI) == 0)
+        {
+            // New Child is spawned.
+            const auto params = Poco::URI(request.getURI()).getQueryParameters();
+            Poco::Process::PID pid = -1;
+            for (const auto& param : params)
+            {
+                if (param.first == "pid")
+                {
+                    pid = std::stoi(param.second);
+                }
+            }
+
+            if (pid <= 0)
+            {
+                Log::error("Invalid PID in child URI [" + request.getURI() + "].");
+                return;
+            }
+
+            Log::info("New child [" + std::to_string(pid) + "].");
+            auto ws = std::make_shared<WebSocket>(request, response);
+            std::unique_lock<std::mutex> lock(newChildsMutex);
+            newChilds.emplace_back(std::make_shared<ChildProcess>(pid, ws));
+            return;
+        }
+
         if (request.getURI().find(CHILD_URI) != 0)
         {
             Log::error("Invalid request URI: [" + request.getURI() + "].");
