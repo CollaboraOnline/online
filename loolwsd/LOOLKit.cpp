@@ -629,7 +629,6 @@ private:
     LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided)
     {
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
-        const unsigned intSessionId = Util::decodeId(sessionId);
 
         std::unique_lock<std::mutex> lock(_mutex);
         while (_isLoading)
@@ -641,10 +640,70 @@ private:
         ++_isLoading;
         lock.unlock();
 
+        try
+        {
+            load(sessionId, uri, docPassword, isDocPasswordProvided);
+        }
+        catch (const std::exception& exc)
+        {
+            Log::error("Exception while loading [" + uri + "] : " + exc.what());
+        }
+
+        // Done loading, let the next one in (if any).
+        lock.lock();
+        ++_clientViews;
+        --_isLoading;
+        _cvLoading.notify_one();
+
+        return _loKitDocument;
+    }
+
+    void onUnload(const std::string& sessionId)
+    {
+        const unsigned intSessionId = Util::decodeId(sessionId);
+        const auto it = _connections.find(intSessionId);
+        if (it == _connections.end() || !it->second || !_loKitDocument)
+        {
+            // Nothing to do.
+            return;
+        }
+
+        auto session = it->second->getSession();
+        auto sessionLock = session->getLock();
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        --_clientViews;
+
+        std::ostringstream message;
+        message << "rmview" << " "
+                << Process::id() << " "
+                << sessionId << " "
+                << "\n";
+        IoUtil::writeFIFO(WriterNotify, message.str());
+
+        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
+
+        if (_multiView && _loKitDocument)
+        {
+            Log::info() << "Document [" << _url << "] session ["
+                        << sessionId << "] unloaded, leaving "
+                        << _clientViews << " views." << Log::end;
+
+            const auto viewId = _loKitDocument->pClass->getView(_loKitDocument);
+            _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, nullptr);
+            _loKitDocument->pClass->destroyView(_loKitDocument, viewId);
+        }
+    }
+
+private:
+
+    LibreOfficeKitDocument* load(const std::string& sessionId, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided)
+    {
+        const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second)
         {
-            Log::error("Cannot find session [" + sessionId + "] which decoded to " + std::to_string(intSessionId));
+            Log::error("Cannot find session [" + sessionId + "].");
             return nullptr;
         }
 
@@ -667,8 +726,12 @@ private:
             _docPassword = docPassword;
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
-            Log::info("Calling _loKit->pClass->documentLoad");
-            if ((_loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str())) == nullptr)
+
+            Log::debug("Calling documentLoad");
+            _loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str());
+            Log::debug("documentLoad returned");
+
+            if (_loKitDocument == nullptr)
             {
                 Log::error("Failed to load: " + uri + ", error: " + _loKit->pClass->getError(_loKit));
 
@@ -690,7 +753,6 @@ private:
 
                 return nullptr;
             }
-            Log::info("documentLoad() returned");
 
             // Notify the Admin thread
             std::ostringstream message;
@@ -739,57 +801,14 @@ private:
             }
         }
 
-        // Done loading, let the next one in (if any).
-        lock.lock();
-        ++_clientViews;
-        --_isLoading;
-        _cvLoading.notify_one();
-
         std::ostringstream message;
         message << "addview" << " "
                 << Process::id() << " "
                 << sessionId << " "
-                << "\r\n";
+                << "\n";
         IoUtil::writeFIFO(WriterNotify, message.str());
 
         return _loKitDocument;
-    }
-
-    void onUnload(const std::string& sessionId)
-    {
-        const unsigned intSessionId = Util::decodeId(sessionId);
-        const auto it = _connections.find(intSessionId);
-        if (it == _connections.end() || !it->second || !_loKitDocument)
-        {
-            // Nothing to do.
-            return;
-        }
-
-        auto session = it->second->getSession();
-        auto sessionLock = session->getLock();
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        --_clientViews;
-
-        std::ostringstream message;
-        message << "rmview" << " "
-                << Process::id() << " "
-                << sessionId << " "
-                << "\r\n";
-        IoUtil::writeFIFO(WriterNotify, message.str());
-
-        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
-
-        if (_multiView && _loKitDocument)
-        {
-            Log::info() << "Document [" << _url << "] session ["
-                        << sessionId << "] unloaded, leaving "
-                        << _clientViews << " views." << Log::end;
-
-            const auto viewId = _loKitDocument->pClass->getView(_loKitDocument);
-            _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, nullptr);
-            _loKitDocument->pClass->destroyView(_loKitDocument, viewId);
-        }
     }
 
 private:
