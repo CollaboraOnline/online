@@ -194,7 +194,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                         {
                             if (std::stoi(tokens[1]))
                             {
-                                IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, firstLine + " \r\n");
+                                LOOLWSD::DlgBroker->sendMessage(firstLine);
                             }
                         }
                         catch(std::exception& e)

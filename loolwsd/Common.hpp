@@ -35,7 +35,6 @@ constexpr int READ_BUFFER_SIZE = 2048;
 constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
 
 constexpr auto CHILD_URI = "/loolws/child?";
-constexpr auto FIFO_LOOLWSD = "loolwsdfifo";
 constexpr auto FIFO_PATH = "pipe";
 constexpr auto JAILED_DOCUMENT_ROOT = "/user/docs/";
 constexpr auto SSL_KEY_FILE = "key.pem";
