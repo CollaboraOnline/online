@@ -590,6 +590,12 @@ public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
+        std::string thread_name = "prison_ws_";
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
+            Log::error("Cannot set thread name to " + thread_name + ".");
+
+        Log::debug("Child connection with URI [" + request.getURI() + "].");
+
         assert(request.serverAddress().port() == MASTER_PORT_NUMBER);
         if (request.getURI().find(CHILD_URI) != 0)
         {
@@ -597,7 +603,6 @@ public:
             return;
         }
 
-        std::string thread_name = "prison_ws_";
         try
         {
             const auto params = Poco::URI(request.getURI()).getQueryParameters();

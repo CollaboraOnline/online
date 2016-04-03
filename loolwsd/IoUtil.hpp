@@ -24,7 +24,7 @@ namespace IoUtil
     /// Synchronously process WebSocket requests and dispatch to handler.
     //. Handler returns false to end.
     void SocketProcessor(std::shared_ptr<Poco::Net::WebSocket> ws,
-                         Poco::Net::HTTPServerResponse& response,
+                         Poco::Net::HTTPResponse& response,
                          std::function<bool(const std::vector<char>&)> handler,
                          std::function<bool()> stopPredicate,
                          std::string name = std::string(),

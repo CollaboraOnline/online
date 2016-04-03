@@ -37,7 +37,7 @@ using Poco::Net::WebSocketException;
 // Synchronously process WebSocket requests and dispatch to handler.
 // Handler returns false to end.
 void SocketProcessor(std::shared_ptr<WebSocket> ws,
-                     Poco::Net::HTTPServerResponse& response,
+                     Poco::Net::HTTPResponse& response,
                      std::function<bool(const std::vector<char>&)> handler,
                      std::function<bool()> stopPredicate,
                      std::string name,
@@ -184,7 +184,6 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         case WebSocket::WS_ERR_HANDSHAKE_NO_KEY:
             response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
             response.setContentLength(0);
-            response.send();
             break;
         }
     }
