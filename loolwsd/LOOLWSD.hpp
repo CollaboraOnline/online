@@ -19,6 +19,7 @@
 #include <Poco/Random.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
+#include <Poco/Net/DialogSocket.h>
 
 #include "Auth.hpp"
 #include "Common.hpp"
@@ -36,6 +37,7 @@ public:
     // An Application is a singleton anyway,
     // so just keep these as statics.
     static std::atomic<unsigned> NextSessionId;
+    static std::unique_ptr<Poco::Net::DialogSocket> DlgBroker;
     static int NumPreSpawnedChildren;
     static int BrokerWritePipe;
     static bool DoTest;

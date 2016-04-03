@@ -35,7 +35,6 @@ const std::string BROKER_SUFIX = ".fifo";
 const std::string BROKER_PREFIX = "lokit";
 
 static int readerChild = -1;
-static int readerBroker = -1;
 
 static std::string loolkitPath;
 static std::atomic<unsigned> forkCounter;
@@ -174,11 +173,12 @@ namespace
     }
 }
 
-class PipeRunnable: public Runnable
+class CommandRunnable: public Runnable
 {
 public:
-    PipeRunnable() :
-        _childPipeReader("child_pipe_rd", readerChild)
+    CommandRunnable(const std::shared_ptr<DialogSocket>& dlgWsd) :
+        _childPipeReader("child_pipe_rd", readerChild),
+        _dlgWsd(dlgWsd)
     {
     }
 
@@ -271,21 +271,39 @@ public:
     void run() override
     {
         static const std::string thread_name = "brk_pipe_reader";
+        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
 
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
             Log::error("Cannot set thread name to " + thread_name + ".");
 
         Log::debug("Thread [" + thread_name + "] started.");
 
-        IoUtil::PipeReader pipeReader(FIFO_LOOLWSD, readerBroker);
-        pipeReader.process([this](std::string& message) { handleInput(message); return true; },
-                           []() { return TerminationFlag; });
+        try
+        {
+            while (!TerminationFlag)
+            {
+                if (_dlgWsd->poll(waitTime, Socket::SELECT_READ))
+                {
+                    std::string message;
+                    _dlgWsd->receiveMessage(message);
+                    handleInput(message);
+                }
+            }
+            _dlgWsd->shutdown();
+        }
+        catch (const Exception& exc)
+        {
+            Log::error() << "CommandRunnable::run: Exception: " << exc.displayText()
+                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                         << Log::end;
+        }
 
         Log::debug("Thread [" + thread_name + "] finished.");
     }
 
 private:
     IoUtil::PipeReader _childPipeReader;
+    std::shared_ptr<DialogSocket> _dlgWsd;
 };
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
@@ -553,11 +571,18 @@ int main(int argc, char** argv)
     assert(!childRoot.empty());
     assert(numPreSpawnedChildren >= 1);
 
-    const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
-    const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
-    if ( (readerBroker = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
+    std::shared_ptr<DialogSocket> dlgWsd = std::make_shared<DialogSocket>();
+    const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+
+    try
     {
-        Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] read only. Exiting.");
+        dlgWsd->connect(SocketAddress("localhost", COMMAND_PORT_NUMBER), waitTime);
+    }
+    catch (const Exception& exc)
+    {
+        Log::error() << "LOOLBroker::main: Exception: " << exc.displayText()
+                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                     << Log::end;
         std::exit(Application::EXIT_SOFTWARE);
     }
 
@@ -568,6 +593,8 @@ int main(int argc, char** argv)
         Log::info("Note: LOK_VIEW_CALLBACK is not set.");
 
     int pipeFlags = O_RDONLY | O_NONBLOCK;
+
+    const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
     const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
     if (mkfifo(pipeBroker.c_str(), 0666) < 0 && errno != EEXIST)
     {
@@ -630,10 +657,10 @@ int main(int argc, char** argv)
         dropCapability(CAP_FOWNER);
     }
 
-    PipeRunnable pipeHandler;
-    Poco::Thread pipeThread;
+    CommandRunnable commandHandler(dlgWsd);
+    Poco::Thread commandThread;
 
-    pipeThread.start(pipeHandler);
+    commandThread.start(commandHandler);
 
     Log::info("loolbroker is ready.");
 
@@ -807,10 +834,9 @@ int main(int argc, char** argv)
     _childProcesses.clear();
     _newChildProcesses.clear();
 
-    pipeThread.join();
+    commandThread.join();
     close(writerNotify);
     close(readerChild);
-    close(readerBroker);
 
     Log::info("Process [loolbroker] finished.");
     return Application::EXIT_OK;

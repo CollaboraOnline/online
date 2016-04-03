@@ -18,6 +18,7 @@ constexpr int MAX_SESSIONS = 1024;
 
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 constexpr int MASTER_PORT_NUMBER = 9981;
+constexpr int COMMAND_PORT_NUMBER = 9982;
 constexpr int INTERVAL_PROBES = 10;
 constexpr int MAINTENANCE_INTERVAL = 1;
 constexpr int CHILD_TIMEOUT_SECS = 10;
@@ -34,7 +35,6 @@ constexpr int READ_BUFFER_SIZE = 2048;
 constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
 
 constexpr auto CHILD_URI = "/loolws/child?";
-constexpr auto FIFO_LOOLWSD = "loolwsdfifo";
 constexpr auto FIFO_PATH = "pipe";
 constexpr auto JAILED_DOCUMENT_ROOT = "/user/docs/";
 constexpr auto SSL_KEY_FILE = "key.pem";

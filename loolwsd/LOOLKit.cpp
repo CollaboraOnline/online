@@ -34,6 +34,9 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Net/ServerSocket.h>
+#include <Poco/Net/DialogSocket.h>
+#include <Poco/Net/SocketAddress.h>
 #include <Poco/Process.h>
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
@@ -62,7 +65,11 @@ using Poco::File;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
+using Poco::Net::Socket;
 using Poco::Net::WebSocket;
+using Poco::Net::ServerSocket;
+using Poco::Net::DialogSocket;
+using Poco::Net::SocketAddress;
 using Poco::Path;
 using Poco::Process;
 using Poco::Runnable;
