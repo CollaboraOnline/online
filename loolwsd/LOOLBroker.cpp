@@ -1129,10 +1129,9 @@ static void lokit_main(const std::string& childRoot,
         document.reset();
     }
 
-    // Destroy LibreOfficeKit
     if (loKit)
     {
-        Log::debug("Destroying LibreOfficeKit.");
+        Log::debug("Destroying LibreOfficeKit instance.");
         loKit->pClass->destroy(loKit);
     }
 
@@ -1247,7 +1246,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
         return -1;
     }
 
-    Log::debug("Forking LibreOfficeKit.");
+    Log::debug("Forking a loolkit process.");
 
     Process::PID pid;
     if (!(pid = fork()))
