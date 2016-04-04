@@ -192,9 +192,12 @@ std::shared_ptr<ChildProcess> getNewChild()
         balance -= available - 1;
     }
 
-    const std::string aMessage = "spawn " + std::to_string(balance) + "\n";
-    Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
-    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
+    if (balance > 0)
+    {
+        const std::string aMessage = "spawn " + std::to_string(balance) + "\n";
+        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
+        IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
+    }
 
     if (available > 0)
     {
