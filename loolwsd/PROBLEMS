@@ -11,7 +11,7 @@
   is declared *static* in ChildProcessSession.hpp and thus is a
   separate variable in each compilation unit (object file) that
   includes ChildProcessSession.hpp. The variable that is assigned in
-  main() in LOOLKit.cpp is not the variable used in
+  main() in LOOLBroker.cpp is not the variable used in
   ChildProcessSession::downloadAs() in ChildProcessSession.cpp.
 
 - Recursive mutexes are evil. In general, I think the consensus is
