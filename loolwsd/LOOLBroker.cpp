@@ -67,7 +67,11 @@ static int NumPreSpawnedChildren = 1;
 
 using namespace LOOLProtocol;
 
+using Poco::Exception;
 using Poco::File;
+using Poco::Net::NetException;
+using Poco::Net::HTTPClientSession;
+using Poco::Net::HTTPResponse;
 using Poco::Net::HTTPRequest;
 using Poco::Net::WebSocket;
 using Poco::Path;
@@ -75,7 +79,9 @@ using Poco::Process;
 using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Thread;
+using Poco::Timestamp;
 using Poco::Util::Application;
+using Poco::URI;
 
 namespace
 {
@@ -305,7 +311,7 @@ public:
 
             _session->disconnect();
         }
-        catch (const Poco::Exception& exc)
+        catch (const Exception& exc)
         {
             Log::error() << "Connection::run: Exception: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
@@ -393,7 +399,7 @@ public:
                     }
                 }
             }
-            catch(Poco::Net::NetException& exc)
+            catch(NetException& exc)
             {
                 Log::error() << "Document::~Document: " << exc.displayText()
                              << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
@@ -450,10 +456,10 @@ public:
 
             // Open websocket connection between the child process and the
             // parent. The parent forwards us requests that it can't handle (i.e most).
-            Poco::Net::HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+            HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
             cs.setTimeout(0);
             HTTPRequest request(HTTPRequest::HTTP_GET, std::string(CHILD_URI) + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey);
-            Poco::Net::HTTPResponse response;
+            HTTPResponse response;
 
             auto ws = std::make_shared<WebSocket>(cs, request, response);
             ws->setReceiveTimeout(0);
@@ -924,7 +930,7 @@ static void lokit_main(const std::string& childRoot,
         if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
         {
             Log::error("Error: symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
-            throw Poco::Exception("symlink() failed");
+            throw Exception("symlink() failed");
         }
 
         Path jailLOInstallation(jailPath, loSubPath);
@@ -1009,10 +1015,10 @@ static void lokit_main(const std::string& childRoot,
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
 
         // Open websocket connection between the child process and WSD.
-        Poco::Net::HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+        HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
         cs.setTimeout(0);
         HTTPRequest request(HTTPRequest::HTTP_GET, std::string(NEW_CHILD_URI) + "pid=" + pid);
-        Poco::Net::HTTPResponse response;
+        HTTPResponse response;
         auto ws = std::make_shared<WebSocket>(cs, request, response);
         ws->setReceiveTimeout(0);
 
@@ -1036,7 +1042,7 @@ static void lokit_main(const std::string& childRoot,
                         const std::string& docKey = tokens[2];
 
                         std::string url;
-                        Poco::URI::decode(docKey, url);
+                        URI::decode(docKey, url);
                         Log::info("New session [" + sessionId + "] request on url [" + url + "].");
 
                         if (!document)
@@ -1074,7 +1080,7 @@ static void lokit_main(const std::string& childRoot,
                 [](){ return TerminationFlag; },
                 socketName);
     }
-    catch (const Poco::Exception& exc)
+    catch (const Exception& exc)
     {
         Log::error() << exc.name() << ": " << exc.displayText()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
@@ -1367,7 +1373,7 @@ int main(int argc, char** argv)
     ChildDispatcher childDispatcher;
     Log::info("loolbroker is ready.");
 
-    Poco::Timestamp startTime;
+    Timestamp startTime;
 
     while (!TerminationFlag)
     {
