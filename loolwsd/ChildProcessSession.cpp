@@ -31,6 +31,7 @@
 
 using namespace LOOLProtocol;
 
+using Poco::AutoPtr;
 using Poco::Exception;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -38,13 +39,15 @@ using Poco::Net::WebSocket;
 using Poco::Notification;
 using Poco::NotificationQueue;
 using Poco::Path;
+using Poco::Runnable;
 using Poco::StringTokenizer;
+using Poco::Timestamp;
 using Poco::URI;
 
-class CallbackNotification: public Poco::Notification
+class CallbackNotification: public Notification
 {
 public:
-    typedef Poco::AutoPtr<CallbackNotification> Ptr;
+    typedef AutoPtr<CallbackNotification> Ptr;
 
     CallbackNotification(const int nType, const std::string& rPayload)
       : _nType(nType),
@@ -57,7 +60,7 @@ public:
 };
 
 /// This thread handles callbacks from the lokit instance.
-class CallbackWorker: public Poco::Runnable
+class CallbackWorker: public Runnable
 {
 public:
     CallbackWorker(NotificationQueue& queue, ChildProcessSession& session):
@@ -249,7 +252,7 @@ private:
 std::recursive_mutex ChildProcessSession::Mutex;
 
 ChildProcessSession::ChildProcessSession(const std::string& id,
-                                         std::shared_ptr<Poco::Net::WebSocket> ws,
+                                         std::shared_ptr<WebSocket> ws,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& jailId,
                                          std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> onLoad,
@@ -296,7 +299,7 @@ void ChildProcessSession::disconnect(const std::string& reason)
     }
 }
 
-bool ChildProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
+bool ChildProcessSession::handleDisconnect(StringTokenizer& tokens)
 {
     return LOOLSession::handleDisconnect(tokens);
 }
@@ -574,7 +577,7 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    Poco::Timestamp timestamp;
+    Timestamp timestamp;
     int width, height;
     unsigned char *pixmap = _loKitDocument->pClass->renderFont(_loKitDocument, decodedFont.c_str(), &width, &height);
     Log::trace("renderFont [" + font + "] rendered in " + std::to_string(timestamp.elapsed()/1000.) + "ms");
@@ -691,7 +694,7 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
         _loKitDocument->pClass->setPart(_loKitDocument, part);
     }
 
-    Poco::Timestamp timestamp;
+    Timestamp timestamp;
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap.data(), width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
                  << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
@@ -798,7 +801,7 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
 
     std::vector<unsigned char> pixmap(pixmapSize, 0);
 
-    Poco::Timestamp timestamp;
+    Timestamp timestamp;
     _loKitDocument->pClass->paintTile(_loKitDocument, pixmap.data(), pixmapWidth, pixmapHeight,
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
