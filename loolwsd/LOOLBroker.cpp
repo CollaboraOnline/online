@@ -1104,7 +1104,7 @@ static void lokit_main(const std::string& childRoot,
                     }
 
                     //FIXME: Do we really need to respond here?
-                    Log::trace("KitToDocBroker: " + responseFrame.substr(0, responseFrame.length()-2));
+                    Log::trace("KitToDocBroker: " + responseFrame.substr(0, responseFrame.length()-1));
                     ws->sendFrame(responseFrame.data(), responseFrame.size());
 
                     return true;
