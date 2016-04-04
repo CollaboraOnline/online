@@ -66,9 +66,7 @@ using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::Util::Application;
 
-const std::string FIFO_BROKER = "loolbroker.fifo";
 const std::string FIFO_ADMIN_NOTIFY = "lool_admin_notify.fifo";
-
 static int WriterNotify = -1;
 
 namespace
@@ -882,25 +880,10 @@ void lokit_main(const std::string& childRoot,
 
     try
     {
-        const int readerBroker = open(pipe.c_str(), O_RDONLY);
-        if (readerBroker < 0)
-        {
-            Log::error("Error: failed to open pipe [" + pipe + "] read only.");
-            std::exit(Application::EXIT_SOFTWARE);
-        }
-
-        const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
-        const std::string pipeBroker = Path(pipePath, FIFO_BROKER).toString();
-        const int writerBroker = open(pipeBroker.c_str(), O_WRONLY);
-        if (writerBroker < 0)
-        {
-            Log::error("Error: failed to open Broker write pipe [" + FIFO_BROKER + "].");
-            std::exit(Application::EXIT_SOFTWARE);
-        }
-
         if (!doBenchmark)
         {
             // Open notify pipe
+            const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
             const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
             if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
             {
@@ -1015,10 +998,6 @@ void lokit_main(const std::string& childRoot,
         }
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
-        if (doBenchmark)
-        {
-            IoUtil::writeFIFO(writerBroker, "started\n");
-        }
 
         // Open websocket connection between the child process and WSD.
         Poco::Net::HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
@@ -1085,127 +1064,6 @@ void lokit_main(const std::string& childRoot,
                 },
                 [](){ return TerminationFlag; },
                 socketName);
-
-        char buffer[READ_BUFFER_SIZE];
-        std::string message;
-        char* start = nullptr;
-        char* end = nullptr;
-
-        while (!TerminationFlag)
-        {
-            if (start == end)
-            {
-                struct pollfd pollPipeBroker;
-                pollPipeBroker.fd = readerBroker;
-                pollPipeBroker.events = POLLIN;
-                pollPipeBroker.revents = 0;
-
-                const int ready = poll(&pollPipeBroker, 1, POLL_TIMEOUT_MS);
-                if (ready == 0)
-                {
-                    // time out maintenance
-                    if (document && document->canDiscard())
-                    {
-                        Log::info("Document closed. Flagging for termination.");
-                        TerminationFlag = true;
-                    }
-                }
-                else
-                if (ready < 0)
-                {
-                    Log::error("Failed to poll pipe [" + pipe + "].");
-                    continue;
-                }
-                else
-                if (pollPipeBroker.revents & (POLLIN | POLLPRI))
-                {
-                    const auto bytes = IoUtil::readFIFO(readerBroker, buffer, sizeof(buffer));
-                    if (bytes < 0)
-                    {
-                        start = end = nullptr;
-                        Log::error("Error reading message from pipe [" + pipe + "].");
-                        continue;
-                    }
-                    start = buffer;
-                    end = buffer + bytes;
-                }
-                else
-                if (pollPipeBroker.revents & (POLLERR | POLLHUP))
-                {
-                    Log::error("Broken pipe [" + pipe + "] with broker.");
-                    break;
-                }
-            }
-
-            if (start != end)
-            {
-                char byteChar = *start++;
-                while (start != end && byteChar != '\n')
-                {
-                    message += byteChar;
-                    byteChar = *start++;
-                }
-
-                if (byteChar == '\n')
-                {
-                    Log::trace("Recv: " + message);
-                    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                    auto response = std::to_string(Process::id()) + " ";
-
-                    if (TerminationFlag)
-                    {
-                        // Too late, we're going down.
-                        response += "down\n";
-                    }
-                    else if (tokens[0] == "session")
-                    {
-                        const std::string& sessionId = tokens[1];
-                        const unsigned intSessionId = Util::decodeId(sessionId);
-                        const std::string& docKey = tokens[2];
-
-                        std::string url;
-                        Poco::URI::decode(docKey, url);
-                        Log::info("New session [" + sessionId + "] request on url [" + url + "].");
-
-                        if (!document)
-                        {
-                            document = std::make_shared<Document>(loKit, jailId, docKey, url);
-                        }
-
-                        // Validate and create session.
-                        if (url == document->getUrl() &&
-                            document->createSession(sessionId, intSessionId))
-                        {
-                            response += "ok\n";
-                        }
-                        else
-                        {
-                            response += "bad\n";
-                        }
-                    }
-                    else if (document && document->canDiscard())
-                    {
-                        TerminationFlag = true;
-                        response += "down\n";
-                    }
-                    else
-                    {
-                        response += "bad unknown token [" + tokens[0] + "]\n";
-                    }
-
-                    IoUtil::writeFIFO(writerBroker, response);
-
-                    // Don't log the CR LF at end
-                    assert(response.length() > 2);
-                    assert(response[response.length()-1] == '\n');
-                    Log::trace("KitToBroker: " + response.substr(0, response.length()-2));
-                    message.clear();
-                }
-            }
-        }
-
-        close(writerBroker);
-        close(readerBroker);
     }
     catch (const Poco::Exception& exc)
     {
