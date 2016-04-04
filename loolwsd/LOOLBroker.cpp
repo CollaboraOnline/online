@@ -898,8 +898,7 @@ static void lokit_main(const std::string& childRoot,
                        const std::string& sysTemplate,
                        const std::string& loTemplate,
                        const std::string& loSubPath,
-                       const std::string& pipe,
-                       bool doBenchmark = false)
+                       const std::string& pipe)
 {
     // Reinitialize logging when forked.
     Log::initialize("kit");
@@ -934,16 +933,13 @@ static void lokit_main(const std::string& childRoot,
 
     try
     {
-        if (!doBenchmark)
+        // Open notify pipe
+        const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
+        const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
+        if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
         {
-            // Open notify pipe
-            const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
-            const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
-            if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
-            {
-                Log::error("Error: failed to open notify pipe [" + std::string(FIFO_ADMIN_NOTIFY) + "] for writing.");
-                exit(Application::EXIT_SOFTWARE);
-            }
+            Log::error("Error: failed to open notify pipe [" + std::string(FIFO_ADMIN_NOTIFY) + "] for writing.");
+            exit(Application::EXIT_SOFTWARE);
         }
 
         const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
