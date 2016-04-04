@@ -11,18 +11,14 @@
 #define INCLUDED_LOOLSESSION_HPP
 
 #include <cassert>
-#include <condition_variable>
-#include <map>
 #include <memory>
 #include <mutex>
 #include <ostream>
-#include <set>
 
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Buffer.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
-#include <Poco/Random.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Types.h>
 
