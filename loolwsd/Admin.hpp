@@ -20,8 +20,6 @@
 
 #include "AdminModel.hpp"
 
-const std::string FIFO_ADMIN_NOTIFY = "lool_admin_notify.fifo";
-
 class Admin;
 
 class AdminRequestHandler: public Poco::Net::HTTPRequestHandler

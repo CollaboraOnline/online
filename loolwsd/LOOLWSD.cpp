@@ -1233,7 +1233,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
     if (mkfifo(pipeNotify.c_str(), 0666) < 0 && errno != EEXIST)
     {
-        Log::error("Error: Failed to create pipe FIFO [" + FIFO_ADMIN_NOTIFY + "].");
+        Log::error("Error: Failed to create pipe FIFO [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 
@@ -1245,14 +1245,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if ((pipeFlags = fcntl(notifyPipe, F_GETFL, 0)) < 0)
     {
-        Log::error("Error: failed to get pipe flags [" + FIFO_ADMIN_NOTIFY + "].");
+        Log::error("Error: failed to get pipe flags [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 
     pipeFlags &= ~O_NONBLOCK;
     if (fcntl(notifyPipe, F_SETFL, pipeFlags) < 0)
     {
-        Log::error("Error: failed to set pipe flags [" + FIFO_ADMIN_NOTIFY + "].");
+        Log::error("Error: failed to set pipe flags [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 

@@ -56,7 +56,6 @@ typedef int (LokHookPreInit)  (const char *install_path, const char *user_profil
 
 const std::string BROKER_SUFIX = ".fifo";
 const std::string BROKER_PREFIX = "lokit";
-const std::string FIFO_ADMIN_NOTIFY = "lool_admin_notify.fifo";
 
 static int WriterNotify = -1;
 static int ReaderBroker = -1;
@@ -905,7 +904,7 @@ static void lokit_main(const std::string& childRoot,
             const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
             if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
             {
-                Log::error("Error: failed to open notify pipe [" + FIFO_ADMIN_NOTIFY + "] for writing.");
+                Log::error("Error: failed to open notify pipe [" + std::string(FIFO_ADMIN_NOTIFY) + "] for writing.");
                 exit(Application::EXIT_SOFTWARE);
             }
         }
@@ -1276,7 +1275,7 @@ void setupPipes(const std::string &childRoot)
     const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
     if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
     {
-        Log::error("Error: failed to open notify pipe [" + FIFO_ADMIN_NOTIFY + "] for writing.");
+        Log::error("Error: failed to open notify pipe [" + std::string(FIFO_ADMIN_NOTIFY) + "] for writing.");
         exit(Application::EXIT_SOFTWARE);
     }
 }
