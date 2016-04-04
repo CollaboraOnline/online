@@ -131,7 +131,7 @@ namespace
                 }
                 if (!shouldCopyDir(relativeOldPath))
                 {
-                    Log::debug("skip redundant paths " + std::string(relativeOldPath));
+                    Log::trace("skip redundant paths " + std::string(relativeOldPath));
                     return FTW_SKIP_SUBTREE;
                 }
                 File(newPath).createDirectories();
@@ -389,7 +389,7 @@ public:
             }
             catch(Poco::Net::NetException& exc)
             {
-                Log::error() << "Document::~Document: NetException: " << exc.displayText()
+                Log::error() << "Document::~Document: " << exc.displayText()
                              << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                              << Log::end;
             }
@@ -492,7 +492,7 @@ public:
                 return -1;
             }
 
-            for (auto it =_connections.cbegin(); it != _connections.cend(); )
+            for (auto it = _connections.cbegin(); it != _connections.cend(); )
             {
                 if (!it->second->isRunning())
                 {
@@ -919,8 +919,7 @@ void lokit_main(const std::string& childRoot,
             symlinkTarget += "../";
         symlinkTarget += loSubPath;
 
-        Log::info("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
-
+        Log::debug("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
         if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
         {
             Log::error("Error: symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");

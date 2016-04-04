@@ -301,7 +301,6 @@ int PipeReader::readLine(std::string& line,
         pipe.events = POLLIN;
         pipe.revents = 0;
         const int ready = poll(&pipe, 1, pollTimeoutMs);
-        Log::trace() << "Poll for pipe: " << _name << " returned: " << ready << Log::end;
         if (ready == 0)
         {
             // Timeout.

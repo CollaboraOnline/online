@@ -1382,7 +1382,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             time_t now = time(NULL);
             if (now >= last30SecCheck + 30)
             {
-                Log::debug("30-second check");
+                Log::trace("30-second check");
                 last30SecCheck = now;
 
                 std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
@@ -1404,7 +1404,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             }
             if (now >= lastFiveMinuteCheck + 300)
             {
-                Log::debug("Five-minute check");
+                Log::trace("Five-minute check");
                 lastFiveMinuteCheck = now;
 
                 std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
