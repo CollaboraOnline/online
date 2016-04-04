@@ -179,6 +179,21 @@ static std::condition_variable newChildsCV;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 
+void forkChildren(int number)
+{
+    assert(!newChildsMutex.try_lock()); // check it is held.
+
+    const std::string aMessage = "spawn " + std::to_string(number) + "\n";
+    Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
+    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
+}
+
+void preForkChildren()
+{
+    std::unique_lock<std::mutex> lock(newChildsMutex);
+    forkChildren(LOOLWSD::NumPreSpawnedChildren);
+}
+
 std::shared_ptr<ChildProcess> getNewChild()
 {
     std::unique_lock<std::mutex> lock(newChildsMutex);
@@ -195,11 +210,7 @@ std::shared_ptr<ChildProcess> getNewChild()
     }
 
     if (balance > 0)
-    {
-        const std::string aMessage = "spawn " + std::to_string(balance) + "\n";
-        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
-        IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
-    }
+        forkChildren(balance);
 
     const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_SECS * 1000);
     if (newChildsCV.wait_for(lock, timeout, [](){ return !newChilds.empty(); }))
@@ -1149,7 +1160,6 @@ Process::PID LOOLWSD::createBroker()
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
-    args.push_back("--numprespawns=" + std::to_string(NumPreSpawnedChildren));
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
     const std::string brokerPath = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
@@ -1315,6 +1325,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         inputThread.start(input);
         waitForTerminationRequest();
     }
+
+    preForkChildren();
 
     time_t last30SecCheck = time(NULL);
     time_t lastFiveMinuteCheck = time(NULL);

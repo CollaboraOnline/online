@@ -59,9 +59,8 @@ static const std::string BROKER_PREFIX = "lokit";
 static int WriterNotify = -1;
 static int ReaderBroker = -1;
 
-static std::atomic<unsigned> ForkCounter;
+static std::atomic<unsigned> ForkCounter( 0 );
 static unsigned int ChildCounter = 0;
-static int NumPreSpawnedChildren = 1;
 
 using namespace LOOLProtocol;
 
@@ -1278,9 +1277,6 @@ static void printArgumentHelp()
     std::cout << "  --lotemplate=<path>       path of libreoffice template to pre-populate chroot with." << std::endl;
     std::cout << "  --pipe=<path>             path of loolwsd pipe to connect to on startup." << std::endl;
     std::cout << "  --losubpath=<path>        path to libreoffice install" << std::endl;
-    std::cout << "" << std::endl;
-    std::cout << "  Some paramaters are optional:" << std::endl;
-    std::cout << "  --numprespawns=<number>   pre-fork at least <number> processes [1]" << std::endl;
 }
 
 void setupPipes(const std::string &childRoot)
@@ -1348,11 +1344,6 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             childRoot = std::string(eq+1);
         }
-        else if (std::strstr(cmd, "--numprespawns=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            NumPreSpawnedChildren = std::stoi(std::string(eq+1));
-        }
         else if (std::strstr(cmd, "--clientport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
@@ -1361,8 +1352,7 @@ int main(int argc, char** argv)
     }
 
     if (loSubPath.empty() || sysTemplate.empty() ||
-        loTemplate.empty() || childRoot.empty() ||
-        NumPreSpawnedChildren < 1)
+        loTemplate.empty() || childRoot.empty())
     {
         printArgumentHelp();
         return 1;
@@ -1381,15 +1371,12 @@ int main(int argc, char** argv)
 
     Log::info("Preinit stage OK.");
 
-    // We must have at least one child, more is created dynamically.
+    // We must have at least one child, more are created dynamically.
     if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
     {
         Log::error("Error: failed to create children.");
         std::exit(Application::EXIT_SOFTWARE);
     }
-
-    if (NumPreSpawnedChildren > 1)
-        ForkCounter = NumPreSpawnedChildren - 1;
 
     ChildDispatcher childDispatcher;
     Log::info("loolbroker is ready.");
