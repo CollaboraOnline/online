@@ -45,12 +45,11 @@ DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <sys/prctl.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 
-#include <ftw.h>
 #include <time.h>
-#include <utime.h>
 
 #include <cassert>
 #include <cstdlib>
@@ -59,7 +58,6 @@ DEALINGS IN THE SOFTWARE.
 #include <map>
 #include <mutex>
 #include <sstream>
-#include <unordered_set>
 
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
