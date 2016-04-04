@@ -661,6 +661,9 @@ private:
 
     static void DocumentCallback(int nType, const char* pPayload, void* pData)
     {
+        Log::trace() << "Document::DocumentCallback "
+                     << LOKitHelper::kitCallbackTypeToString(nType)
+                     << " [" << (pPayload ? pPayload : "") << "]." << Log::end;
         Document* self = reinterpret_cast<Document*>(pData);
         if (self)
         {
