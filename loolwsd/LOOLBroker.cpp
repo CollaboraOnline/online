@@ -54,8 +54,8 @@
 
 typedef int (LokHookPreInit)  (const char *install_path, const char *user_profile_path);
 
-const std::string BROKER_SUFIX = ".fifo";
-const std::string BROKER_PREFIX = "lokit";
+static const std::string BROKER_SUFIX = ".fifo";
+static const std::string BROKER_PREFIX = "lokit";
 
 static int WriterNotify = -1;
 static int ReaderBroker = -1;
