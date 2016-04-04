@@ -57,7 +57,6 @@ loolmap_SOURCES = loolmap.c
 noinst_HEADERS = Admin.hpp \
                  AdminModel.hpp \
                  Auth.hpp \
-                 Capabilities.hpp \
                  ChildProcessSession.hpp \
                  Common.hpp \
                  DocumentBroker.hpp \

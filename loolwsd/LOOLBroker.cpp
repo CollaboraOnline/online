@@ -9,6 +9,7 @@
 
 #include <dlfcn.h>
 #include <ftw.h>
+#include <sys/capability.h>
 #include <sys/prctl.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -40,7 +41,6 @@
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
 
-#include "Capabilities.hpp"
 #include "ChildProcessSession.hpp"
 #include "Common.hpp"
 #include "IoUtil.hpp"
@@ -187,6 +187,43 @@ namespace
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL) == -1)
             Log::error("linkOrCopy: nftw() failed for '" + source + "'");
     }
+
+    void dropCapability(cap_value_t capability)
+    {
+        cap_t caps;
+        cap_value_t cap_list[] = { capability };
+
+        caps = cap_get_proc();
+        if (caps == nullptr)
+        {
+            Log::error("Error: cap_get_proc() failed.");
+            std::exit(1);
+        }
+
+        char *capText = cap_to_text(caps, nullptr);
+        Log::trace("Capabilities first: " + std::string(capText));
+        cap_free(capText);
+
+        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
+            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
+        {
+            Log::error("Error: cap_set_flag() failed.");
+            std::exit(1);
+        }
+
+        if (cap_set_proc(caps) == -1)
+        {
+            Log::error("Error: cap_set_proc() failed.");
+            std::exit(1);
+        }
+
+        capText = cap_to_text(caps, nullptr);
+        Log::trace("Capabilities now: " + std::string(capText));
+        cap_free(capText);
+
+        cap_free(caps);
+    }
+
 }
 
 class Connection: public Runnable
