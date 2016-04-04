@@ -64,11 +64,13 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
 
 DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
                                const std::string& docKey,
-                               const std::string& childRoot) :
+                               const std::string& childRoot,
+                               std::shared_ptr<ChildProcess> childProcess) :
     _uriPublic(uriPublic),
     _docKey(docKey),
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
+    _childProcess(childProcess),
     _sessionsCount(0)
 {
     assert(!_docKey.empty());
@@ -163,6 +165,11 @@ void DocumentBroker::addWSSession(const std::string id, std::shared_ptr<MasterPr
     {
         Log::warn("DocumentBroker: Trying to add already existed session.");
     }
+
+    // Request a new session from the child kit.
+    const std::string aMessage = "session " + id + " " + _docKey + "\n";
+    Log::debug("DocBroker to Child: " + aMessage.substr(0, aMessage.length() - 1));
+    _childProcess->getWebSocket()->sendFrame(aMessage.data(), aMessage.size());
 }
 
 void DocumentBroker::removeWSSession(const std::string id)

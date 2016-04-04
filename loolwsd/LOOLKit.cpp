@@ -1016,7 +1016,75 @@ void lokit_main(const std::string& childRoot,
 
         Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
         if (doBenchmark)
+        {
             IoUtil::writeFIFO(writerBroker, "started\n");
+        }
+
+        // Open websocket connection between the child process and WSD.
+        Poco::Net::HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+        cs.setTimeout(0);
+        HTTPRequest request(HTTPRequest::HTTP_GET, std::string(NEW_CHILD_URI) + "pid=" + pid);
+        Poco::Net::HTTPResponse response;
+        auto ws = std::make_shared<WebSocket>(cs, request, response);
+        ws->setReceiveTimeout(0);
+
+        const std::string socketName = "ChildControllerWS";
+        IoUtil::SocketProcessor(ws, response, [&socketName, &ws, &document, &loKit](const std::vector<char>& data)
+                {
+                    const std::string message(data.data(), data.size());
+                    Log::debug(socketName + ": recv [" + message + "].");
+                    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    auto response = std::to_string(Process::id()) + " ";
+
+                    if (TerminationFlag)
+                    {
+                        // Too late, we're going down.
+                        response += "down\n";
+                    }
+                    else if (tokens[0] == "session")
+                    {
+                        const std::string& sessionId = tokens[1];
+                        const unsigned intSessionId = Util::decodeId(sessionId);
+                        const std::string& docKey = tokens[2];
+
+                        std::string url;
+                        Poco::URI::decode(docKey, url);
+                        Log::info("New session [" + sessionId + "] request on url [" + url + "].");
+
+                        if (!document)
+                        {
+                            document = std::make_shared<Document>(loKit, jailId, docKey, url);
+                        }
+
+                        // Validate and create session.
+                        if (url == document->getUrl() &&
+                            document->createSession(sessionId, intSessionId))
+                        {
+                            response += "ok\n";
+                        }
+                        else
+                        {
+                            response += "bad\n";
+                        }
+                    }
+                    else if (document && document->canDiscard())
+                    {
+                        TerminationFlag = true;
+                        response += "down\n";
+                    }
+                    else
+                    {
+                        response += "bad unknown token [" + tokens[0] + "]\n";
+                    }
+
+                    //FIXME: Do we really need to respond here?
+                    Log::trace("KitToDocBroker: " + response.substr(0, response.length()-2));
+                    ws->sendFrame(response.data(), response.size());
+
+                    return true;
+                },
+                [](){ return TerminationFlag; },
+                socketName);
 
         char buffer[READ_BUFFER_SIZE];
         std::string message;

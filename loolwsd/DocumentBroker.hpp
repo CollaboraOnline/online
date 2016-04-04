@@ -10,6 +10,8 @@
 #ifndef INCLUDED_DOCUMENTBROKER_HPP
 #define INCLUDED_DOCUMENTBROKER_HPP
 
+#include <signal.h>
+
 #include <atomic>
 #include <memory>
 #include <mutex>
@@ -24,6 +26,81 @@
 // Forwards.
 class StorageBase;
 class TileCache;
+
+/// Represents a new LOK child that is read
+/// to host a document.
+class ChildProcess
+{
+public:
+    ChildProcess() :
+        _pid(-1)
+    {
+    }
+
+    /// pid is the process ID of the child.
+    /// ws is the control WebSocket to the child.
+    ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<Poco::Net::WebSocket>& ws) :
+        _pid(pid),
+        _ws(ws)
+    {
+        Log::info("ChildProcess ctor [" + std::to_string(_pid) + "].");
+    }
+
+    ChildProcess(ChildProcess&& other) :
+        _pid(other._pid),
+        _ws(other._ws)
+    {
+        Log::info("ChildProcess move ctor [" + std::to_string(_pid) + "].");
+        other._pid = -1;
+        other._ws.reset();
+    }
+
+    const ChildProcess& operator=(ChildProcess&& other)
+    {
+        Log::info("ChildProcess assign [" + std::to_string(_pid) + "].");
+        _pid = other._pid;
+        other._pid = -1;
+        _ws = other._ws;
+        other._ws.reset();
+
+        return *this;
+    }
+
+    ~ChildProcess()
+    {
+        Log::info("~ChildProcess dtor [" + std::to_string(_pid) + "].");
+        close(true);
+    }
+
+    void close(const bool rude)
+    {
+        Log::info("Closing child [" + std::to_string(_pid) + "].");
+        if (_pid != -1)
+        {
+            if (kill(_pid, SIGINT) != 0 && rude && kill(_pid, 0) != 0)
+            {
+                Log::error("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+            }
+
+            //TODO: Notify Admin.
+            std::ostringstream message;
+            message << "rmdoc" << " "
+                    << _pid << " "
+                    << "\n";
+            //IoUtil::writeFIFO(WriterNotify, message.str());
+           _pid = -1;
+        }
+
+        _ws.reset();
+    }
+
+    Poco::Process::PID getPid() const { return _pid; }
+    std::shared_ptr<Poco::Net::WebSocket> getWebSocket() const { return _ws; }
+
+private:
+    Poco::Process::PID _pid;
+    std::shared_ptr<Poco::Net::WebSocket> _ws;
+};
 
 /// DocumentBroker is responsible for setting up a document
 /// in jail and brokering loading it from Storage
@@ -43,7 +120,8 @@ public:
 
     DocumentBroker(const Poco::URI& uriPublic,
                    const std::string& docKey,
-                   const std::string& childRoot);
+                   const std::string& childRoot,
+                   std::shared_ptr<ChildProcess> childProcess);
 
     ~DocumentBroker()
     {
@@ -94,6 +172,7 @@ private:
     std::string _filename;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
+    std::shared_ptr<ChildProcess> _childProcess;
     std::mutex _mutex;
     std::atomic<unsigned> _sessionsCount;
 };

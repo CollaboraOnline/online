@@ -173,76 +173,6 @@ using Poco::XML::InputSource;
 using Poco::XML::Node;
 using Poco::XML::NodeList;
 
-/// Represents a new LOK child that is read
-/// to host a document.
-class ChildProcess
-{
-public:
-    ChildProcess() :
-        _pid(-1)
-    {
-    }
-
-    /// pid is the process ID of the child.
-    /// ws is the control WebSocket to the child.
-    ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<Poco::Net::WebSocket>& ws) :
-        _pid(pid),
-        _ws(ws)
-    {
-    }
-
-    ChildProcess(ChildProcess&& other) :
-        _pid(other._pid),
-        _ws(other._ws)
-    {
-        other._pid = -1;
-        other._ws.reset();
-    }
-
-    const ChildProcess& operator=(ChildProcess&& other)
-    {
-        _pid = other._pid;
-        other._pid = -1;
-        _ws = other._ws;
-        other._ws.reset();
-
-        return *this;
-    }
-
-    ~ChildProcess()
-    {
-        close(true);
-    }
-
-    void close(const bool rude)
-    {
-        if (_pid != -1)
-        {
-            if (kill(_pid, SIGINT) != 0 && rude && kill(_pid, 0) != 0)
-            {
-                Log::error("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
-            }
-
-            //TODO: Notify Admin.
-            std::ostringstream message;
-            message << "rmdoc" << " "
-                    << _pid << " "
-                    << "\n";
-            //IoUtil::writeFIFO(WriterNotify, message.str());
-           _pid = -1;
-        }
-
-        _ws.reset();
-    }
-
-    Poco::Process::PID getPid() const { return _pid; }
-    std::shared_ptr<Poco::Net::WebSocket> getWebSocket() const { return _ws; }
-
-private:
-    Poco::Process::PID _pid;
-    std::shared_ptr<Poco::Net::WebSocket> _ws;
-};
-
 /// New LOK child processes ready to host documents.
 static std::vector<std::shared_ptr<ChildProcess>> newChilds;
 static std::mutex newChildsMutex;
@@ -337,9 +267,21 @@ private:
                 if (!format.empty())
                 {
                     Log::info("Conversion request for URI [" + fromPath + "].");
+
+                    // Request a kit process for this doc.
+                    auto child = getNewChild();
+                    if (!child)
+                    {
+                        // Let the client know we can't serve now.
+                        response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
+                        response.setContentLength(0);
+                        response.send();
+                        return;
+                    }
+
                     auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
                     const auto docKey = DocumentBroker::getDocKey(uriPublic);
-                    auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot);
+                    auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
 
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
@@ -517,9 +459,20 @@ private:
         }
         else
         {
+            // Request a kit process for this doc.
+            auto child = getNewChild();
+            if (!child)
+            {
+                // Let the client know we can't serve now.
+                response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
+                response.setContentLength(0);
+                response.send();
+                return;
+            }
+
             // Set one we just created.
             Log::debug("New DocumentBroker for docKey [" + docKey + "].");
-            docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot);
+            docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
             docBrokers.emplace(docKey, docBroker);
         }
 
@@ -542,11 +495,6 @@ private:
         Log::warn(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
         if (wsSessionsCount == 1)
             session->setEditLock(true);
-
-        // Request a kit process for this doc.
-        const std::string aMessage = "request " + id + " " + docKey + "\n";
-        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
-        IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
         QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
 
@@ -722,6 +670,7 @@ public:
             auto ws = std::make_shared<WebSocket>(request, response);
             std::unique_lock<std::mutex> lock(newChildsMutex);
             newChilds.emplace_back(std::make_shared<ChildProcess>(pid, ws));
+            Log::info("Have " + std::to_string(newChilds.size()) + " childs.");
             return;
         }
 
