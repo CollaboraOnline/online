@@ -1184,31 +1184,31 @@ private:
 static void globalPreinit(const std::string &loTemplate)
 {
     const std::string libSofficeapp = loTemplate + "/program/" LIB_SOFFICEAPP;
+    const std::string libMerged = loTemplate + "/program/" LIB_MERGED;
 
     std::string loadedLibrary;
     void *handle;
-    if (File(libSofficeapp).exists())
+    if (File(libMerged).exists())
     {
-        handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
+        handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
         if (!handle)
         {
-            Log::error("Failed to load " + libSofficeapp + ": " + std::string(dlerror()));
+            Log::error("Failed to load " + libMerged + ": " + std::string(dlerror()));
             _exit(Application::EXIT_SOFTWARE);
         }
-        loadedLibrary = libSofficeapp;
+        loadedLibrary = libMerged;
     }
     else
     {
-        std::string libMerged = loTemplate + "/program/" LIB_MERGED;
-        if (File(libMerged).exists())
+        if (File(libSofficeapp).exists())
         {
-            handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
+            handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
             if (!handle)
             {
-                Log::error("Failed to load " + libMerged + ": " + std::string(dlerror()));
+                Log::error("Failed to load " + libSofficeapp + ": " + std::string(dlerror()));
                 _exit(Application::EXIT_SOFTWARE);
             }
-            loadedLibrary = libMerged;
+            loadedLibrary = libSofficeapp;
         }
         else
         {
