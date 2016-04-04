@@ -8,7 +8,7 @@
  */
 
 /*
- * NB. this file is compiled both standalone, and as part of the LOOLBroker.
+ * NB. this file is compiled as part of the LOOLBroker.
  */
 
 #include <sys/prctl.h>
@@ -855,11 +855,9 @@ void lokit_main(const std::string& childRoot,
                 const std::string& pipe,
                 bool doBenchmark = false)
 {
-#ifdef LOOLKIT_NO_MAIN
     // Reinitialize logging when forked.
     Log::initialize("kit");
     Util::rng::reseed();
-#endif
 
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
@@ -907,7 +905,6 @@ void lokit_main(const std::string& childRoot,
 
         File(jailPath).createDirectories();
 
-#ifdef LOOLKIT_NO_MAIN
         // Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
         // interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
         Path symlinkSource(jailPath, Path(loTemplate.substr(1)));
@@ -925,7 +922,6 @@ void lokit_main(const std::string& childRoot,
             Log::error("Error: symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
             throw Poco::Exception("symlink() failed");
         }
-#endif
 
         Path jailLOInstallation(jailPath, loSubPath);
         jailLOInstallation.makeDirectory();
@@ -1107,82 +1103,5 @@ void lokit_main(const std::string& childRoot,
 
     Log::info("Process [" + process_name + "] finished.");
 }
-
-#ifndef LOOLKIT_NO_MAIN
-
-/// Simple argument parsing wrapper / helper for the above.
-int main(int argc, char** argv)
-{
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        std::cerr << "Sleeping " << std::getenv("SLEEPFORDEBUGGER")
-                  << " seconds to attach debugger to process "
-                  << Process::id() << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
-    }
-
-    Log::initialize("kit");
-
-    std::string childRoot;
-    std::string sysTemplate;
-    std::string loTemplate;
-    std::string loSubPath;
-    std::string pipe;
-
-    for (int i = 1; i < argc; ++i)
-    {
-        char *cmd = argv[i];
-        char *eq;
-
-        if (std::strstr(cmd, "--childroot=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            childRoot = std::string(eq+1);
-        }
-        else if (std::strstr(cmd, "--systemplate=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            sysTemplate = std::string(eq+1);
-        }
-        else if (std::strstr(cmd, "--lotemplate=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            loTemplate = std::string(eq+1);
-        }
-        else if (std::strstr(cmd, "--losubpath=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            loSubPath = std::string(eq+1);
-        }
-        else if (std::strstr(cmd, "--pipe=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            pipe = std::string(eq+1);
-        }
-        else if (std::strstr(cmd, "--clientport=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            ClientPortNumber = std::stoll(std::string(eq+1));
-        }
-    }
-
-    if (loSubPath.empty())
-    {
-        Log::error("Error: --losubpath is empty");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if (pipe.empty())
-    {
-        Log::error("Error: --pipe is empty");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipe);
-
-    return Application::EXIT_OK;
-}
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

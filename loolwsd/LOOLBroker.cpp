@@ -21,7 +21,6 @@
 // we can avoid execve and share lots of memory here. We
 // can't link to a non-PIC translation unit though, so
 // include to share.
-#define LOOLKIT_NO_MAIN 1
 #include "LOOLKit.cpp"
 
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
@@ -34,7 +33,6 @@ const std::string BROKER_PREFIX = "lokit";
 
 static int ReaderBroker = -1;
 
-static std::string LoolkitPath;
 static std::atomic<unsigned> ForkCounter;
 static unsigned int ChildCounter = 0;
 static int NumPreSpawnedChildren = 1;
@@ -74,7 +72,7 @@ private:
 };
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
-static bool globalPreinit(const std::string &loTemplate)
+static void globalPreinit(const std::string &loTemplate)
 {
     const std::string libSofficeapp = loTemplate + "/program/" LIB_SOFFICEAPP;
 
@@ -85,8 +83,8 @@ static bool globalPreinit(const std::string &loTemplate)
         handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
         if (!handle)
         {
-            Log::warn("Failed to load " + libSofficeapp + ": " + std::string(dlerror()));
-            return false;
+            Log::error("Failed to load " + libSofficeapp + ": " + std::string(dlerror()));
+            _exit(Application::EXIT_SOFTWARE);
         }
         loadedLibrary = libSofficeapp;
     }
@@ -98,30 +96,33 @@ static bool globalPreinit(const std::string &loTemplate)
             handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
             if (!handle)
             {
-                Log::warn("Failed to load " + libMerged + ": " + std::string(dlerror()));
-                return false;
+                Log::error("Failed to load " + libMerged + ": " + std::string(dlerror()));
+                _exit(Application::EXIT_SOFTWARE);
             }
             loadedLibrary = libMerged;
         }
         else
         {
-            Log::warn("Neither " + libSofficeapp + " or " + libMerged + " exist.");
-            return false;
+            Log::error("Neither " + libSofficeapp + " or " + libMerged + " exist.");
+            _exit(Application::EXIT_SOFTWARE);
         }
     }
 
     LokHookPreInit* preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
-        Log::warn("Note: No lok_preinit hook in " + loadedLibrary);
-        return false;
+        Log::error("No lok_preinit symbol in " + loadedLibrary);
+        _exit(Application::EXIT_SOFTWARE);
     }
 
-    return preInit((loTemplate + "/program").c_str(), "file:///user") == 0;
+    if (preInit((loTemplate + "/program").c_str(), "file:///user") != 0)
+    {
+        Log::error("lok_preinit() in " + loadedLibrary + " failed");
+        _exit(Application::EXIT_SOFTWARE);
+    }
 }
 
-static int createLibreOfficeKit(const bool sharePages,
-                                const std::string& childRoot,
+static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
                                 const std::string& loSubPath)
@@ -137,56 +138,28 @@ static int createLibreOfficeKit(const bool sharePages,
         return -1;
     }
 
-    if (sharePages)
+    Log::debug("Forking LibreOfficeKit.");
+
+    Process::PID pid;
+    if (!(pid = fork()))
     {
-        Log::debug("Forking LibreOfficeKit.");
-
-        Process::PID pid;
-        if (!(pid = fork()))
+        // child
+        if (std::getenv("SLEEPKITFORDEBUGGER"))
         {
-            // child
-            if (std::getenv("SLEEPKITFORDEBUGGER"))
-            {
-                std::cerr << "Sleeping " << std::getenv("SLEEPKITFORDEBUGGER")
-                          << " seconds to give you time to attach debugger to process "
-                          << Process::id() << std::endl;
-                Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
-            }
+            std::cerr << "Sleeping " << std::getenv("SLEEPKITFORDEBUGGER")
+                      << " seconds to give you time to attach debugger to process "
+                      << Process::id() << std::endl;
+            Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
+        }
 
-            lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit);
-            _exit(Application::EXIT_OK);
-        }
-        else
-        {
-            // parent
-            childPID = pid; // (somehow - switch the hash to use real pids or ?) ...
-            Log::info("Forked kit [" + std::to_string(childPID) + "].");
-        }
+        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit);
+        _exit(Application::EXIT_OK);
     }
     else
     {
-        Process::Args args;
-        args.push_back("--childroot=" + childRoot);
-        args.push_back("--systemplate=" + sysTemplate);
-        args.push_back("--lotemplate=" + loTemplate);
-        args.push_back("--losubpath=" + loSubPath);
-        args.push_back("--pipe=" + pipeKit);
-        args.push_back("--clientport=" + std::to_string(ClientPortNumber));
-
-        Log::info("Launching LibreOfficeKit #" + std::to_string(ChildCounter) +
-                  ": " + LoolkitPath + " " +
-                  Poco::cat(std::string(" "), args.begin(), args.end()));
-
-        Poco::ProcessHandle procChild = Process::launch(LoolkitPath, args);
-        childPID = procChild.id();
-        Log::info("Spawned kit [" + std::to_string(childPID) + "].");
-
-        if (!Process::isRunning(procChild))
-        {
-            // This can happen if we fail to copy it, or bad chroot etc.
-            Log::error("Error: loolkit [" + std::to_string(childPID) + "] was stillborn.");
-            return -1;
-        }
+        // parent
+        childPID = pid; // (somehow - switch the hash to use real pids or ?) ...
+        Log::info("Forked kit [" + std::to_string(childPID) + "].");
     }
 
     Log::info() << "Created Kit #" << ChildCounter << ", PID: " << childPID << Log::end;
@@ -289,8 +262,6 @@ int main(int argc, char** argv)
         }
     }
 
-    LoolkitPath = Poco::Path(argv[0]).parent().toString() + "loolkit";
-
     if (loSubPath.empty() || sysTemplate.empty() ||
         loTemplate.empty() || childRoot.empty() ||
         NumPreSpawnedChildren < 1)
@@ -307,19 +278,13 @@ int main(int argc, char** argv)
 
     setupPipes(childRoot);
 
-    // Initialize LoKit and hope we can fork and save memory by sharing pages.
-    const bool sharePages = std::getenv("LOK_NO_PREINIT") == nullptr
-                          ? globalPreinit(loTemplate)
-                          : std::getenv("LOK_FORK") != nullptr;
+    // Initialize LoKit
+    globalPreinit(loTemplate);
 
-    if (!sharePages)
-        Log::warn("Cannot fork, will spawn instead.");
-    else
-        Log::info("Preinit stage OK.");
+    Log::info("Preinit stage OK.");
 
     // We must have at least one child, more is created dynamically.
-    if (createLibreOfficeKit(sharePages, childRoot, sysTemplate,
-                             loTemplate, loSubPath) < 0)
+    if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
     {
         Log::error("Error: failed to create children.");
         std::exit(Application::EXIT_SOFTWARE);
@@ -327,13 +292,6 @@ int main(int argc, char** argv)
 
     if (NumPreSpawnedChildren > 1)
         ForkCounter = NumPreSpawnedChildren - 1;
-
-    if (!sharePages)
-    {
-        dropCapability(CAP_SYS_CHROOT);
-        dropCapability(CAP_MKNOD);
-        dropCapability(CAP_FOWNER);
-    }
 
     ChildDispatcher childDispatcher;
     Log::info("loolbroker is ready.");
@@ -357,8 +315,7 @@ int main(int argc, char** argv)
             size_t newInstances = 0;
             do
             {
-                if (createLibreOfficeKit(sharePages, childRoot, sysTemplate,
-                                         loTemplate, loSubPath) < 0)
+                if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
                 {
                     Log::error("Error: fork failed.");
                 }
