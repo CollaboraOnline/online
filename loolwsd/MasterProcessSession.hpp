@@ -64,6 +64,9 @@ public:
     time_t _idleSaveTime;
     time_t _autoSaveTime;
 
+    // Raise this flag on ToClient from ToPrisoner to let ToClient know of load failures
+    bool _bLoadError = false;
+
  protected:
     bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
 

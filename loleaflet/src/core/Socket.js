@@ -113,6 +113,8 @@ L.Socket = L.Class.extend({
 			}
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
+			this.close();
+
 			var errorKind = command.errorKind;
 			var passwordNeeded = false;
 			if (errorKind.startsWith('passwordrequired')) {
@@ -139,7 +141,7 @@ L.Socket = L.Class.extend({
 					input: '<input name="password" type="password" required />',
 					callback: L.bind(function(data) {
 						this._map._docPassword = data.password;
-						this._onOpen();
+						this.initialize(this._map);
 					}, this)
 				});
 				return;

@@ -523,11 +523,10 @@ private:
             "Client_ws_" + id
             );
 
-        if (docBroker->getSessionsCount() == 1 && !normalShutdown)
+        if (docBroker->getSessionsCount() == 1 && !normalShutdown && !session->_bLoadError)
         {
             //TODO: This isn't this simple. We need to wait for the notification
             // of save so Storage can persist the save (if necessary).
-            // In addition, we shouldn't issue save when opening of the doc fails.
             Log::info("Non-deliberate shutdown of the last session, saving the document before tearing down.");
             queue->put("uno .uno:Save");
         }

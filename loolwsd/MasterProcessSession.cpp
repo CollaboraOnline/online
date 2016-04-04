@@ -169,12 +169,8 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                             errorKind == "passwordrequired:to-modify" ||
                             errorKind == "wrongpassword")
                         {
-                            _isDocPasswordProtected = true;
-                            // Reset docURL so that client can send another load request with password
-                            peer->_docURL = "";
-                            // disconnect 'ToPrisoner' after letting client know that password is required
                             forwardToPeer(buffer, length);
-                            LOOLSession::disconnect();
+                            peer->_bLoadError = true;
                             return false;
                         }
                     }
