@@ -1063,12 +1063,10 @@ static void lokit_main(const std::string& childRoot,
                     const std::string message(data.data(), data.size());
                     Log::debug(socketName + ": recv [" + message + "].");
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                    auto responseFrame = std::to_string(Process::id()) + " ";
 
                     if (TerminationFlag)
                     {
-                        // Too late, we're going down.
-                        responseFrame += "down\n";
+                        Log::debug("Too late, we're going down");
                     }
                     else if (tokens[0] == "session")
                     {
@@ -1086,29 +1084,20 @@ static void lokit_main(const std::string& childRoot,
                         }
 
                         // Validate and create session.
-                        if (url == document->getUrl() &&
-                            document->createSession(sessionId, intSessionId))
+                        if (!(url == document->getUrl() &&
+                            document->createSession(sessionId, intSessionId)))
                         {
-                            responseFrame += "ok\n";
-                        }
-                        else
-                        {
-                            responseFrame += "bad\n";
+                            Log::debug("Create Session failed");
                         }
                     }
                     else if (document && document->canDiscard())
                     {
                         TerminationFlag = true;
-                        responseFrame += "down\n";
                     }
                     else
                     {
-                        responseFrame += "bad unknown token [" + tokens[0] + "]\n";
+                        Log::info("bad unknown token [" + tokens[0] + "]");
                     }
-
-                    //FIXME: Do we really need to respond here?
-                    Log::trace("KitToDocBroker: " + responseFrame.substr(0, responseFrame.length()-1));
-                    ws->sendFrame(responseFrame.data(), responseFrame.size());
 
                     return true;
                 },
