@@ -181,8 +181,8 @@ std::shared_ptr<ChildProcess> getNewChild()
 {
     std::unique_lock<std::mutex> lock(newChildsMutex);
 
-    const signed available = newChilds.size();
-    signed balance = LOOLWSD::NumPreSpawnedChildren;
+    const int available = newChilds.size();
+    int balance = LOOLWSD::NumPreSpawnedChildren;
     if (available == 0)
     {
         Log::error("No available child. Sending spawn request to Broker and failing.");
