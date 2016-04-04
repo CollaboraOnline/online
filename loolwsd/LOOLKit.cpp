@@ -398,11 +398,20 @@ public:
         // Destroy all connections and views.
         _connections.clear();
 
-        // TODO. check what is happening when destroying lokit document
+        // TODO. check what is happening when destroying lokit document,
+        // often it blows up.
         // Destroy the document.
         if (_loKitDocument != nullptr)
         {
-            _loKitDocument->pClass->destroy(_loKitDocument);
+            try
+            {
+                _loKitDocument->pClass->destroy(_loKitDocument);
+            }
+            catch (const std::exception& exc)
+            {
+                Log::error() << "Document::~Document: " << exc.what()
+                             << Log::end;
+            }
         }
     }
 
@@ -670,7 +679,10 @@ private:
         auto sessionLock = session->getLock();
         std::unique_lock<std::mutex> lock(_mutex);
 
+        Log::info("Session " + sessionId + " is unloading. Erasing connection.");
+        _connections.erase(it);
         --_clientViews;
+        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
 
         std::ostringstream message;
         message << "rmview" << " "
@@ -678,8 +690,6 @@ private:
                 << sessionId << " "
                 << "\n";
         IoUtil::writeFIFO(WriterNotify, message.str());
-
-        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
 
         if (_multiView && _loKitDocument)
         {
