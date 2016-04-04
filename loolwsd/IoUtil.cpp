@@ -29,10 +29,12 @@
 #include "IoUtil.hpp"
 #include "Util.hpp"
 
-namespace IoUtil
-{
+using Poco::Net::NetException;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
+
+namespace IoUtil
+{
 
 // Synchronously process WebSocket requests and dispatch to handler.
 // Handler returns false to end.
@@ -186,6 +188,10 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             response.setContentLength(0);
             break;
         }
+    }
+    catch (const NetException& exc)
+    {
+        Log::error("SocketProcessor: NetException: " + exc.message());
     }
 
     Log::info(name + "Finished Socket Processor.");
