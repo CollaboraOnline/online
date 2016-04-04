@@ -94,7 +94,6 @@ DEALINGS IN THE SOFTWARE.
 #include <Poco/Net/SecureServerSocket.h>
 #include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/SocketAddress.h>
-#include <Poco/Net/DialogSocket.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
@@ -148,7 +147,6 @@ using Poco::Net::SecureServerSocket;
 using Poco::Net::ServerSocket;
 using Poco::Net::Socket;
 using Poco::Net::SocketAddress;
-using Poco::Net::DialogSocket;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Path;
@@ -466,9 +464,9 @@ private:
             session->setEditLock(true);
 
         // Request a kit process for this doc.
-        const std::string message = "request " + id + " " + docKey;
-        Log::debug("MasterToBroker: " + message);
-        LOOLWSD::DlgBroker->sendMessage(message);
+        const std::string aMessage = "request " + id + " " + docKey + "\n";
+        Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
+        IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
         QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
 
@@ -881,7 +879,7 @@ private:
 };
 
 std::atomic<unsigned> LOOLWSD::NextSessionId;
-std::unique_ptr<DialogSocket> LOOLWSD::DlgBroker;
+int LOOLWSD::BrokerWritePipe = -1;
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
@@ -1082,47 +1080,23 @@ void LOOLWSD::displayVersion()
 
 Process::PID LOOLWSD::createBroker()
 {
-    Process::PID brokerPid = -1;
+    Process::Args args;
 
-    try
-    {
-        Process::Args args;
+    args.push_back("--losubpath=" + LOOLWSD::LoSubPath);
+    args.push_back("--systemplate=" + SysTemplate);
+    args.push_back("--lotemplate=" + LoTemplate);
+    args.push_back("--childroot=" + ChildRoot);
+    args.push_back("--numprespawns=" + std::to_string(NumPreSpawnedChildren));
+    args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
-        args.push_back("--losubpath=" + LOOLWSD::LoSubPath);
-        args.push_back("--systemplate=" + SysTemplate);
-        args.push_back("--lotemplate=" + LoTemplate);
-        args.push_back("--childroot=" + ChildRoot);
-        args.push_back("--numprespawns=" + std::to_string(NumPreSpawnedChildren));
-        args.push_back("--clientport=" + std::to_string(ClientPortNumber));
+    const std::string brokerPath = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
 
-        const std::string brokerPath = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
-        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+    Log::info("Launching Broker #1: " + brokerPath + " " +
+              Poco::cat(std::string(" "), args.begin(), args.end()));
 
-        Log::info("Launching Broker #1: " + brokerPath + " " +
-                  Poco::cat(std::string(" "), args.begin(), args.end()));
+    ProcessHandle child = Process::launch(brokerPath, args);
 
-        ServerSocket srvCommand(COMMAND_PORT_NUMBER);
-        ProcessHandle child = Process::launch(brokerPath, args);
-
-        if (srvCommand.poll(waitTime, Socket::SELECT_READ))
-        {
-            DlgBroker.reset(new DialogSocket(srvCommand.acceptConnection()));
-            brokerPid = child.id();
-        }
-        else
-        {
-            Log::error("Error: failed to socket connection with broker.");
-            Util::requestTermination(child.id());
-        }
-    }
-    catch (const Exception& exc)
-    {
-        Log::error() << "LOOLWSD::createBroker: Exception: " << exc.displayText()
-                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                     << Log::end;
-    }
-
-    return brokerPid;
+    return child.id();
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -1185,6 +1159,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (!File(pipePath).exists() && !File(pipePath).createDirectory())
     {
         Log::error("Error: Failed to create pipe directory [" + pipePath.toString() + "].");
+        return Application::EXIT_SOFTWARE;
+    }
+
+    const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
+    if (mkfifo(pipeLoolwsd.c_str(), 0666) < 0 && errno != EEXIST)
+    {
+        Log::error("Error: Failed to create pipe FIFO [" + pipeLoolwsd + "].");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -1255,6 +1236,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, svs2, params2);
 
     srv2.start();
+
+    if ( (BrokerWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
+    {
+        Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] write only.");
+        return Application::EXIT_SOFTWARE;
+    }
 
     threadPool.start(admin);
 
@@ -1393,12 +1380,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
 
     // Terminate child processes
-    DlgBroker->shutdown();
+    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\n");
     Log::info("Requesting child process " + std::to_string(brokerPid) + " to terminate");
     Util::requestTermination(brokerPid);
 
     // wait broker process finish
     waitpid(brokerPid, &status, WUNTRACED);
+
+    close(BrokerWritePipe);
 
     Log::info("Cleaning up childroot directory [" + ChildRoot + "].");
     std::vector<std::string> jails;
