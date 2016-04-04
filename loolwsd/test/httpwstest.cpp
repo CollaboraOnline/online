@@ -28,7 +28,6 @@
 #include <Common.hpp>
 #include <Util.hpp>
 #include <LOOLProtocol.hpp>
-#include <ChildProcessSession.hpp>
 
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
@@ -79,7 +78,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                             const bool isLine);
 public:
     HTTPWSTest()
-        : _uri("https://127.0.0.1:" + std::to_string(ClientPortNumber))
+        : _uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER))
     {
         Poco::Net::initializeSSL();
         // Just accept the certificate anyway for testing purposes
