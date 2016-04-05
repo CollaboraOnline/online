@@ -23,9 +23,7 @@
 #include "LOOLSession.hpp"
 
 // The client port number, which is changed via loolwsd args.
-// Except that it isn't. This is "static" so it is a *separate* variable
-// in each compilation unit.
-static int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+extern int ClientPortNumber;
 
 class CallbackWorker;
 

@@ -10,7 +10,8 @@ AM_LDFLAGS = -pthread
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
-shared_sources = IoUtil.cpp \
+shared_sources = ChildProcessSession.cpp \
+	  	 IoUtil.cpp \
                  LOOLProtocol.cpp \
                  LOOLSession.cpp \
                  MessageQueue.cpp \
@@ -19,7 +20,6 @@ shared_sources = IoUtil.cpp \
 loolwsd_SOURCES = Admin.cpp \
 		  AdminModel.cpp \
                   Auth.cpp \
-                  ChildProcessSession.cpp \
                   DocumentBroker.cpp \
                   LOOLWSD.cpp \
                   MasterProcessSession.cpp \
@@ -44,11 +44,9 @@ lokitclient_SOURCES = IoUtil.cpp \
                       LOOLProtocol.cpp \
                       Util.cpp
 
-broker_shared_sources = ChildProcessSession.cpp \
-                        $(shared_sources)
-
-loolbroker_SOURCES = LOOLBroker.cpp \
-                     $(broker_shared_sources)
+loolbroker_SOURCES = LOOLForKit.cpp \
+		     LOOLKit.cpp \
+                     $(shared_sources)
 
 loolmount_SOURCES = loolmount.c
 
@@ -64,6 +62,7 @@ noinst_HEADERS = Admin.hpp \
                  IoUtil.hpp \
                  LoadTest.hpp \
                  LOKitHelper.hpp \
+		 LOOLKit.hpp \
                  LOOLProtocol.hpp \
                  LOOLSession.hpp \
                  LOOLWSD.hpp \

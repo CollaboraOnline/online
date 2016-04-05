@@ -44,6 +44,8 @@ using Poco::StringTokenizer;
 using Poco::Timestamp;
 using Poco::URI;
 
+int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+
 class CallbackNotification: public Notification
 {
 public:
