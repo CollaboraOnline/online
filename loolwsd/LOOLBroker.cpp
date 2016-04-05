@@ -1224,7 +1224,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& loTemplate,
                                 const std::string& loSubPath)
 {
-    Process::PID childPID;
+    Process::PID childPID = 0;
 
     const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
     const std::string pipeKit = Path(pipePath, BROKER_PREFIX + std::to_string(ChildCounter++) + BROKER_SUFIX).toString();
