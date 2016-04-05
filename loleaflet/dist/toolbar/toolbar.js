@@ -895,12 +895,7 @@ map.on('editlock', function (e) {
 		toolbar.disable('takeedit');
 		toolbar.set('takeedit', {hint: _('You are editing (others can only view)')});
 
-		$('#takeedit_text')
-			.w2tag('You are editing now')
-			.html('EDITING');
-		setTimeout(function() {
-			$('#takeedit_text').w2tag('');
-		}, 5000);
+		$('#takeedit_text').html('EDITING');
 	}
 	else {
 		toolbar.uncheck('takeedit');
@@ -911,7 +906,7 @@ map.on('editlock', function (e) {
 			.html('VIEWING');
 		setTimeout(function() {
 			$('#takeedit_text').w2tag('');
-		}, 5000);
+		}, 3000);
 	}
 });
 
