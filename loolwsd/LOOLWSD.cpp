@@ -172,8 +172,10 @@ using Poco::XML::Node;
 using Poco::XML::NodeList;
 
 /// New LOK child processes ready to host documents.
+//TODO: Move to a more sensible namespace.
 static std::vector<std::shared_ptr<ChildProcess>> newChilds;
 static std::mutex newChildsMutex;
+static std::condition_variable newChildsCV;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 
@@ -199,7 +201,8 @@ std::shared_ptr<ChildProcess> getNewChild()
         IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
     }
 
-    if (available > 0)
+    const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_SECS * 1000);
+    if (newChildsCV.wait_for(lock, timeout, [](){ return !newChilds.empty(); }))
     {
         auto child = newChilds.back();
         newChilds.pop_back();
@@ -671,6 +674,7 @@ public:
             std::unique_lock<std::mutex> lock(newChildsMutex);
             newChilds.emplace_back(std::make_shared<ChildProcess>(pid, ws));
             Log::info("Have " + std::to_string(newChilds.size()) + " childs.");
+            newChildsCV.notify_one();
             return;
         }
 
