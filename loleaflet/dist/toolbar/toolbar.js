@@ -130,8 +130,6 @@ $(function () {
 			{ type: 'button',  id: 'searchnext', img: 'next', hint: _("Search forward"), disabled: true },
 			{ type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _("Cancel the search"), hidden: true },
 			{ type: 'html', id: 'left' },
-			{ type: 'button',  id: 'edit', img: 'edit', hint: _("Enable editing") },
-			{ type: 'button',  id: 'select', img: 'select', hint: _("Enable selection") },
 			{ type: 'button',  id: 'presentation', img: 'presentation', hint: _("Fullscreen presentation") },
 			{ type: 'button',  id: 'insertpage', img: 'insertpage', hint: _("Insert Page") },
 			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: _("Duplicate Page") },
@@ -141,10 +139,10 @@ $(function () {
 			{ type: 'button',  id: 'takeedit', img: 'edit', hint: _("Take edit lock (others can only view)")},
 			{ type: 'html',    id: 'takeedit_text', html: '<div id="takeedit_text">VIEWING</div>' },
 			{ type: 'break' },
-			{ type: 'button',  id: 'prev', img: 'prev', hint: _("Previous page/part") },
-			{ type: 'button',  id: 'next', img: 'next', hint: _("Next page/part") },
-			{ type: 'break' },
-			{ type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _("Reset") },
+			{ type: 'button',  id: 'prev', img: 'prev', hint: _("Previous page") },
+			{ type: 'button',  id: 'next', img: 'next', hint: _("Next page") },
+			{ type: 'break', id: 'prevnextbreak' },
+			{ type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _("Reset zoom") },
 			{ type: 'button',  id: 'zoomout', img: 'zoomout', hint: _("Zoom out") },
 			{ type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel">100%</div>'},
 			{ type: 'button',  id: 'zoomin', img: 'zoomin', hint: _("Zoom in") }
@@ -813,23 +811,36 @@ map.on('updateparts pagenumberchanged', function (e) {
 	}
 
 	var toolbar = w2ui['toolbar-down'];
-	if (e.docType !== 'presentation') {
+	if (e.docType === 'presentation') {
+		toolbar.set('prev', {hint: _('Previous slide')});
+		toolbar.set('next', {hint: _('Next slide')});
+	}
+	else {
 		toolbar.hide('presentation');
 		toolbar.hide('insertpage');
 		toolbar.hide('duplicatepage');
 		toolbar.hide('deletepage');
 	}
-	if (current === 0) {
-		toolbar.disable('prev');
+
+	if (e.docType === 'spreadsheet') {
+		toolbar.hide('prev');
+		toolbar.hide('next');
+		toolbar.hide('prevnextbreak');
 	}
 	else {
-		toolbar.enable('prev');
-	}
-	if (current === count - 1) {
-		toolbar.disable('next');
-	}
-	else {
-		toolbar.enable('next');
+		if (current === 0) {
+			toolbar.disable('prev');
+		}
+		else {
+			toolbar.enable('prev');
+		}
+
+		if (current === count - 1) {
+			toolbar.disable('next');
+		}
+		else {
+			toolbar.enable('next');
+		}
 	}
 
 	toolbar = w2ui['toolbar-up'];
