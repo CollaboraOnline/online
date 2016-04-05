@@ -167,7 +167,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         Log::debug() << name << "Finishing SocketProcessor. TerminationFlag: " << stop
                      << ", payload size: " << payload.size()
                      << ", flags: " << std::hex << flags << Log::end;
-        if (!payload.empty())
+        if (payload.size() > 1)
         {
             Log::warn(name + "Last message will not be processed: [" +
                       LOOLProtocol::getFirstLine(payload.data(), payload.size()) + "].");

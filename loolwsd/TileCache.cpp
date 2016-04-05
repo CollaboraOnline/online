@@ -15,6 +15,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <mutex>
 #include <sstream>
 #include <string>
 
@@ -90,7 +91,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
 
         if (dir.exists() && dir.isDirectory() && File(fileName).exists())
         {
-            Log::debug("Found editing tile: " + cachedName);
+            Log::trace("Found editing tile: " + cachedName);
             std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
             return result;
         }
@@ -112,7 +113,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
     }
 
     const std::string fileName = _persCacheDir + "/" + cachedName;
-    Log::debug("Found persistent tile: " + fileName);
+    Log::trace("Found persistent tile: " + fileName);
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
     return result;
@@ -129,7 +130,7 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
     File(dirName).createDirectories();
 
     const std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    Log::debug() << "Saving "
+    Log::trace() << "Saving "
                  << (_hasUnsavedChanges ? "editing" : "persistent") <<
                  " tile: " << fileName << Log::end;
 
@@ -182,7 +183,7 @@ std::string TileCache::getTextFile(std::string fileName)
 
 void TileCache::documentSaved()
 {
-    Log::debug("Persisting editing tiles.");
+    Log::trace("Persisting editing tiles.");
 
     // first remove the invalidated tiles from the Persistent cache
     for (const auto& it : _toBeRemoved)
@@ -190,14 +191,22 @@ void TileCache::documentSaved()
         Util::removeFile(_persCacheDir + "/" + it);
     }
 
-    _cacheMutex.lock();
+    _toBeRemoved.clear();
+
     // then move the new tiles from the Editing cache to Persistent
     try
     {
+        std::unique_lock<std::mutex> lock(_cacheMutex);
         for (auto tileIterator = DirectoryIterator(_editCacheDir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
             tileIterator->moveTo(_persCacheDir);
         }
+
+        // update status
+        _hasUnsavedChanges = false;
+
+        // FIXME should we take the exact time of the file for the local files?
+        saveLastModified(Timestamp());
     }
     catch (const FileException& exc)
     {
@@ -206,15 +215,6 @@ void TileCache::documentSaved()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                      << Log::end;
     }
-
-    _cacheMutex.unlock();
-
-    // update status
-    _toBeRemoved.clear();
-    _hasUnsavedChanges = false;
-
-    // FIXME should we take the exact time of the file for the local files?
-    saveLastModified(Timestamp());
 }
 
 void TileCache::setEditing(bool editing)
@@ -275,7 +275,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
     File editingDir(_editCacheDir);
     if (editingDir.exists() && editingDir.isDirectory())
     {
-        _cacheMutex.lock();
+        std::unique_lock<std::mutex> lock(_cacheMutex);
         for (auto tileIterator = DirectoryIterator(editingDir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
             const std::string fileName = tileIterator.path().getFileName();
@@ -284,7 +284,6 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
                 Util::removeFile(tileIterator.path());
             }
         }
-        _cacheMutex.unlock();
     }
 
     // in the Persistent cache, add to _toBeRemoved for removal on save

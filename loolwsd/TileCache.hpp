@@ -97,7 +97,7 @@ private:
     /// Set of tiles that we want to remove from the Persistent cache on the next save.
     std::set<std::string> _toBeRemoved;
 
-    Poco::FastMutex _cacheMutex;
+    std::mutex _cacheMutex;
 };
 
 #endif
