@@ -53,9 +53,6 @@
 
 typedef int (LokHookPreInit)  (const char *install_path, const char *user_profile_path);
 
-static const std::string BROKER_SUFIX = ".fifo";
-static const std::string BROKER_PREFIX = "lokit";
-
 static int WriterNotify = -1;
 static int ReaderBroker = -1;
 
@@ -907,8 +904,7 @@ private:
 static void lokit_main(const std::string& childRoot,
                        const std::string& sysTemplate,
                        const std::string& loTemplate,
-                       const std::string& loSubPath,
-                       const std::string& pipe)
+                       const std::string& loSubPath)
 {
     // Reinitialize logging when forked.
     Log::initialize("kit");
@@ -918,7 +914,6 @@ static void lokit_main(const std::string& childRoot,
     assert(!sysTemplate.empty());
     assert(!loTemplate.empty());
     assert(!loSubPath.empty());
-    assert(!pipe.empty());
 
     // We only host a single document in our lifetime.
     std::shared_ptr<Document> document;
@@ -1226,15 +1221,6 @@ static int createLibreOfficeKit(const std::string& childRoot,
 {
     Process::PID childPID = 0;
 
-    const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
-    const std::string pipeKit = Path(pipePath, BROKER_PREFIX + std::to_string(ChildCounter++) + BROKER_SUFIX).toString();
-
-    if (mkfifo(pipeKit.c_str(), 0666) < 0 && errno != EEXIST)
-    {
-        Log::error("Error: Failed to create pipe FIFO [" + pipeKit + "].");
-        return -1;
-    }
-
     Log::debug("Forking a loolkit process.");
 
     Process::PID pid;
@@ -1249,7 +1235,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
             Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
         }
 
-        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit);
+        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath);
     }
     else
     {
@@ -1274,7 +1260,6 @@ static void printArgumentHelp()
     std::cout << "  --childroot=<path>        path to chroot for child to live inside." << std::endl;
     std::cout << "  --systemplate=<path>      path of system template to pre-populate chroot with." << std::endl;
     std::cout << "  --lotemplate=<path>       path of libreoffice template to pre-populate chroot with." << std::endl;
-    std::cout << "  --pipe=<path>             path of loolwsd pipe to connect to on startup." << std::endl;
     std::cout << "  --losubpath=<path>        path to libreoffice install" << std::endl;
 }
 
