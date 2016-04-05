@@ -4,6 +4,7 @@
 AC_PREREQ([2.69])
 
 AC_INIT([loolwsd], [1.5.5], [libreoffice@lists.freedesktop.org])
+LT_INIT([disable-static])
 
 AM_INIT_AUTOMAKE([1.11 silent-rules subdir-objects])
 
@@ -42,6 +43,10 @@ AC_ARG_ENABLE([debug],
 AC_ARG_WITH([lokit-path],
             AS_HELP_STRING([--with-lokit-path=<path>],
                            [Path to the "include" directory with the LibreOfficeKit headers]))
+
+AC_ARG_WITH([lo-path],
+            AS_HELP_STRING([--with-lo-path=<path>],
+                           [Path to a working installation directory or instdir of LibreOffice]))
 
 AC_ARG_WITH([poco-includes],
             AS_HELP_STRING([--with-poco-includes=<path>],
@@ -82,6 +87,30 @@ AS_IF([test -z "$with_poco_libs"],
 with_lokit_path=`readlink -f $with_lokit_path`
 AS_IF([test -n "$with_lokit_path"],
       [CPPFLAGS="$CPPFLAGS -I${with_lokit_path}"])
+lokit_msg="$with_lokit_path"
+
+dnl
+dnl lo_path is not required; but useful for testing.
+dnl
+LO_PATH=
+have_lo_path=false
+AC_MSG_CHECKING([whether to run tests against a LibreOffice])
+if test -n "$with_lo_path"; then
+   version_file="$with_lo_path/program/versionrc"
+   if test -f $version_file; then
+     LO_PATH="$with_lo_path"
+     have_lo_path=true
+     lo_msg="test against $LO_PATH"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_ERROR([LibreOffice install looks dodgy, missing $version_file])
+   fi
+else
+   lo_msg="no integration tests"
+   AC_MSG_RESULT([no])
+fi
+AC_SUBST(LO_PATH)
+AM_CONDITIONAL(HAVE_LO_PATH,[test "$have_lo_path" = "true"])
 
 AS_IF([test -n "$with_poco_includes"],
       [CPPFLAGS="$CPPFLAGS -I${with_poco_includes}"])
@@ -176,5 +205,13 @@ AC_CONFIG_FILES([Makefile
 AC_OUTPUT
 
 AC_LANG_POP
+
+echo "
+Configuration:
+    Source code location:   ${srcdir}
+    Build location:         ${top_builddir}
+    LOKit path              ${lokit_msg}
+    LO integration tests    ${lo_msg}
+"
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:

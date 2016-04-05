@@ -5,7 +5,7 @@ bin_PROGRAMS = loolwsd loolforkit loolmap loolmount
 dist_bin_SCRIPTS = loolwsd-systemplate-setup discovery.xml
 
 AM_CPPFLAGS = -pthread
-AM_LDFLAGS = -pthread
+AM_LDFLAGS = -pthread -Wl,-E
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
@@ -25,6 +25,7 @@ loolwsd_SOURCES = Admin.cpp \
                   MasterProcessSession.cpp \
                   Storage.cpp \
                   TileCache.cpp \
+		  Unit.cpp \
                   $(shared_sources)
 
 noinst_PROGRAMS = connect \
@@ -73,6 +74,7 @@ noinst_HEADERS = Admin.hpp \
                  Rectangle.hpp \
                  Storage.hpp \
                  TileCache.hpp \
+		 Unit.hpp \
                  Util.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \

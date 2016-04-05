@@ -92,6 +92,7 @@
 #include "Storage.hpp"
 #include "IoUtil.hpp"
 #include "Util.hpp"
+#include "Unit.hpp"
 
 using namespace LOOLProtocol;
 
@@ -163,7 +164,9 @@ void forkChildren(int number)
 void preForkChildren()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
-    forkChildren(LOOLWSD::NumPreSpawnedChildren);
+    int nPreSpawn = LOOLWSD::NumPreSpawnedChildren;
+    UnitHooks::get().preSpawnCount(nPreSpawn);
+    forkChildren(nPreSpawn);
 }
 
 std::shared_ptr<ChildProcess> getNewChild()
@@ -954,6 +957,7 @@ std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::AdminCreds;
 bool LOOLWSD::AllowLocalStorage = false;
+std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 bool LOOLWSD::DoTest = false;
@@ -1139,9 +1143,15 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
     optionSet.addOption(Option("test", "", "Interactive testing.")
                         .required(false)
                         .repeatable(false));
+
+    optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("unitlib"));
 }
 
-void LOOLWSD::handleOption(const std::string& optionName, const std::string& value)
+void LOOLWSD::handleOption(const std::string& optionName,
+                           const std::string& value)
 {
     ServerApplication::handleOption(optionName, value);
 
@@ -1175,6 +1185,8 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
         AdminCreds = value;
     else if (optionName == "allowlocalstorage")
         AllowLocalStorage = true;
+    else if (optionName == "unitlib")
+        UnitTestLibrary = value;
     else if (optionName == "test")
         LOOLWSD::DoTest = true;
 }
@@ -1220,6 +1232,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (geteuid() == 0)
     {
         Log::error("Don't run this as root");
+        return Application::EXIT_USAGE;
+    }
+
+    if (!UnitHooks::init(UnitTestLibrary))
+    {
+        Log::error("Failed to load unit test library");
         return Application::EXIT_USAGE;
     }
 
