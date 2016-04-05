@@ -1250,7 +1250,6 @@ static int createLibreOfficeKit(const std::string& childRoot,
         }
 
         lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, pipeKit);
-        _exit(Application::EXIT_OK);
     }
     else
     {
