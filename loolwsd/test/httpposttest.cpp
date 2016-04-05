@@ -28,7 +28,7 @@
 class HTTPPostTest : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(HTTPPostTest);
-    //CPPUNIT_TEST(testConvertTo);
+    CPPUNIT_TEST(testConvertTo);
     CPPUNIT_TEST_SUITE_END();
 
     void testConvertTo();

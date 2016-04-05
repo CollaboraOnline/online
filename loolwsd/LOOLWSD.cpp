@@ -291,17 +291,16 @@ private:
                     // In that case, we can use a pool and index by publicPath.
                     std::unique_lock<std::mutex> lock(docBrokersMutex);
 
+                    //FIXME: What if the same document is already open? Need a fake dockey here.
                     Log::debug("New DocumentBroker for docKey [" + docKey + "].");
                     docBrokers.emplace(docKey, docBroker);
-
-                    // Request a kit process for this doc.
-                    const std::string aMessage = "request " + id + " " + docKey + "\n";
-                    Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
-                    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
 
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
                     auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, nullptr);
+                    docBroker->addWSSession(id, session);
+                    unsigned wsSessionsCount = docBroker->getWSSessionsCount();
+                    Log::warn(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
                     session->setEditLock(true);
                     docBroker->incSessions();
                     lock.unlock();
