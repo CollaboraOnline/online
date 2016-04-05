@@ -173,15 +173,15 @@ using Poco::XML::NodeList;
 
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
-static std::vector<std::shared_ptr<ChildProcess>> newChilds;
-static std::mutex newChildsMutex;
-static std::condition_variable newChildsCV;
+static std::vector<std::shared_ptr<ChildProcess>> newChildren;
+static std::mutex newChildrenMutex;
+static std::condition_variable newChildrenCV;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 
 void forkChildren(int number)
 {
-    assert(!newChildsMutex.try_lock()); // check it is held.
+    assert(!newChildrenMutex.try_lock()); // check it is held.
 
     const std::string aMessage = "spawn " + std::to_string(number) + "\n";
     Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
@@ -190,15 +190,15 @@ void forkChildren(int number)
 
 void preForkChildren()
 {
-    std::unique_lock<std::mutex> lock(newChildsMutex);
+    std::unique_lock<std::mutex> lock(newChildrenMutex);
     forkChildren(LOOLWSD::NumPreSpawnedChildren);
 }
 
 std::shared_ptr<ChildProcess> getNewChild()
 {
-    std::unique_lock<std::mutex> lock(newChildsMutex);
+    std::unique_lock<std::mutex> lock(newChildrenMutex);
 
-    const int available = newChilds.size();
+    const int available = newChildren.size();
     int balance = LOOLWSD::NumPreSpawnedChildren;
     if (available == 0)
     {
@@ -213,10 +213,10 @@ std::shared_ptr<ChildProcess> getNewChild()
         forkChildren(balance);
 
     const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_SECS * 1000);
-    if (newChildsCV.wait_for(lock, timeout, [](){ return !newChilds.empty(); }))
+    if (newChildrenCV.wait_for(lock, timeout, [](){ return !newChildren.empty(); }))
     {
-        auto child = newChilds.back();
-        newChilds.pop_back();
+        auto child = newChildren.back();
+        newChildren.pop_back();
         return child;
     }
 
@@ -681,10 +681,10 @@ public:
 
             Log::info("New child [" + std::to_string(pid) + "].");
             auto ws = std::make_shared<WebSocket>(request, response);
-            std::unique_lock<std::mutex> lock(newChildsMutex);
-            newChilds.emplace_back(std::make_shared<ChildProcess>(pid, ws));
-            Log::info("Have " + std::to_string(newChilds.size()) + " childs.");
-            newChildsCV.notify_one();
+            std::unique_lock<std::mutex> lock(newChildrenMutex);
+            newChildren.emplace_back(std::make_shared<ChildProcess>(pid, ws));
+            Log::info("Have " + std::to_string(newChildren.size()) + " children.");
+            newChildrenCV.notify_one();
             return;
         }
 
