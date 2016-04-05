@@ -94,6 +94,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
     Process::PID pid;
     if (!(pid = fork()))
     {
+        // quicker than a generic socket closing approach.
+        close(ReaderBroker);
+
         // child
         if (std::getenv("SLEEPKITFORDEBUGGER"))
         {
