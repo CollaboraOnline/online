@@ -28,7 +28,6 @@
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/Exception.h>
-#include <Poco/Mutex.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -242,6 +241,7 @@ public:
     {
         Log::info("~Connection dtor in child for " + _session->getId());
         stop();
+        join();
     }
 
     std::shared_ptr<WebSocket> getWebSocket() const { return _ws; }
@@ -264,7 +264,13 @@ public:
 
     void join()
     {
-        _thread.join();
+        // The thread is joinable only once.
+        std::unique_lock<std::mutex> lock(_threadMutex);
+        if (!_joined)
+        {
+            _thread.join();
+            _joined = true;
+        }
     }
 
     void handle(std::shared_ptr<TileQueue> queue, const std::string& firstLine, char* buffer, int n)
@@ -369,7 +375,9 @@ private:
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
     std::shared_ptr<WebSocket> _ws;
-    volatile bool _stop;
+    std::atomic<unsigned> _stop;
+    std::mutex _threadMutex;
+    std::atomic<unsigned> _joined;
 };
 
 /// A document container.
