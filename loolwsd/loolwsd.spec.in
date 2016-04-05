@@ -57,7 +57,7 @@ echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -ex
 /usr/bin/loolwsd
 /usr/bin/loolwsd-systemplate-setup
 /usr/bin/loolmap
-/usr/bin/loolbroker
+/usr/bin/loolforkit
 /usr/bin/discovery.xml
 %{_unitdir}/loolwsd.service
 /var/adm/fillup-templates/sysconfig.loolwsd

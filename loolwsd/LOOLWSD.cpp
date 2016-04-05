@@ -1135,9 +1135,9 @@ Process::PID LOOLWSD::createBroker()
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
-    const std::string brokerPath = Path(Application::instance().commandPath()).parent().toString() + "loolbroker";
+    const std::string brokerPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
 
-    Log::info("Launching Broker #1: " + brokerPath + " " +
+    Log::info("Launching kit forker #1: " + brokerPath + " " +
               Poco::cat(std::string(" "), args.begin(), args.end()));
 
     ProcessHandle child = Process::launch(brokerPath, args);

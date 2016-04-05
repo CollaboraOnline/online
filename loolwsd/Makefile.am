@@ -1,6 +1,6 @@
 SUBDIRS = test
 
-bin_PROGRAMS = loolwsd loolbroker loolmap loolmount
+bin_PROGRAMS = loolwsd loolforkit loolmap loolmount
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup discovery.xml
 
@@ -44,7 +44,7 @@ lokitclient_SOURCES = IoUtil.cpp \
                       LOOLProtocol.cpp \
                       Util.cpp
 
-loolbroker_SOURCES = LOOLForKit.cpp \
+loolforkit_SOURCES = LOOLForKit.cpp \
 		     LOOLKit.cpp \
                      $(shared_sources)
 
@@ -87,15 +87,15 @@ clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
 
-# After building loolbroker, set its capabilities as required. Do it
+# After building loolforkit, set its capabilities as required. Do it
 # already after a plain 'make' to allow for testing without
 # installing. When building for packaging, no need for this, as the
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
 
-all-local: loolbroker certificates
+all-local: loolforkit certificates
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
-	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolbroker; \
+	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit; \
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount; \
 	    echo "Set required capabilities"; \
 	else \
