@@ -955,13 +955,11 @@ static void lokit_main(const std::string& childRoot,
 
         const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
         Log::info("Jail path: " + jailPath.toString());
-
         File(jailPath).createDirectories();
 
         // Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
         // interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
         Path symlinkSource(jailPath, Path(loTemplate.substr(1)));
-
         File(symlinkSource.parent()).createDirectories();
 
         std::string symlinkTarget;
@@ -1111,6 +1109,9 @@ static void lokit_main(const std::string& childRoot,
                 },
                 [](){ return TerminationFlag; },
                 socketName);
+
+        // Cleanup jail.
+        Util::removeFile(jailPath, true);
     }
     catch (const Exception& exc)
     {
@@ -1123,18 +1124,6 @@ static void lokit_main(const std::string& childRoot,
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    if (document)
-    {
-        Log::info("Destroying document [" + document->getUrl() + "].");
-        document.reset();
-    }
-
-    if (loKit)
-    {
-        Log::debug("Destroying LibreOfficeKit instance.");
-        loKit->pClass->destroy(loKit);
-    }
-
     std::ostringstream message;
     message << "rmdoc" << " "
             << Process::id() << " "
@@ -1143,6 +1132,7 @@ static void lokit_main(const std::string& childRoot,
     close(WriterNotify);
 
     Log::info("Process [" + process_name + "] finished.");
+    _exit(Application::EXIT_OK);
 }
 
 class ChildDispatcher
