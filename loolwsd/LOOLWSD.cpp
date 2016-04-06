@@ -1381,6 +1381,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
                         for (auto& sessionIt: brokerIt.second->_wsSessions)
                         {
+                            // If a message has arrived from the client since we last did an idle save,
+                            // and it is more than 30 seconds since the message arrived, do a save.
                             if (sessionIt.second->_lastMessageTime > sessionIt.second->_idleSaveTime &&
                                 sessionIt.second->_lastMessageTime < now - 30)
                             {
@@ -1403,6 +1405,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
                         for (auto& sessionIt: brokerIt.second->_wsSessions)
                         {
+                            // If messages have arrived from the client since we last did an idle or auto
+                            // save, do a save.
                             if (sessionIt.second->_lastMessageTime >= sessionIt.second->_idleSaveTime &&
                                 sessionIt.second->_lastMessageTime >= sessionIt.second->_autoSaveTime)
                             {
