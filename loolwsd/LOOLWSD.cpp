@@ -990,30 +990,13 @@ void LOOLWSD::initialize(Application& self)
 
 void LOOLWSD::initializeSSL()
 {
-    auto& conf = config();
-
-    auto ssl_cert_file_path = conf.getString("ssl.cert_file_path");
-    if (conf.getBool("ssl.cert_file_path[@relative]"))
-    {
-        ssl_cert_file_path = Poco::Path(Application::instance().commandPath()).parent().append(ssl_cert_file_path).toString();
-    }
-
+    const auto ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
     Log::info("SSL Cert file: " + ssl_cert_file_path);
 
-    auto ssl_key_file_path = conf.getString("ssl.key_file_path");
-    if (conf.getBool("ssl.key_file_path[@relative]"))
-    {
-        ssl_key_file_path = Poco::Path(Application::instance().commandPath()).parent().append(ssl_key_file_path).toString();
-    }
-
+    const auto ssl_key_file_path = getPathFromConfig("ssl.key_file_path");
     Log::info("SSL Key file: " + ssl_key_file_path);
 
-    auto ssl_ca_file_path = conf.getString("ssl.ca_file_path");
-    if (conf.getBool("ssl.ca_file_path[@relative]"))
-    {
-        ssl_ca_file_path = Poco::Path(Application::instance().commandPath()).parent().append(ssl_ca_file_path).toString();
-    }
-
+    const auto ssl_ca_file_path = getPathFromConfig("ssl.ca_file_path");
     Log::info("SSL CA file: " + ssl_ca_file_path);
 
     Poco::Crypto::initializeCrypto();

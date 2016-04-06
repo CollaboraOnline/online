@@ -65,6 +65,22 @@ private:
     void displayHelp();
     void displayVersion();
     Poco::Process::PID createBroker();
+
+    /// Reads and processes path entries with the given property
+    /// from the configuration.
+    /// Converts relative paths to absolute.
+    //TODO: Move to a better namespace.
+    std::string getPathFromConfig(const std::string& property) const
+    {
+        auto path = config().getString(property);
+        if (config().hasProperty(property + "[@relative]") &&
+            config().getBool(property + "[@relative]"))
+        {
+            path = Poco::Path(Application::instance().commandPath()).parent().append(path).toString();
+        }
+
+        return path;
+    }
 };
 
 #endif
