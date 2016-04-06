@@ -1,9 +1,11 @@
 # Autofoo
-/.deps
-/Makefile
-/Makefile.in
+.deps
+Makefile
+Makefile.in
 *.log
 *.trs
-
+.libs
+*.la
+*.lo
 *.o
 test

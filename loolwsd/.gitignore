@@ -3,25 +3,29 @@
 \#*
 
 # Autofoo
-/.deps
-/Makefile
-/Makefile.in
-/aclocal.m4
-/autom4te.cache
-/config.h
-/config.h.in
-/config.log
-/config.status
-/configure
-/compile
-/depcomp
-/install-sh
-/missing
-/stamp-h1
-/systemplate
-/test-driver
-/jails
-/loolwsd.spec
+.deps
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache
+config.h
+config.h.in
+config.log
+config.guess
+config.status
+config.sub
+configure
+compile
+depcomp
+install-sh
+libtool
+ltmain.sh
+missing
+stamp-h1
+systemplate
+test-driver
+jails
+loolwsd.spec
 
 *.o
 *.exe
@@ -36,6 +40,8 @@ loolwsd
 loolforkit
 loolmount
 loolmap
+loolmount
+looltool
 sockettransporttest
 
 # Debug output
