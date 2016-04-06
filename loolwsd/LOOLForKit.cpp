@@ -151,6 +151,13 @@ int main(int argc, char** argv)
     Util::setTerminationSignals();
     Util::setFatalSignals();
 
+    // Auto-reap zombies.
+    if (signal(SIGCHLD, SIG_IGN) == SIG_ERR)
+    {
+        Log::error("Failed to set SIGCHLD to SIG_IGN.");
+        return 1;
+    }
+
     std::string childRoot;
     std::string loSubPath;
     std::string sysTemplate;
