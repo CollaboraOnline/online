@@ -1,14 +1,24 @@
 <config>
+
+    <num_prespawn_kit desc="Number of child processes to keep started in advance and waiting for new clients." type="uint">1</num_prespawn_kit>
+    <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="false"></sys_template_path>
+    <lo_template_path desc="Path to a LibreOffice installation tree to be copied (linked) into the jails for child processes. Should be on the same file system as systemplate." type="path" relative="false"></lo_template_path>
+    <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate." type="path" relative="false"></child_root_path>
+    <lo_jail_subpath desc="Relative path where the LibreOffice installation will be copied inside a jail." type="path" relative="true" default="lo">lo</lo_jail_subpath>
+    <file_server_root_path desc="Path to the directory that should be considered root for the file server." type="path" relative="true" default="../loleaflet/">../loleaflet/</file_server_root_path>
+
+    <logging>
+        <color type="bool">true</color>
+        <level type="string">trace</level>
+    </logging>
+
     <ssl desc="SSL settings">
         <cert_file_path desc="Path to the cert file" relative="false">/etc/loolwsd/cert.pem</cert_file_path>
         <key_file_path desc="Path to the key file" relative="false">/etc/loolwsd/key.pem</key_file_path>
         <ca_file_path desc="Path to the ca file" relative="false">/etc/loolwsd/CollaboraCloudSuiteCA_ca-chain.cert.pem</ca_file_path>
     </ssl>
+
     <storage desc="Backend storage">
-        <filesystem allow="true">
-            <path desc="loleaflet is a must" allow="true" recurse="true" relative="true">loleaflet</path>
-            <path desc="/tmp is used for testing" allow="true" recurse="false" relative="false">/tmp</path>
-        </filesystem>
         <wopi desc="Allow/deny wopi storage. Mutually exclusive with webdav." allow="true">
             <host desc="Hostname to allow">localhost</host>
             <max_file_size desc="Maximum document size in bytes to load. 0 for unlimited." type="uint">0</max_file_size>
