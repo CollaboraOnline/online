@@ -236,8 +236,7 @@ int main(int argc, char** argv)
 
         if (ForkCounter > 0)
         {
-            // Figure out how many children we need. Always create at least as many
-            // as configured pre-spawn or one more than requested (whichever is larger).
+            // Create as many as requested.
             int spawn = ForkCounter;
             Log::info() << "Creating " << spawn << " new child." << Log::end;
             size_t newInstances = 0;
@@ -255,7 +254,7 @@ int main(int argc, char** argv)
             while (--spawn > 0);
 
             // If we need to spawn more, retry later.
-            ForkCounter = (newInstances > ForkCounter ? 0 : ForkCounter - newInstances);
+            ForkCounter = (newInstances >= ForkCounter ? 0 : ForkCounter - newInstances);
         }
     }
 

@@ -20,6 +20,7 @@
 
 #include <Poco/URI.h>
 
+#include "IoUtil.hpp"
 #include "MasterProcessSession.hpp"
 #include "Util.hpp"
 
@@ -75,6 +76,7 @@ public:
     void close(const bool rude)
     {
         Log::info("Closing child [" + std::to_string(_pid) + "].");
+        _ws.reset();
         if (_pid != -1)
         {
             if (rude && kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
@@ -90,8 +92,6 @@ public:
             //IoUtil::writeFIFO(WriterNotify, message.str());
            _pid = -1;
         }
-
-        _ws.reset();
     }
 
     Poco::Process::PID getPid() const { return _pid; }
