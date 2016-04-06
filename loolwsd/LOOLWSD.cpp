@@ -1367,52 +1367,54 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         }
         else // pid == 0, no children have died
         {
-            time_t now = time(NULL);
-            if (now >= last30SecCheck + 30)
+            if (!std::getenv("LOOL_NO_AUTOSAVE"))
             {
-                Log::trace("30-second check");
-                last30SecCheck = now;
-
-                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
-                for (auto& brokerIt : docBrokers)
+                time_t now = time(NULL);
+                if (now >= last30SecCheck + 30)
                 {
-                    std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
-                    for (auto& sessionIt: brokerIt.second->_wsSessions)
-                    {
-                        if (sessionIt.second->_lastMessageTime > sessionIt.second->_idleSaveTime &&
-                            sessionIt.second->_lastMessageTime < now - 30)
-                        {
-                            Log::info("Idle save triggered for session " + sessionIt.second->getId());
-                            sessionIt.second->getQueue()->put("uno .uno:Save");
+                    Log::debug("30-second check");
+                    last30SecCheck = now;
 
-                            sessionIt.second->_idleSaveTime = now;
+                    std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                    for (auto& brokerIt : docBrokers)
+                    {
+                        std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
+                        for (auto& sessionIt: brokerIt.second->_wsSessions)
+                        {
+                            if (sessionIt.second->_lastMessageTime > sessionIt.second->_idleSaveTime &&
+                                sessionIt.second->_lastMessageTime < now - 30)
+                            {
+                                Log::info("Idle save triggered for session " + sessionIt.second->getId());
+                                sessionIt.second->getQueue()->put("uno .uno:Save");
+
+                                sessionIt.second->_idleSaveTime = now;
+                            }
+                        }
+                    }
+                }
+                if (now >= lastFiveMinuteCheck + 300)
+                {
+                    Log::debug("Five-minute check");
+                    lastFiveMinuteCheck = now;
+
+                    std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                    for (auto& brokerIt : docBrokers)
+                    {
+                        std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
+                        for (auto& sessionIt: brokerIt.second->_wsSessions)
+                        {
+                            if (sessionIt.second->_lastMessageTime >= sessionIt.second->_idleSaveTime &&
+                                sessionIt.second->_lastMessageTime >= sessionIt.second->_autoSaveTime)
+                            {
+                                Log::info("Auto-save triggered for session " + sessionIt.second->getId());
+                                sessionIt.second->getQueue()->put("uno .uno:Save");
+
+                                sessionIt.second->_autoSaveTime = now;
+                            }
                         }
                     }
                 }
             }
-            if (now >= lastFiveMinuteCheck + 300)
-            {
-                Log::trace("Five-minute check");
-                lastFiveMinuteCheck = now;
-
-                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
-                for (auto& brokerIt : docBrokers)
-                {
-                    std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
-                    for (auto& sessionIt: brokerIt.second->_wsSessions)
-                    {
-                        if (sessionIt.second->_lastMessageTime >= sessionIt.second->_idleSaveTime &&
-                            sessionIt.second->_lastMessageTime >= sessionIt.second->_autoSaveTime)
-                        {
-                            Log::info("Auto-save triggered for session " + sessionIt.second->getId());
-                            sessionIt.second->getQueue()->put("uno .uno:Save");
-
-                            sessionIt.second->_autoSaveTime = now;
-                        }
-                    }
-                }
-            }
-
             sleep(MAINTENANCE_INTERVAL*2);
         }
     }
