@@ -22,8 +22,14 @@ L.Map.SlideShow = L.Handler.extend({
 		this._map.off('slidedownloadready', this._onSlideDownloadReady, this);
 	},
 
+	_onIframeLoaded: function (e) {
+		L.DomUtil.removeClass(this._slideShow, 'leaflet-slidshow-spinner');
+	},
+
 	_onFullScreen: function () {
-		this._slideShow = L.DomUtil.create('iframe', '', this._map._container);
+		this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow leaflet-slidshow-spinner', this._map._container);
+		this._slideShow.src = this._map.options.webserver + '/loleaflet/dist/loading.html';
+		this._slideShow.onload = L.bind(this._onIframeLoaded, this);
 		if (this._slideShow.requestFullscreen) {
 			this._slideShow.requestFullscreen();
 		}
