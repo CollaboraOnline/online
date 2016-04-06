@@ -500,7 +500,7 @@ private:
                 else
                 {
                     // Keep track of timestamps of incoming client messages that indicate editing
-                    if (token != "tile")
+                    if (tokenIndicatesUserInteraction(token))
                         time(&session->_lastUserInteractionTime);
                     queue->put(payload);
                 }

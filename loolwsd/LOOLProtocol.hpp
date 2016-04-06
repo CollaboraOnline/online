@@ -107,6 +107,13 @@ namespace LOOLProtocol
         return getFirstToken(message.data(), message.size());
     }
 
+    inline
+    bool tokenIndicatesUserInteraction(const std::string& token)
+    {
+        return (token != "tile" &&
+                token != "status");
+    }
+
     /// Returns the first line of a message.
     inline
     std::string getFirstLine(const char *message, const int length)
