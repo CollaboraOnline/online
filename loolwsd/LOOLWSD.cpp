@@ -492,7 +492,6 @@ private:
         IoUtil::SocketProcessor(ws, response,
                 [&session, &queue, &normalShutdown](const std::vector<char>& payload)
             {
-                time(&session->_lastMessageTime);
                 const auto token = LOOLProtocol::getFirstToken(payload);
                 if (token == "disconnect")
                 {
@@ -500,6 +499,9 @@ private:
                 }
                 else
                 {
+                    // Keep track of timestamps of incoming client messages that indicate editing
+                    if (token != "tile")
+                        time(&session->_lastUserInteractionTime);
                     queue->put(payload);
                 }
 
@@ -1381,10 +1383,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
                         for (auto& sessionIt: brokerIt.second->_wsSessions)
                         {
-                            // If a message has arrived from the client since we last did an idle save,
-                            // and it is more than 30 seconds since the message arrived, do a save.
-                            if (sessionIt.second->_lastMessageTime > sessionIt.second->_idleSaveTime &&
-                                sessionIt.second->_lastMessageTime < now - 30)
+                            // If no editing done by the client since we last did an idle save,
+                            // and it is more than 30 seconds since the last edit, do an idle save.
+                            if (sessionIt.second->_lastUserInteractionTime > sessionIt.second->_idleSaveTime &&
+                                sessionIt.second->_lastUserInteractionTime < now - 30)
                             {
                                 Log::info("Idle save triggered for session " + sessionIt.second->getId());
                                 sessionIt.second->getQueue()->put("uno .uno:Save");
@@ -1405,10 +1407,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
                         for (auto& sessionIt: brokerIt.second->_wsSessions)
                         {
-                            // If messages have arrived from the client since we last did an idle or auto
-                            // save, do a save.
-                            if (sessionIt.second->_lastMessageTime >= sessionIt.second->_idleSaveTime &&
-                                sessionIt.second->_lastMessageTime >= sessionIt.second->_autoSaveTime)
+                            // If some editing by from the client since we last did an (idle or
+                            // auto) save, do an auto save.
+                            if (sessionIt.second->_lastUserInteractionTime >= sessionIt.second->_idleSaveTime &&
+                                sessionIt.second->_lastUserInteractionTime >= sessionIt.second->_autoSaveTime)
                             {
                                 Log::info("Auto-save triggered for session " + sessionIt.second->getId());
                                 sessionIt.second->getQueue()->put("uno .uno:Save");

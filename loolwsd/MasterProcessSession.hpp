@@ -60,7 +60,7 @@ public:
     static std::mutex AvailableChildSessionMutex;
     static std::condition_variable AvailableChildSessionCV;
 
-    time_t _lastMessageTime;
+    time_t _lastUserInteractionTime;
     time_t _idleSaveTime;
     time_t _autoSaveTime;
 
