@@ -13,15 +13,27 @@
 #include "Util.hpp"
 #include "Unit.hpp"
 
-class UnitPrefork : public UnitHooks {
+class UnitPrefork : public UnitHooks
+{
+    int _numStarted;
+    const int _numToPrefork;
 public:
     UnitPrefork()
+        : _numStarted(0),
+          _numToPrefork(20)
     {
     }
-    virtual void preSpawnCount(int &numPrefork)
+    virtual void preSpawnCount(int &numPrefork) override
     {
-        numPrefork = 20;
+        numPrefork = _numToPrefork;
         Log::error("Hello world");
+    }
+
+    virtual void newChild() override
+    {
+        _numStarted++;
+        if (_numStarted >= _numToPrefork + 1)
+            exitTest(TestResult::TEST_OK);
     }
 };
 

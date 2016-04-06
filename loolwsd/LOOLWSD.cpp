@@ -164,9 +164,9 @@ void forkChildren(int number)
 void preForkChildren()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
-    int nPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-    UnitHooks::get().preSpawnCount(nPreSpawn);
-    forkChildren(nPreSpawn);
+    int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
+    UnitHooks::get().preSpawnCount(numPreSpawn);
+    forkChildren(numPreSpawn);
 }
 
 std::shared_ptr<ChildProcess> getNewChild()
@@ -662,6 +662,7 @@ public:
             newChildren.emplace_back(std::make_shared<ChildProcess>(pid, ws));
             Log::info("Have " + std::to_string(newChildren.size()) + " children.");
             newChildrenCV.notify_one();
+            UnitHooks::get().newChild();
             return;
         }
 
@@ -1543,8 +1544,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Poco::Net::uninitializeSSL();
     Poco::Crypto::uninitializeCrypto();
 
-    Log::info("Process finished.");
-    return Application::EXIT_OK;
+    Log::info("Process [loolwsd] finished.");
+
+    int returnValue = Application::EXIT_OK;
+    UnitHooks::get().returnValue(returnValue);
+
+    return returnValue;
 }
 
 POCO_SERVER_MAIN(LOOLWSD)

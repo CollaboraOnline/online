@@ -13,6 +13,9 @@
 #include "Util.hpp"
 #include "Unit.hpp"
 
+#include <Poco/Util/Application.h>
+using Poco::Util::Application;
+
 UnitHooks *UnitHooks::_global = nullptr;
 
 UnitHooks *UnitHooks::linkAndCreateUnit(const std::string &unitLibPath)
@@ -56,9 +59,32 @@ UnitHooks::UnitHooks()
 
 UnitHooks::~UnitHooks()
 {
-    if (_dlHandle)
-        dlclose(_dlHandle);
+// FIXME: we should really clean-up properly.
+//    if (_dlHandle)
+//        dlclose(_dlHandle);
     _dlHandle = NULL;
+}
+
+void UnitHooks::exitTest(TestResult result)
+{
+    _setRetValue = true;
+    _retValue = result == TestResult::TEST_OK ?
+        Application::EXIT_OK : Application::EXIT_SOFTWARE;
+    TerminationFlag = true;
+}
+
+/// Tweak the return value from LOOLWSD.
+void UnitHooks::returnValue(int &retValue)
+{
+    if (_setRetValue)
+        retValue = _retValue;
+}
+
+// FIXME: trigger the timeout.
+void UnitHooks::timeout()
+{
+    Log::error("Test timed out - failing.");
+    exitTest(TestResult::TEST_TIMED_OUT);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

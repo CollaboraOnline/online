@@ -21,10 +21,16 @@ extern "C" { UnitHooks *unit_create(void); }
 class UnitHooks
 {
     void *_dlHandle;
+    bool _setRetValue;
+    int  _retValue;
     static UnitHooks *_global;
 
     void setHandle(void *dlHandle) { _dlHandle = dlHandle; }
     static UnitHooks *linkAndCreateUnit(const std::string &unitLibPath);
+protected:
+    enum TestResult { TEST_FAILED, TEST_OK, TEST_TIMED_OUT };
+    /// Encourages loolwsd to exit with this value (unless hooked)
+    void exitTest(TestResult result);
 public:
              UnitHooks();
     virtual ~UnitHooks();
@@ -32,7 +38,14 @@ public:
     /// Load unit test hook shared library from this path
     static bool init(const std::string &unitLibPath);
 
+    /// Tweak the count of pre-spawned kits.
 	virtual void preSpawnCount(int & /* numPrefork */) {}
+    /// Tweak the return value from LOOLWSD.
+	virtual void returnValue(int & /* retValue */);
+    /// When a new child kit process reports
+    virtual void newChild() {}
+    /// If the test times out
+    virtual void timeout();
 };
 
 #endif // LOOL_UNIT_HPP
