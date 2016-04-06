@@ -49,7 +49,7 @@ L.Map = L.Evented.extend({
 		L.Cursor.imagePath = options.cursorURL || L.Cursor.getCursorURL('cursors');
 
 		if (options.webserver === undefined) {
-			var protocol = window.location.protocol === 'file:' ? 'http:' : window.location.protocol;
+			var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
 			options.webserver = options.server.replace(/^(ws|wss):/i, protocol);
 		}
 
