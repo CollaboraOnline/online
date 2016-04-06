@@ -30,38 +30,6 @@ namespace LOOLProtocol
     // mouse events. And in fact, those are here part of the
     // "commands".
 
-    // Not sure if these enums will be needed
-    enum class Command
-    {
-        GETTEXTSELECTION,
-        KEY,
-        LOAD,
-        MOUSE,
-        RESETSELECTION,
-        SAVEAS,
-        SELECTGRAPHIC,
-        SELECTTEXT,
-        STATUS,
-        TILE,
-        UNO,
-    };
-
-    enum class Message
-    {
-        CHILD,
-        CURSOR_VISIBLE,
-        ERROR,
-        GRAPHIC_SELECTION,
-        HYPERLINK_CLICKED,
-        INVALIDATE_CURSOR,
-        INVALIDATE_TILES,
-        STATUS,
-        TEXT_SELECTION,
-        TEXT_SELECTION_END,
-        TEXT_SELECTION_START,
-        TILE,
-    };
-
     // Protocol Version Number.
     // See protocol.txt.
     constexpr unsigned ProtocolMajorVersionNumber = 0;
