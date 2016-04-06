@@ -18,18 +18,6 @@
 
 namespace LOOLProtocol
 {
-    // The frames sent from the client to the server are called
-    // "commands" and those sent from the server to the client are
-    // called "messages". At least until I come up with a better
-    // terminology.
-
-    // I don't want to call the latter "responses"
-    // because they are not necessarily responses to some "request" or
-    // "command". Also "event" would be misleading because that is
-    // typically used for things originated by the user, like key or
-    // mouse events. And in fact, those are here part of the
-    // "commands".
-
     // Protocol Version Number.
     // See protocol.txt.
     constexpr unsigned ProtocolMajorVersionNumber = 0;
