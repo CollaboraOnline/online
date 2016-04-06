@@ -64,7 +64,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
         auto ws = std::make_shared<WebSocket>(request, response);
 
         {
-            std::lock_guard<std::mutex> modelLock(_admin->_modelMutex);
+            std::unique_lock<std::mutex> modelLock(_admin->getLock());
             // Subscribe the websocket of any AdminModel updates
             AdminModel& model = _admin->getModel();
             model.subscribe(nSessionId, ws);
@@ -120,7 +120,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                         continue;
 
                     // Lock the model mutex before interacting with it
-                    std::lock_guard<std::mutex> modelLock(_admin->_modelMutex);
+                    std::unique_lock<std::mutex> modelLock(_admin->getLock());
                     AdminModel& model = _admin->getModel();
 
                     if (tokens[0] == "stats")
@@ -396,11 +396,9 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 }
 
 /// An admin command processor.
-Admin::Admin(const Poco::Process::PID brokerPid, const int notifyPipe) :
+Admin::Admin() :
     _model(AdminModel())
 {
-    Admin::BrokerPid = brokerPid;
-    Admin::AdminNotifyPipe = notifyPipe;
 }
 
 Admin::~Admin()
@@ -408,12 +406,7 @@ Admin::~Admin()
     Log::info("~Admin dtor.");
 }
 
-AdminRequestHandler* Admin::createRequestHandler()
-{
-    return new AdminRequestHandler(this);
-}
-
-void Admin::handleInput(std::string& message)
+void Admin::update(const std::string& message)
 {
     std::lock_guard<std::mutex> modelLock(_modelMutex);
     _model.update(message);
@@ -421,7 +414,7 @@ void Admin::handleInput(std::string& message)
 
 void MemoryStats::run()
 {
-    std::lock_guard<std::mutex> modelLock(_admin->_modelMutex);
+    std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
     unsigned totalMem = _admin->getTotalMemoryUsage(model);
 
@@ -432,7 +425,7 @@ void MemoryStats::run()
 void CpuStats::run()
 {
     //TODO: Implement me
-    //std::lock_guard<std::mutex> modelLock(_admin->_modelMutex);
+    //std::unique_lock<std::mutex> modelLock(_admin->getLock());
     //model.addCpuStats(totalMem);
 }
 
@@ -456,8 +449,7 @@ void Admin::rescheduleCpuTimer(unsigned interval)
 
 unsigned Admin::getTotalMemoryUsage(AdminModel& model)
 {
-    Poco::Process::PID nBrokerPid = getBrokerPid();
-    unsigned totalMem = Util::getMemoryUsage(nBrokerPid);
+    unsigned totalMem = Util::getMemoryUsage(_brokerPid);
     totalMem += model.getTotalMemoryUsage();
     totalMem += Util::getMemoryUsage(Poco::Process::id());
 
@@ -489,11 +481,6 @@ void Admin::run()
 
     Log::info("Thread [" + thread_name + "] started.");
 
-    // Start listening for data changes.
-    IoUtil::PipeReader pipeReader(FIFO_ADMIN_NOTIFY, AdminNotifyPipe);
-    pipeReader.process([this](std::string& message) { handleInput(message); return true; },
-                       []() { return TerminationFlag; });
-
     _memStatsTimer.cancel();
     _cpuStatsTimer.cancel();
 
@@ -504,9 +491,5 @@ AdminModel& Admin::getModel()
 {
     return _model;
 }
-
-//TODO: Clean up with something more elegant.
-Poco::Process::PID Admin::BrokerPid;
-int Admin::AdminNotifyPipe;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

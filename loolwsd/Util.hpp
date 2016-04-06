@@ -126,7 +126,7 @@ namespace Util
 
     void requestTermination(const Poco::Process::PID& pid);
 
-    unsigned getMemoryUsage(Poco::Process::PID nPid);
+    int getMemoryUsage(const Poco::Process::PID nPid);
 
     std::string replace(const std::string& s, const std::string& a, const std::string& b);
 

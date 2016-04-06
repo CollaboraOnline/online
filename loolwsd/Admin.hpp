@@ -40,15 +40,23 @@ private:
 class Admin : public Poco::Runnable
 {
 public:
-    Admin(const Poco::Process::PID brokerPid, const int notifyPipe);
+    virtual ~Admin();
 
-    ~Admin();
-
-    static int getBrokerPid() { return Admin::BrokerPid; }
+    static Admin& instance()
+    {
+        static Admin admin;
+        return admin;
+    }
 
     unsigned getTotalMemoryUsage(AdminModel&);
 
     void run() override;
+
+    /// Update the Admin Model.
+    void update(const std::string& message);
+
+    /// Set the broker ProcessID.
+    void setBrokerPid(const int brokerPid) { _brokerPid = brokerPid; }
 
     /// Callers must ensure that modelMutex is acquired
     AdminModel& getModel();
@@ -61,16 +69,21 @@ public:
 
     void rescheduleCpuTimer(unsigned interval);
 
-    AdminRequestHandler* createRequestHandler();
+    static
+    AdminRequestHandler* createRequestHandler()
+    {
+        return new AdminRequestHandler(&instance());
+    }
 
-public:
-    std::mutex _modelMutex;
+    std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_modelMutex); }
 
 private:
-    void handleInput(std::string& message);
+    Admin();
 
 private:
     AdminModel _model;
+    std::mutex _modelMutex;
+    int _brokerPid;
 
     Poco::Util::Timer _memStatsTimer;
     Poco::Util::TimerTask::Ptr _memStatsTask;

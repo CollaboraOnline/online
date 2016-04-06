@@ -84,12 +84,6 @@ public:
                 Log::error("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
             }
 
-            //TODO: Notify Admin.
-            std::ostringstream message;
-            message << "rmdoc" << " "
-                    << _pid << " "
-                    << "\n";
-            //IoUtil::writeFIFO(WriterNotify, message.str());
            _pid = -1;
         }
     }

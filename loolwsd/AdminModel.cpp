@@ -280,11 +280,7 @@ void AdminModel::notify(const std::string& message)
 
 void AdminModel::addDocument(Poco::Process::PID pid, std::string url)
 {
-    const auto ret = _documents.emplace(pid, Document(pid, url));
-    if (!ret.second)
-    {
-        Log::warn() << "Document with PID [" + std::to_string(pid) + "] already exists." << Log::end;
-    }
+    _documents.emplace(pid, Document(pid, url));
 }
 
 void AdminModel::removeDocument(Poco::Process::PID pid)

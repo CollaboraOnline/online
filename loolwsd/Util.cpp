@@ -481,10 +481,9 @@ namespace Util
         }
     }
 
-    unsigned getMemoryUsage(Poco::Process::PID nPid)
+    int getMemoryUsage(const Poco::Process::PID nPid)
     {
         //TODO: Instead of RSS, return PSS
-        std::string sResponse;
         const auto cmd = "ps o rss= -p " + std::to_string(nPid);
         FILE* fp = popen(cmd.c_str(), "r");
         if (fp == nullptr)
@@ -492,6 +491,7 @@ namespace Util
             return 0;
         }
 
+        std::string sResponse;
         char cmdBuffer[1024];
         while (fgets(cmdBuffer, sizeof(cmdBuffer) - 1, fp) != nullptr)
         {
@@ -499,7 +499,7 @@ namespace Util
         }
         pclose(fp);
 
-        unsigned nMem = 0;
+        int nMem = -1;
         try
         {
             nMem = std::stoi(sResponse);

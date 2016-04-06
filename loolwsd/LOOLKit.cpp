@@ -54,8 +54,6 @@
 
 typedef int (LokHookPreInit)  (const char *install_path, const char *user_profile_path);
 
-static int WriterNotify = -1;
-
 using namespace LOOLProtocol;
 
 using Poco::Exception;
@@ -736,13 +734,6 @@ private:
         --_clientViews;
         Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
 
-        std::ostringstream message;
-        message << "rmview" << " "
-                << Process::id() << " "
-                << sessionId << " "
-                << "\n";
-        IoUtil::writeFIFO(WriterNotify, message.str());
-
         if (_multiView && _loKitDocument)
         {
             Log::info() << "Document [" << _url << "] session ["
@@ -814,14 +805,6 @@ private:
                 return nullptr;
             }
 
-            // Notify the Admin thread
-            std::ostringstream message;
-            message << "document" << " "
-                    << Process::id() << " "
-                    << uri.substr(uri.find_last_of("/") + 1) << " "
-                    << "\n";
-            IoUtil::writeFIFO(WriterNotify, message.str());
-
             if (_multiView)
             {
                 Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
@@ -860,13 +843,6 @@ private:
                 }
             }
         }
-
-        std::ostringstream message;
-        message << "addview" << " "
-                << Process::id() << " "
-                << sessionId << " "
-                << "\n";
-        IoUtil::writeFIFO(WriterNotify, message.str());
 
         return _loKitDocument;
     }
@@ -935,15 +911,6 @@ void lokit_main(const std::string& childRoot,
 
     try
     {
-        // Open notify pipe
-        const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
-        const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
-        if ((WriterNotify = open(pipeNotify.c_str(), O_WRONLY) ) < 0)
-        {
-            Log::error("Error: failed to open notify pipe [" + std::string(FIFO_ADMIN_NOTIFY) + "] for writing.");
-            exit(Application::EXIT_SOFTWARE);
-        }
-
         const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
         Log::info("Jail path: " + jailPath.toString());
         File(jailPath).createDirectories();
@@ -1114,13 +1081,6 @@ void lokit_main(const std::string& childRoot,
     {
         Log::error(std::string("Exception: ") + exc.what());
     }
-
-    std::ostringstream message;
-    message << "rmdoc" << " "
-            << Process::id() << " "
-            << "\n";
-    IoUtil::writeFIFO(WriterNotify, message.str());
-    close(WriterNotify);
 
     Log::info("Process [" + process_name + "] finished.");
     _exit(Application::EXIT_OK);

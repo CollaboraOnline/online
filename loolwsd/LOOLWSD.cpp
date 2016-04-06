@@ -318,6 +318,12 @@ private:
                     {
                         Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
                         docBrokers.erase(docKey);
+
+                        std::ostringstream message;
+                        message << "rmdoc" << " "
+                                << docBroker->getJailId() << " "
+                                << "\n";
+                        Admin::instance().update(message.str());
                     }
                 }
 
@@ -669,11 +675,11 @@ public:
             return;
         }
 
+        std::string sessionId;
+        std::string jailId;
         try
         {
             const auto params = Poco::URI(request.getURI()).getQueryParameters();
-            std::string sessionId;
-            std::string jailId;
             std::string docKey;
             for (const auto& param : params)
             {
@@ -738,6 +744,20 @@ public:
             lock.unlock();
             MasterProcessSession::AvailableChildSessionCV.notify_one();
 
+            const auto uri = request.getURI();
+            std::ostringstream message;
+            message << "document" << " "
+                    << jailId << " "
+                    << uri.substr(uri.find_last_of("/") + 1) << " "
+                    << "\n";
+            Admin::instance().update(message.str());
+
+            message << "addview" << " "
+                    << jailId << " "
+                    << sessionId << " "
+                    << "\n";
+            Admin::instance().update(message.str());
+
             IoUtil::SocketProcessor(ws, response,
                     [&session](const std::vector<char>& payload)
                 {
@@ -762,6 +782,16 @@ public:
             Log::error("PrisonerRequestHandler::handleRequest: Unexpected exception");
         }
 
+        if (!jailId.empty())
+        {
+            std::ostringstream message;
+            message << "rmview" << " "
+                    << jailId << " "
+                    << sessionId << " "
+                    << "\n";
+            Admin::instance().update(message.str());
+        }
+
         Log::debug("Thread [" + thread_name + "] finished.");
     }
 };
@@ -769,9 +799,8 @@ public:
 class ClientRequestHandlerFactory: public HTTPRequestHandlerFactory
 {
 public:
-    ClientRequestHandlerFactory(Admin& admin, FileServer& fileServer)
-        : _admin(admin),
-          _fileServer(fileServer)
+    ClientRequestHandlerFactory(FileServer& fileServer)
+        : _fileServer(fileServer)
         { }
 
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
@@ -806,7 +835,7 @@ public:
         // Admin WebSocket Connections
         else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "adminws")
         {
-            requestHandler = _admin.createRequestHandler();
+            requestHandler = Admin::createRequestHandler();
         }
         // Client post and websocket connections
         else
@@ -818,7 +847,6 @@ public:
     }
 
 private:
-    Admin& _admin;
     FileServer& _fileServer;
 };
 
@@ -1254,7 +1282,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
 
     // Init the Admin manager
-    Admin admin(brokerPid, notifyPipe);
+    Admin::instance().setBrokerPid(brokerPid);
     // Init the file server
     FileServer fileServer;
 
@@ -1274,7 +1302,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Start a server listening on the port for clients
     SecureServerSocket svs(ClientPortNumber);
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
-    HTTPServer srv(new ClientRequestHandlerFactory(admin, fileServer), threadPool, svs, params1);
+    HTTPServer srv(new ClientRequestHandlerFactory(fileServer), threadPool, svs, params1);
 
     srv.start();
 
@@ -1291,7 +1319,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    threadPool.start(admin);
+    threadPool.start(Admin::instance());
 
     TestInput input(*this, svs, srv);
     Thread inputThread;
