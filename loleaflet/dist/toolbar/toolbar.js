@@ -923,6 +923,8 @@ $(document).ready(function() {
 });
 
 function resizeToolbar() {
+	var has_more_items = false;
+
 	// move items from toolbar-up-more -> toolbar-up
 	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
 		var firstItem = $('#toolbar-up-more>table>tbody>tr>td:first');
@@ -937,6 +939,15 @@ function resizeToolbar() {
 	while ($('#toolbar-up')[0].scrollWidth > $(window).width()) {
 		var detached = $('#toolbar-up>table>tbody>tr>td:nth-last-child(5)').detach();
 		$('#toolbar-up-more>table>tbody>tr').prepend(detached);
+
+		has_more_items = true;
+	}
+
+	if (has_more_items) {
+		w2ui['toolbar-up'].show('more');
+	}
+	else {
+		w2ui['toolbar-up'].hide('more');
 	}
 
 	// resize toolbar-up-more
