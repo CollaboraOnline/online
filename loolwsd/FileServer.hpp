@@ -48,6 +48,55 @@ using Poco::Util::Application;
 class FileServerRequestHandler: public HTTPRequestHandler
 {
 public:
+    /// Evaluate if the cookie exists, and if not, ask for the credentials.
+    static bool isAdminLoggedIn(HTTPServerRequest& request, HTTPServerResponse& response)
+    {
+        if (request.find("Cookie") != request.end())
+        {
+            // FIXME: Handle other cookie params like '; httponly; secure'
+            const std::size_t pos = request["Cookie"].find_first_of("=");
+            if (pos == std::string::npos)
+                throw Poco::Net::NotAuthenticatedException("Missing JWT");
+
+            const std::string jwtToken = request["Cookie"].substr(pos + 1);
+            Log::info("Verifying JWT token: " + jwtToken);
+            // TODO: Read key from configuration file
+            const std::string keyPath = "/etc/loolwsd/" + std::string(SSL_KEY_FILE);
+            JWTAuth authAgent(keyPath, "admin", "admin", "admin");
+            if (authAgent.verify(jwtToken))
+            {
+                Log::trace("JWT token is valid");
+                return true;
+            }
+
+            Log::info("Invalid JWT token, let the administrator re-login");
+        }
+
+        HTTPBasicCredentials credentials(request);
+
+        // TODO: Read username and password from config file
+        if (credentials.getUsername() == "admin"
+                && credentials.getPassword() == "admin")
+        {
+            const std::string htmlMimeType = "text/html";
+            // generate and set the cookie
+            // TODO: Read key from configuration file
+            const std::string keyPath = "/etc/loolwsd/" + std::string(SSL_KEY_FILE);
+            JWTAuth authAgent(keyPath, "admin", "admin", "admin");
+            const std::string jwtToken = authAgent.getAccessToken();
+            Poco::Net::HTTPCookie cookie("jwt", jwtToken);
+            cookie.setPath("/adminws/");
+            cookie.setSecure(true);
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
+
+            return true;
+        }
+
+        Log::info("Wrong admin credentials.");
+        return false;
+    }
+
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         try
@@ -62,57 +111,32 @@ public:
 
             if (request.getMethod() == HTTPRequest::HTTP_GET)
             {
-                // FIXME: Some nice way to ask for credentials for protected files
                 if (endPoint == "admin.html" ||
                     endPoint == "adminSettings.html" ||
                     endPoint == "adminAnalytics.html")
                 {
-                    HTTPBasicCredentials credentials(request);
-                    // TODO: Read username and password from config file
-                    if (credentials.getUsername() == "admin"
-                        && credentials.getPassword() == "admin")
-                    {
-                        const std::string htmlMimeType = "text/html";
-                        // generate and set the cookie
-                        // TODO: Read key from configuration file
-                        const std::string keyPath = "/etc/loolwsd/" + std::string(SSL_KEY_FILE);
-                        JWTAuth authAgent(keyPath, "admin", "admin", "admin");
-                        const std::string jwtToken = authAgent.getAccessToken();
-                        Poco::Net::HTTPCookie cookie("jwt", jwtToken);
-                        cookie.setPath("/adminws/");
-                        cookie.setSecure(true);
-                        cookie.setHttpOnly(true);
-                        response.addCookie(cookie);
-                        response.setContentType(htmlMimeType);
-                        response.sendFile(LOOLWSD::FileServerRoot + requestUri.getPath(), htmlMimeType);
-                    }
-                    else
-                    {
-                        Log::info("Wrong admin credentials.");
-                        throw Poco::Net::NotAuthenticatedException("Wrong credentials.");
-                    }
+                    if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
+                        throw Poco::Net::NotAuthenticatedException("Invalid admin login");
                 }
+
+                const std::string filePath = requestUri.getPath();
+                const std::size_t extPoint = endPoint.find_last_of(".");
+                if (extPoint == std::string::npos)
+                    throw Poco::FileNotFoundException("Invalid file.");
+
+                const std::string fileType = endPoint.substr(extPoint + 1);
+                std::string mimeType;
+                if (fileType == "js")
+                    mimeType = "application/javascript";
+                else if (fileType == "css")
+                    mimeType = "text/css";
+                else if (fileType == "html")
+                    mimeType = "text/html";
                 else
-                {
-                    const std::string filePath = requestUri.getPath();
-                    const std::size_t extPoint = endPoint.find_last_of(".");
-                    if (extPoint == std::string::npos)
-                        throw Poco::FileNotFoundException("Invalid file.");
+                    mimeType = "text/plain";
 
-                    const std::string fileType = endPoint.substr(extPoint + 1);
-                    std::string mimeType;
-                    if (fileType == "js")
-                        mimeType = "application/javascript";
-                    else if (fileType == "css")
-                        mimeType = "text/css";
-                    else if (fileType == "html")
-                        mimeType = "text/html";
-                    else
-                        mimeType = "text/plain";
-
-                    response.setContentType(mimeType);
-                    response.sendFile(LOOLWSD::FileServerRoot + requestUri.getPath(), mimeType);
-                }
+                response.setContentType(mimeType);
+                response.sendFile(LOOLWSD::FileServerRoot + requestUri.getPath(), mimeType);
             }
         }
         catch (Poco::Net::NotAuthenticatedException& exc)

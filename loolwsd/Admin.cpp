@@ -30,6 +30,7 @@
 #include "Admin.hpp"
 #include "AdminModel.hpp"
 #include "Common.hpp"
+#include "FileServer.hpp"
 #include "TileCache.hpp"
 #include "Storage.hpp"
 #include "LOOLProtocol.hpp"
@@ -347,34 +348,10 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 
         if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
         {
-            if (request.find("Cookie") != request.end())
-            {
-                // FIXME: Handle other cookie params like '; httponly; secure'
-                const std::size_t pos = request["Cookie"].find_first_of("=");
-                if (pos == std::string::npos)
-                    throw Poco::Net::NotAuthenticatedException("Missing JWT");
+            if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
+                throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
-                const std::string jwtToken = request["Cookie"].substr(pos + 1);
-                Log::info("Verifying JWT token: " + jwtToken);
-                // TODO: Read key from configuration file
-                const std::string keyPath = "/etc/loolwsd/" + std::string(SSL_KEY_FILE);
-                JWTAuth authAgent(keyPath, "admin", "admin", "admin");
-                if (authAgent.verify(jwtToken))
-                {
-                    Log::trace("JWT token is valid");
-                    handleWSRequests(request, response, nSessionId);
-                }
-                else
-                {
-                    Log::info("Invalid JWT token");
-                    throw Poco::Net::NotAuthenticatedException("Invalid Token");
-                }
-            }
-            else
-            {
-                Log::info("Missing authentication cookie. Handshake declined.");
-                throw Poco::Net::NotAuthenticatedException("Missing token");
-            }
+            handleWSRequests(request, response, nSessionId);
         }
     }
     catch(const Poco::Net::NotAuthenticatedException& exc)
