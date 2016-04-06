@@ -685,3 +685,15 @@ a.leaflet-control-buttons:hover:first-child {
 	color: rgba(0, 0, 0, 0.7);
 	text-shadow: 0 1px rgba(255, 255, 255, 0.4);
 	}
+
+.leaflet-progress-spinner {
+	background-image: url(images/spinner.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 100%;
+	height: 48px;
+	}
+
+.leaflet-progress-label {
+	text-align: center;
+	}

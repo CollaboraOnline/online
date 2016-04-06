@@ -70,6 +70,7 @@ L.Map = L.Evented.extend({
 		}
 		this._addLayers(this.options.layers);
 		this._socket = L.socket(this);
+		this._progressBar = L.progressOverlay(this.getCenter(), L.point(150, 25));
 
 		// Inhibit the context menu - the browser thinks that the document
 		// is just a bunch of images, hence the context menu is useless (tdf#94599)
@@ -103,12 +104,13 @@ L.Map = L.Evented.extend({
 			}
 		});
 
-		this.on('statusindicator', this._onUpdateProgress, this);
-
 		// when editing, we need the LOK session right away
 		if (options.permission === 'edit') {
 			this.setPermission(options.permission);
 		}
+
+		this.showBusy('Initializing...', false);
+		this.on('statusindicator', this._onUpdateProgress, this);
 	},
 
 
@@ -119,6 +121,20 @@ L.Map = L.Evented.extend({
 		zoom = zoom === undefined ? this.getZoom() : zoom;
 		this._resetView(L.latLng(center), this._limitZoom(zoom));
 		return this;
+	},
+
+	showBusy: function(label, bar) {
+		this._progressBar.setLabel(label);
+		this._progressBar.setBar(bar);
+		this._progressBar.setValue(0);
+
+		if (!this.hasLayer(this._progressBar)) {
+			this.addLayer(this._progressBar);
+		}
+	},
+
+	hideBusy: function () {
+		this.removeLayer(this._progressBar);
 	},
 
 	setZoom: function (zoom, options) {
@@ -698,15 +714,13 @@ L.Map = L.Evented.extend({
 
 	_onUpdateProgress: function (e) {
 		if (e.statusType === 'start') {
-			this._progressBar = L.progressOverlay(this.getCenter(), L.point(100, 32));
-			this.addLayer(this._progressBar);
+			this.showBusy('Loading...', true);
 		}
-		else if (e.statusType === 'setvalue' && this._progressBar) {
+		else if (e.statusType === 'setvalue') {
 			this._progressBar.setValue(e.value);
 		}
-		else if (e.statusType === 'finish' && this._progressBar) {
-			this.removeLayer(this._progressBar);
-			this._progressOverlay = null;
+		else if (e.statusType === 'finish' || e.statusType === 'loleafletloaded') {
+			this.hideBusy();
 		}
 	},
 
