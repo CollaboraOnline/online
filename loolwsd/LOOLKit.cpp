@@ -118,7 +118,7 @@ namespace
             File(newPath.parent()).createDirectories();
             if (link(fpath, newPath.toString().c_str()) == -1)
             {
-                Log::error("Error: link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
+                Log::syserror("link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
                            "\") failed. Exiting.");
                 std::exit(Application::EXIT_SOFTWARE);
             }
@@ -128,7 +128,7 @@ namespace
                 struct stat st;
                 if (stat(fpath, &st) == -1)
                 {
-                    Log::error("Error: stat(\"" + std::string(fpath) + "\") failed.");
+                    Log::syserror("stat(\"" + std::string(fpath) + "\") failed.");
                     return 1;
                 }
                 if (!shouldCopyDir(relativeOldPath))
@@ -142,7 +142,7 @@ namespace
                 ut.modtime = st.st_mtime;
                 if (utime(newPath.toString().c_str(), &ut) == -1)
                 {
-                    Log::error("Error: utime(\"" + newPath.toString() + "\", &ut) failed.");
+                    Log::syserror("utime(\"" + newPath.toString() + "\") failed.");
                     return 1;
                 }
             }
@@ -185,7 +185,7 @@ namespace
         caps = cap_get_proc();
         if (caps == nullptr)
         {
-            Log::error("Error: cap_get_proc() failed.");
+            Log::syserror("cap_get_proc() failed.");
             std::exit(1);
         }
 
@@ -196,13 +196,13 @@ namespace
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
-            Log::error("Error: cap_set_flag() failed.");
+            Log::syserror("cap_set_flag() failed.");
             std::exit(1);
         }
 
         if (cap_set_proc(caps) == -1)
         {
-            Log::error("Error: cap_set_proc() failed.");
+            Log::syserror("cap_set_proc() failed.");
             std::exit(1);
         }
 
@@ -925,7 +925,7 @@ void lokit_main(const std::string& childRoot,
         Log::debug("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
         if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
         {
-            Log::error("Error: symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
+            Log::syserror("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
             throw Exception("symlink() failed");
         }
 
@@ -972,26 +972,26 @@ void lokit_main(const std::string& childRoot,
                   S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                   makedev(1, 8)) != 0)
         {
-            Log::error("Error: mknod(" + jailPath.toString() + "/dev/random) failed.");
+            Log::syserror("mknod(" + jailPath.toString() + "/dev/random) failed.");
 
         }
         if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
                   S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                   makedev(1, 9)) != 0)
         {
-            Log::error("Error: mknod(" + jailPath.toString() + "/dev/urandom) failed.");
+            Log::syserror("mknod(" + jailPath.toString() + "/dev/urandom) failed.");
         }
 
         Log::info("chroot(\"" + jailPath.toString() + "\")");
         if (chroot(jailPath.toString().c_str()) == -1)
         {
-            Log::error("Error: chroot(\"" + jailPath.toString() + "\") failed.");
+            Log::syserror("chroot(\"" + jailPath.toString() + "\") failed.");
             std::exit(Application::EXIT_SOFTWARE);
         }
 
         if (chdir("/") == -1)
         {
-            Log::error("Error: chdir(\"/\") in jail failed.");
+            Log::syserror("chdir(\"/\") in jail failed.");
             std::exit(Application::EXIT_SOFTWARE);
         }
 
@@ -1004,7 +1004,7 @@ void lokit_main(const std::string& childRoot,
         loKit = lok_init_2(instdir_path.c_str(), "file:///user");
         if (loKit == nullptr)
         {
-            Log::error("Error: LibreOfficeKit initialization failed. Exiting.");
+            Log::error("LibreOfficeKit initialization failed. Exiting.");
             std::exit(Application::EXIT_SOFTWARE);
         }
 

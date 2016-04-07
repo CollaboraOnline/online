@@ -214,7 +214,7 @@ int main(int argc, char** argv)
     const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
     if ( (ReaderBroker = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
     {
-        Log::syserror("Error: failed to open pipe [" + pipeLoolwsd + "] read only. Exiting.");
+        Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for reading. Exiting.");
         std::exit(Application::EXIT_SOFTWARE);
     }
 
@@ -227,7 +227,7 @@ int main(int argc, char** argv)
     // We must have at least one child, more are created dynamically.
     if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
     {
-        Log::error("Error: failed to create a kit process.");
+        Log::error("Failed to create a kit process.");
         std::exit(Application::EXIT_SOFTWARE);
     }
 
@@ -254,7 +254,7 @@ int main(int argc, char** argv)
             {
                 if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
                 {
-                    Log::error("Error: failed to create a kit process.");
+                    Log::error("Failed to create a kit process.");
                 }
                 else
                 {

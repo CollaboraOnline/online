@@ -1281,14 +1281,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     const Path pipePath = Path::forDirectory(ChildRoot + Path::separator() + FIFO_PATH);
     if (!File(pipePath).exists() && !File(pipePath).createDirectory())
     {
-        Log::error("Error: Failed to create pipe directory [" + pipePath.toString() + "].");
+        Log::error("Failed to create pipe directory [" + pipePath.toString() + "].");
         return Application::EXIT_SOFTWARE;
     }
 
     const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
     if (mkfifo(pipeLoolwsd.c_str(), 0666) < 0 && errno != EEXIST)
     {
-        Log::error("Error: Failed to create pipe FIFO [" + pipeLoolwsd + "].");
+        Log::syserror("Failed to create pipe FIFO [" + pipeLoolwsd + "].");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -1298,26 +1298,26 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
     if (mkfifo(pipeNotify.c_str(), 0666) < 0 && errno != EEXIST)
     {
-        Log::syserror("Error: Failed to create pipe FIFO [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
+        Log::syserror("Failed to create pipe FIFO [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 
     if ((notifyPipe = open(pipeNotify.c_str(), pipeFlags) ) < 0)
     {
-        Log::error("Error: pipe opened for reading.");
+        Log::syserror("Failed to open pipe for reading.");
         exit(Application::EXIT_SOFTWARE);
     }
 
     if ((pipeFlags = fcntl(notifyPipe, F_GETFL, 0)) < 0)
     {
-        Log::error("Error: failed to get pipe flags [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
+        Log::syserror("Failed to get pipe flags [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 
     pipeFlags &= ~O_NONBLOCK;
     if (fcntl(notifyPipe, F_SETFL, pipeFlags) < 0)
     {
-        Log::error("Error: failed to set pipe flags [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
+        Log::syserror("Failed to set pipe flags [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 
@@ -1362,7 +1362,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if ( (BrokerWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
     {
-        Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] write only.");
+        Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for writing.");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -1434,7 +1434,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         }
         else if (pid < 0)
         {
-            Log::error("Error: waitpid failed.");
+            Log::syserror("waitpid failed.");
             // No child processes
             if (errno == ECHILD)
             {
