@@ -10,13 +10,19 @@
 #include <dlfcn.h>
 #include <ftw.h>
 #include <cassert>
+#include <iostream>
+
 #include "Util.hpp"
 #include "Unit.hpp"
+
+#include <Poco/Timestamp.h>
+using Poco::Timestamp;
 
 class UnitPrefork : public UnitHooks
 {
     int _numStarted;
     const int _numToPrefork;
+    Timestamp _startTime;
 public:
     UnitPrefork()
         : _numStarted(0),
@@ -26,14 +32,19 @@ public:
     virtual void preSpawnCount(int &numPrefork) override
     {
         numPrefork = _numToPrefork;
-        Log::error("Hello world");
     }
-
     virtual void newChild() override
     {
         _numStarted++;
         if (_numStarted >= _numToPrefork + 1)
+        {
             exitTest(TestResult::TEST_OK);
+
+            Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
+
+            std::cout << "Launched " << _numStarted << " in "
+                      << (1.0 * elapsed)/Poco::Timestamp::resolution() << std::endl;
+        }
     }
 };
 
