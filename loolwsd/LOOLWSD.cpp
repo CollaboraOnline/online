@@ -963,6 +963,7 @@ std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::FileServerRoot;
+std::string LOOLWSD::AdminCreds;
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::DoTest = false;
@@ -977,11 +978,23 @@ LOOLWSD::~LOOLWSD()
 
 void LOOLWSD::initialize(Application& self)
 {
-    // load default configuration files, if present
+    // Load default configuration files, if present.
     if (loadConfiguration() == 0)
     {
-        std::string configPath = LOOLWSD_CONFIGDIR "/loolwsd.xml";
+        // Fallback to the default path.
+        const std::string configPath = LOOLWSD_CONFIGDIR "/loolwsd.xml";
         loadConfiguration(configPath);
+    }
+
+    if (!AdminCreds.empty())
+    {
+        // Set the Admin Console credentials, if provided.
+        StringTokenizer tokens(AdminCreds, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        if (tokens.count() == 2)
+        {
+            config().setString("admin_console_username", tokens[0]);
+            config().setString("admin_console_password", tokens[1]);
+        }
     }
 
     ServerApplication::initialize(self);
@@ -1084,6 +1097,11 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("number"));
 
+    optionSet.addOption(Option("admincreds", "", "Admin 'username/password' used to access the admin console.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("directory"));
+
     optionSet.addOption(Option("test", "", "Interactive testing.")
                         .required(false)
                         .repeatable(false));
@@ -1119,6 +1137,8 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
         FileServerRoot = value;
     else if (optionName == "numprespawns")
         NumPreSpawnedChildren = std::stoi(value);
+    else if (optionName == "admincreds")
+        AdminCreds = value;
     else if (optionName == "test")
         LOOLWSD::DoTest = true;
 }
@@ -1205,6 +1225,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (LOOLWSD::DoTest)
         NumPreSpawnedChildren = 1;
+
+    if (AdminCreds.empty())
+    {
+        Log::warn("No admin credentials set via 'admincreds' command-line argument. Admin Console will be disabled.");
+    }
 
     const Path pipePath = Path::forDirectory(ChildRoot + Path::separator() + FIFO_PATH);
     if (!File(pipePath).exists() && !File(pipePath).createDirectory())

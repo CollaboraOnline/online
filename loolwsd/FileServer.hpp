@@ -72,11 +72,17 @@ public:
             Log::info("Invalid JWT token, let the administrator re-login");
         }
 
-        HTTPBasicCredentials credentials(request);
+        const auto user = Application::instance().config().getString("admin_console_username", "");
+        const auto pass = Application::instance().config().getString("admin_console_password", "");
+        if (user.empty() || pass.empty())
+        {
+            Log::error("Admin Console credentials missing. Denying access until set.");
+            return false;
+        }
 
-        // TODO: Read username and password from config file
-        if (credentials.getUsername() == "admin"
-                && credentials.getPassword() == "admin")
+        HTTPBasicCredentials credentials(request);
+        if (credentials.getUsername() == user &&
+            credentials.getPassword() == pass)
         {
             const std::string htmlMimeType = "text/html";
             // generate and set the cookie

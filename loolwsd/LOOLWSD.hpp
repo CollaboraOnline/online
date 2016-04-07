@@ -45,7 +45,7 @@ public:
     static std::string ChildRoot;
     static std::string LoSubPath;
     static std::string FileServerRoot;
-    //static Auth AuthAgent;
+    static std::string AdminCreds;
 
     static
     std::string GenSessionId()
