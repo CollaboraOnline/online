@@ -112,7 +112,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
     {
         // parent
         childPID = pid; // (somehow - switch the hash to use real pids or ?) ...
-        Log::info("Forked kit [" + std::to_string(childPID) + "].");
+        if (pid < 0)
+            Log::syserror("Fork failed.");
+        else
+            Log::info("Forked kit [" + std::to_string(childPID) + "].");
     }
 
     Log::info() << "Created Kit #" << ChildCounter << ", PID: " << childPID << Log::end;
@@ -154,7 +157,7 @@ int main(int argc, char** argv)
     // Auto-reap zombies.
     if (signal(SIGCHLD, SIG_IGN) == SIG_ERR)
     {
-        Log::error("Failed to set SIGCHLD to SIG_IGN.");
+        Log::syserror("Failed to set SIGCHLD to SIG_IGN.");
         return 1;
     }
 
@@ -211,7 +214,7 @@ int main(int argc, char** argv)
     const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
     if ( (ReaderBroker = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
     {
-        Log::error("Error: failed to open pipe [" + pipeLoolwsd + "] read only. Exiting.");
+        Log::syserror("Error: failed to open pipe [" + pipeLoolwsd + "] read only. Exiting.");
         std::exit(Application::EXIT_SOFTWARE);
     }
 
@@ -224,7 +227,7 @@ int main(int argc, char** argv)
     // We must have at least one child, more are created dynamically.
     if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
     {
-        Log::error("Error: failed to create children.");
+        Log::error("Error: failed to create a kit process.");
         std::exit(Application::EXIT_SOFTWARE);
     }
 
@@ -251,7 +254,7 @@ int main(int argc, char** argv)
             {
                 if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
                 {
-                    Log::error("Error: fork failed.");
+                    Log::error("Error: failed to create a kit process.");
                 }
                 else
                 {

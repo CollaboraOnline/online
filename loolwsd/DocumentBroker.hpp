@@ -81,7 +81,7 @@ public:
         {
             if (rude && kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
             {
-                Log::error("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+                Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
             }
 
            _pid = -1;

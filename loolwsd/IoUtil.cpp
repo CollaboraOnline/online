@@ -219,10 +219,10 @@ ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size)
         const auto bytes = write(pipe, buffer + count, size - count);
         if (bytes < 0)
         {
-            Log::error("Failed to write to pipe. Retrying. Data: [" + std::string(buffer, size) + "].");
             if (errno == EINTR || errno == EAGAIN)
                 continue;
 
+            Log::syserror("Failed to write to pipe. Data: [" + std::string(buffer, size) + "].");
             count = -1;
             break;
         }

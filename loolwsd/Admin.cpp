@@ -337,7 +337,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
     const std::string thread_name = "admin_ws_" + std::to_string(nSessionId);
 
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-        Log::error("Cannot set thread name to " + thread_name + ".");
+        Log::syserror("Cannot set thread name to " + thread_name + ".");
 
     Log::debug("Thread [" + thread_name + "] started.");
 
@@ -454,7 +454,7 @@ void Admin::run()
     static const std::string thread_name = "admin_thread";
 
     if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-        Log::error("Cannot set thread name to " + thread_name + ".");
+        Log::syserror("Cannot set thread name to " + thread_name + ".");
 
     Log::info("Thread [" + thread_name + "] started.");
 

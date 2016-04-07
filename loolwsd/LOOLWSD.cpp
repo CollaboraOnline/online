@@ -175,7 +175,7 @@ std::shared_ptr<ChildProcess> getNewChild()
     int balance = LOOLWSD::NumPreSpawnedChildren;
     if (available == 0)
     {
-        Log::error("No available child. Sending spawn request to Broker and failing.");
+        Log::error("No available child. Sending spawn request to forkit and failing.");
     }
     else
     {
@@ -587,7 +587,7 @@ public:
         const std::string thread_name = "client_ws_" + id;
 
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to " + thread_name + ".");
+            Log::syserror("Cannot set thread name to " + thread_name + ".");
 
         Log::debug("Thread [" + thread_name + "] started.");
 
@@ -636,7 +636,7 @@ public:
     {
         std::string thread_name = "prison_ws_";
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to " + thread_name + ".");
+            Log::syserror("Cannot set thread name to " + thread_name + ".");
 
         Log::debug("Child connection with URI [" + request.getURI() + "].");
 
@@ -699,7 +699,7 @@ public:
 
             thread_name += sessionId;
             if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-                Log::error("Cannot set thread name to " + thread_name + ".");
+                Log::syserror("Cannot set thread name to " + thread_name + ".");
 
             Log::debug("Thread [" + thread_name + "] started.");
 
@@ -806,7 +806,7 @@ public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to request_handler.");
+            Log::syserror("Cannot set thread name to request_handler.");
 
         auto logger = Log::info();
         logger << "Request from " << request.clientAddress().toString() << ": "
@@ -856,7 +856,7 @@ public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to request_handler.");
+            Log::syserror("Cannot set thread name to request_handler.");
 
         auto logger = Log::info();
         logger << "Request from " << request.clientAddress().toString() << ": "
@@ -902,7 +902,7 @@ public:
         }
         catch (const WebSocketException& exc)
         {
-            Log::error("TestOutput::run(), WebSocketException: " + exc.message());
+            Log::error("TestOutput::run: WebSocketException: " + exc.message());
             _ws.close();
         }
     }
@@ -1245,8 +1245,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        Log::error("Unable to access cache [" + Cache +
-                   "] please make sure it exists, and has write permission for this user.");
+        Log::syserror("Unable to access cache [" + Cache +
+                      "] please make sure it exists, and has write permission for this user.");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -1300,7 +1300,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
     if (mkfifo(pipeNotify.c_str(), 0666) < 0 && errno != EEXIST)
     {
-        Log::error("Error: Failed to create pipe FIFO [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
+        Log::syserror("Error: Failed to create pipe FIFO [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
         exit(Application::EXIT_SOFTWARE);
     }
 

@@ -143,7 +143,8 @@ namespace Log
     void debug(const std::string& msg);
     void info(const std::string& msg);
     void warn(const std::string& msg);
-    void error(const std::string& msg, const bool append_errno = true);
+    void error(const std::string& msg);
+    void syserror(const std::string& msg);
 
     /// The following is to write streaming logs.
     /// Log::info() << "Value: 0x" << std::hex << value

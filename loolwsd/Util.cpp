@@ -172,12 +172,15 @@ namespace Log
         logger().warning(logPrefix() + msg);
     }
 
-    void error(const std::string& msg, const bool append_errno)
+    void error(const std::string& msg)
     {
-        logger().error(logPrefix() + msg +
-                       (append_errno
-                        ? (std::string(" (errno: ") + strerror(errno) + ").")
-                        : std::string("")));
+        logger().error(logPrefix() + msg);
+    }
+
+    void syserror(const std::string& msg)
+    {
+        logger().error(logPrefix() + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
+
     }
 }
 

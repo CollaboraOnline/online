@@ -30,7 +30,7 @@ public:
     void run() override
     {
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to " + _name + ".");
+            Log::syserror("Cannot set thread name to " + _name + ".");
 
         Log::debug("Thread [" + _name + "] started.");
 
