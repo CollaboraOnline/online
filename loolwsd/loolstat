@@ -64,7 +64,7 @@ fi
 $PSTREE -a -c -h -A -p $LOOLWSD_PID;
 
 # get the number of running processes.
-PROCESS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -E '^loolwsd|^loolbroker|^libreofficekit' | $WC -l);
+PROCESS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $SED -e "s/\`//g" | $TR -d ' |-' | $GREP -E '^loolwsd|^loolforkit|^loolkit' | $WC -l);
 
 # get the number of running threads.
 THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{.*}' | $WC -l);
