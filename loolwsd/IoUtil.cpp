@@ -244,27 +244,6 @@ ssize_t readFIFO(int pipe, char* buffer, ssize_t size)
     return bytes;
 }
 
-ssize_t readMessage(const int pipe, char* buffer, const ssize_t size, const size_t timeoutSec)
-{
-    struct pollfd pollPipe;
-
-    pollPipe.fd = pipe;
-    pollPipe.events = POLLIN;
-    pollPipe.revents = 0;
-
-    const int nPoll = poll(&pollPipe, 1, timeoutSec * 1000);
-    if ( nPoll < 0 )
-        return -1;
-
-    if ( nPoll == 0 )
-        errno = ETIME;
-
-    if( (pollPipe.revents & POLLIN) != 0 )
-        return readFIFO(pipe, buffer, size);
-
-    return -1;
-}
-
 /// Reads a single line from a pipe.
 /// Returns 0 for timeout, <0 for error, and >0 on success.
 /// On success, line will contain the read message.
