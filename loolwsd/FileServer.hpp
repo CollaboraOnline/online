@@ -110,13 +110,14 @@ public:
             Poco::URI requestUri(request.getURI());
             std::vector<std::string> requestSegments;
             requestUri.getPathSegments(requestSegments);
-
-            // TODO: We might want to package all files from leaflet to some other dir and restrict
-            // file serving to it (?)
-            const std::string endPoint = requestSegments[requestSegments.size() - 1];
+            if (requestSegments.size() < 1)
+            {
+                throw Poco::FileNotFoundException("Invalid file.");
+            }
 
             if (request.getMethod() == HTTPRequest::HTTP_GET)
             {
+                const std::string endPoint = requestSegments[requestSegments.size() - 1];
                 if (endPoint == "admin.html" ||
                     endPoint == "adminSettings.html" ||
                     endPoint == "adminAnalytics.html")
@@ -125,7 +126,14 @@ public:
                         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
                 }
 
-                const std::string filePath = requestUri.getPath();
+                const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
+                const auto filepath = path.absolute().toString();
+                if (filepath.find(LOOLWSD::FileServerRoot) != 0)
+                {
+                    // Accessing unauthorized path.
+                    throw Poco::FileNotFoundException("Invalid file path.");
+                }
+
                 const std::size_t extPoint = endPoint.find_last_of(".");
                 if (extPoint == std::string::npos)
                     throw Poco::FileNotFoundException("Invalid file.");
@@ -142,12 +150,12 @@ public:
                     mimeType = "text/plain";
 
                 response.setContentType(mimeType);
-                response.sendFile(LOOLWSD::FileServerRoot + requestUri.getPath(), mimeType);
+                response.sendFile(filepath, mimeType);
             }
         }
         catch (Poco::Net::NotAuthenticatedException& exc)
         {
-            Log::info ("FileServerRequestHandler::NotAuthenticated");
+            Log::error("FileServerRequestHandler::NotAuthenticated");
             response.set("WWW-Authenticate", "Basic realm=\"online\"");
             response.setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
             response.setContentLength(0);
@@ -155,7 +163,7 @@ public:
         }
         catch (Poco::FileNotFoundException& exc)
         {
-            Log::info("FileServerRequestHandler:: File " + request.getURI() + " not found.");
+            Log::error("FileServerRequestHandler:: File [" + request.getURI() + "] not found.");
             response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
             response.setContentLength(0);
             response.send();

@@ -1219,6 +1219,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (FileServerRoot.empty())
         FileServerRoot = Path(Application::instance().commandPath()).parent().parent().toString();
+    FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
+    Log::debug("FileServerRoot: " + FileServerRoot);
 
     if (ClientPortNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
