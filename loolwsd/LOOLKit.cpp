@@ -1126,7 +1126,7 @@ bool globalPreinit(const std::string &loTemplate)
     LokHookPreInit* preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
-        Log::error("No lok_preinit symbol in " + loadedLibrary);
+        Log::error("No lok_preinit symbol in " + loadedLibrary + ": " + std::string(dlerror()));
         return false;
     }
 
