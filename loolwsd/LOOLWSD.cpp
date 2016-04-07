@@ -283,7 +283,7 @@ private:
                     auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, nullptr);
                     docBroker->addWSSession(id, session);
                     unsigned wsSessionsCount = docBroker->getWSSessionsCount();
-                    Log::warn(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
+                    Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
                     session->setEditLock(true);
                     docBroker->incSessions();
                     lock.unlock();
@@ -484,7 +484,7 @@ private:
 
         docBroker->addWSSession(id, session);
         unsigned wsSessionsCount = docBroker->getWSSessionsCount();
-        Log::warn(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
+        Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
         if (wsSessionsCount == 1)
             session->setEditLock(true);
 
@@ -531,7 +531,7 @@ private:
 
         docBroker->removeWSSession(id);
         wsSessionsCount = docBroker->getWSSessionsCount();
-        Log::warn(docKey + ", ws_sessions--: " + std::to_string(wsSessionsCount));
+        Log::trace(docKey + ", ws_sessions--: " + std::to_string(wsSessionsCount));
 
         Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
         queue->put("eof");
