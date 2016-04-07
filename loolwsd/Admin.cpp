@@ -337,7 +337,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 
     Util::setThreadName(thread_name);
 
-    Log::debug("Thread [" + thread_name + "] started.");
+    Log::debug("Thread started.");
 
     try
     {
@@ -367,7 +367,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
         response.setContentLength(0);
         response.send();
     }
-    Log::debug("Thread [" + thread_name + "] finished.");
+    Log::debug("Thread finished.");
 }
 
 /// An admin command processor.
@@ -453,12 +453,12 @@ void Admin::run()
 
     Util::setThreadName(thread_name);
 
-    Log::info("Thread [" + thread_name + "] started.");
+    Log::info("Thread started.");
 
     _memStatsTimer.cancel();
     _cpuStatsTimer.cancel();
 
-    Log::debug("Thread [" + thread_name + "] finished.");
+    Log::debug("Thread finished.");
 }
 
 AdminModel& Admin::getModel()

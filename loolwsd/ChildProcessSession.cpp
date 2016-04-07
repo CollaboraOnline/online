@@ -202,7 +202,7 @@ public:
 
         Util::setThreadName(thread_name);
 
-        Log::debug("Thread [" + thread_name + "] started.");
+        Log::debug("Thread started.");
 
         while (!_stop && !TerminationFlag)
         {
@@ -233,7 +233,7 @@ public:
                 break;
         }
 
-        Log::debug("Thread [" + thread_name + "] finished.");
+        Log::debug("Thread finished.");
     }
 
     void stop()

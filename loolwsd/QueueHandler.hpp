@@ -31,7 +31,7 @@ public:
     {
         Util::setThreadName(_name);
 
-        Log::debug("Thread [" + _name + "] started.");
+        Log::debug("Thread started.");
 
         try
         {
@@ -56,7 +56,7 @@ public:
             Log::error(std::string("QueueHandler::run: Exception: ") + exc.what());
         }
 
-        Log::debug("Thread [" + _name + "] finished.");
+        Log::debug("Thread finished.");
     }
 
 private:

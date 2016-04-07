@@ -281,7 +281,7 @@ public:
 
         Util::setThreadName(thread_name);
 
-        Log::debug("Thread [" + thread_name + "] started.");
+        Log::debug("Thread started.");
 
         try
         {
@@ -357,7 +357,7 @@ public:
             Log::error("Connection::run:: Unexpected exception");
         }
 
-        Log::debug("Thread [" + thread_name + "] finished.");
+        Log::debug("Thread finished.");
     }
 
 private:
@@ -898,10 +898,10 @@ void lokit_main(const std::string& childRoot,
 
     Util::setThreadName(process_name);
 
+    Log::debug("Process started.");
+
     Util::setTerminationSignals();
     Util::setFatalSignals();
-
-    Log::debug("Process [" + process_name + "] started.");
 
     static const std::string instdir_path = "/" + loSubPath + "/program";
     LibreOfficeKit* loKit = nullptr;
@@ -1079,7 +1079,7 @@ void lokit_main(const std::string& childRoot,
         Log::error(std::string("Exception: ") + exc.what());
     }
 
-    Log::info("Process [" + process_name + "] finished.");
+    Log::info("Process finished.");
     _exit(Application::EXIT_OK);
 }
 

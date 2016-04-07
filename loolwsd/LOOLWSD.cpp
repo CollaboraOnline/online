@@ -587,7 +587,7 @@ public:
 
         Util::setThreadName(thread_name);
 
-        Log::debug("Thread [" + thread_name + "] started.");
+        Log::debug("Thread started.");
 
         try
         {
@@ -621,7 +621,7 @@ public:
             Log::error("ClientRequestHandler::handleRequest: Unexpected exception");
         }
 
-        Log::debug("Thread [" + thread_name + "] finished.");
+        Log::debug("Thread finished.");
     }
 };
 
@@ -701,7 +701,7 @@ public:
 
             // Misleading debug message, we obviously started already a while ago and have done lots
             // of stuff already.
-            Log::debug("Thread [" + thread_name + "] started.");
+            Log::debug("Thread started.");
 
             Log::debug("Child socket for SessionId: " + sessionId + ", jailId: " + jailId +
                        ", docKey: " + docKey + " connected.");
@@ -792,7 +792,7 @@ public:
             Admin::instance().update(message.str());
         }
 
-        Log::debug("Thread [" + thread_name + "] finished.");
+        Log::debug("Thread finished.");
     }
 };
 
@@ -1534,7 +1534,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Poco::Net::uninitializeSSL();
     Poco::Crypto::uninitializeCrypto();
 
-    Log::info("Process [loolwsd] finished.");
+    Log::info("Process finished.");
     return Application::EXIT_OK;
 }
 
