@@ -40,13 +40,12 @@ namespace IoUtil
 void SocketProcessor(std::shared_ptr<WebSocket> ws,
                      Poco::Net::HTTPResponse& response,
                      std::function<bool(const std::vector<char>&)> handler,
-                     std::function<bool()> stopPredicate,
-                     const size_t pollTimeoutMs)
+                     std::function<bool()> stopPredicate)
 {
     Log::info("SocketProcessor starting.");
 
     // Timeout given is in microseconds.
-    const Poco::Timespan waitTime(pollTimeoutMs * 1000);
+    const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
     try
     {
         ws->setReceiveTimeout(0);

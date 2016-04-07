@@ -26,8 +26,7 @@ namespace IoUtil
     void SocketProcessor(std::shared_ptr<Poco::Net::WebSocket> ws,
                          Poco::Net::HTTPResponse& response,
                          std::function<bool(const std::vector<char>&)> handler,
-                         std::function<bool()> stopPredicate,
-                         const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
+                         std::function<bool()> stopPredicate);
 
     /// Call WebSocket::shutdown() ignoring Poco::IOException.
     void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws);
