@@ -39,6 +39,8 @@ L.Map.include({
 			options = '';
 		}
 		id = id || -1; // not a special download
+
+		this.showBusy('Downloading...', false);
 		this._socket.sendMessage('downloadas ' +
 			'name=' + name + ' ' +
 			'id=' + id + ' ' +
@@ -47,6 +49,7 @@ L.Map.include({
 	},
 
 	print: function () {
+		this.showBusy('Downloading...', false);
 		this.downloadAs('print.pdf', 'pdf', null, 'print');
 	},
 
@@ -58,6 +61,7 @@ L.Map.include({
 			options = '';
 		}
 
+		this.showBusy('Saving...', false);
 		// TakeOwnership: we are performing a 'real' save-as, the document
 		// is just getting a new place, ie. it will get the
 		// '.uno:ModifiedStatus' upon completion.

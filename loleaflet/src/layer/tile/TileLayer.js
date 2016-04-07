@@ -369,6 +369,7 @@ L.TileLayer = L.GridLayer.extend({
 		var url = this._map.options.webserver + '/' +
 			command.jail + '/' + command.dir + '/' + command.name;
 
+		this._map.hideBusy();
 		if (command.id === 'print') {
 			var isFirefox = typeof InstallTrigger !== 'undefined' || navigator.userAgent.search('Firefox') >= 0;
 			if (isFirefox || this._map.options.print === false) {
@@ -624,8 +625,11 @@ L.TileLayer = L.GridLayer.extend({
 		else if (obj.success === 'false') {
 			success = false;
 		}
+
+		this._map.hideBusy();
 		// TODO when implemented in the LOK, add also obj.result
 		this._map.fire('commandresult', {commandName: commandName, success: success});
+
 	},
 
 	_onTextSelectionMsg: function (textMsg) {
