@@ -49,7 +49,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         name = "[" + name + "] ";
     }
 
-    Log::info(name + "Starting Socket Processor.");
+    Log::info("SocketProcessor starting.");
 
     // Timeout given is in microseconds.
     const Poco::Timespan waitTime(pollTimeoutMs * 1000);
@@ -67,7 +67,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             stop = stopPredicate();
             if (stop)
             {
-                Log::info(name + "Termination flagged. Finishing.");
+                Log::info("Termination flagged. Finishing.");
                 break;
             }
 
@@ -101,7 +101,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             }
             else if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
             {
-                Log::warn(name + "Connection closed.");
+                Log::warn("Connection closed.");
                 break;
             }
 
@@ -145,30 +145,30 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 
             if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
             {
-                Log::warn(name + "Connection closed.");
+                Log::warn("Connection closed.");
                 break;
             }
 
             if (firstLine == "eof")
             {
-                Log::info(name + "Received EOF. Finishing.");
+                Log::info("Received EOF. Finishing.");
                 break;
             }
 
             // Call the handler.
             if (!handler(payload))
             {
-                Log::info(name + "Socket handler flagged to finish.");
+                Log::info("Socket handler flagged to finish.");
                 break;
             }
         }
 
-        Log::debug() << name << "Finishing SocketProcessor. TerminationFlag: " << stop
+        Log::debug() << "SocketProcessor finishing. TerminationFlag: " << stop
                      << ", payload size: " << payload.size()
                      << ", flags: " << std::hex << flags << Log::end;
         if (payload.size() > 1)
         {
-            Log::warn(name + "Last message will not be processed: [" +
+            Log::warn("Last message will not be processed: [" +
                       LOOLProtocol::getFirstLine(payload.data(), payload.size()) + "].");
         }
     }
@@ -193,7 +193,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         Log::error("SocketProcessor: NetException: " + exc.message());
     }
 
-    Log::info(name + "Finished Socket Processor.");
+    Log::info("SocketProcessor finished.");
 }
 
 void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws)
