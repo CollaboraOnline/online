@@ -17,6 +17,7 @@
 
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPBasicCredentials.h>
+#include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServer.h>
@@ -28,12 +29,15 @@
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
+#include <Poco/FileStream.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/Timer.h>
 
 #include "Common.hpp"
 #include "LOOLWSD.hpp"
 
+using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
 using Poco::Net::HTTPRequestHandlerFactory;
@@ -43,6 +47,8 @@ using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::SecureServerSocket;
 using Poco::Net::HTTPBasicCredentials;
+using Poco::FileInputStream;
+using Poco::StreamCopier;
 using Poco::Util::Application;
 
 class FileServerRequestHandler: public HTTPRequestHandler
@@ -103,6 +109,37 @@ public:
         return false;
     }
 
+    void preprocessFile(HTTPServerRequest& request, HTTPServerResponse& response)
+    {
+        Poco::URI requestUri("https", request.getHost(), request.getURI());
+        HTMLForm form(request, request.stream());
+
+        std::string preprocess;
+        const auto host = "wss://" + requestUri.getHost() + ":" + std::to_string(requestUri.getPort());
+        const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
+        const auto wopi = form.has("WOPISrc") ?
+                          form.get("WOPISrc") + "?access_token=" + form.get("access_token","") : "";
+
+        FileInputStream file(path.toString());
+        StreamCopier::copyToString(file, preprocess);
+        file.close();
+
+        Poco::replaceInPlace(preprocess, std::string("WOPISRC"), wopi);
+        Poco::replaceInPlace(preprocess, std::string("HOST"), form.get("host", host));
+        Poco::replaceInPlace(preprocess, std::string("FILEPATH"), form.get("file_path", ""));
+        Poco::replaceInPlace(preprocess, std::string("TITLE"), form.get("title", ""));
+        Poco::replaceInPlace(preprocess, std::string("PERMISSION"), form.get("permission", ""));
+        Poco::replaceInPlace(preprocess, std::string("TIMESTAMP"), form.get("timestamp", ""));
+        Poco::replaceInPlace(preprocess, std::string("CLOSEBUTTON"), form.get("closebutton", ""));
+
+        response.setContentType("text/html");
+        response.setContentLength(preprocess.length());
+        response.setChunkedTransferEncoding(false);
+
+        std::ostream& ostr = response.send();
+        ostr << preprocess;
+    }
+
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         try
@@ -115,9 +152,15 @@ public:
                 throw Poco::FileNotFoundException("Invalid file.");
             }
 
+            const std::string endPoint = requestSegments[requestSegments.size() - 1];
+            if (endPoint == "loleaflet.html")
+            {
+                preprocessFile(request, response);
+                return;
+            }
+
             if (request.getMethod() == HTTPRequest::HTTP_GET)
             {
-                const std::string endPoint = requestSegments[requestSegments.size() - 1];
                 if (endPoint == "admin.html" ||
                     endPoint == "adminSettings.html" ||
                     endPoint == "adminAnalytics.html")

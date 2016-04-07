@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0054)http://leafletjs.com/examples/quick-start-example.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Document Simple Example</title>
+<title>Collabora Online</title>
 <meta charset="utf-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -260,23 +260,16 @@
     </style>
 	<script>
 
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : results[1].replace(/\+/g, " ");
-    }
-
-    var wopiSrc = getParameterByName('WOPISrc');
-    var filePath = getParameterByName('file_path');
-    var title = getParameterByName('title');
+    var wopiSrc = 'WOPISRC';
+    var filePath = 'FILEPATH';
+    var title = 'TITLE';
     if (title === '') {
         title = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
     }
-    var host = getParameterByName('host');
-    var permission = getParameterByName('permission');
-    var timestamp = getParameterByName('timestamp');
-    var closebutton = getParameterByName('closebutton');
+    var host = 'HOST';
+    var permission = 'PERMISSION';
+    var timestamp = 'TIMESTAMP';
+    var closebutton = 'CLOSEBUTTON';
     if (wopiSrc === '' && filePath === '') {
         vex.dialog.alert('Wrong WOPISrc, usage: WOPISrc=valid encoded URI,  or file_path, usage: file_path=/path/to/doc/');
     }
