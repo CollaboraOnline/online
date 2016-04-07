@@ -50,7 +50,6 @@
 #include <Poco/Net/HTTPRequestHandlerFactory.h>
 #include <Poco/Net/HTTPServer.h>
 #include <Poco/Net/HTTPServerParams.h>
-#include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
@@ -93,6 +92,7 @@
 #include "IoUtil.hpp"
 #include "Util.hpp"
 #include "Unit.hpp"
+#include "UnitHTTP.hpp"
 
 using namespace LOOLProtocol;
 
@@ -240,7 +240,7 @@ class ClientRequestHandler: public HTTPRequestHandler
 {
 private:
 
-    void handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
+    static void handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
         Log::info("Post request: [" + request.getURI() + "]");
         StringTokenizer tokens(request.getURI(), "/?");
@@ -425,7 +425,7 @@ private:
         }
     }
 
-    void handleGetRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
+    static void handleGetRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
         Log::info("Starting GET request handler for session [" + id + "].");
 
@@ -546,7 +546,7 @@ private:
         }
     }
 
-    void handleGetDiscovery(HTTPServerRequest& request, HTTPServerResponse& response)
+    static void handleGetDiscovery(HTTPServerRequest& request, HTTPServerResponse& response)
     {
         DOMParser parser;
         DOMWriter writer;
@@ -582,6 +582,11 @@ private:
 public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
+    {
+        handleClientRequest(request,response);
+    }
+
+    static void handleClientRequest(HTTPServerRequest& request, HTTPServerResponse& response)
     {
         const auto id = LOOLWSD::GenSessionId();
 
@@ -631,6 +636,11 @@ class PrisonerRequestHandler: public HTTPRequestHandler
 public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
+    {
+        handlePrisonerRequest(request, response);
+    }
+
+    static void handlePrisonerRequest(HTTPServerRequest& request, HTTPServerResponse& response)
     {
         Util::setThreadName("prison_ws");
 
@@ -1395,6 +1405,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     int status = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
     {
+        UnitHooks::get().invokeTest();
+
         const pid_t pid = waitpid(forKitPid, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
@@ -1550,6 +1562,22 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     UnitHooks::get().returnValue(returnValue);
 
     return returnValue;
+}
+
+void UnitHooks::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request, UnitHTTPServerResponse& response)
+{
+    switch (type)
+    {
+    case TestRequest::TEST_REQ_CLIENT:
+        ClientRequestHandler::handleClientRequest(request, response);
+        break;
+    case TestRequest::TEST_REQ_PRISONER:
+        PrisonerRequestHandler::handlePrisonerRequest(request, response);
+        break;
+    default:
+        assert(false);
+        break;
+    }
 }
 
 POCO_SERVER_MAIN(LOOLWSD)

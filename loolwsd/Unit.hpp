@@ -10,8 +10,13 @@
 #define LOOL_UNIT_HPP
 
 #include <string>
+#include <memory>
 
 class UnitHooks;
+class UnitHTTPServerRequest;
+class UnitHTTPServerResponse;
+
+class StorageBase;
 
 #define CREATE_UNIT_HOOKS_SYMBOL "unit_create"
 typedef UnitHooks *(CreateUnitHooksFunction)();
@@ -28,9 +33,19 @@ class UnitHooks
     void setHandle(void *dlHandle) { _dlHandle = dlHandle; }
     static UnitHooks *linkAndCreateUnit(const std::string &unitLibPath);
 protected:
+
+    // ---------------- Helper API ----------------
+
     enum TestResult { TEST_FAILED, TEST_OK, TEST_TIMED_OUT };
     /// Encourages loolwsd to exit with this value (unless hooked)
     void exitTest(TestResult result);
+
+    enum TestRequest { TEST_REQ_CLIENT, TEST_REQ_PRISONER };
+    /// Simulate an incoming request
+    void testHandleRequest(TestRequest type,
+                           UnitHTTPServerRequest& request,
+                           UnitHTTPServerResponse& response);
+
 public:
              UnitHooks();
     virtual ~UnitHooks();
@@ -38,14 +53,23 @@ public:
     /// Load unit test hook shared library from this path
     static bool init(const std::string &unitLibPath);
 
+    // ---------------- Hooks ----------------
+
+    /// Main-loop reached, time for testing
+    virtual void invokeTest() {}
     /// Tweak the count of pre-spawned kits.
 	virtual void preSpawnCount(int & /* numPrefork */) {}
     /// Tweak the return value from LOOLWSD.
 	virtual void returnValue(int & /* retValue */);
     /// When a new child kit process reports
     virtual void newChild() {}
-    /// If the test times out
+    /// If the test times out this gets invoked
     virtual void timeout();
+    /// Intercept createStorage
+    virtual bool createStorage(const std::string& /* jailRoot */,
+                               const std::string& /* jailPath */,
+                               const Poco::URI& /* uri */,
+                               std::unique_ptr<StorageBase> & /*rStorage */) { return false; }
 };
 
 #endif // LOOL_UNIT_HPP

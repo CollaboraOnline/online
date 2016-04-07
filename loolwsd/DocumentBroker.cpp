@@ -81,7 +81,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
 void DocumentBroker::validate(const Poco::URI& uri)
 {
     Log::info("Validating: " + uri.toString());
-    auto storage = createStorage("", "", uri);
+    auto storage = StorageBase::create("", "", uri);
     if (storage == nullptr || !storage->getFileInfo(uri).isValid())
     {
         throw std::runtime_error("Invalid URI or access denied.");
@@ -111,15 +111,21 @@ bool DocumentBroker::load(const std::string& jailId)
 
     Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
-    auto storage = createStorage("", "", _uriPublic);
-    const auto fileInfo = storage->getFileInfo(_uriPublic);
-    _tileCache.reset(new TileCache(_uriPublic.toString(), fileInfo.ModifiedTime, _cacheRoot));
+    auto storage = StorageBase::create("", "", _uriPublic);
+    if (storage)
+    {
+        const auto fileInfo = storage->getFileInfo(_uriPublic);
+        _tileCache.reset(new TileCache(_uriPublic.toString(), fileInfo.ModifiedTime, _cacheRoot));
 
-    _storage = createStorage(jailRoot, jailPath.toString(), _uriPublic);
+        _storage = StorageBase::create(jailRoot, jailPath.toString(), _uriPublic);
 
-    const auto localPath = _storage->loadStorageFileToLocal();
-    _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
-    return true;
+        const auto localPath = _storage->loadStorageFileToLocal();
+        _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
+
+        return true;
+    }
+    else
+        return false;
 }
 
 bool DocumentBroker::save()

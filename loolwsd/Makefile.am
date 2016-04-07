@@ -75,6 +75,7 @@ noinst_HEADERS = Admin.hpp \
                  Storage.hpp \
                  TileCache.hpp \
 		 Unit.hpp \
+	         UnitHTTP.hpp \
                  Util.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \

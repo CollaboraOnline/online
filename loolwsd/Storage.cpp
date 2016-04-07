@@ -23,6 +23,7 @@
 #include "Auth.hpp"
 #include "Storage.hpp"
 #include "Util.hpp"
+#include "Unit.hpp"
 
 ///////////////////
 // StorageBase Impl
@@ -46,6 +47,33 @@ std::string StorageBase::getLocalRootPath() const
 size_t StorageBase::getFileSize(const std::string& filename)
 {
     return std::ifstream(filename, std::ifstream::ate | std::ifstream::binary).tellg();
+}
+
+std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, const std::string& jailPath, const Poco::URI& uri)
+{
+    std::unique_ptr<StorageBase> storage;
+
+    if (UnitHooks::get().createStorage(jailRoot, jailPath, uri, storage))
+        Log::info("Storage load hooked");
+    else if (uri.isRelative() || uri.getScheme() == "file")
+    {
+        if (!Poco::Util::Application::instance().config().getBool("storage.filesystem[@allow]", false))
+        {
+            Log::error("Local Storage is disabled by default. Specify allowlocalstorage on the command-line to enable.");
+            return nullptr;
+        }
+
+        Log::info("Public URI [" + uri.toString() + "] is a file.");
+        storage = std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
+    }
+    else
+    {
+        Log::info("Public URI [" + uri.toString() +
+                  "] assuming cloud storage.");
+        //TODO: Configure the storage to use. For now, assume it's WOPI.
+        storage = std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
+    }
+    return storage;
 }
 
 ////////////////////

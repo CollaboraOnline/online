@@ -69,6 +69,10 @@ public:
     static
     size_t getFileSize(const std::string& filename);
 
+    static std::unique_ptr<StorageBase> create(const std::string& jailRoot,
+                                               const std::string& jailPath,
+                                               const Poco::URI& uri);
+
 protected:
     const std::string _localStorePath;
     const std::string _jailPath;
@@ -135,33 +139,9 @@ public:
     std::string loadStorageFileToLocal() override;
 
     bool saveLocalFileToStorage() override;
-
 private:
     std::unique_ptr<AuthBase> _authAgent;
 };
-
-inline
-std::unique_ptr<StorageBase> createStorage(const std::string& jailRoot, const std::string& jailPath, const Poco::URI& uri)
-{
-    if (uri.isRelative() || uri.getScheme() == "file")
-    {
-        if (!Poco::Util::Application::instance().config().getBool("storage.filesystem[@allow]", false))
-        {
-            Log::error("Local Storage is disabled by default. Specify allowlocalstorage on the command-line to enable.");
-            return nullptr;
-        }
-
-        Log::info("Public URI [" + uri.toString() + "] is a file.");
-        return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
-    }
-    else
-    {
-        Log::info("Public URI [" + uri.toString() +
-                  "] assuming cloud storage.");
-        //TODO: Configure the storage to use. For now, assume it's WOPI.
-        return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
-    }
-}
 
 #endif
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

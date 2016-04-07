@@ -7,7 +7,7 @@ mkdir -p test_output
 # result logging
 echo > run_unit.sh.trs
 
-for tst in prefork; do
+for tst in storage prefork; do
     tst_log="test_output/$tst.log"
     echo "Running test: $tst | $tst_log ...";
     if ../loolwsd --systemplate=${systemplate} --lotemplate="${LO_PATH}" --childroot="${jails}" --unitlib=".libs/unit-$tst.so" 2> "$tst_log"; then

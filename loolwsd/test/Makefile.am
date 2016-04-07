@@ -11,7 +11,7 @@ check_PROGRAMS = test
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 
-lib_LTLIBRARIES = unit-prefork.la
+lib_LTLIBRARIES = unit-prefork.la unit-storage.la
 
 AM_CPPFLAGS = -pthread -I$(top_srcdir)
 
@@ -22,9 +22,10 @@ test_LDADD = $(CPPUNIT_LIBS)
 test_SOURCES = httpposttest.cpp httpwstest.cpp test.cpp ../LOOLProtocol.cpp
 
 # unit test modules:
-unit_prefork_la_SOURCES = \
-	UnitPrefork.cpp
+unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_prefork_la_LDFLAGS = -module
+unit_storage_la_SOURCES = UnitStorage.cpp
+unit_storage_la_LDFLAGS = -module
 
 ${systemplate}/system_stamp :
 	rm -rf ${systemplate}
@@ -38,7 +39,7 @@ ${top_builddir}/test/run_unit.sh.log ${top_builddir}/test/run_unit.sh.trs : \
 	${top_srcdir}/test/run_unit.sh \
 	${top_builddir}/loolwsd \
 	${top_builddir}/loolforkit \
-	unit-prefork.la
+	unit-prefork.la unit-storage.la
 	if ${top_srcdir}/test/run_unit.sh; then \
 	   touch ${top_builddir}/test/run_unit.sh.log; \
 	fi
