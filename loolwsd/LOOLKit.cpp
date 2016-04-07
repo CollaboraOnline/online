@@ -332,7 +332,7 @@ public:
                 }
             }
             while (!_stop && n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-            Log::debug() << "Finishing " << thread_name << ". stop " << _stop
+            Log::debug() << "Finishing. stop " << _stop
                          << ", payload size: " << n
                          << ", flags: " << std::hex << flags << Log::end;
 
