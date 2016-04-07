@@ -1,4 +1,4 @@
-SUBDIRS = test
+SUBDIRS = . test
 
 bin_PROGRAMS = loolwsd loolforkit loolmap loolmount
 
