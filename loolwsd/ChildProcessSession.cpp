@@ -198,9 +198,7 @@ public:
 
     void run()
     {
-        static const std::string thread_name = "kit_callback";
-
-        Util::setThreadName(thread_name);
+        Util::setThreadName("kit_callback");
 
         Log::debug("Thread started.");
 

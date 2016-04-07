@@ -583,9 +583,8 @@ public:
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         const auto id = LOOLWSD::GenSessionId();
-        const std::string thread_name = "client_ws_" + id;
 
-        Util::setThreadName(thread_name);
+        Util::setThreadName("client_ws_" + id);
 
         Log::debug("Thread started.");
 
@@ -632,9 +631,7 @@ public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
-        std::string thread_name = "prison_ws_";
-
-        Util::setThreadName(thread_name);
+        Util::setThreadName("prison_ws");
 
         Log::debug("Child connection with URI [" + request.getURI() + "].");
 
@@ -695,9 +692,7 @@ public:
                 }
             }
 
-            thread_name += sessionId;
-
-            Util::setThreadName(thread_name);
+            Util::setThreadName("prison_ws_" + sessionId);
 
             // Misleading debug message, we obviously started already a while ago and have done lots
             // of stuff already.
@@ -805,7 +800,7 @@ public:
 
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
-        Util::setThreadName("request_handler");
+        Util::setThreadName("client_req_hdl");
 
         auto logger = Log::info();
         logger << "Request from " << request.clientAddress().toString() << ": "
@@ -854,7 +849,7 @@ class PrisonerRequestHandlerFactory: public HTTPRequestHandlerFactory
 public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
-        Util::setThreadName("request_handler");
+        Util::setThreadName("prsnr_req_hdl");
 
         auto logger = Log::info();
         logger << "Request from " << request.clientAddress().toString() << ": "

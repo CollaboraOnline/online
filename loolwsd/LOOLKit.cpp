@@ -277,9 +277,7 @@ public:
 
     void run() override
     {
-        const std::string thread_name = "kit_ws_" + _session->getId();
-
-        Util::setThreadName(thread_name);
+        Util::setThreadName("kit_ws_" + _session->getId());
 
         Log::debug("Thread started.");
 
@@ -894,9 +892,8 @@ void lokit_main(const std::string& childRoot,
     // the jailId (i.e. the path) implicitly by knowing our pid.
     static const std::string pid = std::to_string(Process::id());
     static const std::string jailId = pid;
-    static const std::string process_name = "loolkit";
 
-    Util::setThreadName(process_name);
+    Util::setThreadName("loolkit");
 
     Log::debug("Process started.");
 

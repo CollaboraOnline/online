@@ -333,9 +333,8 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 {
     // Different session id pool for admin sessions (?)
     const auto nSessionId = Util::decodeId(LOOLWSD::GenSessionId());
-    const std::string thread_name = "admin_ws_" + std::to_string(nSessionId);
 
-    Util::setThreadName(thread_name);
+    Util::setThreadName("admin_ws_" + std::to_string(nSessionId));
 
     Log::debug("Thread started.");
 
@@ -449,9 +448,7 @@ void Admin::run()
     _cpuStatsTask = new CpuStats(this);
     _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
 
-    static const std::string thread_name = "admin_thread";
-
-    Util::setThreadName(thread_name);
+    Util::setThreadName("admin_thread");
 
     Log::debug("Thread started.");
 
