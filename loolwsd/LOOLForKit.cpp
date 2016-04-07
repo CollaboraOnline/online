@@ -40,9 +40,6 @@ using Poco::Thread;
 using Poco::Timestamp;
 using Poco::Util::Application;
 
-static const std::string BROKER_SUFIX = ".fifo";
-static const std::string BROKER_PREFIX = "lokit";
-
 static std::atomic<unsigned> ForkCounter( 0 );
 static unsigned int ChildCounter = 0;
 
