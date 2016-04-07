@@ -453,7 +453,7 @@ void Admin::run()
 
     Util::setThreadName(thread_name);
 
-    Log::info("Thread started.");
+    Log::debug("Thread started.");
 
     _memStatsTimer.cancel();
     _cpuStatsTimer.cancel();
