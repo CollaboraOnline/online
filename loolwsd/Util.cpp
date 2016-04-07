@@ -92,8 +92,21 @@ namespace rng
 namespace Log
 {
     static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
-    static std::string SourceName;
-    static std::string SourceId;
+    // help avoid destruction ordering issues.
+    struct StaticNames {
+        bool inited;
+        std::string name;
+        std::string id;
+        StaticNames() :
+            inited(true)
+        {
+        }
+        ~StaticNames()
+        {
+            inited = false;
+        }
+    };
+    static StaticNames Source;
 
     std::string logPrefix()
     {
@@ -108,7 +121,8 @@ namespace Log
         usec %= (one_s);
 
         std::ostringstream stream;
-        stream << Log::SourceId << '-' << std::setw(2) << std::setfill('0')
+        stream << (Source.inited ? Source.id : std::string())
+               << '-' << std::setw(2) << std::setfill('0')
                << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ' '
                << std::setw(2) << hours << ':' << std::setw(2) << minutes << ':'
                << std::setw(2) << seconds << "." << std::setw(6) << usec
@@ -124,16 +138,16 @@ namespace Log
 
     void initialize(const std::string& name)
     {
-        SourceName = name;
+        Source.name = name;
         std::ostringstream oss;
-        oss << SourceName << '-'
+        oss << Source.name << '-'
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
-        SourceId = oss.str();
+        Source.id = oss.str();
 
         auto channel = (isatty(fileno(stdout)) || std::getenv("LOOL_LOGCOLOR")
                      ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
                      : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
-        auto& logger = Poco::Logger::create(SourceName, channel, Poco::Message::PRIO_TRACE);
+        auto& logger = Poco::Logger::create(Source.name, channel, Poco::Message::PRIO_TRACE);
 
         // Configure the logger.
         // TODO: This should come from a file.
@@ -149,7 +163,7 @@ namespace Log
 
     Poco::Logger& logger()
     {
-        return Poco::Logger::get(SourceName);
+        return Poco::Logger::get(Source.inited ? Source.name : std::string());
     }
 
     void trace(const std::string& msg)
