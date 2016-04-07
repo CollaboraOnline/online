@@ -9,9 +9,6 @@ TOP='top'
 GREP='grep'
 PSTREE='pstree'
 
-# log pid file
-PIDLOG="/tmp/loolwsd.pid"
-
 # print error message
 log_failure_msg () {
   if [ -n "${1:-}" ]; then
@@ -54,14 +51,8 @@ if ! $TOP -v >/dev/null 2>&1; then
   log_failure_msg "$0: error: $TOP utility not found."
 fi
 
-# checking pid log file.
-if [ ! -f $PIDLOG ]; then
-	log_failure_msg "$0: error: $PIDLOG file not found."
-	exit 1;
-fi
-
 # get the loolwsd process id.
-LOOLWSD_PID=$(cat $PIDLOG);
+LOOLWSD_PID=`pgrep loolwsd$`;
 
 # checking if loolwsd is running.
 if ! $PS -p $LOOLWSD_PID > /dev/null; then

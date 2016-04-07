@@ -966,7 +966,6 @@ std::string LOOLWSD::FileServerRoot;
 
 int LOOLWSD::NumPreSpawnedChildren = 10;
 bool LOOLWSD::DoTest = false;
-static const std::string pidLog = "/tmp/loolwsd.pid";
 
 LOOLWSD::LOOLWSD()
 {
@@ -1206,13 +1205,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (LOOLWSD::DoTest)
         NumPreSpawnedChildren = 1;
-
-    // log pid information
-    {
-        FileOutputStream filePID(pidLog);
-        if (filePID.good())
-            filePID << Process::id();
-    }
 
     const Path pipePath = Path::forDirectory(ChildRoot + Path::separator() + FIFO_PATH);
     if (!File(pipePath).exists() && !File(pipePath).createDirectory())
