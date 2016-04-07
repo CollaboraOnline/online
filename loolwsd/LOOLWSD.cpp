@@ -964,6 +964,7 @@ std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::AdminCreds;
+bool LOOLWSD::AllowLocalStorage = false;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 bool LOOLWSD::DoTest = false;
@@ -1032,6 +1033,10 @@ void LOOLWSD::initialize(Application& self)
         // Default to 10 children.
         NumPreSpawnedChildren = config().getUInt("num_prespawn_children", 10);
     }
+
+    // This overrides whatever is in the config file,
+    // which forces admins to set this flag on the command-line.
+    config().setBool("storage.filesystem[@allow]", AllowLocalStorage);
 
     ServerApplication::initialize(self);
 }
@@ -1138,6 +1143,10 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("directory"));
 
+    optionSet.addOption(Option("allowlocalstorage", "", "When true will allow highly insecure loading of files from local storage.")
+                        .required(false)
+                        .repeatable(false));
+
     optionSet.addOption(Option("test", "", "Interactive testing.")
                         .required(false)
                         .repeatable(false));
@@ -1175,6 +1184,8 @@ void LOOLWSD::handleOption(const std::string& optionName, const std::string& val
         NumPreSpawnedChildren = std::stoi(value);
     else if (optionName == "admincreds")
         AdminCreds = value;
+    else if (optionName == "allowlocalstorage")
+        AllowLocalStorage = true;
     else if (optionName == "test")
         LOOLWSD::DoTest = true;
 }

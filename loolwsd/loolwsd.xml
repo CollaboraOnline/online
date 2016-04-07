@@ -20,6 +20,7 @@
     </ssl>
 
     <storage desc="Backend storage">
+        <filesystem allow="false" />
         <wopi desc="Allow/deny wopi storage. Mutually exclusive with webdav." allow="true">
             <host desc="Hostname to allow">localhost</host>
             <max_file_size desc="Maximum document size in bytes to load. 0 for unlimited." type="uint">0</max_file_size>

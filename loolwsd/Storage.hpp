@@ -13,6 +13,7 @@
 
 #include <string>
 
+#include <Poco/Util/Application.h>
 #include <Poco/URI.h>
 
 #include "Auth.hpp"
@@ -26,6 +27,11 @@ public:
     class FileInfo
     {
     public:
+        bool isValid() const
+        {
+            return !Filename.empty() && Size > 0;
+        }
+
         std::string Filename;
         Poco::Timestamp ModifiedTime;
         size_t Size;
@@ -139,6 +145,12 @@ std::unique_ptr<StorageBase> createStorage(const std::string& jailRoot, const st
 {
     if (uri.isRelative() || uri.getScheme() == "file")
     {
+        if (!Poco::Util::Application::instance().config().getBool("storage.filesystem[@allow]", false))
+        {
+            Log::error("Local Storage is disabled by default. Specify allowlocalstorage on the command-line to enable.");
+            return nullptr;
+        }
+
         Log::info("Public URI [" + uri.toString() + "] is a file.");
         return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
     }

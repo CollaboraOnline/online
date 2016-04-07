@@ -82,7 +82,10 @@ void DocumentBroker::validate(const Poco::URI& uri)
 {
     Log::info("Validating: " + uri.toString());
     auto storage = createStorage("", "", uri);
-    storage->getFileInfo(uri);
+    if (storage == nullptr || !storage->getFileInfo(uri).isValid())
+    {
+        throw std::runtime_error("Invalid URI or access denied.");
+    }
 }
 
 bool DocumentBroker::load(const std::string& jailId)
