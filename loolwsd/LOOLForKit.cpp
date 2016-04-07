@@ -43,13 +43,13 @@ using Poco::Util::Application;
 static std::atomic<unsigned> ForkCounter( 0 );
 static unsigned int ChildCounter = 0;
 
-static int ReaderBroker = -1;
+static int pipeFd = -1;
 
 class ChildDispatcher
 {
 public:
     ChildDispatcher() :
-        _wsdPipeReader("wsd_pipe_rd", ReaderBroker)
+        _wsdPipeReader("wsd_pipe_rd", pipeFd)
     {
     }
 
@@ -63,7 +63,7 @@ public:
 private:
     void handleInput(const std::string& message)
     {
-        Log::info("Broker command: [" + message + "].");
+        Log::info("ForKit command: [" + message + "].");
 
         StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -92,7 +92,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     if (!(pid = fork()))
     {
         // quicker than a generic socket closing approach.
-        close(ReaderBroker);
+        close(pipeFd);
 
         // child
         if (std::getenv("SLEEPKITFORDEBUGGER"))
@@ -122,19 +122,12 @@ static int createLibreOfficeKit(const std::string& childRoot,
 static void printArgumentHelp()
 {
     std::cout << "Usage: loolforkit [OPTION]..." << std::endl;
-    std::cout << "  Single threaded process broker that spawns lok instances" << std::endl;
-    std::cout << "  note: running this standalone is not possible, it is spawned by the loolwsd" << std::endl;
+    std::cout << "  Single-threaded process that spawns lok instances" << std::endl;
+    std::cout << "  Note: Running this standalone is not possible. It is spawned by loolwsd" << std::endl;
     std::cout << "        and is controlled via a pipe." << std::endl;
     std::cout << "" << std::endl;
-    std::cout << "  Some parameters are required and passed on to the lok instance:" << std::endl;
-    std::cout << "  --losubpath=<path>        path to chroot for child to live inside." << std::endl;
-    std::cout << "  --childroot=<path>        path to chroot for child to live inside." << std::endl;
-    std::cout << "  --systemplate=<path>      path of system template to pre-populate chroot with." << std::endl;
-    std::cout << "  --lotemplate=<path>       path of libreoffice template to pre-populate chroot with." << std::endl;
-    std::cout << "  --losubpath=<path>        path to libreoffice install" << std::endl;
 }
 
-// Broker process
 int main(int argc, char** argv)
 {
     if (std::getenv("SLEEPFORDEBUGGER"))
@@ -209,7 +202,7 @@ int main(int argc, char** argv)
 
     const Path pipePath = Path::forDirectory(childRoot + Path::separator() + FIFO_PATH);
     const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
-    if ( (ReaderBroker = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
+    if ( (pipeFd = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
     {
         Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for reading. Exiting.");
         std::exit(Application::EXIT_SOFTWARE);
@@ -229,7 +222,7 @@ int main(int argc, char** argv)
     }
 
     ChildDispatcher childDispatcher;
-    Log::info("loolbroker is ready.");
+    Log::info("ForKit process is ready.");
 
     Timestamp startTime;
 
@@ -265,9 +258,9 @@ int main(int argc, char** argv)
         }
     }
 
-    close(ReaderBroker);
+    close(pipeFd);
 
-    Log::info("Process [loolbroker] finished.");
+    Log::info("ForKit process finished.");
     return Application::EXIT_OK;
 }
 

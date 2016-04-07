@@ -780,7 +780,7 @@ void MasterProcessSession::dispatchChild()
             // request again new URL session
             const std::string message = "request " + getId() + " " + _docBroker->getDocKey() + '\n';
             Log::trace("MasterToBroker: " + message.substr(0, message.length()-1));
-            IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, message);
+            IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, message);
         }
     }
 

@@ -126,7 +126,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                     if (tokens[0] == "stats")
                     {
                         //TODO: Collect stats and reply back to admin.
-                        // We need to ask Broker to give us some numbers on docs/clients/etc.
+                        // We need to ask ForKit to give us some numbers on docs/clients/etc.
                         // But we can also collect some memory info using system calls.
 
                         std::string statsResponse;
@@ -194,7 +194,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                         {
                             if (std::stoi(tokens[1]))
                             {
-                                IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, firstLine + "\n");
+                                IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, firstLine + "\n");
                             }
                         }
                         catch(std::exception& e)
@@ -424,7 +424,7 @@ void Admin::rescheduleCpuTimer(unsigned interval)
 
 unsigned Admin::getTotalMemoryUsage(AdminModel& model)
 {
-    unsigned totalMem = Util::getMemoryUsage(_brokerPid);
+    unsigned totalMem = Util::getMemoryUsage(_forKitPid);
     totalMem += model.getTotalMemoryUsage();
     totalMem += Util::getMemoryUsage(Poco::Process::id());
 

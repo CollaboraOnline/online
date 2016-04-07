@@ -156,8 +156,8 @@ void forkChildren(int number)
     assert(!newChildrenMutex.try_lock()); // check it is held.
 
     const std::string aMessage = "spawn " + std::to_string(number) + "\n";
-    Log::debug("MasterToBroker: " + aMessage.substr(0, aMessage.length() - 1));
-    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, aMessage);
+    Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
+    IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, aMessage);
 }
 
 void preForkChildren()
@@ -954,7 +954,7 @@ private:
 };
 
 std::atomic<unsigned> LOOLWSD::NextSessionId;
-int LOOLWSD::BrokerWritePipe = -1;
+int LOOLWSD::ForKitWritePipe = -1;
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
@@ -1202,7 +1202,7 @@ void LOOLWSD::displayVersion()
     std::cout << LOOLWSD_VERSION << std::endl;
 }
 
-Process::PID LOOLWSD::createBroker()
+Process::PID LOOLWSD::createForKit()
 {
     Process::Args args;
 
@@ -1212,12 +1212,12 @@ Process::PID LOOLWSD::createBroker()
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
 
-    const std::string brokerPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
+    const std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
 
-    Log::info("Launching kit forker #1: " + brokerPath + " " +
+    Log::info("Launching forkit process: " + forKitPath + " " +
               Poco::cat(std::string(" "), args.begin(), args.end()));
 
-    ProcessHandle child = Process::launch(brokerPath, args);
+    ProcessHandle child = Process::launch(forKitPath, args);
 
     return child.id();
 }
@@ -1321,15 +1321,16 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         exit(Application::EXIT_SOFTWARE);
     }
 
-    const Process::PID brokerPid = createBroker();
-    if (brokerPid < 0)
+    const Process::PID forKitPid = createForKit();
+    if (forKitPid < 0)
     {
-        Log::error("Failed to spawn loolBroker.");
+        Log::error("Failed to spawn loolforkit.");
         return Application::EXIT_SOFTWARE;
     }
 
     // Init the Admin manager
-    Admin::instance().setBrokerPid(brokerPid);
+    Admin::instance().setForKitPid(forKitPid);
+
     // Init the file server
     FileServer fileServer;
 
@@ -1360,7 +1361,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     srv2.start();
 
-    if ( (BrokerWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
+    if ( (ForKitWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
     {
         Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for writing.");
         return Application::EXIT_SOFTWARE;
@@ -1384,10 +1385,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     int status = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
     {
-        const pid_t pid = waitpid(brokerPid, &status, WUNTRACED | WNOHANG);
+        const pid_t pid = waitpid(forKitPid, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
-            if (brokerPid == pid)
+            if (forKitPid == pid)
             {
                 if (WIFEXITED(status))
                 {
@@ -1511,14 +1512,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
 
     // Terminate child processes
-    IoUtil::writeFIFO(LOOLWSD::BrokerWritePipe, "eof\n");
-    Log::info("Requesting child process " + std::to_string(brokerPid) + " to terminate");
-    Util::requestTermination(brokerPid);
+    IoUtil::writeFIFO(ForKitWritePipe, "eof\n");
+    Log::info("Requesting child process " + std::to_string(forKitPid) + " to terminate");
+    Util::requestTermination(forKitPid);
 
-    // wait broker process finish
-    waitpid(brokerPid, &status, WUNTRACED);
+    // Wait for forkit process finish
+    waitpid(forKitPid, &status, WUNTRACED);
 
-    close(BrokerWritePipe);
+    close(ForKitWritePipe);
 
     Log::info("Cleaning up childroot directory [" + ChildRoot + "].");
     std::vector<std::string> jails;

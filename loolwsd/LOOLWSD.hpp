@@ -37,7 +37,7 @@ public:
     // so just keep these as statics.
     static std::atomic<unsigned> NextSessionId;
     static unsigned int NumPreSpawnedChildren;
-    static int BrokerWritePipe;
+    static int ForKitWritePipe;
     static bool DoTest;
     static std::string Cache;
     static std::string SysTemplate;
@@ -65,7 +65,7 @@ private:
     void initializeSSL();
     void displayHelp();
     void displayVersion();
-    Poco::Process::PID createBroker();
+    Poco::Process::PID createForKit();
 
     /// Reads and processes path entries with the given property
     /// from the configuration.

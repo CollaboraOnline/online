@@ -55,8 +55,8 @@ public:
     /// Update the Admin Model.
     void update(const std::string& message);
 
-    /// Set the broker ProcessID.
-    void setBrokerPid(const int brokerPid) { _brokerPid = brokerPid; }
+    /// Set the forkit process id.
+    void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; }
 
     /// Callers must ensure that modelMutex is acquired
     AdminModel& getModel();
@@ -83,7 +83,7 @@ private:
 private:
     AdminModel _model;
     std::mutex _modelMutex;
-    int _brokerPid;
+    int _forKitPid;
 
     Poco::Util::Timer _memStatsTimer;
     Poco::Util::TimerTask::Ptr _memStatsTask;
@@ -92,10 +92,6 @@ private:
     Poco::Util::Timer _cpuStatsTimer;
     Poco::Util::TimerTask::Ptr _cpuStatsTask;
     unsigned _cpuStatsTaskInterval = 5000;
-
-    static Poco::Process::PID BrokerPid;
-    static int BrokerPipe;
-    static int AdminNotifyPipe;
 };
 
 class MemoryStats : public Poco::Util::TimerTask
