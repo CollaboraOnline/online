@@ -41,14 +41,8 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                      Poco::Net::HTTPResponse& response,
                      std::function<bool(const std::vector<char>&)> handler,
                      std::function<bool()> stopPredicate,
-                     std::string name,
                      const size_t pollTimeoutMs)
 {
-    if (!name.empty())
-    {
-        name = "[" + name + "] ";
-    }
-
     Log::info("SocketProcessor starting.");
 
     // Timeout given is in microseconds.

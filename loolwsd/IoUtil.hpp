@@ -27,7 +27,6 @@ namespace IoUtil
                          Poco::Net::HTTPResponse& response,
                          std::function<bool(const std::vector<char>&)> handler,
                          std::function<bool()> stopPredicate,
-                         std::string name = std::string(),
                          const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
 
     /// Call WebSocket::shutdown() ignoring Poco::IOException.

@@ -512,9 +512,7 @@ private:
 
                 return true;
             },
-            []() { return TerminationFlag; },
-            "Client_ws_" + id
-            );
+            []() { return TerminationFlag; });
 
         if (docBroker->getSessionsCount() == 1 && !normalShutdown && !session->_bLoadError)
         {
@@ -758,9 +756,7 @@ public:
                 {
                     return session->handleInput(payload.data(), payload.size());
                 },
-                []() { return TerminationFlag; },
-                "Child_ws_" + sessionId
-                );
+                []() { return TerminationFlag; });
         }
         catch (const Exception& exc)
         {

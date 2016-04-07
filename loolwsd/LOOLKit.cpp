@@ -1059,8 +1059,7 @@ void lokit_main(const std::string& childRoot,
 
                     return true;
                 },
-                [](){ return TerminationFlag; },
-                socketName);
+                [](){ return TerminationFlag; });
 
         // Cleanup jail.
         Util::removeFile(jailPath, true);
