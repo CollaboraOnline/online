@@ -10,7 +10,6 @@
 #include <cassert>
 #include <mutex>
 #include <sys/poll.h>
-#include <sys/prctl.h>
 
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPBasicCredentials.h>
@@ -336,8 +335,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
     const auto nSessionId = Util::decodeId(LOOLWSD::GenSessionId());
     const std::string thread_name = "admin_ws_" + std::to_string(nSessionId);
 
-    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-        Log::syserror("Cannot set thread name to " + thread_name + ".");
+    Util::setThreadName(thread_name);
 
     Log::debug("Thread [" + thread_name + "] started.");
 
@@ -453,8 +451,7 @@ void Admin::run()
 
     static const std::string thread_name = "admin_thread";
 
-    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-        Log::syserror("Cannot set thread name to " + thread_name + ".");
+    Util::setThreadName(thread_name);
 
     Log::info("Thread [" + thread_name + "] started.");
 

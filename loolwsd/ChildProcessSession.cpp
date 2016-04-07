@@ -7,8 +7,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <sys/prctl.h>
-
 #include <iostream>
 
 #include <Poco/Exception.h>
@@ -202,8 +200,7 @@ public:
     {
         static const std::string thread_name = "kit_callback";
 
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::syserror("Cannot set thread name to " + thread_name + ".");
+        Util::setThreadName(thread_name);
 
         Log::debug("Thread [" + thread_name + "] started.");
 

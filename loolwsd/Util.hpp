@@ -131,6 +131,8 @@ namespace Util
     std::string replace(const std::string& s, const std::string& a, const std::string& b);
 
     std::string formatLinesForLog(const std::string& s);
+
+    void setThreadName(const std::string& s);
 };
 
 //TODO: Move to own file.

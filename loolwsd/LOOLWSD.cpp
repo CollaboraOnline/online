@@ -18,7 +18,6 @@
 #include <unistd.h>
 
 #include <sys/types.h>
-#include <sys/prctl.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 
@@ -586,8 +585,7 @@ public:
         const auto id = LOOLWSD::GenSessionId();
         const std::string thread_name = "client_ws_" + id;
 
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::syserror("Cannot set thread name to " + thread_name + ".");
+        Util::setThreadName(thread_name);
 
         Log::debug("Thread [" + thread_name + "] started.");
 
@@ -635,8 +633,8 @@ public:
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         std::string thread_name = "prison_ws_";
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::syserror("Cannot set thread name to " + thread_name + ".");
+
+        Util::setThreadName(thread_name);
 
         Log::debug("Child connection with URI [" + request.getURI() + "].");
 
@@ -698,9 +696,11 @@ public:
             }
 
             thread_name += sessionId;
-            if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-                Log::syserror("Cannot set thread name to " + thread_name + ".");
 
+            Util::setThreadName(thread_name);
+
+            // Misleading debug message, we obviously started already a while ago and have done lots
+            // of stuff already.
             Log::debug("Thread [" + thread_name + "] started.");
 
             Log::debug("Child socket for SessionId: " + sessionId + ", jailId: " + jailId +
@@ -805,8 +805,7 @@ public:
 
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
-            Log::syserror("Cannot set thread name to request_handler.");
+        Util::setThreadName("request_handler");
 
         auto logger = Log::info();
         logger << "Request from " << request.clientAddress().toString() << ": "
@@ -855,8 +854,7 @@ class PrisonerRequestHandlerFactory: public HTTPRequestHandlerFactory
 public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>("request_handler"), 0, 0, 0) != 0)
-            Log::syserror("Cannot set thread name to request_handler.");
+        Util::setThreadName("request_handler");
 
         auto logger = Log::info();
         logger << "Request from " << request.clientAddress().toString() << ": "

@@ -8,7 +8,6 @@
  */
 
 #include <sys/poll.h>
-#include <sys/prctl.h>
 
 #include <cassert>
 #include <cstdlib>

@@ -14,7 +14,6 @@
 #include <dlfcn.h>
 #include <ftw.h>
 #include <sys/capability.h>
-#include <sys/prctl.h>
 #include <unistd.h>
 #include <utime.h>
 
@@ -280,8 +279,7 @@ public:
     {
         const std::string thread_name = "kit_ws_" + _session->getId();
 
-        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(thread_name.c_str()), 0, 0, 0) != 0)
-            Log::error("Cannot set thread name to " + thread_name + ".");
+        Util::setThreadName(thread_name);
 
         Log::debug("Thread [" + thread_name + "] started.");
 
@@ -898,8 +896,7 @@ void lokit_main(const std::string& childRoot,
     static const std::string jailId = pid;
     static const std::string process_name = "loolkit";
 
-    if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(process_name.c_str()), 0, 0, 0) != 0)
-        Log::error("Cannot set process name to " + process_name + ".");
+    Util::setThreadName(process_name);
 
     Util::setTerminationSignals();
     Util::setFatalSignals();

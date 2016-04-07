@@ -533,6 +533,12 @@ namespace Util
             r = s;
         return replace(r, "\n", " / ");
     }
+
+    void setThreadName(const std::string& s)
+    {
+        if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
+            Log::syserror("Cannot set thread name to " + s + ".");
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
