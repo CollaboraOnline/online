@@ -152,6 +152,7 @@ namespace Log
                      ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
                      : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
         auto& logger = Poco::Logger::create(Source.name, channel, Poco::Message::PRIO_TRACE);
+        channel->release();
 
         // Configure the logger.
         // TODO: This should come from a file.
