@@ -142,7 +142,7 @@ namespace Log
     void trace(const std::string& msg);
     void debug(const std::string& msg);
     void info(const std::string& msg);
-    void warn(const std::string& msg, const bool append_errno = false);
+    void warn(const std::string& msg);
     void error(const std::string& msg, const bool append_errno = true);
 
     /// The following is to write streaming logs.

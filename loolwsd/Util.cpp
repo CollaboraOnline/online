@@ -167,12 +167,9 @@ namespace Log
         logger().information(logPrefix() + msg);
     }
 
-    void warn(const std::string& msg, const bool append_errno)
+    void warn(const std::string& msg)
     {
-        logger().warning(logPrefix() + msg +
-                         (append_errno
-                          ? (std::string(" (errno: ") + strerror(errno) + ").")
-                          : std::string("")));
+        logger().warning(logPrefix() + msg);
     }
 
     void error(const std::string& msg, const bool append_errno)
