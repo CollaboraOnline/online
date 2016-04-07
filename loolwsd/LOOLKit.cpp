@@ -1005,7 +1005,7 @@ void lokit_main(const std::string& childRoot,
             std::exit(Application::EXIT_SOFTWARE);
         }
 
-        Log::info("loolkit [" + std::to_string(Process::id()) + "] is ready.");
+        Log::info("Process is ready.");
 
         // Open websocket connection between the child process and WSD.
         HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
