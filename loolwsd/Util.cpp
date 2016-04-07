@@ -18,6 +18,7 @@
 #include <random>
 #include <sstream>
 #include <string>
+#include <unistd.h>
 
 #include <png.h>
 
@@ -89,6 +90,8 @@ namespace rng
 }
 }
 
+static char LogPrefix[256] = { '\0' };
+
 namespace Log
 {
     static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
@@ -135,7 +138,6 @@ namespace Log
         return stream.str();
     }
 
-
     void initialize(const std::string& name)
     {
         Source.name = name;
@@ -143,6 +145,8 @@ namespace Log
         oss << Source.name << '-'
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
         Source.id = oss.str();
+        assert (sizeof (LogPrefix) > strlen(oss.str().c_str()) + 1);
+        strcpy(LogPrefix, oss.str().c_str());
 
         auto channel = (isatty(fileno(stdout)) || std::getenv("LOOL_LOGCOLOR")
                      ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
@@ -356,19 +360,38 @@ namespace Util
         }
     }
 
+    // We need a signal safe means of writing messages
+    //   $ man 7 signal
+    static
+    void log_signal(const char *message)
+    {
+        while (true) {
+            int length = strlen(message);
+            int written = write (STDERR_FILENO, message, length);
+            if (written < 0)
+            {
+                if (errno == EINTR)
+                    continue; // ignore.
+                else
+                    break;
+            }
+            message += written;
+            if (message[0] == '\0')
+                break;
+        }
+    }
+
     static
     void handleTerminationSignal(const int signal)
     {
         if (!TerminationFlag)
         {
-            // Poco::Log takes a lock that isn't recursive.
-            // If we are signaled while having that lock,
-            // logging again will deadlock on it.
             TerminationFlag = true;
 
-            Log::info() << "Termination signal received: "
-                        << Util::signalName(signal) << " "
-                        << strsignal(signal) << Log::end;
+            log_signal(LogPrefix);
+            log_signal(" Termination signal received: ");
+            log_signal(strsignal(signal));
+            log_signal("\n");
         }
     }
 
@@ -386,19 +409,19 @@ namespace Util
         sigaction(SIGHUP, &action, nullptr);
     }
 
+    static char FatalGdbString[256] = { '\0' };
+
     static
     void handleFatalSignal(const int signal)
     {
-        Log::error() << "Fatal signal received: "
-                     << Util::signalName(signal) << " "
-                     << strsignal(signal) << Log::end;
+        log_signal(LogPrefix);
+        log_signal(" Fatal signal received: ");
+        log_signal(strsignal(signal));
+        log_signal("\n");
 
         if (std::getenv("LOOL_DEBUG"))
         {
-            Log::error() << "\nFatal signal! Attach debugger with:\n"
-                         << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
-                         << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
-                         << Poco::Process::id() << "\n" << Log::end;
+            log_signal(FatalGdbString);
             sleep(30);
         }
 
@@ -426,6 +449,16 @@ namespace Util
         sigaction(SIGABRT, &action, NULL);
         sigaction(SIGILL, &action, NULL);
         sigaction(SIGFPE, &action, NULL);
+
+        // prepare this in advance just in case.
+        std::ostringstream stream;
+        stream << "\nFatal signal! Attach debugger with:\n"
+               << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
+               << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
+               << Poco::Process::id() << "\n";
+        std::string streamStr = stream.str();
+        assert (sizeof (FatalGdbString) > strlen(streamStr.c_str()) + 1);
+        strcpy(FatalGdbString, streamStr.c_str());
     }
 
     int getChildStatus(const int code)
