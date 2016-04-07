@@ -1,12 +1,13 @@
 <config>
 
-    <num_prespawn_kit desc="Number of child processes to keep started in advance and waiting for new clients." type="uint">1</num_prespawn_kit>
-    <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="false"></sys_template_path>
+    <tile_cache_path desc="Path to a directory where to keep the persistent tile cache." type="path" relative="false" default="/usr/local/var/cache/loolwsd"></tile_cache_path>
+    <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="true" default="systemplate"></sys_template_path>
     <lo_template_path desc="Path to a LibreOffice installation tree to be copied (linked) into the jails for child processes. Should be on the same file system as systemplate." type="path" relative="false"></lo_template_path>
-    <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate." type="path" relative="false"></child_root_path>
+    <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="true" default="jails"></child_root_path>
     <lo_jail_subpath desc="Relative path where the LibreOffice installation will be copied inside a jail." type="path" relative="true" default="lo">lo</lo_jail_subpath>
-    <file_server_root_path desc="Path to the directory that should be considered root for the file server." type="path" relative="true" default="../loleaflet/">../loleaflet/</file_server_root_path>
+    <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing loleaflet." type="path" relative="true" default="../loleaflet/../"></file_server_root_path>
 
+    <num_prespawn_children desc="Number of child processes to keep started in advance and waiting for new clients." type="uint" default="10">1</num_prespawn_children>
     <logging>
         <color type="bool">true</color>
         <level type="string">trace</level>

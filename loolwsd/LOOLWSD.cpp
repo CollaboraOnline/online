@@ -965,7 +965,7 @@ std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::AdminCreds;
 
-int LOOLWSD::NumPreSpawnedChildren = 10;
+unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 bool LOOLWSD::DoTest = false;
 
 LOOLWSD::LOOLWSD()
@@ -995,6 +995,42 @@ void LOOLWSD::initialize(Application& self)
             config().setString("admin_console_username", tokens[0]);
             config().setString("admin_console_password", tokens[1]);
         }
+    }
+
+    if (Cache.empty())
+    {
+        Cache = getPathFromConfig("tile_cache_path");
+    }
+
+    if (SysTemplate.empty())
+    {
+        SysTemplate = getPathFromConfig("sys_template_path");
+    }
+
+    if (LoTemplate.empty())
+    {
+        LoTemplate = getPathFromConfig("lo_template_path");
+    }
+
+    if (ChildRoot.empty())
+    {
+        ChildRoot = getPathFromConfig("child_root_path");
+    }
+
+    if (LoSubPath.empty())
+    {
+        LoSubPath = getPathFromConfig("lo_jail_subpath");
+    }
+
+    if (FileServerRoot.empty())
+    {
+        FileServerRoot = getPathFromConfig("file_server_root_path");
+    }
+
+    if (NumPreSpawnedChildren == 0)
+    {
+        // Default to 10 children.
+        NumPreSpawnedChildren = config().getUInt("num_prespawn_children", 10);
     }
 
     ServerApplication::initialize(self);

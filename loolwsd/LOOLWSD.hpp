@@ -36,7 +36,7 @@ public:
     // An Application is a singleton anyway,
     // so just keep these as statics.
     static std::atomic<unsigned> NextSessionId;
-    static int NumPreSpawnedChildren;
+    static unsigned int NumPreSpawnedChildren;
     static int BrokerWritePipe;
     static bool DoTest;
     static std::string Cache;
@@ -73,6 +73,13 @@ private:
     std::string getPathFromConfig(const std::string& property) const
     {
         auto path = config().getString(property);
+        if (path.empty() && config().hasProperty(property + "[@default]"))
+        {
+            // Use the default value if empty and a default provided.
+            path = config().getString(property + "[@default]");
+        }
+
+        // Reconstruct absolute path if relative.
         if (config().hasProperty(property + "[@relative]") &&
             config().getBool(property + "[@relative]"))
         {
