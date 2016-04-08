@@ -33,6 +33,7 @@ class HTTPPostTest : public CPPUNIT_NS::TestFixture
 
     void testConvertTo();
 
+#ifdef ENABLE_SSL
 public:
     HTTPPostTest()
     {
@@ -48,14 +49,20 @@ public:
     {
         Poco::Net::uninitializeSSL();
     }
+#endif
 };
 
 void HTTPPostTest::testConvertTo()
 {
     const auto srcPath = Util::getTempFilePath(TDOC, "hello.odt");
 
+#ifdef ENABLE_SSL
     Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
     Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
+#else
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+#endif
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/convert-to");
     Poco::Net::HTMLForm form;

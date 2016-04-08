@@ -556,7 +556,11 @@ private:
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
+#ifdef ENABLE_SSL
         const std::string uriValue = "https://" + uri.getHost() + ":" + std::to_string(uri.getPort()) + "/loleaflet/dist/loleaflet.html?";
+#else
+        const std::string uriValue = "http://" + uri.getHost() + ":" + std::to_string(uri.getPort()) + "/loleaflet/dist/loleaflet.html?";
+#endif
 
         InputSource inputSrc(discoveryPath);
         AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
@@ -1045,6 +1049,7 @@ void LOOLWSD::initialize(Application& self)
     ServerApplication::initialize(self);
 }
 
+#ifdef ENABLE_SSL
 void LOOLWSD::initializeSSL()
 {
     const auto ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
@@ -1083,6 +1088,7 @@ void LOOLWSD::initializeSSL()
     Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 }
+#endif
 
 void LOOLWSD::uninitialize()
 {
@@ -1251,8 +1257,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::error("Failed to load unit test library");
         return Application::EXIT_USAGE;
     }
-
+#ifdef ENABLE_SSL
     initializeSSL();
+#endif
 
     char *locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
@@ -1368,7 +1375,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     params2->setMaxThreads(MAX_SESSIONS);
 
     // Start a server listening on the port for clients
+#ifdef ENABLE_SSL
     SecureServerSocket svs(ClientPortNumber);
+#else
+    ServerSocket svs(ClientPortNumber);
+#endif
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
     HTTPServer srv(new ClientRequestHandlerFactory(fileServer), threadPool, svs, params1);
 
@@ -1553,8 +1564,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Util::removeFile(path, true);
     }
 
+#ifdef ENABLE_SSL
     Poco::Net::uninitializeSSL();
     Poco::Crypto::uninitializeCrypto();
+#endif
 
     Log::info("Process [loolwsd] finished.");
 

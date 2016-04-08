@@ -68,6 +68,10 @@ AC_ARG_ENABLE([tests],
             AS_HELP_STRING([--disable-tests],
                            [Build and run unit tests]))
 
+AC_ARG_ENABLE([ssl],
+            AS_HELP_STRING([--disable-ssl],
+                           [Compile without SSL support]))
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -148,6 +152,9 @@ AS_IF([test `uname -s` = Linux],
 AS_IF([test "$enable_tests" != "no"],
       [PKG_CHECK_MODULES([CPPUNIT], [cppunit])])
 
+AS_IF([test "$enable_ssl" != "no"],
+      [AC_DEFINE([ENABLE_SSL],[],[Enable SSL])])
+
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
 AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
@@ -212,6 +219,7 @@ Configuration:
     Build location:         ${top_builddir}
     LOKit path              ${lokit_msg}
     LO integration tests    ${lo_msg}
+    SSL support             ${enable_ssl}
 "
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:

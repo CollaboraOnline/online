@@ -14,6 +14,7 @@
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
+#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -43,6 +44,7 @@ using namespace LOOLProtocol;
 
 using Poco::Net::AcceptCertificateHandler;
 using Poco::Net::Context;
+using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPSClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
@@ -118,7 +120,11 @@ class Connect: public Poco::Util::Application
 {
 public:
     Connect() :
+#ifdef ENABLE_SSL
         _uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
+#else
+        _uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
+#endif
     {
     }
 
@@ -138,6 +144,7 @@ protected:
         if (args.size() > 1)
             _uri = URI(args[1]);
 
+#ifdef ENABLE_SSL
         Poco::Net::initializeSSL();
 
         SharedPtr<InvalidCertificateHandler> invalidCertHandler = new AcceptCertificateHandler(false);
@@ -146,6 +153,9 @@ protected:
         SSLManager::instance().initializeClient(0, invalidCertHandler, sslContext);
 
         HTTPSClientSession cs(_uri.getHost(), _uri.getPort());
+#else
+        HTTPClientSession cs(_uri.getHost(), _uri.getPort());
+#endif
         HTTPRequest request(HTTPRequest::HTTP_GET, args[0]);
         HTTPResponse response;
         WebSocket ws(cs, request, response);

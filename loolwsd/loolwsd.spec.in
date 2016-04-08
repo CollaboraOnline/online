@@ -37,7 +37,11 @@ Requires:       libcap libcap-progs libpng libPocoFoundation42 >= 1.7.1 libPocoN
 %setup -q
 
 %build
-%configure --with-lokit-path=bundled/include
+%configure \
+	--with-lokit-path=bundled/include \
+%if %{ssl_support} == "NO"
+	--disable-ssl
+%endif
 
 env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 

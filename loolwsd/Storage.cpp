@@ -13,6 +13,7 @@
 
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/StreamCopier.h>
@@ -156,7 +157,11 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
     Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
 
     Poco::URI uriObject(uri);
+#ifdef ENABLE_SSL
     Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
+#else
+    Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+#endif
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
     session.sendRequest(request);
@@ -212,7 +217,11 @@ std::string WopiStorage::loadStorageFileToLocal()
     const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
     Log::debug("Wopi requesting: " + url);
 
+#ifdef ENABLE_SSL
     Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
+#else
+    Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+#endif
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url, Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
     session.sendRequest(request);
@@ -253,7 +262,11 @@ bool WopiStorage::saveLocalFileToStorage()
     const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
     Log::debug("Wopi posting: " + url);
 
+#ifdef ENABLE_SSL
     Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
+#else
+    Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+#endif
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, url, Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("X-WOPIOverride", "PUT");
     request.setContentType("application/octet-stream");
