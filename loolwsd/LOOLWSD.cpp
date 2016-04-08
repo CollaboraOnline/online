@@ -152,7 +152,7 @@ static std::condition_variable newChildrenCV;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 
-void forkChildren(int number)
+static void forkChildren(int number)
 {
     assert(!newChildrenMutex.try_lock()); // check it is held.
 
@@ -161,7 +161,7 @@ void forkChildren(int number)
     IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, aMessage);
 }
 
-void preForkChildren()
+static void preForkChildren()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
@@ -169,7 +169,7 @@ void preForkChildren()
     forkChildren(numPreSpawn);
 }
 
-std::shared_ptr<ChildProcess> getNewChild()
+static std::shared_ptr<ChildProcess> getNewChild()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
 
@@ -968,7 +968,7 @@ std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::AdminCreds;
 bool LOOLWSD::AllowLocalStorage = false;
-std::string UnitTestLibrary;
+static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 bool LOOLWSD::DoTest = false;
