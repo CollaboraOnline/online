@@ -1076,6 +1076,10 @@ void lokit_main(const std::string& childRoot,
         Log::error(std::string("Exception: ") + exc.what());
     }
 
+    // Sleep a second here in case we get a fatal signal just when about to finish up, which sadly
+    // seems to happen often, so that the fatalSignalHandler in Util.cpp has time to produce a
+    // backtrace.
+    sleep(1);
     Log::info("Process finished.");
     std::_Exit(Application::EXIT_OK);
 }
