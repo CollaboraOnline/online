@@ -7,8 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_ADMIN_MODEL_HPP
-#define INCLUDED_ADMIN_MODEL_HPP
+#ifndef INCLUDED_ADMINMODEL_HPP
+#define INCLUDED_ADMINMODEL_HPP
 
 #include <memory>
 #include <set>

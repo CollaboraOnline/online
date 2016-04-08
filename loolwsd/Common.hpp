@@ -41,4 +41,5 @@ constexpr auto NEW_CHILD_URI = "/loolws/newchild?";
 constexpr auto SSL_KEY_FILE = "key.pem";
 
 #endif
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

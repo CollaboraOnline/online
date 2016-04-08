@@ -7,8 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_LOOLCHILDPROCESSSESSION_HPP
-#define INCLUDED_LOOLCHILDPROCESSSESSION_HPP
+#ifndef INCLUDED_CHILDPROCESSSESSION_HPP
+#define INCLUDED_CHILDPROCESSSESSION_HPP
 
 #include <mutex>
 

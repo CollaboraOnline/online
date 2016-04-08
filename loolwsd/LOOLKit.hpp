@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#ifndef LOOL_KIT_HPP
-#define LOOL_KIT_HPP
+#ifndef INCLUDED_LOOLKIT_HPP
+#define INCLUDED_LOOLKIT_HPP
 
 void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
@@ -16,6 +16,6 @@ void lokit_main(const std::string& childRoot,
 
 bool globalPreinit(const std::string &loTemplate);
 
-#endif // LOOL_KIT_HPP
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

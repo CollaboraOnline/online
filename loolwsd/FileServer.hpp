@@ -7,8 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_FILE_SERVER_HPP
-#define INCLUDED_FILE_SERVER_HPP
+#ifndef INCLUDED_FILESERVER_HPP
+#define INCLUDED_FILESERVER_HPP
 
 #include <string>
 #include <vector>

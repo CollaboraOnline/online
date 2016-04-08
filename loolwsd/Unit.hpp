@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#ifndef LOOL_UNIT_HPP
-#define LOOL_UNIT_HPP
+#ifndef INCLUDED_UNIT_HPP
+#define INCLUDED_UNIT_HPP
 
 #include <string>
 #include <memory>
@@ -72,6 +72,6 @@ public:
                                std::unique_ptr<StorageBase> & /*rStorage */) { return false; }
 };
 
-#endif // LOOL_UNIT_HPP
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

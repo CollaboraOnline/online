@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#ifndef LOOL_UNIT_HTTP_HPP
-#define LOOL_UNIT_HTTP_HPP
+#ifndef INCLUDED_UNITHTTP_HPP
+#define INCLUDED_UNITHTTP_HPP
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPServerParams.h>
@@ -70,4 +70,6 @@ public:
         { return _response; }
 };
 
-#endif // LOOL_UNIT_HTTP_HPP
+#endif
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
