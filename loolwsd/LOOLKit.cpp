@@ -223,7 +223,8 @@ public:
                std::shared_ptr<WebSocket> ws) :
         _session(session),
         _ws(ws),
-        _stop(false)
+        _stop(false),
+        _joined(false)
     {
         Log::info("Connection ctor in child for " + _session->getId());
     }
