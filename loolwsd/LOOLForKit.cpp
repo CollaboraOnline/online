@@ -210,7 +210,7 @@ int main(int argc, char** argv)
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))
-        _exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
 
     Log::info("Preinit stage OK.");
 
