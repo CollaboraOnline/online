@@ -156,12 +156,12 @@ void DocumentBroker::takeEditLock(const std::string id)
         if (it.first != id)
         {
             it.second->setEditLock(false);
-            it.second->sendTextFrame("editlock 0");
+            it.second->sendTextFrame("editlock: 0");
         }
         else
         {
             it.second->setEditLock(true);
-            it.second->sendTextFrame("editlock 1");
+            it.second->sendTextFrame("editlock: 1");
         }
     }
 }

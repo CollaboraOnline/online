@@ -331,7 +331,7 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('unocommandresult:')) {
 			this._onUnoCommandResultMsg(textMsg);
 		}
-		else if (textMsg.startsWith('editlock')) {
+		else if (textMsg.startsWith('editlock:')) {
 			this._onEditLock(textMsg);
 		}
 		else if (textMsg.startsWith('contextmenu:')) {
