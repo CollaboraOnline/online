@@ -364,9 +364,9 @@ private:
     Thread _thread;
     std::shared_ptr<ChildProcessSession> _session;
     std::shared_ptr<WebSocket> _ws;
-    std::atomic<unsigned> _stop;
+    std::atomic<bool> _stop;
     std::mutex _threadMutex;
-    std::atomic<unsigned> _joined;
+    std::atomic<bool> _joined;
 };
 
 /// A document container.
