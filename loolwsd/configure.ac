@@ -153,7 +153,7 @@ AS_IF([test "$enable_tests" != "no"],
       [PKG_CHECK_MODULES([CPPUNIT], [cppunit])])
 
 AS_IF([test "$enable_ssl" != "no"],
-      [AC_DEFINE([ENABLE_SSL],[],[Enable SSL])])
+      [AC_DEFINE([ENABLE_SSL],1,[Enable SSL])])
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
