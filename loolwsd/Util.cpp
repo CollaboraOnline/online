@@ -307,7 +307,7 @@ namespace Util
     {
         switch (signo)
         {
-#define CASE(x) case SIG##x: return #x
+#define CASE(x) case SIG##x: return "SIG" #x
             CASE(HUP);
             CASE(INT);
             CASE(QUIT);
