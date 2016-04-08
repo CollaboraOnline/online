@@ -41,7 +41,6 @@ using Poco::Timestamp;
 using Poco::Util::Application;
 
 static std::atomic<unsigned> ForkCounter( 0 );
-static unsigned int ChildCounter = 0;
 
 static int pipeFd = -1;
 
@@ -115,7 +114,6 @@ static int createLibreOfficeKit(const std::string& childRoot,
             Log::info("Forked kit [" + std::to_string(childPID) + "].");
     }
 
-    Log::info() << "Created Kit #" << ChildCounter << ", PID: " << childPID << Log::end;
     return childPID;
 }
 
