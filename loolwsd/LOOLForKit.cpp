@@ -83,8 +83,6 @@ static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& loTemplate,
                                 const std::string& loSubPath)
 {
-    Process::PID childPID = 0;
-
     Log::debug("Forking a loolkit process.");
 
     Process::PID pid;
@@ -107,14 +105,13 @@ static int createLibreOfficeKit(const std::string& childRoot,
     else
     {
         // parent
-        childPID = pid; // (somehow - switch the hash to use real pids or ?) ...
         if (pid < 0)
             Log::syserror("Fork failed.");
         else
-            Log::info("Forked kit [" + std::to_string(childPID) + "].");
+            Log::info("Forked kit [" + std::to_string(pid) + "].");
     }
 
-    return childPID;
+    return pid;
 }
 
 static void printArgumentHelp()
