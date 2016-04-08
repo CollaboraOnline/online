@@ -7,6 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "config.h"
+
 #include <cassert>
 #include <string>
 #include <fstream>
