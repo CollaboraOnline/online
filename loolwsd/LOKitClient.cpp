@@ -194,7 +194,7 @@ protected:
         }
 
         // Safest to just bluntly exit
-        _Exit(Application::EXIT_OK);
+        std::_Exit(Application::EXIT_OK);
     }
 };
 
