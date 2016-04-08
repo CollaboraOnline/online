@@ -13,10 +13,12 @@
 #include "Util.hpp"
 #include "Unit.hpp"
 
+#include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
-using Poco::Util::Application;
 
 UnitHooks *UnitHooks::_global = nullptr;
+
+static Poco::Thread TimeoutThread("unit timeout");
 
 UnitHooks *UnitHooks::linkAndCreateUnit(const std::string &unitLibPath)
 {
@@ -45,15 +47,33 @@ UnitHooks *UnitHooks::linkAndCreateUnit(const std::string &unitLibPath)
 bool UnitHooks::init(const std::string &unitLibPath)
 {
     if (!unitLibPath.empty())
+    {
         _global = linkAndCreateUnit(unitLibPath);
+        TimeoutThread.startFunc([](){
+                TimeoutThread.trySleep(_global->_timeoutMilliSeconds);
+                if (!_global->_timeoutShutdown)
+                {
+                    Log::error("Timeout");
+                    _global->timeout();
+                }
+            });
+    }
     else
         _global = new UnitHooks();
 
     return _global != NULL;
 }
 
+void UnitHooks::setTimeout(int timeoutMilliSeconds)
+{
+    assert(!TimeoutThread.isRunning());
+    _timeoutMilliSeconds = timeoutMilliSeconds;
+}
+
 UnitHooks::UnitHooks()
-    : _dlHandle(NULL)
+    : _dlHandle(NULL),
+      _timeoutMilliSeconds(30 * 1000),
+      _timeoutShutdown(false)
 {
 }
 
@@ -69,22 +89,27 @@ void UnitHooks::exitTest(TestResult result)
 {
     _setRetValue = true;
     _retValue = result == TestResult::TEST_OK ?
-        Application::EXIT_OK : Application::EXIT_SOFTWARE;
+        Poco::Util::Application::EXIT_OK :
+        Poco::Util::Application::EXIT_SOFTWARE;
     TerminationFlag = true;
 }
 
-/// Tweak the return value from LOOLWSD.
+void UnitHooks::timeout()
+{
+    exitTest(TestResult::TEST_TIMED_OUT);
+}
+
 void UnitHooks::returnValue(int &retValue)
 {
     if (_setRetValue)
         retValue = _retValue;
-}
 
-// FIXME: trigger the timeout.
-void UnitHooks::timeout()
-{
-    Log::error("Test timed out - failing.");
-    exitTest(TestResult::TEST_TIMED_OUT);
+    _timeoutShutdown = true;
+    TimeoutThread.wakeUp();
+    TimeoutThread.join();
+
+    delete _global;
+    _global = nullptr;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -11,8 +11,10 @@
 
 #include <string>
 #include <memory>
+#include <atomic>
 
 class UnitHooks;
+class UnitTimeout;
 class UnitHTTPServerRequest;
 class UnitHTTPServerResponse;
 
@@ -25,9 +27,13 @@ extern "C" { UnitHooks *unit_create(void); }
 /// Derive your unit test / hooks from me.
 class UnitHooks
 {
+    friend UnitTimeout;
+
     void *_dlHandle;
     bool _setRetValue;
     int  _retValue;
+    int  _timeoutMilliSeconds;
+    std::atomic<bool> _timeoutShutdown;
     static UnitHooks *_global;
 
     void setHandle(void *dlHandle) { _dlHandle = dlHandle; }
@@ -35,6 +41,9 @@ class UnitHooks
 protected:
 
     // ---------------- Helper API ----------------
+
+    /// After this time we invoke 'timeout' default 30 seconds
+    void setTimeout(int timeoutMilliSeconds);
 
     enum TestResult { TEST_FAILED, TEST_OK, TEST_TIMED_OUT };
     /// Encourages loolwsd to exit with this value (unless hooked)
@@ -63,7 +72,7 @@ public:
 	virtual void returnValue(int & /* retValue */);
     /// When a new child kit process reports
     virtual void newChild() {}
-    /// If the test times out this gets invoked
+    /// If the test times out this gets invoked, default exits.
     virtual void timeout();
     /// Intercept createStorage
     virtual bool createStorage(const std::string& /* jailRoot */,
