@@ -196,10 +196,11 @@ void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws)
         if (ws)
             ws->shutdown();
     }
-    catch (const Poco::IOException& exc)
+    catch (const Poco::Exception& exc)
     {
-        Log::warn("Util::shutdownWebSocket: IOException: " + exc.message());
+        Log::warn("Util::shutdownWebSocket: Exception: " + exc.displayText() + (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
+
 }
 
 ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size)
