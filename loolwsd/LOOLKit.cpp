@@ -20,9 +20,10 @@
 #include <atomic>
 #include <cassert>
 #include <condition_variable>
+#include <cstdlib>
 #include <iostream>
-
 #include <memory>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -120,7 +121,7 @@ namespace
             {
                 Log::syserror("link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
                            "\") failed. Exiting.");
-                std::exit(Application::EXIT_SOFTWARE);
+                std::_Exit(Application::EXIT_SOFTWARE);
             }
             break;
         case FTW_D:
@@ -186,7 +187,7 @@ namespace
         if (caps == nullptr)
         {
             Log::syserror("cap_get_proc() failed.");
-            std::exit(1);
+            std::_Exit(1);
         }
 
         char *capText = cap_to_text(caps, nullptr);
@@ -197,13 +198,13 @@ namespace
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
             Log::syserror("cap_set_flag() failed.");
-            std::exit(1);
+            std::_Exit(1);
         }
 
         if (cap_set_proc(caps) == -1)
         {
             Log::syserror("cap_set_proc() failed.");
-            std::exit(1);
+            std::_Exit(1);
         }
 
         capText = cap_to_text(caps, nullptr);
@@ -983,13 +984,13 @@ void lokit_main(const std::string& childRoot,
         if (chroot(jailPath.toString().c_str()) == -1)
         {
             Log::syserror("chroot(\"" + jailPath.toString() + "\") failed.");
-            std::exit(Application::EXIT_SOFTWARE);
+            std::_Exit(Application::EXIT_SOFTWARE);
         }
 
         if (chdir("/") == -1)
         {
             Log::syserror("chdir(\"/\") in jail failed.");
-            std::exit(Application::EXIT_SOFTWARE);
+            std::_Exit(Application::EXIT_SOFTWARE);
         }
 
         dropCapability(CAP_SYS_CHROOT);
@@ -1002,7 +1003,7 @@ void lokit_main(const std::string& childRoot,
         if (loKit == nullptr)
         {
             Log::error("LibreOfficeKit initialization failed. Exiting.");
-            std::exit(Application::EXIT_SOFTWARE);
+            std::_Exit(Application::EXIT_SOFTWARE);
         }
 
         Log::info("Process is ready.");
@@ -1076,7 +1077,7 @@ void lokit_main(const std::string& childRoot,
     }
 
     Log::info("Process finished.");
-    _exit(Application::EXIT_OK);
+    std::_Exit(Application::EXIT_OK);
 }
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
