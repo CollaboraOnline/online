@@ -303,7 +303,7 @@ namespace Util
         return true;
     }
 
-    std::string signalName(const int signo)
+    const char *signalName(const int signo)
     {
         switch (signo)
         {
@@ -359,7 +359,7 @@ namespace Util
 #endif
 #undef CASE
         default:
-            return std::to_string(signo);
+            return "unknown";
         }
     }
 
@@ -393,7 +393,7 @@ namespace Util
 
             log_signal(LogPrefix);
             log_signal(" Termination signal received: ");
-            log_signal(signalName(signal).c_str());
+            log_signal(signalName(signal));
             log_signal("\n");
         }
     }
@@ -419,7 +419,7 @@ namespace Util
     {
         log_signal(LogPrefix);
         log_signal(" Fatal signal received: ");
-        log_signal(signalName(signal).c_str());
+        log_signal(signalName(signal));
         log_signal("\n");
 
         if (std::getenv("LOOL_DEBUG"))

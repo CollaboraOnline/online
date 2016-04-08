@@ -113,7 +113,7 @@ namespace Util
     }
 
     /// Returns the name of the signal.
-    std::string signalName(int signo);
+    const char *signalName(int signo);
 
     /// Trap signals to cleanup and exit the process gracefully.
     void setTerminationSignals();
