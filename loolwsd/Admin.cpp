@@ -353,7 +353,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
     }
     catch(const Poco::Net::NotAuthenticatedException& exc)
     {
-        Log::info("Admin::NotAuthneticated");
+        Log::info("Admin::NotAuthenticated");
         response.set("WWW-Authenticate", "Basic realm=\"online\"");
         response.setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
         response.setContentLength(0);
