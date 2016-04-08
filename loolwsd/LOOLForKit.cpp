@@ -89,6 +89,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     if (!(pid = fork()))
     {
         // quicker than a generic socket closing approach.
+        // (but pipeFd is a pipe, not a socket...?)
         close(pipeFd);
 
         // child
