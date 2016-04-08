@@ -154,6 +154,23 @@ loolserver <major.minor[-patch]>
            Security fixes that do not alter the API would bump the minor version number.
     Patch: an optional string that is informational.
 
+contextmenu: <json description of the context menu>
+
+    When the user right-clicks in the document, the content of the context
+    menu is sent back via this callback.
+
+    The structure of the context menu is a JSON, and looks like:
+
+        {
+            "menu": [
+                { "text": "label text1", "type": "command", "command": ".uno:Something1", "enabled": "true" },
+                { "text": "label text2", "type": "command", "command": ".uno:Something2", "enabled": "false" },
+                { "type": "separator" },
+                { "text": "label text2", "type": "menu", "menu": [ { ... }, { ... }, ... ] },
+                ...
+            ]
+        }
+
 downloadas: jail=<jail directory> dir=<a tmp dir> name=<name> port=<port>
 
     The client should then request http://server:port/jail/dir/name in order to download

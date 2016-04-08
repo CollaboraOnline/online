@@ -86,6 +86,10 @@ namespace LOKitHelper
             return "DOCUMENT_PASSWORD";
         case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
             return "DOCUMENT_PASSWORD_TO_MODIFY";
+        case LOK_CALLBACK_ERROR:
+            return "ERROR";
+        case LOK_CALLBACK_CONTEXT_MENU:
+            return "CONTEXT_MENU";
         }
 
         return std::to_string(nType);

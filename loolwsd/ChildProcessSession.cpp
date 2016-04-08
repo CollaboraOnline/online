@@ -193,6 +193,9 @@ public:
                         " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
             }
             break;
+        case LOK_CALLBACK_CONTEXT_MENU:
+            _session.sendTextFrame("contextmenu: " + rPayload);
+            break;
         }
     }
 
