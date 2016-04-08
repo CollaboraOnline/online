@@ -1091,6 +1091,9 @@ extern "C"
                         " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
             }
             break;
+        case LOK_CALLBACK_CONTEXT_MENU:
+            srv->sendTextFrame("contextmenu: " + std::string(pPayload));
+            break;
         }
     }
 }
