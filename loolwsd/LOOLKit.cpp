@@ -1077,7 +1077,7 @@ void lokit_main(const std::string& childRoot,
     }
 
     // Sleep a second here in case we get a fatal signal just when about to finish up, which sadly
-    // seems to happen often, so that the fatalSignalHandler in Util.cpp has time to produce a
+    // seems to happen often, so that handleFatalSignal() in Util.cpp has time to produce a
     // backtrace.
     sleep(1);
     Log::info("Process finished.");

@@ -393,7 +393,7 @@ namespace Util
 
             log_signal(LogPrefix);
             log_signal(" Termination signal received: ");
-            log_signal(strsignal(signal));
+            log_signal(signalName(signal).c_str());
             log_signal("\n");
         }
     }
@@ -419,7 +419,7 @@ namespace Util
     {
         log_signal(LogPrefix);
         log_signal(" Fatal signal received: ");
-        log_signal(strsignal(signal));
+        log_signal(signalName(signal).c_str());
         log_signal("\n");
 
         if (std::getenv("LOOL_DEBUG"))

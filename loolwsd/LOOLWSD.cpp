@@ -1438,7 +1438,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         fate = "core-dumped";
                     Log::error() << "Child process [" << pid << "] " << fate
                                  << " with " << Util::signalName(WTERMSIG(status))
-                                 << " signal: " << strsignal(WTERMSIG(status))
                                  << Log::end;
 
                     break;
@@ -1447,7 +1446,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 {
                     Log::info() << "Child process [" << pid << "] stopped with "
                                 << Util::signalName(WSTOPSIG(status))
-                                << " signal: " << strsignal(WTERMSIG(status))
                                 << Log::end;
                 }
                 else if (WIFCONTINUED(status))
