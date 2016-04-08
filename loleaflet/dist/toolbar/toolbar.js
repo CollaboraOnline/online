@@ -910,6 +910,10 @@ map.on('editlock', function (e) {
 	}
 });
 
+map.on('locontextmenu', function (e) {
+	// TODO: context menu handling...
+});
+
 $(window).resize(function() {
 	resizeToolbar();
 });

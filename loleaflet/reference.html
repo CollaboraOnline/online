@@ -1888,6 +1888,12 @@ unexpected behaviour.</h4>
 		<td>Fired when the state of a command such as .uno:Bold changes.</td>
 	</tr>
 	<tr>
+		<td><code><b>locontextmenu</b></code></td>
+		<td><code><a href="#locontextmenu-event">LOContextMenuEvent</a></code></td>
+		<td>Fired when the user's action invoked a context menu (via a
+		    right-click).  It contains the structure of the menu.</td>
+	</tr>
+	<tr>
 		<td><code><b>docsize</b></code></td>
 		<td><code><a href="#docsize-event">DocumentSizeEvent</a></code></td>
 		<td>Fired when the document size changes.</td>
@@ -2028,6 +2034,29 @@ unexpected behaviour.</h4>
 		<td><code><b>state</b></code></td>
 		<td><code><a href="#commandstate-values">CommandStateValues</a></code></td>
 		<td>UNO command state.</td>
+	</tr>
+</table>
+
+<h3 id="locontextmenu-event">LOContextMenuEvent</h3>
+
+<table data-id='events'>
+	<tr>
+		<th class="width100">property</th>
+		<th>type</th>
+		<th>description</th>
+	</tr>
+	<tr>
+		<td><code><b>menu</b></code></td>
+		<td><code>String</code></td>
+		<td>List of the menu entries.  The structure looks like:<br/>
+<code>
+{ "text": "label text1", "type": "command", "command": ".uno:Something1", "enabled": "true" },
+{ "text": "label text2", "type": "command", "command": ".uno:Something2", "enabled": "false" },
+{ "type": "separator" },
+{ "text": "label text2", "type": "menu", "menu": [ { ... }, { ... }, ... ] },
+...
+</code>
+		</td>
 	</tr>
 </table>
 
