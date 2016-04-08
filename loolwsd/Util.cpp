@@ -7,8 +7,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <execinfo.h>
 #include <sys/poll.h>
 #include <sys/prctl.h>
+#include <sys/uio.h>
 
 #include <cassert>
 #include <cstdlib>
@@ -433,6 +435,29 @@ namespace Util
         action.sa_handler = SIG_DFL;
 
         sigaction(signal, &action, NULL);
+
+        const int maxSlots = 50;
+        void *backtraceBuffer[maxSlots];
+        int numSlots = backtrace(backtraceBuffer, maxSlots);
+        if (numSlots > 0)
+        {
+            char **symbols = backtrace_symbols(backtraceBuffer, numSlots);
+            if (symbols != NULL)
+            {
+                struct iovec ioVector[maxSlots*2+1];
+                ioVector[0].iov_base = (void*)"Backtrace:\n";
+                ioVector[0].iov_len = std::strlen((const char*)ioVector[0].iov_base);
+                for (int i = 0; i < numSlots; i++)
+                {
+                    ioVector[1+i*2+0].iov_base = symbols[i];
+                    ioVector[1+i*2+0].iov_len = std::strlen((const char *)ioVector[1+i*2+0].iov_base);
+                    ioVector[1+i*2+1].iov_base = (void*)"\n";
+                    ioVector[1+i*2+1].iov_len = 1;
+                }
+                writev(STDERR_FILENO, ioVector, numSlots*2+1);
+            }
+        }
+
         // let default handler process the signal
         kill(Poco::Process::id(), signal);
     }
