@@ -1319,26 +1319,26 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (mkfifo(pipeNotify.c_str(), 0666) < 0 && errno != EEXIST)
     {
         Log::syserror("Failed to create pipe FIFO [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if ((notifyPipe = open(pipeNotify.c_str(), pipeFlags) ) < 0)
     {
         Log::syserror("Failed to open pipe for reading.");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     if ((pipeFlags = fcntl(notifyPipe, F_GETFL, 0)) < 0)
     {
         Log::syserror("Failed to get pipe flags [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     pipeFlags &= ~O_NONBLOCK;
     if (fcntl(notifyPipe, F_SETFL, pipeFlags) < 0)
     {
         Log::syserror("Failed to set pipe flags [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
-        exit(Application::EXIT_SOFTWARE);
+        std::exit(Application::EXIT_SOFTWARE);
     }
 
     const Process::PID forKitPid = createForKit();
