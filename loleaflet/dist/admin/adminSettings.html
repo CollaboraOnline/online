@@ -37,7 +37,12 @@
     <script src="admin-src.js"></script>
     <script>
 
-	host = 'wss://' + window.location.host + '/adminws/';
+        if (window.location.protocol == "https:") {
+           host = 'wss://' + window.location.host + '/adminws/'
+        }
+        else {
+           host = 'ws://' + window.location.host + '/adminws/'
+        }
 	new AdminSocketSettings(host);
 
     </script>

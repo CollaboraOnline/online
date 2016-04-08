@@ -276,9 +276,6 @@
     if (host === '') {
 	vex.dialog.alert('The host URL is empty, usage: host=wss://localhost:9980');
     }
-    if (host.startsWith('ws:')) {
-        vex.dialog.alert('Please use wss: instead of ws: in the host URL, usage: host=wss://localhost:9980');
-    }
     var docURL = wopiSrc !== '' ? wopiSrc : filePath;
 
     document.title = title;
