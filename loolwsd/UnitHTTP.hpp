@@ -55,8 +55,9 @@ public:
         { setURI(uri); }
     virtual std::istream& stream() override
         { return *(static_cast<std::istream *>(nullptr)); }
-    virtual bool expectContinue() const override
+    virtual bool expectContinue() const /*override*/ // Some Poco version don't have this.
         { return false; }
+    virtual bool secure() const { return true; }
 	virtual const SocketAddress& clientAddress() const override
         { return _clientAddress; }
 	virtual const SocketAddress& serverAddress() const override
