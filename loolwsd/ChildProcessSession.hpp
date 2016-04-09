@@ -30,30 +30,6 @@ class CallbackWorker;
 class ChildProcessSession final : public LOOLSession
 {
 public:
-    class Statistics
-    {
-    public:
-        Statistics() :
-            _lastActivityTime(std::chrono::steady_clock::now())
-        {
-        }
-
-        void updateLastActivityTime()
-        {
-            _lastActivityTime = std::chrono::steady_clock::now();
-        }
-
-        double getInactivityMS() const
-        {
-            const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
-            return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-        }
-
-    private:
-        std::chrono::steady_clock::time_point _lastActivityTime;
-    };
-
-public:
     /// Create a new ChildProcessSession
     /// ws The socket between master and kit (jailed).
     /// loKit The LOKit instance.
@@ -87,9 +63,6 @@ public:
     void loKitCallback(const int nType, const char* pPayload);
 
     std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
-
-    const Statistics& getStatistics() const { return _stats; }
-    bool isInactive() const { return _stats.getInactivityMS() >= InactivityThresholdMS; }
 
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
@@ -131,8 +104,6 @@ private:
     int _clientPart;
     std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> _onLoad;
     std::function<void(const std::string&)> _onUnload;
-    /// Statistics and activity tracking.
-    Statistics _stats;
 
     std::unique_ptr<CallbackWorker> _callbackWorker;
     Poco::Thread _callbackThread;
@@ -141,8 +112,6 @@ private:
     /// Synchronize _loKitDocument acess.
     /// This should be owned by Document.
     static std::recursive_mutex Mutex;
-
-    static constexpr auto InactivityThresholdMS = 120 * 1000;
 };
 
 #endif

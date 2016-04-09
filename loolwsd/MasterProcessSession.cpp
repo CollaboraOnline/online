@@ -103,6 +103,8 @@ bool MasterProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
 
 bool MasterProcessSession::_handleInput(const char *buffer, int length)
 {
+    updateLastActivityTime();
+
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     Log::trace(getName() + ": handling [" + firstLine + "].");

@@ -54,6 +54,15 @@ public:
     /// Called to handle disconnection command from socket.
     virtual bool handleDisconnect(Poco::StringTokenizer& tokens);
 
+    bool isInactive() const { return getInactivityMS() >= InactivityThresholdMS; }
+
+    /// Returns the inactivity time of the client in milliseconds.
+    double getInactivityMS() const
+    {
+        const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
+        return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    }
+
 protected:
     LOOLSession(const std::string& id, const Kind kind,
                 std::shared_ptr<Poco::Net::WebSocket> ws);
@@ -77,6 +86,11 @@ protected:
     virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
+
+    void updateLastActivityTime()
+    {
+        _lastActivityTime = std::chrono::steady_clock::now();
+    }
 
     // Fields common to sessions in master and jailed processes:
 
@@ -123,7 +137,11 @@ private:
     /// True if we have been disconnected.
     bool _disconnected;
 
+    std::chrono::steady_clock::time_point _lastActivityTime;
+
     std::mutex _mutex;
+
+    static constexpr auto InactivityThresholdMS = 120 * 1000;
 };
 
 template<typename charT, typename traits>

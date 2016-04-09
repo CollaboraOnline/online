@@ -308,7 +308,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
 {
     if (isInactive() && _loKitDocument != nullptr)
     {
-        Log::debug("Handling message after inactivity of " + std::to_string(_stats.getInactivityMS()) + "ms.");
+        Log::debug("Handling message after inactivity of " + std::to_string(getInactivityMS()) + "ms.");
 
         // Client is getting active again.
         // Send invalidation and other sync-up messages.
@@ -333,7 +333,8 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         //TODO: Sync cursor.
     }
 
-    _stats.updateLastActivityTime();
+    updateLastActivityTime();
+
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
