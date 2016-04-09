@@ -31,6 +31,7 @@
 #include "IoUtil.hpp"
 #include "LOOLKit.hpp"
 #include "Util.hpp"
+#include "Unit.hpp"
 #include "ChildProcessSession.hpp"
 
 using Poco::Path;
@@ -40,6 +41,7 @@ using Poco::Thread;
 using Poco::Timestamp;
 using Poco::Util::Application;
 
+static std::string UnitTestLibrary;
 static std::atomic<unsigned> ForkCounter( 0 );
 
 static int pipeFd = -1;
@@ -181,6 +183,11 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             ClientPortNumber = std::stoll(std::string(eq+1));
         }
+        else if (std::strstr(cmd, "--unitlib=") == cmd)
+        {
+            eq = std::strchr(cmd, '=');
+            UnitTestLibrary = std::string(eq+1);
+        }
     }
 
     if (loSubPath.empty() || sysTemplate.empty() ||
@@ -188,6 +195,13 @@ int main(int argc, char** argv)
     {
         printArgumentHelp();
         return 1;
+    }
+
+    if (!UnitBase::init(UnitBase::UnitType::TYPE_KIT,
+                        UnitTestLibrary))
+    {
+        Log::error("Failed to load kit unit test library");
+        return Application::EXIT_USAGE;
     }
 
     if (!std::getenv("LD_BIND_NOW"))
@@ -256,8 +270,11 @@ int main(int argc, char** argv)
 
     close(pipeFd);
 
+    int returnValue = Application::EXIT_OK;
+    UnitKit::get().returnValue(returnValue);
+
     Log::info("ForKit process finished.");
-    return Application::EXIT_OK;
+    return returnValue;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

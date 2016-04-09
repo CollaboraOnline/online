@@ -19,7 +19,7 @@
 #include <Poco/Util/Application.h>
 using Poco::Timestamp;
 
-class UnitTimeout : public UnitHooks
+class UnitTimeout : public UnitWSD
 {
     std::atomic<bool> _timedOut;
 public:
@@ -31,7 +31,7 @@ public:
     virtual void timeout() override
     {
         _timedOut = true;
-        UnitHooks::timeout();
+        UnitBase::timeout();
     }
 	virtual void returnValue(int & retValue) override
     {
@@ -48,10 +48,24 @@ public:
             retValue = Poco::Util::Application::EXIT_OK;
         }
     }
+
+    // sanity check the non-unit-test paths
+    static void testDefaultKits()
+    {
+        bool madeWSD = init(UnitType::TYPE_WSD, std::string());
+        assert(madeWSD);
+        delete UnitBase::_global;
+        UnitBase::_global = NULL;
+        bool madeKit = init(UnitType::TYPE_KIT, std::string());
+        assert(madeKit);
+        delete UnitBase::_global;
+        UnitBase::_global = NULL;
+    }
 };
 
-UnitHooks *unit_create(void)
+UnitBase *unit_create_wsd(void)
 {
+    UnitTimeout::testDefaultKits();
     return new UnitTimeout();
 }
 

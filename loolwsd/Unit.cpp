@@ -16,11 +16,11 @@
 #include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
 
-UnitHooks *UnitHooks::_global = nullptr;
+UnitBase *UnitBase::_global = nullptr;
 
 static Poco::Thread TimeoutThread("unit timeout");
 
-UnitHooks *UnitHooks::linkAndCreateUnit(const std::string &unitLibPath)
+UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibPath)
 {
     void *dlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!dlHandle)
@@ -29,14 +29,24 @@ UnitHooks *UnitHooks::linkAndCreateUnit(const std::string &unitLibPath)
         return NULL;
     }
 
+    const char *symbol = NULL;
+    switch (type)
+    {
+        case TYPE_WSD:
+            symbol = "unit_create_wsd";
+            break;
+        case TYPE_KIT:
+            symbol = "unit_create_kit";
+            break;
+    }
     CreateUnitHooksFunction* createHooks;
-    createHooks = (CreateUnitHooksFunction *)dlsym(dlHandle, CREATE_UNIT_HOOKS_SYMBOL);
+    createHooks = reinterpret_cast<CreateUnitHooksFunction *>(dlsym(dlHandle, symbol));
     if (!createHooks)
     {
-        Log::error("No " CREATE_UNIT_HOOKS_SYMBOL " symbol in " + unitLibPath);
+        Log::error("No " + std::string(symbol) + " symbol in " + unitLibPath);
         return NULL;
     }
-    UnitHooks *pHooks = createHooks();
+    UnitBase *pHooks = createHooks();
 
     if (pHooks)
         pHooks->setHandle(dlHandle);
@@ -44,40 +54,62 @@ UnitHooks *UnitHooks::linkAndCreateUnit(const std::string &unitLibPath)
     return pHooks;
 }
 
-bool UnitHooks::init(const std::string &unitLibPath)
+bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 {
+    assert(!_global);
     if (!unitLibPath.empty())
     {
-        _global = linkAndCreateUnit(unitLibPath);
-        TimeoutThread.startFunc([](){
-                TimeoutThread.trySleep(_global->_timeoutMilliSeconds);
-                if (!_global->_timeoutShutdown)
-                {
-                    Log::error("Timeout");
-                    _global->timeout();
-                }
-            });
+        _global = linkAndCreateUnit(type, unitLibPath);
+        if (_global)
+        {
+            TimeoutThread.startFunc([](){
+                    TimeoutThread.trySleep(_global->_timeoutMilliSeconds);
+                    if (!_global->_timeoutShutdown)
+                    {
+                        Log::error("Timeout");
+                        _global->timeout();
+                    }
+                });
+        }
     }
     else
-        _global = new UnitHooks();
+    {
+        switch (type)
+        {
+        case TYPE_WSD:
+            _global = new UnitWSD();
+            break;
+        case TYPE_KIT:
+            _global = new UnitKit();
+            break;
+        default:
+            assert(false);
+            break;
+        }
+    }
+
+    if (_global)
+        _global->_type = type;
 
     return _global != NULL;
 }
 
-void UnitHooks::setTimeout(int timeoutMilliSeconds)
+void UnitBase::setTimeout(int timeoutMilliSeconds)
 {
     assert(!TimeoutThread.isRunning());
     _timeoutMilliSeconds = timeoutMilliSeconds;
 }
 
-UnitHooks::UnitHooks()
+UnitBase::UnitBase()
     : _dlHandle(NULL),
+      _setRetValue(false),
+      _retValue(0),
       _timeoutMilliSeconds(30 * 1000),
       _timeoutShutdown(false)
 {
 }
 
-UnitHooks::~UnitHooks()
+UnitBase::~UnitBase()
 {
 // FIXME: we should really clean-up properly.
 //    if (_dlHandle)
@@ -85,7 +117,24 @@ UnitHooks::~UnitHooks()
     _dlHandle = NULL;
 }
 
-void UnitHooks::exitTest(TestResult result)
+UnitWSD::UnitWSD()
+    : _hasKitHooks(false)
+{
+}
+
+UnitWSD::~UnitWSD()
+{
+}
+
+UnitKit::UnitKit()
+{
+}
+
+UnitKit::~UnitKit()
+{
+}
+
+void UnitBase::exitTest(TestResult result)
 {
     _setRetValue = true;
     _retValue = result == TestResult::TEST_OK ?
@@ -94,12 +143,12 @@ void UnitHooks::exitTest(TestResult result)
     TerminationFlag = true;
 }
 
-void UnitHooks::timeout()
+void UnitBase::timeout()
 {
     exitTest(TestResult::TEST_TIMED_OUT);
 }
 
-void UnitHooks::returnValue(int &retValue)
+void UnitBase::returnValue(int &retValue)
 {
     if (_setRetValue)
         retValue = _retValue;

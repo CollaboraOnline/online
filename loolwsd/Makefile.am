@@ -15,6 +15,7 @@ shared_sources = ChildProcessSession.cpp \
                  LOOLProtocol.cpp \
                  LOOLSession.cpp \
                  MessageQueue.cpp \
+		 Unit.cpp \
                  Util.cpp
 
 loolwsd_SOURCES = Admin.cpp \
@@ -25,7 +26,6 @@ loolwsd_SOURCES = Admin.cpp \
                   MasterProcessSession.cpp \
                   Storage.cpp \
                   TileCache.cpp \
-		  Unit.cpp \
                   $(shared_sources)
 
 noinst_PROGRAMS = connect \

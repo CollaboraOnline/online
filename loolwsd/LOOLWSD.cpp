@@ -165,7 +165,7 @@ static void preForkChildren()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-    UnitHooks::get().preSpawnCount(numPreSpawn);
+    UnitWSD::get().preSpawnCount(numPreSpawn);
     forkChildren(numPreSpawn);
 }
 
@@ -676,7 +676,7 @@ public:
             newChildren.emplace_back(std::make_shared<ChildProcess>(pid, ws));
             Log::info("Have " + std::to_string(newChildren.size()) + " children.");
             newChildrenCV.notify_one();
-            UnitHooks::get().newChild();
+            UnitWSD::get().newChild();
             return;
         }
 
@@ -1231,6 +1231,8 @@ Process::PID LOOLWSD::createForKit()
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
+    if (UnitWSD::get().hasKitHooks())
+        args.push_back("--unitlib=" + UnitTestLibrary);
 
     const std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
 
@@ -1252,9 +1254,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_USAGE;
     }
 
-    if (!UnitHooks::init(UnitTestLibrary))
+    if (!UnitWSD::init(UnitWSD::UnitType::TYPE_WSD,
+                         UnitTestLibrary))
     {
-        Log::error("Failed to load unit test library");
+        Log::error("Failed to load wsd unit test library");
         return Application::EXIT_USAGE;
     }
 #ifdef ENABLE_SSL
@@ -1416,7 +1419,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     int status = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
     {
-        UnitHooks::get().invokeTest();
+        UnitWSD::get().invokeTest();
 
         const pid_t pid = waitpid(forKitPid, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
@@ -1570,12 +1573,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Log::info("Process [loolwsd] finished.");
 
     int returnValue = Application::EXIT_OK;
-    UnitHooks::get().returnValue(returnValue);
+    UnitWSD::get().returnValue(returnValue);
 
     return returnValue;
 }
 
-void UnitHooks::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request, UnitHTTPServerResponse& response)
+void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request, UnitHTTPServerResponse& response)
 {
     switch (type)
     {

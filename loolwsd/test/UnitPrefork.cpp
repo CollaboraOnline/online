@@ -18,7 +18,7 @@
 #include <Poco/Timestamp.h>
 using Poco::Timestamp;
 
-class UnitPrefork : public UnitHooks
+class UnitPrefork : public UnitWSD
 {
     int _numStarted;
     const int _numToPrefork;
@@ -48,7 +48,7 @@ public:
     }
 };
 
-UnitHooks *unit_create(void)
+UnitBase *unit_create_wsd(void)
 {
     return new UnitPrefork();
 }

@@ -12,55 +12,88 @@
 #include <string>
 #include <memory>
 #include <atomic>
+#include <assert.h>
 
-class UnitHooks;
+class UnitBase;
+class UnitWSD;
+class UnitKit;
 class UnitTimeout;
 class UnitHTTPServerRequest;
 class UnitHTTPServerResponse;
 
 class StorageBase;
 
-#define CREATE_UNIT_HOOKS_SYMBOL "unit_create"
-typedef UnitHooks *(CreateUnitHooksFunction)();
-extern "C" { UnitHooks *unit_create(void); }
+typedef UnitBase *(CreateUnitHooksFunction)();
+extern "C" { UnitBase *unit_create_wsd(void); }
+extern "C" { UnitBase *unit_create_kit(void); }
 
-/// Derive your unit test / hooks from me.
-class UnitHooks
+/// Derive your WSD unit test / hooks from me.
+class UnitBase
 {
     friend UnitTimeout;
+    friend UnitWSD;
+    friend UnitKit;
+
+protected:
+    // ---------------- Helper API ----------------
+    /// After this time we invoke 'timeout' default 30 seconds
+    void setTimeout(int timeoutMilliSeconds);
+
+    /// If the test times out this gets invoked, the default just exits.
+    virtual void timeout();
+
+    enum TestResult { TEST_FAILED, TEST_OK, TEST_TIMED_OUT };
+
+    /// Encourages the process to exit with this value (unless hooked)
+    void exitTest(TestResult result);
+
+             UnitBase();
+    virtual ~UnitBase();
+
+public:
+    enum UnitType { TYPE_WSD, TYPE_KIT };
+    /// Load unit test hook shared library from this path
+    static bool init(UnitType type, const std::string &unitLibPath);
+
+    /// Tweak the return value from the process.
+	virtual void returnValue(int & /* retValue */);
+
+private:
+    void setHandle(void *dlHandle) { _dlHandle = dlHandle; }
+    static UnitBase *linkAndCreateUnit(UnitType type, const std::string &unitLibPath);
 
     void *_dlHandle;
     bool _setRetValue;
     int  _retValue;
     int  _timeoutMilliSeconds;
     std::atomic<bool> _timeoutShutdown;
-    static UnitHooks *_global;
+    static UnitBase *_global;
+    UnitType _type;
+};
 
-    void setHandle(void *dlHandle) { _dlHandle = dlHandle; }
-    static UnitHooks *linkAndCreateUnit(const std::string &unitLibPath);
-protected:
+/// Derive your WSD unit test / hooks from me.
+class UnitWSD : public UnitBase
+{
+    bool _hasKitHooks;
+public:
+             UnitWSD();
+    virtual ~UnitWSD();
 
-    // ---------------- Helper API ----------------
-
-    /// After this time we invoke 'timeout' default 30 seconds
-    void setTimeout(int timeoutMilliSeconds);
-
-    enum TestResult { TEST_FAILED, TEST_OK, TEST_TIMED_OUT };
-    /// Encourages loolwsd to exit with this value (unless hooked)
-    void exitTest(TestResult result);
+	static UnitWSD &get()
+    {
+        assert (_global && _global->_type == UnitType::TYPE_WSD);
+        return *static_cast<UnitWSD *>(_global);
+    }
 
     enum TestRequest { TEST_REQ_CLIENT, TEST_REQ_PRISONER };
     /// Simulate an incoming request
     void testHandleRequest(TestRequest type,
                            UnitHTTPServerRequest& request,
                            UnitHTTPServerResponse& response);
-
-public:
-             UnitHooks();
-    virtual ~UnitHooks();
-	static UnitHooks &get() { return *_global; }
-    /// Load unit test hook shared library from this path
-    static bool init(const std::string &unitLibPath);
+    /// Do we have hooks for the Kit too
+    bool hasKitHooks() { return _hasKitHooks; }
+    /// set in your unit if you want to be injected into the kit too.
+    void setHasKitHooks(bool hasHooks) { _hasKitHooks = hasHooks; }
 
     // ---------------- Hooks ----------------
 
@@ -68,17 +101,27 @@ public:
     virtual void invokeTest() {}
     /// Tweak the count of pre-spawned kits.
 	virtual void preSpawnCount(int & /* numPrefork */) {}
-    /// Tweak the return value from LOOLWSD.
-	virtual void returnValue(int & /* retValue */);
     /// When a new child kit process reports
     virtual void newChild() {}
-    /// If the test times out this gets invoked, default exits.
-    virtual void timeout();
     /// Intercept createStorage
     virtual bool createStorage(const std::string& /* jailRoot */,
                                const std::string& /* jailPath */,
                                const Poco::URI& /* uri */,
-                               std::unique_ptr<StorageBase> & /*rStorage */) { return false; }
+                               std::unique_ptr<StorageBase> & /*rStorage */)
+        { return false; }
+};
+
+/// Derive your Kit unit test / hooks from me.
+class UnitKit : public UnitBase
+{
+public:
+             UnitKit();
+    virtual ~UnitKit();
+	static UnitKit &get()
+    {
+        assert (_global && _global->_type == UnitType::TYPE_KIT);
+        return *static_cast<UnitKit *>(_global);
+    }
 };
 
 #endif

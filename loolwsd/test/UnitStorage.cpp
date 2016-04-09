@@ -16,7 +16,7 @@
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 
-class UnitStorage : public UnitHooks
+class UnitStorage : public UnitWSD
 {
 public:
     virtual bool createStorage(const std::string& /* jailRoot */,
@@ -33,12 +33,12 @@ public:
         exitTest(TestResult::TEST_OK);
         UnitHTTPServerResponse response;
         UnitHTTPServerRequest request(response, std::string(CHILD_URI));
-        UnitHooks::testHandleRequest(TestRequest::TEST_REQ_PRISONER,
-                                    request, response);
+        UnitWSD::testHandleRequest(TestRequest::TEST_REQ_PRISONER,
+                                   request, response);
     }
 };
 
-UnitHooks *unit_create(void)
+UnitBase *unit_create_wsd(void)
 {
     return new UnitStorage();
 }
