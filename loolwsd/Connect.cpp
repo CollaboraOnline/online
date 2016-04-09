@@ -14,6 +14,7 @@
 #include <fstream>
 #include <iostream>
 
+#include <Poco/Version.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/HTTPClientSession.h>

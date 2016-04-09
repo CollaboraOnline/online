@@ -9,6 +9,7 @@
 #ifndef INCLUDED_UNITHTTP_HPP
 #define INCLUDED_UNITHTTP_HPP
 
+#include <Poco/Version.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
