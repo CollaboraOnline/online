@@ -454,7 +454,11 @@ namespace Util
                     ioVector[1+i*2+1].iov_base = (void*)"\n";
                     ioVector[1+i*2+1].iov_len = 1;
                 }
-                writev(STDERR_FILENO, ioVector, numSlots*2+1);
+
+                if (writev(STDERR_FILENO, ioVector, numSlots*2+1) == -1)
+                {
+                    Log::syserror("Failed to dump backtrace to stderr.");
+                }
             }
         }
 
