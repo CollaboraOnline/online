@@ -1259,11 +1259,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
 
     if (!UnitWSD::init(UnitWSD::UnitType::TYPE_WSD,
-                         UnitTestLibrary))
+                       UnitTestLibrary))
     {
         Log::error("Failed to load wsd unit test library");
         return Application::EXIT_USAGE;
     }
+
 #ifdef ENABLE_SSL
     initializeSSL();
 #endif
@@ -1418,7 +1419,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     preForkChildren();
 
     time_t last30SecCheck = time(NULL);
-    time_t lastFiveMinuteCheck = time(NULL);
+    time_t lastFiveMinuteCheck = last30SecCheck;
 
     int status = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
@@ -1488,7 +1489,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 time_t now = time(NULL);
                 if (now >= last30SecCheck + 30)
                 {
-                    Log::debug("30-second check");
+                    Log::trace("30-second check");
                     last30SecCheck = now;
 
                     std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
@@ -1512,7 +1513,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 }
                 if (now >= lastFiveMinuteCheck + 300)
                 {
-                    Log::debug("Five-minute check");
+                    Log::trace("Five-minute check");
                     lastFiveMinuteCheck = now;
 
                     std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);

@@ -243,8 +243,6 @@ int main(int argc, char** argv)
     ChildDispatcher childDispatcher;
     Log::info("ForKit process is ready.");
 
-    Timestamp startTime;
-
     while (!TerminationFlag)
     {
         UnitKit::get().invokeForKitTest();
