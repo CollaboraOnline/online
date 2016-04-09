@@ -49,6 +49,8 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
 
     std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
 
+    void setPeer(const std::shared_ptr<MasterProcessSession>& peer) { _peer = peer; }
+
     void setEditLock(const bool value) { _bEditLock = value; }
 
     bool isEditLocked() const { return _bEditLock; }

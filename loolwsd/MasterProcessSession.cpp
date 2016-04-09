@@ -29,10 +29,6 @@ using namespace LOOLProtocol;
 using Poco::Path;
 using Poco::StringTokenizer;
 
-std::map<std::string, std::shared_ptr<MasterProcessSession>> MasterProcessSession::AvailableChildSessions;
-std::mutex MasterProcessSession::AvailableChildSessionMutex;
-std::condition_variable MasterProcessSession::AvailableChildSessionCV;
-
 MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
                                            std::shared_ptr<Poco::Net::WebSocket> ws,
@@ -761,50 +757,6 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
 
 void MasterProcessSession::dispatchChild()
 {
-    int retries = 3;
-    bool isFound = false;
-
-    // Wait until the child has connected with Master.
-    std::shared_ptr<MasterProcessSession> childSession;
-    std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
-
-    Log::debug() << "Waiting for child session [" << getId() << "] to connect." << Log::end;
-    while (retries-- && !isFound)
-    {
-        AvailableChildSessionCV.wait_for(
-            lock,
-            std::chrono::milliseconds(3000),
-            [&isFound, this]
-            {
-                return (isFound = AvailableChildSessions.find(getId()) != AvailableChildSessions.end());
-            });
-
-        if (!isFound)
-        {
-            Log::info() << "Retrying child permission... " << retries << Log::end;
-            // request again new URL session
-            const std::string message = "request " + getId() + " " + _docBroker->getDocKey() + '\n';
-            Log::trace("MasterToBroker: " + message.substr(0, message.length()-1));
-            IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, message);
-        }
-    }
-
-    if (!isFound)
-    {
-        Log::error(getName() + ": Failed to connect to child. Shutting down socket.");
-        IoUtil::shutdownWebSocket(_ws);
-        throw std::runtime_error("Failed to connect to child.");
-    }
-
-    Log::debug("Waiting child session permission, done!");
-    childSession = AvailableChildSessions[getId()];
-    AvailableChildSessions.erase(getId());
-
-    _peer = childSession;
-    childSession->_peer = shared_from_this();
-    childSession->_docBroker = _docBroker;
-    Log::debug("Connected " + getName() + " - " + childSession->getName() + ".");
-
     std::ostringstream oss;
     oss << "load";
     oss << " url=" << _docBroker->getPublicUri().toString();
