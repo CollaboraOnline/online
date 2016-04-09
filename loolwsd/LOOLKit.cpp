@@ -47,6 +47,7 @@
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
 #include "QueueHandler.hpp"
+#include "Unit.hpp"
 #include "Util.hpp"
 
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
@@ -1020,7 +1021,10 @@ void lokit_main(const std::string& childRoot,
         const std::string socketName = "ChildControllerWS";
         IoUtil::SocketProcessor(ws, response, [&socketName, &ws, &document, &loKit](const std::vector<char>& data)
                 {
-                    const std::string message(data.data(), data.size());
+                    std::string message(data.data(), data.size());
+
+                    UnitKit::get().kitMessage(message);
+
                     Log::debug(socketName + ": recv [" + message + "].");
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 

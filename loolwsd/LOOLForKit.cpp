@@ -94,6 +94,8 @@ static int createLibreOfficeKit(const std::string& childRoot,
         // (but pipeFd is a pipe, not a socket...?)
         close(pipeFd);
 
+        UnitKit::get().postFork();
+
         // child
         if (std::getenv("SLEEPKITFORDEBUGGER"))
         {
@@ -238,6 +240,8 @@ int main(int argc, char** argv)
 
     while (!TerminationFlag)
     {
+        UnitKit::get().invokeForKitTest();
+
         if (!childDispatcher.pollAndDispatch())
         {
             Log::info("Child dispatcher flagged for termination.");

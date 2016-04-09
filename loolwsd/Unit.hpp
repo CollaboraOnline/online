@@ -35,6 +35,7 @@ class UnitBase
     friend UnitKit;
 
 protected:
+
     // ---------------- Helper API ----------------
     /// After this time we invoke 'timeout' default 30 seconds
     void setTimeout(int timeoutMilliSeconds);
@@ -93,9 +94,9 @@ public:
     /// Do we have hooks for the Kit too
     bool hasKitHooks() { return _hasKitHooks; }
     /// set in your unit if you want to be injected into the kit too.
-    void setHasKitHooks(bool hasHooks) { _hasKitHooks = hasHooks; }
+    void setHasKitHooks(bool hasHooks = true) { _hasKitHooks = hasHooks; }
 
-    // ---------------- Hooks ----------------
+    // ---------------- WSD hooks ----------------
 
     /// Main-loop reached, time for testing
     virtual void invokeTest() {}
@@ -122,6 +123,19 @@ public:
         assert (_global && _global->_type == UnitType::TYPE_KIT);
         return *static_cast<UnitKit *>(_global);
     }
+
+    // ---------------- ForKit hooks ----------------
+
+    /// main-loop reached, time for testing
+    virtual void invokeForKitTest() {}
+
+    // ---------------- Kit hooks ----------------
+
+    /// Post fork hook - just before we init the child kit
+    virtual void postFork() {}
+
+    /// Kit got a message
+    virtual void kitMessage(std::string &/* message */) {}
 };
 
 #endif

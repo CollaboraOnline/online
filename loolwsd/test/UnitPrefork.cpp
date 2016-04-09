@@ -18,6 +18,7 @@
 #include <Poco/Timestamp.h>
 using Poco::Timestamp;
 
+// Inside the WSD process
 class UnitPrefork : public UnitWSD
 {
     int _numStarted;
@@ -28,6 +29,7 @@ public:
         : _numStarted(0),
           _numToPrefork(20)
     {
+        setHasKitHooks();
     }
     virtual void preSpawnCount(int &numPrefork) override
     {
@@ -48,9 +50,21 @@ public:
     }
 };
 
+// Inside the forkit & kit processes
+class UnitKitPrefork : public UnitKit
+{
+public:
+    UnitKitPrefork() {}
+};
+
 UnitBase *unit_create_wsd(void)
 {
     return new UnitPrefork();
+}
+
+UnitBase *unit_create_kit(void)
+{
+    return new UnitKitPrefork();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
