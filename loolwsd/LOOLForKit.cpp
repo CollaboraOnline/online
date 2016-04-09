@@ -71,8 +71,15 @@ private:
         if (tokens[0] == "spawn" && tokens.count() == 2)
         {
             const auto count = std::stoi(tokens[1]);
-            Log::info("Spawning " + tokens[1] + " children on request.");
-            ForkCounter = count;
+            if (count > 0)
+            {
+                Log::info("Spawning " + tokens[1] + " children per request.");
+                ForkCounter = count;
+            }
+            else
+            {
+                Log::warn("Cannot spawn " + std::to_string(count) + " children as requested.");
+            }
         }
     }
 

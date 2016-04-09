@@ -152,13 +152,16 @@ static std::condition_variable newChildrenCV;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 
-static void forkChildren(int number)
+static void forkChildren(const int number)
 {
     assert(!newChildrenMutex.try_lock()); // check it is held.
 
-    const std::string aMessage = "spawn " + std::to_string(number) + "\n";
-    Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
-    IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, aMessage);
+    if (number > 0)
+    {
+        const std::string aMessage = "spawn " + std::to_string(number) + "\n";
+        Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
+        IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, aMessage);
+    }
 }
 
 static void preForkChildren()
@@ -166,6 +169,7 @@ static void preForkChildren()
     std::unique_lock<std::mutex> lock(newChildrenMutex);
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     UnitWSD::get().preSpawnCount(numPreSpawn);
+    --numPreSpawn; // ForKit always spawns one child at startup.
     forkChildren(numPreSpawn);
 }
 
