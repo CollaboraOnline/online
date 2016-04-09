@@ -54,6 +54,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         int n = 0;
         bool stop = false;
         std::vector<char> payload(READ_BUFFER_SIZE * 100);
+        payload.resize(0);
 
         for (;;)
         {
@@ -72,10 +73,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 
             payload.resize(payload.capacity());
             n = ws->receiveFrame(payload.data(), payload.capacity(), flags);
-            if (n >= 0)
-            {
-                payload.resize(n);
-            }
+            payload.resize(n > 0 ? n : 0);
 
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
             {
@@ -149,7 +147,10 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             }
 
             // Call the handler.
-            if (!handler(payload))
+            const auto success = handler(payload);
+            payload.resize(0);
+
+            if (!success)
             {
                 Log::info("Socket handler flagged to finish.");
                 break;
@@ -157,12 +158,13 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
         }
 
         Log::debug() << "SocketProcessor finishing. TerminationFlag: " << stop
+                     << ", n: " << n
                      << ", payload size: " << payload.size()
                      << ", flags: " << std::hex << flags << Log::end;
         if (payload.size() > 1)
         {
-            Log::warn("Last message will not be processed: [" +
-                      LOOLProtocol::getFirstLine(payload.data(), payload.size()) + "].");
+            Log::warn("Last message (" + std::to_string(payload.size()) + " bytes) will not be processed: [" +
+                      std::string(payload.data(), payload.size()) + "].");
         }
     }
     catch (const WebSocketException& exc)
@@ -181,9 +183,13 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             break;
         }
     }
-    catch (const NetException& exc)
+    catch (const Poco::Exception& exc)
     {
-        Log::error("SocketProcessor: NetException: " + exc.message());
+        Log::error("SocketProcessor: Exception: " + exc.message());
+    }
+    catch (const std::exception& exc)
+    {
+        Log::error("SocketProcessor: std::exception: " + std::string(exc.what()));
     }
 
     Log::info("SocketProcessor finished.");
