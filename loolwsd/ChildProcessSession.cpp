@@ -1042,7 +1042,17 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
     constexpr auto KEY_CTRL = 0x2000;
     constexpr auto KEY_W = 0x0216;
     if (keycode == (KEY_CTRL | KEY_W))
+    {
         return true;
+    }
+
+    // Ctrl+Tab switching browser tabs,
+    // Doesn't insert tabs.
+    constexpr auto KEY_TAB = 0x0502;
+    if (keycode == (KEY_CTRL | KEY_TAB))
+    {
+        return true;
+    }
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
