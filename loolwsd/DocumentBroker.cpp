@@ -70,6 +70,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _docKey(docKey),
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
+    _lastSaveTime(std::chrono::steady_clock::now()),
     _childProcess(childProcess),
     _sessionsCount(0)
 {
@@ -135,11 +136,47 @@ bool DocumentBroker::save()
     assert(_storage && _tileCache);
     if (_storage->saveLocalFileToStorage())
     {
+        _lastSaveTime = std::chrono::steady_clock::now();
         _tileCache->documentSaved();
         return true;
     }
 
     return false;
+}
+
+void DocumentBroker::autoSave()
+{
+    std::unique_lock<std::mutex> sessionsLock(_wsSessionsMutex);
+    if (_wsSessions.empty())
+    {
+        // Shouldn't happen.
+        return;
+    }
+
+    // Find the most recent activity.
+    double inactivityTimeMs = std::numeric_limits<double>::max();
+    for (auto& sessionIt: _wsSessions)
+    {
+        inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
+    }
+
+    Log::trace("Most recent inactivity was " + std::to_string(inactivityTimeMs) + " ms ago.");
+    const auto timeSinceLastSaveMs = getTimeSinceLastSaveMs();
+    Log::trace("Time since last save was " + std::to_string(timeSinceLastSaveMs) + " ms ago.");
+
+    // There has been some editing since we saved last?
+    if (inactivityTimeMs < timeSinceLastSaveMs)
+    {
+        // Either we've been idle long enough, or it's auto-save time.
+        if (inactivityTimeMs >= IdleSaveDurationMs ||
+            timeSinceLastSaveMs >= AutoSaveDurationMs)
+        {
+            Log::info("Auto-save triggered for doc [" + _docKey + "].");
+
+            // Any session can be used to save.
+            _wsSessions.begin()->second->getQueue()->put("uno .uno:Save");
+        }
+    }
 }
 
 std::string DocumentBroker::getJailRoot() const

@@ -131,6 +131,8 @@ public:
 
     bool save();
 
+    void autoSave();
+
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
     const std::string& getJailId() const { return _jailId; }
@@ -139,6 +141,13 @@ public:
     unsigned incSessions() { return ++_sessionsCount; }
     unsigned getSessionsCount() { return _sessionsCount; }
     TileCache& tileCache() { return *_tileCache; }
+
+    /// Returns the time in milliseconds since last save.
+    double getTimeSinceLastSaveMs() const
+    {
+        const auto duration = (std::chrono::steady_clock::now() - _lastSaveTime);
+        return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    }
 
     std::string getJailRoot() const;
 
@@ -164,11 +173,15 @@ private:
     Poco::URI _uriJailed;
     std::string _jailId;
     std::string _filename;
+    std::chrono::steady_clock::time_point _lastSaveTime;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::shared_ptr<ChildProcess> _childProcess;
     std::mutex _mutex;
     std::atomic<unsigned> _sessionsCount;
+
+    static constexpr auto IdleSaveDurationMs = 30 * 1000;
+    static constexpr auto AutoSaveDurationMs = 300 * 1000;
 };
 
 #endif

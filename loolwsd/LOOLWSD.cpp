@@ -511,9 +511,6 @@ private:
                 }
                 else
                 {
-                    // Keep track of timestamps of incoming client messages that indicate editing
-                    if (tokenIndicatesUserInteraction(token))
-                        time(&session->_lastUserInteractionTime);
                     queue->put(payload);
                 }
 
@@ -1419,7 +1416,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     preForkChildren();
 
     time_t last30SecCheck = time(NULL);
-    time_t lastFiveMinuteCheck = last30SecCheck;
 
     int status = 0;
     while (!TerminationFlag && !LOOLWSD::DoTest)
@@ -1486,54 +1482,24 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         {
             if (!std::getenv("LOOL_NO_AUTOSAVE"))
             {
-                time_t now = time(NULL);
-                if (now >= last30SecCheck + 30)
+                if (time(nullptr) >= last30SecCheck + 30)
                 {
                     Log::trace("30-second check");
-                    last30SecCheck = now;
 
-                    std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
-                    for (auto& brokerIt : docBrokers)
+                    try
                     {
-                        std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
-                        for (auto& sessionIt: brokerIt.second->_wsSessions)
+                        std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                        for (auto& brokerIt : docBrokers)
                         {
-                            // If no editing done by the client since we last did an idle save,
-                            // and it is more than 30 seconds since the last edit, do an idle save.
-                            if (sessionIt.second->_lastUserInteractionTime > sessionIt.second->_idleSaveTime &&
-                                sessionIt.second->_lastUserInteractionTime < now - 30)
-                            {
-                                Log::info("Idle save triggered for session " + sessionIt.second->getId());
-                                sessionIt.second->getQueue()->put("uno .uno:Save");
-
-                                sessionIt.second->_idleSaveTime = now;
-                            }
+                            brokerIt.second->autoSave();
                         }
                     }
-                }
-                if (now >= lastFiveMinuteCheck + 300)
-                {
-                    Log::trace("Five-minute check");
-                    lastFiveMinuteCheck = now;
-
-                    std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
-                    for (auto& brokerIt : docBrokers)
+                    catch (const std::exception& exc)
                     {
-                        std::unique_lock<std::mutex> sessionsLock(brokerIt.second->_wsSessionsMutex);
-                        for (auto& sessionIt: brokerIt.second->_wsSessions)
-                        {
-                            // If some editing by from the client since we last did an (idle or
-                            // auto) save, do an auto save.
-                            if (sessionIt.second->_lastUserInteractionTime >= sessionIt.second->_idleSaveTime &&
-                                sessionIt.second->_lastUserInteractionTime >= sessionIt.second->_autoSaveTime)
-                            {
-                                Log::info("Auto-save triggered for session " + sessionIt.second->getId());
-                                sessionIt.second->getQueue()->put("uno .uno:Save");
-
-                                sessionIt.second->_autoSaveTime = now;
-                            }
-                        }
+                        Log::error("Exception: " + std::string(exc.what()));
                     }
+
+                    last30SecCheck = time(nullptr);
                 }
             }
             sleep(MAINTENANCE_INTERVAL*2);
