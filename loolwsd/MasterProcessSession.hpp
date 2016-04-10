@@ -56,9 +56,6 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     bool isEditLocked() const { return _bEditLock; }
 
 public:
-    time_t _idleSaveTime;
-    time_t _autoSaveTime;
-
     // Raise this flag on ToClient from ToPrisoner to let ToClient know of load failures
     bool _bLoadError = false;
 

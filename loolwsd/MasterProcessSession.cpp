@@ -35,8 +35,6 @@ MasterProcessSession::MasterProcessSession(const std::string& id,
                                            std::shared_ptr<DocumentBroker> docBroker,
                                            std::shared_ptr<BasicTileQueue> queue) :
     LOOLSession(id, kind, ws),
-    _idleSaveTime(0),
-    _autoSaveTime(0),
     _curPart(0),
     _loadPart(-1),
     _docBroker(docBroker),
