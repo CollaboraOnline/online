@@ -120,8 +120,8 @@ public:
     ~DocumentBroker()
     {
         Log::info() << "~DocumentBroker [" << _uriPublic.toString()
-                    << "] destroyed with " << _sessionsCount
-                    << " sessions." << Log::end;
+                    << "] destroyed with " << getSessionsCount()
+                    << " sessions left." << Log::end;
     }
 
     void validate(const Poco::URI& uri);
@@ -137,10 +137,12 @@ public:
     Poco::URI getJailedUri() const { return _uriJailed; }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
-    unsigned decSessions() { return --_sessionsCount; }
-    unsigned incSessions() { return ++_sessionsCount; }
-    unsigned getSessionsCount() { return _sessionsCount; }
     TileCache& tileCache() { return *_tileCache; }
+    unsigned getSessionsCount() const
+    {
+        std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
+        return _wsSessions.size();
+    }
 
     /// Returns the time in milliseconds since last save.
     double getTimeSinceLastSaveMs() const
@@ -171,12 +173,11 @@ private:
     std::string _filename;
     std::chrono::steady_clock::time_point _lastSaveTime;
     std::map<std::string, std::shared_ptr<MasterProcessSession>> _wsSessions;
-    std::mutex _wsSessionsMutex;
+    mutable std::mutex _wsSessionsMutex;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::shared_ptr<ChildProcess> _childProcess;
     std::mutex _mutex;
-    std::atomic<unsigned> _sessionsCount;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;

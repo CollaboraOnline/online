@@ -71,8 +71,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
     _lastSaveTime(std::chrono::steady_clock::now()),
-    _childProcess(childProcess),
-    _sessionsCount(0)
+    _childProcess(childProcess)
 {
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
@@ -125,22 +124,25 @@ bool DocumentBroker::load(const std::string& jailId)
 
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 bool DocumentBroker::save()
 {
-    Log::debug("Saving to URI: " + _uriPublic.toString());
+    const auto uri = _uriPublic.toString();
+    Log::debug("Saving to URI [" + uri + "].");
 
     assert(_storage && _tileCache);
     if (_storage->saveLocalFileToStorage())
     {
         _lastSaveTime = std::chrono::steady_clock::now();
         _tileCache->documentSaved();
+        Log::debug("Saved to URI [" + uri + "] and updated tile cache.");
         return true;
     }
 
+    Log::error("Failed to save to URI [" + uri + "].");
     return false;
 }
 
@@ -221,6 +223,7 @@ void DocumentBroker::takeEditLock(const std::string id)
 void DocumentBroker::addWSSession(const std::string id, std::shared_ptr<MasterProcessSession>& ws)
 {
     std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
+
     auto ret = _wsSessions.emplace(id, ws);
     if (!ret.second)
     {

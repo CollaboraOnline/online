@@ -341,10 +341,9 @@ private:
                     std::shared_ptr<WebSocket> ws;
                     auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, nullptr);
                     docBroker->addWSSession(id, session);
-                    unsigned wsSessionsCount = docBroker->getWSSessionsCount();
+                    auto wsSessionsCount = docBroker->getWSSessionsCount();
                     Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
                     session->setEditLock(true);
-                    docBroker->incSessions();
                     lock.unlock();
 
                     if (!waitBridgeCompleted(session, docBroker))
@@ -384,7 +383,9 @@ private:
                     }
 
                     lock.lock();
-                    if (docBroker->decSessions() == 0)
+                    docBroker->removeWSSession(id);
+                    wsSessionsCount = docBroker->getWSSessionsCount();
+                    if (wsSessionsCount == 0)
                     {
                         Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
                         docBrokers.erase(docKey);
@@ -550,14 +551,14 @@ private:
 
         auto ws = std::make_shared<WebSocket>(request, response);
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
-        docBroker->incSessions();
-        docBrokersLock.unlock();
-
         docBroker->addWSSession(id, session);
-        unsigned wsSessionsCount = docBroker->getWSSessionsCount();
+        auto wsSessionsCount = docBroker->getWSSessionsCount();
         Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
         if (wsSessionsCount == 1)
+        {
             session->setEditLock(true);
+        }
+        docBrokersLock.unlock();
 
         if (!waitBridgeCompleted(session, docBroker))
         {
@@ -607,16 +608,15 @@ private:
             queue->clear();
         }
 
-        docBroker->removeWSSession(id);
-        wsSessionsCount = docBroker->getWSSessionsCount();
-        Log::trace(docKey + ", ws_sessions--: " + std::to_string(wsSessionsCount));
-
         Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
         queue->put("eof");
         queueHandlerThread.join();
 
         docBrokersLock.lock();
-        if (docBroker->decSessions() == 0)
+        docBroker->removeWSSession(id);
+        wsSessionsCount = docBroker->getWSSessionsCount();
+        Log::trace(docKey + ", ws_sessions--: " + std::to_string(wsSessionsCount));
+        if (wsSessionsCount == 0)
         {
             Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
             docBrokers.erase(docKey);
