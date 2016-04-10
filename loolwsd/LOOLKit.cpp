@@ -340,8 +340,6 @@ public:
             queue->clear();
             queue->put("eof");
             queueHandlerThread.join();
-
-            _session->disconnect();
         }
         catch (const Exception& exc)
         {
