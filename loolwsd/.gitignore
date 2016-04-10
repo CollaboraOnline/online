@@ -41,8 +41,3 @@ loolforkit
 loolmount
 loolmap
 loolmount
-looltool
-sockettransporttest
-
-# Debug output
-/FOO*.png
