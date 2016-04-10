@@ -343,7 +343,6 @@ private:
                     docBroker->addWSSession(id, session);
                     auto wsSessionsCount = docBroker->getWSSessionsCount();
                     Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
-                    session->setEditLock(true);
                     lock.unlock();
 
                     if (!waitBridgeCompleted(session, docBroker))
@@ -554,10 +553,6 @@ private:
         docBroker->addWSSession(id, session);
         auto wsSessionsCount = docBroker->getWSSessionsCount();
         Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
-        if (wsSessionsCount == 1)
-        {
-            session->setEditLock(true);
-        }
         docBrokersLock.unlock();
 
         if (!waitBridgeCompleted(session, docBroker))

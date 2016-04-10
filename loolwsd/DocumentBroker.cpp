@@ -230,6 +230,12 @@ void DocumentBroker::addWSSession(const std::string id, std::shared_ptr<MasterPr
         Log::warn("DocumentBroker: Trying to add already existed session.");
     }
 
+    if (_wsSessions.size() == 1)
+    {
+        ws->setEditLock(true);
+        ws->sendTextFrame("editlock: 1");
+    }
+
     // Request a new session from the child kit.
     const std::string aMessage = "session " + id + " " + _docKey + "\n";
     Log::debug("DocBroker to Child: " + aMessage.substr(0, aMessage.length() - 1));
