@@ -34,3 +34,5 @@
 - Occasionally Control-C (SIGINT) doesn't shut fown loolwsd. One has
   to kill it with SIGKILL. Which of course leaves all the chroot jails
   around.
+
+- ASCII art? Seriously?
