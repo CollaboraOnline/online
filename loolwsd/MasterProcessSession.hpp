@@ -56,12 +56,6 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     bool isEditLocked() const { return _bEditLock; }
 
 public:
-    // Sessions to pre-spawned child processes that have connected but are not yet assigned a
-    // document to work on.
-    static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChildSessions;
-    static std::mutex AvailableChildSessionMutex;
-    static std::condition_variable AvailableChildSessionCV;
-
     time_t _idleSaveTime;
     time_t _autoSaveTime;
 
