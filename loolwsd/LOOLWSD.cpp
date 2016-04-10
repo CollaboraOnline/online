@@ -24,6 +24,7 @@
 #include <time.h>
 
 #include <cassert>
+#include <condition_variable>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
