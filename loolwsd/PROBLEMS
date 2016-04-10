@@ -31,13 +31,6 @@
   'disconnect'.  When we move to actually saving the document all
   the time automatically, the 'disconnect' message should be removed.
 
-- 'make check' does not work, or fails randomly, unless you have a
-  freshly started loolwsd with a --numprespawn option that is big
-  enough, 8 or so. Running 'make check' again without waiting for some
-  time (or re-starting loolwsd) fails most of the times. But
-  occasionally it passes. Clearly this is a sign that things do not
-  work as they should.
-
 - Occasionally Control-C (SIGINT) doesn't shut fown loolwsd. One has
   to kill it with SIGKILL. Which of course leaves all the chroot jails
   around.
