@@ -22,6 +22,7 @@
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Thread.h>
+#include <Poco/URI.h>
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
@@ -108,6 +109,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                     n = ws->receiveFrame(buffer, sizeof(buffer), flags);
                     if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
                     {
+                        Log::warn("Connection closed while reading multiframe message.");
                         break;
                     }
 
@@ -157,14 +159,16 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             }
         }
 
-        Log::debug() << "SocketProcessor finishing. TerminationFlag: " << stop
+        Log::info() << "SocketProcessor finishing. TerminationFlag: " << stop
                      << ", n: " << n
                      << ", payload size: " << payload.size()
                      << ", flags: " << std::hex << flags << Log::end;
         if (payload.size() > 1)
         {
-            Log::warn("Last message (" + std::to_string(payload.size()) + " bytes) will not be processed: [" +
-                      std::string(payload.data(), payload.size()) + "].");
+            std::string msg;
+            Poco::URI::encode(std::string(payload.data(), payload.size()), "", msg);
+            Log::warn("Last message (" + std::to_string(payload.size()) +
+                      " bytes) will not be processed: [" + msg + "].");
         }
     }
     catch (const WebSocketException& exc)

@@ -1023,7 +1023,7 @@ void lokit_main(const std::string& childRoot,
 
                     UnitKit::get().kitMessage(message);
 
-                    Log::debug(socketName + ": recv [" + message + "].");
+                    Log::debug(socketName + ": recv [" + LOOLProtocol::getAbbreviatedMessage(message) + "].");
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
                     if (TerminationFlag)
@@ -1049,7 +1049,7 @@ void lokit_main(const std::string& childRoot,
                         if (!(url == document->getUrl() &&
                             document->createSession(sessionId, intSessionId)))
                         {
-                            Log::debug("Create Session failed");
+                            Log::debug("CreateSession failed.");
                         }
                     }
                     else if (document && document->canDiscard())
@@ -1058,7 +1058,7 @@ void lokit_main(const std::string& childRoot,
                     }
                     else
                     {
-                        Log::info("bad unknown token [" + tokens[0] + "]");
+                        Log::info("Bad or unknown token [" + tokens[0] + "]");
                     }
 
                     return true;

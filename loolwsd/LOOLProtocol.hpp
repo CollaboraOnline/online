@@ -92,6 +92,12 @@ namespace LOOLProtocol
 
     /// Returns an abbereviation of the message (the first line, indicating truncation).
     std::string getAbbreviatedMessage(const char *message, const int length);
+
+    inline
+    std::string getAbbreviatedMessage(const std::string& message)
+    {
+        return getAbbreviatedMessage(message.data(), message.size());
+    }
 };
 
 #endif

@@ -190,7 +190,7 @@ void DocumentBroker::autoSave()
 
             if (!sent)
             {
-                Log::error("Failed to save doc [" + _docKey + "]: No valid sessions.");
+                Log::error("Failed to auto-save doc [" + _docKey + "]: No valid sessions.");
             }
         }
     }
