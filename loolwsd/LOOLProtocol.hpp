@@ -63,11 +63,18 @@ namespace LOOLProtocol
         return getFirstToken(message.data(), message.size());
     }
 
+    /// Returns true if the token is a user-interaction token.
+    /// Currently this excludes commands sent automatically.
+    /// Notice that this doesn't guarantee editing activity,
+    /// rather just user interaction with the UI.
     inline
     bool tokenIndicatesUserInteraction(const std::string& token)
     {
-        return (token != "tile" &&
-                token != "status");
+        // Exclude tokens that include these keywords,
+        // such as canceltiles statusindicator.
+        return (token.find("tile") == std::string::npos &&
+                token.find("status") == std::string::npos &&
+                token.find("state") == std::string::npos);
     }
 
     /// Returns the first line of a message.

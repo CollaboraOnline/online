@@ -103,11 +103,15 @@ bool MasterProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
 
 bool MasterProcessSession::_handleInput(const char *buffer, int length)
 {
-    updateLastActivityTime();
-
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     Log::trace(getName() + ": handling [" + firstLine + "].");
+
+    if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
+    {
+        // Keep track of timestamps of incoming client messages that indicate user activity.
+        updateLastActivityTime();
+    }
 
     if (tokens[0] == "loolclient")
     {
@@ -141,7 +145,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             if (tokens[0] == "unocommandresult:")
             {
                 const std::string stringMsg(buffer, length);
-                Log::info(getName() +"Command: " + stringMsg);
+                Log::info(getName() + "Command: " + stringMsg);
                 const auto index = stringMsg.find_first_of("{");
                 if (index != std::string::npos)
                 {

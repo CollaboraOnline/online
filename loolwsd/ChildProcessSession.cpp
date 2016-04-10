@@ -333,10 +333,14 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         //TODO: Sync cursor.
     }
 
-    updateLastActivityTime();
-
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+    if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
+    {
+        // Keep track of timestamps of incoming client messages that indicate user activity.
+        updateLastActivityTime();
+    }
 
     if (tokens[0] == "dummymsg")
     {
