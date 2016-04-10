@@ -174,7 +174,22 @@ void DocumentBroker::autoSave()
             Log::info("Auto-save triggered for doc [" + _docKey + "].");
 
             // Any session can be used to save.
-            _wsSessions.begin()->second->getQueue()->put("uno .uno:Save");
+            bool sent = false;
+            for (auto& sessionIt: _wsSessions)
+            {
+                auto queue = sessionIt.second->getQueue();
+                if (queue)
+                {
+                    queue->put("uno .uno:Save");
+                    sent = true;
+                    break;
+                }
+            }
+
+            if (!sent)
+            {
+                Log::error("Failed to save doc [" + _docKey + "]: No valid sessions.");
+            }
         }
     }
 }
