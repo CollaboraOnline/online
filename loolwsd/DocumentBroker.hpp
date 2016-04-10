@@ -161,10 +161,6 @@ public:
 
     unsigned getWSSessionsCount() { return _wsSessions.size(); }
 
-public:
-    std::map<std::string, std::shared_ptr<MasterProcessSession>> _wsSessions;
-    std::mutex _wsSessionsMutex;
-
 private:
     const Poco::URI _uriPublic;
     const std::string _docKey;
@@ -174,6 +170,8 @@ private:
     std::string _jailId;
     std::string _filename;
     std::chrono::steady_clock::time_point _lastSaveTime;
+    std::map<std::string, std::shared_ptr<MasterProcessSession>> _wsSessions;
+    std::mutex _wsSessionsMutex;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::shared_ptr<ChildProcess> _childProcess;
