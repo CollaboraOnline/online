@@ -239,17 +239,18 @@ void DocumentBroker::addWSSession(const std::string id, std::shared_ptr<MasterPr
 void DocumentBroker::removeWSSession(const std::string id)
 {
     std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
-    bool bEditLock = false;
+
+    bool haveEditLock = false;
     auto it = _wsSessions.find(id);
     if (it != _wsSessions.end())
     {
-        if (it->second->isEditLocked())
-            bEditLock = true;
-
+        haveEditLock = it->second->isEditLocked();
+        it->second->setEditLock(false);
+        it->second->sendTextFrame("editlock 0");
         _wsSessions.erase(it);
     }
 
-    if (bEditLock)
+    if (haveEditLock)
     {
         // pass the edit lock to first session in map
         it = _wsSessions.begin();
