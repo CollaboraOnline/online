@@ -266,7 +266,7 @@ private:
         {
             AvailableChildSessionCV.wait_for(
                 lock,
-                std::chrono::milliseconds(3000),
+                std::chrono::milliseconds(COMMAND_TIMEOUT_MS),
                 [&isFound, &clientSession]
                 {
                     return (isFound = AvailableChildSessions.find(clientSession->getId()) != AvailableChildSessions.end());
@@ -354,7 +354,7 @@ private:
                         response.send();
                         return;
                     }
-                    // Now the bridge beetween the client and kit process is connected
+                    // Now the bridge between the client and kit processes is connected
                     // Let messages flow
 
                     std::string encodedFrom;
@@ -600,7 +600,7 @@ private:
             // Note: technically, there is a race between these two (we should
             // hold the broker lock before issueing the save and waiting,)
             // but in practice this shouldn't happen.
-            if (docBroker->autoSave(true) && !docBroker->waitSave(5000))
+            if (docBroker->autoSave(true) && !docBroker->waitSave(COMMAND_TIMEOUT_MS))
             {
                 Log::error("Auto-save before closing failed.");
             }
