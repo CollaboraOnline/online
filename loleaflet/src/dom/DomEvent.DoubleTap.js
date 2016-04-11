@@ -46,6 +46,7 @@ L.extend(L.DomEvent, {
 					touch = newTouch;
 				}
 				touch.type = 'dblclick';
+				touch.button = 0;
 				handler(touch);
 				last = null;
 			}
