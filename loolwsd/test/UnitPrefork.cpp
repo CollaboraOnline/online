@@ -24,6 +24,7 @@ class UnitPrefork : public UnitWSD
     int _numStarted;
     const int _numToPrefork;
     Timestamp _startTime;
+
 public:
     UnitPrefork()
         : _numStarted(0),
@@ -31,14 +32,16 @@ public:
     {
         setHasKitHooks();
     }
+
     virtual void preSpawnCount(int &numPrefork) override
     {
         numPrefork = _numToPrefork;
     }
+
     virtual void newChild() override
     {
-        _numStarted++;
-        if (_numStarted >= _numToPrefork + 1)
+        ++_numStarted;
+        if (_numStarted >= _numToPrefork)
         {
             exitTest(TestResult::TEST_OK);
 
