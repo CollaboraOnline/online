@@ -592,10 +592,18 @@ private:
 
         if (docBroker->getSessionsCount() == 1 && !normalShutdown && !session->_bLoadError)
         {
-            //TODO: This isn't this simple. We need to wait for the notification
-            // of save so Storage can persist the save (if necessary).
             Log::info("Non-deliberate shutdown of the last session, saving the document before tearing down.");
-            queue->put("uno .uno:Save");
+
+            // Use auto-save to save only when there are modifications since last save.
+            // We also need to wait until the save notification reaches us
+            // and Storage persists the document.
+            // Note: technically, there is a race between these two (we should
+            // hold the broker lock before issueing the save and waiting,)
+            // but in practice this shouldn't happen.
+            if (docBroker->autoSave(true) && !docBroker->waitSave(5000))
+            {
+                Log::error("Auto-save before closing failed.");
+            }
         }
         else
         {
@@ -1562,7 +1570,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
                         for (auto& brokerIt : docBrokers)
                         {
-                            brokerIt.second->autoSave();
+                            brokerIt.second->autoSave(false);
                         }
                     }
                     catch (const std::exception& exc)

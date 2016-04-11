@@ -130,6 +130,8 @@ bool DocumentBroker::load(const std::string& jailId)
 
 bool DocumentBroker::save()
 {
+    std::unique_lock<std::mutex> lock(_saveMutex);
+
     const auto uri = _uriPublic.toString();
     Log::debug("Saving to URI [" + uri + "].");
 
@@ -139,6 +141,7 @@ bool DocumentBroker::save()
         _lastSaveTime = std::chrono::steady_clock::now();
         _tileCache->documentSaved();
         Log::debug("Saved to URI [" + uri + "] and updated tile cache.");
+        _saveCV.notify_all();
         return true;
     }
 
@@ -146,13 +149,13 @@ bool DocumentBroker::save()
     return false;
 }
 
-void DocumentBroker::autoSave()
+bool DocumentBroker::autoSave(const bool force)
 {
     std::unique_lock<std::mutex> sessionsLock(_wsSessionsMutex);
     if (_wsSessions.empty())
     {
         // Shouldn't happen.
-        return;
+        return false;
     }
 
     // Find the most recent activity.
@@ -170,8 +173,10 @@ void DocumentBroker::autoSave()
     if (inactivityTimeMs < timeSinceLastSaveMs)
     {
         // Either we've been idle long enough, or it's auto-save time.
+        // Or we are asked to save anyway.
         if (inactivityTimeMs >= IdleSaveDurationMs ||
-            timeSinceLastSaveMs >= AutoSaveDurationMs)
+            timeSinceLastSaveMs >= AutoSaveDurationMs ||
+            force)
         {
             Log::info("Auto-save triggered for doc [" + _docKey + "].");
 
@@ -192,8 +197,27 @@ void DocumentBroker::autoSave()
             {
                 Log::error("Failed to auto-save doc [" + _docKey + "]: No valid sessions.");
             }
+
+            return sent;
         }
     }
+
+    return false;
+}
+
+bool DocumentBroker::waitSave(const size_t timeoutMs)
+{
+    std::unique_lock<std::mutex> lock(_saveMutex);
+
+    // Remeber the last save time, since this is the predicate.
+    const auto lastSaveTime = _lastSaveTime;
+
+    if (_saveCV.wait_for(lock, std::chrono::milliseconds(timeoutMs)) == std::cv_status::no_timeout)
+    {
+        return true;
+    }
+
+    return (lastSaveTime != _lastSaveTime);
 }
 
 std::string DocumentBroker::getJailRoot() const

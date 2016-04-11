@@ -13,6 +13,7 @@
 #include <signal.h>
 
 #include <atomic>
+#include <chrono>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -131,7 +132,15 @@ public:
 
     bool save();
 
-    void autoSave();
+    /// Save the document if there was activity since last save.
+    /// force when true, will force saving immediatly, regardless
+    /// of how long ago the activity was.
+    bool autoSave(const bool force);
+
+    /// Wait until the document is saved next.
+    /// This is used to cleanup after the last save.
+    /// Returns false if times out.
+    bool waitSave(const size_t timeoutMs);
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
@@ -178,6 +187,8 @@ private:
     std::unique_ptr<TileCache> _tileCache;
     std::shared_ptr<ChildProcess> _childProcess;
     std::mutex _mutex;
+    std::condition_variable _saveCV;
+    std::mutex _saveMutex;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;
