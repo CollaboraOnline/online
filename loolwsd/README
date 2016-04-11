@@ -25,16 +25,24 @@ On Debian 8 (Linux x86_64) you can use in /etc/apt/sources.list:
 Building
 --------
 
-loolwsd uses autoconf/automake, so build using the usual:
-
-    MASTER=/path/to/built/core.git # configure for your system
+loolwsd uses autoconf/automake, so especially when building from .git
+(as opposed to from a distribution tarball) you need the usual fun:
 
     autoreconf
+    libtoolize
     automake --add-missing
+
+possibly iterating several times...
+
+and then
+
     ./configure --enable-silent-rules --with-lokit-path=${MASTER}/include
     make
 
+
 where ${MASTER} is the location of the LibreOffice source tree.
+
+When building from a tarball less magic is needed.
 
 Run 'make check' after each commit. Requires loolwsd to be running.
 
