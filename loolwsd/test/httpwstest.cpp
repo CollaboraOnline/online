@@ -203,6 +203,12 @@ void HTTPWSTest::testBadLoad()
             {
                 std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
                 const std::string line = LOOLProtocol::getFirstLine(buffer, n);
+
+                // For some reason the server claims a client has the 'edit lock' even if no
+                // document has been successfully loaded
+                if (LOOLProtocol::getFirstToken(buffer, n) == "editlock:")
+                    continue;
+
                 CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
                 break;
             }
