@@ -43,18 +43,24 @@ namespace LOOLProtocol
     // Functions that parse messages. All return false if parsing fails
     bool parseStatus(const std::string& message, LibreOfficeKitDocumentType& type, int& nParts, int& currentPart, int& width, int& height);
 
-    /// Returns the first token of a message given a delimiter.
     inline
-    std::string getFirstToken(const char *message, const int length, const char delim = ' ')
+    std::string getDelimitedInitialSubstring(const char *message, const int length, const char delimiter)
     {
         if (message == nullptr || length <= 0)
         {
             return "";
         }
 
-        const char *endOfLine = static_cast<const char *>(std::memchr(message, delim, length));
-        const auto size = (endOfLine == nullptr ? length : endOfLine - message);
+        const char *foundDelimiter = static_cast<const char *>(std::memchr(message, delimiter, length));
+        const auto size = (foundDelimiter == nullptr ? length : foundDelimiter - message);
         return std::string(message, size);
+    }
+
+    /// Returns the first token of a message.
+    inline
+    std::string getFirstToken(const char *message, const int length)
+    {
+        return getDelimitedInitialSubstring(message, length, ' ');
     }
 
     inline
@@ -81,7 +87,7 @@ namespace LOOLProtocol
     inline
     std::string getFirstLine(const char *message, const int length)
     {
-        return getFirstToken(message, length, '\n');
+        return getDelimitedInitialSubstring(message, length, '\n');
     }
 
     inline
