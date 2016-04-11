@@ -82,6 +82,11 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
 AS_IF([test "$enable_debug" = yes],
       [AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces ])])
 
+debug_msg="secure mode: product build"
+if test "$enable_debug" = yes; then
+   debug_msg="low security debugging mode"
+fi
+
 # Test for build environment
 
 CXXFLAGS="$CXXFLAGS -std=c++11"
@@ -163,6 +168,12 @@ AS_IF([test "$enable_tests" != "no"],
 AS_IF([test "$enable_ssl" != "no"],
       [AC_DEFINE([ENABLE_SSL],1,[Enable SSL])])
 
+if test "$enable_ssl" != "no"; then
+   ssl_msg="ssl enabled"
+else
+   ssl_msg="insecure: ssl disabled"
+fi
+
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
 AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
@@ -226,14 +237,15 @@ AC_LANG_POP
 
 echo "
 Configuration:
-    Source code location:   ${srcdir}
-    Build location:         ${top_builddir}
     LOKit path              ${lokit_msg}
     LO integration tests    ${lo_msg}
-    SSL support             ${enable_ssl}
+    SSL support             $ssl_msg
+    Debug & low security    $debug_msg
 
-    Systemplate path        ${systemplate_msg}
-    Jail path               ${jail_msg}
+    \$ make # to compile"
+if test -n "$with_lo_path"; then
+echo "    \$ make run # to start loolwsd
 "
+fi
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:
