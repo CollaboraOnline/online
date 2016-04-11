@@ -165,9 +165,9 @@ bool DocumentBroker::autoSave(const bool force)
         inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
     }
 
-    Log::trace("Most recent inactivity was " + std::to_string((int)inactivityTimeMs) + " ms ago.");
+    Log::trace("Most recent activity was " + std::to_string((int)inactivityTimeMs) + " ms ago.");
     const auto timeSinceLastSaveMs = getTimeSinceLastSaveMs();
-    Log::trace("Time since last save was " + std::to_string((int)timeSinceLastSaveMs) + " ms ago.");
+    Log::trace("Time since last save is " + std::to_string((int)timeSinceLastSaveMs) + " ms.");
 
     // There has been some editing since we saved last?
     if (inactivityTimeMs < timeSinceLastSaveMs)
