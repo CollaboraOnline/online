@@ -1563,8 +1563,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             {
                 if (time(nullptr) >= last30SecCheck + 30)
                 {
-                    Log::trace("30-second check");
-
                     try
                     {
                         std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
