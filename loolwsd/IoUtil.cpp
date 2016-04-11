@@ -259,8 +259,7 @@ ssize_t readFIFO(int pipe, char* buffer, ssize_t size)
 /// Returns 0 for timeout, <0 for error, and >0 on success.
 /// On success, line will contain the read message.
 int PipeReader::readLine(std::string& line,
-                         std::function<bool()> stopPredicate,
-                         const size_t timeoutMs)
+                         std::function<bool()> stopPredicate)
 {
     const char *endOfLine = static_cast<const char *>(std::memchr(_data.data(), '\n', _data.size()));
     if (endOfLine != nullptr)
@@ -275,7 +274,7 @@ int PipeReader::readLine(std::string& line,
 
     // Poll in short intervals to check for stop condition.
     const auto pollTimeoutMs = 500;
-    auto maxPollCount = timeoutMs / pollTimeoutMs;
+    auto maxPollCount = POLL_TIMEOUT_MS / pollTimeoutMs;
     while (maxPollCount-- > 0)
     {
         if (stopPredicate())
@@ -339,11 +338,10 @@ int PipeReader::readLine(std::string& line,
 }
 
 bool PipeReader::processOnce(std::function<bool(std::string& message)> handler,
-                             std::function<bool()> stopPredicate,
-                             const size_t pollTimeoutMs)
+                             std::function<bool()> stopPredicate)
 {
     std::string line;
-    const auto ready = readLine(line, stopPredicate, pollTimeoutMs);
+    const auto ready = readLine(line, stopPredicate);
     if (ready == 0)
     {
         // Timeout.

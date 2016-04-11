@@ -55,16 +55,14 @@ namespace IoUtil
         /// to check for termination condition.
         /// Intended to be called from a polling loop.
         bool processOnce(std::function<bool(std::string& message)> handler,
-                         std::function<bool()> stopPredicate,
-                         const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
+                         std::function<bool()> stopPredicate);
 
     private:
         /// Reads a single line from the pipe.
         /// Returns 0 for timeout, <0 for error, and >0 on success.
         /// On success, line will contain the read message.
         int readLine(std::string& line,
-                     std::function<bool()> stopPredicate,
-                     const size_t timeoutMs = POLL_TIMEOUT_MS);
+                     std::function<bool()> stopPredicate);
 
         const std::string _name;
         const int _pipe;
