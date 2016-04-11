@@ -170,11 +170,13 @@ L.Map.Keyboard = L.Handler.extend({
 
 		this._map.on('mousedown', this._onMouseDown, this);
 		this._map.on('keydown keyup keypress', this._onKeyDown, this);
+		this._map.on('compositionend', this._onKeyDown, this);
 	},
 
 	removeHooks: function () {
 		this._map.on('mousedown', this._onMouseDown, this);
 		this._map.off('keydown keyup keypress', this._onKeyDown, this);
+		this._map.off('compositionend', this._onKeyDown, this);
 	},
 
 	_setPanOffset: function (pan) {
@@ -257,6 +259,9 @@ L.Map.Keyboard = L.Handler.extend({
 
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
+		if (e.type === 'compositionend') {
+			charCode = keyCode = e.originalEvent.data.charCodeAt();
+		}
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
 
 		if (this.modifier) {
@@ -273,7 +278,7 @@ L.Map.Keyboard = L.Handler.extend({
 			if (e.type === 'keydown' && this.handleOnKeyDown[keyCode] && charCode === 0) {
 				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 			}
-			else if (e.type === 'keypress' &&
+			else if ((e.type === 'keypress' || e.type === 'compositionend') &&
 				(!this.handleOnKeyDown[keyCode] || charCode !== 0)) {
 				if (charCode === keyCode && charCode !== 13) {
 					// Chrome sets keyCode = charCode for printable keys
