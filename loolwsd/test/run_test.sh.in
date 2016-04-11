@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# DO NOT EDIT - this file is generated from run_test.sh.in.
+#
+
+abs_top_builddir="@abs_top_builddir@"
+test_build="${abs_top_builddir}/test"
+test_output="$test_build/run_test.sh.trs"
+test_log_output="$test_build/test_output"
+
+mkdir -p $test_log_output
+
+# result logging
+echo > $test_output
+
+${abs_top_builddir}/loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
+           --childroot="@JAILS_PATH@" --allowlocalstorage 2>$test_log_output/run_test.log &
+
+sleep 1 # sad - need to add a wait to the start of test.cpp ...
+
+cd $test_build
+if ./test; then
+	echo "Test run_test.sh passed."
+	echo ":test-result: PASS run_test.sh" >> $test_output
+else
+	cat $test_log_output/run_test.log
+        echo "============================================================="
+	echo "Test failed on unit:"
+        echo "============================================================="
+	echo ":test-result: FAIL run_test.sh" >> $test_output
+fi
+
+kill $!

@@ -86,6 +86,26 @@ EXTRA_DIST = discovery.xml \
              loolwsd.service \
              sysconfig.loolwsd
 
+if HAVE_LO_PATH
+
+@SYSTEMPLATE_PATH@/system_stamp :
+	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
+	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@
+
+@JAILS_PATH@ :
+	mkdir -p $@
+
+clean-local:
+	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
+	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
+
+run: @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+	@echo "Launching loolwsd - launch this in your browser:"
+	@echo "   https://localhost:9980/loleaflet/dist/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello.odt&host=wss://localhost:9980"
+	./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
+                  --childroot="@JAILS_PATH@" --allowlocalstorage
+endif
+
 clean-cache:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
@@ -96,7 +116,7 @@ clean-cache:
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
 
-all-local: loolforkit certificates
+all-local: loolforkit certificates @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit; \
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount; \

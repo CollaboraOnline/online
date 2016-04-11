@@ -9,3 +9,5 @@ Makefile.in
 *.lo
 *.o
 test
+run_unit.sh
+run_test.sh

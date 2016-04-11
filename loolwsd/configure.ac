@@ -78,7 +78,7 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=])
 
 AS_IF([test "$enable_debug" = yes],
-      [AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code])])
+      [AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces ])])
 
 # Test for build environment
 
@@ -97,12 +97,16 @@ dnl
 dnl lo_path is not required; but useful for testing.
 dnl
 LO_PATH=
+JAIL_PATH=not-set
+SYSTEMPLATE_PATH=not-set
 have_lo_path=false
 AC_MSG_CHECKING([whether to run tests against a LibreOffice])
 if test -n "$with_lo_path"; then
    version_file="$with_lo_path/program/versionrc"
    if test -f $version_file; then
      LO_PATH="$with_lo_path"
+     JAILS_PATH="\${abs_top_builddir}/jails"
+     SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
      have_lo_path=true
      lo_msg="test against $LO_PATH"
      AC_MSG_RESULT([yes])
@@ -114,6 +118,8 @@ else
    AC_MSG_RESULT([no])
 fi
 AC_SUBST(LO_PATH)
+AC_SUBST(JAILS_PATH)
+AC_SUBST(SYSTEMPLATE_PATH)
 AM_CONDITIONAL(HAVE_LO_PATH,[test "$have_lo_path" = "true"])
 
 AS_IF([test -n "$with_poco_includes"],
@@ -209,6 +215,9 @@ AC_SUBST(LOOLWSD_CONFIGDIR)
 AC_CONFIG_FILES([Makefile
                  test/Makefile
                  loolwsd.spec])
+AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
+AC_CONFIG_FILES([test/run_test.sh],[chmod +x test/run_test.sh])
+
 AC_OUTPUT
 
 AC_LANG_POP
@@ -220,6 +229,9 @@ Configuration:
     LOKit path              ${lokit_msg}
     LO integration tests    ${lo_msg}
     SSL support             ${enable_ssl}
+
+    Systemplate path        ${systemplate_msg}
+    Jail path               ${jail_msg}
 "
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:
