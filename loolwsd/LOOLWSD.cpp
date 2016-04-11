@@ -1579,7 +1579,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     last30SecCheck = time(nullptr);
                 }
             }
-            sleep(MAINTENANCE_INTERVAL*2);
+            sleep(WSD_SLEEP_SECS);
         }
     }
 
