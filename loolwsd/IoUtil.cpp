@@ -163,7 +163,8 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                      << ", n: " << n
                      << ", payload size: " << payload.size()
                      << ", flags: " << std::hex << flags << Log::end;
-        if (payload.size() > 1)
+
+        if ((flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && payload.size() > 1)
         {
             std::string msg;
             Poco::URI::encode(std::string(payload.data(), payload.size()), "", msg);
