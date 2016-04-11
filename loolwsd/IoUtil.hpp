@@ -65,12 +65,6 @@ namespace IoUtil
                          std::function<bool()> stopPredicate,
                          const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
 
-        /// Designed to be called from a dedicated thread,
-        /// blocks and processes pipe messages in a loop.
-        void process(std::function<bool(std::string& message)> handler,
-                     std::function<bool()> stopPredicate,
-                     const size_t pollTimeoutMs = POLL_TIMEOUT_MS);
-
     private:
         const std::string _name;
         const int _pipe;

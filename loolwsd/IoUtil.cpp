@@ -363,16 +363,6 @@ bool PipeReader::processOnce(std::function<bool(std::string& message)> handler,
     return true;
 }
 
-void PipeReader::process(std::function<bool(std::string& message)> handler,
-                         std::function<bool()> stopPredicate,
-                         const size_t pollTimeoutMs)
-{
-    while (processOnce(handler, stopPredicate, pollTimeoutMs))
-    {
-        // readLine will call stopPredicate, no need to do it again here.
-    }
-}
-
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
