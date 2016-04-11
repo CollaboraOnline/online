@@ -148,7 +148,7 @@ namespace Log
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
         Source.id = oss.str();
         assert (sizeof (LogPrefix) > strlen(oss.str().c_str()) + 1);
-        strcpy(LogPrefix, oss.str().c_str());
+        strncpy(LogPrefix, oss.str().c_str(), sizeof(LogPrefix));
 
         auto channel = (isatty(fileno(stdout)) || std::getenv("LOOL_LOGCOLOR")
                      ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
@@ -488,7 +488,7 @@ namespace Util
                << Poco::Process::id() << "\n";
         std::string streamStr = stream.str();
         assert (sizeof (FatalGdbString) > strlen(streamStr.c_str()) + 1);
-        strcpy(FatalGdbString, streamStr.c_str());
+        strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString));
     }
 
     int getChildStatus(const int code)
