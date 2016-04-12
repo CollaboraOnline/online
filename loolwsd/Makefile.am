@@ -88,7 +88,9 @@ EXTRA_DIST = discovery.xml \
 
 if HAVE_LO_PATH
 
-@SYSTEMPLATE_PATH@/system_stamp :
+SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
+
+$(SYSTEM_STAMP) :
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@
 
@@ -104,6 +106,10 @@ run: @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "   https://localhost:9980/loleaflet/dist/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello.odt&host=wss://localhost:9980"
 	./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
                   --childroot="@JAILS_PATH@" --allowlocalstorage
+else
+
+SYSTEM_STAMP =
+
 endif
 
 clean-cache:
@@ -116,7 +122,7 @@ clean-cache:
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
 
-all-local: loolforkit certificates @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+all-local: loolforkit certificates @JAILS_PATH@ $(SYSTEM_STAMP)
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit; \
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount; \

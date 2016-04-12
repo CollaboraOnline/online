@@ -24,8 +24,14 @@ unit_prefork_la_LDFLAGS = -module
 unit_storage_la_SOURCES = UnitStorage.cpp
 unit_storage_la_LDFLAGS = -module
 
+if HAVE_LO_PATH
+SYSTEM_STAMP = ${systemplate}/system_stamp
+else
+SYSTEM_STAMP =
+endif
+
 ${top_builddir}/test/run_unit.sh.log ${top_builddir}/test/run_unit.sh.trs : \
-	${systemplate}/system_stamp @JAILS_PATH@ \
+	$(SYSTEM_STAMP) @JAILS_PATH@ \
 	${top_srcdir}/test/run_unit.sh \
 	${top_builddir}/loolwsd ${top_builddir}/loolforkit \
 	$(wildcard *.la)
