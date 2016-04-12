@@ -1323,37 +1323,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    // Open notify pipe
-    int pipeFlags = O_RDONLY | O_NONBLOCK;
-    int notifyPipe = -1;
-    const std::string pipeNotify = Path(pipePath, FIFO_ADMIN_NOTIFY).toString();
-    Log::debug("mkfifo(" + pipeNotify + ")");
-    if (mkfifo(pipeNotify.c_str(), 0666) < 0 && errno != EEXIST)
-    {
-        Log::syserror("Failed to create fifo [" + pipeNotify + "].");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    if ((notifyPipe = open(pipeNotify.c_str(), pipeFlags) ) < 0)
-    {
-        Log::syserror("Failed to open pipe [" + pipeNotify + "] for reading.");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-    Log::debug("open(" + pipeNotify + ", RDONLY) = " + std::to_string(notifyPipe));
-
-    if ((pipeFlags = fcntl(notifyPipe, F_GETFL, 0)) < 0)
-    {
-        Log::syserror("Failed to get pipe flags [" + pipeNotify + "].");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
-    pipeFlags &= ~O_NONBLOCK;
-    if (fcntl(notifyPipe, F_SETFL, pipeFlags) < 0)
-    {
-        Log::syserror("Failed to set pipe flags [" + pipeNotify + "].");
-        std::exit(Application::EXIT_SOFTWARE);
-    }
-
     const Process::PID forKitPid = createForKit();
     if (forKitPid < 0)
     {
