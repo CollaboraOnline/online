@@ -14,50 +14,149 @@
 
 #include "Util.hpp"
 #include "Unit.hpp"
+#include "LOOLProtocol.hpp"
 
 #include <Poco/Timestamp.h>
-using Poco::Timestamp;
+#include <Poco/StringTokenizer.h>
+
+const int NumToPrefork = 20;
 
 // Inside the WSD process
 class UnitPrefork : public UnitWSD
 {
     int _numStarted;
-    const int _numToPrefork;
-    Timestamp _startTime;
+    Poco::Timestamp _startTime;
+    std::vector< std::shared_ptr<Poco::Net::WebSocket> > _childSockets;
 
 public:
     UnitPrefork()
-        : _numStarted(0),
-          _numToPrefork(20)
+        : _numStarted(0)
     {
         setHasKitHooks();
     }
 
     virtual void preSpawnCount(int &numPrefork) override
     {
-        numPrefork = _numToPrefork;
+        numPrefork = NumToPrefork;
     }
 
-    virtual void newChild() override
+    std::string getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket)
+    {
+        /// Fetch memory usage data from the last process ...
+        socket->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n")-1);
+        int flags;
+        char buffer[4096];
+        std::cout << "Waiting for memory stats" << std::endl;
+
+        int length = socket->receiveFrame(buffer, sizeof (buffer), flags);
+        std::string memory = LOOLProtocol::getFirstLine(buffer, length);
+
+        return memory;
+    }
+
+    virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
     {
         ++_numStarted;
-        if (_numStarted >= _numToPrefork)
+        _childSockets.push_back(socket);
+        if (_numStarted >= NumToPrefork)
         {
-            exitTest(TestResult::TEST_OK);
-
             Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
 
             std::cout << "Launched " << _numStarted << " in "
                       << (1.0 * elapsed)/Poco::Timestamp::resolution() << std::endl;
+            int num = 0;
+            for (auto child : _childSockets)
+                std::cout << "Memory of " << ++num << " : " <<
+                             getMemory(child) << std::endl;
+
+            exitTest(TestResult::TEST_OK);
         }
     }
 };
 
+namespace {
+    std::vector<int> pids;
+
+    const char *startsWith(const char *line, const char *tag)
+    {
+        int len = strlen(tag);
+        if (!strncmp(line, tag, len))
+        {
+            while (!isdigit(line[len]) && line[len] != '\0')
+                len++;
+//            fprintf(stdout, "does start with %s: '%s'\n", tag, line + len);
+            return line + len;
+        }
+        else
+            return 0;
+    }
+
+    std::string readMemorySizes(FILE *inStream)
+    {
+        size_t numPSSKb = 0;
+        size_t numDirtyKb = 0;
+
+        char line[4096];
+        while (fgets(line, sizeof (line), inStream))
+        {
+            const char *value;
+            if ((value = startsWith(line, "Private_Dirty:")) ||
+                (value = startsWith(line, "Shared_Dirty:")))
+                numDirtyKb += atoi(value);
+            else if ((value = startsWith(line, "Pss:")))
+                numPSSKb += atoi(value);
+        }
+        std::ostringstream oss;
+        oss << numPSSKb << "k pss " << numDirtyKb << "k dirty";
+        return oss.str();
+    }
+}
+
 // Inside the forkit & kit processes
 class UnitKitPrefork : public UnitKit
 {
+    FILE *_procSMaps;
+
 public:
-    UnitKitPrefork() {}
+    UnitKitPrefork()
+        : _procSMaps(NULL)
+    {
+        std::cerr << "UnitKit Prefork init !\n";
+    }
+    ~UnitKitPrefork()
+    {
+        fclose(_procSMaps);
+    }
+
+    virtual void launchedKit(int pid) override
+    {
+        // by the magic of forking - this should appear
+        // in the last kit child nearly fully formed.
+        pids.push_back(pid);
+    }
+
+    virtual void postFork() override
+    {
+        // before we drop the caps we can even open our /proc files !
+        std::string procName = std::string("/proc/") +
+                               std::to_string(getpid()) +
+                               std::string("/smaps");
+        _procSMaps = fopen(procName.c_str(), "r");
+    }
+
+    virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> &ws,
+                                  std::string &message) override
+    {
+        std::string token = LOOLProtocol::getFirstToken(message.c_str(), message.length());
+        if (token == "unit-memdump:")
+        {
+            std::string memory = readMemorySizes(_procSMaps) + "\n";
+            ws->sendFrame(memory.c_str(), memory.length());
+            return true;
+        }
+
+        return false;
+    }
 };
 
 UnitBase *unit_create_wsd(void)

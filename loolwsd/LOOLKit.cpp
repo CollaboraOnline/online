@@ -1021,7 +1021,8 @@ void lokit_main(const std::string& childRoot,
                 {
                     std::string message(data.data(), data.size());
 
-                    UnitKit::get().kitMessage(message);
+                    if (UnitKit::get().filterKitMessage(ws, message))
+                        return true;
 
                     Log::debug(socketName + ": recv [" + LOOLProtocol::getAbbreviatedMessage(message) + "].");
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);

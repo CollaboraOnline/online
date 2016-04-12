@@ -667,6 +667,11 @@ public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
+        if (UnitWSD::get().filterHandleRequest(
+                UnitWSD::TestRequest::TEST_REQ_CLIENT,
+                request, response))
+            return;
+
         handleClientRequest(request,response);
     }
 
@@ -721,6 +726,11 @@ public:
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
+        if (UnitWSD::get().filterHandleRequest(
+                UnitWSD::TestRequest::TEST_REQ_PRISONER,
+                request, response))
+            return;
+
         handlePrisonerRequest(request, response);
     }
 
@@ -756,7 +766,7 @@ public:
             newChildren.emplace_back(std::make_shared<ChildProcess>(pid, ws));
             Log::info("Have " + std::to_string(newChildren.size()) + " " + (newChildren.size() == 1 ? "child" : "children") + ".");
             newChildrenCV.notify_one();
-            UnitWSD::get().newChild();
+            UnitWSD::get().newChild(ws);
             return;
         }
 
