@@ -141,7 +141,7 @@ public:
 
     void update(const std::string& data);
 
-    std::string query(const std::string command);
+    std::string query(const std::string& command);
 
     /// Returns memory consumed by all active loolkit processes
     unsigned getTotalMemoryUsage();
@@ -166,7 +166,7 @@ public:
     void notify(const std::string& message);
 
 private:
-    void addDocument(Poco::Process::PID pid, std::string url);
+    void addDocument(Poco::Process::PID pid, const std::string& url);
 
     void removeDocument(Poco::Process::PID pid);
 

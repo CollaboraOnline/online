@@ -124,7 +124,7 @@ void AdminModel::update(const std::string& data)
     notify(data);
 }
 
-std::string AdminModel::query(const std::string command)
+std::string AdminModel::query(const std::string& command)
 {
     StringTokenizer tokens(command, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -278,7 +278,7 @@ void AdminModel::notify(const std::string& message)
     }
 }
 
-void AdminModel::addDocument(Poco::Process::PID pid, std::string url)
+void AdminModel::addDocument(Poco::Process::PID pid, const std::string& url)
 {
     _documents.emplace(pid, Document(pid, url));
 }
