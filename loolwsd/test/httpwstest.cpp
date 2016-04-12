@@ -168,7 +168,7 @@ void HTTPWSTest::testLoad()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -220,7 +220,7 @@ void HTTPWSTest::testBadLoad()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -260,7 +260,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 
     try
@@ -311,7 +311,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -364,7 +364,7 @@ void HTTPWSTest::testExcelLoad()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -424,7 +424,7 @@ void HTTPWSTest::testPaste()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -481,7 +481,7 @@ void HTTPWSTest::testLargePaste()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -541,7 +541,7 @@ void HTTPWSTest::testRenderingOptions()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -582,7 +582,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -623,7 +623,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -651,7 +651,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
@@ -759,7 +759,7 @@ void HTTPWSTest::testImpressPartCountChanged()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_ASSERT_MESSAGE(exc.displayText(), false);
+        CPPUNIT_FAIL(exc.displayText());
     }
 }
 
