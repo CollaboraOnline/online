@@ -279,7 +279,6 @@ void DocumentBroker::removeWSSession(const std::string id)
     {
         haveEditLock = it->second->isEditLocked();
         it->second->setEditLock(false);
-        it->second->sendTextFrame("editlock: 0");
         _wsSessions.erase(it);
     }
 

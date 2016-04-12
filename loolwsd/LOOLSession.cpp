@@ -24,6 +24,7 @@
 #include <set>
 
 #include <Poco/Exception.h>
+#include <Poco/Net/Socket.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/String.h>
@@ -40,6 +41,7 @@ using namespace LOOLProtocol;
 
 using Poco::Exception;
 using Poco::IOException;
+using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::StringTokenizer;
@@ -71,30 +73,41 @@ LOOLSession::~LOOLSession()
 
 void LOOLSession::sendTextFrame(const std::string& text)
 {
-    if (!_ws)
+    if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
     {
-        Log::error("No socket to send " + getAbbreviatedMessage(text.c_str(), text.size()) + " to.");
+        Log::error("Socket error to send " + getAbbreviatedMessage(text.c_str(), text.size()) + " to.");
         return;
     }
     else
         Log::trace(getName() + " Send: " + getAbbreviatedMessage(text.c_str(), text.size()));
 
     std::unique_lock<std::mutex> lock(_mutex);
-    const int length = text.size();
-    if ( length > SMALL_MESSAGE_SIZE )
-    {
-        const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-        _ws->sendFrame(nextmessage.data(), nextmessage.size());
-    }
 
-    _ws->sendFrame(text.data(), length);
+    try
+    {
+        const int length = text.size();
+        if ( length > SMALL_MESSAGE_SIZE )
+        {
+            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+            _ws->sendFrame(nextmessage.data(), nextmessage.size());
+        }
+
+        _ws->sendFrame(text.data(), length);
+    }
+    catch (const Exception& exc)
+    {
+        Log::warn() << "LOOLSession::sendTextFrame: "
+                    << "Exception: " << exc.displayText()
+                    << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+        IoUtil::shutdownWebSocket(_ws);
+    }
 }
 
 void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
-    if (!_ws)
+    if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
     {
-        Log::error("No socket to send binary frame of " + std::to_string(length) + " bytes to.");
+        Log::error("Socket error to send binary frame of " + std::to_string(length) + " bytes to.");
         return;
     }
     else
@@ -102,13 +115,23 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 
     std::unique_lock<std::mutex> lock(_mutex);
 
-    if ( length > SMALL_MESSAGE_SIZE )
+    try
     {
-        const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-        _ws->sendFrame(nextmessage.data(), nextmessage.size());
-    }
+        if ( length > SMALL_MESSAGE_SIZE )
+        {
+            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+            _ws->sendFrame(nextmessage.data(), nextmessage.size());
+        }
 
-    _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+        _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+    }
+    catch (const Exception& exc)
+    {
+        Log::warn() << "LOOLSession::sendBinaryFrame: "
+                    << "Exception: " << exc.displayText()
+                    << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+        IoUtil::shutdownWebSocket(_ws);
+    }
 }
 
 void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std::string& timestamp)

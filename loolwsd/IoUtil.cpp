@@ -19,6 +19,7 @@
 
 #include <Poco/StringTokenizer.h>
 #include <Poco/Net/HTTPServerResponse.h>
+#include <Poco/Net/Socket.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Thread.h>
@@ -30,6 +31,7 @@
 #include "Util.hpp"
 
 using Poco::Net::NetException;
+using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 
@@ -204,7 +206,12 @@ void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws)
 {
     try
     {
-        if (ws)
+        // Calling WebSocket::shutdown, in case of error, would try to send a 'close' frame
+        // which won't work in case of broken pipe or timeout from peer. Just close the
+        // socket in that case preventing 'close' frame from being sent.
+        if (ws && ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
+            ws->close();
+        else if (ws)
             ws->shutdown();
     }
     catch (const Poco::Exception& exc)
