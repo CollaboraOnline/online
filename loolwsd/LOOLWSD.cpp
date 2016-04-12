@@ -155,6 +155,9 @@ static std::mutex AvailableChildSessionMutex;
 static std::condition_variable AvailableChildSessionCV;
 static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChildSessions;
 
+#if ENABLE_DEBUG
+static int careerSpanSeconds = 0;
+#endif
 
 static void forkChildren(const int number)
 {
@@ -1155,6 +1158,13 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false)
                         .argument("unitlib"));
+
+#if ENABLE_DEBUG
+    optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("seconds"));
+#endif
 }
 
 void LOOLWSD::handleOption(const std::string& optionName,
@@ -1194,6 +1204,10 @@ void LOOLWSD::handleOption(const std::string& optionName,
         AllowLocalStorage = true;
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
+#if ENABLE_DEBUG
+    else if (optionName == "careerspan")
+        careerSpanSeconds = std::stoi(value);
+#endif
 }
 
 void LOOLWSD::displayHelp()
@@ -1393,6 +1407,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     time_t last30SecCheck = time(NULL);
 
+#if ENABLE_DEBUG
+    time_t startTime = last30SecCheck;
+#endif
+
     int status = 0;
     while (!TerminationFlag)
     {
@@ -1478,6 +1496,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             }
             sleep(WSD_SLEEP_SECS);
         }
+#if ENABLE_DEBUG
+        if (careerSpanSeconds > 0 && time(nullptr) > startTime + careerSpanSeconds)
+        {
+            Log::info(std::to_string(time(nullptr) - startTime) + " seconds gone, finishing as requested.");
+            break;
+        }
+#endif
     }
 
     // stop the service, no more request
