@@ -146,7 +146,7 @@ int main(int argc, char** argv)
     }
 
     // Initialization
-    Log::initialize("brk");
+    Log::initialize("frk");
 
     Util::setTerminationSignals();
     Util::setFatalSignals();

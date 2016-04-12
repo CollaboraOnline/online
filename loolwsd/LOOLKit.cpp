@@ -888,7 +888,7 @@ void lokit_main(const std::string& childRoot,
     // We only host a single document in our lifetime.
     std::shared_ptr<Document> document;
 
-    // Ideally this will be a random ID, but broker will cleanup
+    // Ideally this will be a random ID, but forkit will cleanup
     // our jail directory when we die, and it's simpler to know
     // the jailId (i.e. the path) implicitly by knowing our pid.
     static const std::string pid = std::to_string(Process::id());
