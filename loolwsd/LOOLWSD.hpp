@@ -38,7 +38,6 @@ public:
     static std::atomic<unsigned> NextSessionId;
     static unsigned int NumPreSpawnedChildren;
     static int ForKitWritePipe;
-    static bool DoTest;
     static std::string Cache;
     static std::string SysTemplate;
     static std::string LoTemplate;

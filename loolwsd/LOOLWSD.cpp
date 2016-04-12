@@ -45,7 +45,6 @@
 #include <Poco/Net/ConsoleCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPRequestHandlerFactory.h>
@@ -102,7 +101,6 @@ using Poco::File;
 using Poco::FileOutputStream;
 using Poco::IOException;
 using Poco::Net::HTMLForm;
-using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
 using Poco::Net::HTTPRequestHandlerFactory;
@@ -123,7 +121,6 @@ using Poco::Net::WebSocketException;
 using Poco::Path;
 using Poco::Process;
 using Poco::ProcessHandle;
-using Poco::Runnable;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
@@ -960,88 +957,6 @@ public:
     }
 };
 
-class TestOutput : public Runnable
-{
-public:
-    TestOutput(WebSocket& ws) :
-        _ws(ws)
-    {
-    }
-
-    void run() override
-    {
-        int flags;
-        int n;
-        _ws.setReceiveTimeout(0);
-        try
-        {
-            do
-            {
-                char buffer[200000];
-                n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
-                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                {
-                    Log::trace() << "Client got " << n << " bytes: "
-                                 << getAbbreviatedMessage(buffer, n) << Log::end;
-                }
-            }
-            while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-        }
-        catch (const WebSocketException& exc)
-        {
-            Log::error("TestOutput::run: WebSocketException: " + exc.message());
-            _ws.close();
-        }
-    }
-
-private:
-    WebSocket& _ws;
-};
-
-class TestInput : public Runnable
-{
-public:
-    TestInput(ServerApplication& main, ServerSocket& svs, HTTPServer& srv) :
-        _main(main),
-        _svs(svs),
-        _srv(srv)
-    {
-    }
-
-    void run() override
-    {
-        HTTPClientSession cs("127.0.0.1", _svs.address().port());
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
-        HTTPResponse response;
-        WebSocket ws(cs, request, response);
-
-        Thread thread;
-        TestOutput output(ws);
-        thread.start(output);
-
-        if (isatty(0))
-        {
-            std::cout << std::endl;
-            std::cout << "Enter LOOL WS requests, one per line. Enter EOF to finish." << std::endl;
-        }
-
-        while (!std::cin.eof())
-        {
-            std::string line;
-            std::getline(std::cin, line);
-            ws.sendFrame(line.c_str(), line.size());
-        }
-        thread.join();
-        _srv.stopAll();
-        _main.terminate();
-    }
-
-private:
-    ServerApplication& _main;
-    ServerSocket& _svs;
-    HTTPServer& _srv;
-};
-
 std::atomic<unsigned> LOOLWSD::NextSessionId;
 int LOOLWSD::ForKitWritePipe = -1;
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
@@ -1055,7 +970,6 @@ bool LOOLWSD::AllowLocalStorage = false;
 static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
-bool LOOLWSD::DoTest = false;
 
 LOOLWSD::LOOLWSD()
 {
@@ -1237,10 +1151,6 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
-    optionSet.addOption(Option("test", "", "Interactive testing.")
-                        .required(false)
-                        .repeatable(false));
-
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
                         .repeatable(false)
@@ -1284,8 +1194,6 @@ void LOOLWSD::handleOption(const std::string& optionName,
         AllowLocalStorage = true;
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
-    else if (optionName == "test")
-        LOOLWSD::DoTest = true;
 }
 
 void LOOLWSD::displayHelp()
@@ -1380,9 +1288,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (ClientPortNumber == MASTER_PORT_NUMBER)
         throw IncompatibleOptionsException("port");
-
-    if (LOOLWSD::DoTest)
-        NumPreSpawnedChildren = 1;
 
     if (AdminCreds.empty())
     {
@@ -1484,20 +1389,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     threadPool.start(Admin::instance());
 
-    TestInput input(*this, svs, srv);
-    Thread inputThread;
-    if (LOOLWSD::DoTest)
-    {
-        inputThread.start(input);
-        waitForTerminationRequest();
-    }
-
     preForkChildren();
 
     time_t last30SecCheck = time(NULL);
 
     int status = 0;
-    while (!TerminationFlag && !LOOLWSD::DoTest)
+    while (!TerminationFlag)
     {
         UnitWSD::get().invokeTest();
 
@@ -1582,9 +1479,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             sleep(WSD_SLEEP_SECS);
         }
     }
-
-    if (LOOLWSD::DoTest)
-        inputThread.join();
 
     // stop the service, no more request
     srv.stop();
