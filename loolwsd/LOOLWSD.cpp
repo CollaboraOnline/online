@@ -1408,7 +1408,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     time_t last30SecCheck = time(NULL);
 
 #if ENABLE_DEBUG
-    time_t startTime = last30SecCheck;
+    time_t startTimeSpan = last30SecCheck;
 #endif
 
     int status = 0;
@@ -1497,9 +1497,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             sleep(WSD_SLEEP_SECS);
         }
 #if ENABLE_DEBUG
-        if (careerSpanSeconds > 0 && time(nullptr) > startTime + careerSpanSeconds)
+        if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)
         {
-            Log::info(std::to_string(time(nullptr) - startTime) + " seconds gone, finishing as requested.");
+            Log::info(std::to_string(time(nullptr) - startTimeSpan) + " seconds gone, finishing as requested.");
             break;
         }
 #endif
