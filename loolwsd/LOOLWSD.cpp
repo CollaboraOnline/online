@@ -754,7 +754,7 @@ public:
             auto ws = std::make_shared<WebSocket>(request, response);
             std::unique_lock<std::mutex> lock(newChildrenMutex);
             newChildren.emplace_back(std::make_shared<ChildProcess>(pid, ws));
-            Log::info("Have " + std::to_string(newChildren.size()) + " children.");
+            Log::info("Have " + std::to_string(newChildren.size()) + " " + (newChildren.size() == 1 ? "child" : "children") + ".");
             newChildrenCV.notify_one();
             UnitWSD::get().newChild();
             return;
