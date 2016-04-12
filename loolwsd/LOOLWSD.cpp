@@ -1319,7 +1319,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Log::debug("mkfifo(" + pipeLoolwsd + ")");
     if (mkfifo(pipeLoolwsd.c_str(), 0666) < 0 && errno != EEXIST)
     {
-        Log::syserror("Failed to create pipe FIFO [" + pipeLoolwsd + "].");
+        Log::syserror("Failed to create fifo [" + pipeLoolwsd + "].");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -1330,7 +1330,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     Log::debug("mkfifo(" + pipeNotify + ")");
     if (mkfifo(pipeNotify.c_str(), 0666) < 0 && errno != EEXIST)
     {
-        Log::syserror("Failed to create pipe FIFO [" + std::string(FIFO_ADMIN_NOTIFY) + "].");
+        Log::syserror("Failed to create fifo [" + pipeNotify + "].");
         std::exit(Application::EXIT_SOFTWARE);
     }
 
