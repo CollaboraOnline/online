@@ -28,11 +28,10 @@ Building
 loolwsd uses autoconf/automake, so especially when building from .git
 (as opposed to from a distribution tarball) you need the usual fun:
 
-    autoreconf
     libtoolize
+    aclocal
     automake --add-missing
-
-possibly iterating several times...
+    autoreconf
 
 and then
 

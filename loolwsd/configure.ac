@@ -8,6 +8,8 @@ LT_INIT([disable-static])
 
 AM_INIT_AUTOMAKE([1.11 silent-rules subdir-objects])
 
+AC_CONFIG_MACRO_DIR([m4])
+
 LOOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
 LOOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
 LOOLWSD_VERSION_MICRO=`echo $VERSION | awk -F. '{print $3}'`
@@ -21,8 +23,6 @@ AC_SUBST([LOOLWSD_VERSION])
 AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[LibreOffice On-Line WebSocket server version])
 
 AC_CONFIG_SRCDIR([LOOLWSD.cpp])
-
-AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CXX

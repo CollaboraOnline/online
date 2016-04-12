@@ -4,6 +4,8 @@ bin_PROGRAMS = loolwsd loolforkit loolmap loolmount
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup discovery.xml
 
+ACLOCAL_AMFLAGS = -I m4
+
 AM_CPPFLAGS = -pthread
 AM_LDFLAGS = -pthread -Wl,-E
 
