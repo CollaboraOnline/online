@@ -504,6 +504,20 @@ private:
             uri.erase(0, 1);
         }
 
+        // accept websocket connection with client
+        std::shared_ptr<WebSocket> ws;
+        try
+        {
+            ws = std::make_shared<WebSocket>(request, response);
+        }
+        catch (WebSocketException& exc)
+        {
+            response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
+            response.setContentLength(0);
+            response.send();
+            throw;
+        }
+
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
         std::shared_ptr<DocumentBroker> docBroker;
@@ -548,7 +562,6 @@ private:
         // "canceltiles" message.
         auto queue = std::make_shared<BasicTileQueue>();
 
-        auto ws = std::make_shared<WebSocket>(request, response);
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
         docBroker->addWSSession(id, session);
         auto wsSessionsCount = docBroker->getWSSessionsCount();

@@ -39,6 +39,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     Poco::Net::HTTPResponse _response;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
+    CPPUNIT_TEST(testBadRequest);
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
     CPPUNIT_TEST(testReload);
@@ -54,6 +55,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testImpressPartCountChanged);
     CPPUNIT_TEST_SUITE_END();
 
+    void testBadRequest();
     void testLoad();
     void testBadLoad();
     void testReload();
@@ -112,6 +114,37 @@ public:
     {
     }
 };
+
+void HTTPWSTest::testBadRequest()
+{
+    try
+    {
+        // Load a document and get its status.
+        const std::string documentURL = "file:///fake.doc";
+
+        Poco::Net::HTTPResponse response;
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+#ifdef ENABLE_SSL
+        Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
+#else
+        Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
+#endif
+
+        request.set("Connection", "Upgrade");
+        request.set("Upgrade", "websocket");
+        request.set("Sec-WebSocket-Version", "13");
+        request.set("Sec-WebSocket-Key", "");
+        request.setChunkedTransferEncoding(false);
+        session.setKeepAlive(true);
+        session.sendRequest(request);
+        session.receiveResponse(response);
+        CPPUNIT_ASSERT(response.getStatus() == Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
 
 void HTTPWSTest::testLoad()
 {
