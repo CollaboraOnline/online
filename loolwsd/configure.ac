@@ -79,13 +79,16 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
       [POCO_DEBUG_SUFFIX=])
 
-AS_IF([test "$enable_debug" = yes],
-      [AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces ])])
-
+ENABLE_DEBUG=
 debug_msg="secure mode: product build"
-if test "$enable_debug" = yes; then
-   debug_msg="low security debugging mode"
+if test "$enable_debug" = "yes"; then
+   AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces ])
+   ENABLE_DEBUG=true
+   if test "$enable_debug" = yes; then
+      debug_msg="low security debugging mode"
+   fi
 fi
+AC_SUBST(ENABLE_DEBUG)
 
 # Test for build environment
 

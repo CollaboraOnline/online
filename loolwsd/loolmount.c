@@ -7,13 +7,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * This is a trivial helper to allow bind mounting.
+ * This is a very tiny helper to allow overlay mounting.
  */
 
 #include <sys/mount.h>
 
+#include "security.h"
+
 int main(int argc, char **argv)
 {
+    if (!hasCorrectUID("loolmount"))
+        return 1;
+
     if (argc < 3)
         return 1;
 

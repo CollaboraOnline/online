@@ -10,6 +10,14 @@ test_log_output="$test_build/test_output"
 
 mkdir -p $test_log_output
 
+if test "z@ENABLE_DEBUG@" != "ztrue"; then
+    echo ""
+    echo "It is necessary to configure with --enable-debug for unit tests to pass"
+    echo ""
+    echo ":test-result: FAIL $tst" > $test_output
+    exit 1;
+fi
+
 # result logging
 echo > $test_output
 

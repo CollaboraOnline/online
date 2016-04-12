@@ -133,6 +133,9 @@ namespace Util
     std::string formatLinesForLog(const std::string& s);
 
     void setThreadName(const std::string& s);
+
+    /// Ensure that we have the correct UID unless in debug mode.
+    bool hasCorrectUID();
 };
 
 //TODO: Move to own file.

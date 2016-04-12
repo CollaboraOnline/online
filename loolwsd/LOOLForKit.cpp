@@ -11,6 +11,8 @@
  * spawn lots of kits as children.
  */
 
+#include "config.h"
+
 #include <sys/capability.h>
 #include <sys/wait.h>
 #include <sys/types.h>
@@ -33,6 +35,8 @@
 #include "Util.hpp"
 #include "Unit.hpp"
 #include "ChildProcessSession.hpp"
+
+#include "security.h"
 
 using Poco::Path;
 using Poco::Process;
@@ -137,6 +141,9 @@ static void printArgumentHelp()
 
 int main(int argc, char** argv)
 {
+    if (!hasCorrectUID("loolforkit"))
+        return 1;
+
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
         std::cerr << "Sleeping " << std::getenv("SLEEPFORDEBUGGER")
@@ -192,11 +199,14 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             ClientPortNumber = std::stoll(std::string(eq+1));
         }
+#if ENABLE_DEBUG
+        // this process has various privileges - don't run arbitrary code.
         else if (std::strstr(cmd, "--unitlib=") == cmd)
         {
             eq = std::strchr(cmd, '=');
             UnitTestLibrary = std::string(eq+1);
         }
+#endif
     }
 
     if (loSubPath.empty() || sysTemplate.empty() ||

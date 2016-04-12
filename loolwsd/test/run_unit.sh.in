@@ -6,8 +6,19 @@
 export LOOL_LOGLEVEL=trace
 
 abs_top_builddir="@abs_top_builddir@"
+test_build="${abs_top_builddir}/test"
+test_output="$test_build/run_unit.sh.trs"
+test_log_output="$test_build/test_output"
 
-mkdir -p test_output
+mkdir -p $test_log_output
+
+if test "z@ENABLE_DEBUG@" != "ztrue"; then
+    echo ""
+    echo "It is necessary to configure with --enable-debug for unit tests to pass"
+    echo ""
+    echo ":test-result: FAIL $tst" > $test_output
+    exit 1;
+fi
 
 # result logging
 echo > run_unit.sh.trs
@@ -18,7 +29,7 @@ for tst in timeout storage prefork; do
     if ../loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
 	          --childroot="@JAILS_PATH@" --unitlib=".libs/unit-$tst.so" 2> "$tst_log"; then
 	echo "Test $tst passed."
-	echo ":test-result: PASS $tst" >> run_unit.sh.trs
+	echo ":test-result: PASS $tst" >> $test_output
     else
 	cat "$tst_log"
         echo "============================================================="
@@ -26,7 +37,7 @@ for tst in timeout storage prefork; do
 	echo "   $ gdb --args ../loolwsd --systemplate=\"@SYSTEMPLATE_PATH@\" --lotemplate=\"@LO_PATH@\" \\"
 	echo "         --childroot=\"@JAILS_PATH@\" --unitlib=\".libs/unit-$tst.so\""
         echo "============================================================="
-	echo ":test-result: FAIL $tst" >> run_unit.sh.trs
+	echo ":test-result: FAIL $tst" >> $test_output
     fi
 done
 

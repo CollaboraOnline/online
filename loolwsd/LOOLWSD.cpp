@@ -1154,12 +1154,12 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
+#if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
                         .repeatable(false)
                         .argument("unitlib"));
 
-#if ENABLE_DEBUG
     optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
                         .required(false)
                         .repeatable(false)
@@ -1202,9 +1202,9 @@ void LOOLWSD::handleOption(const std::string& optionName,
         AdminCreds = value;
     else if (optionName == "allowlocalstorage")
         AllowLocalStorage = true;
+#if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
-#if ENABLE_DEBUG
     else if (optionName == "careerspan")
         careerSpanSeconds = std::stoi(value);
 #endif
