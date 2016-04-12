@@ -220,10 +220,8 @@ document, based on the public URI as unique key, and forward
 the request to this existing Kit, which then loads a new
 view to the document.
 
-There is an additional pipe that kit processes and ForKit have
-write access to. This pipe is 'notify' pipe. All the important
-changes are notified on this pipe. The pipe is read by the admin
-manager continously and it keeps updating the AdminModel object.
+There is a singleton Admin class that gets notified of all the
+important changes and update the AdminModel object accordingly.
 AdminModel object has subscribers which corresponds to admin
 panel sessions. Subscriber can subscribe to specific commands
 to get live notifications about, and to update the UI accordingly.
