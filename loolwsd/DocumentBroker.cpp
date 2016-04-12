@@ -180,10 +180,13 @@ bool DocumentBroker::autoSave(const bool force)
         {
             Log::info("Auto-save triggered for doc [" + _docKey + "].");
 
-            // Any session can be used to save.
+            // Save using session holding the edit-lock
             bool sent = false;
             for (auto& sessionIt: _wsSessions)
             {
+                if (!sessionIt.second->isEditLocked())
+                    continue;
+
                 auto queue = sessionIt.second->getQueue();
                 if (queue)
                 {
