@@ -24,6 +24,8 @@ AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[LibreOffice On-Line
 
 AC_CONFIG_SRCDIR([LOOLWSD.cpp])
 
+AC_CONFIG_HEADERS([config.h])
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC

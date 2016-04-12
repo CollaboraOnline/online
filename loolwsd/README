@@ -32,6 +32,7 @@ loolwsd uses autoconf/automake, so especially when building from .git
     aclocal
     automake --add-missing
     autoreconf
+    autoheader
 
 and then
 
