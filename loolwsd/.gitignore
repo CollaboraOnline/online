@@ -6,6 +6,7 @@
 .deps
 Makefile
 Makefile.in
+loolwsd.spec
 aclocal.m4
 autom4te.cache
 config.h
@@ -22,10 +23,12 @@ libtool
 ltmain.sh
 missing
 stamp-h1
+m4
+
+# Test stuff
 systemplate
 test-driver
 jails
-loolwsd.spec
 
 *.o
 *.exe
