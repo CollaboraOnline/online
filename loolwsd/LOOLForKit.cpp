@@ -226,6 +226,7 @@ int main(int argc, char** argv)
         Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for reading. Exiting.");
         std::exit(Application::EXIT_SOFTWARE);
     }
+    Log::debug("open(" + pipeLoolwsd + ", RDONLY) = " + std::to_string(pipeFd));
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))
