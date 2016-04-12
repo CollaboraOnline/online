@@ -1,7 +1,3 @@
-# variables for tests
-jails=${top_builddir}/test/jails
-systemplate=${top_builddir}/test/systemplate
-
 AUTOMAKE_OPTION = serial-tests
 
 check_PROGRAMS = test
@@ -25,7 +21,7 @@ unit_storage_la_SOURCES = UnitStorage.cpp
 unit_storage_la_LDFLAGS = -module
 
 if HAVE_LO_PATH
-SYSTEM_STAMP = ${systemplate}/system_stamp
+SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
 else
 SYSTEM_STAMP =
 endif
