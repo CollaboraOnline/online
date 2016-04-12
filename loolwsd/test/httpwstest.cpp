@@ -110,12 +110,7 @@ public:
 
     void tearDown()
     {
-        // Remove the temp files.
-        Util::removeFile(_tmpFilePath);
     }
-
-private:
-    std::string _tmpFilePath;
 };
 
 void HTTPWSTest::testLoad()
@@ -124,7 +119,6 @@ void HTTPWSTest::testLoad()
     {
         // Load a document and get its status.
         const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -165,6 +159,7 @@ void HTTPWSTest::testLoad()
 
         sendTextFrame(socket, "disconnect");
         socket.shutdown();
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -178,7 +173,6 @@ void HTTPWSTest::testBadLoad()
     {
         // Load a document and get its status.
         const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -217,6 +211,7 @@ void HTTPWSTest::testBadLoad()
 
         sendTextFrame(socket, "disconnect");
         socket.shutdown();
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -238,7 +233,6 @@ void HTTPWSTest::testSaveOnDisconnect()
     {
         // Load a document and get its status.
         const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -267,7 +261,6 @@ void HTTPWSTest::testSaveOnDisconnect()
     {
         // Load the same document and check that the last changes (pasted text) is saved.
         const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -307,6 +300,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
         socket.shutdown();
+        Util::removeFile(documentPath);
         CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -321,7 +315,6 @@ void HTTPWSTest::testExcelLoad()
     {
         // Load a document and make it empty.
         const std::string documentPath = Util::getTempFilePath(TDOC, "timeline.xlsx");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -358,6 +351,7 @@ void HTTPWSTest::testExcelLoad()
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
         socket.shutdown();
+        Util::removeFile(documentPath);
         // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
@@ -374,7 +368,6 @@ void HTTPWSTest::testPaste()
     {
         // Load a document and make it empty, then paste some text into it.
         const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -421,6 +414,7 @@ void HTTPWSTest::testPaste()
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
         socket.shutdown();
         CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -434,7 +428,6 @@ void HTTPWSTest::testLargePaste()
     {
         // Load a document and make it empty.
         const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -478,6 +471,7 @@ void HTTPWSTest::testLargePaste()
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
         socket.shutdown();
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -491,7 +485,6 @@ void HTTPWSTest::testRenderingOptions()
     {
         // Load a document and get its size.
         const std::string documentPath = Util::getTempFilePath(TDOC, "hide-whitespace.odt");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
         const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
 
@@ -528,6 +521,8 @@ void HTTPWSTest::testRenderingOptions()
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
         socket.shutdown();
+        Util::removeFile(documentPath);
+
         // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
@@ -550,7 +545,6 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
     try
     {
         const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -579,6 +573,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
             CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
         }
         socket.shutdown();
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -591,7 +586,6 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
     try
     {
         const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -620,6 +614,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
             CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
         }
         socket.shutdown();
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -632,7 +627,6 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
     try
     {
         const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -648,6 +642,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
 
         CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket));
         socket.shutdown();
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -666,7 +661,6 @@ void HTTPWSTest::testImpressPartCountChanged()
     {
         // Load a document
         const std::string documentPath = Util::getTempFilePath(TDOC, "insert-delete.odp");
-        _tmpFilePath = documentPath;
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -756,6 +750,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         */
 
         socket.shutdown();
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
