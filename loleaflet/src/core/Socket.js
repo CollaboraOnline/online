@@ -144,6 +144,9 @@ L.Socket = L.Class.extend({
 				return;
 			}
 		}
+		else if (textMsg.startsWith('statusindicator:')) {
+			this._map.showBusy('Connecting...', false);
+		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
 			// log the tile msg separately as we need the tile coordinates
 			L.Log.log(textMsg, L.INCOMING);
