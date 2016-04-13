@@ -819,9 +819,6 @@ void HTTPWSTest::testImpressPartCountChanged()
 
 void HTTPWSTest::testNoExtraLoolKitsLeft()
 {
-    // Give polls in the lool processes time to time out
-    Poco::Thread::sleep(POLL_TIMEOUT_MS*2);
-
     int countNow = countLoolKitProcesses();
 
     CPPUNIT_ASSERT_EQUAL(countNow, _initialLoolKitCount);
@@ -933,32 +930,41 @@ void HTTPWSTest::getResponseMessage(Poco::Net::WebSocket& ws, const std::string&
 
 int HTTPWSTest::countLoolKitProcesses()
 {
+    // Give polls in the lool processes time to time out
+    Poco::Thread::sleep(POLL_TIMEOUT_MS*3);
+
     int result = 0;
 
     for (auto i = Poco::DirectoryIterator(std::string("/proc")); i != Poco::DirectoryIterator(); ++i)
     {
-        Poco::Path procEntry = i.path();
-        const std::string& fileName = procEntry.getFileName();
-        int pid;
-        std::size_t endPos = 0;
         try
         {
-            pid = std::stoi(fileName, &endPos);
+            Poco::Path procEntry = i.path();
+            const std::string& fileName = procEntry.getFileName();
+            int pid;
+            std::size_t endPos = 0;
+            try
+            {
+                pid = std::stoi(fileName, &endPos);
+            }
+            catch (const std::invalid_argument&)
+            {
+                pid = 0;
+            }
+            if (pid > 1 && endPos == fileName.length())
+            {
+                Poco::FileInputStream comm(procEntry.toString() + "/comm");
+                std::string command;
+                Poco::StreamCopier::copyToString(comm, command);
+                if (command.length() > 0 && command.back() == '\n')
+                    command.pop_back();
+                // std::cout << "For process " << pid << " comm is '" << command << "'" << std::endl;
+                if (command == "loolkit")
+                    result++;
+            }
         }
-        catch (const std::invalid_argument&)
+        catch (const Poco::Exception&)
         {
-            pid = 0;
-        }
-        if (pid > 1 && endPos == fileName.length())
-        {
-            Poco::FileInputStream comm(procEntry.toString() + "/comm");
-            std::string command;
-            Poco::StreamCopier::copyToString(comm, command);
-            if (command.length() > 0 && command.back() == '\n')
-                command.pop_back();
-            // std::cout << "For process " << pid << " comm is '" << command << "'" << std::endl;
-            if (command == "loolkit")
-                result++;
         }
     }
 
