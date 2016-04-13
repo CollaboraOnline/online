@@ -144,12 +144,6 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                 break;
             }
 
-            if (firstLine == "eof")
-            {
-                Log::info("Received EOF. Finishing.");
-                break;
-            }
-
             // Call the handler.
             const auto success = handler(payload);
             payload.resize(0);

@@ -301,12 +301,6 @@ public:
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     std::string firstLine = getFirstLine(buffer, n);
-                    if (firstLine == "eof")
-                    {
-                        Log::info("Received EOF. Finishing.");
-                        break;
-                    }
-
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
                     // Check if it is a "nextmessage:" and in that case read the large

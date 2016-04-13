@@ -110,12 +110,6 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                     Log::trace("Recv: " + firstLine);
 
-                    if (firstLine == "eof")
-                    {
-                        Log::info("Received EOF. Finishing.");
-                        break;
-                    }
-
                     if (tokens.count() < 1)
                         continue;
 
