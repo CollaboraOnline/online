@@ -44,7 +44,10 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     static int _initialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
+
+    // This should be the first test:
     CPPUNIT_TEST(testCountHowManyLoolkits);
+
     CPPUNIT_TEST(testBadRequest);
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
@@ -59,7 +62,10 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
     CPPUNIT_TEST(testImpressPartCountChanged);
+
+    // This should be the last test:
     CPPUNIT_TEST(testNoExtraLoolKitsLeft);
+
     CPPUNIT_TEST_SUITE_END();
 
     void testCountHowManyLoolkits();
