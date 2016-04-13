@@ -1064,7 +1064,12 @@ void lokit_main(const std::string& childRoot,
 
                     return true;
                 },
-                [](){ return TerminationFlag; });
+                                [&document]()
+                {
+                    if (document && document->canDiscard())
+                        TerminationFlag = true;
+                    return TerminationFlag;
+                });
 
         // Cleanup jail.
         Util::removeFile(jailPath, true);
