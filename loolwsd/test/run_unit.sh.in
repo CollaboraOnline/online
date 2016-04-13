@@ -23,7 +23,7 @@ fi
 # result logging
 echo > run_unit.sh.trs
 
-for tst in timeout storage prefork; do
+for tst in fonts timeout storage prefork; do
     tst_log="test_output/$tst.log"
     echo "Running test: $tst | $tst_log ...";
     if ${abs_top_builddir}/loolwsd --systemplate="@SYSTEMPLATE_PATH@" \

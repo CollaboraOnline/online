@@ -21,6 +21,8 @@ fi
 # result logging
 echo > $test_output
 
+echo "Running cppunit test ...";
+
 ${abs_top_builddir}/loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
            --childroot="@JAILS_PATH@" --allowlocalstorage 2>$test_log_output/run_test.log &
 

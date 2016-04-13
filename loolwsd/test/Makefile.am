@@ -4,7 +4,9 @@ check_PROGRAMS = test
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 
-lib_LTLIBRARIES = unit-timeout.la unit-prefork.la unit-storage.la
+lib_LTLIBRARIES = \
+	unit-timeout.la unit-prefork.la \
+        unit-storage.la unit-fonts.la
 
 AM_CPPFLAGS = -pthread -I$(top_srcdir)
 
@@ -13,6 +15,8 @@ test_SOURCES = httpposttest.cpp httpwstest.cpp test.cpp ../LOOLProtocol.cpp
 test_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
+unit_fonts_la_SOURCES = UnitFonts.cpp
+unit_fonts_la_LDFLAGS = -module
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_timeout_la_LDFLAGS = -module
 unit_prefork_la_SOURCES = UnitPrefork.cpp

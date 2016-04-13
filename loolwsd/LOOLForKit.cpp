@@ -120,13 +120,13 @@ static int createLibreOfficeKit(const std::string& childRoot,
     }
     else
     {
-        UnitKit::get().launchedKit(pid);
-
         // parent
         if (pid < 0)
             Log::syserror("Fork failed.");
         else
             Log::info("Forked kit [" + std::to_string(pid) + "].");
+
+        UnitKit::get().launchedKit(pid);
     }
 
     return pid;
