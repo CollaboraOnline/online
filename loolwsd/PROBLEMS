@@ -1,6 +1,18 @@
 - There is way too much of busy waiting for fairly arbitrarily chosen
   timeout periods in the code.
 
+  With "busy wait" here I of course don't mean *real* busy wait that
+  would actually mindlessly spin the CPU.
+
+  I mean calling poll() with some short timeout (order of seconds),
+  and each time a timeout happens (which surely is the large majority
+  of times), check a condition, which in the large majority of times
+  will not be true, and then repeat.
+
+  Instead the code could use for instance eventfds to enable the
+  poll() calls to be without timeout. Or something similar, depending
+  on case.
+
 - Recursive mutexes are evil. In general, I think the consensus is
   that recursive mutexes should be avoided. One should use them only
   when absolutely necessary because the code-base is so complex that
