@@ -135,6 +135,7 @@ $(function () {
 			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: _("Duplicate Page") },
 			{ type: 'button',  id: 'deletepage', img: 'deletepage', hint: _("Delete Page") },
 			{ type: 'html', id: 'right' },
+			{ type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel"></div>' },
 			{ type: 'break' },
 			{ type: 'button',  id: 'takeedit', img: 'edit', hint: _("Take edit lock (others can only view)")},
 			{ type: 'html',    id: 'takeedit_text', html: '<div id="takeedit_text">VIEWING</div>' },
@@ -692,6 +693,15 @@ map.on('commandstatechanged', function (e) {
 		}
 		var div = L.DomUtil.get('backcolorindicator');
 		L.DomUtil.setStyle(div, 'background', color);
+	}
+	else if (commandName === '.uno:ModifiedStatus') {
+		var modifiedStatus = e.state === 'true';
+		if (modifiedStatus) {
+			$('#modifiedstatuslabel').html('');
+		}
+		else {
+			$('#modifiedstatuslabel').html('Document saved');
+		}
 	}
 
 	formatButtons.forEach(function (id) {
