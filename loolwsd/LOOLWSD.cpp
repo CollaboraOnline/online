@@ -1496,7 +1496,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)
         {
             Log::info(std::to_string(time(nullptr) - startTimeSpan) + " seconds gone, finishing as requested.");
-            break;
+            TerminationFlag = true;
         }
 #endif
     }
