@@ -9,6 +9,8 @@
 
 #include "config.h"
 
+#include <Poco/DirectoryIterator.h>
+#include <Poco/FileStream.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPClientSession.h>
@@ -21,7 +23,9 @@
 #include <Poco/Net/Socket.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/Path.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <Poco/JSON/JSON.h>
@@ -37,8 +41,10 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
+    static int _initialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
+    CPPUNIT_TEST(testCountHowManyLoolkits);
     CPPUNIT_TEST(testBadRequest);
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
@@ -53,8 +59,10 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
     CPPUNIT_TEST(testImpressPartCountChanged);
+    CPPUNIT_TEST(testNoExtraLoolKitsLeft);
     CPPUNIT_TEST_SUITE_END();
 
+    void testCountHowManyLoolkits();
     void testBadRequest();
     void testLoad();
     void testBadLoad();
@@ -69,6 +77,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testPasswordProtectedDocumentWithCorrectPassword();
     void testPasswordProtectedDocumentWithCorrectPasswordAgain();
     void testImpressPartCountChanged();
+    void testNoExtraLoolKitsLeft();
 
     static
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
@@ -81,6 +90,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                             const std::string& prefix,
                             std::string& response,
                             const bool isLine);
+    static
+    int countLoolKitProcesses();
+
 public:
     HTTPWSTest()
 #ifdef ENABLE_SSL
@@ -114,6 +126,14 @@ public:
     {
     }
 };
+
+int HTTPWSTest::_initialLoolKitCount = 0;
+
+void HTTPWSTest::testCountHowManyLoolkits()
+{
+    _initialLoolKitCount = countLoolKitProcesses();
+    CPPUNIT_ASSERT(_initialLoolKitCount > 0);
+}
 
 void HTTPWSTest::testBadRequest()
 {
@@ -791,6 +811,16 @@ void HTTPWSTest::testImpressPartCountChanged()
     }
 }
 
+void HTTPWSTest::testNoExtraLoolKitsLeft()
+{
+    // Give polls in the lool processes time to time out
+    Poco::Thread::sleep(POLL_TIMEOUT_MS*2);
+
+    int countNow = countLoolKitProcesses();
+
+    CPPUNIT_ASSERT_EQUAL(countNow, _initialLoolKitCount);
+}
+
 void HTTPWSTest::sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
 {
     socket.sendFrame(string.data(), string.size());
@@ -893,6 +923,41 @@ void HTTPWSTest::getResponseMessage(Poco::Net::WebSocket& ws, const std::string&
     {
         std::cout << exc.message();
     }
+}
+
+int HTTPWSTest::countLoolKitProcesses()
+{
+    int result = 0;
+
+    for (auto i = Poco::DirectoryIterator(std::string("/proc")); i != Poco::DirectoryIterator(); ++i)
+    {
+        Poco::Path procEntry = i.path();
+        const std::string& fileName = procEntry.getFileName();
+        int pid;
+        std::size_t endPos = 0;
+        try
+        {
+            pid = std::stoi(fileName, &endPos);
+        }
+        catch (const std::invalid_argument&)
+        {
+            pid = 0;
+        }
+        if (pid > 1 && endPos == fileName.length())
+        {
+            Poco::FileInputStream comm(procEntry.toString() + "/comm");
+            std::string command;
+            Poco::StreamCopier::copyToString(comm, command);
+            if (command.length() > 0 && command.back() == '\n')
+                command.pop_back();
+            // std::cout << "For process " << pid << " comm is '" << command << "'" << std::endl;
+            if (command == "loolkit")
+                result++;
+        }
+    }
+
+    // std::cout << "Number of loolkit processes: " << result << std::endl;
+    return result;
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
