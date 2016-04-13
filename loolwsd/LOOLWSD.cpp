@@ -643,17 +643,12 @@ private:
     {
         DOMParser parser;
         DOMWriter writer;
-        URI uri("http", request.getHost(), request.getURI());
 
         const std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
-#ifdef ENABLE_SSL
-        const std::string uriValue = "https://" + uri.getHost() + ":" + std::to_string(uri.getPort()) + "/loleaflet/dist/loleaflet.html?";
-#else
-        const std::string uriValue = "http://" + uri.getHost() + ":" + std::to_string(uri.getPort()) + "/loleaflet/dist/loleaflet.html?";
-#endif
+        const std::string uriValue = (LOOLWSD::SSLEnabled? "https://": "http://") + request.getHost() + "/loleaflet/dist/loleaflet.html?";
 
         InputSource inputSrc(discoveryPath);
         AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
@@ -993,6 +988,12 @@ std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::AdminCreds;
 bool LOOLWSD::AllowLocalStorage = false;
+bool LOOLWSD::SSLEnabled =
+#ifdef ENABLE_SSL
+    true;
+#else
+    false;
+#endif
 static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;

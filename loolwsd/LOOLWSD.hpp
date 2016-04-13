@@ -46,6 +46,7 @@ public:
     static std::string FileServerRoot;
     static std::string AdminCreds;
     static bool AllowLocalStorage;
+    static bool SSLEnabled;
 
     static
     std::string GenSessionId()

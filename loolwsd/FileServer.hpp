@@ -111,11 +111,11 @@ public:
 
     void preprocessFile(HTTPServerRequest& request, HTTPServerResponse& response)
     {
-        Poco::URI requestUri("https", request.getHost(), request.getURI());
+        Poco::URI requestUri((LOOLWSD::SSLEnabled? "https": "http"), request.getHost(), request.getURI());
         HTMLForm form(request, request.stream());
 
         std::string preprocess;
-        const auto host = "wss://" + requestUri.getHost() + ":" + std::to_string(requestUri.getPort());
+        const auto host = (LOOLWSD::SSLEnabled? "wss://": "ws://") + requestUri.getHost() + ":" + std::to_string(requestUri.getPort());
         const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
         const auto wopi = form.has("WOPISrc") ?
                           form.get("WOPISrc") + "?access_token=" + form.get("access_token","") : "";
