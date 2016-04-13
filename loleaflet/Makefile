@@ -16,14 +16,9 @@ all:
 .PHONY: dist
 dist: all
 	rm -rf loleaflet-$(VERSION)
-	mkdir loleaflet-$(VERSION)
-	cp README loleaflet-$(VERSION)
-	cp reference.html loleaflet-$(VERSION)
-	tar cf - dist plugins/draw-$(DRAW_VERSION)/dist debug/document docs spec \
-		node_modules/mocha/mocha.css \
-		node_modules/mocha/mocha.js \
-		node_modules/happen/happen.js \
-		| (cd loleaflet-$(VERSION) && tar xf -)
+	mkdir -p loleaflet-$(VERSION)/dist/plugins/draw-$(DRAW_VERSION)
+	cp -ar dist loleaflet-$(VERSION)
+	cp -ar plugins/draw-$(DRAW_VERSION)/dist loleaflet-$(VERSION)/dist/plugins/draw-$(DRAW_VERSION)
 	util/po2json.py po/*.po
 	mv po/*.json loleaflet-$(VERSION)/dist/l10n
 	util/po2json.py po/styles/*.po
