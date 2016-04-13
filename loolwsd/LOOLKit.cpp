@@ -1017,7 +1017,8 @@ void lokit_main(const std::string& childRoot,
         ws->setReceiveTimeout(0);
 
         const std::string socketName = "ChildControllerWS";
-        IoUtil::SocketProcessor(ws, response, [&socketName, &ws, &document, &loKit](const std::vector<char>& data)
+        IoUtil::SocketProcessor(ws, response,
+                                [&socketName, &ws, &document, &loKit](const std::vector<char>& data)
                 {
                     std::string message(data.data(), data.size());
 
