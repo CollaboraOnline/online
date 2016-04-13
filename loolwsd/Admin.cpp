@@ -386,7 +386,7 @@ Admin::~Admin()
 
 void Admin::update(const std::string& message)
 {
-    std::lock_guard<std::mutex> modelLock(_modelMutex);
+    std::unique_lock<std::mutex> modelLock(_modelMutex);
     _model.update(message);
 }
 
