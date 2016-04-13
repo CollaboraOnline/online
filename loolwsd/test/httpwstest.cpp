@@ -10,27 +10,27 @@
 #include "config.h"
 
 #include <Poco/DirectoryIterator.h>
+#include <Poco/Dynamic/Var.h>
 #include <Poco/FileStream.h>
+#include <Poco/JSON/JSON.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Net/PrivateKeyPassphraseHandler.h>
-#include <Poco/Net/Socket.h>
 #include <Poco/Net/SSLManager.h>
+#include <Poco/Net/Socket.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include <Poco/JSON/JSON.h>
-#include <Poco/JSON/Parser.h>
-#include <Poco/Dynamic/Var.h>
 
 #include <Common.hpp>
 #include <Util.hpp>
