@@ -593,7 +593,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
         std::string response;
 
         getResponseMessage(socket, "error:", response, true);
-        CPPUNIT_ASSERT_MESSAGE("failed command load: ", !response.empty());
+        CPPUNIT_ASSERT_MESSAGE("did not receive an error: message as expected", !response.empty());
         {
             Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), tokens.count());
@@ -634,7 +634,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
 
         std::string response;
         getResponseMessage(socket, "error:", response, true);
-        CPPUNIT_ASSERT_MESSAGE("failed command load: ", !response.empty());
+        CPPUNIT_ASSERT_MESSAGE("did not receive an error: message as expected", !response.empty());
         {
             Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), tokens.count());
@@ -713,7 +713,7 @@ void HTTPWSTest::testImpressPartCountChanged()
 
         std::string response;
         getResponseMessage(socket, "status:", response, true);
-        CPPUNIT_ASSERT_MESSAGE("failed command status: ", !response.empty());
+        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         {
             Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
@@ -730,7 +730,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         {
             sendTextFrame(socket, "uno .uno:InsertPage");
             getResponseMessage(socket, "partscountchanged:", response, false);
-            CPPUNIT_ASSERT_MESSAGE("failed command partscountchanged: ", !response.empty());
+            CPPUNIT_ASSERT_MESSAGE("did not receive a partscountchanged: message as expected", !response.empty());
             {
                 Poco::JSON::Parser parser;
                 Poco::Dynamic::Var result = parser.parse(response);
@@ -744,7 +744,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         {
             sendTextFrame(socket, "uno .uno:DeletePage");
             getResponseMessage(socket, "partscountchanged:", response, false);
-            CPPUNIT_ASSERT_MESSAGE("failed command partscountchanged: ", !response.empty());
+            CPPUNIT_ASSERT_MESSAGE("did not receive a partscountchanged: message as expected", !response.empty());
             {
                 Poco::JSON::Parser parser;
                 Poco::Dynamic::Var result = parser.parse(response);
@@ -758,7 +758,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         {
             sendTextFrame(socket, "uno .uno:Undo");
             getResponseMessage(socket, "partscountchanged:", response, false);
-            CPPUNIT_ASSERT_MESSAGE("failed command partscountchanged: ", !response.empty());
+            CPPUNIT_ASSERT_MESSAGE("did not receive a partscountchanged: message as expected", !response.empty());
             {
                 Poco::JSON::Parser parser;
                 Poco::Dynamic::Var result = parser.parse(response);
@@ -772,7 +772,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         {
             sendTextFrame(socket, "uno .uno:Redo");
             getResponseMessage(socket, "partscountchanged:", response, false);
-            CPPUNIT_ASSERT_MESSAGE("failed command partscountchanged: ", !response.empty());
+            CPPUNIT_ASSERT_MESSAGE("did not receive a partscountchanged: message as expected", !response.empty());
             {
                 Poco::JSON::Parser parser;
                 Poco::Dynamic::Var result = parser.parse(response);
