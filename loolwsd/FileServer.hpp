@@ -120,22 +120,15 @@ public:
         requestUri.normalize(); // avoid .'s and ..'s
         const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
 
-        const auto wopi = form.has("WOPISrc") ?
-                          form.get("WOPISrc") + "?access_token=" + form.get("access_token","") : "";
-
         Log::debug("Preprocessing file: " + path.toString());
 
         FileInputStream file(path.toString());
         StreamCopier::copyToString(file, preprocess);
         file.close();
 
-        Poco::replaceInPlace(preprocess, std::string("WOPISRC"), wopi);
-        Poco::replaceInPlace(preprocess, std::string("HOST"), form.get("host", host));
-        Poco::replaceInPlace(preprocess, std::string("FILEPATH"), form.get("file_path", ""));
-        Poco::replaceInPlace(preprocess, std::string("TITLE"), form.get("title", ""));
-        Poco::replaceInPlace(preprocess, std::string("PERMISSION"), form.get("permission", ""));
-        Poco::replaceInPlace(preprocess, std::string("TIMESTAMP"), form.get("timestamp", ""));
-        Poco::replaceInPlace(preprocess, std::string("CLOSEBUTTON"), form.get("closebutton", ""));
+        Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), form.get("access_token", ""));
+        Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), form.get("access_token_ttl", ""));
+        Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
 
         response.setContentType("text/html");
         response.setContentLength(preprocess.length());
