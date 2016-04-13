@@ -111,14 +111,19 @@ public:
 
     void preprocessFile(HTTPServerRequest& request, HTTPServerResponse& response)
     {
-        Poco::URI requestUri((LOOLWSD::SSLEnabled? "https": "http"), request.getHost(), request.getURI());
         HTMLForm form(request, request.stream());
 
         std::string preprocess;
-        const auto host = (LOOLWSD::SSLEnabled? "wss://": "ws://") + requestUri.getHost() + ":" + std::to_string(requestUri.getPort());
+        const auto host = (LOOLWSD::SSLEnabled? "wss://": "ws://") + request.getHost();
+
+        Poco::URI requestUri(request.getURI());
+        requestUri.normalize(); // avoid .'s and ..'s
         const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
+
         const auto wopi = form.has("WOPISrc") ?
                           form.get("WOPISrc") + "?access_token=" + form.get("access_token","") : "";
+
+        Log::debug("Preprocessing file: " + path.toString());
 
         FileInputStream file(path.toString());
         StreamCopier::copyToString(file, preprocess);
@@ -145,6 +150,8 @@ public:
         try
         {
             Poco::URI requestUri(request.getURI());
+            requestUri.normalize(); // avoid .'s and ..'s
+
             std::vector<std::string> requestSegments;
             requestUri.getPathSegments(requestSegments);
             if (requestSegments.size() < 1)
