@@ -951,18 +951,19 @@ void lokit_main(const std::string& childRoot,
                    bLoopMounted ? COPY_NO_USR : COPY_ALL);
         linkOrCopy(loTemplate, jailLOInstallation, COPY_LO);
 
-        Log::debug("Initialized jail files.");
-
         // We need this because sometimes the hostname is not resolved
-        const std::vector<std::string> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+        const auto networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
         for (const auto& filename : networkFiles)
         {
+            const auto etcPath = Path(jailPath, filename).toString();
             const File networkFile(filename);
-            if (networkFile.exists())
+            if (networkFile.exists() && !File(etcPath).exists())
             {
-                networkFile.copyTo(Path(jailPath, "/etc").toString());
+                networkFile.copyTo(etcPath);
             }
         }
+
+        Log::debug("Initialized jail files.");
 
         // Create the urandom and random devices
         File(Path(jailPath, "/dev")).createDirectory();
