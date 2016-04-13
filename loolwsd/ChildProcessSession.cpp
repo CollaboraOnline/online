@@ -408,7 +408,6 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
 
         assert(tokens[0] == "clientzoom" ||
                tokens[0] == "clientvisiblearea" ||
-               tokens[0] == "disconnect" ||
                tokens[0] == "downloadas" ||
                tokens[0] == "getchildid" ||
                tokens[0] == "gettextselection" ||
@@ -442,11 +441,6 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "clientvisiblearea")
         {
             return clientVisibleArea(buffer, length, tokens);
-        }
-        else if (tokens[0] == "disconnect")
-        {
-            // This was the last we would hear from the client on this socket.
-            return handleDisconnect(tokens);
         }
         else if (tokens[0] == "downloadas")
         {

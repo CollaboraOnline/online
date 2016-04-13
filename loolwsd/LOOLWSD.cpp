@@ -584,28 +584,18 @@ private:
 
         Thread queueHandlerThread;
         queueHandlerThread.start(handler);
-        bool normalShutdown = false;
 
         IoUtil::SocketProcessor(ws, response,
-                [&session, &queue, &normalShutdown](const std::vector<char>& payload)
+                [&session, &queue](const std::vector<char>& payload)
             {
-                const auto token = LOOLProtocol::getFirstToken(payload);
-                if (token == "disconnect")
-                {
-                    normalShutdown = true;
-                }
-                else
-                {
-                    queue->put(payload);
-                }
-
+                queue->put(payload);
                 return true;
             },
             []() { return TerminationFlag; });
 
-        if (docBroker->getSessionsCount() == 1 && !normalShutdown && !session->_bLoadError)
+        if (docBroker->getSessionsCount() == 1 && !session->_bLoadError)
         {
-            Log::info("Non-deliberate shutdown of the last session, saving the document before tearing down.");
+            Log::info("Shutdown of the last session, saving the document before tearing down.");
 
             // Use auto-save to save only when there are modifications since last save.
             // We also need to wait until the save notification reaches us

@@ -23,9 +23,6 @@ L.Socket = L.Class.extend({
 	},
 
 	close: function () {
-		// mark this as a deliberate shutdown
-		this.sendMessage('disconnect');
-
 		this.socket.onerror = function () {};
 		this.socket.onclose = function () {};
 		this.socket.onmessage = function () {};
