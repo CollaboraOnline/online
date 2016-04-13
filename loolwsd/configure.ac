@@ -177,6 +177,8 @@ else
    ssl_msg="insecure: ssl disabled"
 fi
 
+AC_SUBST(ENABLE_SSL)
+
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
 AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],

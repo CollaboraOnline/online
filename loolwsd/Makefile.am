@@ -105,7 +105,9 @@ clean-local:
 
 run: @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd - launch this in your browser:"
-	@echo "   https://localhost:9980/loleaflet/dist/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello.odt&host=wss://localhost:9980"
+	@PROTOCOL="http" ; if test "z@ENABLE_SSL@" != "z"; then PROTOCOL="https" ; fi ; \
+		echo "   $$PROTOCOL://localhost:9980/loleaflet/dist/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello.odt"
+	@echo
 	./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
                   --childroot="@JAILS_PATH@" --allowlocalstorage
 else
