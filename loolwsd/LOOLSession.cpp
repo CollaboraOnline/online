@@ -179,7 +179,7 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
     }
 }
 
-void LOOLSession::disconnect(const std::string&)
+void LOOLSession::disconnect()
 {
     try
     {
@@ -195,7 +195,7 @@ void LOOLSession::disconnect(const std::string&)
     }
 }
 
-bool LOOLSession::handleDisconnect(StringTokenizer& /*tokens*/)
+bool LOOLSession::handleDisconnect()
 {
     _disconnected = true;
     IoUtil::shutdownWebSocket(_ws);

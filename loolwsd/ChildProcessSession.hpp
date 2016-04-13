@@ -51,8 +51,7 @@ public:
 
     virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
-    virtual void disconnect(const std::string& reason = "") override;
-    virtual bool handleDisconnect(Poco::StringTokenizer& tokens) override;
+    virtual void disconnect() override;
 
     int getViewId() const  { return _viewId; }
 

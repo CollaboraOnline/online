@@ -59,11 +59,11 @@ MasterProcessSession::~MasterProcessSession()
     }
 }
 
-void MasterProcessSession::disconnect(const std::string& reason)
+void MasterProcessSession::disconnect()
 {
     if (!isDisconnected())
     {
-        LOOLSession::disconnect(reason);
+        LOOLSession::disconnect();
 
         // Release the save-as queue.
         _saveAsQueue.put("");
@@ -71,25 +71,20 @@ void MasterProcessSession::disconnect(const std::string& reason)
         auto peer = _peer.lock();
         if (peer)
         {
-            peer->disconnect(reason);
+            peer->disconnect();
         }
     }
 }
 
-bool MasterProcessSession::handleDisconnect(Poco::StringTokenizer& tokens)
+bool MasterProcessSession::handleDisconnect()
 {
-    Log::info("Graceful disconnect on " + getName() + " [" +
-              (tokens.count() > 1 ? tokens[1] : std::string("no reason")) +
-              "].");
+    Log::info("Graceful disconnect on " + getName() + ".");
 
-    LOOLSession::handleDisconnect(tokens);
+    LOOLSession::handleDisconnect();
 
     auto peer = _peer.lock();
     if (peer)
-    {
-        const auto reason = (tokens.count() > 1 ? Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) : "");
-        peer->disconnect(reason);
-    }
+        peer->disconnect();
 
     return false;
 }

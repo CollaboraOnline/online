@@ -283,7 +283,7 @@ ChildProcessSession::~ChildProcessSession()
     _callbackThread.join();
 }
 
-void ChildProcessSession::disconnect(const std::string& reason)
+void ChildProcessSession::disconnect()
 {
     if (!isDisconnected())
     {
@@ -295,13 +295,8 @@ void ChildProcessSession::disconnect(const std::string& reason)
         //TODO: Handle saving to temp etc.
         _onUnload(getId());
 
-        LOOLSession::disconnect(reason);
+        LOOLSession::disconnect();
     }
-}
-
-bool ChildProcessSession::handleDisconnect(StringTokenizer& tokens)
-{
-    return LOOLSession::handleDisconnect(tokens);
 }
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)

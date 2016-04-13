@@ -49,10 +49,10 @@ public:
     bool handleInput(const char *buffer, int length);
 
     /// Invoked when we want to disconnect a session.
-    virtual void disconnect(const std::string& reason = "");
+    virtual void disconnect();
 
     /// Called to handle disconnection command from socket.
-    virtual bool handleDisconnect(Poco::StringTokenizer& tokens);
+    virtual bool handleDisconnect();
 
     bool isInactive() const { return getInactivityMS() >= InactivityThresholdMS; }
 
