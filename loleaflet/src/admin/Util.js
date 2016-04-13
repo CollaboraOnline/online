@@ -24,8 +24,9 @@ var Util = Base.extend({
 		var res = '';
 
 		secs = parseInt(secs);
-		if (isNaN(secs))
+		if (isNaN(secs)) {
 			return res;
+		}
 
 		if (secs >= 60) {
 			mins = Math.floor(secs / 60);

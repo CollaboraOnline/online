@@ -22,7 +22,7 @@ L.Map.SlideShow = L.Handler.extend({
 		this._map.off('slidedownloadready', this._onSlideDownloadReady, this);
 	},
 
-	_onIframeLoaded: function (e) {
+	_onIframeLoaded: function () {
 		L.DomUtil.removeClass(this._slideShow, 'leaflet-slidshow-spinner');
 	},
 
