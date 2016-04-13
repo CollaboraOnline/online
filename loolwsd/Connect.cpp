@@ -107,7 +107,7 @@ public:
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-            std::cout << "Websocket closed" << std::endl;
+            std::cout << "CLOSE frame received" << std::endl;
         }
         catch (WebSocketException& exc)
         {
