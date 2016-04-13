@@ -17,12 +17,6 @@ canceltiles
     dropped and will not be handled. There is no guarantee of exactly
     which tile: messages might still be sent back to the client.
 
-disconnect
-
-    The socket is going to be shut down normally.  This is to distinguish
-    deliberate shutdown from the case when the connection was lost, or
-    the browser was killed etc.
-
 downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
     Exports the current document to the desired format and returns a download URL
@@ -278,11 +272,6 @@ curpart: part=<partNumber>
     Sent to the parent process before certain messages that the parent
     needs to act on in addition to passing them on to the client, like
     invalidatetiles:
-
-disconnect [reason]
-
-    Sent before disconnecting gracefully.
-    reason: optional human-readable reason to disconnect.
 
 nextmessage: size=<upperlimit>
 

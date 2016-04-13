@@ -179,16 +179,12 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
     }
 }
 
-void LOOLSession::disconnect(const std::string& reason)
+void LOOLSession::disconnect(const std::string&)
 {
     try
     {
         if (!_disconnected)
         {
-            if (reason != "")
-                sendTextFrame("disconnect " + reason);
-            else
-                sendTextFrame("disconnect");
             _disconnected = true;
             IoUtil::shutdownWebSocket(_ws);
         }

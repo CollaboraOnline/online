@@ -7,22 +7,6 @@
   one has no idea how it works. That was hopefully not the case when
   recursive mutexes were introduced here? But probably it is by now...
 
-- The use of separate "disconnect" messages over the WebSocket
-  connections is not good. It should be perfectly enough to just close
-  the WebSocket connection gracefully using the WebSocket mechanism,
-  i.e. a frame with the CLOSE opcode. Or just tearing down the socket
-  without a CLOSE frame. The code needs to be prepared to handle these
-  situations anyway, especially for the socket talking to the
-  client. For the internal communication in the process tree,
-  "disconnect" messages are barely acceptable, if the code is already
-  written to generate and expect them.
-
-  For the moment, we send them from the client too - to distinguish the
-  browser crash or connection loss from a deliberate shutdown.
-  We are saving the document in the case we don't get the explicit
-  'disconnect'.  When we move to actually saving the document all
-  the time automatically, the 'disconnect' message should be removed.
-
 - Occasionally Control-C (SIGINT) doesn't shut fown loolwsd. One has
   to kill it with SIGKILL. Which of course leaves all the chroot jails
   around.

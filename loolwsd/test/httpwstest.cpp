@@ -216,7 +216,6 @@ void HTTPWSTest::testLoad()
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
-        sendTextFrame(socket, "disconnect");
         socket.shutdown();
         Util::removeFile(documentPath);
     }
@@ -268,7 +267,6 @@ void HTTPWSTest::testBadLoad()
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
-        sendTextFrame(socket, "disconnect");
         socket.shutdown();
         Util::removeFile(documentPath);
     }
