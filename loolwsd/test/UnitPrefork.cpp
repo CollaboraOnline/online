@@ -40,18 +40,22 @@ public:
         numPrefork = NumToPrefork;
     }
 
-    std::string getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket)
+    void getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket,
+                   size_t &totalPSS, size_t &totalDirty)
     {
         /// Fetch memory usage data from the last process ...
         socket->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n")-1);
         int flags;
         char buffer[4096];
-        std::cout << "Waiting for memory stats" << std::endl;
 
         int length = socket->receiveFrame(buffer, sizeof (buffer), flags);
         std::string memory = LOOLProtocol::getFirstLine(buffer, length);
 
-        return memory;
+//        std::cout << "Got memory stats '" << memory << "'" << std::endl;
+        Poco::StringTokenizer tokens(memory, " ");
+        assert (tokens.count() == 2);
+        totalPSS += atoi(tokens[0].c_str());
+        totalDirty += atoi(tokens[1].c_str());
     }
 
     virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
@@ -64,10 +68,18 @@ public:
 
             std::cout << "Launched " << _numStarted << " in "
                       << (1.0 * elapsed)/Poco::Timestamp::resolution() << std::endl;
-            int num = 0;
+            size_t totalPSSKb = 0;
+            size_t totalDirtyKb = 0;
             for (auto child : _childSockets)
-                std::cout << "Memory of " << ++num << " : " <<
-                             getMemory(child) << std::endl;
+                getMemory(child, totalPSSKb, totalDirtyKb);
+
+            std::cout << "Memory use total   " << totalPSSKb << "k shared "
+                      << totalDirtyKb << "k dirty" << std::endl;
+
+            totalPSSKb /= _childSockets.size();
+            totalDirtyKb /= _childSockets.size();
+            std::cout << "Memory use average " << totalPSSKb << "k shared "
+                      << totalDirtyKb << "k dirty" << std::endl;
 
             exitTest(TestResult::TEST_OK);
         }
@@ -107,7 +119,7 @@ namespace {
                 numPSSKb += atoi(value);
         }
         std::ostringstream oss;
-        oss << numPSSKb << "k pss " << numDirtyKb << "k dirty";
+        oss << numPSSKb << " " << numDirtyKb;
         return oss.str();
     }
 }

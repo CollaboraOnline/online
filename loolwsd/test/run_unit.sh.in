@@ -26,8 +26,10 @@ echo > run_unit.sh.trs
 for tst in timeout storage prefork; do
     tst_log="test_output/$tst.log"
     echo "Running test: $tst | $tst_log ...";
-    if ../loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
-	          --childroot="@JAILS_PATH@" --unitlib=".libs/unit-$tst.so" 2> "$tst_log"; then
+    if ${abs_top_builddir}/loolwsd --systemplate="@SYSTEMPLATE_PATH@" \
+                                   --lotemplate="@LO_PATH@" \
+                                   --childroot="@JAILS_PATH@" \
+                                   --unitlib=".libs/unit-$tst.so" 2> "$tst_log"; then
 	echo "Test $tst passed."
 	echo ":test-result: PASS $tst" >> $test_output
     else
