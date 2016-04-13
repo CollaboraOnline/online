@@ -138,7 +138,7 @@ $(function () {
 			{ type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel"></div>' },
 			{ type: 'break' },
 			{ type: 'button',  id: 'takeedit', img: 'edit', hint: _("Take edit lock (others can only view)")},
-			{ type: 'html',    id: 'takeedit_text', html: '<div id="takeedit_text">VIEWING</div>' },
+			{ type: 'html',    id: 'takeeditlabel', html: '<div id="takeeditlabel">VIEWING</div>' },
 			{ type: 'break' },
 			{ type: 'button',  id: 'prev', img: 'prev', hint: _("Previous page") },
 			{ type: 'button',  id: 'next', img: 'next', hint: _("Next page") },
@@ -905,17 +905,17 @@ map.on('editlock', function (e) {
 		toolbar.disable('takeedit');
 		toolbar.set('takeedit', {hint: _('You are editing (others can only view)')});
 
-		$('#takeedit_text').html('EDITING');
+		$('#takeeditlabel').html('EDITING');
 	}
 	else {
 		toolbar.uncheck('takeedit');
 		toolbar.enable('takeedit');
 		toolbar.set('takeedit', {hint: _('Take edit lock (others can only view)')});
-		$('#takeedit_text')
+		$('#takeeditlabel')
 			.w2tag('You are viewing now')
 			.html('VIEWING');
 		setTimeout(function() {
-			$('#takeedit_text').w2tag('');
+			$('#takeeditlabel').w2tag('');
 		}, 3000);
 	}
 });
