@@ -1438,8 +1438,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
     Log::debug("open(" + pipeLoolwsd + ", WRONLY) = " + std::to_string(ForKitWritePipe));
 
-    threadPool.start(Admin::instance());
-
     preForkChildren();
 
     time_t last30SecCheck = time(NULL);

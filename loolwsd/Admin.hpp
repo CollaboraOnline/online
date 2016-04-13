@@ -37,7 +37,7 @@ private:
 };
 
 /// An admin command processor.
-class Admin : public Poco::Runnable
+class Admin
 {
 public:
     virtual ~Admin();
@@ -49,8 +49,6 @@ public:
     }
 
     unsigned getTotalMemoryUsage(AdminModel&);
-
-    void run() override;
 
     /// Update the Admin Model.
     void update(const std::string& message);

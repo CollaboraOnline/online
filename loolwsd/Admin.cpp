@@ -367,11 +367,21 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 Admin::Admin() :
     _model(AdminModel())
 {
+    Log::info("Admin ctor.");
+
+    _memStatsTask = new MemoryStats(this);
+    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
+
+    _cpuStatsTask = new CpuStats(this);
+    _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
 }
 
 Admin::~Admin()
 {
     Log::info("~Admin dtor.");
+
+    _memStatsTask->cancel();
+    _cpuStatsTask->cancel();
 }
 
 void Admin::update(const std::string& message)
@@ -432,24 +442,6 @@ unsigned Admin::getMemStatsInterval()
 unsigned Admin::getCpuStatsInterval()
 {
     return _cpuStatsTaskInterval;
-}
-
-void Admin::run()
-{
-    _memStatsTask = new MemoryStats(this);
-    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
-
-    _cpuStatsTask = new CpuStats(this);
-    _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
-
-    Util::setThreadName("admin_thread");
-
-    Log::debug("Thread started.");
-
-    _memStatsTimer.cancel();
-    _cpuStatsTimer.cancel();
-
-    Log::debug("Thread finished.");
 }
 
 AdminModel& Admin::getModel()
