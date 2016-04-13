@@ -33,7 +33,7 @@ std::string getCachePath(const std::string& uri)
 
 }
 
-Poco::URI DocumentBroker::sanitizeURI(std::string uri)
+Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
 {
     // The URI of the document should be url-encoded.
     std::string decodedUri;
@@ -229,7 +229,7 @@ std::string DocumentBroker::getJailRoot() const
     return Poco::Path(_childRoot, _jailId).toString();
 }
 
-void DocumentBroker::takeEditLock(const std::string id)
+void DocumentBroker::takeEditLock(const std::string& id)
 {
     std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
     for (auto& it: _wsSessions)
@@ -247,7 +247,7 @@ void DocumentBroker::takeEditLock(const std::string id)
     }
 }
 
-void DocumentBroker::addWSSession(const std::string id, std::shared_ptr<MasterProcessSession>& ws)
+void DocumentBroker::addWSSession(const std::string& id, std::shared_ptr<MasterProcessSession>& ws)
 {
     std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
 
@@ -269,7 +269,7 @@ void DocumentBroker::addWSSession(const std::string id, std::shared_ptr<MasterPr
     _childProcess->getWebSocket()->sendFrame(aMessage.data(), aMessage.size());
 }
 
-void DocumentBroker::removeWSSession(const std::string id)
+void DocumentBroker::removeWSSession(const std::string& id)
 {
     std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
 

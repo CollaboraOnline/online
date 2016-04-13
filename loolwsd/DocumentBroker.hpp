@@ -105,8 +105,7 @@ class DocumentBroker
 {
 public:
 
-    static
-    Poco::URI sanitizeURI(std::string uri);
+    static Poco::URI sanitizeURI(const std::string& uri);
 
     /// Returns a document-specific key based
     /// on the URI of the document.
@@ -164,11 +163,11 @@ public:
 
     /// Ignore input events from all web socket sessions
     /// except this one
-    void takeEditLock(const std::string id);
+    void takeEditLock(const std::string& id);
 
-    void addWSSession(const std::string id, std::shared_ptr<MasterProcessSession>& ws);
+    void addWSSession(const std::string& id, std::shared_ptr<MasterProcessSession>& ws);
 
-    void removeWSSession(const std::string id);
+    void removeWSSession(const std::string& id);
 
     unsigned getWSSessionsCount() { return _wsSessions.size(); }
 
