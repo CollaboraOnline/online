@@ -518,6 +518,10 @@ private:
             throw;
         }
 
+        // indicator to the client that document broker is searching
+        std::string status("statusindicator: find");
+        ws->sendFrame(status.data(), (int) status.size());
+
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
         std::shared_ptr<DocumentBroker> docBroker;
@@ -561,24 +565,29 @@ private:
         // thread that handles them. This is so that we can empty the queue when we get a
         // "canceltiles" message.
         auto queue = std::make_shared<BasicTileQueue>();
-
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
         docBroker->addWSSession(id, session);
         auto wsSessionsCount = docBroker->getWSSessionsCount();
         Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
         docBrokersLock.unlock();
 
+        // indicator to a client that is waiting to connect to lokit process
+        status = "statusindicator: connect";
+        ws->sendFrame(status.data(), (int) status.size());
+
         if (!waitBridgeCompleted(session, docBroker))
         {
-            Log::error(session->getName() + ": Failed to connect to child. Client cannot serve now.");
+            Log::error(session->getName() + ": Failed to connect to lokit process. Client cannot serve now.");
             // Let the client know we can't serve now.
-            response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
-            response.setContentLength(0);
-            response.send();
-            return;
+            status = "statusindicator: fail";
+            ws->sendFrame(status.data(), (int) status.size());
+            ws->shutdown();
+            throw WebSocketException("Failed to connect to lokit process", WebSocket::WS_ENDPOINT_GOING_AWAY);
         }
         // Now the bridge beetween the client and kit process is connected
         // Let messages flow
+        status = "statusindicator: ready";
+        ws->sendFrame(status.data(), (int) status.size());
 
         QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
 

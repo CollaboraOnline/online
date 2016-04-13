@@ -49,6 +49,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCountHowManyLoolkits);
 
     CPPUNIT_TEST(testBadRequest);
+    CPPUNIT_TEST(testHandShake);
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
     CPPUNIT_TEST(testReload);
@@ -70,6 +71,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     void testCountHowManyLoolkits();
     void testBadRequest();
+    void testHandShake();
     void testLoad();
     void testBadLoad();
     void testReload();
@@ -172,6 +174,73 @@ void HTTPWSTest::testBadRequest()
     }
 }
 
+void HTTPWSTest::testHandShake()
+{
+    try
+    {
+        int bytes;
+        int flags;
+        char buffer[1024];
+        // Load a document and get its status.
+        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPResponse response;
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+#ifdef ENABLE_SSL
+        Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
+#else
+        Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
+#endif
+        Poco::Net::WebSocket socket(session, request, response);
+
+        const std::string prefixEdit = "editlock:";
+        const char* fail = "fail";
+        std::string payload("statusindicator: find");
+
+        std::string receive;
+        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        CPPUNIT_ASSERT(bytes == (int) payload.size());
+        CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+        CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+
+        // After document broker finish searching it sends editlok
+        // it should be at end on handshake
+        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        CPPUNIT_ASSERT(prefixEdit.compare(0, prefixEdit.size(), buffer, 0, prefixEdit.size()) == 0);
+        CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+
+        payload = "statusindicator: connect";
+        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        CPPUNIT_ASSERT(bytes == (int) payload.size());
+        CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+        CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+
+        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        if (std::strstr(buffer, fail))
+        {
+            payload = "statusindicator: fail";
+            CPPUNIT_ASSERT(bytes == (int) payload.size());
+            CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+            CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+        }
+        else
+        {
+            payload = "statusindicator: ready";
+            CPPUNIT_ASSERT(bytes == (int) payload.size());
+            CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+            CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+        }
+
+        socket.shutdown();
+        Util::removeFile(documentPath);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
 void HTTPWSTest::testLoad()
 {
     try
@@ -258,7 +327,8 @@ void HTTPWSTest::testBadLoad()
 
                 // For some reason the server claims a client has the 'edit lock' even if no
                 // document has been successfully loaded
-                if (LOOLProtocol::getFirstToken(buffer, n) == "editlock:")
+                if (LOOLProtocol::getFirstToken(buffer, n) == "editlock:" ||
+                    LOOLProtocol::getFirstToken(buffer, n) == "statusindicator:")
                     continue;
 
                 CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
