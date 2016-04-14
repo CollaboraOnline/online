@@ -11,6 +11,7 @@ component.json
 _site
 dist/*.js
 dist/admin/*.js
+dist/plugins/
 plugins/draw-0.2.4/dist/*.js
 plugins/draw-0.2.4/npm-debug.log
 coverage/

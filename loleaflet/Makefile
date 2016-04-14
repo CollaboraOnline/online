@@ -11,14 +11,14 @@ DRAW_VERSION=0.2.4
 all:
 	npm install
 	jake build
-	cd plugins/draw-$(DRAW_VERSION) && jake build
+	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
+	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 
 .PHONY: dist
 dist: all
 	rm -rf loleaflet-$(VERSION)
-	mkdir -p loleaflet-$(VERSION)/dist/plugins/draw-$(DRAW_VERSION)
+	mkdir loleaflet-$(VERSION)
 	cp -ar dist loleaflet-$(VERSION)
-	cp -ar plugins/draw-$(DRAW_VERSION)/dist loleaflet-$(VERSION)/dist/plugins/draw-$(DRAW_VERSION)
 	util/po2json.py po/*.po
 	mv po/*.json loleaflet-$(VERSION)/dist/l10n
 	util/po2json.py po/styles/*.po
