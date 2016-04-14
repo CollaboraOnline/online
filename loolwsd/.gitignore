@@ -29,6 +29,7 @@ m4
 systemplate
 test-driver
 jails
+test/data/hello-world.odt
 
 *.o
 *.exe
