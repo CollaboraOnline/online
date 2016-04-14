@@ -34,7 +34,6 @@
 #include "LOOLKit.hpp"
 #include "Util.hpp"
 #include "Unit.hpp"
-#include "ChildProcessSession.hpp"
 
 #include "security.h"
 
@@ -47,6 +46,8 @@ using Poco::Util::Application;
 
 static std::string UnitTestLibrary;
 static std::atomic<unsigned> ForkCounter( 0 );
+
+int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 
 static int pipeFd = -1;
 

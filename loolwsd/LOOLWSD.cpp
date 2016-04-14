@@ -81,7 +81,6 @@
 
 #include "Admin.hpp"
 #include "Auth.hpp"
-#include "ChildProcessSession.hpp"
 #include "Common.hpp"
 #include "FileServer.hpp"
 #include "LOOLProtocol.hpp"
@@ -142,6 +141,8 @@ using Poco::XML::Element;
 using Poco::XML::InputSource;
 using Poco::XML::Node;
 using Poco::XML::NodeList;
+
+int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.

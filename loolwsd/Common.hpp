@@ -40,6 +40,9 @@ constexpr auto JAILED_DOCUMENT_ROOT = "/user/docs/";
 constexpr auto NEW_CHILD_URI = "/loolws/newchild?";
 constexpr auto SSL_KEY_FILE = "key.pem";
 
+// The client port number, both loolwsd and the kits have this.
+extern int ClientPortNumber;
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -22,9 +22,6 @@
 #include "Common.hpp"
 #include "LOOLSession.hpp"
 
-// The client port number, which is changed via loolwsd args.
-extern int ClientPortNumber;
-
 class CallbackWorker;
 
 class ChildProcessSession final : public LOOLSession
