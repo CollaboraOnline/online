@@ -20,7 +20,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 	onSocketOpen: function() {
 		this.socket.send('documents');
-		this.socket.send('subscribe document addview rmview rmdoc');
+		this.socket.send('subscribe adddoc rmdoc');
 
 		this._getBasicStats();
 		var socketOverview = this;
@@ -78,9 +78,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 		var tableContainer = document.getElementById('doclist');
 		var rowContainer;
-		var pidEle, urlEle, viewsEle, memEle, sDocTimeEle, docEle;
+		var pidEle, nameEle, viewsEle, memEle, sDocTimeEle, docEle, aEle;
 		var nViews, nTotalViews;
-		var docProps, sPid, sUrl, sViews, sMem, sDocTime;
+		var docProps, sPid, sName, sViews, sMem, sDocTime;
 		if (textMsg.startsWith('documents')) {
 			var documents = textMsg.substring('documents'.length);
 			documents = documents.trim().split('\n');
@@ -90,11 +90,11 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				}
 				docProps = documents[i].trim().split(' ');
 				sPid = docProps[0];
-				sUrl = docProps[1];
+				sName = docProps[1];
 				sViews = docProps[2];
 				sMem = docProps[3];
 				sDocTime = docProps[4];
-				if (sUrl === '0') {
+				if (sName === '0') {
 					continue;
 				}
 				rowContainer = document.createElement('tr');
@@ -105,9 +105,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				pidEle.innerHTML = sPid;
 				rowContainer.appendChild(pidEle);
 
-				urlEle = document.createElement('td');
-				urlEle.innerHTML = sUrl;
-				rowContainer.appendChild(urlEle);
+				nameEle = document.createElement('td');
+				nameEle.innerHTML = sName;
+				rowContainer.appendChild(nameEle);
 
 				viewsEle = document.createElement('td');
 				viewsEle.id = 'docview' + sPid;
@@ -125,64 +125,60 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				rowContainer.appendChild(sDocTimeEle);
 			}
 		}
-		else if (textMsg.startsWith('addview')) {
-			sPid = textMsg.substring('addview'.length).trim().split(' ')[0];
-			nViews = parseInt(document.getElementById('docview' + sPid).innerHTML);
-			document.getElementById('docview' + sPid).innerHTML = nViews + 1;
-			nTotalViews = parseInt(document.getElementById('active_users_count').innerHTML);
-			document.getElementById('active_users_count').innerHTML = nTotalViews + 1;
-		}
-		else if (textMsg.startsWith('rmview')) {
-			sPid = textMsg.substring('addview'.length).trim().split(' ')[0];
-			nViews = parseInt(document.getElementById('docview' + sPid).innerHTML);
-			document.getElementById('docview' + sPid).innerHTML = nViews - 1;
-			nTotalViews = parseInt(document.getElementById('active_users_count').innerHTML);
-			document.getElementById('active_users_count').innerHTML = nTotalViews - 1;
-		}
-		else if (textMsg.startsWith('document')) {
-			textMsg = textMsg.substring('document'.length);
+		else if (textMsg.startsWith('adddoc')) {
+			textMsg = textMsg.substring('adddoc'.length);
 			docProps = textMsg.trim().split(' ');
 			sPid = docProps[0];
-			sUrl = docProps[1];
-			sMem = docProps[2];
+			sName = docProps[1];
+			// docProps[2] == sessionid
+			sMem = docProps[3];
 
 			docEle = document.getElementById('doc' + sPid);
-			if (docEle) {
-				tableContainer.removeChild(docEle);
+			if (!docEle) {
+
+				if (sName === '0') {
+					return;
+				}
+
+				rowContainer = document.createElement('tr');
+				rowContainer.id = 'doc' + sPid;
+				tableContainer.appendChild(rowContainer);
+
+				pidEle = document.createElement('td');
+				pidEle.innerHTML = sPid;
+				rowContainer.appendChild(pidEle);
+
+				nameEle = document.createElement('td');
+				nameEle.innerHTML = sName;
+				rowContainer.appendChild(nameEle);
+
+				viewsEle = document.createElement('td');
+				viewsEle.innerHTML = 0;
+				viewsEle.id = 'docview' + sPid;
+				rowContainer.appendChild(viewsEle);
+
+				memEle = document.createElement('td');
+				memEle.innerHTML = Util.humanizeMem(parseInt(sMem));
+				rowContainer.appendChild(memEle);
+
+				sDocTimeEle = document.createElement('td');
+				sDocTimeEle.className = 'elapsed_time';
+				sDocTimeEle.value = 0;
+				sDocTimeEle.innerHTML = Util.humanizeSecs(0);
+				rowContainer.appendChild(sDocTimeEle);
+
+				var totalUsersEle = document.getElementById('active_docs_count');
+				totalUsersEle.innerHTML = parseInt(totalUsersEle.innerHTML) + 1;
+
 			}
-			if (sUrl === '0') {
-				return;
-			}
 
-			rowContainer = document.createElement('tr');
-			rowContainer.id = 'doc' + docProps[0];
-			tableContainer.appendChild(rowContainer);
+			viewsEle = document.getElementById('docview' + sPid);
+			nViews = parseInt(viewsEle.innerHTML);
+			viewsEle.innerHTML = nViews + 1;
 
-			pidEle = document.createElement('td');
-			pidEle.innerHTML = docProps[0];
-			rowContainer.appendChild(pidEle);
-
-			urlEle = document.createElement('td');
-			urlEle.innerHTML = docProps[1];
-			rowContainer.appendChild(urlEle);
-
-			viewsEle = document.createElement('td');
-			viewsEle.innerHTML = 0;
-			viewsEle.id = 'docview' + docProps[0];
-			rowContainer.appendChild(viewsEle);
-
-			memEle = document.createElement('td');
-			memEle.innerHTML = Util.humanizeMem(parseInt(sMem));
-			rowContainer.appendChild(memEle);
-
-			sDocTimeEle = document.createElement('td');
-			sDocTimeEle.className = 'elapsed_time';
-			sDocTimeEle.value = 0;
-			sDocTimeEle.innerHTML = Util.humanizeSecs(0);
-			rowContainer.appendChild(sDocTimeEle);
-
-			var totalUsersEle = document.getElementById('active_docs_count');
-			totalUsersEle.innerHTML = parseInt(totalUsersEle.innerHTML) + 1;
+			aEle = document.getElementById('active_users_count');
+			nTotalViews = parseInt(aEle.innerHTML);
+			aEle.innerHTML = nTotalViews + 1;
 		}
 		else if (textMsg.startsWith('total_mem') ||
 			textMsg.startsWith('active_docs_count') ||
@@ -201,9 +197,20 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = textMsg.substring('rmdoc'.length);
 			docProps = textMsg.trim().split(' ');
 			sPid = docProps[0];
+			// docProps[1] == sessionid
+
 			docEle = document.getElementById('doc' + sPid);
 			if (docEle) {
-				tableContainer.removeChild(docEle);
+				viewsEle = document.getElementById('docview' + sPid);
+				nViews = parseInt(viewsEle.innerHTML) - 1;
+				viewsEle.innerHTML = nViews;
+				if (!nViews) {
+					tableContainer.removeChild(docEle);
+				}
+
+				aEle = document.getElementById('active_users_count');
+				nTotalViews = parseInt(aEle.innerHTML);
+				aEle.innerHTML = nTotalViews - 1;
 			}
 		}
 	},
