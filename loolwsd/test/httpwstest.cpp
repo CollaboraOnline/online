@@ -815,7 +815,7 @@ void HTTPWSTest::testImpressPartCountChanged()
             // Expected format is something like 'type= parts= current= width= height='.
             const std::string prefix = "parts=";
             const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
-            CPPUNIT_ASSERT_EQUAL(totalParts, 1);
+            CPPUNIT_ASSERT_EQUAL(1, totalParts);
         }
 
         /* FIXME partscountchanged: was removed, update accordingly
@@ -889,7 +889,7 @@ void HTTPWSTest::testNoExtraLoolKitsLeft()
 {
     int countNow = countLoolKitProcesses();
 
-    CPPUNIT_ASSERT_EQUAL(countNow, _initialLoolKitCount);
+    CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
 }
 
 void HTTPWSTest::sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
