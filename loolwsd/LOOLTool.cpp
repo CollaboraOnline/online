@@ -57,7 +57,7 @@ public:
     unsigned    _numWorkers;
     std::string _serverURI;
     std::string _destinationFormat;
-    std::string _destinationDir; // FIXME: implement me.
+    std::string _destinationDir;
 
 protected:
     void defineOptions(Poco::Util::OptionSet& options) override;
@@ -141,9 +141,8 @@ public:
 
             std::cerr << "Get response\n";
 
-            // FIXME: implement destinationDir
             Poco::Path path(document);
-            std::string outPath = path.getBaseName() + "." + _app._destinationFormat;
+            std::string outPath = _app._destinationDir + "/" + path.getBaseName() + "." + _app._destinationFormat;
             std::ofstream fileStream(outPath);
 
             std::cerr << "write to " << outPath << "\n";
@@ -186,7 +185,7 @@ void Tool::defineOptions(OptionSet& optionSet)
     optionSet.addOption(Option("outdir", "", "output directory for converted files")
                         .required(false).repeatable(false).argument("outdir"));
     optionSet.addOption(Option("parallelism", "", "number of simultaneous threads to use")
-                        .required(false) .repeatable(false)
+                        .required(false).repeatable(false)
                         .argument("threads"));
     optionSet.addOption(Option("server", "", "URI of LOOL server")
                         .required(false).repeatable(false)
@@ -196,7 +195,7 @@ void Tool::defineOptions(OptionSet& optionSet)
 }
 
 void Tool::handleOption(const std::string& optionName,
-                            const std::string& value)
+                        const std::string& value)
 {
     Application::handleOption(optionName, value);
 
@@ -210,12 +209,12 @@ void Tool::handleOption(const std::string& optionName,
         helpFormatter.format(std::cout);
         std::exit(Application::EXIT_OK);
     }
-    else if (optionName == "format")
+    else if (optionName == "extension")
         _destinationFormat = value;
     else if (optionName == "outdir")
         _destinationDir = value;
-    else if (optionName == "threads")
-        _numWorkers = std::min(std::stoi(value), 1);
+    else if (optionName == "parallelism")
+        _numWorkers = std::max(std::stoi(value), 1);
     else if (optionName == "uri")
         _serverURI = value;
     else if (optionName == "no-check-certificate")
