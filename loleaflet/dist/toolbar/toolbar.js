@@ -243,24 +243,6 @@ function onClick(id) {
 			map.setPart(id);
 		}
 	}
-	else if (id === 'edit') {
-		if (item.checked) {
-			map.setPermission('view');
-		}
-		else {
-			map.setPermission('edit');
-		}
-	}
-	else if (id === 'select') {
-		if (item.checked) {
-			map.disableSelection();
-			toolbar.uncheck(id);
-		}
-		else {
-			map.enableSelection();
-			toolbar.check(id);
-		}
-	}
 	else if (id === 'menu:file:saveas') {
 		var dialog = '<label for="url">URL</label>' +
 					'<input name="url" type="text" value=' + map._docLayer.options.doc + '/>' +
@@ -554,24 +536,6 @@ function onFormulaBarBlur() {
 
 map.on('updatepermission', function (e) {
 	var toolbar = w2ui['toolbar-down'];
-	if (e.perm === 'edit') {
-		toolbar.uncheck('select');
-		toolbar.disable('select');
-		toolbar.check('edit');
-		toolbar.enable('edit');
-	}
-	else if (e.perm === 'view') {
-		toolbar.uncheck('select');
-		toolbar.enable('select');
-		toolbar.uncheck('edit');
-		toolbar.enable('edit');
-	}
-	else if (e.perm === 'readonly') {
-		toolbar.uncheck('select');
-		toolbar.enable('select');
-		toolbar.uncheck('edit');
-		toolbar.disable('edit');
-	}
 	formatButtons.forEach(function (id) {
 		if (e.perm === 'edit') {
 			toolbar.enable(id);

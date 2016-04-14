@@ -31,8 +31,6 @@ L.Control.Buttons = L.Control.extend({
 			'saveas':        {title: 'Save As',                                     iconName: 'saveas.png'},
 			'undo':          {title: 'Undo',               uno: 'Undo',             iconName: 'undo.png'},
 			'redo':          {title: 'Redo',               uno: 'Redo',             iconName: 'redo.png'},
-			'edit':          {title: 'Enable editing',                              iconName: 'edit.png'},
-			'selection':     {title: 'Enable selection',                            iconName: 'selection.png'},
 			'presentation':  {title: 'Present',                                     iconName: 'presentation.png'}
 		};
 		var separator = ['alignleft', 'save', 'undo', 'bullet', 'edit', 'presentation'];
@@ -84,24 +82,6 @@ L.Control.Buttons = L.Control.extend({
 			}
 			else {
 				this._map.toggleCommandState(button.uno);
-			}
-		}
-		else if (id === 'edit' && !L.DomUtil.hasClass(button.el.firstChild, 'leaflet-control-buttons-disabled')) {
-			if (this._map.getPermission() === 'edit') {
-				this._map.setPermission('view');
-			}
-			else if (this._map.getPermission() === 'view') {
-				this._map.setPermission('edit');
-			}
-		}
-		else if (id === 'selection' && !L.DomUtil.hasClass(button.el.firstChild, 'leaflet-control-buttons-disabled')) {
-			if (this._map.isSelectionEnabled()) {
-				this._map.disableSelection();
-				L.DomUtil.removeClass(button.el.firstChild, 'leaflet-control-buttons-active');
-			}
-			else {
-				this._map.enableSelection();
-				L.DomUtil.addClass(button.el.firstChild, 'leaflet-control-buttons-active');
 			}
 		}
 		else if (id === 'presentation') {
