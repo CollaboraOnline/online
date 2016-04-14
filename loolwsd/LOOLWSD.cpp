@@ -991,7 +991,7 @@ std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::AdminCreds;
 bool LOOLWSD::AllowLocalStorage = false;
 bool LOOLWSD::SSLEnabled =
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
     true;
 #else
     false;
@@ -1077,7 +1077,7 @@ void LOOLWSD::initialize(Application& self)
     ServerApplication::initialize(self);
 }
 
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
 void LOOLWSD::initializeSSL()
 {
     const auto ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
@@ -1294,7 +1294,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_USAGE;
     }
 
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
     initializeSSL();
 #endif
 
@@ -1381,7 +1381,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     params2->setMaxThreads(MAX_SESSIONS);
 
     // Start a server listening on the port for clients
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
     SecureServerSocket svs(ClientPortNumber);
 #else
     ServerSocket svs(ClientPortNumber);
@@ -1536,7 +1536,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Util::removeFile(path, true);
     }
 
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
     Poco::Net::uninitializeSSL();
     Poco::Crypto::uninitializeCrypto();
 #endif

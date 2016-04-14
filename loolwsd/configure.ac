@@ -82,11 +82,13 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
 ENABLE_DEBUG=
 debug_msg="secure mode: product build"
 if test "$enable_debug" = "yes"; then
-   AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces ])
+   AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
    if test "$enable_debug" = yes; then
       debug_msg="low security debugging mode"
    fi
+else
+    AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
 fi
 AC_SUBST(ENABLE_DEBUG)
 
@@ -169,7 +171,8 @@ AS_IF([test "$enable_tests" != "no"],
       [PKG_CHECK_MODULES([CPPUNIT], [cppunit])])
 
 AS_IF([test "$enable_ssl" != "no"],
-      [AC_DEFINE([ENABLE_SSL],1,[Enable SSL])])
+      [AC_DEFINE([ENABLE_SSL],1,[Whether to enable SSL])],
+      [AC_DEFINE([ENABLE_SSL],0,[Whether to enable SSL])])
 
 ENABLE_SSL=
 if test "$enable_ssl" != "no"; then

@@ -103,13 +103,13 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
 public:
     HTTPWSTest()
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         : _uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER))
 #else
         : _uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER))
 #endif
     {
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::initializeSSL();
         // Just accept the certificate anyway for testing purposes
         Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
@@ -119,7 +119,7 @@ public:
 #endif
     }
 
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
     ~HTTPWSTest()
     {
         Poco::Net::uninitializeSSL();
@@ -152,7 +152,7 @@ void HTTPWSTest::testBadRequest()
 
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -187,7 +187,7 @@ void HTTPWSTest::testHandShake()
 
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -250,7 +250,7 @@ void HTTPWSTest::testLoad()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -303,7 +303,7 @@ void HTTPWSTest::testBadLoad()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -363,7 +363,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -391,7 +391,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -445,7 +445,7 @@ void HTTPWSTest::testExcelLoad()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -498,7 +498,7 @@ void HTTPWSTest::testPaste()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -558,7 +558,7 @@ void HTTPWSTest::testLargePaste()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -616,7 +616,7 @@ void HTTPWSTest::testRenderingOptions()
         const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -675,7 +675,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -716,7 +716,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -757,7 +757,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
@@ -791,7 +791,7 @@ void HTTPWSTest::testImpressPartCountChanged()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());

@@ -123,7 +123,7 @@ class Connect: public Poco::Util::Application
 {
 public:
     Connect() :
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         _uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
 #else
         _uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws")
@@ -147,7 +147,7 @@ protected:
         if (args.size() > 1)
             _uri = URI(args[1]);
 
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
         Poco::Net::initializeSSL();
 
         SharedPtr<InvalidCertificateHandler> invalidCertHandler = new AcceptCertificateHandler(false);

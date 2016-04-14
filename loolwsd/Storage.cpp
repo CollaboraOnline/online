@@ -159,7 +159,7 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
     Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
 
     Poco::URI uriObject(uri);
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
     Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
 #else
     Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
@@ -219,7 +219,7 @@ std::string WopiStorage::loadStorageFileToLocal()
     const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
     Log::debug("Wopi requesting: " + url);
 
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
     Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
 #else
     Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
@@ -264,7 +264,7 @@ bool WopiStorage::saveLocalFileToStorage()
     const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
     Log::debug("Wopi posting: " + url);
 
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
     Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
 #else
     Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
