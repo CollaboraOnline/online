@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/loolwsd
-ExecStart=/usr/bin/loolwsd --systemplate=/opt/lool/systemplate --lotemplate=/opt/collaboraoffice5.0 --childroot=/opt/lool/child-roots --numprespawns=5 --fileserverroot=/srv/www/htdocs/
+ExecStart=/usr/bin/loolwsd --systemplate=/opt/lool/systemplate --lotemplate=/opt/collaboraoffice5.0 --childroot=/opt/lool/child-roots --numprespawns=5 --fileserverroot=/usr/share/loolwsd
 User=lool
 KillMode=control-group
 Restart=always

@@ -38,9 +38,6 @@ l10n: pot
 	rm po/loleaflet-ui.pot
 	rm po/loleaflet-help.pot
 
-loleaflet.spec: loleaflet.spec.in Makefile
-	sed -e 's/@PACKAGE_VERSION@/$(VERSION)/g' <loleaflet.spec.in >loleaflet.spec
-
 spec/data/load-test:
 	if [ ! -d spec/data/load_test ]; then \
 		mkdir -p spec/data/load_test; \
