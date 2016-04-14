@@ -643,7 +643,11 @@ private:
         DOMParser parser;
         DOMWriter writer;
 
-        const std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
+        std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
+        if (!File(discoveryPath).exists())
+        {
+            discoveryPath = LOOLWSD_DATADIR "/discovery.xml";
+        }
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";

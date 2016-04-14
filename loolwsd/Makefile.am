@@ -2,7 +2,11 @@ SUBDIRS = . test
 
 bin_PROGRAMS = loolwsd loolforkit loolmap loolmount
 
-dist_bin_SCRIPTS = loolwsd-systemplate-setup discovery.xml
+dist_bin_SCRIPTS = loolwsd-systemplate-setup
+
+loolwsddatadir = @LOOLWSD_DATADIR@
+
+loolwsddata_DATA = discovery.xml
 
 ACLOCAL_AMFLAGS = -I m4
 
