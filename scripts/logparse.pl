@@ -98,7 +98,12 @@ while (my $line = shift @input) {
 	}
     }
 
-    if ($line =~/Initializing wsd/) {
+    # systemd[1]: loolwsd.service: main process exited, code=killed, status=11/SEGV
+    if ($line =~m/loolwsd.service: main process exited.*status=(.*)$/) {
+	print "loolwsd exit: $1\n";
+    }
+
+    if ($line =~m/Initializing wsd/) {
 	print "Re-started\n";
 	clear_state(\%sessions, \%lok_starting, \%lok_running);
     }
@@ -109,7 +114,7 @@ while (my $line = shift @input) {
     # [loolkit        ] loolkit [1689] is ready.
     # [loolbroker     ] Child 1536 terminated.
     # [loolbroker     ] Child process [1689] exited with code: 0.
-    if ($line =~ m/loolbroker.*Spawned kit \[(\d+)\]./) {
+    if ($line =~ m/loolbroker.*Forked kit \[(\d+)\]./) {
 	my $pid = $1;
 	$lok_starting{$pid} = 1;
 	$pevent = "newkit\t\"$pid\"";
