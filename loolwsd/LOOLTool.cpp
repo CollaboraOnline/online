@@ -21,9 +21,13 @@
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/HTTPClientSession.h>
+#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/FilePartSource.h>
+#include <Poco/Net/SSLManager.h>
+#include <Poco/Net/KeyConsoleHandler.h>
+#include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/Process.h>
@@ -101,7 +105,13 @@ public:
         std::cerr << "convert file " << document << "\n";
 
         Poco::URI uri(_app._serverURI);
-        Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+
+        Poco::Net::HTTPClientSession *session;
+        if (_app._serverURI.compare(0, 5, "https"))
+            session = new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
+        else
+            session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/convert-to");
 
         try {
@@ -112,45 +122,53 @@ public:
             form.prepareSubmit(request);
 
             // If this results in a Poco::Net::ConnectionRefusedException, loolwsd is not running.
-            form.write(session.sendRequest(request));
+            form.write(session->sendRequest(request));
         }
         catch (const Poco::Exception &e)
         {
-            std::cerr << "Failed to connect: " << e.name() <<
+            std::cerr << "Failed to write data: " << e.name() <<
                   " " << e.message() << "\n";
             return;
         }
 
         Poco::Net::HTTPResponse response;
-        std::stringstream actualStream;
 
-        // receiveResponse() resulted in a Poco::Net::NoMessageException.
-        std::istream& responseStream = session.receiveResponse(response);
-        Poco::StreamCopier::copyStream(responseStream, actualStream);
+        try {
+            std::cerr << "try to get response\n";
 
-        // FIXME: implement destinationDir
-        Poco::Path path(document);
+            // receiveResponse() resulted in a Poco::Net::NoMessageException.
+            std::istream& responseStream = session->receiveResponse(response);
 
-        std::string outPath = path.getBaseName() + "." + _app._destinationFormat;
-        std::cerr << "write to " << outPath << "\n";
-        std::ifstream fileStream(outPath);
-        std::stringstream expectedStream;
-        expectedStream << fileStream.rdbuf();
+            std::cerr << "Get response\n";
 
-        // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
-        // (U+FEFF). Skip that.
-        std::string actualString = actualStream.str();
-        if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
-            actualString = actualString.substr(3);
+            // FIXME: implement destinationDir
+            Poco::Path path(document);
+            std::string outPath = path.getBaseName() + "." + _app._destinationFormat;
+            std::ofstream fileStream(outPath);
+
+            std::cerr << "write to " << outPath << "\n";
+
+            Poco::StreamCopier::copyStream(responseStream, fileStream);
+
+            std::cerr << "Copied stream\n";
+        }
+        catch (const Poco::Exception &e)
+        {
+            std::cerr << "Exception converting: " << e.name() <<
+                  " " << e.message() << "\n";
+            return;
+        }
+
+        delete session;
     }
 };
 
 Tool::Tool() :
     _numWorkers(4),
 #if ENABLE_SSL
-    _serverURI("https://localhost:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/wss"),
+    _serverURI("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER)),
 #else
-    _serverURI("http://localhost:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/ws"),
+    _serverURI("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER)),
 #endif
     _destinationFormat("txt")
 {
@@ -166,13 +184,15 @@ void Tool::defineOptions(OptionSet& optionSet)
                         .required(false).repeatable(false)
                         .argument("format"));
     optionSet.addOption(Option("outdir", "", "output directory for converted files")
-                        .required(false).repeatable(false));
+                        .required(false).repeatable(false).argument("outdir"));
     optionSet.addOption(Option("parallelism", "", "number of simultaneous threads to use")
                         .required(false) .repeatable(false)
                         .argument("threads"));
     optionSet.addOption(Option("server", "", "URI of LOOL server")
                         .required(false).repeatable(false)
                         .argument("uri"));
+    optionSet.addOption(Option("no-check-certificate", "", "Disable checking of SSL certs")
+                        .required(false).repeatable(false));
 }
 
 void Tool::handleOption(const std::string& optionName,
@@ -198,6 +218,13 @@ void Tool::handleOption(const std::string& optionName,
         _numWorkers = std::min(std::stoi(value), 1);
     else if (optionName == "uri")
         _serverURI = value;
+    else if (optionName == "no-check-certificate")
+    {
+        Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler = new Poco::Net::KeyConsoleHandler(false);
+        Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler = new Poco::Net::AcceptCertificateHandler(false);
+        Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "");
+        Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+    }
 }
 
 int Tool::main(const std::vector<std::string>& args)
