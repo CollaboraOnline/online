@@ -4,7 +4,7 @@ check_PROGRAMS = test
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 
-lib_LTLIBRARIES = \
+check_LTLIBRARIES = \
 	unit-timeout.la unit-prefork.la \
         unit-storage.la unit-fonts.la
 
