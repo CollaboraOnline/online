@@ -134,13 +134,13 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             {
                 const std::string stringMsg(buffer, length);
                 Log::info(getName() + "Command: " + stringMsg);
-                const auto index = stringMsg.find_first_of("{");
+                const auto index = stringMsg.find_first_of('{');
                 if (index != std::string::npos)
                 {
                     const std::string stringJSON = stringMsg.substr(index);
                     Poco::JSON::Parser parser;
                     const auto result = parser.parse(stringJSON);
-                    const auto object = result.extract<Poco::JSON::Object::Ptr>();
+                    const auto& object = result.extract<Poco::JSON::Object::Ptr>();
                     if (object->get("commandName").toString() == ".uno:Save" &&
                         object->get("success").toString() == "true")
                     {
@@ -233,13 +233,13 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             else if (tokens[0] == "commandvalues:")
             {
                 const std::string stringMsg(buffer, length);
-                const auto index = stringMsg.find_first_of("{");
+                const auto index = stringMsg.find_first_of('{');
                 if (index != std::string::npos)
                 {
                     const std::string stringJSON = stringMsg.substr(index);
                     Poco::JSON::Parser parser;
                     const auto result = parser.parse(stringJSON);
-                    const auto object = result.extract<Poco::JSON::Object::Ptr>();
+                    const auto& object = result.extract<Poco::JSON::Object::Ptr>();
                     const std::string commandName = object->get("commandName").toString();
                     if (commandName.find(".uno:CharFontName") != std::string::npos ||
                         commandName.find(".uno:StyleApply") != std::string::npos)
