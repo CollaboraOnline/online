@@ -200,7 +200,7 @@ void HTTPWSTest::testHandShake()
 
         std::string receive;
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        CPPUNIT_ASSERT(bytes == (int) payload.size());
+        CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
         CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
         CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
 
@@ -212,7 +212,7 @@ void HTTPWSTest::testHandShake()
 
         payload = "statusindicator: connect";
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        CPPUNIT_ASSERT(bytes == (int) payload.size());
+        CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
         CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
         CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
 
@@ -220,14 +220,14 @@ void HTTPWSTest::testHandShake()
         if (std::strstr(buffer, fail))
         {
             payload = "statusindicator: fail";
-            CPPUNIT_ASSERT(bytes == (int) payload.size());
+            CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
             CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
             CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
         }
         else
         {
             payload = "statusindicator: ready";
-            CPPUNIT_ASSERT(bytes == (int) payload.size());
+            CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
             CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
             CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
         }
