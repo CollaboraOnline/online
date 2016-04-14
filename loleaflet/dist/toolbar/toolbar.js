@@ -163,8 +163,10 @@ $(function () {
 	backColorIndicator.id = 'backcolorindicator';
 });
 
-var formatButtons = ['bold', 'italic', 'underline', 'strikeout', 'bullet', 'numbering', 'save',
-	'alignleft', 'alignhorizontal', 'alignright', 'alignblock', 'incrementindent', 'decrementindent'];
+var formatButtons = ['undo', 'redo', 'save',
+					 'bold', 'italic', 'underline', 'strikeout',
+					 'fontcolor', 'backcolor', 'bullet', 'numbering', 'alignleft', 'alignhorizontal', 'alignright', 'alignblock',
+					 'incrementindent', 'decrementindent', 'insertgraphic'];
 
 function onSearch(e) {
 	if (e.keyCode === 13) {
@@ -535,7 +537,7 @@ function onFormulaBarBlur() {
 }
 
 map.on('updatepermission', function (e) {
-	var toolbar = w2ui['toolbar-down'];
+	var toolbar = w2ui['toolbar-up'];
 	formatButtons.forEach(function (id) {
 		if (e.perm === 'edit') {
 			toolbar.enable(id);
@@ -544,7 +546,7 @@ map.on('updatepermission', function (e) {
 			toolbar.disable(id);
 		}
 	});
-	var toolbar = w2ui['toolbar-up'];
+
 	var docType = map.getDocType();
 	if (docType !== 'text') {
 		toolbar.hide('writer:menu:file');
