@@ -101,9 +101,6 @@ namespace Util
     void setTerminationSignals();
     void setFatalSignals();
 
-    /// Returns EXIT_SUCCESS or EXIT_FAILURE from <stdlib.h>
-    int getSignalStatus(const int code);
-
     void requestTermination(const Poco::Process::PID& pid);
 
     int getMemoryUsage(const Poco::Process::PID nPid);

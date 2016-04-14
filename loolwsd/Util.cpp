@@ -491,34 +491,6 @@ namespace Util
         strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString));
     }
 
-    int getSignalStatus(const int code)
-    {
-        int retVal;
-
-        switch (code)
-        {
-            case SIGSEGV:
-            case SIGBUS:
-            case SIGABRT:
-            case SIGILL:
-            case SIGFPE:
-            case SIGTERM:
-            case SIGINT:
-            case SIGQUIT:
-            case SIGHUP:
-                retVal = EXIT_FAILURE;
-            break;
-
-            // Why are other signals treated as success? Will this function ever be called when a
-            // child was *not* terminated by a signal?
-            default:
-                retVal = EXIT_SUCCESS;
-            break;
-        }
-
-        return retVal;
-    }
-
     void requestTermination(const Poco::Process::PID& pid)
     {
         try
