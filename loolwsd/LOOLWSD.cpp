@@ -31,6 +31,7 @@
 #include <map>
 #include <mutex>
 #include <sstream>
+#include <thread>
 
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
@@ -262,7 +263,7 @@ private:
         std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
 
         Log::debug() << "Waiting for client session [" << clientSession->getId() << "] to connect." << Log::end;
-        while (retries-- && !isFound)
+        while (!TerminationFlag && retries-- && !isFound)
         {
             AvailableChildSessionCV.wait_for(
                 lock,
@@ -737,6 +738,24 @@ class PrisonerRequestHandler: public HTTPRequestHandler
 {
 public:
 
+    static bool waitBridgeCompleted(const std::shared_ptr<MasterProcessSession>& prisonSession)
+    {
+        // time to live, if the kit process cannot connect to a client session.
+        int ttl = 180;
+        bool isFound = true;
+        // Wait until the prison has connected with a client socket.
+        Log::debug() << "Waiting for prison session [" << prisonSession->getId() << "] to connect." << Log::end;
+        while (!TerminationFlag &&
+                (isFound = AvailableChildSessions.find(prisonSession->getId()) != AvailableChildSessions.end()) &&
+                ttl--)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
+            Log::debug() << "Sleeping prison session [" << prisonSession->getId() << "] to connect." << Log::end;
+        }
+
+        return isFound;
+    }
+
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         if (UnitWSD::get().filterHandleRequest(
@@ -871,6 +890,15 @@ public:
                     << sessionId << " "
                     << "\n";
             Admin::instance().update(message.str());
+
+            if (waitBridgeCompleted(session))
+            {
+                ws->shutdown();
+                throw WebSocketException("Failed to connect to client session", WebSocket::WS_ENDPOINT_GOING_AWAY);
+            }
+            Log::debug("Connected " + session->getName() + ".");
+            // Now the bridge beetween the prison and the client is connected
+            // Let messages flow
 
             IoUtil::SocketProcessor(ws, response,
                     [&session](const std::vector<char>& payload)
