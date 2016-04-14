@@ -176,6 +176,13 @@ L.TileLayer = L.GridLayer.extend({
 			},
 		this);
 
+		map.on('updatepermission', function(e) {
+			// {En,Dis}able selection handles
+			for (var key in this._selectionHandles) {
+				this._selectionHandles[key].setDraggable(e.perm === 'edit');
+			}
+		}, this);
+
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
@@ -945,7 +952,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update group layer selection handler.
 	_onUpdateGraphicSelection: function () {
-		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
+		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection) && this._map._permission === 'edit') {
 			if (this._graphicMarker) {
 				this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
 				this._map.removeLayer(this._graphicMarker);
@@ -1260,6 +1267,7 @@ L.TileLayer = L.GridLayer.extend({
 		var val = parseInt(textMsg.split(' ')[1]);
 		if (!isNaN(val)) {
 			this._map.fire('editlock', {value: val});
+			this._map.setPermission(val ? 'edit' : 'readonly');
 		}
 	},
 

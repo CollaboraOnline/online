@@ -24,6 +24,19 @@ L.Marker = L.Layer.extend({
 		this._latlng = L.latLng(latlng);
 	},
 
+	setDraggable: function(val) {
+		if (!this.dragging) {
+			this.options.draggable = val;
+			return;
+		}
+
+		if (val) {
+			this.dragging.enable();
+		} else {
+			this.dragging.disable();
+		}
+	},
+
 	onAdd: function (map) {
 		this._zoomAnimated = this._zoomAnimated && map.options.markerZoomAnimation;
 

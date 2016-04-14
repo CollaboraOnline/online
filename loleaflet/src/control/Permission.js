@@ -10,10 +10,11 @@ L.Map.include({
 		}
 		else if (perm === 'view' || perm === 'readonly') {
 			this.dragging.enable();
+			// For time being, treat view/readonly mode as mode without editlock
 			// disable all user interaction, will need to add keyboard too
-			this._docLayer._onUpdateCursor();
-			this._docLayer._clearSelections();
-			this._docLayer._onUpdateTextSelection();
+			//this._docLayer._onUpdateCursor();
+			//this._docLayer._clearSelections();
+			//this._docLayer._onUpdateTextSelection();
 		}
 		this.fire('updatepermission', {perm : perm});
 	},
