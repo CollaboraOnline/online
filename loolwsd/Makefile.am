@@ -6,7 +6,7 @@ dist_bin_SCRIPTS = loolwsd-systemplate-setup discovery.xml
 
 ACLOCAL_AMFLAGS = -I m4
 
-AM_CPPFLAGS = -pthread
+AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"'
 AM_LDFLAGS = -pthread -Wl,-E
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
