@@ -82,7 +82,8 @@ noinst_HEADERS = Admin.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
-                 bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h
+                 bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h \
+                 security.h
 
 EXTRA_DIST = discovery.xml \
              loolwsd.service \
