@@ -53,6 +53,12 @@ public:
     /// Update the Admin Model.
     void update(const std::string& message);
 
+    /// Calls with same pid will increment view count, if pid already exists
+    void addDoc(Poco::Process::PID pid, const std::string& filename, const int sessionId);
+
+    /// Decrement view count till becomes zero after which doc is removed
+    void rmDoc(Poco::Process::PID pid, const int nSessionId);
+
     /// Set the forkit process id.
     void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; }
 

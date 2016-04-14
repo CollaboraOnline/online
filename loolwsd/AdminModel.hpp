@@ -22,8 +22,8 @@
 class View
 {
 public:
-    View(int nSessionId)
-        : _nSessionId(nSessionId),
+    View(int sessionId)
+        : _nSessionId(sessionId),
           _start(std::time(nullptr))
     {    }
 
@@ -41,9 +41,9 @@ private:
 class Document
 {
 public:
-    Document(Poco::Process::PID nPid, std::string sUrl)
-        : _nPid(nPid),
-          _sUrl(sUrl),
+    Document(Poco::Process::PID pid, std::string filename)
+        : _nPid(pid),
+          _sFilename(filename),
           _start(std::time(nullptr))
     {
         Log::info("Document " + std::to_string(_nPid) + " ctor.");
@@ -56,17 +56,15 @@ public:
 
     Poco::Process::PID getPid() const { return _nPid; }
 
-    std::string getUrl() const { return _sUrl; }
-
-    void expire() { _end = std::time(nullptr); }
+    std::string getFilename() const { return _sFilename; }
 
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
     std::time_t getElapsedTime() const { return std::time(nullptr) - _start; }
 
-    void addView(int nSessionId);
+    void addView(int sessionId);
 
-    void removeView(int nSessionId);
+    int expireView(int sessionId);
 
     unsigned getActiveViews() const { return _nActiveViews; }
 
@@ -76,8 +74,8 @@ private:
     std::map<int, View> _views;
     /// Total number of active views
     unsigned _nActiveViews = 0;
-    /// Hosted URL
-    std::string _sUrl;
+    /// Hosted filename
+    std::string _sFilename;
 
     std::time_t _start;
     std::time_t _end = 0;
@@ -86,8 +84,8 @@ private:
 class Subscriber
 {
 public:
-    Subscriber(int nSessionId, std::shared_ptr<Poco::Net::WebSocket>& ws)
-        : _nSessionId(nSessionId),
+    Subscriber(int sessionId, std::shared_ptr<Poco::Net::WebSocket>& ws)
+        : _nSessionId(sessionId),
           _ws(ws),
           _start(std::time(nullptr))
     {
@@ -119,11 +117,6 @@ private:
 
     std::time_t _start;
     std::time_t _end = 0;
-
-    /// In case of huge number of documents,
-    /// client can tell us the specific page it is
-    /// interested in getting live notifications
-    unsigned _currentPage;
 };
 
 class AdminModel
@@ -139,17 +132,15 @@ public:
         Log::info("AdminModel dtor.");
     }
 
-    void update(const std::string& data);
-
     std::string query(const std::string& command);
 
     /// Returns memory consumed by all active loolkit processes
     unsigned getTotalMemoryUsage();
 
-    void subscribe(int nSessionId, std::shared_ptr<Poco::Net::WebSocket>& ws);
-    void subscribe(int nSessionId, const std::string& command);
+    void subscribe(int sessionId, std::shared_ptr<Poco::Net::WebSocket>& ws);
+    void subscribe(int sessionId, const std::string& command);
 
-    void unsubscribe(int nSessionId, const std::string& command);
+    void unsubscribe(int sessionId, const std::string& command);
 
     void clearMemStats() { _memStats.clear(); }
 
@@ -165,10 +156,11 @@ public:
 
     void notify(const std::string& message);
 
-private:
-    void addDocument(Poco::Process::PID pid, const std::string& url);
+    void addDocument(Poco::Process::PID pid, const std::string& filename, const int sessionId);
 
-    void removeDocument(Poco::Process::PID pid);
+    void removeDocument(Poco::Process::PID pid, const int sessionId);
+
+private:
 
     std::string getMemStats();
 

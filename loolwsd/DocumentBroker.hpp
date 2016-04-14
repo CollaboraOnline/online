@@ -145,6 +145,7 @@ public:
     Poco::URI getJailedUri() const { return _uriJailed; }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
+    const std::string& getFilename() const { return _filename; };
     TileCache& tileCache() { return *_tileCache; }
     unsigned getSessionsCount() const
     {

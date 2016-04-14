@@ -390,12 +390,6 @@ private:
                     {
                         Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
                         docBrokers.erase(docKey);
-
-                        std::ostringstream message;
-                        message << "rmdoc" << " "
-                                << docBroker->getJailId() << " "
-                                << "\n";
-                        Admin::instance().update(message.str());
                     }
                 }
 
@@ -879,18 +873,18 @@ public:
             AvailableChildSessionCV.notify_one();
 
             const auto uri = request.getURI();
-            std::ostringstream message;
-            message << "document" << " "
-                    << jailId << " "
-                    << uri.substr(uri.find_last_of("/") + 1) << " "
-                    << "\n";
-            Admin::instance().update(message.str());
 
-            message << "addview" << " "
-                    << jailId << " "
-                    << sessionId << " "
-                    << "\n";
-            Admin::instance().update(message.str());
+            // Jail id should be the PID, beacuse Admin need it to calculate the memory
+            try
+            {
+                Log::info("Adding doc " + jailId + " to Admin");
+                Admin::instance().addDoc(std::stoi(jailId), docBroker->getFilename(), std::stoi(sessionId));
+            }
+            catch (std::invalid_argument& exc)
+            {
+                assert(false);
+            }
+
 
             if (waitBridgeCompleted(session))
             {
@@ -925,12 +919,15 @@ public:
 
         if (!jailId.empty())
         {
-            std::ostringstream message;
-            message << "rmview" << " "
-                    << jailId << " "
-                    << sessionId << " "
-                    << "\n";
-            Admin::instance().update(message.str());
+            try
+            {
+                Log::info("Removing doc " + jailId + " from Admin");
+                Admin::instance().rmDoc(std::stoi(jailId), std::stoi(sessionId));
+            }
+            catch (std::invalid_argument& exc)
+            {
+                assert(false);
+            }
         }
 
         Log::debug("Thread finished.");

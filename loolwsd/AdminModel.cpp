@@ -24,12 +24,12 @@ using Poco::StringTokenizer;
 /////////////////
 // Document Impl
 ////////////////
-void Document::addView(int nSessionId)
+void Document::addView(int sessionId)
 {
-    const auto ret = _views.emplace(nSessionId, View(nSessionId));
+    const auto ret = _views.emplace(sessionId, View(sessionId));
     if (!ret.second)
     {
-        Log::warn() << "View with SessionID [" + std::to_string(nSessionId) + "] already exists." << Log::end;
+        Log::warn() << "View with SessionID [" + std::to_string(sessionId) + "] already exists." << Log::end;
     }
     else
     {
@@ -37,14 +37,19 @@ void Document::addView(int nSessionId)
     }
 }
 
-void Document::removeView(int nSessionId)
+int Document::expireView(int sessionId)
 {
-    auto it = _views.find(nSessionId);
+    auto it = _views.find(sessionId);
     if (it != _views.end())
     {
         it->second.expire();
-        _nActiveViews--;
+
+        // If last view, expire the Document also
+        if (--_nActiveViews == 0)
+            _end = std::time(nullptr);
     }
+
+    return _nActiveViews;
 }
 
 ///////////////////
@@ -83,46 +88,6 @@ void  Subscriber::unsubscribe(const std::string& command)
 ///////////////////
 // AdminModel Impl
 //////////////////
-
-void AdminModel::update(const std::string& data)
-{
-    StringTokenizer tokens(data, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-    Log::info("AdminModel Recv: " + data);
-
-    if (tokens[0] == "document")
-    {
-        addDocument(std::stoi(tokens[1]), tokens[2]);
-        unsigned mem = Util::getMemoryUsage(std::stoi(tokens[1]));
-        std::string response = data + std::to_string(mem);
-        notify(response);
-        return;
-    }
-    else if (tokens[0] == "addview")
-    {
-        auto it = _documents.find(std::stoi(tokens[1]));
-        if (it != _documents.end())
-        {
-            const unsigned nSessionId = Util::decodeId(tokens[2]);
-            it->second.addView(nSessionId);
-        }
-    }
-    else if (tokens[0] == "rmview")
-    {
-        auto it = _documents.find(std::stoi(tokens[1]));
-        if (it != _documents.end())
-        {
-            const unsigned nSessionId = Util::decodeId(tokens[2]);
-            it->second.removeView(nSessionId);
-        }
-    }
-    else if (tokens[0] == "rmdoc")
-    {
-        removeDocument(std::stoi(tokens[1]));
-    }
-
-    notify(data);
-}
 
 std::string AdminModel::query(const std::string& command)
 {
@@ -278,21 +243,43 @@ void AdminModel::notify(const std::string& message)
     }
 }
 
-void AdminModel::addDocument(Poco::Process::PID pid, const std::string& url)
+void AdminModel::addDocument(Poco::Process::PID pid, const std::string& filename, const int sessionId)
 {
-    _documents.emplace(pid, Document(pid, url));
+    const auto ret = _documents.emplace(pid, Document(pid, filename));
+    ret.first->second.addView(sessionId);
+
+    // Notify the subscribers
+    unsigned memUsage = Util::getMemoryUsage(pid);
+    std::ostringstream oss;
+    oss << "adddoc" << " "
+        << pid << " "
+        << filename << " "
+        << sessionId << " "
+        << std::to_string(memUsage);
+    Log::info("Message to admin console: " + oss.str());
+    notify(oss.str());
 }
 
-void AdminModel::removeDocument(Poco::Process::PID pid)
+void AdminModel::removeDocument(Poco::Process::PID pid, const int sessionId)
 {
-    auto it = _documents.find(pid);
-    if (it != _documents.end() && !it->second.isExpired())
+    auto docIt = _documents.find(pid);
+    if (docIt != _documents.end() && !docIt->second.isExpired())
     {
+        // Notify the subscribers
+        std::ostringstream oss;
+        oss << "rmdoc" << " "
+            << pid << " "
+            << sessionId;
+        Log::info("Message to admin console: " + oss.str());
+        notify(oss.str());
+
         // TODO: The idea is to only expire the document and keep the history
         // of documents open and close, to be able to give a detailed summary
         // to the admin console with views. For now, just remove the document.
-        it->second.expire();
-        _documents.erase(it);
+        if (docIt->second.expireView(sessionId) == 0)
+        {
+            _documents.erase(docIt);
+        }
     }
 }
 
@@ -341,13 +328,14 @@ std::string AdminModel::getDocuments()
             continue;
 
         std::string sPid = std::to_string(it.second.getPid());
-        std::string sUrl = it.second.getUrl();
+        // TODO: URI encode the filename
+        std::string sFilename = it.second.getFilename();
         std::string sViews = std::to_string(it.second.getActiveViews());
         std::string sMem = std::to_string(Util::getMemoryUsage(it.second.getPid()));
         std::string sElapsed = std::to_string(it.second.getElapsedTime());
 
         oss << sPid << " "
-            << sUrl << " "
+            << sFilename << " "
             << sViews << " "
             << sMem << " "
             << sElapsed << " \n ";

@@ -384,10 +384,16 @@ Admin::~Admin()
     _cpuStatsTask->cancel();
 }
 
-void Admin::update(const std::string& message)
+void Admin::addDoc(Poco::Process::PID pid, const std::string& filename, const int sessionId)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
-    _model.update(message);
+    _model.addDocument(pid, filename, sessionId);
+}
+
+void Admin::rmDoc(Poco::Process::PID pid, const int sessionId)
+{
+    std::unique_lock<std::mutex> modelLock(_modelMutex);
+    _model.removeDocument(pid, sessionId);
 }
 
 void MemoryStats::run()
@@ -396,7 +402,7 @@ void MemoryStats::run()
     AdminModel& model = _admin->getModel();
     unsigned totalMem = _admin->getTotalMemoryUsage(model);
 
-    Log::trace() << "Total memory used: " << std::to_string(totalMem);
+    Log::info("Total memory used: " + std::to_string(totalMem));
     model.addMemStats(totalMem);
 }
 

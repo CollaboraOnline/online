@@ -116,7 +116,7 @@ bool DocumentBroker::load(const std::string& jailId)
     {
         const auto fileInfo = storage->getFileInfo(_uriPublic);
         _tileCache.reset(new TileCache(_uriPublic.toString(), fileInfo.ModifiedTime, _cacheRoot));
-
+        _filename = fileInfo.Filename;
         _storage = StorageBase::create(jailRoot, jailPath.toString(), _uriPublic);
 
         const auto localPath = _storage->loadStorageFileToLocal();
