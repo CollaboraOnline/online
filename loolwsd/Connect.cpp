@@ -67,6 +67,8 @@ using Poco::Thread;
 using Poco::URI;
 using Poco::Util::Application;
 
+static bool closeExpected = false;
+
 class Output: public Runnable
 {
 public:
@@ -108,6 +110,8 @@ public:
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
             std::cout << "CLOSE frame received" << std::endl;
+            if (!closeExpected)
+                std::_Exit(Application::EXIT_SOFTWARE);
         }
         catch (WebSocketException& exc)
         {
@@ -116,7 +120,6 @@ public:
     }
 
     WebSocket& _ws;
-
 };
 
 class Connect: public Poco::Util::Application
@@ -192,6 +195,7 @@ protected:
         }
 
         std::cout << "Shutting down websocket" << std::endl;
+        closeExpected = true;
         ws.shutdown();
         thread.join();
 
