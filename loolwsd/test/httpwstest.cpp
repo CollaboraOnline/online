@@ -199,6 +199,7 @@ void HTTPWSTest::testHandShake()
         std::string payload("statusindicator: find");
 
         std::string receive;
+        socket.setReceiveTimeout(0);
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
         CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
         CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
