@@ -8,6 +8,10 @@ loolwsddatadir = @LOOLWSD_DATADIR@
 
 loolwsddata_DATA = discovery.xml
 
+loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
+
+loolwsdconfig_DATA = loolwsd.xml
+
 ACLOCAL_AMFLAGS = -I m4
 
 AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"'
@@ -90,6 +94,7 @@ noinst_HEADERS = Admin.hpp \
                  security.h
 
 EXTRA_DIST = discovery.xml \
+             loolwsd.xml.in \
              loolwsd.service \
              sysconfig.loolwsd \
              etc/key.pem \
