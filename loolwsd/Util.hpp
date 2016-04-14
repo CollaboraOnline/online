@@ -24,24 +24,6 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-// This is an odd mix of the EExitCodes enum in LibreOffice's desktop/source/inc/exithelper.h and
-// then EX_SOFTWARE (= 70) from the (BSD origin) <sysexits.h>.
-
-enum class LOOLExitCode
-{
-    LOOL_NO_ERROR = 0,
-    /* pipe was detected - second office must terminate itself */
-    LOOL_SECOND_OFFICE = 1,
-    /* an uno exception was catched during startup */
-    LOOL_FATAL_ERROR = 77, /* Only the low 8 bits are significant 333 % 256 = 77 */
-    /* user force automatic restart after crash */
-    LOOL_CRASH_WITH_RESTART = 79,
-    /* the office restarts itself */
-    LOOL_NORMAL_RESTART = 81,
-    /* internal software error */
-    LOOL_EXIT_SOFTWARE = 70
-};
-
 /// Flag to stop pump loops.
 extern volatile bool TerminationFlag;
 
@@ -119,8 +101,6 @@ namespace Util
     void setTerminationSignals();
     void setFatalSignals();
 
-    /// Returns EXIT_SUCCESS or EXIT_FAILURE from <stdlib.h>
-    int getChildStatus(const int code);
     /// Returns EXIT_SUCCESS or EXIT_FAILURE from <stdlib.h>
     int getSignalStatus(const int code);
 

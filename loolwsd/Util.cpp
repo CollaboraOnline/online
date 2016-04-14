@@ -491,33 +491,6 @@ namespace Util
         strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString));
     }
 
-    int getChildStatus(const int code)
-    {
-        int retVal;
-
-        switch (static_cast<const LOOLExitCode>(code))
-        {
-            case LOOLExitCode::LOOL_SECOND_OFFICE:
-            case LOOLExitCode::LOOL_FATAL_ERROR:
-            case LOOLExitCode::LOOL_CRASH_WITH_RESTART:
-            case LOOLExitCode::LOOL_NORMAL_RESTART:
-            case LOOLExitCode::LOOL_EXIT_SOFTWARE:
-                retVal = EXIT_FAILURE;
-            break;
-
-            case LOOLExitCode::LOOL_NO_ERROR:
-                retVal = EXIT_SUCCESS;
-            break;
-
-            // Why are other non-zero exit codes interpreted as success?
-            default:
-                retVal = EXIT_SUCCESS;
-            break;
-        }
-
-        return retVal;
-    }
-
     int getSignalStatus(const int code)
     {
         int retVal;
