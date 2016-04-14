@@ -390,7 +390,8 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             _docBroker->tileCache().removeFile("status.txt");
         }
 
-        if (_kind == Kind::ToClient && !isEditLocked())
+        // Allow 'downloadas' for all kinds of views irrespective of editlock
+        if (_kind == Kind::ToClient && !isEditLocked() && tokens[0] != "downloadas")
         {
             std::string dummyFrame = "dummymsg";
             forwardToPeer(dummyFrame.c_str(), dummyFrame.size());
