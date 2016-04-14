@@ -91,7 +91,10 @@ noinst_HEADERS = Admin.hpp \
 
 EXTRA_DIST = discovery.xml \
              loolwsd.service \
-             sysconfig.loolwsd
+             sysconfig.loolwsd \
+             etc/key.pem \
+             etc/cert.pem \
+             etc/ca-chain.cert.pem
 
 if HAVE_LO_PATH
 
@@ -141,7 +144,7 @@ all-local: loolforkit certificates @JAILS_PATH@ $(SYSTEM_STAMP)
 	    echo "Skipping capability setting"; \
 	fi
 
-certificates: etc/cert.pem etc/key.pem etc/CollaboraCloudSuiteCA_ca-chain.cert.pem
+certificates: etc/cert.pem etc/key.pem etc/ca-chain.cert.pem
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo mkdir -p /etc/loolwsd ; \
 	    sudo cp $? /etc/loolwsd/ ; \
