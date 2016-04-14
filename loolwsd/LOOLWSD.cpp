@@ -647,7 +647,9 @@ private:
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
-        const std::string uriValue = (LOOLWSD::SSLEnabled? "https://": "http://") + request.getHost() + "/loleaflet/dist/loleaflet.html?";
+        const std::string uriValue = (LOOLWSD::SSLEnabled? "https://": "http://") +
+            (LOOLWSD::ServerName.empty()? request.getHost(): LOOLWSD::ServerName) +
+            "/loleaflet/dist/loleaflet.html?";
 
         InputSource inputSrc(discoveryPath);
         AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
@@ -984,6 +986,7 @@ std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::LoSubPath = "lo";
+std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::AdminCreds;
 bool LOOLWSD::AllowLocalStorage = false;
@@ -1049,6 +1052,11 @@ void LOOLWSD::initialize(Application& self)
     if (LoSubPath.empty())
     {
         LoSubPath = getPathFromConfig("lo_jail_subpath");
+    }
+
+    if (ServerName.empty())
+    {
+        ServerName = config().getString("server_name");
     }
 
     if (FileServerRoot.empty())
