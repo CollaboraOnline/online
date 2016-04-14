@@ -12,6 +12,12 @@ loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
 
 loolwsdconfig_DATA = loolwsd.xml
 
+if ENABLE_SSL
+loolwsdconfig_DATA += etc/key.pem \
+                      etc/cert.pem \
+                      etc/ca-chain.cert.pem
+endif
+
 ACLOCAL_AMFLAGS = -I m4
 
 AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"'
@@ -140,17 +146,11 @@ clean-cache:
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
 
-all-local: loolforkit certificates @JAILS_PATH@ $(SYSTEM_STAMP)
+all-local: loolforkit @JAILS_PATH@ $(SYSTEM_STAMP)
 	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit; \
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount; \
 	    echo "Set required capabilities"; \
 	else \
 	    echo "Skipping capability setting"; \
-	fi
-
-certificates: etc/cert.pem etc/key.pem etc/ca-chain.cert.pem
-	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
-	    sudo mkdir -p /etc/loolwsd ; \
-	    sudo cp $? /etc/loolwsd/ ; \
 	fi

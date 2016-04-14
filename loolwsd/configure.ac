@@ -174,6 +174,8 @@ AS_IF([test "$enable_ssl" != "no"],
       [AC_DEFINE([ENABLE_SSL],1,[Whether to enable SSL])],
       [AC_DEFINE([ENABLE_SSL],0,[Whether to enable SSL])])
 
+AM_CONDITIONAL([ENABLE_SSL], [test "$enable_ssl" != "no"])
+
 ENABLE_SSL=
 if test "$enable_ssl" != "no"; then
    ssl_msg="ssl enabled"
