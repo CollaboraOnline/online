@@ -84,7 +84,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
 /////////////////////
 StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uri)
 {
-    const auto path = uri.getPath();
+    const auto& path = uri.getPath();
     Log::debug("Getting info for local uri [" + uri.toString() + "], path [" + path + "].");
     const auto filename = Poco::Path(path).getFileName();
     const auto lastModified = Poco::File(path).getLastModified();
@@ -158,13 +158,12 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
 {
     Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
 
-    Poco::URI uriObject(uri);
 #if ENABLE_SSL
-    Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
+    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
 #else
-    Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
 #endif
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
     session.sendRequest(request);
 
@@ -186,13 +185,13 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
     Log::debug("WOPI::CheckFileInfo returned: " + resMsg);
-    const auto index = resMsg.find_first_of("{");
+    const auto index = resMsg.find_first_of('{');
     if (index != std::string::npos)
     {
         const std::string stringJSON = resMsg.substr(index);
         Poco::JSON::Parser parser;
         const auto result = parser.parse(stringJSON);
-        const auto object = result.extract<Poco::JSON::Object::Ptr>();
+        const auto& object = result.extract<Poco::JSON::Object::Ptr>();
         filename = object->get("BaseFileName").toString();
         size = std::stoul (object->get("Size").toString(), nullptr, 0);
     }
