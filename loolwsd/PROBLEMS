@@ -23,4 +23,11 @@
   to kill it with SIGKILL. Which of course leaves all the chroot jails
   around.
 
+- There are lots of places where a std::string variable is defined,
+  initialised with a value, that is never changed. (In many cases it
+  is const, so could of course not be changed.) Then the variable is
+  used just once or twice, passed as a parameter to a function, or
+  used in a comparisin expression. This is fairly pointless and just
+  makes the code harder to read. Use string literals instead.
+
 - ASCII art? Seriously?
