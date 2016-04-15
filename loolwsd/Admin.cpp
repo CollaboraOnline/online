@@ -186,14 +186,15 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                     {
                         try
                         {
-                            if (std::stoi(tokens[1]))
+                            const auto pid = std::stoi(tokens[1]);
+                            if (kill(pid, SIGINT) != 0 && kill(pid, 0) !=0)
                             {
-                                LOOLWSD::killKit(std::stoi(tokens[1]));
+                                Log::syserror("Cannot terminate PID: " + tokens[0]);
                             }
                         }
-                        catch(std::exception& e)
+                        catch(std::invalid_argument& exc)
                         {
-                            Log::warn() << "Could not kill given PID" << Log::end;
+                            Log::warn() << "Invalid PID to kill: " << tokens[0] << Log::end;
                         }
                     }
                     else if (tokens[0] == "mem_stats")

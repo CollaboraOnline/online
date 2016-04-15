@@ -1301,12 +1301,6 @@ Process::PID LOOLWSD::createForKit()
     return child.id();
 }
 
-void LOOLWSD::killKit(const Process::PID /*pid*/)
-{
-    std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
-    // TODO
-}
-
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
     Log::initialize("wsd");
