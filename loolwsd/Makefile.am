@@ -28,7 +28,7 @@ AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
 shared_sources = ChildProcessSession.cpp \
                  IoUtil.cpp \
-				 Log.cpp \
+                 Log.cpp \
                  LOOLProtocol.cpp \
                  LOOLSession.cpp \
                  MessageQueue.cpp \
@@ -84,7 +84,7 @@ noinst_HEADERS = Admin.hpp \
                  FileServer.hpp \
                  IoUtil.hpp \
                  LoadTest.hpp \
-				 Log.hpp \
+                 Log.hpp \
                  LOKitHelper.hpp \
                  LOOLKit.hpp \
                  LOOLProtocol.hpp \
