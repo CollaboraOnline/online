@@ -88,12 +88,14 @@ if [ -h usr/share/fonts/ghostscript ]; then
 fi
 
 # Our Libreoffice install often comes with pre-bundled fonts.
-mkdir -p $CHROOT/$INSTDIR/share
-cp -r -p -L $INSTDIR/share/fonts $CHROOT/$INSTDIR/share/
+# we need to ensure that there is a link to these with the same
+# path that fontconfig found.
+mkdir -p ./lo
+mkdir -p ./$INSTDIR
+rmdir ./$INSTDIR
+ln -s /lo $CHROOT/$INSTDIR
 
-#
-# A debugging hackery to avoid confusion.
-#
+# Debugging only hackery to avoid confusion.
 if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     echo "Copying development users's fonts into systemplate"
     mkdir -p $CHROOT/$HOME

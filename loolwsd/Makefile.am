@@ -131,7 +131,7 @@ clean-local:
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 
-run: @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd - launch this in your browser:"
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@PROTOCOL="http" ; if test "z@ENABLE_SSL@" != "z"; then PROTOCOL="https" ; fi ; \

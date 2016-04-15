@@ -117,6 +117,7 @@ namespace
         switch (typeflag)
         {
         case FTW_F:
+        case FTW_SLN:
             File(newPath.parent()).createDirectories();
             if (link(fpath, newPath.toString().c_str()) == -1)
             {
@@ -155,9 +156,6 @@ namespace
         case FTW_NS:
             Log::error("nftw: stat failed for '" + std::string(fpath) + "'");
             return 1;
-        case FTW_SLN:
-            Log::error("nftw: symlink to nonexistent file: '" + std::string(fpath) + "', ignored.");
-            break;
         default:
             Log::error("nftw: unexpected type: '" + std::to_string(typeflag));
             assert(false);
