@@ -239,7 +239,7 @@ int Tool::main(const std::vector<std::string>& args)
         if (toCopy > 0)
         {
             std::vector< std::string > files( toCopy );
-            std::copy( args.begin() + offset, args.begin() + offset + chunk, files.begin() );
+            std::copy( args.begin() + offset, args.begin() + offset + toCopy, files.begin() );
             offset += toCopy;
             clients[i]->start(*(new Worker(*this, files)));
         }
