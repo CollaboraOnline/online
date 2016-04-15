@@ -68,8 +68,9 @@ TileCache::TileCache(const std::string& docURL,
         Log::info("Cleared the editing tilecache: " + _editCacheDir);
     }
 
-    File cacheDir(_rootCacheDir);
-    cacheDir.createDirectories();
+    File(_rootCacheDir).createDirectories();
+    File(_editCacheDir).createDirectories();
+    File(_persCacheDir).createDirectories();
 
     saveLastModified(modifiedTime);
 }
@@ -85,38 +86,35 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
 
     if (_hasUnsavedChanges)
     {
-        // try the Editing cache first
-        const std::string fileName = _editCacheDir + "/" + cachedName;
-        File dir(_editCacheDir);
-
-        if (dir.exists() && dir.isDirectory() && File(fileName).exists())
+        // Try the Editing cache first.
+        Path path(_editCacheDir, cachedName);
+        const std::string fileName = path.toString();
+        std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
+        if (result && result->is_open())
         {
-            Log::trace("Found editing tile: " + cachedName);
-            std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
+            Log::trace("Found editing tile: " + fileName);
             return result;
         }
     }
 
-    // skip tiles scheduled for removal from the Persistent cache (on save)
+    // Skip tiles scheduled for removal from the Persistent cache (on save)
     if (_toBeRemoved.find(cachedName) != _toBeRemoved.end())
     {
-        Log::trace("Perishable tile not used: " + cachedName);
+        Log::trace("Skipping perishable tile: " + cachedName);
         return nullptr;
     }
 
-    // default to the content of the Persistent cache
-    File dir(_persCacheDir);
-
-    if (!dir.exists() || !dir.isDirectory())
-    {
-        return nullptr;
-    }
-
-    const std::string fileName = _persCacheDir + "/" + cachedName;
-    Log::trace("Found persistent tile: " + fileName);
-
+    // Default to the content of the Persistent cache.
+    Path path(_persCacheDir, cachedName);
+    const std::string fileName = path.toString();
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
-    return result;
+    if (result && result->is_open())
+    {
+        Log::trace("Found persistent tile: " + fileName);
+        return result;
+    }
+
+    return nullptr;
 }
 
 void TileCache::saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size)
@@ -127,7 +125,6 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
     }
 
     const std::string dirName = cacheDirName(_hasUnsavedChanges);
-    File(dirName).createDirectories();
 
     const std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     Log::trace() << "Saving "
@@ -225,8 +222,6 @@ void TileCache::setEditing(bool editing)
 void TileCache::saveTextFile(const std::string& text, std::string fileName)
 {
     const std::string dirName = cacheDirName(_isEditing);
-
-    File(dirName).createDirectories();
 
     StringTokenizer tokens(text, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -336,11 +331,9 @@ void TileCache::invalidateTiles(const std::string& tiles)
 
 void TileCache::removeFile(const std::string fileName)
 {
-    const std::string textFile = _persCacheDir + "/" + fileName;
-    const std::string editingTextFile = _editCacheDir + "/" + fileName;
-
-    Util::removeFile(textFile);
-    Util::removeFile(editingTextFile);
+    Log::warn("Removing tile: " + fileName);
+    Util::removeFile(_persCacheDir + "/" + fileName);
+    Util::removeFile(_editCacheDir + "/" + fileName);
 }
 
 std::string TileCache::cacheDirName(const bool useEditingCache)
