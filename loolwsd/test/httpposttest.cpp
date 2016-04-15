@@ -26,14 +26,28 @@
 #include <Common.hpp>
 #include <Util.hpp>
 
+#include "countloolkits.hpp"
+
 /// Tests the HTTP POST API of loolwsd. The server has to be started manually before running this test.
 class HTTPPostTest : public CPPUNIT_NS::TestFixture
 {
+    static int _initialLoolKitCount;
+
     CPPUNIT_TEST_SUITE(HTTPPostTest);
+
+    // This should be the first test:
+    CPPUNIT_TEST(testCountHowManyLoolkits);
+
     CPPUNIT_TEST(testConvertTo);
+
+    // This should be the last test:
+    CPPUNIT_TEST(testNoExtraLoolKitsLeft);
+
     CPPUNIT_TEST_SUITE_END();
 
+    void testCountHowManyLoolkits();
     void testConvertTo();
+    void testNoExtraLoolKitsLeft();
 
 #if ENABLE_SSL
 public:
@@ -53,6 +67,14 @@ public:
     }
 #endif
 };
+
+int HTTPPostTest::_initialLoolKitCount = 0;
+
+void HTTPPostTest::testCountHowManyLoolkits()
+{
+    _initialLoolKitCount = countLoolKitProcesses();
+    CPPUNIT_ASSERT(_initialLoolKitCount > 0);
+}
 
 void HTTPPostTest::testConvertTo()
 {
@@ -94,6 +116,13 @@ void HTTPPostTest::testConvertTo()
     if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
         actualString = actualString.substr(3);
     CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualString);
+}
+
+void HTTPPostTest::testNoExtraLoolKitsLeft()
+{
+    int countNow = countLoolKitProcesses();
+
+    CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPPostTest);

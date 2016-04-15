@@ -36,6 +36,8 @@
 #include <Util.hpp>
 #include <LOOLProtocol.hpp>
 
+#include "countloolkits.hpp"
+
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
@@ -102,9 +104,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     std::shared_ptr<Poco::Net::WebSocket>
     connectLOKit(Poco::Net::HTTPRequest& request,
                  Poco::Net::HTTPResponse& response);
-
-    static
-    int countLoolKitProcesses();
 
 public:
     HTTPWSTest()
@@ -942,10 +941,10 @@ void HTTPWSTest::getResponseMessage(Poco::Net::WebSocket& ws, const std::string&
     }
 }
 
-int HTTPWSTest::countLoolKitProcesses()
+int countLoolKitProcesses()
 {
-    // Give polls in the lool processes time to time out
-    Poco::Thread::sleep(POLL_TIMEOUT_MS*3);
+    // Give polls in the lool processes time to time out etc
+    Poco::Thread::sleep(POLL_TIMEOUT_MS*5);
 
     int result = 0;
 
