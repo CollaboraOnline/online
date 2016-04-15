@@ -253,27 +253,6 @@ namespace Util
         }
     }
 
-    // We need a signal safe means of writing messages
-    //   $ man 7 signal
-    static
-    void log_signal(const char *message)
-    {
-        while (true) {
-            int length = strlen(message);
-            int written = write (STDERR_FILENO, message, length);
-            if (written < 0)
-            {
-                if (errno == EINTR)
-                    continue; // ignore.
-                else
-                    break;
-            }
-            message += written;
-            if (message[0] == '\0')
-                break;
-        }
-    }
-
     static
     void handleTerminationSignal(const int signal)
     {
@@ -281,10 +260,10 @@ namespace Util
         {
             TerminationFlag = true;
 
-            log_signal(Log::prefix().c_str());
-            log_signal(" Termination signal received: ");
-            log_signal(signalName(signal));
-            log_signal("\n");
+            Log::signalLogPrefix();
+            Log::signalLog(" Termination signal received: ");
+            Log::signalLog(signalName(signal));
+            Log::signalLog("\n");
         }
     }
 
@@ -307,14 +286,14 @@ namespace Util
     static
     void handleFatalSignal(const int signal)
     {
-        log_signal(Log::prefix().c_str());
-        log_signal(" Fatal signal received: ");
-        log_signal(signalName(signal));
-        log_signal("\n");
+        Log::signalLogPrefix();
+        Log::signalLog(" Fatal signal received: ");
+        Log::signalLog(signalName(signal));
+        Log::signalLog("\n");
 
         if (std::getenv("LOOL_DEBUG"))
         {
-            log_signal(FatalGdbString);
+            Log::signalLog(FatalGdbString);
             sleep(30);
         }
 

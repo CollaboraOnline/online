@@ -29,6 +29,11 @@ namespace Log
     void error(const std::string& msg);
     void syserror(const std::string& msg);
 
+    /// Signal safe prefix logging
+    void signalLogPrefix();
+    /// Signal safe logging
+    void signalLog(const char *message);
+
     /// The following is to write streaming logs.
     /// Log::info() << "Value: 0x" << std::hex << value
     ///             << ", pointer: " << this << Log::end;

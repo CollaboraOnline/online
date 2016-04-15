@@ -41,7 +41,27 @@ namespace Log
     };
     static StaticNames Source;
 
-    std::string prefix()
+    // We need a signal safe means of writing messages
+    //   $ man 7 signal
+    void signalLog(const char *message)
+    {
+        while (true) {
+            int length = strlen(message);
+            int written = write (STDERR_FILENO, message, length);
+            if (written < 0)
+            {
+                if (errno == EINTR)
+                    continue; // ignore.
+                else
+                    break;
+            }
+            message += written;
+            if (message[0] == '\0')
+                break;
+        }
+    }
+
+    static void getPrefix(char *buffer)
     {
         Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - epochStart;
 
@@ -53,19 +73,31 @@ namespace Log
         const Poco::Int64 seconds = usec / (one_s);
         usec %= (one_s);
 
-        std::ostringstream stream;
-        stream << (Source.inited ? Source.id : std::string())
-               << '-' << std::setw(2) << std::setfill('0')
-               << (Poco::Thread::current() ? Poco::Thread::current()->id() : 0) << ' '
-               << std::setw(2) << hours << ':' << std::setw(2) << minutes << ':'
-               << std::setw(2) << seconds << "." << std::setw(6) << usec
-               << ' ';
+        char procName[32]; // we really need only 16
+        if (!prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) == 0)
+            strcpy(procName, "<noid>");
 
-        char buf[32]; // we really need only 16
-        if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(buf), 0, 0, 0) == 0)
-            stream << '[' << std::setw(15) << std::setfill(' ') << std::left << buf << "] ";
+        const char *appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
+        assert(strlen(appName) + 32 + 28 < 1024 - 1);
 
-        return stream.str();
+        snprintf(buffer, 4095, "%s-%.2d %.2d:%.2d:%.2d.%.6d [ %s ] ", appName,
+                 (Poco::Thread::current() ? Poco::Thread::current()->id() : 0),
+                 (int)hours, (int)minutes, (int)seconds, (int)usec,
+                 procName);
+    }
+
+    std::string prefix()
+    {
+        char buffer[1024];
+        getPrefix(buffer);
+        return std::string(buffer);
+    }
+
+    void signalLogPrefix()
+    {
+        char buffer[1024];
+        getPrefix(buffer);
+        signalLog(buffer);
     }
 
     void initialize(const std::string& name)
