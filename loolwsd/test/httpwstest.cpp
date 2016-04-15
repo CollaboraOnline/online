@@ -996,7 +996,7 @@ HTTPWSTest::connectLOKit(Poco::Net::HTTPRequest& request,
                          Poco::Net::HTTPResponse& response)
 {
     int flags;
-    int received;
+    int received = 0;
     int retries = 3;
     bool ready = false;
     char buffer[READ_BUFFER_SIZE];
