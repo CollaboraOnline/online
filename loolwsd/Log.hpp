@@ -1,0 +1,121 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/*
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+#ifndef INCLUDED_LOG_HPP
+#define INCLUDED_LOG_HPP
+
+#include <string>
+#include <sstream>
+#include <functional>
+
+#include <Poco/Logger.h>
+
+namespace Log
+{
+    void initialize(const std::string& name);
+    Poco::Logger& logger();
+    std::string prefix();
+
+    void trace(const std::string& msg);
+    void debug(const std::string& msg);
+    void info(const std::string& msg);
+    void warn(const std::string& msg);
+    void error(const std::string& msg);
+    void syserror(const std::string& msg);
+
+    /// The following is to write streaming logs.
+    /// Log::info() << "Value: 0x" << std::hex << value
+    ///             << ", pointer: " << this << Log::end;
+    static const struct _end_marker
+    {
+        _end_marker()
+        {
+        }
+    } end;
+
+    class StreamLogger
+    {
+        public:
+            StreamLogger(std::function<void(const std::string&)> func)
+              : _func(func)
+            {
+            }
+
+            StreamLogger(StreamLogger&& sl)
+              : _stream(std::move(sl._stream.str()))
+              , _func(std::move(sl._func))
+            {
+            }
+
+            void flush() const
+            {
+                _func(_stream.str());
+            }
+
+            std::ostringstream _stream;
+
+        private:
+            std::function<void(const std::string&)> _func;
+    };
+
+    inline
+    StreamLogger trace()
+    {
+        return StreamLogger([](const std::string& msg) { trace(msg);});
+    }
+
+    inline
+    StreamLogger debug()
+    {
+        return StreamLogger([](const std::string& msg) { debug(msg);});
+    }
+
+    inline
+    StreamLogger info()
+    {
+        return StreamLogger([](const std::string& msg) { info(msg);});
+    }
+
+    inline
+    StreamLogger warn()
+    {
+        return StreamLogger([](const std::string& msg) { warn(msg);});
+    }
+
+    inline
+    StreamLogger error()
+    {
+        return StreamLogger([](const std::string& msg) { error(msg);});
+    }
+
+    template <typename U>
+    StreamLogger& operator <<(StreamLogger& lhs, const U& rhs)
+    {
+        lhs._stream << rhs;
+        return lhs;
+    }
+
+    template <typename U>
+    StreamLogger& operator <<(StreamLogger&& lhs, U&& rhs)
+    {
+        lhs._stream << rhs;
+        return lhs;
+    }
+
+    inline
+    void operator <<(StreamLogger& lhs, const _end_marker&)
+    {
+        (void)end;
+        lhs.flush();
+    }
+}
+
+#endif
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

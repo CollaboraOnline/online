@@ -27,15 +27,16 @@ AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
 shared_sources = ChildProcessSession.cpp \
-	  	 IoUtil.cpp \
+                 IoUtil.cpp \
+				 Log.cpp \
                  LOOLProtocol.cpp \
                  LOOLSession.cpp \
                  MessageQueue.cpp \
-		 Unit.cpp \
+                 Unit.cpp \
                  Util.cpp
 
 loolwsd_SOURCES = Admin.cpp \
-		  AdminModel.cpp \
+                  AdminModel.cpp \
                   Auth.cpp \
                   DocumentBroker.cpp \
                   LOOLWSD.cpp \
@@ -49,20 +50,23 @@ noinst_PROGRAMS = connect \
                   lokitclient
 
 loadtest_SOURCES = LoadTest.cpp \
+                   Log.cpp \
                    LOOLProtocol.cpp \
                    Util.cpp
 
 connect_SOURCES = Connect.cpp \
+                  Log.cpp \
                   LOOLProtocol.cpp \
                   Util.cpp
 
 lokitclient_SOURCES = IoUtil.cpp \
+                      Log.cpp \
                       LOKitClient.cpp \
                       LOOLProtocol.cpp \
                       Util.cpp
 
 loolforkit_SOURCES = LOOLForKit.cpp \
-		     LOOLKit.cpp \
+                     LOOLKit.cpp \
                      $(shared_sources)
 
 loolmount_SOURCES = loolmount.c
@@ -80,8 +84,9 @@ noinst_HEADERS = Admin.hpp \
                  FileServer.hpp \
                  IoUtil.hpp \
                  LoadTest.hpp \
+				 Log.hpp \
                  LOKitHelper.hpp \
-		 LOOLKit.hpp \
+                 LOOLKit.hpp \
                  LOOLProtocol.hpp \
                  LOOLSession.hpp \
                  LOOLWSD.hpp \
@@ -92,8 +97,8 @@ noinst_HEADERS = Admin.hpp \
                  Rectangle.hpp \
                  Storage.hpp \
                  TileCache.hpp \
-		 Unit.hpp \
-	         UnitHTTP.hpp \
+                 Unit.hpp \
+                 UnitHTTP.hpp \
                  Util.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
