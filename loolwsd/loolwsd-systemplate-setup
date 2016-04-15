@@ -99,5 +99,7 @@ ln -s /lo $CHROOT/$INSTDIR
 if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     echo "Copying development users's fonts into systemplate"
     mkdir -p $CHROOT/$HOME
-    cp -r -p -L $HOME/.fonts $CHROOT/$HOME
+    test -d $HOME/.fonts && cp -r -p -L $HOME/.fonts $CHROOT/$HOME
 fi
+
+exit 0
