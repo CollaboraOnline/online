@@ -188,7 +188,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                         {
                             if (std::stoi(tokens[1]))
                             {
-                                IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, firstLine + "\n");
+                                LOOLWSD::killKit(std::stoi(tokens[1]));
                             }
                         }
                         catch(std::exception& e)
@@ -384,16 +384,16 @@ Admin::~Admin()
     _cpuStatsTask->cancel();
 }
 
-void Admin::addDoc(Poco::Process::PID pid, const std::string& filename, const int sessionId)
+void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const int sessionId)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
-    _model.addDocument(pid, filename, sessionId);
+    _model.addDocument(docKey, pid, filename, sessionId);
 }
 
-void Admin::rmDoc(Poco::Process::PID pid, const int sessionId)
+void Admin::rmDoc(const std::string& docKey, const int sessionId)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
-    _model.removeDocument(pid, sessionId);
+    _model.removeDocument(docKey, sessionId);
 }
 
 void MemoryStats::run()

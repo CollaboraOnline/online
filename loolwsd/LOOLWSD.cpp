@@ -805,10 +805,10 @@ public:
 
         std::string sessionId;
         std::string jailId;
+        std::string docKey;
         try
         {
             const auto params = Poco::URI(request.getURI()).getQueryParameters();
-            std::string docKey;
             for (const auto& param : params)
             {
                 if (param.first == "sessionId")
@@ -875,16 +875,17 @@ public:
             const auto uri = request.getURI();
 
             // Jail id should be the PID, beacuse Admin need it to calculate the memory
+            Poco::Process::PID pid;
             try
             {
-                Log::info("Adding doc " + jailId + " to Admin");
-                Admin::instance().addDoc(std::stoi(jailId), docBroker->getFilename(), std::stoi(sessionId));
+                pid = std::stoi(jailId);
             }
             catch (std::invalid_argument& exc)
             {
                 assert(false);
             }
-
+            Log::info("Adding doc " + docKey + " to Admin");
+            Admin::instance().addDoc(docKey, pid, docBroker->getFilename(), Util::decodeId(sessionId));
 
             if (waitBridgeCompleted(session))
             {
@@ -919,15 +920,8 @@ public:
 
         if (!jailId.empty())
         {
-            try
-            {
-                Log::info("Removing doc " + jailId + " from Admin");
-                Admin::instance().rmDoc(std::stoi(jailId), std::stoi(sessionId));
-            }
-            catch (std::invalid_argument& exc)
-            {
-                assert(false);
-            }
+            Log::info("Removing doc " + docKey + " from Admin");
+            Admin::instance().rmDoc(docKey, Util::decodeId(sessionId));
         }
 
         Log::debug("Thread finished.");
@@ -1305,6 +1299,12 @@ Process::PID LOOLWSD::createForKit()
     ProcessHandle child = Process::launch(forKitPath, args);
 
     return child.id();
+}
+
+void LOOLWSD::killKit(const Process::PID /*pid*/)
+{
+    std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+    // TODO
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)

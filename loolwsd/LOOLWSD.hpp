@@ -55,6 +55,9 @@ public:
         return Util::encodeId(++NextSessionId, 4);
     }
 
+    static
+    void killKit(const Poco::Process::PID pid);
+
 protected:
     void initialize(Poco::Util::Application& self) override;
     void uninitialize() override;

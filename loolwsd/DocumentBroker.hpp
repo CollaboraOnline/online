@@ -172,6 +172,8 @@ public:
 
     unsigned getWSSessionsCount() { return _wsSessions.size(); }
 
+    void kill() { _childProcess->close(true); };
+
 private:
     const Poco::URI _uriPublic;
     const std::string _docKey;

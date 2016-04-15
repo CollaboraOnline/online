@@ -23,7 +23,7 @@ class View
 {
 public:
     View(int sessionId)
-        : _nSessionId(sessionId),
+        : _sessionId(sessionId),
           _start(std::time(nullptr))
     {    }
 
@@ -32,7 +32,7 @@ public:
     bool isExpired() { return _end != 0 && std::time(nullptr) >= _end; }
 
 private:
-    int _nSessionId;
+    int _sessionId;
 
     std::time_t _start;
     std::time_t _end = 0;
@@ -41,22 +41,23 @@ private:
 class Document
 {
 public:
-    Document(Poco::Process::PID pid, std::string filename)
-        : _nPid(pid),
-          _sFilename(filename),
+    Document(std::string docKey, Poco::Process::PID pid, std::string filename)
+        : _docKey(docKey),
+          _pid(pid),
+          _filename(filename),
           _start(std::time(nullptr))
     {
-        Log::info("Document " + std::to_string(_nPid) + " ctor.");
+        Log::info("Document " + _docKey + " ctor.");
     }
 
     ~Document()
     {
-        Log::info("Document " + std::to_string(_nPid) + " dtor.");
+        Log::info("Document " + _docKey + " dtor.");
     }
 
-    Poco::Process::PID getPid() const { return _nPid; }
+    Poco::Process::PID getPid() const { return _pid; }
 
-    std::string getFilename() const { return _sFilename; }
+    std::string getFilename() const { return _filename; }
 
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
@@ -66,16 +67,17 @@ public:
 
     int expireView(int sessionId);
 
-    unsigned getActiveViews() const { return _nActiveViews; }
+    unsigned getActiveViews() const { return _activeViews; }
 
 private:
-    Poco::Process::PID _nPid;
+    const std::string _docKey;
+    const Poco::Process::PID _pid;
     /// SessionId mapping to View object
     std::map<int, View> _views;
     /// Total number of active views
-    unsigned _nActiveViews = 0;
+    unsigned _activeViews = 0;
     /// Hosted filename
-    std::string _sFilename;
+    std::string _filename;
 
     std::time_t _start;
     std::time_t _end = 0;
@@ -85,7 +87,7 @@ class Subscriber
 {
 public:
     Subscriber(int sessionId, std::shared_ptr<Poco::Net::WebSocket>& ws)
-        : _nSessionId(sessionId),
+        : _sessionId(sessionId),
           _ws(ws),
           _start(std::time(nullptr))
     {
@@ -109,7 +111,7 @@ public:
 
 private:
     /// Admin session Id
-    int _nSessionId;
+    int _sessionId;
     /// WebSocket to use to send messages to session
     std::weak_ptr<Poco::Net::WebSocket> _ws;
 
@@ -156,9 +158,9 @@ public:
 
     void notify(const std::string& message);
 
-    void addDocument(Poco::Process::PID pid, const std::string& filename, const int sessionId);
+    void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const int sessionId);
 
-    void removeDocument(Poco::Process::PID pid, const int sessionId);
+    void removeDocument(const std::string& docKey, const int sessionId);
 
 private:
 
@@ -172,7 +174,7 @@ private:
 
 private:
     std::map<int, Subscriber> _subscribers;
-    std::map<Poco::Process::PID, Document> _documents;
+    std::map<std::string, Document> _documents;
 
     std::list<unsigned> _memStats;
     unsigned _memStatsSize = 100;

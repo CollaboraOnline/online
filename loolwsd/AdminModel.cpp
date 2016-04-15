@@ -33,7 +33,7 @@ void Document::addView(int sessionId)
     }
     else
     {
-        _nActiveViews++;
+        _activeViews++;
     }
 }
 
@@ -45,11 +45,11 @@ int Document::expireView(int sessionId)
         it->second.expire();
 
         // If last view, expire the Document also
-        if (--_nActiveViews == 0)
+        if (--_activeViews == 0)
             _end = std::time(nullptr);
     }
 
-    return _nActiveViews;
+    return _activeViews;
 }
 
 ///////////////////
@@ -243,9 +243,9 @@ void AdminModel::notify(const std::string& message)
     }
 }
 
-void AdminModel::addDocument(Poco::Process::PID pid, const std::string& filename, const int sessionId)
+void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const int sessionId)
 {
-    const auto ret = _documents.emplace(pid, Document(pid, filename));
+    const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
     ret.first->second.addView(sessionId);
 
     // Notify the subscribers
@@ -260,15 +260,15 @@ void AdminModel::addDocument(Poco::Process::PID pid, const std::string& filename
     notify(oss.str());
 }
 
-void AdminModel::removeDocument(Poco::Process::PID pid, const int sessionId)
+void AdminModel::removeDocument(const std::string& docKey, const int sessionId)
 {
-    auto docIt = _documents.find(pid);
+    auto docIt = _documents.find(docKey);
     if (docIt != _documents.end() && !docIt->second.isExpired())
     {
         // Notify the subscribers
         std::ostringstream oss;
         oss << "rmdoc" << " "
-            << pid << " "
+            << docIt->second.getPid() << " "
             << sessionId;
         Log::info("Message to admin console: " + oss.str());
         notify(oss.str());
