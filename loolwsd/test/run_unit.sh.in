@@ -28,7 +28,7 @@ else
     test_mode=old
 fi
 
-# export LOOL_LOGLEVEL=trace
+export LOOL_LOGLEVEL=trace
 
 if test "z$enable_debug" != "ztrue"; then
     echo ""
