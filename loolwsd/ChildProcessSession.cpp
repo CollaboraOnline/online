@@ -691,7 +691,8 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
                  << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
-    LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
+    const LibreOfficeKitTileMode mode =
+            static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
     if (!Util::encodeBufferToPNG(pixmap.data(), width, height, output, mode))
     {
         sendTextFrame("error: cmd=tile kind=failure");
@@ -747,15 +748,16 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
     std::vector<Util::Rectangle> tiles;
     tiles.reserve(numberOfPositions);
 
-    for (size_t i = 0; i < numberOfPositions; i++)
+    for (size_t i = 0; i < numberOfPositions; ++i)
     {
-        int x, y;
-
+        int x = 0;
         if (!stringToInteger(positionXtokens[i], x))
         {
             sendTextFrame("error: cmd=tilecombine kind=syntax");
             return;
         }
+
+        int y = 0;
         if (!stringToInteger(positionYtokens[i], y))
         {
             sendTextFrame("error: cmd=tilecombine kind=syntax");
@@ -798,7 +800,7 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
 
-    Log::debug() << "paintTile (Multiple) called, tile at [" << renderArea.getLeft() << ", " << renderArea.getTop() << "]"
+    Log::debug() << "paintTile (combined) called, tile at [" << renderArea.getLeft() << ", " << renderArea.getTop() << "]"
                 << " (" << renderArea.getWidth() << ", " << renderArea.getHeight() << ") rendered in "
                 << double(timestamp.elapsed())/1000 <<  "ms" << Log::end;
 

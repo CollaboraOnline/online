@@ -558,8 +558,8 @@ void MasterProcessSession::sendFontRendering(const char *buffer, int length, Str
 
 void MasterProcessSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
 {
-    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
+    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
     if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
         !getTokenInteger(tokens[2], "width", width) ||
@@ -585,7 +585,7 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         return;
     }
 
-    std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+    const std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
     std::vector<char> output;
     output.reserve(4 * width * height);
@@ -617,8 +617,6 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
 {
     int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
     std::string tilePositionsX, tilePositionsY;
-    std::string reqTimestamp;
-
     if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
         !getTokenInteger(tokens[2], "width", pixelWidth) ||
@@ -632,18 +630,17 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
         return;
     }
 
-    if (part < 0 || pixelWidth <= 0 || pixelHeight <= 0
-       || tileWidth <= 0 || tileHeight <= 0
-       || tilePositionsX.empty() || tilePositionsY.empty())
+    if (part < 0 || pixelWidth <= 0 || pixelHeight <= 0 ||
+        tileWidth <= 0 || tileHeight <= 0 ||
+        tilePositionsX.empty() || tilePositionsY.empty())
     {
         sendTextFrame("error: cmd=tilecombine kind=invalid");
         return;
     }
 
+    std::string reqTimestamp;
     if (tokens.count() > 8)
         getTokenString(tokens[8], "timestamp", reqTimestamp);
-
-    Util::Rectangle renderArea;
 
     StringTokenizer positionXtokens(tilePositionsX, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     StringTokenizer positionYtokens(tilePositionsY, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -651,7 +648,7 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
     size_t numberOfPositions = positionYtokens.count();
 
     // check that number of positions for X and Y is the same
-    if (numberOfPositions != positionYtokens.count())
+    if (numberOfPositions != positionXtokens.count())
     {
         sendTextFrame("error: cmd=tilecombine kind=invalid");
         return;
@@ -659,16 +656,16 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
 
     std::string forwardTileX;
     std::string forwardTileY;
-
-    for (size_t i = 0; i < numberOfPositions; i++)
+    for (size_t i = 0; i < numberOfPositions; ++i)
     {
-        int x, y;
-
+        int x = 0;
         if (!stringToInteger(positionXtokens[i], x))
         {
             sendTextFrame("error: cmd=tilecombine kind=syntax");
             return;
         }
+
+        int y = 0;
         if (!stringToInteger(positionYtokens[i], y))
         {
             sendTextFrame("error: cmd=tilecombine kind=syntax");
@@ -729,12 +726,12 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
         dispatchChild();
 
     std::string forward = "tilecombine part=" + std::to_string(part) +
-                               " width=" + std::to_string(pixelWidth) +
-                               " height=" + std::to_string(pixelHeight) +
-                               " tileposx=" + forwardTileX +
-                               " tileposy=" + forwardTileY +
-                               " tilewidth=" + std::to_string(tileWidth) +
-                               " tileheight=" + std::to_string(tileHeight);
+                          " width=" + std::to_string(pixelWidth) +
+                          " height=" + std::to_string(pixelHeight) +
+                          " tileposx=" + forwardTileX +
+                          " tileposy=" + forwardTileY +
+                          " tilewidth=" + std::to_string(tileWidth) +
+                          " tileheight=" + std::to_string(tileHeight);
 
     if (!reqTimestamp.empty())
         forward += " timestamp=" + reqTimestamp;

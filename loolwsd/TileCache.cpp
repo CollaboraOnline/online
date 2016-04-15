@@ -183,7 +183,7 @@ std::string TileCache::getTextFile(std::string fileName)
 
 void TileCache::documentSaved()
 {
-    Log::trace("Persisting editing tiles.");
+    Log::debug("Persisting editing tiles.");
 
     // first remove the invalidated tiles from the Persistent cache
     for (const auto& it : _toBeRemoved)
@@ -271,6 +271,11 @@ std::unique_ptr<std::fstream> TileCache::lookupRendering(const std::string& name
 
 void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
 {
+    Log::trace() << "Removing invalidated tiles: part: " << part
+                 << ", x: " << x << ", y: " << y
+                 << ", width: " << width
+                 << ", height: " << height << Log::end;
+
     // in the Editing cache, remove immediately
     File editingDir(_editCacheDir);
     if (editingDir.exists() && editingDir.isDirectory())
@@ -360,16 +365,15 @@ bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& 
 bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height)
 {
     int tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight;
-
     if (parseCacheFileName(fileName, tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight))
     {
         if (part != -1 && tilePart != part)
             return false;
 
-        int left = std::max(x, tilePosX);
-        int right = std::min(x + width, tilePosX + tileWidth);
-        int top = std::max(y, tilePosY);
-        int bottom = std::min(y + height, tilePosY + tileHeight);
+        const int left = std::max(x, tilePosX);
+        const int right = std::min(x + width, tilePosX + tileWidth);
+        const int top = std::max(y, tilePosY);
+        const int bottom = std::min(y + height, tilePosY + tileHeight);
 
         if (left <= right && top <= bottom)
             return true;
