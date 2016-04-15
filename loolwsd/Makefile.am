@@ -1,5 +1,7 @@
 SUBDIRS = . test
 
+export ENABLE_DEBUG
+
 bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
@@ -118,7 +120,7 @@ if HAVE_LO_PATH
 
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
 
-$(SYSTEM_STAMP) :
+$(SYSTEM_STAMP) : ${top_srcdir}/loolwsd-systemplate-setup
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@
 

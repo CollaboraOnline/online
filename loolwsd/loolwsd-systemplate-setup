@@ -74,7 +74,7 @@ mkdir -p $CHROOT/tmp
 mkdir -p $CHROOT/usr/bin/
 
 # /usr/share/fonts needs to be taken care of separately because the
-# directory time stamps must be preserved are for fontconfig to trust
+# directory time stamps must be preserved for fontconfig to trust
 # its cache.
 
 cd $CHROOT || exit 1
@@ -85,4 +85,17 @@ cp -r -p /usr/share/fonts usr/share
 if [ -h usr/share/fonts/ghostscript ]; then
     mkdir usr/share/ghostscript || exit 1
     cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
+fi
+
+# Our Libreoffice install often comes with pre-bundled fonts.
+mkdir -p $CHROOT/$INSTDIR/share
+cp -r -p -L $INSTDIR/share/fonts $CHROOT/$INSTDIR/share/
+
+#
+# A debugging hackery to avoid confusion.
+#
+if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
+    echo "Copying development users's fonts into systemplate"
+    mkdir -p $CHROOT/$HOME
+    cp -r -p -L $HOME/.fonts $CHROOT/$HOME
 fi

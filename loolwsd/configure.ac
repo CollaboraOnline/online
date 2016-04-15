@@ -84,9 +84,7 @@ debug_msg="secure mode: product build"
 if test "$enable_debug" = "yes"; then
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
-   if test "$enable_debug" = yes; then
-      debug_msg="low security debugging mode"
-   fi
+   debug_msg="low security debugging mode"
 else
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
 fi
