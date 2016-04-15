@@ -14,6 +14,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <vector>
 
 #include <Poco/Timestamp.h>
 
@@ -26,6 +27,18 @@ The cache consists of 2 cache directories:
 
 The editing cache is cleared on startup, and copied to the persistent on each save.
 */
+
+class MasterProcessSession;
+
+class TileBeingRendered
+{
+    std::vector<std::weak_ptr<MasterProcessSession>> _subscribers;
+
+public:
+    void subscribe(std::weak_ptr<MasterProcessSession> session);
+    std::vector<std::weak_ptr<MasterProcessSession>> getSubscribers();
+};
+
 class TileCache
 {
 public:
@@ -37,7 +50,16 @@ public:
 
     TileCache(const TileCache&) = delete;
 
+    std::unique_lock<std::mutex> getTilesBeingRenderdLock();
+
+    void rememberTileAsBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+
+    std::shared_ptr<TileBeingRendered> findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+
+    void forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+
     void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
     std::string getTextFile(std::string fileName);
 
@@ -80,7 +102,6 @@ private:
     /// Store the timestamp to modtime.txt.
     void saveLastModified(const Poco::Timestamp& timestamp);
 
-private:
     const std::string _docURL;
     const std::string _rootCacheDir;
     const std::string _persCacheDir;
@@ -96,6 +117,10 @@ private:
     std::set<std::string> _toBeRemoved;
 
     std::mutex _cacheMutex;
+
+    std::mutex _tilesBeingRenderedMutex;
+
+    std::map<std::string, std::shared_ptr<TileBeingRendered>> _tilesBeingRendered;
 };
 
 #endif

@@ -16,7 +16,6 @@
 
 #include "LOOLSession.hpp"
 #include "MessageQueue.hpp"
-#include "TileCache.hpp"
 
 class DocumentBroker;
 

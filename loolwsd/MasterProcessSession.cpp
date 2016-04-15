@@ -181,6 +181,22 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
                 assert(firstLine.size() < static_cast<std::string::size_type>(length));
                 _docBroker->tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+                auto lock = _docBroker->tileCache().getTilesBeingRenderdLock();
+                std::shared_ptr<TileBeingRendered> tileBeingRendered = _docBroker->tileCache().findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+                if (tileBeingRendered)
+                {
+                    for (auto i: tileBeingRendered->getSubscribers())
+                    {
+                        auto subscriber = i.lock();
+                        if (subscriber)
+                        {
+                            Log::debug("Sending tile also to subscriber " + subscriber->getName());
+                            subscriber->sendBinaryFrame(buffer, length);
+                        }
+                    }
+                    _docBroker->tileCache().forgetTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+                }
+                lock.unlock();
             }
             else if (tokens[0] == "status:")
             {
@@ -568,6 +584,17 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
 
         return;
     }
+
+    auto lock = _docBroker->tileCache().getTilesBeingRenderdLock();
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = _docBroker->tileCache().findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    if (tileBeingRendered)
+    {
+        Log::debug("Tile is already being rendered, subscribing");
+        tileBeingRendered->subscribe(shared_from_this());
+        return;
+    }
+    _docBroker->tileCache().rememberTileAsBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    lock.unlock();
 
     if (_peer.expired())
         dispatchChild();

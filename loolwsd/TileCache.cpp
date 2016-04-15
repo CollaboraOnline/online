@@ -18,6 +18,7 @@
 #include <mutex>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include <Poco/DigestEngine.h>
 #include <Poco/DirectoryIterator.h>
@@ -42,6 +43,16 @@ using Poco::Timestamp;
 using Poco::URI;
 
 using namespace LOOLProtocol;
+
+void TileBeingRendered::subscribe(std::weak_ptr<MasterProcessSession> session)
+{
+    _subscribers.push_back(session);
+}
+
+std::vector<std::weak_ptr<MasterProcessSession>> TileBeingRendered::getSubscribers()
+{
+    return _subscribers;
+}
 
 TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,
@@ -78,6 +89,45 @@ TileCache::TileCache(const std::string& docURL,
 TileCache::~TileCache()
 {
     Log::info("~TileCache dtor for uri [" + _docURL + "].");
+#if 0
+    auto lock = getTilesBeingRenderdLock();
+    _tilesBeingRendered.clear();
+#endif
+}
+
+std::unique_lock<std::mutex> TileCache::getTilesBeingRenderdLock()
+{
+    return std::unique_lock<std::mutex>(_tilesBeingRenderedMutex);
+}
+
+void TileCache::rememberTileAsBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+{
+    const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+
+    assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
+
+    _tilesBeingRendered[cachedName] = std::make_shared<TileBeingRendered>();
+}
+
+std::shared_ptr<TileBeingRendered> TileCache::findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+{
+    const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+
+    auto tile = _tilesBeingRendered.find(cachedName);
+
+    if (tile == _tilesBeingRendered.end())
+        return nullptr;
+
+    return tile->second;
+}
+
+void TileCache::forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+{
+    const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+
+    assert(_tilesBeingRendered.find(cachedName) != _tilesBeingRendered.end());
+
+    _tilesBeingRendered.erase(cachedName);
 }
 
 std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
