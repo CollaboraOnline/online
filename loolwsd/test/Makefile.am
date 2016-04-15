@@ -28,19 +28,14 @@ else
 SYSTEM_STAMP =
 endif
 
-${top_builddir}/test/run_unit.sh.log ${top_builddir}/test/run_unit.sh.trs : \
-	$(SYSTEM_STAMP) @JAILS_PATH@ \
-	${top_srcdir}/test/run_unit.sh \
-	${top_builddir}/loolwsd ${top_builddir}/loolforkit \
-	$(wildcard *.la)
-	if ${top_srcdir}/test/run_unit.sh; then \
-	   touch ${top_builddir}/test/run_unit.sh.log; \
-	fi
-
 if HAVE_LO_PATH
-TESTS = ${top_srcdir}/test/run_unit.sh ${top_srcdir}/test/run_test.sh
+TESTS = unit-timeout.la unit-fonts.la unit-storage.la unit-prefork.la run_test.sh
 else
 TESTS = ${top_builddir}/test/test
 endif
+
+TEST_EXTENSIONS = .la .sh
+LA_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
+SH_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
 
 EXTRA_DIST = data/hello.odt data/hello.txt $(test_SOURCES) run_unit.sh

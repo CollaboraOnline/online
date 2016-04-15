@@ -249,7 +249,6 @@ AC_CONFIG_FILES([Makefile
                  loolwsd.spec
                  loolwsd.xml])
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
-AC_CONFIG_FILES([test/run_test.sh],[chmod +x test/run_test.sh])
 
 AC_OUTPUT
 
