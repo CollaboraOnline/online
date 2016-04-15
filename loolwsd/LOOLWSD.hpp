@@ -65,7 +65,6 @@ protected:
 private:
     void initializeSSL();
     void displayHelp();
-    void displayVersion();
     Poco::Process::PID createForKit();
 
     /// Reads and processes path entries with the given property

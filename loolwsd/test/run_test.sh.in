@@ -18,15 +18,18 @@ if test "z@ENABLE_DEBUG@" != "ztrue"; then
     exit 1;
 fi
 
+echo "Running cppunit test ...";
+
 # result logging
 echo > $test_output
-
-echo "Running cppunit test ...";
 
 ${abs_top_builddir}/loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
            --childroot="@JAILS_PATH@" --allowlocalstorage 2>$test_log_output/run_test.log &
 
+echo "  waiting for loolwsd to start"
 sleep 1 # sad - need to add a wait to the start of test.cpp ...
+
+echo "  executing test"
 
 cd $test_build
 if ./test; then

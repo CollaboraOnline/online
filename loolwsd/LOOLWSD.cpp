@@ -146,6 +146,7 @@ int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
+static bool DisplayVersion = false;
 static std::vector<std::shared_ptr<ChildProcess>> newChildren;
 static std::mutex newChildrenMutex;
 static std::condition_variable newChildrenCV;
@@ -1233,10 +1234,7 @@ void LOOLWSD::handleOption(const std::string& optionName,
         std::exit(Application::EXIT_OK);
     }
     else if (optionName == "version")
-    {
-        displayVersion();
-        std::exit(Application::EXIT_OK);
-    }
+        DisplayVersion = true;
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
     else if (optionName == "cache")
@@ -1274,11 +1272,6 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-void LOOLWSD::displayVersion()
-{
-    std::cout << LOOLWSD_VERSION << std::endl;
-}
-
 Process::PID LOOLWSD::createForKit()
 {
     Process::Args args;
@@ -1290,6 +1283,8 @@ Process::PID LOOLWSD::createForKit()
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
     if (UnitWSD::get().hasKitHooks())
         args.push_back("--unitlib=" + UnitTestLibrary);
+    if (DisplayVersion)
+        args.push_back("--version");
 
     const std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
 
@@ -1304,6 +1299,9 @@ Process::PID LOOLWSD::createForKit()
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
     Log::initialize("wsd");
+
+    if (DisplayVersion)
+        Util::displayVersionInfo("loolwsd");
 
     if (geteuid() == 0)
     {

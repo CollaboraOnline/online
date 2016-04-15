@@ -7,6 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "config.h"
+
 #include <execinfo.h>
 #include <sys/poll.h>
 #include <sys/prctl.h>
@@ -15,6 +17,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 #include <iomanip>
 #include <mutex>
 #include <random>
@@ -447,6 +450,13 @@ namespace Util
     {
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
             Log::syserror("Cannot set thread name to " + s + ".");
+    }
+
+    void displayVersionInfo(const char *app)
+    {
+        std::string hash(LOOLWSD_VERSION_HASH);
+        hash.resize(std::min(8, (int)hash.length()));
+        std::cout << app << " " << LOOLWSD_VERSION << " - " << hash << std::endl;
     }
 }
 

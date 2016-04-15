@@ -202,6 +202,10 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             ClientPortNumber = std::stoll(std::string(eq+1));
         }
+        else if (std::strstr(cmd, "--version") == cmd)
+        {
+            Util::displayVersionInfo("loolforkit");
+        }
 #if ENABLE_DEBUG
         // this process has various privileges - don't run arbitrary code.
         else if (std::strstr(cmd, "--unitlib=") == cmd)

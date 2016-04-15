@@ -22,6 +22,15 @@ AC_SUBST([LOOLWSD_VERSION])
 
 AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[LibreOffice On-Line WebSocket server version])
 
+# try to add a git hash for a version if we're developing
+LOOLWSD_VERSION_HASH=package
+git_hash=`cd ${ac_srcdir} && git log -1 --format=%H 2> /dev/null`
+if test "z$git_hash" != "z"; then
+   LOOLWSD_VERSION_HASH=$git_hash
+fi
+
+AC_DEFINE_UNQUOTED([LOOLWSD_VERSION_HASH],[["$LOOLWSD_VERSION_HASH"]],[LibreOffice On-Line git hash if present])
+
 AC_CONFIG_SRCDIR([LOOLWSD.cpp])
 
 AC_CONFIG_HEADERS([config.h])
@@ -260,3 +269,4 @@ echo "    \$ make run # to start loolwsd
 fi
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:
+
