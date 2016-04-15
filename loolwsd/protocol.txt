@@ -135,6 +135,13 @@ clientvisiblearea x=<x> y=<y> width=<width> height=<height>
 
     Invokes lok::Document::setClientVisibleArea().
 
+takeedit
+
+    Request for an edit lock. If successful, client will receive an 'editlock: 1'
+    message meaning editlock is granted.
+
+    See 'editlock:' message in server -> client.
+
 server -> client
 ================
 
