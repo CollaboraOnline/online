@@ -590,8 +590,8 @@ private:
         Thread queueHandlerThread;
         queueHandlerThread.start(handler);
 
-        IoUtil::SocketProcessor(ws, response,
-                [&session, &queue](const std::vector<char>& payload)
+        IoUtil::SocketProcessor(ws,
+            [&queue](const std::vector<char>& payload)
             {
                 queue->put(payload);
                 return true;
@@ -896,7 +896,7 @@ public:
             // Now the bridge beetween the prison and the client is connected
             // Let messages flow
 
-            IoUtil::SocketProcessor(ws, response,
+            IoUtil::SocketProcessor(ws,
                     [&session](const std::vector<char>& payload)
                 {
                     return session->handleInput(payload.data(), payload.size());

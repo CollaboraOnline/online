@@ -266,18 +266,6 @@ public:
         }
     }
 
-    void handle(std::shared_ptr<TileQueue> queue, const std::string& firstLine, char* buffer, int n)
-    {
-        if (firstLine.find("paste") != 0)
-        {
-            // Everything else is expected to be a single line.
-            assert(firstLine.size() == static_cast<std::string::size_type>(n));
-            queue->put(firstLine);
-        }
-        else
-            queue->put(std::string(buffer, n));
-    }
-
     void run() override
     {
         Util::setThreadName("kit_ws_" + _session->getId());
@@ -292,38 +280,13 @@ public:
             Thread queueHandlerThread;
             queueHandlerThread.start(handler);
 
-            int flags;
-            int n;
-            do
-            {
-                char buffer[1024];
-                n = _ws->receiveFrame(buffer, sizeof(buffer), flags);
-                if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+            IoUtil::SocketProcessor(_ws,
+                    [&queue](const std::vector<char>& payload)
                 {
-                    std::string firstLine = getFirstLine(buffer, n);
-                    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-                    // Check if it is a "nextmessage:" and in that case read the large
-                    // follow-up message separately, and handle that only.
-                    int size;
-                    if (tokens.count() == 2 && tokens[0] == "nextmessage:" && getTokenInteger(tokens[1], "size", size) && size > 0)
-                    {
-                        char largeBuffer[size];
-                        n = _ws->receiveFrame(largeBuffer, size, flags);
-                        if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
-                        {
-                            firstLine = getFirstLine(largeBuffer, n);
-                            handle(queue, firstLine, largeBuffer, n);
-                        }
-                    }
-                    else
-                        handle(queue, firstLine, buffer, n);
-                }
-            }
-            while (!_stop && n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-            Log::debug() << "Finishing. stop " << _stop
-                         << ", payload size: " << n
-                         << ", flags: " << std::hex << flags << Log::end;
+                    queue->put(payload);
+                    return true;
+                },
+                []() { return TerminationFlag; });
 
             queue->clear();
             queue->put("eof");
@@ -1006,8 +969,8 @@ void lokit_main(const std::string& childRoot,
         ws->setReceiveTimeout(0);
 
         const std::string socketName = "ChildControllerWS";
-        IoUtil::SocketProcessor(ws, response,
-                                [&socketName, &ws, &document, &loKit](const std::vector<char>& data)
+        IoUtil::SocketProcessor(ws,
+                [&socketName, &ws, &document, &loKit](const std::vector<char>& data)
                 {
                     std::string message(data.data(), data.size());
 

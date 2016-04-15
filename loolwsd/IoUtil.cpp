@@ -18,7 +18,6 @@
 #include <string>
 
 #include <Poco/StringTokenizer.h>
-#include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/Socket.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Net/NetException.h>
@@ -41,7 +40,6 @@ namespace IoUtil
 // Synchronously process WebSocket requests and dispatch to handler.
 // Handler returns false to end.
 void SocketProcessor(std::shared_ptr<WebSocket> ws,
-                     Poco::Net::HTTPResponse& response,
                      std::function<bool(const std::vector<char>&)> handler,
                      std::function<bool()> stopPredicate)
 {
@@ -166,22 +164,6 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             Poco::URI::encode(std::string(payload.data(), payload.size()), "", msg);
             Log::warn("Last message (" + std::to_string(payload.size()) +
                       " bytes) will not be processed: [" + msg + "].");
-        }
-    }
-    catch (const WebSocketException& exc)
-    {
-        Log::error("SocketProcessor: WebSocketException: " + exc.message());
-        switch (exc.code())
-        {
-        case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
-            response.set("Sec-WebSocket-Version", WebSocket::WEBSOCKET_VERSION);
-            // fallthrough
-        case WebSocket::WS_ERR_NO_HANDSHAKE:
-        case WebSocket::WS_ERR_HANDSHAKE_NO_VERSION:
-        case WebSocket::WS_ERR_HANDSHAKE_NO_KEY:
-            response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
-            response.setContentLength(0);
-            break;
         }
     }
     catch (const Poco::Exception& exc)
