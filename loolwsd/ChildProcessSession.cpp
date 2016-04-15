@@ -7,7 +7,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "config.h"
+
 #include <iostream>
+#include <thread>
 
 #include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
@@ -675,6 +678,15 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     std::vector<unsigned char> pixmap;
     pixmap.resize(4 * width * height);
 
+#if ENABLE_DEBUG
+    bool makeSlow = false;
+    if (part == 42)
+    {
+        makeSlow = true;
+        part = 0;
+    }
+#endif
+
     if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument))
     {
         _loKitDocument->pClass->setPart(_loKitDocument, part);
@@ -692,6 +704,14 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
         sendTextFrame("error: cmd=tile kind=failure");
         return;
     }
+
+#if ENABLE_DEBUG
+    if (makeSlow)
+    {
+        Log::debug("Sleeping for 5 seconds");
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
+#endif
 
     sendBinaryFrame(output.data(), output.size());
 }
