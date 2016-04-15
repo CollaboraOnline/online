@@ -47,7 +47,7 @@ public:
     void documentSaved();
 
     /// Notify whether we need to use the Editing cache.
-    void setEditing(bool editing = true);
+    void setEditing(bool editing);
 
     // The parameter is a message
     void saveTextFile(const std::string& text, std::string fileName);
