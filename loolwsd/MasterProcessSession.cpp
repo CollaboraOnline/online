@@ -593,8 +593,9 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
     std::memcpy(output.data(), response.data(), response.size());
 
     std::unique_ptr<std::fstream> cachedTile = _docBroker->tileCache().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    if (cachedTile && cachedTile->is_open())
+    if (cachedTile)
     {
+        assert(cachedTile->is_open());
         cachedTile->seekg(0, std::ios_base::end);
         size_t pos = output.size();
         std::streamsize size = cachedTile->tellg();
@@ -674,8 +675,9 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
 
         std::unique_ptr<std::fstream> cachedTile = _docBroker->tileCache().lookupTile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
 
-        if (cachedTile && cachedTile->is_open())
+        if (cachedTile)
         {
+            assert(cachedTile->is_open());
             std::ostringstream oss;
             oss << "tile: part=" << part
                 << " width=" << pixelWidth
