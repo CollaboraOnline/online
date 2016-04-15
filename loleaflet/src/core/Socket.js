@@ -11,7 +11,7 @@ L.Socket = L.Class.extend({
 		try {
 			this.socket = new WebSocket(map.options.server + '/' + map.options.doc);
 		} catch (e) {
-			this.fire('error', {msg: _('Socket connection error: ' + e), cmd: 'socket', kind: 'failed', id: 3});
+			this.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ' + e), cmd: 'socket', kind: 'failed', id: 3});
 			return null;
 		}
 		this._msgQueue = [];
@@ -146,6 +146,9 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			this._map.showBusy('Connecting...', false);
+			if (textMsg.match('statusindicator: fail')) {
+				this._map.fail = true;
+			}
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
 			// log the tile msg separately as we need the tile coordinates
@@ -238,11 +241,19 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketError: function () {
-		this.fire('error', {msg: _('Socket connection error'), cmd: 'socket', kind: 'failed', id: 3});
+		this.hideBusy();
+		this.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online. Please contact your webmaster.'), cmd: 'socket', kind: 'failed', id: 3});
 	},
 
 	_onSocketClose: function () {
-		this.fire('error', {msg: _('Socket connection closed'), cmd: 'socket', kind: 'closed', id: 4});
+		this.hideBusy();
+		if (this.fail) {
+			this.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+		}
+		else {
+			this.fire('error', {msg: _('We are sorry, this is an unexpected connection error. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+		}
+		this._map.fail = false;
 	},
 
 	parseServerCmd: function (msg) {

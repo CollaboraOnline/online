@@ -773,7 +773,6 @@ L.TileLayer = L.GridLayer.extend({
 		if (e.msg) {
 			this._map.setPermission('view');
 		}
-		this._map.hideBusy();
 	},
 
 	_onTileRemove: function (e) {
