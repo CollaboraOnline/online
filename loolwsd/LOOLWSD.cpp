@@ -479,6 +479,7 @@ private:
                 response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
                 response.setContentLength(0);
                 response.send();
+                Log::info("file not found.");
             }
         }
         else

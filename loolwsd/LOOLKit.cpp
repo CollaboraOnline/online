@@ -16,6 +16,9 @@
 #include <sys/capability.h>
 #include <unistd.h>
 #include <utime.h>
+#include <limits.h>
+#include <stdlib.h>
+#include <malloc.h>
 
 #include <atomic>
 #include <cassert>
@@ -820,6 +823,27 @@ private:
     std::atomic_size_t _clientViews;
 };
 
+namespace {
+    void symlinkPathToJail(const Path jailPath, const std::string &loTemplate,
+                           const std::string &loSubPath)
+    {
+        Path symlinkSource(jailPath, Path(loTemplate.substr(1)));
+        File(symlinkSource.parent()).createDirectories();
+
+        std::string symlinkTarget;
+        for (auto i = 0; i < Path(loTemplate).depth(); i++)
+            symlinkTarget += "../";
+        symlinkTarget += loSubPath;
+
+        Log::debug("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
+        if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
+        {
+            Log::syserror("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
+            throw Exception("symlink() failed");
+        }
+    }
+}
+
 void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
@@ -861,19 +885,15 @@ void lokit_main(const std::string& childRoot,
 
         // Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
         // interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
-        Path symlinkSource(jailPath, Path(loTemplate.substr(1)));
-        File(symlinkSource.parent()).createDirectories();
+        symlinkPathToJail(jailPath, loTemplate, loSubPath);
 
-        std::string symlinkTarget;
-        for (auto i = 0; i < Path(loTemplate).depth(); i++)
-            symlinkTarget += "../";
-        symlinkTarget += loSubPath;
-
-        Log::debug("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
-        if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
+        // Font paths can end up as realpaths so match that too.
+        char *resolved = realpath(loTemplate.c_str(), NULL);
+        if (resolved)
         {
-            Log::syserror("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
-            throw Exception("symlink() failed");
+            if (strcmp(loTemplate.c_str(), resolved))
+                symlinkPathToJail(jailPath, std::string(resolved), loSubPath);
+            free (resolved);
         }
 
         Path jailLOInstallation(jailPath, loSubPath);
