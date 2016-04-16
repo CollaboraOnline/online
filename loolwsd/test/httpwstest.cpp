@@ -209,29 +209,39 @@ void HTTPWSTest::testHandShake()
         CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
         CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
 
-        // After document broker finish searching it sends editlok
-        // it should be at end on handshake
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        CPPUNIT_ASSERT(prefixEdit.compare(0, prefixEdit.size(), buffer, 0, prefixEdit.size()) == 0);
-        CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
-
-        payload = "statusindicator: connect";
-        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
-        CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
-        CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
-
-        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (std::strstr(buffer, fail))
+        if (!std::strstr(buffer, fail))
         {
-            payload = "statusindicator: fail";
+            // After document broker finish searching it sends editlok
+            // it should be at end on handshake
+            CPPUNIT_ASSERT(prefixEdit.compare(0, prefixEdit.size(), buffer, 0, prefixEdit.size()) == 0);
+            CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+
+            payload = "statusindicator: connect";
+            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
             CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
             CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
             CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+
+            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            if (!std::strstr(buffer, fail))
+            {
+                payload = "statusindicator: ready";
+                CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
+                CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+                CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+            }
+            else
+            {
+                payload = "statusindicator: fail";
+                CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
+                CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+                CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+            }
         }
         else
         {
-            payload = "statusindicator: ready";
+            payload = "statusindicator: fail";
             CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
             CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
             CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);

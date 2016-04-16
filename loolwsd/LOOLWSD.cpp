@@ -543,10 +543,10 @@ private:
             if (!child)
             {
                 // Let the client know we can't serve now.
-                response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
-                response.setContentLength(0);
-                response.send();
-                return;
+                status = "statusindicator: fail";
+                ws->sendFrame(status.data(), (int) status.size());
+                ws->shutdown();
+                throw WebSocketException("Failed to get new child. Client cannot serve now.", WebSocket::WS_ENDPOINT_GOING_AWAY);
             }
 
             // Set one we just created.
@@ -575,7 +575,6 @@ private:
 
         if (!waitBridgeCompleted(session, docBroker))
         {
-            Log::error(session->getName() + ": Failed to connect to lokit process. Client cannot serve now.");
             // Let the client know we can't serve now.
             status = "statusindicator: fail";
             ws->sendFrame(status.data(), (int) status.size());
