@@ -54,6 +54,7 @@ using Poco::Util::Application;
 class FileServerRequestHandler: public HTTPRequestHandler
 {
 public:
+
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(HTTPServerRequest& request, HTTPServerResponse& response)
     {
@@ -106,35 +107,6 @@ public:
 
         Log::info("Wrong admin credentials.");
         return false;
-    }
-
-    void preprocessFile(HTTPServerRequest& request, HTTPServerResponse& response)
-    {
-        HTMLForm form(request, request.stream());
-
-        std::string preprocess;
-        const auto host = (LOOLWSD::SSLEnabled? "wss://": "ws://") + request.getHost();
-
-        Poco::URI requestUri(request.getURI());
-        requestUri.normalize(); // avoid .'s and ..'s
-        const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
-
-        Log::debug("Preprocessing file: " + path.toString());
-
-        FileInputStream file(path.toString());
-        StreamCopier::copyToString(file, preprocess);
-        file.close();
-
-        Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), form.get("access_token", ""));
-        Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), form.get("access_token_ttl", ""));
-        Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
-
-        response.setContentType("text/html");
-        response.setContentLength(preprocess.length());
-        response.setChunkedTransferEncoding(false);
-
-        std::ostream& ostr = response.send();
-        ostr << preprocess;
     }
 
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
@@ -210,6 +182,37 @@ public:
             response.setContentLength(0);
             response.send();
         }
+    }
+
+private:
+
+    void preprocessFile(HTTPServerRequest& request, HTTPServerResponse& response)
+    {
+        HTMLForm form(request, request.stream());
+
+        std::string preprocess;
+        const auto host = (LOOLWSD::SSLEnabled? "wss://": "ws://") + request.getHost();
+
+        Poco::URI requestUri(request.getURI());
+        requestUri.normalize(); // avoid .'s and ..'s
+        const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
+
+        Log::debug("Preprocessing file: " + path.toString());
+
+        FileInputStream file(path.toString());
+        StreamCopier::copyToString(file, preprocess);
+        file.close();
+
+        Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), form.get("access_token", ""));
+        Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), form.get("access_token_ttl", ""));
+        Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
+
+        response.setContentType("text/html");
+        response.setContentLength(preprocess.length());
+        response.setChunkedTransferEncoding(false);
+
+        std::ostream& ostr = response.send();
+        ostr << preprocess;
     }
 };
 
