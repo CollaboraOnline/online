@@ -69,6 +69,10 @@ public:
     static
     size_t getFileSize(const std::string& filename);
 
+    /// Must be called at startup to configure.
+    static void initialize();
+
+    /// Storage object creation factory.
     static std::unique_ptr<StorageBase> create(const std::string& jailRoot,
                                                const std::string& jailPath,
                                                const Poco::URI& uri);
@@ -79,6 +83,11 @@ protected:
     const std::string _uri;
     std::string _jailedFilePath;
     FileInfo _fileInfo;
+
+    static bool _filesystemEnabled;
+    static bool _wopiEnabled;
+    /// Allowed/trusted WOPI hosts, if any and if WOPI is enabled.
+    static std::vector<std::string> _wopiHosts;
 };
 
 /// Trivial implementation of local storage that does not need do anything.

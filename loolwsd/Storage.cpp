@@ -31,6 +31,10 @@
 ///////////////////
 // StorageBase Impl
 ///////////////////
+bool StorageBase::_filesystemEnabled;
+bool StorageBase::_wopiEnabled;
+std::vector<std::string> StorageBase::_wopiHosts;
+
 std::string StorageBase::getLocalRootPath() const
 {
     auto localPath = _jailPath;
@@ -52,15 +56,47 @@ size_t StorageBase::getFileSize(const std::string& filename)
     return std::ifstream(filename, std::ifstream::ate | std::ifstream::binary).tellg();
 }
 
+void StorageBase::initialize()
+{
+    const auto& app = Poco::Util::Application::instance();
+    _filesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
+
+    // Parse the WOPI settings.
+    _wopiHosts.clear();
+    _wopiEnabled = app.config().getBool("storage.wopi[@allow]", false);
+    if (_wopiEnabled)
+    {
+        for (size_t i = 0; ; ++i)
+        {
+            const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
+            if (app.config().getBool(path + "[@allow]", false))
+            {
+                const auto host = app.config().getString(path, "");
+                if (!host.empty())
+                {
+                    Log::info("Adding trusted WOPI host: [" + host + "].");
+                    _wopiHosts.push_back(host);
+                }
+            }
+            else if (!app.config().has(path))
+            {
+                break;
+            }
+        }
+    }
+}
+
 std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, const std::string& jailPath, const Poco::URI& uri)
 {
     std::unique_ptr<StorageBase> storage;
 
     if (UnitWSD::get().createStorage(jailRoot, jailPath, uri, storage))
-        Log::info("Storage load hooked");
+    {
+        Log::info("Storage load hooked.");
+    }
     else if (uri.isRelative() || uri.getScheme() == "file")
     {
-        if (!Poco::Util::Application::instance().config().getBool("storage.filesystem[@allow]", false))
+        if (!_filesystemEnabled)
         {
             Log::error("Local Storage is disabled by default. Specify allowlocalstorage on the command-line to enable.");
             return nullptr;
@@ -69,13 +105,17 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
         Log::info("Public URI [" + uri.toString() + "] is a file.");
         storage = std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
     }
-    else
+    else if (_wopiEnabled)
     {
         Log::info("Public URI [" + uri.toString() +
                   "] assuming cloud storage.");
-        //TODO: Configure the storage to use. For now, assume it's WOPI.
         storage = std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
     }
+    else
+    {
+        throw std::runtime_error("No Storage configured or invalid URI.");
+    }
+
     return storage;
 }
 
