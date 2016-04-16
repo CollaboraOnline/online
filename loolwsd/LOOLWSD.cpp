@@ -82,14 +82,16 @@
 #include "Admin.hpp"
 #include "Auth.hpp"
 #include "Common.hpp"
+#include "Exceptions.hpp"
 #include "FileServer.hpp"
+#include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
 #include "MasterProcessSession.hpp"
 #include "QueueHandler.hpp"
 #include "Storage.hpp"
-#include "IoUtil.hpp"
+#include "UserMessages.hpp"
 #include "Util.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
@@ -299,7 +301,10 @@ private:
         return isFound;
     }
 
-    static void handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
+    /// Handle POST requests.
+    /// Always throw on error, do not set response status here.
+    /// Returns true if a response has been sent.
+    static bool handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
         Log::info("Post request: [" + request.getURI() + "]");
         StringTokenizer tokens(request.getURI(), "/?");
@@ -322,10 +327,7 @@ private:
                     if (!child)
                     {
                         // Let the client know we can't serve now.
-                        response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
-                        response.setContentLength(0);
-                        response.send();
-                        return;
+                        throw std::runtime_error("Failed to spawn lokit child.");
                     }
 
                     auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
@@ -336,7 +338,7 @@ private:
                     // In that case, we can use a pool and index by publicPath.
                     std::unique_lock<std::mutex> lock(docBrokersMutex);
 
-                    //FIXME: What if the same document is already open? Need a fake dockey here.
+                    //FIXME: What if the same document is already open? Need a fake dockey here?
                     Log::debug("New DocumentBroker for docKey [" + docKey + "].");
                     docBrokers.emplace(docKey, docBroker);
 
@@ -350,12 +352,8 @@ private:
 
                     if (!waitBridgeCompleted(session, docBroker))
                     {
-                        Log::error(session->getName() + ": Failed to connect to lokit child.");
                         // Let the client know we can't serve now.
-                        response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
-                        response.setContentLength(0);
-                        response.send();
-                        return;
+                        throw std::runtime_error("Failed to connect to lokit child.");
                     }
                     // Now the bridge between the client and kit processes is connected
                     // Let messages flow
@@ -402,10 +400,11 @@ private:
 
             if (!sent)
             {
-                response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-                response.setContentLength(0);
-                response.send();
+                //TODO: We should differentiate between bad request and failed conversion.
+                throw BadRequestException("Failed to convert and send file.");
             }
+
+            return true;
         }
         else if (tokens.count() >= 2 && tokens[1] == "insertfile")
         {
@@ -418,17 +417,13 @@ private:
             ConvertToPartHandler handler(tmpPath);
             HTMLForm form(request, request.stream(), handler);
 
-            bool goodRequest = form.has("childid") && form.has("name");
-            std::string formChildid(form.get("childid"));
-            std::string formName(form.get("name"));
-
-            // protect against attempts to inject something funny here
-            if (goodRequest && formChildid.find('/') != std::string::npos && formName.find('/') != std::string::npos)
-                goodRequest = false;
-
-            if (goodRequest)
+            if (form.has("childid") && form.has("name"))
             {
-                try
+                const std::string formChildid(form.get("childid"));
+                const std::string formName(form.get("name"));
+
+                // protect against attempts to inject something funny here
+                if (formChildid.find('/') == std::string::npos && formName.find('/') == std::string::npos)
                 {
                     Log::info() << "Perform insertfile: " << formChildid << ", " << formName << Log::end;
                     const std::string dirPath = LOOLWSD::ChildRoot + formChildid
@@ -436,27 +431,15 @@ private:
                     File(dirPath).createDirectories();
                     std::string fileName = dirPath + Path::separator() + form.get("name");
                     File(tmpPath).moveTo(fileName);
-
-                    response.setStatus(HTTPResponse::HTTP_OK);
-                    response.send();
+                    return false;
                 }
-                catch (const IOException& exc)
-                {
-                    Log::info() << "ClientRequestHandler::handlePostRequest: IOException: " << exc.message() << Log::end;
-                    response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-                    response.send();
-                }
-            }
-            else
-            {
-                response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-                response.send();
             }
         }
         else if (tokens.count() >= 4)
         {
             Log::info("File download request.");
             // The user might request a file to download
+            //TODO: Check that the user in question has access to this file!
             const std::string dirPath = LOOLWSD::ChildRoot + tokens[1]
                                       + JAILED_DOCUMENT_ROOT + tokens[2];
             std::string fileName;
@@ -468,30 +451,21 @@ private:
             {
                 response.set("Access-Control-Allow-Origin", "*");
                 HTMLForm form(request);
-                std::string mimeType = "application/octet-stream";
-                if (form.has("mime_type"))
-                    mimeType = form.get("mime_type");
+                const std::string mimeType = form.has("mime_type")
+                                           ? form.get("mime_type")
+                                           : "application/octet-stream";
                 response.sendFile(filePath, mimeType);
+                //TODO: Cleanup on error.
                 Util::removeFile(dirPath, true);
-            }
-            else
-            {
-                response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
-                response.setContentLength(0);
-                response.send();
-                Log::info("file not found.");
+                return true;
             }
         }
-        else
-        {
-            Log::info("Bad request.");
-            response.setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-            response.setContentLength(0);
-            response.send();
-        }
+
+        throw BadRequestException("Invalid or unknown request.");
     }
 
-    static void handleGetRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
+    /// Handle GET requests.
+    static void handleGetRequest(HTTPServerRequest& request, std::shared_ptr<WebSocket>& ws, const std::string& id)
     {
         Log::info("Starting GET request handler for session [" + id + "].");
 
@@ -500,20 +474,6 @@ private:
         if (uri.size() > 0 && uri[0] == '/')
         {
             uri.erase(0, 1);
-        }
-
-        // accept websocket connection with client
-        std::shared_ptr<WebSocket> ws;
-        try
-        {
-            ws = std::make_shared<WebSocket>(request, response);
-        }
-        catch (WebSocketException& exc)
-        {
-            response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
-            response.setContentLength(0);
-            response.send();
-            throw;
         }
 
         // indicator to the client that document broker is searching
@@ -576,11 +536,10 @@ private:
         if (!waitBridgeCompleted(session, docBroker))
         {
             // Let the client know we can't serve now.
-            status = "statusindicator: fail";
-            ws->sendFrame(status.data(), (int) status.size());
-            ws->shutdown();
-            throw WebSocketException("Failed to connect to lokit process", WebSocket::WS_ENDPOINT_GOING_AWAY);
+            Log::error(session->getName() + ": Failed to connect to lokit process. Client cannot serve now.");
+            throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
         }
+
         // Now the bridge beetween the client and kit process is connected
         // Let messages flow
         status = "statusindicator: ready";
@@ -635,7 +594,10 @@ private:
         }
     }
 
-    static void handleGetDiscovery(HTTPServerRequest& request, HTTPServerResponse& response)
+    /// Sends back the WOPI Discovery XML.
+    /// The XML needs to be preprocessed to stamp the correct URL etc.
+    /// Returns true if a response has been sent.
+    static bool handleGetWOPIDiscovery(HTTPServerRequest& request, HTTPServerResponse& response)
     {
         std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
         if (!File(discoveryPath).exists())
@@ -672,6 +634,7 @@ private:
         std::ostream& ostr = response.send();
         ostr << ostrXML.str();
         Log::debug("Sent discovery.xml successfully.");
+        return true;
     }
 
 public:
@@ -694,35 +657,70 @@ public:
 
         Log::debug("Thread started.");
 
+        bool responded = false;
         try
         {
             if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
             {
                 // http://server/hosting/discovery
-                handleGetDiscovery(request, response);
+                responded = handleGetWOPIDiscovery(request, response);
             }
             else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
             {
-                handlePostRequest(request, response, id);
+                responded = handlePostRequest(request, response, id);
             }
             else
             {
-                handleGetRequest(request, response, id);
+                auto ws = std::make_shared<WebSocket>(request, response);
+                try
+                {
+                    responded = true; // After upgrading to WS we should not set HTTP response.
+                    handleGetRequest(request, ws, id);
+                }
+                catch (const WebSocketErrorMessageException& exc)
+                {
+                    Log::error(std::string("ClientRequestHandler::handleRequest: WebSocketErrorMessageException: ") + exc.what());
+                    try
+                    {
+                        const std::string msg = std::string("error: ") + exc.what();
+                        ws->sendFrame(msg.data(), msg.size());
+                        ws->shutdown();
+                    }
+                    catch (const std::exception& exc2)
+                    {
+                        Log::error(std::string("ClientRequestHandler::handleRequest: exception while sending WS error message: ") + exc2.what());
+                    }
+                }
             }
         }
         catch (const Exception& exc)
         {
-            Log::error() << "ClientRequestHandler::handleRequest: Exception: " << exc.displayText()
+            Log::error() << "ClientRequestHandler::handleRequest: PocoException: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                          << Log::end;
+            response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
+        }
+        catch (const UnauthorizedRequestException& exc)
+        {
+            Log::error(std::string("ClientRequestHandler::handleRequest: UnauthorizedException: ") + exc.what());
+            response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
+        }
+        catch (const BadRequestException& exc)
+        {
+            Log::error(std::string("ClientRequestHandler::handleRequest: BadRequestException: ") + exc.what());
+            response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
+
         }
         catch (const std::exception& exc)
         {
             Log::error(std::string("ClientRequestHandler::handleRequest: Exception: ") + exc.what());
+            response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
         }
-        catch (...)
+
+        if (!responded)
         {
-            Log::error("ClientRequestHandler::handleRequest: Unexpected exception");
+            response.setContentLength(0);
+            response.send();
         }
 
         Log::debug("Thread finished.");
@@ -885,6 +883,7 @@ public:
             {
                 assert(false);
             }
+
             Log::info("Adding doc " + docKey + " to Admin");
             Admin::instance().addDoc(docKey, pid, docBroker->getFilename(), Util::decodeId(sessionId));
 
@@ -913,10 +912,6 @@ public:
         catch (const std::exception& exc)
         {
             Log::error(std::string("PrisonerRequestHandler::handleRequest: Exception: ") + exc.what());
-        }
-        catch (...)
-        {
-            Log::error("PrisonerRequestHandler::handleRequest: Unexpected exception");
         }
 
         if (!jailId.empty())
