@@ -403,7 +403,7 @@ void MemoryStats::run()
     AdminModel& model = _admin->getModel();
     unsigned totalMem = _admin->getTotalMemoryUsage(model);
 
-    Log::info("Total memory used: " + std::to_string(totalMem));
+    Log::trace("Total memory used: " + std::to_string(totalMem));
     model.addMemStats(totalMem);
 }
 

@@ -148,7 +148,7 @@ public:
             requestUri.getPathSegments(requestSegments);
             if (requestSegments.size() < 1)
             {
-                throw Poco::FileNotFoundException("Invalid file.");
+                throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
             }
 
             const std::string endPoint = requestSegments[requestSegments.size() - 1];
@@ -173,7 +173,7 @@ public:
                 if (filepath.find(LOOLWSD::FileServerRoot) != 0)
                 {
                     // Accessing unauthorized path.
-                    throw Poco::FileNotFoundException("Invalid file path.");
+                    throw Poco::FileNotFoundException("Invalid or forbidden file path: [" + filepath + "].");
                 }
 
                 const std::size_t extPoint = endPoint.find_last_of(".");
@@ -195,17 +195,17 @@ public:
                 response.sendFile(filepath, mimeType);
             }
         }
-        catch (Poco::Net::NotAuthenticatedException& exc)
+        catch (const Poco::Net::NotAuthenticatedException& exc)
         {
-            Log::error("FileServerRequestHandler::NotAuthenticated");
+            Log::error("FileServerRequestHandler::NotAuthenticated: " + exc.displayText());
             response.set("WWW-Authenticate", "Basic realm=\"online\"");
             response.setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
             response.setContentLength(0);
             response.send();
         }
-        catch (Poco::FileNotFoundException& exc)
+        catch (const Poco::FileNotFoundException& exc)
         {
-            Log::error("FileServerRequestHandler:: File [" + request.getURI() + "] not found.");
+            Log::error("FileServerRequestHandler: " + exc.displayText());
             response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
             response.setContentLength(0);
             response.send();

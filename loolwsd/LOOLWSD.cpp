@@ -638,31 +638,31 @@ private:
 
     static void handleGetDiscovery(HTTPServerRequest& request, HTTPServerResponse& response)
     {
-        DOMParser parser;
-        DOMWriter writer;
-
         std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
         if (!File(discoveryPath).exists())
         {
             discoveryPath = LOOLWSD_DATADIR "/discovery.xml";
         }
+
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
-        const std::string uriValue = (LOOLWSD::SSLEnabled? "https://": "http://") +
-            (LOOLWSD::ServerName.empty()? request.getHost(): LOOLWSD::ServerName) +
+        const std::string uriValue = (LOOLWSD::SSLEnabled ? "https://" : "http://") +
+            (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName) +
             "/loleaflet/dist/loleaflet.html?";
 
         InputSource inputSrc(discoveryPath);
+        DOMParser parser;
         AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
         AutoPtr<NodeList> listNodes = docXML->getElementsByTagName(action);
 
-        for (unsigned long it = 0; it < listNodes->length(); it++)
+        for (unsigned long it = 0; it < listNodes->length(); ++it)
         {
             static_cast<Element*>(listNodes->item(it))->setAttribute(urlsrc, uriValue);
         }
 
         std::ostringstream ostrXML;
+        DOMWriter writer;
         writer.writeNode(ostrXML, docXML);
 
         response.set("User-Agent", "LOOLWSD WOPI Agent");
@@ -672,6 +672,7 @@ private:
 
         std::ostream& ostr = response.send();
         ostr << ostrXML.str();
+        Log::debug("Sent discovery.xml successfully.");
     }
 
 public:
@@ -707,7 +708,6 @@ public:
             }
             else
             {
-                //authenticate(request, response, id);
                 handleGetRequest(request, response, id);
             }
         }

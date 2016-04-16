@@ -25,8 +25,6 @@
 #include "DocumentBroker.hpp"
 #include "Util.hpp"
 
-class MasterProcessSession;
-
 class LOOLWSD: public Poco::Util::ServerApplication
 {
 public:
