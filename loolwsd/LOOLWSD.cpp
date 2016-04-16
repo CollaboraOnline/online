@@ -147,6 +147,7 @@ int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
 static bool DisplayVersion = false;
+static bool NoCapsForKit = false;
 static std::vector<std::shared_ptr<ChildProcess>> newChildren;
 static std::mutex newChildrenMutex;
 static std::condition_variable newChildrenCV;
@@ -1216,6 +1217,11 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("unitlib"));
 
+    optionSet.addOption(Option("nocaps", "", "Use a non-privileged forkit for valgrinding.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("nocaps"));
+
     optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
                         .required(false)
                         .repeatable(false)
@@ -1258,6 +1264,8 @@ void LOOLWSD::handleOption(const std::string& optionName,
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
+    else if (optionName == "nocaps")
+        NoCapsForKit = true;
     else if (optionName == "careerspan")
         careerSpanSeconds = std::stoi(value);
 #endif
@@ -1286,7 +1294,13 @@ Process::PID LOOLWSD::createForKit()
     if (DisplayVersion)
         args.push_back("--version");
 
-    const std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
+    std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
+
+    if (NoCapsForKit)
+    {
+        forKitPath = forKitPath + std::string("-nocaps");
+        args.push_back("--nocaps");
+    }
 
     Log::info("Launching forkit process: " + forKitPath + " " +
               Poco::cat(std::string(" "), args.begin(), args.end()));

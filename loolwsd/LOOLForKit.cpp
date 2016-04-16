@@ -44,6 +44,7 @@ using Poco::Thread;
 using Poco::Timestamp;
 using Poco::Util::Application;
 
+static bool NoCapsForKit = false;
 static std::string UnitTestLibrary;
 static std::atomic<unsigned> ForkCounter( 0 );
 
@@ -117,7 +118,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
             Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
         }
 
-        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath);
+        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, NoCapsForKit);
     }
     else
     {
@@ -212,6 +213,11 @@ int main(int argc, char** argv)
         {
             eq = std::strchr(cmd, '=');
             UnitTestLibrary = std::string(eq+1);
+        }
+        // we are running in no-privilege mode - with no chroot etc.
+        else if (std::strstr(cmd, "--nocaps") == cmd)
+        {
+            NoCapsForKit = true;
         }
 #endif
     }

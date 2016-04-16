@@ -49,7 +49,8 @@ loolwsd_SOURCES = Admin.cpp \
 
 noinst_PROGRAMS = connect \
                   loadtest \
-                  lokitclient
+                  lokitclient \
+		  loolforkit-nocaps
 
 loadtest_SOURCES = LoadTest.cpp \
                    Log.cpp \
@@ -70,6 +71,9 @@ lokitclient_SOURCES = IoUtil.cpp \
 loolforkit_SOURCES = LOOLForKit.cpp \
                      LOOLKit.cpp \
                      $(shared_sources)
+
+# build a binary with no caps to help debugging
+loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)
 
 loolmount_SOURCES = loolmount.c
 

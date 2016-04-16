@@ -847,7 +847,8 @@ namespace {
 void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
-                const std::string& loSubPath)
+                const std::string& loSubPath,
+                bool noCapabilities)
 {
     // Reinitialize logging when forked.
     Log::initialize("kit");
@@ -874,102 +875,112 @@ void lokit_main(const std::string& childRoot,
     Util::setTerminationSignals();
     Util::setFatalSignals();
 
-    static const std::string instdir_path = "/" + loSubPath + "/program";
-    LibreOfficeKit* loKit = nullptr;
+    std::string instdir_path;
 
+    Path jailPath;
+    bool bRunInsideJail = !noCapabilities;
     try
     {
-        const Path jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
-        Log::info("Jail path: " + jailPath.toString());
-        File(jailPath).createDirectories();
-
-        // Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
-        // interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
-        symlinkPathToJail(jailPath, loTemplate, loSubPath);
-
-        // Font paths can end up as realpaths so match that too.
-        char *resolved = realpath(loTemplate.c_str(), NULL);
-        if (resolved)
+        if (bRunInsideJail)
         {
-            if (strcmp(loTemplate.c_str(), resolved))
-                symlinkPathToJail(jailPath, std::string(resolved), loSubPath);
-            free (resolved);
-        }
+            instdir_path = "/" + loSubPath + "/program";
 
-        Path jailLOInstallation(jailPath, loSubPath);
-        jailLOInstallation.makeDirectory();
-        File(jailLOInstallation).createDirectory();
+            jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
+            Log::info("Jail path: " + jailPath.toString());
+            File(jailPath).createDirectories();
 
-        // Copy (link) LO installation and other necessary files into it from the template.
-        bool bLoopMounted = false;
-        if (getenv("LOOL_BIND_MOUNT"))
-        {
-            Path usrSrcPath(sysTemplate, "usr");
-            Path usrDestPath(jailPath, "usr");
-            File(usrDestPath).createDirectory();
-            std::string mountCommand =
-                std::string("loolmount ") +
-                usrSrcPath.toString() +
-                std::string(" ") +
-                usrDestPath.toString();
-            Log::debug("Initializing jail bind mount.");
-            bLoopMounted = !system(mountCommand.c_str());
-            Log::debug("Initialized jail bind mount.");
-        }
-        linkOrCopy(sysTemplate, jailPath,
-                   bLoopMounted ? COPY_NO_USR : COPY_ALL);
-        linkOrCopy(loTemplate, jailLOInstallation, COPY_LO);
+            // Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
+            // interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
+            symlinkPathToJail(jailPath, loTemplate, loSubPath);
 
-        // We need this because sometimes the hostname is not resolved
-        const auto networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
-        for (const auto& filename : networkFiles)
-        {
-            const auto etcPath = Path(jailPath, filename).toString();
-            const File networkFile(filename);
-            if (networkFile.exists() && !File(etcPath).exists())
+            // Font paths can end up as realpaths so match that too.
+            char *resolved = realpath(loTemplate.c_str(), NULL);
+            if (resolved)
             {
-                networkFile.copyTo(etcPath);
+                if (strcmp(loTemplate.c_str(), resolved))
+                    symlinkPathToJail(jailPath, std::string(resolved), loSubPath);
+                free (resolved);
             }
+
+            Path jailLOInstallation(jailPath, loSubPath);
+            jailLOInstallation.makeDirectory();
+            File(jailLOInstallation).createDirectory();
+
+            // Copy (link) LO installation and other necessary files into it from the template.
+            bool bLoopMounted = false;
+            if (getenv("LOOL_BIND_MOUNT"))
+            {
+                Path usrSrcPath(sysTemplate, "usr");
+                Path usrDestPath(jailPath, "usr");
+                File(usrDestPath).createDirectory();
+                std::string mountCommand =
+                    std::string("loolmount ") +
+                    usrSrcPath.toString() +
+                    std::string(" ") +
+                    usrDestPath.toString();
+                Log::debug("Initializing jail bind mount.");
+                bLoopMounted = !system(mountCommand.c_str());
+                Log::debug("Initialized jail bind mount.");
+            }
+            linkOrCopy(sysTemplate, jailPath,
+                       bLoopMounted ? COPY_NO_USR : COPY_ALL);
+            linkOrCopy(loTemplate, jailLOInstallation, COPY_LO);
+
+            // We need this because sometimes the hostname is not resolved
+            const auto networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+            for (const auto& filename : networkFiles)
+            {
+                const auto etcPath = Path(jailPath, filename).toString();
+                const File networkFile(filename);
+                if (networkFile.exists() && !File(etcPath).exists())
+                {
+                    networkFile.copyTo(etcPath);
+                }
+            }
+
+            Log::debug("Initialized jail files.");
+
+            // Create the urandom and random devices
+            File(Path(jailPath, "/dev")).createDirectory();
+            if (mknod((jailPath.toString() + "/dev/random").c_str(),
+                      S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                      makedev(1, 8)) != 0)
+            {
+                Log::syserror("mknod(" + jailPath.toString() + "/dev/random) failed.");
+            }
+            if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
+                      S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+                      makedev(1, 9)) != 0)
+            {
+                Log::syserror("mknod(" + jailPath.toString() + "/dev/urandom) failed.");
+            }
+
+            Log::info("chroot(\"" + jailPath.toString() + "\")");
+            if (chroot(jailPath.toString().c_str()) == -1)
+            {
+                Log::syserror("chroot(\"" + jailPath.toString() + "\") failed.");
+                std::_Exit(Application::EXIT_SOFTWARE);
+            }
+
+            if (chdir("/") == -1)
+            {
+                Log::syserror("chdir(\"/\") in jail failed.");
+                std::_Exit(Application::EXIT_SOFTWARE);
+            }
+
+            dropCapability(CAP_SYS_CHROOT);
+            dropCapability(CAP_MKNOD);
+            dropCapability(CAP_FOWNER);
+
+            Log::debug("Initialized jail nodes, dropped caps.");
         }
-
-        Log::debug("Initialized jail files.");
-
-        // Create the urandom and random devices
-        File(Path(jailPath, "/dev")).createDirectory();
-        if (mknod((jailPath.toString() + "/dev/random").c_str(),
-                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                  makedev(1, 8)) != 0)
+        else // noCapabilities set
         {
-            Log::syserror("mknod(" + jailPath.toString() + "/dev/random) failed.");
-
-        }
-        if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
-                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                  makedev(1, 9)) != 0)
-        {
-            Log::syserror("mknod(" + jailPath.toString() + "/dev/urandom) failed.");
+            Log::info("Using template " + loTemplate + " as install subpath - skipping jail setup");
+            instdir_path = "/" + loTemplate + "/program";
         }
 
-        Log::info("chroot(\"" + jailPath.toString() + "\")");
-        if (chroot(jailPath.toString().c_str()) == -1)
-        {
-            Log::syserror("chroot(\"" + jailPath.toString() + "\") failed.");
-            std::_Exit(Application::EXIT_SOFTWARE);
-        }
-
-        if (chdir("/") == -1)
-        {
-            Log::syserror("chdir(\"/\") in jail failed.");
-            std::_Exit(Application::EXIT_SOFTWARE);
-        }
-
-        dropCapability(CAP_SYS_CHROOT);
-        dropCapability(CAP_MKNOD);
-        dropCapability(CAP_FOWNER);
-
-        Log::debug("Initialized jail nodes, dropped caps.");
-
-        loKit = lok_init_2(instdir_path.c_str(), "file:///user");
+        LibreOfficeKit* loKit = lok_init_2(instdir_path.c_str(), "file:///user");
         if (loKit == nullptr)
         {
             Log::error("LibreOfficeKit initialization failed. Exiting.");
@@ -1042,8 +1053,11 @@ void lokit_main(const std::string& childRoot,
                     return TerminationFlag;
                 });
 
-        // Cleanup jail.
-        Util::removeFile(jailPath, true);
+        // Cleanup a jail if we created one
+        if (bRunInsideJail && !jailPath.isRelative())
+        {
+            Util::removeFile(jailPath, true);
+        }
     }
     catch (const Exception& exc)
     {
