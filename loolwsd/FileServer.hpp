@@ -57,6 +57,9 @@ public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(HTTPServerRequest& request, HTTPServerResponse& response)
     {
+        const auto& config = Application::instance().config();
+        const auto sslKeyPath = config.getString("ssl.key_file_path", "");
+
         if (request.find("Cookie") != request.end())
         {
             // FIXME: Handle other cookie params like '; httponly; secure'
@@ -66,9 +69,7 @@ public:
 
             const std::string jwtToken = request["Cookie"].substr(pos + 1);
             Log::info("Verifying JWT token: " + jwtToken);
-            // TODO: Read key from configuration file
-            const std::string keyPath = "/etc/loolwsd/" + std::string(SSL_KEY_FILE);
-            JWTAuth authAgent(keyPath, "admin", "admin", "admin");
+            JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
             if (authAgent.verify(jwtToken))
             {
                 Log::trace("JWT token is valid");
@@ -78,8 +79,8 @@ public:
             Log::info("Invalid JWT token, let the administrator re-login");
         }
 
-        const auto user = Application::instance().config().getString("admin_console_username", "");
-        const auto pass = Application::instance().config().getString("admin_console_password", "");
+        const auto user = config.getString("admin_console_username", "");
+        const auto pass = config.getString("admin_console_password", "");
         if (user.empty() || pass.empty())
         {
             Log::error("Admin Console credentials missing. Denying access until set.");
@@ -92,9 +93,7 @@ public:
         {
             const std::string htmlMimeType = "text/html";
             // generate and set the cookie
-            // TODO: Read key from configuration file
-            const std::string keyPath = "/etc/loolwsd/" + std::string(SSL_KEY_FILE);
-            JWTAuth authAgent(keyPath, "admin", "admin", "admin");
+            JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
             const std::string jwtToken = authAgent.getAccessToken();
             Poco::Net::HTTPCookie cookie("jwt", jwtToken);
             cookie.setPath("/adminws/");
