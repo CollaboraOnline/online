@@ -1030,6 +1030,17 @@ LOOLWSD::~LOOLWSD()
 
 void LOOLWSD::initialize(Application& self)
 {
+    if (geteuid() == 0)
+    {
+        throw std::runtime_error("Do not run as root. Please run as lool user.");
+    }
+
+    if (!UnitWSD::init(UnitWSD::UnitType::TYPE_WSD,
+                       UnitTestLibrary))
+    {
+        throw std::runtime_error("Failed to load wsd unit test library.");
+    }
+
     // Load default configuration files, if present.
     if (loadConfiguration() == 0)
     {
@@ -1037,6 +1048,10 @@ void LOOLWSD::initialize(Application& self)
         const std::string configPath = LOOLWSD_CONFIGDIR "/loolwsd.xml";
         loadConfiguration(configPath);
     }
+
+    // This overrides whatever is in the config file,
+    // which forces admins to set this flag on the command-line.
+    config().setBool("storage.filesystem[@allow]", AllowLocalStorage);
 
     if (!AdminCreds.empty())
     {
@@ -1048,6 +1063,9 @@ void LOOLWSD::initialize(Application& self)
             config().setString("admin_console_password", tokens[1]);
         }
     }
+
+    // Allow UT to manipulate before using configuration values.
+    UnitWSD::get().configure(config());
 
     if (Cache.empty())
     {
@@ -1089,10 +1107,6 @@ void LOOLWSD::initialize(Application& self)
         // Default to 10 children.
         NumPreSpawnedChildren = config().getUInt("num_prespawn_children", 10);
     }
-
-    // This overrides whatever is in the config file,
-    // which forces admins to set this flag on the command-line.
-    config().setBool("storage.filesystem[@allow]", AllowLocalStorage);
 
     StorageBase::initialize();
 
@@ -1312,19 +1326,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (DisplayVersion)
         Util::displayVersionInfo("loolwsd");
-
-    if (geteuid() == 0)
-    {
-        Log::error("Don't run this as root");
-        return Application::EXIT_USAGE;
-    }
-
-    if (!UnitWSD::init(UnitWSD::UnitType::TYPE_WSD,
-                       UnitTestLibrary))
-    {
-        Log::error("Failed to load wsd unit test library");
-        return Application::EXIT_USAGE;
-    }
 
 #if ENABLE_SSL
     initializeSSL();
