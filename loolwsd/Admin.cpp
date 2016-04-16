@@ -310,7 +310,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
     {
         Log::info("NotAuthenticatedException");
         response.set("WWW-Authenticate", "Basic realm=\"ws-online\"");
-        response.setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
+        response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
         response.setContentLength(0);
         response.send();
     }
@@ -350,13 +350,13 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
     {
         Log::info("Admin::NotAuthenticated");
         response.set("WWW-Authenticate", "Basic realm=\"online\"");
-        response.setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
+        response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
         response.setContentLength(0);
         response.send();
     }
     catch (const std::exception& exc)
     {
-        Log::info("Unknown Exception caught");
+        Log::info(std::string("Admin::handleRequest: Exception: ") + exc.what());
         response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
         response.setContentLength(0);
         response.send();

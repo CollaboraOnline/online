@@ -171,14 +171,14 @@ public:
         {
             Log::error("FileServerRequestHandler::NotAuthenticated: " + exc.displayText());
             response.set("WWW-Authenticate", "Basic realm=\"online\"");
-            response.setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
+            response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
             response.setContentLength(0);
             response.send();
         }
         catch (const Poco::FileNotFoundException& exc)
         {
             Log::error("FileServerRequestHandler: " + exc.displayText());
-            response.setStatus(HTTPResponse::HTTP_NOT_FOUND);
+            response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
             response.setContentLength(0);
             response.send();
         }

@@ -11,8 +11,6 @@
 #ifndef INCLUDED_COMMON_HPP
 #define INCLUDED_COMMON_HPP
 
-#include <string>
-
 // The maximum number of client connections we can accept.
 constexpr int MAX_SESSIONS = 1024;
 
