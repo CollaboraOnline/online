@@ -12,6 +12,7 @@
 #define INCLUDED_STORAGE_HPP
 
 #include <string>
+#include <set>
 
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
@@ -87,7 +88,7 @@ protected:
     static bool _filesystemEnabled;
     static bool _wopiEnabled;
     /// Allowed/trusted WOPI hosts, if any and if WOPI is enabled.
-    static std::vector<std::string> _wopiHosts;
+    static std::set<std::string> _wopiHosts;
 };
 
 /// Trivial implementation of local storage that does not need do anything.

@@ -34,7 +34,7 @@
 ///////////////////
 bool StorageBase::_filesystemEnabled;
 bool StorageBase::_wopiEnabled;
-std::vector<std::string> StorageBase::_wopiHosts;
+std::set<std::string> StorageBase::_wopiHosts;
 
 std::string StorageBase::getLocalRootPath() const
 {
@@ -70,13 +70,22 @@ void StorageBase::initialize()
         for (size_t i = 0; ; ++i)
         {
             const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
-            if (app.config().getBool(path + "[@allow]", false))
+            const auto host = app.config().getString(path, "");
+            if (!host.empty())
             {
-                const auto host = app.config().getString(path, "");
-                if (!host.empty())
+                if (app.config().getBool(path + "[@allow]", false))
                 {
                     Log::info("Adding trusted WOPI host: [" + host + "].");
-                    _wopiHosts.push_back(host);
+                    _wopiHosts.insert(host);
+                }
+                else
+                {
+                    if (_wopiHosts.find(host) != _wopiHosts.end())
+                    {
+                        Log::warn("Configuration of WOPI trusted hosts contains conflicting duplicates.");
+                    }
+
+                    _wopiHosts.erase(host);
                 }
             }
             else if (!app.config().has(path))
