@@ -91,6 +91,8 @@ public:
         StorageBase(localStorePath, jailPath, uri),
         _isCopy(false)
     {
+        Log::info("LocalStorage ctor with localStorePath: [" + localStorePath +
+                  "], jailPath: [" + jailPath + "], uri: [" + uri + "].");
     }
 
     FileInfo getFileInfo(const Poco::URI& uri) override;
@@ -112,6 +114,8 @@ public:
                 const std::string& uri) :
         StorageBase(localStorePath, jailPath, uri)
     {
+        Log::info("WopiStorage ctor with localStorePath: [" + localStorePath +
+                  "], jailPath: [" + jailPath + "], uri: [" + uri + "].");
     }
 
     FileInfo getFileInfo(const Poco::URI& uri) override;
@@ -132,6 +136,8 @@ public:
         StorageBase(localStorePath, jailPath, uri),
         _authAgent(std::move(authAgent))
     {
+        Log::info("WebDAVStorage ctor with localStorePath: [" + localStorePath +
+                  "], jailPath: [" + jailPath + "], uri: [" + uri + "].");
     }
 
     FileInfo getFileInfo(const Poco::URI& uri) override;
@@ -139,6 +145,7 @@ public:
     std::string loadStorageFileToLocal() override;
 
     bool saveLocalFileToStorage() override;
+
 private:
     std::unique_ptr<AuthBase> _authAgent;
 };
