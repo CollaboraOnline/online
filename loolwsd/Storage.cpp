@@ -22,8 +22,9 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 
-#include "Common.hpp"
 #include "Auth.hpp"
+#include "Common.hpp"
+#include "Exceptions.hpp"
 #include "Storage.hpp"
 #include "Util.hpp"
 #include "Unit.hpp"
@@ -96,27 +97,30 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     }
     else if (uri.isRelative() || uri.getScheme() == "file")
     {
-        if (!_filesystemEnabled)
+        Log::info("Public URI [" + uri.toString() + "] is a file.");
+        if (_filesystemEnabled)
         {
-            Log::error("Local Storage is disabled by default. Specify allowlocalstorage on the command-line to enable.");
-            return nullptr;
+            return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
         }
 
-        Log::info("Public URI [" + uri.toString() + "] is a file.");
-        storage = std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
+        Log::error("Local Storage is disabled by default. Specify allowlocalstorage on the command-line to enable.");
     }
     else if (_wopiEnabled)
     {
-        Log::info("Public URI [" + uri.toString() +
-                  "] assuming cloud storage.");
-        storage = std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
-    }
-    else
-    {
-        throw std::runtime_error("No Storage configured or invalid URI.");
+        Log::info("Public URI [" + uri.toString() + "] considered WOPI.");
+        const auto targetHost = uri.getHost();
+        for (const auto& acceptedHost : _wopiHosts)
+        {
+            if (targetHost == acceptedHost)
+            {
+                return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
+            }
+        }
+
+        Log::error("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
     }
 
-    return storage;
+    throw BadRequestException("No Storage configured or invalid URI.");
 }
 
 ////////////////////
