@@ -147,10 +147,10 @@ public:
     const std::string& getDocKey() const { return _docKey; }
     const std::string& getFilename() const { return _filename; };
     TileCache& tileCache() { return *_tileCache; }
-    unsigned getSessionsCount() const
+    size_t getSessionsCount() const
     {
-        std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
-        return _wsSessions.size();
+        std::lock_guard<std::mutex> lock(_mutex);
+        return _sessions.size();
     }
 
     /// Returns the time in milliseconds since last save.
@@ -166,11 +166,10 @@ public:
     /// except this one
     void takeEditLock(const std::string& id);
 
-    void addWSSession(const std::string& id, std::shared_ptr<MasterProcessSession>& ws);
-
-    void removeWSSession(const std::string& id);
-
-    unsigned getWSSessionsCount() { return _wsSessions.size(); }
+    /// Add a new session. Returns the new number of sessions.
+    size_t addSession(std::shared_ptr<MasterProcessSession>& session);
+    /// Removes a session by ID. Returns the new number of sessions.
+    size_t removeSession(const std::string& id);
 
     void kill() { _childProcess->close(true); };
 
@@ -183,12 +182,11 @@ private:
     std::string _jailId;
     std::string _filename;
     std::chrono::steady_clock::time_point _lastSaveTime;
-    std::map<std::string, std::shared_ptr<MasterProcessSession>> _wsSessions;
-    mutable std::mutex _wsSessionsMutex;
+    std::map<std::string, std::shared_ptr<MasterProcessSession>> _sessions;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::shared_ptr<ChildProcess> _childProcess;
-    std::mutex _mutex;
+    mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;
 

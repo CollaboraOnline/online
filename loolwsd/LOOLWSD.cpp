@@ -346,10 +346,9 @@ private:
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
                     auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, nullptr);
-                    docBroker->addWSSession(id, session);
-                    auto wsSessionsCount = docBroker->getWSSessionsCount();
-                    Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
+                    auto sessionsCount = docBroker->addSession(session);
                     lock.unlock();
+                    Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
                     if (!waitBridgeCompleted(session, docBroker))
                     {
@@ -384,9 +383,8 @@ private:
                     }
 
                     lock.lock();
-                    docBroker->removeWSSession(id);
-                    wsSessionsCount = docBroker->getWSSessionsCount();
-                    if (wsSessionsCount == 0)
+                    sessionsCount = docBroker->removeSession(id);
+                    if (sessionsCount == 0)
                     {
                         Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
                         docBrokers.erase(docKey);
@@ -523,10 +521,9 @@ private:
         // "canceltiles" message.
         auto queue = std::make_shared<BasicTileQueue>();
         auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
-        docBroker->addWSSession(id, session);
-        auto wsSessionsCount = docBroker->getWSSessionsCount();
-        Log::trace(docKey + ", ws_sessions++: " + std::to_string(wsSessionsCount));
+        auto sessionsCount = docBroker->addSession(session);
         docBrokersLock.unlock();
+        Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
         // indicator to a client that is waiting to connect to lokit process
         status = "statusindicator: connect";
@@ -583,10 +580,9 @@ private:
         queueHandlerThread.join();
 
         docBrokersLock.lock();
-        docBroker->removeWSSession(id);
-        wsSessionsCount = docBroker->getWSSessionsCount();
-        Log::trace(docKey + ", ws_sessions--: " + std::to_string(wsSessionsCount));
-        if (wsSessionsCount == 0)
+        sessionsCount = docBroker->removeSession(id);
+        Log::trace(docKey + ", ws_sessions--: " + std::to_string(sessionsCount));
+        if (sessionsCount == 0)
         {
             Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
             docBrokers.erase(docKey);

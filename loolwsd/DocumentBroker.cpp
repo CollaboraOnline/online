@@ -151,8 +151,8 @@ bool DocumentBroker::save()
 
 bool DocumentBroker::autoSave(const bool force)
 {
-    std::unique_lock<std::mutex> sessionsLock(_wsSessionsMutex);
-    if (_wsSessions.empty())
+    std::unique_lock<std::mutex> lock(_mutex);
+    if (_sessions.empty())
     {
         // Shouldn't happen.
         return false;
@@ -160,7 +160,7 @@ bool DocumentBroker::autoSave(const bool force)
 
     // Find the most recent activity.
     double inactivityTimeMs = std::numeric_limits<double>::max();
-    for (auto& sessionIt: _wsSessions)
+    for (auto& sessionIt: _sessions)
     {
         inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
     }
@@ -182,7 +182,7 @@ bool DocumentBroker::autoSave(const bool force)
 
             // Save using session holding the edit-lock
             bool sent = false;
-            for (auto& sessionIt: _wsSessions)
+            for (auto& sessionIt: _sessions)
             {
                 if (!sessionIt.second->isEditLocked())
                     continue;
@@ -231,8 +231,8 @@ std::string DocumentBroker::getJailRoot() const
 
 void DocumentBroker::takeEditLock(const std::string& id)
 {
-    std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
-    for (auto& it: _wsSessions)
+    std::lock_guard<std::mutex> lock(_mutex);
+    for (auto& it: _sessions)
     {
         if (it.first != id)
         {
@@ -247,51 +247,56 @@ void DocumentBroker::takeEditLock(const std::string& id)
     }
 }
 
-void DocumentBroker::addWSSession(const std::string& id, std::shared_ptr<MasterProcessSession>& ws)
+size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session)
 {
-    std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
+    const auto id = session->getId();
 
-    auto ret = _wsSessions.emplace(id, ws);
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    auto ret = _sessions.emplace(id, session);
     if (!ret.second)
     {
         Log::warn("DocumentBroker: Trying to add already existed session.");
     }
 
-    if (_wsSessions.size() == 1)
+    if (_sessions.size() == 1)
     {
-        ws->setEditLock(true);
-        ws->sendTextFrame("editlock: 1");
+        session->setEditLock(true);
+        session->sendTextFrame("editlock: 1");
     }
 
     // Request a new session from the child kit.
     const std::string aMessage = "session " + id + " " + _docKey + "\n";
     Log::debug("DocBroker to Child: " + aMessage.substr(0, aMessage.length() - 1));
     _childProcess->getWebSocket()->sendFrame(aMessage.data(), aMessage.size());
+
+    return _sessions.size();
 }
 
-void DocumentBroker::removeWSSession(const std::string& id)
+size_t DocumentBroker::removeSession(const std::string& id)
 {
-    std::lock_guard<std::mutex> sessionsLock(_wsSessionsMutex);
+    std::lock_guard<std::mutex> lock(_mutex);
 
-    bool haveEditLock = false;
-    auto it = _wsSessions.find(id);
-    if (it != _wsSessions.end())
+    auto it = _sessions.find(id);
+    if (it != _sessions.end())
     {
-        haveEditLock = it->second->isEditLocked();
+        const auto haveEditLock = it->second->isEditLocked();
         it->second->setEditLock(false);
-        _wsSessions.erase(it);
-    }
+        _sessions.erase(it);
 
-    if (haveEditLock)
-    {
-        // pass the edit lock to first session in map
-        it = _wsSessions.begin();
-        if (it != _wsSessions.end())
+        if (haveEditLock)
         {
-            it->second->setEditLock(true);
-            it->second->sendTextFrame("editlock: 1");
+            // pass the edit lock to first session in map
+            it = _sessions.begin();
+            if (it != _sessions.end())
+            {
+                it->second->setEditLock(true);
+                it->second->sendTextFrame("editlock: 1");
+            }
         }
     }
+
+    return _sessions.size();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
