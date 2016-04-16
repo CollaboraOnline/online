@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # DO NOT EDIT - this file is generated from run_unit.sh.in.
 #
 
 # substituted variables in one place:
-abs_top_builddir="/opt/libreoffice/online/loolwsd"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+abs_top_builddir="${DIR}/.."
 systemplate_path="@SYSTEMPLATE_PATH@"
 enable_debug="@ENABLE_DEBUG@"
 jails_path="@JAILS_PATH@"
