@@ -144,11 +144,11 @@ L.Socket = L.Class.extend({
 				return;
 			}
 		}
+		else if (textMsg.startsWith('error:') && !this._map._docLayer) {
+			this._map.fail = true;
+		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			this._map.showBusy('Connecting...', false);
-			if (textMsg.match('statusindicator: fail')) {
-				this._map.fail = true;
-			}
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
 			// log the tile msg separately as we need the tile coordinates
