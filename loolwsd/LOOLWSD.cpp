@@ -1545,13 +1545,15 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
 
     // Terminate child processes
-    IoUtil::writeFIFO(ForKitWritePipe, "eof\n");
     Log::info("Requesting child process " + std::to_string(forKitPid) + " to terminate");
     Util::requestTermination(forKitPid);
+    for (auto& child : newChildren)
+    {
+        child->close(true);
+    }
 
     // Wait for forkit process finish
     waitpid(forKitPid, &status, WUNTRACED);
-
     close(ForKitWritePipe);
 
     Log::info("Cleaning up childroot directory [" + ChildRoot + "].");

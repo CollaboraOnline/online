@@ -70,16 +70,19 @@ public:
 
     ~ChildProcess()
     {
-        Log::info("~ChildProcess dtor [" + std::to_string(_pid) + "].");
-        close(false);
+        if (_pid > 0)
+        {
+            Log::info("~ChildProcess dtor [" + std::to_string(_pid) + "].");
+            close(false);
+        }
     }
 
     void close(const bool rude)
     {
-        Log::info("Closing child [" + std::to_string(_pid) + "].");
         _ws.reset();
         if (_pid != -1)
         {
+            Log::info("Closing child [" + std::to_string(_pid) + "].");
             if (rude && kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
             {
                 Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
