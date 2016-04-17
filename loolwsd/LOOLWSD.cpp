@@ -705,7 +705,6 @@ public:
         {
             Log::error(std::string("ClientRequestHandler::handleRequest: BadRequestException: ") + exc.what());
             response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
-
         }
         catch (const std::exception& exc)
         {

@@ -12,8 +12,9 @@
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 
-#include "LOOLWSD.hpp"
 #include "DocumentBroker.hpp"
+#include "Exceptions.hpp"
+#include "LOOLWSD.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 
@@ -81,10 +82,17 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
 void DocumentBroker::validate(const Poco::URI& uri)
 {
     Log::info("Validating: " + uri.toString());
-    auto storage = StorageBase::create("", "", uri);
-    if (storage == nullptr || !storage->getFileInfo(uri).isValid())
+    try
     {
-        throw std::runtime_error("Invalid URI or access denied.");
+        auto storage = StorageBase::create("", "", uri);
+        if (storage == nullptr || !storage->getFileInfo(uri).isValid())
+        {
+            throw BadRequestException("Invalid URI or access denied.");
+        }
+    }
+    catch (const std::exception&)
+    {
+        throw BadRequestException("Invalid URI or access denied.");
     }
 }
 

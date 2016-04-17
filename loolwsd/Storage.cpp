@@ -137,11 +137,12 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
 /////////////////////
 StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uri)
 {
-    const auto& path = uri.getPath();
-    Log::debug("Getting info for local uri [" + uri.toString() + "], path [" + path + "].");
-    const auto filename = Poco::Path(path).getFileName();
-    const auto lastModified = Poco::File(path).getLastModified();
-    const auto size = Poco::File(path).getSize();
+    const auto path = Poco::Path(uri.getPath());
+    Log::debug("Getting info for local uri [" + uri.toString() + "], path [" + path.toString() + "].");
+    const auto filename = path.getFileName();
+    const auto file = Poco::File(path);
+    const auto lastModified = file.getLastModified();
+    const auto size = file.getSize();
     return FileInfo({filename, lastModified, size});
 }
 
