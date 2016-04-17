@@ -322,7 +322,7 @@ int main(int argc, char** argv)
     UnitKit::get().returnValue(returnValue);
 
     Log::info("ForKit process finished.");
-    return returnValue;
+    std::_Exit(returnValue);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
