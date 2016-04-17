@@ -50,19 +50,13 @@ namespace IoUtil
 
         const std::string& getName() const { return _name; }
 
-        /// Processes a single line read and invoking stopPredicate
-        /// to check for termination condition.
-        /// Intended to be called from a polling loop.
-        bool processOnce(std::function<bool(std::string& message)> handler,
-                         std::function<bool()> stopPredicate);
-
-    private:
         /// Reads a single line from the pipe.
         /// Returns 0 for timeout, <0 for error, and >0 on success.
         /// On success, line will contain the read message.
         int readLine(std::string& line,
                      std::function<bool()> stopPredicate);
 
+    private:
         const std::string _name;
         const int _pipe;
         std::string _data;

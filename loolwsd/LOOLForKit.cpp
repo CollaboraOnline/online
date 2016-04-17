@@ -52,19 +52,37 @@ int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 
 static int pipeFd = -1;
 
-class ChildDispatcher
+class ChildDispatcher : public IoUtil::PipeReader
 {
 public:
-    ChildDispatcher() :
-        _wsdPipeReader("wsd_pipe_rd", pipeFd)
+    ChildDispatcher(const int pipeFd) :
+        PipeReader("wsd_pipe_rd", pipeFd)
     {
     }
 
     /// Polls WSD commands and dispatches them to the appropriate child.
     bool pollAndDispatch()
     {
-        return _wsdPipeReader.processOnce([this](std::string& message) { handleInput(message); return true; },
-                                          []() { return TerminationFlag; });
+        std::string line;
+        const auto ready = readLine(line, [](){ return TerminationFlag; });
+        if (ready == 0)
+        {
+            // Timeout.
+            return true;
+        }
+        else if (ready < 0)
+        {
+            // Termination is done via SIGINT, which breaks the wait.
+            if (!TerminationFlag)
+            {
+                Log::error("Error reading from pipe [" + getName() + "].");
+            }
+
+            return false;
+        }
+
+        handleInput(line);
+        return true;
     }
 
 private:
@@ -88,9 +106,6 @@ private:
             }
         }
     }
-
-private:
-    IoUtil::PipeReader _wsdPipeReader;
 };
 
 static int createLibreOfficeKit(const std::string& childRoot,
@@ -264,7 +279,7 @@ int main(int argc, char** argv)
         std::exit(Application::EXIT_SOFTWARE);
     }
 
-    ChildDispatcher childDispatcher;
+    ChildDispatcher childDispatcher(pipeFd);
     Log::info("ForKit process is ready.");
 
     while (!TerminationFlag)

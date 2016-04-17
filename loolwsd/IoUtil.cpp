@@ -321,30 +321,6 @@ int PipeReader::readLine(std::string& line,
     return 0;
 }
 
-bool PipeReader::processOnce(std::function<bool(std::string& message)> handler,
-                             std::function<bool()> stopPredicate)
-{
-    std::string line;
-    const auto ready = readLine(line, stopPredicate);
-    if (ready == 0)
-    {
-        // Timeout.
-        return true;
-    }
-    else if (ready < 0)
-    {
-        Log::error("Error reading from pipe [" + _name + "].");
-        return false;
-    }
-    else if (!handler(line))
-    {
-        Log::info("Pipe [" + _name + "] handler requested to finish.");
-        return false;
-    }
-
-    return true;
-}
-
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
