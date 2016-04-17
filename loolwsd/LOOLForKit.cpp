@@ -161,7 +161,7 @@ static void printArgumentHelp()
 int main(int argc, char** argv)
 {
     if (!hasCorrectUID("loolforkit"))
-        return 1;
+        return Application::EXIT_SOFTWARE;
 
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
@@ -181,7 +181,7 @@ int main(int argc, char** argv)
     if (signal(SIGCHLD, SIG_IGN) == SIG_ERR)
     {
         Log::syserror("Failed to set SIGCHLD to SIG_IGN.");
-        return 1;
+        return Application::EXIT_SOFTWARE;
     }
 
     std::string childRoot;
@@ -241,7 +241,7 @@ int main(int argc, char** argv)
         loTemplate.empty() || childRoot.empty())
     {
         printArgumentHelp();
-        return 1;
+        return Application::EXIT_USAGE;
     }
 
     if (!UnitBase::init(UnitBase::UnitType::TYPE_KIT,
@@ -262,13 +262,13 @@ int main(int argc, char** argv)
     if ( (pipeFd = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
     {
         Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for reading. Exiting.");
-        std::exit(Application::EXIT_SOFTWARE);
+        std::_Exit(Application::EXIT_SOFTWARE);
     }
     Log::debug("open(" + pipeLoolwsd + ", RDONLY) = " + std::to_string(pipeFd));
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))
-        std::exit(Application::EXIT_SOFTWARE);
+        std::_Exit(Application::EXIT_SOFTWARE);
 
     Log::info("Preinit stage OK.");
 
@@ -276,7 +276,7 @@ int main(int argc, char** argv)
     if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
     {
         Log::error("Failed to create a kit process.");
-        std::exit(Application::EXIT_SOFTWARE);
+        std::_Exit(Application::EXIT_SOFTWARE);
     }
 
     ChildDispatcher childDispatcher(pipeFd);
