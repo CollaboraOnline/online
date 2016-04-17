@@ -33,6 +33,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <Common.hpp>
+#include <UserMessages.hpp>
 #include <Util.hpp>
 #include <LOOLProtocol.hpp>
 
@@ -170,7 +171,7 @@ void HTTPWSTest::testBadRequest()
         session.setKeepAlive(true);
         session.sendRequest(request);
         session.receiveResponse(response);
-        CPPUNIT_ASSERT(response.getStatus() == Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+        CPPUNIT_ASSERT(response.getStatus() == Poco::Net::HTTPResponse::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
     }
     catch (const Poco::Exception& exc)
     {
@@ -199,7 +200,7 @@ void HTTPWSTest::testHandShake()
         Poco::Net::WebSocket socket(session, request, response);
 
         const std::string prefixEdit = "editlock:";
-        const char* fail = "fail";
+        const char* fail = "error:";
         std::string payload("statusindicator: find");
 
         std::string receive;
@@ -233,18 +234,26 @@ void HTTPWSTest::testHandShake()
             }
             else
             {
-                payload = "statusindicator: fail";
-                CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
-                CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+                // check error message
+                CPPUNIT_ASSERT(std::strstr(buffer, SERVICE_UNAVALABLE_INTERNAL_ERROR) != nullptr);
                 CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+
+                // close frame message
+                bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+                CPPUNIT_ASSERT(std::strstr(buffer, SERVICE_UNAVALABLE_INTERNAL_ERROR) != nullptr);
+                CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
             }
         }
         else
         {
-            payload = "statusindicator: fail";
-            CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
-            CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+            // check error message
+            CPPUNIT_ASSERT(std::strstr(buffer, SERVICE_UNAVALABLE_INTERNAL_ERROR) != nullptr);
             CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+
+            // close frame message
+            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            CPPUNIT_ASSERT(std::strstr(buffer, SERVICE_UNAVALABLE_INTERNAL_ERROR) != nullptr);
+            CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
         }
 
         socket.shutdown();

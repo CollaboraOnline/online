@@ -504,10 +504,8 @@ private:
             if (!child)
             {
                 // Let the client know we can't serve now.
-                status = "statusindicator: fail";
-                ws->sendFrame(status.data(), (int) status.size());
-                ws->shutdown();
-                throw WebSocketException("Failed to get new child. Client cannot serve now.", WebSocket::WS_ENDPOINT_GOING_AWAY);
+                Log::error("Failed to get new child. Client cannot serve now.");
+                throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
             }
 
             // Set one we just created.
@@ -685,7 +683,8 @@ public:
                     {
                         const std::string msg = std::string("error: ") + exc.what();
                         ws->sendFrame(msg.data(), msg.size());
-                        ws->shutdown();
+                        // abnormal close frame handshake
+                        ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, exc.what());
                     }
                     catch (const std::exception& exc2)
                     {
