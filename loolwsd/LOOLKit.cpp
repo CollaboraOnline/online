@@ -442,7 +442,8 @@ public:
             // parent. The parent forwards us requests that it can't handle (i.e most).
             HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
             cs.setTimeout(0);
-            HTTPRequest request(HTTPRequest::HTTP_GET, std::string(CHILD_URI) + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey);
+            const auto childUrl = std::string(CHILD_URI) + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey;
+            HTTPRequest request(HTTPRequest::HTTP_GET, childUrl);
             HTTPResponse response;
 
             auto ws = std::make_shared<WebSocket>(cs, request, response);

@@ -31,10 +31,10 @@ constexpr int READ_BUFFER_SIZE = 2048;
 /// size are considered small messages.
 constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
 
-constexpr auto CHILD_URI = "/loolws/child?";
 constexpr auto FIFO_LOOLWSD = "loolwsdfifo";
 constexpr auto FIFO_PATH = "pipe";
 constexpr auto JAILED_DOCUMENT_ROOT = "/user/docs/";
+constexpr auto CHILD_URI = "/loolws/child?";
 constexpr auto NEW_CHILD_URI = "/loolws/newchild?";
 
 // The client port number, both loolwsd and the kits have this.

@@ -150,19 +150,19 @@ public:
     virtual void postFork() override
     {
         // before we drop the caps we can even open our /proc files !
-        std::string procName = std::string("/proc/") +
-                               std::to_string(getpid()) +
-                               std::string("/smaps");
+        const std::string procName = std::string("/proc/") +
+                                     std::to_string(getpid()) +
+                                     std::string("/smaps");
         _procSMaps = fopen(procName.c_str(), "r");
     }
 
     virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> &ws,
                                   std::string &message) override
     {
-        std::string token = LOOLProtocol::getFirstToken(message.c_str(), message.length());
+        const auto token = LOOLProtocol::getFirstToken(message.c_str(), message.length());
         if (token == "unit-memdump:")
         {
-            std::string memory = readMemorySizes(_procSMaps) + "\n";
+            const std::string memory = readMemorySizes(_procSMaps) + "\n";
             ws->sendFrame(memory.c_str(), memory.length());
             return true;
         }

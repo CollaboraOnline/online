@@ -130,6 +130,9 @@ public:
                      Poco::Net::HTTPServerRequest& /* request */,
                      Poco::Net::HTTPServerResponse& /* response */)
         { return false; }
+
+    // ---------------- WSD events ----------------
+    virtual void onChildConnected(const int /* pid */, const std::string& /* sessionId */) {}
 };
 
 /// Derive your Kit unit test / hooks from me.

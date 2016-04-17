@@ -892,6 +892,8 @@ public:
             // Now the bridge beetween the prison and the client is connected
             // Let messages flow
 
+            UnitWSD::get().onChildConnected(pid, sessionId);
+
             IoUtil::SocketProcessor(ws,
                     [&session](const std::vector<char>& payload)
                 {
