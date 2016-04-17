@@ -162,6 +162,9 @@ void HTTPWSTest::testBadRequest()
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
 #endif
+        // This should result in Bad Request, but results in:
+        // WebSocket Exception: Missing Sec-WebSocket-Key in handshake request
+        // So Service Unavailable is returned.
 
         request.set("Connection", "Upgrade");
         request.set("Upgrade", "websocket");
