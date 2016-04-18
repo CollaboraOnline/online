@@ -70,6 +70,7 @@ tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 /usr/bin/loolmap
 /usr/bin/loolforkit
 /usr/bin/loolmount
+/usr/bin/looltool
 /usr/share/loolwsd/discovery.xml
 /usr/share/loolwsd/loleaflet
 %{_unitdir}/loolwsd.service
