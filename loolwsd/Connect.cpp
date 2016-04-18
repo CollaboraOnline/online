@@ -187,6 +187,18 @@ protected:
                 std::cout << "Sleeping " << sleepTime << " seconds" << std::endl;
                 Thread::sleep(sleepTime * 1000);
             }
+            else if (line == "exit")
+            {
+                // While hacking on LOOL and editing input files for this program back and forth it
+                // is a good idea to be able to add an enforced exit in the middle of the input
+                // file.
+                std::cout << "Exiting" << std::endl;
+                break;
+            }
+            else if (line.find("#") == 0)
+            {
+                // Also comments can be useful in input files for this program
+            }
             else
             {
                 std::cout << "Sending: '" << line << "'" << std::endl;
