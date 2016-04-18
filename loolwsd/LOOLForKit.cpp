@@ -55,8 +55,8 @@ static int pipeFd = -1;
 class ChildDispatcher : public IoUtil::PipeReader
 {
 public:
-    ChildDispatcher(const int pipeFd) :
-        PipeReader("wsd_pipe_rd", pipeFd)
+    ChildDispatcher(const int pipe) :
+        PipeReader("wsd_pipe_rd", pipe)
     {
     }
 
