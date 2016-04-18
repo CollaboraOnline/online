@@ -74,7 +74,7 @@ namespace Log
         usec %= (one_s);
 
         char procName[32]; // we really need only 16
-        if (!prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) == 0)
+        if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) != 0)
             strcpy(procName, "<noid>");
 
         const char *appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
