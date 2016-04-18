@@ -148,9 +148,16 @@ static int createLibreOfficeKit(const std::string& childRoot,
         int status;
         while ((exitedChildPid = waitpid(-1, &status, WNOHANG)) > 0)
         {
-            Log::info("Child " + std::to_string(exitedChildPid) + " has exited, removing its jail '" + childJails[exitedChildPid] + "'");
-            Util::removeFile(childJails[exitedChildPid], true);
-            childJails.erase(exitedChildPid);
+            if (childJails.find(exitedChildPid) != childJails.end())
+            {
+                Log::info("Child " + std::to_string(exitedChildPid) + " has exited, removing its jail '" + childJails[exitedChildPid] + "'");
+                Util::removeFile(childJails[exitedChildPid], true);
+                childJails.erase(exitedChildPid);
+            }
+            else
+            {
+                Log::error("Unknown child " + std::to_string(exitedChildPid) + " has exited");
+            }
         }
 
         if (pid < 0)
