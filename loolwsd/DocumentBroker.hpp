@@ -174,7 +174,9 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
-    void kill() { _childProcess->close(true); };
+    // Called when the last view is going out.
+    bool canDestroy();
+    bool isMarkedToDestroy() const { return _markToDestroy; }
 
 private:
     const Poco::URI _uriPublic;
@@ -189,6 +191,7 @@ private:
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::shared_ptr<ChildProcess> _childProcess;
+    bool _markToDestroy;
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;

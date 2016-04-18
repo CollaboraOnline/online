@@ -72,7 +72,8 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
     _lastSaveTime(std::chrono::steady_clock::now()),
-    _childProcess(childProcess)
+    _childProcess(childProcess),
+    _markToDestroy(false)
 {
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
@@ -101,6 +102,12 @@ bool DocumentBroker::load(const std::string& jailId)
     Log::debug("Loading from URI: " + _uriPublic.toString());
 
     std::unique_lock<std::mutex> lock(_mutex);
+
+    if (_markToDestroy)
+    {
+        // Tearing down.
+        return false;
+    }
 
     if (_storage)
     {
@@ -305,6 +312,19 @@ size_t DocumentBroker::removeSession(const std::string& id)
     }
 
     return _sessions.size();
+}
+
+bool DocumentBroker::canDestroy()
+{
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    if (_sessions.size() == 1)
+    {
+        // Last view going away, can destroy.
+        _markToDestroy = true;
+    }
+
+    return _markToDestroy;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

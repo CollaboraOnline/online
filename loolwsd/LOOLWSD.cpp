@@ -494,8 +494,33 @@ private:
             Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
             docBroker = it->second;
             assert(docBroker);
+
+            // If this document is going out, wait.
+            if (docBroker->isMarkedToDestroy())
+            {
+                Log::debug("Document [" + docKey + "] is marked to destroy, waiting to load.");
+                const auto timeout = POLL_TIMEOUT_MS / 2;
+                for (size_t i = 0; i < COMMAND_TIMEOUT_MS / timeout; ++i)
+                {
+                    docBrokersLock.unlock();
+                    std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+                    docBrokersLock.lock();
+                    if (docBrokers.find(docKey) == docBrokers.end())
+                    {
+                        docBroker.reset();
+                        break;
+                    }
+                }
+
+                if (docBroker)
+                {
+                    // Still here, but marked to destroy.
+                    throw std::runtime_error("Cannot load a view to document while unloading.");
+                }
+            }
         }
-        else
+
+        if (!docBroker)
         {
             // Request a kit process for this doc.
             auto child = getNewChild();
@@ -554,7 +579,11 @@ private:
             },
             []() { return TerminationFlag; });
 
-        if (docBroker->getSessionsCount() == 1 && !session->_bLoadError)
+        docBrokersLock.lock();
+        const bool canDestroy = docBroker->canDestroy();
+        docBrokersLock.unlock();
+
+        if (canDestroy && !session->_bLoadError)
         {
             Log::info("Shutdown of the last session, saving the document before tearing down.");
 
