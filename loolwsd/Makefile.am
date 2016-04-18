@@ -81,6 +81,7 @@ noinst_HEADERS = Admin.hpp \
                  ChildProcessSession.hpp \
                  Common.hpp \
                  DocumentBroker.hpp \
+                 Exceptions.hpp \
                  FileServer.hpp \
                  IoUtil.hpp \
                  Log.hpp \
@@ -98,6 +99,7 @@ noinst_HEADERS = Admin.hpp \
                  TileCache.hpp \
                  Unit.hpp \
                  UnitHTTP.hpp \
+                 UserMessages.hpp \
                  Util.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
