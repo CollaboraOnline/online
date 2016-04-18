@@ -35,6 +35,7 @@
 #include "LOOLProtocol.hpp"
 #include "LOOLWSD.hpp"
 #include "IoUtil.hpp"
+#include "Unit.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;
@@ -272,6 +273,7 @@ AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
 
 void AdminRequestHandler::sendTextFrame(std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& message)
 {
+    UnitWSD::get().onAdminQueryMessage(message);
     socket->sendFrame(message.data(), message.size());
 }
 

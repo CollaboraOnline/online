@@ -14,6 +14,8 @@
 #include <atomic>
 #include <assert.h>
 
+#include <Poco/Net/WebSocket.h>
+
 class UnitBase;
 class UnitWSD;
 class UnitKit;
@@ -133,6 +135,10 @@ public:
 
     // ---------------- WSD events ----------------
     virtual void onChildConnected(const int /* pid */, const std::string& /* sessionId */) {}
+    /// When admin notify message is sent
+    virtual void onAdminNotifyMessage(const std::string& /* message */) {}
+    /// When admin message is sent in response to a query
+    virtual void onAdminQueryMessage(const std::string& /* message */) {}
 };
 
 /// Derive your Kit unit test / hooks from me.

@@ -17,6 +17,7 @@
 #include <Poco/StringTokenizer.h>
 
 #include "AdminModel.hpp"
+#include "Unit.hpp"
 #include "Util.hpp"
 
 using Poco::StringTokenizer;
@@ -65,6 +66,7 @@ bool Subscriber::notify(const std::string& message)
     auto webSocket = _ws.lock();
     if (webSocket)
     {
+        UnitWSD::get().onAdminNotifyMessage(message);
         webSocket->sendFrame(message.data(), message.length());
         return true;
     }

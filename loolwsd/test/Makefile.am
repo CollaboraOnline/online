@@ -5,8 +5,9 @@ check_PROGRAMS = test
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 
 noinst_LTLIBRARIES = \
-	unit-timeout.la unit-prefork.la \
-        unit-storage.la unit-fonts.la
+        unit-timeout.la unit-prefork.la \
+        unit-storage.la unit-fonts.la \
+        unit-admin.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
@@ -17,6 +18,8 @@ test_SOURCES = WhiteBoxTests.cpp httpposttest.cpp httpwstest.cpp test.cpp ../LOO
 test_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
+unit_admin_la_SOURCES = UnitAdmin.cpp
+unit_admin_la_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
 unit_fonts_la_SOURCES = UnitFonts.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
@@ -29,7 +32,7 @@ SYSTEM_STAMP =
 endif
 
 if HAVE_LO_PATH
-TESTS = unit-timeout.la unit-fonts.la unit-storage.la unit-prefork.la run_test.sh
+TESTS = unit-admin.la unit-timeout.la unit-fonts.la unit-storage.la unit-prefork.la run_test.sh
 else
 TESTS = ${top_builddir}/test/test
 endif
