@@ -55,7 +55,7 @@ describe('Parts and Pages', function () {
 				expect(e.docType).to.be('text');
 				done();
 			});
-			map.getCustomPreview(2, 0, 100, 200, 0, 0, 3000, 6000, {autoUpdate: true});
+			map.getCustomPreview(2, 0, 100, 200, 0, 0, 3840, 7680, {autoUpdate: true});
 		});
 
 

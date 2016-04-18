@@ -14,8 +14,8 @@ L.Map = L.Evented.extend({
 		trackResize: true,
 		markerZoomAnimation: true,
 		defaultZoom: 10,
-		tileWidthTwips: 3000,
-		tileHeightTwips: 3000
+		tileWidthTwips: 3840,
+		tileHeightTwips: 3840
 	},
 
 	initialize: function (id, options) { // (HTMLElement or String, Object)

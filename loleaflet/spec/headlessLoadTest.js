@@ -16,7 +16,7 @@ describe('LoadTest', function () {
 	var testsRan = 0,
 		testsToRun = 500;
 		tileSize = 256,
-		tileSizeTwips = 3000,
+		tileSizeTwips = 3840,
 		host = 'wss://localhost:9980';
 
 	var _parseServerCmd = function (msg) {
