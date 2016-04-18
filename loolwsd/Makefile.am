@@ -48,14 +48,8 @@ loolwsd_SOURCES = Admin.cpp \
                   $(shared_sources)
 
 noinst_PROGRAMS = connect \
-                  loadtest \
                   lokitclient \
 		  loolforkit-nocaps
-
-loadtest_SOURCES = LoadTest.cpp \
-                   Log.cpp \
-                   LOOLProtocol.cpp \
-                   Util.cpp
 
 connect_SOURCES = Connect.cpp \
                   Log.cpp \
@@ -89,7 +83,6 @@ noinst_HEADERS = Admin.hpp \
                  DocumentBroker.hpp \
                  FileServer.hpp \
                  IoUtil.hpp \
-                 LoadTest.hpp \
                  Log.hpp \
                  LOKitHelper.hpp \
                  LOOLKit.hpp \
