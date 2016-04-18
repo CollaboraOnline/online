@@ -16,8 +16,6 @@
 #include <iostream>
 #include <random>
 
-#include <Poco/Condition.h>
-#include <Poco/Mutex.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/HTTPClientSession.h>
@@ -68,8 +66,6 @@ protected:
 
 using namespace LOOLProtocol;
 
-using Poco::Condition;
-using Poco::Mutex;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;

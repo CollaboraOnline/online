@@ -15,9 +15,7 @@
 #include <set>
 #include <string>
 
-#include <Poco/File.h>
 #include <Poco/Timestamp.h>
-#include <Poco/Mutex.h>
 
 /** Handles the cache for tiles of one document.
 
