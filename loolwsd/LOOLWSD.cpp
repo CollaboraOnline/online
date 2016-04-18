@@ -1132,8 +1132,8 @@ void LOOLWSD::initialize(Application& self)
 
     if (NumPreSpawnedChildren == 0)
     {
-        // Default to 10 children.
-        NumPreSpawnedChildren = config().getUInt("num_prespawn_children", 10);
+        // Default to 1 child.
+        NumPreSpawnedChildren = config().getUInt("num_prespawn_children", 1);
     }
 
     StorageBase::initialize();
