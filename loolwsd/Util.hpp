@@ -14,11 +14,13 @@
 #include <sstream>
 #include <functional>
 #include <memory>
+#include <set>
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/RegularExpression.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -117,6 +119,63 @@ namespace Util
 
     /// Display version information
     void displayVersionInfo(const char *app);
+
+    /// Given one or more patterns to allow, and one or more to deny,
+    /// the match member will return true if, and only if, the subject
+    /// matches the allowed list, but not the deny.
+    /// By default, everything is denied.
+    class RegexListMatcher
+    {
+    public:
+        void allow(const std::string& pattern) { _allowed.insert(pattern); }
+        void deny(const std::string& pattern)
+        {
+            _allowed.erase(pattern);
+            _denied.insert(pattern);
+        }
+
+        bool match(const std::string& subject) const
+        {
+            return (match(_allowed, subject) && !match(_denied, subject));
+        }
+
+    private:
+        bool match(const std::set<std::string>& set, const std::string& subject) const
+        {
+            if (set.find(subject) != set.end())
+            {
+                return true;
+            }
+
+            // Not a perfect match, try regex.
+            for (const auto& value : set)
+            {
+                try
+                {
+                    // Not performance critical to warrant caching.
+                    Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
+                    Poco::RegularExpression::Match match;
+
+                    // Must be a full match.
+                    if (re.match(subject, match) && match.offset == 0 && match.length == subject.size())
+                    {
+                        return true;
+                    }
+                }
+                catch (const std::exception& exc)
+                {
+                    // Nothing to do; skip.
+                }
+            }
+
+            return false;
+        }
+
+    private:
+        std::set<std::string> _allowed;
+        std::set<std::string> _denied;
+    };
+
 };
 
 #endif
