@@ -1257,8 +1257,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
 
     optionSet.addOption(Option("nocaps", "", "Use a non-privileged forkit for valgrinding.")
                         .required(false)
-                        .repeatable(false)
-                        .argument("nocaps"));
+                        .repeatable(false));
 
     optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
                         .required(false)
