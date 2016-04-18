@@ -22,19 +22,18 @@
 class View
 {
 public:
-    View(int sessionId)
-        : _sessionId(sessionId),
-          _start(std::time(nullptr))
-    {    }
+    View(const std::string& sessionId) :
+        _sessionId(sessionId),
+        _start(std::time(nullptr))
+    {
+    }
 
     void expire() { _end = std::time(nullptr); }
-
-    bool isExpired() { return _end != 0 && std::time(nullptr) >= _end; }
+    bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
 private:
-    int _sessionId;
-
-    std::time_t _start;
+    const std::string _sessionId;
+    const std::time_t _start;
     std::time_t _end = 0;
 };
 
@@ -63,9 +62,9 @@ public:
 
     std::time_t getElapsedTime() const { return std::time(nullptr) - _start; }
 
-    void addView(int sessionId);
+    void addView(const std::string& sessionId);
 
-    int expireView(int sessionId);
+    int expireView(const std::string& sessionId);
 
     unsigned getActiveViews() const { return _activeViews; }
 
@@ -73,7 +72,7 @@ private:
     const std::string _docKey;
     const Poco::Process::PID _pid;
     /// SessionId mapping to View object
-    std::map<int, View> _views;
+    std::map<std::string, View> _views;
     /// Total number of active views
     unsigned _activeViews = 0;
     /// Hosted filename
@@ -158,9 +157,9 @@ public:
 
     void notify(const std::string& message);
 
-    void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const int sessionId);
+    void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId);
 
-    void removeDocument(const std::string& docKey, const int sessionId);
+    void removeDocument(const std::string& docKey, const std::string& sessionId);
 
 private:
 

@@ -385,13 +385,13 @@ Admin::~Admin()
     _cpuStatsTask->cancel();
 }
 
-void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const int sessionId)
+void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
     _model.addDocument(docKey, pid, filename, sessionId);
 }
 
-void Admin::rmDoc(const std::string& docKey, const int sessionId)
+void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
     _model.removeDocument(docKey, sessionId);

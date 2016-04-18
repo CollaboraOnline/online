@@ -54,10 +54,10 @@ public:
     void update(const std::string& message);
 
     /// Calls with same pid will increment view count, if pid already exists
-    void addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const int sessionId);
+    void addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId);
 
     /// Decrement view count till becomes zero after which doc is removed
-    void rmDoc(const std::string& docKey, const int nSessionId);
+    void rmDoc(const std::string& docKey, const std::string& sessionId);
 
     void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; }
 

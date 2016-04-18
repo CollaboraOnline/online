@@ -24,20 +24,20 @@ using Poco::StringTokenizer;
 /////////////////
 // Document Impl
 ////////////////
-void Document::addView(int sessionId)
+void Document::addView(const std::string& sessionId)
 {
     const auto ret = _views.emplace(sessionId, View(sessionId));
     if (!ret.second)
     {
-        Log::warn() << "View with SessionID [" + std::to_string(sessionId) + "] already exists." << Log::end;
+        Log::warn() << "View with SessionID [" + sessionId + "] already exists." << Log::end;
     }
     else
     {
-        _activeViews++;
+        ++_activeViews;
     }
 }
 
-int Document::expireView(int sessionId)
+int Document::expireView(const std::string& sessionId)
 {
     auto it = _views.find(sessionId);
     if (it != _views.end())
@@ -243,7 +243,8 @@ void AdminModel::notify(const std::string& message)
     }
 }
 
-void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const int sessionId)
+void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
+                             const std::string& filename, const std::string& sessionId)
 {
     const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
     ret.first->second.addView(sessionId);
@@ -251,7 +252,7 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid, 
     // Notify the subscribers
     unsigned memUsage = Util::getMemoryUsage(pid);
     std::ostringstream oss;
-    oss << "adddoc" << " "
+    oss << "adddoc "
         << pid << " "
         << filename << " "
         << sessionId << " "
@@ -260,14 +261,14 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid, 
     notify(oss.str());
 }
 
-void AdminModel::removeDocument(const std::string& docKey, const int sessionId)
+void AdminModel::removeDocument(const std::string& docKey, const std::string& sessionId)
 {
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end() && !docIt->second.isExpired())
     {
         // Notify the subscribers
         std::ostringstream oss;
-        oss << "rmdoc" << " "
+        oss << "rmdoc "
             << docIt->second.getPid() << " "
             << sessionId;
         Log::info("Message to admin console: " + oss.str());

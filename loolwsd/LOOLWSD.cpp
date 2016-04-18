@@ -880,7 +880,7 @@ public:
             }
 
             Log::info("Adding doc " + docKey + " to Admin");
-            Admin::instance().addDoc(docKey, pid, docBroker->getFilename(), Util::decodeId(sessionId));
+            Admin::instance().addDoc(docKey, pid, docBroker->getFilename(), sessionId);
 
             if (waitBridgeCompleted(session))
             {
@@ -914,7 +914,7 @@ public:
         if (!jailId.empty())
         {
             Log::info("Removing doc " + docKey + " from Admin");
-            Admin::instance().rmDoc(docKey, Util::decodeId(sessionId));
+            Admin::instance().rmDoc(docKey, sessionId);
         }
 
         Log::debug("Thread finished.");
