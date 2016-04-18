@@ -577,7 +577,8 @@ private:
                 queue->put(payload);
                 return true;
             },
-            []() { return TerminationFlag; });
+            [&session]() { session->closeFrame(); },
+            [&queueHandlerThread]() { return TerminationFlag && queueHandlerThread.isRunning(); });
 
         docBrokersLock.lock();
         const bool canDestroy = docBroker->canDestroy();
@@ -617,6 +618,26 @@ private:
             docBrokers.erase(docKey);
             Log::info("Removing complete doc [" + docKey + "] from Admin.");
             Admin::instance().rmDoc(docKey);
+        }
+        docBrokersLock.unlock();
+
+        if (session->isCloseFrame())
+        {
+            Log::trace("Normal close handshake.");
+            if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE, ""))
+            {
+                // Client initiated close handshake
+                // respond close frame
+                ws->shutdown();
+            }
+        }
+        else
+        {
+            // something wrong, with internal exceptions
+            Log::trace("Abnormal close handshake.");
+            session->closeFrame();
+            ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
+            session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
         }
     }
 
@@ -741,6 +762,10 @@ public:
         {
             Log::error(std::string("ClientRequestHandler::handleRequest: Exception: ") + exc.what());
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
+        }
+        catch (...)
+        {
+            Log::error("ClientRequestHandler::handleRequest:: Unexpected exception");
         }
 
         if (!responded)
@@ -925,11 +950,31 @@ public:
             UnitWSD::get().onChildConnected(pid, sessionId);
 
             IoUtil::SocketProcessor(ws,
-                    [&session](const std::vector<char>& payload)
+                [&session](const std::vector<char>& payload)
                 {
                     return session->handleInput(payload.data(), payload.size());
                 },
+                [&session]() { session->closeFrame(); },
                 []() { return TerminationFlag; });
+
+            if (session->isCloseFrame())
+            {
+                Log::trace("Normal close handshake.");
+                if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE, ""))
+                {
+                    // LOKit initiated close handshake
+                    // respond close frame
+                    ws->shutdown();
+                }
+            }
+            else
+            {
+                // something wrong, with internal exceptions
+                Log::trace("Abnormal close handshake.");
+                session->closeFrame();
+                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
+                session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
+            }
         }
         catch (const Exception& exc)
         {
@@ -940,6 +985,10 @@ public:
         catch (const std::exception& exc)
         {
             Log::error(std::string("PrisonerRequestHandler::handleRequest: Exception: ") + exc.what());
+        }
+        catch (...)
+        {
+            Log::error("PrisonerRequestHandler::handleRequest:: Unexpected exception");
         }
 
         if (!jailId.empty())

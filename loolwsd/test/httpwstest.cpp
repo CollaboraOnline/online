@@ -53,6 +53,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testBadRequest);
     CPPUNIT_TEST(testHandShake);
+    CPPUNIT_TEST(testCloseAfterClose);
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
     CPPUNIT_TEST(testReload);
@@ -76,6 +77,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testCountHowManyLoolkits();
     void testBadRequest();
     void testHandShake();
+    void testCloseAfterClose();
     void testLoad();
     void testBadLoad();
     void testReload();
@@ -265,6 +267,51 @@ void HTTPWSTest::testHandShake()
 
         socket.shutdown();
         Util::removeFile(documentPath);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testCloseAfterClose()
+{
+    try
+    {
+        int bytes;
+        int flags;
+        char buffer[READ_BUFFER_SIZE];
+
+        // Load a document and get its status.
+        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket = *connectLOKit(request, _response);
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        sendTextFrame(socket, "status");
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        // send normal socket shutdown
+        socket.shutdown();
+
+        // 5 seconds timeout
+        socket.setReceiveTimeout(5000000);
+
+        // receive close frame handshake
+        do
+        {
+            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        }
+        while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+
+        // no more messages is received.
+        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        std::string received(buffer);
+        std::cout << received << "received " << bytes << " flags "<< flags << std::endl;
+        CPPUNIT_ASSERT_EQUAL(0, bytes);
+        CPPUNIT_ASSERT_EQUAL(0, flags);
     }
     catch (const Poco::Exception& exc)
     {

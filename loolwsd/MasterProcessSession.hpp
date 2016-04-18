@@ -36,9 +36,6 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
 
     virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
-    virtual void disconnect() override;
-    virtual bool handleDisconnect() override;
-
     /**
      * Return the URL of the saved-as document when it's ready. If called
      * before it's ready, the call blocks till then.
@@ -54,6 +51,8 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     void setEditLock(const bool value) { _bEditLock = value; }
 
     bool isEditLocked() const { return _bEditLock; }
+
+    bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
 public:
     // Raise this flag on ToClient from ToPrisoner to let ToClient know of load failures

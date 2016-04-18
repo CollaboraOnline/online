@@ -47,46 +47,8 @@ MasterProcessSession::~MasterProcessSession()
 {
     Log::info("~MasterProcessSession dtor [" + getName() + "].");
 
-    try
-    {
-        // We could be unwinding because our peer's connection
-        // died. Handle I/O errors in that case.
-        disconnect();
-    }
-    catch (const std::exception& exc)
-    {
-        Log::error(std::string("MasterProcessSession::~MasterProcessSession: Exception: ") + exc.what());
-    }
-}
-
-void MasterProcessSession::disconnect()
-{
-    if (!isDisconnected())
-    {
-        LOOLSession::disconnect();
-
-        // Release the save-as queue.
-        _saveAsQueue.put("");
-
-        auto peer = _peer.lock();
-        if (peer)
-        {
-            peer->disconnect();
-        }
-    }
-}
-
-bool MasterProcessSession::handleDisconnect()
-{
-    Log::info("Graceful disconnect on " + getName() + ".");
-
-    LOOLSession::handleDisconnect();
-
-    auto peer = _peer.lock();
-    if (peer)
-        peer->disconnect();
-
-    return false;
+    // Release the save-as queue.
+    _saveAsQueue.put("");
 }
 
 bool MasterProcessSession::_handleInput(const char *buffer, int length)
@@ -126,8 +88,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         {
             if (!peer)
             {
-                LOOLSession::disconnect();
-                return false;
+                throw Poco::ProtocolException("The session has not been assigned a peer.");
             }
 
             if (tokens[0] == "unocommandresult:")
@@ -768,11 +729,25 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
     auto peer = _peer.lock();
     if (!peer)
     {
-        Log::error(getName() + ": no peer to forward to.");
+        throw Poco::ProtocolException(getName() + ": no peer to forward to.");
+    }
+    else if (peer->isCloseFrame())
+    {
+        Log::trace(getName() + ": peer begin the closing handshake");
         return;
     }
 
     peer->sendBinaryFrame(buffer, length);
+}
+
+bool MasterProcessSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)
+{
+    auto peer = _peer.lock();
+    if (peer && !peer->isCloseFrame())
+    {
+        peer->_ws->shutdown(statusCode, message);
+    }
+    return peer != nullptr;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

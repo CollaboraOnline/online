@@ -56,6 +56,7 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _isDocPasswordProvided(false),
     _isDocLoaded(false),
     _isDocPasswordProtected(false),
+    _isCloseFrame(false),
     _disconnected(false),
     _lastActivityTime(std::chrono::steady_clock::now())
 {
@@ -68,7 +69,6 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
 
 LOOLSession::~LOOLSession()
 {
-    IoUtil::shutdownWebSocket(_ws);
 }
 
 void LOOLSession::sendTextFrame(const std::string& text)
@@ -99,7 +99,6 @@ void LOOLSession::sendTextFrame(const std::string& text)
         Log::warn() << "LOOLSession::sendTextFrame: "
                     << "Exception: " << exc.displayText()
                     << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
-        IoUtil::shutdownWebSocket(_ws);
     }
 }
 
@@ -130,7 +129,6 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
         Log::warn() << "LOOLSession::sendBinaryFrame: "
                     << "Exception: " << exc.displayText()
                     << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
-        IoUtil::shutdownWebSocket(_ws);
     }
 }
 

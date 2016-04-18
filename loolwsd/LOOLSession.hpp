@@ -10,6 +10,7 @@
 #ifndef INCLUDED_LOOLSESSION_HPP
 #define INCLUDED_LOOLSESSION_HPP
 
+#include <atomic>
 #include <cassert>
 #include <memory>
 #include <mutex>
@@ -62,6 +63,9 @@ public:
         const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
         return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
     }
+
+    void closeFrame() { _isCloseFrame = true; };
+    bool isCloseFrame() const { return _isCloseFrame; }
 
 protected:
     LOOLSession(const std::string& id, const Kind kind,
@@ -124,6 +128,9 @@ protected:
 
     /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
     std::string _docOptions;
+
+    // Whether websocket received close frame.  Closing Handshake
+    std::atomic<bool> _isCloseFrame;
 
 private:
 

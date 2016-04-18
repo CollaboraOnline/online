@@ -41,6 +41,7 @@ namespace IoUtil
 // Handler returns false to end.
 void SocketProcessor(std::shared_ptr<WebSocket> ws,
                      std::function<bool(const std::vector<char>&)> handler,
+                     std::function<void()> closeFrame,
                      std::function<bool()> stopPredicate)
 {
     Log::info("SocketProcessor starting.");
@@ -93,6 +94,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
             }
             else if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
             {
+                closeFrame();
                 Log::warn("Connection closed.");
                 break;
             }
@@ -109,6 +111,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
                     n = ws->receiveFrame(buffer, sizeof(buffer), flags);
                     if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
                     {
+                        closeFrame();
                         Log::warn("Connection closed while reading multiframe message.");
                         break;
                     }
@@ -138,6 +141,7 @@ void SocketProcessor(std::shared_ptr<WebSocket> ws,
 
             if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
             {
+                closeFrame();
                 Log::warn("Connection closed.");
                 break;
             }

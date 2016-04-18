@@ -78,7 +78,12 @@ public:
         Log::trace() << "CallbackWorker::callback [" << _session.getViewId() << "] "
                      << LOKitHelper::kitCallbackTypeToString(nType)
                      << " [" << rPayload << "]." << Log::end;
-        if (_session.isDisconnected())
+        if (_session.isCloseFrame())
+        {
+            Log::trace("LOKit document begin the closing handshake");
+            return;
+        }
+        else if (_session.isDisconnected())
         {
             Log::trace("Skipping callback on disconnected session " + _session.getName());
             return;

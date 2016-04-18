@@ -25,6 +25,7 @@ namespace IoUtil
     //. Handler returns false to end.
     void SocketProcessor(std::shared_ptr<Poco::Net::WebSocket> ws,
                          std::function<bool(const std::vector<char>&)> handler,
+                         std::function<void()> closeFrame,
                          std::function<bool()> stopPredicate);
 
     /// Call WebSocket::shutdown() ignoring Poco::IOException.

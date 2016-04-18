@@ -51,6 +51,7 @@
 #include "LOOLProtocol.hpp"
 #include "QueueHandler.hpp"
 #include "Unit.hpp"
+#include "UserMessages.hpp"
 #include "Util.hpp"
 
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
@@ -280,18 +281,31 @@ public:
 
             Thread queueHandlerThread;
             queueHandlerThread.start(handler);
+            std::shared_ptr<ChildProcessSession> session = _session;
 
             IoUtil::SocketProcessor(_ws,
-                    [&queue](const std::vector<char>& payload)
+                [&queue](const std::vector<char>& payload)
                 {
                     queue->put(payload);
                     return true;
                 },
-                []() { return TerminationFlag; });
+                [&session]() { session->closeFrame(); },
+                [&queueHandlerThread]() { return TerminationFlag && queueHandlerThread.isRunning(); });
 
             queue->clear();
             queue->put("eof");
             queueHandlerThread.join();
+
+            if (session->isCloseFrame())
+            {
+                Log::trace("Normal close handshake.");
+                _ws->shutdown();
+            }
+            else
+            {
+                Log::trace("Abnormal close handshake.");
+               _ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
+            }
         }
         catch (const Exception& exc)
         {
@@ -1047,7 +1061,8 @@ void lokit_main(const std::string& childRoot,
 
                     return true;
                 },
-                                [&document]()
+                []() {},
+                [&document]()
                 {
                     if (document && document->canDiscard())
                         TerminationFlag = true;
