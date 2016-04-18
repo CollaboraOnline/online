@@ -90,6 +90,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testImpressPartCountChanged();
     void testNoExtraLoolKitsLeft();
 
+    void loadDoc(const std::string& documentURL);
+
     static
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
 
@@ -268,14 +270,11 @@ void HTTPWSTest::testHandShake()
     }
 }
 
-void HTTPWSTest::testLoad()
+void HTTPWSTest::loadDoc(const std::string& documentURL)
 {
     try
     {
         // Load a document and get its status.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
 
@@ -308,12 +307,19 @@ void HTTPWSTest::testLoad()
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
         socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
     }
+}
+
+void HTTPWSTest::testLoad()
+{
+    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    loadDoc(documentURL);
+    Util::removeFile(documentPath);
 }
 
 void HTTPWSTest::testBadLoad()
@@ -365,10 +371,14 @@ void HTTPWSTest::testBadLoad()
 
 void HTTPWSTest::testReload()
 {
+    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
     for (auto i = 0; i < 3; ++i)
     {
-        testLoad();
+        loadDoc(documentURL);
     }
+
+    Util::removeFile(documentPath);
 }
 
 void HTTPWSTest::testSaveOnDisconnect()
