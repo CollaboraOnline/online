@@ -114,15 +114,6 @@ tilecombine <parameters>
     Accept same parameters as 'tile' message except parameters 'tileposx' and 'tileposy'
     can be a comma separated list, and number of elements in both must be same.
 
-unload [save|force]
-
-    unloads the document.
-
-    if 'save' is specified, the document is saved before unloading,
-    otherwise, changes are discarded.
-    if other users have the document open, and save not specified,
-    'force' is necessary to discard changes.
-
 uno <command>
 
     <command> is a line of text.

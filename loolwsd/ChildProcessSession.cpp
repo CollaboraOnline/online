@@ -412,8 +412,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                tokens[0] == "selecttext" ||
                tokens[0] == "selectgraphic" ||
                tokens[0] == "resetselection" ||
-               tokens[0] == "saveas" ||
-               tokens[0] == "unload");
+               tokens[0] == "saveas");
 
         {
             std::unique_lock<std::recursive_mutex> lock(Mutex);
@@ -482,11 +481,6 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "saveas")
         {
             return saveAs(buffer, length, tokens);
-        }
-        else if (tokens[0] == "unload")
-        {
-            //FIXME: Implement.
-            assert(!"Not implemented");
         }
         else
         {
