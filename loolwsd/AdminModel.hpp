@@ -68,6 +68,8 @@ public:
 
     unsigned getActiveViews() const { return _activeViews; }
 
+    const std::map<std::string, View>& getViews() const { return _views; }
+
 private:
     const std::string _docKey;
     const Poco::Process::PID _pid;
@@ -160,6 +162,7 @@ public:
     void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId);
 
     void removeDocument(const std::string& docKey, const std::string& sessionId);
+    void removeDocument(const std::string& docKey);
 
 private:
 

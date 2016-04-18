@@ -59,6 +59,9 @@ public:
     /// Decrement view count till becomes zero after which doc is removed
     void rmDoc(const std::string& docKey, const std::string& sessionId);
 
+    /// Remove the document with all views. Used on termination or catastrophic failure.
+    void rmDoc(const std::string& docKey);
+
     void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; }
 
     /// Callers must ensure that modelMutex is acquired

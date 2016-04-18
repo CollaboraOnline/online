@@ -284,6 +284,26 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
     }
 }
 
+void AdminModel::removeDocument(const std::string& docKey)
+{
+    auto docIt = _documents.find(docKey);
+    if (docIt != _documents.end())
+    {
+        for (const auto& pair : docIt->second.getViews())
+        {
+            // Notify the subscribers
+            std::ostringstream oss;
+            oss << "rmdoc "
+                << docIt->second.getPid() << " "
+                << pair.first;
+            Log::info("Message to admin console: " + oss.str());
+            notify(oss.str());
+        }
+
+        _documents.erase(docIt);
+    }
+}
+
 std::string AdminModel::getMemStats()
 {
     std::string response;

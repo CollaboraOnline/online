@@ -397,6 +397,12 @@ void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
     _model.removeDocument(docKey, sessionId);
 }
 
+void Admin::rmDoc(const std::string& docKey)
+{
+    std::unique_lock<std::mutex> modelLock(_modelMutex);
+    _model.removeDocument(docKey);
+}
+
 void MemoryStats::run()
 {
     std::unique_lock<std::mutex> modelLock(_admin->getLock());

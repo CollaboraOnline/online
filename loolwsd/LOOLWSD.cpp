@@ -586,6 +586,8 @@ private:
         {
             Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
             docBrokers.erase(docKey);
+            Log::info("Removing complete doc [" + docKey + "] from Admin.");
+            Admin::instance().rmDoc(docKey);
         }
     }
 
