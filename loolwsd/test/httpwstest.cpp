@@ -56,7 +56,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
     CPPUNIT_TEST(testReload);
-    //CPPUNIT_TEST(testSaveOnDisconnect);
+    CPPUNIT_TEST(testSaveOnDisconnect);
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPaste);
     CPPUNIT_TEST(testLargePaste);
@@ -383,12 +383,12 @@ void HTTPWSTest::testReload()
 
 void HTTPWSTest::testSaveOnDisconnect()
 {
+    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
     try
     {
         // Load a document and get its status.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
 
@@ -399,6 +399,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket, "uno .uno:Delete");
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
 
+        // Shutdown abruptly.
         socket.shutdown();
     }
     catch (const Poco::Exception& exc)
@@ -406,12 +407,12 @@ void HTTPWSTest::testSaveOnDisconnect()
         CPPUNIT_FAIL(exc.displayText());
     }
 
+    // Allow time to save and destroy before we connect again.
+    sleep(5);
+    std::cout << "Loading again." << std::endl;
     try
     {
         // Load the same document and check that the last changes (pasted text) is saved.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
-
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
 
