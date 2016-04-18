@@ -886,7 +886,7 @@ void lokit_main(const std::string& childRoot,
         {
             instdir_path = "/" + loSubPath + "/program";
 
-            jailPath = Path::forDirectory(childRoot + Path::separator() + jailId);
+            jailPath = Path::forDirectory(childRoot + "/" + jailId);
             Log::info("Jail path: " + jailPath.toString());
             File(jailPath).createDirectories();
 

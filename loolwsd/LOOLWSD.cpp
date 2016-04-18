@@ -239,7 +239,7 @@ public:
         if (!params.has("filename"))
             return;
 
-        Path tempPath = Path::forDirectory(TemporaryFile().tempName() + Path::separator());
+        Path tempPath = Path::forDirectory(TemporaryFile().tempName() + "/");
         File(tempPath).createDirectories();
         tempPath.setFileName(params.get("filename"));
         _filename = tempPath.toString();
@@ -428,7 +428,7 @@ private:
                     const std::string dirPath = LOOLWSD::ChildRoot + formChildid
                                               + JAILED_DOCUMENT_ROOT + "insertfile";
                     File(dirPath).createDirectories();
-                    std::string fileName = dirPath + Path::separator() + form.get("name");
+                    std::string fileName = dirPath + "/" + form.get("name");
                     File(tmpPath).moveTo(fileName);
                     return false;
                 }
@@ -443,7 +443,7 @@ private:
                                       + JAILED_DOCUMENT_ROOT + tokens[2];
             std::string fileName;
             URI::decode(tokens[3], fileName);
-            const std::string filePath = dirPath + Path::separator() + fileName;
+            const std::string filePath = dirPath + "/" + fileName;
             Log::info("HTTP request for: " + filePath);
             File file(filePath);
             if (file.exists())
@@ -1383,8 +1383,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (ChildRoot.empty())
         throw MissingOptionException("childroot");
-    else if (ChildRoot[ChildRoot.size() - 1] != Path::separator())
-        ChildRoot += Path::separator();
+    else if (ChildRoot[ChildRoot.size() - 1] != '/')
+        ChildRoot += '/';
 
     if (FileServerRoot.empty())
         FileServerRoot = Path(Application::instance().commandPath()).parent().parent().toString();
@@ -1399,7 +1399,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::warn("No admin credentials set via 'admincreds' command-line argument. Admin Console will be disabled.");
     }
 
-    const Path pipePath = Path::forDirectory(ChildRoot + Path::separator() + FIFO_PATH);
+    const Path pipePath = Path::forDirectory(ChildRoot + "/" + FIFO_PATH);
     if (!File(pipePath).exists() && !File(pipePath).createDirectory())
     {
         Log::error("Failed to create pipe directory [" + pipePath.toString() + "].");
