@@ -1084,14 +1084,24 @@ int countLoolKitProcesses()
             }
             if (pid > 1 && endPos == fileName.length())
             {
-                Poco::FileInputStream comm(procEntry.toString() + "/comm");
-                std::string command;
-                Poco::StreamCopier::copyToString(comm, command);
-                if (command.length() > 0 && command.back() == '\n')
-                    command.pop_back();
-                // std::cout << "For process " << pid << " comm is '" << command << "'" << std::endl;
-                if (command == "loolkit")
-                    result++;
+                Poco::FileInputStream stat(procEntry.toString() + "/stat");
+                std::string statString;
+                Poco::StreamCopier::copyToString(stat, statString);
+                Poco::StringTokenizer tokens(statString, " ");
+                if (tokens.count() > 3 && tokens[1] == "(loolkit)")
+                {
+                    switch (tokens[2].c_str()[0])
+                    {
+                    case 'x':
+                    case 'X': // Kinds of dead-ness.
+                    case 'Z': // zombies
+                        break; // ignore
+                    default:
+                        result++;
+                        break;
+                    }
+                    // std::cout << "Process:" << pid << ", '" << tokens[1] << "'" << " state: " << tokens[2] << std::endl;
+                }
             }
         }
         catch (const Poco::Exception&)

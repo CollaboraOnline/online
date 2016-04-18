@@ -18,10 +18,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <atomic>
 #include <cstdlib>
 #include <cstring>
-#include <atomic>
+#include <map>
 #include <iostream>
+#include <set>
 
 #include <Poco/Path.h>
 #include <Poco/Process.h>
@@ -47,6 +49,8 @@ using Poco::Util::Application;
 static bool NoCapsForKit = false;
 static std::string UnitTestLibrary;
 static std::atomic<unsigned> ForkCounter( 0 );
+
+static std::map<Process::PID, std::string> childJails;
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 
@@ -137,11 +141,25 @@ static int createLibreOfficeKit(const std::string& childRoot,
     }
     else
     {
-        // parent
+        // Parent
+
+        // Check if some previously forked kids have died
+        Process::PID exitedChildPid;
+        int status;
+        while ((exitedChildPid = waitpid(-1, &status, WNOHANG)) > 0)
+        {
+            Log::info("Child " + std::to_string(exitedChildPid) + " has exited, removing its jail '" + childJails[exitedChildPid] + "'");
+            Util::removeFile(childJails[exitedChildPid], true);
+            childJails.erase(exitedChildPid);
+        }
+
         if (pid < 0)
             Log::syserror("Fork failed.");
         else
+        {
             Log::info("Forked kit [" + std::to_string(pid) + "].");
+            childJails[pid] = childRoot + std::to_string(pid);
+        }
 
         UnitKit::get().launchedKit(pid);
     }
@@ -176,13 +194,6 @@ int main(int argc, char** argv)
 
     Util::setTerminationSignals();
     Util::setFatalSignals();
-
-    // Auto-reap zombies.
-    if (signal(SIGCHLD, SIG_IGN) == SIG_ERR)
-    {
-        Log::syserror("Failed to set SIGCHLD to SIG_IGN.");
-        return Application::EXIT_SOFTWARE;
-    }
 
     std::string childRoot;
     std::string loSubPath;
