@@ -82,7 +82,7 @@ private:
         if (response.getStatus() == HTTPResponse::HTTP_UNAUTHORIZED)
             res = TestResult::TEST_OK;
 
-        Log::info("testIncorrectPassword: " + (res == TestResult::TEST_OK) ? "OK" : "FAIL");
+        Log::info(std::string("testIncorrectPassword: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
         return res;
     }
 
@@ -121,7 +121,7 @@ private:
             res = TestResult::TEST_OK;
         }
 
-        Log::info("testCorrectPassword: " + (res == TestResult::TEST_OK) ? "OK" : "FAIL");
+        Log::info(std::string("testCorrectPassword: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
         return res;
     }
 
@@ -147,7 +147,7 @@ private:
         if (!authorized)
             res = TestResult::TEST_OK;
 
-        Log::info("testWebSocketWithoutCookie: " + (res == TestResult::TEST_OK) ? "OK" : "FAIL");
+        Log::info(std::string("testWebSocketWithoutCookie: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
         return res;
     }
 
@@ -179,7 +179,7 @@ private:
         if (authorized)
             res = TestResult::TEST_OK;
 
-        Log::info("testWebSocketWithCookie: " + (res == TestResult::TEST_OK) ? "OK" : "FAIL");
+        Log::info(std::string("testWebSocketWithCookie: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
         return res;
     }
 
