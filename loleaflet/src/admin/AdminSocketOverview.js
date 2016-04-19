@@ -90,7 +90,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				}
 				docProps = documents[i].trim().split(' ');
 				sPid = docProps[0];
-				sName = docProps[1];
+				sName = decodeURI(docProps[1]);
 				sViews = docProps[2];
 				sMem = docProps[3];
 				sDocTime = docProps[4];
@@ -129,7 +129,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = textMsg.substring('adddoc'.length);
 			docProps = textMsg.trim().split(' ');
 			sPid = docProps[0];
-			sName = docProps[1];
+			sName = decodeURI(docProps[1]);
 			// docProps[2] == sessionid
 			sMem = docProps[3];
 

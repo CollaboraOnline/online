@@ -15,6 +15,7 @@
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/URI.h>
 
 #include "AdminModel.hpp"
 #include "Unit.hpp"
@@ -254,9 +255,11 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
     // Notify the subscribers
     unsigned memUsage = Util::getMemoryUsage(pid);
     std::ostringstream oss;
+    std::string encodedFilename;
+    Poco::URI::encode(filename, " ", encodedFilename);
     oss << "adddoc "
         << pid << " "
-        << filename << " "
+        << encodedFilename << " "
         << sessionId << " "
         << std::to_string(memUsage);
     Log::info("Message to admin console: " + oss.str());
@@ -351,14 +354,15 @@ std::string AdminModel::getDocuments()
             continue;
 
         std::string sPid = std::to_string(it.second.getPid());
-        // TODO: URI encode the filename
         std::string sFilename = it.second.getFilename();
         std::string sViews = std::to_string(it.second.getActiveViews());
         std::string sMem = std::to_string(Util::getMemoryUsage(it.second.getPid()));
         std::string sElapsed = std::to_string(it.second.getElapsedTime());
 
+        std::string encodedFilename;
+        Poco::URI::encode(sFilename, " ", encodedFilename);
         oss << sPid << " "
-            << sFilename << " "
+            << encodedFilename << " "
             << sViews << " "
             << sMem << " "
             << sElapsed << " \n ";
