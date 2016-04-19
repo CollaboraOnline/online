@@ -117,36 +117,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                     std::unique_lock<std::mutex> modelLock(_admin->getLock());
                     AdminModel& model = _admin->getModel();
 
-                    if (tokens[0] == "stats")
-                    {
-                        //TODO: Collect stats and reply back to admin.
-                        // We need to ask ForKit to give us some numbers on docs/clients/etc.
-                        // But we can also collect some memory info using system calls.
-
-                        std::string statsResponse;
-
-                        const auto cmd = "pstree -a -c -h -A -p " + std::to_string(getpid());
-                        FILE* fp = popen(cmd.c_str(), "r");
-                        if (fp == nullptr)
-                        {
-                            statsResponse = "error: failed to collect stats.";
-                            ws->sendFrame(statsResponse.data(), statsResponse.size());
-                            continue;
-                        }
-
-                        char treeBuffer[1024];
-                        while (fgets(treeBuffer, sizeof(treeBuffer)-1, fp) != nullptr &&
-                               !TerminationFlag)
-                        {
-                            statsResponse += treeBuffer;
-                            statsResponse += "</ BR>\n";
-                        }
-
-                        pclose(fp);
-
-                        ws->sendFrame(statsResponse.data(), statsResponse.size());
-                    }
-                    else if (tokens[0] == "subscribe" && tokens.count() > 1)
+                    if (tokens[0] == "subscribe" && tokens.count() > 1)
                     {
                         for (unsigned i = 0; i < tokens.count() - 1; i++)
                         {
@@ -162,7 +133,6 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                     }
                     else if (tokens[0] == "documents")
                     {
-
                         std::string responseString = "documents " + model.query("documents");
                         ws->sendFrame(responseString.data(), responseString.size());
                     }
