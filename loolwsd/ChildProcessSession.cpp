@@ -639,6 +639,32 @@ bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*le
     return true;
 }
 
+namespace {
+    inline bool delayAndRewritePart(int &part)
+    {
+#if ENABLE_DEBUG
+        static bool delayEnv = getenv("DELAY_TILES");
+        if (delayEnv)
+            return true;
+
+        if (part == 42)
+        {
+            part = 0;
+            return true;
+        }
+#endif
+        return false;
+    }
+    inline void delay()
+    {
+#if ENABLE_DEBUG
+        Log::debug("Sleeping for one second");
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+#endif
+    }
+}
+
+
 void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
@@ -683,14 +709,7 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     std::vector<unsigned char> pixmap;
     pixmap.resize(4 * width * height);
 
-#if ENABLE_DEBUG
-    bool makeSlow = false;
-    if (part == 42)
-    {
-        makeSlow = true;
-        part = 0;
-    }
-#endif
+    bool makeSlow = delayAndRewritePart(part);
 
     if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument))
     {
@@ -710,13 +729,8 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
         return;
     }
 
-#if ENABLE_DEBUG
     if (makeSlow)
-    {
-        Log::debug("Sleeping for 5 seconds");
-        std::this_thread::sleep_for(std::chrono::seconds(5));
-    }
-#endif
+        delay();
 
     sendBinaryFrame(output.data(), output.size());
 }
@@ -750,6 +764,8 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
 
     if (tokens.count() > 8)
         getTokenString(tokens[8], "timestamp", reqTimestamp);
+
+    bool makeSlow = delayAndRewritePart(part);
 
     Util::Rectangle renderArea;
 
@@ -855,6 +871,9 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
 
         sendBinaryFrame(output.data(), output.size());
     }
+
+    if (makeSlow)
+        delay();
 }
 
 bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)

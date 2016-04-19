@@ -77,7 +77,7 @@ else # newer unit tests.
                                    --lotemplate="$lo_path" \
                                    --childroot="$jails_path" \
                                    --allowlocalstorage \
-                                   --admincreds=admin/admin \
+                                   --admincreds="admin/admin" \
                                    --unitlib=".libs/$tst.so" 2> "$tst_log"; then
         echo "Test $tst passed."
         echo ":test-result: PASS $tst" >> $test_output
