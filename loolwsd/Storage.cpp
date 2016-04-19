@@ -96,7 +96,24 @@ void StorageBase::initialize()
 
 bool isLocalhost(const std::string& targetHost)
 {
-    std::string targetAddress = Poco::Net::DNS::resolveOne(targetHost).toString();
+    std::string targetAddress;
+    try
+    {
+        targetAddress = Poco::Net::DNS::resolveOne(targetHost).toString();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        Log::warn("Poco::Net::DNS::resolveOne(\"" + targetHost + "\") failed: " + exc.displayText());
+        try
+        {
+            targetAddress = Poco::Net::IPAddress(targetHost).toString();
+        }
+        catch (const Poco::Exception& exc1)
+        {
+            Log::warn("Poco::Net::IPAddress(\"" + targetHost + "\") failed: " + exc1.displayText());
+        }
+    }
+
     Poco::Net::NetworkInterface::NetworkInterfaceList list = Poco::Net::NetworkInterface::list(true,true);
     for (unsigned i = 0; i < list.size(); i++)
     {
@@ -104,8 +121,12 @@ bool isLocalhost(const std::string& targetHost)
         std::string address = netif.address().toString();
         address = address.substr(0, address.find("%",0));
         if (address == targetAddress)
+        {
+            Log::info("WOPI host is on the same host as the WOPI client: \"" + targetAddress + "\". Connection is allowed.");
             return true;
+        }
     }
+    Log::info("WOPI host is not on the same host as the WOPI client: \"" + targetAddress + "\". Connection is not allowed.");
     return false;
 }
 
