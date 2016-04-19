@@ -127,11 +127,33 @@ namespace Util
     class RegexListMatcher
     {
     public:
+        RegexListMatcher()
+        {
+        }
+
+        RegexListMatcher(std::initializer_list<std::string> allow) :
+            _allowed(allow)
+        {
+        }
+
+        RegexListMatcher(std::initializer_list<std::string> allow,
+                         std::initializer_list<std::string> deny) :
+            _allowed(allow),
+            _denied(deny)
+        {
+        }
+
         void allow(const std::string& pattern) { _allowed.insert(pattern); }
         void deny(const std::string& pattern)
         {
             _allowed.erase(pattern);
             _denied.insert(pattern);
+        }
+
+        void clear()
+        {
+            _allowed.clear();
+            _denied.clear();
         }
 
         bool match(const std::string& subject) const

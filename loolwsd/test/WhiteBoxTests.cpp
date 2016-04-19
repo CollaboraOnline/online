@@ -20,10 +20,12 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(WhiteBoxTests);
 
     CPPUNIT_TEST(testRegexListMatcher);
+    CPPUNIT_TEST(testRegexListMatcher_Init);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testRegexListMatcher();
+    void testRegexListMatcher_Init();
 };
 
 void WhiteBoxTests::testRegexListMatcher()
@@ -58,6 +60,47 @@ void WhiteBoxTests::testRegexListMatcher()
     CPPUNIT_ASSERT(!matcher.match("staging.collaboracloudsuite"));
     CPPUNIT_ASSERT(!matcher.match("web.collaboracloudsuite"));
     CPPUNIT_ASSERT(!matcher.match("staging.collaboracloudsuite.com"));
+
+    matcher.allow("10\\.10\\.[0-9]{1,3}\\.[0-9]{1,3}");
+    matcher.deny("10\\.10\\.10\\.10");
+    CPPUNIT_ASSERT(matcher.match("10.10.001.001"));
+    CPPUNIT_ASSERT(!matcher.match("10.10.10.10"));
+    CPPUNIT_ASSERT(matcher.match("10.10.250.254"));
+}
+
+
+void WhiteBoxTests::testRegexListMatcher_Init()
+{
+    Util::RegexListMatcher matcher({"localhost", "192\\..*"}, {"192\\.168\\..*"});
+
+    CPPUNIT_ASSERT(matcher.match("localhost"));
+    CPPUNIT_ASSERT(!matcher.match(""));
+    CPPUNIT_ASSERT(!matcher.match("localhost2"));
+    CPPUNIT_ASSERT(!matcher.match("xlocalhost"));
+    CPPUNIT_ASSERT(!matcher.match("192.168.1.1"));
+    CPPUNIT_ASSERT(matcher.match("192.172.10.122"));
+
+    matcher.deny("localhost");
+    CPPUNIT_ASSERT(!matcher.match("localhost"));
+
+    matcher.allow("www[0-9].*");
+    CPPUNIT_ASSERT(matcher.match("www1example"));
+
+    matcher.allow("192\\.168\\..*\\..*");
+    CPPUNIT_ASSERT(!matcher.match("192.168.1.1"));
+    CPPUNIT_ASSERT(!matcher.match("192.168.159.1"));
+    CPPUNIT_ASSERT(!matcher.match("192.168.1.134"));
+    CPPUNIT_ASSERT(matcher.match("192.169.1.1"));
+    CPPUNIT_ASSERT(!matcher.match("192.168.."));
+
+    matcher.clear();
+
+    matcher.allow("192\\.168\\..*\\..*");
+    CPPUNIT_ASSERT(matcher.match("192.168.1.1"));
+    CPPUNIT_ASSERT(matcher.match("192.168.159.1"));
+    CPPUNIT_ASSERT(matcher.match("192.168.1.134"));
+    CPPUNIT_ASSERT(!matcher.match("192.169.1.1"));
+    CPPUNIT_ASSERT(matcher.match("192.168.."));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
