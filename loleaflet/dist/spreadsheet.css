@@ -2,13 +2,14 @@
 	border-top: 1px solid #B6B6B6 !important;
 	top: 100px !important;
 	left: 50px !important;
-	bottom: 20px !important;
+	bottom: 49px !important;
 	}
 
 .spreadsheet-tab {
 	margin: 0;
 	padding: 0;
-	bottom: 0;
+	left: 108px;
+	bottom: 34px;
 	position: absolute;
 	cursor: pointer;
 	height: 20px;
@@ -124,7 +125,7 @@
 	left: 0;
 	top: 100px;
 	width: 48px;
-	bottom: 20px;
+	bottom: 54px;
 	overflow: hidden;
 	}
 

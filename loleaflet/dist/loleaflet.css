@@ -2,8 +2,8 @@
 	border-top: 2px solid #B6B6B6;
 	background: #DFDFDF;
 	position: absolute;
-	top: 70px;
-	bottom: 0px;
+	top: 47px;
+	bottom: 29px;
 	right: 0px;
 	left: 0px;
 }
@@ -15,4 +15,8 @@
 	left: 0px;
 	right: 16px;
 	z-index: 10;
+}
+
+body {
+    margin: 0;
 }

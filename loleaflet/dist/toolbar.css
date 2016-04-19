@@ -7,6 +7,67 @@
 	text-align: center;
 }
 
+#toolbar-up {
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 10px;
+}
+
+#toolbar-down {
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+}
+
+#toolbar-up-more {
+    position: absolute;
+    right: 10px;
+    width: 200px;
+    top: 40px;
+    border: 1px solid black;
+    z-index: 8000;
+    display: none;
+}
+
+#spreadsheet-toolbar {
+    left: 0;
+    text-align: center;
+    bottom: 29px;
+    padding: 0;
+    position: absolute;
+}
+
+/* center the toolbar */
+#tb_toolbar-up_item_left,
+#tb_formulabar_item_left {
+    width: 50%;
+}
+
+#formulaInput {
+    height: 29px;
+    width: 800px;
+}
+
+#tb_toolbar-up_item_right {
+    width: 100%;
+}
+
+#tb_toolbar-down_item_left {
+    width: 45%;
+}
+#tb_toolbar-down_item_right {
+    width: 100%;
+}
+
+.w2ui-tb-image {
+    width: 16px;
+    height: 16px;
+}
+
 .leaflet-bar a {
     float: left;
 }
@@ -61,4 +122,109 @@ button.leaflet-control-search-next
 #toolbar label
 , .leaflet-control-search {
     background-color: #fff;
+}
+
+.search-not-found {
+    background-color: red !important;
+    -webkit-transition: background-color 0.8s linear;
+       -moz-transition: background-color 0.8s linear;
+         -o-transition: background-color 0.8s linear;
+            transition: background-color 0.8s linear;
+
+}
+
+#zoomlevel {
+    min-width: 36px;
+    font-size: 12px;
+}
+
+/* select box */
+.select2-results__option {
+    padding: 5px;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.styles-select {
+    width: 180px;
+}
+.fonts-select {
+    width: 150px;
+}
+.fontsizes-select {
+    width: 70px;
+}
+.evo-cp-wrap {
+    /* hide the color pick div */
+    width: 1px !important;
+}
+
+.font-color-indicator,
+.back-color-indicator {
+    width: 16px;
+    height: 5px;
+    margin-top: -7px;
+    margin-left: 5px;
+    position: fixed;
+    background: transparent;
+}
+
+.back-color-indicator {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.w2ui-icon.accepttrackedchanges{ background: url('/loleaflet/dist/images/sc_accepttrackedchanges.png') no-repeat center !important; }
+.w2ui-icon.alignblock{ background: url('/loleaflet/dist/images/sc_alignblock.png') no-repeat center !important; }
+.w2ui-icon.alignhorizontal{ background: url('/loleaflet/dist/images/sc_alignhorizontal.png') no-repeat center !important; }
+.w2ui-icon.alignleft{ background: url('/loleaflet/dist/images/sc_alignleft.png') no-repeat center !important; }
+.w2ui-icon.alignright{ background: url('/loleaflet/dist/images/sc_alignright.png') no-repeat center !important; }
+.w2ui-icon.autosum{ background: url('/loleaflet/dist/images/sc_autosum.png') no-repeat center !important; }
+.w2ui-icon.backcolor{ background: url('/loleaflet/dist/images/sc_backcolor.png') no-repeat center !important; }
+.w2ui-icon.bold{ background: url('/loleaflet/dist/images/sc_bold.png') no-repeat center !important; }
+.w2ui-icon.bullet{ background: url('/loleaflet/dist/images/sc_bullet.png') no-repeat center !important; }
+.w2ui-icon.cancel{ background: url('/loleaflet/dist/images/sc_cancel.png') no-repeat center !important; }
+.w2ui-icon.color{ background: url('/loleaflet/dist/images/sc_color.png') no-repeat center !important; }
+.w2ui-icon.closedoc{ background: url('/loleaflet/dist/images/sc_closedoc.png') no-repeat center !important; }
+.w2ui-icon.decrementindent{ background: url('/loleaflet/dist/images/sc_decrementindent.png') no-repeat center !important; }
+.w2ui-icon.deletepage{ background: url('/loleaflet/dist/images/sc_deletepage.png') no-repeat center !important; }
+.w2ui-icon.duplicatepage{ background: url('/loleaflet/dist/images/sc_duplicatepage.png') no-repeat center !important; }
+.w2ui-icon.edit{ background: url('/loleaflet/dist/images/sc_edit.png') no-repeat center !important; }
+.w2ui-icon.equal{ background: url('/loleaflet/dist/images/sc_equal.png') no-repeat center !important; }
+.w2ui-icon.help{ background: url('/loleaflet/dist/images/sc_help.png') no-repeat center !important; }
+.w2ui-icon.incrementindent{ background: url('/loleaflet/dist/images/sc_incrementindent.png') no-repeat center !important; }
+.w2ui-icon.insertpage{ background: url('/loleaflet/dist/images/sc_insertpage.png') no-repeat center !important; }
+.w2ui-icon.italic{ background: url('/loleaflet/dist/images/sc_italic.png') no-repeat center !important; }
+.w2ui-icon.insertgraphic{ background: url('/loleaflet/dist/images/sc_gallery.png') no-repeat center !important; }
+.w2ui-icon.next{ background: url('/loleaflet/dist/images/sc_next.png') no-repeat center !important; }
+.w2ui-icon.numbering{ background: url('/loleaflet/dist/images/sc_numbering.png') no-repeat center !important; }
+.w2ui-icon.presentation{ background: url('/loleaflet/dist/images/sc_presentation.png') no-repeat center !important; }
+.w2ui-icon.prev{ background: url('/loleaflet/dist/images/sc_prev.png') no-repeat center !important; }
+.w2ui-icon.print{ background: url('/loleaflet/dist/images/sc_print.png') no-repeat center !important; }
+.w2ui-icon.redo{ background: url('/loleaflet/dist/images/sc_redo.png') no-repeat center !important; }
+.w2ui-icon.save{ background: url('/loleaflet/dist/images/sc_save.png') no-repeat center !important; }
+.w2ui-icon.saveas{ background: url('/loleaflet/dist/images/sc_saveas.png') no-repeat center !important; }
+.w2ui-icon.select{ background: url('/loleaflet/dist/images/sc_select.png') no-repeat center !important; }
+.w2ui-icon.strikeout{ background: url('/loleaflet/dist/images/sc_strikeout.png') no-repeat center !important; }
+.w2ui-icon.underline{ background: url('/loleaflet/dist/images/sc_underline.png') no-repeat center !important; }
+.w2ui-icon.undo{ background: url('/loleaflet/dist/images/sc_undo.png') no-repeat center !important; }
+.w2ui-icon.zoomin{ background: url('/loleaflet/dist/images/sc_zoomin.png') no-repeat center !important; }
+.w2ui-icon.zoomout{ background: url('/loleaflet/dist/images/sc_zoomout.png') no-repeat center !important; }
+.w2ui-icon.zoomreset{ background: url('/loleaflet/dist/images/sc_view100.png') no-repeat center !important; }
+.w2ui-icon.more{ background: url('/loleaflet/dist/images/sc_next.png') no-repeat center !important; }
+.w2ui-icon.firstrecord{ background: url('/loleaflet/dist/images/sc_firstrecord.png') no-repeat center !important; }
+.w2ui-icon.nextrecord{ background: url('/loleaflet/dist/images/sc_nextrecord.png') no-repeat center !important; }
+.w2ui-icon.prevrecord{ background: url('/loleaflet/dist/images/sc_prevrecord.png') no-repeat center !important; }
+.w2ui-icon.lastrecord{ background: url('/loleaflet/dist/images/sc_lastrecord.png') no-repeat center !important; }
+
+#simplemodal-container a.modalCloseImg {
+	background:url('/loleaflet/dist/images/sc_closedoc.png') no-repeat;
+	width:25px;
+	height:29px;
+	display:inline;
+	z-index:3200;
+	position:absolute;
+	top:0px;
+	right:-10px;
+	cursor:pointer;
 }
