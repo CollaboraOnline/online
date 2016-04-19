@@ -131,15 +131,15 @@ namespace Util
         {
         }
 
-        RegexListMatcher(std::initializer_list<std::string> allow) :
-            _allowed(allow)
+        RegexListMatcher(std::initializer_list<std::string> allowed) :
+            _allowed(allowed)
         {
         }
 
-        RegexListMatcher(std::initializer_list<std::string> allow,
-                         std::initializer_list<std::string> deny) :
-            _allowed(allow),
-            _denied(deny)
+        RegexListMatcher(std::initializer_list<std::string> allowed,
+                         std::initializer_list<std::string> denied) :
+            _allowed(allowed),
+            _denied(denied)
         {
         }
 
@@ -176,10 +176,10 @@ namespace Util
                 {
                     // Not performance critical to warrant caching.
                     Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
-                    Poco::RegularExpression::Match match;
+                    Poco::RegularExpression::Match reMatch;
 
                     // Must be a full match.
-                    if (re.match(subject, match) && match.offset == 0 && match.length == subject.size())
+                    if (re.match(subject, reMatch) && reMatch.offset == 0 && reMatch.length == subject.size())
                     {
                         return true;
                     }
