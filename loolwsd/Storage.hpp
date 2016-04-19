@@ -87,8 +87,8 @@ protected:
 
     static bool _filesystemEnabled;
     static bool _wopiEnabled;
-    /// Allowed/trusted WOPI hosts, if any and if WOPI is enabled.
-    static std::set<std::string> _wopiHosts;
+    /// Allowed/denied WOPI hosts, if any and if WOPI is enabled.
+    static Util::RegexListMatcher _wopiHosts;
 };
 
 /// Trivial implementation of local storage that does not need do anything.

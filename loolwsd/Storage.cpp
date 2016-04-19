@@ -34,7 +34,7 @@
 ///////////////////
 bool StorageBase::_filesystemEnabled;
 bool StorageBase::_wopiEnabled;
-std::set<std::string> StorageBase::_wopiHosts;
+Util::RegexListMatcher StorageBase::_wopiHosts;
 
 std::string StorageBase::getLocalRootPath() const
 {
@@ -76,16 +76,12 @@ void StorageBase::initialize()
                 if (app.config().getBool(path + "[@allow]", false))
                 {
                     Log::info("Adding trusted WOPI host: [" + host + "].");
-                    _wopiHosts.insert(host);
+                    _wopiHosts.allow(host);
                 }
                 else
                 {
-                    if (_wopiHosts.find(host) != _wopiHosts.end())
-                    {
-                        Log::warn("Configuration of WOPI trusted hosts contains conflicting duplicates.");
-                    }
-
-                    _wopiHosts.erase(host);
+                    Log::info("Adding blocked WOPI host: [" + host + "].");
+                    _wopiHosts.deny(host);
                 }
             }
             else if (!app.config().has(path))
@@ -118,12 +114,9 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     {
         Log::info("Public URI [" + uri.toString() + "] considered WOPI.");
         const auto targetHost = uri.getHost();
-        for (const auto& acceptedHost : _wopiHosts)
+        if (_wopiHosts.match(targetHost))
         {
-            if (targetHost == acceptedHost)
-            {
-                return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
-            }
+            return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
         }
 
         Log::error("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
