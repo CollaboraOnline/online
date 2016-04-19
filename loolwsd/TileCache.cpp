@@ -90,12 +90,12 @@ TileCache::~TileCache()
 {
     Log::info("~TileCache dtor for uri [" + _docURL + "].");
 #if 0
-    auto lock = getTilesBeingRenderdLock();
+    auto lock = getTilesBeingRenderedLock();
     _tilesBeingRendered.clear();
 #endif
 }
 
-std::unique_lock<std::mutex> TileCache::getTilesBeingRenderdLock()
+std::unique_lock<std::mutex> TileCache::getTilesBeingRenderedLock()
 {
     return std::unique_lock<std::mutex>(_tilesBeingRenderedMutex);
 }

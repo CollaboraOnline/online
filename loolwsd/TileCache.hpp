@@ -50,7 +50,7 @@ public:
 
     TileCache(const TileCache&) = delete;
 
-    std::unique_lock<std::mutex> getTilesBeingRenderdLock();
+    std::unique_lock<std::mutex> getTilesBeingRenderedLock();
 
     void rememberTileAsBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 

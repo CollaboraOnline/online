@@ -181,7 +181,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
                 assert(firstLine.size() < static_cast<std::string::size_type>(length));
                 _docBroker->tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-                auto lock = _docBroker->tileCache().getTilesBeingRenderdLock();
+                auto lock = _docBroker->tileCache().getTilesBeingRenderedLock();
                 std::shared_ptr<TileBeingRendered> tileBeingRendered = _docBroker->tileCache().findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
                 if (tileBeingRendered)
                 {
@@ -585,7 +585,7 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         return;
     }
 
-    auto lock = _docBroker->tileCache().getTilesBeingRenderdLock();
+    auto lock = _docBroker->tileCache().getTilesBeingRenderedLock();
     std::shared_ptr<TileBeingRendered> tileBeingRendered = _docBroker->tileCache().findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     if (tileBeingRendered)
     {
