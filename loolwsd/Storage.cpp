@@ -17,6 +17,8 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/NetworkInterface.h>
+#include <Poco/Net/DNS.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/JSON/Object.h>
@@ -92,6 +94,21 @@ void StorageBase::initialize()
     }
 }
 
+bool isLocalhost(const std::string& targetHost)
+{
+    std::string targetAddress = Poco::Net::DNS::resolveOne(targetHost).toString();
+    Poco::Net::NetworkInterface::NetworkInterfaceList list = Poco::Net::NetworkInterface::list(true,true);
+    for (unsigned i = 0; i < list.size(); i++)
+    {
+        Poco::Net::NetworkInterface& netif = list[i];
+        std::string address = netif.address().toString();
+        address = address.substr(0, address.find("%",0));
+        if (address == targetAddress)
+            return true;
+    }
+    return false;
+}
+
 std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, const std::string& jailPath, const Poco::URI& uri)
 {
     std::unique_ptr<StorageBase> storage;
@@ -114,7 +131,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     {
         Log::info("Public URI [" + uri.toString() + "] considered WOPI.");
         const auto targetHost = uri.getHost();
-        if (_wopiHosts.match(targetHost))
+        if (_wopiHosts.match(targetHost) || isLocalhost(targetHost))
         {
             return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
         }
