@@ -12,11 +12,11 @@ loolwsddata_DATA = discovery.xml
 
 loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
 
-loolwsdconfig_DATA = loolwsd.xml
+loolwsdconfig_DATA = loolwsd.xml \
+                     etc/key.pem
 
 if ENABLE_SSL
-loolwsdconfig_DATA += etc/key.pem \
-                      etc/cert.pem \
+loolwsdconfig_DATA += etc/cert.pem \
                       etc/ca-chain.cert.pem
 endif
 

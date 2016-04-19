@@ -81,8 +81,8 @@ tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 
 %config(noreplace) /etc/cron.d/loolwsd.cron
 %config(noreplace) /etc/loolwsd/loolwsd.xml
-%if %{ssl_support} == "YES"
 %config(noreplace) %attr(400, %{owner}, %{owner}) /etc/loolwsd/key.pem
+%if %{ssl_support} == "YES"
 %config(noreplace) /etc/loolwsd/cert.pem
 %config(noreplace) /etc/loolwsd/ca-chain.cert.pem
 %endif
