@@ -13,6 +13,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServer.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/Runnable.h>
 #include <Poco/Types.h>
 #include <Poco/Util/Timer.h>
@@ -31,6 +32,8 @@ public:
 
 private:
     void handleWSRequests(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response, int nSessionId);
+
+    void sendTextFrame(std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& message);
 
 private:
     Admin* _admin;

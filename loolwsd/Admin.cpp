@@ -117,7 +117,16 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                     std::unique_lock<std::mutex> modelLock(_admin->getLock());
                     AdminModel& model = _admin->getModel();
 
-                    if (tokens[0] == "subscribe" && tokens.count() > 1)
+                    if (tokens[0] == "documents" ||
+                        tokens[0] == "active_users_count" ||
+                        tokens[0] == "active_docs_count" ||
+                        tokens[0] == "mem_stats" ||
+                        tokens[0] == "cpu_stats" )
+                    {
+                        const std::string responseFrame = tokens[0] + " " + model.query(tokens[0]);
+                        sendTextFrame(ws, responseFrame);
+                    }
+                    else if (tokens[0] == "subscribe" && tokens.count() > 1)
                     {
                         for (unsigned i = 0; i < tokens.count() - 1; i++)
                         {
@@ -131,26 +140,11 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                             model.unsubscribe(nSessionId, tokens[i + 1]);
                         }
                     }
-                    else if (tokens[0] == "documents")
-                    {
-                        std::string responseString = "documents " + model.query("documents");
-                        ws->sendFrame(responseString.data(), responseString.size());
-                    }
                     else if (tokens[0] == "total_mem")
                     {
                         unsigned totalMem = _admin->getTotalMemoryUsage(model);
                         std::string responseFrame = "total_mem " + std::to_string(totalMem);
-                        ws->sendFrame(responseFrame.data(), responseFrame.size());
-                    }
-                    else if (tokens[0] == "active_users_count")
-                    {
-                        std::string responseFrame = tokens[0] + " " + model.query(tokens[0]);
-                        ws->sendFrame(responseFrame.data(), responseFrame.size());
-                    }
-                    else if (tokens[0] == "active_docs_count")
-                    {
-                        std::string responseFrame = tokens[0] + " " + model.query(tokens[0]);
-                        ws->sendFrame(responseFrame.data(), responseFrame.size());
+                        sendTextFrame(ws, responseFrame);
                     }
                     else if (tokens[0] == "kill" && tokens.count() == 2)
                     {
@@ -167,24 +161,6 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                             Log::warn() << "Invalid PID to kill: " << tokens[0] << Log::end;
                         }
                     }
-                    else if (tokens[0] == "mem_stats")
-                    {
-                        std::ostringstream oss;
-                        oss << tokens[0] << " "
-                            << model.query(tokens[0]);
-
-                        std::string responseFrame = oss.str();
-                        ws->sendFrame(responseFrame.data(), responseFrame.size());
-                    }
-                    else if (tokens[0] == "cpu_stats")
-                    {
-                        std::ostringstream oss;
-                        oss << tokens[0] << " "
-                            << model.query(tokens[0]);
-
-                        std::string responseFrame = oss.str();
-                        ws->sendFrame(responseFrame.data(), responseFrame.size());
-                    }
                     else if (tokens[0] == "settings")
                     {
                         // for now, we have only these settings
@@ -196,7 +172,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                             << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval());
 
                         std::string responseFrame = oss.str();
-                        ws->sendFrame(responseFrame.data(), responseFrame.size());
+                        sendTextFrame(ws, responseFrame);
                     }
                     else if (tokens[0] == "set" && tokens.count() > 1)
                     {
@@ -293,6 +269,11 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
 AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
     : _admin(adminManager)
 {    }
+
+void AdminRequestHandler::sendTextFrame(std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& message)
+{
+    socket->sendFrame(message.data(), message.size());
+}
 
 void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerResponse& response)
 {
