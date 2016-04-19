@@ -54,6 +54,9 @@ env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 
 %install
 env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
+%if %{default_admin} == "YES"
+sed -i "s|ExecStart=/usr/bin/loolwsd --version --systemplate=/opt/lool/systemplate --lotemplate=/opt/collaboraoffice5.0 --childroot=/opt/lool/child-roots --numprespawns=5 --fileserverroot=/usr/share/loolwsd|ExecStart=/usr/bin/loolwsd --version --systemplate=/opt/lool/systemplate --lotemplate=/opt/collaboraoffice5.0 --childroot=/opt/lool/child-roots --numprespawns=5 --fileserverroot=/usr/share/loolwsd --admincreds=admin/admin|" loolwsd.service
+%endif
 %__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
 install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
