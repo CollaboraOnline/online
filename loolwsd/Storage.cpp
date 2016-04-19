@@ -253,7 +253,7 @@ std::string WopiStorage::loadStorageFileToLocal()
     Log::info("Downloading URI [" + _uri + "].");
 
     _fileInfo = getFileInfo(Poco::URI(_uri));
-    if (_fileInfo.Size == 0 && _fileInfo.Filename.empty())
+    if (_fileInfo._size == 0 && _fileInfo._filename.empty())
     {
         //TODO: Should throw a more appropriate exception.
         throw std::runtime_error("Failed to load file from storage.");
@@ -286,7 +286,7 @@ std::string WopiStorage::loadStorageFileToLocal()
 
     logger << Log::end;
 
-    _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo.Filename).toString();
+    _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();
     std::ofstream ofs(_jailedFilePath);
     std::copy(std::istreambuf_iterator<char>(rs),
               std::istreambuf_iterator<char>(),
@@ -298,7 +298,7 @@ std::string WopiStorage::loadStorageFileToLocal()
                 << response.getStatus() << " " << response.getReason() << Log::end;
 
     // Now return the jailed path.
-    return Poco::Path(_jailPath, _fileInfo.Filename).toString();
+    return Poco::Path(_jailPath, _fileInfo._filename).toString();
 }
 
 bool WopiStorage::saveLocalFileToStorage()

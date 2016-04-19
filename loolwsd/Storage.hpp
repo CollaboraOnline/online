@@ -30,12 +30,12 @@ public:
     public:
         bool isValid() const
         {
-            return !Filename.empty() && Size > 0;
+            return !_filename.empty() && _size > 0;
         }
 
-        std::string Filename;
-        Poco::Timestamp ModifiedTime;
-        size_t Size;
+        std::string _filename;
+        Poco::Timestamp _modifiedTime;
+        size_t _size;
     };
 
     /// localStorePath the absolute root path of the chroot.

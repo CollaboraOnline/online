@@ -130,8 +130,8 @@ bool DocumentBroker::load(const std::string& jailId)
     if (storage)
     {
         const auto fileInfo = storage->getFileInfo(_uriPublic);
-        _tileCache.reset(new TileCache(_uriPublic.toString(), fileInfo.ModifiedTime, _cacheRoot));
-        _filename = fileInfo.Filename;
+        _tileCache.reset(new TileCache(_uriPublic.toString(), fileInfo._modifiedTime, _cacheRoot));
+        _filename = fileInfo._filename;
         _storage = StorageBase::create(jailRoot, jailPath.toString(), _uriPublic);
 
         const auto localPath = _storage->loadStorageFileToLocal();
