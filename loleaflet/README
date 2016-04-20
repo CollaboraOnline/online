@@ -49,9 +49,11 @@ fileserverroot manually for more control. See loolwsd/README for more informatio
 
     https://localhost:9980/loleaflet/dist/loleaflet.html?file_path=file:///PATH/TO_DOC&host=wss://localhost:9980
 
-and you should see the document in the browser.  In case anything goes wrong,
-check the loolwsd console for the debugging output. You might be asked to confirm the certificate if you
-are using self-signed certificate for loolwsd.
+and you should see the document in the browser.
+Note that file_path parameter is disabled by default for security reasons. You need to explicitly enable it
+with the --allowlocalstorage option of loolwsd. In case anything goes wrong, check the loolwsd console for
+the debugging output. You might be asked to confirm the certificate if you are using self-signed certificate
+for loolwsd.
 
 Admin Panel
 -----------
@@ -63,7 +65,8 @@ For example:
 
     https://localhost:9980/loleaflet/dist/admin/admin.html
 
-It will ask for username and password which, by default, are 'admin', 'admin' respectively. After entering
+It will ask for username and password which is set by the --admincreds option of loolwsd. For example you can
+pass --admincreds=admin/admin which will make username and password 'admin', 'admin' respectively. After entering
 the correct password you should be able to monitor the live documents opened, total users, memory consumption,
 document URLs with number of users viewing that document etc. You can also kill the documents directly from
 the panel which would result in closing the socket connection to the respective document.
