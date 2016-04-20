@@ -306,7 +306,7 @@ Coding style
 
 There is not really any serious rationale why the code ended up being
 written in the style it is... but unless you plan to change some style
-detail completely and consistenly all over, please keep to the style
+detail completely and consistently all over, please keep to the style
 of the existing code when editing.
 
 The style is roughly as follows, in rough order of importance:
