@@ -898,6 +898,17 @@ map.on('editlock', function (e) {
 	});
 });
 
+map.on('mousedown keypress', function(e) {
+	if (!map._editlock) {
+		$('#takeeditlabel')
+			.w2tag('Click to take edit')
+			.html('VIEWING');
+		setTimeout(function() {
+			$('#takeeditlabel').w2tag('');
+		}, 3000);
+	}
+});
+
 map.on('locontextmenu', function (e) {
 	// TODO: context menu handling...
 });
