@@ -47,7 +47,6 @@ L.TileLayer = L.GridLayer.extend({
 		zoomReverse: false,
 		detectRetina: false,
 		crossOrigin: false,
-		preFetchOtherParts: false,
 		previewInvalidationTimeout: 1000,
 		defaultPermission: 'view'
 	},

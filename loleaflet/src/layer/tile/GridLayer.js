@@ -1056,44 +1056,6 @@ L.GridLayer = L.Layer.extend({
 				tileBorder.max.y += 1;
 			}
 			borderWidth += 1;
-			if (!(tileBorder.min.x >= 0 || tileBorder.min.y >= 0 ||
-					tileBorder.max.x * this._tileWidthTwips < this._docWidthTwips ||
-					 tileBorder.max.y * this._tileHeightTwips < this._docHeightTwips) &&
-					this.options.preFetchOtherParts) {
-				var diff = this._preFetchPart - this._selectedPart;
-				if (diff === 0 && this._selectedPart < this._parts - 1) {
-					this._preFetchPart += 1;
-					this._preFetchBorder = null;
-				}
-				else if (diff === 0 && this._selectedPart > 0) {
-					this._preFetchPart -= 1;
-					this._preFetchBorder = null;
-				}
-				else if (diff > 0) {
-					if (this._selectedPart - diff >= 0) {
-						// lower part number
-						this._preFetchPart = this._selectedPart - diff;
-						this._preFetchBorder = null;
-					}
-					else if (this._selectedPart + diff + 1 < this._parts) {
-						// higher part number
-						this._preFetchPart = this._selectedPart + diff + 1;
-						this._preFetchBorder = null;
-					}
-				}
-				else if (diff < 0) {
-					if (this._selectedPart - diff + 1 < this._parts) {
-						// higher part number
-						this._preFetchPart = this._selectedPart - diff + 1;
-						this._preFetchBorder = null;
-					}
-					else if (this._selectedPart + diff - 1 >= 0) {
-						// lower part number
-						this._preFetchPart = this._selectedPart + diff - 1;
-						this._preFetchBorder = null;
-					}
-				}
-			}
 		}
 
 		if (finalQueue.length > 0) {
