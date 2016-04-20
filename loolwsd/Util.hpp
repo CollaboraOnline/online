@@ -120,6 +120,9 @@ namespace Util
     /// Display version information
     void displayVersionInfo(const char *app);
 
+    /// Return a string that is unique across processes and calls.
+    std::string UniqueId();
+
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.

@@ -10,10 +10,13 @@
 #include "config.h"
 
 #include <execinfo.h>
+#include <signal.h>
 #include <sys/poll.h>
 #include <sys/prctl.h>
 #include <sys/uio.h>
+#include <unistd.h>
 
+#include <atomic>
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
@@ -23,11 +26,8 @@
 #include <random>
 #include <sstream>
 #include <string>
-#include <unistd.h>
 
 #include <png.h>
-
-#include <signal.h>
 
 #include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
@@ -436,6 +436,12 @@ namespace Util
         std::string hash(LOOLWSD_VERSION_HASH);
         hash.resize(std::min(8, (int)hash.length()));
         std::cout << app << " " << LOOLWSD_VERSION << " - " << hash << std::endl;
+    }
+
+    std::string UniqueId()
+    {
+        static std::atomic_int counter(0);
+        return std::to_string(Poco::Process::id()) + "/" + std::to_string(counter++);
     }
 }
 
