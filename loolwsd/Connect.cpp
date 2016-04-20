@@ -13,6 +13,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <mutex>
 
 #include <Poco/Version.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
@@ -68,6 +69,7 @@ using Poco::URI;
 using Poco::Util::Application;
 
 static bool closeExpected = false;
+static std::mutex coutMutex;
 
 class Output: public Runnable
 {
@@ -89,7 +91,10 @@ public:
                 n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
-                    std::cout << "Got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) << std::endl;
+                    {
+                        std::unique_lock<std::mutex> lock(coutMutex);
+                        std::cout << "Got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) << std::endl;
+                    }
 
                     std::string firstLine = getFirstLine(buffer, n);
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -109,12 +114,17 @@ public:
                 }
             }
             while (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-            std::cout << "CLOSE frame received" << std::endl;
+
+            {
+                std::unique_lock<std::mutex> lock(coutMutex);
+                std::cout << "CLOSE frame received" << std::endl;
+            }
             if (!closeExpected)
                 std::_Exit(Application::EXIT_SOFTWARE);
         }
         catch (WebSocketException& exc)
         {
+            std::unique_lock<std::mutex> lock(coutMutex);
             std::cout << "Got exception " << exc.message() << std::endl;
         }
     }
@@ -184,7 +194,10 @@ protected:
             {
                 // Accept an input line "sleep <n>" that makes us sleep a number of seconds.
                 long sleepTime = std::stol(line.substr(std::string("sleep").length()));
-                std::cout << "Sleeping " << sleepTime << " seconds" << std::endl;
+                {
+                    std::unique_lock<std::mutex> lock(coutMutex);
+                    std::cout << "Sleeping " << sleepTime << " seconds" << std::endl;
+                }
                 Thread::sleep(sleepTime * 1000);
             }
             else if (line == "exit")
@@ -192,7 +205,10 @@ protected:
                 // While hacking on LOOL and editing input files for this program back and forth it
                 // is a good idea to be able to add an enforced exit in the middle of the input
                 // file.
-                std::cout << "Exiting" << std::endl;
+                {
+                    std::unique_lock<std::mutex> lock(coutMutex);
+                    std::cout << "Exiting" << std::endl;
+                }
                 break;
             }
             else if (line.find("#") == 0)
@@ -201,12 +217,18 @@ protected:
             }
             else
             {
-                std::cout << "Sending: '" << line << "'" << std::endl;
+                {
+                    std::unique_lock<std::mutex> lock(coutMutex);
+                    std::cout << "Sending: '" << line << "'" << std::endl;
+                }
                 ws.sendFrame(line.c_str(), line.size());
             }
         }
 
-        std::cout << "Shutting down websocket" << std::endl;
+        {
+            std::unique_lock<std::mutex> lock(coutMutex);
+            std::cout << "Shutting down websocket" << std::endl;
+        }
         closeExpected = true;
         ws.shutdown();
         thread.join();
