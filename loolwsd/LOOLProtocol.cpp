@@ -117,6 +117,36 @@ namespace LOOLProtocol
         return true;
     }
 
+    bool getTokenInteger(const Poco::StringTokenizer& tokens, const std::string& name, int& value)
+    {
+        for (int i = 0; i < tokens.count(); i++)
+        {
+            if (getTokenInteger(tokens[i], name, value))
+                return true;
+        }
+        return false;
+    }
+
+    bool getTokenString(const Poco::StringTokenizer& tokens, const std::string& name, std::string& value)
+    {
+        for (int i = 0; i < tokens.count(); i++)
+        {
+            if (getTokenString(tokens[i], name, value))
+                return true;
+        }
+        return false;
+    }
+
+    bool getTokenKeyword(const Poco::StringTokenizer& tokens, const std::string& name, const std::map<std::string, int>& map, int& value)
+    {
+        for (int i = 0; i < tokens.count(); i++)
+        {
+            if (getTokenKeyword(tokens[i], name, map, value))
+                return true;
+        }
+        return false;
+    }
+
     bool parseStatus(const std::string& message, LibreOfficeKitDocumentType& type, int& nParts, int& currentPart, int& width, int& height)
     {
         StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
