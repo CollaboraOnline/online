@@ -75,7 +75,7 @@ namespace Log
 
         char procName[32]; // we really need only 16
         if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) != 0)
-            strcpy(procName, "<noid>");
+            strncpy(procName, "<noid>", sizeof(procName) - 1);
 
         const char *appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
         assert(strlen(appName) + 32 + 28 < 1024 - 1);
