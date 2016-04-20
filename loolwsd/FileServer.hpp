@@ -10,6 +10,8 @@
 #ifndef INCLUDED_FILESERVER_HPP
 #define INCLUDED_FILESERVER_HPP
 
+#include "config.h"
+
 #include <string>
 #include <vector>
 
@@ -140,12 +142,12 @@ public:
                         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
                 }
 
-                const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
+                const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
                 const auto filepath = path.absolute().toString();
                 if (filepath.find(LOOLWSD::FileServerRoot) != 0)
                 {
                     // Accessing unauthorized path.
-                    throw Poco::FileNotFoundException("Invalid or forbidden file path: [" + filepath + "].");
+                    throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + filepath + "].");
                 }
 
                 const std::size_t extPoint = endPoint.find_last_of(".");
@@ -175,30 +177,48 @@ public:
             response.setContentLength(0);
             response.send();
         }
+        catch (const Poco::FileAccessDeniedException& exc)
+        {
+            Log::error("FileServerRequestHandler: " + exc.displayText());
+            response.setStatusAndReason(HTTPResponse::HTTP_FORBIDDEN);
+            response.setContentLength(0); // TODO return some 403 page?
+            response.send();
+        }
         catch (const Poco::FileNotFoundException& exc)
         {
             Log::error("FileServerRequestHandler: " + exc.displayText());
             response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
-            response.setContentLength(0);
+            response.setContentLength(0); // TODO return some 404 page?
             response.send();
         }
     }
 
 private:
 
+    std::string getRequestPathname(const HTTPServerRequest& request)
+    {
+        Poco::URI requestUri(request.getURI());
+        // avoid .'s and ..'s
+        requestUri.normalize();
+
+        std::string path(requestUri.getPath());
+
+        // convert version back to a real file name
+        Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION "/"), std::string("/loleaflet/dist/"));
+
+        return path;
+    }
+
     void preprocessFile(HTTPServerRequest& request, HTTPServerResponse& response)
     {
         HTMLForm form(request, request.stream());
 
-        std::string preprocess;
         const auto host = (LOOLWSD::SSLEnabled? "wss://": "ws://") + request.getHost();
-
-        Poco::URI requestUri(request.getURI());
-        requestUri.normalize(); // avoid .'s and ..'s
-        const auto path = Poco::Path(LOOLWSD::FileServerRoot, requestUri.getPath());
+        const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
 
         Log::debug("Preprocessing file: " + path.toString());
 
+        std::string preprocess;
         FileInputStream file(path.toString());
         StreamCopier::copyToString(file, preprocess);
         file.close();
@@ -206,6 +226,7 @@ private:
         Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), form.get("access_token", ""));
         Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), form.get("access_token_ttl", ""));
         Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
+        Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION));
 
         response.setContentType("text/html");
         response.setContentLength(preprocess.length());
