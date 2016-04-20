@@ -886,6 +886,16 @@ map.on('editlock', function (e) {
 			$('#takeeditlabel').w2tag('');
 		}, 3000);
 	}
+
+	toolbar = w2ui['toolbar-up'];
+	// {En,Dis}able toolbar buttons
+	formatButtons.forEach(function (id) {
+		if (e.value) {
+			toolbar.enable(id);
+		} else {
+			toolbar.disable(id);
+		}
+	});
 });
 
 map.on('locontextmenu', function (e) {

@@ -176,10 +176,10 @@ L.TileLayer = L.GridLayer.extend({
 			},
 		this);
 
-		map.on('updatepermission', function(e) {
+		map.on('editlock', function(e) {
 			// {En,Dis}able selection handles
 			for (var key in this._selectionHandles) {
-				this._selectionHandles[key].setDraggable(e.perm === 'edit');
+				this._selectionHandles[key].setDraggable(e.value);
 			}
 		}, this);
 
@@ -951,16 +951,22 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update group layer selection handler.
 	_onUpdateGraphicSelection: function () {
-		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection) && this._map._permission === 'edit') {
+		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
 			if (this._graphicMarker) {
 				this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
 				this._map.removeLayer(this._graphicMarker);
 			}
+
+			if (!this._map._editlock) {
+				return;
+			}
+
 			this._graphicMarker = L.rectangle(this._graphicSelection, {fill: false});
 			if (!this._graphicMarker) {
 				this._map.fire('error', {msg: 'Graphic marker initialization', cmd: 'marker', kind: 'failed', id: 1});
 				return;
 			}
+
 			this._graphicMarker.editing.enable();
 			this._graphicMarker.on('editstart editend', this._onGraphicEdit, this);
 			this._map.addLayer(this._graphicMarker);
@@ -1265,8 +1271,15 @@ L.TileLayer = L.GridLayer.extend({
 	_onEditLock: function (textMsg) {
 		var val = parseInt(textMsg.split(' ')[1]);
 		if (!isNaN(val)) {
+			this._map._editlock = val;
 			this._map.fire('editlock', {value: val});
-			this._map.setPermission(val ? 'edit' : 'readonly');
+
+			// we want graphic selection handles to appear ...
+			// when editlock is taken, and dissappear when it is taken away
+			if (!val) {
+				this._graphicSelection = null;
+			}
+			this._onUpdateGraphicSelection();
 		}
 	},
 
