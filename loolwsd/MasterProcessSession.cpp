@@ -7,6 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "config.h"
+
 #include <Poco/FileStream.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
@@ -572,16 +574,22 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         return;
     }
 
-    const std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
-
-    std::vector<char> output;
-    output.reserve(4 * width * height);
-    output.resize(response.size());
-    std::memcpy(output.data(), response.data(), response.size());
-
     std::unique_ptr<std::fstream> cachedTile = _docBroker->tileCache().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+
     if (cachedTile)
     {
+        std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end());
+
+#if ENABLE_DEBUG
+        response += " renderid=cached";
+#endif
+        response += "\n";
+
+        std::vector<char> output;
+        output.reserve(4 * width * height);
+        output.resize(response.size());
+        std::memcpy(output.data(), response.data(), response.size());
+
         assert(cachedTile->is_open());
         cachedTile->seekg(0, std::ios_base::end);
         size_t pos = output.size();
@@ -690,6 +698,10 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
             {
                 oss << " timestamp=" << reqTimestamp;
             }
+
+#if ENABLE_DEBUG
+            oss << " renderid=cached";
+#endif
 
             oss << "\n";
             const std::string response = oss.str();

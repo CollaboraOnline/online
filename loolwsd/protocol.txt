@@ -237,9 +237,10 @@ tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<
 
     The parameters from the corresponding 'tile' command.
 
-    Additionally, in a debug build, the renderid is a unique
+    Additionally, in a debug build, the renderid is either a unique
     identifier, different for each actual call to LibreOfficeKit to
-    render a tile.
+    render a tile, or the string 'cached' if the tile was found in the
+    cache.
 
 Each LOK_CALLBACK_FOO_BAR callback causes a corresponding message to
 the client, consisting of the FOO_BAR part in lowercase, without
