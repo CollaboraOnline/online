@@ -549,11 +549,7 @@ L.GridLayer = L.Layer.extend({
 
 			// create DOM fragment to append tiles in one batch
 			var fragment = document.createDocumentFragment();
-
-			for (i = 0; i < queue.length; i++) {
-				this._addTile(queue[i], fragment);
-			}
-
+			this._addTiles(queue, fragment);
 			this._level.el.appendChild(fragment);
 		}
 	},
@@ -781,57 +777,61 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
-	_addTile: function (coords, fragment) {
-		var tilePos = this._getTilePos(coords),
-			key = this._tileCoordsToKey(coords);
+	_addTiles: function (coordsQueue, fragment) {
+		for (i = 0; i < coordsQueue.length; i++) {
+			var coords = coordsQueue[i];
 
-		if (coords.part === this._selectedPart) {
-			var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+			var tilePos = this._getTilePos(coords),
+				key = this._tileCoordsToKey(coords);
 
-			this._initTile(tile);
-
-			// if createTile is defined with a second argument ("done" callback),
-			// we know that tile is async and will be ready later; otherwise
-			if (this.createTile.length < 2) {
-				// mark tile as ready, but delay one frame for opacity animation to happen
-				setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
-			}
-
-			// we prefer top/left over translate3d so that we don't create a HW-accelerated layer from each tile
-			// which is slow, and it also fixes gaps between tiles in Safari
-			L.DomUtil.setPosition(tile, tilePos, true);
-
-			// save tile in cache
-			this._tiles[key] = {
-				el: tile,
-				coords: coords,
-				current: true
-			};
-
-			fragment.appendChild(tile);
-
-			this.fire('tileloadstart', {
-				tile: tile,
-				coords: coords
-			});
-		}
-
-		if (!this._tileCache[key]) {
 			if (coords.part === this._selectedPart) {
-				var twips = this._coordsToTwips(coords);
-				var msg = 'tile ' +
-						'part=' + coords.part + ' ' +
-						'width=' + this._tileSize + ' ' +
-						'height=' + this._tileSize + ' ' +
-						'tileposx=' + twips.x + ' '	+
-						'tileposy=' + twips.y + ' ' +
-						'tilewidth=' + this._tileWidthTwips + ' ' +
-						'tileheight=' + this._tileHeightTwips;
-				this._map._socket.sendMessage(msg, key);
+				var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+
+				this._initTile(tile);
+
+				// if createTile is defined with a second argument ("done" callback),
+				// we know that tile is async and will be ready later; otherwise
+				if (this.createTile.length < 2) {
+					// mark tile as ready, but delay one frame for opacity animation to happen
+					setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
+				}
+
+				// we prefer top/left over translate3d so that we don't create a HW-accelerated layer from each tile
+				// which is slow, and it also fixes gaps between tiles in Safari
+				L.DomUtil.setPosition(tile, tilePos, true);
+
+				// save tile in cache
+				this._tiles[key] = {
+					el: tile,
+					coords: coords,
+					current: true
+				};
+
+				fragment.appendChild(tile);
+
+				this.fire('tileloadstart', {
+					tile: tile,
+					coords: coords
+				});
 			}
-		}
-		else {
-			tile.src = this._tileCache[key];
+
+			if (!this._tileCache[key]) {
+				if (coords.part === this._selectedPart) {
+					var twips = this._coordsToTwips(coords);
+					var msg = 'tile ' +
+							'part=' + coords.part + ' ' +
+							'width=' + this._tileSize + ' ' +
+							'height=' + this._tileSize + ' ' +
+							'tileposx=' + twips.x + ' '	+
+							'tileposy=' + twips.y + ' ' +
+							'tilewidth=' + this._tileWidthTwips + ' ' +
+							'tileheight=' + this._tileHeightTwips;
+					this._map._socket.sendMessage(msg, key);
+				}
+			}
+			else {
+				tile.src = this._tileCache[key];
+			}
 		}
 	},
 
@@ -1060,9 +1060,7 @@ L.GridLayer = L.Layer.extend({
 
 		if (finalQueue.length > 0) {
 			var fragment = document.createDocumentFragment();
-			for (i = 0; i < finalQueue.length; i++) {
-				this._addTile(finalQueue[i], fragment);
-			}
+			this._addTiles(finalQueue, fragment);
 			this._level.el.appendChild(fragment);
 		}
 	},
