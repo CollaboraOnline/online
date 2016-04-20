@@ -653,6 +653,7 @@ namespace {
             return true;
         }
 #endif
+        (void)part;
         return false;
     }
     inline void delay()
