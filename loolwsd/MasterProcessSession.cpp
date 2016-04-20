@@ -196,7 +196,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                             queue = subscriber->getQueue();
                             // re-emit the tile command in the other thread
                             // to re-check and hit the cache. NB. it needs to be
-                            // 'tile' and not 'tile'
+                            // 'tile' and not 'tile:'
                             if (queue)
                             {
                                 std::string noColon = firstLine + "\n";
