@@ -149,17 +149,11 @@ required even in HTTP-only mode, because it is used to generate the
 secure token for the admin console.
 
 If you plan to hack on loolwsd, you probably want to familiarize
-yourself with loolwsd's --test and --numprespawns switches, and the
-'connect' test program.
+yourself with loolwsd's --numprespawns switch, and the 'connect'
+test program.
 
-For interactive testing, you can use the loolwsd --test switch, or you
-can use the 'connect' program. Both accept "commands" from the
-protocol on standard input. You can either used them tuly
-interactively, or edit input lines into a file, or use shell
-scripting, etc. For instance:
-
-    (echo load /some/where/foo.odt; echo tile part=0 width=500 height=500 tileposx=0 tileposy=0 tilewidth=10000 tileheight=10000; sleep 10) |
-    ./loolwsd --test --systemplate=/home/tml/lo/master/lool-sys-template --lotemplate=/home/tml/lo/master/instdir --childroot=/home/tml/lo/master/lool-child-root
+For interactive testing, you can use the 'connect' program. It accepts
+"commands" from the protocol on standard input.
 
 Admin Panel
 -----------
