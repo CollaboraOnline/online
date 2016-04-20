@@ -1,3 +1,25 @@
+- The URL of the document to view and/or edit is specified both in the
+  HTTP GET and in the 'load' message. This is redundant, and adds
+  completely unnecessary, hard to define, and hard to test, states
+  that the server and clients can be in. For instance:
+
+  - Is it an error to send a different URL in the 'load' message than
+    the one in the GET? (Of course it is. Do we check that? Do we have
+    a unit test to make sure it stays an error?)
+
+  - What messages are accepted by the server before the 'load'? What
+    messages are sent to the client? Do they make sense, if it is only
+    the 'load' that actually fully completes the association of a
+    session with a document? Do we have unit tests for this?
+
+  - What if one client connects, and then before it has sent the
+    'load' message, another client connects specifying the same
+    document in the GET, and also sends a 'load' message. Which client
+    gets the edit lock? Is that arbitrary or specified? Do we have a
+    unit test for it?
+
+  - Etc
+
 - There is way too much of busy waiting for fairly arbitrarily chosen
   timeout periods in the code.
 
