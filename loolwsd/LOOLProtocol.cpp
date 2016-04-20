@@ -119,7 +119,7 @@ namespace LOOLProtocol
 
     bool getTokenInteger(const Poco::StringTokenizer& tokens, const std::string& name, int& value)
     {
-        for (int i = 0; i < tokens.count(); i++)
+        for (size_t i = 0; i < tokens.count(); i++)
         {
             if (getTokenInteger(tokens[i], name, value))
                 return true;
@@ -129,7 +129,7 @@ namespace LOOLProtocol
 
     bool getTokenString(const Poco::StringTokenizer& tokens, const std::string& name, std::string& value)
     {
-        for (int i = 0; i < tokens.count(); i++)
+        for (size_t i = 0; i < tokens.count(); i++)
         {
             if (getTokenString(tokens[i], name, value))
                 return true;
@@ -139,7 +139,7 @@ namespace LOOLProtocol
 
     bool getTokenKeyword(const Poco::StringTokenizer& tokens, const std::string& name, const std::map<std::string, int>& map, int& value)
     {
-        for (int i = 0; i < tokens.count(); i++)
+        for (size_t i = 0; i < tokens.count(); i++)
         {
             if (getTokenKeyword(tokens[i], name, map, value))
                 return true;
