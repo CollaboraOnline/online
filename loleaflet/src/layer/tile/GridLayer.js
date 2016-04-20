@@ -817,16 +817,16 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (!this._tileCache[key]) {
-			var twips = this._coordsToTwips(coords);
-			var msg = 'tile ' +
-					'part=' + coords.part + ' ' +
-					'width=' + this._tileSize + ' ' +
-					'height=' + this._tileSize + ' ' +
-					'tileposx=' + twips.x + ' '	+
-					'tileposy=' + twips.y + ' ' +
-					'tilewidth=' + this._tileWidthTwips + ' ' +
-					'tileheight=' + this._tileHeightTwips;
 			if (coords.part === this._selectedPart) {
+				var twips = this._coordsToTwips(coords);
+				var msg = 'tile ' +
+						'part=' + coords.part + ' ' +
+						'width=' + this._tileSize + ' ' +
+						'height=' + this._tileSize + ' ' +
+						'tileposx=' + twips.x + ' '	+
+						'tileposy=' + twips.y + ' ' +
+						'tilewidth=' + this._tileWidthTwips + ' ' +
+						'tileheight=' + this._tileHeightTwips;
 				this._map._socket.sendMessage(msg, key);
 			}
 		}
