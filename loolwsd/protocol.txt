@@ -232,10 +232,14 @@ textselectioncontent: <content>
 
     Current selection's content
 
-tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>]
+tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>]
 <binaryPngImage>
 
     The parameters from the corresponding 'tile' command.
+
+    Additionally, in a debug build, the renderid is a unique
+    identifier, different for each actual call to LibreOfficeKit to
+    render a tile.
 
 Each LOK_CALLBACK_FOO_BAR callback causes a corresponding message to
 the client, consisting of the FOO_BAR part in lowercase, without

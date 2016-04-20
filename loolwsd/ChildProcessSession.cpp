@@ -700,7 +700,12 @@ void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, Strin
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    const std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+    std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end());
+
+#if ENABLE_DEBUG
+    response += " renderid=" + Util::UniqueId();
+#endif
+    response += "\n";
 
     std::vector<char> output;
     output.reserve(response.size() + (4 * width * height));
@@ -852,6 +857,10 @@ void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length
 
         if (reqTimestamp != "")
             response += " timestamp=" + reqTimestamp;
+
+#if ENABLE_DEBUG
+        response += " renderid=" + Util::UniqueId();
+#endif
 
         response += "\n";
 
