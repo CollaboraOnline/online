@@ -778,6 +778,7 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_addTiles: function (coordsQueue, fragment) {
+		// first take care of the DOM
 		for (i = 0; i < coordsQueue.length; i++) {
 			var coords = coordsQueue[i];
 
@@ -815,6 +816,17 @@ L.GridLayer = L.Layer.extend({
 				});
 			}
 
+			if (this._tileCache[key]) {
+				tile.src = this._tileCache[key];
+			}
+		}
+
+		// then ask for the actual tiles
+		for (i = 0; i < coordsQueue.length; i++) {
+			var coords = coordsQueue[i];
+
+			var key = this._tileCoordsToKey(coords);
+
 			if (!this._tileCache[key]) {
 				if (coords.part === this._selectedPart) {
 					var twips = this._coordsToTwips(coords);
@@ -828,9 +840,6 @@ L.GridLayer = L.Layer.extend({
 							'tileheight=' + this._tileHeightTwips;
 					this._map._socket.sendMessage(msg, key);
 				}
-			}
-			else {
-				tile.src = this._tileCache[key];
 			}
 		}
 	},
