@@ -224,13 +224,13 @@ void Tool::handleOption(const std::string& optionName,
 
 int Tool::main(const std::vector<std::string>& args)
 {
-    Thread *clients[_numWorkers];
+    std::vector<std::unique_ptr<Thread>> clients(_numWorkers);
 
     size_t chunk = (args.size() + _numWorkers - 1) / _numWorkers;
     size_t offset = 0;
     for (unsigned i = 0; i < _numWorkers; i++)
     {
-        clients[i] = new Thread();
+        clients[i].reset(new Thread());
         size_t toCopy = std::min(args.size() - offset, chunk);
         if (toCopy > 0)
         {
