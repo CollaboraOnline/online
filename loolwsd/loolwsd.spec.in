@@ -1,19 +1,10 @@
-#
 # spec file for package loolwsd
 #
 # Copyright (c) 2015 Collabora
 #
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the MIT License). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
-
-
-# See also http://en.opensuse.org/openSUSE:Specfile_guidelines
+# This file is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 Name:           loolwsd
 Version:        @PACKAGE_VERSION@
@@ -23,16 +14,30 @@ Summary:        LibreOffice On-Line WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
 Source1:        loleaflet-@PACKAGE_VERSION@.tar.gz
-BuildRequires:  libcap-progs libcap-devel libpng-devel poco-devel >= 1.7.1 systemd-rpm-macros
-# This works for now only with a CP build of 5.0, I think. The TDF
-# (and thus also CP) packages include the version number in their
-# names. How clever is that? So we need to specify one.
-Requires:       libcap libcap-progs libpng libPocoFoundation42 >= 1.7.1 libPocoNet42 >= 1.7.1 collaboraoffice5.0 collaboraoffice5.0-en-US collaboraoffice5.0-ure collaboraofficebasis5.0-core collaboraofficebasis5.0-writer collaboraofficebasis5.0-impress collaboraofficebasis5.0-graphicfilter collaboraofficebasis5.0-en-US collaboraofficebasis5.0-calc collaboraofficebasis5.0-en-US-res collaboraofficebasis5.0-en-US-calc collaboraofficebasis5.0-ooofonts collaboraofficebasis5.0-images collaboraofficebasis5.0-filter-data collaboraofficebasis5.0-draw collaboraofficebasis5.0-base collaboraofficebasis5.0-en-US-writer collaboraofficebasis5.0-en-US-math collaboraofficebasis5.0-en-US-base Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig libbz2-1 libcairo2 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgthread-2_0-0 liblzma5 libpcre1 libpixman-1-0 libpng16-16 libuuid1 libxml2-2 %{?systemd_requires} %{fillup_prereq}
+BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.1
+%if 0%{?fedora} || 0%{?rhel} >= 7
+BuildRequires:  libpcap
+%else
+%if 0%{?suse_version}
+BuildRequires:  libcap-progs systemd-rpm-macros
+%endif
+%endif
+
+Requires:       collaboraoffice5.0 collaboraoffice5.0-en-US collaboraoffice5.0-ure collaboraofficebasis5.0-core collaboraofficebasis5.0-writer collaboraofficebasis5.0-impress collaboraofficebasis5.0-graphicfilter collaboraofficebasis5.0-en-US collaboraofficebasis5.0-calc collaboraofficebasis5.0-en-US-res collaboraofficebasis5.0-en-US-calc collaboraofficebasis5.0-ooofonts collaboraofficebasis5.0-images collaboraofficebasis5.0-filter-data collaboraofficebasis5.0-draw collaboraofficebasis5.0-base collaboraofficebasis5.0-en-US-writer collaboraofficebasis5.0-en-US-math collaboraofficebasis5.0-en-US-base
+Requires:       systemd
+%if 0%{?fedora} || 0%{?rhel} >= 7
+Requires:       expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssl-libs pcre xz-libs zlib
+Requires:       poco-crypto >= 1.7.1 poco-foundation >= 1.7.1 poco-json >= 1.7.1 poco-net >= 1.7.1 poco-netssl >= 1.7.1 poco-util >= 1.7.1 poco-xml >= 1.7.1
+Requires:       atk avahi-glib avahi-libs bzip2-libs cairo cups-libs dbus-glib dbus-libs fontconfig freetype GConf2 gdk-pixbuf2 glib2 gnome-vfs2 graphite2 gstreamer gstreamer-plugins-base gtk2 harfbuzz libdrm libffi libICE libSM libuuid libX11 libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXi libXinerama libXrandr libXrender libxshmfence libXt libXxf86vm mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi pango pixman
+%else
+%if 0%{?suse_version}
+Requires:       libcap2 libpng12 libpcre1 libz1 %{?systemd_requires} %{fillup_prereq}
+Requires:       libPocoCrypto42 >= 1.7.1 libPocoFoundation42 >= 1.7.1 libPocoJSON42 >= 1.7.1 libPocoNet42 >= 1.7.1 libPocoNetSSL42 >= 1.7.1 libPocoUtil42 >= 1.7.1 libPocoXML42 >= 1.7.1
+Requires:       Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig krb5 libatk libavahi-client3 libavahi-common3 libavahi-glib1 libbz2-1 libcairo2 libcom_err2 libdbus libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgraphite2 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libkeyutils1 liblzma5 libpixman-1-0 libpng16-16 libuuid1 libxml2
+%endif
+%endif
 Provides:       loleaflet = 1.5.8
 Obsoletes:      loleaflet <= 1.5.8
-
-%define owner lool
-%define group lool
 
 %description
 
@@ -59,7 +64,13 @@ sed -i "s|ExecStart=/usr/bin/loolwsd --version --systemplate=/opt/lool/systempla
 %endif
 %__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
+%if 0%{?fedora} || 0%{?rhel} >= 7
+install -D -m 644 sysconfig.loolwsd %{buildroot}/etc/sysconfig/loolwsd
+%else
+%if 0%{?suse_version}
 install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
+%endif
+%endif
 mkdir -p %{buildroot}/etc/cron.d
 echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
 echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
@@ -77,11 +88,17 @@ tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 /usr/share/loolwsd/discovery.xml
 /usr/share/loolwsd/loleaflet
 %{_unitdir}/loolwsd.service
+%if 0%{?fedora} || 0%{?rhel} >= 7
+%config(noreplace) /etc/sysconfig/loolwsd
+%else
+%if 0%{?suse_version}
 /var/adm/fillup-templates/sysconfig.loolwsd
+%endif
+%endif
 
 %config(noreplace) /etc/cron.d/loolwsd.cron
 %config(noreplace) /etc/loolwsd/loolwsd.xml
-%config(noreplace) %attr(400, %{owner}, %{owner}) /etc/loolwsd/key.pem
+%config(noreplace) %attr(400, lool, lool) /etc/loolwsd/key.pem
 %if %{ssl_support} == "YES"
 %config(noreplace) /etc/loolwsd/cert.pem
 %config(noreplace) /etc/loolwsd/ca-chain.cert.pem
@@ -90,15 +107,17 @@ tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 %doc README
 
 %pre
+%if 0%{?suse_version}
 %service_add_pre loolwsd.service
+%endif
 
 %post
 setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
 
-getent group %{group} >/dev/null || groupadd -r %{group}
-getent passwd %{owner} >/dev/null || useradd -g %{group} -r %{owner}
+getent group lool >/dev/null || groupadd -r lool
+getent passwd lool >/dev/null || useradd -g lool -r lool
 
-mkdir -p /var/cache/loolwsd && chown %{owner}: /var/cache/loolwsd
+mkdir -p /var/cache/loolwsd && chown lool:lool /var/cache/loolwsd
 rm -rf /var/cache/loolwsd/*
 
 # Figure out where LO is installed, let's hope it is not a mount point
@@ -108,20 +127,38 @@ loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
 rm -rf ${loolparent}/lool
 mkdir -p ${loolparent}/lool/child-roots
-chown %{owner}: ${loolparent}/lool
-chown %{owner}: ${loolparent}/lool/child-roots
+chown lool:lool ${loolparent}/lool
+chown lool:lool ${loolparent}/lool/child-roots
 
-su %{owner} -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null"
+su lool -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null"
 
+%if 0%{?fedora} || 0%{?rhel} >= 7
+%systemd_post loolwsd.service
+%else
+%if 0%{?suse_version}
 %service_add_post loolwsd.service
-
 %{fillup_only -n loolwsd}
+%endif
+%endif
+
 
 %preun
+%if 0%{?fedora} || 0%{?rhel} >= 7
+%systemd_preun loolwsd.service
+%else
+%if 0%{?suse_version}
 %service_del_preun loolwsd.service
+%endif
+%endif
 
 %postun
+%if 0%{?fedora} || 0%{?rhel} >= 7
+%systemd_postun loolwsd.service
+%else
+%if 0%{?suse_version}
 %service_del_postun loolwsd.service
+%endif
+%endif
 
 %changelog
 * Mon Aug 03 2015 Mihai Varga
