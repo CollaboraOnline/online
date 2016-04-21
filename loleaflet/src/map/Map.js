@@ -2,6 +2,57 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
+function activate(socket)
+{
+	socket.sendMessage('useractive');
+	clearTimeout(vex.timer);
+	return vex.close(vex.globalID - 1);
+}
+
+function deactivate(socket)
+{
+	socket.sendMessage('userinactive');
+	clearTimeout(vex.timer);
+
+	options = $.extend({}, vex.defaultOptions, {contentCSS: {"background":"rgba(0, 0, 0, 0)"}});
+	options.id = vex.globalID;
+	vex.globalID += 1;
+	options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
+	  vex: options
+	});
+	options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
+	  vex: options
+	});
+
+	options.$vexOverlay.bind('click.vex', function(e) {
+	  if (e.target !== this) {
+	    return;
+	  }
+	  return activate(socket);
+	});
+	options.$vex.append(options.$vexOverlay);
+
+	options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).data({
+	  vex: options
+	});
+	options.$vex.append(options.$vexContent);
+
+	$(options.appendLocation).append(options.$vex);
+	vex.setupBodyClassName(options.$vex);
+}
+
+function dim(bool, socket)
+{
+	if (bool)
+	{
+		vex.timer = setTimeout(function() { deactivate(socket); }, 10 * 1000);
+	}
+	else
+	{
+		activate(socket);
+	}
+}
+
 L.Map = L.Evented.extend({
 
 	options: {
@@ -695,6 +746,8 @@ L.Map = L.Evented.extend({
 			doclayer._isCursorOverlayVisible = false;
 			doclayer._onUpdateCursor();
 		}
+
+		dim(true, this._socket);
 	},
 
 	_onGotFocus: function () {
@@ -710,6 +763,8 @@ L.Map = L.Evented.extend({
 				doclayer._onUpdateCursor();
 			}, 300);
 		}
+
+		dim(false, this._socket);
 	},
 
 	_onUpdateProgress: function (e) {
