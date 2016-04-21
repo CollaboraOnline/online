@@ -235,6 +235,7 @@ void TileCache::documentSaved()
     // first remove the invalidated tiles from the Persistent cache
     for (const auto& it : _toBeRemoved)
     {
+        Log::debug("Removing tile: " + _persCacheDir + "/" + it);
         Util::removeFile(_persCacheDir + "/" + it);
     }
 
@@ -246,6 +247,7 @@ void TileCache::documentSaved()
         std::unique_lock<std::mutex> lock(_cacheMutex);
         for (auto tileIterator = DirectoryIterator(_editCacheDir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
+            Log::debug("Moving tile: " + tileIterator.path().toString() + " to " + _persCacheDir);
             tileIterator->moveTo(_persCacheDir);
         }
 
@@ -331,6 +333,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
             const std::string fileName = tileIterator.path().getFileName();
             if (intersectsTile(fileName, part, x, y, width, height))
             {
+                Log::debug("Removing tile: " + tileIterator.path().toString());
                 Util::removeFile(tileIterator.path());
             }
         }
