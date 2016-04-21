@@ -14,7 +14,7 @@ AM_LDFLAGS = -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
 AM_CPPFLAGS = -pthread -I$(top_srcdir)
 
 test_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
-test_SOURCES = WhiteBoxTests.cpp httpposttest.cpp httpwstest.cpp test.cpp ../LOOLProtocol.cpp
+test_SOURCES = WhiteBoxTests.cpp httpposttest.cpp httpwstest.cpp httpcrashtest.cpp test.cpp ../LOOLProtocol.cpp
 test_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
