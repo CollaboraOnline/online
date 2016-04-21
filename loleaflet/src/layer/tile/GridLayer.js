@@ -779,7 +779,7 @@ L.GridLayer = L.Layer.extend({
 
 	_addTiles: function (coordsQueue, fragment) {
 		// first take care of the DOM
-		for (i = 0; i < coordsQueue.length; i++) {
+		for (var i = 0; i < coordsQueue.length; i++) {
 			var coords = coordsQueue[i];
 
 			var tilePos = this._getTilePos(coords),
@@ -821,25 +821,124 @@ L.GridLayer = L.Layer.extend({
 			}
 		}
 
-		// then ask for the actual tiles
-		for (i = 0; i < coordsQueue.length; i++) {
-			var coords = coordsQueue[i];
+		// sort the tiles by the rows
+		coordsQueue.sort(function(a, b){
+			if (a.y != b.y ) {
+				return a.y-b.y;
+			} else {
+				return a.x-b.x;
+			}
+		});
 
+		// try group the tiles into rectangular areas
+		var rectangles = [];
+		while (coordsQueue.length > 0) {
+			var coords = coordsQueue[0];
+
+			// tiles that do not interest us
 			var key = this._tileCoordsToKey(coords);
+			if (this._tileCache[key] || coords.part !== this._selectedPart) {
+				coordsQueue.splice(0, 1);
+				continue;
+			}
 
-			if (!this._tileCache[key]) {
-				if (coords.part === this._selectedPart) {
-					var twips = this._coordsToTwips(coords);
-					var msg = 'tile ' +
-							'part=' + coords.part + ' ' +
-							'width=' + this._tileSize + ' ' +
-							'height=' + this._tileSize + ' ' +
-							'tileposx=' + twips.x + ' '	+
-							'tileposy=' + twips.y + ' ' +
-							'tilewidth=' + this._tileWidthTwips + ' ' +
-							'tileheight=' + this._tileHeightTwips;
-					this._map._socket.sendMessage(msg, key);
+			var rectQueue = [ coords ];
+			var bound = new L.Point(coords.x, coords.y);
+
+			// remove it
+			coordsQueue.splice(0, 1);
+
+			// find the close ones
+			var rowLocked = false;
+			var hasHole = false
+			var i = 0;
+			while (i < coordsQueue.length) {
+				var current = coordsQueue[i];
+
+				// extend the bound vertically if possible (so far it was
+				// continous)
+				if (!hasHole && (current.y == bound.y + 1)) {
+					rowLocked = true;
+					++bound.y;
 				}
+
+				if (current.y > bound.y) {
+					break;
+				}
+
+				if (!rowLocked) {
+					if (current.y == bound.y && current.x == bound.x + 1) {
+						// extend the bound horizontally
+						++bound.x;
+						rectQueue.push(current);
+						coordsQueue.splice(i, 1);
+					} else {
+						// ignore the rest of the row
+						rowLocked = true;
+						++i;
+					}
+				} else if (current.x <= bound.x && current.y <= bound.y) {
+					// we are inside the bound
+					rectQueue.push(current);
+					coordsQueue.splice(i, 1);
+				} else {
+					// ignore this one, but there still may be other tiles
+					hasHole = true;
+					++i;
+				}
+			}
+
+			rectangles.push(rectQueue);
+		}
+
+		for (var r = 0; r < rectangles.length; ++r) {
+			var rectQueue = rectangles[r];
+
+			if (rectQueue.length == 1) {
+				// only one tile here
+				var coords = rectQueue[0];
+				var key = this._tileCoordsToKey(coords);
+
+				var twips = this._coordsToTwips(coords);
+				var msg = 'tile ' +
+						'part=' + coords.part + ' ' +
+						'width=' + this._tileSize + ' ' +
+						'height=' + this._tileSize + ' ' +
+						'tileposx=' + twips.x + ' '	+
+						'tileposy=' + twips.y + ' ' +
+						'tilewidth=' + this._tileWidthTwips + ' ' +
+						'tileheight=' + this._tileHeightTwips;
+				this._map._socket.sendMessage(msg, key);
+			}
+			else {
+				// more tiles, use tilecombine
+				var tilePositionsX = '';
+				var tilePositionsY = '';
+				for (var i = 0; i < rectQueue.length; i++) {
+					var coords = rectQueue[i];
+					var twips = this._coordsToTwips(coords);
+
+					if (tilePositionsX !== '') {
+						tilePositionsX += ',';
+					}
+					tilePositionsX += twips.x;
+
+					if (tilePositionsY !== '') {
+						tilePositionsY += ',';
+					}
+					tilePositionsY += twips.y;
+				}
+
+				var twips = this._coordsToTwips(coords);
+				var msg = 'tilecombine ' +
+						'part=' + coords.part + ' ' +
+						'width=' + this._tileSize + ' ' +
+						'height=' + this._tileSize + ' ' +
+						'tileposx=' + tilePositionsX + ' '	+
+						'tileposy=' + tilePositionsY + ' ' +
+						'tilewidth=' + this._tileWidthTwips + ' ' +
+						'tileheight=' + this._tileHeightTwips;
+				this._map._socket.sendMessage(msg, '');
 			}
 		}
 	},
