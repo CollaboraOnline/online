@@ -56,7 +56,7 @@ public:
     virtual bool handleDisconnect();
 
     bool isActive() const { return _isActive; }
-    void setIsActive(bool isActive) { _isActive = isActive; }
+    void setIsActive(bool active) { _isActive = active; }
 
     /// Returns the inactivity time of the client in milliseconds.
     double getInactivityMS() const
