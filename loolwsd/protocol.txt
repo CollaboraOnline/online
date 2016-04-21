@@ -133,6 +133,21 @@ takeedit
 
     See 'editlock:' message in server -> client.
 
+useractive
+
+    Sent when the user regains focus or clicks within the active area to
+    disable the inactive state.
+    Will send invalidation and update notifications to force refreshing the screen.
+
+    See 'userinactive'.
+
+userinactive
+
+    Sent when the user has switched tabs or away from the Browser altogether.
+    It should throttle updates until the user is active again.
+
+    See 'useractive'.
+
 server -> client
 ================
 
