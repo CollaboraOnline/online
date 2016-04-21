@@ -88,7 +88,7 @@ public:
             Log::trace("Skipping callback on disconnected session " + _session.getName());
             return;
         }
-        else if (_session.isInactive())
+        else if (!_session.isActive())
         {
             Log::trace("Skipping callback on inactive session " + _session.getName());
             return;
@@ -307,7 +307,7 @@ void ChildProcessSession::disconnect()
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
 {
-    if (isInactive() && _loKitDocument != nullptr)
+    if (!isActive() && _loKitDocument != nullptr)
     {
         Log::debug("Handling message after inactivity of " + std::to_string(getInactivityMS()) + "ms.");
 
@@ -375,6 +375,13 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
     }
     else if (!_isDocLoaded)
     {
+        // Be forgiving to these messages while we load.
+        if (tokens[0] == "useractive" ||
+            tokens[0] == "userinactive")
+        {
+            return true;
+        }
+
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
@@ -420,7 +427,9 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                tokens[0] == "selecttext" ||
                tokens[0] == "selectgraphic" ||
                tokens[0] == "resetselection" ||
-               tokens[0] == "saveas");
+               tokens[0] == "saveas" ||
+               tokens[0] == "useractive" ||
+               tokens[0] == "userinactive");
 
         {
             std::unique_lock<std::recursive_mutex> lock(Mutex);
@@ -489,6 +498,14 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "saveas")
         {
             return saveAs(buffer, length, tokens);
+        }
+        else if (tokens[0] == "useractive")
+        {
+            setIsActive(true);
+        }
+        else if (tokens[0] == "userinactive")
+        {
+            setIsActive(false);
         }
         else
         {

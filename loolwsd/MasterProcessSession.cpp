@@ -319,7 +319,9 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
              tokens[0] != "status" &&
              tokens[0] != "tile" &&
              tokens[0] != "tilecombine" &&
-             tokens[0] != "uno")
+             tokens[0] != "uno" &&
+             tokens[0] != "useractive" &&
+             tokens[0] != "userinactive")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
@@ -380,7 +382,8 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         }
 
         // Allow 'downloadas' for all kinds of views irrespective of editlock
-        if (_kind == Kind::ToClient && !isEditLocked() && tokens[0] != "downloadas")
+        if (_kind == Kind::ToClient && !isEditLocked() && tokens[0] != "downloadas" &&
+            tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";
             forwardToPeer(dummyFrame.c_str(), dummyFrame.size());

@@ -55,7 +55,8 @@ public:
     /// Called to handle disconnection command from socket.
     virtual bool handleDisconnect();
 
-    bool isInactive() const { return getInactivityMS() >= InactivityThresholdMS; }
+    bool isActive() const { return _isActive; }
+    void setIsActive(bool isActive) { _isActive = isActive; }
 
     /// Returns the inactivity time of the client in milliseconds.
     double getInactivityMS() const
@@ -143,6 +144,8 @@ private:
     std::string _name;
     /// True if we have been disconnected.
     bool _disconnected;
+    /// True if the user is active, otherwise false (switched tabs).
+    bool _isActive;
 
     std::chrono::steady_clock::time_point _lastActivityTime;
 
