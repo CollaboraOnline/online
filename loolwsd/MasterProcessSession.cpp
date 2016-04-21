@@ -196,14 +196,21 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                             Log::debug("Sending tile message also to subscriber " + subscriber->getName() + " line: '" + firstLine + "'");
                             std::shared_ptr<BasicTileQueue> queue;
                             queue = subscriber->getQueue();
-                            // re-emit the tile command in the other thread
-                            // to re-check and hit the cache. NB. it needs to be
-                            // 'tile' and not 'tile:'
+                            // Re-emit the tile command in the other thread(s) to re-check and hit
+                            // the cache. Construct the message from scratch to contain only the
+                            // mandatory parts of the message.
                             if (queue)
                             {
-                                std::string noColon = firstLine + "\n";
-                                noColon.erase(4,1);
-                                queue->put(noColon);
+                                const std::string message("tile "
+                                                          " part=" + std::to_string(part) +
+                                                          " width=" + std::to_string(width) +
+                                                          " height=" + std::to_string(height) +
+                                                          " tileposx=" + std::to_string(tilePosX) +
+                                                          " tileposy=" + std::to_string(tilePosY) +
+                                                          " tilewidth=" + std::to_string(tileWidth) +
+                                                          " tileheight=" + std::to_string(tileHeight) +
+                                                          "\n");
+                                queue->put(message);
                             }
                         }
                     }
