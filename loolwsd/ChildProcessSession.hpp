@@ -60,6 +60,9 @@ public:
 
     std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
 
+    void setMissedUpdates() { _missedUpdates = true; }
+    void setMissedNotif(const int type, const std::string& payload) { _missedNotif.emplace(type, payload); }
+
  protected:
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
@@ -98,6 +101,8 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     int _clientPart;
+    bool _missedUpdates;
+    std::map<int, std::string> _missedNotif;
     std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> _onLoad;
     std::function<void(const std::string&)> _onUnload;
 

@@ -90,8 +90,22 @@ public:
         }
         else if (!_session.isActive())
         {
-            Log::trace("Skipping callback on inactive session " + _session.getName());
-            return;
+            // Pass save notifications through.
+            if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
+            {
+                Log::trace("Skipping callback on inactive session " + _session.getName());
+                _session.setMissedUpdates();
+                if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+                    nType == LOK_CALLBACK_TEXT_SELECTION ||
+                    nType == LOK_CALLBACK_TEXT_SELECTION_START ||
+                    nType == LOK_CALLBACK_TEXT_SELECTION_END ||
+                    nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
+                {
+                    _session.setMissedNotif(nType, rPayload);
+                }
+
+                return;
+            }
         }
 
         switch (nType)
@@ -269,6 +283,7 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
     _jailId(jailId),
     _viewId(0),
     _clientPart(0),
+    _missedUpdates(false),
     _onLoad(onLoad),
     _onUnload(onUnload),
     _callbackWorker(new CallbackWorker(_callbackQueue, *this))
@@ -307,8 +322,9 @@ void ChildProcessSession::disconnect()
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
 {
-    if (!isActive() && _loKitDocument != nullptr)
+    if (_missedUpdates && _loKitDocument != nullptr)
     {
+        _missedUpdates = false;
         Log::debug("Handling message after inactivity of " + std::to_string(getInactivityMS()) + "ms.");
 
         // Client is getting active again.
@@ -331,7 +347,30 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                        " width=" + std::to_string(INT_MAX) +
                        " height=" + std::to_string(INT_MAX));
 
-        //TODO: Sync cursor.
+        for (const auto& pair : _missedNotif)
+        {
+            switch (pair.first)
+            {
+                case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
+                    sendTextFrame("invalidatecursor: " + pair.second);
+                    break;
+                case LOK_CALLBACK_TEXT_SELECTION:
+                    sendTextFrame("textselection: " + pair.second);
+                    break;
+                case LOK_CALLBACK_TEXT_SELECTION_START:
+                    sendTextFrame("textselectionstart: " + pair.second);
+                    break;
+                case LOK_CALLBACK_TEXT_SELECTION_END:
+                    sendTextFrame("textselectionend: " + pair.second);
+                    break;
+                case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
+                    getStatus("", 0);
+                    getPartPageRectangles("", 0);
+                    break;
+            }
+        }
+
+        _missedNotif.clear();
     }
 
     const std::string firstLine = getFirstLine(buffer, length);
