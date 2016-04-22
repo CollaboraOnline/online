@@ -268,16 +268,8 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                 if (tokens.count() > 1 && !tokens[1].empty())
                     _docBroker->tileCache().saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
             }
-            else if (tokens[0] == "invalidatecursor:")
-            {
-                _docBroker->tileCache().setEditing(true);
-            }
             else if (tokens[0] == "invalidatetiles:")
             {
-                // FIXME temporarily, set the editing on the 1st invalidate, TODO extend
-                // the protocol so that the client can set the editing or view only.
-                _docBroker->tileCache().setEditing(true);
-
                 assert(firstLine.size() == static_cast<std::string::size_type>(length));
                 _docBroker->tileCache().invalidateTiles(firstLine);
             }
@@ -434,10 +426,6 @@ bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*
         sendTextFrame("error: cmd=invalidatetiles kind=syntax");
         return false;
     }
-
-    // FIXME temporarily, set the editing on the 1st invalidate, TODO extend
-    // the protocol so that the client can set the editing or view only.
-    _docBroker->tileCache().setEditing(true);
 
     _docBroker->tileCache().invalidateTiles(_curPart, tilePosX, tilePosY, tileWidth, tileHeight);
     return true;

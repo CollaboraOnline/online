@@ -156,9 +156,11 @@ bool DocumentBroker::save()
     {
         _isModified = false;
         _lastSaveTime = std::chrono::steady_clock::now();
-        _tileCache->documentSaved();
+        _tileCache->setUnsavedChanges(false);
         Log::debug("Saved to URI [" + uri + "] and updated tile cache.");
         _saveCV.notify_all();
+        const auto fileInfo = _storage->getFileInfo(_uriPublic);
+        _tileCache->saveLastModified(fileInfo._modifiedTime);
         return true;
     }
 
@@ -327,6 +329,12 @@ bool DocumentBroker::canDestroy()
     }
 
     return _markToDestroy;
+}
+
+void DocumentBroker::setModified(const bool value)
+{
+    _tileCache->setUnsavedChanges(value);
+    _isModified = value;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -65,32 +65,22 @@ std::vector<std::weak_ptr<MasterProcessSession>> TileBeingRendered::getSubscribe
 
 TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,
-                     const std::string& rootCacheDir) :
+                     const std::string& cacheDir) :
     _docURL(docURL),
-    _rootCacheDir(rootCacheDir),
-    _persCacheDir(Path(rootCacheDir, "persistent").toString()),
-    _editCacheDir(Path(rootCacheDir, "editing").toString()),
-    _isEditing(false),
-    _hasUnsavedChanges(false)
+    _cacheDir(cacheDir)
 {
-    Log::info("TileCache ctor for uri [" + _docURL + "].");
-    const bool cleanEverything = (getLastModified() < modifiedTime);
-    if (cleanEverything)
+    Log::info("TileCache ctor for uri [" + _docURL + "] modifiedTime=" + std::to_string(modifiedTime.raw()/1000000) + " getLastModified()=" + std::to_string(getLastModified().raw()/1000000));
+    File directory(_cacheDir);
+    if (directory.exists() &&
+        (getLastModified() < modifiedTime ||
+         getTextFile("unsaved.txt") != ""))
     {
-        // document changed externally, clean up everything
-        Util::removeFile(_rootCacheDir, true);
-        Log::info("Completely cleared tilecache: " + _rootCacheDir);
-    }
-    else
-    {
-        // remove only the Editing cache
-        Util::removeFile(_editCacheDir, true);
-        Log::info("Cleared the editing tilecache: " + _editCacheDir);
+        // Document changed externally or modifications were not saved after all. Cache not useful.
+        Util::removeFile(_cacheDir, true);
+        Log::info("Completely cleared tile cache: " + _cacheDir);
     }
 
-    File(_rootCacheDir).createDirectories();
-    File(_editCacheDir).createDirectories();
-    File(_persCacheDir).createDirectories();
+    File(_cacheDir).createDirectories();
 
     saveLastModified(modifiedTime);
 }
@@ -141,35 +131,12 @@ void TileCache::forgetTileBeingRendered(int part, int width, int height, int til
 
 std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
 {
-    const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    const std::string fileName = _cacheDir + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    if (_hasUnsavedChanges)
-    {
-        // Try the Editing cache first.
-        Path path(_editCacheDir, cachedName);
-        const std::string fileName = path.toString();
-        std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
-        if (result && result->is_open())
-        {
-            Log::trace("Found editing tile: " + fileName);
-            return result;
-        }
-    }
-
-    // Skip tiles scheduled for removal from the Persistent cache (on save)
-    if (_toBeRemoved.find(cachedName) != _toBeRemoved.end())
-    {
-        Log::trace("Skipping perishable tile: " + cachedName);
-        return nullptr;
-    }
-
-    // Default to the content of the Persistent cache.
-    Path path(_persCacheDir, cachedName);
-    const std::string fileName = path.toString();
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
     if (result && result->is_open())
     {
-        Log::trace("Found persistent tile: " + fileName);
+        Log::trace("Found cache tile: " + fileName);
         return result;
     }
 
@@ -178,128 +145,74 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
 
 void TileCache::saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size)
 {
-    if (_isEditing)
-    {
-        _hasUnsavedChanges = true;
-    }
+    const std::string fileName = _cacheDir + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    const std::string dirName = cacheDirName(_hasUnsavedChanges);
-
-    const std::string fileName = dirName + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    Log::trace() << "Saving "
-                 << (_hasUnsavedChanges ? "editing" : "persistent") <<
-                 " tile: " << fileName << Log::end;
+    Log::trace() << "Saving cache tile: " << fileName << Log::end;
 
     std::fstream outStream(fileName, std::ios::out);
     outStream.write(data, size);
     outStream.close();
 }
 
-std::string TileCache::getTextFile(std::string fileName)
+std::string TileCache::getTextFile(const std::string& fileName)
 {
-    const auto textFile = std::string("/" + fileName);
+    const std::string fullFileName =  _cacheDir + "/" + fileName;
 
-    std::string dirName = _persCacheDir;
-    if (_hasUnsavedChanges)
-    {
-        // try the Editing cache first, and prefer it if it exists
-        const std::string editingDirName = _editCacheDir;
-        File dir(editingDirName);
-
-        File text(editingDirName + textFile);
-        if (dir.exists() && dir.isDirectory() && text.exists() && !text.isDirectory())
-            dirName = editingDirName;
-    }
-
-    if (!File(dirName).exists() || !File(dirName).isDirectory())
-    {
-        return "";
-    }
-
-    fileName = dirName + textFile;
-    std::fstream textStream(fileName, std::ios::in);
+    std::fstream textStream(fullFileName, std::ios::in);
     if (!textStream.is_open())
     {
+        Log::info("Could not open " + fullFileName);
         return "";
     }
 
-    std::vector<char> result;
+    std::vector<char> buffer;
     textStream.seekg(0, std::ios_base::end);
     std::streamsize size = textStream.tellg();
-    result.resize(size);
+    buffer.resize(size);
     textStream.seekg(0, std::ios_base::beg);
-    textStream.read(result.data(), size);
+    textStream.read(buffer.data(), size);
     textStream.close();
 
-    if (result[result.size()-1] == '\n')
-        result.resize(result.size() - 1);
+    if (buffer.size() > 0 && buffer.back() == '\n')
+        buffer.pop_back();
 
-    return std::string(result.data(), result.size());
+    std::string result = std::string(buffer.data(), buffer.size());
+    Log::info("Read '" + result + "' from " + fullFileName);
+
+    return result;
 }
 
-void TileCache::documentSaved()
+void TileCache::saveTextFile(const std::string& text, const std::string& fileName)
 {
-    Log::debug("Persisting editing tiles.");
-
-    // first remove the invalidated tiles from the Persistent cache
-    for (const auto& it : _toBeRemoved)
-    {
-        Log::debug("Removing tile: " + _persCacheDir + "/" + it);
-        Util::removeFile(_persCacheDir + "/" + it);
-    }
-
-    _toBeRemoved.clear();
-
-    // then move the new tiles from the Editing cache to Persistent
-    try
-    {
-        std::unique_lock<std::mutex> lock(_cacheMutex);
-        for (auto tileIterator = DirectoryIterator(_editCacheDir); tileIterator != DirectoryIterator(); ++tileIterator)
-        {
-            Log::debug("Moving tile: " + tileIterator.path().toString() + " to " + _persCacheDir);
-            tileIterator->moveTo(_persCacheDir);
-        }
-
-        // update status
-        _hasUnsavedChanges = false;
-
-        // FIXME should we take the exact time of the file for the local files?
-        saveLastModified(Timestamp());
-    }
-    catch (const FileException& exc)
-    {
-        // Just log this exception, ignore it otherwise
-        Log::error() << "TileCache::documentSaved: Exception: " << exc.displayText()
-                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                     << Log::end;
-    }
-}
-
-void TileCache::setEditing(bool editing)
-{
-    _isEditing = editing;
-}
-
-void TileCache::saveTextFile(const std::string& text, std::string fileName)
-{
-    const std::string dirName = cacheDirName(_isEditing);
-
-    StringTokenizer tokens(text, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-    fileName = dirName + "/" + fileName;
-    std::fstream textStream(fileName, std::ios::out);
+    const std::string fullFileName = _cacheDir + "/" + fileName;
+    std::fstream textStream(fullFileName, std::ios::out);
 
     if (!textStream.is_open())
+    {
+        Log::error("Could not save '" + text + "' to " + fullFileName);
         return;
+    }
+    else
+    {
+        Log::info("Saving '" + text + "' to " + fullFileName);
+    }
 
     textStream << text << std::endl;
     textStream.close();
 }
 
+void TileCache::setUnsavedChanges(bool state)
+{
+    if (state)
+        saveTextFile("1", "unsaved.txt");
+    else
+        removeFile("unsaved.txt");
+}
+
 void TileCache::saveRendering(const std::string& name, const std::string& dir, const char *data, size_t size)
 {
     // can fonts be invalidated?
-    const std::string dirName = _persCacheDir + "/" + dir;
+    const std::string dirName = _cacheDir + "/" + dir;
 
     File(dirName).createDirectories();
 
@@ -312,7 +225,7 @@ void TileCache::saveRendering(const std::string& name, const std::string& dir, c
 
 std::unique_ptr<std::fstream> TileCache::lookupRendering(const std::string& name, const std::string& dir)
 {
-    const std::string dirName = _persCacheDir + "/" + dir;
+    const std::string dirName = _cacheDir + "/" + dir;
     const std::string fileName = dirName + "/" + name;
     File directory(dirName);
 
@@ -332,32 +245,17 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
                  << ", width: " << width
                  << ", height: " << height << Log::end;
 
-    // in the Editing cache, remove immediately
-    File editingDir(_editCacheDir);
-    if (editingDir.exists() && editingDir.isDirectory())
+    File dir(_cacheDir);
+    if (dir.exists() && dir.isDirectory())
     {
         std::unique_lock<std::mutex> lock(_cacheMutex);
-        for (auto tileIterator = DirectoryIterator(editingDir); tileIterator != DirectoryIterator(); ++tileIterator)
+        for (auto tileIterator = DirectoryIterator(dir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
             const std::string fileName = tileIterator.path().getFileName();
             if (intersectsTile(fileName, part, x, y, width, height))
             {
                 Log::debug("Removing tile: " + tileIterator.path().toString());
                 Util::removeFile(tileIterator.path());
-            }
-        }
-    }
-
-    // in the Persistent cache, add to _toBeRemoved for removal on save
-    File persistentDir(_persCacheDir);
-    if (persistentDir.exists() && persistentDir.isDirectory())
-    {
-        for (auto tileIterator = DirectoryIterator(persistentDir); tileIterator != DirectoryIterator(); ++tileIterator)
-        {
-            const std::string fileName = tileIterator.path().getFileName();
-            if (_toBeRemoved.find(fileName) == _toBeRemoved.end() && intersectsTile(fileName, part, x, y, width, height))
-            {
-                _toBeRemoved.insert(fileName);
             }
         }
     }
@@ -393,14 +291,8 @@ void TileCache::invalidateTiles(const std::string& tiles)
 
 void TileCache::removeFile(const std::string& fileName)
 {
-    Log::warn("Removing tile: " + fileName);
-    Util::removeFile(_persCacheDir + "/" + fileName);
-    Util::removeFile(_editCacheDir + "/" + fileName);
-}
-
-std::string TileCache::cacheDirName(const bool useEditingCache)
-{
-    return (useEditingCache ? _editCacheDir : _persCacheDir);
+    Log::warn("Removing file: " + _cacheDir + "/" + fileName);
+    Util::removeFile(_cacheDir + "/" + fileName);
 }
 
 std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
@@ -439,7 +331,7 @@ bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int
 
 Timestamp TileCache::getLastModified()
 {
-    std::fstream modTimeFile(_rootCacheDir + "/modtime.txt", std::ios::in);
+    std::fstream modTimeFile(_cacheDir + "/modtime.txt", std::ios::in);
 
     if (!modTimeFile.is_open())
         return 0;
@@ -453,7 +345,7 @@ Timestamp TileCache::getLastModified()
 
 void TileCache::saveLastModified(const Timestamp& timestamp)
 {
-    std::fstream modTimeFile(_rootCacheDir + "/modtime.txt", std::ios::out);
+    std::fstream modTimeFile(_cacheDir + "/modtime.txt", std::ios::out);
     modTimeFile << timestamp.raw() << std::endl;
     modTimeFile.close();
 }

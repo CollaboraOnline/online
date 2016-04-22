@@ -1254,7 +1254,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("port number"));
 
-    optionSet.addOption(Option("cache", "", "Path to a directory where to keep the persistent tile cache (default: " + std::string(LOOLWSD_CACHEDIR) + ").")
+    optionSet.addOption(Option("cache", "", "Path to a directory where to keep the tile cache (default: " + std::string(LOOLWSD_CACHEDIR) + ").")
                         .required(false)
                         .repeatable(false)
                         .argument("directory"));

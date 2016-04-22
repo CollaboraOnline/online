@@ -19,13 +19,6 @@
 #include <Poco/Timestamp.h>
 
 /** Handles the cache for tiles of one document.
-
-The cache consists of 2 cache directories:
-
-  * persistent - that always represents the document as is saved
-  * editing - that represents the document in the current state (with edits)
-
-The editing cache is cleared on startup, and copied to the persistent on each save.
 */
 
 class MasterProcessSession;
@@ -45,7 +38,7 @@ public:
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
-    TileCache(const std::string& docURL, const Poco::Timestamp& modifiedTime, const std::string& rootCacheDir);
+    TileCache(const std::string& docURL, const Poco::Timestamp& modifiedTime, const std::string& cacheDir);
     ~TileCache();
 
     TileCache(const TileCache&) = delete;
@@ -61,16 +54,13 @@ public:
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
     void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
-    std::string getTextFile(std::string fileName);
+    std::string getTextFile(const std::string& fileName);
 
-    /// Notify the cache that the document was saved - to copy tiles from the Editing cache to Persistent.
-    void documentSaved();
+    // Save some text into a file in the cache directory
+    void saveTextFile(const std::string& text, const std::string& fileName);
 
-    /// Notify whether we need to use the Editing cache.
-    void setEditing(bool editing);
-
-    // The parameter is a message
-    void saveTextFile(const std::string& text, std::string fileName);
+    // Set the unsaved-changes state, used for sanity checks, ideally not needed
+    void setUnsavedChanges(bool state);
 
     // Saves a font / style / etc rendering
     // The dir parameter should be the type of rendering, like "font", "style", etc
@@ -83,13 +73,13 @@ public:
 
     void invalidateTiles(int part, int x, int y, int width, int height);
 
-    // Removes the given file from both editing and persistent cache
+    // Removes the given file from the cache
     void removeFile(const std::string& fileName);
 
-private:
-    /// Path of the (sub-)cache dir, the parameter specifies which (sub-)cache to use.
-    std::string cacheDirName(bool useEditingCache);
+    /// Store the timestamp to modtime.txt.
+    void saveLastModified(const Poco::Timestamp& timestamp);
 
+private:
     std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
 
@@ -99,22 +89,9 @@ private:
     /// Load the timestamp from modtime.txt.
     Poco::Timestamp getLastModified();
 
-    /// Store the timestamp to modtime.txt.
-    void saveLastModified(const Poco::Timestamp& timestamp);
-
     const std::string _docURL;
-    const std::string _rootCacheDir;
-    const std::string _persCacheDir;
-    const std::string _editCacheDir;
 
-    /// The document is being edited.
-    bool _isEditing;
-
-    /// We have some unsaved changes => use the Editing cache.
-    bool _hasUnsavedChanges;
-
-    /// Set of tiles that we want to remove from the Persistent cache on the next save.
-    std::set<std::string> _toBeRemoved;
+    const std::string _cacheDir;
 
     std::mutex _cacheMutex;
 

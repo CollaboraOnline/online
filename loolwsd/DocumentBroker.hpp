@@ -178,7 +178,7 @@ public:
     bool canDestroy();
     bool isMarkedToDestroy() const { return _markToDestroy; }
     bool isModified() const { return _isModified; }
-    void setModified(const bool value) { _isModified = value; }
+    void setModified(const bool value);
 
 private:
     const Poco::URI _uriPublic;
