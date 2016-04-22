@@ -9,6 +9,10 @@ function activate(map)
 		map._socket.sendMessage('useractive');
 	}
 
+	if (map._docLayer) {
+		map._docLayer._onMessage('invalidatetiles: part=0 x=0 y=0 width=2147483647 height=2147483647', null);
+	}
+
 	return vex.close(vex.globalID - 1);
 }
 

@@ -334,19 +334,10 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         if (_multiView)
             _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-        int curPart = _loKitDocument->pClass->getPart(_loKitDocument);
+        const int curPart = _loKitDocument->pClass->getPart(_loKitDocument);
         sendTextFrame("curpart: part=" + std::to_string(curPart));
-        if (getDocType() == "text")
-        {
-            curPart = 0;
-        }
 
-        sendTextFrame("invalidatetiles:"
-                       " part=" + std::to_string(curPart) +
-                       " x=0 y=0"
-                       " width=" + std::to_string(INT_MAX) +
-                       " height=" + std::to_string(INT_MAX));
-
+        //TODO: Is the order of these important?
         for (const auto& pair : _missedNotif)
         {
             switch (pair.first)
