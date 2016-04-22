@@ -1001,43 +1001,43 @@ void HTTPWSTest::testImpressPartCountChanged()
 
 void HTTPWSTest::testSimultaneousTilesRenderedJustOnce()
 {
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket1 = *connectLOKit(request, _response);
-        sendTextFrame(socket1, "load url=" + documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+    Poco::Net::WebSocket socket1 = *connectLOKit(request, _response);
+    sendTextFrame(socket1, "load url=" + documentURL);
 
-        Poco::Net::WebSocket socket2 = *connectLOKit(request, _response);
-        sendTextFrame(socket2, "load url=" + documentURL);
+    Poco::Net::WebSocket socket2 = *connectLOKit(request, _response);
+    sendTextFrame(socket2, "load url=" + documentURL);
 
-        sendTextFrame(socket1, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
-        sendTextFrame(socket2, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
+    sendTextFrame(socket1, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
+    sendTextFrame(socket2, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
 
-        std::string response1;
-        getResponseMessage(socket1, "tile:", response1, true);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !response1.empty());
+    std::string response1;
+    getResponseMessage(socket1, "tile:", response1, true);
+    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !response1.empty());
 
-        std::string response2;
-        getResponseMessage(socket2, "tile:", response2, true);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !response2.empty());
+    std::string response2;
+    getResponseMessage(socket2, "tile:", response2, true);
+    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !response2.empty());
 
-        if (!response1.empty() && !response2.empty())
-        {
-            Poco::StringTokenizer tokens1(response1, " ");
-            std::string renderId1;
-            LOOLProtocol::getTokenString(tokens1, "renderid", renderId1);
-            Poco::StringTokenizer tokens2(response2, " ");
-            std::string renderId2;
-            LOOLProtocol::getTokenString(tokens2, "renderid", renderId2);
+    if (!response1.empty() && !response2.empty())
+    {
+        Poco::StringTokenizer tokens1(response1, " ");
+        std::string renderId1;
+        LOOLProtocol::getTokenString(tokens1, "renderid", renderId1);
+        Poco::StringTokenizer tokens2(response2, " ");
+        std::string renderId2;
+        LOOLProtocol::getTokenString(tokens2, "renderid", renderId2);
 
-            CPPUNIT_ASSERT(renderId1 == renderId2 ||
-                           (renderId1 == "cached" && renderId2 != "cached") ||
-                           (renderId1 != "cached" && renderId2 == "cached"));
-        }
+        CPPUNIT_ASSERT(renderId1 == renderId2 ||
+                       (renderId1 == "cached" && renderId2 != "cached") ||
+                       (renderId1 != "cached" && renderId2 == "cached"));
+    }
 
-        socket1.shutdown();
-        socket2.shutdown();
+    socket1.shutdown();
+    socket2.shutdown();
 }
 
 void HTTPWSTest::testNoExtraLoolKitsLeft()
