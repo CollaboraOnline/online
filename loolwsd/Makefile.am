@@ -144,7 +144,7 @@ SYSTEM_STAMP =
 
 endif
 
-clean-cache:
+clean-cache cache-clean:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
 
