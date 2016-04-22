@@ -110,7 +110,7 @@ namespace Log
         assert (sizeof (LogPrefix) > strlen(oss.str().c_str()) + 1);
         strncpy(LogPrefix, oss.str().c_str(), sizeof(LogPrefix));
 
-        auto channel = (isatty(fileno(stdout)) || std::getenv("LOOL_LOGCOLOR")
+        auto channel = (isatty(fileno(stderr)) || std::getenv("LOOL_LOGCOLOR")
                      ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
                      : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
         auto& logger = Poco::Logger::create(Source.name, channel, Poco::Message::PRIO_TRACE);
