@@ -177,6 +177,8 @@ public:
     // Called when the last view is going out.
     bool canDestroy();
     bool isMarkedToDestroy() const { return _markToDestroy; }
+    bool isModified() const { return _isModified; }
+    void setModified(const bool value) { _isModified = value; }
 
 private:
     const Poco::URI _uriPublic;
@@ -192,6 +194,7 @@ private:
     std::unique_ptr<TileCache> _tileCache;
     std::shared_ptr<ChildProcess> _childProcess;
     bool _markToDestroy;
+    bool _isModified;
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;

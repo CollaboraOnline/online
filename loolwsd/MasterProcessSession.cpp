@@ -164,6 +164,17 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
                 return true;
             }
+            else if (tokens.count() == 2 && tokens[0] == "statechanged:")
+            {
+                StringTokenizer stateTokens(tokens[1], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                if (stateTokens.count() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
+                {
+                    if (_docBroker)
+                    {
+                        _docBroker->setModified(stateTokens[1] == "true");
+                    }
+                }
+            }
         }
 
         if (peer && !_isDocPasswordProtected)

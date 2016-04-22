@@ -73,7 +73,8 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _cacheRoot(getCachePath(uriPublic.toString())),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _childProcess(childProcess),
-    _markToDestroy(false)
+    _markToDestroy(false),
+    _isModified(false)
 {
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
@@ -153,6 +154,7 @@ bool DocumentBroker::save()
     assert(_storage && _tileCache);
     if (_storage->saveLocalFileToStorage())
     {
+        _isModified = false;
         _lastSaveTime = std::chrono::steady_clock::now();
         _tileCache->documentSaved();
         Log::debug("Saved to URI [" + uri + "] and updated tile cache.");
