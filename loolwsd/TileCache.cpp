@@ -291,8 +291,10 @@ void TileCache::invalidateTiles(const std::string& tiles)
 
 void TileCache::removeFile(const std::string& fileName)
 {
-    Log::warn("Removing file: " + _cacheDir + "/" + fileName);
-    Util::removeFile(_cacheDir + "/" + fileName);
+    const std::string fullFileName = _cacheDir + "/" + fileName;
+
+    if (std::remove(fullFileName.c_str()) == 0)
+        Log::info("Removed file: " + _cacheDir + "/" + fileName);
 }
 
 std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
