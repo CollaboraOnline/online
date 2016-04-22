@@ -8,6 +8,7 @@ L.Socket = L.Class.extend({
 
 	initialize: function (map) {
 		this._map = map;
+		this._active = true;
 		try {
 			this.socket = new WebSocket(map.options.server + '/' + map.options.doc);
 		} catch (e) {
@@ -30,6 +31,18 @@ L.Socket = L.Class.extend({
 	},
 
 	sendMessage: function (msg, coords) {
+		if (!msg.startsWith('useractive') && !msg.startsWith('userinactive') && !this._active) {
+			// Avoid communicating when we're inactive.
+			return;
+		}
+
+		if (msg.startsWith('useractive')) {
+			this._active = true;
+		}
+		else if (msg.startsWith('userinactive')) {
+			this._active = false;
+		}
+
 		var socketState = this.socket.readyState;
 		if (socketState === 2 || socketState === 3) {
 			this.initialize(this._map);
