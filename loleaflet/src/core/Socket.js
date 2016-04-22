@@ -161,6 +161,7 @@ L.Socket = L.Class.extend({
 			this._map.fail = true;
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
+			//FIXME: We should get statusindicator when saving too, no?
 			this._map.showBusy('Connecting...', false);
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {

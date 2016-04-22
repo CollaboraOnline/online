@@ -2,17 +2,27 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-function activate(socket)
+function activate(map)
 {
-	socket.sendMessage('useractive');
 	clearTimeout(vex.timer);
+	if (map._socket) {
+		map._socket.sendMessage('useractive');
+	}
+
 	return vex.close(vex.globalID - 1);
 }
 
-function deactivate(socket)
+function deactivate(map)
 {
-	socket.sendMessage('userinactive');
 	clearTimeout(vex.timer);
+
+	if (map._socket) {
+		map._socket.sendMessage('userinactive');
+	}
+
+	if (map._docLayer) {
+		map._docLayer._onMessage('textselection:', null);
+	}
 
 	options = $.extend({}, vex.defaultOptions, {contentCSS: {"background":"rgba(0, 0, 0, 0)"}});
 	options.id = vex.globalID;
@@ -28,7 +38,7 @@ function deactivate(socket)
 	  if (e.target !== this) {
 	    return;
 	  }
-	  return activate(socket);
+	  return activate(map);
 	});
 	options.$vex.append(options.$vexOverlay);
 
@@ -41,15 +51,15 @@ function deactivate(socket)
 	vex.setupBodyClassName(options.$vex);
 }
 
-function dim(bool, socket)
+function dim(bool, map)
 {
 	if (bool)
 	{
-		vex.timer = setTimeout(function() { deactivate(socket); }, 10 * 1000);
+		vex.timer = setTimeout(function() { deactivate(map); }, 10 * 1000);
 	}
 	else
 	{
-		activate(socket);
+		activate(map);
 	}
 }
 
@@ -747,7 +757,7 @@ L.Map = L.Evented.extend({
 			doclayer._onUpdateCursor();
 		}
 
-		dim(true, this._socket);
+		dim(true, this);
 	},
 
 	_onGotFocus: function () {
@@ -764,7 +774,7 @@ L.Map = L.Evented.extend({
 			}, 300);
 		}
 
-		dim(false, this._socket);
+		dim(false, this);
 	},
 
 	_onUpdateProgress: function (e) {
