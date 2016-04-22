@@ -35,7 +35,7 @@ class TileBeingRendered
     std::vector<std::weak_ptr<MasterProcessSession>> _subscribers;
 
 public:
-    void subscribe(std::weak_ptr<MasterProcessSession> session);
+    void subscribe(const std::weak_ptr<MasterProcessSession>& session);
     std::vector<std::weak_ptr<MasterProcessSession>> getSubscribers();
 };
 
@@ -84,7 +84,7 @@ public:
     void invalidateTiles(int part, int x, int y, int width, int height);
 
     // Removes the given file from both editing and persistent cache
-    void removeFile(const std::string fileName);
+    void removeFile(const std::string& fileName);
 
 private:
     /// Path of the (sub-)cache dir, the parameter specifies which (sub-)cache to use.

@@ -44,7 +44,7 @@ using Poco::URI;
 
 using namespace LOOLProtocol;
 
-void TileBeingRendered::subscribe(std::weak_ptr<MasterProcessSession> session)
+void TileBeingRendered::subscribe(const std::weak_ptr<MasterProcessSession>& session)
 {
     _subscribers.push_back(session);
 }
@@ -382,7 +382,7 @@ void TileCache::invalidateTiles(const std::string& tiles)
     }
 }
 
-void TileCache::removeFile(const std::string fileName)
+void TileCache::removeFile(const std::string& fileName)
 {
     Log::warn("Removing tile: " + fileName);
     Util::removeFile(_persCacheDir + "/" + fileName);
