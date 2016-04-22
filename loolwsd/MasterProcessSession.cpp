@@ -320,7 +320,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
              tokens[0] != "gettextselection" &&
              tokens[0] != "paste" &&
              tokens[0] != "insertfile" &&
-             tokens[0] != "invalidatetiles" &&
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
              tokens[0] != "partpagerectangles" &&
@@ -359,10 +358,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "partpagerectangles")
     {
         return getPartPageRectangles(buffer, length);
-    }
-    else if (tokens[0] == "invalidatetiles")
-    {
-        return invalidateTiles(buffer, length, tokens);
     }
     else if (tokens[0] == "renderfont")
     {
@@ -409,25 +404,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             forwardToPeer(buffer, length);
         }
     }
-    return true;
-}
-
-bool MasterProcessSession::invalidateTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
-{
-    int part, tilePosX, tilePosY, tileWidth, tileHeight;
-
-    if (tokens.count() != 6 ||
-        !getTokenInteger(tokens[1], "part", part) ||
-        !getTokenInteger(tokens[2], "tileposx", tilePosX) ||
-        !getTokenInteger(tokens[3], "tileposy", tilePosY) ||
-        !getTokenInteger(tokens[4], "tilewidth", tileWidth) ||
-        !getTokenInteger(tokens[5], "tileheight", tileHeight))
-    {
-        sendTextFrame("error: cmd=invalidatetiles kind=syntax");
-        return false;
-    }
-
-    _docBroker->tileCache().invalidateTiles(_curPart, tilePosX, tilePosY, tileWidth, tileHeight);
     return true;
 }
 

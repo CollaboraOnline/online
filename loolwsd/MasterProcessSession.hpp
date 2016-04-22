@@ -58,8 +58,6 @@ public:
     bool _bLoadError = false;
 
  protected:
-    bool invalidateTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens) override;

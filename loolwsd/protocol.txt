@@ -40,11 +40,6 @@ insertfile name=<name> type=<type>
 
     Inserts the file with the name <name> into the document, we currently support type = 'graphic'
 
-invalidatetiles part=<partNumber> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight>
-
-    All parameters are numbers. Makes the server remove any cached
-    tiles intersecting with the given area (in twips).
-
 key type=<type> char=<charcode> key=<keycode>
 
     <type> is 'input' or 'up', <charcode> and <keycode> are numbers.
