@@ -204,6 +204,12 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                         auto subscriber = i.lock();
                         if (subscriber)
                         {
+                            if (subscriber.get() == this)
+                            {
+                                Log::debug("Refusing to queue new tile message for ourselves");
+                                continue;
+                            }
+
                             Log::debug("Sending tile message also to subscriber " + subscriber->getName() + " line: '" + firstLine + "'");
                             std::shared_ptr<BasicTileQueue> queue;
                             queue = subscriber->getQueue();

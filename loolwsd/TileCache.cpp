@@ -46,6 +46,15 @@ using namespace LOOLProtocol;
 
 void TileBeingRendered::subscribe(const std::weak_ptr<MasterProcessSession>& session)
 {
+    std::shared_ptr<MasterProcessSession> cmp = session.lock();
+    for (auto s : _subscribers)
+    {
+        if (s.lock().get() == cmp.get())
+        {
+            Log::debug("Redundant request to re-subscribe on a tile");
+            return;
+        }
+    }
     _subscribers.push_back(session);
 }
 
