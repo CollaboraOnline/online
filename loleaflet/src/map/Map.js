@@ -2,71 +2,6 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-function activate(map)
-{
-	clearTimeout(vex.timer);
-	if (map._socket) {
-		map._socket.sendMessage('useractive');
-	}
-
-	if (map._docLayer) {
-		map._docLayer._onMessage('invalidatetiles: part=0 x=0 y=0 width=2147483647 height=2147483647', null);
-	}
-
-	return vex.close(vex.globalID - 1);
-}
-
-function deactivate(map)
-{
-	clearTimeout(vex.timer);
-
-	if (map._socket) {
-		map._socket.sendMessage('userinactive');
-	}
-
-	if (map._docLayer) {
-		map._docLayer._onMessage('textselection:', null);
-	}
-
-	options = $.extend({}, vex.defaultOptions, {contentCSS: {"background":"rgba(0, 0, 0, 0)"}});
-	options.id = vex.globalID;
-	vex.globalID += 1;
-	options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
-	  vex: options
-	});
-	options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
-	  vex: options
-	});
-
-	options.$vexOverlay.bind('click.vex', function(e) {
-	  if (e.target !== this) {
-	    return;
-	  }
-	  return activate(map);
-	});
-	options.$vex.append(options.$vexOverlay);
-
-	options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).data({
-	  vex: options
-	});
-	options.$vex.append(options.$vexContent);
-
-	$(options.appendLocation).append(options.$vex);
-	vex.setupBodyClassName(options.$vex);
-}
-
-function dim(bool, map)
-{
-	if (bool)
-	{
-		vex.timer = setTimeout(function() { deactivate(map); }, 10 * 1000);
-	}
-	else
-	{
-		activate(map);
-	}
-}
-
 L.Map = L.Evented.extend({
 
 	options: {
@@ -752,6 +687,51 @@ L.Map = L.Evented.extend({
 		        function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
 	},
 
+	_activate: function () {
+		clearTimeout(vex.timer);
+		this._socket.sendMessage('useractive');
+		this._docLayer._onMessage('invalidatetiles: part=0 x=0 y=0 width=2147483647 height=2147483647', null);
+
+		return vex.close(vex.globalID - 1);
+	},
+
+	_deactivate: function () {
+		var map = this;
+		vex.timer = setTimeout(function() {
+			clearTimeout(vex.timer);
+
+			options = $.extend({}, vex.defaultOptions, {contentCSS: {"background":"rgba(0, 0, 0, 0)"}});
+			options.id = vex.globalID;
+			vex.globalID += 1;
+			options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
+			  vex: options
+			});
+			options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
+			  vex: options
+			});
+
+			options.$vexOverlay.bind('click.vex', function(e) {
+			  if (e.target !== this) {
+			    return;
+			  }
+			  return map._activate();
+			});
+			options.$vex.append(options.$vexOverlay);
+
+			options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).data({
+			  vex: options
+			});
+			options.$vex.append(options.$vexContent);
+
+			$(options.appendLocation).append(options.$vex);
+			vex.setupBodyClassName(options.$vex);
+
+			map._socket.sendMessage('userinactive');
+			map._docLayer._onMessage('textselection:', null);
+
+		}, 10 * 1000);
+	},
+
 	_onLostFocus: function () {
 		var doclayer = this._docLayer;
 		if (doclayer._isCursorVisible && doclayer._isCursorOverlayVisible) {
@@ -761,7 +741,7 @@ L.Map = L.Evented.extend({
 			doclayer._onUpdateCursor();
 		}
 
-		dim(true, this);
+		this._deactivate();
 	},
 
 	_onGotFocus: function () {
@@ -778,7 +758,7 @@ L.Map = L.Evented.extend({
 			}, 300);
 		}
 
-		dim(false, this);
+		this._activate();
 	},
 
 	_onUpdateProgress: function (e) {
