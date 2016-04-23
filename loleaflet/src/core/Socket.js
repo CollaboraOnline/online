@@ -62,10 +62,19 @@ L.Socket = L.Class.extend({
 		}
 	},
 
+    _doSend: function(msg, coords) {
+        // Only attempt to log text frames, not binary ones.
+        if (typeof msg === 'string') {
+            L.Log.log(msg, L.OUTGOING, coords);
+        }
+
+        this.socket.send(msg);
+    },
+
 	_onOpen: function () {
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
-		this.socket.send('loolclient ' + this.ProtocolVersionNumber);
+		this._doSend('loolclient ' + this.ProtocolVersionNumber);
 
 		var msg = 'load url=' + this._map.options.doc;
 		if (this._map._docLayer) {
@@ -85,12 +94,11 @@ L.Socket = L.Class.extend({
 			};
 			msg += ' options=' + JSON.stringify(options);
 		}
-		this.socket.send(msg);
-		this.socket.send('status');
-		this.socket.send('partpagerectangles');
+		this._doSend(msg);
+		this._doSend('status');
+		this._doSend('partpagerectangles');
 		for (var i = 0; i < this._msgQueue.length; i++) {
-			this.socket.send(this._msgQueue[i].msg);
-			L.Log.log(this._msgQueue[i].msg, this._msgQueue[i].coords);
+			this._doSend(this._msgQueue[i].msg, this._msgQueue[i].coords);
 		}
 		this._msgQueue = [];
 	},

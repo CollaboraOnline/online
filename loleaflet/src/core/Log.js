@@ -13,6 +13,7 @@ L.Log = {
 		msg = msg.replace(/(\r\n|\n|\r)/gm, ' ');
 		this._logs.push({msg : msg, direction : direction,
 			coords : tileCoords, time : time});
+		//console.log(time + '-' + direction + ': ' + msg);
 	},
 
 	_getEntries: function () {
