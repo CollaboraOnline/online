@@ -78,6 +78,18 @@ public:
         Log::trace() << "CallbackWorker::callback [" << _session.getViewId() << "] "
                      << LOKitHelper::kitCallbackTypeToString(nType)
                      << " [" << rPayload << "]." << Log::end;
+
+        // Cache important notifications to replay them when our client
+        // goes inactive and loses them.
+        if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+            nType == LOK_CALLBACK_TEXT_SELECTION ||
+            nType == LOK_CALLBACK_TEXT_SELECTION_START ||
+            nType == LOK_CALLBACK_TEXT_SELECTION_END ||
+            nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
+        {
+            _session.setDocState(nType, rPayload);
+        }
+
         if (_session.isCloseFrame())
         {
             Log::trace("LOKit document begin the closing handshake");
@@ -94,16 +106,6 @@ public:
             if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
             {
                 Log::trace("Skipping callback on inactive session " + _session.getName());
-                _session.setMissedUpdates();
-                if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-                    nType == LOK_CALLBACK_TEXT_SELECTION ||
-                    nType == LOK_CALLBACK_TEXT_SELECTION_START ||
-                    nType == LOK_CALLBACK_TEXT_SELECTION_END ||
-                    nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
-                {
-                    _session.setMissedNotif(nType, rPayload);
-                }
-
                 return;
             }
         }
@@ -283,7 +285,6 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
     _jailId(jailId),
     _viewId(0),
     _clientPart(0),
-    _missedUpdates(false),
     _onLoad(onLoad),
     _onUnload(onUnload),
     _callbackWorker(new CallbackWorker(_callbackQueue, *this))
@@ -322,9 +323,11 @@ void ChildProcessSession::disconnect()
 
 bool ChildProcessSession::_handleInput(const char *buffer, int length)
 {
-    if (_missedUpdates && _loKitDocument != nullptr)
+    const std::string firstLine = getFirstLine(buffer, length);
+    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+    if (tokens.count() > 0 && tokens[0] == "useractive" && _loKitDocument != nullptr)
     {
-        _missedUpdates = false;
         Log::debug("Handling message after inactivity of " + std::to_string(getInactivityMS()) + "ms.");
 
         // Client is getting active again.
@@ -338,7 +341,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         sendTextFrame("curpart: part=" + std::to_string(curPart));
 
         //TODO: Is the order of these important?
-        for (const auto& pair : _missedNotif)
+        for (const auto& pair : _lastDocStates)
         {
             switch (pair.first)
             {
@@ -360,12 +363,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                     break;
             }
         }
-
-        _missedNotif.clear();
     }
-
-    const std::string firstLine = getFirstLine(buffer, length);
-    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {
