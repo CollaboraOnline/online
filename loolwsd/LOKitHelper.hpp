@@ -113,7 +113,9 @@ namespace LOKitHelper
             for (int i = 0; i < parts; i++)
             {
                 status += "\n";
-                status += loKitDocument->pClass->getPartName(loKitDocument, i);
+                status += typeString == "presentation" ?
+                          loKitDocument->pClass->getPartHash(loKitDocument, i):
+                          loKitDocument->pClass->getPartName(loKitDocument, i);
             }
         }
         return status;
