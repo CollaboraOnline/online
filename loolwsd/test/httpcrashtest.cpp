@@ -140,7 +140,11 @@ void HTTPCrashTest::testCrashKit()
                     Poco::StringTokenizer tokens(statString, " ");
                     if (tokens.count() > 3 && tokens[1] == "(loolkit)")
                     {
-                        std::system(killLOKit.c_str());
+                        const auto res = std::system(killLOKit.c_str());
+                        if (res != 0)
+                        {
+                            std::cerr << "exit " + std::to_string(res) + " from " + killLOKit << std::endl;
+                        }
                     }
                 }
             }
