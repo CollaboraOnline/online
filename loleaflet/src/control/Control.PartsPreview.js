@@ -40,13 +40,17 @@ L.Control.PartsPreview = L.Control.extend({
 					$('.scroll-container').mCustomScrollbar('update');
 				}, this), 500);
 				for (var i = 0; i < parts; i++) {
-					this._previewTiles.push(this._createPreview(i));
+					this._previewTiles.push(this._createPreview(i, e.partNames[i]));
 				}
 				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-selected');
 				this._previewInitialized = true;
 			}
 			else
 			{
+				if (e.partNames !== undefined) {
+					this._syncPreviews(e);
+				}
+
 				// change the border style of the selected preview.
 				for (var j = 0; j < parts; j++) {
 					L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selected');
@@ -56,13 +60,12 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
-	_createPreview: function (i) {
-		var id = 'preview-tile' + i;
+	_createPreview: function (i, hashCode) {
 		var frame = L.DomUtil.create('div', 'preview-frame', this._partsPreviewCont);
 		L.DomUtil.create('span', 'preview-helper', frame);
 		var imgClassName = 'preview-img';
 		var img = L.DomUtil.create('img', imgClassName, frame);
-		img.id = id;
+		img.hash = hashCode;
 		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
 		L.DomEvent
 			.on(img, 'click', L.DomEvent.stopPropagation)
@@ -75,7 +78,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		var part =  e.target.id.match(/\d+/g)[0];
+		var part = $('.parts-preview .mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			this._map.setPart(parseInt(part));
 		}
@@ -84,6 +87,61 @@ L.Control.PartsPreview = L.Control.extend({
 	_updatePart: function (e) {
 		if (e.docType === 'presentation') {
 			this._map.getPreview(e.part, e.part, 180, 180, {autoUpdate: this.options.autoUpdate});
+		}
+	},
+
+	_syncPreviews: function (e) {
+		var it = 0;
+		var parts = e.parts;
+		if (parts !== this._previewTiles.length) {
+			if (Math.abs(parts - this._previewTiles.length) === 1) {
+				if (parts > this._previewTiles.length) {
+					for (it = 0; it < parts; it++) {
+						if (it === this._previewTiles.length) {
+							this._insertPreview({selectedPart: it - 1, hashCode: e.partNames[it]});
+							break;
+						}
+						if (this._previewTiles[it].hash !== e.partNames[it]) {
+							this._insertPreview({selectedPart: it, hashCode: e.partNames[it]});
+							break;
+						}
+					}
+				}
+				else {
+					for (it = 0; it < this._previewTiles.length; it++) {
+						if (it === e.partNames.length ||
+						    this._previewTiles[it].hash !== e.partNames[it]) {
+							this._deletePreview({selectedPart: it});
+							break;
+						}
+					}
+				}
+			}
+			else {
+				// sync all, should never happen
+				while (this._previewTiles.length < e.partNames.length) {
+					this._insertPreview({selectedPart: this._previewTiles.length - 1,
+							     hashCode: e.partNames[this._previewTiles.length]});
+				}
+
+				while (this._previewTiles.length > e.partNames.length) {
+					this._deletePreview({selectedPart: this._previewTiles.length - 1});
+				}
+
+				for (it = 0; it < e.partNames.length; it++) {
+					this._previewTiles[it].hash = e.partNames[it];
+					this._previewTiles[it].src = L.Icon.Default.imagePath + '/preview_placeholder.png';
+					this._map.getPreview(it, it, 180, 180, {autoUpdate: this.options.autoUpdate});
+				}
+			}
+		}
+		else {
+			// update hash code when user click insert slide.
+			for (it = 0; it < parts; it++) {
+				if (this._previewTiles[it].hash !== e.partNames[it]) {
+					this._previewTiles[it].hash = e.partNames[it];
+				}
+			}
 		}
 	},
 
@@ -104,18 +162,13 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_updatePreviewIds: function () {
-		// TO DO: preview-tileX prefix is unneccessary, can be removed completely
-		// since we have them in this._previewTiles[]
-		for (var i = 0; i < this._previewTiles.length; i++) {
-			this._previewTiles[i].id = 'preview-tile' + i;
-		}
 		$('.parts-preview').mCustomScrollbar('update');
 	},
 
 	_insertPreview: function (e) {
 		if (this._map.getDocType() === 'presentation') {
 			var newIndex = e.selectedPart + 1;
-			var newPreview = this._createPreview(newIndex);
+			var newPreview = this._createPreview(newIndex, (e.hashCode === undefined ? null : e.hashCode));
 
 			// insert newPreview to newIndex position
 			this._previewTiles.splice(newIndex, 0, newPreview);
