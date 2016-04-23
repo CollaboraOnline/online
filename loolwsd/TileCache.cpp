@@ -44,6 +44,11 @@ using Poco::URI;
 
 using namespace LOOLProtocol;
 
+TileBeingRendered::TileBeingRendered()
+{
+    _startTime.update();
+}
+
 void TileBeingRendered::subscribe(const std::weak_ptr<MasterProcessSession>& session)
 {
     std::shared_ptr<MasterProcessSession> cmp = session.lock();

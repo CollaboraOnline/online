@@ -25,9 +25,10 @@ class MasterProcessSession;
 
 class TileBeingRendered
 {
+    Poco::Timestamp _startTime;
     std::vector<std::weak_ptr<MasterProcessSession>> _subscribers;
-
 public:
+    TileBeingRendered();
     void subscribe(const std::weak_ptr<MasterProcessSession>& session);
     std::vector<std::weak_ptr<MasterProcessSession>> getSubscribers();
 };
