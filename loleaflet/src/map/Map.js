@@ -763,7 +763,12 @@ L.Map = L.Evented.extend({
 
 	_onUpdateProgress: function (e) {
 		if (e.statusType === 'start') {
-			this.showBusy('Loading...', true);
+			if (this._docLayer) {
+				this.showBusy('Saving...', true);
+			}
+			else {
+				this.showBusy('Loading...', true);
+			}
 		}
 		else if (e.statusType === 'setvalue') {
 			this._progressBar.setValue(e.value);
