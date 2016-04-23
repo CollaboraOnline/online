@@ -68,6 +68,8 @@ public:
     void closeFrame() { _isCloseFrame = true; };
     bool isCloseFrame() const { return _isCloseFrame; }
 
+    Kind getKind() const { return _kind; }
+
 protected:
     LOOLSession(const std::string& id, const Kind kind,
                 std::shared_ptr<Poco::Net::WebSocket> ws);

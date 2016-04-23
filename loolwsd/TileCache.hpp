@@ -44,17 +44,21 @@ public:
 
     TileCache(const TileCache&) = delete;
 
-    std::unique_lock<std::mutex> getTilesBeingRenderedLock();
-
     void rememberTileAsBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
-    std::shared_ptr<TileBeingRendered> findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    std::shared_ptr<TileBeingRendered> findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+;
+
+    bool isTileBeingRenderedIfSoSubscribe(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const std::shared_ptr<MasterProcessSession> &subscriber);
 
     void forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
     void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
+
+    void notifyAndRemoveSubscribers(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, MasterProcessSession *emitter);
+
     std::string getTextFile(const std::string& fileName);
 
     // Save some text into a file in the cache directory

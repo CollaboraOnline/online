@@ -33,6 +33,7 @@
 #include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
+#include "MasterProcessSession.hpp"
 
 using Poco::DirectoryIterator;
 using Poco::File;
@@ -93,15 +94,6 @@ TileCache::TileCache(const std::string& docURL,
 TileCache::~TileCache()
 {
     Log::info("~TileCache dtor for uri [" + _docURL + "].");
-#if 0
-    auto lock = getTilesBeingRenderedLock();
-    _tilesBeingRendered.clear();
-#endif
-}
-
-std::unique_lock<std::mutex> TileCache::getTilesBeingRenderedLock()
-{
-    return std::unique_lock<std::mutex>(_tilesBeingRenderedMutex);
 }
 
 void TileCache::rememberTileAsBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
@@ -355,6 +347,70 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
     std::fstream modTimeFile(_cacheDir + "/modtime.txt", std::ios::out);
     modTimeFile << timestamp.raw() << std::endl;
     modTimeFile.close();
+}
+
+void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, MasterProcessSession *emitter)
+{
+    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
+
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    if (!tileBeingRendered)
+        return;
+
+    Log::debug("Sending tile message also to subscribers");
+
+    for (auto i: tileBeingRendered->getSubscribers())
+    {
+        auto subscriber = i.lock();
+        if (subscriber)
+        {
+            if (subscriber.get() == emitter)
+            {
+                Log::error("Refusing to queue new tile message for ourselves");
+                continue;
+            }
+
+            std::shared_ptr<BasicTileQueue> queue;
+            queue = subscriber->getQueue();
+            // Re-emit the tile command in the other thread(s) to re-check and hit
+            // the cache. Construct the message from scratch to contain only the
+            // mandatory parts of the message.
+            if (queue)
+            {
+                const std::string message("tile "
+                                          " part=" + std::to_string(part) +
+                                          " width=" + std::to_string(width) +
+                                          " height=" + std::to_string(height) +
+                                          " tileposx=" + std::to_string(tilePosX) +
+                                          " tileposy=" + std::to_string(tilePosY) +
+                                          " tilewidth=" + std::to_string(tileWidth) +
+                                          " tileheight=" + std::to_string(tileHeight) +
+                                          "\n");
+                queue->put(message);
+            }
+        }
+    }
+    forgetTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+
+    lock.unlock();
+}
+
+bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const std::shared_ptr<MasterProcessSession> &subscriber)
+{
+    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
+
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    if (tileBeingRendered)
+    {
+        Log::debug("Tile is already being rendered, subscribing");
+        assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
+        tileBeingRendered->subscribe(subscriber);
+        return true;
+    }
+    rememberTileAsBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    lock.unlock();
+
+    return false;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

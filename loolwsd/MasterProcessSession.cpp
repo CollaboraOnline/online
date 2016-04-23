@@ -195,45 +195,8 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                 assert(_kind == Kind::ToPrisoner);
                 assert(firstLine.size() < static_cast<std::string::size_type>(length));
                 _docBroker->tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-                auto lock = _docBroker->tileCache().getTilesBeingRenderedLock();
-                std::shared_ptr<TileBeingRendered> tileBeingRendered = _docBroker->tileCache().findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-                if (tileBeingRendered)
-                {
-                    for (auto i: tileBeingRendered->getSubscribers())
-                    {
-                        auto subscriber = i.lock();
-                        if (subscriber)
-                        {
-                            if (subscriber.get() == this)
-                            {
-                                Log::debug("Refusing to queue new tile message for ourselves");
-                                continue;
-                            }
 
-                            Log::debug("Sending tile message also to subscriber " + subscriber->getName() + " line: '" + firstLine + "'");
-                            std::shared_ptr<BasicTileQueue> queue;
-                            queue = subscriber->getQueue();
-                            // Re-emit the tile command in the other thread(s) to re-check and hit
-                            // the cache. Construct the message from scratch to contain only the
-                            // mandatory parts of the message.
-                            if (queue)
-                            {
-                                const std::string message("tile "
-                                                          " part=" + std::to_string(part) +
-                                                          " width=" + std::to_string(width) +
-                                                          " height=" + std::to_string(height) +
-                                                          " tileposx=" + std::to_string(tilePosX) +
-                                                          " tileposy=" + std::to_string(tilePosY) +
-                                                          " tilewidth=" + std::to_string(tileWidth) +
-                                                          " tileheight=" + std::to_string(tileHeight) +
-                                                          "\n");
-                                queue->put(message);
-                            }
-                        }
-                    }
-                    _docBroker->tileCache().forgetTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-                }
-                lock.unlock();
+                _docBroker->tileCache().notifyAndRemoveSubscribers(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, this);
             }
             else if (tokens[0] == "status:")
             {
@@ -595,17 +558,10 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         return;
     }
 
-    auto lock = _docBroker->tileCache().getTilesBeingRenderedLock();
-    std::shared_ptr<TileBeingRendered> tileBeingRendered = _docBroker->tileCache().findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    if (tileBeingRendered)
-    {
-        Log::debug("Tile is already being rendered, subscribing");
-        assert(_kind == Kind::ToClient);
-        tileBeingRendered->subscribe(shared_from_this());
+    if (_docBroker->tileCache().isTileBeingRenderedIfSoSubscribe(
+            part, width, height, tilePosX, tilePosY, tileWidth,
+            tileHeight, shared_from_this()))
         return;
-    }
-    _docBroker->tileCache().rememberTileAsBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    lock.unlock();
 
     if (_peer.expired())
         dispatchChild();
@@ -713,22 +669,9 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
         }
         else
         {
-            // FIXME: rip out into a helper method [!?] ...
-            auto lock = _docBroker->tileCache().getTilesBeingRenderedLock();
-            std::shared_ptr<TileBeingRendered> tileBeingRendered = _docBroker->tileCache().findTileBeingRendered(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
-            bool subscribed = false;
-            if (tileBeingRendered)
-            {
-                Log::debug("Tile (combined) is already being rendered, subscribing");
-                assert(_kind == Kind::ToClient);
-                tileBeingRendered->subscribe(shared_from_this());
-                subscribed = true;
-            }
-            else
-                _docBroker->tileCache().rememberTileAsBeingRendered(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
-            lock.unlock();
-
-            if (!subscribed)
+            if (!_docBroker->tileCache().isTileBeingRenderedIfSoSubscribe(
+                    part, pixelWidth, pixelHeight, x, y, tileWidth,
+                    tileHeight, shared_from_this()))
             {
                 if (!forwardTileX.empty())
                     forwardTileX += ",";
