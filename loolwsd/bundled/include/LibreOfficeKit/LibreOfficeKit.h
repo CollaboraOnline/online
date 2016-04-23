@@ -224,6 +224,10 @@ struct _LibreOfficeKitDocumentClass
                        const char* pFontName,
                        int* pFontWidth,
                        int* pFontHeight);
+
+    /// @see lok::Document::getPartHash().
+    char* (*getPartHash) (LibreOfficeKitDocument* pThis,
+                          int nPart);
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
 
