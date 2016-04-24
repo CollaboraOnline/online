@@ -96,6 +96,8 @@ L.Socket = L.Class.extend({
 			this._doSend(this._msgQueue[i].msg, this._msgQueue[i].coords);
 		}
 		this._msgQueue = [];
+
+		this._map._activate();
 	},
 
 	_onMessage: function (e) {

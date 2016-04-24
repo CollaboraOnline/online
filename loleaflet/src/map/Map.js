@@ -64,6 +64,8 @@ L.Map = L.Evented.extend({
 		this._bDisableKeyboard = false;
 		this._active = true;
 
+		vex.dialog_id = -1;
+
 		this.callInitHooks();
 
 		if (this.options.imagePath) {
@@ -690,17 +692,44 @@ L.Map = L.Evented.extend({
 
 	_activate: function () {
 		clearTimeout(vex.timer);
-		this._socket.sendMessage('useractive');
-		this._docLayer._onMessage('invalidatetiles: part=0 x=0 y=0 width=2147483647 height=2147483647', null);
 
-		return vex.close(vex.globalID - 1);
+		if (!this._active) {
+			this._socket.sendMessage('useractive');
+
+			// Only activate when we are connected.
+			if (this._socket.connected()) {
+				this._docLayer._onMessage('invalidatetiles: part=0 x=0 y=0 width=2147483647 height=2147483647', null);
+				this._active = true;
+
+				if (vex.dialog_id > 0) {
+					id = vex.dialog_id;
+					vex.dialog_id = -1;
+					return vex.close(id);
+				}
+			}
+		}
+
+		return false;
 	},
 
 	_deactivate: function () {
+		clearTimeout(vex.timer);
+
+		if (!this._active || vex.dialog_id > 0) {
+			// A dialog is already dimming the screen and probably
+			// shows an error message. Leave it alone.
+			this._active = false;
+			this._docLayer._onMessage('textselection:', null);
+			if (this._socket.connected()) {
+				this._socket.sendMessage('userinactive');
+			}
+
+			return;
+		}
+
 		var map = this;
 		vex.timer = setTimeout(function() {
-			L.Log.log("Deactivating");
-			this._active = false;
+			map._active = false;
 			clearTimeout(vex.timer);
 
 			options = $.extend({}, vex.defaultOptions, {contentCSS: {"background":"rgba(0, 0, 0, 0)"}});
