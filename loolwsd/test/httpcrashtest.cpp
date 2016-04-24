@@ -52,6 +52,9 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
     void testCrashKit();
 
     static
+    void killLoKitProcesses();
+
+    static
     void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
 
     static
@@ -114,44 +117,7 @@ void HTTPCrashTest::testCrashKit()
         sendTextFrame(socket, "status");
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
-        // simulate crash all lokit process
-        for (auto it = Poco::DirectoryIterator(std::string("/proc")); it != Poco::DirectoryIterator(); ++it)
-        {
-            try
-            {
-                Poco::Path procEntry = it.path();
-                const std::string& fileName = procEntry.getFileName();
-                int pid;
-                std::size_t endPos = 0;
-                try
-                {
-                    pid = std::stoi(fileName, &endPos);
-                }
-                catch (const std::invalid_argument&)
-                {
-                    pid = 0;
-                }
-                if (pid > 1 && endPos == fileName.length())
-                {
-                    const std::string killLOKit = "kill -9 " + std::to_string(pid);
-                    Poco::FileInputStream stat(procEntry.toString() + "/stat");
-                    std::string statString;
-                    Poco::StreamCopier::copyToString(stat, statString);
-                    Poco::StringTokenizer tokens(statString, " ");
-                    if (tokens.count() > 3 && tokens[1] == "(loolkit)")
-                    {
-                        const auto res = std::system(killLOKit.c_str());
-                        if (res != 0)
-                        {
-                            std::cerr << "exit " + std::to_string(res) + " from " + killLOKit << std::endl;
-                        }
-                    }
-                }
-            }
-            catch (const Poco::Exception&)
-            {
-            }
-        }
+        killLoKitProcesses();
 
         // 5 seconds timeout
         socket.setReceiveTimeout(5000000);
@@ -174,6 +140,49 @@ void HTTPCrashTest::testCrashKit()
     catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPCrashTest::killLoKitProcesses()
+{
+    // Crash all lokit processes.
+    for (auto it = Poco::DirectoryIterator(std::string("/proc")); it != Poco::DirectoryIterator(); ++it)
+    {
+        try
+        {
+            Poco::Path procEntry = it.path();
+            const std::string& fileName = procEntry.getFileName();
+            int pid;
+            std::size_t endPos = 0;
+            try
+            {
+                pid = std::stoi(fileName, &endPos);
+            }
+            catch (const std::invalid_argument&)
+            {
+                pid = 0;
+            }
+            if (pid > 1 && endPos == fileName.length())
+            {
+                Poco::FileInputStream stat(procEntry.toString() + "/stat");
+                std::string statString;
+                Poco::StreamCopier::copyToString(stat, statString);
+                Poco::StringTokenizer tokens(statString, " ");
+                if (tokens.count() > 3 && tokens[1] == "(loolkit)")
+                {
+                    const std::string killLOKit = "kill -9 " + std::to_string(pid);
+                    std::cerr << "$ " + killLOKit << std::endl;
+                    const auto res = std::system(killLOKit.c_str());
+                    if (res != 0)
+                    {
+                        std::cerr << "exit " + std::to_string(res) + " from " + killLOKit << std::endl;
+                    }
+                }
+            }
+        }
+        catch (const Poco::Exception&)
+        {
+        }
     }
 }
 
