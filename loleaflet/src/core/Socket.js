@@ -46,19 +46,18 @@ L.Socket = L.Class.extend({
 		var socketState = this.socket.readyState;
 		if (socketState === 2 || socketState === 3) {
 			this.initialize(this._map);
-			this._msgQueue.push({msg: msg, coords: coords});
 		}
 
-		if (socketState === 0) {
-			// push message while trying to connect socket again.
-			this._msgQueue.push({msg: msg, coords: coords});
-		}
-		else if (socketState === 1) {
+		if (socketState === 1) {
 			this.socket.send(msg);
 			// Only attempt to log text frames, not binary ones.
 			if (typeof msg === 'string') {
 				L.Log.log(msg, L.OUTGOING, coords);
 			}
+		}
+		else {
+			// push message while trying to connect socket again.
+			this._msgQueue.push({msg: msg, coords: coords});
 		}
 	},
 
