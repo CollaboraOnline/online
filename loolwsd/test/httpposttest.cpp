@@ -38,6 +38,7 @@ class HTTPPostTest : public CPPUNIT_NS::TestFixture
     // This should be the first test:
     CPPUNIT_TEST(testCountHowManyLoolkits);
 
+    CPPUNIT_TEST(testLOleaflet);
     CPPUNIT_TEST(testConvertTo);
 
     // This should be the last test:
@@ -47,6 +48,7 @@ class HTTPPostTest : public CPPUNIT_NS::TestFixture
 
     void testCountHowManyLoolkits();
     void testConvertTo();
+    void testLOleaflet();
     void testNoExtraLoolKitsLeft();
 
 #if ENABLE_SSL
@@ -74,6 +76,26 @@ void HTTPPostTest::testCountHowManyLoolkits()
 {
     _initialLoolKitCount = countLoolKitProcesses();
     CPPUNIT_ASSERT(_initialLoolKitCount > 0);
+}
+
+void HTTPPostTest::testLOleaflet()
+{
+#if ENABLE_SSL
+    Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
+#else
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+#endif
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/loleaflet/dist/loleaflet.html");
+    std::string body;
+    request.setContentLength((int) body.length());
+    session.sendRequest(request) << body;
+
+    Poco::Net::HTTPResponse response;
+    std::istream& rs = session.receiveResponse(response);
+    CPPUNIT_ASSERT_EQUAL(std::string("text/html"), response.getContentType());
 }
 
 void HTTPPostTest::testConvertTo()

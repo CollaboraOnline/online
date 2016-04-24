@@ -32,10 +32,12 @@ class HTTPGetTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPGetTest);
 
     CPPUNIT_TEST(testDiscovery);
+    CPPUNIT_TEST(testLOleaflet);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testDiscovery();
+    void testLOleaflet();
 
 #if ENABLE_SSL
 public:
@@ -72,6 +74,24 @@ void HTTPGetTest::testDiscovery()
     Poco::Net::HTTPResponse response;
     session.receiveResponse(response);
     CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
+}
+
+void HTTPGetTest::testLOleaflet()
+{
+#if ENABLE_SSL
+    Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
+#else
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+#endif
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/loleaflet/dist/loleaflet.html");
+    session.sendRequest(request);
+
+    Poco::Net::HTTPResponse response;
+    session.receiveResponse(response);
+    CPPUNIT_ASSERT_EQUAL(std::string("text/html"), response.getContentType());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPGetTest);
