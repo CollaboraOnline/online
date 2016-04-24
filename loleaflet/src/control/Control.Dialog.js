@@ -10,6 +10,11 @@ L.Control.Dialog = L.Control.extend({
 	},
 
 	_onError: function (e) {
+		if (vex.dialog_id > 0) {
+			// Close other dialogs before presenting a new one.
+			vex.close(vex.dialog_id);
+		}
+
 		if (e.msg) {
 			vex.dialog.alert(e.msg);
 		}
@@ -18,6 +23,9 @@ L.Control.Dialog = L.Control.extend({
 						' parsing the \'' + e.cmd + '\' command.';
 			vex.dialog.alert(msg);
 		}
+
+		// Remember the current dialog ID to close it later.
+		vex.dialog_id = vex.globalID - 1;
 	},
 
 	_onPrint: function (e) {

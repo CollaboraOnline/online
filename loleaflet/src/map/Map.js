@@ -705,6 +705,7 @@ L.Map = L.Evented.extend({
 
 			options = $.extend({}, vex.defaultOptions, {contentCSS: {"background":"rgba(0, 0, 0, 0)"}});
 			options.id = vex.globalID;
+			vex.dialog_id = options.id;
 			vex.globalID += 1;
 			options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
 			  vex: options
