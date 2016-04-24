@@ -9,6 +9,8 @@
 
 #include "config.h"
 
+#include <regex>
+
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Dynamic/Var.h>
 #include <Poco/FileStream.h>
@@ -67,7 +69,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocumentWithWrongPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
-    CPPUNIT_TEST(testImpressPartCountChanged);
+    CPPUNIT_TEST(testInsertDelete);
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
 #endif
@@ -94,7 +96,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testPasswordProtectedDocumentWithWrongPassword();
     void testPasswordProtectedDocumentWithCorrectPassword();
     void testPasswordProtectedDocumentWithCorrectPasswordAgain();
-    void testImpressPartCountChanged();
+    void testInsertDelete();
     void testSimultaneousTilesRenderedJustOnce();
     void testNoExtraLoolKitsLeft();
 
@@ -901,10 +903,13 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPasswordAgain()
     testPasswordProtectedDocumentWithCorrectPassword();
 }
 
-void HTTPWSTest::testImpressPartCountChanged()
+void HTTPWSTest::testInsertDelete()
 {
     try
     {
+        std::vector<std::string> parts;
+        std::string response;
+
         // Load a document
         const std::string documentPath = Util::getTempFilePath(TDOC, "insert-delete.odp");
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
@@ -913,14 +918,10 @@ void HTTPWSTest::testImpressPartCountChanged()
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
-        sendTextFrame(socket, "status");
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
         // check total slides 1
-        sendTextFrame(socket, "status");
-
-        std::string response;
-        getResponseMessage(socket, "status:", response, true);
+        getResponseMessage(socket, "status:", response, false);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         {
             Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -930,20 +931,46 @@ void HTTPWSTest::testImpressPartCountChanged()
             const std::string prefix = "parts=";
             const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
             CPPUNIT_ASSERT_EQUAL(1, totalParts);
+
+            std::regex endLine("[^\n\r]+");
+            std::regex number("^[0-9]+$");
+            std::smatch match;
+            for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                 it != std::sregex_iterator(); ++it)
+            {
+                if (std::regex_match((*it).str(), match, number))
+                {
+                    parts.push_back(match.str());
+                }
+            }
+            CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
+            parts.clear();
         }
 
-        /* FIXME partscountchanged: was removed, update accordingly
         // insert 10 slides
         for (unsigned it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:InsertPage");
-            getResponseMessage(socket, "partscountchanged:", response, false);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a partscountchanged: message as expected", !response.empty());
+            getResponseMessage(socket, "status:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             {
-                Poco::JSON::Parser parser;
-                Poco::Dynamic::Var result = parser.parse(response);
-                Poco::DynamicStruct values = *result.extract<Poco::JSON::Object::Ptr>();
-                CPPUNIT_ASSERT(values["action"] == "PartInserted");
+                Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                const std::string prefix = "parts=";
+                const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
+
+                std::regex endLine("[^\n\r]+");
+                std::regex number("^[0-9]+$");
+                std::smatch match;
+                for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                     it != std::sregex_iterator(); ++it)
+                {
+                    if (std::regex_match((*it).str(), match, number))
+                    {
+                        parts.push_back(match.str());
+                    }
+                }
+                CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
+                parts.clear();
             }
         }
 
@@ -951,13 +978,26 @@ void HTTPWSTest::testImpressPartCountChanged()
         for (unsigned it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:DeletePage");
-            getResponseMessage(socket, "partscountchanged:", response, false);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a partscountchanged: message as expected", !response.empty());
+            getResponseMessage(socket, "status:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             {
-                Poco::JSON::Parser parser;
-                Poco::Dynamic::Var result = parser.parse(response);
-                Poco::DynamicStruct values = *result.extract<Poco::JSON::Object::Ptr>();
-                CPPUNIT_ASSERT(values["action"] == "PartDeleted");
+                Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                const std::string prefix = "parts=";
+                const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
+
+                std::regex endLine("[^\n\r]+");
+                std::regex number("^[0-9]+$");
+                std::smatch match;
+                for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                     it != std::sregex_iterator(); ++it)
+                {
+                    if (std::regex_match((*it).str(), match, number))
+                    {
+                        parts.push_back(match.str());
+                    }
+                }
+                CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
+                parts.clear();
             }
         }
 
@@ -965,13 +1005,26 @@ void HTTPWSTest::testImpressPartCountChanged()
         for (unsigned it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Undo");
-            getResponseMessage(socket, "partscountchanged:", response, false);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a partscountchanged: message as expected", !response.empty());
+            getResponseMessage(socket, "status:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             {
-                Poco::JSON::Parser parser;
-                Poco::Dynamic::Var result = parser.parse(response);
-                Poco::DynamicStruct values = *result.extract<Poco::JSON::Object::Ptr>();
-                CPPUNIT_ASSERT(values["action"] == "PartInserted");
+                Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                const std::string prefix = "parts=";
+                const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
+
+                std::regex endLine("[^\n\r]+");
+                std::regex number("^[0-9]+$");
+                std::smatch match;
+                for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                     it != std::sregex_iterator(); ++it)
+                {
+                    if (std::regex_match((*it).str(), match, number))
+                    {
+                        parts.push_back(match.str());
+                    }
+                }
+                CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
+                parts.clear();
             }
         }
 
@@ -979,16 +1032,53 @@ void HTTPWSTest::testImpressPartCountChanged()
         for (unsigned it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Redo");
-            getResponseMessage(socket, "partscountchanged:", response, false);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a partscountchanged: message as expected", !response.empty());
+            getResponseMessage(socket, "status:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             {
-                Poco::JSON::Parser parser;
-                Poco::Dynamic::Var result = parser.parse(response);
-                Poco::DynamicStruct values = *result.extract<Poco::JSON::Object::Ptr>();
-                CPPUNIT_ASSERT(values["action"] == "PartDeleted");
+                Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                const std::string prefix = "parts=";
+                const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
+
+                std::regex endLine("[^\n\r]+");
+                std::regex number("^[0-9]+$");
+                std::smatch match;
+                for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                     it != std::sregex_iterator(); ++it)
+                {
+                    if (std::regex_match((*it).str(), match, number))
+                    {
+                        parts.push_back(match.str());
+                    }
+                }
+                CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
+                parts.clear();
             }
         }
-        */
+
+        // check total slides 1
+        sendTextFrame(socket, "status");
+        getResponseMessage(socket, "status:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+        {
+            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            const std::string prefix = "parts=";
+            const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
+            CPPUNIT_ASSERT_EQUAL(1, totalParts);
+
+            std::regex endLine("[^\n\r]+");
+            std::regex number("^[0-9]+$");
+            std::smatch match;
+            for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                 it != std::sregex_iterator(); ++it)
+            {
+                if (std::regex_match((*it).str(), match, number))
+                {
+                    parts.push_back(match.str());
+                }
+            }
+            CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
+            parts.clear();
+        }
 
         socket.shutdown();
         Util::removeFile(documentPath);
