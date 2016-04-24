@@ -726,8 +726,8 @@ L.Map = L.Evented.extend({
 			$(options.appendLocation).append(options.$vex);
 			vex.setupBodyClassName(options.$vex);
 
-			map._socket.sendMessage('userinactive');
 			map._docLayer._onMessage('textselection:', null);
+			map._socket.sendMessage('userinactive');
 
 		}, 10 * 1000);
 	},

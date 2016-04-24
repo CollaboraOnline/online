@@ -61,14 +61,14 @@ L.Socket = L.Class.extend({
 		}
 	},
 
-    _doSend: function(msg, coords) {
-        // Only attempt to log text frames, not binary ones.
-        if (typeof msg === 'string') {
-            L.Log.log(msg, L.OUTGOING, coords);
-        }
+	_doSend: function(msg, coords) {
+		// Only attempt to log text frames, not binary ones.
+		if (typeof msg === 'string') {
+			L.Log.log(msg, L.OUTGOING, coords);
+		}
 
-        this.socket.send(msg);
-    },
+		this.socket.send(msg);
+	},
 
 	_onOpen: function () {
 		// Always send the protocol version number.
@@ -79,7 +79,7 @@ L.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			// we are reconnecting after a lost connection
 			msg += ' part=' + this._map.getCurrentPartNumber();
-			this.fire('statusindicator', {statusType : 'reconnected'});
+			this._map.fire('statusindicator', {statusType : 'reconnected'});
 		}
 		if (this._map.options.timestamp) {
 			msg += ' timestamp=' + this._map.options.timestamp;
@@ -120,10 +120,7 @@ L.Socket = L.Class.extend({
 
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('loolserver ')) {
-			// This must be the first message.
-			if (this._map._docLayer) {
-				this.fire('error', {msg: _('Unexpected loolserver message.')});
-			}
+			// This must be the first message, unless we reconnect.
 			// TODO: For now we expect perfect match.
 			if (textMsg.substring(11) !== this.ProtocolVersionNumber) {
 				this.fire('error', {msg: _('Unsupported server version.')});
@@ -165,7 +162,7 @@ L.Socket = L.Class.extend({
 			}
 		}
 		else if (textMsg.startsWith('error:') && !this._map._docLayer) {
-			this._map.fail = true;
+			this.fail = true;
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
@@ -274,7 +271,7 @@ L.Socket = L.Class.extend({
 		else {
 			this.fire('error', {msg: _('We are sorry, this is an unexpected connection error. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
-		this._map.fail = false;
+		this.fail = false;
 	},
 
 	parseServerCmd: function (msg) {
