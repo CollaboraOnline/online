@@ -201,8 +201,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         balance -= available - 1;
     }
 
-    if (balance > 0)
-        forkChildren(balance);
+    forkChildren(balance);
 
     const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_SECS * 1000);
     if (newChildrenCV.wait_for(lock, timeout, [](){ return !newChildren.empty(); }))
@@ -280,6 +279,7 @@ private:
 
                 if (!isFound)
                 {
+                    //FIXME: outdated!
                     Log::info() << "Retrying client permission... " << retries << Log::end;
                     // request again new URL session
                     const std::string message = "request " + clientSession->getId() + " " + docBroker->getDocKey() + '\n';
@@ -468,16 +468,16 @@ private:
     {
         Log::info("Starting GET request handler for session [" + id + "].");
 
+        // indicator to the client that document broker is searching
+        std::string status("statusindicator: find");
+        ws->sendFrame(status.data(), (int) status.size());
+
         // Remove the leading '/' in the GET URL.
         std::string uri = request.getURI();
         if (uri.size() > 0 && uri[0] == '/')
         {
             uri.erase(0, 1);
         }
-
-        // indicator to the client that document broker is searching
-        std::string status("statusindicator: find");
-        ws->sendFrame(status.data(), (int) status.size());
 
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
@@ -726,6 +726,7 @@ public:
                 }
                 catch (const WebSocketErrorMessageException& exc)
                 {
+                    // Internal error that should be passed on to the client.
                     Log::error(std::string("ClientRequestHandler::handleRequest: WebSocketErrorMessageException: ") + exc.what());
                     try
                     {

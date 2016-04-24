@@ -133,6 +133,8 @@ public:
     bool load(const std::string& jailId);
 
     bool save();
+    bool isModified() const { return _isModified; }
+    void setModified(const bool value);
 
     /// Save the document if there was activity since last save.
     /// force when true, will force saving immediatly, regardless
@@ -177,14 +179,13 @@ public:
     // Called when the last view is going out.
     bool canDestroy();
     bool isMarkedToDestroy() const { return _markToDestroy; }
-    bool isModified() const { return _isModified; }
-    void setModified(const bool value);
 
 private:
     const Poco::URI _uriPublic;
     const std::string _docKey;
     const std::string _childRoot;
     const std::string _cacheRoot;
+    std::shared_ptr<ChildProcess> _childProcess;
     Poco::URI _uriJailed;
     std::string _jailId;
     std::string _filename;
@@ -192,7 +193,6 @@ private:
     std::map<std::string, std::shared_ptr<MasterProcessSession>> _sessions;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
-    std::shared_ptr<ChildProcess> _childProcess;
     bool _markToDestroy;
     bool _isModified;
     mutable std::mutex _mutex;

@@ -37,7 +37,7 @@ namespace LOKitHelper
     }
 
     inline
-    std::string kitCallbackTypeToString (const int nType)
+    std::string kitCallbackTypeToString(const int nType)
     {
         // Keep in the same order as in LibreOfficeKitEnums.h
         switch (nType)

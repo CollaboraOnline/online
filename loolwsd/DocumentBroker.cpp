@@ -71,8 +71,8 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _docKey(docKey),
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
-    _lastSaveTime(std::chrono::steady_clock::now()),
     _childProcess(childProcess),
+    _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
     _isModified(false)
 {
@@ -275,7 +275,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session
     auto ret = _sessions.emplace(id, session);
     if (!ret.second)
     {
-        Log::warn("DocumentBroker: Trying to add already existed session.");
+        Log::warn("DocumentBroker: Trying to add already existing session.");
     }
 
     if (_sessions.size() == 1)

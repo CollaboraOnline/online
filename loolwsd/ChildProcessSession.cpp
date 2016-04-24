@@ -92,7 +92,7 @@ public:
 
         if (_session.isCloseFrame())
         {
-            Log::trace("LOKit document begin the closing handshake");
+            Log::trace("Skipping callback on closing session " + _session.getName());
             return;
         }
         else if (_session.isDisconnected())
