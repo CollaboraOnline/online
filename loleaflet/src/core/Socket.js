@@ -30,6 +30,10 @@ L.Socket = L.Class.extend({
 		this.socket.close();
 	},
 
+	connected: function() {
+		return this.socket && this.socket.readyState === 1;
+	},
+
 	sendMessage: function (msg, coords) {
 		if (!msg.startsWith('useractive') && !msg.startsWith('userinactive') && !this._active) {
 			// Avoid communicating when we're inactive.
