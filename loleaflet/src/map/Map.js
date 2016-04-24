@@ -62,6 +62,7 @@ L.Map = L.Evented.extend({
 		this._zoomBoundLayers = {};
 		this._sizeChanged = true;
 		this._bDisableKeyboard = false;
+		this._active = true;
 
 		this.callInitHooks();
 
@@ -698,6 +699,8 @@ L.Map = L.Evented.extend({
 	_deactivate: function () {
 		var map = this;
 		vex.timer = setTimeout(function() {
+			L.Log.log("Deactivating");
+			this._active = false;
 			clearTimeout(vex.timer);
 
 			options = $.extend({}, vex.defaultOptions, {contentCSS: {"background":"rgba(0, 0, 0, 0)"}});

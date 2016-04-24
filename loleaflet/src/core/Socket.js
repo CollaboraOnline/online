@@ -8,7 +8,6 @@ L.Socket = L.Class.extend({
 
 	initialize: function (map) {
 		this._map = map;
-		this._active = true;
 		try {
 			this.socket = new WebSocket(map.options.server + '/' + map.options.doc);
 		} catch (e) {
@@ -35,16 +34,9 @@ L.Socket = L.Class.extend({
 	},
 
 	sendMessage: function (msg, coords) {
-		if (!msg.startsWith('useractive') && !msg.startsWith('userinactive') && !this._active) {
+		if (!msg.startsWith('useractive') && !msg.startsWith('userinactive') && !this._map._active) {
 			// Avoid communicating when we're inactive.
 			return;
-		}
-
-		if (msg.startsWith('useractive')) {
-			this._active = true;
-		}
-		else if (msg.startsWith('userinactive')) {
-			this._active = false;
 		}
 
 		var socketState = this.socket.readyState;
@@ -269,6 +261,10 @@ L.Socket = L.Class.extend({
 
 	_onSocketClose: function () {
 		this.hideBusy();
+		if (this._map) {
+			this._map._active = false;
+		}
+
 		if (this.fail) {
 			this.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
