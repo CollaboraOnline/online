@@ -45,10 +45,12 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPCrashTest);
 
+    CPPUNIT_TEST(testBarren);
     CPPUNIT_TEST(testCrashKit);
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testBarren();
     void testCrashKit();
 
     static
@@ -97,6 +99,59 @@ public:
     {
     }
 };
+
+void HTTPCrashTest::testBarren()
+{
+    // Kill all kit processes and try loading a document.
+    try
+    {
+        killLoKitProcesses();
+
+        // Load a document and get its status.
+        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket = *connectLOKit(request, _response);
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        sendTextFrame(socket, "status");
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        // 5 seconds timeout
+        socket.setReceiveTimeout(5000000);
+
+        std::string status;
+        int flags;
+        int n;
+        do
+        {
+            char buffer[READ_BUFFER_SIZE];
+            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
+            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+            {
+                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
+                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
+                const std::string prefix = "status: ";
+                if (line.find(prefix) == 0)
+                {
+                    status = line.substr(prefix.length());
+                    // Might be too strict, consider something flexible instread.
+                    CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
+                    break;
+                }
+            }
+        }
+        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+
+        socket.shutdown();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
 
 void HTTPCrashTest::testCrashKit()
 {
