@@ -264,7 +264,7 @@ L.Socket = L.Class.extend({
 
 	_onSocketError: function () {
 		this.hideBusy();
-		this.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online. Please contact your webmaster.'), cmd: 'socket', kind: 'failed', id: 3});
+		// Let onclose (_onSocketClose) report errors.
 	},
 
 	_onSocketClose: function () {
