@@ -190,27 +190,43 @@ static std::shared_ptr<ChildProcess> getNewChild()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
 
-    const int available = newChildren.size();
-    int balance = LOOLWSD::NumPreSpawnedChildren;
-    if (available == 0)
+    namespace chrono = std::chrono;
+    const auto startTime = chrono::steady_clock::now();
+    do
     {
-        Log::error("No available child. Sending spawn request to forkit and failing.");
-    }
-    else
-    {
-        balance -= available - 1;
-    }
+        const int available = newChildren.size();
+        int balance = LOOLWSD::NumPreSpawnedChildren;
+        if (available == 0)
+        {
+            Log::error("getNewChild: No available child. Sending spawn request to forkit and failing.");
+        }
+        else
+        {
+            balance -= available - 1; // Minus the one we'll dispatch just now.
+        }
 
-    forkChildren(balance);
+        Log::debug("getNewChild: Have " + std::to_string(available) + " children, forking " + std::to_string(balance));
+        forkChildren(balance);
 
-    const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_SECS * 1000);
-    if (newChildrenCV.wait_for(lock, timeout, [](){ return !newChildren.empty(); }))
-    {
-        auto child = newChildren.back();
-        newChildren.pop_back();
-        return child;
+        const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_SECS * 1000);
+        if (newChildrenCV.wait_for(lock, timeout, [](){ return !newChildren.empty(); }))
+        {
+            auto child = newChildren.back();
+            newChildren.pop_back();
+
+            // Validate before returning.
+            if (child && child->isAlive())
+            {
+                Log::debug("getNewChild: Returning new child [" + std::to_string(child->getPid()) + "].");
+                return child;
+            }
+
+            Log::debug("getNewChild: No live child, forking more.");
+        }
     }
+    while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() < CHILD_TIMEOUT_SECS * 2000);
 
+    Log::debug("getNewChild: Timed out while waiting for new child.");
     return nullptr;
 }
 

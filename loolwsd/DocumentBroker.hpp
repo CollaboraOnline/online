@@ -20,6 +20,7 @@
 #include <map>
 
 #include <Poco/URI.h>
+#include <Poco/Net/WebSocket.h>
 
 #include "IoUtil.hpp"
 #include "MasterProcessSession.hpp"
@@ -95,6 +96,25 @@ public:
     Poco::Process::PID getPid() const { return _pid; }
     std::shared_ptr<Poco::Net::WebSocket> getWebSocket() const { return _ws; }
 
+    /// Check whether this child is alive and able to respond.
+    bool isAlive() const
+    {
+        try
+        {
+            if (_pid > 1 && _ws && kill(_pid, 0) == 0)
+            {
+                // We don't care about the response (and shouldn't read here).
+                _ws->sendFrame("PING", 4, Poco::Net::WebSocket::FRAME_OP_PING);
+                return true;
+            }
+        }
+        catch (const std::exception& exc)
+        {
+        }
+
+        return false;
+    }
+
 private:
     Poco::Process::PID _pid;
     std::shared_ptr<Poco::Net::WebSocket> _ws;
@@ -152,6 +172,7 @@ public:
     const std::string& getDocKey() const { return _docKey; }
     const std::string& getFilename() const { return _filename; };
     TileCache& tileCache() { return *_tileCache; }
+    bool isAlive() const { return _childProcess && _childProcess->isAlive(); }
     size_t getSessionsCount() const
     {
         std::lock_guard<std::mutex> lock(_mutex);
