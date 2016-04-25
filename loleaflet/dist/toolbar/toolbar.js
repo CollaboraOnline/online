@@ -705,7 +705,7 @@ map.on('search', function (e) {
 
 map.on('updatetoolbarcommandvalues', function (e) {
 	// we need an empty option for the place holder to work
-	var data = [{text: ''}];
+	var data = [''];
 	var styles = [];
 	var topStyles = [];
 	if (e.commandName === '.uno:StyleApply') {
