@@ -8,7 +8,7 @@
 
 Name:           loolwsd
 Version:        @PACKAGE_VERSION@
-Release:        0
+Release:        1%{?dist}
 Vendor:         Collabora
 Summary:        LibreOffice On-Line WebSocket Daemon
 License:        MPL
