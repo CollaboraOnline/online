@@ -292,6 +292,23 @@ size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session
     return _sessions.size();
 }
 
+bool DocumentBroker::connectPeers(std::shared_ptr<MasterProcessSession>& session)
+{
+    const auto id = session->getId();
+
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    auto it = _sessions.find(id);
+    if (it != _sessions.end())
+    {
+        it->second->setPeer(session);
+        session->setPeer(it->second);
+        return true;
+    }
+
+    return false;
+}
+
 size_t DocumentBroker::removeSession(const std::string& id)
 {
     std::lock_guard<std::mutex> lock(_mutex);
