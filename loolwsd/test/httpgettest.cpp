@@ -33,11 +33,13 @@ class HTTPGetTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testDiscovery);
     CPPUNIT_TEST(testLOleaflet);
+    CPPUNIT_TEST(testParams);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testDiscovery();
     void testLOleaflet();
+    void testParams();
 
 #if ENABLE_SSL
 public:
@@ -73,6 +75,7 @@ void HTTPGetTest::testDiscovery()
 
     Poco::Net::HTTPResponse response;
     session.receiveResponse(response);
+    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
     CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
 }
 
@@ -91,9 +94,37 @@ void HTTPGetTest::testLOleaflet()
 
     Poco::Net::HTTPResponse response;
     session.receiveResponse(response);
+    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
     CPPUNIT_ASSERT_EQUAL(std::string("text/html"), response.getContentType());
 }
 
+void HTTPGetTest::testParams()
+{
+#if ENABLE_SSL
+    Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
+#else
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+#endif
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/loleaflet/dist/loleaflet.html?access_token=111111111");
+    Poco::Net::HTMLForm param(request);
+    session.sendRequest(request);
+
+    Poco::Net::HTTPResponse response;
+    std::istream& rs = session.receiveResponse(response);
+    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+
+    std::string html;
+    Poco::StreamCopier::copyToString(rs, html);
+
+    CPPUNIT_ASSERT(html.find(param["access_token"]) != std::string::npos);
+    CPPUNIT_ASSERT(html.find(uri.getHost()) != std::string::npos);
+    CPPUNIT_ASSERT(html.find(std::string(LOOLWSD_VERSION)) != std::string::npos);
+}
+
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPGetTest);
+//CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(HTTPGetTest, "httpgettest");
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

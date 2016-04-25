@@ -358,5 +358,6 @@ HTTPCrashTest::connectLOKit(Poco::Net::HTTPRequest& request,
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPCrashTest);
+//CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(HTTPCrashTest, "httpcrashtest");
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -16,6 +16,8 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/CompilerOutputter.h>
 
+class HTTPGetTest;
+
 /// Dump all the tests registered.
 void dumpTests(CPPUNIT_NS::Test* test)
 {
@@ -43,9 +45,14 @@ int main(int /*argc*/, char** /*argv*/)
 
     auto all = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
     //dumpTests(all);
+    //CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpgettest");
+    //CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpposttest");
+    //CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpwstest");
+    //CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpcrashtest");
 
     CPPUNIT_NS::TestRunner runner;
     runner.addTest(all);
+    //runner.addTest(registry.makeTest());
     runner.run(controller);
 
     CPPUNIT_NS::CompilerOutputter outputter(&result, std::cerr);
