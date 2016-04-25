@@ -216,7 +216,7 @@ private:
     std::map<std::string, std::shared_ptr<MasterProcessSession>> _sessions;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
-    bool _markToDestroy;
+    std::atomic<bool> _markToDestroy;
     bool _isModified;
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
