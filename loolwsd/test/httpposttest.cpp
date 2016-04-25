@@ -180,6 +180,5 @@ void HTTPPostTest::testNoExtraLoolKitsLeft()
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPPostTest);
-//CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(HTTPPostTest, "httpposttest");
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
