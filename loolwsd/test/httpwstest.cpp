@@ -962,10 +962,10 @@ void HTTPWSTest::testInsertDelete()
                 std::regex endLine("[^\n\r]+");
                 std::regex number("^[0-9]+$");
                 std::smatch match;
-                for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                     it != std::sregex_iterator(); ++it)
+                for (std::sregex_iterator regex_it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                     regex_it != std::sregex_iterator(); ++regex_it)
                 {
-                    const auto str = (*it).str();
+                    const auto str = (*regex_it).str();
                     if (std::regex_match(str, match, number))
                     {
                         parts.push_back(match.str());
@@ -990,10 +990,10 @@ void HTTPWSTest::testInsertDelete()
                 std::regex endLine("[^\n\r]+");
                 std::regex number("^[0-9]+$");
                 std::smatch match;
-                for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                     it != std::sregex_iterator(); ++it)
+                for (std::sregex_iterator regex_it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                     regex_it != std::sregex_iterator(); ++regex_it)
                 {
-                    const auto str = (*it).str();
+                    const auto str = (*regex_it).str();
                     if (std::regex_match(str, match, number))
                     {
                         parts.push_back(match.str());
@@ -1018,10 +1018,10 @@ void HTTPWSTest::testInsertDelete()
                 std::regex endLine("[^\n\r]+");
                 std::regex number("^[0-9]+$");
                 std::smatch match;
-                for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                     it != std::sregex_iterator(); ++it)
+                for (std::sregex_iterator regex_it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                     regex_it != std::sregex_iterator(); ++regex_it)
                 {
-                    const auto str = (*it).str();
+                    const auto str = (*regex_it).str();
                     if (std::regex_match(str, match, number))
                     {
                         parts.push_back(match.str());
@@ -1046,10 +1046,10 @@ void HTTPWSTest::testInsertDelete()
                 std::regex endLine("[^\n\r]+");
                 std::regex number("^[0-9]+$");
                 std::smatch match;
-                for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                     it != std::sregex_iterator(); ++it)
+                for (std::sregex_iterator regex_it = std::sregex_iterator(response.begin(), response.end(), endLine);
+                     regex_it != std::sregex_iterator(); ++regex_it)
                 {
-                    const auto str = (*it).str();
+                    const auto str = (*regex_it).str();
                     if (std::regex_match(str, match, number))
                     {
                         parts.push_back(match.str());
