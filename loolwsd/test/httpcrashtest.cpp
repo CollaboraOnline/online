@@ -9,6 +9,12 @@
 
 #include "config.h"
 
+#include <errno.h>
+#include <signal.h>
+#include <sys/types.h>
+
+#include <cstring>
+
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Dynamic/Var.h>
 #include <Poco/FileStream.h>
@@ -224,12 +230,9 @@ void HTTPCrashTest::killLoKitProcesses()
                 Poco::StringTokenizer tokens(statString, " ");
                 if (tokens.count() > 3 && tokens[1] == "(loolkit)")
                 {
-                    const std::string killLOKit = "kill -9 " + std::to_string(pid);
-                    std::cerr << "$ " + killLOKit << std::endl;
-                    const auto res = std::system(killLOKit.c_str());
-                    if (res != 0)
+                    if (kill(pid, SIGKILL) == -1)
                     {
-                        std::cerr << "exit " + std::to_string(res) + " from " + killLOKit << std::endl;
+                        std::cerr << "kill(" << pid << ",SIGKILL) failed: " << std::strerror(errno) << std::endl;
                     }
                 }
             }
