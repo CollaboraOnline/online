@@ -108,5 +108,6 @@
     globalMap.addControl(L.control.columnHeader());
     globalMap.addControl(L.control.rowHeader());
     globalMap.on('hyperlinkclicked', function (e) { window.open(e.url, '_blank'); });
+    globalMap.on('locontextmenu', function (e) { console.log("locontextmenu: %o", e.menu); });
     </script>
 </body></html>
