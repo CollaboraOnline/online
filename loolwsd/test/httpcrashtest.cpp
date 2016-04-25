@@ -188,7 +188,6 @@ void HTTPCrashTest::testCrashKit()
         socket.shutdown();
         // no more messages is received.
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        std::string received(buffer);
         CPPUNIT_ASSERT_EQUAL(0, bytes);
         CPPUNIT_ASSERT_EQUAL(0, flags);
     }
