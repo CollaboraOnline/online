@@ -127,20 +127,6 @@ namespace Util
         }
     }
 
-    std::string createRandomFile(const std::string& path)
-    {
-        Poco::File(path).createDirectories();
-        for (;;)
-        {
-            const auto name = Util::encodeId(rng::getNext());
-            Poco::File file(Poco::Path(path, name));
-            if (file.createFile())
-            {
-                return name;
-            }
-        }
-    }
-
     bool windowingAvailable()
     {
         return std::getenv("DISPLAY") != nullptr;

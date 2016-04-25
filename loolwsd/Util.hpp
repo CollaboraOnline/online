@@ -45,8 +45,6 @@ namespace Util
 
     /// Creates a randomly name directory within path and returns the name.
     std::string createRandomDir(const std::string& path);
-    /// Creates a randomly name file within path and returns the name.
-    std::string createRandomFile(const std::string& path);
 
     bool windowingAvailable();
 
