@@ -114,9 +114,6 @@ namespace Util
 
     void setThreadName(const std::string& s);
 
-    /// Ensure that we have the correct UID unless in debug mode.
-    bool hasCorrectUID();
-
     /// Display version information
     void displayVersionInfo(const char *app);
 
