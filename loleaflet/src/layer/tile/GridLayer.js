@@ -778,12 +778,13 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_addTiles: function (coordsQueue, fragment) {
+		var coords, key;
 		// first take care of the DOM
 		for (var i = 0; i < coordsQueue.length; i++) {
-			var coords = coordsQueue[i];
+			coords = coordsQueue[i];
 
-			var tilePos = this._getTilePos(coords),
-				key = this._tileCoordsToKey(coords);
+			var tilePos = this._getTilePos(coords);
+			key = this._tileCoordsToKey(coords);
 
 			if (coords.part === this._selectedPart) {
 				var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
@@ -822,27 +823,27 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		// sort the tiles by the rows
-		coordsQueue.sort(function(a, b){
-			if (a.y != b.y ) {
-				return a.y-b.y;
+		coordsQueue.sort(function(a, b) {
+			if (a.y !== b.y) {
+				return a.y - b.y;
 			} else {
-				return a.x-b.x;
+				return a.x - b.x;
 			}
 		});
 
 		// try group the tiles into rectangular areas
 		var rectangles = [];
 		while (coordsQueue.length > 0) {
-			var coords = coordsQueue[0];
+			coords = coordsQueue[0];
 
 			// tiles that do not interest us
-			var key = this._tileCoordsToKey(coords);
+			key = this._tileCoordsToKey(coords);
 			if (this._tileCache[key] || coords.part !== this._selectedPart) {
 				coordsQueue.splice(0, 1);
 				continue;
 			}
 
-			var rectQueue = [ coords ];
+			var rectQueue = [coords];
 			var bound = new L.Point(coords.x, coords.y);
 
 			// remove it
@@ -850,14 +851,14 @@ L.GridLayer = L.Layer.extend({
 
 			// find the close ones
 			var rowLocked = false;
-			var hasHole = false
-			var i = 0;
+			var hasHole = false;
+			i = 0;
 			while (i < coordsQueue.length) {
 				var current = coordsQueue[i];
 
 				// extend the bound vertically if possible (so far it was
 				// continous)
-				if (!hasHole && (current.y == bound.y + 1)) {
+				if (!hasHole && (current.y === bound.y + 1)) {
 					rowLocked = true;
 					++bound.y;
 				}
@@ -867,7 +868,7 @@ L.GridLayer = L.Layer.extend({
 				}
 
 				if (!rowLocked) {
-					if (current.y == bound.y && current.x == bound.x + 1) {
+					if (current.y === bound.y && current.x === bound.x + 1) {
 						// extend the bound horizontally
 						++bound.x;
 						rectQueue.push(current);
@@ -891,32 +892,33 @@ L.GridLayer = L.Layer.extend({
 			rectangles.push(rectQueue);
 		}
 
+		var twips, msg;
 		for (var r = 0; r < rectangles.length; ++r) {
-			var rectQueue = rectangles[r];
+			rectQueue = rectangles[r];
 
-			if (rectQueue.length == 1) {
+			if (rectQueue.length === 1) {
 				// only one tile here
-				var coords = rectQueue[0];
-				var key = this._tileCoordsToKey(coords);
+				coords = rectQueue[0];
+				key = this._tileCoordsToKey(coords);
 
-				var twips = this._coordsToTwips(coords);
-				var msg = 'tile ' +
-						'part=' + coords.part + ' ' +
-						'width=' + this._tileSize + ' ' +
-						'height=' + this._tileSize + ' ' +
-						'tileposx=' + twips.x + ' '	+
-						'tileposy=' + twips.y + ' ' +
-						'tilewidth=' + this._tileWidthTwips + ' ' +
-						'tileheight=' + this._tileHeightTwips;
+				twips = this._coordsToTwips(coords);
+				msg = 'tile ' +
+					'part=' + coords.part + ' ' +
+					'width=' + this._tileSize + ' ' +
+					'height=' + this._tileSize + ' ' +
+					'tileposx=' + twips.x + ' '	+
+					'tileposy=' + twips.y + ' ' +
+					'tilewidth=' + this._tileWidthTwips + ' ' +
+					'tileheight=' + this._tileHeightTwips;
 				this._map._socket.sendMessage(msg, key);
 			}
 			else {
 				// more tiles, use tilecombine
 				var tilePositionsX = '';
 				var tilePositionsY = '';
-				for (var i = 0; i < rectQueue.length; i++) {
-					var coords = rectQueue[i];
-					var twips = this._coordsToTwips(coords);
+				for (i = 0; i < rectQueue.length; i++) {
+					coords = rectQueue[i];
+					twips = this._coordsToTwips(coords);
 
 					if (tilePositionsX !== '') {
 						tilePositionsX += ',';
@@ -929,15 +931,15 @@ L.GridLayer = L.Layer.extend({
 					tilePositionsY += twips.y;
 				}
 
-				var twips = this._coordsToTwips(coords);
-				var msg = 'tilecombine ' +
-						'part=' + coords.part + ' ' +
-						'width=' + this._tileSize + ' ' +
-						'height=' + this._tileSize + ' ' +
-						'tileposx=' + tilePositionsX + ' '	+
-						'tileposy=' + tilePositionsY + ' ' +
-						'tilewidth=' + this._tileWidthTwips + ' ' +
-						'tileheight=' + this._tileHeightTwips;
+				twips = this._coordsToTwips(coords);
+				msg = 'tilecombine ' +
+					'part=' + coords.part + ' ' +
+					'width=' + this._tileSize + ' ' +
+					'height=' + this._tileSize + ' ' +
+					'tileposx=' + tilePositionsX + ' '	+
+					'tileposy=' + tilePositionsY + ' ' +
+					'tilewidth=' + this._tileWidthTwips + ' ' +
+					'tileheight=' + this._tileHeightTwips;
 				this._map._socket.sendMessage(msg, '');
 			}
 		}

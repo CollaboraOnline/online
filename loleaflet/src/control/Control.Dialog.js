@@ -10,9 +10,9 @@ L.Control.Dialog = L.Control.extend({
 	},
 
 	_onError: function (e) {
-		if (vex.dialog_id > 0) {
+		if (vex.dialogID > 0) {
 			// Close other dialogs before presenting a new one.
-			vex.close(vex.dialog_id);
+			vex.close(vex.dialogID);
 		}
 
 		if (e.msg) {
@@ -25,7 +25,7 @@ L.Control.Dialog = L.Control.extend({
 		}
 
 		// Remember the current dialog ID to close it later.
-		vex.dialog_id = vex.globalID - 1;
+		vex.dialogID = vex.globalID - 1;
 	},
 
 	_onPrint: function (e) {

@@ -2,6 +2,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
+/* global vex $ */
 L.Map = L.Evented.extend({
 
 	options: {
@@ -64,7 +65,7 @@ L.Map = L.Evented.extend({
 		this._bDisableKeyboard = false;
 		this._active = true;
 
-		vex.dialog_id = -1;
+		vex.dialogID = -1;
 
 		this.callInitHooks();
 
@@ -701,9 +702,9 @@ L.Map = L.Evented.extend({
 				this._docLayer._onMessage('invalidatetiles: part=0 x=0 y=0 width=2147483647 height=2147483647', null);
 				this._active = true;
 
-				if (vex.dialog_id > 0) {
-					id = vex.dialog_id;
-					vex.dialog_id = -1;
+				if (vex.dialogID > 0) {
+					var id = vex.dialogID;
+					vex.dialogID = -1;
 					return vex.close(id);
 				}
 			}
@@ -715,7 +716,7 @@ L.Map = L.Evented.extend({
 	_deactivate: function () {
 		clearTimeout(vex.timer);
 
-		if (!this._active || vex.dialog_id > 0) {
+		if (!this._active || vex.dialogID > 0) {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;
@@ -732,9 +733,9 @@ L.Map = L.Evented.extend({
 			map._active = false;
 			clearTimeout(vex.timer);
 
-			options = $.extend({}, vex.defaultOptions, {contentCSS: {"background":"rgba(0, 0, 0, 0)"}});
+			options = $.extend({}, vex.defaultOptions, {contentCSS: {'background':'rgba(0, 0, 0, 0)'}});
 			options.id = vex.globalID;
-			vex.dialog_id = options.id;
+			vex.dialogID = options.id;
 			vex.globalID += 1;
 			options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
 			  vex: options
@@ -744,10 +745,10 @@ L.Map = L.Evented.extend({
 			});
 
 			options.$vexOverlay.bind('click.vex', function(e) {
-			  if (e.target !== this) {
-			    return;
-			  }
-			  return map._activate();
+				if (e.target !== this) {
+					return;
+				}
+				return map._activate();
 			});
 			options.$vex.append(options.$vexOverlay);
 
