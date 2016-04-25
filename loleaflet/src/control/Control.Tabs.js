@@ -85,7 +85,7 @@ L.Control.Tabs = L.Control.extend({
 
 				for (var i = 0; i < parts; i++) {
 					var id = 'spreadsheet-tab' + i;
-					var tab = L.DomUtil.create('li', 'spreadsheet-context-menu', ssTabScroll);
+					var tab = L.DomUtil.create('div', 'spreadsheet-context-menu', ssTabScroll);
 					tab.innerHTML = e.partNames[i];
 					tab.id = id;
 
@@ -99,9 +99,9 @@ L.Control.Tabs = L.Control.extend({
 			}
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
-				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'selected');
+				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-context-menu-selected');
 				if (part === selectedPart) {
-					L.DomUtil.addClass(this._spreadsheetTabs[key], 'selected');
+					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-context-menu-selected');
 				}
 			}
 		}
