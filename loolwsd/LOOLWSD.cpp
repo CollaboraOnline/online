@@ -927,6 +927,9 @@ public:
             Log::debug("Child socket for SessionId: " + sessionId + ", jailId: " + jailId +
                        ", docKey: " + docKey + " connected.");
 
+            // Jail id should be the PID, beacuse Admin need it to calculate the memory
+            const Poco::Process::PID pid = std::stoi(jailId);
+
             std::shared_ptr<DocumentBroker> docBroker;
             {
                 // This lock could become a bottleneck.
@@ -964,19 +967,6 @@ public:
 
             lock.unlock();
             AvailableChildSessionCV.notify_one();
-
-            const auto uri = request.getURI();
-
-            // Jail id should be the PID, beacuse Admin need it to calculate the memory
-            Poco::Process::PID pid;
-            try
-            {
-                pid = std::stoi(jailId);
-            }
-            catch (std::invalid_argument& exc)
-            {
-                assert(false);
-            }
 
             Log::info("Adding doc " + docKey + " to Admin");
             Admin::instance().addDoc(docKey, pid, docBroker->getFilename(), sessionId);
