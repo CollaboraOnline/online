@@ -938,7 +938,8 @@ void HTTPWSTest::testInsertDelete()
             for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
                  it != std::sregex_iterator(); ++it)
             {
-                if (std::regex_match((*it).str(), match, number))
+                const auto str = (*it).str();
+                if (std::regex_match(str, match, number))
                 {
                     parts.push_back(match.str());
                 }
@@ -964,7 +965,8 @@ void HTTPWSTest::testInsertDelete()
                 for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
                      it != std::sregex_iterator(); ++it)
                 {
-                    if (std::regex_match((*it).str(), match, number))
+                    const auto str = (*it).str();
+                    if (std::regex_match(str, match, number))
                     {
                         parts.push_back(match.str());
                     }
@@ -991,7 +993,8 @@ void HTTPWSTest::testInsertDelete()
                 for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
                      it != std::sregex_iterator(); ++it)
                 {
-                    if (std::regex_match((*it).str(), match, number))
+                    const auto str = (*it).str();
+                    if (std::regex_match(str, match, number))
                     {
                         parts.push_back(match.str());
                     }
@@ -1018,7 +1021,8 @@ void HTTPWSTest::testInsertDelete()
                 for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
                      it != std::sregex_iterator(); ++it)
                 {
-                    if (std::regex_match((*it).str(), match, number))
+                    const auto str = (*it).str();
+                    if (std::regex_match(str, match, number))
                     {
                         parts.push_back(match.str());
                     }
@@ -1045,7 +1049,8 @@ void HTTPWSTest::testInsertDelete()
                 for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
                      it != std::sregex_iterator(); ++it)
                 {
-                    if (std::regex_match((*it).str(), match, number))
+                    const auto str = (*it).str();
+                    if (std::regex_match(str, match, number))
                     {
                         parts.push_back(match.str());
                     }
@@ -1071,7 +1076,8 @@ void HTTPWSTest::testInsertDelete()
             for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
                  it != std::sregex_iterator(); ++it)
             {
-                if (std::regex_match((*it).str(), match, number))
+                const auto str = (*it).str();
+                if (std::regex_match(str, match, number))
                 {
                     parts.push_back(match.str());
                 }

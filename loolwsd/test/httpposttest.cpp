@@ -96,7 +96,7 @@ void HTTPPostTest::testLOleaflet()
     session.sendRequest(request) << body;
 
     Poco::Net::HTTPResponse response;
-    std::istream& rs = session.receiveResponse(response);
+    session.receiveResponse(response);
     CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
     CPPUNIT_ASSERT_EQUAL(std::string("text/html"), response.getContentType());
 }
