@@ -11,6 +11,8 @@
 #include <ftw.h>
 #include <cassert>
 #include <iostream>
+#include <sys/types.h>
+#include <dirent.h>
 
 #include "Util.hpp"
 #include "Unit.hpp"
@@ -25,6 +27,7 @@ const int NumToPrefork = 20;
 class UnitPrefork : public UnitWSD
 {
     int _numStarted;
+    std::string _failure;
     Poco::Timestamp _startTime;
     std::vector< std::shared_ptr<Poco::Net::WebSocket> > _childSockets;
 
@@ -51,11 +54,16 @@ public:
         int length = socket->receiveFrame(buffer, sizeof (buffer), flags);
         std::string memory = LOOLProtocol::getFirstLine(buffer, length);
 
+        if (!memory.compare(0,6,"Error:"))
+            _failure = memory;
+        else
+        {
 //        std::cout << "Got memory stats '" << memory << "'" << std::endl;
-        Poco::StringTokenizer tokens(memory, " ");
-        assert (tokens.count() == 2);
-        totalPSS += atoi(tokens[0].c_str());
-        totalDirty += atoi(tokens[1].c_str());
+            Poco::StringTokenizer tokens(memory, " ");
+            assert (tokens.count() == 2);
+            totalPSS += atoi(tokens[0].c_str());
+            totalDirty += atoi(tokens[1].c_str());
+        }
     }
 
     virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
@@ -81,7 +89,10 @@ public:
             std::cout << "Memory use average " << totalPSSKb << "k shared "
                       << totalDirtyKb << "k dirty" << std::endl;
 
-            exitTest(TestResult::TEST_OK);
+            if (!_failure.empty())
+                exitTest(TestResult::TEST_FAILED);
+            else
+                exitTest(TestResult::TEST_OK);
         }
     }
 };
@@ -128,6 +139,7 @@ namespace {
 class UnitKitPrefork : public UnitKit
 {
     FILE *_procSMaps;
+    std::string _failure;
 
 public:
     UnitKitPrefork()
@@ -147,8 +159,60 @@ public:
         pids.push_back(pid);
     }
 
+    // Check that we have no unexpected open sockets.
+    void checkSockets()
+    {
+        DIR *fds = opendir ("/proc/self/fd");
+        struct dirent *ent;
+        int deviceCount = 0, rdbCount = 0, resCount = 0,
+            numSockets = 0, numUnexpected = 0, pipeCount = 0;
+        while ((ent = readdir(fds)))
+        {
+            if (ent->d_name[0] == '.')
+                continue;
+            char name[1024 + 32];
+            char buffer[4096];
+            strcpy (name, "/proc/self/fd/");
+            strncat(name, ent->d_name, 1024);
+            size_t len;
+            memset(buffer, 0, sizeof(buffer));
+            if ((len = readlink(name, buffer, sizeof(buffer)-1) > 0))
+            {
+                assert(len<sizeof(buffer));
+                numSockets++;
+                char *extDot = strrchr(buffer, '.');
+//                fprintf(stdout, "fd: %s -> %s\n", ent->d_name, buffer);
+                if (!strncmp(buffer, "/dev/", sizeof ("/dev/") -1))
+                    deviceCount++;
+                else if (extDot && !strcmp(extDot, ".res"))
+                    resCount++;
+                else if (extDot && !strcmp(extDot, ".rdb"))
+                    rdbCount++;
+                else if (strstr(buffer, "unit-prefork.log") || // our log
+                         (strstr(buffer, "/proc/") && // our readdir
+                          strstr(buffer, "/fd")))
+                    ; // ignore
+                else if (!strncmp(buffer, "pipe:[", 6))
+                    pipeCount++;
+                else
+                {
+                    fprintf(stderr, "Unexpected descriptor: %s -> %s\n", ent->d_name, buffer);
+                    numUnexpected++;
+                }
+            }
+        }
+        fprintf(stderr, "%d devices, %d rdb %d resources, %d pipes, %d descriptors total: %d unexpected\n",
+                deviceCount, rdbCount, resCount, pipeCount, numSockets, numUnexpected);
+        if (pipeCount > 2 || numUnexpected > 0)
+            _failure = std::string("Error: unexpected inherited sockets ") +
+                std::to_string(numUnexpected) + " and pipes " +
+                std::to_string(pipeCount);
+    }
+
     virtual void postFork() override
     {
+        checkSockets();
+
         // before we drop the caps we can even open our /proc files !
         const std::string procName = std::string("/proc/") +
                                      std::to_string(getpid()) +
@@ -162,7 +226,11 @@ public:
         const auto token = LOOLProtocol::getFirstToken(message.c_str(), message.length());
         if (token == "unit-memdump:")
         {
-            const std::string memory = readMemorySizes(_procSMaps) + "\n";
+            std::string memory;
+            if (!_failure.empty())
+                memory = _failure;
+            else
+                memory = readMemorySizes(_procSMaps) + "\n";
             ws->sendFrame(memory.c_str(), memory.length());
             return true;
         }
