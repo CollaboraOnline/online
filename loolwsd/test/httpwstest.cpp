@@ -114,6 +114,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                             std::string& response,
                             const bool isLine);
 
+    void getPartHashCodes(const std::string response,
+                          std::vector<std::string>& parts);
+
     std::shared_ptr<Poco::Net::WebSocket>
     connectLOKit(Poco::Net::HTTPRequest& request,
                  Poco::Net::HTTPResponse& response);
@@ -931,21 +934,8 @@ void HTTPWSTest::testInsertDelete()
             const std::string prefix = "parts=";
             const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
             CPPUNIT_ASSERT_EQUAL(1, totalParts);
-
-            std::regex endLine("[^\n\r]+");
-            std::regex number("^[0-9]+$");
-            std::smatch match;
-            for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                 it != std::sregex_iterator(); ++it)
-            {
-                const auto str = (*it).str();
-                if (std::regex_match(str, match, number))
-                {
-                    parts.push_back(match.str());
-                }
-            }
+            getPartHashCodes(response, parts);
             CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-            parts.clear();
         }
 
         // insert 10 slides
@@ -959,20 +949,8 @@ void HTTPWSTest::testInsertDelete()
                 const std::string prefix = "parts=";
                 const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
 
-                std::regex endLine("[^\n\r]+");
-                std::regex number("^[0-9]+$");
-                std::smatch match;
-                for (std::sregex_iterator regex_it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                     regex_it != std::sregex_iterator(); ++regex_it)
-                {
-                    const auto str = (*regex_it).str();
-                    if (std::regex_match(str, match, number))
-                    {
-                        parts.push_back(match.str());
-                    }
-                }
+                getPartHashCodes(response, parts);
                 CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-                parts.clear();
             }
         }
 
@@ -987,20 +965,8 @@ void HTTPWSTest::testInsertDelete()
                 const std::string prefix = "parts=";
                 const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
 
-                std::regex endLine("[^\n\r]+");
-                std::regex number("^[0-9]+$");
-                std::smatch match;
-                for (std::sregex_iterator regex_it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                     regex_it != std::sregex_iterator(); ++regex_it)
-                {
-                    const auto str = (*regex_it).str();
-                    if (std::regex_match(str, match, number))
-                    {
-                        parts.push_back(match.str());
-                    }
-                }
+                getPartHashCodes(response, parts);
                 CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-                parts.clear();
             }
         }
 
@@ -1015,20 +981,8 @@ void HTTPWSTest::testInsertDelete()
                 const std::string prefix = "parts=";
                 const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
 
-                std::regex endLine("[^\n\r]+");
-                std::regex number("^[0-9]+$");
-                std::smatch match;
-                for (std::sregex_iterator regex_it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                     regex_it != std::sregex_iterator(); ++regex_it)
-                {
-                    const auto str = (*regex_it).str();
-                    if (std::regex_match(str, match, number))
-                    {
-                        parts.push_back(match.str());
-                    }
-                }
+                getPartHashCodes(response, parts);
                 CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-                parts.clear();
             }
         }
 
@@ -1043,20 +997,8 @@ void HTTPWSTest::testInsertDelete()
                 const std::string prefix = "parts=";
                 const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
 
-                std::regex endLine("[^\n\r]+");
-                std::regex number("^[0-9]+$");
-                std::smatch match;
-                for (std::sregex_iterator regex_it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                     regex_it != std::sregex_iterator(); ++regex_it)
-                {
-                    const auto str = (*regex_it).str();
-                    if (std::regex_match(str, match, number))
-                    {
-                        parts.push_back(match.str());
-                    }
-                }
+                getPartHashCodes(response, parts);
                 CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-                parts.clear();
             }
         }
 
@@ -1070,20 +1012,8 @@ void HTTPWSTest::testInsertDelete()
             const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
             CPPUNIT_ASSERT_EQUAL(1, totalParts);
 
-            std::regex endLine("[^\n\r]+");
-            std::regex number("^[0-9]+$");
-            std::smatch match;
-            for (std::sregex_iterator it = std::sregex_iterator(response.begin(), response.end(), endLine);
-                 it != std::sregex_iterator(); ++it)
-            {
-                const auto str = (*it).str();
-                if (std::regex_match(str, match, number))
-                {
-                    parts.push_back(match.str());
-                }
-            }
+            getPartHashCodes(response, parts);
             CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-            parts.clear();
         }
 
         socket.shutdown();
@@ -1299,6 +1229,27 @@ int countLoolKitProcesses()
 
     // std::cout << "Number of loolkit processes: " << result << std::endl;
     return result;
+}
+
+void HTTPWSTest::getPartHashCodes(const std::string response,
+                                  std::vector<std::string>& parts)
+{
+    Poco::RegularExpression endLine("[^\n\r]+");
+    Poco::RegularExpression number("^[0-9]+$");
+    Poco::RegularExpression::MatchVec matches;
+    int offset = 0;
+
+    parts.clear();
+    while (endLine.match(response, offset, matches) > 0)
+    {
+        CPPUNIT_ASSERT_EQUAL(1, (int)matches.size());
+        const auto str = response.substr(matches[0].offset, matches[0].length);
+        if (number.match(str, 0) > 0)
+        {
+            parts.push_back(str);
+        }
+        offset = static_cast<int>(matches[0].offset + matches[0].length);
+    }
 }
 
 // Connecting to a Kit process is managed by document broker, that it does several
