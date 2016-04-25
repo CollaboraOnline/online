@@ -1363,6 +1363,5 @@ HTTPWSTest::connectLOKit(Poco::Net::HTTPRequest& request,
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
-//CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(HTTPWSTest, "httpwstest");
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
