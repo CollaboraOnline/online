@@ -53,7 +53,7 @@ TileBeingRendered::TileBeingRendered()
 void TileBeingRendered::subscribe(const std::weak_ptr<MasterProcessSession>& session)
 {
     std::shared_ptr<MasterProcessSession> cmp = session.lock();
-    for (auto s : _subscribers)
+    for (const auto& s : _subscribers)
     {
         if (s.lock().get() == cmp.get())
         {
