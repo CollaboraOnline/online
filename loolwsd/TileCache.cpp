@@ -45,30 +45,6 @@ using Poco::URI;
 
 using namespace LOOLProtocol;
 
-TileBeingRendered::TileBeingRendered()
-{
-    _startTime.update();
-}
-
-void TileBeingRendered::subscribe(const std::weak_ptr<MasterProcessSession>& session)
-{
-    std::shared_ptr<MasterProcessSession> cmp = session.lock();
-    for (const auto& s : _subscribers)
-    {
-        if (s.lock().get() == cmp.get())
-        {
-            Log::debug("Redundant request to re-subscribe on a tile");
-            return;
-        }
-    }
-    _subscribers.push_back(session);
-}
-
-std::vector<std::weak_ptr<MasterProcessSession>> TileBeingRendered::getSubscribers()
-{
-    return _subscribers;
-}
-
 TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,
                      const std::string& cacheDir) :
@@ -96,16 +72,17 @@ TileCache::~TileCache()
     Log::info("~TileCache dtor for uri [" + _docURL + "].");
 }
 
-void TileCache::rememberTileAsBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+struct TileCache::TileBeingRendered
 {
-    const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    Poco::Timestamp _startTime;
+    std::vector<std::weak_ptr<MasterProcessSession>> _subscribers;
+    TileBeingRendered()
+    {
+        _startTime.update();
+    }
+};
 
-    assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
-
-    _tilesBeingRendered[cachedName] = std::make_shared<TileBeingRendered>();
-}
-
-std::shared_ptr<TileBeingRendered> TileCache::findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
 {
     const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
@@ -359,7 +336,7 @@ void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int 
 
     Log::debug("Sending tile message also to subscribers");
 
-    for (auto i: tileBeingRendered->getSubscribers())
+    for (auto i: tileBeingRendered->_subscribers)
     {
         auto subscriber = i.lock();
         if (subscriber)
@@ -391,26 +368,42 @@ void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int 
         }
     }
     forgetTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-
-    lock.unlock();
 }
 
+// FIXME: to be further simplified when we centralize tile messages.
 bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const std::shared_ptr<MasterProcessSession> &subscriber)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+
     if (tileBeingRendered)
     {
         Log::debug("Tile is already being rendered, subscribing");
         assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
-        tileBeingRendered->subscribe(subscriber);
+
+        for (const auto &s : tileBeingRendered->_subscribers)
+        {
+            if (s.lock().get() == subscriber.get())
+            {
+                Log::debug("Redundant request to re-subscribe on a tile");
+                return true;
+            }
+        }
+        tileBeingRendered->_subscribers.push_back(subscriber);
+
         return true;
     }
-    rememberTileAsBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    lock.unlock();
+    else
+    {
+        const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    return false;
+        assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
+
+        _tilesBeingRendered[cachedName] = std::make_shared<TileBeingRendered>();
+
+        return false;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

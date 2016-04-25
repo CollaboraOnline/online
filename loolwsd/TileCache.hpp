@@ -23,18 +23,13 @@
 
 class MasterProcessSession;
 
-class TileBeingRendered
-{
-    Poco::Timestamp _startTime;
-    std::vector<std::weak_ptr<MasterProcessSession>> _subscribers;
-public:
-    TileBeingRendered();
-    void subscribe(const std::weak_ptr<MasterProcessSession>& session);
-    std::vector<std::weak_ptr<MasterProcessSession>> getSubscribers();
-};
-
 class TileCache
 {
+    struct TileBeingRendered;
+
+    std::shared_ptr<TileBeingRendered> findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+;
+
 public:
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
@@ -43,11 +38,6 @@ public:
     ~TileCache();
 
     TileCache(const TileCache&) = delete;
-
-    void rememberTileAsBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
-
-    std::shared_ptr<TileBeingRendered> findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
-;
 
     bool isTileBeingRenderedIfSoSubscribe(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const std::shared_ptr<MasterProcessSession> &subscriber);
 
