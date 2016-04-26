@@ -213,6 +213,7 @@ private:
     std::string _jailId;
     std::string _filename;
     std::chrono::steady_clock::time_point _lastSaveTime;
+    Poco::Timestamp _lastFileModifiedTime;
     std::map<std::string, std::shared_ptr<MasterProcessSession>> _sessions;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;

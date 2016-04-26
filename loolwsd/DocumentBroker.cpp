@@ -127,17 +127,20 @@ bool DocumentBroker::load(const std::string& jailId)
 
     Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
 
-    auto storage = StorageBase::create("", "", _uriPublic);
+    auto storage = StorageBase::create(jailRoot, jailPath.toString(), _uriPublic);
     if (storage)
     {
         const auto fileInfo = storage->getFileInfo(_uriPublic);
-        _tileCache.reset(new TileCache(_uriPublic.toString(), fileInfo._modifiedTime, _cacheRoot));
         _filename = fileInfo._filename;
-        _storage = StorageBase::create(jailRoot, jailPath.toString(), _uriPublic);
 
-        const auto localPath = _storage->loadStorageFileToLocal();
+        const auto localPath = storage->loadStorageFileToLocal();
         _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
 
+        // Use the local temp file's timestamp.
+        _lastFileModifiedTime = Poco::File(storage->getLocalRootPath()).getLastModified();
+        _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
+
+        _storage.reset(storage.release());
         return true;
     }
 
@@ -149,18 +152,27 @@ bool DocumentBroker::save()
     std::unique_lock<std::mutex> lock(_saveMutex);
 
     const auto uri = _uriPublic.toString();
+    const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
+    if (newFileModifiedTime == _lastFileModifiedTime)
+    {
+        // Nothing to do.
+        Log::debug("Skipping unnecessary saving to URI [" + uri + "].");
+        return true;
+    }
+
     Log::debug("Saving to URI [" + uri + "].");
 
     assert(_storage && _tileCache);
     if (_storage->saveLocalFileToStorage())
     {
         _isModified = false;
-        _lastSaveTime = std::chrono::steady_clock::now();
         _tileCache->setUnsavedChanges(false);
+        const auto fileInfo = _storage->getFileInfo(_uriPublic);
+        _lastFileModifiedTime = newFileModifiedTime;
+        _tileCache->saveLastModified(_lastFileModifiedTime);
+        _lastSaveTime = std::chrono::steady_clock::now();
         Log::debug("Saved to URI [" + uri + "] and updated tile cache.");
         _saveCV.notify_all();
-        const auto fileInfo = _storage->getFileInfo(_uriPublic);
-        _tileCache->saveLastModified(fileInfo._modifiedTime);
         return true;
     }
 
