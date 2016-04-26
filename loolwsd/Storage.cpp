@@ -119,7 +119,7 @@ bool isLocalhost(const std::string& targetHost)
     {
         Poco::Net::NetworkInterface& netif = list[i];
         std::string address = netif.address().toString();
-        address = address.substr(0, address.find("%",0));
+        address = address.substr(0, address.find('%', 0));
         if (address == targetAddress)
         {
             Log::info("WOPI host is on the same host as the WOPI client: \"" + targetAddress + "\". Connection is allowed.");
@@ -151,7 +151,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     else if (_wopiEnabled)
     {
         Log::info("Public URI [" + uri.toString() + "] considered WOPI.");
-        const auto targetHost = uri.getHost();
+        const auto& targetHost = uri.getHost();
         if (_wopiHosts.match(targetHost) || isLocalhost(targetHost))
         {
             return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
@@ -170,7 +170,7 @@ StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uri)
 {
     const auto path = Poco::Path(uri.getPath());
     Log::debug("Getting info for local uri [" + uri.toString() + "], path [" + path.toString() + "].");
-    const auto filename = path.getFileName();
+    const auto& filename = path.getFileName();
     const auto file = Poco::File(path);
     const auto lastModified = file.getLastModified();
     const auto size = file.getSize();
