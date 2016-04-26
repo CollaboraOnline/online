@@ -317,8 +317,7 @@ void HTTPWSTest::testCloseAfterClose()
 
         // no more messages is received.
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        std::string received(buffer);
-        std::cout << received << "received " << bytes << " flags "<< flags << std::endl;
+        std::cout << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
         CPPUNIT_ASSERT_EQUAL(0, bytes);
         CPPUNIT_ASSERT_EQUAL(0, flags);
     }
