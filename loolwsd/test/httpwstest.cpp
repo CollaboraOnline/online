@@ -224,8 +224,7 @@ void HTTPWSTest::testHandShake()
         std::string receive;
         socket.setReceiveTimeout(0);
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        CPPUNIT_ASSERT_EQUAL((int) payload.size(), bytes);
-        CPPUNIT_ASSERT(payload.compare(0, payload.size(), buffer, 0, bytes) == 0);
+        CPPUNIT_ASSERT_EQUAL(std::string(payload), std::string(buffer, bytes));
         CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
