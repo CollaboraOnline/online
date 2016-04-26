@@ -26,6 +26,8 @@
 #include <Common.hpp>
 #include <Util.hpp>
 
+#include "httptestutils.hpp"
+
 /// Tests the HTTP GET API of loolwsd.
 class HTTPGetTest : public CPPUNIT_NS::TestFixture
 {
@@ -148,36 +150,8 @@ void HTTPGetTest::testScripts()
     Poco::StreamCopier::copyToString(rs, html);
 
     Poco::RegularExpression script("<script.*?src=\"(.*?)\"");
-    Poco::RegularExpression::MatchVec matches;
-    int offset = 0;
 
-    while (script.match(html, offset, matches) > 0)
-    {
-        CPPUNIT_ASSERT_EQUAL(2, (int)matches.size());
-        Poco::URI uriScript(html.substr(matches[1].offset, matches[1].length));
-        if (uriScript.getHost().empty())
-        {
-#if ENABLE_SSL
-            Poco::Net::HTTPSClientSession sessionScript(uri.getHost(), uri.getPort());
-#else
-            Poco::Net::HTTPClientSession sessionScript(uri.getHost(), uri.getPort());
-#endif
-            std::cout << "checking... " << uriScript.toString();
-            Poco::Net::HTTPRequest requestScript(Poco::Net::HTTPRequest::HTTP_GET, uriScript.toString());
-            sessionScript.sendRequest(requestScript);
-
-            Poco::Net::HTTPResponse responseScript;
-            sessionScript.receiveResponse(responseScript);
-            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseScript.getStatus());
-            CPPUNIT_ASSERT_EQUAL(std::string("application/javascript"), responseScript.getContentType());
-            std::cout << " OK" << std::endl;
-        }
-        else
-        {
-            std::cout << "skip " << uriScript.toString() << std::endl;
-        }
-        offset = static_cast<int>(matches[0].offset + matches[0].length);
-    }
+    httptest::assertHTTPFilesExist(uri, script, html, "application/javascript");
 }
 
 void HTTPGetTest::testLinks()
@@ -201,34 +175,8 @@ void HTTPGetTest::testLinks()
 
     Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
     Poco::RegularExpression::MatchVec matches;
-    int offset = 0;
 
-    while (link.match(html, offset, matches) > 0)
-    {
-        CPPUNIT_ASSERT_EQUAL(2, (int)matches.size());
-        Poco::URI uriLink(html.substr(matches[1].offset, matches[1].length));
-        if (uriLink.getHost().empty())
-        {
-#if ENABLE_SSL
-            Poco::Net::HTTPSClientSession sessionLink(uri.getHost(), uri.getPort());
-#else
-            Poco::Net::HTTPClientSession sessionLink(uri.getHost(), uri.getPort());
-#endif
-            std::cout << "checking... " << uriLink.toString();
-            Poco::Net::HTTPRequest requestLink(Poco::Net::HTTPRequest::HTTP_GET, uriLink.toString());
-            sessionLink.sendRequest(requestLink);
-
-            Poco::Net::HTTPResponse responseLink;
-            sessionLink.receiveResponse(responseLink);
-            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseLink.getStatus());
-            std::cout << " OK" << std::endl;
-        }
-        else
-        {
-            std::cout << "skip " << uriLink.toString() << std::endl;
-        }
-        offset = static_cast<int>(matches[0].offset + matches[0].length);
-    }
+    httptest::assertHTTPFilesExist(uri, link, html);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPGetTest);
