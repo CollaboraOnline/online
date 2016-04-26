@@ -233,7 +233,32 @@ L.Map.Keyboard = L.Handler.extend({
 		var ctrl = e.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
 		var alt = e.originalEvent.altKey ? this.keyModifier.alt : 0;
 		var cmd = e.originalEvent.metaKey ? this.keyModifier.ctrl : 0;
+		var location = e.originalEvent.location;
 		this.modifier = shift | ctrl | alt | cmd;
+
+		// On Windows, pressing AltGr = Alt + Ctrl
+		// Presence of AltGr is detected if previous Ctrl + Alt 'location' === 2 (i.e right)
+		// because Ctrl + Alt + <some char> won't give any 'location' information.
+		if (ctrl && alt) {
+			if (e.type === 'keydown' && location === 2) {
+				this._prevCtrlAltLocation = location;
+				return;
+			}
+			else if (location === 1) {
+				this._prevCtrlAltLocation = undefined;
+			}
+
+			if (this._prevCtrlAltLocation === 2 && location === 0) {
+				// and we got the final character
+				if (e.type === 'keypress') {
+					ctrl = alt = this.modifier = 0;
+				}
+				else {
+					// Don't handle remnant 'keyup'
+					return;
+				}
+			}
+		}
 
 		if (ctrl || cmd) {
 			if (this._handleCtrlCommand(e)) {
