@@ -51,7 +51,9 @@ TileCache::TileCache(const std::string& docURL,
     _docURL(docURL),
     _cacheDir(cacheDir)
 {
-    Log::info("TileCache ctor for uri [" + _docURL + "] modifiedTime=" + std::to_string(modifiedTime.raw()/1000000) + " getLastModified()=" + std::to_string(getLastModified().raw()/1000000));
+    Log::info() << "TileCache ctor for uri [" << _docURL
+                << "] modifiedTime=" << (modifiedTime.raw()/1000000)
+                << " getLastModified()=" << (getLastModified().raw()/1000000) << Log::end;
     File directory(_cacheDir);
     if (directory.exists() &&
         (getLastModified() < modifiedTime ||
@@ -86,12 +88,9 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(i
 {
     const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    auto tile = _tilesBeingRendered.find(cachedName);
+    const auto tile = _tilesBeingRendered.find(cachedName);
 
-    if (tile == _tilesBeingRendered.end())
-        return nullptr;
-
-    return tile->second;
+    return (tile != _tilesBeingRendered.end() ? tile->second : nullptr);
 }
 
 void TileCache::forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
@@ -268,7 +267,7 @@ void TileCache::removeFile(const std::string& fileName)
     const std::string fullFileName = _cacheDir + "/" + fileName;
 
     if (std::remove(fullFileName.c_str()) == 0)
-        Log::info("Removed file: " + _cacheDir + "/" + fileName);
+        Log::info("Removed file: " + fullFileName);
 }
 
 std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)

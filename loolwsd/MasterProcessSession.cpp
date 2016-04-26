@@ -727,19 +727,19 @@ void MasterProcessSession::dispatchChild()
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 {
     const auto message = getAbbreviatedMessage(buffer, length);
-    Log::trace(getName() + " Forward: " + message);
 
     auto peer = _peer.lock();
     if (!peer)
     {
-        throw Poco::ProtocolException(getName() + ": no peer to forward to.");
+        throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
     }
     else if (peer->isCloseFrame())
     {
-        Log::trace(getName() + ": peer begin the closing handshake");
+        Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
         return;
     }
 
+    Log::trace(getName() + " -> " + peer->getName() + ": " + message);
     peer->sendBinaryFrame(buffer, length);
 }
 
