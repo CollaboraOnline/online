@@ -41,6 +41,7 @@ class HTTPPostTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLOleaflet);
     CPPUNIT_TEST(testParams);
     CPPUNIT_TEST(testScripts);
+    CPPUNIT_TEST(testLinks);
     CPPUNIT_TEST(testConvertTo);
 
     // This should be the last test:
@@ -52,6 +53,7 @@ class HTTPPostTest : public CPPUNIT_NS::TestFixture
     void testLOleaflet();
     void testParams();
     void testScripts();
+    void testLinks();
     void testConvertTo();
     void testNoExtraLoolKitsLeft();
 
@@ -182,6 +184,60 @@ void HTTPPostTest::testScripts()
         else
         {
             std::cout << "skip " << uriScript.toString() << std::endl;
+        }
+        offset = static_cast<int>(matches[0].offset + matches[0].length);
+    }
+}
+
+void HTTPPostTest::testLinks()
+{
+#if ENABLE_SSL
+    Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
+#else
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+#endif
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/loleaflet/dist/loleaflet.html");
+    std::string body;
+    request.setContentLength((int) body.length());
+    session.sendRequest(request) << body;
+
+    Poco::Net::HTTPResponse response;
+    std::istream& rs = session.receiveResponse(response);
+    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+
+    std::string html;
+    Poco::StreamCopier::copyToString(rs, html);
+
+    Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
+    Poco::RegularExpression::MatchVec matches;
+    int offset = 0;
+
+    while (link.match(html, offset, matches) > 0)
+    {
+        CPPUNIT_ASSERT_EQUAL(2, (int)matches.size());
+        Poco::URI uriLink(html.substr(matches[1].offset, matches[1].length));
+        if (uriLink.getHost().empty())
+        {
+#if ENABLE_SSL
+            Poco::Net::HTTPSClientSession sessionLink(uri.getHost(), uri.getPort());
+#else
+            Poco::Net::HTTPClientSession sessionLink(uri.getHost(), uri.getPort());
+#endif
+            std::cout << "checking... " << uriLink.toString();
+            Poco::Net::HTTPRequest requestLink(Poco::Net::HTTPRequest::HTTP_GET, uriLink.toString());
+            sessionLink.sendRequest(requestLink);
+
+            Poco::Net::HTTPResponse responseLink;
+            sessionLink.receiveResponse(responseLink);
+            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseLink.getStatus());
+            std::cout << " OK" << std::endl;
+        }
+        else
+        {
+            std::cout << "skip " << uriLink.toString() << std::endl;
         }
         offset = static_cast<int>(matches[0].offset + matches[0].length);
     }
