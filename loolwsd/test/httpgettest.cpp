@@ -34,12 +34,14 @@ class HTTPGetTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testDiscovery);
     CPPUNIT_TEST(testLOleaflet);
     CPPUNIT_TEST(testParams);
+    CPPUNIT_TEST(testScripts);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testDiscovery();
     void testLOleaflet();
     void testParams();
+    void testScripts();
 
 #if ENABLE_SSL
 public:
@@ -122,6 +124,58 @@ void HTTPGetTest::testParams()
     CPPUNIT_ASSERT(html.find(param["access_token"]) != std::string::npos);
     CPPUNIT_ASSERT(html.find(uri.getHost()) != std::string::npos);
     CPPUNIT_ASSERT(html.find(std::string(LOOLWSD_VERSION)) != std::string::npos);
+}
+
+void HTTPGetTest::testScripts()
+{
+#if ENABLE_SSL
+    Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
+#else
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+#endif
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/loleaflet/dist/loleaflet.html");
+    session.sendRequest(request);
+
+    Poco::Net::HTTPResponse response;
+    std::istream& rs = session.receiveResponse(response);
+    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+
+    std::string html;
+    Poco::StreamCopier::copyToString(rs, html);
+
+    Poco::RegularExpression script("<script.*?src=\"(.*?)\"");
+    Poco::RegularExpression::MatchVec matches;
+    int offset = 0;
+
+    while (script.match(html, offset, matches) > 0)
+    {
+        CPPUNIT_ASSERT_EQUAL(2, (int)matches.size());
+        Poco::URI uriScript(html.substr(matches[1].offset, matches[1].length));
+        if (uriScript.getHost().empty())
+        {
+#if ENABLE_SSL
+            Poco::Net::HTTPSClientSession sessionScript(uri.getHost(), uri.getPort());
+#else
+            Poco::Net::HTTPClientSession sessionScript(uri.getHost(), uri.getPort());
+#endif
+            std::cout << "checking... " << uriScript.toString();
+            Poco::Net::HTTPRequest requestScript(Poco::Net::HTTPRequest::HTTP_GET, uriScript.toString());
+            sessionScript.sendRequest(requestScript);
+
+            Poco::Net::HTTPResponse responseScript;
+            sessionScript.receiveResponse(responseScript);
+            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseScript.getStatus());
+            CPPUNIT_ASSERT_EQUAL(std::string("application/javascript"), responseScript.getContentType());
+            std::cout << " OK" << std::endl;
+        }
+        else
+        {
+            std::cout << "skip " << uriScript.toString() << std::endl;
+        }
+        offset = static_cast<int>(matches[0].offset + matches[0].length);
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPGetTest);
