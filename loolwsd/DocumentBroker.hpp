@@ -152,19 +152,19 @@ public:
     /// Loads a document from the public URI into the jail.
     bool load(const std::string& jailId);
 
+    /// Save the document to Storage if needs persisting.
     bool save();
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
 
-    /// Save the document if there was activity since last save.
-    /// force when true, will force saving immediatly, regardless
-    /// of how long ago the activity was.
-    bool autoSave(const bool force);
-
-    /// Wait until the document is saved next.
-    /// This is used to cleanup after the last save.
-    /// Returns false if times out.
-    bool waitSave(const size_t timeoutMs);
+    /// Save the document if the document is modified.
+    /// force when true, will force saving if there
+    /// has been any recent activity after the last save.
+    /// waitTimeoutMs when >0 will wait for the save to
+    /// complete before returning, or timeout.
+    /// Returns true if attempts to save or it also waits
+    /// and receives save notification. Otherwise, false.
+    bool autoSave(const bool force, const size_t waitTimeoutMs);
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
@@ -202,6 +202,14 @@ public:
     // Called when the last view is going out.
     bool canDestroy();
     bool isMarkedToDestroy() const { return _markToDestroy; }
+
+private:
+
+    /// Sends the .uno:Save command to LoKit.
+    bool sendUnoSave();
+
+    /// Saves the document to Storage (assuming LO Core saved to local copy).
+    bool saveToStorage();
 
 private:
     const Poco::URI _uriPublic;

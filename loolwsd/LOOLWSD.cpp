@@ -604,10 +604,7 @@ private:
                 // Use auto-save to save only when there are modifications since last save.
                 // We also need to wait until the save notification reaches us
                 // and Storage persists the document.
-                // Note: technically, there is a race between these two (we should
-                // hold the broker lock before issueing the save and waiting,)
-                // but in practice this shouldn't happen.
-                if (docBroker->autoSave(true) && !docBroker->waitSave(COMMAND_TIMEOUT_MS))
+                if (docBroker->autoSave(true, COMMAND_TIMEOUT_MS))
                 {
                     Log::error("Auto-save before closing failed.");
                 }
@@ -1581,7 +1578,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         {
                             if (brokerIt.second->isModified())
                             {
-                                brokerIt.second->autoSave(false);
+                                brokerIt.second->autoSave(false, 0);
                             }
                         }
                     }

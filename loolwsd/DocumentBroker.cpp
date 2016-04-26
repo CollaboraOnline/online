@@ -180,8 +180,10 @@ bool DocumentBroker::save()
     return false;
 }
 
-bool DocumentBroker::autoSave(const bool force)
+bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
 {
+    Log::trace("Autosaving [" + _docKey + "].");
+
     std::unique_lock<std::mutex> lock(_mutex);
     if (_sessions.empty())
     {
@@ -189,69 +191,74 @@ bool DocumentBroker::autoSave(const bool force)
         return false;
     }
 
-    // Find the most recent activity.
-    double inactivityTimeMs = std::numeric_limits<double>::max();
-    for (auto& sessionIt: _sessions)
+    bool sent = false;
+    if (force || _isModified)
     {
-        inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
+        sent = sendUnoSave();
     }
-
-    Log::trace("Most recent activity was " + std::to_string((int)inactivityTimeMs) + " ms ago.");
-    const auto timeSinceLastSaveMs = getTimeSinceLastSaveMs();
-    Log::trace("Time since last save is " + std::to_string((int)timeSinceLastSaveMs) + " ms.");
-
-    // There has been some editing since we saved last?
-    if (inactivityTimeMs < timeSinceLastSaveMs)
+    else
     {
-        // Either we've been idle long enough, or it's auto-save time.
-        // Or we are asked to save anyway.
-        if (inactivityTimeMs >= IdleSaveDurationMs ||
-            timeSinceLastSaveMs >= AutoSaveDurationMs ||
-            force)
+        // Find the most recent activity.
+        double inactivityTimeMs = std::numeric_limits<double>::max();
+        for (auto& sessionIt: _sessions)
         {
-            Log::info("Auto-save triggered for doc [" + _docKey + "].");
+            inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
+        }
 
-            // Save using session holding the edit-lock
-            bool sent = false;
-            for (auto& sessionIt: _sessions)
+        Log::trace("Most recent activity was " + std::to_string((int)inactivityTimeMs) + " ms ago.");
+        const auto timeSinceLastSaveMs = getTimeSinceLastSaveMs();
+        Log::trace("Time since last save is " + std::to_string((int)timeSinceLastSaveMs) + " ms.");
+
+        // There has been some editing since we saved last?
+        if (inactivityTimeMs < timeSinceLastSaveMs)
+        {
+            // Either we've been idle long enough, or it's auto-save time.
+            // Or we are asked to save anyway.
+            if (inactivityTimeMs >= IdleSaveDurationMs ||
+                timeSinceLastSaveMs >= AutoSaveDurationMs)
             {
-                if (!sessionIt.second->isEditLocked())
-                    continue;
-
-                auto queue = sessionIt.second->getQueue();
-                if (queue)
-                {
-                    queue->put("uno .uno:Save");
-                    sent = true;
-                    break;
-                }
+                sent = sendUnoSave();
             }
-
-            if (!sent)
-            {
-                Log::error("Failed to auto-save doc [" + _docKey + "]: No valid sessions.");
-            }
-
-            return sent;
         }
     }
 
-    return false;
-}
-
-bool DocumentBroker::waitSave(const size_t timeoutMs)
-{
-    std::unique_lock<std::mutex> lock(_saveMutex);
-
-    // Remeber the last save time, since this is the predicate.
-    const auto lastSaveTime = _lastSaveTime;
-
-    if (_saveCV.wait_for(lock, std::chrono::milliseconds(timeoutMs)) == std::cv_status::no_timeout)
+    if (sent && waitTimeoutMs > 0)
     {
-        return true;
+        // Remeber the last save time, since this is the predicate.
+        const auto lastSaveTime = _lastSaveTime;
+
+        if (_saveCV.wait_for(lock, std::chrono::milliseconds(waitTimeoutMs)) == std::cv_status::no_timeout)
+        {
+            return true;
+        }
+
+        return (lastSaveTime != _lastSaveTime);
     }
 
-    return (lastSaveTime != _lastSaveTime);
+    return sent;
+}
+
+bool DocumentBroker::sendUnoSave()
+{
+    Log::info("Autosave triggered for doc [" + _docKey + "].");
+    assert(!_mutex.try_lock());
+
+    // Save using session holding the edit-lock
+    for (auto& sessionIt: _sessions)
+    {
+        if (sessionIt.second->isEditLocked())
+        {
+            auto queue = sessionIt.second->getQueue();
+            if (queue)
+            {
+                queue->put("uno .uno:Save");
+                return true;
+            }
+        }
+    }
+
+    Log::error("Failed to auto-save doc [" + _docKey + "]: No valid sessions.");
+    return false;
 }
 
 std::string DocumentBroker::getJailRoot() const

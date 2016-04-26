@@ -314,7 +314,6 @@ void ChildProcessSession::disconnect()
         if (_multiView)
             _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-        //TODO: Handle saving to temp etc.
         _onUnload(getId());
 
         LOOLSession::disconnect();
