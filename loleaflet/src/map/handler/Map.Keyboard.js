@@ -174,7 +174,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	removeHooks: function () {
-		this._map.on('mousedown', this._onMouseDown, this);
+		this._map.off('mousedown', this._onMouseDown, this);
 		this._map.off('keydown keyup keypress', this._onKeyDown, this);
 		this._map.off('compositionend', this._onKeyDown, this);
 	},
