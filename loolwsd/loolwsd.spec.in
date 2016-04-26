@@ -31,9 +31,9 @@ Requires:       poco-crypto >= 1.7.1 poco-foundation >= 1.7.1 poco-json >= 1.7.1
 Requires:       atk avahi-glib avahi-libs bzip2-libs cairo cups-libs dbus-glib dbus-libs fontconfig freetype GConf2 gdk-pixbuf2 glib2 gnome-vfs2 graphite2 gstreamer gstreamer-plugins-base gtk2 harfbuzz libdrm libffi libICE libSM libuuid libX11 libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXi libXinerama libXrandr libXrender libxshmfence libXt libXxf86vm mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi pango pixman
 %else
 %if 0%{?suse_version}
-Requires:       libcap2 libpng12 libpcre1 libz1 %{?systemd_requires} %{fillup_prereq}
+Requires:       libcap2 libpng12-0 libpcre1 libz1 %{?systemd_requires} %{fillup_prereq}
 Requires:       libPocoCrypto42 >= 1.7.1 libPocoFoundation42 >= 1.7.1 libPocoJSON42 >= 1.7.1 libPocoNet42 >= 1.7.1 libPocoNetSSL42 >= 1.7.1 libPocoUtil42 >= 1.7.1 libPocoXML42 >= 1.7.1
-Requires:       Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig krb5 libatk-1_0-0 libavahi-client3 libavahi-common3 libavahi-glib1 libbz2-1 libcairo2 libcom_err2 libdbus libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgraphite2 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libkeyutils1 liblzma5 libpixman-1-0 libpng16-16 libuuid1 libxml2
+Requires:       Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig krb5 libatk-1_0-0 libavahi-client3 libavahi-common3 libavahi-glib1 libbz2-1 libcairo2 libcom_err2 libdbus-1-3 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgraphite2-3 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libkeyutils1 liblzma5 libpixman-1-0 libpng16-16 libuuid1 libxml2
 %endif
 %endif
 Provides:       loleaflet = 1.5.8
