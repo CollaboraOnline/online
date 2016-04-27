@@ -420,6 +420,14 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
     return true;
 }
 
+void MasterProcessSession::setEditLock(const bool value)
+{
+    // Update the sate and forward to child.
+    _bEditLock = value;
+    const auto msg = std::string("editlock: ") + (value ? "1" : "0");
+    forwardToPeer(msg.data(), msg.size());
+}
+
 bool MasterProcessSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
 {
     std::string command;

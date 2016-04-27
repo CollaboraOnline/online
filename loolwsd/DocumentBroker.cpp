@@ -269,19 +269,13 @@ std::string DocumentBroker::getJailRoot() const
 
 void DocumentBroker::takeEditLock(const std::string& id)
 {
+    Log::debug("Session " + id + " taking the editing lock.");
     std::lock_guard<std::mutex> lock(_mutex);
+
+    // Forward to all children.
     for (auto& it: _sessions)
     {
-        if (it.first != id)
-        {
-            it.second->setEditLock(false);
-            it.second->sendTextFrame("editlock: 0");
-        }
-        else
-        {
-            it.second->setEditLock(true);
-            it.second->sendTextFrame("editlock: 1");
-        }
+        it.second->setEditLock(it.first == id);
     }
 }
 
@@ -304,8 +298,8 @@ size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session
 
     if (_sessions.size() == 1)
     {
-        session->setEditLock(true);
-        session->sendTextFrame("editlock: 1");
+        Log::debug("Giving editing lock to the first session [" + id + "].");
+        _sessions.begin()->second->markEditLock(true);
     }
 
     return _sessions.size();
@@ -336,7 +330,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
     if (it != _sessions.end())
     {
         const auto haveEditLock = it->second->isEditLocked();
-        it->second->setEditLock(false);
+        it->second->markEditLock(false);
         _sessions.erase(it);
 
         if (haveEditLock)
@@ -346,7 +340,6 @@ size_t DocumentBroker::removeSession(const std::string& id)
             if (it != _sessions.end())
             {
                 it->second->setEditLock(true);
-                it->second->sendTextFrame("editlock: 1");
             }
         }
     }

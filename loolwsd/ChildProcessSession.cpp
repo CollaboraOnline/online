@@ -456,7 +456,8 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                tokens[0] == "resetselection" ||
                tokens[0] == "saveas" ||
                tokens[0] == "useractive" ||
-               tokens[0] == "userinactive");
+               tokens[0] == "userinactive" ||
+               tokens[0] == "editlock:");
 
         {
             std::unique_lock<std::recursive_mutex> lock(Mutex);
@@ -533,6 +534,18 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "userinactive")
         {
             setIsActive(false);
+        }
+        else if (tokens[0] == "editlock:")
+        {
+            // Nothing for us to do but to let the
+            // client know about the edit lock state.
+            // Yes, this is echoed back because it's better
+            // to do this on each child's queue and thread
+            // than for WSD to potentially stall while notifying
+            // each client with the edit lock state.
+            Log::trace("Echoing back [" + firstLine + "].");
+            sendTextFrame(firstLine);
+            return true;
         }
         else
         {
