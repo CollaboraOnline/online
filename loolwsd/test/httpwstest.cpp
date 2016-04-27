@@ -71,6 +71,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
     CPPUNIT_TEST(testInsertDelete);
+    CPPUNIT_TEST(testClientPartImpress);
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
 #endif
@@ -98,6 +99,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testPasswordProtectedDocumentWithCorrectPassword();
     void testPasswordProtectedDocumentWithCorrectPasswordAgain();
     void testInsertDelete();
+    void testClientPartImpress();
     void testSimultaneousTilesRenderedJustOnce();
     void testNoExtraLoolKitsLeft();
 
@@ -114,6 +116,14 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                             const std::string& prefix,
                             std::string& response,
                             const bool isLine);
+
+    void requestTiles(Poco::Net::WebSocket& socket,
+                      const int part,
+                      const int docWidth,
+                      const int docHeight);
+
+    void getTileMessage(Poco::Net::WebSocket& ws,
+                        std::string& tile);
 
     void getPartHashCodes(const std::string response,
                           std::vector<std::string>& parts);
@@ -1022,6 +1032,103 @@ void HTTPWSTest::testInsertDelete()
     }
 }
 
+void HTTPWSTest::testClientPartImpress()
+{
+    try
+    {
+        const std::string current = "current=";
+        const std::string height = "height=";
+        const std::string parts = "parts=";
+        const std::string type = "type=";
+        const std::string width = "width=";
+
+        int currentPart = -1;
+        int totalParts = 0;
+        int docHeight = 0;
+        int docWidth = 0;
+
+        std::string response;
+        std::string text;
+
+        std::vector<std::string> partHashs;
+
+        // Load a document
+        const std::string documentPath = Util::getTempFilePath(TDOC, "setclientpart.odp");
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket = *connectLOKit(request, _response);
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        // check total slides 10
+        getResponseMessage(socket, "status:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+        {
+            std::cout << "status: " << response << std::endl;
+            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+
+            // Expected format is something like 'type= parts= current= width= height='.
+            text = tokens[0].substr(type.size());
+            totalParts = std::stoi(tokens[1].substr(parts.size()));
+            currentPart = std::stoi(tokens[2].substr(current.size()));
+            docWidth = std::stoi(tokens[3].substr(width.size()));
+            docHeight = std::stoi(tokens[4].substr(height.size()));
+            CPPUNIT_ASSERT_EQUAL(std::string("presentation"), text);
+            CPPUNIT_ASSERT_EQUAL(10, totalParts);
+            CPPUNIT_ASSERT(currentPart > -1);
+            CPPUNIT_ASSERT(docWidth > 0);
+            CPPUNIT_ASSERT(docHeight > 0);
+        }
+
+        // first full invalidation
+        getResponseMessage(socket, "invalidatetiles:", response, true);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+        {
+            Poco::StringTokenizer tokens(response, ":", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), tokens[0]);
+        }
+
+        // request tiles
+        requestTiles(socket, currentPart, docWidth, docHeight);
+
+        // random setclientpart
+        std::srand(std::time(0));
+        std::vector<int> vParts = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        std::random_shuffle (vParts.begin(), vParts.end());
+        for (auto it : vParts)
+        {
+            if (currentPart != it)
+            {
+                // change part
+                text = Poco::format("setclientpart part=%d", it);
+                std::cout << text << std::endl;
+                sendTextFrame(socket, text);
+
+                // get full invalidation
+                getResponseMessage(socket, "invalidatetiles:", response, true);
+                CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+                {
+                    Poco::StringTokenizer tokens(response, ":", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                    CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), tokens[0]);
+                }
+                requestTiles(socket, it, docWidth, docHeight);
+            }
+            currentPart = it;
+        }
+
+        socket.shutdown();
+        Util::removeFile(documentPath);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+
 void HTTPWSTest::testSimultaneousTilesRenderedJustOnce()
 {
     const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
@@ -1172,6 +1279,98 @@ void HTTPWSTest::getResponseMessage(Poco::Net::WebSocket& ws, const std::string&
     {
         std::cout << exc.message();
     }
+}
+
+void HTTPWSTest::requestTiles(Poco::Net::WebSocket& socket, const int part, const int docWidth, const int docHeight)
+{
+    // twips
+    const int tileSize = 3840;
+    // pixel
+    const int pixTileSize = 256;
+
+    int rows;
+    int cols;
+    int tileX;
+    int tileY;
+    int tileWidth;
+    int tileHeight;
+
+    std::string text;
+    std::string tile;
+
+    rows = docHeight / tileSize;
+    cols = docWidth / tileSize;
+    for (int itRow = 0; itRow < rows; ++itRow)
+    {
+        for (int itCol = 0; itCol < cols; ++itCol)
+        {
+            tileWidth = tileSize;
+            tileHeight = tileSize;
+            tileX = tileSize * itCol;
+            tileY = tileSize * itRow;
+            text = Poco::format("tile part=%d width=%d height=%d tileposx=%d tileposy=%d tilewidth=%d tileheight=%d",
+                    part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
+
+            sendTextFrame(socket, text);
+            getTileMessage(socket, tile);
+            // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
+            Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
+            CPPUNIT_ASSERT_EQUAL(part, std::stoi(tokens[1].substr(std::string("part=").size())));
+            CPPUNIT_ASSERT_EQUAL(pixTileSize, std::stoi(tokens[2].substr(std::string("width=").size())));
+            CPPUNIT_ASSERT_EQUAL(pixTileSize, std::stoi(tokens[3].substr(std::string("height=").size())));
+            CPPUNIT_ASSERT_EQUAL(tileX, std::stoi(tokens[4].substr(std::string("tileposx=").size())));
+            CPPUNIT_ASSERT_EQUAL(tileY, std::stoi(tokens[5].substr(std::string("tileposy=").size())));
+            CPPUNIT_ASSERT_EQUAL(tileWidth, std::stoi(tokens[6].substr(std::string("tileWidth=").size())));
+            CPPUNIT_ASSERT_EQUAL(tileHeight, std::stoi(tokens[7].substr(std::string("tileHeight=").size())));
+        }
+    }
+}
+
+void HTTPWSTest::getTileMessage(Poco::Net::WebSocket& ws, std::string& tile)
+{
+    int flags;
+    int bytes;
+    int size = 0;
+    int retries = 10;
+    const Poco::Timespan waitTime(1000000);
+
+    ws.setReceiveTimeout(0);
+    std::cout << "==> getTileMessage\n";
+    tile.clear();
+    do
+    {
+        std::vector<char> payload(READ_BUFFER_SIZE * 100);
+        if (retries > 0 && ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
+        {
+            bytes = ws.receiveFrame(payload.data(), payload.capacity(), flags);
+            payload.resize(bytes > 0 ? bytes : 0);
+            std::cout << "Got " << bytes << " bytes, flags: " << std::bitset<8>(flags) << '\n';
+            if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+            {
+                tile = LOOLProtocol::getFirstLine(payload.data(), bytes);
+                std::cout << "message: " << tile << '\n';
+                Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                if (tokens.count() == 2 &&
+                    tokens[0] == "nextmessage:" &&
+                    LOOLProtocol::getTokenInteger(tokens[1], "size", size) &&
+                    size > 0)
+                {
+                    payload.resize(size);
+                    bytes = ws.receiveFrame(payload.data(), size, flags);
+                    tile = LOOLProtocol::getFirstLine(payload.data(), bytes);
+                    break;
+                }
+            }
+            retries = 10;
+        }
+        else
+        {
+            std::cout << "Timeout\n";
+            --retries;
+        }
+    }
+    while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 }
 
 int countLoolKitProcesses()
