@@ -351,11 +351,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             dispatchChild();
         }
 
-        if (tokens[0] == "setclientpart")
-        {
-            _docBroker->tileCache().removeFile("status.txt");
-        }
-
         // Allow 'downloadas' for all kinds of views irrespective of editlock
         if (_kind == Kind::ToClient && !isEditLocked() && tokens[0] != "downloadas" &&
             tokens[0] != "userinactive" && tokens[0] != "useractive")

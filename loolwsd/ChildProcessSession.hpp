@@ -99,7 +99,6 @@ private:
     const std::string _jailId;
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
-    int _clientPart;
     std::map<int, std::string> _lastDocStates;
     std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> _onLoad;
     std::function<void(const std::string&)> _onUnload;

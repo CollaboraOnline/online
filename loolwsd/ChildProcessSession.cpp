@@ -284,7 +284,6 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
     _viewId(0),
-    _clientPart(0),
     _onLoad(onLoad),
     _onUnload(onUnload),
     _callbackWorker(new CallbackWorker(_callbackQueue, *this))
@@ -459,18 +458,6 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                tokens[0] == "userinactive" ||
                tokens[0] == "editlock:");
 
-        {
-            std::unique_lock<std::recursive_mutex> lock(Mutex);
-
-            if (_multiView)
-                _loKitDocument->pClass->setView(_loKitDocument, _viewId);
-
-            if (_docType != "text" && _loKitDocument->pClass->getPart(_loKitDocument) != _clientPart)
-            {
-                _loKitDocument->pClass->setPart(_loKitDocument, _clientPart);
-            }
-        }
-
         if (tokens[0] == "clientzoom")
         {
             return clientZoom(buffer, length, tokens);
@@ -593,7 +580,6 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
 
     if (_docType != "text" && part != -1)
     {
-        _clientPart = part;
         _loKitDocument->pClass->setPart(_loKitDocument, part);
     }
 
@@ -1345,11 +1331,25 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
 
 bool ChildProcessSession::setClientPart(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
+    int part;
     if (tokens.count() < 2 ||
-        !getTokenInteger(tokens[1], "part", _clientPart))
+        !getTokenInteger(tokens[1], "part", part))
     {
+        sendTextFrame("error: cmd=setclientpart kind=invalid");
         return false;
     }
+
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
+
+    if (part == _loKitDocument->pClass->getPart(_loKitDocument))
+        return true;
+
+    if (_multiView)
+        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+
+    _loKitDocument->pClass->setPart(_loKitDocument, part);
+    // invalidate all
+    loKitCallback(LOK_CALLBACK_INVALIDATE_TILES, std::string("EMPTY").c_str());
     return true;
 }
 
