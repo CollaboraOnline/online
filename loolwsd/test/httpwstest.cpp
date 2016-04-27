@@ -72,6 +72,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
     CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testClientPartImpress);
+    CPPUNIT_TEST(testClientPartCalc);
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
 #endif
@@ -100,6 +101,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testPasswordProtectedDocumentWithCorrectPasswordAgain();
     void testInsertDelete();
     void testClientPartImpress();
+    void testClientPartCalc();
     void testSimultaneousTilesRenderedJustOnce();
     void testNoExtraLoolKitsLeft();
 
@@ -116,6 +118,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                             const std::string& prefix,
                             std::string& response,
                             const bool isLine);
+
+    void checkTiles(Poco::Net::WebSocket& socket,
+                    const std::string& type);
 
     void requestTiles(Poco::Net::WebSocket& socket,
                       const int part,
@@ -1029,22 +1034,6 @@ void HTTPWSTest::testClientPartImpress()
 {
     try
     {
-        const std::string current = "current=";
-        const std::string height = "height=";
-        const std::string parts = "parts=";
-        const std::string type = "type=";
-        const std::string width = "width=";
-
-        int currentPart = -1;
-        int totalParts = 0;
-        int docHeight = 0;
-        int docWidth = 0;
-
-        std::string response;
-        std::string text;
-
-        std::vector<std::string> partHashs;
-
         // Load a document
         const std::string documentPath = Util::getTempFilePath(TDOC, "setclientpart.odp");
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
@@ -1055,62 +1044,7 @@ void HTTPWSTest::testClientPartImpress()
         sendTextFrame(socket, "load url=" + documentURL);
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
-        // check total slides 10
-        getResponseMessage(socket, "status:", response, false);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        {
-            std::cout << "status: " << response << std::endl;
-            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
-
-            // Expected format is something like 'type= parts= current= width= height='.
-            text = tokens[0].substr(type.size());
-            totalParts = std::stoi(tokens[1].substr(parts.size()));
-            currentPart = std::stoi(tokens[2].substr(current.size()));
-            docWidth = std::stoi(tokens[3].substr(width.size()));
-            docHeight = std::stoi(tokens[4].substr(height.size()));
-            CPPUNIT_ASSERT_EQUAL(std::string("presentation"), text);
-            CPPUNIT_ASSERT_EQUAL(10, totalParts);
-            CPPUNIT_ASSERT(currentPart > -1);
-            CPPUNIT_ASSERT(docWidth > 0);
-            CPPUNIT_ASSERT(docHeight > 0);
-        }
-
-        // first full invalidation
-        getResponseMessage(socket, "invalidatetiles:", response, true);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
-        {
-            Poco::StringTokenizer tokens(response, ":", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), tokens[0]);
-        }
-
-        // request tiles
-        requestTiles(socket, currentPart, docWidth, docHeight);
-
-        // random setclientpart
-        std::srand(std::time(0));
-        std::vector<int> vParts = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        std::random_shuffle (vParts.begin(), vParts.end());
-        for (auto it : vParts)
-        {
-            if (currentPart != it)
-            {
-                // change part
-                text = Poco::format("setclientpart part=%d", it);
-                std::cout << text << std::endl;
-                sendTextFrame(socket, text);
-
-                // get full invalidation
-                getResponseMessage(socket, "invalidatetiles:", response, true);
-                CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
-                {
-                    Poco::StringTokenizer tokens(response, ":", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                    CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), tokens[0]);
-                }
-                requestTiles(socket, it, docWidth, docHeight);
-            }
-            currentPart = it;
-        }
+        checkTiles(socket, "presentation");
 
         socket.shutdown();
         Util::removeFile(documentPath);
@@ -1121,6 +1055,30 @@ void HTTPWSTest::testClientPartImpress()
     }
 }
 
+void HTTPWSTest::testClientPartCalc()
+{
+    try
+    {
+        // Load a document
+        const std::string documentPath = Util::getTempFilePath(TDOC, "setclientpart.ods");
+        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket = *connectLOKit(request, _response);
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        checkTiles(socket, "spreadsheet");
+
+        socket.shutdown();
+        Util::removeFile(documentPath);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
 
 void HTTPWSTest::testSimultaneousTilesRenderedJustOnce()
 {
@@ -1273,6 +1231,84 @@ void HTTPWSTest::getResponseMessage(Poco::Net::WebSocket& ws, const std::string&
         std::cout << exc.message();
     }
 }
+
+void HTTPWSTest::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType)
+{
+    const std::string current = "current=";
+    const std::string height = "height=";
+    const std::string parts = "parts=";
+    const std::string type = "type=";
+    const std::string width = "width=";
+
+    int currentPart = -1;
+    int totalParts = 0;
+    int docHeight = 0;
+    int docWidth = 0;
+
+    std::string response;
+    std::string text;
+
+    // check total slides 10
+    getResponseMessage(socket, "status:", response, false);
+    CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+    {
+        std::cout << "status: " << response << std::endl;
+        Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+
+        // Expected format is something like 'type= parts= current= width= height='.
+        text = tokens[0].substr(type.size());
+        totalParts = std::stoi(tokens[1].substr(parts.size()));
+        currentPart = std::stoi(tokens[2].substr(current.size()));
+        docWidth = std::stoi(tokens[3].substr(width.size()));
+        docHeight = std::stoi(tokens[4].substr(height.size()));
+        CPPUNIT_ASSERT_EQUAL(docType, text);
+        CPPUNIT_ASSERT_EQUAL(10, totalParts);
+        CPPUNIT_ASSERT(currentPart > -1);
+        CPPUNIT_ASSERT(docWidth > 0);
+        CPPUNIT_ASSERT(docHeight > 0);
+    }
+
+    if (docType == "presentation")
+    {
+        // first full invalidation
+        getResponseMessage(socket, "invalidatetiles:", response, true);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+        {
+            Poco::StringTokenizer tokens(response, ":", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), tokens[0]);
+        }
+
+        // request tiles
+        requestTiles(socket, currentPart, docWidth, docHeight);
+    }
+
+    // random setclientpart
+    std::srand(std::time(0));
+    std::vector<int> vParts = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::random_shuffle (vParts.begin(), vParts.end());
+    for (auto it : vParts)
+    {
+        if (currentPart != it)
+        {
+            // change part
+            text = Poco::format("setclientpart part=%d", it);
+            std::cout << text << std::endl;
+            sendTextFrame(socket, text);
+
+            // get full invalidation
+            getResponseMessage(socket, "invalidatetiles:", response, true);
+            CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+            {
+                Poco::StringTokenizer tokens(response, ":", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), tokens[0]);
+            }
+            requestTiles(socket, it, docWidth, docHeight);
+        }
+        currentPart = it;
+    }
+}
+
 
 void HTTPWSTest::requestTiles(Poco::Net::WebSocket& socket, const int part, const int docWidth, const int docHeight)
 {
