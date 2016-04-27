@@ -663,7 +663,6 @@ bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
     }
 
     sendTextFrame(status);
-
     return true;
 }
 

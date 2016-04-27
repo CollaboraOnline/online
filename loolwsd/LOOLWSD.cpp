@@ -464,6 +464,7 @@ private:
 
         // indicator to the client that document broker is searching
         std::string status("statusindicator: find");
+        Log::trace("Sending to Client [" + status + "].");
         ws->sendFrame(status.data(), (int) status.size());
 
         // Remove the leading '/' in the GET URL.
@@ -573,6 +574,7 @@ private:
 
             // indicator to a client that is waiting to connect to lokit process
             status = "statusindicator: connect";
+            Log::trace("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), (int) status.size());
 
             // Wait until the client has connected with a prison socket.
@@ -581,6 +583,7 @@ private:
             // Let messages flow
 
             status = "statusindicator: ready";
+            Log::trace("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), (int) status.size());
 
             QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
