@@ -123,7 +123,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._documentInfo = textMsg;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
-			this._map._socket.sendMessage('setclientpart part=' + this._selectedPart);
 			this._resetPreFetching(true);
 			this._update();
 			if (this._preFetchPart !== this._selectedPart) {

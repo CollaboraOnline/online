@@ -166,7 +166,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 				this._updateMaxBounds(true);
 			}
 			this._documentInfo = textMsg;
-			this._map._socket.sendMessage('setclientpart part=' + this._selectedPart);
 			var partNames = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
 			partNames = partNames.slice(partNames.length - this._parts);
