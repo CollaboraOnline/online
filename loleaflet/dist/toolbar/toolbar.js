@@ -879,11 +879,14 @@ map.on('editlock', function (e) {
 		toolbar.uncheck('takeedit');
 		toolbar.enable('takeedit');
 		toolbar.set('takeedit', {hint: _('Take edit lock (others can only view)')});
-		$('#takeeditlabel')
-			.w2tag('You are viewing now')
-			.html('VIEWING');
+		$('#takeeditlabel').html('VIEWING');
+		$('#tb_toolbar-down_item_takeedit')
+			.w2overlay({
+				html: '<div>You are viewing now.<br/>Click to take edit</div>',
+				style: 'padding: 5px'
+			});
 		setTimeout(function() {
-			$('#takeeditlabel').w2tag('');
+			$('#tb_toolbar-down_item_takeedit').w2overlay('');
 		}, 3000);
 	}
 
@@ -898,13 +901,16 @@ map.on('editlock', function (e) {
 	});
 });
 
-map.on('mousedown keypress', function(e) {
+map.on('mouseup keypress', function(e) {
 	if (!map._editlock) {
-		$('#takeeditlabel')
-			.w2tag('Click to take edit')
-			.html('VIEWING');
+		$('#takeeditlabel').html('VIEWING');
+		$('#tb_toolbar-down_item_takeedit')
+			.w2overlay({
+				html: '<div>You are viewing now.<br/>Click to take edit</div>',
+				style: 'padding: 5px'
+			});
 		setTimeout(function() {
-			$('#takeeditlabel').w2tag('');
+			$('#tb_toolbar-down_item_takeedit').w2overlay('');
 		}, 3000);
 	}
 });
