@@ -839,7 +839,7 @@ private:
 };
 
 namespace {
-    void symlinkPathToJail(const Path jailPath, const std::string &loTemplate,
+    void symlinkPathToJail(const Path& jailPath, const std::string &loTemplate,
                            const std::string &loSubPath)
     {
         Path symlinkSource(jailPath, Path(loTemplate.substr(1)));

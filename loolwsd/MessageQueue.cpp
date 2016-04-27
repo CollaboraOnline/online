@@ -37,7 +37,7 @@ void MessageQueue::clear()
     clear_impl();
 }
 
-void MessageQueue::remove_if(std::function<bool(const Payload&)> pred)
+void MessageQueue::remove_if(const std::function<bool(const Payload&)>& pred)
 {
     std::unique_lock<std::mutex> lock(_mutex);
     std::remove_if(_queue.begin(), _queue.end(), pred);

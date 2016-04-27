@@ -92,7 +92,7 @@ public:
 
     void run() override
     {
-        for (auto i : _files)
+        for (const auto& i : _files)
             convertFile(i);
     }
 

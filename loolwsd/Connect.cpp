@@ -211,7 +211,7 @@ protected:
                 }
                 break;
             }
-            else if (line.find("#") == 0)
+            else if (line.find('#') == 0)
             {
                 // Also comments can be useful in input files for this program
             }

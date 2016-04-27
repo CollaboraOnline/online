@@ -46,7 +46,7 @@ public:
     void clear();
 
     /// Thread safe remove_if.
-    void remove_if(std::function<bool(const Payload&)> pred);
+    void remove_if(const std::function<bool(const Payload&)>& pred);
 
 private:
     std::mutex _mutex;

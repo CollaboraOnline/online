@@ -335,7 +335,7 @@ void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int 
 
     Log::debug("Sending tile message also to subscribers");
 
-    for (auto i: tileBeingRendered->_subscribers)
+    for (const auto& i: tileBeingRendered->_subscribers)
     {
         auto subscriber = i.lock();
         if (subscriber)

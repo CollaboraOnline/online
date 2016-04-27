@@ -23,13 +23,13 @@ namespace IoUtil
 {
     /// Synchronously process WebSocket requests and dispatch to handler.
     //. Handler returns false to end.
-    void SocketProcessor(std::shared_ptr<Poco::Net::WebSocket> ws,
-                         std::function<bool(const std::vector<char>&)> handler,
-                         std::function<void()> closeFrame,
-                         std::function<bool()> stopPredicate);
+    void SocketProcessor(const std::shared_ptr<Poco::Net::WebSocket>& ws,
+                         const std::function<bool(const std::vector<char>&)>& handler,
+                         const std::function<void()>& closeFrame,
+                         const std::function<bool()>& stopPredicate);
 
     /// Call WebSocket::shutdown() ignoring Poco::IOException.
-    void shutdownWebSocket(std::shared_ptr<Poco::Net::WebSocket> ws);
+    void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws);
 
     ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size);
     inline
@@ -55,7 +55,7 @@ namespace IoUtil
         /// Returns 0 for timeout, <0 for error, and >0 on success.
         /// On success, line will contain the read message.
         int readLine(std::string& line,
-                     std::function<bool()> stopPredicate);
+                     const std::function<bool()>& stopPredicate);
 
     private:
         const std::string _name;
