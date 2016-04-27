@@ -9,6 +9,7 @@
 
 #include "config.h"
 
+#include <algorithm>
 #include <regex>
 
 #include <Poco/DirectoryIterator.h>
@@ -232,7 +233,7 @@ void HTTPWSTest::testHandShake()
         {
             // After document broker finish searching it sends editlok
             // it should be at end on handshake
-            CPPUNIT_ASSERT_EQUAL(prefixEdit, std::string(buffer, bytes));
+            CPPUNIT_ASSERT_EQUAL(prefixEdit, std::string(buffer, std::min((std::string::size_type)bytes, prefixEdit.size())));
             CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
 
             payload = "statusindicator: connect";
