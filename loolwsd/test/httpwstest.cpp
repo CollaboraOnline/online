@@ -228,7 +228,6 @@ void HTTPWSTest::testHandShake()
 #endif
         Poco::Net::WebSocket socket(session, request, response);
 
-        const std::string prefixEdit = "editlock:";
         const char* fail = "error:";
         std::string payload("statusindicator: find");
 
@@ -241,13 +240,7 @@ void HTTPWSTest::testHandShake()
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
         if (!std::strstr(buffer, fail))
         {
-            // After document broker finish searching it sends editlok
-            // it should be at end on handshake
-            CPPUNIT_ASSERT_EQUAL(prefixEdit, std::string(buffer, std::min((std::string::size_type)bytes, prefixEdit.size())));
-            CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
-
             payload = "statusindicator: connect";
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
             CPPUNIT_ASSERT_EQUAL(payload, std::string(buffer, bytes));
             CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
 
