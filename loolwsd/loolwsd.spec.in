@@ -25,15 +25,21 @@ BuildRequires:  libcap-progs systemd-rpm-macros
 
 Requires:       collaboraoffice5.0 collaboraoffice5.0-en-US collaboraoffice5.0-ure collaboraofficebasis5.0-core collaboraofficebasis5.0-writer collaboraofficebasis5.0-impress collaboraofficebasis5.0-graphicfilter collaboraofficebasis5.0-en-US collaboraofficebasis5.0-calc collaboraofficebasis5.0-en-US-res collaboraofficebasis5.0-en-US-calc collaboraofficebasis5.0-ooofonts collaboraofficebasis5.0-images collaboraofficebasis5.0-filter-data collaboraofficebasis5.0-draw collaboraofficebasis5.0-base collaboraofficebasis5.0-en-US-writer collaboraofficebasis5.0-en-US-math collaboraofficebasis5.0-en-US-base
 Requires:       systemd
+Requires(post): coreutils grep sed
 %if 0%{?fedora} || 0%{?rhel} >= 7
+# loolwsd dependencies
 Requires:       expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssl-libs pcre xz-libs zlib
 Requires:       poco-crypto >= 1.7.1 poco-foundation >= 1.7.1 poco-json >= 1.7.1 poco-net >= 1.7.1 poco-netssl >= 1.7.1 poco-util >= 1.7.1 poco-xml >= 1.7.1
+# Collabora Office dependencies (unfortunately Collabora Office RPM packages does not have real dependencies)
 Requires:       atk avahi-glib avahi-libs bzip2-libs cairo cups-libs dbus-glib dbus-libs fontconfig freetype GConf2 gdk-pixbuf2 glib2 gnome-vfs2 graphite2 gstreamer gstreamer-plugins-base gtk2 harfbuzz libdrm libffi libICE libSM libuuid libX11 libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXi libXinerama libXrandr libXrender libxshmfence libXt libXxf86vm mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi pango pixman
 %else
 %if 0%{?suse_version}
-Requires:       libcap2 libpng12-0 libpcre1 libz1 %{?systemd_requires} %{fillup_prereq}
+# loolwsd dependencies
+Requires(post): libcap-progs
+Requires:       libcap2 libopenssl1_0_0 libpng12-0 libpcre1 libz1 %{?systemd_requires} %{fillup_prereq}
 Requires:       libPocoCrypto42 >= 1.7.1 libPocoFoundation42 >= 1.7.1 libPocoJSON42 >= 1.7.1 libPocoNet42 >= 1.7.1 libPocoNetSSL42 >= 1.7.1 libPocoUtil42 >= 1.7.1 libPocoXML42 >= 1.7.1
-Requires:       Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig krb5 libatk-1_0-0 libavahi-client3 libavahi-common3 libavahi-glib1 libbz2-1 libcairo2 libcom_err2 libdbus-1-3 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgraphite2-3 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libkeyutils1 liblzma5 libpixman-1-0 libpng16-16 libuuid1 libxml2
+# Collabora Office dependencies (unfortunately Collabora Office RPM packages does not have real dependencies)
+Requires:       Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig libatk-1_0-0 libavahi-client3 libavahi-common3 libavahi-glib1 libbz2-1 libcairo2 libcom_err2 libdbus-1-3 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgraphite2-3 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libkeyutils1 liblzma5 libpixman-1-0 libpng16-16 libuuid1 libxml2 libffi4 libgbm1 libICE6 libselinux1 libSM6 libwayland-client0 libwayland-server0 libX11-6 libX11-xcb1 libXau6 libxcb1 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-render0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libXdamage1 libXext6 libXfixes3 libXrender1 libxshmfence1 libXxf86vm1
 %endif
 %endif
 Provides:       loleaflet = 1.5.8
@@ -111,11 +117,11 @@ tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 %service_add_pre loolwsd.service
 %endif
 
-%post
-setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
-
 getent group lool >/dev/null || groupadd -r lool
 getent passwd lool >/dev/null || useradd -g lool -r lool
+
+%post
+setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
 
 mkdir -p /var/cache/loolwsd && chown lool:lool /var/cache/loolwsd
 rm -rf /var/cache/loolwsd/*
@@ -165,4 +171,3 @@ su lool -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >
 - added the cronjob
 * Tue May 19 2015 Tor Lillqvist
 - Initial RPM release
-
