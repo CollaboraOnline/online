@@ -4,7 +4,19 @@
 
 /* global $ vex _ */
 L.Control.Tabs = L.Control.extend({
-	onAdd: function (map) {
+	onAdd: function(map) {
+		map.on('updatepermission', this._onUpdatePermission, this);
+		this._initalized = false;
+	},
+
+	_onUpdatePermission: function() {
+		if (this._map.getDocType() === 'spreadsheet' && !this._initialized) {
+			this._initialize();
+		}
+	},
+
+	_initialize: function () {
+		this._initialized = true;
 		this._tabsInitialized = false;
 		this._spreadsheetTabs = {};
 		var docContainer = map.options.documentContainer;
