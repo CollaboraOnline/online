@@ -119,6 +119,10 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                             std::string& response,
                             const bool isLine);
 
+    static
+    void SocketProcessor(const std::shared_ptr<Poco::Net::WebSocket>& socket,
+                         std::function<bool(const std::string& msg)> handler);
+
     void checkTiles(Poco::Net::WebSocket& socket,
                     const std::string& type);
 
@@ -136,6 +140,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     std::shared_ptr<Poco::Net::WebSocket>
     connectLOKit(Poco::Net::HTTPRequest& request,
                  Poco::Net::HTTPResponse& response);
+
+    std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const std::string& documentURL);
 
 public:
     HTTPWSTest()
@@ -347,38 +353,28 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
     try
     {
         // Load a document and get its status.
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        sendTextFrame(socket, "status");
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+        auto socket = loadDocAndGetSocket(documentURL);
 
         std::string status;
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
-                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
-                const std::string prefix = "status: ";
-                if (line.find(prefix) == 0)
+        std::string editlock;
+        SocketProcessor(socket, [&](const std::string& msg)
                 {
-                    status = line.substr(prefix.length());
-                    // Might be too strict, consider something flexible instread.
-                    CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
-                    break;
-                }
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+                    const std::string prefix = "status: ";
+                    if (msg.find(prefix) == 0)
+                    {
+                        status = msg.substr(prefix.length());
+                        return false;
+                    }
 
-        socket.shutdown();
+                    return true;
+                });
+
+        // Might be too strict, consider something flexible instread.
+        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
+        // First session always gets the lock.
+        CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), editlock);
+
+        socket->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
@@ -1558,6 +1554,51 @@ HTTPWSTest::connectLOKit(Poco::Net::HTTPRequest& request,
         throw Poco::Net::WebSocketException("Failed to connect to lokit process", Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY);
 
     return ws;
+}
+
+std::shared_ptr<Poco::Net::WebSocket> HTTPWSTest::loadDocAndGetSocket(const std::string& documentURL)
+{
+    try
+    {
+        // Load a document and get its status.
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        auto socket = connectLOKit(request, _response);
+
+        sendTextFrame(*socket, "load url=" + documentURL);
+        sendTextFrame(*socket, "status");
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket));
+
+        return socket;
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+
+    // Really couldn't reach here, but the compiler doesn't know any better.
+    return nullptr;
+}
+
+
+void HTTPWSTest::SocketProcessor(const std::shared_ptr<Poco::Net::WebSocket>& socket, std::function<bool(const std::string& msg)> handler)
+{
+    int flags;
+    int n;
+    do
+    {
+        char buffer[READ_BUFFER_SIZE];
+        n = socket->receiveFrame(buffer, sizeof(buffer), flags);
+        std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
+        if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+        {
+            std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
+            if (!handler(std::string(buffer, n)))
+            {
+                break;
+            }
+        }
+    }
+    while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
