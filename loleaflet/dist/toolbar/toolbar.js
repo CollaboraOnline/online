@@ -170,6 +170,9 @@ var formatButtons = ['undo', 'redo', 'save',
 					 'fontcolor', 'backcolor', 'bullet', 'numbering', 'alignleft', 'alignhorizontal', 'alignright', 'alignblock',
 					 'incrementindent', 'decrementindent', 'insertgraphic'];
 
+var takeEditPopupMessage = '<div>You are viewing now.<br/>Click here to take edit</div>';
+var takeEditPopupTimeout = null;
+
 function onSearch(e) {
 	if (e.keyCode === 13) {
 		var toolbar = w2ui['toolbar-down'];
@@ -882,11 +885,14 @@ map.on('editlock', function (e) {
 		$('#takeeditlabel').html('VIEWING');
 		$('#tb_toolbar-down_item_takeedit')
 			.w2overlay({
-				html: '<div>You are viewing now.<br/>Click to take edit</div>',
+				html: takeEditPopupMessage,
 				style: 'padding: 5px'
 			});
-		setTimeout(function() {
+		clearTimeout(takeEditPopupTimeout);
+		takeEditPopupTimeout = setTimeout(function() {
 			$('#tb_toolbar-down_item_takeedit').w2overlay('');
+			clearTimeout(takeEditPopupTimeout);
+			takeEditPopupTimeout = null;
 		}, 3000);
 	}
 
@@ -906,11 +912,14 @@ map.on('mouseup keypress', function(e) {
 		$('#takeeditlabel').html('VIEWING');
 		$('#tb_toolbar-down_item_takeedit')
 			.w2overlay({
-				html: '<div>You are viewing now.<br/>Click to take edit</div>',
+				html: takeEditPopupMessage,
 				style: 'padding: 5px'
 			});
-		setTimeout(function() {
+		clearTimeout(takeEditPopupTimeout);
+		takeEditPopupTimeout = setTimeout(function() {
 			$('#tb_toolbar-down_item_takeedit').w2overlay('');
+			clearTimeout(takeEditPopupTimeout);
+			takeEditPopupTimeout = null;
 		}, 3000);
 	}
 });
