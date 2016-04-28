@@ -202,7 +202,10 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             {
                 _docBroker->tileCache().saveTextFile(std::string(buffer, length), "status.txt");
 
-                // let clients know if they hold the edit lock
+                // Forward the status response to the client.
+                forwardToPeer(buffer, length);
+
+                // And let clients know if they hold the edit lock.
                 std::string message = "editlock: ";
                 message += std::to_string(peer->isEditLocked());
                 Log::debug("Forwarding [" + message + "] in response to status.");
@@ -397,13 +400,9 @@ bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, 
 bool MasterProcessSession::getStatus(const char *buffer, int length)
 {
     const std::string status = _docBroker->tileCache().getTextFile("status.txt");
-    if (status.size() > 0)
+    if (!status.empty())
     {
         sendTextFrame(status);
-        // let clients know if they hold the edit lock
-        std::string message = "editlock: ";
-        message += std::to_string(isEditLocked());
-        sendTextFrame(message);
         return true;
     }
 

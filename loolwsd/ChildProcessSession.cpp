@@ -587,6 +587,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     }
 
     // Respond by the document status, which has no arguments.
+    Log::debug("Sending status after load.");
     if (!getStatus(nullptr, 0))
         return false;
 
