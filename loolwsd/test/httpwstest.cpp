@@ -1071,7 +1071,7 @@ void HTTPWSTest::testClientPartCalc()
     {
         // Load a document
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
+        getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
