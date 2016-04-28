@@ -152,8 +152,15 @@ L.Socket = L.Class.extend({
 					message: msg,
 					input: '<input name="password" type="password" required />',
 					callback: L.bind(function(data) {
-						this._map._docPassword = data.password;
-						this.initialize(this._map);
+						if (data) {
+							this._map._docPassword = data.password;
+							this.initialize(this._map);
+						} else if (passwordType === 'to-modify') {
+							this._map._docPassword = '';
+							this.initialize(this._map);
+						} else {
+							this._map.hideBusy();
+						}
 					}, this)
 				});
 				return;
