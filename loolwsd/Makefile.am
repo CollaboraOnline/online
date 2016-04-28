@@ -49,7 +49,7 @@ loolwsd_SOURCES = Admin.cpp \
 
 noinst_PROGRAMS = connect \
                   lokitclient \
-		  loolforkit-nocaps
+                  loolforkit-nocaps
 
 connect_SOURCES = Connect.cpp \
                   Log.cpp \

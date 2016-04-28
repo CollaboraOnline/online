@@ -10,6 +10,9 @@
 #include "config.h"
 
 #include <algorithm>
+#include <condition_variable>
+#include <mutex>
+#include <thread>
 #include <regex>
 
 #include <Poco/DirectoryIterator.h>
@@ -71,6 +74,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
     CPPUNIT_TEST(testInsertDelete);
+    CPPUNIT_TEST(testEditLock);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
 #if ENABLE_DEBUG
@@ -104,6 +108,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testClientPartCalc();
     void testSimultaneousTilesRenderedJustOnce();
     void testNoExtraLoolKitsLeft();
+    void testEditLock();
 
     void loadDoc(const std::string& documentURL);
 
@@ -1128,6 +1133,123 @@ void HTTPWSTest::testSimultaneousTilesRenderedJustOnce()
 
     socket1.shutdown();
     socket2.shutdown();
+}
+
+void HTTPWSTest::testEditLock()
+{
+    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
+    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+    std::mutex mutex;
+    std::condition_variable cv;
+    volatile bool second_client_died = false;
+
+    // The first client loads the document and checks that it has the lock.
+    // It then waits until the lock is taken away.
+    std::thread first_client([&]()
+        {
+            try
+            {
+                std::cerr << "First client loading." << std::endl;
+                auto socket = loadDocAndGetSocket(documentURL);
+                std::string editlock1;
+                SocketProcessor("First", socket, [&](const std::string& msg)
+                        {
+                            if (msg.find("editlock") == 0)
+                            {
+                                if (editlock1.empty())
+                                {
+                                    std::cerr << "First client has the lock." << std::endl;
+                                    CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
+                                    editlock1 = msg;
+
+                                    // Initial condition met, connect second client.
+                                    std::cerr << "Starting second client." << std::endl;
+                                    cv.notify_one();
+                                }
+                                else if (editlock1 == "editlock: 1")
+                                {
+                                    if (second_client_died)
+                                    {
+                                        // We had lost the lock to the second client,
+                                        // but we should get it back once they die.
+                                        std::cerr << "First client is given the lock." << std::endl;
+                                        CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
+                                        return false; // Done!
+                                    }
+                                    else
+                                    {
+                                        // Normal broadcast when the second client joins.
+                                        std::cerr << "First client still has the lock." << std::endl;
+                                    }
+                                }
+                                else
+                                {
+                                    // Another client took the lock.
+                                    std::cerr << "First client lost the lock." << std::endl;
+                                    CPPUNIT_ASSERT_EQUAL(std::string("editlock: 0"), msg);
+                                }
+                            }
+
+                            return true;
+                        });
+
+                std::cerr << "First client out." << std::endl;
+                socket->shutdown();
+            }
+            catch (const Poco::Exception& exc)
+            {
+                CPPUNIT_FAIL(exc.displayText());
+            }
+        });
+
+    std::unique_lock<std::mutex> lock(mutex);
+    cv.wait(lock);
+
+    // The second client loads the document and checks that it has no lock.
+    // It then takes the lock and breaks when it gets it.
+    try
+    {
+        std::cerr << "Second client loading." << std::endl;
+        auto socket = loadDocAndGetSocket(documentURL);
+        std::string editlock1;
+        SocketProcessor("Second", socket, [&](const std::string& msg)
+                {
+                    if (msg.find("editlock") == 0)
+                    {
+                        if (editlock1.empty())
+                        {
+                            // We shouldn't have it.
+                            std::cerr << "Second client doesn't have the lock." << std::endl;
+                            CPPUNIT_ASSERT_EQUAL(std::string("editlock: 0"), msg);
+                            editlock1 = msg;
+
+                            // But we will take it.
+                            std::cerr << "Second client taking lock." << std::endl;
+                            sendTextFrame(*socket, "takeedit");
+                        }
+                        else
+                        {
+                            // Now it should be ours.
+                            std::cerr << "Second client took the lock." << std::endl;
+                            CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+        std::cerr << "Second client out." << std::endl;
+        socket->shutdown();
+        second_client_died = true;
+
+        first_client.join();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
 }
 
 void HTTPWSTest::testNoExtraLoolKitsLeft()

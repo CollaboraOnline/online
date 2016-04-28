@@ -10,7 +10,7 @@ noinst_LTLIBRARIES = \
         unit-admin.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
-AM_LDFLAGS = -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
+AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
 AM_CPPFLAGS = -pthread -I$(top_srcdir)
 
 test_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
