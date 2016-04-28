@@ -26,30 +26,43 @@
 #include <Common.hpp>
 #include <Util.hpp>
 
+#include "countloolkits.hpp"
 #include "httptestutils.hpp"
 
 /// Tests the HTTP GET API of loolwsd.
-class HTTPGetTest : public CPPUNIT_NS::TestFixture
+class HTTPServerTest : public CPPUNIT_NS::TestFixture
 {
-    CPPUNIT_TEST_SUITE(HTTPGetTest);
+    static int _initialLoolKitCount;
+
+    CPPUNIT_TEST_SUITE(HTTPServerTest);
+
+    // This should be the first test:
+    CPPUNIT_TEST(testCountHowManyLoolkits);
 
     CPPUNIT_TEST(testDiscovery);
-    CPPUNIT_TEST(testLOleaflet);
-    CPPUNIT_TEST(testParams);
-    CPPUNIT_TEST(testScripts);
-    CPPUNIT_TEST(testLinks);
+    CPPUNIT_TEST(testLoleafletGet);
+    CPPUNIT_TEST(testLoleafletPost);
+    CPPUNIT_TEST(testScriptsAndLinksGet);
+    CPPUNIT_TEST(testScriptsAndLinksPost);
+
+    // This should be the last test:
+    CPPUNIT_TEST(testNoExtraLoolKitsLeft);
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testCountHowManyLoolkits();
+
     void testDiscovery();
-    void testLOleaflet();
-    void testParams();
-    void testScripts();
-    void testLinks();
+    void testLoleafletGet();
+    void testLoleafletPost();
+    void testScriptsAndLinksGet();
+    void testScriptsAndLinksPost();
+
+    void testNoExtraLoolKitsLeft();
 
 #if ENABLE_SSL
 public:
-    HTTPGetTest()
+    HTTPServerTest()
     {
         Poco::Net::initializeSSL();
         // Just accept the certificate anyway for testing purposes
@@ -59,14 +72,22 @@ public:
         Poco::Net::SSLManager::instance().initializeClient(0, invalidCertHandler, sslContext);
     }
 
-    ~HTTPGetTest()
+    ~HTTPServerTest()
     {
         Poco::Net::uninitializeSSL();
     }
 #endif
 };
 
-void HTTPGetTest::testDiscovery()
+int HTTPServerTest::_initialLoolKitCount = 0;
+
+void HTTPServerTest::testCountHowManyLoolkits()
+{
+    _initialLoolKitCount = countLoolKitProcesses();
+    CPPUNIT_ASSERT(_initialLoolKitCount > 0);
+}
+
+void HTTPServerTest::testDiscovery()
 {
 #if ENABLE_SSL
     Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
@@ -85,26 +106,7 @@ void HTTPGetTest::testDiscovery()
     CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
 }
 
-void HTTPGetTest::testLOleaflet()
-{
-#if ENABLE_SSL
-    Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
-    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
-#else
-    Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
-    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
-#endif
-
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/loleaflet/dist/loleaflet.html");
-    session.sendRequest(request);
-
-    Poco::Net::HTTPResponse response;
-    session.receiveResponse(response);
-    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-    CPPUNIT_ASSERT_EQUAL(std::string("text/html"), response.getContentType());
-}
-
-void HTTPGetTest::testParams()
+void HTTPServerTest::testLoleafletGet()
 {
 #if ENABLE_SSL
     Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
@@ -121,6 +123,7 @@ void HTTPGetTest::testParams()
     Poco::Net::HTTPResponse response;
     std::istream& rs = session.receiveResponse(response);
     CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+    CPPUNIT_ASSERT_EQUAL(std::string("text/html"), response.getContentType());
 
     std::string html;
     Poco::StreamCopier::copyToString(rs, html);
@@ -130,7 +133,7 @@ void HTTPGetTest::testParams()
     CPPUNIT_ASSERT(html.find(std::string(LOOLWSD_VERSION)) != std::string::npos);
 }
 
-void HTTPGetTest::testScripts()
+void HTTPServerTest::testLoleafletPost()
 {
 #if ENABLE_SSL
     Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
@@ -139,6 +142,36 @@ void HTTPGetTest::testScripts()
     Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
     Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
 #endif
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/loleaflet/dist/loleaflet.html");
+    Poco::Net::HTMLForm form;
+    form.set("access_token", "2222222222");
+    form.prepareSubmit(request);
+    std::ostream& ostr = session.sendRequest(request);
+    form.write(ostr);
+
+    Poco::Net::HTTPResponse response;
+    std::istream& rs = session.receiveResponse(response);
+    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+
+    std::string html;
+    Poco::StreamCopier::copyToString(rs, html);
+
+    CPPUNIT_ASSERT(html.find(form["access_token"]) != std::string::npos);
+    CPPUNIT_ASSERT(html.find(uri.getHost()) != std::string::npos);
+    CPPUNIT_ASSERT(html.find(std::string(LOOLWSD_VERSION)) != std::string::npos);
+}
+
+void HTTPServerTest::testScriptsAndLinksGet()
+{
+#if ENABLE_SSL
+    Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
+#else
+    Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
+#endif
+
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/loleaflet/dist/loleaflet.html");
     session.sendRequest(request);
 
@@ -150,11 +183,13 @@ void HTTPGetTest::testScripts()
     Poco::StreamCopier::copyToString(rs, html);
 
     Poco::RegularExpression script("<script.*?src=\"(.*?)\"");
-
     httptest::assertHTTPFilesExist(uri, script, html, "application/javascript");
+
+    Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
+    httptest::assertHTTPFilesExist(uri, link, html);
 }
 
-void HTTPGetTest::testLinks()
+void HTTPServerTest::testScriptsAndLinksPost()
 {
 #if ENABLE_SSL
     Poco::URI uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
@@ -163,8 +198,11 @@ void HTTPGetTest::testLinks()
     Poco::URI uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
     Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
 #endif
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/loleaflet/dist/loleaflet.html");
-    session.sendRequest(request);
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/loleaflet/dist/loleaflet.html");
+    std::string body;
+    request.setContentLength((int) body.length());
+    session.sendRequest(request) << body;
 
     Poco::Net::HTTPResponse response;
     std::istream& rs = session.receiveResponse(response);
@@ -173,12 +211,20 @@ void HTTPGetTest::testLinks()
     std::string html;
     Poco::StreamCopier::copyToString(rs, html);
 
-    Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
-    Poco::RegularExpression::MatchVec matches;
+    Poco::RegularExpression script("<script.*?src=\"(.*?)\"");
+    httptest::assertHTTPFilesExist(uri, script, html, "application/javascript");
 
+    Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
     httptest::assertHTTPFilesExist(uri, link, html);
 }
 
-CPPUNIT_TEST_SUITE_REGISTRATION(HTTPGetTest);
+void HTTPServerTest::testNoExtraLoolKitsLeft()
+{
+    int countNow = countLoolKitProcesses();
+
+    CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
+}
+
+CPPUNIT_TEST_SUITE_REGISTRATION(HTTPServerTest);
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
