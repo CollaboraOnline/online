@@ -120,7 +120,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                             const bool isLine);
 
     static
-    void SocketProcessor(const std::shared_ptr<Poco::Net::WebSocket>& socket,
+    void SocketProcessor(std::string name,
+                         const std::shared_ptr<Poco::Net::WebSocket>& socket,
                          std::function<bool(const std::string& msg)> handler);
 
     void checkTiles(Poco::Net::WebSocket& socket,
@@ -357,7 +358,7 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
 
         std::string status;
         std::string editlock;
-        SocketProcessor(socket, [&](const std::string& msg)
+        SocketProcessor("", socket, [&](const std::string& msg)
                 {
                     const std::string prefix = "status: ";
                     if (msg.find(prefix) == 0)
@@ -467,6 +468,8 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket, "uno .uno:Delete");
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
 
+        std::cerr << "Closing connection after pasting." << std::endl;
+
         // Shutdown abruptly.
         socket.shutdown();
     }
@@ -477,7 +480,7 @@ void HTTPWSTest::testSaveOnDisconnect()
 
     // Allow time to save and destroy before we connect again.
     sleep(5);
-    std::cout << "Loading again." << std::endl;
+    std::cerr << "Loading again." << std::endl;
     try
     {
         // Load the same document and check that the last changes (pasted text) is saved.
@@ -1509,7 +1512,6 @@ HTTPWSTest::connectLOKit(Poco::Net::HTTPRequest& request,
     int retries = 3;
     bool ready = false;
     char buffer[READ_BUFFER_SIZE];
-    const std::string success("ready");
     std::shared_ptr<Poco::Net::WebSocket> ws;
 
     do
@@ -1519,6 +1521,7 @@ HTTPWSTest::connectLOKit(Poco::Net::HTTPRequest& request,
 #else
         Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
 #endif
+        std::cerr << "Connecting... ";
         ws = std::make_shared<Poco::Net::WebSocket>(session, request, response);
 
         do
@@ -1530,7 +1533,7 @@ HTTPWSTest::connectLOKit(Poco::Net::HTTPRequest& request,
                 {
                     const std::string message = LOOLProtocol::getFirstLine(buffer, received);
                     std::cerr << message << std::endl;
-                    if (message.find(success) != std::string::npos)
+                    if (message.find("ready") != std::string::npos)
                     {
                         ready = true;
                         break;
@@ -1539,11 +1542,7 @@ HTTPWSTest::connectLOKit(Poco::Net::HTTPRequest& request,
             }
             catch (const Poco::TimeoutException& exc)
             {
-                std::cout << exc.displayText();
-            }
-            catch(...)
-            {
-                throw;
+                std::cout << exc.displayText() << std::endl;
             }
         }
         while (received > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
@@ -1562,10 +1561,10 @@ std::shared_ptr<Poco::Net::WebSocket> HTTPWSTest::loadDocAndGetSocket(const std:
     {
         // Load a document and get its status.
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        auto socket = connectLOKit(request, _response);
+        Poco::Net::HTTPResponse response;
+        auto socket = connectLOKit(request, response);
 
         sendTextFrame(*socket, "load url=" + documentURL);
-        sendTextFrame(*socket, "status");
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket));
 
         return socket;
@@ -1580,22 +1579,32 @@ std::shared_ptr<Poco::Net::WebSocket> HTTPWSTest::loadDocAndGetSocket(const std:
 }
 
 
-void HTTPWSTest::SocketProcessor(const std::shared_ptr<Poco::Net::WebSocket>& socket, std::function<bool(const std::string& msg)> handler)
+void HTTPWSTest::SocketProcessor(std::string name,
+                                 const std::shared_ptr<Poco::Net::WebSocket>& socket,
+                                 std::function<bool(const std::string& msg)> handler)
 {
+    if (!name.empty())
+    {
+        name += ' ';
+    }
+
     int flags;
     int n;
     do
     {
         char buffer[READ_BUFFER_SIZE];
         n = socket->receiveFrame(buffer, sizeof(buffer), flags);
-        std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
-            std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
+            std::cout << name + "Got " << n << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
             if (!handler(std::string(buffer, n)))
             {
                 break;
             }
+        }
+        else
+        {
+            std::cerr << name + "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
