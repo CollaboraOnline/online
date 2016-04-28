@@ -169,6 +169,15 @@ public:
     void tearDown()
     {
     }
+
+protected:
+    void getDocumentPathAndURL(const char* document, std::string& documentPath, std::string& documentURL)
+    {
+        documentPath = Util::getTempFilePath(TDOC, document);
+        documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+
+        std::cerr << "Test file: " << documentPath << std::endl;
+    }
 };
 
 int HTTPWSTest::_initialLoolKitCount = 0;
@@ -221,8 +230,8 @@ void HTTPWSTest::testHandShake()
         int flags;
         char buffer[1024];
         // Load a document and get its status.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -298,8 +307,8 @@ void HTTPWSTest::testCloseAfterClose()
         char buffer[READ_BUFFER_SIZE];
 
         // Load a document and get its status.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -379,8 +388,8 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
 
 void HTTPWSTest::testLoad()
 {
-    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
     loadDoc(documentURL);
     Util::removeFile(documentPath);
 }
@@ -390,8 +399,8 @@ void HTTPWSTest::testBadLoad()
     try
     {
         // Load a document and get its status.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -434,8 +443,8 @@ void HTTPWSTest::testBadLoad()
 
 void HTTPWSTest::testReload()
 {
-    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
     for (auto i = 0; i < 3; ++i)
     {
         loadDoc(documentURL);
@@ -446,8 +455,8 @@ void HTTPWSTest::testReload()
 
 void HTTPWSTest::testSaveOnDisconnect()
 {
-    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
     try
     {
@@ -519,8 +528,8 @@ void HTTPWSTest::testSaveOnDisconnect()
 
 void HTTPWSTest::testReloadWhileDisconnecting()
 {
-    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
     int kitcount = -1;
     try
@@ -605,8 +614,8 @@ void HTTPWSTest::testExcelLoad()
     try
     {
         // Load a document and make it empty.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "timeline.xlsx");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("timeline.xlsx", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -653,8 +662,8 @@ void HTTPWSTest::testPaste()
     try
     {
         // Load a document and make it empty, then paste some text into it.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -708,8 +717,8 @@ void HTTPWSTest::testLargePaste()
     try
     {
         // Load a document and make it empty.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -760,8 +769,9 @@ void HTTPWSTest::testRenderingOptions()
     try
     {
         // Load a document and get its size.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hide-whitespace.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hide-whitespace.odt", documentPath, documentURL);
+
         const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -815,8 +825,8 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
 {
     try
     {
-        const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -851,8 +861,8 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
 {
     try
     {
-        const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -919,8 +929,8 @@ void HTTPWSTest::testInsertDelete()
         std::string response;
 
         // Load a document
-        const std::string documentPath = Util::getTempFilePath(TDOC, "insert-delete.odp");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("insert-delete.odp", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -1035,8 +1045,8 @@ void HTTPWSTest::testClientPartImpress()
     try
     {
         // Load a document
-        const std::string documentPath = Util::getTempFilePath(TDOC, "setclientpart.odp");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -1060,8 +1070,8 @@ void HTTPWSTest::testClientPartCalc()
     try
     {
         // Load a document
-        const std::string documentPath = Util::getTempFilePath(TDOC, "setclientpart.ods");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(request, _response);
@@ -1082,8 +1092,8 @@ void HTTPWSTest::testClientPartCalc()
 
 void HTTPWSTest::testSimultaneousTilesRenderedJustOnce()
 {
-    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
     Poco::Net::WebSocket socket1 = *connectLOKit(request, _response);
