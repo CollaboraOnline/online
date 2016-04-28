@@ -19,9 +19,9 @@ dist: all
 	rm -rf loleaflet-$(VERSION)
 	mkdir loleaflet-$(VERSION)
 	cp -ar dist loleaflet-$(VERSION)
-	util/po2json.py po/*.po
+	util/po2json.py --quiet po/*.po
 	mv po/*.json loleaflet-$(VERSION)/dist/l10n
-	util/po2json.py po/styles/*.po
+	util/po2json.py --quiet po/styles/*.po
 	mkdir -p loleaflet-$(VERSION)/dist/l10n/styles/
 	mv po/styles/*.json loleaflet-$(VERSION)/dist/l10n/styles/
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
