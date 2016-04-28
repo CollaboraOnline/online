@@ -277,7 +277,7 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::shared_ptr<WebSocket> ws,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& jailId,
-                                         std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> onLoad,
+                                         std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> onLoad,
                                          std::function<void(const std::string&)> onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
@@ -554,19 +554,6 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     std::string timestamp;
     parseDocOptions(tokens, part, timestamp);
 
-    assert(!_docURL.empty());
-    assert(!_jailedFilePath.empty());
-
-    _loKitDocument = _onLoad(getId(), _jailedFilePath, _docPassword, _isDocPasswordProvided);
-
-    if (!_loKitDocument)
-        return false;
-
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
-
-    if (_multiView)
-        _viewId = _loKitDocument->pClass->getView(_loKitDocument);
-
     std::string renderingOptions;
     if (!_docOptions.empty())
     {
@@ -576,7 +563,23 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
         renderingOptions = object->get("rendering").toString();
     }
 
-    _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderingOptions.empty() ? nullptr : renderingOptions.c_str()));
+    assert(!_docURL.empty());
+    assert(!_jailedFilePath.empty());
+
+    _loKitDocument = _onLoad(getId(), _jailedFilePath, _docPassword, renderingOptions, _isDocPasswordProvided);
+    if (!_loKitDocument)
+    {
+        Log::error("Failed to get LoKitDocument instance.");
+        return false;
+    }
+
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
+
+    if (_multiView)
+    {
+        _viewId = _loKitDocument->pClass->getView(_loKitDocument);
+        _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderingOptions.empty() ? nullptr : renderingOptions.c_str()));
+    }
 
     if (_docType != "text" && part != -1)
     {

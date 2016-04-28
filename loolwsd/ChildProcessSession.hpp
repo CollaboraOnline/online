@@ -38,7 +38,7 @@ public:
                         std::shared_ptr<Poco::Net::WebSocket> ws,
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& jailId,
-                        std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> onLoad,
+                        std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> onLoad,
                         std::function<void(const std::string&)> onUnload);
     virtual ~ChildProcessSession();
 
@@ -100,7 +100,7 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     std::map<int, std::string> _lastDocStates;
-    std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, bool)> _onLoad;
+    std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> _onLoad;
     std::function<void(const std::string&)> _onUnload;
 
     std::unique_ptr<CallbackWorker> _callbackWorker;

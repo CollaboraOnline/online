@@ -464,7 +464,8 @@ public:
             ws->setReceiveTimeout(0);
 
             auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId,
-                           [this](const std::string& id, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, isDocPasswordProvided); },
+                           [this](const std::string& id, const std::string& uri, const std::string& docPassword,
+                                  const std::string& renderingOptions, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, renderingOptions, isDocPasswordProvided); },
                            [this](const std::string& id) { onUnload(id); });
 
             auto thread = std::make_shared<Connection>(session, ws);
@@ -647,7 +648,11 @@ private:
     }
 
     /// Load a document (or view) and register callbacks.
-    LibreOfficeKitDocument* onLoad(const std::string& sessionId, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided)
+    LibreOfficeKitDocument* onLoad(const std::string& sessionId,
+                                   const std::string& uri,
+                                   const std::string& docPassword,
+                                   const std::string& renderingOptions,
+                                   bool isDocPasswordProvided)
     {
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
 
@@ -663,7 +668,7 @@ private:
 
         try
         {
-            load(sessionId, uri, docPassword, isDocPasswordProvided);
+            load(sessionId, uri, docPassword, renderingOptions, isDocPasswordProvided);
         }
         catch (const std::exception& exc)
         {
@@ -712,7 +717,11 @@ private:
 
 private:
 
-    LibreOfficeKitDocument* load(const std::string& sessionId, const std::string& uri, const std::string& docPassword, bool isDocPasswordProvided)
+    LibreOfficeKitDocument* load(const std::string& sessionId,
+                                 const std::string& uri,
+                                 const std::string& docPassword,
+                                 const std::string& renderingOptions,
+                                 bool isDocPasswordProvided)
     {
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
@@ -784,6 +793,8 @@ private:
             {
                 _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
             }
+
+            _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderingOptions.empty() ? nullptr : renderingOptions.c_str()));
         }
         else
         {
