@@ -152,8 +152,11 @@ bool DocumentBroker::save()
     std::unique_lock<std::mutex> lock(_saveMutex);
 
     const auto uri = _uriPublic.toString();
+
+    // If the file hasn't been modified within the past 10 seconds, skip saving.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
-    if (newFileModifiedTime == _lastFileModifiedTime)
+    const auto elapsed = newFileModifiedTime - _lastFileModifiedTime;
+    if (std::abs(elapsed) > 10 * 1000 * 1000)
     {
         // Nothing to do.
         Log::debug("Skipping unnecessary saving to URI [" + uri + "].");
