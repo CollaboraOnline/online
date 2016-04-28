@@ -166,28 +166,28 @@ namespace {
 void assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr, const std::string& html, const std::string& mimetype = std::string())
 {
     Poco::RegularExpression::MatchVec matches;
+    bool found = false;
 
     for (int offset = 0; expr.match(html, offset, matches) > 0; offset = static_cast<int>(matches[0].offset + matches[0].length))
     {
+        found = true;
 	CPPUNIT_ASSERT_EQUAL(2, (int)matches.size());
 	Poco::URI uriScript(html.substr(matches[1].offset, matches[1].length));
 	if (uriScript.getHost().empty())
 	{
 	    std::string scriptString(uriScript.toString());
 
-	    // ignore the branding bits, they do not have to be there
+	    // ignore the branding bits, it's not an error when they are not
+            // present
 	    if (scriptString.find("/branding.") != std::string::npos)
-	    {
-		std::cout << "skipping test for... " << scriptString << std::endl;
 		continue;
-	    }
 
 #if ENABLE_SSL
 	    Poco::Net::HTTPSClientSession sessionScript(uri.getHost(), uri.getPort());
 #else
 	    Poco::Net::HTTPClientSession sessionScript(uri.getHost(), uri.getPort());
 #endif
-	    std::cout << "checking... " << scriptString;
+
 	    Poco::Net::HTTPRequest requestScript(Poco::Net::HTTPRequest::HTTP_GET, scriptString);
 	    sessionScript.sendRequest(requestScript);
 
@@ -197,14 +197,10 @@ void assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr, c
 
 	    if (!mimetype.empty())
 		CPPUNIT_ASSERT_EQUAL(mimetype, responseScript.getContentType());
-
-	    std::cout << " OK" << std::endl;
-	}
-	else
-	{
-	    std::cout << "skip " << uriScript.toString() << std::endl;
 	}
     }
+
+    CPPUNIT_ASSERT_MESSAGE("No match found", found);
 }
 
 }
