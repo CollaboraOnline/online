@@ -718,7 +718,7 @@ void MasterProcessSession::dispatchChild()
     if (_loadPart >= 0)
         oss << " part=" + std::to_string(_loadPart);
 
-    if (_isDocPasswordProvided)
+    if (_haveDocPassword)
         oss << " password=" << _docPassword;
 
     if (!_docOptions.empty())

@@ -277,8 +277,8 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::shared_ptr<WebSocket> ws,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& jailId,
-                                         std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> onLoad,
-                                         std::function<void(const std::string&)> onUnload) :
+                                         OnLoadCallback onLoad,
+                                         OnUnloadCallback onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
@@ -554,19 +554,19 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     std::string timestamp;
     parseDocOptions(tokens, part, timestamp);
 
-    std::string renderingOptions;
+    std::string renderOpts;
     if (!_docOptions.empty())
     {
         Parser parser;
         Poco::Dynamic::Var var = parser.parse(_docOptions);
         Object::Ptr object = var.extract<Object::Ptr>();
-        renderingOptions = object->get("rendering").toString();
+        renderOpts = object->get("rendering").toString();
     }
 
     assert(!_docURL.empty());
     assert(!_jailedFilePath.empty());
 
-    _loKitDocument = _onLoad(getId(), _jailedFilePath, _docPassword, renderingOptions, _isDocPasswordProvided);
+    _loKitDocument = _onLoad(getId(), _jailedFilePath, _docPassword, renderOpts, _haveDocPassword);
     if (!_loKitDocument)
     {
         Log::error("Failed to get LoKitDocument instance.");
@@ -578,7 +578,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     if (_multiView)
     {
         _viewId = _loKitDocument->pClass->getView(_loKitDocument);
-        _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderingOptions.empty() ? nullptr : renderingOptions.c_str()));
+        _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderOpts.empty() ? nullptr : renderOpts.c_str()));
     }
 
     if (_docType != "text" && part != -1)

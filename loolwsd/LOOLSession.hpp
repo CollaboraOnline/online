@@ -121,7 +121,7 @@ protected:
     std::string _docPassword;
 
     // If password is provided or not
-    bool _isDocPasswordProvided;
+    bool _haveDocPassword;
 
     // Whether document has been opened succesfuly
     bool _isDocLoaded;

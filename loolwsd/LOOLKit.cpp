@@ -360,7 +360,7 @@ public:
         _url(url),
         _loKitDocument(nullptr),
         _docPassword(""),
-        _isDocPasswordProvided(false),
+        _haveDocPassword(false),
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
         _isLoading(0),
@@ -465,7 +465,7 @@ public:
 
             auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId,
                            [this](const std::string& id, const std::string& uri, const std::string& docPassword,
-                                  const std::string& renderingOptions, bool isDocPasswordProvided) { return onLoad(id, uri, docPassword, renderingOptions, isDocPasswordProvided); },
+                                  const std::string& renderOpts, bool haveDocPassword) { return onLoad(id, uri, docPassword, renderOpts, haveDocPassword); },
                            [this](const std::string& id) { onUnload(id); });
 
             auto thread = std::make_shared<Connection>(session, ws);
@@ -549,10 +549,10 @@ public:
     void setDocumentPassword(int nPasswordType)
     {
         Log::info() << "setDocumentPassword: passwordProtected=" << _isDocPasswordProtected
-                    << " passwordProvided=" << _isDocPasswordProvided
+                    << " passwordProvided=" << _haveDocPassword
                     << " password='" << _docPassword <<  "'" << Log::end;
 
-        if (_isDocPasswordProtected && _isDocPasswordProvided)
+        if (_isDocPasswordProtected && _haveDocPassword)
         {
             // it means this is the second attempt with the wrong password; abort the load operation
             _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), nullptr);
@@ -567,7 +567,7 @@ public:
             _docPasswordType = PasswordType::ToModify;
 
         Log::info("Caling _loKit->pClass->setDocumentPassword");
-        if (_isDocPasswordProvided)
+        if (_haveDocPassword)
             _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), _docPassword.c_str());
         else
             _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), nullptr);
@@ -651,8 +651,8 @@ private:
     LibreOfficeKitDocument* onLoad(const std::string& sessionId,
                                    const std::string& uri,
                                    const std::string& docPassword,
-                                   const std::string& renderingOptions,
-                                   bool isDocPasswordProvided)
+                                   const std::string& renderOpts,
+                                   bool haveDocPassword)
     {
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
 
@@ -668,7 +668,7 @@ private:
 
         try
         {
-            load(sessionId, uri, docPassword, renderingOptions, isDocPasswordProvided);
+            load(sessionId, uri, docPassword, renderOpts, haveDocPassword);
         }
         catch (const std::exception& exc)
         {
@@ -720,8 +720,8 @@ private:
     LibreOfficeKitDocument* load(const std::string& sessionId,
                                  const std::string& uri,
                                  const std::string& docPassword,
-                                 const std::string& renderingOptions,
-                                 bool isDocPasswordProvided)
+                                 const std::string& renderOpts,
+                                 bool haveDocPassword)
     {
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
@@ -746,7 +746,7 @@ private:
             }
 
             // Save the provided password with us and the jailed url
-            _isDocPasswordProvided = isDocPasswordProvided;
+            _haveDocPassword = haveDocPassword;
             _docPassword = docPassword;
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
@@ -762,7 +762,7 @@ private:
                 // Checking if wrong password or no password was reason for failure.
                 if (_isDocPasswordProtected)
                 {
-                    if (!_isDocPasswordProvided)
+                    if (!_haveDocPassword)
                     {
                         std::string passwordFrame = "passwordrequired:";
                         if (_docPasswordType == PasswordType::ToView)
@@ -794,14 +794,14 @@ private:
                 _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
             }
 
-            _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderingOptions.empty() ? nullptr : renderingOptions.c_str()));
+            _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderOpts.empty() ? nullptr : renderOpts.c_str()));
         }
         else
         {
             // Check if this document requires password
             if (_isDocPasswordProtected)
             {
-                if (!isDocPasswordProvided)
+                if (!haveDocPassword)
                 {
                     std::string passwordFrame = "passwordrequired:";
                     if (_docPasswordType == PasswordType::ToView)
@@ -836,7 +836,7 @@ private:
     // Document password provided
     std::string _docPassword;
     // Whether password was provided or not
-    bool _isDocPasswordProvided;
+    bool _haveDocPassword;
     // Whether document is password protected
     bool _isDocPasswordProtected;
     // Whether password is required to view the document, or modify it

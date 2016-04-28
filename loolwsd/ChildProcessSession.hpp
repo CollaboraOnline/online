@@ -23,6 +23,8 @@
 #include "LOOLSession.hpp"
 
 class CallbackWorker;
+typedef std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> OnLoadCallback;
+typedef std::function<void(const std::string&)> OnUnloadCallback;
 
 class ChildProcessSession final : public LOOLSession
 {
@@ -38,8 +40,8 @@ public:
                         std::shared_ptr<Poco::Net::WebSocket> ws,
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& jailId,
-                        std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> onLoad,
-                        std::function<void(const std::string&)> onUnload);
+                        OnLoadCallback onLoad,
+                        OnUnloadCallback onUnload);
     virtual ~ChildProcessSession();
 
     virtual bool getStatus(const char *buffer, int length) override;
@@ -100,8 +102,8 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     std::map<int, std::string> _lastDocStates;
-    std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> _onLoad;
-    std::function<void(const std::string&)> _onUnload;
+    OnLoadCallback _onLoad;
+    OnUnloadCallback _onUnload;
 
     std::unique_ptr<CallbackWorker> _callbackWorker;
     Poco::Thread _callbackThread;
