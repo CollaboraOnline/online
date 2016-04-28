@@ -1002,9 +1002,9 @@ public:
                << request.getMethod() << " " << request.getURI() << " "
                << request.getVersion();
 
-        for (HTTPServerRequest::ConstIterator it = request.begin(); it != request.end(); ++it)
+        for (const auto& it : request)
         {
-            logger << " / " << it->first << ": " << it->second;
+            logger << " / " << it.first << ": " << it.second;
         }
 
         logger << Log::end;
@@ -1051,9 +1051,9 @@ public:
                << request.getMethod() << " " << request.getURI() << " "
                << request.getVersion();
 
-        for (HTTPServerRequest::ConstIterator it = request.begin(); it != request.end(); ++it)
+        for (const auto& it : request)
         {
-            logger << " / " << it->first << ": " << it->second;
+            logger << " / " << it.first << ": " << it.second;
         }
 
         logger << Log::end;

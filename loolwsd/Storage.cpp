@@ -115,9 +115,8 @@ bool isLocalhost(const std::string& targetHost)
     }
 
     Poco::Net::NetworkInterface::NetworkInterfaceList list = Poco::Net::NetworkInterface::list(true,true);
-    for (unsigned i = 0; i < list.size(); i++)
+    for (auto& netif : list)
     {
-        Poco::Net::NetworkInterface& netif = list[i];
         std::string address = netif.address().toString();
         address = address.substr(0, address.find('%', 0));
         if (address == targetAddress)

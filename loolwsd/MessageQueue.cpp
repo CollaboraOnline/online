@@ -106,9 +106,9 @@ void TileQueue::put_impl(const Payload& value)
         //   so that get_impl() returns optimal results
         //
         // For now: just don't put duplicates into the queue
-        for (auto it = _queue.cbegin(); it != _queue.cend(); ++it)
+        for (const auto& it : _queue)
         {
-            if (value == *it)
+            if (value == it)
             {
                 return;
             }
