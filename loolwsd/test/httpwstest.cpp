@@ -1329,6 +1329,18 @@ void HTTPWSTest::requestTiles(Poco::Net::WebSocket& socket, const int part, cons
 
     rows = docHeight / tileSize;
     cols = docWidth / tileSize;
+
+    // Note: this code tests tile requests in the wrong way.
+
+    // This code does NOT match what was the idea how the LOOL protocol should/could be used. The
+    // intent was never that the protocol would need to be, or should be, used in a strict
+    // request/reply fashion. If a client needs n tiles, it should just send the requests, one after
+    // another. There is no need to do n roundtrips. A client should all the time be reading
+    // incoming messages, and handle incoming tiles as appropriate. There should be no expectation
+    // that tiles arrive at the client in the same order that they were requested.
+
+    // But, whatever.
+
     for (int itRow = 0; itRow < rows; ++itRow)
     {
         for (int itCol = 0; itCol < cols; ++itCol)
