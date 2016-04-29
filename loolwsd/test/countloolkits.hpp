@@ -68,7 +68,7 @@ int getLoolKitProcessCount()
 static
 int countLoolKitProcesses(const int expected, const int timeoutMs = POLL_TIMEOUT_MS * 10)
 {
-    const size_t repeat = (timeoutMs + POLL_TIMEOUT_MS - 1) / POLL_TIMEOUT_MS;
+    const size_t repeat = 1 + (timeoutMs / POLL_TIMEOUT_MS);
     auto count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {
@@ -81,6 +81,11 @@ int countLoolKitProcesses(const int expected, const int timeoutMs = POLL_TIMEOUT
         Poco::Thread::sleep(POLL_TIMEOUT_MS);
 
         count = getLoolKitProcessCount();
+    }
+
+    if (expected != count)
+    {
+        std::cerr << "Found " << count << " LoKit processes but was expecting " << expected << "." << std::endl;
     }
 
     return count;
