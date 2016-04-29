@@ -154,6 +154,13 @@ bool DocumentBroker::save()
     const auto uri = _uriPublic.toString();
 
     // If the file hasn't been modified within the past 10 seconds, skip saving.
+    // FIXME this is because currently the ChildProcessSession broadcasts the
+    // unocommandresult, so we get called several times here, and have no real
+    // possibility to distinguish who was the 1st caller.
+    // The refactor to un-thread the ChildProcessSession, and move the
+    // broadcasting up in the hierarchy (so that we can 'sniff' the
+    // unocommandresult for .uno:Save at the place where it appears just once)
+    // is planned post-release.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
     const auto elapsed = newFileModifiedTime - _lastFileModifiedTime;
     if (std::abs(elapsed) > 10 * 1000 * 1000)
