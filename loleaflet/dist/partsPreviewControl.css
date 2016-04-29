@@ -1,5 +1,5 @@
 .parts-preview-document {
-	left: 195px !important;
+	left: 214px !important;
 }
 
 .parts-preview {
@@ -8,7 +8,7 @@
 	top: 47px;
 	left: 0px;
 	bottom: 29px;
-	max-width: 205px;
+	max-width: 214px;
 	overflow: hidden;
 	border-top: 2px solid #B6B6B6;
 }
@@ -27,7 +27,7 @@
 
 .preview-img {
 	vertical-align: middle;
-	max-width: 180px;
+	max-width: 184px;
 	cursor: pointer;
 	border: 2px solid #dfdfdf;
 	}
