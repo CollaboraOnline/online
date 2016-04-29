@@ -542,7 +542,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
         // Should have no new instances.
-        CPPUNIT_ASSERT_EQUAL(kitcount, getLoolKitProcessCount());
+        CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll");
