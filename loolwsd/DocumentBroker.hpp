@@ -40,8 +40,8 @@ public:
     {
     }
 
-    /// pid is the process ID of the child.
-    /// ws is the control WebSocket to the child.
+    /// @param pid is the process ID of the child.
+    /// @param ws is the control WebSocket to the child.
     ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<Poco::Net::WebSocket>& ws) :
         _pid(pid),
         _ws(ws)
@@ -158,11 +158,11 @@ public:
     void setModified(const bool value);
 
     /// Save the document if the document is modified.
-    /// force when true, will force saving if there
+    /// @param force when true, will force saving if there
     /// has been any recent activity after the last save.
-    /// waitTimeoutMs when >0 will wait for the save to
+    /// @param waitTimeoutMs when >0 will wait for the save to
     /// complete before returning, or timeout.
-    /// Returns true if attempts to save or it also waits
+    /// @return true if attempts to save or it also waits
     /// and receives save notification. Otherwise, false.
     bool autoSave(const bool force, const size_t waitTimeoutMs);
 
@@ -179,7 +179,7 @@ public:
         return _sessions.size();
     }
 
-    /// Returns the time in milliseconds since last save.
+    /// @eturn the time in milliseconds since last save.
     double getTimeSinceLastSaveMs() const
     {
         const auto duration = (std::chrono::steady_clock::now() - _lastSaveTime);
