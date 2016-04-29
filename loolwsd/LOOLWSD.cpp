@@ -607,7 +607,7 @@ private:
                 // Use auto-save to save only when there are modifications since last save.
                 // We also need to wait until the save notification reaches us
                 // and Storage persists the document.
-                if (docBroker->autoSave(true, COMMAND_TIMEOUT_MS))
+                if (!docBroker->autoSave(true, COMMAND_TIMEOUT_MS))
                 {
                     Log::error("Auto-save before closing failed.");
                 }
