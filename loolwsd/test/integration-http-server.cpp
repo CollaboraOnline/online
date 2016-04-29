@@ -82,7 +82,7 @@ int HTTPServerTest::_initialLoolKitCount = 0;
 
 void HTTPServerTest::testCountHowManyLoolkits()
 {
-    _initialLoolKitCount = countLoolKitProcesses();
+    _initialLoolKitCount = getLoolKitProcessCount();
     CPPUNIT_ASSERT(_initialLoolKitCount > 0);
 }
 
@@ -263,7 +263,7 @@ void HTTPServerTest::testScriptsAndLinksPost()
 
 void HTTPServerTest::testNoExtraLoolKitsLeft()
 {
-    int countNow = countLoolKitProcesses();
+    const auto countNow = countLoolKitProcesses(_initialLoolKitCount);
 
     CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
 }

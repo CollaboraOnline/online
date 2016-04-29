@@ -15,7 +15,6 @@
 #include <thread>
 #include <regex>
 
-#include <Poco/DirectoryIterator.h>
 #include <Poco/Dynamic/Var.h>
 #include <Poco/FileStream.h>
 #include <Poco/JSON/JSON.h>
@@ -160,6 +159,7 @@ public:
 
     void tearDown()
     {
+        testNoExtraLoolKitsLeft();
     }
 };
 
@@ -167,7 +167,7 @@ int HTTPWSTest::_initialLoolKitCount = 0;
 
 void HTTPWSTest::testCountHowManyLoolkits()
 {
-    _initialLoolKitCount = countLoolKitProcesses();
+    _initialLoolKitCount = getLoolKitProcessCount();
     CPPUNIT_ASSERT(_initialLoolKitCount > 0);
 }
 
@@ -520,7 +520,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         sendTextFrame(socket, "uno .uno:Delete");
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
 
-        kitcount = countLoolKitProcesses();
+        kitcount = getLoolKitProcessCount();
 
         // Shutdown abruptly.
         socket.shutdown();
@@ -542,7 +542,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
         // Should have no new instances.
-        CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses());
+        CPPUNIT_ASSERT_EQUAL(kitcount, getLoolKitProcessCount());
 
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll");
@@ -1225,7 +1225,7 @@ void HTTPWSTest::testEditLock()
 
 void HTTPWSTest::testNoExtraLoolKitsLeft()
 {
-    int countNow = countLoolKitProcesses();
+    const auto countNow = countLoolKitProcesses(_initialLoolKitCount);
 
     CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
 }
@@ -1409,60 +1409,6 @@ void HTTPWSTest::getTileMessage(Poco::Net::WebSocket& ws, std::string& tile)
         }
     }
     while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-}
-
-int countLoolKitProcesses()
-{
-    // Give polls in the lool processes time to time out etc
-    Poco::Thread::sleep(POLL_TIMEOUT_MS*5);
-
-    int result = 0;
-
-    for (auto i = Poco::DirectoryIterator(std::string("/proc")); i != Poco::DirectoryIterator(); ++i)
-    {
-        try
-        {
-            Poco::Path procEntry = i.path();
-            const std::string& fileName = procEntry.getFileName();
-            int pid;
-            std::size_t endPos = 0;
-            try
-            {
-                pid = std::stoi(fileName, &endPos);
-            }
-            catch (const std::invalid_argument&)
-            {
-                pid = 0;
-            }
-            if (pid > 1 && endPos == fileName.length())
-            {
-                Poco::FileInputStream stat(procEntry.toString() + "/stat");
-                std::string statString;
-                Poco::StreamCopier::copyToString(stat, statString);
-                Poco::StringTokenizer tokens(statString, " ");
-                if (tokens.count() > 3 && tokens[1] == "(loolkit)")
-                {
-                    switch (tokens[2].c_str()[0])
-                    {
-                    case 'x':
-                    case 'X': // Kinds of dead-ness.
-                    case 'Z': // zombies
-                        break; // ignore
-                    default:
-                        result++;
-                        break;
-                    }
-                    // std::cout << "Process:" << pid << ", '" << tokens[1] << "'" << " state: " << tokens[2] << std::endl;
-                }
-            }
-        }
-        catch (const Poco::Exception&)
-        {
-        }
-    }
-
-    // std::cout << "Number of loolkit processes: " << result << std::endl;
-    return result;
 }
 
 void HTTPWSTest::getPartHashCodes(const std::string response,
