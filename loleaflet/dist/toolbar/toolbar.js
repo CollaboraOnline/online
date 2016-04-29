@@ -113,10 +113,10 @@ $(function () {
 	$('#spreadsheet-toolbar').w2toolbar({
 		name: 'spreadsheet-toolbar',
 		items: [
-			{ type: 'button',  id: 'firstrecord',  img: 'firstrecord', hint: _("First Sheet") },
-			{ type: 'button',  id: 'prevrecord',  img: 'prevrecord', hint: _("Previous Sheet") },
-			{ type: 'button',  id: 'nextrecord',  img: 'nextrecord', hint: _("Next Sheet") },
-			{ type: 'button',  id: 'lastrecord',  img: 'lastrecord', hint: _("Last Sheet") }
+			{ type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _("First Sheet") },
+			{ type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _("Previous Sheet") },
+			{ type: 'button',  id: 'nextrecord',  img: 'nextrecord', hidden: true, hint: _("Next Sheet") },
+			{ type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _("Last Sheet") }
 		],
 		onClick: function (e) {
 			onClick(e.target);
@@ -831,12 +831,12 @@ map.on('updateparts pagenumberchanged', function (e) {
 		toolbar.hide('incdecindent');
 	}
 
-	var toolbar = w2ui['spreadsheet-toolbar'];
-	if (e.docType !== 'spreadsheet') {
-		toolbar.hide('firstrecord');
-		toolbar.hide('nextrecord');
-		toolbar.hide('prevrecord');
-		toolbar.hide('lastrecord');
+	toolbar = w2ui['spreadsheet-toolbar'];
+	if (e.docType === 'spreadsheet') {
+		toolbar.show('firstrecord');
+		toolbar.show('nextrecord');
+		toolbar.show('prevrecord');
+		toolbar.show('lastrecord');
 	}
 });
 
