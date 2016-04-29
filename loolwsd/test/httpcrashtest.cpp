@@ -42,6 +42,9 @@
 #include <UserMessages.hpp>
 #include <Util.hpp>
 #include <LOOLProtocol.hpp>
+#include "helpers.hpp"
+
+using namespace helpers;
 
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
 class HTTPCrashTest : public CPPUNIT_NS::TestFixture
@@ -61,16 +64,6 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 
     static
     void killLoKitProcesses();
-
-    static
-    void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string);
-
-    static
-    bool isDocumentLoaded(Poco::Net::WebSocket& socket);
-
-    std::shared_ptr<Poco::Net::WebSocket>
-    connectLOKit(Poco::Net::HTTPRequest& request,
-                 Poco::Net::HTTPResponse& response);
 
 public:
     HTTPCrashTest()
@@ -118,7 +111,7 @@ void HTTPCrashTest::testBarren()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(request, _response);
+        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
         sendTextFrame(socket, "status");
@@ -172,7 +165,7 @@ void HTTPCrashTest::testCrashKit()
         const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(request, _response);
+        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
         sendTextFrame(socket, "status");
@@ -241,122 +234,6 @@ void HTTPCrashTest::killLoKitProcesses()
         {
         }
     }
-}
-
-void HTTPCrashTest::sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
-{
-    socket.sendFrame(string.data(), string.size());
-}
-
-bool HTTPCrashTest::isDocumentLoaded(Poco::Net::WebSocket& ws)
-{
-    bool isLoaded = false;
-    try
-    {
-        int flags;
-        int bytes;
-        int retries = 30;
-        const Poco::Timespan waitTime(1000000);
-
-        ws.setReceiveTimeout(0);
-        std::cout << "==> isDocumentLoaded\n";
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-
-            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
-            {
-                bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                std::cout << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
-                if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-                {
-                    std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << '\n';
-                    const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
-                    const std::string prefixIndicator = "statusindicatorfinish:";
-                    const std::string prefixStatus = "status:";
-                    if (line.find(prefixIndicator) == 0 || line.find(prefixStatus) == 0)
-                    {
-                        isLoaded = true;
-                        break;
-                    }
-                }
-                retries = 10;
-            }
-            else
-            {
-                std::cout << "Timeout\n";
-                --retries;
-            }
-        }
-        while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    }
-    catch (const Poco::Net::WebSocketException& exc)
-    {
-        std::cout << exc.message();
-    }
-
-    return isLoaded;
-}
-
-// Connecting to a Kit process is managed by document broker, that it does several
-// jobs to establish the bridge connection between the Client and Kit process,
-// The result, it is mostly time outs to get messages in the unit test and it could fail.
-// connectLOKit ensures the websocket is connected to a kit process.
-
-std::shared_ptr<Poco::Net::WebSocket>
-HTTPCrashTest::connectLOKit(Poco::Net::HTTPRequest& request,
-                            Poco::Net::HTTPResponse& response)
-{
-    int flags;
-    int received = 0;
-    int retries = 3;
-    bool ready = false;
-    char buffer[READ_BUFFER_SIZE];
-    const std::string success("ready");
-    std::shared_ptr<Poco::Net::WebSocket> ws;
-
-    do
-    {
-#if ENABLE_SSL
-        Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
-#else
-        Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
-#endif
-        ws = std::make_shared<Poco::Net::WebSocket>(session, request, response);
-
-        do
-        {
-            try
-            {
-                received = ws->receiveFrame(buffer, sizeof(buffer), flags);
-                if (received > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-                {
-                    const std::string message = LOOLProtocol::getFirstLine(buffer, received);
-                    std::cerr << message << std::endl;
-                    if (message.find(success) != std::string::npos)
-                    {
-                        ready = true;
-                        break;
-                    }
-                }
-            }
-            catch (const Poco::TimeoutException& exc)
-            {
-                std::cout << exc.displayText();
-            }
-            catch(...)
-            {
-                throw;
-            }
-        }
-        while (received > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    }
-    while (retries-- && !ready);
-
-    if (!ready)
-        throw Poco::Net::WebSocketException("Failed to connect to lokit process", Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY);
-
-    return ws;
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPCrashTest);
