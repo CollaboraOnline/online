@@ -56,15 +56,20 @@ void getDocumentPathAndURL(const char* document, std::string& documentPath, std:
     std::cerr << "Test file: " << documentPath << std::endl;
 }
 
-static
+inline
 void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
 {
     socket.sendFrame(string.data(), string.size());
 }
 
-static
-bool isDocumentLoaded(Poco::Net::WebSocket& ws)
+inline
+bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
 {
+    if (!name.empty())
+    {
+        name += ' ';
+    }
+
     bool isLoaded = false;
     try
     {
@@ -74,7 +79,6 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws)
         const Poco::Timespan waitTime(1000000);
 
         ws.setReceiveTimeout(0);
-        std::cout << "==> isDocumentLoaded\n";
         do
         {
             char buffer[READ_BUFFER_SIZE];
@@ -82,10 +86,9 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws)
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                std::cout << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
-                    std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << '\n';
+                    std::cout << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
                     const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
                     const std::string prefixIndicator = "statusindicatorfinish:";
                     const std::string prefixStatus = "status:";
@@ -95,6 +98,11 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws)
                         break;
                     }
                 }
+                else
+                {
+                    std::cerr << name << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
+                }
+
                 retries = 10;
             }
             else
@@ -118,7 +126,7 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws)
 // jobs to establish the bridge connection between the Client and Kit process,
 // The result, it is mostly time outs to get messages in the unit test and it could fail.
 // connectLOKit ensures the websocket is connected to a kit process.
-static
+inline
 std::shared_ptr<Poco::Net::WebSocket>
 connectLOKit(Poco::URI uri,
              Poco::Net::HTTPRequest& request,
@@ -172,7 +180,7 @@ connectLOKit(Poco::URI uri,
     return ws;
 }
 
-static
+inline
 void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string& response, const bool isLine)
 {
     try
@@ -184,7 +192,6 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
 
         response.clear();
         ws.setReceiveTimeout(0);
-        std::cout << "==> getResponseMessage(" << prefix << ")\n";
         do
         {
             char buffer[READ_BUFFER_SIZE];
@@ -192,10 +199,9 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                std::cout << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
-                    std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << '\n';
+                    std::cout << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
                     const std::string message = isLine ?
                                                 LOOLProtocol::getFirstLine(buffer, bytes) :
                                                 std::string(buffer, bytes);
@@ -205,6 +211,10 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
                         response = message.substr(prefix.length());
                         break;
                     }
+                }
+                else
+                {
+                    std::cout << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
                 }
                 retries = 10;
             }
@@ -222,7 +232,7 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
     }
 }
 
-static
+inline
 std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL)
 {
     try
