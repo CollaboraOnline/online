@@ -12,6 +12,7 @@
     right: 0;
     text-align: center;
     padding: 10px;
+    z-index: 1000;
 }
 
 #toolbar-down {
@@ -21,6 +22,7 @@
     padding: 0;
     position: fixed;
     bottom: 0;
+    z-index: 1000;
 }
 
 #toolbar-up-more {
@@ -41,7 +43,18 @@
     position: absolute;
 }
 
+#presentation-toolbar {
+    background: #DFDFDF;
+    left: 0;
+    text-align: center;
+    bottom: 28px;
+    width: 203px;
+    position: absolute;
+    z-index: 500;
+}
+
 /* center the toolbar */
+#tb_presentation-toolbar_item_left,
 #tb_toolbar-up_item_left,
 #tb_formulabar_item_left {
     width: 50%;

@@ -122,6 +122,20 @@ $(function () {
 			onClick(e.target);
 		}
 	});
+	$('#presentation-toolbar').w2toolbar({
+		name: 'presentation-toolbar',
+		items: [
+			{ type: 'html',  id: 'left' },
+			{ type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _("Fullscreen presentation") },
+			{ type: 'button',  id: 'insertpage', img: 'insertpage', hidden:true, hint: _("Insert Page") },
+			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hidden:true, hint: _("Duplicate Page") },
+			{ type: 'button',  id: 'deletepage', img: 'deletepage', hidden:true, hint: _("Delete Page") },
+			{ type: 'html',  id: 'right' }
+		],
+		onClick: function (e) {
+			onClick(e.target);
+		}
+	});
 	$('#toolbar-down').w2toolbar({
 		name: 'toolbar-down',
 		items: [
@@ -135,12 +149,8 @@ $(function () {
 			{ type: 'button',  id: 'searchprev', img: 'prev', hint: _("Search backwards"), disabled: true },
 			{ type: 'button',  id: 'searchnext', img: 'next', hint: _("Search forward"), disabled: true },
 			{ type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _("Cancel the search"), hidden: true },
-			{ type: 'html', id: 'left' },
-			{ type: 'button',  id: 'presentation', img: 'presentation', hint: _("Fullscreen presentation") },
-			{ type: 'button',  id: 'insertpage', img: 'insertpage', hint: _("Insert Page") },
-			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: _("Duplicate Page") },
-			{ type: 'button',  id: 'deletepage', img: 'deletepage', hint: _("Delete Page") },
-			{ type: 'html', id: 'right' },
+			{ type: 'html',  id: 'left' },
+			{ type: 'html',  id: 'right' },
 			{ type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel"></div>' },
 			{ type: 'break' },
 			{ type: 'button',  id: 'takeedit', img: 'edit', hint: _("Take edit lock (others can only view)")},
@@ -202,6 +212,10 @@ function onClick(id) {
 	else if (w2ui['spreadsheet-toolbar'].get(id) !== null) {
 		toolbar = w2ui['spreadsheet-toolbar'];
 		item = toolbar.get(id) ;
+	}
+	else if (w2ui['presentation-toolbar'].get(id) != null) {
+		toolbar = w2ui['presentation-toolbar'];
+		item = toolbar.get(id);
 	}
 	else if (id.indexOf(':') >= 0) {
 		// we just handle a menu item click,
@@ -555,7 +569,16 @@ map.on('updatepermission', function (e) {
 	var docType = map.getDocType();
 	if (docType !== 'text') {
 		toolbar.hide('writer:menu:file');
-		if (docType === 'presentation' || docType === 'drawing') {
+		if (docType === 'presentation') {
+			toolbar.show('impress:menu:file');
+
+			toolbar = w2ui['presentation-toolbar'];
+			toolbar.show('presentation');
+			toolbar.show('insertpage');
+			toolbar.show('duplicatepage');
+			toolbar.show('deletepage');
+		}
+		else if (docType === 'drawing') {
 			toolbar.show('impress:menu:file');
 		}
 		else if (docType === 'spreadsheet') {
