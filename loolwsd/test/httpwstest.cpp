@@ -332,24 +332,24 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
         // Load a document and get its status.
         auto socket = loadDocAndGetSocket(_uri, documentURL);
 
-        std::string status;
-        std::string editlock;
         SocketProcessor("", socket, [&](const std::string& msg)
                 {
                     const std::string prefix = "status: ";
                     if (msg.find(prefix) == 0)
                     {
-                        status = msg.substr(prefix.length());
+                        const auto status = msg.substr(prefix.length());
+                        // Might be too strict, consider something flexible instread.
+                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
+                    }
+                    else if (msg.find("editlock") == 0)
+                    {
+                        // First session always gets the lock.
+                        CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
                         return false;
                     }
 
                     return true;
                 });
-
-        // Might be too strict, consider something flexible instread.
-        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
-        // First session always gets the lock.
-        CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), editlock);
 
         socket->shutdown();
     }
