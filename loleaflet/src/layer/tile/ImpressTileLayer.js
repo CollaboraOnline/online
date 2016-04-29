@@ -39,18 +39,15 @@ L.ImpressTileLayer = L.TileLayer.extend({
 					this._tiles[key]._invalidCount = 1;
 				}
 				if (visibleArea.intersects(bounds)) {
-					if (!this._transientInvalidationKeys[key]) {
-						if (tilePositionsX !== '') {
-							tilePositionsX += ',';
-						}
-						tilePositionsX += tileTopLeft.x;
-						if (tilePositionsY !== '') {
-							tilePositionsY += ',';
-						}
-						tilePositionsY += tileTopLeft.y;
-						needsNewTiles = true;
-						this._transientInvalidationKeys[key] = true;
+					if (tilePositionsX !== '') {
+						tilePositionsX += ',';
 					}
+					tilePositionsX += tileTopLeft.x;
+					if (tilePositionsY !== '') {
+						tilePositionsY += ',';
+					}
+					tilePositionsY += tileTopLeft.y;
+					needsNewTiles = true;
 				}
 				else {
 					// tile outside of the visible area, just remove it
