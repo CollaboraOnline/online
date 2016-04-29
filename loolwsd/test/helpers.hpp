@@ -47,7 +47,7 @@
 /// These are supposed to be testing the latter.
 namespace helpers
 {
-static
+inline
 void getDocumentPathAndURL(const char* document, std::string& documentPath, std::string& documentURL)
 {
     documentPath = Util::getTempFilePath(TDOC, document);
@@ -246,25 +246,35 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, 
     return nullptr;
 }
 
-static
+inline
 void SocketProcessor(std::string name,
                      const std::shared_ptr<Poco::Net::WebSocket>& socket,
-                     std::function<bool(const std::string& msg)> handler)
+                     std::function<bool(const std::string& msg)> handler,
+                     const size_t timeoutMs = 10000)
 {
     if (!name.empty())
     {
         name += ' ';
     }
 
+    socket->setReceiveTimeout(0);
+
+    const Poco::Timespan waitTime(timeoutMs * 1000);
     int flags;
     int n;
+    char buffer[READ_BUFFER_SIZE];
     do
     {
-        char buffer[READ_BUFFER_SIZE];
+        if (!socket->poll(waitTime, Poco::Net::Socket::SELECT_READ))
+        {
+            std::cerr << "Timeout." << std::endl;
+            break;
+        }
+
         n = socket->receiveFrame(buffer, sizeof(buffer), flags);
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
-            std::cout << name + "Got " << n << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
+            std::cout << name << "Got " << n << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
             if (!handler(std::string(buffer, n)))
             {
                 break;
@@ -272,7 +282,7 @@ void SocketProcessor(std::string name,
         }
         else
         {
-            std::cerr << name + "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
+            std::cerr << name << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
