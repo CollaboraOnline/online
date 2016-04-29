@@ -232,27 +232,27 @@ void HTTPWSTest::testHandShake()
         socket.setReceiveTimeout(0);
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
         CPPUNIT_ASSERT_EQUAL(std::string(payload), std::string(buffer, bytes));
-        CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+        CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags);
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
         if (!std::strstr(buffer, fail))
         {
             payload = "statusindicator: connect";
             CPPUNIT_ASSERT_EQUAL(payload, std::string(buffer, bytes));
-            CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+            CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags);
 
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
             if (!std::strstr(buffer, fail))
             {
                 payload = "statusindicator: ready";
                 CPPUNIT_ASSERT_EQUAL(payload, std::string(buffer, bytes));
-                CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+                CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags);
             }
             else
             {
                 // check error message
                 CPPUNIT_ASSERT(std::strstr(buffer, SERVICE_UNAVALABLE_INTERNAL_ERROR) != nullptr);
-                CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+                CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags);
 
                 // close frame message
                 bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
@@ -264,7 +264,7 @@ void HTTPWSTest::testHandShake()
         {
             // check error message
             CPPUNIT_ASSERT(std::strstr(buffer, SERVICE_UNAVALABLE_INTERNAL_ERROR) != nullptr);
-            CPPUNIT_ASSERT(flags == Poco::Net::WebSocket::FRAME_TEXT);
+            CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags);
 
             // close frame message
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
