@@ -218,6 +218,15 @@ public:
         case LOK_CALLBACK_CONTEXT_MENU:
             _session.sendTextFrame("contextmenu: " + rPayload);
             break;
+        case LOK_CALLBACK_STATUS_INDICATOR_START:
+            _session.sendTextFrame("statusindicatorstart:");
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+            _session.sendTextFrame("statusindicatorsetvalue: " + rPayload);
+            break;
+        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+            _session.sendTextFrame("statusindicatorfinish:");
+            break;
         }
     }
 

@@ -575,73 +575,41 @@ public:
     }
 
 private:
-    static void KitCallback(int nType, const char* pPayload, void* pData)
-    {
-        Document* self = reinterpret_cast<Document*>(pData);
-        Log::trace() << "Document::KitCallback "
-                     << LOKitHelper::kitCallbackTypeToString(nType)
-                     << " [" << (pPayload ? pPayload : "") << "]." << Log::end;
-
-        if (self)
-        {
-            std::unique_lock<std::mutex> lock(self->_mutex);
-            for (auto& it: self->_connections)
-            {
-                if (it.second->isRunning())
-                {
-                    auto session = it.second->getSession();
-                    auto sessionLock = session->getLock();
-
-                    switch (nType)
-                    {
-                    case LOK_CALLBACK_STATUS_INDICATOR_START:
-                        session->sendTextFrame("statusindicatorstart:");
-                        break;
-                    case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-                        session->sendTextFrame("statusindicatorsetvalue: " + std::string(pPayload));
-                        break;
-                    case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-                        session->sendTextFrame("statusindicatorfinish:");
-                        break;
-                    case LOK_CALLBACK_DOCUMENT_PASSWORD:
-                    case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
-                        self->setDocumentPassword(nType);
-                        break;
-                    }
-
-                    // Ideally, there would be only one *live* connection at this point of time
-                    // So, just get the first running one and break out.
-                    // TODO: Find a better way to find the correct connection.
-                    break;
-                }
-            }
-        }
-    }
 
     static void ViewCallback(int , const char* , void* )
     {
         //TODO: Delegate the callback.
     }
 
-    static void DocumentCallback(int nType, const char* pPayload, void* pData)
+    static void DocumentCallback(const int nType, const char* pPayload, void* pData)
     {
         Log::trace() << "Document::DocumentCallback "
                      << LOKitHelper::kitCallbackTypeToString(nType)
                      << " [" << (pPayload ? pPayload : "") << "]." << Log::end;
         Document* self = reinterpret_cast<Document*>(pData);
-        if (self)
+        if (self == nullptr)
         {
-            std::unique_lock<std::mutex> lock(self->_mutex);
+            return;
+        }
 
-            for (auto& it: self->_connections)
+        std::unique_lock<std::mutex> lock(self->_mutex);
+
+        if (nType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
+            nType == LOK_CALLBACK_DOCUMENT_PASSWORD)
+        {
+            // Mark the document password type.
+            self->setDocumentPassword(nType);
+            return;
+        }
+
+        for (auto& it: self->_connections)
+        {
+            if (it.second->isRunning())
             {
-                if (it.second->isRunning())
+                auto session = it.second->getSession();
+                if (session)
                 {
-                    auto session = it.second->getSession();
-                    if (session)
-                    {
-                        session->loKitCallback(nType, pPayload);
-                    }
+                    session->loKitCallback(nType, pPayload);
                 }
             }
         }
@@ -740,9 +708,10 @@ private:
 
             if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
             {
-                _loKit->pClass->registerCallback(_loKit, KitCallback, this);
-                _loKit->pClass->setOptionalFeatures(_loKit, LOK_FEATURE_DOCUMENT_PASSWORD |
-                                                    LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY);
+                _loKit->pClass->registerCallback(_loKit, DocumentCallback, this);
+                const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
+                                 | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY;
+                _loKit->pClass->setOptionalFeatures(_loKit, flags);
             }
 
             // Save the provided password with us and the jailed url
