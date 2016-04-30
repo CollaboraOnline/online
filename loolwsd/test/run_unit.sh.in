@@ -11,6 +11,7 @@ enable_debug="@ENABLE_DEBUG@"
 jails_path="@JAILS_PATH@"
 lo_path="@LO_PATH@"
 
+tst=
 while test $# -gt 0; do
   case $1 in
       --test-name) tst=$2; shift;;
@@ -21,13 +22,8 @@ while test $# -gt 0; do
   shift
 done
 
-test_mode=
-if test "z$tst" != "zrun_test.sh"; then
-    # drop .la suffix
-    tst=`echo $tst | sed s/\.la//`;
-else
-    test_mode=old
-fi
+# drop .la suffix
+tst=`echo $tst | sed s/\.la//`;
 
 export LOOL_LOGLEVEL=trace
 
@@ -40,9 +36,10 @@ if test "z$enable_debug" != "ztrue"; then
 fi
 
 # result logging
+echo "test output is '$test_output'"
 echo > $test_output
 
-if test "z$test_mode" == "zold"; then
+if test "z$tst" == "z"; then
      echo "executing external tests"
      ${abs_top_builddir}/loolwsd --systemplate="$systemplate_path" \
                                  --lotemplate="$lo_path" \

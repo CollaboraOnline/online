@@ -149,7 +149,8 @@ public:
     }
     ~UnitKitPrefork()
     {
-        fclose(_procSMaps);
+        if (_procSMaps)
+            fclose(_procSMaps);
     }
 
     virtual void launchedKit(int pid) override

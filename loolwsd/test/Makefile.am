@@ -32,13 +32,14 @@ SYSTEM_STAMP =
 endif
 
 if HAVE_LO_PATH
-TESTS = unit-admin.la unit-timeout.la unit-fonts.la unit-storage.la unit-prefork.la run_test.sh
+check-local:
+	./run_unit.sh --log-file test.log --trs-file test.trs
+TESTS = unit-admin.la unit-timeout.la unit-fonts.la unit-storage.la unit-prefork.la
 else
 TESTS = ${top_builddir}/test/test
 endif
 
-TEST_EXTENSIONS = .la .sh
+TEST_EXTENSIONS = .la
 LA_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
-SH_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
 
 EXTRA_DIST = data/hello.odt data/hello.txt $(test_SOURCES) run_unit.sh
