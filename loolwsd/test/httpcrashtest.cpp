@@ -43,6 +43,7 @@
 #include <Util.hpp>
 #include <LOOLProtocol.hpp>
 #include "helpers.hpp"
+#include "countloolkits.hpp"
 
 using namespace helpers;
 
@@ -51,16 +52,25 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
+    static int _initialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPCrashTest);
+
+    // This should be the first test:
+    CPPUNIT_TEST(testCountHowManyLoolkits);
 
     CPPUNIT_TEST(testBarren);
     CPPUNIT_TEST(testCrashKit);
 
+    // This should be the last test:
+    CPPUNIT_TEST(testNoExtraLoolKitsLeft);
+
     CPPUNIT_TEST_SUITE_END();
 
+    void testCountHowManyLoolkits();
     void testBarren();
     void testCrashKit();
+    void testNoExtraLoolKitsLeft();
 
     static
     void killLoKitProcesses();
@@ -98,6 +108,21 @@ public:
     {
     }
 };
+
+int HTTPCrashTest::_initialLoolKitCount = 0;
+
+void HTTPCrashTest::testCountHowManyLoolkits()
+{
+    _initialLoolKitCount = countLoolKitProcesses(1);
+    CPPUNIT_ASSERT(_initialLoolKitCount > 0);
+}
+
+void HTTPCrashTest::testNoExtraLoolKitsLeft()
+{
+    const auto countNow = countLoolKitProcesses(_initialLoolKitCount);
+
+    CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
+}
 
 void HTTPCrashTest::testBarren()
 {
