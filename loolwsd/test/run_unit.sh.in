@@ -49,8 +49,6 @@ if test "z$test_mode" == "zold"; then
                                  --childroot="$jails_path" \
                                  --allowlocalstorage  2> "$tst_log" &
 
-     echo "  waiting for loolwsd to start"
-     sleep 1 # sad - need to add a wait to the start of test.cpp ...
      echo "  executing test"
 
      oldpath=`pwd`
