@@ -151,6 +151,8 @@ public:
 
     /// Loads a document from the public URI into the jail.
     bool load(const std::string& jailId);
+    bool isLoaded() const { return _isLoaded; }
+    void setLoaded() { _isLoaded = true; }
 
     /// Save the document to Storage if needs persisting.
     bool save();
@@ -226,6 +228,7 @@ private:
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;
+    bool _isLoaded;
     bool _isModified;
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;

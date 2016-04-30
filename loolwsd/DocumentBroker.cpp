@@ -74,6 +74,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _childProcess(childProcess),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
+    _isLoaded(false),
     _isModified(false)
 {
     assert(!_docKey.empty());
@@ -195,10 +196,11 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
     Log::trace("Autosaving [" + _docKey + "].");
 
     std::unique_lock<std::mutex> lock(_mutex);
-    if (_sessions.empty())
+    if (_sessions.empty() || _storage == nullptr || !_isLoaded)
     {
-        // Shouldn't happen.
-        return false;
+        // Nothing to do.
+        Log::trace("Nothing to autosave [" + _docKey + "].");
+        return true;
     }
 
     bool sent = false;
