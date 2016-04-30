@@ -720,9 +720,9 @@ private:
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
 
-            Log::debug("Calling documentLoad");
+            Log::debug("Calling lokit::documentLoad.");
             _loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str());
-            Log::debug("documentLoad returned");
+            Log::debug("Returned lokit::documentLoad.");
 
             if (_loKitDocument == nullptr)
             {

@@ -1354,15 +1354,18 @@ bool ChildProcessSession::setClientPart(const char* /*buffer*/, int /*length*/, 
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (part == _loKitDocument->pClass->getPart(_loKitDocument))
-        return true;
+    if (part != _loKitDocument->pClass->getPart(_loKitDocument))
+    {
+        if (_multiView)
+            _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->pClass->setPart(_loKitDocument, part);
 
-    _loKitDocument->pClass->setPart(_loKitDocument, part);
-    // invalidate all
-    loKitCallback(LOK_CALLBACK_INVALIDATE_TILES, std::string("EMPTY").c_str());
+        //FIXME: We shouldn't need to do this. The client should
+        // know what to do when they change the part.
+        loKitCallback(LOK_CALLBACK_INVALIDATE_TILES, "EMPTY");
+    }
+
     return true;
 }
 
