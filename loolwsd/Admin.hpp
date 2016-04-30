@@ -107,20 +107,22 @@ class MemoryStats : public Poco::Util::TimerTask
 {
 public:
     MemoryStats(Admin* admin)
-        : _admin(admin)
+        : _admin(admin),
+          _lastTotalMemory(0)
     {
-        Log::info("Memory stat ctor");
+        Log::debug("Memory stat ctor");
     }
 
     ~MemoryStats()
     {
-        Log::info("Memory stat dtor");
+        Log::debug("Memory stat dtor");
     }
 
     void run() override;
 
 private:
     Admin* _admin;
+    long _lastTotalMemory;
 };
 
 class CpuStats : public Poco::Util::TimerTask
@@ -128,12 +130,12 @@ class CpuStats : public Poco::Util::TimerTask
 public:
     CpuStats(Admin* /*admin*/)
     {
-        Log::info("Cpu stat ctor");
+        Log::debug("Cpu stat ctor");
     }
 
     ~CpuStats()
     {
-        Log::info("Cpu stat dtor");
+        Log::debug("Cpu stat dtor");
     }
 
     void run() override;

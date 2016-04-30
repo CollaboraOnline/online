@@ -360,9 +360,14 @@ void MemoryStats::run()
 {
     std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
-    unsigned totalMem = _admin->getTotalMemoryUsage(model);
+    const auto totalMem = _admin->getTotalMemoryUsage(model);
 
-    Log::trace("Total memory used: " + std::to_string(totalMem));
+    if (totalMem != _lastTotalMemory)
+    {
+        Log::trace("Total memory used: " + std::to_string(totalMem));
+    }
+
+    _lastTotalMemory = totalMem;
     model.addMemStats(totalMem);
 }
 
