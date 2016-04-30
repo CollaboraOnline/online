@@ -291,6 +291,9 @@ namespace Util
 
         sigaction(signal, &action, NULL);
 
+        char header[32];
+        sprintf(header, "Backtrace %d:\n", getpid());
+
         const int maxSlots = 50;
         void *backtraceBuffer[maxSlots];
         int numSlots = backtrace(backtraceBuffer, maxSlots);
@@ -300,7 +303,7 @@ namespace Util
             if (symbols != NULL)
             {
                 struct iovec ioVector[maxSlots*2+1];
-                ioVector[0].iov_base = (void*)"Backtrace:\n";
+                ioVector[0].iov_base = (void*)header;
                 ioVector[0].iov_len = std::strlen((const char*)ioVector[0].iov_base);
                 for (int i = 0; i < numSlots; i++)
                 {
