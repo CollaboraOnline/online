@@ -114,7 +114,12 @@ public:
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
             {
-                int curPart = _session.getLoKitDocument()->pClass->getPart(_session.getLoKitDocument());
+                const auto lokitDoc = _session.getLoKitDocument();
+                assert(lokitDoc);
+                assert(lokitDoc->pClass);
+                assert(lokitDoc->pClass->getPart);
+
+                int curPart = lokitDoc->pClass->getPart(lokitDoc);
                 _session.sendTextFrame("curpart: part=" + std::to_string(curPart));
                 if (_session.getDocType() == "text")
                 {
@@ -575,14 +580,14 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     assert(!_docURL.empty());
     assert(!_jailedFilePath.empty());
 
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
+
     _loKitDocument = _onLoad(getId(), _jailedFilePath, _docPassword, renderOpts, _haveDocPassword);
     if (!_loKitDocument)
     {
         Log::error("Failed to get LoKitDocument instance.");
         return false;
     }
-
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
     {
