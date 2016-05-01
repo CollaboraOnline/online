@@ -14,8 +14,18 @@ MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
 AM_CPPFLAGS = -pthread -I$(top_srcdir)
 
-test_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
-test_SOURCES = WhiteBoxTests.cpp integration-http-server.cpp httpwstest.cpp httpcrashtest.cpp test.cpp ../LOOLProtocol.cpp
+wsd_sources = \
+            ../IoUtil.cpp \
+            ../Log.cpp \
+            ../LOOLProtocol.cpp \
+            ../TileCache.cpp \
+            ../MessageQueue.cpp \
+            ../Unit.cpp \
+            ../Util.cpp
+
+test_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\" -I$(top_srcdir)
+test_SOURCES = TileCacheTests.cpp WhiteBoxTests.cpp integration-http-server.cpp \
+               httpwstest.cpp httpcrashtest.cpp test.cpp $(wsd_sources)
 test_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
