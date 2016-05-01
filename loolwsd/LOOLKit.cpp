@@ -975,11 +975,18 @@ void lokit_main(const std::string& childRoot,
             instdir_path = "/" + loTemplate + "/program";
         }
 
-        LibreOfficeKit* loKit = lok_init_2(instdir_path.c_str(), "file:///user");
-        if (loKit == nullptr)
+        LibreOfficeKit* loKit;
         {
-            Log::error("LibreOfficeKit initialization failed. Exiting.");
-            std::_Exit(Application::EXIT_SOFTWARE);
+            const char *instdir = instdir_path.c_str();
+            const char *userdir = "file:///user";
+            loKit = UnitKit::get().lok_init(instdir, userdir);
+            if (!loKit)
+                loKit = lok_init_2(instdir, userdir);
+            if (loKit == nullptr)
+            {
+                Log::error("LibreOfficeKit initialization failed. Exiting.");
+                std::_Exit(Application::EXIT_SOFTWARE);
+            }
         }
 
         Log::info("Process is ready.");

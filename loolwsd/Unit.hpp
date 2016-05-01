@@ -40,6 +40,7 @@ class StorageBase;
 typedef UnitBase *(CreateUnitHooksFunction)();
 extern "C" { UnitBase *unit_create_wsd(void); }
 extern "C" { UnitBase *unit_create_kit(void); }
+extern "C" { typedef struct _LibreOfficeKit LibreOfficeKit; }
 
 /// Derive your WSD unit test / hooks from me.
 class UnitBase
@@ -186,6 +187,11 @@ public:
     virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> & /* ws */,
                                   std::string &/* message */)
         { return false; }
+
+    /// Allow a custom LibreOfficeKit wrapper
+    virtual LibreOfficeKit *lok_init(const char * /* instdir */,
+                                     const char * /* userdir */)
+        { return NULL; }
 };
 
 #endif
