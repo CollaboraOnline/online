@@ -36,6 +36,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include <Common.hpp>
 #include <UserMessages.hpp>

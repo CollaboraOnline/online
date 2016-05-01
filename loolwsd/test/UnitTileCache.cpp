@@ -12,14 +12,21 @@
 #include <cassert>
 #include <iostream>
 #include <fstream>
+#include <thread>
 
 #include "Util.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
+#include "helpers.hpp"
 
 class UnitTileCache: public UnitWSD
 {
 public:
+    UnitTileCache() :
+        _retValue(0)
+    {
+    }
+
     virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
                             int tileWidth, int tileHeight, std::unique_ptr<std::fstream>& cacheFile)
     {
@@ -28,6 +35,11 @@ public:
 
         // Fail the lookup to force subscription and rendering.
         cacheFile.reset();
+    }
+
+    virtual void returnValue(int & retValue)
+    {
+        retValue = _retValue;
     }
 
     virtual void invokeTest()
@@ -39,6 +51,24 @@ public:
         UnitWSD::testHandleRequest(TestRequest::TEST_REQ_PRISONER,
                                    request, response);
     }
+
+private:
+    void clientThread()
+    {
+        std::thread t([&]()
+            {
+                try
+                {
+                }
+                catch (const Poco::Exception& exc)
+                {
+                    _retValue = 1;
+                }
+            });
+    }
+
+private:
+    int _retValue;
 };
 
 UnitBase *unit_create_wsd(void)

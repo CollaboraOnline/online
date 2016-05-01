@@ -25,6 +25,7 @@ unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
 unit_tilecache_la_SOURCES = UnitTileCache.cpp
+unit_tilecache_la_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
