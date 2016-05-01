@@ -1,6 +1,7 @@
 AUTOMAKE_OPTION = serial-tests
 
 check_PROGRAMS = test
+bin_PROGRAMS = test
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 
