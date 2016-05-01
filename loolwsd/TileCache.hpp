@@ -27,8 +27,7 @@ class TileCache
 {
     struct TileBeingRendered;
 
-    std::shared_ptr<TileBeingRendered> findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
-;
+    std::shared_ptr<TileBeingRendered> findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
 public:
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
@@ -40,8 +39,6 @@ public:
     TileCache(const TileCache&) = delete;
 
     bool isTileBeingRenderedIfSoSubscribe(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const std::shared_ptr<MasterProcessSession> &subscriber);
-
-    void forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
     std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
@@ -66,20 +63,22 @@ public:
     // The tiles parameter is an invalidatetiles: message as sent by the child process
     void invalidateTiles(const std::string& tiles);
 
+    /// Store the timestamp to modtime.txt.
+    void saveLastModified(const Poco::Timestamp& timestamp);
+
+private:
     void invalidateTiles(int part, int x, int y, int width, int height);
 
     // Removes the given file from the cache
     void removeFile(const std::string& fileName);
 
-    /// Store the timestamp to modtime.txt.
-    void saveLastModified(const Poco::Timestamp& timestamp);
-
-private:
     std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
     bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
     bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height);
+
+    void forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
     /// Load the timestamp from modtime.txt.
     Poco::Timestamp getLastModified();
