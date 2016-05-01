@@ -7,7 +7,7 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 noinst_LTLIBRARIES = \
         unit-timeout.la unit-prefork.la \
         unit-storage.la unit-fonts.la \
-        unit-admin.la
+        unit-admin.la unit-tilecache.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
@@ -24,6 +24,7 @@ unit_fonts_la_SOURCES = UnitFonts.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
+unit_tilecache_la_SOURCES = UnitTileCache.cpp
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -34,7 +35,7 @@ endif
 if HAVE_LO_PATH
 check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
-TESTS = unit-admin.la unit-timeout.la unit-fonts.la unit-storage.la unit-prefork.la
+TESTS = unit-tilecache.la unit-admin.la unit-timeout.la unit-fonts.la unit-storage.la unit-prefork.la
 else
 TESTS = ${top_builddir}/test/test
 endif

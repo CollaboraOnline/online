@@ -34,6 +34,7 @@
 #include "TileCache.hpp"
 #include "Util.hpp"
 #include "MasterProcessSession.hpp"
+#include "Unit.hpp"
 
 using Poco::DirectoryIterator;
 using Poco::File;
@@ -107,6 +108,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
     const std::string fileName = _cacheDir + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
+    UnitWSD::get().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, result);
     if (result && result->is_open())
     {
         Log::trace("Found cache tile: " + fileName);

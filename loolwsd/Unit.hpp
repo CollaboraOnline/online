@@ -133,12 +133,28 @@ public:
                      Poco::Net::HTTPServerResponse& /* response */)
         { return false; }
 
+    // ---------------- TileCache hooks ----------------
+    /// Called before the lookupTile call returns. Should always be called to fire events.
+    virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
+                            int tileWidth, int tileHeight, std::unique_ptr<std::fstream>& cacheFile);
+
     // ---------------- WSD events ----------------
     virtual void onChildConnected(const int /* pid */, const std::string& /* sessionId */) {}
     /// When admin notify message is sent
     virtual void onAdminNotifyMessage(const std::string& /* message */) {}
     /// When admin message is sent in response to a query
     virtual void onAdminQueryMessage(const std::string& /* message */) {}
+
+    // ---------------- TileCache events ----------------
+    virtual void onTileCacheHit(int /*part*/, int /*width*/, int /*height*/,
+                                int /*tilePosX*/, int /*tilePosY*/,
+                                int /*tileWidth*/, int /*tileHeight*/) {}
+    virtual void onTileCacheMiss(int /*part*/, int /*width*/, int /*height*/,
+                                 int /*tilePosX*/, int /*tilePosY*/,
+                                 int /*tileWidth*/, int /*tileHeight*/) {}
+    virtual void onTileCacheSubscribe(int /*part*/, int /*width*/, int /*height*/,
+                                      int /*tilePosX*/, int /*tilePosY*/,
+                                      int /*tileWidth*/, int /*tileHeight*/) {}
 };
 
 /// Derive your Kit unit test / hooks from me.

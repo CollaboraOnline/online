@@ -10,6 +10,8 @@
 #include <dlfcn.h>
 #include <ftw.h>
 #include <cassert>
+#include <fstream>
+
 #include "Util.hpp"
 #include "Unit.hpp"
 
@@ -124,6 +126,19 @@ UnitWSD::UnitWSD()
 
 UnitWSD::~UnitWSD()
 {
+}
+
+void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
+                         int tileWidth, int tileHeight, std::unique_ptr<std::fstream>& cacheFile)
+{
+    if (cacheFile && cacheFile->is_open())
+    {
+        onTileCacheHit(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    }
+    else
+    {
+        onTileCacheMiss(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    }
 }
 
 UnitKit::UnitKit()
