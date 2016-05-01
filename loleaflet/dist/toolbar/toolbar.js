@@ -46,6 +46,8 @@ $(function () {
 			{ type: 'break', id: 'incdecindent' },
 			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Insert Comment"), uno: 'InsertAnnotation' },
 			{ type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _("Insert Graphic") },
+			{ type: 'html',  id: 'inserttable-html', html: '<div id="tablePicker" class="evo-pop" style="position:absolute !important;display:none"><div id="tpstatus"></div><table id="insert-table"></table></div>' },
+			{ type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _("Insert Table") },
 			{ type: 'break' },
 			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
 			{ type: 'html', id: 'right' },
@@ -287,6 +289,14 @@ function onClick(id) {
 	}
 	else if (id === 'insertgraphic') {
 		L.DomUtil.get('insertgraphic').click();
+	}
+	else if (id === 'inserttable') {
+		// toggles tablePicker
+		if (L.DomUtil.get('tablePicker').style.display == 'none') {
+			L.DomUtil.get('tablePicker').style.display = '';
+		} else {
+			L.DomUtil.get('tablePicker').style.display = 'none';
+		}
 	}
 	else if (id === 'fontcolor') {
 		// absolutely no idea why, but without the timeout, the popup is
@@ -1005,5 +1015,74 @@ function resizeToolbar() {
 		$('#toolbar-up-more').hide();
 		var toolbar = w2ui['toolbar-up'];
 		toolbar.uncheck('more');
+	}
+}
+
+// tablePicker - init
+$(function() {
+	$( "#tablePicker" ).draggable();
+	tbl = document.getElementById('insert-table');
+	for (var i = 0; i < 3; i++) {
+		var tr = tbl.insertRow();
+		for (var j = 0; j < 3; j++) {
+			var td = tr.insertCell();
+		}
+	}
+	walkCells();
+});
+
+// tablePicker - GUI
+function walkCells() {
+	var table = document.getElementById('insert-table');
+	var cells = table.getElementsByTagName("td");
+
+	for (var i = 0; i < cells.length; i++) {
+		var cell = cells[i];
+		cell.onmouseover = function() {
+			var cellIndex = this.cellIndex + 1;
+			var rowIndex = this.parentNode.rowIndex + 1;
+			var div = document.getElementById('tpstatus');
+			div.innerHTML = cellIndex + " x " + rowIndex;
+			for (var j = 0; j < cells.length; j++) {
+				var celly = cells[j];
+				if (celly.parentNode.rowIndex < rowIndex & celly.cellIndex < cellIndex) {
+					celly.style.background = '#87CEFA';
+				} else {
+					celly.style.background = '';
+				}
+			}
+			if (cellIndex == table.rows[0].cells.length) {
+				for (var k = 0; k < table.rows.length; k++) {
+					table.rows[k].insertCell();
+					walkCells();
+				}
+			} else if (rowIndex == table.rows.length) {
+				var tr = table.insertRow();
+				for (var j = 0; j < table.rows[0].cells.length; j++) {
+					var td = tr.insertCell();
+				}
+				walkCells();
+			} else if ((table.rows.length>3 && rowIndex < table.rows.length-1)) {
+				table.deleteRow(table.rows.length-1);
+				walkCells();
+			} else if (table.rows[0].cells.length>3 && cellIndex < table.rows[0].cells.length-1 ) {
+				for (var j = 0; j < table.rows.length; j++) {
+					var tr = table.rows[j]
+					tr.deleteCell(table.rows[0].cells.length-1);
+				}
+				walkCells();
+			}
+		}
+		cell.onclick = function(){
+			var cellIndex = this.cellIndex + 1;
+			var rowIndex = this.parentNode.rowIndex + 1;
+			var msg = 'uno .uno:InsertTable {' +
+				' "Columns": { "type": "long","value": '
+				cellIndex +
+				' }, "Rows": { "type": "long","value": '
+				rowIndex +' }}';
+			map._socket.sendMessage(msg);
+			L.DomUtil.get('tablePicker').style.display = 'none';
+		}
 	}
 }

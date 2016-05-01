@@ -222,6 +222,7 @@ button.leaflet-control-search-next
 .w2ui-icon.insertpage{ background: url('/loleaflet/dist/images/lc_insertpage.png') no-repeat center !important; }
 .w2ui-icon.italic{ background: url('/loleaflet/dist/images/lc_italic.png') no-repeat center !important; }
 .w2ui-icon.insertgraphic{ background: url('/loleaflet/dist/images/lc_gallery.png') no-repeat center !important; }
+.w2ui-icon.inserttable{ background: url('/loleaflet/dist/images/lc_inserttable.png') no-repeat center !important; }
 .w2ui-icon.next{ background: url('/loleaflet/dist/images/lc_downsearch.png') no-repeat center !important; }
 .w2ui-icon.numbering{ background: url('/loleaflet/dist/images/lc_defaultnumbering.png') no-repeat center !important; }
 .w2ui-icon.presentation{ background: url('/loleaflet/dist/images/lc_dia.png') no-repeat center !important; }
@@ -252,4 +253,23 @@ button.leaflet-control-search-next
 	top:0px;
 	right:-10px;
 	cursor:pointer;
+}
+
+
+#tablePicker table {
+  border: 1px solid #808080;
+}
+
+#tablePicker td {
+  border: 1px solid #808080 !important;
+  width: 15px;
+  height: 15px;
+}
+
+#tablePicker td:hover {
+  background: #87CEFA;
+}
+
+#tablePicker div {
+    text-align:left;
 }
