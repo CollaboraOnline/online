@@ -170,13 +170,9 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
                       " bytes) will not be processed: [" + msg + "].");
         }
     }
-    catch (const Poco::Exception& exc)
-    {
-        Log::error("SocketProcessor: Exception: " + exc.message());
-    }
     catch (const std::exception& exc)
     {
-        Log::error("SocketProcessor: std::exception: " + std::string(exc.what()));
+        Log::error("SocketProcessor: exception: " + std::string(exc.what()));
     }
 
     Log::info("SocketProcessor finished.");
