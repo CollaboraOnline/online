@@ -80,9 +80,11 @@ else # newer unit tests.
         cat "$tst_log"
         echo "============================================================="
         echo "Test failed on unit: $tst re-run with:"
-	echo "   $ gdb --args ../loolwsd --systemplate=\"$systemplate_path\" --lotemplate=\"$lo_path\" \\"
-	echo "         --childroot=\"$jails_path\" --unitlib=\".libs/$tst.so\""
-	echo "============================================================="
-	echo ":test-result: FAIL $tst" >> $test_output
+        echo "   $ gdb --args ../loolwsd --systemplate=\"$systemplate_path\" \\"
+        echo "         --lotemplate=\"$lo_path\" \\"
+        echo "         --childroot=\"$jails_path\" --allowlocalstorage --admincreds="admin/admin" \\"
+        echo "         --unitlib=\".libs/$tst.so\""
+        echo "============================================================="
+        echo ":test-result: FAIL $tst" >> $test_output
     fi
 fi
