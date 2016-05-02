@@ -122,6 +122,15 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
     return isLoaded;
 }
 
+inline
+Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
+{
+#if ENABLE_SSL
+    return new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
+#else
+    return new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+#endif
+}
 
 // Connecting to a Kit process is managed by document broker, that it does several
 // jobs to establish the bridge connection between the Client and Kit process,
@@ -142,13 +151,10 @@ connectLOKit(Poco::URI uri,
 
     do
     {
-#if ENABLE_SSL
-        Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort());
-#else
-        Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
-#endif
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
+
         std::cerr << "Connecting... ";
-        ws = std::make_shared<Poco::Net::WebSocket>(session, request, response);
+        ws = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
 
         do
         {

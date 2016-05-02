@@ -31,13 +31,15 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
+#include "helpers.hpp"
+
 #define UNIT_URI "/loolwsd/unit-admin"
 
 using Poco::Net::HTTPBasicCredentials;
 using Poco::Net::HTTPCookie;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPSClientSession;
+using Poco::Net::HTTPClientSession;
 using Poco::StringTokenizer;
 
 // Inside the WSD process
@@ -74,10 +76,10 @@ private:
         HTTPResponse response;
         std::string path(_uri.getPathAndQuery());
         HTTPRequest request(HTTPRequest::HTTP_GET, path);
-        HTTPSClientSession session(_uri.getHost(), _uri.getPort());
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
 
-        session.sendRequest(request);
-        session.receiveResponse(response);
+        session->sendRequest(request);
+        session->receiveResponse(response);
         TestResult res = TestResult::TEST_FAILED;
         if (response.getStatus() == HTTPResponse::HTTP_UNAUTHORIZED)
             res = TestResult::TEST_OK;
@@ -91,12 +93,12 @@ private:
         HTTPResponse response;
         std::string path(_uri.getPathAndQuery());
         HTTPRequest request(HTTPRequest::HTTP_GET, path);
-        HTTPSClientSession session(_uri.getHost(), _uri.getPort());
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
         HTTPBasicCredentials credentials("admin", "admin");
         credentials.authenticate(request);
 
-        session.sendRequest(request);
-        session.receiveResponse(response);
+        session->sendRequest(request);
+        session->receiveResponse(response);
         std::vector<HTTPCookie> cookies;
         response.getCookies(cookies);
 
@@ -130,11 +132,11 @@ private:
         // try connecting without cookie; should result in exception
         HTTPResponse response;
         HTTPRequest request(HTTPRequest::HTTP_GET, "/adminws/");
-        HTTPSClientSession session(_uri.getHost(), _uri.getPort());
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
         bool authorized = true;
         try
         {
-            _adminWs = std::make_shared<Poco::Net::WebSocket>(session, request, response);
+            _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
         }
         catch (const Poco::Net::WebSocketException& exc)
         {
@@ -155,7 +157,7 @@ private:
     {
         HTTPResponse response;
         HTTPRequest request(HTTPRequest::HTTP_GET, "/adminws/");
-        HTTPSClientSession session(_uri.getHost(), _uri.getPort());
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
 
         // set cookie
         assert(_jwtCookie != "");
@@ -167,7 +169,7 @@ private:
         bool authorized = true;
         try
         {
-            _adminWs = std::make_shared<Poco::Net::WebSocket>(session, request, response);
+            _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
         }
         catch (const Poco::Net::WebSocketException& exc)
         {
@@ -195,10 +197,10 @@ private:
         HTTPResponse response1;
         const Poco::URI docUri1("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
         const std::string loadMessage1 = "load url=" + documentURL1;
-        HTTPSClientSession session1(docUri1.getHost(), docUri1.getPort());
-        HTTPSClientSession session2(docUri1.getHost(), docUri1.getPort());
-        _docWs1 = std::make_shared<Poco::Net::WebSocket>(session1, request1, response1);
-        _docWs2 = std::make_shared<Poco::Net::WebSocket>(session2, request1, response1);
+        std::unique_ptr<HTTPClientSession> session1(helpers::createSession(docUri1));
+        std::unique_ptr<HTTPClientSession> session2(helpers::createSession(docUri1));
+        _docWs1 = std::make_shared<Poco::Net::WebSocket>(*session1, request1, response1);
+        _docWs2 = std::make_shared<Poco::Net::WebSocket>(*session2, request1, response1);
 
         {
             _messageReceived.clear();
@@ -265,8 +267,8 @@ private:
         HTTPResponse response2;
         const Poco::URI docUri2("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
         const std::string loadMessage2 = "load url=" + documentURL2;
-        HTTPSClientSession session3(docUri2.getHost(), docUri2.getPort());
-        _docWs3 = std::make_shared<Poco::Net::WebSocket>(session3, request2, response2);
+        std::unique_ptr<HTTPClientSession> session3(helpers::createSession(docUri1));
+        _docWs3 = std::make_shared<Poco::Net::WebSocket>(*session3, request2, response2);
 
         {
             _messageReceived.clear();
