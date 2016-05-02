@@ -110,6 +110,12 @@ namespace LOOLProtocol
     {
         return getAbbreviatedMessage(message.data(), message.size());
     }
+
+    inline
+    std::string getAbbreviatedMessage(const std::vector<char>& message)
+    {
+        return getAbbreviatedMessage(message.data(), message.size());
+    }
 };
 
 #endif
