@@ -17,27 +17,6 @@
 #include "LOOLWSD.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
-#include "LOOLProtocol.hpp"
-
-using namespace LOOLProtocol;
-
-void ChildProcess::socketProcessor()
-{
-    IoUtil::SocketProcessor(_ws,
-        [this](const std::vector<char>& payload)
-        {
-            auto docBroker = this->_docBroker.lock();
-            if (docBroker)
-            {
-                return docBroker->handleInput(payload);
-            }
-
-            Log::warn("No DocumentBroker to handle child message: [" + LOOLProtocol::getAbbreviatedMessage(payload) + "].");
-            return true;
-        },
-        []() { },
-        [this]() { return !!this->_stop; });
-}
 
 namespace
 {
@@ -100,7 +79,6 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
 {
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
-
     Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
 }
 
@@ -379,14 +357,6 @@ size_t DocumentBroker::removeSession(const std::string& id)
     }
 
     return _sessions.size();
-}
-
-bool DocumentBroker::handleInput(const std::vector<char>& payload)
-{
-    Log::trace("DocumentBroker got child message: [" + LOOLProtocol::getAbbreviatedMessage(payload) + "].");
-
-    //TODO: Handle message.
-    return true;
 }
 
 bool DocumentBroker::canDestroy()

@@ -17,7 +17,6 @@
 #include <memory>
 #include <mutex>
 #include <string>
-#include <thread>
 #include <map>
 
 #include <Poco/URI.h>
@@ -40,10 +39,8 @@ public:
     /// @param ws is the control WebSocket to the child.
     ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<Poco::Net::WebSocket>& ws) :
         _pid(pid),
-        _ws(ws),
-        _stop(false)
+        _ws(ws)
     {
-        _thread = std::thread([this]() { this->socketProcessor(); });
         Log::info("ChildProcess ctor [" + std::to_string(_pid) + "].");
     }
 
@@ -60,15 +57,8 @@ public:
         }
     }
 
-    void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
-    {
-        _docBroker = docBroker;
-    }
-
     void close(const bool rude)
     {
-        _stop = true;
-        _thread.join();
         _ws.reset();
         if (_pid != -1)
         {
@@ -105,14 +95,8 @@ public:
     }
 
 private:
-    void socketProcessor();
-
-private:
     Poco::Process::PID _pid;
     std::shared_ptr<Poco::Net::WebSocket> _ws;
-    std::weak_ptr<DocumentBroker> _docBroker;
-    std::thread _thread;
-    std::atomic<bool> _stop;
 };
 
 /// DocumentBroker is responsible for setting up a document
@@ -199,8 +183,6 @@ public:
     // Called when the last view is going out.
     bool canDestroy();
     bool isMarkedToDestroy() const { return _markToDestroy; }
-
-    bool handleInput(const std::vector<char>& payload);
 
 private:
 
