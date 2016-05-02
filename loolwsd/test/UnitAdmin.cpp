@@ -195,7 +195,7 @@ private:
         const std::string documentURL1 = "file://" + Poco::Path(documentPath1).makeAbsolute().toString();
         HTTPRequest request1(HTTPRequest::HTTP_GET, documentURL1);
         HTTPResponse response1;
-        const Poco::URI docUri1("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+        const Poco::URI docUri1(getServerURI());
         const std::string loadMessage1 = "load url=" + documentURL1;
         std::unique_ptr<HTTPClientSession> session1(helpers::createSession(docUri1));
         std::unique_ptr<HTTPClientSession> session2(helpers::createSession(docUri1));
@@ -265,7 +265,7 @@ private:
         const std::string documentURL2 = "file://" + Poco::Path(documentPath2).makeAbsolute().toString();
         HTTPRequest request2(HTTPRequest::HTTP_GET, documentURL2);
         HTTPResponse response2;
-        const Poco::URI docUri2("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER));
+        const Poco::URI docUri2(getServerURI());
         const std::string loadMessage2 = "load url=" + documentURL2;
         std::unique_ptr<HTTPClientSession> session3(helpers::createSession(docUri1));
         _docWs3 = std::make_shared<Poco::Net::WebSocket>(*session3, request2, response2);
@@ -390,10 +390,18 @@ private:
         return TestResult::TEST_OK;
     }
 
+    std::string getServerURI()
+    {
+#if ENABLE_SSL
+        return "https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER);
+#else
+        return "http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER);
+#endif
+    }
 
 public:
     UnitAdmin()
-        : _uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "/loleaflet/dist/admin/admin.html")
+        : _uri(getServerURI() + "/loleaflet/dist/admin/admin.html")
     {
         // Register tests here.
         _tests.push_back(&UnitAdmin::testIncorrectPassword);
