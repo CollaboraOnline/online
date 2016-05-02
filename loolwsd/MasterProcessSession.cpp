@@ -181,22 +181,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         {
             if (tokens[0] == "tile:")
             {
-                int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
-                if (tokens.count() < 8 ||
-                    !getTokenInteger(tokens[1], "part", part) ||
-                    !getTokenInteger(tokens[2], "width", width) ||
-                    !getTokenInteger(tokens[3], "height", height) ||
-                    !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
-                    !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
-                    !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-                    !getTokenInteger(tokens[7], "tileheight", tileHeight))
-                    assert(false);
-
-                assert(_kind == Kind::ToPrisoner);
-                assert(firstLine.size() < static_cast<std::string::size_type>(length));
-                _docBroker->tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-
-                _docBroker->tileCache().notifyAndRemoveSubscribers(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, this);
+                assert(!"Tile traffic should go through the DocumentBroker-LoKit WS.");
             }
             else if (tokens[0] == "status:")
             {
@@ -504,9 +489,8 @@ void MasterProcessSession::sendFontRendering(const char *buffer, int length, Str
     forwardToPeer(buffer, length);
 }
 
-void MasterProcessSession::sendTile(const char *buffer, int length, StringTokenizer& tokens)
+void MasterProcessSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-
     int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
     if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
@@ -533,44 +517,8 @@ void MasterProcessSession::sendTile(const char *buffer, int length, StringTokeni
         return;
     }
 
-    std::unique_ptr<std::fstream> cachedTile = _docBroker->tileCache().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-
-    if (cachedTile)
-    {
-        std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end());
-
-#if ENABLE_DEBUG
-        response += " renderid=cached";
-#endif
-        response += "\n";
-
-        std::vector<char> output;
-        output.reserve(4 * width * height);
-        output.resize(response.size());
-        std::memcpy(output.data(), response.data(), response.size());
-
-        assert(cachedTile->is_open());
-        cachedTile->seekg(0, std::ios_base::end);
-        size_t pos = output.size();
-        std::streamsize size = cachedTile->tellg();
-        output.resize(pos + size);
-        cachedTile->seekg(0, std::ios_base::beg);
-        cachedTile->read(output.data() + pos, size);
-        cachedTile->close();
-
-        sendBinaryFrame(output.data(), output.size());
-
-        return;
-    }
-
-    if (_docBroker->tileCache().isTileBeingRenderedIfSoSubscribe(
-            part, width, height, tilePosX, tilePosY, tileWidth,
-            tileHeight, shared_from_this()))
-        return;
-
-    if (_peer.expired())
-        dispatchChild();
-    forwardToPeer(buffer, length);
+    _docBroker->handleTileRequest(part, width, height, tilePosX, tilePosY,
+                                  tileWidth, tileHeight, shared_from_this());
 }
 
 void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
@@ -614,8 +562,6 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
         return;
     }
 
-    std::string forwardTileX;
-    std::string forwardTileY;
     for (size_t i = 0; i < numberOfPositions; ++i)
     {
         int x = 0;
@@ -632,81 +578,9 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
             return;
         }
 
-        std::unique_ptr<std::fstream> cachedTile = _docBroker->tileCache().lookupTile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
-
-        if (cachedTile)
-        {
-            assert(cachedTile->is_open());
-            std::ostringstream oss;
-            oss << "tile: part=" << part
-                << " width=" << pixelWidth
-                << " height=" << pixelHeight
-                << " tileposx=" << x
-                << " tileposy=" << y
-                << " tilewidth=" << tileWidth
-                << " tileheight=" << tileHeight;
-
-            if (!reqTimestamp.empty())
-            {
-                oss << " timestamp=" << reqTimestamp;
-            }
-
-#if ENABLE_DEBUG
-            oss << " renderid=cached";
-#endif
-
-            oss << "\n";
-            const std::string response = oss.str();
-
-            std::vector<char> output;
-            output.reserve(4 * pixelWidth * pixelHeight);
-            output.resize(response.size());
-            std::memcpy(output.data(), response.data(), response.size());
-            cachedTile->seekg(0, std::ios_base::end);
-            const size_t pos = output.size();
-            const std::streamsize size = cachedTile->tellg();
-            output.resize(pos + size);
-            cachedTile->seekg(0, std::ios_base::beg);
-            cachedTile->read(output.data() + pos, size);
-            cachedTile->close();
-
-            sendBinaryFrame(output.data(), output.size());
-        }
-        else
-        {
-            if (!_docBroker->tileCache().isTileBeingRenderedIfSoSubscribe(
-                    part, pixelWidth, pixelHeight, x, y, tileWidth,
-                    tileHeight, shared_from_this()))
-            {
-                if (!forwardTileX.empty())
-                    forwardTileX += ",";
-                forwardTileX += std::to_string(x);
-
-                if (!forwardTileY.empty())
-                    forwardTileY += ",";
-                forwardTileY += std::to_string(y);
-            }
-        }
+        _docBroker->handleTileRequest(part, pixelWidth, pixelHeight, x, y,
+                                      tileWidth, tileHeight, shared_from_this());
     }
-
-    if (forwardTileX.empty() && forwardTileY.empty())
-        return;
-
-    if (_peer.expired())
-        dispatchChild();
-
-    std::string forward = "tilecombine part=" + std::to_string(part) +
-                          " width=" + std::to_string(pixelWidth) +
-                          " height=" + std::to_string(pixelHeight) +
-                          " tileposx=" + forwardTileX +
-                          " tileposy=" + forwardTileY +
-                          " tilewidth=" + std::to_string(tileWidth) +
-                          " tileheight=" + std::to_string(tileHeight);
-
-    if (!reqTimestamp.empty())
-        forward += " timestamp=" + reqTimestamp;
-
-    forwardToPeer(forward.c_str(), forward.size());
 }
 
 void MasterProcessSession::dispatchChild()

@@ -443,7 +443,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "tile")
     {
-        sendTile(buffer, length, tokens);
+        assert(!"Tile traffic should go through the DocumentBroker-LoKit WS.");
     }
     else if (tokens[0] == "tilecombine")
     {
@@ -723,81 +723,6 @@ namespace {
         std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
     }
-}
-
-void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
-{
-    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
-
-    if (tokens.count() < 8 ||
-        !getTokenInteger(tokens[1], "part", part) ||
-        !getTokenInteger(tokens[2], "width", width) ||
-        !getTokenInteger(tokens[3], "height", height) ||
-        !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
-        !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
-        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-        !getTokenInteger(tokens[7], "tileheight", tileHeight))
-    {
-        sendTextFrame("error: cmd=tile kind=syntax");
-        return;
-    }
-
-    if (part < 0 ||
-        width <= 0 ||
-        height <= 0 ||
-        tilePosX < 0 ||
-        tilePosY < 0 ||
-        tileWidth <= 0 ||
-        tileHeight <= 0)
-    {
-        sendTextFrame("error: cmd=tile kind=invalid");
-        return;
-    }
-
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
-
-    if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
-
-    std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end());
-
-#if ENABLE_DEBUG
-    response += " renderid=" + Util::UniqueId();
-#endif
-    response += "\n";
-
-    std::vector<char> output;
-    output.reserve(response.size() + (4 * width * height));
-    output.resize(response.size());
-    std::memcpy(output.data(), response.data(), response.size());
-
-    std::vector<unsigned char> pixmap;
-    pixmap.resize(4 * width * height);
-
-    bool makeSlow = delayAndRewritePart(part);
-
-    if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument))
-    {
-        _loKitDocument->pClass->setPart(_loKitDocument, part);
-    }
-
-    Timestamp timestamp;
-    _loKitDocument->pClass->paintTile(_loKitDocument, pixmap.data(), width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
-                 << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
-
-    const LibreOfficeKitTileMode mode =
-            static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
-    if (!Util::encodeBufferToPNG(pixmap.data(), width, height, output, mode))
-    {
-        sendTextFrame("error: cmd=tile kind=failure");
-        return;
-    }
-
-    if (makeSlow)
-        delay();
-
-    sendBinaryFrame(output.data(), output.size());
 }
 
 void ChildProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)

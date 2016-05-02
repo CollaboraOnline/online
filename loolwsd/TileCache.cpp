@@ -330,7 +330,7 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
     modTimeFile.close();
 }
 
-void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, MasterProcessSession *emitter)
+void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
@@ -345,12 +345,7 @@ void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int 
         auto subscriber = i.lock();
         if (subscriber)
         {
-            if (subscriber.get() == emitter)
-            {
-                Log::error("Refusing to queue new tile message for ourselves");
-                continue;
-            }
-
+            //FIXME: This is inefficient; should just send directly to each client (although that is risky as well!
             std::shared_ptr<BasicTileQueue> queue;
             queue = subscriber->getQueue();
             // Re-emit the tile command in the other thread(s) to re-check and hit
@@ -404,7 +399,9 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height
 
         assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
 
-        _tilesBeingRendered[cachedName] = std::make_shared<TileBeingRendered>();
+        auto tileBeingRendered = std::make_shared<TileBeingRendered>();
+        tileBeingRendered->_subscribers.push_back(subscriber);
+        _tilesBeingRendered[cachedName] = tileBeingRendered;
 
         return false;
     }

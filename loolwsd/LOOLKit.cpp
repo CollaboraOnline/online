@@ -574,6 +574,93 @@ public:
         Log::info("setDocumentPassword returned");
     }
 
+    void renderTile(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
+    {
+        int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
+
+        if (tokens.count() < 8 ||
+            !getTokenInteger(tokens[1], "part", part) ||
+            !getTokenInteger(tokens[2], "width", width) ||
+            !getTokenInteger(tokens[3], "height", height) ||
+            !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
+            !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
+            !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
+            !getTokenInteger(tokens[7], "tileheight", tileHeight))
+        {
+            //FIXME: Return error.
+            //sendTextFrame("error: cmd=tile kind=syntax");
+            return;
+        }
+
+        if (part < 0 ||
+            width <= 0 ||
+            height <= 0 ||
+            tilePosX < 0 ||
+            tilePosY < 0 ||
+            tileWidth <= 0 ||
+            tileHeight <= 0)
+        {
+            //FIXME: Return error.
+            //sendTextFrame("error: cmd=tile kind=invalid");
+            return;
+        }
+
+        std::unique_lock<std::recursive_mutex> lock(ChildProcessSession::getLock());
+
+        if (_loKitDocument == nullptr)
+        {
+            Log::error("Tile rendering requested before loading document.");
+            return;
+        }
+
+        //TODO: Support multiviews.
+        //if (_multiView)
+            //_loKitDocument->pClass->setView(_loKitDocument, _viewId);
+
+        std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end());
+
+#if ENABLE_DEBUG
+        response += " renderid=" + Util::UniqueId();
+#endif
+        response += "\n";
+
+        std::vector<char> output;
+        output.reserve(response.size() + (4 * width * height));
+        output.resize(response.size());
+        std::memcpy(output.data(), response.data(), response.size());
+
+        std::vector<unsigned char> pixmap;
+        pixmap.resize(4 * width * height);
+
+        if (part != _loKitDocument->pClass->getPart(_loKitDocument))
+        {
+            _loKitDocument->pClass->setPart(_loKitDocument, part);
+        }
+
+        Timestamp timestamp;
+        _loKitDocument->pClass->paintTile(_loKitDocument, pixmap.data(), width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+        Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
+                     << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
+
+        const LibreOfficeKitTileMode mode =
+                static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
+        if (!Util::encodeBufferToPNG(pixmap.data(), width, height, output, mode))
+        {
+            //FIXME: Return error.
+            //sendTextFrame("error: cmd=tile kind=failure");
+            return;
+        }
+
+        const auto length = output.size();
+        if (length > SMALL_MESSAGE_SIZE)
+        {
+            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+            ws->sendFrame(nextmessage.data(), nextmessage.size());
+        }
+
+        ws->sendFrame(output.data(), length, WebSocket::FRAME_BINARY);
+    }
+
 private:
 
     static void ViewCallback(int , const char* , void* )
@@ -1035,6 +1122,13 @@ void lokit_main(const std::string& childRoot,
                             document->createSession(sessionId, intSessionId)))
                         {
                             Log::debug("CreateSession failed.");
+                        }
+                    }
+                    else if (tokens[0] == "tile")
+                    {
+                        if (document)
+                        {
+                            document->renderTile(tokens, ws);
                         }
                     }
                     else if (document && document->canDiscard())

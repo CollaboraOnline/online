@@ -17,6 +17,27 @@
 #include "LOOLWSD.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
+#include "LOOLProtocol.hpp"
+
+using namespace LOOLProtocol;
+
+void ChildProcess::socketProcessor()
+{
+    IoUtil::SocketProcessor(_ws,
+        [this](const std::vector<char>& payload)
+        {
+            auto docBroker = this->_docBroker.lock();
+            if (docBroker)
+            {
+                return docBroker->handleInput(payload);
+            }
+
+            Log::warn("No DocumentBroker to handle child message: [" + LOOLProtocol::getAbbreviatedMessage(payload) + "].");
+            return true;
+        },
+        []() { },
+        [this]() { return !!this->_stop; });
+}
 
 namespace
 {
@@ -353,6 +374,105 @@ size_t DocumentBroker::removeSession(const std::string& id)
     }
 
     return _sessions.size();
+}
+
+bool DocumentBroker::handleInput(const std::vector<char>& payload)
+{
+    Log::trace("DocumentBroker got child message: [" + LOOLProtocol::getAbbreviatedMessage(payload) + "].");
+
+    const auto command = LOOLProtocol::getFirstToken(payload);
+    if (command == "tile:")
+    {
+        handleTileResponse(payload);
+    }
+
+    return true;
+}
+
+void DocumentBroker::handleTileRequest(int part, int width, int height, int tilePosX,
+                                       int tilePosY, int tileWidth, int tileHeight,
+                                       const std::shared_ptr<MasterProcessSession>& session)
+{
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    std::unique_ptr<std::fstream> cachedTile = tileCache().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+
+    if (cachedTile)
+    {
+        std::ostringstream oss;
+        oss << "tile: part=" << part
+            << " width=" << width
+            << " height=" << height
+            << " tileposx=" << tilePosX
+            << " tileposy=" << tilePosY
+            << " tilewidth=" << tileWidth
+            << " tileheight=" << tileHeight;
+
+#if ENABLE_DEBUG
+        oss << " renderid=cached";
+#endif
+        oss << "\n";
+        const auto response = oss.str();
+
+        std::vector<char> output;
+        output.reserve(4 * width * height);
+        output.resize(response.size());
+        std::memcpy(output.data(), response.data(), response.size());
+
+        assert(cachedTile->is_open());
+        cachedTile->seekg(0, std::ios_base::end);
+        size_t pos = output.size();
+        std::streamsize size = cachedTile->tellg();
+        output.resize(pos + size);
+        cachedTile->seekg(0, std::ios_base::beg);
+        cachedTile->read(output.data() + pos, size);
+        cachedTile->close();
+
+        session->sendBinaryFrame(output.data(), output.size());
+        return;
+    }
+
+    if (tileCache().isTileBeingRenderedIfSoSubscribe(
+            part, width, height, tilePosX, tilePosY, tileWidth,
+            tileHeight, session))
+        return;
+
+    // Forward to child to render.
+    std::ostringstream oss;
+    oss << "tile part=" << part
+        << " width=" << width
+        << " height=" << height
+        << " tileposx=" << tilePosX
+        << " tileposy=" << tilePosY
+        << " tilewidth=" << tileWidth
+        << " tileheight=" << tileHeight;
+    const std::string request = oss.str();
+
+    _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
+}
+
+void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
+{
+    const std::string firstLine = getFirstLine(payload);
+    Poco::StringTokenizer tokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+
+    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
+    if (tokens.count() < 8 ||
+        !getTokenInteger(tokens[1], "part", part) ||
+        !getTokenInteger(tokens[2], "width", width) ||
+        !getTokenInteger(tokens[3], "height", height) ||
+        !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
+        !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
+        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
+        !getTokenInteger(tokens[7], "tileheight", tileHeight))
+        assert(false);
+
+    const auto buffer = payload.data();
+    const auto length = payload.size();
+    assert(firstLine.size() < static_cast<std::string::size_type>(length));
+    tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+
+    tileCache().notifyAndRemoveSubscribers(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 }
 
 bool DocumentBroker::canDestroy()

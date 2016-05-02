@@ -197,6 +197,12 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
+    void handleTileRequest(int part, int width, int height, int tilePosX,
+                           int tilePosY, int tileWidth, int tileHeight,
+                           const std::shared_ptr<MasterProcessSession>& session);
+
+    void handleTileResponse(const std::vector<char>& payload);
+
     // Called when the last view is going out.
     bool canDestroy();
     bool isMarkedToDestroy() const { return _markToDestroy; }
