@@ -533,6 +533,7 @@ private:
             // Set one we just created.
             Log::debug("New DocumentBroker for docKey [" + docKey + "].");
             docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
+            child->setDocumentBroker(docBroker);
         }
 
         // Validate the broker.
