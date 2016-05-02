@@ -725,7 +725,6 @@ namespace {
     }
 }
 
-
 void ChildProcessSession::sendTile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;

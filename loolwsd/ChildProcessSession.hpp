@@ -60,7 +60,7 @@ public:
 
     void loKitCallback(const int nType, const char* pPayload);
 
-    std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
+    static std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
 
     void setDocState(const int type, const std::string& payload) { _lastDocStates[type] = payload; }
 
