@@ -35,11 +35,6 @@ class TileCache;
 class ChildProcess
 {
 public:
-    ChildProcess() :
-        _pid(-1)
-    {
-    }
-
     /// @param pid is the process ID of the child.
     /// @param ws is the control WebSocket to the child.
     ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<Poco::Net::WebSocket>& ws) :
@@ -49,25 +44,9 @@ public:
         Log::info("ChildProcess ctor [" + std::to_string(_pid) + "].");
     }
 
-    ChildProcess(ChildProcess&& other) :
-        _pid(other._pid),
-        _ws(other._ws)
-    {
-        Log::info("ChildProcess move ctor [" + std::to_string(_pid) + "].");
-        other._pid = -1;
-        other._ws.reset();
-    }
+    ChildProcess(ChildProcess&& other) = delete;
 
-    const ChildProcess& operator=(ChildProcess&& other)
-    {
-        Log::info("ChildProcess assign [" + std::to_string(_pid) + "].");
-        _pid = other._pid;
-        other._pid = -1;
-        _ws = other._ws;
-        other._ws.reset();
-
-        return *this;
-    }
+    const ChildProcess& operator=(ChildProcess&& other) = delete;
 
     ~ChildProcess()
     {
