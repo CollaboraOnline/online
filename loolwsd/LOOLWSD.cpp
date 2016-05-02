@@ -167,7 +167,7 @@ static int careerSpanSeconds = 0;
 
 static void forkChildren(const int number)
 {
-    assert(!newChildrenMutex.try_lock()); // check it is held.
+    Util::assertIsLocked(newChildrenMutex);
 
     if (number > 0)
     {

@@ -56,6 +56,13 @@ namespace Util
                               int bufferWidth, int bufferHeight,
                               std::vector<char>& output, LibreOfficeKitTileMode mode);
 
+    /// Assert that a lock is already taken.
+    template <typename T>
+    void assertIsLocked(T& lock)
+    {
+        assert(!lock.try_lock());
+    }
+
     /// Safely remove a file or directory.
     /// Supresses exception when the file is already removed.
     /// This can happen when there is a race (unavoidable) or when

@@ -253,7 +253,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
 bool DocumentBroker::sendUnoSave()
 {
     Log::info("Autosave triggered for doc [" + _docKey + "].");
-    assert(!_mutex.try_lock());
+    Util::assertIsLocked(_mutex);
 
     // Save using session holding the edit-lock
     for (auto& sessionIt: _sessions)

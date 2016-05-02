@@ -89,7 +89,7 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(i
 {
     const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    assert(!_tilesBeingRenderedMutex.try_lock());
+    Util::assertIsLocked(_tilesBeingRenderedMutex);
 
     const auto tile = _tilesBeingRendered.find(cachedName);
     return (tile != _tilesBeingRendered.end() ? tile->second : nullptr);
@@ -99,7 +99,7 @@ void TileCache::forgetTileBeingRendered(int part, int width, int height, int til
 {
     const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    assert(!_tilesBeingRenderedMutex.try_lock());
+    Util::assertIsLocked(_tilesBeingRenderedMutex);
 
     assert(_tilesBeingRendered.find(cachedName) != _tilesBeingRendered.end());
     _tilesBeingRendered.erase(cachedName);
