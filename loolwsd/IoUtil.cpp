@@ -67,7 +67,8 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
                 break;
             }
 
-            if (!ws->poll(waitTime, Poco::Net::Socket::SELECT_READ))
+            if (!ws->poll(waitTime, Poco::Net::Socket::SELECT_READ) ||
+                stopPredicate())
             {
                 // Wait some more.
                 continue;

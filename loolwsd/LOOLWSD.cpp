@@ -597,7 +597,7 @@ private:
                     return true;
                 },
                 [&session]() { session->closeFrame(); },
-                [&queueHandlerThread]() { return TerminationFlag && queueHandlerThread.isRunning(); });
+                [&queueHandlerThread]() { return TerminationFlag || !queueHandlerThread.isRunning(); });
 
             const bool canDestroy = docBroker->canDestroy();
             if (canDestroy && !session->_bLoadError)
