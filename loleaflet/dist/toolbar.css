@@ -49,6 +49,7 @@
     text-align: center;
     bottom: 28px;
     width: 203px;
+    padding: 0;
     position: absolute;
     z-index: 500;
 }
