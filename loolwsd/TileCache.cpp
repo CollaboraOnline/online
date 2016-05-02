@@ -89,8 +89,9 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(i
 {
     const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    const auto tile = _tilesBeingRendered.find(cachedName);
+    assert(!_tilesBeingRenderedMutex.try_lock());
 
+    const auto tile = _tilesBeingRendered.find(cachedName);
     return (tile != _tilesBeingRendered.end() ? tile->second : nullptr);
 }
 
@@ -98,8 +99,9 @@ void TileCache::forgetTileBeingRendered(int part, int width, int height, int til
 {
     const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    assert(_tilesBeingRendered.find(cachedName) != _tilesBeingRendered.end());
+    assert(!_tilesBeingRenderedMutex.try_lock());
 
+    assert(_tilesBeingRendered.find(cachedName) != _tilesBeingRendered.end());
     _tilesBeingRendered.erase(cachedName);
 }
 
@@ -109,6 +111,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
     UnitWSD::get().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, result);
+
     if (result && result->is_open())
     {
         Log::trace("Found cache tile: " + fileName);
