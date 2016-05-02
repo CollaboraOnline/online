@@ -136,7 +136,7 @@ mkdir -p ${loolparent}/lool/child-roots
 chown lool:lool ${loolparent}/lool
 chown lool:lool ${loolparent}/lool/child-roots
 
-su lool -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null"
+su lool -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null 2>&1"
 
 %if 0%{?fedora} || 0%{?rhel} >= 7
 %systemd_post loolwsd.service
