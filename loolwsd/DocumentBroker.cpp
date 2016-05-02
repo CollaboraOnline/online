@@ -79,6 +79,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
 {
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
+
     Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
 }
 
