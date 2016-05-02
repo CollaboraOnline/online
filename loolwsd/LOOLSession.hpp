@@ -40,6 +40,7 @@ public:
     bool isDisconnected() const { return _disconnected; }
 
     void sendTextFrame(const std::string& text);
+    void sendBinaryFrame(const char *buffer, int length);
 
     virtual bool getStatus(const char *buffer, int length) = 0;
 
@@ -80,8 +81,6 @@ protected:
         _id = id;
         _name = _kindString + '-' + id;
     }
-
-    void sendBinaryFrame(const char *buffer, int length);
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
     void parseDocOptions(const Poco::StringTokenizer& tokens, int& part, std::string& timestamp);
