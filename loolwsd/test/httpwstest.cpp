@@ -180,11 +180,7 @@ void HTTPWSTest::testBadRequest()
 
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#if ENABLE_SSL
-        Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
-#else
-        Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
-#endif
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         // This should result in Bad Request, but results in:
         // WebSocket Exception: Missing Sec-WebSocket-Key in handshake request
         // So Service Unavailable is returned.
@@ -194,9 +190,9 @@ void HTTPWSTest::testBadRequest()
         request.set("Sec-WebSocket-Version", "13");
         request.set("Sec-WebSocket-Key", "");
         request.setChunkedTransferEncoding(false);
-        session.setKeepAlive(true);
-        session.sendRequest(request);
-        session.receiveResponse(response);
+        session->setKeepAlive(true);
+        session->sendRequest(request);
+        session->receiveResponse(response);
         CPPUNIT_ASSERT(response.getStatus() == Poco::Net::HTTPResponse::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
     }
     catch (const Poco::Exception& exc)
@@ -218,12 +214,8 @@ void HTTPWSTest::testHandShake()
 
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-#if ENABLE_SSL
-        Poco::Net::HTTPSClientSession session(_uri.getHost(), _uri.getPort());
-#else
-        Poco::Net::HTTPClientSession session(_uri.getHost(), _uri.getPort());
-#endif
-        Poco::Net::WebSocket socket(session, request, response);
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+        Poco::Net::WebSocket socket(*session, request, response);
 
         const char* fail = "error:";
         std::string payload("statusindicator: find");
