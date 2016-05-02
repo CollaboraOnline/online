@@ -46,6 +46,7 @@
 #include <Poco/Util/Application.h>
 #include <Poco/Util/OptionSet.h>
 
+/** Simple command-line tool for file format conversion. */
 class Tool: public Poco::Util::Application
 {
 public:

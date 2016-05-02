@@ -132,6 +132,7 @@ public:
     WebSocket& _ws;
 };
 
+/** Program for interactive or scripted testing of a lool server. */
 class Connect: public Poco::Util::Application
 {
 public:
