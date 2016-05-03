@@ -1,6 +1,19 @@
 All communication consists of messages that are one line of
 human-readable UTF-8 text (with no terminating newline), optionally
-followed by a single newline and binary data.
+followed by a single newline and arbitrary (potentialy even binary)
+data.
+
+The WebSocket distinction between 'text' and 'binary' frames has no
+meaning for us for messages that don't contain additional binary data;
+such messages can be either 'binary' or 'text' from the WebSocket
+point of view even if we require them (the single line) to be
+UTF-8. In other words, an implementation is free to send such a
+single-line message as a WebSocket 'binary' frame, and the receiving
+implementation must treat that equally as if it was a 'text' frame.
+
+The WebSocket protocol says that 'text' frames are to be "interpreted"
+as UTF-8, so it is probably best to indeed use 'binary' frames for
+messages that contain optional non-UTF-8 data.
 
 The protocol is not a request-response one. Messages may be sent in
 either direction at any time, either in response to some message, or
