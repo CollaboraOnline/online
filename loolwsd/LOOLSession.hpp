@@ -87,10 +87,6 @@ protected:
 
     virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
-    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
-
-    virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
-
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
     void updateLastActivityTime()

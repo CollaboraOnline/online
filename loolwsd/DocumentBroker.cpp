@@ -393,6 +393,10 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
                                        int tilePosY, int tileWidth, int tileHeight,
                                        const std::shared_ptr<MasterProcessSession>& session)
 {
+    Log::trace() << "Tile request for part: " << part << ", width: " << width << ", height: " << height
+                 << ", tilePosX: " << tilePosX << ", tilePosY: " << tilePosY << ", tileWidth: " << tileWidth
+                 << ", tileHeight: " << tileHeight << Log::end;
+
     std::unique_lock<std::mutex> lock(_mutex);
 
     std::unique_ptr<std::fstream> cachedTile = tileCache().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
