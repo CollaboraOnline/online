@@ -73,7 +73,7 @@ else # newer unit tests.
                                    --childroot="$jails_path" \
                                    --allowlocalstorage \
                                    --admincreds="admin/admin" \
-                                   --unitlib=".libs/$tst.so" 2> "$tst_log"; then
+                                   --unitlib=".libs/$tst.so" > "$tst_log" 2>&1; then
         echo "Test $tst passed."
         echo ":test-result: PASS $tst" >> $test_output
     else
