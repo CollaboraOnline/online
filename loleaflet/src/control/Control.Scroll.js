@@ -114,9 +114,9 @@ L.Control.Scroll = L.Control.extend({
 
 	_onUpdateSize: function (e) {
 		this._ignoreScroll = true;
-		setTimeout(L.bind(function() {this._ignoreScroll = null;}, this), 200);
 		L.DomUtil.setStyle(this._mockDoc, 'width', e.x + 'px');
 		L.DomUtil.setStyle(this._mockDoc, 'height', e.y + 'px');
+		this._ignoreScroll = null;
 	},
 
 	_onUpdateScrollOffset: function (e) {
