@@ -50,7 +50,7 @@ int receiveFrame(WebSocket& socket, void* buffer, int length, int& flags)
         }
         else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
         {
-            // In case we do send pings in the future.
+            // In case we do send pongs in the future.
         }
         else if (((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_TEXT ||
                   (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_BINARY) &&
