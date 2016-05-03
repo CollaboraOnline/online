@@ -177,6 +177,7 @@ static void forkChildren(const int number)
     }
 }
 
+/// Called on startup only.
 static void preForkChildren()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
@@ -184,6 +185,24 @@ static void preForkChildren()
     UnitWSD::get().preSpawnCount(numPreSpawn);
     --numPreSpawn; // ForKit always spawns one child at startup.
     forkChildren(numPreSpawn);
+}
+
+static void prespawnChildren()
+{
+    std::unique_lock<std::mutex> lock(newChildrenMutex);
+
+    for (int i = newChildren.size() - 1; i >= 0; --i)
+    {
+        if (!newChildren[i]->isAlive())
+        {
+            newChildren.erase(newChildren.begin() + i);
+        }
+    }
+
+    const int available = newChildren.size();
+    int balance = LOOLWSD::NumPreSpawnedChildren;
+    balance -= available;
+    forkChildren(balance);
 }
 
 static std::shared_ptr<ChildProcess> getNewChild()
@@ -203,6 +222,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         else
         {
             balance -= available - 1; // Minus the one we'll dispatch just now.
+            std::max(balance, 0);
         }
 
         Log::debug("getNewChild: Have " + std::to_string(available) + " children, forking " + std::to_string(balance));
@@ -1593,7 +1613,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     last30SecCheck = time(nullptr);
                 }
             }
+
             sleep(WSD_SLEEP_SECS);
+
+            // Make sure we have sufficient reserves.
+            prespawnChildren();
         }
 #if ENABLE_DEBUG
         if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)
