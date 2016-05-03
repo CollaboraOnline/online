@@ -370,10 +370,11 @@ L.GridLayer = L.Layer.extend({
 										 this._docHeightTwips / this.options.tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 
+		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		var topLeft = new L.Point(0, 0);
-		topLeft = this._map.unproject(topLeft);
+		topLeft = this._map.unproject(topLeft.multiplyBy(scale));
 		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
-		bottomRight = this._map.unproject(bottomRight);
+		bottomRight = this._map.unproject(bottomRight.multiplyBy(scale));
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
