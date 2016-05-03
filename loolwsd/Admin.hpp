@@ -33,10 +33,14 @@ public:
 private:
     void handleWSRequests(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response, int nSessionId);
 
-    void sendTextFrame(std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& message);
+    void sendTextFrame(const std::string& message);
+
+    bool adminCommandHandler(const std::vector<char>& payload);
 
 private:
     Admin* _admin;
+    std::shared_ptr<Poco::Net::WebSocket> _adminWs;
+    int _sessionId;
 };
 
 /// An admin command processor.

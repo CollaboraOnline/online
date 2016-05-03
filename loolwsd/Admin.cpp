@@ -12,7 +12,6 @@
 #include <sys/poll.h>
 
 #include <Poco/Net/HTTPCookie.h>
-#include <Poco/Net/HTTPBasicCredentials.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServerParams.h>
@@ -41,7 +40,6 @@
 using namespace LOOLProtocol;
 
 using Poco::StringTokenizer;
-using Poco::Net::HTTPBasicCredentials;
 using Poco::Net::HTTPCookie;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
@@ -57,219 +55,172 @@ using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Util::Application;
 
-/// Handle admin requests.
-void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServerResponse& response, int nSessionId)
+bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
 {
-    try
+    const std::string firstLine = getFirstLine(payload.data(), payload.size());
+    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    Log::trace("Recv: " + firstLine);
+
+    if (tokens.count() < 1)
+        return false;
+
+    std::unique_lock<std::mutex> modelLock(_admin->getLock());
+    AdminModel& model = _admin->getModel();
+
+    if (tokens[0] == "documents" ||
+        tokens[0] == "active_users_count" ||
+        tokens[0] == "active_docs_count" ||
+        tokens[0] == "mem_stats" ||
+        tokens[0] == "cpu_stats" )
     {
-        auto ws = std::make_shared<WebSocket>(request, response);
-
+        const std::string responseFrame = tokens[0] + " " + model.query(tokens[0]);
+        sendTextFrame(responseFrame);
+    }
+    else if (tokens[0] == "subscribe" && tokens.count() > 1)
+    {
+        for (unsigned i = 0; i < tokens.count() - 1; i++)
         {
-            std::unique_lock<std::mutex> modelLock(_admin->getLock());
-            // Subscribe the websocket of any AdminModel updates
-            AdminModel& model = _admin->getModel();
-            model.subscribe(nSessionId, ws);
+            model.subscribe(_sessionId, tokens[i + 1]);
         }
-
-        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
-        int flags = 0;
-        int n = 0;
-        ws->setReceiveTimeout(0);
-        do
+    }
+    else if (tokens[0] == "unsubscribe" && tokens.count() > 1)
+    {
+        for (unsigned i = 0; i < tokens.count() - 1; i++)
         {
-            char buffer[200000]; //FIXME: Dynamic?
-
-            if (ws->poll(waitTime, Socket::SELECT_READ))
+            model.unsubscribe(_sessionId, tokens[i + 1]);
+        }
+    }
+    else if (tokens[0] == "total_mem")
+    {
+        unsigned totalMem = _admin->getTotalMemoryUsage(model);
+        std::string responseFrame = "total_mem " + std::to_string(totalMem);
+        sendTextFrame(responseFrame);
+    }
+    else if (tokens[0] == "kill" && tokens.count() == 2)
+    {
+        try
+        {
+            const auto pid = std::stoi(tokens[1]);
+            if (kill(pid, SIGINT) != 0 && kill(pid, 0) !=0)
             {
-                n = IoUtil::receiveFrame(*ws, buffer, sizeof(buffer), flags);
+                Log::syserror("Cannot terminate PID: " + tokens[0]);
+            }
+        }
+        catch(std::invalid_argument& exc)
+        {
+            Log::warn() << "Invalid PID to kill: " << tokens[0] << Log::end;
+            return false;
+        }
+    }
+    else if (tokens[0] == "settings")
+    {
+        // for now, we have only these settings
+        std::ostringstream oss;
+        oss << tokens[0] << " "
+            << "mem_stats_size=" << model.query("mem_stats_size") << " "
+            << "mem_stats_interval=" << std::to_string(_admin->getMemStatsInterval()) << " "
+            << "cpu_stats_size="  << model.query("cpu_stats_size") << " "
+            << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval());
 
-                if (n <= 0)
+        std::string responseFrame = oss.str();
+        sendTextFrame(responseFrame);
+    }
+    else if (tokens[0] == "set" && tokens.count() > 1)
+    {
+        for (unsigned i = 1; i < tokens.count(); i++)
+        {
+            StringTokenizer setting(tokens[i], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            unsigned settingVal = 0;
+            try
+            {
+                settingVal = std::stoi(setting[1]);
+            }
+            catch (const std::exception& exc)
+            {
+                Log::warn() << "Invalid setting value: "
+                            << setting[1] << " for "
+                            << setting[0] << Log::end;
+                return false;
+            }
+
+            if (setting[0] == "mem_stats_size")
+            {
+                if (settingVal != static_cast<unsigned>(std::stoi(model.query(setting[0]))))
                 {
-                    // Connection closed.
-                    Log::warn() << "Received " << n
-                                << " bytes. Connection closed. Flags: "
-                                << std::hex << flags << Log::end;
-                    break;
+                    model.setMemStatsSize(settingVal);
                 }
-                else
+            }
+            else if (setting[0] == "mem_stats_interval")
+            {
+                if (settingVal != _admin->getMemStatsInterval())
                 {
-                    assert(n > 0);
-                    const std::string firstLine = getFirstLine(buffer, n);
-                    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                    Log::trace("Recv: " + firstLine);
-
-                    if (tokens.count() < 1)
-                        continue;
-
-                    // Lock the model mutex before interacting with it
-                    std::unique_lock<std::mutex> modelLock(_admin->getLock());
-                    AdminModel& model = _admin->getModel();
-
-                    if (tokens[0] == "documents" ||
-                        tokens[0] == "active_users_count" ||
-                        tokens[0] == "active_docs_count" ||
-                        tokens[0] == "mem_stats" ||
-                        tokens[0] == "cpu_stats" )
-                    {
-                        const std::string responseFrame = tokens[0] + " " + model.query(tokens[0]);
-                        sendTextFrame(ws, responseFrame);
-                    }
-                    else if (tokens[0] == "subscribe" && tokens.count() > 1)
-                    {
-                        for (unsigned i = 0; i < tokens.count() - 1; i++)
-                        {
-                            model.subscribe(nSessionId, tokens[i + 1]);
-                        }
-                    }
-                    else if (tokens[0] == "unsubscribe" && tokens.count() > 1)
-                    {
-                        for (unsigned i = 0; i < tokens.count() - 1; i++)
-                        {
-                            model.unsubscribe(nSessionId, tokens[i + 1]);
-                        }
-                    }
-                    else if (tokens[0] == "total_mem")
-                    {
-                        unsigned totalMem = _admin->getTotalMemoryUsage(model);
-                        std::string responseFrame = "total_mem " + std::to_string(totalMem);
-                        sendTextFrame(ws, responseFrame);
-                    }
-                    else if (tokens[0] == "kill" && tokens.count() == 2)
-                    {
-                        try
-                        {
-                            const auto pid = std::stoi(tokens[1]);
-                            if (kill(pid, SIGINT) != 0 && kill(pid, 0) !=0)
-                            {
-                                Log::syserror("Cannot terminate PID: " + tokens[0]);
-                            }
-                        }
-                        catch(std::invalid_argument& exc)
-                        {
-                            Log::warn() << "Invalid PID to kill: " << tokens[0] << Log::end;
-                        }
-                    }
-                    else if (tokens[0] == "settings")
-                    {
-                        // for now, we have only these settings
-                        std::ostringstream oss;
-                        oss << tokens[0] << " "
-                            << "mem_stats_size=" << model.query("mem_stats_size") << " "
-                            << "mem_stats_interval=" << std::to_string(_admin->getMemStatsInterval()) << " "
-                            << "cpu_stats_size="  << model.query("cpu_stats_size") << " "
-                            << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval());
-
-                        std::string responseFrame = oss.str();
-                        sendTextFrame(ws, responseFrame);
-                    }
-                    else if (tokens[0] == "set" && tokens.count() > 1)
-                    {
-                        for (unsigned i = 1; i < tokens.count(); i++)
-                        {
-                            StringTokenizer setting(tokens[i], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                            unsigned settingVal = 0;
-                            try
-                            {
-                                settingVal = std::stoi(setting[1]);
-                            }
-                            catch (const std::exception& exc)
-                            {
-                                Log::warn() << "Invalid setting value: "
-                                            << setting[1] << " for "
-                                            << setting[0] << Log::end;
-                                continue;
-                            }
-
-                            if (setting[0] == "mem_stats_size")
-                            {
-                                if (settingVal != static_cast<unsigned>(std::stoi(model.query(setting[0]))))
-                                {
-                                    model.setMemStatsSize(settingVal);
-                                }
-                            }
-                            else if (setting[0] == "mem_stats_interval")
-                            {
-                                if (settingVal != _admin->getMemStatsInterval())
-                                {
-                                    _admin->rescheduleMemTimer(settingVal);
-                                    model.clearMemStats();
-                                    model.notify("settings mem_stats_interval=" + std::to_string(settingVal));
-                                }
-                            }
-                            else if (setting[0] == "cpu_stats_size")
-                            {
-                                if (settingVal != static_cast<unsigned>(std::stoi(model.query(setting[0]))))
-                                {
-                                    model.setCpuStatsSize(settingVal);
-                                }
-                            }
-                            else if (setting[0] == "cpu_stats_interval")
-                            {
-                                if (settingVal != _admin->getCpuStatsInterval())
-                                {
-                                    _admin->rescheduleCpuTimer(settingVal);
-                                    model.clearCpuStats();
-                                    model.notify("settings cpu_stats_interval=" + std::to_string(settingVal));
-                                }
-                            }
-                        }
-                    }
+                    _admin->rescheduleMemTimer(settingVal);
+                    model.clearMemStats();
+                    model.notify("settings mem_stats_interval=" + std::to_string(settingVal));
+                }
+            }
+            else if (setting[0] == "cpu_stats_size")
+            {
+                if (settingVal != static_cast<unsigned>(std::stoi(model.query(setting[0]))))
+                {
+                    model.setCpuStatsSize(settingVal);
+                }
+            }
+            else if (setting[0] == "cpu_stats_interval")
+            {
+                if (settingVal != _admin->getCpuStatsInterval())
+                {
+                    _admin->rescheduleCpuTimer(settingVal);
+                    model.clearCpuStats();
+                    model.notify("settings cpu_stats_interval=" + std::to_string(settingVal));
                 }
             }
         }
-        while (!TerminationFlag &&
-               (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
-        Log::debug() << "Finishing AdminProcessor. TerminationFlag: " << TerminationFlag
-                     << ", payload size: " << n
-                     << ", flags: " << std::hex << flags << Log::end;
     }
-    catch (const WebSocketException& exc)
+
+    return true;
+}
+
+/// Handle admin requests.
+void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServerResponse& response, int sessionId)
+{
+    _adminWs = std::make_shared<WebSocket>(request, response);
+
     {
-        Log::error("AdminRequestHandler::handleRequest: WebSocketException: " + exc.message());
-        switch (exc.code())
-        {
-        case WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
-            response.set("Sec-WebSocket-Version", WebSocket::WEBSOCKET_VERSION);
-            // fallthrough
-        case WebSocket::WS_ERR_NO_HANDSHAKE:
-        case WebSocket::WS_ERR_HANDSHAKE_NO_VERSION:
-        case WebSocket::WS_ERR_HANDSHAKE_NO_KEY:
-            response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
-            response.setContentLength(0);
-            response.send();
-            break;
-        }
+        std::unique_lock<std::mutex> modelLock(_admin->getLock());
+        // Subscribe the websocket of any AdminModel updates
+        AdminModel& model = _admin->getModel();
+        _sessionId = sessionId;
+        model.subscribe(_sessionId, _adminWs);
     }
-    catch (const Poco::Net::NotAuthenticatedException& exc)
-    {
-        Log::info("NotAuthenticatedException");
-        response.set("WWW-Authenticate", "Basic realm=\"ws-online\"");
-        response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
-        response.setContentLength(0);
-        response.send();
-    }
-    catch (const std::exception& exc)
-    {
-        Log::error(std::string("AdminRequestHandler::handleRequest: Exception: ") + exc.what());
-    }
+
+    IoUtil::SocketProcessor(_adminWs,
+                            [this](const std::vector<char>& payload)
+                            {
+                                return adminCommandHandler(payload);
+                            },
+                            []() { },
+                            []() { return TerminationFlag; });
+
+    Log::debug() << "Finishing Admin Session " << Util::encodeId(sessionId);
 }
 
 AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
     : _admin(adminManager)
 {    }
 
-void AdminRequestHandler::sendTextFrame(std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& message)
+void AdminRequestHandler::sendTextFrame(const std::string& message)
 {
     UnitWSD::get().onAdminQueryMessage(message);
-    socket->sendFrame(message.data(), message.size());
+    _adminWs->sendFrame(message.data(), message.size());
 }
 
 void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerResponse& response)
 {
     // Different session id pool for admin sessions (?)
-    const auto nSessionId = Util::decodeId(LOOLWSD::GenSessionId());
+    const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
 
-    Util::setThreadName("admin_ws_" + std::to_string(nSessionId));
+    Util::setThreadName("admin_ws_" + std::to_string(sessionId));
 
     Log::debug("Thread started.");
 
@@ -283,7 +234,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
             if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
                 throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
-            handleWSRequests(request, response, nSessionId);
+            handleWSRequests(request, response, sessionId);
         }
     }
     catch(const Poco::Net::NotAuthenticatedException& exc)
