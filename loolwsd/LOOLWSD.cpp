@@ -222,7 +222,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         else
         {
             balance -= available - 1; // Minus the one we'll dispatch just now.
-            std::max(balance, 0);
+            balance = std::max(balance, 0);
         }
 
         Log::debug("getNewChild: Have " + std::to_string(available) + " children, forking " + std::to_string(balance));
