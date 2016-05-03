@@ -189,7 +189,12 @@ static void preForkChildren()
 
 static void prespawnChildren()
 {
-    std::unique_lock<std::mutex> lock(newChildrenMutex);
+    std::unique_lock<std::mutex> lock(newChildrenMutex, std::defer_lock);
+    if (!lock.try_lock())
+    {
+        // We are forking already? Try later.
+        return;
+    }
 
     for (int i = newChildren.size() - 1; i >= 0; --i)
     {
