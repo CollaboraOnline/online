@@ -204,11 +204,11 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
     }
 
     bool sent = false;
-    if (force || _isModified)
+    if (force)
     {
         sent = sendUnoSave();
     }
-    else
+    else if (_isModified)
     {
         // Find the most recent activity.
         double inactivityTimeMs = std::numeric_limits<double>::max();
@@ -221,16 +221,11 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
         const auto timeSinceLastSaveMs = getTimeSinceLastSaveMs();
         Log::trace("Time since last save is " + std::to_string((int)timeSinceLastSaveMs) + " ms.");
 
-        // There has been some editing since we saved last?
-        if (inactivityTimeMs < timeSinceLastSaveMs)
+        // Either we've been idle long enough, or it's auto-save time.
+        if (inactivityTimeMs >= IdleSaveDurationMs ||
+            timeSinceLastSaveMs >= AutoSaveDurationMs)
         {
-            // Either we've been idle long enough, or it's auto-save time.
-            // Or we are asked to save anyway.
-            if (inactivityTimeMs >= IdleSaveDurationMs ||
-                timeSinceLastSaveMs >= AutoSaveDurationMs)
-            {
-                sent = sendUnoSave();
-            }
+            sent = sendUnoSave();
         }
     }
 
