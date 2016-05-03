@@ -64,11 +64,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
 #if ENABLE_SSL
 public:
     HTTPServerTest()
-#if ENABLE_SSL
-        : _uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER))
-#else
-        : _uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER))
-#endif
+        : _uri(helpers::getTestServerURI())
     {
         Poco::Net::initializeSSL();
         // Just accept the certificate anyway for testing purposes

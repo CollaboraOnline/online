@@ -77,11 +77,7 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 
 public:
     HTTPCrashTest()
-#if ENABLE_SSL
-        : _uri("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER))
-#else
-        : _uri("http://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER))
-#endif
+        : _uri(helpers::getTestServerURI())
     {
 #if ENABLE_SSL
         Poco::Net::initializeSSL();

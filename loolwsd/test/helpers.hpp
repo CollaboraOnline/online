@@ -132,6 +132,22 @@ Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
 #endif
 }
 
+inline
+std::string getTestServerURI()
+{
+    static const char* clientPort = getenv("LOOL_TEST_CLIENT_PORT");
+
+    static std::string serverURI(
+#if ENABLE_SSL
+            "https://127.0.0.1:"
+#else
+            "http://127.0.0.1:"
+#endif
+            + (clientPort? std::string(clientPort) : std::to_string(DEFAULT_CLIENT_PORT_NUMBER)));
+
+    return serverURI;
+}
+
 // Connecting to a Kit process is managed by document broker, that it does several
 // jobs to establish the bridge connection between the Client and Kit process,
 // The result, it is mostly time outs to get messages in the unit test and it could fail.
