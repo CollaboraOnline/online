@@ -81,22 +81,9 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
 
             if (ws->poll(waitTime, Socket::SELECT_READ))
             {
-                n = ws->receiveFrame(buffer, sizeof(buffer), flags);
+                n = IoUtil::receiveFrame(*ws, buffer, sizeof(buffer), flags);
 
-                if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
-                {
-                    // Echo back the ping payload as pong.
-                    // Technically, we should send back a PONG control frame.
-                    // However Firefox (probably) or Node.js (possibly) doesn't
-                    // like that and closes the socket when we do.
-                    // Echoing the payload as a normal frame works with Firefox.
-                    ws->sendFrame(buffer, n /*, WebSocket::FRAME_OP_PONG*/);
-                }
-                else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
-                {
-                    // In case we do send pings in the future.
-                }
-                else if (n <= 0)
+                if (n <= 0)
                 {
                     // Connection closed.
                     Log::warn() << "Received " << n

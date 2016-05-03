@@ -14,9 +14,10 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-#include "Util.hpp"
-#include "Unit.hpp"
+#include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
+#include "Unit.hpp"
+#include "Util.hpp"
 
 #include <Poco/Timestamp.h>
 #include <Poco/StringTokenizer.h>
@@ -51,7 +52,7 @@ public:
         int flags;
         char buffer[4096];
 
-        int length = socket->receiveFrame(buffer, sizeof (buffer), flags);
+        int length = IoUtil::receiveFrame(*socket, buffer, sizeof (buffer), flags);
         std::string memory = LOOLProtocol::getFirstLine(buffer, length);
 
         if (!memory.compare(0,6,"Error:"))

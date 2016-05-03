@@ -37,6 +37,34 @@ using Poco::Net::WebSocketException;
 namespace IoUtil
 {
 
+int receiveFrame(WebSocket& socket, void* buffer, int length, int& flags)
+{
+    while (true)
+    {
+        int n = socket.receiveFrame(buffer, length, flags);
+        if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
+        {
+            // Technically, we should send back a PONG control frame. However Firefox (probably) or
+            // Node.js (possibly) doesn't like that and closes the socket when we do.
+            socket.sendFrame("pong", strlen("pong"));
+        }
+        else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
+        {
+            // In case we do send pings in the future.
+        }
+        else if (((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_TEXT ||
+                  (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_BINARY) &&
+                 n == 4 && memcmp((char*)buffer, "pong", 4) == 0)
+        {
+            // Ignore what we send above. Be lenient, also ignore binary "pong" frames.
+        }
+        else
+        {
+            return n;
+        }
+    }
+}
+
 // Synchronously process WebSocket requests and dispatch to handler.
 // Handler returns false to end.
 void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
@@ -75,25 +103,10 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
             }
 
             payload.resize(payload.capacity());
-            n = ws->receiveFrame(payload.data(), payload.capacity(), flags);
+            n = receiveFrame(*ws, payload.data(), payload.capacity(), flags);
             payload.resize(n > 0 ? n : 0);
 
-            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
-            {
-                // Echo back the ping payload as pong.
-                // Technically, we should send back a PONG control frame.
-                // However Firefox (probably) or Node.js (possibly) doesn't
-                // like that and closes the socket when we do.
-                // Echoing the payload as a normal frame works with Firefox.
-                ws->sendFrame(payload.data(), n /*, WebSocket::FRAME_OP_PONG*/);
-                continue;
-            }
-            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
-            {
-                // In case we do send pings in the future.
-                continue;
-            }
-            else if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
+            if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
             {
                 closeFrame();
                 Log::warn("Connection closed.");
