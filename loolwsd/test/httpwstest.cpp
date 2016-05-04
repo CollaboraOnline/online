@@ -77,6 +77,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
     CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testEditLock);
+    CPPUNIT_TEST(testSlideShow);
 
     // This should be the last test:
     CPPUNIT_TEST(testNoExtraLoolKitsLeft);
@@ -103,6 +104,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInsertDelete();
     void testNoExtraLoolKitsLeft();
     void testEditLock();
+    void testSlideShow();
 
     void loadDoc(const std::string& documentURL);
 
@@ -1094,6 +1096,65 @@ void HTTPWSTest::testEditLock()
         second_client_died = true;
 
         first_client.join();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testSlideShow()
+{
+    try
+    {
+        const std::string jail = "jail=";
+        const std::string dir = "dir=";
+        const std::string name = "name=";
+        const std::string port = "port=";
+        const std::string id = "id=";
+
+        // Load a document
+        std::string documentPath, documentURL;
+        std::string response;
+        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        // request slide show
+        sendTextFrame(socket, "downloadas name=slideshow.svg id=slideshow format=svg options=");
+        getResponseMessage(socket, "downloadas:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a downloadas: message as expected", !response.empty());
+        {
+            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            // "downloadas: jail= dir= name=slideshow.svg port= id=slideshow"
+            const std::string jail = tokens[0].substr(std::string("jail=").size());
+            const std::string dir = tokens[1].substr(std::string("dir=").size());
+            const std::string name = tokens[2].substr(std::string("name=").size());
+            const int port = std::stoi(tokens[3].substr(std::string("port=").size()));
+            const std::string id = tokens[4].substr(std::string("id=").size());
+            CPPUNIT_ASSERT(!jail.empty());
+            CPPUNIT_ASSERT(!dir.empty());
+            CPPUNIT_ASSERT_EQUAL(std::string("slideshow.svg"), name);
+            CPPUNIT_ASSERT_EQUAL(static_cast<int>(_uri.getPort()), port);
+            CPPUNIT_ASSERT_EQUAL(std::string("slideshow"), id);
+
+            const std::string path = "/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
+            std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, path);
+            session->sendRequest(request);
+
+            Poco::Net::HTTPResponse response;
+            session->receiveResponse(response);
+            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+            CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), response.getContentType());
+
+            socket.shutdown();
+            Util::removeFile(documentPath);
+        }
     }
     catch (const Poco::Exception& exc)
     {
