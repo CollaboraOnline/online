@@ -31,6 +31,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(TileCacheTests);
 
     CPPUNIT_TEST(testSimple);
+    CPPUNIT_TEST(testSimpleCombine);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
 #if ENABLE_DEBUG
@@ -40,6 +41,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testSimple();
+    void testSimpleCombine();
     void testClientPartImpress();
     void testClientPartCalc();
     void testSimultaneousTilesRenderedJustOnce();
@@ -150,6 +152,43 @@ void TileCacheTests::testSimple()
     // No Cache
     file = tc.lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     CPPUNIT_ASSERT_MESSAGE("found tile when none was expected", !file);
+}
+
+void TileCacheTests::testSimpleCombine()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket1 = *loadDocAndGetSocket(_uri, documentURL);
+
+    getResponseMessage(socket1, "invalidatetiles");
+
+    sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+
+    auto tile1a = getResponseMessage(socket1, "tile:");
+    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
+    auto tile1b = getResponseMessage(socket1, "tile:");
+    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
+    sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+
+    tile1a = getResponseMessage(socket1, "tile:");
+    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
+    tile1b = getResponseMessage(socket1, "tile:");
+    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
+
+    sleep(4);
+    std::cerr << "Connecting second client." << std::endl;
+    auto socket2 = *loadDocAndGetSocket(_uri, documentURL);
+    sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+
+    auto tile2a = getResponseMessage(socket2, "tile:");
+    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
+    auto tile2b = getResponseMessage(socket2, "tile:");
+    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
+
+    socket1.shutdown();
+    socket2.shutdown();
 }
 
 void TileCacheTests::testClientPartImpress()
