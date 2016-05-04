@@ -61,24 +61,26 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
 
     void testNoExtraLoolKitsLeft();
 
-#if ENABLE_SSL
 public:
     HTTPServerTest()
         : _uri(helpers::getTestServerURI())
     {
+#if ENABLE_SSL
         Poco::Net::initializeSSL();
         // Just accept the certificate anyway for testing purposes
         Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
         Poco::Net::Context::Params sslParams;
         Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
         Poco::Net::SSLManager::instance().initializeClient(0, invalidCertHandler, sslContext);
+#endif
     }
 
     ~HTTPServerTest()
     {
+#if ENABLE_SSL
         Poco::Net::uninitializeSSL();
-    }
 #endif
+    }
 };
 
 int HTTPServerTest::_initialLoolKitCount = 0;
