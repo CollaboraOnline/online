@@ -1304,7 +1304,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
     optionSet.addOption(Option("admincreds", "", "Admin 'username/password' used to access the admin console.")
                         .required(false)
                         .repeatable(false)
-                        .argument("directory"));
+                        .argument("credentials"));
 
     optionSet.addOption(Option("allowlocalstorage", "", "When true will allow highly insecure loading of files from local storage.")
                         .required(false)
