@@ -557,15 +557,6 @@ function onFormulaBarBlur() {
 
 map.on('updatepermission', function (e) {
 	var toolbar = w2ui['toolbar-up'];
-	formatButtons.forEach(function (id) {
-		if (e.perm === 'edit') {
-			toolbar.enable(id);
-		}
-		else {
-			toolbar.disable(id);
-		}
-	});
-
 	var docType = map.getDocType();
 	if (docType !== 'text') {
 		toolbar.hide('writer:menu:file');
