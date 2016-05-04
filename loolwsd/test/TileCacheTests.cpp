@@ -32,6 +32,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
+    CPPUNIT_TEST(testUnresponsiveClient);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
 #if ENABLE_DEBUG
@@ -42,6 +43,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     void testSimple();
     void testSimpleCombine();
+    void testUnresponsiveClient();
     void testClientPartImpress();
     void testClientPartCalc();
     void testSimultaneousTilesRenderedJustOnce();
@@ -173,7 +175,6 @@ void TileCacheTests::testSimpleCombine()
     tile1b = getResponseMessage(socket1, "tile:");
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
-    sleep(4);
     std::cerr << "Connecting second client." << std::endl;
     auto socket2 = *loadDocAndGetSocket(_uri, documentURL);
     sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
@@ -182,6 +183,40 @@ void TileCacheTests::testSimpleCombine()
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
     auto tile2b = getResponseMessage(socket2, "tile:");
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
+
+    socket1.shutdown();
+    socket2.shutdown();
+}
+
+void TileCacheTests::testUnresponsiveClient()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket1 = *loadDocAndGetSocket(_uri, documentURL);
+
+    getResponseMessage(socket1, "invalidatetiles");
+
+    std::cerr << "Connecting second client." << std::endl;
+    auto socket2 = *loadDocAndGetSocket(_uri, documentURL);
+
+    // Pathologically request tiles and fail to read (say slow connection).
+    // Meanwhile, verify that others can get all tiles fine.
+    // TODO: Track memory consumption to verify we don't buffer too much.
+    for (auto x = 0; x < 5; ++x)
+    {
+        // As for tiles and don't read!
+        sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
+
+        // Verify that we get all 8 tiles.
+        sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
+        for (auto i = 0; i < 8; ++i)
+        {
+            auto tile = getResponseMessage(socket2, "tile:");
+            CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile.empty());
+        }
+    }
 
     socket1.shutdown();
     socket2.shutdown();
