@@ -338,7 +338,15 @@ void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int 
     if (!tileBeingRendered)
         return;
 
-    Log::debug("Sending tile message also to subscribers");
+    const std::string message("tile "
+                              " part=" + std::to_string(part) +
+                              " width=" + std::to_string(width) +
+                              " height=" + std::to_string(height) +
+                              " tileposx=" + std::to_string(tilePosX) +
+                              " tileposy=" + std::to_string(tilePosY) +
+                              " tilewidth=" + std::to_string(tileWidth) +
+                              " tileheight=" + std::to_string(tileHeight));
+    Log::debug("Sending tile message to subscribers: " + message);
 
     for (const auto& i: tileBeingRendered->_subscribers)
     {
@@ -353,15 +361,6 @@ void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int 
             // mandatory parts of the message.
             if (queue)
             {
-                const std::string message("tile "
-                                          " part=" + std::to_string(part) +
-                                          " width=" + std::to_string(width) +
-                                          " height=" + std::to_string(height) +
-                                          " tileposx=" + std::to_string(tilePosX) +
-                                          " tileposy=" + std::to_string(tilePosY) +
-                                          " tilewidth=" + std::to_string(tileWidth) +
-                                          " tileheight=" + std::to_string(tileHeight) +
-                                          "\n");
                 queue->put(message);
             }
         }
