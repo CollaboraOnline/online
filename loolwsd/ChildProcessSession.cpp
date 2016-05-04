@@ -695,32 +695,6 @@ bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*le
     return true;
 }
 
-namespace {
-    inline bool delayAndRewritePart(int &part)
-    {
-#if ENABLE_DEBUG
-        static bool delayEnv = getenv("DELAY_TILES");
-        if (delayEnv)
-            return true;
-
-        if (part == 42)
-        {
-            part = 0;
-            return true;
-        }
-#endif
-        (void)part;
-        return false;
-    }
-    inline void delay()
-    {
-#if ENABLE_DEBUG
-        Log::debug("Sleeping for one second");
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-#endif
-    }
-}
-
 bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
