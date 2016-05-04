@@ -240,6 +240,77 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
 }
 
 inline
+std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix)
+{
+    try
+    {
+        int flags;
+        int bytes;
+        int retries = 20;
+        const Poco::Timespan waitTime(1000000);
+        std::vector<char> response;
+
+        ws.setReceiveTimeout(0);
+        do
+        {
+            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
+            {
+                response.resize(READ_BUFFER_SIZE);
+                bytes = ws.receiveFrame(response.data(), response.size(), flags);
+                response.resize(bytes >= 0 ? bytes : 0);
+                auto message = LOOLProtocol::getAbbreviatedMessage(response);
+                std::cerr << "Got " << bytes << " bytes: " << message << std::endl;
+                if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+                {
+                    if (message.find(prefix) == 0)
+                    {
+                        return response;
+                    }
+                    else if (message.find("nextmessage") == 0)
+                    {
+                        Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                        int size = 0;
+                        if (tokens.count() == 2 &&
+                            tokens[0] == "nextmessage:" && LOOLProtocol::getTokenInteger(tokens[1], "size", size) && size > 0)
+                        {
+                            response.resize(size);
+                            bytes = ws.receiveFrame(response.data(), response.size(), flags);
+                            response.resize(bytes >= 0 ? bytes : 0);
+                            message = LOOLProtocol::getAbbreviatedMessage(response);
+                            std::cerr << "Got " << bytes << " bytes: " << message << std::endl;
+                            if (bytes > 0 && message.find(prefix) == 0)
+                            {
+                                return response;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    response.resize(0);
+                    std::cerr << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
+                }
+
+                retries = 10;
+            }
+            else
+            {
+                std::cerr << "Timeout\n";
+                --retries;
+            }
+        }
+        while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    }
+    catch (const Poco::Net::WebSocketException& exc)
+    {
+        std::cerr << exc.message();
+    }
+
+    return std::vector<char>();
+}
+
+
+inline
 std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL)
 {
     try
