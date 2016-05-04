@@ -15,7 +15,7 @@
 constexpr int MAX_SESSIONS = 1024;
 
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
-constexpr int MASTER_PORT_NUMBER = 9981;
+constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
 constexpr int WSD_SLEEP_SECS = 2;
 constexpr int CHILD_TIMEOUT_SECS = 10;
 constexpr int POLL_TIMEOUT_MS = 1000;
@@ -39,6 +39,7 @@ constexpr auto NEW_CHILD_URI = "/loolws/newchild?";
 
 // The client port number, both loolwsd and the kits have this.
 extern int ClientPortNumber;
+extern int MasterPortNumber;
 
 #endif
 

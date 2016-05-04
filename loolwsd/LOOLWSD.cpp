@@ -145,6 +145,7 @@ using Poco::XML::Node;
 using Poco::XML::NodeList;
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
@@ -844,7 +845,7 @@ public:
 
         Log::debug("Child connection with URI [" + request.getURI() + "].");
 
-        assert(request.serverAddress().port() == MASTER_PORT_NUMBER);
+        assert(request.serverAddress().port() == MasterPortNumber);
         if (request.getURI().find(NEW_CHILD_URI) == 0)
         {
             // New Child is spawned.
@@ -1260,7 +1261,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false));
 
     optionSet.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),"
-                             " must not be " + std::to_string(MASTER_PORT_NUMBER) + ".")
+                             " must not be " + std::to_string(MasterPortNumber) + ".")
                         .required(false)
                         .repeatable(false)
                         .argument("port number"));
@@ -1365,6 +1366,14 @@ void LOOLWSD::handleOption(const std::string& optionName,
         NoCapsForKit = true;
     else if (optionName == "careerspan")
         careerSpanSeconds = std::stoi(value);
+
+    static const char* clientPort = getenv("LOOL_TEST_CLIENT_PORT");
+    if (clientPort)
+        ClientPortNumber = std::stoi(clientPort);
+
+    static const char* masterPort = getenv("LOOL_TEST_MASTER_PORT");
+    if (masterPort)
+        MasterPortNumber = std::stoi(masterPort);
 #endif
 }
 
@@ -1451,7 +1460,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
     Log::debug("FileServerRoot: " + FileServerRoot);
 
-    if (ClientPortNumber == MASTER_PORT_NUMBER)
+    if (ClientPortNumber == MasterPortNumber)
         throw IncompatibleOptionsException("port");
 
     if (AdminCreds.empty())
@@ -1512,7 +1521,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     srv.start();
 
     // And one on the port for child processes
-    SocketAddress addr2("127.0.0.1", MASTER_PORT_NUMBER);
+    SocketAddress addr2("127.0.0.1", MasterPortNumber);
     ServerSocket svs2(addr2);
     HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, svs2, params2);
 

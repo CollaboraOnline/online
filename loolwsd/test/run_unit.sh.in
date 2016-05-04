@@ -12,9 +12,10 @@ jails_path="@JAILS_PATH@"
 lo_path="@LO_PATH@"
 
 # run the test on a dedicated port
-# TODO different numbers for tests run in parallel
+# TODO when we update test execution that the tests run in parallel, we'll
+# needd ifferent numbers for the tests run in parallel here
 export LOOL_TEST_CLIENT_PORT=9984
-# TODO export LOOL_TEST_MASTER_PORT=9985
+export LOOL_TEST_MASTER_PORT=9985
 
 tst=
 while test $# -gt 0; do
@@ -46,10 +47,10 @@ echo > $test_output
 
 if test "z$tst" == "z"; then
      echo "executing external tests"
-     ${abs_top_builddir}/loolwsd --port="$LOOL_TEST_CLIENT_PORT" --systemplate="$systemplate_path" \
+     ${abs_top_builddir}/loolwsd --systemplate="$systemplate_path" \
                                  --lotemplate="$lo_path" \
                                  --childroot="$jails_path" \
-                                 --allowlocalstorage  2> "$tst_log" &
+                                 --allowlocalstorage > "$tst_log" 2>&1 &
 
      echo "  executing test"
 
@@ -73,7 +74,7 @@ if test "z$tst" == "z"; then
 
 else # newer unit tests.
     echo "Running $tst | $tst_log ...";
-    if ${abs_top_builddir}/loolwsd --port="$LOOL_TEST_CLIENT_PORT" --systemplate="$systemplate_path" \
+    if ${abs_top_builddir}/loolwsd --systemplate="$systemplate_path" \
                                    --lotemplate="$lo_path" \
                                    --childroot="$jails_path" \
                                    --allowlocalstorage \

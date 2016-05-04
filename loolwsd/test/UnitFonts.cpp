@@ -127,7 +127,7 @@ public:
     virtual void launchedKit(int /* pid */) override
     {
         // Open websocket connection between the child process and WSD.
-        Poco::Net::HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+        Poco::Net::HTTPClientSession cs("127.0.0.1", MasterPortNumber);
         cs.setTimeout(0);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET,
                                        std::string(UNIT_URI));

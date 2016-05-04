@@ -454,7 +454,7 @@ public:
 
             // Open websocket connection between the child process and the
             // parent. The parent forwards us requests that it can't handle (i.e most).
-            HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+            HTTPClientSession cs("127.0.0.1", MasterPortNumber);
             cs.setTimeout(0);
             const auto childUrl = std::string(CHILD_URI) + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey;
             HTTPRequest request(HTTPRequest::HTTP_GET, childUrl);
@@ -1231,7 +1231,7 @@ void lokit_main(const std::string& childRoot,
         Log::info("Process is ready.");
 
         // Open websocket connection between the child process and WSD.
-        HTTPClientSession cs("127.0.0.1", MASTER_PORT_NUMBER);
+        HTTPClientSession cs("127.0.0.1", MasterPortNumber);
         cs.setTimeout(0);
         HTTPRequest request(HTTPRequest::HTTP_GET, std::string(NEW_CHILD_URI) + "pid=" + pid);
         HTTPResponse response;

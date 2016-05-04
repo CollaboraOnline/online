@@ -53,6 +53,7 @@ static std::atomic<unsigned> ForkCounter( 0 );
 static std::map<Process::PID, std::string> childJails;
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 
 static int pipeFd = -1;
 
@@ -206,6 +207,16 @@ int main(int argc, char** argv)
     std::string loSubPath;
     std::string sysTemplate;
     std::string loTemplate;
+
+#if ENABLE_DEBUG
+    static const char* clientPort = getenv("LOOL_TEST_CLIENT_PORT");
+    if (clientPort)
+        ClientPortNumber = std::stoi(clientPort);
+
+    static const char* masterPort = getenv("LOOL_TEST_MASTER_PORT");
+    if (masterPort)
+        MasterPortNumber = std::stoi(masterPort);
+#endif
 
     for (int i = 0; i < argc; ++i)
     {

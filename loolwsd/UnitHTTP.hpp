@@ -52,7 +52,7 @@ public:
                           const std::string &uri)
         : _response(inResponse),
           _clientAddress(),
-          _serverAddress(MASTER_PORT_NUMBER)
+          _serverAddress(MasterPortNumber)
         { setURI(uri); }
     virtual std::istream& stream() override
         { return *(static_cast<std::istream *>(nullptr)); }
