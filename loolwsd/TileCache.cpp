@@ -398,7 +398,7 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height
 
         assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
 
-        auto tileBeingRendered = std::make_shared<TileBeingRendered>();
+        tileBeingRendered = std::make_shared<TileBeingRendered>();
         tileBeingRendered->_subscribers.push_back(subscriber);
         _tilesBeingRendered[cachedName] = tileBeingRendered;
 
