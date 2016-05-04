@@ -68,7 +68,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
                     TimeoutThread.trySleep(_global->_timeoutMilliSeconds);
                     if (!_global->_timeoutShutdown)
                     {
-                        Log::error("Timeout");
+                        Log::error("Unit test timeout");
                         _global->timeout();
                     }
                 });
