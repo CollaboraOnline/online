@@ -89,7 +89,7 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
-                    std::cout << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
+                    std::cerr << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
                     const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
                     const std::string prefixIndicator = "statusindicatorfinish:";
                     const std::string prefixStatus = "status:";
@@ -108,7 +108,7 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
             }
             else
             {
-                std::cout << "Timeout\n";
+                std::cerr << "Timeout\n";
                 --retries;
             }
         }
@@ -116,7 +116,7 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
     }
     catch (const Poco::Net::WebSocketException& exc)
     {
-        std::cout << exc.message();
+        std::cerr << exc.message();
     }
 
     return isLoaded;
@@ -174,7 +174,7 @@ connectLOKit(Poco::URI uri,
             }
             catch (const Poco::TimeoutException& exc)
             {
-                std::cout << exc.displayText() << std::endl;
+                std::cerr << exc.displayText() << std::endl;
             }
         }
         while (received > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
@@ -208,7 +208,7 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
-                    std::cout << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
+                    std::cerr << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
                     const std::string message = isLine ?
                                                 LOOLProtocol::getFirstLine(buffer, bytes) :
                                                 std::string(buffer, bytes);
@@ -221,13 +221,13 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
                 }
                 else
                 {
-                    std::cout << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
+                    std::cerr << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
                 }
                 retries = 10;
             }
             else
             {
-                std::cout << "Timeout\n";
+                std::cerr << "Timeout\n";
                 --retries;
             }
         }
@@ -235,7 +235,7 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
     }
     catch (const Poco::Net::WebSocketException& exc)
     {
-        std::cout << exc.message();
+        std::cerr << exc.message();
     }
 }
 
@@ -291,7 +291,7 @@ void SocketProcessor(std::string name,
         n = socket->receiveFrame(buffer, sizeof(buffer), flags);
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
-            std::cout << name << "Got " << n << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
+            std::cerr << name << "Got " << n << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
             if (!handler(std::string(buffer, n)))
             {
                 break;
