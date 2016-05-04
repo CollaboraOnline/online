@@ -661,8 +661,14 @@ public:
         ws->sendFrame(output.data(), length, WebSocket::FRAME_BINARY);
     }
 
-    void sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+    void sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& /*tokens*/)
     {
+        // This is unnecessary at this point, since the DocumentBroker will send us individual
+        // tile requests (i.e. it breaks tilecombine requests).
+        // So unless DocumentBroker combines them again, there is no point in having this here.
+        // In fact, we probably want to remove this, since we always want to render individual
+        // tiles so that we can fetch them separately in the future.
+#if 0
         int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
         std::string tilePositionsX, tilePositionsY;
         std::string reqTimestamp;
@@ -690,7 +696,7 @@ public:
 
         if (tokens.count() > 8)
             getTokenString(tokens[8], "timestamp", reqTimestamp);
-/*
+
         bool makeSlow = delayAndRewritePart(part);
 
         Util::Rectangle renderArea;
@@ -804,7 +810,7 @@ public:
 
         if (makeSlow)
             delay();
-        */
+#endif
     }
 
 private:
