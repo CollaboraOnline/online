@@ -192,10 +192,10 @@ namespace LOOLProtocol
         // If first line is less than the length (minus newline), add eclipes.
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            return std::string('[' + firstLine + "]...");
+            return firstLine + "...";
         }
 
-        return std::string('[' + firstLine + ']');
+        return firstLine;
     }
 };
 
