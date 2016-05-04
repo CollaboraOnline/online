@@ -162,6 +162,8 @@ public:
                     mimeType = "text/css";
                 else if (fileType == "html")
                     mimeType = "text/html";
+                else if (fileType == "svg")
+                    mimeType = "image/svg+xml";
                 else
                     mimeType = "text/plain";
 
