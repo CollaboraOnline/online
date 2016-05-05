@@ -1107,12 +1107,6 @@ void HTTPWSTest::testSlideShow()
 {
     try
     {
-        const std::string jail = "jail=";
-        const std::string dir = "dir=";
-        const std::string name = "name=";
-        const std::string port = "port=";
-        const std::string id = "id=";
-
         // Load a document
         std::string documentPath, documentURL;
         std::string response;
@@ -1144,17 +1138,16 @@ void HTTPWSTest::testSlideShow()
 
             const std::string path = "/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
             std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, path);
-            session->sendRequest(request);
+            Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
+            session->sendRequest(requestSVG);
 
-            Poco::Net::HTTPResponse response;
-            session->receiveResponse(response);
-            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-            CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), response.getContentType());
-
-            socket.shutdown();
-            Util::removeFile(documentPath);
+            Poco::Net::HTTPResponse responseSVG;
+            session->receiveResponse(responseSVG);
+            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
+            CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
         }
+        socket.shutdown();
+        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
