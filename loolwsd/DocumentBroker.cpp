@@ -410,6 +410,10 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
         oss << " id=" << id;
     }
 
+    // Piggyback editlock information to kit process.
+    // We do not allow requests without editlock to change document parts
+    oss << " editlock=" << (session->isEditLocked() ? "1" : "0");
+
     std::string tileMsg = oss.str();
 
     std::unique_lock<std::mutex> lock(_mutex);
@@ -472,10 +476,18 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 
     const auto buffer = payload.data();
     const auto length = payload.size();
-    assert(firstLine.size() < static_cast<std::string::size_type>(length));
-    tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
 
-    tileCache().notifyAndRemoveSubscribers(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    if(firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+    {
+        tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+        tileCache().notifyAndRemoveSubscribers(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    }
+    else
+    {
+        Log::debug() << "Render request declined for " << firstLine << Log::end;
+        std::unique_lock<std::mutex> tileBeingRenderedLock(tileCache().getTilesBeingRenderedLock());
+        tileCache().forgetTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    }
 }
 
 bool DocumentBroker::canDestroy()

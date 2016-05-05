@@ -67,6 +67,10 @@ public:
     /// Store the timestamp to modtime.txt.
     void saveLastModified(const Poco::Timestamp& timestamp);
 
+    std::unique_lock<std::mutex> getTilesBeingRenderedLock() { return std::unique_lock<std::mutex>(_tilesBeingRenderedMutex); }
+
+    void forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+
 private:
     void invalidateTiles(int part, int x, int y, int width, int height);
 
@@ -78,8 +82,6 @@ private:
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
     bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height);
-
-    void forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
 
     /// Load the timestamp from modtime.txt.
     Poco::Timestamp getLastModified();

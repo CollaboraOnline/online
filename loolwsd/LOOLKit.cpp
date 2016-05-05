@@ -576,16 +576,17 @@ public:
 
     void renderTile(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
     {
-        int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
+        int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, editLock;
 
-        if (tokens.count() < 8 ||
+        if (tokens.count() < 9 ||
             !getTokenInteger(tokens[1], "part", part) ||
             !getTokenInteger(tokens[2], "width", width) ||
             !getTokenInteger(tokens[3], "height", height) ||
             !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
             !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
             !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-            !getTokenInteger(tokens[7], "tileheight", tileHeight))
+            !getTokenInteger(tokens[7], "tileheight", tileHeight) ||
+            !getTokenInteger(tokens[8], "editlock", editLock))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=syntax");
@@ -617,7 +618,7 @@ public:
         //if (_multiView)
             //_loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-        std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end());
+        std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end() - 1);
 
 #if ENABLE_DEBUG
         response += " renderid=" + Util::UniqueId();
@@ -634,7 +635,17 @@ public:
 
         if (part != _loKitDocument->pClass->getPart(_loKitDocument))
         {
-            _loKitDocument->pClass->setPart(_loKitDocument, part);
+            if (editLock)
+            {
+                _loKitDocument->pClass->setPart(_loKitDocument, part);
+            }
+            else
+            {
+                // Session without editlock cannot change part
+                Log::debug() << "Declining tile render request: " << response  << Log::end;
+                ws->sendFrame(response.data(), response.size());
+                return;
+            }
         }
 
         Timestamp timestamp;
