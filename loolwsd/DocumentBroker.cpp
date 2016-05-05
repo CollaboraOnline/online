@@ -397,26 +397,27 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
                  << ", tilePosX: " << tilePosX << ", tilePosY: " << tilePosY << ", tileWidth: " << tileWidth
                  << ", tileHeight: " << tileHeight << Log::end;
 
+    std::ostringstream oss;
+    oss << " part=" << part
+        << " width=" << width
+        << " height=" << height
+        << " tileposx=" << tilePosX
+        << " tileposy=" << tilePosY
+        << " tilewidth=" << tileWidth
+        << " tileheight=" << tileHeight;
+    std::string tileMsg = oss.str();
+
     std::unique_lock<std::mutex> lock(_mutex);
 
     std::unique_ptr<std::fstream> cachedTile = tileCache().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     if (cachedTile)
     {
-        std::ostringstream oss;
-        oss << "tile: part=" << part
-            << " width=" << width
-            << " height=" << height
-            << " tileposx=" << tilePosX
-            << " tileposy=" << tilePosY
-            << " tilewidth=" << tileWidth
-            << " tileheight=" << tileHeight;
-
 #if ENABLE_DEBUG
-        oss << " renderid=cached";
+        std::string response = "tile:" + tileMsg + " renderid=cached\n";
+#else
+        std::string response = "tile:" + tileMsg + "\n";
 #endif
-        oss << "\n";
-        const auto response = oss.str();
 
         std::vector<char> output;
         output.reserve(4 * width * height);
@@ -442,15 +443,7 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
         return;
 
     // Forward to child to render.
-    std::ostringstream oss;
-    oss << "tile part=" << part
-        << " width=" << width
-        << " height=" << height
-        << " tileposx=" << tilePosX
-        << " tileposy=" << tilePosY
-        << " tilewidth=" << tileWidth
-        << " tileheight=" << tileHeight;
-    const std::string request = oss.str();
+    const std::string request = "tile " + tileMsg;
 
     _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
 }
