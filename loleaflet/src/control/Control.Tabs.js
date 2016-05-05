@@ -67,6 +67,15 @@ L.Control.Tabs = L.Control.extend({
 		});
 
 		map.on('updateparts', this._updateDisabled, this);
+		map.on('editlock', this._enableTabsContextMenu, this);
+	},
+
+	_enableTabsContextMenu: function(e) {
+		if (!e.value) {
+			$('.spreadsheet-context-menu').contextMenu(false);
+		} else {
+			$('.spreadsheet-context-menu').contextMenu(true);
+		}
 	},
 
 	_updateDisabled: function (e) {
@@ -115,11 +124,19 @@ L.Control.Tabs = L.Control.extend({
 				if (part === selectedPart) {
 					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-context-menu-selected');
 				}
+
+				if (map._editlock) {
+					L.DomUtil.removeClass(this._spreadsheetTabs[key], 'context-menu-disabled');
+				} else {
+					L.DomUtil.addClass(this._spreadsheetTabs[key], 'context-menu-disabled');
+				}
 			}
 		}
 	},
 
 	_setPart: function (e) {
+		if (!map._editlock)
+			return;
 		var part =  e.target.id.match(/\d+/g)[0];
 		if (part !== null) {
 			this._map.setPart(parseInt(part));
