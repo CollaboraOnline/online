@@ -100,12 +100,14 @@ L.WriterTileLayer = L.TileLayer.extend({
 
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
-		this._currentPage = part;
-		this._map.fire('pagenumberchanged', {
-			currentPage: part,
-			pages: this._pages,
-			docType: this._docType
-		});
+		if (part !== this._selectedPart) {
+			this._currentPage = part;
+			this._map.fire('pagenumberchanged', {
+				currentPage: part,
+				pages: this._pages,
+				docType: this._docType
+			});
+		}
 	},
 
 	_onStatusMsg: function (textMsg) {
