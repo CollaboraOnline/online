@@ -198,7 +198,7 @@ public:
     size_t removeSession(const std::string& id);
 
     void handleTileRequest(int part, int width, int height, int tilePosX,
-                           int tilePosY, int tileWidth, int tileHeight,
+                           int tilePosY, int tileWidth, int tileHeight, int id,
                            const std::shared_ptr<MasterProcessSession>& session);
 
     void handleTileResponse(const std::vector<char>& payload);

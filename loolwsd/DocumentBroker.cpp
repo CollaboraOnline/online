@@ -390,12 +390,12 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
 }
 
 void DocumentBroker::handleTileRequest(int part, int width, int height, int tilePosX,
-                                       int tilePosY, int tileWidth, int tileHeight,
+                                       int tilePosY, int tileWidth, int tileHeight, int id,
                                        const std::shared_ptr<MasterProcessSession>& session)
 {
     Log::trace() << "Tile request for part: " << part << ", width: " << width << ", height: " << height
                  << ", tilePosX: " << tilePosX << ", tilePosY: " << tilePosY << ", tileWidth: " << tileWidth
-                 << ", tileHeight: " << tileHeight << Log::end;
+                 << ", tileHeight: " << tileHeight << ", id: " << id << Log::end;
 
     std::ostringstream oss;
     oss << " part=" << part
@@ -405,6 +405,11 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
         << " tileposy=" << tilePosY
         << " tilewidth=" << tileWidth
         << " tileheight=" << tileHeight;
+    if (id >= 0)
+    {
+        oss << " id=" << id;
+    }
+
     std::string tileMsg = oss.str();
 
     std::unique_lock<std::mutex> lock(_mutex);

@@ -491,7 +491,7 @@ void MasterProcessSession::sendFontRendering(const char *buffer, int length, Str
 
 void MasterProcessSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
+    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, id = -1;
     if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
         !getTokenInteger(tokens[2], "width", width) ||
@@ -517,13 +517,20 @@ void MasterProcessSession::sendTile(const char * /*buffer*/, int /*length*/, Str
         return;
     }
 
+    size_t index = 8;
+    if (tokens.count() > index && tokens[index].find("id") == 0)
+    {
+        getTokenInteger(tokens[index], "id", id);
+        ++index;
+    }
+
     _docBroker->handleTileRequest(part, width, height, tilePosX, tilePosY,
-                                  tileWidth, tileHeight, shared_from_this());
+                                  tileWidth, tileHeight, id, shared_from_this());
 }
 
 void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
+    int part, pixelWidth, pixelHeight, tileWidth, tileHeight, id = -1;
     std::string tilePositionsX, tilePositionsY;
     if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
@@ -547,8 +554,18 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
     }
 
     std::string reqTimestamp;
-    if (tokens.count() > 8)
-        getTokenString(tokens[8], "timestamp", reqTimestamp);
+    size_t index = 8;
+    if (tokens.count() > index && tokens[index].find("timestamp") == 0)
+    {
+        getTokenString(tokens[index], "timestamp", reqTimestamp);
+        ++index;
+    }
+
+    if (tokens.count() > index && tokens[index].find("id") == 0)
+    {
+        getTokenInteger(tokens[index], "id", id);
+        ++index;
+    }
 
     StringTokenizer positionXtokens(tilePositionsX, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     StringTokenizer positionYtokens(tilePositionsY, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -579,7 +596,7 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
         }
 
         _docBroker->handleTileRequest(part, pixelWidth, pixelHeight, x, y,
-                                      tileWidth, tileHeight, shared_from_this());
+                                      tileWidth, tileHeight, id, shared_from_this());
     }
 }
 
