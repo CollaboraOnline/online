@@ -1267,7 +1267,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onEditLock: function (textMsg) {
 		var val = parseInt(textMsg.split(' ')[1]);
-		if (!isNaN(val)) {
+		if (!isNaN(val) && val !== this._map._editlock) {
 			this._map._editlock = val;
 			this._map.fire('editlock', {value: val});
 
