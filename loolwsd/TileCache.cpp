@@ -377,7 +377,7 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height
 
     if (tileBeingRendered)
     {
-        Log::debug("Tile is already being rendered, subscribing");
+        Log::debug() << "Tile (" << part << ',' << tilePosX << ',' << tilePosY << ") is already being rendered, subscribing." << Log::end;
         assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
 
         for (const auto &s : tileBeingRendered->_subscribers)
@@ -394,6 +394,8 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height
     }
     else
     {
+        Log::debug() << "Tile (" << part << ',' << tilePosX << ',' << tilePosY << ") needs rendering, subscribing." << Log::end;
+
         const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
         assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());

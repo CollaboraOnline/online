@@ -409,7 +409,7 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
 
     std::unique_lock<std::mutex> lock(_mutex);
 
-    std::unique_ptr<std::fstream> cachedTile = tileCache().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     if (cachedTile)
     {
@@ -442,9 +442,10 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
             tileHeight, session))
         return;
 
+    Log::debug() << "Sending render request for tile (" << part << ',' << tilePosX << ',' << tilePosY << ")." << Log::end;
+
     // Forward to child to render.
     const std::string request = "tile " + tileMsg;
-
     _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
 }
 
