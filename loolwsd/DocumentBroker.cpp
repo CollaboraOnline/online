@@ -473,13 +473,21 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
         !getTokenInteger(tokens[7], "tileheight", tileHeight))
         assert(false);
 
+    size_t index = 8;
+    int id = -1;
+    if (tokens.count() > index && tokens[index].find("id") == 0)
+    {
+        getTokenInteger(tokens[index], "id", id);
+        ++index;
+    }
+
     const auto buffer = payload.data();
     const auto length = payload.size();
 
     if(firstLine.size() < static_cast<std::string::size_type>(length) - 1)
     {
         tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-        tileCache().notifyAndRemoveSubscribers(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+        tileCache().notifyAndRemoveSubscribers(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, id);
     }
     else
     {

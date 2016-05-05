@@ -632,6 +632,7 @@ public:
         //if (_multiView)
             //_loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
+        // Send back the request with all optional parameters given in the request.
         std::string response = "tile: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end() - 1);
 
 #if ENABLE_DEBUG

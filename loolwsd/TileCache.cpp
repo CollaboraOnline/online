@@ -330,7 +330,7 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
     modTimeFile.close();
 }
 
-void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int id)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
@@ -338,14 +338,20 @@ void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int 
     if (!tileBeingRendered)
         return;
 
-    const std::string message("tile "
-                              " part=" + std::to_string(part) +
-                              " width=" + std::to_string(width) +
-                              " height=" + std::to_string(height) +
-                              " tileposx=" + std::to_string(tilePosX) +
-                              " tileposy=" + std::to_string(tilePosY) +
-                              " tilewidth=" + std::to_string(tileWidth) +
-                              " tileheight=" + std::to_string(tileHeight));
+    std::ostringstream oss;
+    oss << "tile part=" << part
+        << " width=" << width
+        << " height=" << height
+        << " tileposx=" << tilePosX
+        << " tileposy=" << tilePosY
+        << " tilewidth=" << tileWidth
+        << " tileheight=" << tileHeight;
+    if (id >= 0)
+    {
+        oss << " id=" << id;
+    }
+
+    const std::string message = oss.str();
     Log::debug("Sending tile message to subscribers: " + message);
 
     for (const auto& i: tileBeingRendered->_subscribers)
