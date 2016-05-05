@@ -576,7 +576,7 @@ public:
 
     void renderTile(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
     {
-        int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, editLock;
+        int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
         if (tokens.count() < 9 ||
             !getTokenInteger(tokens[1], "part", part) ||
@@ -585,8 +585,7 @@ public:
             !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
             !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
             !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-            !getTokenInteger(tokens[7], "tileheight", tileHeight) ||
-            !getTokenInteger(tokens[8], "editlock", editLock))
+            !getTokenInteger(tokens[7], "tileheight", tileHeight))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=syntax");
@@ -604,6 +603,21 @@ public:
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=invalid");
             return;
+        }
+
+        int editLock = 0;
+        size_t index = 8;
+        if (tokens.count() > index && tokens[index].find("editlock") == 0)
+        {
+            getTokenInteger(tokens[index], "editlock", editLock);
+            ++index;
+        }
+
+        int id = -1;
+        if (tokens.count() > index && tokens[index].find("id") == 0)
+        {
+            getTokenInteger(tokens[index], "id", id);
+            ++index;
         }
 
         std::unique_lock<std::recursive_mutex> lock(ChildProcessSession::getLock());

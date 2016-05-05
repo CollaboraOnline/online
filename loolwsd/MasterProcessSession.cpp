@@ -530,7 +530,7 @@ void MasterProcessSession::sendTile(const char * /*buffer*/, int /*length*/, Str
 
 void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    int part, pixelWidth, pixelHeight, tileWidth, tileHeight, id = -1;
+    int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
     std::string tilePositionsX, tilePositionsY;
     if (tokens.count() < 8 ||
         !getTokenInteger(tokens[1], "part", part) ||
@@ -561,6 +561,7 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
         ++index;
     }
 
+    int id = -1;
     if (tokens.count() > index && tokens[index].find("id") == 0)
     {
         getTokenInteger(tokens[index], "id", id);

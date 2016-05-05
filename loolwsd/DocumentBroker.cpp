@@ -413,8 +413,7 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
     // Piggyback editlock information to kit process.
     // We do not allow requests without editlock to change document parts
     oss << " editlock=" << (session->isEditLocked() ? "1" : "0");
-
-    std::string tileMsg = oss.str();
+    const std::string tileMsg = oss.str();
 
     std::unique_lock<std::mutex> lock(_mutex);
 
@@ -423,9 +422,9 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
     if (cachedTile)
     {
 #if ENABLE_DEBUG
-        std::string response = "tile:" + tileMsg + " renderid=cached\n";
+        const std::string response = "tile:" + tileMsg + " renderid=cached\n";
 #else
-        std::string response = "tile:" + tileMsg + "\n";
+        const std::string response = "tile:" + tileMsg + "\n";
 #endif
 
         std::vector<char> output;
