@@ -45,8 +45,8 @@
 	}
 
 .spreadsheet-context-menu-selected {
-       background: white !important;
-       color: black !important;
+	background: white !important;
+	color: black !important;
 	border-top: 1px solid lightgrey;
 	border-left: 1px solid lightgrey;
 	border-right: 1px solid lightgrey;
@@ -54,8 +54,8 @@
 	}
 
 .spreadsheet-context-menu.context-menu-disabled {
-        color: grey;
-        }
+	color: grey;
+	}
 
 .spreadsheet-header-corner {
 	border-top: 1px solid darkgrey;
@@ -171,5 +171,5 @@
 	}
 
 .spreadsheet-header-row:hover {
-        background-color: #DDD;
+	background-color: #DDD;
 	}
