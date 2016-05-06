@@ -659,10 +659,10 @@ public:
 
         std::vector<unsigned char> pixmap;
         pixmap.resize(4 * width * height);
-
-        if (part != _loKitDocument->pClass->getPart(_loKitDocument))
+        int oldPart = _loKitDocument->pClass->getPart(_loKitDocument);
+        if (part != oldPart)
         {
-            if (editLock)
+            if (editLock || id != -1)
             {
                 _loKitDocument->pClass->setPart(_loKitDocument, part);
             }
@@ -687,6 +687,12 @@ public:
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
             return;
+        }
+
+        // restore the original part if tilepreview request changed the part
+        if (id != -1)
+        {
+            _loKitDocument->pClass->setPart(_loKitDocument, oldPart);
         }
 
         const auto length = output.size();
