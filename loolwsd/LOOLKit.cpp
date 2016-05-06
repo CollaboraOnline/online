@@ -578,6 +578,8 @@ public:
     {
         int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
 
+        // There would be another param, editlock=, as the last parameter.
+        // For presentations, it would be followed by id=
         if (tokens.count() < 9 ||
             !getTokenInteger(tokens[1], "part", part) ||
             !getTokenInteger(tokens[2], "width", width) ||
@@ -589,6 +591,7 @@ public:
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=syntax");
+            Log::error() << "Invalid tile request" << Log::end;
             return;
         }
 
@@ -602,22 +605,31 @@ public:
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=invalid");
+            Log::error() << "Invalid tile request" << Log::end;
             return;
         }
 
-        int editLock = 0;
         size_t index = 8;
+        int editLock = -1;
+        int id = -1;
+        if (tokens.count() > index && tokens[index].find("id") == 0)
+        {
+            getTokenInteger(tokens[index], "id", id);
+            ++index;
+        }
+
         if (tokens.count() > index && tokens[index].find("editlock") == 0)
         {
             getTokenInteger(tokens[index], "editlock", editLock);
             ++index;
         }
 
-        int id = -1;
-        if (tokens.count() > index && tokens[index].find("id") == 0)
+        // For time being, editlock information in tile requests is mandatory
+        // till we have a better solution to handle multi-part documents
+        if (editLock == -1)
         {
-            getTokenInteger(tokens[index], "id", id);
-            ++index;
+            Log::error("No editlock information found.");
+            return;
         }
 
         std::unique_lock<std::recursive_mutex> lock(ChildProcessSession::getLock());
