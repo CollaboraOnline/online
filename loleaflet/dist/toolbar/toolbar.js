@@ -176,9 +176,9 @@ $(function () {
 });
 
 var formatButtons = ['undo', 'redo', 'save',
-					 'bold', 'italic', 'underline', 'strikeout',
-					 'fontcolor', 'backcolor', 'bullet', 'numbering', 'alignleft', 'alignhorizontal', 'alignright', 'alignblock',
-					 'incrementindent', 'decrementindent', 'insertgraphic'];
+                     'bold', 'italic', 'underline', 'strikeout',
+                     'fontcolor', 'backcolor', 'bullet', 'numbering', 'alignleft', 'alignhorizontal', 'alignright', 'alignblock',
+                     'incrementindent', 'decrementindent', 'insertgraphic'];
 
 var takeEditPopupMessage = '<div>You are viewing now.<br/>Click here to take edit</div>';
 var takeEditPopupTimeout = null;
@@ -919,6 +919,71 @@ map.on('editlock', function (e) {
 			toolbar.disable(id);
 		}
 	});
+
+	var spreadsheetButtons = ['firstrecord', 'prevrecord', 'nextrecord', 'lastrecord'];
+	var formulaBarButtons = ['sum', 'function'];
+	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
+	var toolbarDownButtons = ['next', 'prev'];
+	if (e.value) {
+		// Enable list boxes
+		$('.styles-select').prop('disabled', false);
+		$('.fonts-select').prop('disabled', false);
+		$('.fontsizes-select').prop('disabled', false);
+
+		// Enable formula bar
+		$('#formulaInput').prop('disabled', false);
+		toolbar = w2ui['formulabar'];
+		formulaBarButtons.forEach(function(id) {
+			toolbar.enable(id);
+		});
+
+		toolbar = w2ui['spreadsheet-toolbar'];
+		spreadsheetButtons.forEach(function(id) {
+			toolbar.enable(id);
+		});
+
+		toolbar = w2ui['presentation-toolbar'];
+		presentationButtons.forEach(function(id) {
+			toolbar.enable(id);
+		});
+
+		toolbar = w2ui['toolbar-down'];
+		toolbarDownButtons.forEach(function(id) {
+			toolbar.enable(id);
+		});
+		$('#search-input').prop('disabled', false);
+	}
+	else {
+		// Disable list boxes
+		$('.styles-select').prop('disabled', true);
+		$('.fonts-select').prop('disabled', true);
+		$('.fontsizes-select').prop('disabled', true);
+
+		// Disable formula bar
+		$('#formulaInput').prop('disabled', true);
+
+		toolbar = w2ui['formulabar'];
+		formulaBarButtons.forEach(function(id) {
+			toolbar.disable(id);
+		});
+
+		toolbar = w2ui['spreadsheet-toolbar'];
+		spreadsheetButtons.forEach(function(id) {
+			toolbar.disable(id);
+		});
+
+		toolbar = w2ui['presentation-toolbar'];
+		presentationButtons.forEach(function(id) {
+			toolbar.disable(id);
+		});
+
+		toolbar = w2ui['toolbar-down'];
+		toolbarDownButtons.forEach(function(id) {
+			toolbar.disable(id);
+		});
+		$('#search-input').prop('disabled', true);
+	}
+
 });
 
 map.on('mouseup keypress', function(e) {
