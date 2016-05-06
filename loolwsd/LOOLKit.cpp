@@ -659,24 +659,11 @@ public:
 
         std::vector<unsigned char> pixmap;
         pixmap.resize(4 * width * height);
-        int oldPart = _loKitDocument->pClass->getPart(_loKitDocument);
-        if (part != oldPart)
-        {
-            if (editLock || id != -1)
-            {
-                _loKitDocument->pClass->setPart(_loKitDocument, part);
-            }
-            else
-            {
-                // Session without editlock cannot change part
-                Log::debug() << "Declining tile render request: " << response  << Log::end;
-                ws->sendFrame(response.data(), response.size());
-                return;
-            }
-        }
 
         Timestamp timestamp;
-        _loKitDocument->pClass->paintTile(_loKitDocument, pixmap.data(), width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+        _loKitDocument->pClass->paintPartTile(_loKitDocument, pixmap.data(), part,
+                                              width, height, tilePosX, tilePosY,
+                                              tileWidth, tileHeight);
         Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
                      << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
@@ -687,12 +674,6 @@ public:
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
             return;
-        }
-
-        // restore the original part if tilepreview request changed the part
-        if (id != -1)
-        {
-            _loKitDocument->pClass->setPart(_loKitDocument, oldPart);
         }
 
         const auto length = output.size();
@@ -789,11 +770,6 @@ public:
             tiles.push_back(rectangle);
         }
 
-        if (_docType != "text" && part != _loKitDocument->pClass->getPart(_loKitDocument))
-        {
-            _loKitDocument->pClass->setPart(_loKitDocument, part);
-        }
-
         LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
 
         int tilesByX = renderArea.getWidth() / tileWidth;
@@ -807,9 +783,10 @@ public:
         std::vector<unsigned char> pixmap(pixmapSize, 0);
 
         Timestamp timestamp;
-        _loKitDocument->pClass->paintTile(_loKitDocument, pixmap.data(), pixmapWidth, pixmapHeight,
-                                          renderArea.getLeft(), renderArea.getTop(),
-                                          renderArea.getWidth(), renderArea.getHeight());
+        _loKitDocument->pClass->paintPartTile(_loKitDocument, pixmap.data(), part,
+                                              pixmapWidth, pixmapHeight,
+                                              renderArea.getLeft(), renderArea.getTop(),
+                                              renderArea.getWidth(), renderArea.getHeight());
 
         Log::debug() << "paintTile (combined) called, tile at [" << renderArea.getLeft() << ", " << renderArea.getTop() << "]"
                     << " (" << renderArea.getWidth() << ", " << renderArea.getHeight() << ") rendered in "
