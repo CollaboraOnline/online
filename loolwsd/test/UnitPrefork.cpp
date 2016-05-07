@@ -150,9 +150,17 @@ namespace {
             else if ((value = startsWith(line, "Pss:")))
                 numPSSKb += atoi(value);
         }
+
         std::ostringstream oss;
         oss << numPSSKb << " " << numDirtyKb;
-        return oss.str();
+        const auto res = oss.str();
+        Log::info("readMemorySize: [" + res + "].");
+        if (res.empty())
+        {
+            throw std::runtime_error("Failed to read memory stats.");
+        }
+
+        return res;
     }
 }
 
@@ -240,6 +248,11 @@ public:
                                      std::to_string(getpid()) +
                                      std::string("/smaps");
         _procSMaps = fopen(procName.c_str(), "r");
+        if (_procSMaps == NULL)
+        {
+            _failure = "Failed to open process: " + procName;
+            throw std::runtime_error(_failure);
+        }
     }
 
     virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> &ws,
