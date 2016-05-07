@@ -154,6 +154,7 @@ static bool NoCapsForKit = false;
 static std::vector<std::shared_ptr<ChildProcess>> newChildren;
 static std::mutex newChildrenMutex;
 static std::condition_variable newChildrenCV;
+static std::chrono::steady_clock::time_point lastForkRequestTime;
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 // Sessions to pre-spawned child processes that have connected but are not yet assigned a
@@ -175,6 +176,7 @@ static void forkChildren(const int number)
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
         IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, aMessage);
+        lastForkRequestTime = std::chrono::steady_clock::now();
     }
 }
 
@@ -194,6 +196,13 @@ static void prespawnChildren()
     if (!lock.try_lock())
     {
         // We are forking already? Try later.
+        return;
+    }
+
+    const auto duration = (std::chrono::steady_clock::now() - lastForkRequestTime);
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_SECS * 1000)
+    {
+        // Not enough time passed to balance children.
         return;
     }
 
