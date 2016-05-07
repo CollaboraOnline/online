@@ -76,12 +76,14 @@ public:
 
         const std::string memory = LOOLProtocol::getFirstLine(buffer, length);
         if (!memory.compare(0,6,"Error:"))
+        {
             _failure = memory;
+        }
         else
         {
-//        std::cout << "Got memory stats '" << memory << "'" << std::endl;
+            Log::info("Got memory stats [" + memory + "].");
             Poco::StringTokenizer tokens(memory, " ");
-            assert (tokens.count() == 2);
+            assert(tokens.count() == 2);
             totalPSS += atoi(tokens[0].c_str());
             totalDirty += atoi(tokens[1].c_str());
         }
@@ -95,20 +97,20 @@ public:
         {
             Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
 
-            std::cout << "Launched " << _numStarted << " in "
-                      << (1.0 * elapsed)/Poco::Timestamp::resolution() << std::endl;
+            Log::info() << "Launched " << _numStarted << " in "
+                        << (1.0 * elapsed)/Poco::Timestamp::resolution() << Log::end;
             size_t totalPSSKb = 0;
             size_t totalDirtyKb = 0;
             for (auto child : _childSockets)
                 getMemory(child, totalPSSKb, totalDirtyKb);
 
-            std::cout << "Memory use total   " << totalPSSKb << "k shared "
-                      << totalDirtyKb << "k dirty" << std::endl;
+            Log::info() << "Memory use total   " << totalPSSKb << "k shared "
+                        << totalDirtyKb << "k dirty" << Log::end;
 
             totalPSSKb /= _childSockets.size();
             totalDirtyKb /= _childSockets.size();
-            std::cout << "Memory use average " << totalPSSKb << "k shared "
-                      << totalDirtyKb << "k dirty" << std::endl;
+            Log::info() << "Memory use average " << totalPSSKb << "k shared "
+                        << totalDirtyKb << "k dirty" << Log::end;
 
             if (!_failure.empty())
                 exitTest(TestResult::TEST_FAILED);
@@ -128,7 +130,9 @@ namespace {
         {
             while (!isdigit(line[len]) && line[len] != '\0')
                 len++;
-//            fprintf(stdout, "does start with %s: '%s'\n", tag, line + len);
+
+            const auto str = std::string(line + len, strlen(line + len) - 1);
+            Log::info(std::string("does start with ") + tag + " '" + str + "'");
             return line + len;
         }
         else
@@ -265,7 +269,8 @@ public:
             if (!_failure.empty())
                 memory = _failure;
             else
-                memory = readMemorySizes(_procSMaps) + "\n";
+                memory = readMemorySizes(_procSMaps);
+            Log::info("filterKitMessage sending back: [" + memory + "].");
             ws->sendFrame(memory.c_str(), memory.length());
             return true;
         }
