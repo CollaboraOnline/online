@@ -32,7 +32,8 @@ void ChildProcess::socketProcessor()
                 return docBroker->handleInput(payload);
             }
 
-            Log::warn("No DocumentBroker to handle child message: [" + LOOLProtocol::getAbbreviatedMessage(payload) + "].");
+            Log::warn() << "Child " << this->_pid << " has no DocumentBroker to handle message: ["
+                        << LOOLProtocol::getAbbreviatedMessage(payload) << "]." << Log::end;
             return true;
         },
         []() { },

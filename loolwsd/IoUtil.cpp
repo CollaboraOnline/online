@@ -75,7 +75,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
     Log::info("SocketProcessor starting.");
 
     // Timeout given is in microseconds.
-    const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+    static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
     try
     {
         ws->setReceiveTimeout(0);
