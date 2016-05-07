@@ -211,6 +211,19 @@ static void prespawnChildren()
     forkChildren(balance);
 }
 
+static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
+{
+    std::unique_lock<std::mutex> lock(newChildrenMutex);
+    newChildren.emplace_back(child);
+    const auto count = newChildren.size();
+    Log::info() << "Have " << count << " "
+                << (count == 1 ? "child" : "children")
+                << "." << Log::end;
+
+    newChildrenCV.notify_one();
+    return count;
+}
+
 static std::shared_ptr<ChildProcess> getNewChild()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
@@ -867,11 +880,9 @@ public:
 
             Log::info("New child [" + std::to_string(pid) + "].");
             auto ws = std::make_shared<WebSocket>(request, response);
-            std::unique_lock<std::mutex> lock(newChildrenMutex);
-            newChildren.emplace_back(std::make_shared<ChildProcess>(pid, ws));
-            Log::info("Have " + std::to_string(newChildren.size()) + " " + (newChildren.size() == 1 ? "child" : "children") + ".");
-            newChildrenCV.notify_one();
             UnitWSD::get().newChild(ws);
+
+            addNewChild(std::make_shared<ChildProcess>(pid, ws));
             return;
         }
 
