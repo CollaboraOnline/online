@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 
+#include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
 #include "Unit.hpp"
@@ -39,6 +40,12 @@ public:
         setHasKitHooks();
     }
 
+    virtual void returnValue(int &retValue) override
+    {
+        // 0 when empty (success), otherwise failure.
+        retValue = !_failure.empty();
+    }
+
     virtual void preSpawnCount(int &numPrefork) override
     {
         numPrefork = NumToPrefork;
@@ -51,6 +58,13 @@ public:
         socket->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n")-1);
         int flags;
         char buffer[4096];
+
+        static const Poco::Timespan waitTime(COMMAND_TIMEOUT_MS * 1000);
+        if (!socket->poll(waitTime, Poco::Net::Socket::SELECT_READ))
+        {
+            _failure = "Timed out waiting for child to respond to unit-memdump command.";
+            return;
+        }
 
         int length = IoUtil::receiveFrame(*socket, buffer, sizeof (buffer), flags);
         std::string memory = LOOLProtocol::getFirstLine(buffer, length);
