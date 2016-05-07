@@ -22,6 +22,7 @@
 
 #include <Poco/Timestamp.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/Net/WebSocket.h>
 
 const int NumToPrefork = 20;
 
@@ -56,8 +57,6 @@ public:
     {
         /// Fetch memory usage data from the last process ...
         socket->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n")-1);
-        int flags;
-        char buffer[4096];
 
         static const Poco::Timespan waitTime(COMMAND_TIMEOUT_MS * 1000);
         if (!socket->poll(waitTime, Poco::Net::Socket::SELECT_READ))
@@ -66,9 +65,16 @@ public:
             return;
         }
 
-        int length = IoUtil::receiveFrame(*socket, buffer, sizeof (buffer), flags);
-        std::string memory = LOOLProtocol::getFirstLine(buffer, length);
+        int flags;
+        char buffer[4096];
+        const int length = IoUtil::receiveFrame(*socket, buffer, sizeof (buffer), flags);
+        if (length <= 0 || ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE))
+        {
+            _failure = "Failed to read child response to unit-memdump command.";
+            return;
+        }
 
+        const std::string memory = LOOLProtocol::getFirstLine(buffer, length);
         if (!memory.compare(0,6,"Error:"))
             _failure = memory;
         else
