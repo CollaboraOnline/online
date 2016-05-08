@@ -124,9 +124,9 @@ public:
                 assert(lokitDoc->pClass->getPart);
 
                 int curPart = lokitDoc->pClass->getPart(lokitDoc);
-                _session.sendTextFrame("curpart: part=" + std::to_string(curPart));
                 if (_session.getDocType() == "text")
                 {
+                    // Text docs have a single coordinate system.
                     curPart = 0;
                 }
 
@@ -134,7 +134,6 @@ public:
                 if (tokens.count() == 4)
                 {
                     int x, y, width, height;
-
                     try
                     {
                         x = std::stoi(tokens[0]);
