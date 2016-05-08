@@ -177,7 +177,9 @@ bool DocumentBroker::save()
 
     const auto uri = _uriPublic.toString();
 
-    // If the file hasn't been modified within the past 10 seconds, skip saving.
+    // If we aren't potentially destroying just yet, and the file hasn't been
+    // modified within the past 10 seconds, skip saving.
+    //
     // FIXME this is because currently the ChildProcessSession broadcasts the
     // unocommandresult, so we get called several times here, and have no real
     // possibility to distinguish who was the 1st caller.
@@ -187,10 +189,11 @@ bool DocumentBroker::save()
     // is planned post-release.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
     const auto elapsed = newFileModifiedTime - _lastFileModifiedTime;
-    if (std::abs(elapsed) > 10 * 1000 * 1000)
+    if (!canDestroy() && std::abs(elapsed) > 10 * 1000 * 1000)
     {
         // Nothing to do.
-        Log::debug("Skipping unnecessary saving to URI [" + uri + "].");
+        Log::debug() << "Skipping unnecessary saving to URI [" << uri
+                     << "]. File last modified " << elapsed << " ms ago." << Log::end;
         return true;
     }
 
@@ -502,11 +505,8 @@ bool DocumentBroker::canDestroy()
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    if (_sessions.size() == 1)
-    {
-        // Last view going away, can destroy.
-        _markToDestroy = true;
-    }
+    // Last view going away, can destroy.
+    _markToDestroy = (_sessions.size() <= 1);
 
     return _markToDestroy;
 }

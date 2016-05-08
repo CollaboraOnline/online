@@ -648,15 +648,19 @@ private:
                 [&session]() { session->closeFrame(); },
                 [&queueHandlerThread]() { return TerminationFlag || !queueHandlerThread.isRunning(); });
 
-            const bool canDestroy = docBroker->canDestroy();
-            if (canDestroy && !session->_bLoadError)
+            if (!session->_bLoadError)
             {
-                Log::info("Shutdown of the last session, saving the document before tearing down.");
+                // If we are the last, we must wait for the save to complete.
+                const bool canDestroy = docBroker->canDestroy();
+                if (canDestroy)
+                {
+                    Log::info("Shutdown of the last session, saving the document before tearing down.");
+                }
 
                 // Use auto-save to save only when there are modifications since last save.
                 // We also need to wait until the save notification reaches us
                 // and Storage persists the document.
-                if (!docBroker->autoSave(true, COMMAND_TIMEOUT_MS))
+                if (!docBroker->autoSave(canDestroy, COMMAND_TIMEOUT_MS))
                 {
                     Log::error("Auto-save before closing failed.");
                 }
