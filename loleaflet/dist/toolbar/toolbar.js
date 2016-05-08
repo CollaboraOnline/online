@@ -280,6 +280,8 @@ function onClick(id) {
 	else if (id === 'takeedit') {
 		if (!item.checked) {
 			map._socket.sendMessage('takeedit');
+			// And advertise which page we're on.
+			map._socket.sendMessage('setclientpart part=' + map._docLayer._selectedPart);
 		}
 	}
 	else if (id === 'searchprev') {
