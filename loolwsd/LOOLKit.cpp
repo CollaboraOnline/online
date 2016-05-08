@@ -1347,7 +1347,7 @@ void lokit_main(const std::string& childRoot,
     }
     catch (const Exception& exc)
     {
-        Log::error() << exc.name() << ": " << exc.displayText()
+        Log::error() << "Poco Exception: " << exc.displayText()
                      << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                      << Log::end;
     }

@@ -149,11 +149,11 @@ public:
                     }
 
                     _session.sendTextFrame("invalidatetiles:"
-                                       " part=" + std::to_string(curPart) +
-                                       " x=" + std::to_string(x) +
-                                       " y=" + std::to_string(y) +
-                                       " width=" + std::to_string(width) +
-                                       " height=" + std::to_string(height));
+                                           " part=" + std::to_string(curPart) +
+                                           " x=" + std::to_string(x) +
+                                           " y=" + std::to_string(y) +
+                                           " width=" + std::to_string(width) +
+                                           " height=" + std::to_string(height));
                 }
                 else
                 {

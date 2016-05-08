@@ -60,6 +60,7 @@ void getDocumentPathAndURL(const char* document, std::string& documentPath, std:
 inline
 void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
 {
+    std::cerr << "Sending " << string.size() << " bytes: " << LOOLProtocol::getAbbreviatedMessage(string) << std::endl;
     socket.sendFrame(string.data(), string.size());
 }
 

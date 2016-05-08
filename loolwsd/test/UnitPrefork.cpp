@@ -144,7 +144,7 @@ namespace {
         size_t numPSSKb = 0;
         size_t numDirtyKb = 0;
 
-        char line[4096];
+        char line[4096] = { 0 };
         while (fgets(line, sizeof (line), inStream))
         {
             const char *value;
