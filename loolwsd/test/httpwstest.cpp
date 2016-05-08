@@ -1141,17 +1141,20 @@ void HTTPWSTest::testNoExtraLoolKitsLeft()
     CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
 }
 
-void HTTPWSTest::getPartHashCodes(const std::string response,
+void HTTPWSTest::getPartHashCodes(const std::string status,
                                   std::vector<std::string>& parts)
 {
-    std::cerr << "Reading parts from [" << response << "]." << std::endl;
+    std::cerr << "Reading parts from [" << status << "]." << std::endl;
 
     // Expected format is something like 'type= parts= current= width= height='.
-    Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
     CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
 
-    const std::string prefix = "parts=";
-    const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
+    const auto type = tokens[0].substr(std::string("type=").size());
+    CPPUNIT_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
+                           type == "presentation" || type == "spreadsheet");
+
+    const int totalParts = std::stoi(tokens[1].substr(std::string("parts=").size()));
     std::cerr << "Status reports " << totalParts << " parts." << std::endl;
 
     Poco::RegularExpression endLine("[^\n\r]+");
@@ -1160,18 +1163,19 @@ void HTTPWSTest::getPartHashCodes(const std::string response,
     int offset = 0;
 
     parts.clear();
-    while (endLine.match(response, offset, matches) > 0)
+    while (endLine.match(status, offset, matches) > 0)
     {
         CPPUNIT_ASSERT_EQUAL(1, (int)matches.size());
-        const auto str = response.substr(matches[0].offset, matches[0].length);
+        const auto str = status.substr(matches[0].offset, matches[0].length);
         if (number.match(str, 0) > 0)
         {
             parts.push_back(str);
         }
+
         offset = static_cast<int>(matches[0].offset + matches[0].length);
     }
 
-    std::cerr << "Found " << parts.size() << " part hash." << std::endl;
+    std::cerr << "Found " << parts.size() << " part names/codes." << std::endl;
 
     // Validate that Core is internally consistent when emitting status messages.
     CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
