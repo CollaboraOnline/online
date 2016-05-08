@@ -885,97 +885,63 @@ void HTTPWSTest::testInsertDelete()
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
         // check total slides 1
+        std::cerr << "Expecting 1 slide." << std::endl;
         getResponseMessage(socket, "status:", response, false);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        {
-            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
-
-            // Expected format is something like 'type= parts= current= width= height='.
-            const std::string prefix = "parts=";
-            const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
-            CPPUNIT_ASSERT_EQUAL(1, totalParts);
-            getPartHashCodes(response, parts);
-            CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-        }
+        getPartHashCodes(response, parts);
+        CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
 
         // insert 10 slides
-        for (unsigned it = 1; it <= 10; it++)
+        std::cerr << "Inserting 10 slides." << std::endl;
+        for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:InsertPage");
             getResponseMessage(socket, "status:", response, false);
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            {
-                Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                const std::string prefix = "parts=";
-                const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
-
-                getPartHashCodes(response, parts);
-                CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-            }
+            getPartHashCodes(response, parts);
+            CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
         }
 
         // delete 10 slides
-        for (unsigned it = 1; it <= 10; it++)
+        std::cerr << "Deleting 10 slides." << std::endl;
+        for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:DeletePage");
             getResponseMessage(socket, "status:", response, false);
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            {
-                Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                const std::string prefix = "parts=";
-                const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
-
-                getPartHashCodes(response, parts);
-                CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-            }
+            getPartHashCodes(response, parts);
+            CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
         }
 
         // undo delete slides
-        for (unsigned it = 1; it <= 10; it++)
+        std::cerr << "Undoing 10 slide deletes." << std::endl;
+        for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Undo");
             getResponseMessage(socket, "status:", response, false);
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            {
-                Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                const std::string prefix = "parts=";
-                const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
-
-                getPartHashCodes(response, parts);
-                CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-            }
+            getPartHashCodes(response, parts);
+            CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
         }
 
         // redo inserted slides
-        for (unsigned it = 1; it <= 10; it++)
+        std::cerr << "Redoing 10 slide deletes." << std::endl;
+        for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Redo");
             getResponseMessage(socket, "status:", response, false);
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            {
-                Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                const std::string prefix = "parts=";
-                const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
-
-                getPartHashCodes(response, parts);
-                CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-            }
+            getPartHashCodes(response, parts);
+            CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
         }
 
         // check total slides 1
+        std::cerr << "Expecting 1 slide." << std::endl;
         sendTextFrame(socket, "status");
         getResponseMessage(socket, "status:", response, false);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        {
-            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            const std::string prefix = "parts=";
-            const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
-            CPPUNIT_ASSERT_EQUAL(1, totalParts);
-
-            getPartHashCodes(response, parts);
-            CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-        }
+        getPartHashCodes(response, parts);
+        CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
 
         socket.shutdown();
         Util::removeFile(documentPath);
@@ -1165,6 +1131,16 @@ void HTTPWSTest::testNoExtraLoolKitsLeft()
 void HTTPWSTest::getPartHashCodes(const std::string response,
                                   std::vector<std::string>& parts)
 {
+    std::cerr << "Reading parts from [" << response << "]." << std::endl;
+
+    // Expected format is something like 'type= parts= current= width= height='.
+    Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+
+    const std::string prefix = "parts=";
+    const int totalParts = std::stoi(tokens[1].substr(prefix.size()));
+    std::cerr << "Status reports " << totalParts << " parts." << std::endl;
+
     Poco::RegularExpression endLine("[^\n\r]+");
     Poco::RegularExpression number("^[0-9]+$");
     Poco::RegularExpression::MatchVec matches;
@@ -1181,6 +1157,11 @@ void HTTPWSTest::getPartHashCodes(const std::string response,
         }
         offset = static_cast<int>(matches[0].offset + matches[0].length);
     }
+
+    std::cerr << "Found " << parts.size() << " part hash." << std::endl;
+
+    // Validate that Core is internally consistent when emitting status messages.
+    CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
