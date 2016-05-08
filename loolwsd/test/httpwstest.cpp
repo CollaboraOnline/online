@@ -891,6 +891,8 @@ void HTTPWSTest::testInsertDelete()
         getPartHashCodes(response, parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
 
+        const auto slide1Hash = parts[0];
+
         // insert 10 slides
         std::cerr << "Inserting 10 slides." << std::endl;
         for (size_t it = 1; it <= 10; it++)
@@ -901,6 +903,9 @@ void HTTPWSTest::testInsertDelete()
             getPartHashCodes(response, parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
         }
+
+        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after inserting extra slides.", parts[0] == slide1Hash);
+        const std::vector<std::string> parts_after_insert(parts.begin(), parts.end());
 
         // delete 10 slides
         std::cerr << "Deleting 10 slides." << std::endl;
@@ -913,6 +918,8 @@ void HTTPWSTest::testInsertDelete()
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
         }
 
+        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after deleting extra slides.", parts[0] == slide1Hash);
+
         // undo delete slides
         std::cerr << "Undoing 10 slide deletes." << std::endl;
         for (size_t it = 1; it <= 10; it++)
@@ -924,6 +931,10 @@ void HTTPWSTest::testInsertDelete()
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
         }
 
+        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after undoing slide delete.", parts[0] == slide1Hash);
+        const std::vector<std::string> parts_after_undo(parts.begin(), parts.end());
+        CPPUNIT_ASSERT_MESSAGE("Hash codes changed between deleting and undo.", parts_after_insert == parts_after_undo);
+
         // redo inserted slides
         std::cerr << "Redoing 10 slide deletes." << std::endl;
         for (size_t it = 1; it <= 10; it++)
@@ -934,6 +945,8 @@ void HTTPWSTest::testInsertDelete()
             getPartHashCodes(response, parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
         }
+
+        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after redoing slide delete.", parts[0] == slide1Hash);
 
         // check total slides 1
         std::cerr << "Expecting 1 slide." << std::endl;
