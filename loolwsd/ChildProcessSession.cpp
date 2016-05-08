@@ -654,15 +654,14 @@ bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    const std::string status = "status: " + LOKitHelper::documentStatus(_loKitDocument);
-    StringTokenizer tokens(status, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-    if (!getTokenString(tokens[1], "type", _docType))
+    const auto status = LOKitHelper::documentStatus(_loKitDocument);
+    if (status.empty())
     {
-        Log::error("failed to get document type from status [" + status + "].");
+        Log::error("Failed to get document status.");
         return false;
     }
 
-    sendTextFrame(status);
+    sendTextFrame("status: " + status);
     return true;
 }
 

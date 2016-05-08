@@ -11,6 +11,7 @@
 #define INCLUDED_LOKITHELPER_HPP
 
 #include <string>
+#include <sstream>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
@@ -98,27 +99,36 @@ namespace LOKitHelper
     inline
     std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
     {
-        std::string typeString(documentTypeToString(static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument))));
-        long width, height, parts;
+        const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
+
+        const auto parts = loKitDocument->pClass->getParts(loKitDocument);
+        std::ostringstream oss;
+        oss << " type=" << documentTypeToString(type)
+            << " parts=" << parts
+            << " current=" << loKitDocument->pClass->getPart(loKitDocument);
+
+        long width, height;
         loKitDocument->pClass->getDocumentSize(loKitDocument, &width, &height);
-        parts = loKitDocument->pClass->getParts(loKitDocument);
-        std::string status =
-               ("type=" + typeString + " "
-                "parts=" + std::to_string(parts) + " "
-                "current=" + std::to_string(loKitDocument->pClass->getPart(loKitDocument)) + " "
-                "width=" + std::to_string(width) + " "
-                "height=" + std::to_string(height));
-        if (typeString == "spreadsheet" || typeString == "presentation")
+        oss << " width=" << width
+            << " height=" << height;
+
+        if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION)
         {
-            for (int i = 0; i < parts; i++)
+            for (auto i = 0; i < parts; ++i)
             {
-                status += "\n";
-                status += typeString == "presentation" ?
-                          loKitDocument->pClass->getPartHash(loKitDocument, i):
-                          loKitDocument->pClass->getPartName(loKitDocument, i);
+                oss << "\n";
+                if (type == LOK_DOCTYPE_PRESENTATION)
+                {
+                    oss << loKitDocument->pClass->getPartHash(loKitDocument, i);
+                }
+                else
+                {
+                    oss << loKitDocument->pClass->getPartName(loKitDocument, i);
+                }
             }
         }
-        return status;
+
+        return oss.str();
     }
 };
 
