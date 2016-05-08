@@ -689,7 +689,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onTextSelectionEndMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null) {
+		if (strTwips != null && this._map._editlock) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
@@ -704,7 +704,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onTextSelectionStartMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null) {
+		if (strTwips != null && this._map._editlock) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
