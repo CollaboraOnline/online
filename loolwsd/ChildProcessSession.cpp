@@ -82,6 +82,10 @@ public:
         // Cache important notifications to replay them when our client
         // goes inactive and loses them.
         if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+            nType == LOK_CALLBACK_CURSOR_VISIBLE ||
+            nType == LOK_CALLBACK_CELL_CURSOR ||
+            nType == LOK_CALLBACK_CELL_FORMULA ||
+            nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
             nType == LOK_CALLBACK_TEXT_SELECTION ||
             nType == LOK_CALLBACK_TEXT_SELECTION_START ||
             nType == LOK_CALLBACK_TEXT_SELECTION_END ||
@@ -368,6 +372,18 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
                     break;
                 case LOK_CALLBACK_TEXT_SELECTION_END:
                     sendTextFrame("textselectionend: " + pair.second);
+                    break;
+                case LOK_CALLBACK_CURSOR_VISIBLE:
+                    sendTextFrame("cursorvisible: " + pair.second);
+                    break;
+                case LOK_CALLBACK_GRAPHIC_SELECTION:
+                    sendTextFrame("graphicselection: " + pair.second);
+                    break;
+                case LOK_CALLBACK_CELL_CURSOR:
+                    sendTextFrame("cellcursor: " + pair.second);
+                    break;
+                case LOK_CALLBACK_CELL_FORMULA:
+                    sendTextFrame("cellformula: " + pair.second);
                     break;
                 case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
                     getStatus("", 0);
