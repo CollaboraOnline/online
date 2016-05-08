@@ -1488,6 +1488,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::warn("No admin credentials set via 'admincreds' command-line argument. Admin Console will be disabled.");
     }
 
+    // Create the directory where the fifo pipe with ForKit will be.
     const Path pipePath = Path::forDirectory(ChildRoot + "/" + FIFO_PATH);
     if (!File(pipePath).exists() && !File(pipePath).createDirectory())
     {
@@ -1495,6 +1496,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
+    // Create the fifo with ForKit.
     const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
     Log::debug("mkfifo(" + pipeLoolwsd + ")");
     if (mkfifo(pipeLoolwsd.c_str(), 0666) < 0 && errno != EEXIST)
@@ -1503,27 +1505,15 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    const Process::PID forKitPid = createForKit();
-    if (forKitPid < 0)
-    {
-        Log::error("Failed to spawn loolforkit.");
-        return Application::EXIT_SOFTWARE;
-    }
-
-    // Init the Admin manager
-    Admin::instance().setForKitPid(forKitPid);
-
     // Init the file server
     FileServer fileServer;
 
     // Configure the Server.
-    // Note: TCPServer internally uses the default
-    // ThreadPool to dispatch connections.
-    // The capacity of the default ThreadPool
-    // is increased to match MaxThreads.
-    // We must have sufficient available threads
-    // in the default ThreadPool to dispatch
-    // connections, otherwise we will deadlock.
+    // Note: TCPServer internally uses a ThreadPool to
+    // dispatch connections (the default if not given).
+    // The capacity of the ThreadPool is increased here to
+    // match MAX_SESSIONS. The pool must have sufficient available
+    // threads to dispatch new connections, otherwise will deadlock.
     auto params1 = new HTTPServerParams();
     params1->setMaxThreads(MAX_SESSIONS);
     auto params2 = new HTTPServerParams();
@@ -1547,6 +1537,15 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     srv2.start();
 
+    // Fire the ForKit process; we are ready.
+    const Process::PID forKitPid = createForKit();
+    if (forKitPid < 0)
+    {
+        Log::error("Failed to spawn loolforkit.");
+        return Application::EXIT_SOFTWARE;
+    }
+
+    // Open write fifo pipe with ForKit.
     if ( (ForKitWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
     {
         Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for writing.");
@@ -1554,6 +1553,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
     Log::debug("open(" + pipeLoolwsd + ", WRONLY) = " + std::to_string(ForKitWritePipe));
 
+    // Init the Admin manager
+    Admin::instance().setForKitPid(forKitPid);
+
+    // Spawn some children, if necessary.
     preForkChildren();
 
     time_t last30SecCheck = time(NULL);
