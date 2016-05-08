@@ -103,7 +103,7 @@ namespace LOKitHelper
 
         const auto parts = loKitDocument->pClass->getParts(loKitDocument);
         std::ostringstream oss;
-        oss << " type=" << documentTypeToString(type)
+        oss << "type=" << documentTypeToString(type)
             << " parts=" << parts
             << " current=" << loKitDocument->pClass->getPart(loKitDocument);
 
