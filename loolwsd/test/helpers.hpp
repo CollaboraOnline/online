@@ -65,6 +65,12 @@ void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
 }
 
 inline
+void sendTextFrame(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& string)
+{
+    sendTextFrame(*socket, string);
+}
+
+inline
 bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
 {
     if (!name.empty())
@@ -257,6 +263,12 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
 }
 
 inline
+void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, std::string& response, const bool isLine)
+{
+    getResponseMessage(ws, prefix, response, isLine);
+}
+
+inline
 std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix)
 {
     try
@@ -326,6 +338,11 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
     return std::vector<char>();
 }
 
+inline
+std::vector<char> getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix)
+{
+    return getResponseMessage(*ws, prefix);
+}
 
 inline
 std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL)
