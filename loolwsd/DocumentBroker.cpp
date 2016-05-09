@@ -289,6 +289,13 @@ bool DocumentBroker::sendUnoSave()
             if (queue)
             {
                 queue->put("uno .uno:Save");
+
+                // Set calc cell mode back to edit mode
+                // if we were in edit before save
+                if (sessionIt.second->isCursorVisible())
+                {
+                    queue->put("uno .uno:SetInputMode");
+                }
                 return true;
             }
         }
