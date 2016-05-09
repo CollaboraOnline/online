@@ -23,8 +23,8 @@ AC_SUBST([LOOLWSD_VERSION])
 AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[LibreOffice On-Line WebSocket server version])
 
 # try to add a git hash for a version if we're developing
-LOOLWSD_VERSION_HASH=package
-git_hash=`cd ${ac_srcdir} && git log -1 --format=%H 2> /dev/null`
+LOOLWSD_VERSION_HASH="$LOOLWSD_VERSION"
+git_hash=`cd ${srcdir} && git log -1 --format=%H 2> /dev/null`
 if test "z$git_hash" != "z"; then
    LOOLWSD_VERSION_HASH=$git_hash
 fi
