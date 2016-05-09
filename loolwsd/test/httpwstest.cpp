@@ -75,6 +75,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testEditLock);
     CPPUNIT_TEST(testSlideShow);
+    CPPUNIT_TEST(testInactiveClient);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -99,6 +100,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testNoExtraLoolKitsLeft();
     void testEditLock();
     void testSlideShow();
+    void testInactiveClient();
 
     void loadDoc(const std::string& documentURL);
 
@@ -1122,6 +1124,54 @@ void HTTPWSTest::testSlideShow()
         }
         socket.shutdown();
         Util::removeFile(documentPath);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testInactiveClient()
+{
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+        auto socket1 = loadDocAndGetSocket(_uri, documentURL);
+        getResponseMessage(socket1, "invalidatetiles");
+
+        // Connect another and go inactive.
+        std::cerr << "Connecting second client." << std::endl;
+        auto socket2 = loadDocAndGetSocket(_uri, documentURL);
+        getResponseMessage(socket2, "status");
+        sendTextFrame(socket2, "userinactive");
+
+        // While second is inactive, make some changes.
+        sendTextFrame(socket1, "uno .uno:SelectAll");
+        sendTextFrame(socket1, "uno .uno:Delete");
+
+        // Activate second.
+        sendTextFrame(socket2, "useractive");
+        SocketProcessor("Second", socket2, [&](const std::string& msg)
+                {
+                    const auto token = LOOLProtocol::getFirstToken(msg);
+                    CPPUNIT_ASSERT_MESSAGE("unexpected message: " + msg,
+                                            token == "textselection:" ||
+                                            token == "textselectionstart:" ||
+                                            token == "textselectionend:" ||
+                                            token == "invalidatetiles:" ||
+                                            token == "invalidatecursor:" ||
+                                            token == "statechanged:");
+
+                    // End when we get state changed.
+                    return (token != "statechanged:");
+                });
+
+        std::cerr << "Second client finished." << std::endl;
+        socket1->shutdown();
+        socket2->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
