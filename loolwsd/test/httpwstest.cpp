@@ -399,6 +399,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
+    int kitcount = -1;
     try
     {
         // Load a document and get its status.
@@ -408,14 +409,26 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket, "load url=" + documentURL);
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
+        Poco::Net::WebSocket socket2 = *connectLOKit(_uri, request, _response);
+        sendTextFrame(socket2, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket2));
+        sendTextFrame(socket2, "userinactive");
+
         sendTextFrame(socket, "uno .uno:SelectAll");
         sendTextFrame(socket, "uno .uno:Delete");
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
 
+        // Closing connection too fast might not flush buffers.
+        // Often nothing more than the SelectAll reaches the server before
+        // the socket is closed, when the doc is not even modified yet.
+        getResponseMessage(socket, "statechanged");
         std::cerr << "Closing connection after pasting." << std::endl;
+
+        kitcount = getLoolKitProcessCount();
 
         // Shutdown abruptly.
         socket.shutdown();
+        socket2.shutdown();
     }
     catch (const Poco::Exception& exc)
     {
@@ -423,7 +436,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     }
 
     // Allow time to save and destroy before we connect again.
-    sleep(5);
+    testNoExtraLoolKitsLeft();
     std::cerr << "Loading again." << std::endl;
     try
     {
@@ -434,6 +447,9 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket, "load url=" + documentURL);
         sendTextFrame(socket, "status");
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        // Should have no new instances.
+        CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll");
@@ -487,6 +503,12 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         sendTextFrame(socket, "uno .uno:SelectAll");
         sendTextFrame(socket, "uno .uno:Delete");
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
+
+        // Closing connection too fast might not flush buffers.
+        // Often nothing more than the SelectAll reaches the server before
+        // the socket is closed, when the doc is not even modified yet.
+        getResponseMessage(socket, "statechanged");
+        std::cerr << "Closing connection after pasting." << std::endl;
 
         kitcount = getLoolKitProcessCount();
 
