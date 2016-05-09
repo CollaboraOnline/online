@@ -525,18 +525,22 @@ private:
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
         std::shared_ptr<DocumentBroker> docBroker;
-        std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
 
-        // Lookup this document.
-        auto it = docBrokers.find(docKey);
-        if (it != docBrokers.end())
+        // scope the docBrokersLock
         {
-            // Get the DocumentBroker from the Cache.
-            Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
-            docBroker = it->second;
-            assert(docBroker);
+            std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+
+            // Lookup this document.
+            auto it = docBrokers.find(docKey);
+            if (it != docBrokers.end())
+            {
+                // Get the DocumentBroker from the Cache.
+                Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
+                docBroker = it->second;
+                assert(docBroker);
+            }
+            docBrokersLock.unlock();
         }
-        docBrokersLock.unlock();
 
         if (docBroker)
         {
