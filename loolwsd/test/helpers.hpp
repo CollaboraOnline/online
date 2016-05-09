@@ -265,7 +265,7 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
 inline
 void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, std::string& response, const bool isLine)
 {
-    getResponseMessage(ws, prefix, response, isLine);
+    getResponseMessage(*ws, prefix, response, isLine);
 }
 
 inline
