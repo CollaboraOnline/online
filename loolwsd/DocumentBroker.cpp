@@ -177,7 +177,7 @@ bool DocumentBroker::save()
 
     const auto uri = _uriPublic.toString();
 
-    // If we aren't potentially destroying just yet, and the file hasn't been
+    // If we aren't potentially destroying just yet, and the file has been
     // modified within the past 10 seconds, skip saving.
     //
     // FIXME this is because currently the ChildProcessSession broadcasts the
@@ -189,7 +189,7 @@ bool DocumentBroker::save()
     // is planned post-release.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
     const auto elapsed = newFileModifiedTime - _lastFileModifiedTime;
-    if (!canDestroy() && std::abs(elapsed) > 10 * 1000 * 1000)
+    if (!canDestroy() && std::abs(elapsed) < 10 * 1000)
     {
         // Nothing to do.
         Log::debug() << "Skipping unnecessary saving to URI [" << uri
