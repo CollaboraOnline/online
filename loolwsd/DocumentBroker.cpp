@@ -219,19 +219,23 @@ bool DocumentBroker::save()
 
 bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
 {
-    Log::trace("Autosaving [" + _docKey + "].");
-
     std::unique_lock<std::mutex> lock(_mutex);
-    if (_sessions.empty() || _storage == nullptr || !_isLoaded)
+    if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
+        (!_isModified && !force))
     {
         // Nothing to do.
         Log::trace("Nothing to autosave [" + _docKey + "].");
         return true;
     }
 
+    // Remeber the last save time, since this is the predicate.
+    const auto lastSaveTime = _lastSaveTime;
+    Log::trace("Autosaving [" + _docKey + "].");
+
     bool sent = false;
     if (force)
     {
+        Log::trace("Sending forced save command for [" + _docKey + "].");
         sent = sendUnoSave();
     }
     else if (_isModified)
@@ -251,17 +255,17 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
         if (inactivityTimeMs >= IdleSaveDurationMs ||
             timeSinceLastSaveMs >= AutoSaveDurationMs)
         {
+            Log::trace("Sending timed save command for [" + _docKey + "].");
             sent = sendUnoSave();
         }
     }
 
     if (sent && waitTimeoutMs > 0)
     {
-        // Remeber the last save time, since this is the predicate.
-        const auto lastSaveTime = _lastSaveTime;
-
+        Log::trace("Waiting for save event for [" + _docKey + "].");
         if (_saveCV.wait_for(lock, std::chrono::milliseconds(waitTimeoutMs)) == std::cv_status::no_timeout)
         {
+            Log::debug("Successfully persisted document [" + _docKey + "].");
             return true;
         }
 

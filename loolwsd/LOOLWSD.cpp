@@ -1641,10 +1641,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
                         for (auto& brokerIt : docBrokers)
                         {
-                            if (brokerIt.second->isModified())
-                            {
-                                brokerIt.second->autoSave(false, 0);
-                            }
+                            brokerIt.second->autoSave(false, 0);
                         }
                     }
                     catch (const std::exception& exc)
