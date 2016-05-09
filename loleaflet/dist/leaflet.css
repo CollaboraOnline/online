@@ -9,7 +9,6 @@
 .leaflet-map-pane canvas,
 .leaflet-zoom-box,
 .leaflet-image-layer,
-.leaflet-progress-layer,
 .leaflet-layer {
 	position: absolute;
 	left: 0;
@@ -651,12 +650,19 @@ a.leaflet-control-buttons:hover:first-child {
 	margin: 0 auto;
 	}
 
+.leaflet-progress-layer {
+	background: #fff;
+	border: 2px solid #eee;
+	padding: 10px;
+}
+
 .leaflet-progress {
 	background: #ebebeb;
 	border-left: 1px solid transparent;
 	border-right: 1px solid transparent;
 	border-radius: 10px;
-	height:100%;
+	height: 24px;
+	margin: 10px 0 0;
 	}
 
 .leaflet-progress > span {
@@ -665,14 +671,14 @@ a.leaflet-control-buttons:hover:first-child {
 	margin: 0 -1px;
 	height: 100%;
 	text-align: right;
-	background: #5aaadb;
+	background: #5c3dcc;
 	border: 1px solid;
-	border-color: #459fd6 #3094d2 #277db2;
+	border-color: #4422bf #5435c4;
 	border-radius: 10px;
-	background-image: -webkit-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
-	background-image: -moz-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
-	background-image: -o-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
-	background-image: linear-gradient(to bottom, #aed5ed, #7bbbe2 70%, #5aaadb);
+	background-image: -webkit-linear-gradient(top, #745dc6, #6549cc 70%, #5c3dcc);
+	background-image: -moz-linear-gradient(top, #745dc6, #6549cc 70%, #5c3dcc);
+	background-image: -o-linear-gradient(top, #745dc6, #6549cc 70%, #5c3dcc);
+	background-image: linear-gradient(to bottom, #745dc6, #6549cc 70%, #5c3dcc);
 	-webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
 	box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
 	}
@@ -681,17 +687,18 @@ a.leaflet-control-buttons:hover:first-child {
 	padding: 0 8px;
 	font-size: 11px;
 	font-weight: bold;
-	color: #404040;
-	color: rgba(0, 0, 0, 0.7);
-	text-shadow: 0 1px rgba(255, 255, 255, 0.4);
+	color: #fff;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.4);
 	}
 
 .leaflet-progress-spinner {
 	background-image: url(images/spinner.gif);
+	background-color: white;
 	background-repeat: no-repeat;
 	background-position: center center;
 	width: 100%;
-	height: 48px;
+	margin: 0 0 4px;
+	height: 34px;
 	}
 
 .leaflet-progress-label {

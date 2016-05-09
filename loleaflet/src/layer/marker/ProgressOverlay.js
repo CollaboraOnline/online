@@ -46,7 +46,6 @@ L.ProgressOverlay = L.Layer.extend({
 		L.DomUtil.setStyle(this._value, 'line-height', this._size.y + 'px');
 
 		this._container.style.width  = this._size.x + 'px';
-		this._container.style.height = this._size.y + 'px';
 
 		L.DomEvent
 			.disableClickPropagation(this._progress)
