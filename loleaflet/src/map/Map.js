@@ -699,8 +699,8 @@ L.Map = L.Evented.extend({
 
 			// Only activate when we are connected.
 			if (this._socket.connected()) {
-				this._docLayer._onMessage('invalidatetiles: part=0 x=0 y=0 width=2147483647 height=2147483647', null);
 				this._active = true;
+				this._docLayer._onMessage('invalidatetiles: EMPTY', null);
 
 				if (vex.dialogID > 0) {
 					var id = vex.dialogID;
