@@ -68,7 +68,6 @@ void WhiteBoxTests::testRegexListMatcher()
     CPPUNIT_ASSERT(matcher.match("10.10.250.254"));
 }
 
-
 void WhiteBoxTests::testRegexListMatcher_Init()
 {
     Util::RegexListMatcher matcher({"localhost", "192\\..*"}, {"192\\.168\\..*"});

@@ -56,9 +56,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
-    // This should be the first test:
-    CPPUNIT_TEST(testCountHowManyLoolkits);
-
     CPPUNIT_TEST(testBadRequest);
     CPPUNIT_TEST(testHandShake);
     CPPUNIT_TEST(testCloseAfterClose);
@@ -78,9 +75,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testEditLock);
     CPPUNIT_TEST(testSlideShow);
-
-    // This should be the last test:
-    CPPUNIT_TEST(testNoExtraLoolKitsLeft);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -134,6 +128,7 @@ public:
 
     void setUp()
     {
+        testCountHowManyLoolkits();
     }
 
     void tearDown()
