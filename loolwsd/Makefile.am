@@ -105,6 +105,7 @@ noinst_HEADERS = Admin.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h \
+                 test/helpers.hpp \
                  security.h
 
 EXTRA_DIST = discovery.xml \
