@@ -137,7 +137,7 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 		echo "   $$PROTOCOL://localhost:9980/loleaflet/@LOOLWSD_VERSION@/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
 	@echo
 	./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
-                  --childroot="@JAILS_PATH@" --allowlocalstorage
+                  --childroot="@JAILS_PATH@" --allowlocalstorage --admincreds=admin/admin
 else
 
 SYSTEM_STAMP =
