@@ -618,7 +618,7 @@ private:
             session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
 
             // Request the child to connect to us and add this session.
-            const auto sessionsCount = docBroker->addSession(session);
+            auto sessionsCount = docBroker->addSession(session);
             Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
             // indicator to a client that is waiting to connect to lokit process
@@ -648,27 +648,56 @@ private:
                 [&session]() { session->closeFrame(); },
                 [&queueHandlerThread]() { return TerminationFlag || !queueHandlerThread.isRunning(); });
 
-            if (!session->_bLoadError)
             {
+                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+
+                // We can destory if this is the last session.
+                // If not, we have to remove the session and check again.
+                // Otherwise, we may end up removing the one and only session.
+                bool removedSession = false;
+                auto canDestroy = docBroker->canDestroy();
+                sessionsCount = docBroker->getSessionsCount();
+                if (sessionsCount > 1)
+                {
+                    sessionsCount = docBroker->removeSession(id);
+                    removedSession = true;
+                    Log::trace(docKey + ", ws_sessions--: " + std::to_string(sessionsCount));
+                    canDestroy = docBroker->canDestroy();
+                }
+
                 // If we are the last, we must wait for the save to complete.
-                const bool canDestroy = docBroker->canDestroy();
                 if (canDestroy)
                 {
                     Log::info("Shutdown of the last session, saving the document before tearing down.");
                 }
 
-                // Use auto-save to save only when there are modifications since last save.
-                // We also need to wait until the save notification reaches us
+                // We need to wait until the save notification reaches us
                 // and Storage persists the document.
                 if (!docBroker->autoSave(canDestroy, COMMAND_TIMEOUT_MS))
                 {
                     Log::error("Auto-save before closing failed.");
                 }
+
+                if (!removedSession)
+                {
+                    sessionsCount = docBroker->removeSession(id);
+                    Log::trace(docKey + ", ws_sessions--: " + std::to_string(sessionsCount));
+                }
             }
-            else
+
+            if (session->_bLoadError)
             {
                 Log::info("Clearing the queue.");
                 queue->clear();
+            }
+
+            if (sessionsCount == 0)
+            {
+                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
+                docBrokers.erase(docKey);
+                Log::info("Removing complete doc [" + docKey + "] from Admin.");
+                Admin::instance().rmDoc(docKey);
             }
 
             Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
@@ -679,18 +708,6 @@ private:
         {
             Log::error("Error in client request handler: " + std::string(exc.what()));
         }
-
-        docBrokersLock.lock();
-        const auto sessionsCount = docBroker->removeSession(id);
-        Log::trace(docKey + ", ws_sessions--: " + std::to_string(sessionsCount));
-        if (sessionsCount == 0)
-        {
-            Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
-            docBrokers.erase(docKey);
-            Log::info("Removing complete doc [" + docKey + "] from Admin.");
-            Admin::instance().rmDoc(docKey);
-        }
-        docBrokersLock.unlock();
 
         if (session->isCloseFrame())
         {
