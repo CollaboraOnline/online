@@ -69,8 +69,8 @@ namespace LOOLProtocol
         return getDelimitedInitialSubstring(message, length, ' ');
     }
 
-    inline
-    std::string getFirstToken(const std::vector<char>& message)
+    template <typename T>
+    std::string getFirstToken(const T& message)
     {
         return getFirstToken(message.data(), message.size());
     }
@@ -96,8 +96,8 @@ namespace LOOLProtocol
         return getDelimitedInitialSubstring(message, length, '\n');
     }
 
-    inline
-    std::string getFirstLine(const std::vector<char>& message)
+    template <typename T>
+    std::string getFirstLine(const T& message)
     {
         return getFirstLine(message.data(), message.size());
     }
@@ -111,8 +111,8 @@ namespace LOOLProtocol
         return getAbbreviatedMessage(message.data(), message.size());
     }
 
-    inline
-    std::string getAbbreviatedMessage(const std::vector<char>& message)
+    template <typename T>
+    std::string getAbbreviatedMessage(const T& message)
     {
         return getAbbreviatedMessage(message.data(), message.size());
     }
