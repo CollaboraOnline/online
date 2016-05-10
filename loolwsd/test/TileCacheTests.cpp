@@ -352,14 +352,6 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
 
     if (docType == "presentation")
     {
-        // first full invalidation
-        getResponseMessage(socket, "invalidatetiles:", response, true);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
-        {
-            Poco::StringTokenizer tokens(response, ":", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), tokens[0]);
-        }
-
         // request tiles
         requestTiles(socket, currentPart, docWidth, docHeight);
     }
@@ -376,14 +368,6 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
             text = Poco::format("setclientpart part=%d", it);
             std::cout << text << std::endl;
             sendTextFrame(socket, text);
-
-            // get full invalidation
-            getResponseMessage(socket, "invalidatetiles:", response, true);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
-            {
-                Poco::StringTokenizer tokens(response, ":", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), tokens[0]);
-            }
             requestTiles(socket, it, docWidth, docHeight);
         }
         currentPart = it;

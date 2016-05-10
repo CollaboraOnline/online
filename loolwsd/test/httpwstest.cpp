@@ -1180,6 +1180,7 @@ void HTTPWSTest::testInactiveClient()
                 {
                     const auto token = LOOLProtocol::getFirstToken(msg);
                     CPPUNIT_ASSERT_MESSAGE("unexpected message: " + msg,
+                                            token == "setpart:" ||
                                             token == "textselection:" ||
                                             token == "textselectionstart:" ||
                                             token == "textselectionend:" ||
