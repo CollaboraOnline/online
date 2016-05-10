@@ -40,20 +40,11 @@
 using namespace LOOLProtocol;
 
 using Poco::StringTokenizer;
-using Poco::Net::HTTPCookie;
-using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
-using Poco::Net::HTTPRequestHandlerFactory;
 using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPServerParams;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
-using Poco::Net::SecureServerSocket;
-using Poco::Net::ServerSocket;
-using Poco::Net::Socket;
 using Poco::Net::WebSocket;
-using Poco::Net::WebSocketException;
-using Poco::Util::Application;
 
 bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
 {

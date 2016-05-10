@@ -100,8 +100,6 @@ using namespace LOOLProtocol;
 
 using Poco::Exception;
 using Poco::File;
-using Poco::FileOutputStream;
-using Poco::IOException;
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
@@ -116,10 +114,8 @@ using Poco::Net::NameValueCollection;
 using Poco::Net::PartHandler;
 using Poco::Net::SecureServerSocket;
 using Poco::Net::ServerSocket;
-using Poco::Net::Socket;
 using Poco::Net::SocketAddress;
 using Poco::Net::WebSocket;
-using Poco::Net::WebSocketException;
 using Poco::Path;
 using Poco::Process;
 using Poco::ProcessHandle;
@@ -141,7 +137,6 @@ using Poco::XML::DOMParser;
 using Poco::XML::DOMWriter;
 using Poco::XML::Element;
 using Poco::XML::InputSource;
-using Poco::XML::Node;
 using Poco::XML::NodeList;
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;

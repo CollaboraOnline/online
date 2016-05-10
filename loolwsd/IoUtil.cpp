@@ -29,10 +29,8 @@
 #include "IoUtil.hpp"
 #include "Util.hpp"
 
-using Poco::Net::NetException;
 using Poco::Net::Socket;
 using Poco::Net::WebSocket;
-using Poco::Net::WebSocketException;
 
 namespace IoUtil
 {

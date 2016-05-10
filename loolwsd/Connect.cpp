@@ -48,16 +48,11 @@ using namespace LOOLProtocol;
 
 using Poco::Net::AcceptCertificateHandler;
 using Poco::Net::Context;
-using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPSClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::InvalidCertificateHandler;
-using Poco::Net::Socket;
 using Poco::Net::SSLManager;
-using Poco::Net::StreamSocket;
-using Poco::Net::TCPServer;
-using Poco::Net::TCPServerConnection;
 using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Runnable;

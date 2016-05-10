@@ -43,7 +43,6 @@ using Poco::Path;
 using Poco::Process;
 using Poco::StringTokenizer;
 using Poco::Thread;
-using Poco::Timestamp;
 using Poco::Util::Application;
 
 static bool NoCapsForKit = false;

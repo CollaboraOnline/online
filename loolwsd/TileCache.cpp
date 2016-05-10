@@ -38,11 +38,8 @@
 
 using Poco::DirectoryIterator;
 using Poco::File;
-using Poco::FileException;
-using Poco::Path;
 using Poco::StringTokenizer;
 using Poco::Timestamp;
-using Poco::URI;
 
 using namespace LOOLProtocol;
 

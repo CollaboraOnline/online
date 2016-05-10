@@ -43,7 +43,6 @@ using Poco::Exception;
 using Poco::IOException;
 using Poco::Net::Socket;
 using Poco::Net::WebSocket;
-using Poco::Path;
 using Poco::StringTokenizer;
 
 LOOLSession::LOOLSession(const std::string& id, const Kind kind,

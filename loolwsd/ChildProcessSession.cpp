@@ -39,7 +39,6 @@ using Poco::JSON::Parser;
 using Poco::Net::WebSocket;
 using Poco::Notification;
 using Poco::NotificationQueue;
-using Poco::Path;
 using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Timestamp;
