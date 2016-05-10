@@ -48,6 +48,7 @@ using namespace LOOLProtocol;
 
 using Poco::Net::AcceptCertificateHandler;
 using Poco::Net::Context;
+using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPSClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
