@@ -243,7 +243,8 @@ AC_SUBST(LOOLWSD_DATADIR)
 AC_CONFIG_FILES([Makefile
                  test/Makefile
                  loolwsd.spec
-                 loolwsd.xml])
+                 loolwsd.xml
+                 maketarballfordeb.sh])
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
 
 AC_OUTPUT

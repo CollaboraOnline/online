@@ -1,0 +1,13 @@
+#!/bin/sh
+
+TEMPDIR=`mktemp -d`
+SRCDIR=`pwd`
+cd $TEMPDIR
+tar xzvf $SRCDIR/loolwsd-@PACKAGE_VERSION@.tar.gz
+mkdir loolwsd-@PACKAGE_VERSION@/loleaflet
+cd loolwsd-@PACKAGE_VERSION@/loleaflet
+tar xzvf $SRCDIR/../loleaflet/loleaflet-@PACKAGE_VERSION@.tar.gz --strip-components=1
+cd $TEMPDIR
+tar czvf $SRCDIR/loolwsd_@PACKAGE_VERSION@.orig.tar.gz loolwsd-@PACKAGE_VERSION@
+cd $SRCDIR
+rm -rf $TEMPDIR

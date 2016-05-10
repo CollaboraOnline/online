@@ -22,6 +22,7 @@ depcomp
 install-sh
 libtool
 ltmain.sh
+maketarballfordeb.sh
 missing
 stamp-h1
 m4
