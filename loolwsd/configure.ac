@@ -75,10 +75,6 @@ AC_ARG_WITH([libpng-libs],
             AS_HELP_STRING([--with-libpng-libs=<path>],
                            [Path to the "lib" directory with the libpng libraries]))
 
-AC_ARG_ENABLE([tests],
-            AS_HELP_STRING([--disable-tests],
-                           [Build and run unit tests]))
-
 AC_ARG_ENABLE([ssl],
             AS_HELP_STRING([--disable-ssl],
                            [Compile without SSL support]))
@@ -173,9 +169,6 @@ AS_IF([test `uname -s` = Linux],
                       [cap],
                       [],
                       [AC_MSG_ERROR([libcap not available?])])])
-
-AS_IF([test "$enable_tests" != "no"],
-      [PKG_CHECK_MODULES([CPPUNIT], [cppunit])])
 
 AS_IF([test "$enable_ssl" != "no"],
       [AC_DEFINE([ENABLE_SSL],1,[Whether to enable SSL])],
