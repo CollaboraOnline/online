@@ -206,7 +206,7 @@ private:
         std::string path(requestUri.getPath());
 
         // convert version back to a real file name
-        Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION "/"), std::string("/loleaflet/dist/"));
+        Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION_HASH "/"), std::string("/loleaflet/dist/"));
 
         return path;
     }
@@ -228,7 +228,7 @@ private:
         Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), form.get("access_token", ""));
         Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), form.get("access_token_ttl", ""));
         Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
-        Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION));
+        Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
 
         response.setContentType("text/html");
         response.setContentLength(preprocess.length());

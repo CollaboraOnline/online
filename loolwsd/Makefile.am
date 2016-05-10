@@ -136,7 +136,7 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd - launch this in your browser:"
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@PROTOCOL="http" ; if test "z@ENABLE_SSL@" != "z"; then PROTOCOL="https" ; fi ; \
-		echo "   $$PROTOCOL://localhost:9980/loleaflet/@LOOLWSD_VERSION@/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
+		echo "   $$PROTOCOL://localhost:9980/loleaflet/@LOOLWSD_VERSION_HASH@/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
 	@echo
 	./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
                   --childroot="@JAILS_PATH@" --allowlocalstorage --admincreds=admin/admin

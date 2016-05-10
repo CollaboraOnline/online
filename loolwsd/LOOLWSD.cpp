@@ -742,7 +742,7 @@ private:
         const std::string urlsrc = "urlsrc";
         const std::string uriValue = (LOOLWSD::SSLEnabled ? "https://" : "http://") +
             (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName) +
-            "/loleaflet/" LOOLWSD_VERSION "/loleaflet.html?";
+            "/loleaflet/" LOOLWSD_VERSION_HASH "/loleaflet.html?";
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;

@@ -122,7 +122,7 @@ void HTTPServerTest::testLoleafletGet()
 
     CPPUNIT_ASSERT(html.find(param["access_token"]) != std::string::npos);
     CPPUNIT_ASSERT(html.find(_uri.getHost()) != std::string::npos);
-    CPPUNIT_ASSERT(html.find(std::string(LOOLWSD_VERSION)) != std::string::npos);
+    CPPUNIT_ASSERT(html.find(std::string(LOOLWSD_VERSION_HASH)) != std::string::npos);
 }
 
 void HTTPServerTest::testLoleafletPost()

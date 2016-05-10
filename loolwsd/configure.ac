@@ -24,10 +24,11 @@ AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[LibreOffice On-Line
 
 # try to add a git hash for a version if we're developing
 LOOLWSD_VERSION_HASH="$LOOLWSD_VERSION"
-git_hash=`cd ${srcdir} && git log -1 --format=%H 2> /dev/null`
+git_hash=`cd ${srcdir} && git log -1 --format=%h 2> /dev/null`
 if test "z$git_hash" != "z"; then
    LOOLWSD_VERSION_HASH=$git_hash
 fi
+AC_SUBST([LOOLWSD_VERSION_HASH])
 
 AC_DEFINE_UNQUOTED([LOOLWSD_VERSION_HASH],[["$LOOLWSD_VERSION_HASH"]],[LibreOffice On-Line git hash if present])
 
