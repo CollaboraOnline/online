@@ -354,6 +354,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
 
         const int curPart = _loKitDocument->pClass->getPart(_loKitDocument);
         sendTextFrame("curpart: part=" + std::to_string(curPart));
+        sendTextFrame("setpart: part=" + std::to_string(curPart));
 
         //TODO: Is the order of these important?
         for (const auto& pair : _lastDocStates)
@@ -1128,10 +1129,6 @@ bool ChildProcessSession::setClientPart(const char* /*buffer*/, int /*length*/, 
             _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
         _loKitDocument->pClass->setPart(_loKitDocument, part);
-
-        //FIXME: We shouldn't need to do this. The client should
-        // know what to do when they change the part.
-        loKitCallback(LOK_CALLBACK_INVALIDATE_TILES, "EMPTY");
     }
 
     return true;
