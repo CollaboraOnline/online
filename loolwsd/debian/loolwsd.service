@@ -4,7 +4,16 @@ After=network.target
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/loolwsd
-ExecStart=/usr/bin/loolwsd --systemplate=/opt/lool/systemplate --lotemplate=/opt/collaboraoffice5.0 --childroot=/opt/lool/child-roots --numprespawns=5 --fileserverroot=/usr/share/loolwsd
+#
+# For admin console you have to give admin user name and password
+# with --admincreds=username/password
+#
+# Local Storage is disabled by default. Specify --allowlocalstorage
+# to enable it. Beware! If you specify --allowlocalstorage, all files
+# that can be read by lool user, will be passed to LibreOffice and
+# may be displayed in the browser. This option is only for debugging.
+#
+ExecStart=/usr/bin/loolwsd --version --systemplate=/opt/lool/systemplate --lotemplate=/opt/collaboraoffice5.0 --childroot=/opt/lool/child-roots --numprespawns=5 --fileserverroot=/usr/share/loolwsd
 User=lool
 KillMode=control-group
 Restart=always

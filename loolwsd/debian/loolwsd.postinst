@@ -19,7 +19,7 @@ case "$1" in
 	chown lool: /opt/lool
 	chown lool: /opt/lool/child-roots
 
-	su lool --shell=/bin/sh -c "loolwsd-systemplate-setup /opt/lool/systemplate /opt/collaboraoffice5.0 >/dev/null"
+	su lool --shell=/bin/sh -c "loolwsd-systemplate-setup /opt/lool/systemplate /opt/collaboraoffice5.0 >/dev/null 2>&1"
 	;;
 
 esac
