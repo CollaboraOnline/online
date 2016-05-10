@@ -288,7 +288,10 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('invalidatetiles:') && textMsg.match('EMPTY')) {
 			var msg = 'invalidatetiles: ';
-			msg += 'part=' + this._selectedPart + ' ';
+			if (this._docType == 'text')
+				msg += 'part=0 ';
+			else
+				msg += 'part=' + this._selectedPart + ' ';
 			msg += 'x=0 y=0 ';
 			msg += 'width=' + this._docWidthTwips + ' ';
 			msg += 'height=' + this._docHeightTwips;
@@ -751,7 +754,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._tileCache[key] = img;
 		}
 		L.Log.log(textMsg, L.INCOMING, key);
-
 	},
 
 	_tileOnLoad: function (done, tile) {
