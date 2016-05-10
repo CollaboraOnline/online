@@ -78,6 +78,8 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_setPart: function (e) {
+		if (!map._editlock)
+			return;
 		var part = $('.parts-preview .mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			this._map.setPart(parseInt(part));
