@@ -746,7 +746,7 @@ map.on('updatetoolbarcommandvalues', function (e) {
 			styles = e.commandValues.CellStyles;
 		}
 		else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
-			styles = e.commandValues.Default;
+			styles = e.commandValues.Default || e.commandValues.Standard;
 		}
 
 		if (topStyles.length > 0) {
