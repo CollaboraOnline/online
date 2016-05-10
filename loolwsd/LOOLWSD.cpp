@@ -561,9 +561,8 @@ private:
 
                 if (docBroker)
                 {
-                    // Still here, but marked to destroy.
-                    Log::error("Timed out while waiting for document to unload before loading. Service Unavailable.");
-                    throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
+                    // Still here, but marked to destroy. Proceed and hope to recover.
+                    Log::error("Timed out while waiting for document to unload before loading.");
                 }
             }
         }
