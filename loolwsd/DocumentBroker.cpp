@@ -223,7 +223,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
 
     // Remeber the last save time, since this is the predicate.
     const auto lastSaveTime = _lastSaveTime;
-    Log::trace("Autosaving [" + _docKey + "].");
+    Log::trace("Checking to autosave [" + _docKey + "].");
 
     bool sent = false;
     if (force)
@@ -292,6 +292,7 @@ bool DocumentBroker::sendUnoSave()
                 {
                     queue->put("uno .uno:SetInputMode");
                 }
+
                 return true;
             }
         }
@@ -322,11 +323,11 @@ void DocumentBroker::takeEditLock(const std::string& id)
 size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session)
 {
     const auto id = session->getId();
+    const std::string aMessage = "session " + id + " " + _docKey + "\n";
 
     std::lock_guard<std::mutex> lock(_mutex);
 
     // Request a new session from the child kit.
-    const std::string aMessage = "session " + id + " " + _docKey + "\n";
     Log::debug("DocBroker to Child: " + aMessage.substr(0, aMessage.length() - 1));
     _childProcess->getWebSocket()->sendFrame(aMessage.data(), aMessage.size());
 
@@ -340,6 +341,11 @@ size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session
     {
         Log::debug("Giving editing lock to the first session [" + id + "].");
         _sessions.begin()->second->markEditLock(true);
+    }
+    else
+    {
+        assert(_sessions.size() > 1);
+        _markToDestroy = false;
     }
 
     return _sessions.size();

@@ -539,7 +539,6 @@ private:
                 docBroker = it->second;
                 assert(docBroker);
             }
-            docBrokersLock.unlock();
         }
 
         if (docBroker)
