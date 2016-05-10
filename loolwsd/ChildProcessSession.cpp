@@ -74,10 +74,6 @@ public:
     {
         auto lock = _session.getLock();
 
-        Log::trace() << "CallbackWorker::callback [" << _session.getViewId() << "] "
-                     << LOKitHelper::kitCallbackTypeToString(nType)
-                     << " [" << rPayload << "]." << Log::end;
-
         // Cache important notifications to replay them when our client
         // goes inactive and loses them.
         if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
@@ -93,14 +89,15 @@ public:
             _session.setDocState(nType, rPayload);
         }
 
+        const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
         if (_session.isCloseFrame())
         {
-            Log::trace("Skipping callback on closing session " + _session.getName());
+            Log::trace("Skipping callback [" + typeName + "] on closing session " + _session.getName());
             return;
         }
         else if (_session.isDisconnected())
         {
-            Log::trace("Skipping callback on disconnected session " + _session.getName());
+            Log::trace("Skipping callback [" + typeName + "] on disconnected session " + _session.getName());
             return;
         }
         else if (!_session.isActive())
@@ -108,11 +105,13 @@ public:
             // Pass save notifications through.
             if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
             {
-                Log::trace("Skipping callback on inactive session " + _session.getName());
+                Log::trace("Skipping callback [" + typeName + "] on inactive session " + _session.getName());
                 return;
             }
         }
 
+        Log::trace() << "CallbackWorker::callback [" << _session.getName() << "]: "
+                     << typeName << " [" << rPayload << "]." << Log::end;
         switch (nType)
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
