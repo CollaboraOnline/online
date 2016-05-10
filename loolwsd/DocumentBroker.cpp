@@ -177,23 +177,16 @@ bool DocumentBroker::save()
 
     const auto uri = _uriPublic.toString();
 
-    // If we aren't potentially destroying just yet, and the file has been
-    // modified within the past 10 seconds, skip saving.
-    //
-    // FIXME this is because currently the ChildProcessSession broadcasts the
-    // unocommandresult, so we get called several times here, and have no real
-    // possibility to distinguish who was the 1st caller.
-    // The refactor to un-thread the ChildProcessSession, and move the
-    // broadcasting up in the hierarchy (so that we can 'sniff' the
-    // unocommandresult for .uno:Save at the place where it appears just once)
-    // is planned post-release.
+    // If we aren't potentially destroying just yet, and the file
+    // timestamp hasn't changed, skip saving.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
-    const auto elapsed = newFileModifiedTime - _lastFileModifiedTime;
-    if (!canDestroy() && std::abs(elapsed) < 10 * 1000)
+    if (!isMarkedToDestroy() && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
         Log::debug() << "Skipping unnecessary saving to URI [" << uri
-                     << "]. File last modified " << elapsed << " ms ago." << Log::end;
+                     << "]. File last modified "
+                     << _lastFileModifiedTime.elapsed() / 1000000
+                     << " seconds ago." << Log::end;
         return true;
     }
 
@@ -288,6 +281,9 @@ bool DocumentBroker::sendUnoSave()
             auto queue = sessionIt.second->getQueue();
             if (queue)
             {
+                // Invalidate the timestamp to force persisting.
+                _lastFileModifiedTime.fromEpochTime(0);
+
                 queue->put("uno .uno:Save");
 
                 // Set calc cell mode back to edit mode
