@@ -175,9 +175,16 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     }
                 }
             }
+            else if (tokens.count() == 5 && tokens[0] == "invalidatecursor:")
+            {
+                peer->setCursorPos(std::stoi(tokens[1]), std::stoi(tokens[2]));
+            }
             else if (tokens.count() == 2 && tokens[0] == "cursorvisible:")
             {
-                peer->setCursorVisible(tokens[1] == "true");
+                if (tokens[1] == "false")
+                {
+                    peer->setCursorPos(-1, -1);
+                }
             }
         }
 
@@ -652,6 +659,18 @@ bool MasterProcessSession::shutdownPeer(Poco::UInt16 statusCode, const std::stri
         peer->_ws->shutdown(statusCode, message);
     }
     return peer != nullptr;
+}
+
+void MasterProcessSession::setCursorPos(long posX, long posY)
+{
+    _cursorPosX = posX;
+    _cursorPosY = posY;
+}
+
+void MasterProcessSession::getCursorPos(long& posX, long& posY)
+{
+    posX = _cursorPosX;
+    posY = _cursorPosY;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

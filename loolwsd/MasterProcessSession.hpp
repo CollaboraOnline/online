@@ -50,8 +50,9 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     void setEditLock(const bool value);
     void markEditLock(const bool value) { _bEditLock = value; }
     bool isEditLocked() const { return _bEditLock; }
-    void setCursorVisible(const bool value) { _isCursorVisible = value; }
-    bool isCursorVisible() { return _isCursorVisible; }
+    void setCursorPos(const long posX, const long posY);
+    void getCursorPos(long& posX, long& posY);
+    bool isCursorVisible() { return _cursorPosX != -1 && _cursorPosY != -1; }
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
@@ -88,7 +89,8 @@ public:
 
     int _curPart;
     int _loadPart;
-    bool _isCursorVisible;
+    long _cursorPosX;
+    long _cursorPosY;
     /// Kind::ToClient instances store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
     std::shared_ptr<DocumentBroker> _docBroker;
