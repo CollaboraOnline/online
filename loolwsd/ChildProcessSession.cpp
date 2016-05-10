@@ -121,12 +121,10 @@ public:
                 assert(lokitDoc->pClass);
                 assert(lokitDoc->pClass->getPart);
 
-                int curPart = lokitDoc->pClass->getPart(lokitDoc);
-                if (_session.getDocType() == "text")
-                {
-                    // Text docs have a single coordinate system.
-                    curPart = 0;
-                }
+                // Text docs have a single coordinate system.
+                const auto curPart = (_session.getDocType() == "text")
+                                   ? 0
+                                   : lokitDoc->pClass->getPart(lokitDoc);
 
                 StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (tokens.count() == 4)
@@ -605,6 +603,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
         _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderOpts.empty() ? nullptr : renderOpts.c_str()));
     }
 
+    _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument);
     if (_docType != "text" && part != -1)
     {
         _loKitDocument->pClass->setPart(_loKitDocument, part);

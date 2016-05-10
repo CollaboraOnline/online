@@ -38,6 +38,14 @@ namespace LOKitHelper
     }
 
     inline
+    std::string getDocumentTypeAsString(LibreOfficeKitDocument *loKitDocument)
+    {
+        assert(loKitDocument && "null loKitDocument");
+        const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
+        return documentTypeToString(type);
+    }
+
+    inline
     std::string kitCallbackTypeToString(const int nType)
     {
         // Keep in the same order as in LibreOfficeKitEnums.h
@@ -99,6 +107,7 @@ namespace LOKitHelper
     inline
     std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
     {
+        assert(loKitDocument && "null loKitDocument");
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
 
         const auto parts = loKitDocument->pClass->getParts(loKitDocument);
