@@ -758,7 +758,7 @@ map.on('updatetoolbarcommandvalues', function (e) {
 			}, this);
 		}
 
-		if (styles.length > 0) {
+		if (styles !== undefined && styles.length > 0) {
 			// Inserts a separator element
 			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
 
