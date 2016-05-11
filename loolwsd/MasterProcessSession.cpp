@@ -175,10 +175,6 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     }
                 }
             }
-            else if (tokens.count() == 2 && tokens[0] == "cursorvisible:")
-            {
-                peer->setCursorVisible(tokens[1] == "true");
-            }
         }
 
         if (peer && !_isDocPasswordProtected)
