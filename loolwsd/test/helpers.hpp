@@ -154,61 +154,6 @@ std::string getTestServerURI()
     return serverURI;
 }
 
-// Connecting to a Kit process is managed by document broker, that it does several
-// jobs to establish the bridge connection between the Client and Kit process,
-// The result, it is mostly time outs to get messages in the unit test and it could fail.
-// connectLOKit ensures the websocket is connected to a kit process.
-inline
-std::shared_ptr<Poco::Net::WebSocket>
-connectLOKit(Poco::URI uri,
-             Poco::Net::HTTPRequest& request,
-             Poco::Net::HTTPResponse& response)
-{
-    int flags;
-    int received = 0;
-    int retries = 3;
-    bool ready = false;
-    char buffer[READ_BUFFER_SIZE];
-    std::shared_ptr<Poco::Net::WebSocket> ws;
-
-    do
-    {
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
-
-        std::cerr << "Connecting... ";
-        ws = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
-
-        do
-        {
-            try
-            {
-                received = ws->receiveFrame(buffer, sizeof(buffer), flags);
-                if (received > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-                {
-                    const std::string message = LOOLProtocol::getFirstLine(buffer, received);
-                    std::cerr << message << std::endl;
-                    if (message.find("ready") != std::string::npos)
-                    {
-                        ready = true;
-                        break;
-                    }
-                }
-            }
-            catch (const Poco::TimeoutException& exc)
-            {
-                std::cerr << exc.displayText() << std::endl;
-            }
-        }
-        while (received > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    }
-    while (retries-- && !ready);
-
-    if (!ready)
-        throw Poco::Net::WebSocketException("Failed to connect to lokit process", Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY);
-
-    return ws;
-}
-
 inline
 void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string& response, const bool isLine)
 {
@@ -262,20 +207,18 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
 }
 
 inline
-void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, std::string& response, const bool isLine)
+std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string name = "")
 {
-    getResponseMessage(*ws, prefix, response, isLine);
-}
+    if (!name.empty())
+    {
+        name += ": ";
+    }
 
-inline
-std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix)
-{
     try
     {
-        int flags;
-        int bytes;
+        int flags = 0;
         int retries = 20;
-        const Poco::Timespan waitTime(1000000);
+        static const Poco::Timespan waitTime(1000000);
         std::vector<char> response;
 
         ws.setReceiveTimeout(0);
@@ -284,10 +227,10 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
                 response.resize(READ_BUFFER_SIZE);
-                bytes = ws.receiveFrame(response.data(), response.size(), flags);
+                int bytes = ws.receiveFrame(response.data(), response.size(), flags);
                 response.resize(bytes >= 0 ? bytes : 0);
                 auto message = LOOLProtocol::getAbbreviatedMessage(response);
-                std::cerr << "Got " << bytes << " bytes: " << message << std::endl;
+                std::cerr << name << "Got " << bytes << " bytes: " << message << std::endl;
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
                     if (message.find(prefix) == 0)
@@ -305,7 +248,7 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                             bytes = ws.receiveFrame(response.data(), response.size(), flags);
                             response.resize(bytes >= 0 ? bytes : 0);
                             message = LOOLProtocol::getAbbreviatedMessage(response);
-                            std::cerr << "Got " << bytes << " bytes: " << message << std::endl;
+                            std::cerr << name << "Got " << bytes << " bytes: " << message << std::endl;
                             if (bytes > 0 && message.find(prefix) == 0)
                             {
                                 return response;
@@ -316,14 +259,14 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                 else
                 {
                     response.resize(0);
-                    std::cerr << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
+                    std::cerr << name << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
                 }
 
                 retries = 10;
             }
             else
             {
-                std::cerr << "Timeout\n";
+                std::cerr << name << "Timeout\n";
                 --retries;
             }
         }
@@ -338,9 +281,53 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
 }
 
 inline
-std::vector<char> getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix)
+std::vector<char> getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, const std::string name = "")
 {
-    return getResponseMessage(*ws, prefix);
+    return getResponseMessage(*ws, prefix, name);
+}
+
+template <typename T>
+std::string getResponseLine(T& ws, const std::string& prefix, const std::string name = "")
+{
+    return LOOLProtocol::getFirstLine(getResponseMessage(ws, prefix, name));
+}
+
+template <typename T>
+void assertResponseLine(T& ws, const std::string& prefix, const std::string name = "")
+{
+    CPPUNIT_ASSERT_EQUAL(prefix, LOOLProtocol::getFirstToken(getResponseLine(ws, prefix, name)));
+}
+
+inline
+void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, std::string& response, const bool isLine)
+{
+    getResponseMessage(*ws, prefix, response, isLine);
+}
+
+// Connecting to a Kit process is managed by document broker, that it does several
+// jobs to establish the bridge connection between the Client and Kit process,
+// The result, it is mostly time outs to get messages in the unit test and it could fail.
+// connectLOKit ensures the websocket is connected to a kit process.
+inline
+std::shared_ptr<Poco::Net::WebSocket>
+connectLOKit(Poco::URI uri,
+             Poco::Net::HTTPRequest& request,
+             Poco::Net::HTTPResponse& response)
+{
+    int retries = 10;
+    do
+    {
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
+
+            std::cerr << "Connecting... ";
+        auto ws = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+        getResponseMessage(ws, "statusindicator: ready");
+
+        return ws;
+    }
+    while (retries--);
+
+    CPPUNIT_FAIL("Cannot connect to [" + uri.toString() + "].");
 }
 
 inline
