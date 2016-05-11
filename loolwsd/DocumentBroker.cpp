@@ -54,16 +54,6 @@ std::string getCachePath(const std::string& uri)
             Poco::DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
 }
 
-/// Return mouse commands
-std::string getMouseCommand(std::string type, long posX, long posY, int count)
-{
-    return std::string("mouse type=" + type +
-                       " x=" + std::to_string(posX) +
-                       " y=" + std::to_string(posY) +
-                       " count=" + std::to_string(count) +
-                       " buttons=1 modifier=0");
-}
-
 }
 
 Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
@@ -294,23 +284,13 @@ bool DocumentBroker::sendUnoSave()
                 // Invalidate the timestamp to force persisting.
                 _lastFileModifiedTime.fromEpochTime(0);
 
-                // Store the cursor position before saving, if visible
-                long posX = -1;
-                long posY = -1;
-                if (sessionIt.second->isCursorVisible())
-                {
-                    sessionIt.second->getCursorPos(posX, posY);
-                }
-
                 queue->put("uno .uno:Save");
 
-                // Restore the cursor position, if visible, by a fake double click
-                if (posX != -1 && posY != -1)
+                // Set calc cell mode back to edit mode
+                // if we were in edit before save
+                if (sessionIt.second->isCursorVisible())
                 {
-                    queue->put(getMouseCommand("buttondown", posX, posY, 1));
-                    queue->put(getMouseCommand("buttonup", posX, posY, 1));
-                    queue->put(getMouseCommand("buttondown", posX, posY, 2));
-                    queue->put(getMouseCommand("buttonup", posX, posY, 2));
+                    queue->put("uno .uno:SetInputMode");
                 }
 
                 return true;
