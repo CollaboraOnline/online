@@ -90,7 +90,6 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
         do
         {
             char buffer[READ_BUFFER_SIZE];
-
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
                 bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
@@ -354,7 +353,7 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, 
         Poco::Net::HTTPResponse response;
         auto socket = connectLOKit(uri, request, response);
 
-        sendTextFrame(*socket, "load url=" + documentURL);
+        sendTextFrame(socket, "load url=" + documentURL);
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket));
 
         return socket;

@@ -183,7 +183,7 @@ void HTTPWSTest::testHandShake()
     {
         int bytes;
         int flags;
-        char buffer[1024];
+        char buffer[1024] = {0};
         // Load a document and get its status.
         std::string documentPath, documentURL;
         getDocumentPathAndURL("hello.odt", documentPath, documentURL);
@@ -203,7 +203,7 @@ void HTTPWSTest::testHandShake()
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags & Poco::Net::WebSocket::FRAME_TEXT);
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (!std::strstr(buffer, fail))
+        if (bytes > 0 && !std::strstr(buffer, fail))
         {
             payload = "statusindicator: connect";
             CPPUNIT_ASSERT_EQUAL(payload, std::string(buffer, bytes));
