@@ -145,7 +145,6 @@ void HTTPServerTest::testLoleafletPost()
 
     CPPUNIT_ASSERT(html.find(form["access_token"]) != std::string::npos);
     CPPUNIT_ASSERT(html.find(_uri.getHost()) != std::string::npos);
-    CPPUNIT_ASSERT(html.find(std::string(LOOLWSD_VERSION)) != std::string::npos);
 }
 
 namespace {
