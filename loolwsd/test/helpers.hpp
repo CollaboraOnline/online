@@ -71,7 +71,7 @@ void sendTextFrame(const std::shared_ptr<Poco::Net::WebSocket>& socket, const st
 }
 
 inline
-bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
+bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "", bool isView = false)
 {
     if (!name.empty())
     {
@@ -97,9 +97,8 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
                 {
                     std::cerr << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
                     const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
-                    const std::string prefixIndicator = "statusindicatorfinish:";
-                    const std::string prefixStatus = "status:";
-                    if (line.find(prefixIndicator) == 0 || line.find(prefixStatus) == 0)
+                    const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
+                    if (line.find(prefix) == 0)
                     {
                         isLoaded = true;
                         break;
@@ -331,7 +330,7 @@ connectLOKit(Poco::URI uri,
 }
 
 inline
-std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL)
+std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, bool isView = false)
 {
     try
     {
@@ -341,7 +340,7 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, 
         auto socket = connectLOKit(uri, request, response);
 
         sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket));
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket, "", isView));
 
         return socket;
     }
