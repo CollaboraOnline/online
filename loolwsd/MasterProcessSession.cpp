@@ -207,6 +207,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                 message += std::to_string(peer->isEditLocked());
                 Log::debug("Forwarding [" + message + "] in response to status.");
                 forwardToPeer(message.c_str(), message.size());
+                return true;
             }
             else if (tokens[0] == "commandvalues:")
             {
