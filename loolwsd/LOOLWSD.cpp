@@ -740,9 +740,11 @@ private:
         const std::string mediaType = "text/xml";
         const std::string action = "action";
         const std::string urlsrc = "urlsrc";
+        const auto& config = Application::instance().config();
+        const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
         const std::string uriValue = (LOOLWSD::SSLEnabled ? "https://" : "http://") +
             (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName) +
-            "/loleaflet/" LOOLWSD_VERSION_HASH "/loleaflet.html?";
+            "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + "?";
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;

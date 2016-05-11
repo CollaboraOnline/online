@@ -11,6 +11,8 @@
 
     <num_prespawn_children desc="Number of child processes to keep started in advance and waiting for new clients." type="uint" default="1">1</num_prespawn_children>
 
+    <loleaflet_html desc="Allows UI customization by replacing the single endpoint of loleaflet.html" type="string" default="loleaflet.html">loleaflet.html</loleaflet_html>
+
     <!-- FIXME: logging cannot be set from here. Use LOOL_LOGLEVEL environment variable. LOOL_LOGLEVEL can be 0-8, or
          none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace -->
     <logging>
