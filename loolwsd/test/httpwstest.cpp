@@ -298,7 +298,9 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
     try
     {
         // Load a document and get its status.
-        auto socket = loadDocAndGetSocket(_uri, documentURL);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        auto socket = connectLOKit(_uri, request, _response);
+        sendTextFrame(*socket, "load url=" + documentURL);
 
         SocketProcessor("", socket, [&](const std::string& msg)
                 {
