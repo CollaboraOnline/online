@@ -108,6 +108,7 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "")
                 else
                 {
                     std::cerr << name << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
+                    break;
                 }
 
                 retries = 10;
