@@ -328,3 +328,125 @@ saveas: url=<url>
 
     <url> is a URL of the destination, encoded. Sent from the child to the
     parent after a saveAs() completed.
+
+Admin console
+===============
+
+Client can query admin console to get information about currently opened
+documents. Following information about the document is exposed:
+
+* PID of the process hosting the document
+* Number of client views opening this document
+* Name of the document (URL encoded)
+* Memory consumed by the process (in kilobytes)
+* Elapsed time since first view of document was opened (in seconds)
+
+Admin console can also opt to get notified of various events on the server. For
+example, getting notified when a new document is opened or closed. Notifications
+are commands sent from server to the client over established websocket.
+
+client -> admin
+==============
+
+subscribe <space seperated list of commands>
+
+    Where list of commands are the ones that client wants to get notified
+    about. For eg. 'subscribe adddoc rmdoc'
+
+documents
+
+    Queries the server for list of opened documents. See `documents` command
+    in admin -> client section for format of the response message
+
+total_mem
+
+    Queries for total memory being consumed by the server in kilobytes.
+    This includes processes - loolwsd, loolforkit, and child processes
+    hosting various documents
+
+active_docs_count
+
+    Returns total number of documents opened
+
+active_users_count
+
+    Returns total number of users connected. This is a summation of number
+    of views opened of each document.
+
+settings
+
+    Queries the server for configurable settings from admin console.
+
+set <setting1=value1> <setting2=value2> ...
+
+    Sets a particular setting (must be one returned as response to
+    `settings` command) to value.
+
+    There are only 4 configurable settings as of now.
+
+    mem_stats_size: Number of memory consumed values that server caches
+    atmost.
+    mem_stats_interval: Time after which server calculates its total memory
+    consumption
+    cpu_stats_size: Number of cpu usage values that server caches atmost.
+    cpu_stats_interval: Time after which server calculates its total cpu
+    usage.
+
+    Note: cpu stats gathering is a TODO, so  not functional as of now.
+
+kill <pid>
+
+     <pid> process id of the document to kill. All sessions of document would be
+     killed. There is no way yet to kill individual sessions.
+
+admin -> client
+===============
+
+Commands marked with [*] are notifications that are delivered only if client is
+subscribed to these commands using `subscribe` (see client->admin
+section). Others are just response messages to some client command.
+
+[*] adddoc <pid> <filename> <viewid> <memory consumed>
+
+    <pid> process id hosting the document
+    <filename> URL encoded name of the file
+    <viewid> string identifying the view of this document
+    <memory consumed> RSS of <pid> in kilobytes
+
+[*] rmdoc <pid> <viewid>
+
+    <pid> process id hosting the document
+    <viewid> view which was closed
+
+[*] mem_stats <memory consumed>
+
+    <memory consumed> in kilobytes sent from admin -> client after every
+    mem_stats_interval (see `set` command for list of settings)
+
+
+documents <pid> <filename> <number of views> <memory consumed> <elapsed time>
+<pid> <filename> ....
+...
+
+    <elapsed time> is in seconds since the first view of the document was opened
+    <number of views> Number of users/views opening this(<pid>) document
+    Other parameters are same as mentioned in `adddoc`
+
+    Each set document attributes is separated by a newline.
+
+total_mem <memory>
+
+    <memory> in kilobytes
+
+active_docs_count <count>
+
+active_users_count <count>
+
+settings <setting1=value1> <setting2=value2> ...
+
+    Current value of each configurable setting.
+
+mem_stats <comma separated list of memory consumed values>
+
+     The length of the list is equal to the value of setting
+     mem_stats_size`
