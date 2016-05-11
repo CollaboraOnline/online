@@ -290,7 +290,7 @@ public:
                     return true;
                 },
                 [&session]() { session->closeFrame(); },
-                [&queueHandlerThread]() { return TerminationFlag && queueHandlerThread.isRunning(); });
+                [&queueHandlerThread]() { return TerminationFlag || !queueHandlerThread.isRunning(); });
 
             queue->clear();
             queue->put("eof");
