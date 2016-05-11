@@ -160,8 +160,7 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
 {
     try
     {
-        int flags;
-        int bytes;
+        int flags = 0;
         int retries = 20;
         const Poco::Timespan waitTime(1000000);
 
@@ -169,11 +168,11 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
         ws.setReceiveTimeout(0);
         do
         {
-            char buffer[READ_BUFFER_SIZE];
 
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
-                bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
+                char buffer[READ_BUFFER_SIZE];
+                int bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
                     std::cerr << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
