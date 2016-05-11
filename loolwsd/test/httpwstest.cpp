@@ -588,8 +588,8 @@ void HTTPWSTest::testExcelLoad()
         Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
-        sendTextFrame(socket, "status");
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+        sendTextFrame(socket, "status");
 
         std::string status;
         int flags;
@@ -907,6 +907,7 @@ void HTTPWSTest::testInsertDelete()
 
         // check total slides 1
         std::cerr << "Expecting 1 slide." << std::endl;
+        sendTextFrame(socket, "status");
         getResponseMessage(socket, "status:", response, false);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(response, parts);
@@ -1004,6 +1005,7 @@ void HTTPWSTest::testEditLock()
                 std::cerr << "First client loading." << std::endl;
                 auto socket = loadDocAndGetSocket(_uri, documentURL, true);
                 std::string editlock1;
+                sendTextFrame(socket, "status");
                 SocketProcessor("First", socket, [&](const std::string& msg)
                         {
                             if (msg.find("editlock") == 0)

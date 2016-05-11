@@ -330,6 +330,7 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
     std::string text;
 
     // check total slides 10
+    sendTextFrame(socket, "status");
     getResponseMessage(socket, "status:", response, false);
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
     {
