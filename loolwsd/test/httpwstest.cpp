@@ -1187,7 +1187,8 @@ void HTTPWSTest::testInactiveClient()
                                             token == "textselectionend:" ||
                                             token == "invalidatetiles:" ||
                                             token == "invalidatecursor:" ||
-                                            token == "statechanged:");
+                                            token == "statechanged:" ||
+                                            token == "editlock:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");
