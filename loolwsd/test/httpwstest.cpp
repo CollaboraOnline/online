@@ -76,6 +76,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testEditLock);
     CPPUNIT_TEST(testSlideShow);
     CPPUNIT_TEST(testInactiveClient);
+    CPPUNIT_TEST(testMaxColumn);
+    CPPUNIT_TEST(testMaxRow);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -101,12 +103,33 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testEditLock();
     void testSlideShow();
     void testInactiveClient();
+    void testMaxColumn();
+    void testMaxRow();
 
     void loadDoc(const std::string& documentURL);
 
     void getPartHashCodes(const std::string response,
                           std::vector<std::string>& parts);
 
+    void getDocSize(const std::string& message,
+                    const std::string& type,
+                    int& part,
+                    int& parts,
+                    int& width,
+                    int& height);
+
+    void getCursor(const std::string& message,
+                   int& cursorX,
+                   int& cursorY,
+                   int& cursorWidth,
+                   int& cursorHeight);
+
+    void testLimitCursor( std::function<void(const std::shared_ptr<Poco::Net::WebSocket>& socket,
+                                             int cursorX, int cursorY,
+                                             int cursorWidth, int cursorHeight,
+                                             int docWidth, int docHeight)> keyhandler,
+                          std::function<void(int docWidth, int docHeight,
+                                             int newWidth, int newHeight)> checkhandler);
 public:
     HTTPWSTest()
         : _uri(helpers::getTestServerURI())
@@ -1206,6 +1229,84 @@ void HTTPWSTest::testInactiveClient()
     }
 }
 
+void HTTPWSTest::testMaxColumn()
+{
+    try
+    {
+        testLimitCursor(
+            // move cursor to last column
+            [](const std::shared_ptr<Poco::Net::WebSocket>& socket,
+               int cursorX, int cursorY, int cursorWidth, int cursorHeight,
+               int docWidth, int docHeight)
+            {
+                CPPUNIT_ASSERT(cursorX >= 0);
+                CPPUNIT_ASSERT(cursorY >= 0);
+                CPPUNIT_ASSERT(cursorWidth >= 0);
+                CPPUNIT_ASSERT(cursorHeight >= 0);
+                CPPUNIT_ASSERT(docWidth >= 0);
+                CPPUNIT_ASSERT(docHeight >= 0);
+
+                const std::string text = "key type=input char=0 key=1027";
+                while ( cursorX <= docWidth )
+                {
+                    sendTextFrame(socket, text);
+                    cursorX += cursorWidth;
+                }
+            },
+            // check new document width
+            [](int docWidth, int docHeight, int newWidth, int newHeight)
+            {
+                CPPUNIT_ASSERT_EQUAL(docHeight, newHeight);
+                CPPUNIT_ASSERT(newWidth > docWidth);
+            }
+
+        );
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testMaxRow()
+{
+    try
+    {
+        testLimitCursor(
+            // move cursor to last row
+            [](const std::shared_ptr<Poco::Net::WebSocket>& socket,
+               int cursorX, int cursorY, int cursorWidth, int cursorHeight,
+               int docWidth, int docHeight)
+            {
+                CPPUNIT_ASSERT(cursorX >= 0);
+                CPPUNIT_ASSERT(cursorY >= 0);
+                CPPUNIT_ASSERT(cursorWidth >= 0);
+                CPPUNIT_ASSERT(cursorHeight >= 0);
+                CPPUNIT_ASSERT(docWidth >= 0);
+                CPPUNIT_ASSERT(docHeight >= 0);
+
+                const std::string text = "key type=input char=0 key=1024";
+                while ( cursorY <= docHeight )
+                {
+                    sendTextFrame(socket, text);
+                    cursorY += cursorHeight;
+                }
+            },
+            // check new document height
+            [](int docWidth, int docHeight, int newWidth, int newHeight)
+            {
+                CPPUNIT_ASSERT_EQUAL(docWidth, newWidth);
+                CPPUNIT_ASSERT(newHeight > docHeight);
+            }
+
+        );
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
 void HTTPWSTest::testNoExtraLoolKitsLeft()
 {
     const auto countNow = countLoolKitProcesses(_initialLoolKitCount);
@@ -1252,6 +1353,109 @@ void HTTPWSTest::getPartHashCodes(const std::string status,
     // Validate that Core is internally consistent when emitting status messages.
     CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
 }
+
+void HTTPWSTest::getDocSize(const std::string& message, const std::string& type,
+                            int& part, int& parts, int& width, int& height)
+{
+    Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+
+    // Expected format is something like 'type= parts= current= width= height='.
+    const std::string text = tokens[0].substr(std::string("type=").size());
+    parts = std::stoi(tokens[1].substr(std::string("parts=").size()));
+    part = std::stoi(tokens[2].substr(std::string("current=").size()));
+    width = std::stoi(tokens[3].substr(std::string("width=").size()));
+    height = std::stoi(tokens[4].substr(std::string("height=").size()));
+    CPPUNIT_ASSERT_EQUAL(type, text);
+    CPPUNIT_ASSERT(parts > 0);
+    CPPUNIT_ASSERT(part >= 0);
+    CPPUNIT_ASSERT(width > 0);
+    CPPUNIT_ASSERT(height > 0);
+}
+
+void HTTPWSTest::getCursor(const std::string& message,
+                           int& cursorX, int& cursorY, int& cursorWidth, int& cursorHeight)
+{
+    Poco::JSON::Parser parser;
+    const auto result = parser.parse(message);
+    const auto& command = result.extract<Poco::JSON::Object::Ptr>();
+    auto text = command->get("commandName").toString();
+    CPPUNIT_ASSERT_EQUAL(std::string(".uno:CellCursor"), text);
+    text = command->get("commandValues").toString();
+    CPPUNIT_ASSERT(!text.empty());
+    Poco::StringTokenizer position(text, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    cursorX = std::stoi(position[0]);
+    cursorY = std::stoi(position[1]);
+    cursorWidth = std::stoi(position[2]);
+    cursorHeight = std::stoi(position[3]);
+    CPPUNIT_ASSERT(cursorX >= 0);
+    CPPUNIT_ASSERT(cursorY >= 0);
+    CPPUNIT_ASSERT(cursorWidth >= 0);
+    CPPUNIT_ASSERT(cursorHeight >= 0);
+}
+
+void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco::Net::WebSocket>& socket,
+                                                     int cursorX, int cursorY,
+                                                     int cursorWidth, int cursorHeight,
+                                                     int docWidth, int docHeight)> keyhandler,
+                                  std::function<void(int docWidth, int docHeight,
+                                                     int newWidth, int newHeight)> checkhandler)
+
+{
+    int docSheet = -1;
+    int docSheets = 0;
+    int docHeight = 0;
+    int docWidth = 0;
+    int newSheet = -1;
+    int newSheets = 0;
+    int newHeight = 0;
+    int newWidth = 0;
+    int cursorX = 0;
+    int cursorY = 0;
+    int cursorWidth = 0;
+    int cursorHeight = 0;
+
+    std::string docPath;
+    std::string docURL;
+    std::string response;
+    std::string text;
+
+    getDocumentPathAndURL("setclientpart.ods", docPath, docURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+
+    auto socket = loadDocAndGetSocket(_uri, docURL);
+    // check document size
+    sendTextFrame(socket, "status");
+    getResponseMessage(socket, "status:", response, false);
+    CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+    getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight);
+
+    text.clear();
+    Poco::format(text, "commandvalues command=.uno:CellCursor?outputHeight=%d&outputWidth=%d&tileHeight=%d&tileWidth=%d",
+        256, 256, 3840, 3840);
+    sendTextFrame(socket, text);
+    getResponseMessage(socket, "commandvalues:", response, false);
+    CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
+    getCursor(response, cursorX, cursorY, cursorWidth, cursorHeight);
+
+    // move cursor
+    keyhandler(socket, cursorX, cursorY, cursorWidth, cursorHeight, docWidth, docHeight);
+
+    // filter messages, and expect to receive new document size
+    getResponseMessage(socket, "status:", response, false);
+    CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+    getDocSize(response, "spreadsheet", newSheet, newSheets, newWidth, newHeight);
+
+    CPPUNIT_ASSERT_EQUAL(docSheets, newSheets);
+    CPPUNIT_ASSERT_EQUAL(docSheet, newSheet);
+
+    // check new document size
+    checkhandler(docWidth, docHeight, newWidth, newHeight);
+
+    socket->shutdown();
+    Util::removeFile(docPath);
+}
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
 
