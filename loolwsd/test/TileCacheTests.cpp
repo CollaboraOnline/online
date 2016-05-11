@@ -176,7 +176,7 @@ void TileCacheTests::testSimpleCombine()
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = *loadDocAndGetSocket(_uri, documentURL);
+    auto socket2 = *loadDocAndGetSocket(_uri, documentURL, true);
     sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
     auto tile2a = getResponseMessage(socket2, "tile:");
@@ -199,7 +199,7 @@ void TileCacheTests::testUnresponsiveClient()
     getResponseMessage(socket1, "invalidatetiles");
 
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = *loadDocAndGetSocket(_uri, documentURL);
+    auto socket2 = *loadDocAndGetSocket(_uri, documentURL, true);
 
     // Pathologically request tiles and fail to read (say slow connection).
     // Meanwhile, verify that others can get all tiles fine.

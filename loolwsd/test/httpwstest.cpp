@@ -411,7 +411,7 @@ void HTTPWSTest::testSaveOnDisconnect()
 
         Poco::Net::WebSocket socket2 = *connectLOKit(_uri, request, _response);
         sendTextFrame(socket2, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket2));
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket2, "", true));
         sendTextFrame(socket2, "userinactive");
 
         sendTextFrame(socket, "uno .uno:SelectAll");
@@ -1000,7 +1000,7 @@ void HTTPWSTest::testEditLock()
             try
             {
                 std::cerr << "First client loading." << std::endl;
-                auto socket = loadDocAndGetSocket(_uri, documentURL);
+                auto socket = loadDocAndGetSocket(_uri, documentURL, true);
                 std::string editlock1;
                 SocketProcessor("First", socket, [&](const std::string& msg)
                         {
@@ -1166,8 +1166,7 @@ void HTTPWSTest::testInactiveClient()
 
         // Connect another and go inactive.
         std::cerr << "Connecting second client." << std::endl;
-        auto socket2 = loadDocAndGetSocket(_uri, documentURL);
-        getResponseMessage(socket2, "status");
+        auto socket2 = loadDocAndGetSocket(_uri, documentURL, true);
         sendTextFrame(socket2, "userinactive");
 
         // While second is inactive, make some changes.
