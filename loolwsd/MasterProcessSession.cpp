@@ -401,6 +401,13 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
     if (!status.empty())
     {
         sendTextFrame(status);
+
+        // And let clients know if they hold the edit lock.
+        std::string message = "editlock: ";
+        message += std::to_string(isEditLocked());
+        Log::debug("Forwarding [" + message + "] in response to status.");
+        sendTextFrame(message);
+
         return true;
     }
 
