@@ -284,7 +284,8 @@ bool DocumentBroker::sendUnoSave()
                 // Invalidate the timestamp to force persisting.
                 _lastFileModifiedTime.fromEpochTime(0);
 
-                queue->put("uno .uno:Save");
+                // We do not want save to terminate editing mode if we are in edit mode now
+                queue->put("uno .uno:Save {\"DontTerminateEdit\":{\"type\":\"boolean\",\"value\":true}}");
                 return true;
             }
         }
