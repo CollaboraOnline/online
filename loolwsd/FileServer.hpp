@@ -125,8 +125,10 @@ public:
                 throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
             }
 
+            const auto& config = Application::instance().config();
+            const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
             const std::string endPoint = requestSegments[requestSegments.size() - 1];
-            if (endPoint == "loleaflet.html")
+            if (endPoint == loleafletHtml)
             {
                 preprocessFile(request, response);
                 return;
