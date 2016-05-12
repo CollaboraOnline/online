@@ -423,6 +423,11 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         }
 
         _isDocLoaded = loadDocument(buffer, length, tokens);
+        if (!_isDocLoaded)
+        {
+            sendTextFrame("error: cmd=load kind=faileddocloading");
+        }
+
         return _isDocLoaded;
     }
     else if (!_isDocLoaded)

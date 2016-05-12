@@ -901,6 +901,7 @@ private:
         catch (const std::exception& exc)
         {
             Log::error("Exception while loading [" + uri + "] : " + exc.what());
+            return nullptr;
         }
 
         // Done loading, let the next one in (if any).
@@ -991,8 +992,10 @@ private:
                 // Checking if wrong password or no password was reason for failure.
                 if (_isDocPasswordProtected)
                 {
+                    Log::info("Document [" + uri + "] is password protected.");
                     if (!_haveDocPassword)
                     {
+                        Log::info("No password provided for password-protected document [" + uri + "].");
                         std::string passwordFrame = "passwordrequired:";
                         if (_docPasswordType == PasswordType::ToView)
                             passwordFrame += "to-view";
@@ -1001,7 +1004,10 @@ private:
                         session->sendTextFrame("error: cmd=load kind=" + passwordFrame);
                     }
                     else
+                    {
+                        Log::info("Wrong password for password-protected document [" + uri + "].");
                         session->sendTextFrame("error: cmd=load kind=wrongpassword");
+                    }
                 }
 
                 return nullptr;
