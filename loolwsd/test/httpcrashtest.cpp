@@ -56,14 +56,8 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPCrashTest);
 
-    // This should be the first test:
-    CPPUNIT_TEST(testCountHowManyLoolkits);
-
     CPPUNIT_TEST(testBarren);
     CPPUNIT_TEST(testCrashKit);
-
-    // This should be the last test:
-    CPPUNIT_TEST(testNoExtraLoolKitsLeft);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -98,10 +92,12 @@ public:
 
     void setUp()
     {
+        testCountHowManyLoolkits();
     }
 
     void tearDown()
     {
+        testNoExtraLoolKitsLeft();
     }
 };
 
@@ -127,45 +123,38 @@ void HTTPCrashTest::testBarren()
     {
         killLoKitProcesses();
 
+        std::cerr << "Loading after kill." << std::endl;
+
         // Load a document and get its status.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = connectLOKit(_uri, request, _response);
 
+        // First load should fail.
         sendTextFrame(socket, "load url=" + documentURL);
-        sendTextFrame(socket, "status");
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
-
-        // 5 seconds timeout
-        socket.setReceiveTimeout(5000000);
-
-        std::string status;
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
-                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
-                const std::string prefix = "status: ";
-                if (line.find(prefix) == 0)
+        SocketProcessor("Barren", socket, [&](const std::string& msg)
                 {
-                    status = line.substr(prefix.length());
-                    // Might be too strict, consider something flexible instread.
-                    CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
-                    break;
-                }
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+                    const std::string prefix = "status: ";
+                    if (msg.find(prefix) == 0)
+                    {
+                        const auto status = msg.substr(prefix.length());
+                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
+                        return false;
+                    }
+                    else if (msg.find("Service") == 0)
+                    {
+                        // Service unavailable. Try again.
+                        auto socket2 = loadDocAndGetSocket(_uri, documentURL);
+                        sendTextFrame(socket2, "status");
+                        const auto status = getResponseLine(socket2, "status");
+                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
+                        return false;
+                    }
 
-        socket.shutdown();
+                    return true;
+                });
     }
     catch (const Poco::Exception& exc)
     {
@@ -177,27 +166,27 @@ void HTTPCrashTest::testCrashKit()
 {
     try
     {
-        int bytes;
-        int flags;
-        char buffer[READ_BUFFER_SIZE];
-
         // Load a document and get its status.
-        const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = *connectLOKit(_uri, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
-        sendTextFrame(socket, "status");
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
         killLoKitProcesses();
+
+        std::cerr << "Reading after kill." << std::endl;
 
         // 5 seconds timeout
         socket.setReceiveTimeout(5000000);
 
         // receive close frame handshake
+        int bytes;
+        int flags;
+        char buffer[READ_BUFFER_SIZE];
         do
         {
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
@@ -244,6 +233,7 @@ void HTTPCrashTest::killLoKitProcesses()
                 Poco::StringTokenizer tokens(statString, " ");
                 if (tokens.count() > 3 && tokens[1] == "(loolkit)")
                 {
+                    std::cerr << "Killing " << pid << std::endl;
                     if (kill(pid, SIGKILL) == -1)
                     {
                         std::cerr << "kill(" << pid << ",SIGKILL) failed: " << std::strerror(errno) << std::endl;
@@ -255,6 +245,8 @@ void HTTPCrashTest::killLoKitProcesses()
         {
         }
     }
+
+    countLoolKitProcesses(0);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPCrashTest);
