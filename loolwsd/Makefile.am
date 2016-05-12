@@ -140,6 +140,12 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo
 	./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
                   --childroot="@JAILS_PATH@" --allowlocalstorage --admincreds=admin/admin
+
+run_valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
+	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
+		./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
+                  --childroot="@JAILS_PATH@" --allowlocalstorage --admincreds=admin/admin
 else
 
 SYSTEM_STAMP =
@@ -164,3 +170,4 @@ all-local: loolforkit @JAILS_PATH@ $(SYSTEM_STAMP)
 	else \
 	    echo "Skipping capability setting"; \
 	fi
+
