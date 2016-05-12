@@ -211,6 +211,7 @@ void HTTPWSTest::testHandShake()
         std::string documentPath, documentURL;
         getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
+        // NOTE: Do not replace with wrappers. This has to be explicit.
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
