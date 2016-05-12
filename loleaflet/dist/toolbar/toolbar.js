@@ -782,7 +782,11 @@ map.on('updatetoolbarcommandvalues', function (e) {
 		$(".styles-select").on('select2:select', onStyleSelect);
 	}
 	else if (e.commandName === '.uno:CharFontName') {
-		data = data.concat(Object.keys(e.commandValues));
+		// Old browsers like IE11 et al don't like Object.keys with
+		// empty arguments
+		if (typeof e.commandValues === 'object') {
+			data = data.concat(Object.keys(e.commandValues));
+		}
 		$(".fonts-select").select2({
 			data: data,
 			placeholder: _("Font")
