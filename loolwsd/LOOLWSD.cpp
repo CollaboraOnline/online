@@ -1160,6 +1160,8 @@ LOOLWSD::~LOOLWSD()
 
 void LOOLWSD::initialize(Application& self)
 {
+    Log::initialize("wsd");
+
     if (geteuid() == 0)
     {
         throw std::runtime_error("Do not run as root. Please run as lool user.");
@@ -1459,8 +1461,6 @@ Process::PID LOOLWSD::createForKit()
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
-    Log::initialize("wsd");
-
     if (DisplayVersion)
         Util::displayVersionInfo("loolwsd");
 
@@ -1548,14 +1548,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
     HTTPServer srv(new ClientRequestHandlerFactory(fileServer), threadPool, svs, params1);
-
+    Log::info("Starting master server listening on " + std::to_string(ClientPortNumber));
     srv.start();
 
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MasterPortNumber);
     ServerSocket svs2(addr2);
     HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, svs2, params2);
-
+    Log::info("Starting prisoner server listening on " + std::to_string(MasterPortNumber));
     srv2.start();
 
     // Fire the ForKit process; we are ready.
