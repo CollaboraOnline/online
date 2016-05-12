@@ -89,10 +89,15 @@ $(function () {
 			onClick(e.target);
 		},
 		onRefresh: function(e) {
-			var fontColorIndicator = L.DomUtil.create('div', 'font-color-indicator', L.DomUtil.get('tb_toolbar-up_item_fontcolor'));
-			fontColorIndicator.id = 'fontcolorindicator';
-			var backColorIndicator = L.DomUtil.create('div', 'back-color-indicator', L.DomUtil.get('tb_toolbar-up_item_backcolor'));
-			backColorIndicator.id = 'backcolorindicator';
+			if (!L.DomUtil.get('fontcolorindicator')) {
+				var fontColorIndicator = L.DomUtil.create('div', 'font-color-indicator', L.DomUtil.get('tb_toolbar-up_item_fontcolor'));
+				fontColorIndicator.id = 'fontcolorindicator';
+			}
+
+			if (!L.DomUtil.get('backcolorindicator')) {
+				var backColorIndicator = L.DomUtil.create('div', 'back-color-indicator', L.DomUtil.get('tb_toolbar-up_item_backcolor'));
+				backColorIndicator.id = 'backcolorindicator';
+			}
 		}
 	});
 
