@@ -77,7 +77,7 @@ $(function () {
 			{ type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _("Increase Indent"), uno: 'IncrementIndent' },
 			{ type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _("Decrease Indent"), uno: 'DecrementIndent' },
 			{ type: 'break', id: 'incdecindent' },
-			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Comment"), uno: 'InsertAnnotation' },
+			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Insert Comment"), uno: 'InsertAnnotation' },
 			{ type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _("Insert Graphic") },
 			{ type: 'break' },
 			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
