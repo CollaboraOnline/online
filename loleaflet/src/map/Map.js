@@ -11,7 +11,7 @@ L.Map = L.Evented.extend({
 		zoom: 10,
 		minZoom: 1,
 		maxZoom: 20,
-		fadeAnimation: true,
+		fadeAnimation: false, // Not useful for typing.
 		trackResize: true,
 		markerZoomAnimation: true,
 		defaultZoom: 10,
