@@ -590,8 +590,9 @@ private:
                 // Remove.
                 std::unique_lock<std::mutex> lock(docBrokersMutex);
                 docBrokers.erase(docKey);
-                throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
             }
+
+            throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
         }
 
         // Validate the URI and Storage before moving on.
@@ -820,7 +821,7 @@ public:
                         const std::string msg = std::string("error: ") + exc.what();
                         ws->sendFrame(msg.data(), msg.size());
                         // abnormal close frame handshake
-                        ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, exc.what());
+                        ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, msg);
                     }
                     catch (const std::exception& exc2)
                     {
