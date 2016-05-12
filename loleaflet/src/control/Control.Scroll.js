@@ -116,6 +116,7 @@ L.Control.Scroll = L.Control.extend({
 		this._ignoreScroll = true;
 		L.DomUtil.setStyle(this._mockDoc, 'width', e.x + 'px');
 		L.DomUtil.setStyle(this._mockDoc, 'height', e.y + 'px');
+		$('.scroll-container').mCustomScrollbar('update');
 		this._ignoreScroll = null;
 	},
 
