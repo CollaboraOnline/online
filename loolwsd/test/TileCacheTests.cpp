@@ -40,6 +40,8 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
 #endif
     CPPUNIT_TEST(testLoad12ods);
+    CPPUNIT_TEST(testTileInvalidateWriter);
+    CPPUNIT_TEST(testTileInvalidateCalc);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -51,6 +53,9 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testClientPartCalc();
     void testSimultaneousTilesRenderedJustOnce();
     void testLoad12ods();
+    void testTileInvalidateWriter();
+    void testWriterAnyKey();
+    void testTileInvalidateCalc();
 
     void checkTiles(Poco::Net::WebSocket& socket,
                     const std::string& type);
@@ -542,6 +547,173 @@ void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int /*p
         }
     }
 #endif
+}
+
+void TileCacheTests::testTileInvalidateWriter()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = *loadDocAndGetSocket(_uri, documentURL);
+
+    CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !getResponseMessage(socket, "invalidatetiles:").empty());
+
+    std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
+    for (char ch : text)
+    {
+        sendChar(socket, ch); // Send ordinary characters and wait for response -> one tile invalidation for each
+        auto response = getResponseMessage(socket, "invalidatetiles:");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+    }
+
+    text = "\n\n\n";
+    for (char ch : text)
+    {
+        sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages; I see 3 tiles invalidated for each
+        assertResponseLine(socket, "invalidatetiles:");
+        assertResponseLine(socket, "invalidatetiles:");
+        assertResponseLine(socket, "invalidatetiles:");
+    }
+
+    text = "abcde";
+    for (char ch : text)
+    {
+        sendChar(socket, ch);
+        auto response = getResponseMessage(socket, "invalidatetiles:");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+    }
+
+    CPPUNIT_ASSERT_MESSAGE("received unexpected invalidatetiles: message", getResponseMessage(socket, "invalidatetiles:").empty());
+
+    // TODO: implement a random-sequence "monkey test"
+}
+
+// This isn't yet used
+void TileCacheTests::testWriterAnyKey()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = *loadDocAndGetSocket(_uri, documentURL);
+
+    // Now test "usual" keycodes (TODO: whole 32-bit range)
+    for (int i=0; i<0x1000; ++i)
+    {
+        std::stringstream ss("Keycode ");
+        ss << i;
+        auto s = ss.str();
+        std::stringstream fn("saveas url=");
+        fn << documentURL << i << ".odt format= options=";
+        auto f = fn.str();
+
+        const int istart = 474;
+        sendText(socket, "\n"+s+"\n");
+        sendKeyEvent(socket, "input", 0, i);
+        sendKeyEvent(socket, "up", 0, i);
+        sendText(socket, "\nEnd "+s+"\n");
+        if (i>=istart)
+            sendTextFrame(socket, f);
+
+        sendText(socket, "\n"+s+" With Shift:\n");
+        sendKeyEvent(socket, "input", 0, i|skShift);
+        sendKeyEvent(socket, "up", 0, i|skShift);
+        sendText(socket, "\nEnd "+s+" With Shift\n");
+        if (i>=istart)
+            sendTextFrame(socket, f);
+
+        sendText(socket, "\n"+s+" With Ctrl:\n");
+        sendKeyEvent(socket, "input", 0, i|skCtrl);
+        sendKeyEvent(socket, "up", 0, i|skCtrl);
+        sendText(socket, "\nEnd "+s+" With Ctrl\n");
+        if (i>=istart)
+            sendTextFrame(socket, f);
+
+        sendText(socket, "\n"+s+" With Alt:\n");
+        sendKeyEvent(socket, "input", 0, i|skAlt);
+        sendKeyEvent(socket, "up", 0, i|skAlt);
+        sendText(socket, "\nEnd "+s+" With Alt\n");
+        if (i>=istart)
+            sendTextFrame(socket, f);
+
+        sendText(socket, "\n"+s+" With Shift+Ctrl:\n");
+        sendKeyEvent(socket, "input", 0, i|skShift|skCtrl);
+        sendKeyEvent(socket, "up", 0, i|skShift|skCtrl);
+        sendText(socket, "\nEnd "+s+" With Shift+Ctrl\n");
+        if (i>=istart)
+            sendTextFrame(socket, f);
+
+        sendText(socket, "\n"+s+" With Shift+Alt:\n");
+        sendKeyEvent(socket, "input", 0, i|skShift|skAlt);
+        sendKeyEvent(socket, "up", 0, i|skShift|skAlt);
+        sendText(socket, "\nEnd "+s+" With Shift+Alt\n");
+        if (i>=istart)
+            sendTextFrame(socket, f);
+
+        sendText(socket, "\n"+s+" With Ctrl+Alt:\n");
+        sendKeyEvent(socket, "input", 0, i|skCtrl|skAlt);
+        sendKeyEvent(socket, "up", 0, i|skCtrl|skAlt);
+        sendText(socket, "\nEnd "+s+" With Ctrl+Alt\n");
+        if (i>=istart)
+            sendTextFrame(socket, f);
+
+        sendText(socket, "\n"+s+" With Shift+Ctrl+Alt:\n");
+        sendKeyEvent(socket, "input", 0, i|skShift|skCtrl|skAlt);
+        sendKeyEvent(socket, "up", 0, i|skShift|skCtrl|skAlt);
+        sendText(socket, "\nEnd "+s+" With Shift+Ctrl+Alt\n");
+
+        if (i>=istart)
+            sendTextFrame(socket, f);
+
+        // This is to allow server to process the input, and check that everything is still OK
+        sendTextFrame(socket, "status");
+        getResponseMessage(socket, "status:");
+    }
+    //    sendTextFrame(socket, "saveas url=file:///tmp/emptyempty.odt format= options=");
+}
+
+void TileCacheTests::testTileInvalidateCalc()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.ods", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = *loadDocAndGetSocket(_uri, documentURL);
+
+    CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !getResponseMessage(socket, "invalidatetiles:").empty());
+
+    std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
+    for (char ch : text)
+    {
+        sendChar(socket, ch); // Send ordinary characters -> one tile invalidation for each
+        auto response = getResponseMessage(socket, "invalidatetiles:");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+    }
+
+    text = "\n\n\n";
+    for (char ch : text)
+    {
+        sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages; I see 3 tiles invalidated for each
+        auto response1 = getResponseMessage(socket, "invalidatetiles:");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response1.empty());
+        auto response2 = getResponseMessage(socket, "invalidatetiles:");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response2.empty());
+        auto response3 = getResponseMessage(socket, "invalidatetiles:");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response3.empty());
+    }
+
+    text = "abcde";
+    for (char ch : text)
+    {
+        sendChar(socket, ch);
+        auto response = getResponseMessage(socket, "invalidatetiles:");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+    }
+
+    CPPUNIT_ASSERT_MESSAGE("received unexpected invalidatetiles: message", getResponseMessage(socket, "invalidatetiles:").empty());
+
+    socket.shutdown();
 }
 
 void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType)

@@ -468,6 +468,66 @@ std::vector<char> getTileMessage(Poco::Net::WebSocket& ws, const std::string& na
     return std::vector<char>();
 }
 
+enum SpecialKey { skNone=0, skShift=0x1000, skCtrl=0x2000, skAlt=0x4000 };
+
+inline int getCharChar(char ch, SpecialKey specialKeys)
+{
+    // Some primitive code just suitable to basic needs of specific test.
+    // TODO: improve as appropriate.
+    if (specialKeys & (skCtrl | skAlt))
+        return 0;
+
+    switch (ch)
+    {
+        case '\x0a': // Enter
+            return 13;
+        default:
+            return ch;
+    }
+}
+
+inline int getCharKey(char ch, SpecialKey specialKeys)
+{
+    // Some primitive code just suitable to basic needs of specific test.
+    // TODO: improve as appropriate.
+    int result;
+    switch (ch)
+    {
+        case '\x0a': // Enter
+            result = 1280;
+            break;
+        default:
+            result = ch;
+    }
+    return result | specialKeys;
+}
+
+inline void sendKeyEvent(Poco::Net::WebSocket& socket, const char* type, int chr, int key)
+{
+    std::ostringstream ssIn;
+    ssIn << "key type=" << type << " char=" << chr << " key=" << key;
+    sendTextFrame(socket, ssIn.str());
+}
+
+inline void sendKeyPress(Poco::Net::WebSocket& socket, int chr, int key)
+{
+    sendKeyEvent(socket, "input", chr, key);
+    sendKeyEvent(socket, "up", chr, key);
+}
+
+inline void sendChar(Poco::Net::WebSocket& socket, char ch, SpecialKey specialKeys=skNone)
+{
+    sendKeyPress(socket, getCharChar(ch, specialKeys), getCharKey(ch, specialKeys));
+}
+
+inline void sendText(Poco::Net::WebSocket& socket, const std::string& text)
+{
+    for (char ch : text)
+    {
+        sendChar(socket, ch);
+    }
+}
+
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
