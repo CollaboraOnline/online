@@ -149,7 +149,7 @@ static bool NoCapsForKit = false;
 static std::vector<std::shared_ptr<ChildProcess>> newChildren;
 static std::mutex newChildrenMutex;
 static std::condition_variable newChildrenCV;
-static std::chrono::steady_clock::time_point lastForkRequestTime;
+static std::chrono::steady_clock::time_point lastForkRequestTime = std::chrono::steady_clock::now();
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
 // Sessions to pre-spawned child processes that have connected but are not yet assigned a
@@ -194,19 +194,20 @@ static void prespawnChildren()
         return;
     }
 
-    const auto duration = (std::chrono::steady_clock::now() - lastForkRequestTime);
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_SECS * 1000)
-    {
-        // Not enough time passed to balance children.
-        return;
-    }
-
+    // Do the cleanup first.
     for (int i = newChildren.size() - 1; i >= 0; --i)
     {
         if (!newChildren[i]->isAlive())
         {
             newChildren.erase(newChildren.begin() + i);
         }
+    }
+
+    const auto duration = (std::chrono::steady_clock::now() - lastForkRequestTime);
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_SECS * 1000)
+    {
+        // Not enough time passed to balance children.
+        return;
     }
 
     const int available = newChildren.size();
@@ -263,11 +264,11 @@ static std::shared_ptr<ChildProcess> getNewChild()
                 Log::debug("getNewChild: Returning new child [" + std::to_string(child->getPid()) + "].");
                 return child;
             }
-
-            Log::debug("getNewChild: No live child, forking more.");
         }
+
+        Log::debug("getNewChild: No live child, forking more.");
     }
-    while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() < CHILD_TIMEOUT_SECS * 2000);
+    while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() < CHILD_TIMEOUT_SECS * 4000);
 
     Log::debug("getNewChild: Timed out while waiting for new child.");
     return nullptr;
@@ -1452,6 +1453,7 @@ Process::PID LOOLWSD::createForKit()
     Log::info("Launching forkit process: " + forKitPath + " " +
               Poco::cat(std::string(" "), args.begin(), args.end()));
 
+    lastForkRequestTime = std::chrono::steady_clock::now();
     ProcessHandle child = Process::launch(forKitPath, args);
 
     return child.id();
