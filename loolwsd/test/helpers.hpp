@@ -167,7 +167,6 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
         ws.setReceiveTimeout(0);
         do
         {
-
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
                 char buffer[READ_BUFFER_SIZE];
@@ -262,6 +261,10 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                 }
 
                 retries = 10;
+                if (bytes <= 0)
+                {
+                    break;
+                }
             }
             else
             {
