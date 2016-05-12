@@ -177,8 +177,8 @@ button.leaflet-control-search-next
 .back-color-indicator {
     width: 16px;
     height: 5px;
-    margin-top: -7px;
-    margin-left: 5px;
+    margin-top: -7px !important;
+    margin-left: 5px !important;
     position: fixed;
     background: transparent;
 }
