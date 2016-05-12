@@ -10,6 +10,7 @@ systemplate_path="@SYSTEMPLATE_PATH@"
 enable_debug="@ENABLE_DEBUG@"
 jails_path="@JAILS_PATH@"
 lo_path="@LO_PATH@"
+valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes"
 
 # run the test on a dedicated port
 # TODO when we update test execution that the tests run in parallel, we'll
@@ -23,6 +24,7 @@ while test $# -gt 0; do
       --test-name) tst=$2; shift;;
       --log-file)  tst_log=$2; shift;;
       --trs-file)  test_output=$2; shift;;
+      --valgrind)  valgrind=$valgrind_cmd; shift;;
   -*) ;; # ignore
   esac
   shift
@@ -47,6 +49,7 @@ echo > $test_output
 
 if test "z$tst" == "z"; then
      echo "executing external tests"
+     ${valgrind} \
      ${abs_top_builddir}/loolwsd --systemplate="$systemplate_path" \
                                  --lotemplate="$lo_path" \
                                  --childroot="$jails_path" \
@@ -56,7 +59,7 @@ if test "z$tst" == "z"; then
 
      oldpath=`pwd`
      cd "${abs_top_builddir}/test"
-     if ./test; then
+     if ${valgrind} ./test; then
 	 echo "Test run_test.sh passed."
 	 echo ":test-result: PASS run_test.sh" >> $oldpath/$test_output
 	 retval=0
@@ -74,7 +77,8 @@ if test "z$tst" == "z"; then
 
 else # newer unit tests.
     echo "Running $tst | $tst_log ...";
-    if ${abs_top_builddir}/loolwsd --systemplate="$systemplate_path" \
+	if ${valgrind} \
+        ${abs_top_builddir}/loolwsd --systemplate="$systemplate_path" \
                                    --lotemplate="$lo_path" \
                                    --childroot="$jails_path" \
                                    --allowlocalstorage \

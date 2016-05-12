@@ -56,3 +56,7 @@ TEST_EXTENSIONS = .la
 LA_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
 
 EXTRA_DIST = data/hello.odt data/hello.txt $(test_SOURCES) run_unit.sh
+
+check_valgrind: all
+	./run_unit.sh --log-file test.log --trs-file test.trs --valgrind
+
