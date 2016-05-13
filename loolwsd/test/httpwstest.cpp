@@ -263,9 +263,6 @@ void HTTPWSTest::testHandShake()
             CPPUNIT_ASSERT(std::strstr(buffer, SERVICE_UNAVALABLE_INTERNAL_ERROR) != nullptr);
             CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
         }
-
-        socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -358,7 +355,6 @@ void HTTPWSTest::testLoad()
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL);
     loadDoc(documentURL);
-    Util::removeFile(documentPath);
 }
 
 void HTTPWSTest::testBadLoad()
@@ -398,9 +394,6 @@ void HTTPWSTest::testBadLoad()
             }
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-
-        socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -416,8 +409,6 @@ void HTTPWSTest::testReload()
     {
         loadDoc(documentURL);
     }
-
-    Util::removeFile(documentPath);
 }
 
 void HTTPWSTest::testSaveOnDisconnect()
@@ -501,8 +492,6 @@ void HTTPWSTest::testSaveOnDisconnect()
             }
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        socket.shutdown();
-        Util::removeFile(documentPath);
         CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -590,8 +579,6 @@ void HTTPWSTest::testReloadWhileDisconnecting()
             }
         }
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        socket.shutdown();
-        Util::removeFile(documentPath);
         CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -839,8 +826,6 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
             CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
             CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
         }
-        socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -875,8 +860,6 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
             CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
             CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
         }
-        socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -898,8 +881,6 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
         sendTextFrame(socket, "load url=" + documentURL + " password=1");
 
         CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket));
-        socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -1001,9 +982,6 @@ void HTTPWSTest::testInsertDelete()
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(response, parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
-
-        socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -1185,8 +1163,6 @@ void HTTPWSTest::testSlideShow()
             CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
             CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
         }
-        socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -1464,9 +1440,6 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
 
     // check new document size
     checkhandler(docWidth, docHeight, newWidth, newHeight);
-
-    socket->shutdown();
-    Util::removeFile(docPath);
 }
 
 
