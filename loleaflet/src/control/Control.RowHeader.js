@@ -22,6 +22,41 @@ L.Control.RowHeader = L.Control.extend({
 		this._position = 0;
 		this._totalHeight = 0;
 		this._viewPort = 0;
+
+		var rowHeaderObj = this;
+		$.contextMenu({
+			selector: '.spreadsheet-header-row',
+			items: {
+				'insertrowabove': {
+					name: _('Insert row above'),
+					callback: function(key, options) {
+						var row = parseInt(options.$trigger.attr('rel').split('spreadsheet-row-')[1]);
+						rowHeaderObj.insertRow.call(rowHeaderObj, row);
+					}
+				},
+				'deleteselectedrow': {
+					name: _('Delete row'),
+					callback: function(key, options) {
+						var row = parseInt(options.$trigger.attr('rel').split('spreadsheet-row-')[1]);
+						rowHeaderObj.deleteRow.call(rowHeaderObj, row);
+					}
+				}
+			},
+			zIndex: 10
+		});
+	},
+
+	insertRow: function(row) {
+		// First select the corresponding row because
+		// .uno:InsertRows doesn't accept any row number
+		// as argument and just inserts before the selected row
+		this._selectRow(row, 0);
+		this._map.sendUnoCommand('.uno:InsertRows');
+	},
+
+	deleteRow: function(row) {
+		this._selectRow(row, 0);
+		this._map.sendUnoCommand('.uno:DeleteRows');
 	},
 
 	clearRows: function () {
@@ -76,17 +111,7 @@ L.Control.RowHeader = L.Control.extend({
 		}
 	},
 
-	_onRowHeaderClick: function (e) {
-		var row = e.target.getAttribute('rel').split('spreadsheet-row-')[1];
-
-		var modifier = 0;
-		if (e.shiftKey) {
-			modifier += this._map.keyboard.keyModifier.shift;
-		}
-		if (e.ctrlKey) {
-			modifier += this._map.keyboard.keyModifier.ctrl;
-		}
-
+	_selectRow: function(row, modifier) {
 		var command = {
 			Row: {
 				type: 'long',
@@ -99,6 +124,19 @@ L.Control.RowHeader = L.Control.extend({
 		};
 
 		this._map.sendUnoCommand('.uno:SelectRow ', command);
+	},
+
+	_onRowHeaderClick: function (e) {
+		var row = e.target.getAttribute('rel').split('spreadsheet-row-')[1];
+		var modifier = 0;
+		if (e.shiftKey) {
+			modifier += this._map.keyboard.keyModifier.shift;
+		}
+		if (e.ctrlKey) {
+			modifier += this._map.keyboard.keyModifier.ctrl;
+		}
+
+		this._selectRow(row, modifier);
 	},
 
 	_onUpdatePermission: function () {
