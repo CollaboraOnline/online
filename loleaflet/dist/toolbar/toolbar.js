@@ -497,10 +497,11 @@ function onFontSelect (e) {
 
 function onFontSizeSelect (e) {
 	var size = e.target.value;
+	var command = {};
 	$(e.target).find('option[data-select2-tag]').removeAttr('data-select2-tag');
 	map.applyFontSize(size);
-		fontcolor = map.getDocType() === 'text' ? 'FontColor' : 'Color';
-		command[fontcolor] = {};
+	fontcolor = map.getDocType() === 'text' ? 'FontColor' : 'Color';
+	command[fontcolor] = {};
 	map.focus();
 }
 
