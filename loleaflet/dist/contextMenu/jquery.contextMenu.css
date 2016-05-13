@@ -72,6 +72,14 @@
   content: "";
 }
 
+.context-menu-icon-checkmark:before {
+  content: url('/loleaflet/dist/images/lc_checkbox.png');
+}
+
+.context-menu-icon-radio:before {
+  content: url('/loleaflet/dist/images/lc_radiobutton.png');
+}
+
 .context-menu-icon.context-menu-hover:before {
   color: #fff;
 }
