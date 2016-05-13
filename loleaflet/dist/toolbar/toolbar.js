@@ -704,7 +704,7 @@ map.on('commandstatechanged', function (e) {
 			else if (state === 'false') {
 				toolbar.uncheck(id);
 			}
-			else if (state === 'enabled' && map._docLayer._permission === 'edit') {
+			else if (state === 'enabled' && map._permission === 'edit') {
 				toolbar.enable(id);
 			}
 			else if (state === 'disabled') {
