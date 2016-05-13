@@ -601,33 +601,11 @@ void HTTPWSTest::testExcelLoad()
         sendTextFrame(socket, "load url=" + documentURL);
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
         sendTextFrame(socket, "status");
+        const auto status = assertResponseLine(socket, "status:");
 
-        std::string status;
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << '\n';
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
-                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
-                std::string prefix = "status: ";
-                if (line.find(prefix) == 0)
-                {
-                    status = line.substr(prefix.length());
-                    break;
-                }
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        socket.shutdown();
-        Util::removeFile(documentPath);
-        // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
+        // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
     }
     catch (const Poco::Exception& exc)
     {
@@ -659,30 +637,8 @@ void HTTPWSTest::testPaste()
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll");
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-        std::string selection;
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << '\n';
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
-                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
-                const std::string prefix = "textselectioncontent: ";
-                if (line.find(prefix) == 0)
-                {
-                    selection = line.substr(prefix.length());
-                    break;
-                }
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        socket.shutdown();
-        CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
-        Util::removeFile(documentPath);
+        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
     {
@@ -757,36 +713,15 @@ void HTTPWSTest::testRenderingOptions()
 
         sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
         sendTextFrame(socket, "status");
+        const auto status = assertResponseLine(socket, "status:");
 
-        std::string status;
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << '\n';
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
-                std::string line = LOOLProtocol::getFirstLine(buffer, n);
-                std::string prefix = "status: ";
-                if (line.find(prefix) == 0)
-                {
-                    status = line.substr(prefix.length());
-                    break;
-                }
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
         socket.shutdown();
-        Util::removeFile(documentPath);
 
-        // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
+        // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 
-        const std::string token = tokens[4];
+        const std::string token = tokens[5];
         const std::string prefix = "height=";
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
         const int height = std::stoi(token.substr(prefix.size()));

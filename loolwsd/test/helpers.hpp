@@ -284,9 +284,11 @@ std::string getResponseLine(T& ws, const std::string& prefix, const std::string 
 }
 
 template <typename T>
-void assertResponseLine(T& ws, const std::string& prefix, const std::string name = "")
+std::string assertResponseLine(T& ws, const std::string& prefix, const std::string name = "")
 {
-    CPPUNIT_ASSERT_EQUAL(prefix, LOOLProtocol::getFirstToken(getResponseLine(ws, prefix, name)));
+    const auto res = getResponseLine(ws, prefix, name);
+    CPPUNIT_ASSERT_EQUAL(prefix, LOOLProtocol::getFirstToken(res));
+    return res;
 }
 
 inline
