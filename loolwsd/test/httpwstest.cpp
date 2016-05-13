@@ -665,32 +665,22 @@ void HTTPWSTest::testLargePaste()
         sendTextFrame(socket, "uno .uno:Delete");
 
         // Paste some text into it.
-        std::ifstream documentStream(documentPath);
-        std::string documentContents((std::istreambuf_iterator<char>(documentStream)), std::istreambuf_iterator<char>());
+        std::ostringstream oss;
+        for (auto i = 0; i < 1000; ++i)
+        {
+            oss << Util::encodeId(Util::rng::getNext(), 6);
+        }
+        const auto documentContents = oss.str();
+        std::cerr << "Pasting " << documentContents.size() << " characters into document." << std::endl;
         sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents);
 
         // Check if the server is still alive.
         // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
+        sendTextFrame(socket, "uno .uno:SelectAll");
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-        std::string selection;
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message length " << n << ": " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
-                std::string line = LOOLProtocol::getFirstLine(buffer, n);
-                std::string prefix = "textselectioncontent: ";
-                if (line.find(prefix) == 0)
-                    break;
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        socket.shutdown();
-        Util::removeFile(documentPath);
+        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        CPPUNIT_ASSERT_MESSAGE("Pasted text was either corrupted or couldn't be read back",
+                               "textselectioncontent: " + documentContents == selection);
     }
     catch (const Poco::Exception& exc)
     {
