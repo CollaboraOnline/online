@@ -36,6 +36,7 @@
 #include <Poco/Process.h>
 #include <Poco/Thread.h>
 #include <Poco/Timestamp.h>
+#include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
 
 #include "Common.hpp"
@@ -125,6 +126,15 @@ namespace Util
                 return name;
             }
         }
+    }
+
+    std::string getTempFilePath(const std::string srcDir, const std::string& srcFilename)
+    {
+        const std::string srcPath = srcDir + '/' + srcFilename;
+        const std::string dstPath = Poco::Path::temp() + encodeId(rng::getNext()) + '_' + srcFilename;
+        Poco::File(srcPath).copyTo(dstPath);
+        Poco::TemporaryFile::registerForDeletion(dstPath);
+        return dstPath;
     }
 
     bool windowingAvailable()

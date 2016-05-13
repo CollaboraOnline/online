@@ -90,17 +90,7 @@ namespace Util
     /// Primarily used by tests to avoid tainting the originals.
     /// srcDir shouldn't end with '/' and srcFilename shouldn't contain '/'.
     /// Returns the created file path.
-    inline
-    std::string getTempFilePath(const std::string srcDir, const std::string& srcFilename)
-    {
-        const std::string srcPath = srcDir + '/' + srcFilename;
-
-        std::string dstPath = std::tmpnam(nullptr);
-        dstPath += '_' + srcFilename;
-
-        Poco::File(srcPath).copyTo(dstPath);
-        return dstPath;
-    }
+    std::string getTempFilePath(const std::string srcDir, const std::string& srcFilename);
 
     /// Returns the name of the signal.
     const char *signalName(int signo);
