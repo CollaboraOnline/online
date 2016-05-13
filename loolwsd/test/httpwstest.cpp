@@ -1019,6 +1019,8 @@ void HTTPWSTest::testEditLock()
     std::mutex mutex;
     std::condition_variable cv;
     volatile bool second_client_died = false;
+    volatile bool first_has_editlock = false;
+    volatile bool second_has_editlock = false;
 
     // The first client loads the document and checks that it has the lock.
     // It then waits until the lock is taken away.
@@ -1029,8 +1031,8 @@ void HTTPWSTest::testEditLock()
                 std::cerr << "First client loading." << std::endl;
                 auto socket = loadDocAndGetSocket(_uri, documentURL, "editLock-1 ", true);
                 std::string editlock1;
-                sendTextFrame(socket, "status");
-                SocketProcessor("First", socket, [&](const std::string& msg)
+                std::unique_lock<std::mutex> lock(mutex);
+                SocketProcessor("First ", socket, [&](const std::string& msg)
                         {
                             if (msg.find("editlock") == 0)
                             {
@@ -1038,10 +1040,12 @@ void HTTPWSTest::testEditLock()
                                 {
                                     std::cerr << "First client has the lock." << std::endl;
                                     CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
+                                    first_has_editlock = true;
                                     editlock1 = msg;
 
                                     // Initial condition met, connect second client.
                                     std::cerr << "Starting second client." << std::endl;
+                                    lock.unlock();
                                     cv.notify_one();
                                 }
                                 else if (editlock1 == "editlock: 1")
@@ -1052,12 +1056,14 @@ void HTTPWSTest::testEditLock()
                                         // but we should get it back once they die.
                                         std::cerr << "First client is given the lock." << std::endl;
                                         CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
+                                        first_has_editlock = true;
                                         return false; // Done!
                                     }
                                     else
                                     {
                                         // Normal broadcast when the second client joins.
                                         std::cerr << "First client still has the lock." << std::endl;
+                                        CPPUNIT_ASSERT_MESSAGE("First doesn't have the lock", first_has_editlock);
                                     }
                                 }
                                 else
@@ -1065,6 +1071,7 @@ void HTTPWSTest::testEditLock()
                                     // Another client took the lock.
                                     std::cerr << "First client lost the lock." << std::endl;
                                     CPPUNIT_ASSERT_EQUAL(std::string("editlock: 0"), msg);
+                                    first_has_editlock = false;
                                 }
                             }
 
@@ -1099,6 +1106,7 @@ void HTTPWSTest::testEditLock()
                             // We shouldn't have it.
                             std::cerr << "Second client doesn't have the lock." << std::endl;
                             CPPUNIT_ASSERT_EQUAL(std::string("editlock: 0"), msg);
+                            second_has_editlock = false;
                             editlock1 = msg;
 
                             // But we will take it.
@@ -1110,6 +1118,7 @@ void HTTPWSTest::testEditLock()
                             // Now it should be ours.
                             std::cerr << "Second client took the lock." << std::endl;
                             CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
+                            second_has_editlock = true;
                             return false;
                         }
                     }
@@ -1120,8 +1129,12 @@ void HTTPWSTest::testEditLock()
         std::cerr << "Second client out." << std::endl;
         socket->shutdown();
         second_client_died = true;
-
         first_client.join();
+
+        // The second will think it had the lock when it died, but it will give it up.
+        CPPUNIT_ASSERT_MESSAGE("Second doesn't have the lock", second_has_editlock);
+        // The first must ultimately have the lock back.
+        CPPUNIT_ASSERT_MESSAGE("First didn't get back the lock", first_has_editlock);
     }
     catch (const Poco::Exception& exc)
     {
