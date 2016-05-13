@@ -33,21 +33,15 @@
 class HTTPServerTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
-    static int _initialLoolKitCount;
+    static int InitialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPServerTest);
-
-    // This should be the first test:
-    CPPUNIT_TEST(testCountHowManyLoolkits);
 
     CPPUNIT_TEST(testDiscovery);
     CPPUNIT_TEST(testLoleafletGet);
     CPPUNIT_TEST(testLoleafletPost);
     CPPUNIT_TEST(testScriptsAndLinksGet);
     CPPUNIT_TEST(testScriptsAndLinksPost);
-
-    // This should be the last test:
-    CPPUNIT_TEST(testNoExtraLoolKitsLeft);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -81,14 +75,24 @@ public:
         Poco::Net::uninitializeSSL();
 #endif
     }
+
+    void setUp()
+    {
+        testCountHowManyLoolkits();
+    }
+
+    void tearDown()
+    {
+        testNoExtraLoolKitsLeft();
+    }
 };
 
-int HTTPServerTest::_initialLoolKitCount = 0;
+int HTTPServerTest::InitialLoolKitCount = 1;
 
 void HTTPServerTest::testCountHowManyLoolkits()
 {
-    _initialLoolKitCount = countLoolKitProcesses(1);
-    CPPUNIT_ASSERT(_initialLoolKitCount > 0);
+    InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
+    CPPUNIT_ASSERT(InitialLoolKitCount > 0);
 }
 
 void HTTPServerTest::testDiscovery()
@@ -233,9 +237,9 @@ void HTTPServerTest::testScriptsAndLinksPost()
 
 void HTTPServerTest::testNoExtraLoolKitsLeft()
 {
-    const auto countNow = countLoolKitProcesses(_initialLoolKitCount);
+    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
 
-    CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
+    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPServerTest);

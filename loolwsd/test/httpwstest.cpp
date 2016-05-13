@@ -52,7 +52,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
-    static int _initialLoolKitCount;
+    static int InitialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
@@ -162,12 +162,12 @@ public:
     }
 };
 
-int HTTPWSTest::_initialLoolKitCount = 0;
+int HTTPWSTest::InitialLoolKitCount = 1;
 
 void HTTPWSTest::testCountHowManyLoolkits()
 {
-    _initialLoolKitCount = countLoolKitProcesses(1);
-    CPPUNIT_ASSERT(_initialLoolKitCount > 0);
+    InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
+    CPPUNIT_ASSERT(InitialLoolKitCount > 0);
 }
 
 void HTTPWSTest::testBadRequest()
@@ -1323,9 +1323,8 @@ void HTTPWSTest::testMaxRow()
 
 void HTTPWSTest::testNoExtraLoolKitsLeft()
 {
-    const auto countNow = countLoolKitProcesses(_initialLoolKitCount);
-
-    CPPUNIT_ASSERT_EQUAL(_initialLoolKitCount, countNow);
+    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
+    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 }
 
 void HTTPWSTest::getPartHashCodes(const std::string status,
