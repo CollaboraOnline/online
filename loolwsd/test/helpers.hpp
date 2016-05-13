@@ -58,26 +58,21 @@ void getDocumentPathAndURL(const char* document, std::string& documentPath, std:
 }
 
 inline
-void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string)
+void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string, const std::string& name = "")
 {
-    std::cerr << "Sending " << string.size() << " bytes: " << LOOLProtocol::getAbbreviatedMessage(string) << std::endl;
+    std::cerr << name << "Sending " << string.size() << " bytes: " << LOOLProtocol::getAbbreviatedMessage(string) << std::endl;
     socket.sendFrame(string.data(), string.size());
 }
 
 inline
-void sendTextFrame(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& string)
+void sendTextFrame(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& string, const std::string& name = "")
 {
-    sendTextFrame(*socket, string);
+    sendTextFrame(*socket, string, name);
 }
 
 inline
-bool isDocumentLoaded(Poco::Net::WebSocket& ws, std::string name = "", bool isView = false)
+bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bool isView = false)
 {
-    if (!name.empty())
-    {
-        name += ' ';
-    }
-
     bool isLoaded = false;
     try
     {
@@ -205,13 +200,8 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
 }
 
 inline
-std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string name = "")
+std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, const std::string& name = "")
 {
-    if (!name.empty())
-    {
-        name += ": ";
-    }
-
     try
     {
         int flags = 0;
@@ -314,16 +304,17 @@ inline
 std::shared_ptr<Poco::Net::WebSocket>
 connectLOKit(Poco::URI uri,
              Poco::Net::HTTPRequest& request,
-             Poco::Net::HTTPResponse& response)
+             Poco::Net::HTTPResponse& response,
+             const std::string& name = "")
 {
     int retries = 10;
     do
     {
         std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
 
-            std::cerr << "Connecting... ";
+        std::cerr << name << "Connecting... " << std::endl;
         auto ws = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
-        getResponseMessage(ws, "statusindicator: ready");
+        getResponseMessage(ws, "statusindicator: ready", name);
 
         return ws;
     }
@@ -333,18 +324,19 @@ connectLOKit(Poco::URI uri,
 }
 
 inline
-std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, bool isView = false)
+std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& name = "", bool isView = false)
 {
     try
     {
         // Load a document and get its status.
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::HTTPResponse response;
-        auto socket = connectLOKit(uri, request, response);
+        auto socket = connectLOKit(uri, request, response, name);
 
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket, "", isView));
+        sendTextFrame(socket, "load url=" + documentURL, name);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket, name, isView));
 
+        std::cerr << name << "Loaded document [" << documentURL << "]." << std::endl;
         return socket;
     }
     catch (const Poco::Exception& exc)
@@ -357,27 +349,22 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, 
 }
 
 inline
-void SocketProcessor(std::string name,
+void SocketProcessor(const std::string& name,
                      const std::shared_ptr<Poco::Net::WebSocket>& socket,
                      std::function<bool(const std::string& msg)> handler,
                      const size_t timeoutMs = 10000)
 {
-    if (!name.empty())
-    {
-        name += ' ';
-    }
-
     socket->setReceiveTimeout(0);
 
     const Poco::Timespan waitTime(timeoutMs * 1000);
-    int flags;
-    int n;
+    int flags = 0;
+    int n = 0;
     char buffer[READ_BUFFER_SIZE];
     do
     {
         if (!socket->poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
-            std::cerr << "Timeout." << std::endl;
+            std::cerr << name << "Timeout." << std::endl;
             break;
         }
 

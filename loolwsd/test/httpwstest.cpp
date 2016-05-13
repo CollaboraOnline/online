@@ -1027,7 +1027,7 @@ void HTTPWSTest::testEditLock()
             try
             {
                 std::cerr << "First client loading." << std::endl;
-                auto socket = loadDocAndGetSocket(_uri, documentURL, true);
+                auto socket = loadDocAndGetSocket(_uri, documentURL, "editLock-1 ", true);
                 std::string editlock1;
                 sendTextFrame(socket, "status");
                 SocketProcessor("First", socket, [&](const std::string& msg)
@@ -1088,9 +1088,9 @@ void HTTPWSTest::testEditLock()
     try
     {
         std::cerr << "Second client loading." << std::endl;
-        auto socket = loadDocAndGetSocket(_uri, documentURL);
+        auto socket = loadDocAndGetSocket(_uri, documentURL, "editLock-2 ", true);
         std::string editlock1;
-        SocketProcessor("Second", socket, [&](const std::string& msg)
+        SocketProcessor("Second ", socket, [&](const std::string& msg)
                 {
                     if (msg.find("editlock") == 0)
                     {
@@ -1189,12 +1189,12 @@ void HTTPWSTest::testInactiveClient()
         getDocumentPathAndURL("hello.odt", documentPath, documentURL);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-        auto socket1 = loadDocAndGetSocket(_uri, documentURL);
+        auto socket1 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-1 ");
         getResponseMessage(socket1, "invalidatetiles");
 
         // Connect another and go inactive.
         std::cerr << "Connecting second client." << std::endl;
-        auto socket2 = loadDocAndGetSocket(_uri, documentURL, true);
+        auto socket2 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-2 ", true);
         sendTextFrame(socket2, "userinactive");
 
         // While second is inactive, make some changes.
@@ -1203,7 +1203,7 @@ void HTTPWSTest::testInactiveClient()
 
         // Activate second.
         sendTextFrame(socket2, "useractive");
-        SocketProcessor("Second", socket2, [&](const std::string& msg)
+        SocketProcessor("Second ", socket2, [&](const std::string& msg)
                 {
                     const auto token = LOOLProtocol::getFirstToken(msg);
                     CPPUNIT_ASSERT_MESSAGE("unexpected message: " + msg,
@@ -1424,7 +1424,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     getDocumentPathAndURL("setclientpart.ods", docPath, docURL);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
 
-    auto socket = loadDocAndGetSocket(_uri, docURL);
+    auto socket = loadDocAndGetSocket(_uri, docURL, "limitCursor ");
     // check document size
     sendTextFrame(socket, "status");
     getResponseMessage(socket, "status:", response, false);
