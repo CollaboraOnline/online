@@ -24,6 +24,41 @@ L.Control.ColumnHeader = L.Control.extend({
 		this._position = 0;
 		this._totalWidth = 0;
 		this._viewPort = 0;
+
+		var colHeaderObj = this;
+		$.contextMenu({
+			selector: '.spreadsheet-header-column',
+			items: {
+				'insertcolbefore': {
+					name: _('Insert column before'),
+					callback: function(key, options) {
+						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
+						colHeaderObj.insertColumn.call(colHeaderObj, colAlpha);
+					}
+				},
+				'deleteselectedcol': {
+					name: _('Delete column'),
+					callback: function(key, options) {
+						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
+						colHeaderObj.deleteColumn.call(colHeaderObj, colAlpha);
+					}
+				}
+			},
+			zIndex: 10
+		});
+	},
+
+	insertColumn: function(colAlpha) {
+		// First select the corresponding column because
+		// .uno:InsertColumn doesn't accept any column number
+		// as argument and just inserts before the selected column
+		this._selectColumn(colAlpha, 0);
+		this._map.sendUnoCommand('.uno:InsertColumns');
+	},
+
+	deleteColumn: function(colAlpha) {
+		this._selectColumn(colAlpha, 0);
+		this._map.sendUnoCommand('.uno:DeleteColumns');
 	},
 
 	clearColumns : function () {
@@ -89,17 +124,8 @@ L.Control.ColumnHeader = L.Control.extend({
 		return res;
 	},
 
-	_onColumnHeaderClick: function (e) {
-		var colAlpha = e.target.getAttribute('rel').split('spreadsheet-column-')[1];
+	_selectColumn: function(colAlpha, modifier) {
 		var colNumber = this._colAlphaToNumber(colAlpha);
-
-		var modifier = 0;
-		if (e.shiftKey) {
-			modifier += this._map.keyboard.keyModifier.shift;
-		}
-		if (e.ctrlKey) {
-			modifier += this._map.keyboard.keyModifier.ctrl;
-		}
 
 		var command = {
 			Col: {
@@ -113,6 +139,20 @@ L.Control.ColumnHeader = L.Control.extend({
 		};
 
 		this._map.sendUnoCommand('.uno:SelectColumn ', command);
+	},
+
+	_onColumnHeaderClick: function (e) {
+		var colAlpha = e.target.getAttribute('rel').split('spreadsheet-column-')[1];
+
+		var modifier = 0;
+		if (e.shiftKey) {
+			modifier += this._map.keyboard.keyModifier.shift;
+		}
+		if (e.ctrlKey) {
+			modifier += this._map.keyboard.keyModifier.ctrl;
+		}
+
+		this._selectColumn(colAlpha, modifier);
 	},
 
 	_onCornerHeaderClick: function() {
