@@ -308,6 +308,13 @@ var deps = {
 		desc: 'Row Header bar'
 	},
 
+	ControlContextmenu: {
+		src: ['control/Control.js',
+			'control/Control.ContextMenu.js'],
+		heading: 'Controls',
+		desc: 'Context Menu'
+	},
+
 	ControlTabs: {
 		src: ['control/Control.js',
 		      'control/Control.Tabs.js'],
