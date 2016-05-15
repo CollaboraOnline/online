@@ -56,9 +56,6 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
                       const int docWidth,
                       const int docHeight);
 
-    void getTileMessage(Poco::Net::WebSocket& ws,
-                        std::string& tile);
-
     static
     std::vector<char> genRandomData(const size_t size)
     {
@@ -418,7 +415,7 @@ void TileCacheTests::requestTiles(Poco::Net::WebSocket& socket, const int part, 
                     part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
 
             sendTextFrame(socket, text);
-            getTileMessage(socket, tile);
+            tile = assertResponseLine(socket, "tile:", "requestTiles ");
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
@@ -431,52 +428,6 @@ void TileCacheTests::requestTiles(Poco::Net::WebSocket& socket, const int part, 
             CPPUNIT_ASSERT_EQUAL(tileHeight, std::stoi(tokens[7].substr(std::string("tileHeight=").size())));
         }
     }
-}
-
-void TileCacheTests::getTileMessage(Poco::Net::WebSocket& ws, std::string& tile)
-{
-    int flags;
-    int bytes;
-    int size = 0;
-    int retries = 10;
-    const Poco::Timespan waitTime(1000000);
-
-    ws.setReceiveTimeout(0);
-    std::cout << "==> getTileMessage\n";
-    tile.clear();
-    do
-    {
-        std::vector<char> payload(READ_BUFFER_SIZE * 100);
-        if (retries > 0 && ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
-        {
-            bytes = ws.receiveFrame(payload.data(), payload.capacity(), flags);
-            payload.resize(bytes > 0 ? bytes : 0);
-            std::cout << "Got " << bytes << " bytes, flags: " << std::bitset<8>(flags) << '\n';
-            if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                tile = LOOLProtocol::getFirstLine(payload.data(), bytes);
-                std::cout << "message: " << tile << '\n';
-                Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                if (tokens.count() == 2 &&
-                    tokens[0] == "nextmessage:" &&
-                    LOOLProtocol::getTokenInteger(tokens[1], "size", size) &&
-                    size > 0)
-                {
-                    payload.resize(size);
-                    bytes = ws.receiveFrame(payload.data(), size, flags);
-                    tile = LOOLProtocol::getFirstLine(payload.data(), bytes);
-                    break;
-                }
-            }
-            retries = 10;
-        }
-        else
-        {
-            std::cout << "Timeout\n";
-            --retries;
-        }
-    }
-    while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileCacheTests);
