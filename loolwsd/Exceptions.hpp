@@ -21,12 +21,20 @@ protected:
     using std::runtime_error::runtime_error;
 };
 
-/// A bad-request exception that is means to signify,
+/// A bad-request exception that is meant to signify,
 /// and translate into, an HTTP bad request.
 class BadRequestException : public LoolException
 {
 public:
     using LoolException::LoolException;
+};
+
+/// A bad-argument exception that is meant to signify,
+/// and translate into, an HTTP bad request.
+class BadArgumentException : public BadRequestException
+{
+public:
+    using BadRequestException::BadRequestException;
 };
 
 /// An authorization exception that is means to signify,

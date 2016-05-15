@@ -44,6 +44,56 @@ using Poco::Timestamp;
 
 using namespace LOOLProtocol;
 
+std::string TileDesc::serialize(const std::string& prefix) const
+{
+    std::ostringstream oss;
+    oss << prefix
+        << " part=" << _part
+        << " width=" << _width
+        << " height=" << _height
+        << " tileposx=" << _tilePosX
+        << " tileposy=" << _tilePosY
+        << " tilewidth=" << _tileWidth
+        << " tileheight=" << _tileHeight;
+    if (_id >= 0)
+    {
+        oss << " id=" << _id;
+    }
+
+    return oss.str();
+}
+
+TileDesc TileDesc::parse(const Poco::StringTokenizer& tokens)
+{
+    // We don't expect undocument fields and
+    // assume all values to be int.
+    std::map<std::string, int> pairs;
+
+    // id is optional.
+    pairs["id"] = -1;
+
+    for (size_t i = 0; i < tokens.count(); ++i)
+    {
+        std::string name;
+        int value = -1;
+        if (parseNameIntegerPair(tokens[i], name, value))
+        {
+            pairs[name] = value;
+        }
+    }
+
+    return TileDesc(pairs["part"], pairs["width"], pairs["height"],
+                    pairs["tileposx"], pairs["tileposy"],
+                    pairs["tilewidth"], pairs["tileheight"],
+                    pairs["id"]);
+}
+
+TileDesc TileDesc::parse(const std::string& message)
+{
+    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    return parse(tokens);
+}
+
 TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,
                      const std::string& cacheDir) :

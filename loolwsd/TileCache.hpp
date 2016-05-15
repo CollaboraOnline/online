@@ -18,11 +18,66 @@
 #include <vector>
 
 #include <Poco/Timestamp.h>
+#include <Poco/StringTokenizer.h>
+
+#include "Exceptions.hpp"
 
 /** Handles the cache for tiles of one document.
 */
 
 class MasterProcessSession;
+
+/// Tile Descriptor
+/// Represents a tile's coordinates and dimensions.
+class TileDesc
+{
+public:
+    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int id = -1) :
+        _part(part),
+        _width(width),
+        _height(height),
+        _tilePosX(tilePosX),
+        _tilePosY(tilePosY),
+        _tileWidth(tileWidth),
+        _tileHeight(tileHeight),
+        _id(id)
+    {
+        if (_part < 0 ||
+            _width <= 0 ||
+            _height <= 0 ||
+            _tilePosX < 0 ||
+            _tilePosY < 0 ||
+            _tileWidth <= 0 ||
+            _tileHeight <= 0)
+        {
+            throw BadArgumentException("Invalid tile descriptor.");
+        }
+    }
+
+    int getPart() const { return _part; }
+    int getWidth() const { return _width; }
+    int getHeight() const { return _height; }
+    int getTilePosX() const { return _tilePosX; }
+    int getTilePosY() const { return _tilePosY; }
+    int getTileWidth() const { return _tileWidth; }
+    int getTileHeight() const { return _tileHeight; }
+
+    std::string serialize(const std::string& prefix = "") const;
+
+    /// Deserialize a TileDesc from a string format.
+    static TileDesc parse(const std::string& message);
+    static TileDesc parse(const Poco::StringTokenizer& tokens);
+
+private:
+    int _part;
+    int _width;
+    int _height;
+    int _tilePosX;
+    int _tilePosY;
+    int _tileWidth;
+    int _tileHeight;
+    int _id;
+};
 
 class TileCache
 {
