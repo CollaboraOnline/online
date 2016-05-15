@@ -919,6 +919,10 @@ void HTTPWSTest::testEditLock()
     const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
     const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
+    // This test doesn't really need to be multithreaded.
+    // But it's done this way as an experiment and to serve
+    // as an example for other similar tests (where necessary).
+    // Ultimately, the complexity doesn't justify it.
     std::mutex mutex;
     std::condition_variable cv;
     volatile bool second_client_died = false;
@@ -951,7 +955,7 @@ void HTTPWSTest::testEditLock()
                                     lock.unlock();
                                     cv.notify_one();
                                 }
-                                else if (editlock1 == "editlock: 1")
+                                else if (msg == "editlock: 1")
                                 {
                                     if (second_client_died)
                                     {
@@ -966,6 +970,7 @@ void HTTPWSTest::testEditLock()
                                     {
                                         // Normal broadcast when the second client joins.
                                         std::cerr << "First client still has the lock." << std::endl;
+                                        CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
                                         CPPUNIT_ASSERT_MESSAGE("First doesn't have the lock", first_has_editlock);
                                     }
                                 }
@@ -975,6 +980,8 @@ void HTTPWSTest::testEditLock()
                                     std::cerr << "First client lost the lock." << std::endl;
                                     CPPUNIT_ASSERT_EQUAL(std::string("editlock: 0"), msg);
                                     first_has_editlock = false;
+                                    std::cerr << "Allowing the second to die." << std::endl;
+                                    cv.notify_one();
                                 }
                             }
 
@@ -1015,6 +1022,9 @@ void HTTPWSTest::testEditLock()
                             // But we will take it.
                             std::cerr << "Second client taking lock." << std::endl;
                             sendTextFrame(*socket, "takeedit");
+
+                            // Wait until the first gets the notification that we took it.
+                            cv.wait(lock);
                         }
                         else
                         {
@@ -1030,8 +1040,8 @@ void HTTPWSTest::testEditLock()
                 });
 
         std::cerr << "Second client out." << std::endl;
-        socket->shutdown();
         second_client_died = true;
+        socket->shutdown();
         first_client.join();
 
         // The second will think it had the lock when it died, but it will give it up.
