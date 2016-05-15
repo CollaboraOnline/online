@@ -83,7 +83,7 @@ class TileCache
 {
     struct TileBeingRendered;
 
-    std::shared_ptr<TileBeingRendered> findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    std::shared_ptr<TileBeingRendered> findTileBeingRendered(const TileDesc& tile);
 
 public:
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
@@ -94,13 +94,13 @@ public:
 
     TileCache(const TileCache&) = delete;
 
-    bool isTileBeingRenderedIfSoSubscribe(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const std::shared_ptr<MasterProcessSession> &subscriber);
+    bool isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<MasterProcessSession> &subscriber);
 
-    std::unique_ptr<std::fstream> lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    std::unique_ptr<std::fstream> lookupTile(const TileDesc& tile);
 
-    void saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size);
+    void saveTile(const TileDesc& tile, const char *data, size_t size);
 
-    void notifyAndRemoveSubscribers(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int id);
+    void notifyAndRemoveSubscribers(const TileDesc& tile);
 
     std::string getTextFile(const std::string& fileName);
 
@@ -124,7 +124,7 @@ public:
 
     std::unique_lock<std::mutex> getTilesBeingRenderedLock() { return std::unique_lock<std::mutex>(_tilesBeingRenderedMutex); }
 
-    void forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    void forgetTileBeingRendered(const TileDesc& tile);
 
 private:
     void invalidateTiles(int part, int x, int y, int width, int height);
@@ -132,7 +132,7 @@ private:
     // Removes the given file from the cache
     void removeFile(const std::string& fileName);
 
-    std::string cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight);
+    std::string cacheFileName(const TileDesc& tile);
     bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].

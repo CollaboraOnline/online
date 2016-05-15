@@ -399,32 +399,15 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     return true;
 }
 
-void DocumentBroker::handleTileRequest(int part, int width, int height, int tilePosX,
-                                       int tilePosY, int tileWidth, int tileHeight, int id,
+void DocumentBroker::handleTileRequest(const TileDesc& tile,
                                        const std::shared_ptr<MasterProcessSession>& session)
 {
-    Log::trace() << "Tile request for part: " << part << ", width: " << width << ", height: " << height
-                 << ", tilePosX: " << tilePosX << ", tilePosY: " << tilePosY << ", tileWidth: " << tileWidth
-                 << ", tileHeight: " << tileHeight << ", id: " << id << Log::end;
-
-    std::ostringstream oss;
-    oss << " part=" << part
-        << " width=" << width
-        << " height=" << height
-        << " tileposx=" << tilePosX
-        << " tileposy=" << tilePosY
-        << " tilewidth=" << tileWidth
-        << " tileheight=" << tileHeight;
-    if (id >= 0)
-    {
-        oss << " id=" << id;
-    }
-
-    const std::string tileMsg = oss.str();
+    const auto tileMsg = tile.serialize();
+    Log::trace() << "Tile request for " << tileMsg << Log::end;
 
     std::unique_lock<std::mutex> lock(_mutex);
 
-    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
 
     if (cachedTile)
     {
@@ -435,7 +418,7 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
 #endif
 
         std::vector<char> output;
-        output.reserve(4 * width * height);
+        output.reserve(4 * tile.getWidth() * tile.getHeight());
         output.resize(response.size());
         std::memcpy(output.data(), response.data(), response.size());
 
@@ -452,12 +435,10 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
         return;
     }
 
-    if (tileCache().isTileBeingRenderedIfSoSubscribe(
-            part, width, height, tilePosX, tilePosY, tileWidth,
-            tileHeight, session))
+    if (tileCache().isTileBeingRenderedIfSoSubscribe(tile, session))
         return;
 
-    Log::debug() << "Sending render request for tile (" << part << ',' << tilePosX << ',' << tilePosY << ")." << Log::end;
+    Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
 
     // Forward to child to render.
     const std::string request = "tile " + tileMsg;
@@ -467,45 +448,29 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
 void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);
-    Poco::StringTokenizer tokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-
-    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
-    if (tokens.count() < 8 ||
-        !getTokenInteger(tokens[1], "part", part) ||
-        !getTokenInteger(tokens[2], "width", width) ||
-        !getTokenInteger(tokens[3], "height", height) ||
-        !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
-        !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
-        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-        !getTokenInteger(tokens[7], "tileheight", tileHeight))
+    try
     {
+        auto tile = TileDesc::parse(firstLine);
+        const auto buffer = payload.data();
+        const auto length = payload.size();
+
+        if(firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+        {
+            tileCache().saveTile(tile, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+            tileCache().notifyAndRemoveSubscribers(tile);
+        }
+        else
+        {
+            Log::debug() << "Render request declined for " << firstLine << Log::end;
+            std::unique_lock<std::mutex> tileBeingRenderedLock(tileCache().getTilesBeingRenderedLock());
+            tileCache().forgetTileBeingRendered(tile);
+        }
+    }
+    catch (const std::exception& exc)
+    {
+        Log::error("Failed to process tile response [" + firstLine + "]: " + exc.what() + ".");
         //FIXME: Return error.
         //sendTextFrame("error: cmd=tile kind=syntax");
-        Log::error("Invalid tile request [" + firstLine + "].");
-        return;
-    }
-
-    size_t index = 8;
-    int id = -1;
-    if (tokens.count() > index && tokens[index].find("id") == 0)
-    {
-        getTokenInteger(tokens[index], "id", id);
-        ++index;
-    }
-
-    const auto buffer = payload.data();
-    const auto length = payload.size();
-
-    if(firstLine.size() < static_cast<std::string::size_type>(length) - 1)
-    {
-        tileCache().saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-        tileCache().notifyAndRemoveSubscribers(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, id);
-    }
-    else
-    {
-        Log::debug() << "Render request declined for " << firstLine << Log::end;
-        std::unique_lock<std::mutex> tileBeingRenderedLock(tileCache().getTilesBeingRenderedLock());
-        tileCache().forgetTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     }
 }
 

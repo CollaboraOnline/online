@@ -499,41 +499,16 @@ void MasterProcessSession::sendFontRendering(const char *buffer, int length, Str
 
 void MasterProcessSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, id = -1;
-    if (tokens.count() < 8 ||
-        !getTokenInteger(tokens[1], "part", part) ||
-        !getTokenInteger(tokens[2], "width", width) ||
-        !getTokenInteger(tokens[3], "height", height) ||
-        !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
-        !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
-        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-        !getTokenInteger(tokens[7], "tileheight", tileHeight))
+    try
     {
-        sendTextFrame("error: cmd=tile kind=syntax");
-        return;
+        auto tileDesc = TileDesc::parse(tokens);
+        _docBroker->handleTileRequest(tileDesc, shared_from_this());
     }
-
-    if (part < 0 ||
-        width <= 0 ||
-        height <= 0 ||
-        tilePosX < 0 ||
-        tilePosY < 0 ||
-        tileWidth <= 0 ||
-        tileHeight <= 0)
+    catch (const std::exception& exc)
     {
+        Log::error(std::string("Failed to process tile command: ") + exc.what() + ".");
         sendTextFrame("error: cmd=tile kind=invalid");
-        return;
     }
-
-    size_t index = 8;
-    if (tokens.count() > index && tokens[index].find("id") == 0)
-    {
-        getTokenInteger(tokens[index], "id", id);
-        ++index;
-    }
-
-    _docBroker->handleTileRequest(part, width, height, tilePosX, tilePosY,
-                                  tileWidth, tileHeight, id, shared_from_this());
 }
 
 void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
@@ -604,8 +579,8 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
             return;
         }
 
-        _docBroker->handleTileRequest(part, pixelWidth, pixelHeight, x, y,
-                                      tileWidth, tileHeight, id, shared_from_this());
+        const TileDesc tile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
+        _docBroker->handleTileRequest(tile, shared_from_this());
     }
 }
 

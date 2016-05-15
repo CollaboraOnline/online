@@ -125,18 +125,19 @@ void TileCacheTests::testSimple()
     int tilePosY = 0;
     int tileWidth = 3840;
     int tileHeight = 3840;
+    TileDesc tile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
     // No Cache
-    auto file = tc.lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    auto file = tc.lookupTile(tile);
     CPPUNIT_ASSERT_MESSAGE("found tile when none was expected", !file);
 
     // Cache Tile
     const auto size = 1024;
     const auto data = genRandomData(size);
-    tc.saveTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, data.data(), size);
+    tc.saveTile(tile, data.data(), size);
 
     // Find Tile
-    file = tc.lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    file = tc.lookupTile(tile);
     CPPUNIT_ASSERT_MESSAGE("tile not found when expected", file && file->is_open());
     const auto tileData = readDataFromFile(file);
     CPPUNIT_ASSERT_MESSAGE("cached tile corrupted", data == tileData);
@@ -145,7 +146,7 @@ void TileCacheTests::testSimple()
     tc.invalidateTiles("invalidatetiles: EMPTY");
 
     // No Cache
-    file = tc.lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    file = tc.lookupTile(tile);
     CPPUNIT_ASSERT_MESSAGE("found tile when none was expected", !file);
 }
 

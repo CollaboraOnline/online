@@ -141,9 +141,9 @@ private:
     std::chrono::steady_clock::time_point _startTime;
 };
 
-std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(const TileDesc& tileDesc)
 {
-    const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    const std::string cachedName = cacheFileName(tileDesc);
 
     Util::assertIsLocked(_tilesBeingRenderedMutex);
 
@@ -151,9 +151,9 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(i
     return (tile != _tilesBeingRendered.end() ? tile->second : nullptr);
 }
 
-void TileCache::forgetTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+void TileCache::forgetTileBeingRendered(const TileDesc& tile)
 {
-    const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    const std::string cachedName = cacheFileName(tile);
 
     Util::assertIsLocked(_tilesBeingRenderedMutex);
 
@@ -161,12 +161,14 @@ void TileCache::forgetTileBeingRendered(int part, int width, int height, int til
     _tilesBeingRendered.erase(cachedName);
 }
 
-std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
 {
-    const std::string fileName = _cacheDir + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
-    UnitWSD::get().lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, result);
+    UnitWSD::get().lookupTile(tile.getPart(), tile.getWidth(), tile.getHeight(),
+                              tile.getTilePosX(), tile.getTilePosY(),
+                              tile.getTileWidth(), tile.getTileHeight(), result);
 
     if (result && result->is_open())
     {
@@ -177,9 +179,9 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(int part, int width, int hei
     return nullptr;
 }
 
-void TileCache::saveTile(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const char *data, size_t size)
+void TileCache::saveTile(const TileDesc& tile, const char *data, size_t size)
 {
-    const std::string fileName = _cacheDir + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
 
     Log::trace() << "Saving cache tile: " << fileName << Log::end;
 
@@ -331,12 +333,12 @@ void TileCache::removeFile(const std::string& fileName)
         Log::info("Removed file: " + fullFileName);
 }
 
-std::string TileCache::cacheFileName(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
+std::string TileCache::cacheFileName(const TileDesc& tile)
 {
     std::ostringstream oss;
-    oss << part << '_' << width << 'x' << height << '.'
-        << tilePosX << ',' << tilePosY << '.'
-        << tileWidth << 'x' << tileHeight << ".png";
+    oss << tile.getPart() << '_' << tile.getWidth() << 'x' << tile.getHeight() << '.'
+        << tile.getTilePosX() << ',' << tile.getTilePosY() << '.'
+        << tile.getTileWidth() << 'x' << tile.getTileHeight() << ".png";
     return oss.str();
 }
 
@@ -386,28 +388,15 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
     modTimeFile.close();
 }
 
-void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int id)
+void TileCache::notifyAndRemoveSubscribers(const TileDesc& tile)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
-    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
     if (!tileBeingRendered)
         return;
 
-    std::ostringstream oss;
-    oss << "tile part=" << part
-        << " width=" << width
-        << " height=" << height
-        << " tileposx=" << tilePosX
-        << " tileposy=" << tilePosY
-        << " tilewidth=" << tileWidth
-        << " tileheight=" << tileHeight;
-    if (id >= 0)
-    {
-        oss << " id=" << id;
-    }
-
-    const std::string message = oss.str();
+    const std::string message = tile.serialize("tile");
     Log::debug("Sending tile message to subscribers: " + message);
 
     for (const auto& i: tileBeingRendered->_subscribers)
@@ -427,19 +416,21 @@ void TileCache::notifyAndRemoveSubscribers(int part, int width, int height, int 
             }
         }
     }
-    forgetTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+
+    forgetTileBeingRendered(tile);
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
-bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, const std::shared_ptr<MasterProcessSession> &subscriber)
+bool TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<MasterProcessSession> &subscriber)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
-    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
 
     if (tileBeingRendered)
     {
-        Log::debug() << "Tile (" << part << ',' << tilePosX << ',' << tilePosY << ") is already being rendered, subscribing." << Log::end;
+        Log::debug() << "Tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
+                     << tile.getTilePosY() << ") is already being rendered, subscribing." << Log::end;
         assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
 
         for (const auto &s : tileBeingRendered->_subscribers)
@@ -463,9 +454,10 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height
     }
     else
     {
-        Log::debug() << "Tile (" << part << ',' << tilePosX << ',' << tilePosY << ") needs rendering, subscribing." << Log::end;
+        Log::debug() << "Tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
+                     << tile.getTilePosY() << ") needs rendering, subscribing." << Log::end;
 
-        const std::string cachedName = cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+        const std::string cachedName = cacheFileName(tile);
 
         assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
 
