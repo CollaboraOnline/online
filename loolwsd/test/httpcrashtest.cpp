@@ -122,7 +122,7 @@ void HTTPCrashTest::testBarren()
     try
     {
         killLoKitProcesses();
-        InitialLoolKitCount = countLoolKitProcesses(0);
+        countLoolKitProcesses(0);
 
         std::cerr << "Loading after kill." << std::endl;
 
@@ -135,7 +135,7 @@ void HTTPCrashTest::testBarren()
 
         // First load should fail.
         sendTextFrame(socket, "load url=" + documentURL);
-        SocketProcessor("Barren", socket, [&](const std::string& msg)
+        SocketProcessor("Barren ", socket, [&](const std::string& msg)
                 {
                     const std::string prefix = "status: ";
                     if (msg.find(prefix) == 0)
