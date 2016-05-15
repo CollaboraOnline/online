@@ -61,14 +61,14 @@ int getLoolKitProcessCount()
         }
     }
 
-    // std::cout << "Number of loolkit processes: " << result << std::endl;
+    std::cerr << "Number of loolkit processes: " << result << std::endl;
     return result;
 }
 
 static
 int countLoolKitProcesses(const int expected, const int timeoutMs = POLL_TIMEOUT_MS * 10)
 {
-    const size_t repeat = 1 + (timeoutMs / POLL_TIMEOUT_MS);
+    const size_t repeat = 1 + (2 * timeoutMs / POLL_TIMEOUT_MS);
     auto count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {
@@ -78,7 +78,7 @@ int countLoolKitProcesses(const int expected, const int timeoutMs = POLL_TIMEOUT
         }
 
         // Give polls in the lool processes time to time out etc
-        Poco::Thread::sleep(POLL_TIMEOUT_MS);
+        Poco::Thread::sleep(POLL_TIMEOUT_MS / 2);
 
         count = getLoolKitProcessCount();
     }
