@@ -420,9 +420,6 @@ void DocumentBroker::handleTileRequest(int part, int width, int height, int tile
         oss << " id=" << id;
     }
 
-    // Piggyback editlock information to kit process.
-    // We do not allow requests without editlock to change document parts
-    oss << " editlock=" << (session->isEditLocked() ? "1" : "0");
     const std::string tileMsg = oss.str();
 
     std::unique_lock<std::mutex> lock(_mutex);
@@ -481,7 +478,12 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
         !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
         !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
         !getTokenInteger(tokens[7], "tileheight", tileHeight))
-        assert(false);
+    {
+        //FIXME: Return error.
+        //sendTextFrame("error: cmd=tile kind=syntax");
+        Log::error("Invalid tile request [" + firstLine + "].");
+        return;
+    }
 
     size_t index = 8;
     int id = -1;
