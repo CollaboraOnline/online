@@ -57,6 +57,18 @@ namespace LOOLProtocol
         return true;
     }
 
+    bool parseNameIntegerPair(const std::string& token, std::string& name, int& value)
+    {
+        const auto mid = token.find_first_of('=');
+        if (mid != std::string::npos)
+        {
+            name = token.substr(0, mid);
+            return stringToInteger(token.substr(mid + 1), value);
+        }
+
+        return false;
+    }
+
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
     {
         size_t nextIdx;
@@ -68,7 +80,7 @@ namespace LOOLProtocol
                 (value = std::stoi(token.substr(name.size() + 1), &nextIdx), false) ||
                 nextIdx != token.size() - name.size() - 1)
             {
-                throw std::invalid_argument("bah");
+                return false;
             }
         }
         catch (std::invalid_argument&)
@@ -87,13 +99,14 @@ namespace LOOLProtocol
                 token.substr(0, name.size()) != name ||
                 token[name.size()] != '=')
             {
-                throw std::invalid_argument("bah");
+                return false;
             }
         }
         catch (std::invalid_argument&)
         {
             return false;
         }
+
         value = token.substr(name.size() + 1);
         return true;
     }
