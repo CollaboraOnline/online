@@ -29,6 +29,7 @@
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 
+#include "Common.hpp"
 #include "Storage.hpp"
 #include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
@@ -74,12 +75,20 @@ TileCache::~TileCache()
 
 struct TileCache::TileBeingRendered
 {
-    Poco::Timestamp _startTime;
     std::vector<std::weak_ptr<MasterProcessSession>> _subscribers;
     TileBeingRendered()
+     : _startTime(std::chrono::steady_clock::now())
     {
-        _startTime.update();
     }
+
+    std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
+    void resetStartTime()
+    {
+        _startTime = std::chrono::steady_clock::now();
+    }
+
+private:
+    std::chrono::steady_clock::time_point _startTime;
 };
 
 std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight)
@@ -392,6 +401,13 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(int part, int width, int height
             }
         }
         tileBeingRendered->_subscribers.push_back(subscriber);
+
+        const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
+        {
+            // Tile painting has stalled. Reissue.
+            return false;
+        }
 
         return true;
     }
