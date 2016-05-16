@@ -414,7 +414,7 @@ private:
 
                     // Send it back to the client.
                     //TODO: Should have timeout to avoid waiting forever.
-                    Poco::URI resultURL(session->getSaveAs());
+                    Poco::URI resultURL(session->getSaveAsUrl());
                     if (!resultURL.getPath().empty())
                     {
                         const std::string mimeType = "application/octet-stream";

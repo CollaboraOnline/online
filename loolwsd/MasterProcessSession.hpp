@@ -35,17 +35,9 @@ class MasterProcessSession : public LOOLSession, public std::enable_shared_from_
 
     virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
-    /**
-     * Return the URL of the saved-as document when it's ready. If called
-     * before it's ready, the call blocks till then.
-     */
-    std::string getSaveAs();
-
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
     std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
-
-    void setPeer(const std::shared_ptr<MasterProcessSession>& peer) { _peer = peer; }
 
     void setEditLock(const bool value);
     void markEditLock(const bool value) { _bEditLock = value; }
@@ -78,12 +70,8 @@ public:
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
 
-    virtual bool _handleInput(const char *buffer, int length) override;
-
     int _curPart;
     int _loadPart;
-    /// Kind::ToClient instances store URLs of completed 'save as' documents.
-    MessageQueue _saveAsQueue;
     std::shared_ptr<DocumentBroker> _docBroker;
     std::shared_ptr<BasicTileQueue> _queue;
 

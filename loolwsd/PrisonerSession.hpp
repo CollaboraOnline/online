@@ -26,11 +26,17 @@ class PrisonerSession final : public MasterProcessSession//, public std::enable_
 public:
     using MasterProcessSession::MasterProcessSession;
 
-    //void setPeer(const std::shared_ptr<ClientSession>& peer) { _peer = peer; }
+    virtual ~PrisonerSession();
+
+    void setPeer(const std::shared_ptr<ClientSession>& peer) { MasterProcessSession::_peer = _peer = peer; }
 
 private:
 
-    //std::weak_ptr<ClientSession> _peer;
+    virtual bool _handleInput(const char *buffer, int length) override;
+
+private:
+
+    std::weak_ptr<ClientSession> _peer;
 #if 0
  public:
     MasterProcessSession(const std::string& id,
@@ -56,8 +62,6 @@ private:
 
     std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
 
-    void setPeer(const std::shared_ptr<MasterProcessSession>& peer) { _peer = peer; }
-
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
 public:
@@ -76,17 +80,6 @@ public:
  private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
-
-    // If _kind==ToPrisoner and the child process has started and completed its handshake with the
-    // parent process: Points to the WebSocketSession for the child process handling the document in
-    // question, if any.
-
-    // In the session to the child process, points to the LOOLSession for the LOOL client. This will
-    // obvious have to be rethought when we add collaboration and there can be several LOOL clients
-    // per document being edited (i.e., per child process).
-    std::weak_ptr<MasterProcessSession> _peer;
-
-    virtual bool _handleInput(const char *buffer, int length) override;
 
     int _curPart;
     int _loadPart;

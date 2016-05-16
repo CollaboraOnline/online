@@ -26,12 +26,32 @@ class ClientSession final : public MasterProcessSession//, public std::enable_sh
 public:
     using MasterProcessSession::MasterProcessSession;
 
+    virtual ~ClientSession();
+
     //void setEditLock(const bool value);
     //void markEditLock(const bool value) { _bEditLock = value; }
     //bool isEditLocked() const { return _bEditLock; }
 
+    void setPeer(const std::shared_ptr<PrisonerSession>& peer) { MasterProcessSession::_peer = _peer = peer; }
 
-    //void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }
+    /**
+     * Return the URL of the saved-as document when it's ready. If called
+     * before it's ready, the call blocks till then.
+     */
+    std::string getSaveAsUrl()
+    {
+        const auto payload = _saveAsQueue.get();
+        return std::string(payload.data(), payload.size());
+    }
+
+    void setSaveAsUrl(const std::string& url)
+    {
+        _saveAsQueue.put(url);
+    }
+
+private:
+
+    virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
 
@@ -39,8 +59,10 @@ private:
     // An edit lock will only allow the current session to make edits,
     // while other session opening the same document can only see
     bool _bEditLock = false;
-    //std::weak_ptr<PrisonerSession> _peer;
+    std::weak_ptr<PrisonerSession> _peer;
 
+    /// Store URLs of completed 'save as' documents.
+    MessageQueue _saveAsQueue;
 #if 0
  public:
     MasterProcessSession(const std::string& id,
@@ -66,8 +88,6 @@ private:
 
     std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
 
-    void setPeer(const std::shared_ptr<MasterProcessSession>& peer) { _peer = peer; }
-
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
 public:
@@ -87,21 +107,8 @@ public:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
-    // If _kind==ToPrisoner and the child process has started and completed its handshake with the
-    // parent process: Points to the WebSocketSession for the child process handling the document in
-    // question, if any.
-
-    // In the session to the child process, points to the LOOLSession for the LOOL client. This will
-    // obvious have to be rethought when we add collaboration and there can be several LOOL clients
-    // per document being edited (i.e., per child process).
-    std::weak_ptr<MasterProcessSession> _peer;
-
-    virtual bool _handleInput(const char *buffer, int length) override;
-
     int _curPart;
     int _loadPart;
-    /// Kind::ToClient instances store URLs of completed 'save as' documents.
-    MessageQueue _saveAsQueue;
     std::shared_ptr<DocumentBroker> _docBroker;
     std::shared_ptr<BasicTileQueue> _queue;
 #endif

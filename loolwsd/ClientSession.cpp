@@ -20,12 +20,157 @@
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
 #include "ClientSession.hpp"
+#include "PrisonerSession.hpp"
 #include "MasterProcessSession.hpp"
 #include "Rectangle.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "IoUtil.hpp"
 #include "Util.hpp"
+
+using namespace LOOLProtocol;
+
+using Poco::Path;
+using Poco::StringTokenizer;
+
+ClientSession::~ClientSession()
+{
+    Log::info("~PrisonerSession dtor [" + getName() + "].");
+
+    // Release the save-as queue.
+    _saveAsQueue.put("");
+}
+
+bool ClientSession::_handleInput(const char *buffer, int length)
+{
+    const std::string firstLine = getFirstLine(buffer, length);
+    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    Log::trace(getName() + ": handling [" + firstLine + "].");
+
+    if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
+    {
+        // Keep track of timestamps of incoming client messages that indicate user activity.
+        updateLastActivityTime();
+    }
+
+    if (tokens[0] == "loolclient")
+    {
+        const auto versionTuple = ParseVersion(tokens[1]);
+        if (std::get<0>(versionTuple) != ProtocolMajorVersionNumber ||
+            std::get<1>(versionTuple) != ProtocolMinorVersionNumber)
+        {
+            sendTextFrame("error: cmd=loolclient kind=badversion");
+            return false;
+        }
+
+        sendTextFrame("loolserver " + GetProtocolVersion());
+        return true;
+    }
+
+    if (tokens[0] == "takeedit")
+    {
+        _docBroker->takeEditLock(getId());
+        return true;
+    }
+    else if (tokens[0] == "load")
+    {
+        if (_docURL != "")
+        {
+            sendTextFrame("error: cmd=load kind=docalreadyloaded");
+            return false;
+        }
+        return loadDocument(buffer, length, tokens);
+    }
+    else if (tokens[0] != "canceltiles" &&
+             tokens[0] != "clientzoom" &&
+             tokens[0] != "clientvisiblearea" &&
+             tokens[0] != "commandvalues" &&
+             tokens[0] != "downloadas" &&
+             tokens[0] != "getchildid" &&
+             tokens[0] != "gettextselection" &&
+             tokens[0] != "paste" &&
+             tokens[0] != "insertfile" &&
+             tokens[0] != "key" &&
+             tokens[0] != "mouse" &&
+             tokens[0] != "partpagerectangles" &&
+             tokens[0] != "renderfont" &&
+             tokens[0] != "requestloksession" &&
+             tokens[0] != "resetselection" &&
+             tokens[0] != "saveas" &&
+             tokens[0] != "selectgraphic" &&
+             tokens[0] != "selecttext" &&
+             tokens[0] != "setclientpart" &&
+             tokens[0] != "setpage" &&
+             tokens[0] != "status" &&
+             tokens[0] != "tile" &&
+             tokens[0] != "tilecombine" &&
+             tokens[0] != "uno" &&
+             tokens[0] != "useractive" &&
+             tokens[0] != "userinactive")
+    {
+        sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
+        return false;
+    }
+    else if (_docURL == "")
+    {
+        sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
+        return false;
+    }
+    else if (tokens[0] == "canceltiles")
+    {
+        if (!_peer.expired())
+            forwardToPeer(buffer, length);
+    }
+    else if (tokens[0] == "commandvalues")
+    {
+        return getCommandValues(buffer, length, tokens);
+    }
+    else if (tokens[0] == "partpagerectangles")
+    {
+        return getPartPageRectangles(buffer, length);
+    }
+    else if (tokens[0] == "renderfont")
+    {
+        sendFontRendering(buffer, length, tokens);
+    }
+    else if (tokens[0] == "status")
+    {
+        return getStatus(buffer, length);
+    }
+    else if (tokens[0] == "tile")
+    {
+        sendTile(buffer, length, tokens);
+    }
+    else if (tokens[0] == "tilecombine")
+    {
+        sendCombinedTiles(buffer, length, tokens);
+    }
+    else
+    {
+        // All other commands are such that they always require a
+        // LibreOfficeKitDocument session, i.e. need to be handled in
+        // a child process.
+
+        if (_peer.expired())
+        {
+            Log::trace("Dispatching child to handle [" + tokens[0] + "].");
+            dispatchChild();
+        }
+
+        // Allow 'downloadas' for all kinds of views irrespective of editlock
+        if (!isEditLocked() && tokens[0] != "downloadas" &&
+            tokens[0] != "userinactive" && tokens[0] != "useractive")
+        {
+            std::string dummyFrame = "dummymsg";
+            forwardToPeer(dummyFrame.c_str(), dummyFrame.size());
+        }
+        else if (tokens[0] != "requestloksession")
+        {
+            forwardToPeer(buffer, length);
+        }
+    }
+    return true;
+}
 
 /*
 void ClientSession::setEditLock(const bool value)
