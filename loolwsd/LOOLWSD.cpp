@@ -686,7 +686,7 @@ private:
                 }
             }
 
-            if (session->_bLoadError)
+            if (session->isLoadFailed())
             {
                 Log::info("Clearing the queue.");
                 queue->clear();

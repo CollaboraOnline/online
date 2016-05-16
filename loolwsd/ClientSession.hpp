@@ -49,6 +49,13 @@ public:
         _saveAsQueue.put(url);
     }
 
+    bool isLoadFailed() const { return _loadFailed; }
+    void setLoadFailed(const std::string& reason)
+    {
+        Log::warn("Document load failed: " + reason);
+        _loadFailed = true;
+    }
+
 private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
@@ -73,32 +80,17 @@ private:
 
     /// Store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
+
+    /// Marks if document loading failed.
+    bool _loadFailed;
+
 #if 0
- public:
-    MasterProcessSession(const std::string& id,
-                         const Kind kind,
-                         std::shared_ptr<Poco::Net::WebSocket> ws,
-                         std::shared_ptr<DocumentBroker> docBroker,
-                         std::shared_ptr<BasicTileQueue> queue);
-    virtual ~MasterProcessSession();
-
-    /**
-     * Return the URL of the saved-as document when it's ready. If called
-     * before it's ready, the call blocks till then.
-     */
-    std::string getSaveAs();
-
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
     std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
-public:
-    // Raise this flag on ToClient from ToPrisoner to let ToClient know of load failures
-    bool _bLoadError = false;
-
- protected:
  private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);

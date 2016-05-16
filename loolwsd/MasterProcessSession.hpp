@@ -39,10 +39,6 @@ class MasterProcessSession : public LOOLSession, public std::enable_shared_from_
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
-public:
-    // Raise this flag on ToClient from ToPrisoner to let ToClient know of load failures
-    bool _bLoadError = false;
-
  protected:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);

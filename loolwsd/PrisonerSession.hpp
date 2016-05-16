@@ -44,18 +44,12 @@ private:
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
-public:
-    // Raise this flag on ToClient from ToPrisoner to let ToClient know of load failures
-    bool _bLoadError = false;
-
  private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
     int _curPart;
     int _loadPart;
-    /// Kind::ToClient instances store URLs of completed 'save as' documents.
-    MessageQueue _saveAsQueue;
     std::shared_ptr<DocumentBroker> _docBroker;
     std::shared_ptr<BasicTileQueue> _queue;
 #endif
