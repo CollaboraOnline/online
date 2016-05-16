@@ -33,10 +33,6 @@ class MasterProcessSession : public LOOLSession, public std::enable_shared_from_
 
     std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
 
-    void setEditLock(const bool value);
-    void markEditLock(const bool value) { _bEditLock = value; }
-    bool isEditLocked() const { return _bEditLock; }
-
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
  protected:
@@ -56,11 +52,6 @@ class MasterProcessSession : public LOOLSession, public std::enable_shared_from_
     int _loadPart;
     std::shared_ptr<DocumentBroker> _docBroker;
     std::shared_ptr<BasicTileQueue> _queue;
-
-    // If this document holds the edit lock.
-    // An edit lock will only allow the current session to make edits,
-    // while other session opening the same document can only see
-    bool _bEditLock = false;
 };
 
 #endif

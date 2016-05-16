@@ -225,7 +225,7 @@ bool ClientSession::getStatus(const char *buffer, int length)
     forwardToPeer(buffer, length);
     return true;
 }
-/*
+
 void ClientSession::setEditLock(const bool value)
 {
     // Update the sate and forward to child.
@@ -233,7 +233,7 @@ void ClientSession::setEditLock(const bool value)
     const auto msg = std::string("editlock: ") + (value ? "1" : "0");
     forwardToPeer(msg.data(), msg.size());
 }
-*/
+
 bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
 {
     std::string command;

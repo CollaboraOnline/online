@@ -28,9 +28,9 @@ public:
 
     virtual ~ClientSession();
 
-    //void setEditLock(const bool value);
-    //void markEditLock(const bool value) { _bEditLock = value; }
-    //bool isEditLocked() const { return _bEditLock; }
+    void setEditLock(const bool value);
+    void markEditLock(const bool value) { _bEditLock = value; }
+    bool isEditLocked() const { return _bEditLock; }
 
     void setPeer(const std::shared_ptr<PrisonerSession>& peer) { MasterProcessSession::_peer = _peer = peer; }
 

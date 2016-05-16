@@ -49,14 +49,6 @@ MasterProcessSession::~MasterProcessSession()
 {
 }
 
-void MasterProcessSession::setEditLock(const bool value)
-{
-    // Update the sate and forward to child.
-    _bEditLock = value;
-    const auto msg = std::string("editlock: ") + (value ? "1" : "0");
-    forwardToPeer(msg.data(), msg.size());
-}
-
 void MasterProcessSession::dispatchChild()
 {
     std::ostringstream oss;
