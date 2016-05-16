@@ -49,34 +49,6 @@ MasterProcessSession::~MasterProcessSession()
 {
 }
 
-bool MasterProcessSession::loadDocument(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
-{
-    if (tokens.count() < 2)
-    {
-        sendTextFrame("error: cmd=load kind=syntax");
-        return false;
-    }
-
-    try
-    {
-        std::string timestamp;
-        parseDocOptions(tokens, _loadPart, timestamp);
-
-        // Finally, wait for the Child to connect to Master,
-        // link the document in jail and dispatch load to child.
-        Log::trace("Dispatching child to handle [load].");
-        dispatchChild();
-
-        return true;
-    }
-    catch (const Poco::SyntaxException&)
-    {
-        sendTextFrame("error: cmd=load kind=uriinvalid");
-    }
-
-    return false;
-}
-
 bool MasterProcessSession::getStatus(const char *buffer, int length)
 {
     const std::string status = _docBroker->tileCache().getTextFile("status.txt");

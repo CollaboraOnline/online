@@ -50,8 +50,6 @@ public:
     bool _bLoadError = false;
 
  protected:
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);

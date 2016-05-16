@@ -65,7 +65,7 @@ public:
     void setDocState(const int type, const std::string& payload) { _lastDocStates[type] = payload; }
 
  protected:
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
+    bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 

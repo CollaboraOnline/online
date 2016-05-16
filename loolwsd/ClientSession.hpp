@@ -53,6 +53,8 @@ private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
 
+    bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
 private:
 
     // If this document holds the edit lock.
@@ -95,8 +97,6 @@ public:
     bool _bLoadError = false;
 
  protected:
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
     virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
