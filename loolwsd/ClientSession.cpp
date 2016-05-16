@@ -19,12 +19,24 @@
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
+#include "ClientSession.hpp"
 #include "MasterProcessSession.hpp"
 #include "Rectangle.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "IoUtil.hpp"
 #include "Util.hpp"
+
+/*
+void ClientSession::setEditLock(const bool value)
+{
+    // Update the sate and forward to child.
+    _bEditLock = value;
+    const auto msg = std::string("editlock: ") + (value ? "1" : "0");
+    forwardToPeer(msg.data(), msg.size());
+}
+*/
+
 #if 0
 using namespace LOOLProtocol;
 

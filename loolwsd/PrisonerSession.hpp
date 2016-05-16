@@ -58,10 +58,6 @@ private:
 
     void setPeer(const std::shared_ptr<MasterProcessSession>& peer) { _peer = peer; }
 
-    void setEditLock(const bool value);
-    void markEditLock(const bool value) { _bEditLock = value; }
-    bool isEditLocked() const { return _bEditLock; }
-
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
 public:
@@ -90,9 +86,6 @@ public:
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
 
-    static
-    Poco::Path getJailPath(const std::string& childId);
-
     virtual bool _handleInput(const char *buffer, int length) override;
 
     int _curPart;
@@ -101,11 +94,6 @@ public:
     MessageQueue _saveAsQueue;
     std::shared_ptr<DocumentBroker> _docBroker;
     std::shared_ptr<BasicTileQueue> _queue;
-
-    // If this document holds the edit lock.
-    // An edit lock will only allow the current session to make edits,
-    // while other session opening the same document can only see
-    bool _bEditLock = false;
 #endif
 };
 

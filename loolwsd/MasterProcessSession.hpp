@@ -66,7 +66,6 @@ public:
 
     virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
- private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
@@ -78,9 +77,6 @@ public:
     // obvious have to be rethought when we add collaboration and there can be several LOOL clients
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
-
-    static
-    Poco::Path getJailPath(const std::string& childId);
 
     virtual bool _handleInput(const char *buffer, int length) override;
 
