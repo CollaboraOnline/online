@@ -44,12 +44,8 @@ public:
                         OnUnloadCallback onUnload);
     virtual ~ChildProcessSession();
 
-    virtual bool getStatus(const char *buffer, int length) override;
-
-    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
-    virtual bool getPartPageRectangles(const char *buffer, int length) override;
-
+    bool getStatus(const char *buffer, int length);
+    bool getPartPageRectangles(const char *buffer, int length);
     virtual void disconnect() override;
 
     int getViewId() const  { return _viewId; }
@@ -67,7 +63,8 @@ public:
  protected:
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
+    void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool clientVisibleArea(const char *buffer, int length, Poco::StringTokenizer& tokens);

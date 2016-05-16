@@ -52,19 +52,16 @@ public:
 private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
-    virtual bool getStatus(const char *buffer, int length) override;
-
-    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
-    virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool getStatus(const char *buffer, int length);
+    bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool getPartPageRectangles(const char *buffer, int length);
 
-    virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
+    void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
 private:
 

@@ -42,12 +42,6 @@ public:
     void sendTextFrame(const std::string& text);
     void sendBinaryFrame(const char *buffer, int length);
 
-    virtual bool getStatus(const char *buffer, int length) = 0;
-
-    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
-
-    virtual bool getPartPageRectangles(const char *buffer, int length) = 0;
-
     bool handleInput(const char *buffer, int length);
 
     /// Invoked when we want to disconnect a session.
@@ -84,8 +78,6 @@ protected:
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
     void parseDocOptions(const Poco::StringTokenizer& tokens, int& part, std::string& timestamp);
-
-    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) = 0;
 
     void updateLastActivityTime()
     {

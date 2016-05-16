@@ -38,26 +38,6 @@ private:
 
     std::weak_ptr<ClientSession> _peer;
 #if 0
- public:
-    MasterProcessSession(const std::string& id,
-                         const Kind kind,
-                         std::shared_ptr<Poco::Net::WebSocket> ws,
-                         std::shared_ptr<DocumentBroker> docBroker,
-                         std::shared_ptr<BasicTileQueue> queue);
-    virtual ~MasterProcessSession();
-
-    virtual bool getStatus(const char *buffer, int length) override;
-
-    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
-    virtual bool getPartPageRectangles(const char *buffer, int length) override;
-
-    /**
-     * Return the URL of the saved-as document when it's ready. If called
-     * before it's ready, the call blocks till then.
-     */
-    std::string getSaveAs();
-
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
     std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
@@ -67,15 +47,6 @@ private:
 public:
     // Raise this flag on ToClient from ToPrisoner to let ToClient know of load failures
     bool _bLoadError = false;
-
- protected:
-    virtual bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
-    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
  private:
     void dispatchChild();
