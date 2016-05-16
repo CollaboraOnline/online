@@ -21,7 +21,7 @@
 #include "LOOLWSD.hpp"
 #include "ClientSession.hpp"
 #include "PrisonerSession.hpp"
-#include "MasterProcessSession.hpp"
+#include "ClientSession.hpp"
 #include "Rectangle.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
@@ -200,45 +200,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
     return false;
 }
 
-/*
-void ClientSession::setEditLock(const bool value)
-{
-    // Update the sate and forward to child.
-    _bEditLock = value;
-    const auto msg = std::string("editlock: ") + (value ? "1" : "0");
-    forwardToPeer(msg.data(), msg.size());
-}
-*/
-
-#if 0
-using namespace LOOLProtocol;
-
-using Poco::Path;
-using Poco::StringTokenizer;
-
-MasterProcessSession::MasterProcessSession(const std::string& id,
-                                           const Kind kind,
-                                           std::shared_ptr<Poco::Net::WebSocket> ws,
-                                           std::shared_ptr<DocumentBroker> docBroker,
-                                           std::shared_ptr<BasicTileQueue> queue) :
-    LOOLSession(id, kind, ws),
-    _curPart(0),
-    _loadPart(-1),
-    _docBroker(docBroker),
-    _queue(queue)
-{
-    Log::info("MasterProcessSession ctor [" + getName() + "].");
-}
-
-MasterProcessSession::~MasterProcessSession()
-{
-    Log::info("~MasterProcessSession dtor [" + getName() + "].");
-
-    // Release the save-as queue.
-    _saveAsQueue.put("");
-}
-
-bool MasterProcessSession::getStatus(const char *buffer, int length)
+bool ClientSession::getStatus(const char *buffer, int length)
 {
     const std::string status = _docBroker->tileCache().getTextFile("status.txt");
     if (!status.empty())
@@ -263,16 +225,16 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
     forwardToPeer(buffer, length);
     return true;
 }
-
-void MasterProcessSession::setEditLock(const bool value)
+/*
+void ClientSession::setEditLock(const bool value)
 {
     // Update the sate and forward to child.
     _bEditLock = value;
     const auto msg = std::string("editlock: ") + (value ? "1" : "0");
     forwardToPeer(msg.data(), msg.size());
 }
-
-bool MasterProcessSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
+*/
+bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
 {
     std::string command;
     if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
@@ -294,7 +256,7 @@ bool MasterProcessSession::getCommandValues(const char *buffer, int length, Stri
     return true;
 }
 
-bool MasterProcessSession::getPartPageRectangles(const char *buffer, int length)
+bool ClientSession::getPartPageRectangles(const char *buffer, int length)
 {
     const std::string partPageRectangles = _docBroker->tileCache().getTextFile("partpagerectangles.txt");
     if (partPageRectangles.size() > 0)
@@ -309,13 +271,7 @@ bool MasterProcessSession::getPartPageRectangles(const char *buffer, int length)
     return true;
 }
 
-std::string MasterProcessSession::getSaveAs()
-{
-    const auto payload = _saveAsQueue.get();
-    return std::string(payload.data(), payload.size());
-}
-
-void MasterProcessSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
+void ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
 {
     std::string font;
     if (tokens.count() < 2 ||
@@ -351,7 +307,7 @@ void MasterProcessSession::sendFontRendering(const char *buffer, int length, Str
     forwardToPeer(buffer, length);
 }
 
-void MasterProcessSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
+void ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     try
     {
@@ -365,7 +321,7 @@ void MasterProcessSession::sendTile(const char * /*buffer*/, int /*length*/, Str
     }
 }
 
-void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
     std::string tilePositionsX, tilePositionsY;
@@ -438,53 +394,4 @@ void MasterProcessSession::sendCombinedTiles(const char* /*buffer*/, int /*lengt
     }
 }
 
-void MasterProcessSession::dispatchChild()
-{
-    std::ostringstream oss;
-    oss << "load";
-    oss << " url=" << _docBroker->getPublicUri().toString();
-    oss << " jail=" << _docBroker->getJailedUri().toString();
-
-    if (_loadPart >= 0)
-        oss << " part=" + std::to_string(_loadPart);
-
-    if (_haveDocPassword)
-        oss << " password=" << _docPassword;
-
-    if (!_docOptions.empty())
-        oss << " options=" << _docOptions;
-
-    const auto loadRequest = oss.str();
-    forwardToPeer(loadRequest.c_str(), loadRequest.size());
-}
-
-void MasterProcessSession::forwardToPeer(const char *buffer, int length)
-{
-    const auto message = getAbbreviatedMessage(buffer, length);
-
-    auto peer = _peer.lock();
-    if (!peer)
-    {
-        throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
-    }
-    else if (peer->isCloseFrame())
-    {
-        Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
-        return;
-    }
-
-    Log::trace(getName() + " -> " + peer->getName() + ": " + message);
-    peer->sendBinaryFrame(buffer, length);
-}
-
-bool MasterProcessSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)
-{
-    auto peer = _peer.lock();
-    if (peer && !peer->isCloseFrame())
-    {
-        peer->_ws->shutdown(statusCode, message);
-    }
-    return peer != nullptr;
-}
-#endif
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

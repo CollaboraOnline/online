@@ -52,8 +52,19 @@ public:
 private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
+    virtual bool getStatus(const char *buffer, int length) override;
+
+    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
+
+    virtual bool getPartPageRectangles(const char *buffer, int length) override;
 
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
+    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
+    virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
+
+    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
 
 private:
 
@@ -74,12 +85,6 @@ private:
                          std::shared_ptr<BasicTileQueue> queue);
     virtual ~MasterProcessSession();
 
-    virtual bool getStatus(const char *buffer, int length) override;
-
-    virtual bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
-    virtual bool getPartPageRectangles(const char *buffer, int length) override;
-
     /**
      * Return the URL of the saved-as document when it's ready. If called
      * before it's ready, the call blocks till then.
@@ -97,12 +102,6 @@ public:
     bool _bLoadError = false;
 
  protected:
-    virtual void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    virtual void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
-
-    virtual void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens) override;
-
  private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
