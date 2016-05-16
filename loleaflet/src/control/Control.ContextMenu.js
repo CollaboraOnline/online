@@ -12,6 +12,11 @@ L.Control.ContextMenu = L.Control.extend({
 		 * of documents. If you do not want that, whitelist it in document specific filter.
 		 */
 		whitelist: {
+			/*
+			 * UNO commands for menus are not available sometimes. Presence of Menu commands
+			 * in following list is just for reference and ease of locating uno command
+			 * from context menu structure.
+			 */
 			general: ['Cut', 'Copy', 'Paste', 'PasteSpecialMenu', 'PasteUnformatted',
 					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
 					  'OpenHyperlinkLocation', 'CopyHyperlinkLocation', 'RemoveHyperlink',
@@ -87,18 +92,18 @@ L.Control.ContextMenu = L.Control.extend({
 				isLastItemText = false;
 			}
 			else {
-				// Only show whitelisted items
-				// Command name (excluding '.uno:') starts from index = 5
-				var commandName = item['command'].substring(5);
-				if (this.options.whitelist.general.indexOf(commandName) === -1 &&
-					!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
-					!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
-					!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
-					!(docType === 'drawing' && this.optinos.whitelist.drawing.indexOf(commandName) !== -1)) {
-					continue;
-				}
-
 				if (item['type'] === 'command') {
+					// Only show whitelisted items
+					// Command name (excluding '.uno:') starts from index = 5
+					var commandName = item['command'].substring(5);
+					if (this.options.whitelist.general.indexOf(commandName) === -1 &&
+						!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
+						!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
+						!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
+						!(docType === 'drawing' && this.optinos.whitelist.drawing.indexOf(commandName) !== -1)) {
+						continue;
+					}
+
 					itemName = item['text'].replace('~', '');
 					contextMenu[item['command']] = {
 						name: itemName
