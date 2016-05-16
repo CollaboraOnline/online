@@ -18,6 +18,7 @@
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "LOOLProtocol.hpp"
+#include "PrisonerSession.hpp"
 
 using namespace LOOLProtocol;
 
@@ -344,7 +345,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session
     return _sessions.size();
 }
 
-bool DocumentBroker::connectPeers(std::shared_ptr<MasterProcessSession>& session)
+bool DocumentBroker::connectPeers(std::shared_ptr<PrisonerSession>& session)
 {
     const auto id = session->getId();
 

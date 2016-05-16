@@ -42,6 +42,8 @@ loolwsd_SOURCES = Admin.cpp \
                   Auth.cpp \
                   DocumentBroker.cpp \
                   LOOLWSD.cpp \
+                  ClientSession.cpp \
+                  PrisonerSession.cpp \
                   MasterProcessSession.cpp \
                   Storage.cpp \
                   TileCache.cpp \
@@ -91,6 +93,8 @@ noinst_HEADERS = Admin.hpp \
                  LOOLSession.hpp \
                  LOOLWSD.hpp \
                  MasterProcessSession.hpp \
+                 ClientSession.hpp \
+                 PrisonerSession.hpp \
                  MessageQueue.hpp \
                  Png.hpp \
                  QueueHandler.hpp \

@@ -116,6 +116,8 @@ private:
     std::atomic<bool> _stop;
 };
 
+class PrisonerSession;
+
 /// DocumentBroker is responsible for setting up a document
 /// in jail and brokering loading it from Storage
 /// and saving it back.
@@ -193,7 +195,7 @@ public:
     /// Add a new session. Returns the new number of sessions.
     size_t addSession(std::shared_ptr<MasterProcessSession>& session);
     /// Connect a prison session to its client peer.
-    bool connectPeers(std::shared_ptr<MasterProcessSession>& session);
+    bool connectPeers(std::shared_ptr<PrisonerSession>& session);
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 

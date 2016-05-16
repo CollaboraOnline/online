@@ -88,6 +88,8 @@
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
+#include "ClientSession.hpp"
+#include "PrisonerSession.hpp"
 #include "MasterProcessSession.hpp"
 #include "QueueHandler.hpp"
 #include "Storage.hpp"
@@ -156,7 +158,7 @@ static std::mutex docBrokersMutex;
 // document to work on.
 static std::mutex AvailableChildSessionMutex;
 static std::condition_variable AvailableChildSessionCV;
-static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChildSessions;
+static std::map<std::string, std::shared_ptr<PrisonerSession>> AvailableChildSessions;
 
 #if ENABLE_DEBUG
 static int careerSpanSeconds = 0;
@@ -984,7 +986,7 @@ public:
             docBroker->load(jailId);
 
             auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker, nullptr);
+            auto session = std::make_shared<PrisonerSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker, nullptr);
 
             // Connect the prison session to the client.
             docBroker->connectPeers(session);

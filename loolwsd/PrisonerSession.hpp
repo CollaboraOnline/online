@@ -7,20 +7,31 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_MASTERPROCESSSESSION_HPP
-#define INCLUDED_MASTERPROCESSSESSION_HPP
+#ifndef INCLUDED_PRISONERSESSION_HPP
+#define INCLUDED_PRISONERSESSION_HPP
 
 #include <time.h>
 
 #include <Poco/Random.h>
 
+#include "MasterProcessSession.hpp"
 #include "LOOLSession.hpp"
 #include "MessageQueue.hpp"
 
 class DocumentBroker;
+class ClientSession;
 
-class MasterProcessSession : public LOOLSession, public std::enable_shared_from_this<MasterProcessSession>
+class PrisonerSession final : public MasterProcessSession//, public std::enable_shared_from_this<PrisonerSession>
 {
+public:
+    using MasterProcessSession::MasterProcessSession;
+
+    //void setPeer(const std::shared_ptr<ClientSession>& peer) { _peer = peer; }
+
+private:
+
+    //std::weak_ptr<ClientSession> _peer;
+#if 0
  public:
     MasterProcessSession(const std::string& id,
                          const Kind kind,
@@ -95,6 +106,7 @@ public:
     // An edit lock will only allow the current session to make edits,
     // while other session opening the same document can only see
     bool _bEditLock = false;
+#endif
 };
 
 #endif
