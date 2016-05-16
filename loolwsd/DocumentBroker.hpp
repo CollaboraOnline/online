@@ -117,6 +117,7 @@ private:
 };
 
 class PrisonerSession;
+class ClientSession;
 
 /// DocumentBroker is responsible for setting up a document
 /// in jail and brokering loading it from Storage
@@ -193,7 +194,7 @@ public:
     void takeEditLock(const std::string& id);
 
     /// Add a new session. Returns the new number of sessions.
-    size_t addSession(std::shared_ptr<MasterProcessSession>& session);
+    size_t addSession(std::shared_ptr<ClientSession>& session);
     /// Connect a prison session to its client peer.
     bool connectPeers(std::shared_ptr<PrisonerSession>& session);
     /// Removes a session by ID. Returns the new number of sessions.
@@ -229,7 +230,7 @@ private:
     std::string _filename;
     std::chrono::steady_clock::time_point _lastSaveTime;
     Poco::Timestamp _lastFileModifiedTime;
-    std::map<std::string, std::shared_ptr<MasterProcessSession>> _sessions;
+    std::map<std::string, std::shared_ptr<ClientSession>> _sessions;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;

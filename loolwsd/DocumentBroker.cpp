@@ -18,6 +18,7 @@
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "LOOLProtocol.hpp"
+#include "ClientSession.hpp"
 #include "PrisonerSession.hpp"
 
 using namespace LOOLProtocol;
@@ -314,7 +315,7 @@ void DocumentBroker::takeEditLock(const std::string& id)
     }
 }
 
-size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session)
+size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
 {
     const auto id = session->getId();
     const std::string aMessage = "session " + id + " " + _docKey + "\n";

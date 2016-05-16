@@ -384,7 +384,7 @@ private:
 
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
-                    auto session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, nullptr);
+                    auto session = std::make_shared<ClientSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, nullptr);
 
                     // Request the child to connect to us and add this session.
                     auto sessionsCount = docBroker->addSession(session);
@@ -610,13 +610,13 @@ private:
 
         // Above this point exceptions are safe and will auto-cleanup.
         // Below this, we need to cleanup internal references.
-        std::shared_ptr<MasterProcessSession> session;
+        std::shared_ptr<ClientSession> session;
         try
         {
             // For ToClient sessions, we store incoming messages in a queue and have a separate
             // thread to pump them. This is to empty the queue when we get a "canceltiles" message.
             auto queue = std::make_shared<BasicTileQueue>();
-            session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
+            session = std::make_shared<ClientSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);
