@@ -49,7 +49,7 @@ ClientSession::ClientSession(const std::string& id,
 
 ClientSession::~ClientSession()
 {
-    Log::info("~PrisonerSession dtor [" + getName() + "].");
+    Log::info("~ClientSession dtor [" + getName() + "].");
 
     // Release the save-as queue.
     _saveAsQueue.put("");
