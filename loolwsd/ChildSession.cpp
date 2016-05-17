@@ -63,7 +63,7 @@ public:
 class CallbackWorker: public Runnable
 {
 public:
-    CallbackWorker(NotificationQueue& queue, ChildProcessSession& session):
+    CallbackWorker(NotificationQueue& queue, ChildSession& session):
         _queue(queue),
         _session(session),
         _stop(false)
@@ -280,13 +280,13 @@ public:
 
 private:
     NotificationQueue& _queue;
-    ChildProcessSession& _session;
+    ChildSession& _session;
     volatile bool _stop;
 };
 
-std::recursive_mutex ChildProcessSession::Mutex;
+std::recursive_mutex ChildSession::Mutex;
 
-ChildProcessSession::ChildProcessSession(const std::string& id,
+ChildSession::ChildSession(const std::string& id,
                                          std::shared_ptr<WebSocket> ws,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& jailId,
@@ -301,14 +301,14 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
     _onUnload(onUnload),
     _callbackWorker(new CallbackWorker(_callbackQueue, *this))
 {
-    Log::info("ChildProcessSession ctor [" + getName() + "].");
+    Log::info("ChildSession ctor [" + getName() + "].");
 
     _callbackThread.start(*_callbackWorker);
 }
 
-ChildProcessSession::~ChildProcessSession()
+ChildSession::~ChildSession()
 {
-    Log::info("~ChildProcessSession dtor [" + getName() + "].");
+    Log::info("~ChildSession dtor [" + getName() + "].");
 
     disconnect();
 
@@ -317,7 +317,7 @@ ChildProcessSession::~ChildProcessSession()
     _callbackThread.join();
 }
 
-void ChildProcessSession::disconnect()
+void ChildSession::disconnect()
 {
     if (!isDisconnected())
     {
@@ -332,7 +332,7 @@ void ChildProcessSession::disconnect()
     }
 }
 
-bool ChildProcessSession::_handleInput(const char *buffer, int length)
+bool ChildSession::_handleInput(const char *buffer, int length)
 {
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -569,7 +569,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
     return true;
 }
 
-bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part = -1;
     if (tokens.count() < 2)
@@ -623,7 +623,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     return true;
 }
 
-void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+void ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string font, decodedFont;
 
@@ -665,7 +665,7 @@ void ChildProcessSession::sendFontRendering(const char* /*buffer*/, int /*length
     sendBinaryFrame(output.data(), output.size());
 }
 
-bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
+bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
 {
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
@@ -683,7 +683,7 @@ bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
     return true;
 }
 
-bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string command;
     if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
@@ -701,7 +701,7 @@ bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*
     return true;
 }
 
-bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
+bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
 {
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
@@ -712,7 +712,7 @@ bool ChildProcessSession::getPartPageRectangles(const char* /*buffer*/, int /*le
     return true;
 }
 
-bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
 
@@ -735,7 +735,7 @@ bool ChildProcessSession::clientZoom(const char* /*buffer*/, int /*length*/, Str
     return true;
 }
 
-bool ChildProcessSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int x;
     int y;
@@ -761,7 +761,7 @@ bool ChildProcessSession::clientVisibleArea(const char* /*buffer*/, int /*length
     return true;
 }
 
-bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string name, id, format, filterOptions;
 
@@ -798,13 +798,13 @@ bool ChildProcessSession::downloadAs(const char* /*buffer*/, int /*length*/, Str
     return true;
 }
 
-bool ChildProcessSession::getChildId()
+bool ChildSession::getChildId()
 {
     sendTextFrame("getchildid: id=" + _jailId);
     return true;
 }
 
-bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string mimeType;
 
@@ -828,7 +828,7 @@ bool ChildProcessSession::getTextSelection(const char* /*buffer*/, int /*length*
     return true;
 }
 
-bool ChildProcessSession::paste(const char* buffer, int length, StringTokenizer& tokens)
+bool ChildSession::paste(const char* buffer, int length, StringTokenizer& tokens)
 {
     std::string mimeType;
 
@@ -854,7 +854,7 @@ bool ChildProcessSession::paste(const char* buffer, int length, StringTokenizer&
     return true;
 }
 
-bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string name, type;
 
@@ -886,7 +886,7 @@ bool ChildProcessSession::insertFile(const char* /*buffer*/, int /*length*/, Str
     return true;
 }
 
-bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, charcode, keycode;
 
@@ -927,7 +927,7 @@ bool ChildProcessSession::keyEvent(const char* /*buffer*/, int /*length*/, Strin
     return true;
 }
 
-bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y, count;
     bool success = true;
@@ -973,7 +973,7 @@ bool ChildProcessSession::mouseEvent(const char* /*buffer*/, int /*length*/, Str
     return true;
 }
 
-bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     if (tokens.count() == 1)
     {
@@ -1003,7 +1003,7 @@ bool ChildProcessSession::unoCommand(const char* /*buffer*/, int /*length*/, Str
     return true;
 }
 
-bool ChildProcessSession::selectText(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y;
 
@@ -1030,7 +1030,7 @@ bool ChildProcessSession::selectText(const char* /*buffer*/, int /*length*/, Str
     return true;
 }
 
-bool ChildProcessSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y;
 
@@ -1056,7 +1056,7 @@ bool ChildProcessSession::selectGraphic(const char* /*buffer*/, int /*length*/, 
     return true;
 }
 
-bool ChildProcessSession::resetSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     if (tokens.count() != 1)
     {
@@ -1074,7 +1074,7 @@ bool ChildProcessSession::resetSelection(const char* /*buffer*/, int /*length*/,
     return true;
 }
 
-bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string url, format, filterOptions;
 
@@ -1113,7 +1113,7 @@ bool ChildProcessSession::saveAs(const char* /*buffer*/, int /*length*/, StringT
     return true;
 }
 
-bool ChildProcessSession::setClientPart(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part;
     if (tokens.count() < 2 ||
@@ -1136,7 +1136,7 @@ bool ChildProcessSession::setClientPart(const char* /*buffer*/, int /*length*/, 
     return true;
 }
 
-bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int page;
     if (tokens.count() < 2 ||
@@ -1155,7 +1155,7 @@ bool ChildProcessSession::setPage(const char* /*buffer*/, int /*length*/, String
     return true;
 }
 
-void ChildProcessSession::loKitCallback(const int nType, const char *pPayload)
+void ChildSession::loKitCallback(const int nType, const char *pPayload)
 {
     auto pNotif = new CallbackNotification(nType, pPayload ? pPayload : "(nil)");
     _callbackQueue.enqueueNotification(pNotif);

@@ -26,23 +26,23 @@ class CallbackWorker;
 typedef std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> OnLoadCallback;
 typedef std::function<void(const std::string&)> OnUnloadCallback;
 
-class ChildProcessSession final : public LOOLSession
+class ChildSession final : public LOOLSession
 {
 public:
-    /// Create a new ChildProcessSession
+    /// Create a new ChildSession
     /// ws The socket between master and kit (jailed).
     /// loKit The LOKit instance.
     /// loKitDocument The instance to an existing document (when opening
     ///                 a new view) or nullptr (when first view).
     /// jailId The JailID of the jail root directory,
     //         used by downloadas to construct jailed path.
-    ChildProcessSession(const std::string& id,
+    ChildSession(const std::string& id,
                         std::shared_ptr<Poco::Net::WebSocket> ws,
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& jailId,
                         OnLoadCallback onLoad,
                         OnUnloadCallback onUnload);
-    virtual ~ChildProcessSession();
+    virtual ~ChildSession();
 
     bool getStatus(const char *buffer, int length);
     bool getPartPageRectangles(const char *buffer, int length);

@@ -222,7 +222,7 @@ namespace
 class Connection: public Runnable
 {
 public:
-    Connection(std::shared_ptr<ChildProcessSession> session,
+    Connection(std::shared_ptr<ChildSession> session,
                std::shared_ptr<WebSocket> ws) :
         _session(session),
         _ws(ws),
@@ -240,7 +240,7 @@ public:
     }
 
     std::shared_ptr<WebSocket> getWebSocket() const { return _ws; }
-    std::shared_ptr<ChildProcessSession> getSession() { return _session; }
+    std::shared_ptr<ChildSession> getSession() { return _session; }
 
     void start()
     {
@@ -281,7 +281,7 @@ public:
 
             Thread queueHandlerThread;
             queueHandlerThread.start(handler);
-            std::shared_ptr<ChildProcessSession> session = _session;
+            std::shared_ptr<ChildSession> session = _session;
 
             IoUtil::SocketProcessor(_ws,
                 [&queue](const std::vector<char>& payload)
@@ -327,7 +327,7 @@ public:
 
 private:
     Thread _thread;
-    std::shared_ptr<ChildProcessSession> _session;
+    std::shared_ptr<ChildSession> _session;
     std::shared_ptr<WebSocket> _ws;
     std::atomic<bool> _stop;
     std::mutex _threadMutex;
@@ -463,7 +463,7 @@ public:
             auto ws = std::make_shared<WebSocket>(cs, request, response);
             ws->setReceiveTimeout(0);
 
-            auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId,
+            auto session = std::make_shared<ChildSession>(sessionId, ws, _loKitDocument, _jailId,
                            [this](const std::string& id, const std::string& uri, const std::string& docPassword,
                                   const std::string& renderOpts, bool haveDocPassword) { return onLoad(id, uri, docPassword, renderOpts, haveDocPassword); },
                            [this](const std::string& id) { onUnload(id); });
@@ -494,7 +494,7 @@ public:
     /// Returns -1 on failure.
     size_t purgeSessions()
     {
-        std::vector<std::shared_ptr<ChildProcessSession>> deadSessions;
+        std::vector<std::shared_ptr<ChildSession>> deadSessions;
         size_t num_connections = 0;
         {
             std::unique_lock<std::mutex> lock(_mutex, std::defer_lock);
@@ -616,7 +616,7 @@ public:
             ++index;
         }
 
-        std::unique_lock<std::recursive_mutex> lock(ChildProcessSession::getLock());
+        std::unique_lock<std::recursive_mutex> lock(ChildSession::getLock());
 
         if (_loKitDocument == nullptr)
         {
