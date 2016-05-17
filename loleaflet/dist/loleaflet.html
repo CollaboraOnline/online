@@ -22,6 +22,8 @@
 <link rel="stylesheet" href="/loleaflet/%VERSION%/dialog/vex-theme-plain.css" />
 <link rel="stylesheet" href="/loleaflet/%VERSION%/toolbar/w2ui.min.css" />
 <link rel="stylesheet" href="/loleaflet/%VERSION%/toolbar/select2.min.css" />
+<link rel="stylesheet" href="/loleaflet/dist/smartmenus/sm-core-css.css" />
+<link rel="stylesheet" href="/loleaflet/dist/smartmenus/sm-simple.css" />
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-lightness/jquery-ui.css">
 <link rel="stylesheet" href="/loleaflet/%VERSION%/toolbar/evol.colorpicker.min.css">
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
@@ -42,6 +44,7 @@
     <script src="/loleaflet/%VERSION%/scrollbar/jquery.mCustomScrollbar.js"></script>
     <script src="/loleaflet/%VERSION%/contextMenu/jquery.contextMenu.js"></script>
     <script src="/loleaflet/%VERSION%/contextMenu/jquery.ui.position.min.js"></script>
+    <script src="/loleaflet/%VERSION%/smartmenus/jquery.smartmenus.js"></script>
     <script src="/loleaflet/%VERSION%/dialog/vex.combined.min.js"></script>
     <script src="/loleaflet/%VERSION%/branding.js"></script> <!-- logo onclick handler -->
     <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
@@ -124,6 +127,7 @@
     map.addControl(L.control.columnHeader());
     map.addControl(L.control.rowHeader());
     map.addControl(L.control.contextMenu());
+    map.addControl(L.control.menubar());
 
     </script>
 
