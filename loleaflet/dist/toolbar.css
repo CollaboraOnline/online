@@ -15,6 +15,7 @@
     padding-top: 6px;
     padding-bottom: 4px;
     z-index: 1000;
+    margin-top: 25px;
 }
 
 #toolbar-down {
@@ -31,7 +32,7 @@
     position: absolute;
     right: 10px;
     width: 200px;
-    top: 40px;
+    top: 65px;
     border: 1px solid darkgrey;
     z-index: 8000;
     display: none;
