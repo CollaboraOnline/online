@@ -29,7 +29,6 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/Exception.h>
 #include <Poco/Net/HTTPClientSession.h>
@@ -41,14 +40,15 @@
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
-#include <Poco/Util/Application.h>
 #include <Poco/URI.h>
+#include <Poco/Util/Application.h>
 
 #include "ChildSession.hpp"
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
+#include "LibreOfficeKit.hpp"
 #include "QueueHandler.hpp"
 #include "Unit.hpp"
 #include "UserMessages.hpp"
@@ -358,7 +358,6 @@ public:
         _jailId(jailId),
         _docKey(docKey),
         _url(url),
-        _loKitDocument(nullptr),
         _docPassword(""),
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
@@ -407,22 +406,6 @@ public:
 
         // Destroy all connections and views.
         _connections.clear();
-
-        // TODO. check what is happening when destroying lokit document,
-        // often it blows up.
-        // Destroy the document.
-        if (_loKitDocument != nullptr)
-        {
-            try
-            {
-                _loKitDocument->pClass->destroy(_loKitDocument);
-            }
-            catch (const std::exception& exc)
-            {
-                Log::error() << "Document::~Document: " << exc.what()
-                             << Log::end;
-            }
-        }
     }
 
     const std::string& getUrl() const { return _url; }
@@ -463,7 +446,7 @@ public:
             auto ws = std::make_shared<WebSocket>(cs, request, response);
             ws->setReceiveTimeout(0);
 
-            auto session = std::make_shared<ChildSession>(sessionId, ws, _loKitDocument, _jailId,
+            auto session = std::make_shared<ChildSession>(sessionId, ws, _jailId,
                            [this](const std::string& id, const std::string& uri, const std::string& docPassword,
                                   const std::string& renderOpts, bool haveDocPassword) { return onLoad(id, uri, docPassword, renderOpts, haveDocPassword); },
                            [this](const std::string& id) { onUnload(id); });
@@ -618,7 +601,7 @@ public:
 
         std::unique_lock<std::recursive_mutex> lock(ChildSession::getLock());
 
-        if (_loKitDocument == nullptr)
+        if (!_loKitDocument)
         {
             Log::error("Tile rendering requested before loading document.");
             return;
@@ -626,7 +609,7 @@ public:
 
         //TODO: Support multiviews.
         //if (_multiView)
-            //_loKitDocument->pClass->setView(_loKitDocument, _viewId);
+            //_loKitDocument->setView(_viewId);
 
         // Send back the request with all optional parameters given in the request.
 #if ENABLE_DEBUG
@@ -644,14 +627,13 @@ public:
         pixmap.resize(4 * width * height);
 
         Timestamp timestamp;
-        _loKitDocument->pClass->paintPartTile(_loKitDocument, pixmap.data(), part,
-                                              width, height, tilePosX, tilePosY,
-                                              tileWidth, tileHeight);
+        _loKitDocument->paintPartTile(pixmap.data(), part,
+                                      width, height, tilePosX, tilePosY,
+                                      tileWidth, tileHeight);
         Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
                      << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
-        const LibreOfficeKitTileMode mode =
-                static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
+        const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
         if (!Util::encodeBufferToPNG(pixmap.data(), width, height, output, mode))
         {
             //FIXME: Return error.
@@ -881,6 +863,10 @@ private:
         try
         {
             load(sessionId, uri, docPassword, renderOpts, haveDocPassword);
+            if (!_loKitDocument)
+            {
+                return nullptr;
+            }
         }
         catch (const std::exception& exc)
         {
@@ -889,12 +875,13 @@ private:
         }
 
         // Done loading, let the next one in (if any).
+        assert(_loKitDocument && "Uninitialized lok::Document instance");
         lock.lock();
         ++_clientViews;
         --_isLoading;
         _cvLoading.notify_one();
 
-        return _loKitDocument;
+        return _loKitDocument->get();
     }
 
     void onUnload(const std::string& sessionId)
@@ -922,9 +909,9 @@ private:
                         << sessionId << "] unloaded, leaving "
                         << _clientViews << " views." << Log::end;
 
-            const auto viewId = _loKitDocument->pClass->getView(_loKitDocument);
-            _loKitDocument->pClass->registerCallback(_loKitDocument, nullptr, nullptr);
-            _loKitDocument->pClass->destroyView(_loKitDocument, viewId);
+            const auto viewId = _loKitDocument->getView();
+            _loKitDocument->registerCallback(nullptr, nullptr);
+            _loKitDocument->destroyView(viewId);
         }
     }
 
@@ -946,7 +933,7 @@ private:
 
         auto session = it->second->getSession();
 
-        if (_loKitDocument == nullptr)
+        if (!_loKitDocument)
         {
             // This is the first time we are loading the document
             Log::info("Loading new document from URI: [" + uri + "] for session [" + sessionId + "].");
@@ -966,10 +953,10 @@ private:
             _isDocPasswordProtected = false;
 
             Log::debug("Calling lokit::documentLoad.");
-            _loKitDocument = _loKit->pClass->documentLoad(_loKit, uri.c_str());
+            _loKitDocument = std::make_shared<lok::Document>(_loKit->pClass->documentLoad(_loKit, uri.c_str()));
             Log::debug("Returned lokit::documentLoad.");
 
-            if (_loKitDocument == nullptr)
+            if (!_loKitDocument)
             {
                 Log::error("Failed to load: " + uri + ", error: " + _loKit->pClass->getError(_loKit));
 
@@ -1000,9 +987,9 @@ private:
             if (_multiView)
             {
                 Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
-                const auto viewId = _loKitDocument->pClass->createView(_loKitDocument);
+                const auto viewId = _loKitDocument->createView();
 
-                _loKitDocument->pClass->registerCallback(_loKitDocument, ViewCallback, reinterpret_cast<void*>(intSessionId));
+                _loKitDocument->registerCallback(ViewCallback, reinterpret_cast<void*>(intSessionId));
 
                 Log::info() << "Document [" << _url << "] view ["
                             << viewId << "] loaded, leaving "
@@ -1010,10 +997,10 @@ private:
             }
             else
             {
-                _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
+                _loKitDocument->registerCallback(DocumentCallback, this);
             }
 
-            _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderOpts.empty() ? nullptr : renderOpts.c_str()));
+            _loKitDocument->initializeForRendering((renderOpts.empty() ? nullptr : renderOpts.c_str()));
         }
         else
         {
@@ -1038,7 +1025,7 @@ private:
             }
         }
 
-        return _loKitDocument;
+        return _loKitDocument->get();
     }
 
 private:
@@ -1050,7 +1037,7 @@ private:
     const std::string _url;
     std::string _jailedUrl;
 
-    LibreOfficeKitDocument *_loKitDocument;
+    std::shared_ptr<lok::Document> _loKitDocument;
 
     // Document password provided
     std::string _docPassword;

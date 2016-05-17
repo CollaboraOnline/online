@@ -287,13 +287,12 @@ private:
 std::recursive_mutex ChildSession::Mutex;
 
 ChildSession::ChildSession(const std::string& id,
-                                         std::shared_ptr<WebSocket> ws,
-                                         LibreOfficeKitDocument * loKitDocument,
-                                         const std::string& jailId,
-                                         OnLoadCallback onLoad,
-                                         OnUnloadCallback onUnload) :
+                           std::shared_ptr<WebSocket> ws,
+                           const std::string& jailId,
+                           OnLoadCallback onLoad,
+                           OnUnloadCallback onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
-    _loKitDocument(loKitDocument),
+    _loKitDocument(nullptr),
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
     _viewId(0),

@@ -12,15 +12,12 @@
 
 #include <mutex>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
-
 #include <Poco/Thread.h>
 #include <Poco/NotificationQueue.h>
 
 #include "Common.hpp"
 #include "LOOLSession.hpp"
+#include "LibreOfficeKit.hpp"
 
 class CallbackWorker;
 typedef std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> OnLoadCallback;
@@ -37,11 +34,10 @@ public:
     /// jailId The JailID of the jail root directory,
     //         used by downloadas to construct jailed path.
     ChildSession(const std::string& id,
-                        std::shared_ptr<Poco::Net::WebSocket> ws,
-                        LibreOfficeKitDocument * loKitDocument,
-                        const std::string& jailId,
-                        OnLoadCallback onLoad,
-                        OnUnloadCallback onUnload);
+                 std::shared_ptr<Poco::Net::WebSocket> ws,
+                 const std::string& jailId,
+                 OnLoadCallback onLoad,
+                 OnUnloadCallback onUnload);
     virtual ~ChildSession();
 
     bool getStatus(const char *buffer, int length);
