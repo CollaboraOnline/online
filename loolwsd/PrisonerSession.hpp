@@ -21,7 +21,7 @@
 class DocumentBroker;
 class ClientSession;
 
-class PrisonerSession final : public MasterProcessSession, public std::enable_shared_from_this<PrisonerSession>
+class PrisonerSession final : public LOOLSession, public std::enable_shared_from_this<PrisonerSession>
 {
 public:
     PrisonerSession(const std::string& id,
@@ -30,24 +30,20 @@ public:
 
     virtual ~PrisonerSession();
 
-    void setPeer(const std::shared_ptr<ClientSession>& peer) { MasterProcessSession::_peer = _peer = peer; }
+    void setPeer(const std::shared_ptr<ClientSession>& peer) { _peer = peer; }
+    bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
 private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
+
+    void forwardToPeer(const char *buffer, int length);
 
 private:
 
     std::shared_ptr<DocumentBroker> _docBroker;
     std::weak_ptr<ClientSession> _peer;
     int _curPart;
-
-#if 0
-    bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
-
- private:
-    void forwardToPeer(const char *buffer, int length);
-#endif
 };
 
 #endif

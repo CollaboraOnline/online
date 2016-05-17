@@ -50,6 +50,11 @@ public:
     /// Called to handle disconnection command from socket.
     virtual bool handleDisconnect();
 
+    void shutdown(Poco::UInt16 statusCode, const std::string& message)
+    {
+        _ws->shutdown(statusCode, message);
+    }
+
     bool isActive() const { return _isActive; }
     void setIsActive(bool active) { _isActive = active; }
 

@@ -317,7 +317,7 @@ public:
 class ClientRequestHandler: public HTTPRequestHandler
 {
 private:
-    static void waitBridgeCompleted(const std::shared_ptr<MasterProcessSession>& session)
+    static void waitBridgeCompleted(const std::shared_ptr<ClientSession>& session)
     {
         bool isFound = false;
         std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);

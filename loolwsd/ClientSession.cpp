@@ -37,7 +37,7 @@ ClientSession::ClientSession(const std::string& id,
                              std::shared_ptr<Poco::Net::WebSocket> ws,
                              std::shared_ptr<DocumentBroker> docBroker,
                              std::shared_ptr<BasicTileQueue> queue) :
-    MasterProcessSession(id, Kind::ToClient, ws),
+    LOOLSession(id, Kind::ToClient, ws),
     _docBroker(docBroker),
     _queue(queue),
     _loadFailed(false),
@@ -52,11 +52,6 @@ ClientSession::~ClientSession()
 
     // Release the save-as queue.
     _saveAsQueue.put("");
-}
-
-void ClientSession::setPeer(const std::shared_ptr<PrisonerSession>& peer)
-{
-    MasterProcessSession::_peer = _peer = peer;
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)
@@ -430,6 +425,35 @@ void ClientSession::dispatchChild()
 
     const auto loadRequest = oss.str();
     forwardToPeer(loadRequest.c_str(), loadRequest.size());
+}
+
+void ClientSession::forwardToPeer(const char *buffer, int length)
+{
+    const auto message = getAbbreviatedMessage(buffer, length);
+
+    auto peer = _peer.lock();
+    if (!peer)
+    {
+        throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
+    }
+    else if (peer->isCloseFrame())
+    {
+        Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
+        return;
+    }
+
+    Log::trace(getName() + " -> " + peer->getName() + ": " + message);
+    peer->sendBinaryFrame(buffer, length);
+}
+
+bool ClientSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)
+{
+    auto peer = _peer.lock();
+    if (peer && !peer->isCloseFrame())
+    {
+        peer->shutdown(statusCode, message);
+    }
+    return peer != nullptr;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

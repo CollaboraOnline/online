@@ -21,7 +21,7 @@
 class DocumentBroker;
 class PrisonerSession;
 
-class ClientSession final : public MasterProcessSession, public std::enable_shared_from_this<ClientSession>
+class ClientSession final : public LOOLSession, public std::enable_shared_from_this<ClientSession>
 {
 public:
     ClientSession(const std::string& id,
@@ -35,7 +35,8 @@ public:
     void markEditLock(const bool value) { _bEditLock = value; }
     bool isEditLocked() const { return _bEditLock; }
 
-    void setPeer(const std::shared_ptr<PrisonerSession>& peer);
+    void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }
+    bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
     /**
      * Return the URL of the saved-as document when it's ready. If called
@@ -81,6 +82,7 @@ private:
     void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     void dispatchChild();
+    void forwardToPeer(const char *buffer, int length);
 
 private:
 
@@ -101,13 +103,6 @@ private:
     /// Marks if document loading failed.
     bool _loadFailed;
     int _loadPart;
-
-#if 0
-    bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
-
- private:
-    void forwardToPeer(const char *buffer, int length);
-#endif
 };
 
 #endif

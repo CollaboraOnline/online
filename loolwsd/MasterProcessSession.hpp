@@ -26,11 +26,10 @@ class MasterProcessSession : public LOOLSession
                          const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws);
     virtual ~MasterProcessSession();
-
+ private:
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
  protected:
-    void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
     // If _kind==ToPrisoner and the child process has started and completed its handshake with the

@@ -36,7 +36,7 @@ using Poco::StringTokenizer;
 PrisonerSession::PrisonerSession(const std::string& id,
                                  std::shared_ptr<Poco::Net::WebSocket> ws,
                                  std::shared_ptr<DocumentBroker> docBroker) :
-    MasterProcessSession(id, Kind::ToPrisoner, ws),
+    LOOLSession(id, Kind::ToPrisoner, ws),
     _docBroker(docBroker),
     _curPart(0)
 {
@@ -221,6 +221,35 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
 
     forwardToPeer(buffer, length);
     return true;
+}
+
+void PrisonerSession::forwardToPeer(const char *buffer, int length)
+{
+    const auto message = getAbbreviatedMessage(buffer, length);
+
+    auto peer = _peer.lock();
+    if (!peer)
+    {
+        throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
+    }
+    else if (peer->isCloseFrame())
+    {
+        Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
+        return;
+    }
+
+    Log::trace(getName() + " -> " + peer->getName() + ": " + message);
+    peer->sendBinaryFrame(buffer, length);
+}
+
+bool PrisonerSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)
+{
+    auto peer = _peer.lock();
+    if (peer && !peer->isCloseFrame())
+    {
+        peer->shutdown(statusCode, message);
+    }
+    return peer != nullptr;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

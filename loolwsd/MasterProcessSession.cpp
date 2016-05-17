@@ -43,33 +43,4 @@ MasterProcessSession::~MasterProcessSession()
 {
 }
 
-void MasterProcessSession::forwardToPeer(const char *buffer, int length)
-{
-    const auto message = getAbbreviatedMessage(buffer, length);
-
-    auto peer = _peer.lock();
-    if (!peer)
-    {
-        throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
-    }
-    else if (peer->isCloseFrame())
-    {
-        Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
-        return;
-    }
-
-    Log::trace(getName() + " -> " + peer->getName() + ": " + message);
-    peer->sendBinaryFrame(buffer, length);
-}
-
-bool MasterProcessSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)
-{
-    auto peer = _peer.lock();
-    if (peer && !peer->isCloseFrame())
-    {
-        peer->_ws->shutdown(statusCode, message);
-    }
-    return peer != nullptr;
-}
-
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
