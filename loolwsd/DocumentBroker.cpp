@@ -275,7 +275,7 @@ bool DocumentBroker::sendUnoSave()
     Log::info("Autosave triggered for doc [" + _docKey + "].");
     Util::assertIsLocked(_mutex);
 
-    // Save using session holding the edit-lock
+    // Save using session holding the edit-lock (or first if multview).
     for (auto& sessionIt: _sessions)
     {
         if (sessionIt.second->isEditLocked())

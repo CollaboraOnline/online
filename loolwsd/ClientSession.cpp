@@ -40,7 +40,7 @@ ClientSession::ClientSession(const std::string& id,
     LOOLSession(id, Kind::ToClient, ws),
     _docBroker(docBroker),
     _queue(queue),
-    _haveEditLock(false),
+    _haveEditLock(std::getenv("LOK_VIEW_CALLBACK")),
     _loadFailed(false),
     _loadPart(-1)
 {
@@ -222,10 +222,9 @@ bool ClientSession::getStatus(const char *buffer, int length)
         sendTextFrame(status);
 
         // And let clients know if they hold the edit lock.
-        std::string message = "editlock: ";
-        message += std::to_string(isEditLocked());
-        Log::debug("Forwarding [" + message + "] in response to status.");
-        sendTextFrame(message);
+        const auto msg = "editlock: " + std::to_string(isEditLocked());
+        Log::debug("Returning [" + msg + "] in response to status.");
+        sendTextFrame(msg);
 
         return true;
     }
@@ -243,8 +242,10 @@ bool ClientSession::getStatus(const char *buffer, int length)
 void ClientSession::setEditLock(const bool value)
 {
     // Update the sate and forward to child.
-    _haveEditLock = value;
-    const auto msg = std::string("editlock: ") + (value ? "1" : "0");
+    markEditLock(value);
+    const auto msg = "editlock: " + std::to_string(isEditLocked());
+    const auto mv = std::getenv("LOK_VIEW_CALLBACK") ? "1" : "0";
+    Log::debug("Forwarding [" + msg + "] to set editlock to " + std::to_string(value) + ". MultiView: " + mv);
     forwardToPeer(msg.data(), msg.size());
 }
 

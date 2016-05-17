@@ -27,7 +27,7 @@ public:
     virtual ~ClientSession();
 
     void setEditLock(const bool value);
-    void markEditLock(const bool value) { _haveEditLock = value; }
+    void markEditLock(const bool value) { _haveEditLock = (value || std::getenv("LOK_VIEW_CALLBACK")); }
     bool isEditLocked() const { return _haveEditLock; }
 
     void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }
