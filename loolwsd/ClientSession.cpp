@@ -40,6 +40,7 @@ ClientSession::ClientSession(const std::string& id,
     LOOLSession(id, Kind::ToClient, ws),
     _docBroker(docBroker),
     _queue(queue),
+    _haveEditLock(false),
     _loadFailed(false),
     _loadPart(-1)
 {
@@ -242,7 +243,7 @@ bool ClientSession::getStatus(const char *buffer, int length)
 void ClientSession::setEditLock(const bool value)
 {
     // Update the sate and forward to child.
-    _bEditLock = value;
+    _haveEditLock = value;
     const auto msg = std::string("editlock: ") + (value ? "1" : "0");
     forwardToPeer(msg.data(), msg.size());
 }

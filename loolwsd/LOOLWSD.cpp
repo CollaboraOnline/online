@@ -90,7 +90,6 @@
 #include "LOOLWSD.hpp"
 #include "ClientSession.hpp"
 #include "PrisonerSession.hpp"
-#include "MasterProcessSession.hpp"
 #include "QueueHandler.hpp"
 #include "Storage.hpp"
 #include "UserMessages.hpp"

@@ -44,7 +44,6 @@ loolwsd_SOURCES = Admin.cpp \
                   LOOLWSD.cpp \
                   ClientSession.cpp \
                   PrisonerSession.cpp \
-                  MasterProcessSession.cpp \
                   Storage.cpp \
                   TileCache.cpp \
                   $(shared_sources)
@@ -92,7 +91,6 @@ noinst_HEADERS = Admin.hpp \
                  LOOLProtocol.hpp \
                  LOOLSession.hpp \
                  LOOLWSD.hpp \
-                 MasterProcessSession.hpp \
                  ClientSession.hpp \
                  PrisonerSession.hpp \
                  MessageQueue.hpp \

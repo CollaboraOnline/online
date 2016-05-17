@@ -15,6 +15,7 @@
 #include <atomic>
 #include <chrono>
 #include <memory>
+#include <condition_variable>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -24,12 +25,11 @@
 #include <Poco/Net/WebSocket.h>
 
 #include "IoUtil.hpp"
-#include "MasterProcessSession.hpp"
+#include "TileCache.hpp"
 #include "Util.hpp"
 
 // Forwards.
 class StorageBase;
-class TileCache;
 class DocumentBroker;
 
 /// Represents a new LOK child that is read

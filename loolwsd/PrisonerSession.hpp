@@ -10,13 +10,7 @@
 #ifndef INCLUDED_PRISONERSESSION_HPP
 #define INCLUDED_PRISONERSESSION_HPP
 
-#include <time.h>
-
-#include <Poco/Random.h>
-
-#include "MasterProcessSession.hpp"
 #include "LOOLSession.hpp"
-#include "MessageQueue.hpp"
 
 class DocumentBroker;
 class ClientSession;

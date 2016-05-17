@@ -10,11 +10,6 @@
 #ifndef INCLUDED_CLIENTSSESSION_HPP
 #define INCLUDED_CLIENTSSESSION_HPP
 
-#include <time.h>
-
-#include <Poco/Random.h>
-
-#include "MasterProcessSession.hpp"
 #include "LOOLSession.hpp"
 #include "MessageQueue.hpp"
 
@@ -32,8 +27,8 @@ public:
     virtual ~ClientSession();
 
     void setEditLock(const bool value);
-    void markEditLock(const bool value) { _bEditLock = value; }
-    bool isEditLocked() const { return _bEditLock; }
+    void markEditLock(const bool value) { _haveEditLock = value; }
+    bool isEditLocked() const { return _haveEditLock; }
 
     void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
@@ -94,7 +89,9 @@ private:
     // If this document holds the edit lock.
     // An edit lock will only allow the current session to make edits,
     // while other session opening the same document can only see
-    bool _bEditLock = false;
+    bool _haveEditLock;
+
+    /// Our peer that connects us to the child.
     std::weak_ptr<PrisonerSession> _peer;
 
     /// Store URLs of completed 'save as' documents.
