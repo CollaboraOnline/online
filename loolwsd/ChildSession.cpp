@@ -23,7 +23,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "ChildProcessSession.hpp"
+#include "ChildSession.hpp"
 #include "Common.hpp"
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"

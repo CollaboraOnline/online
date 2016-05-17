@@ -28,7 +28,7 @@ AM_LDFLAGS = -pthread -Wl,-E
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
-shared_sources = ChildProcessSession.cpp \
+shared_sources = ChildSession.cpp \
                  IoUtil.cpp \
                  Log.cpp \
                  LOOLProtocol.cpp \
@@ -79,7 +79,7 @@ looltool_SOURCES = LOOLTool.cpp
 noinst_HEADERS = Admin.hpp \
                  AdminModel.hpp \
                  Auth.hpp \
-                 ChildProcessSession.hpp \
+                 ChildSession.hpp \
                  Common.hpp \
                  DocumentBroker.hpp \
                  Exceptions.hpp \

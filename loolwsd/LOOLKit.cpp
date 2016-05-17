@@ -44,7 +44,7 @@
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
 
-#include "ChildProcessSession.hpp"
+#include "ChildSession.hpp"
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOKitHelper.hpp"
