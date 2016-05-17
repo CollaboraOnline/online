@@ -1,6 +1,6 @@
 .spreadsheet-document {
 	border-top: 1px solid #B6B6B6 !important;
-	top: 98px !important;
+	top: 123px !important;
 	left: 50px !important;
 	bottom: 65px !important;
 	}
@@ -67,7 +67,7 @@
 	padding: 0px;
 	margin: 0px;
 	left: 0px;
-	top: 78px;
+	top: 103px;
 	width: 48px;
 	height: 19px;
 	}
@@ -80,7 +80,7 @@
 	display: inline-block;
 	white-space: nowrap;
 	left: 49px;
-	top: 78px;
+	top: 103px;
 	right: 0;
 	height: 19px;
 	overflow: hidden;
@@ -129,7 +129,7 @@
 
 	position: absolute;
 	left: 0;
-	top: 98px;
+	top: 123px;
 	width: 48px;
 	bottom: 65px;
 	overflow: hidden;
