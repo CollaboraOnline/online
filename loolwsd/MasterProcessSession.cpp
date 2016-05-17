@@ -34,13 +34,10 @@ using Poco::StringTokenizer;
 MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
                                            std::shared_ptr<Poco::Net::WebSocket> ws,
-                                           std::shared_ptr<DocumentBroker> docBroker,
-                                           std::shared_ptr<BasicTileQueue> queue) :
+                                           std::shared_ptr<DocumentBroker> docBroker) :
     LOOLSession(id, kind, ws),
-    _curPart(0),
     _loadPart(-1),
-    _docBroker(docBroker),
-    _queue(queue)
+    _docBroker(docBroker)
 {
     Log::info("MasterProcessSession ctor [" + getName() + "].");
 }

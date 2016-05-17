@@ -21,10 +21,13 @@
 class DocumentBroker;
 class PrisonerSession;
 
-class ClientSession final : public MasterProcessSession//, public std::enable_shared_from_this<ClientSession>
+class ClientSession final : public MasterProcessSession, public std::enable_shared_from_this<ClientSession>
 {
 public:
-    using MasterProcessSession::MasterProcessSession;
+    ClientSession(const std::string& id,
+                  std::shared_ptr<Poco::Net::WebSocket> ws,
+                  std::shared_ptr<DocumentBroker> docBroker,
+                  std::shared_ptr<BasicTileQueue> queue);
 
     virtual ~ClientSession();
 
@@ -32,7 +35,7 @@ public:
     void markEditLock(const bool value) { _bEditLock = value; }
     bool isEditLocked() const { return _bEditLock; }
 
-    void setPeer(const std::shared_ptr<PrisonerSession>& peer) { MasterProcessSession::_peer = _peer = peer; }
+    void setPeer(const std::shared_ptr<PrisonerSession>& peer);
 
     /**
      * Return the URL of the saved-as document when it's ready. If called
@@ -54,6 +57,11 @@ public:
     {
         Log::warn("Document load failed: " + reason);
         _loadFailed = true;
+    }
+
+    void sendToInputQueue(const std::string& message)
+    {
+        _queue->put(message);
     }
 
 private:
@@ -81,13 +89,14 @@ private:
     /// Store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
 
+    /// The incoming message queue.
+    std::shared_ptr<BasicTileQueue> _queue;
+
     /// Marks if document loading failed.
     bool _loadFailed;
 
 #if 0
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
-
-    std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
@@ -95,10 +104,8 @@ private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
-    int _curPart;
     int _loadPart;
     std::shared_ptr<DocumentBroker> _docBroker;
-    std::shared_ptr<BasicTileQueue> _queue;
 #endif
 };
 

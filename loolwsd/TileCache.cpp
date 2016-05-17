@@ -34,7 +34,7 @@
 #include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
-#include "MasterProcessSession.hpp"
+#include "ClientSession.hpp"
 #include "Unit.hpp"
 
 using Poco::DirectoryIterator;
@@ -125,7 +125,7 @@ TileCache::~TileCache()
 
 struct TileCache::TileBeingRendered
 {
-    std::vector<std::weak_ptr<MasterProcessSession>> _subscribers;
+    std::vector<std::weak_ptr<ClientSession>> _subscribers;
     TileBeingRendered()
      : _startTime(std::chrono::steady_clock::now())
     {
@@ -405,15 +405,10 @@ void TileCache::notifyAndRemoveSubscribers(const TileDesc& tile)
         if (subscriber)
         {
             //FIXME: This is inefficient; should just send directly to each client (although that is risky as well!
-            std::shared_ptr<BasicTileQueue> queue;
-            queue = subscriber->getQueue();
             // Re-emit the tile command in the other thread(s) to re-check and hit
             // the cache. Construct the message from scratch to contain only the
             // mandatory parts of the message.
-            if (queue)
-            {
-                queue->put(message);
-            }
+            subscriber->sendToInputQueue(message);
         }
     }
 
@@ -421,7 +416,7 @@ void TileCache::notifyAndRemoveSubscribers(const TileDesc& tile)
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
-bool TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<MasterProcessSession> &subscriber)
+bool TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 

@@ -280,16 +280,12 @@ bool DocumentBroker::sendUnoSave()
     {
         if (sessionIt.second->isEditLocked())
         {
-            auto queue = sessionIt.second->getQueue();
-            if (queue)
-            {
-                // Invalidate the timestamp to force persisting.
-                _lastFileModifiedTime.fromEpochTime(0);
+            // Invalidate the timestamp to force persisting.
+            _lastFileModifiedTime.fromEpochTime(0);
 
-                // We do not want save to terminate editing mode if we are in edit mode now
-                queue->put("uno .uno:Save {\"DontTerminateEdit\":{\"type\":\"boolean\",\"value\":true}}");
-                return true;
-            }
+            // We do not want save to terminate editing mode if we are in edit mode now
+            sessionIt.second->sendToInputQueue("uno .uno:Save {\"DontTerminateEdit\":{\"type\":\"boolean\",\"value\":true}}");
+            return true;
         }
     }
 
@@ -402,7 +398,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
 }
 
 void DocumentBroker::handleTileRequest(const TileDesc& tile,
-                                       const std::shared_ptr<MasterProcessSession>& session)
+                                       const std::shared_ptr<ClientSession>& session)
 {
     const auto tileMsg = tile.serialize();
     Log::trace() << "Tile request for " << tileMsg << Log::end;

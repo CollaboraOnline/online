@@ -30,6 +30,7 @@
 // Forwards.
 class StorageBase;
 class TileCache;
+class DocumentBroker;
 
 /// Represents a new LOK child that is read
 /// to host a document.
@@ -201,7 +202,7 @@ public:
     size_t removeSession(const std::string& id);
 
     void handleTileRequest(const TileDesc& tile,
-                           const std::shared_ptr<MasterProcessSession>& session);
+                           const std::shared_ptr<ClientSession>& session);
 
     void handleTileResponse(const std::vector<char>& payload);
 

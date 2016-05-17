@@ -25,7 +25,7 @@
 /** Handles the cache for tiles of one document.
 */
 
-class MasterProcessSession;
+class ClientSession;
 
 /// Tile Descriptor
 /// Represents a tile's coordinates and dimensions.
@@ -94,7 +94,7 @@ public:
 
     TileCache(const TileCache&) = delete;
 
-    bool isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<MasterProcessSession> &subscriber);
+    bool isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber);
 
     std::unique_ptr<std::fstream> lookupTile(const TileDesc& tile);
 

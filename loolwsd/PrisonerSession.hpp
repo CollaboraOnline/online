@@ -21,7 +21,7 @@
 class DocumentBroker;
 class ClientSession;
 
-class PrisonerSession final : public MasterProcessSession//, public std::enable_shared_from_this<PrisonerSession>
+class PrisonerSession final : public MasterProcessSession, public std::enable_shared_from_this<PrisonerSession>
 {
 public:
     using MasterProcessSession::MasterProcessSession;
@@ -37,6 +37,8 @@ private:
 private:
 
     std::weak_ptr<ClientSession> _peer;
+    int _curPart;
+
 #if 0
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
@@ -48,7 +50,6 @@ private:
     void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
 
-    int _curPart;
     int _loadPart;
     std::shared_ptr<DocumentBroker> _docBroker;
     std::shared_ptr<BasicTileQueue> _queue;

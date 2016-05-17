@@ -19,19 +19,16 @@
 
 class DocumentBroker;
 
-class MasterProcessSession : public LOOLSession, public std::enable_shared_from_this<MasterProcessSession>
+class MasterProcessSession : public LOOLSession
 {
  public:
     MasterProcessSession(const std::string& id,
                          const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws,
-                         std::shared_ptr<DocumentBroker> docBroker,
-                         std::shared_ptr<BasicTileQueue> queue);
+                         std::shared_ptr<DocumentBroker> docBroker);
     virtual ~MasterProcessSession();
 
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
-
-    std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
@@ -48,10 +45,8 @@ class MasterProcessSession : public LOOLSession, public std::enable_shared_from_
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
 
-    int _curPart;
     int _loadPart;
     std::shared_ptr<DocumentBroker> _docBroker;
-    std::shared_ptr<BasicTileQueue> _queue;
 };
 
 #endif

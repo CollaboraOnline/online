@@ -33,12 +33,28 @@ using namespace LOOLProtocol;
 using Poco::Path;
 using Poco::StringTokenizer;
 
+ClientSession::ClientSession(const std::string& id,
+                             std::shared_ptr<Poco::Net::WebSocket> ws,
+                             std::shared_ptr<DocumentBroker> docBroker,
+                             std::shared_ptr<BasicTileQueue> queue) :
+    MasterProcessSession(id, Kind::ToClient, ws, docBroker),
+    _queue(queue),
+    _loadFailed(false)
+{
+    Log::info("ClientSession ctor [" + getName() + "].");
+}
+
 ClientSession::~ClientSession()
 {
     Log::info("~PrisonerSession dtor [" + getName() + "].");
 
     // Release the save-as queue.
     _saveAsQueue.put("");
+}
+
+void ClientSession::setPeer(const std::shared_ptr<PrisonerSession>& peer)
+{
+    MasterProcessSession::_peer = _peer = peer;
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)

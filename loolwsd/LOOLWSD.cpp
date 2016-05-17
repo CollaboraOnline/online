@@ -384,7 +384,7 @@ private:
 
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
-                    auto session = std::make_shared<ClientSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, nullptr);
+                    auto session = std::make_shared<ClientSession>(id, ws, docBroker, nullptr);
 
                     // Request the child to connect to us and add this session.
                     auto sessionsCount = docBroker->addSession(session);
@@ -616,7 +616,7 @@ private:
             // For ToClient sessions, we store incoming messages in a queue and have a separate
             // thread to pump them. This is to empty the queue when we get a "canceltiles" message.
             auto queue = std::make_shared<BasicTileQueue>();
-            session = std::make_shared<ClientSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
+            session = std::make_shared<ClientSession>(id, ws, docBroker, queue);
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);
@@ -986,7 +986,7 @@ public:
             docBroker->load(jailId);
 
             auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<PrisonerSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker, nullptr);
+            auto session = std::make_shared<PrisonerSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker);
 
             // Connect the prison session to the client.
             docBroker->connectPeers(session);
