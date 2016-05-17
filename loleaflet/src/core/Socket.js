@@ -100,6 +100,14 @@ L.Socket = L.Class.extend({
 		this._map._activate();
 	},
 
+	_utf8ToString: function (data) {
+		var strBytes = '';
+		for (var it = 0; it < data.length; it++) {
+			strBytes += String.fromCharCode(data[it]);
+		}
+		return strBytes;
+	},
+
 	_onMessage: function (e) {
 		var imgBytes, index, textMsg;
 
@@ -177,8 +185,13 @@ L.Socket = L.Class.extend({
 			// log the tile msg separately as we need the tile coordinates
 			L.Log.log(textMsg, L.INCOMING);
 			if (imgBytes !== undefined) {
-				// if it's not a tile, parse the whole message
-				textMsg = String.fromCharCode.apply(null, imgBytes);
+				try {
+					// if it's not a tile, parse the whole message
+					textMsg = String.fromCharCode.apply(null, imgBytes);
+				} catch (error) {
+					// big data string
+					textMsg = this._utf8ToString(imgBytes);
+				}
 			}
 			// Decode UTF-8.
 			textMsg = decodeURIComponent(window.escape(textMsg));
