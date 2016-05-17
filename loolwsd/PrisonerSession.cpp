@@ -40,7 +40,7 @@ PrisonerSession::PrisonerSession(const std::string& id,
     _docBroker(docBroker),
     _curPart(0)
 {
-    Log::info("ClientSession ctor [" + getName() + "].");
+    Log::info("PrisonerSession ctor [" + getName() + "].");
 }
 
 PrisonerSession::~PrisonerSession()
