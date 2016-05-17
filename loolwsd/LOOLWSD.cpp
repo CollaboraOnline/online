@@ -986,7 +986,7 @@ public:
             docBroker->load(jailId);
 
             auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<PrisonerSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker);
+            auto session = std::make_shared<PrisonerSession>(sessionId, ws, docBroker);
 
             // Connect the prison session to the client.
             docBroker->connectPeers(session);

@@ -64,6 +64,8 @@ public:
         _queue->put(message);
     }
 
+    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
+
 private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
@@ -78,7 +80,14 @@ private:
     void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
     void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
+    void dispatchChild();
+
 private:
+
+    std::shared_ptr<DocumentBroker> _docBroker;
+
+    /// The incoming message queue.
+    std::shared_ptr<BasicTileQueue> _queue;
 
     // If this document holds the edit lock.
     // An edit lock will only allow the current session to make edits,
@@ -89,23 +98,15 @@ private:
     /// Store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
 
-    /// The incoming message queue.
-    std::shared_ptr<BasicTileQueue> _queue;
-
     /// Marks if document loading failed.
     bool _loadFailed;
+    int _loadPart;
 
 #if 0
-    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
-
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
  private:
-    void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
-
-    int _loadPart;
-    std::shared_ptr<DocumentBroker> _docBroker;
 #endif
 };
 

@@ -33,6 +33,16 @@ using namespace LOOLProtocol;
 using Poco::Path;
 using Poco::StringTokenizer;
 
+PrisonerSession::PrisonerSession(const std::string& id,
+                                 std::shared_ptr<Poco::Net::WebSocket> ws,
+                                 std::shared_ptr<DocumentBroker> docBroker) :
+    MasterProcessSession(id, Kind::ToPrisoner, ws),
+    _docBroker(docBroker),
+    _curPart(0)
+{
+    Log::info("ClientSession ctor [" + getName() + "].");
+}
+
 PrisonerSession::~PrisonerSession()
 {
     Log::info("~PrisonerSession dtor [" + getName() + "].");

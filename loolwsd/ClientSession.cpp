@@ -37,9 +37,11 @@ ClientSession::ClientSession(const std::string& id,
                              std::shared_ptr<Poco::Net::WebSocket> ws,
                              std::shared_ptr<DocumentBroker> docBroker,
                              std::shared_ptr<BasicTileQueue> queue) :
-    MasterProcessSession(id, Kind::ToClient, ws, docBroker),
+    MasterProcessSession(id, Kind::ToClient, ws),
+    _docBroker(docBroker),
     _queue(queue),
-    _loadFailed(false)
+    _loadFailed(false),
+    _loadPart(-1)
 {
     Log::info("ClientSession ctor [" + getName() + "].");
 }
@@ -408,6 +410,26 @@ void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
         const TileDesc tile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
         _docBroker->handleTileRequest(tile, shared_from_this());
     }
+}
+
+void ClientSession::dispatchChild()
+{
+    std::ostringstream oss;
+    oss << "load";
+    oss << " url=" << _docBroker->getPublicUri().toString();
+    oss << " jail=" << _docBroker->getJailedUri().toString();
+
+    if (_loadPart >= 0)
+        oss << " part=" + std::to_string(_loadPart);
+
+    if (_haveDocPassword)
+        oss << " password=" << _docPassword;
+
+    if (!_docOptions.empty())
+        oss << " options=" << _docOptions;
+
+    const auto loadRequest = oss.str();
+    forwardToPeer(loadRequest.c_str(), loadRequest.size());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

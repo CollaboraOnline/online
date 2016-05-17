@@ -33,37 +33,14 @@ using Poco::StringTokenizer;
 
 MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
-                                           std::shared_ptr<Poco::Net::WebSocket> ws,
-                                           std::shared_ptr<DocumentBroker> docBroker) :
-    LOOLSession(id, kind, ws),
-    _loadPart(-1),
-    _docBroker(docBroker)
+                                           std::shared_ptr<Poco::Net::WebSocket> ws) :
+    LOOLSession(id, kind, ws)
 {
     Log::info("MasterProcessSession ctor [" + getName() + "].");
 }
 
 MasterProcessSession::~MasterProcessSession()
 {
-}
-
-void MasterProcessSession::dispatchChild()
-{
-    std::ostringstream oss;
-    oss << "load";
-    oss << " url=" << _docBroker->getPublicUri().toString();
-    oss << " jail=" << _docBroker->getJailedUri().toString();
-
-    if (_loadPart >= 0)
-        oss << " part=" + std::to_string(_loadPart);
-
-    if (_haveDocPassword)
-        oss << " password=" << _docPassword;
-
-    if (!_docOptions.empty())
-        oss << " options=" << _docOptions;
-
-    const auto loadRequest = oss.str();
-    forwardToPeer(loadRequest.c_str(), loadRequest.size());
 }
 
 void MasterProcessSession::forwardToPeer(const char *buffer, int length)

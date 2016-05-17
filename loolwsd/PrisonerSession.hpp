@@ -24,7 +24,9 @@ class ClientSession;
 class PrisonerSession final : public MasterProcessSession, public std::enable_shared_from_this<PrisonerSession>
 {
 public:
-    using MasterProcessSession::MasterProcessSession;
+    PrisonerSession(const std::string& id,
+                    std::shared_ptr<Poco::Net::WebSocket> ws,
+                    std::shared_ptr<DocumentBroker> docBroker);
 
     virtual ~PrisonerSession();
 
@@ -36,23 +38,15 @@ private:
 
 private:
 
+    std::shared_ptr<DocumentBroker> _docBroker;
     std::weak_ptr<ClientSession> _peer;
     int _curPart;
 
 #if 0
-    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
-
-    std::shared_ptr<BasicTileQueue> getQueue() const { return _queue; }
-
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
  private:
-    void dispatchChild();
     void forwardToPeer(const char *buffer, int length);
-
-    int _loadPart;
-    std::shared_ptr<DocumentBroker> _docBroker;
-    std::shared_ptr<BasicTileQueue> _queue;
 #endif
 };
 

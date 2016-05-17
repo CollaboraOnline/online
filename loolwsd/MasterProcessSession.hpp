@@ -24,11 +24,8 @@ class MasterProcessSession : public LOOLSession
  public:
     MasterProcessSession(const std::string& id,
                          const Kind kind,
-                         std::shared_ptr<Poco::Net::WebSocket> ws,
-                         std::shared_ptr<DocumentBroker> docBroker);
+                         std::shared_ptr<Poco::Net::WebSocket> ws);
     virtual ~MasterProcessSession();
-
-    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
@@ -44,9 +41,6 @@ class MasterProcessSession : public LOOLSession
     // obvious have to be rethought when we add collaboration and there can be several LOOL clients
     // per document being edited (i.e., per child process).
     std::weak_ptr<MasterProcessSession> _peer;
-
-    int _loadPart;
-    std::shared_ptr<DocumentBroker> _docBroker;
 };
 
 #endif
