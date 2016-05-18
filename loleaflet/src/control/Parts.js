@@ -41,7 +41,7 @@ L.Map.include({
 		if (docLayer._docType === 'spreadsheet') {
 			this._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 		}
-		docLayer._drawSearchResuls();
+		docLayer._drawSearchResults();
 	},
 
 	getPreview: function (id, index, maxWidth, maxHeight, options) {
