@@ -6,53 +6,48 @@
 L.Control.menubar = L.Control.extend({
 	options: {
 		common: [
-			{name: 'File', type: 'menu', menu: [{name: 'New', type: 'command'},
-												{name: 'Open', type: 'command'},
-												{name: 'Save', type: 'command'},
-												{name: 'Print', type: 'command'}]
+			{name: 'File', type: 'menu', menu: [{name: 'Save', type: 'unocommand', uno: '.uno:Save'},
+												{name: 'Print', id: 'print', type: 'action'},
+												{name: 'Download as', type: 'menu', menu: [{name: 'PDF Document (.pdf)', id: 'downloadas-pdf', type: 'action'},
+																						   {name: 'ODF text document (.odt)', id: 'downloadas-odt', type: 'action'},
+																						   {name: 'Microsoft Word 2003 (.doc)', id: 'downloadas-doc', type: 'action'},
+																						   {name: 'Microsoft Word (.docx)', id: 'downloadas-docx', type: 'action'}]}]
 			},
-			{name: 'Edit', type: 'menu', menu: [{name: 'Undo', type: 'command'},
-												{name: 'Redo', type: 'command'},
-												{name: 'Cut', type: 'command'},
-												{name: 'Copy', type: 'command'},
-												{name: 'Paste', type: 'command'},
-												{name: 'Select All', type: 'command'}]
+			{name: 'Edit', type: 'menu', menu: [{name: 'Undo', type: 'unocommand', uno: '.uno:Undo'},
+												{name: 'Redo', type: 'unocommand', uno: '.uno:Redo'},
+												{type: 'separator'},
+												{name: 'Cut', type: 'unocommand', uno: '.uno:Cut'},
+												{name: 'Copy', type: 'unocommand', uno: '.uno:Copy'},
+												{name: 'Paste', type: 'unocommand', uno: '.uno:Paste'},
+												{type: 'separator'},
+												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
 			}
 		],
 
 		text:  [
-			{name: 'Insert', type: 'menu', menu: [{name: 'Image', type: 'command'},
-												  {name: 'Link', type: 'command'},
-												  {name: 'Table', type: 'command'},
-												  {name: 'Footer', type: 'command'},
-												  {name: 'Page number', type: 'command'},
-												  {name: 'Index', type: 'command'},
-												  {name: 'Horizontal Line', type: 'command'},
-												  {name: 'Chart', type: 'command'},
-												  {name: 'Symbol', type: 'command'},
-												  {name: 'Remark', type: 'command'}]
+			{name: 'Insert', type: 'menu', menu: [{name: 'Image', id: 'insertgraphic', type: 'action'},
+												  {name: 'Comment', type: 'unocommand', uno: '.uno:InsertAnnotation'}]
 			},
-			{name: 'View', type: 'menu', menu: [{name: 'Full screen', type: 'command'},
-												{name: 'Rulers', type: 'command'},
-												{name: 'Zoom', type: 'command'},
-												{name: 'Web Layout', type: 'command'}]
+			{name: 'View', type: 'menu', menu: [{name: 'Full screen', id: 'fullscreen', type: 'action'},
+												{name: 'Zoom in', id: 'zoomin', type: 'action'},
+												{name: 'Zoom out', id: 'zoomout', type: 'action'},
+												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
 			},
-			{name: 'Layout', type: 'menu', menu: [{name: 'Text editor', type: 'command'},
-												  {name: 'Columns', type: 'command'},
-												  {name: 'Image crop', type: 'command'},
-												  {name: 'Page layout', type: 'command'},
-												  {name: 'Clear styling', type: 'command'}]
+			{name: 'Layout', type: 'menu', menu: [{name: 'Clear formatting', type: 'unocommand', uno: '.uno:ResetAttributes'}]
 			},
-			{name: 'Tables', type: 'menu', menu: [{name: 'Insert Table', type: 'command'},
-												  {name: 'Insert row', type: 'command'},
-												  {name: 'Insert column', type: 'command'},
-												  {name: 'Submenus', type: 'menu', menu: [{name: 'Item1', type: 'command'},
-																						  {name: 'Item2', type: 'command'},
-																						  {name: 'Item3', type: 'command'}]},
-												  {name: 'Remove row', type: 'command'},
-												  {name: 'Remove column', type: 'command'},
-												  {name: 'Split cells', type: 'command'},
-												  {name: 'Merge cells', type: 'command'}]
+			{name: 'Tables', type: 'menu', menu: [{name: 'Insert row before', type: 'unocommand', uno: '.uno:InsertRowsBefore'},
+												  {name: 'Insert row after', type: 'unocommand', uno: '.uno:InsertRowsAfter'},
+												  {type: 'separator'},
+												  {name: 'Insert column before', type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
+												  {name: 'Insert column after', type: 'unocommand', uno: '.uno:InsertColumnsAfter'},
+												  {type: 'separator'},
+												  {name: 'Delete row', type: 'unocommand', uno: '.uno:DeleteRows'},
+												  {name: 'Delete column', type: 'unocommand', uno: '.uno:DeleteColumns'},
+												  {name: 'Delete table', type: 'unocommand', uno: '.uno:DeleteTable'},
+												  {type: 'separator'},
+												  {name: 'Merge cells', type: 'unocommand', uno: '.uno:MergeCells'}]
+			},
+			{name: 'Review', type: 'menu', menu: [{name: 'Add comment', type: 'unocommand', uno: '.uno:InsertAnnotation'}]
 			}
 		],
 
@@ -127,6 +122,66 @@ L.Control.menubar = L.Control.extend({
 			subIndicatorsText: '&#8250;'
 		});
 		this._initialized = true;
+
+		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
+	},
+
+	_executeAction: function(id) {
+		if (id === 'print') {
+			map.print();
+		} else if (id.startsWith('downloadas-')) {
+			var format = id.substring('downloadas-'.length);
+			// remove the extension if any
+			var fileName = title.substr(0, title.lastIndexOf('.')) || title;
+			// check if it is empty
+			fileName = fileName === '' ? 'document' : fileName;
+			map.downloadAs(fileName + '.' + format, format);
+		} else if (id === 'insertgraphic') {
+			L.DomUtil.get('insertgraphic').click();
+		} else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
+			map.zoomIn(1);
+		} else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {
+			map.zoomOut(1);
+		} else if (id === 'zoomreset') {
+			map.setZoom(map.options.zoom);
+		} else if (id === 'fullscreen') {
+			if (!document.fullscreenElement &&
+				!document.mozFullscreenElement &&
+				!document.msFullscreenElement &&
+				!document.webkitFullscreenElement) {
+				if (document.documentElement.requestFullscreen) {
+					document.documentElement.requestFullscreen();
+				} else if (document.documentElement.msRequestFullscreen) {
+					document.documentElement.msRequestFullscreen();
+				} else if (document.documentElement.mozRequestFullScreen) {
+					document.documentElement.mozRequestFullScreen();
+				} else if (document.documentElement.webkitRequestFullscreen) {
+					document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+				}
+			} else {
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				} else if (document.msExitFullscreen) {
+					document.msExitFullscreen();
+				} else if (document.mozCancelFullScreen) {
+					document.mozCancelFullScreen();
+				} else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+				}
+			}
+		}
+	},
+
+	_onItemSelected: function(e, item) {
+		var self = e.data.self;
+		var type = $(item).data('type');
+		if (type === 'unocommand') {
+			var unoCommand = $(item).data('uno');
+			map.sendUnoCommand(unoCommand);
+		} else if (type === 'action') {
+			var id = $(item).data('id');
+			self._executeAction(id);
+		}
 	},
 
 	_createMenu: function(menu) {
@@ -142,6 +197,14 @@ L.Control.menubar = L.Control.extend({
 				for (var j in subitemList) {
 					ulItem.appendChild(subitemList[j]);
 				}
+			} else if (menu[i]['type'] === 'unocommand') {
+				$(aItem).data('type', 'unocommand');
+				$(aItem).data('uno', menu[i]['uno']);
+			} else if (menu[i]['type'] === 'separator') {
+				$(aItem).addClass('separator');
+			} else if (menu[i]['type'] === 'action') {
+				$(aItem).data('type', 'action');
+				$(aItem).data('id', menu[i]['id']);
 			}
 
 			itemList.push(liItem);
