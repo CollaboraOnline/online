@@ -252,34 +252,6 @@ var deps = {
 		desc: 'Makes markers draggable (by mouse or touch).'
 	},
 
-	ControlZoom: {
-		src: ['control/Control.js',
-		      'control/Control.Zoom.js'],
-		heading: 'Controls',
-		desc: 'Basic zoom control with two buttons (zoom in / zoom out).'
-	},
-
-	ControlSearch: {
-		src: ['control/Control.js',
-		      'control/Control.Search.js'],
-		heading: 'Controls',
-		desc: 'Search control with two buttons (previous / next).'
-	},
-
-	ControlInsertImg: {
-		src: ['control/Control.js',
-		      'control/Control.InsertImg.js'],
-		heading: 'Controls',
-		desc: 'Handles inserting an image in the document.'
-	},
-
-	ControlParts: {
-		src: ['control/Control.js',
-		      'control/Control.Parts.js'],
-		heading: 'Controls',
-		desc: 'Parts control with two buttons (previous / next).'
-	},
-
 	ControlPartsPreview: {
 		src: ['control/Control.js',
 		      'control/Control.PartsPreview.js'],
@@ -329,13 +301,6 @@ var deps = {
 		desc: 'Enables selection in view mode'
 	},
 
-	ControlStatusIndicator: {
-		src: ['control/Control.js',
-		      'control/Control.StatusIndicator.js'],
-		heading: 'Controls',
-		desc: 'Display document loading status'
-	},
-
 	ControlScroll: {
 		src: ['control/Control.js',
 		      'control/Control.Scroll.js'],
@@ -348,28 +313,6 @@ var deps = {
 		      'control/Control.Dialog.js'],
 		heading: 'Controls',
 		desc: 'Handles vex dialogs for displaying alerts'
-	},
-
-	ControlStyles: {
-		src: ['control/Control.js',
-		      'control/Control.Styles.js'],
-		deps: ['Styles'],
-		heading: 'Controls',
-		desc: 'Handles styles selection'
-	},
-
-	ControlFonts: {
-		src: ['control/Control.js',
-		      'control/Control.Fonts.js'],
-		heading: 'Controls',
-		desc: 'Handles fonts selection'
-	},
-
-	ControlFormulaBar: {
-		src: ['control/Control.js',
-		      'control/Control.Formulabar.js'],
-		heading: 'Controls',
-		desc: 'Handles the formula bar in calc'
 	},
 
 	ControlAttrib: {
