@@ -7,10 +7,10 @@
 	position: absolute;
 	top: 47px;
 	left: 0px;
-	bottom: 29px;
+	bottom: 33px;
 	max-width: 214px;
 	overflow: hidden;
-	border-top: 2px solid #B6B6B6;
+	border-top: 1px solid #B6B6B6;
 }
 
 .preview-frame {

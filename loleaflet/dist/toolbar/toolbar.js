@@ -133,6 +133,7 @@ $(function () {
 		items: [
 			{ type: 'html',  id: 'left' },
 			{ type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _("Fullscreen presentation") },
+			{ type: 'break', id: 'presentationbreak', hidden:true },
 			{ type: 'button',  id: 'insertpage', img: 'insertpage', hidden:true, hint: _("Insert Page") },
 			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hidden:true, hint: _("Duplicate Page") },
 			{ type: 'button',  id: 'deletepage', img: 'deletepage', hidden:true, hint: _("Delete Page") },
@@ -575,6 +576,7 @@ map.on('updatepermission', function (e) {
 
 			toolbar = w2ui['presentation-toolbar'];
 			toolbar.show('presentation');
+			toolbar.show('presentationbreak');
 			toolbar.show('insertpage');
 			toolbar.show('duplicatepage');
 			toolbar.show('deletepage');

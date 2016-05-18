@@ -2,19 +2,19 @@
 	border-top: 1px solid #B6B6B6 !important;
 	top: 100px !important;
 	left: 50px !important;
-	bottom: 56px !important;
+	bottom: 65px !important;
 	}
 
 .spreadsheet-tab {
 	margin: 0;
 	padding: 0;
-	left: 108px;
+	left: 140px;
 	right: 0;
 	bottom: 33px;
 	position: absolute;
 	cursor: pointer;
-	height: 24px;
-	overflow-x: hidden;
+	height: 32px;
+	overflow: hidden;
 	white-space: nowrap;
 
 	background-color: #efefef;
@@ -31,11 +31,12 @@
 
 .spreadsheet-context-menu {
 	margin: 0px;
+	margin-top: 2px;
 	margin-right: 3px;
-	padding-left: 7px;
-	padding-right: 7px;
-	padding-top: 1px;
-	padding-bottom: 1px;
+	padding-left: 9px;
+	padding-right: 9px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 
 	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
 	display: inline-block;
@@ -47,10 +48,10 @@
 .spreadsheet-context-menu-selected {
 	background: white !important;
 	color: black !important;
-	border-top: 1px solid lightgrey;
-	border-left: 1px solid lightgrey;
-	border-right: 1px solid lightgrey;
-	border-bottom: 1px solid lightgrey;
+	margin-top: 0px;
+	padding-top: 6px;
+	border: 1px solid #dfdfdf;
+	border-top: 0px;
 	}
 
 .spreadsheet-context-menu.context-menu-disabled {
@@ -137,7 +138,7 @@
 	left: 0;
 	top: 100px;
 	width: 48px;
-	bottom: 57px;
+	bottom: 65px;
 	overflow: hidden;
 	}
 
