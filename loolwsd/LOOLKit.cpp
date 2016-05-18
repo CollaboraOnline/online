@@ -864,7 +864,7 @@ private:
         try
         {
             load(sessionId, uri, docPassword, renderOpts, haveDocPassword);
-            if (!_loKitDocument)
+            if (!_loKitDocument || !_loKitDocument->get())
             {
                 return nullptr;
             }
@@ -876,7 +876,7 @@ private:
         }
 
         // Done loading, let the next one in (if any).
-        assert(_loKitDocument && "Uninitialized lok::Document instance");
+        assert(_loKitDocument && _loKitDocument->get() && "Uninitialized lok::Document instance");
         lock.lock();
         ++_clientViews;
         --_isLoading;
@@ -918,11 +918,11 @@ private:
 
 private:
 
-    LibreOfficeKitDocument* load(const std::string& sessionId,
-                                 const std::string& uri,
-                                 const std::string& docPassword,
-                                 const std::string& renderOpts,
-                                 bool haveDocPassword)
+    std::shared_ptr<lok::Document> load(const std::string& sessionId,
+                                        const std::string& uri,
+                                        const std::string& docPassword,
+                                        const std::string& renderOpts,
+                                        bool haveDocPassword)
     {
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
@@ -959,7 +959,7 @@ private:
             _loKitDocument = _loKit->documentLoad(uri.c_str());
             Log::debug("Returned lokit::documentLoad.");
 
-            if (!_loKitDocument)
+            if (!_loKitDocument || !_loKitDocument->get())
             {
                 Log::error("Failed to load: " + uri + ", error: " + _loKit->getError());
 
@@ -1028,7 +1028,7 @@ private:
             }
         }
 
-        return _loKitDocument->get();
+        return _loKitDocument;
     }
 
 private:
