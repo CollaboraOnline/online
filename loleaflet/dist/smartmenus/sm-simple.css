@@ -1,9 +1,5 @@
 .sm-simple {
-    border: 1px solid #bbbbbb;
     background: white;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 .sm-simple a, .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active {
     padding: 13px 20px;
@@ -11,9 +7,9 @@
     padding-right: 58px;
     color: #555555;
     font-family: "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", Arial, sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: normal;
-    line-height: 17px;
+    line-height: 15px;
     text-decoration: none;
 }
 .sm-simple a.current {
@@ -42,17 +38,16 @@
     content: '-';
 }
 .sm-simple li {
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 .sm-simple > li:first-child {
     border-top: 0;
 }
 .sm-simple ul {
-    background: rgba(179, 179, 179, 0.1);
+    background: #fff;
 }
 .sm-simple ul a, .sm-simple ul a:hover, .sm-simple ul a:focus, .sm-simple ul a:active {
-   font-size: 14px;
-   border-left: 8px solid transparent;
+    font-size: 14px;
+    border-left: 8px solid transparent;
 }
 .sm-simple ul ul a,
 .sm-simple ul ul a:hover,
@@ -99,8 +94,12 @@
 	float: right;
     }
 
-    .sm-simple ul li, .sm-simple.sm-rtl ul li, .sm-simple.sm-vertical li {
+    .sm-simple ul li {
 	float: none;
+    }
+
+    .sm-simple > li {
+	padding-top: 5px;
     }
 
     .sm-simple a {
@@ -112,19 +111,22 @@
     }
 
     .sm-simple .sm-nowrap > li > a, .sm-simple .sm-nowrap > li > :not(ul) a {
-					white-space: nowrap;
-				    }
+	white-space: nowrap;
+    }
 
     /* ...end */
     .sm-simple {
-	background: white;
+	background: #efefef;
     }
     .sm-simple a, .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active, .sm-simple a.highlighted {
-	padding: 11px 20px;
-	color: #555555;
+	padding: 5px 15px;
+	color: #555;
     }
     .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active, .sm-simple a.highlighted {
-	background: #eeeeee;
+	background: #eee;
+    }
+    .sm-simple > li > a:hover, .sm-simple > li > a:focus, .sm-simple > li > a:active, .sm-simple > li > a.highlighted {
+	background: #fff;
     }
     .sm-simple a.current {
 	background: #555555;
@@ -146,6 +148,12 @@
 	font: 14px/16px monospace !important;
 	background: transparent;
     }
+    .sm-simple > li > a span.sub-arrow {
+	display: none;
+    }
+    .sm-simple > li:first-child a span.sub-arrow {
+	display: none;
+    }
     .sm-simple a.highlighted span.sub-arrow:before {
 	display: none;
     }
@@ -159,9 +167,6 @@
     .sm-simple ul {
 	border: 1px solid #bbbbbb;
 	background: white;
-	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
     .sm-simple ul a {
 	border: 0 !important;
@@ -170,12 +175,11 @@
 	padding-right: 20px;
     }
     .sm-simple ul a span.sub-arrow {
-	right: auto;
-	margin-left: -12px;
+	right: 0;
+	margin-right: 5px;
     }
     .sm-simple ul > li {
 	border-left: 0;
-	border-top: 1px solid #eeeeee;
     }
     .sm-simple ul > li:first-child {
 	border-top: 0;

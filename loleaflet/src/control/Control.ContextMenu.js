@@ -58,7 +58,7 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 
 		var contextMenu = this._createContextMenuStructure(obj);
-		var d = $.contextMenu({
+		$.contextMenu({
 			selector: '.leaflet-layer',
 			trigger: 'none',
 			build: function(triggerEle, e) {
