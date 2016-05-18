@@ -38,6 +38,9 @@ L.Map.include({
 		if (docLayer._invalidatePreview) {
 			docLayer._invalidatePreview();
 		}
+		if (docLayer._docType === 'spreadsheet') {
+			this._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+		}
 		docLayer._drawSearchResuls();
 	},
 
