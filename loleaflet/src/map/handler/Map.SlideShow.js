@@ -63,6 +63,7 @@ L.Map.SlideShow = L.Handler.extend({
 
 	_onSlideDownloadReady: function (e) {
 		this._slideShow.src = e.url + '?mime_type=image/svg%2Bxml';
+		this._slideShow.contentWindow.focus();
 	}
 });
 
