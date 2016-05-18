@@ -336,13 +336,6 @@ var deps = {
 		desc: 'Enables selection in view mode'
 	},
 
-	ControlButtons: {
-		src: ['control/Control.js',
-		      'control/Control.Buttons.js'],
-		heading: 'Buttons',
-		desc: 'Handles buttons from the toolbar'
-	},
-
 	ControlStatusIndicator: {
 		src: ['control/Control.js',
 		      'control/Control.StatusIndicator.js'],
