@@ -155,9 +155,6 @@ collapsible to desktop (navbar + dropdowns)
 .sm-simple > li > a span.sub-arrow {
     display: none;
 }
-.sm-simple > li:first-child a span.sub-arrow {
-    display: none;
-}
 .sm-simple a.highlighted span.sub-arrow:before {
     display: none;
 }
@@ -187,6 +184,14 @@ collapsible to desktop (navbar + dropdowns)
 }
 .sm-simple ul > li:first-child {
     border-top: 0;
+}
+.sm-simple a.separator {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: #efefef;
 }
 .sm-simple span.scroll-up,
 .sm-simple span.scroll-down {
