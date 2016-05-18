@@ -47,7 +47,7 @@
     background: #DFDFDF;
     left: 0;
     text-align: center;
-    bottom: 28px;
+    bottom: 33px;
     width: 203px;
     padding: 0;
     position: absolute;
@@ -188,50 +188,50 @@ button.leaflet-control-search-next
     border-style: solid;
 }
 
-.w2ui-icon.accepttrackedchanges{ background: url('/loleaflet/dist/images/sc_accepttrackedchanges.png') no-repeat center !important; }
-.w2ui-icon.alignblock{ background: url('/loleaflet/dist/images/sc_alignblock.png') no-repeat center !important; }
-.w2ui-icon.alignhorizontal{ background: url('/loleaflet/dist/images/sc_alignhorizontalcenter.png') no-repeat center !important; }
-.w2ui-icon.alignleft{ background: url('/loleaflet/dist/images/sc_alignleft.png') no-repeat center !important; }
-.w2ui-icon.alignright{ background: url('/loleaflet/dist/images/sc_alignright.png') no-repeat center !important; }
-.w2ui-icon.autosum{ background: url('/loleaflet/dist/images/sc_autosum.png') no-repeat center !important; }
-.w2ui-icon.backcolor{ background: url('/loleaflet/dist/images/sc_backcolor.png') no-repeat center !important; }
-.w2ui-icon.bold{ background: url('/loleaflet/dist/images/sc_bold.png') no-repeat center !important; }
-.w2ui-icon.bullet{ background: url('/loleaflet/dist/images/sc_defaultbullet.png') no-repeat center !important; }
-.w2ui-icon.cancel{ background: url('/loleaflet/dist/images/sc_cancel.png') no-repeat center !important; }
-.w2ui-icon.color{ background: url('/loleaflet/dist/images/sc_color.png') no-repeat center !important; }
-.w2ui-icon.closedoc{ background: url('/loleaflet/dist/images/sc_closedoc.png') no-repeat center !important; }
-.w2ui-icon.decrementindent{ background: url('/loleaflet/dist/images/sc_decrementindent.png') no-repeat center !important; }
-.w2ui-icon.deletepage{ background: url('/loleaflet/dist/images/sc_deletepage.png') no-repeat center !important; }
-.w2ui-icon.duplicatepage{ background: url('/loleaflet/dist/images/sc_duplicatepage.png') no-repeat center !important; }
-.w2ui-icon.edit{ background: url('/loleaflet/dist/images/sc_editdoc.png') no-repeat center !important; }
-.w2ui-icon.equal{ background: url('/loleaflet/dist/images/sc26049.png') no-repeat center !important; }
-.w2ui-icon.help{ background: url('/loleaflet/dist/images/sc_helpindex.png') no-repeat center !important; }
-.w2ui-icon.incrementindent{ background: url('/loleaflet/dist/images/sc_decrementlevel.png') no-repeat center !important; }
-.w2ui-icon.insertpage{ background: url('/loleaflet/dist/images/sc_insertpage.png') no-repeat center !important; }
-.w2ui-icon.italic{ background: url('/loleaflet/dist/images/sc_italic.png') no-repeat center !important; }
-.w2ui-icon.insertgraphic{ background: url('/loleaflet/dist/images/sc_gallery.png') no-repeat center !important; }
-.w2ui-icon.next{ background: url('/loleaflet/dist/images/sc_downsearch.png') no-repeat center !important; }
-.w2ui-icon.numbering{ background: url('/loleaflet/dist/images/sc_defaultnumbering.png') no-repeat center !important; }
-.w2ui-icon.presentation{ background: url('/loleaflet/dist/images/sc_dia.png') no-repeat center !important; }
-.w2ui-icon.prev{ background: url('/loleaflet/dist/images/sc_upsearch.png') no-repeat center !important; }
-.w2ui-icon.print{ background: url('/loleaflet/dist/images/sc_print.png') no-repeat center !important; }
-.w2ui-icon.redo{ background: url('/loleaflet/dist/images/sc_redo.png') no-repeat center !important; }
-.w2ui-icon.save{ background: url('/loleaflet/dist/images/sc_save.png') no-repeat center !important; }
-.w2ui-icon.saveas{ background: url('/loleaflet/dist/images/sc_saveas.png') no-repeat center !important; }
-.w2ui-icon.strikeout{ background: url('/loleaflet/dist/images/sc_strikeout.png') no-repeat center !important; }
-.w2ui-icon.underline{ background: url('/loleaflet/dist/images/sc_underline.png') no-repeat center !important; }
-.w2ui-icon.undo{ background: url('/loleaflet/dist/images/sc_undo.png') no-repeat center !important; }
+.w2ui-icon.accepttrackedchanges{ background: url('/loleaflet/dist/images/lc_accepttrackedchanges.png') no-repeat center !important; }
+.w2ui-icon.alignblock{ background: url('/loleaflet/dist/images/lc_alignblock.png') no-repeat center !important; }
+.w2ui-icon.alignhorizontal{ background: url('/loleaflet/dist/images/lc_alignhorizontalcenter.png') no-repeat center !important; }
+.w2ui-icon.alignleft{ background: url('/loleaflet/dist/images/lc_alignleft.png') no-repeat center !important; }
+.w2ui-icon.alignright{ background: url('/loleaflet/dist/images/lc_alignright.png') no-repeat center !important; }
+.w2ui-icon.autosum{ background: url('/loleaflet/dist/images/lc_autosum.png') no-repeat center !important; }
+.w2ui-icon.backcolor{ background: url('/loleaflet/dist/images/lc_backcolor.png') no-repeat center !important; }
+.w2ui-icon.bold{ background: url('/loleaflet/dist/images/lc_bold.png') no-repeat center !important; }
+.w2ui-icon.bullet{ background: url('/loleaflet/dist/images/lc_defaultbullet.png') no-repeat center !important; }
+.w2ui-icon.cancel{ background: url('/loleaflet/dist/images/lc_cancel.png') no-repeat center !important; }
+.w2ui-icon.color{ background: url('/loleaflet/dist/images/lc_color.png') no-repeat center !important; }
+.w2ui-icon.closedoc{ background: url('/loleaflet/dist/images/lc_closedoc.png') no-repeat center !important; }
+.w2ui-icon.decrementindent{ background: url('/loleaflet/dist/images/lc_decrementindent.png') no-repeat center !important; }
+.w2ui-icon.deletepage{ background: url('/loleaflet/dist/images/lc_deletepage.png') no-repeat center !important; }
+.w2ui-icon.duplicatepage{ background: url('/loleaflet/dist/images/lc_duplicatepage.png') no-repeat center !important; }
+.w2ui-icon.edit{ background: url('/loleaflet/dist/images/lc_editdoc.png') no-repeat center !important; }
+.w2ui-icon.equal{ background: url('/loleaflet/dist/images/lc26049.png') no-repeat center !important; }
+.w2ui-icon.help{ background: url('/loleaflet/dist/images/lc_helpindex.png') no-repeat center !important; }
+.w2ui-icon.incrementindent{ background: url('/loleaflet/dist/images/lc_decrementlevel.png') no-repeat center !important; }
+.w2ui-icon.insertpage{ background: url('/loleaflet/dist/images/lc_insertpage.png') no-repeat center !important; }
+.w2ui-icon.italic{ background: url('/loleaflet/dist/images/lc_italic.png') no-repeat center !important; }
+.w2ui-icon.insertgraphic{ background: url('/loleaflet/dist/images/lc_gallery.png') no-repeat center !important; }
+.w2ui-icon.next{ background: url('/loleaflet/dist/images/lc_downsearch.png') no-repeat center !important; }
+.w2ui-icon.numbering{ background: url('/loleaflet/dist/images/lc_defaultnumbering.png') no-repeat center !important; }
+.w2ui-icon.presentation{ background: url('/loleaflet/dist/images/lc_dia.png') no-repeat center !important; }
+.w2ui-icon.prev{ background: url('/loleaflet/dist/images/lc_upsearch.png') no-repeat center !important; }
+.w2ui-icon.print{ background: url('/loleaflet/dist/images/lc_print.png') no-repeat center !important; }
+.w2ui-icon.redo{ background: url('/loleaflet/dist/images/lc_redo.png') no-repeat center !important; }
+.w2ui-icon.save{ background: url('/loleaflet/dist/images/lc_save.png') no-repeat center !important; }
+.w2ui-icon.saveas{ background: url('/loleaflet/dist/images/lc_saveas.png') no-repeat center !important; }
+.w2ui-icon.strikeout{ background: url('/loleaflet/dist/images/lc_strikeout.png') no-repeat center !important; }
+.w2ui-icon.underline{ background: url('/loleaflet/dist/images/lc_underline.png') no-repeat center !important; }
+.w2ui-icon.undo{ background: url('/loleaflet/dist/images/lc_undo.png') no-repeat center !important; }
 .w2ui-icon.zoomin{ background: url('/loleaflet/dist/images/plus.png') no-repeat center !important; }
 .w2ui-icon.zoomout{ background: url('/loleaflet/dist/images/minus.png') no-repeat center !important; }
-.w2ui-icon.zoomreset{ background: url('/loleaflet/dist/images/sc_view100.png') no-repeat center !important; }
-.w2ui-icon.more{ background: url('/loleaflet/dist/images/sc_downsearch.png') no-repeat center !important; }
-.w2ui-icon.firstrecord{ background: url('/loleaflet/dist/images/sc_firstrecord.png') no-repeat center !important; }
-.w2ui-icon.nextrecord{ background: url('/loleaflet/dist/images/sc_nextrecord.png') no-repeat center !important; }
-.w2ui-icon.prevrecord{ background: url('/loleaflet/dist/images/sc_prevrecord.png') no-repeat center !important; }
-.w2ui-icon.lastrecord{ background: url('/loleaflet/dist/images/sc_lastrecord.png') no-repeat center !important; }
+.w2ui-icon.zoomreset{ background: url('/loleaflet/dist/images/lc_view100.png') no-repeat center !important; }
+.w2ui-icon.more{ background: url('/loleaflet/dist/images/lc_downsearch.png') no-repeat center !important; }
+.w2ui-icon.firstrecord{ background: url('/loleaflet/dist/images/lc_firstrecord.png') no-repeat center !important; }
+.w2ui-icon.nextrecord{ background: url('/loleaflet/dist/images/lc_nextrecord.png') no-repeat center !important; }
+.w2ui-icon.prevrecord{ background: url('/loleaflet/dist/images/lc_prevrecord.png') no-repeat center !important; }
+.w2ui-icon.lastrecord{ background: url('/loleaflet/dist/images/lc_lastrecord.png') no-repeat center !important; }
 
 #simplemodal-container a.modalCloseImg {
-	background:url('/loleaflet/dist/images/sc_closedoc.png') no-repeat;
+	background:url('/loleaflet/dist/images/lc_closedoc.png') no-repeat;
 	width:25px;
 	height:29px;
 	display:inline;
