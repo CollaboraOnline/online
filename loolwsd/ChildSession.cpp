@@ -292,7 +292,6 @@ ChildSession::ChildSession(const std::string& id,
                            OnLoadCallback onLoad,
                            OnUnloadCallback onUnload) :
     LOOLSession(id, Kind::ToMaster, ws),
-    _loKitDocument(nullptr),
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
     _viewId(0),
@@ -323,7 +322,7 @@ void ChildSession::disconnect()
         std::unique_lock<std::recursive_mutex> lock(Mutex);
 
         if (_multiView)
-            _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+            _loKitDocument->setView(_viewId);
 
         _onUnload(getId());
 
@@ -345,9 +344,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         std::unique_lock<std::recursive_mutex> lock(Mutex);
 
         if (_multiView)
-            _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+            _loKitDocument->setView(_viewId);
 
-        const int curPart = _loKitDocument->pClass->getPart(_loKitDocument);
+        const int curPart = _loKitDocument->getPart();
         sendTextFrame("curpart: part=" + std::to_string(curPart));
         sendTextFrame("setpart: part=" + std::to_string(curPart));
 
@@ -603,14 +602,14 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
 
     if (_multiView)
     {
-        _viewId = _loKitDocument->pClass->getView(_loKitDocument);
-        _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderOpts.empty() ? nullptr : renderOpts.c_str()));
+        _viewId = _loKitDocument->getView();
+        _loKitDocument->initializeForRendering((renderOpts.empty() ? nullptr : renderOpts.c_str()));
     }
 
-    _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument);
+    _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());
     if (_docType != "text" && part != -1)
     {
-        _loKitDocument->pClass->setPart(_loKitDocument, part);
+        _loKitDocument->setPart(part);
     }
 
     // Respond by the document status, which has no arguments.
@@ -636,7 +635,7 @@ void ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-       _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+       _loKitDocument->setView(_viewId);
 
     URI::decode(font, decodedFont);
     std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
@@ -647,7 +646,7 @@ void ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
     Timestamp timestamp;
     int width, height;
-    unsigned char *pixmap = _loKitDocument->pClass->renderFont(_loKitDocument, decodedFont.c_str(), &width, &height);
+    unsigned char *pixmap = _loKitDocument->renderFont(decodedFont.c_str(), &width, &height);
     Log::trace("renderFont [" + font + "] rendered in " + std::to_string(timestamp.elapsed()/1000.) + "ms");
 
     if (pixmap != nullptr)
@@ -669,9 +668,9 @@ bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    const auto status = LOKitHelper::documentStatus(_loKitDocument);
+    const auto status = LOKitHelper::documentStatus(_loKitDocument->get());
     if (status.empty())
     {
         Log::error("Failed to get document status.");
@@ -694,9 +693,9 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    sendTextFrame("commandvalues: " + std::string(_loKitDocument->pClass->getCommandValues(_loKitDocument, command.c_str())));
+    sendTextFrame("commandvalues: " + std::string(_loKitDocument->getCommandValues(command.c_str())));
     return true;
 }
 
@@ -705,9 +704,9 @@ bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    sendTextFrame("partpagerectangles: " + std::string(_loKitDocument->pClass->getPartPageRectangles(_loKitDocument)));
+    sendTextFrame("partpagerectangles: " + std::string(_loKitDocument->getPartPageRectangles()));
     return true;
 }
 
@@ -728,9 +727,9 @@ bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, StringToke
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    _loKitDocument->pClass->setClientZoom(_loKitDocument, tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
+    _loKitDocument->setClientZoom(tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
     return true;
 }
 
@@ -754,9 +753,9 @@ bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, Str
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    _loKitDocument->pClass->setClientVisibleArea(_loKitDocument, x, y, width, height);
+    _loKitDocument->setClientVisibleArea(x, y, width, height);
     return true;
 }
 
@@ -788,7 +787,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, StringToke
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     //TODO: Cleanup the file after downloading.
-    _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
+    _loKitDocument->saveAs(url.c_str(),
             format.size() == 0 ? nullptr :format.c_str(),
             filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
 
@@ -817,9 +816,9 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, Stri
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    char *textSelection = _loKitDocument->pClass->getTextSelection(_loKitDocument, mimeType.c_str(), nullptr);
+    char *textSelection = _loKitDocument->getTextSelection(mimeType.c_str(), nullptr);
 
     sendTextFrame("textselectioncontent: " + std::string(textSelection));
 
@@ -844,10 +843,10 @@ bool ChildSession::paste(const char* buffer, int length, StringTokenizer& tokens
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    Log::info("Calling _loKit->pClass->paste()");
-    _loKitDocument->pClass->paste(_loKitDocument, mimeType.c_str(), data, size);
+    Log::info("Calling _loKit->paste()");
+    _loKitDocument->paste(mimeType.c_str(), data, size);
     Log::info("paste() returned");
 
     return true;
@@ -877,9 +876,9 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringToke
                 "\"value\":\"" + fileName + "\""
             "}}";
         if (_multiView)
-            _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+            _loKitDocument->setView(_viewId);
 
-        _loKitDocument->pClass->postUnoCommand(_loKitDocument, command.c_str(), arguments.c_str(), false);
+        _loKitDocument->postUnoCommand(command.c_str(), arguments.c_str(), false);
     }
 
     return true;
@@ -919,9 +918,9 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokeni
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    _loKitDocument->pClass->postKeyEvent(_loKitDocument, type, charcode, keycode);
+    _loKitDocument->postKeyEvent(type, charcode, keycode);
 
     return true;
 }
@@ -965,9 +964,9 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringToke
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    _loKitDocument->pClass->postMouseEvent(_loKitDocument, type, x, y, count, buttons, modifier);
+    _loKitDocument->postMouseEvent(type, x, y, count, buttons, modifier);
 
     return true;
 }
@@ -983,18 +982,18 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringToke
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
     const bool bNotify = (tokens[1] == ".uno:Save");
 
     if (tokens.count() == 2)
     {
-        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(), nullptr, bNotify);
+        _loKitDocument->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
     }
     else
     {
-        _loKitDocument->pClass->postUnoCommand(_loKitDocument, tokens[1].c_str(),
+        _loKitDocument->postUnoCommand(tokens[1].c_str(),
                                                Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
                                                bNotify);
     }
@@ -1022,9 +1021,9 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, StringToke
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    _loKitDocument->pClass->setTextSelection(_loKitDocument, type, x, y);
+    _loKitDocument->setTextSelection(type, x, y);
 
     return true;
 }
@@ -1048,9 +1047,9 @@ bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringT
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    _loKitDocument->pClass->setGraphicSelection(_loKitDocument, type, x, y);
+    _loKitDocument->setGraphicSelection(type, x, y);
 
     return true;
 }
@@ -1066,9 +1065,9 @@ bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, String
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    _loKitDocument->pClass->resetSelection(_loKitDocument);
+    _loKitDocument->resetSelection();
 
     return true;
 }
@@ -1097,9 +1096,9 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenize
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    bool success = _loKitDocument->pClass->saveAs(_loKitDocument, url.c_str(),
+    bool success = _loKitDocument->saveAs(url.c_str(),
             format.size() == 0 ? nullptr :format.c_str(),
             filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
 
@@ -1124,12 +1123,12 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, StringT
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (part != _loKitDocument->pClass->getPart(_loKitDocument))
+    if (part != _loKitDocument->getPart())
     {
         if (_multiView)
-            _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+            _loKitDocument->setView(_viewId);
 
-        _loKitDocument->pClass->setPart(_loKitDocument, part);
+        _loKitDocument->setPart(part);
     }
 
     return true;
@@ -1148,9 +1147,9 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (_multiView)
-        _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+        _loKitDocument->setView(_viewId);
 
-    _loKitDocument->pClass->setPart(_loKitDocument, page);
+    _loKitDocument->setPart(page);
     return true;
 }
 

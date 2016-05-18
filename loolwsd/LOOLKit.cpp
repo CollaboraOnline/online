@@ -843,7 +843,7 @@ private:
     }
 
     /// Load a document (or view) and register callbacks.
-    LibreOfficeKitDocument* onLoad(const std::string& sessionId,
+    std::shared_ptr<lok::Document> onLoad(const std::string& sessionId,
                                    const std::string& uri,
                                    const std::string& docPassword,
                                    const std::string& renderOpts,
@@ -882,7 +882,7 @@ private:
         --_isLoading;
         _cvLoading.notify_one();
 
-        return _loKitDocument->get();
+        return _loKitDocument;
     }
 
     void onUnload(const std::string& sessionId)

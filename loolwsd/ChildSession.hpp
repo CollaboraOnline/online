@@ -20,7 +20,7 @@
 #include "LibreOfficeKit.hpp"
 
 class CallbackWorker;
-typedef std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> OnLoadCallback;
+typedef std::function<std::shared_ptr<lok::Document>(const std::string&, const std::string&, const std::string&, const std::string&, bool)> OnLoadCallback;
 typedef std::function<void(const std::string&)> OnUnloadCallback;
 
 class ChildSession final : public LOOLSession
@@ -48,7 +48,7 @@ public:
 
     const std::string& getDocType() const { return _docType; }
 
-    LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument; }
+    LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument->get(); }
 
     void loKitCallback(const int nType, const char* pPayload);
 
@@ -84,7 +84,7 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
-    LibreOfficeKitDocument *_loKitDocument;
+    std::shared_ptr<lok::Document> _loKitDocument;
     std::string _docType;
     const bool _multiView;
     const std::string _jailId;
