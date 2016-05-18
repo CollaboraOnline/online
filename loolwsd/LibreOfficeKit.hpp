@@ -497,6 +497,7 @@ public:
         _pOffice(pThis)
     {
         Log::trace("lok::Office ctor.");
+        assert(_pOffice);
     }
 
     inline ~Office()
@@ -506,15 +507,27 @@ public:
         _pOffice->pClass->destroy(_pOffice);
     }
 
+    /// This lock must be held while calling
+    /// one or more member of this class.
+    std::unique_lock<std::mutex> getLock()
+    {
+        return std::unique_lock<std::mutex>(_mutex);
+    }
+
+    /// Gives access to the underlying C pointer.
+    inline LibreOfficeKit* get()
+    {
+        return _pOffice;
+    }
+
     /**
      * Loads a document from an URL.
      *
      * @param pUrl the URL of the document to load
      * @param pFilterOptions options for the import filter, e.g. SkipImages.
      */
-    inline Document* documentLoad(const char* pUrl, const char* pFilterOptions = NULL)
+    inline std::shared_ptr<Document> documentLoad(const char* pUrl, const char* pFilterOptions = NULL)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Office: documentLoad: URL: [" << pUrl
                      << "], FilterOptions: [" << pFilterOptions
                      << "]." << Log::end;
@@ -525,23 +538,18 @@ public:
         else
             pDoc = _pOffice->pClass->documentLoad(_pOffice, pUrl);
 
-        if (pDoc == NULL)
-            return NULL;
-
-        return new Document(pDoc);
+        return std::make_shared<lok::Document>(pDoc);
     }
 
     /// Returns the last error as a string, the returned pointer has to be freed by the caller.
     inline char* getError()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pOffice->pClass->getError(_pOffice);
     }
 
     /// Frees the memory pointed to by pFree.
     inline void freeError(char* pFree)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pOffice->pClass->freeError(pFree);
     }
 
@@ -563,7 +571,6 @@ public:
      */
     inline char* getFilterTypes()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pOffice->pClass->getFilterTypes(_pOffice);
     }
 
@@ -574,7 +581,6 @@ public:
      */
     void setOptionalFeatures(uint64_t features)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pOffice->pClass->setOptionalFeatures(_pOffice, features);
     }
 
@@ -599,7 +605,6 @@ public:
      */
     inline void setDocumentPassword(char const* pURL, char const* pPassword)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pOffice->pClass->setDocumentPassword(_pOffice, pURL, pPassword);
     }
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY

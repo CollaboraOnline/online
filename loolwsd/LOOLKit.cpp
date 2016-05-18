@@ -349,7 +349,7 @@ public:
     /// 2) Document which require password to modify
     enum class PasswordType { ToView, ToModify };
 
-    Document(LibreOfficeKit *loKit,
+    Document(const std::shared_ptr<lok::Office>& loKit,
              const std::string& jailId,
              const std::string& docKey,
              const std::string& url)
@@ -367,6 +367,7 @@ public:
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
+        assert(_loKit && _loKit->get());
     }
 
     ~Document()
@@ -538,7 +539,7 @@ public:
         if (_isDocPasswordProtected && _haveDocPassword)
         {
             // it means this is the second attempt with the wrong password; abort the load operation
-            _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), nullptr);
+            _loKit->setDocumentPassword(_jailedUrl.c_str(), nullptr);
             return;
         }
 
@@ -549,11 +550,11 @@ public:
         else if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY)
             _docPasswordType = PasswordType::ToModify;
 
-        Log::info("Caling _loKit->pClass->setDocumentPassword");
+        Log::info("Calling _loKit->setDocumentPassword");
         if (_haveDocPassword)
-            _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), _docPassword.c_str());
+            _loKit->setDocumentPassword(_jailedUrl.c_str(), _docPassword.c_str());
         else
-            _loKit->pClass->setDocumentPassword(_loKit, _jailedUrl.c_str(), nullptr);
+            _loKit->setDocumentPassword(_jailedUrl.c_str(), nullptr);
         Log::info("setDocumentPassword returned");
     }
 
@@ -938,12 +939,14 @@ private:
             // This is the first time we are loading the document
             Log::info("Loading new document from URI: [" + uri + "] for session [" + sessionId + "].");
 
-            if (LIBREOFFICEKIT_HAS(_loKit, registerCallback))
+
+            auto lock(_loKit->getLock());
+            if (LIBREOFFICEKIT_HAS(_loKit->get(), registerCallback))
             {
-                _loKit->pClass->registerCallback(_loKit, DocumentCallback, this);
+                _loKit->get()->pClass->registerCallback(_loKit->get(), DocumentCallback, this);
                 const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
                                  | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY;
-                _loKit->pClass->setOptionalFeatures(_loKit, flags);
+                _loKit->setOptionalFeatures(flags);
             }
 
             // Save the provided password with us and the jailed url
@@ -953,12 +956,12 @@ private:
             _isDocPasswordProtected = false;
 
             Log::debug("Calling lokit::documentLoad.");
-            _loKitDocument = std::make_shared<lok::Document>(_loKit->pClass->documentLoad(_loKit, uri.c_str()));
+            _loKitDocument = _loKit->documentLoad(uri.c_str());
             Log::debug("Returned lokit::documentLoad.");
 
             if (!_loKitDocument)
             {
-                Log::error("Failed to load: " + uri + ", error: " + _loKit->pClass->getError(_loKit));
+                Log::error("Failed to load: " + uri + ", error: " + _loKit->getError());
 
                 // Checking if wrong password or no password was reason for failure.
                 if (_isDocPasswordProtected)
@@ -1031,7 +1034,7 @@ private:
 private:
 
     const bool _multiView;
-    LibreOfficeKit* const _loKit;
+    std::shared_ptr<lok::Office> _loKit;
     const std::string _jailId;
     const std::string _docKey;
     const std::string _url;
@@ -1212,20 +1215,25 @@ void lokit_main(const std::string& childRoot,
             instdir_path = "/" + loTemplate + "/program";
         }
 
-        LibreOfficeKit* loKit;
+        std::shared_ptr<lok::Office> loKit;
         {
             const char *instdir = instdir_path.c_str();
             const char *userdir = "file:///user";
-            loKit = UnitKit::get().lok_init(instdir, userdir);
-            if (!loKit)
-                loKit = lok_init_2(instdir, userdir);
-            if (loKit == nullptr)
+            auto kit = UnitKit::get().lok_init(instdir, userdir);
+            if (!kit)
+            {
+                kit = lok_init_2(instdir, userdir);
+            }
+
+            loKit = std::make_shared<lok::Office>(kit);
+            if (!loKit || !loKit->get())
             {
                 Log::error("LibreOfficeKit initialization failed. Exiting.");
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
         }
 
+        assert(loKit && loKit->get());
         Log::info("Process is ready.");
 
         // Open websocket connection between the child process and WSD.
