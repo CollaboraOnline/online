@@ -29,7 +29,7 @@ dist: all
 
 pot:
 	xgettext --keyword=_ --output=po/loleaflet-ui.pot dist/toolbar/toolbar.js src/control/Control.Tabs.js \
-		src/core/Socket.js src/control/Control.Presentation.js
+		src/core/Socket.js
 	html2po --pot --input=dist/loleaflet-help.html --output=po/loleaflet-help.pot
 
 l10n: pot
