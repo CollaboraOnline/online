@@ -579,7 +579,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._searchResultsLayer.clearLayers();
 	},
 
-	_drawSearchResuls: function() {
+	_drawSearchResults: function() {
 		if (!this._searchResults) {
 			return;
 		}
