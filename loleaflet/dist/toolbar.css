@@ -11,7 +11,9 @@
     left: 0;
     right: 0;
     text-align: center;
-    padding: 10px;
+    padding: 6px;
+    padding-top: 7px;
+    padding-bottom: 5px;
     z-index: 1000;
 }
 
@@ -30,7 +32,7 @@
     right: 10px;
     width: 200px;
     top: 40px;
-    border: 1px solid black;
+    border: 1px solid darkgrey;
     z-index: 8000;
     display: none;
 }
@@ -77,9 +79,18 @@
     width: 100%;
 }
 
+/*.w2ui-icon{
+    background-repeat:no-repeat;
+    height:16px;
+    width:16px;
+    overflow:hidden;
+    margin:2px;
+    display:inline-block
+}*/
+
 .w2ui-tb-image {
-    width: 16px;
-    height: 16px;
+    width: 24px !important;
+    height: 24px !important;
 }
 
 .leaflet-bar a {
@@ -175,8 +186,8 @@ button.leaflet-control-search-next
 
 .font-color-indicator,
 .back-color-indicator {
-    width: 16px;
-    height: 5px;
+    width: 24px;
+    height: 6px;
     margin-top: -7px !important;
     margin-left: 5px !important;
     position: fixed;
