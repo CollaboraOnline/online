@@ -1,6 +1,6 @@
 .spreadsheet-document {
 	border-top: 1px solid #B6B6B6 !important;
-	top: 100px !important;
+	top: 98px !important;
 	left: 50px !important;
 	bottom: 65px !important;
 	}
@@ -8,7 +8,7 @@
 .spreadsheet-tab {
 	margin: 0;
 	padding: 0;
-	left: 140px;
+	left: 132px;
 	right: 0;
 	bottom: 33px;
 	position: absolute;
@@ -59,10 +59,7 @@
 	}
 
 .spreadsheet-header-corner {
-	border-top: 1px solid darkgrey;
-	border-left: 1px solid darkgrey;
-	border-right: 1px solid darkgrey;
-	border-bottom: 1px solid darkgrey;
+	border: 1px solid darkgrey;
 	background-color: lightgrey;
 	cursor: pointer;
 
@@ -70,23 +67,20 @@
 	padding: 0px;
 	margin: 0px;
 	left: 0px;
-	top: 80px;
-	width: 49px;
+	top: 78px;
+	width: 48px;
 	height: 19px;
 	}
 
 .spreadsheet-header-columns-container {
-	border-top: 1px solid darkgrey;
-	border-left: 1px solid darkgrey;
-	border-right: 1px solid darkgrey;
-	border-bottom: 1px solid darkgrey;
+	border: 1px solid darkgrey;
 	background-color: lightgrey;
 
 	position: absolute;
 	display: inline-block;
 	white-space: nowrap;
 	left: 49px;
-	top: 80px;
+	top: 78px;
 	right: 0;
 	height: 19px;
 	overflow: hidden;
@@ -97,6 +91,7 @@
 	white-space: nowrap;
 	width: 100%;
 	height: 100%;
+	border-spacing: 0px !important;
 	position: relative;
 	margin: 0px;
 	padding: 0px;
@@ -111,6 +106,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	padding: 0px;
+	padding-top: 1px;
 	margin: 0px;
 	height: 100%;
 	cursor: pointer;
@@ -128,15 +124,12 @@
 	}
 
 .spreadsheet-header-rows-container {
-	border-top: 1px solid darkgrey;
-	border-left: 1px solid darkgrey;
-	border-right: 1px solid darkgrey;
-	border-bottom: 1px solid darkgrey;
+	border: 1px solid darkgrey;
 	background-color: lightgrey;
 
 	position: absolute;
 	left: 0;
-	top: 100px;
+	top: 98px;
 	width: 48px;
 	bottom: 65px;
 	overflow: hidden;
