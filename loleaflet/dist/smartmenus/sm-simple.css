@@ -118,6 +118,14 @@ collapsible to desktop (navbar + dropdowns)
 .sm-simple {
     background: #efefef;
 }
+.sm-simple > li > a.has-submenu {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    z-index: 500;
+    border-left: 1px solid #efefef;
+    border-right: 1px solid #efefef;
+}
 .sm-simple a, .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active, .sm-simple a.highlighted {
     padding: 5px 15px;
     color: #555;
@@ -127,8 +135,11 @@ collapsible to desktop (navbar + dropdowns)
 }
 .sm-simple > li > a:hover, .sm-simple > li > a:focus, .sm-simple > li > a:active, .sm-simple > li > a.highlighted {
     background: #fff;
-    border-left: 1px solid #bbbbbb;
-    border-right: 1px solid #bbbbbb;
+    border-color: #bbbbbb;
+    border-bottom: 1px solid #bbb;
+}
+.sm-simple > li > a.highlighted {
+    border-bottom-color: #fff;
 }
 .sm-simple a.current {
     background: #555555;
@@ -141,12 +152,7 @@ collapsible to desktop (navbar + dropdowns)
 .sm-simple a.has-submenu {
     padding-right: 32px;
 }
-.sm-simple > li > a.has-submenu {
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 8px;
-    z-index: 500;
-}
+
 .sm-simple > li > ul {
     margin-top: -1px !important;
     z-index: 400;
