@@ -30,7 +30,6 @@
 
 using namespace LOOLProtocol;
 
-using Poco::Path;
 using Poco::StringTokenizer;
 
 ClientSession::ClientSession(const std::string& id,
