@@ -5,7 +5,7 @@
 /* global $ */
 L.Control.menubar = L.Control.extend({
 	options: {
-		common: [
+		text:  [
 			{name: 'File', type: 'menu', menu: [{name: 'Save', type: 'unocommand', uno: '.uno:Save'},
 												{name: 'Print', id: 'print', type: 'action'},
 												{name: 'Download as', type: 'menu', menu: [{name: 'PDF Document (.pdf)', id: 'downloadas-pdf', type: 'action'},
@@ -21,10 +21,7 @@ L.Control.menubar = L.Control.extend({
 												{name: 'Paste', type: 'unocommand', uno: '.uno:Paste'},
 												{type: 'separator'},
 												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
-			}
-		],
-
-		text:  [
+			},
 			{name: 'Insert', type: 'menu', menu: [{name: 'Image', id: 'insertgraphic', type: 'action'},
 												  {name: 'Comment', type: 'unocommand', uno: '.uno:InsertAnnotation'}]
 			},
@@ -52,6 +49,22 @@ L.Control.menubar = L.Control.extend({
 		],
 
 		presentation: [
+			{name: 'File', type: 'menu', menu: [{name: 'Save', type: 'unocommand', uno: '.uno:Save'},
+												{name: 'Print', id: 'print', type: 'action'},
+												{name: 'Download as', type: 'menu', menu:  [{name: 'PDF Document (.pdf)', id: 'downloadas-pdf', type: 'action'},
+																							{name: 'ODF presentation (.odp)', id: 'downloadas-odp', type: 'action'},
+																							{name: 'Microsoft Powerpoint 2003 (.ppt)', id: 'downloadas-ppt', type: 'action'},
+																							{name: 'Microsoft Powerpoint (.pptx)', id: 'downloadas-pptx', type: 'action'}]}]
+			},
+			{name: 'Edit', type: 'menu', menu: [{name: 'Undo', type: 'unocommand', uno: '.uno:Undo'},
+												{name: 'Redo', type: 'unocommand', uno: '.uno:Redo'},
+												{type: 'separator'},
+												{name: 'Cut', type: 'unocommand', uno: '.uno:Cut'},
+												{name: 'Copy', type: 'unocommand', uno: '.uno:Copy'},
+												{name: 'Paste', type: 'unocommand', uno: '.uno:Paste'},
+												{type: 'separator'},
+												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
+			},
 			{name: 'Insert', type: 'menu', menu: [{name: 'Image', type: 'command'},
 												  {name: 'Shape', type: 'command'},
 												  {name: 'Line', type: 'command'},
@@ -73,6 +86,22 @@ L.Control.menubar = L.Control.extend({
 		],
 
 		spreadsheet: [
+			{name: 'File', type: 'menu', menu: [{name: 'Save', type: 'unocommand', uno: '.uno:Save'},
+												{name: 'Print', id: 'print', type: 'action'},
+												{name: 'Download as', type: 'menu', menu: [{name: 'PDF Document (.pdf)', id: 'downloadas-pdf', type: 'action'},
+																						   {name: 'ODF spreadsheet (.ods)', id: 'downloadas-ods', type: 'action'},
+																						   {name: 'Microsoft Excel 2003 (.xls)', id: 'downloadas-xls', type: 'action'},
+																						   {name: 'Microsoft Excel (.xlsx)', id: 'downloadas-xlsx', type: 'action'}]}]
+			},
+			{name: 'Edit', type: 'menu', menu: [{name: 'Undo', type: 'unocommand', uno: '.uno:Undo'},
+												{name: 'Redo', type: 'unocommand', uno: '.uno:Redo'},
+												{type: 'separator'},
+												{name: 'Cut', type: 'unocommand', uno: '.uno:Cut'},
+												{name: 'Copy', type: 'unocommand', uno: '.uno:Copy'},
+												{name: 'Paste', type: 'unocommand', uno: '.uno:Paste'},
+												{type: 'separator'},
+												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
+			},
 			{name: 'Insert', type: 'menu', menu: [{name: 'Row', type: 'command'},
 												  {name: 'Column', type: 'command'},
 												  {name: 'Function', type: 'command'},
@@ -99,9 +128,6 @@ L.Control.menubar = L.Control.extend({
 		if (this._initialized || !this._menubarCont)
 			return;
 
-		// Intialize menu that is common to all documents
-		this._initializeMenu(this.options.common);
-
 		// Add dcoument specific menu
 		var docType = this._map.getDocType();
 		if (docType === 'text') {
@@ -114,6 +140,7 @@ L.Control.menubar = L.Control.extend({
 
 		// initialize menubar plugin
 		$('#main-menu').smartmenus({
+			hideOnClick: true,
 			showOnClick: true,
 			hideTimeout: 0,
 			hideDuration: 0,
