@@ -102,10 +102,6 @@ collapsible to desktop (navbar + dropdowns)
     float: none;
 }
 
-.sm-simple > li {
-    padding-top: 5px;
-}
-
 .sm-simple a {
     white-space: nowrap;
 }
@@ -142,6 +138,11 @@ collapsible to desktop (navbar + dropdowns)
 }
 .sm-simple a.has-submenu {
     padding-right: 32px;
+}
+.sm-simple > li > a.has-submenu {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
 }
 .sm-simple a span.sub-arrow {
     top: 50%;
