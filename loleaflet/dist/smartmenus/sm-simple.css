@@ -127,6 +127,8 @@ collapsible to desktop (navbar + dropdowns)
 }
 .sm-simple > li > a:hover, .sm-simple > li > a:focus, .sm-simple > li > a:active, .sm-simple > li > a.highlighted {
     background: #fff;
+    border-left: 1px solid #bbbbbb;
+    border-right: 1px solid #bbbbbb;
 }
 .sm-simple a.current {
     background: #555555;
@@ -143,6 +145,11 @@ collapsible to desktop (navbar + dropdowns)
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 8px;
+    z-index: 500;
+}
+.sm-simple > li > ul {
+    margin-top: -1px !important;
+    z-index: 400;
 }
 .sm-simple a span.sub-arrow {
     top: 50%;
