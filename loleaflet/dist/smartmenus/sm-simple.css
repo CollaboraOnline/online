@@ -117,6 +117,13 @@ collapsible to desktop (navbar + dropdowns)
 /* ...end */
 .sm-simple {
     background: #efefef;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
+    cursor: default;
 }
 .sm-simple > li > a.has-submenu {
     padding-left: 15px;
