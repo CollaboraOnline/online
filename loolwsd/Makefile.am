@@ -85,6 +85,7 @@ noinst_HEADERS = Admin.hpp \
                  Exceptions.hpp \
                  FileServer.hpp \
                  IoUtil.hpp \
+                 LibreOfficeKit.hpp \
                  Log.hpp \
                  LOKitHelper.hpp \
                  LOOLKit.hpp \
