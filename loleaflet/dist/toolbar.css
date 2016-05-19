@@ -12,8 +12,8 @@
     right: 0;
     text-align: center;
     padding: 6px;
-    padding-top: 7px;
-    padding-bottom: 5px;
+    padding-top: 6px;
+    padding-bottom: 4px;
     z-index: 1000;
 }
 
@@ -79,18 +79,17 @@
     width: 100%;
 }
 
-/*.w2ui-icon{
-    background-repeat:no-repeat;
-    height:16px;
-    width:16px;
-    overflow:hidden;
-    margin:2px;
-    display:inline-block
-}*/
+.w2ui-button{
+    margin:0 !important;
+}
 
 .w2ui-tb-image {
     width: 24px !important;
     height: 24px !important;
+}
+
+.w2ui-break {
+	margin:0 4px !important;
 }
 
 .leaflet-bar a {
