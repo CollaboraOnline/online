@@ -2,7 +2,7 @@
 * Control.Menubar
 */
 
-/* global $ */
+/* global $ _ map */
 L.Control.menubar = L.Control.extend({
 	options: {
 		text:  [
@@ -26,6 +26,7 @@ L.Control.menubar = L.Control.extend({
 												  {name: 'Comment', type: 'unocommand', uno: '.uno:InsertAnnotation'}]
 			},
 			{name: 'View', type: 'menu', menu: [{name: 'Full screen', id: 'fullscreen', type: 'action'},
+												{type: 'separator'},
 												{name: 'Zoom in', id: 'zoomin', type: 'action'},
 												{name: 'Zoom out', id: 'zoomout', type: 'action'},
 												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
@@ -65,23 +66,31 @@ L.Control.menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: 'Insert', type: 'menu', menu: [{name: 'Image', type: 'command'},
-												  {name: 'Shape', type: 'command'},
-												  {name: 'Line', type: 'command'},
-												  {name: 'Table', type: 'command'},
-												  {name: 'Video', type: 'command'},
-												  {name: 'Slide', type: 'command'},
-												  {name: 'Slide numbering', type: 'command'},
-												  {name: 'Text space', type: 'command'},
-												  {name: 'Chart', type: 'command'},
-												  {name: 'Symbol', type: 'command'},
-												  {name: 'Remark', type: 'command'}]
+			{name: 'Insert', type: 'menu', menu: [{name: 'Image', id: 'insertgraphic', type: 'action'}]
 			},
-			{name: 'View', type: 'menu', menu: [{name: 'Full Screen', type: 'command'},
-												{name: 'Presentation views', type: 'command'},
-												{name: 'Master views', type: 'command'},
-												{name: 'Zoom', type: 'command'},
-												{name: 'Show rulers', type: 'command'}]
+			{name: 'View', type: 'menu', menu: [{name: 'Full Screen', id: 'fullscreen', type: 'action'},
+												{type: 'separator'},
+												{name: 'Zoom in', id: 'zoomin', type: 'action'},
+												{name: 'Zoom out', id: 'zoomout', type: 'action'},
+												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
+			},
+			{name: 'Tables', type: 'menu', menu: [{name: 'Insert row before', type: 'unocommand', uno: '.uno:InsertRowsBefore'},
+												  {name: 'Insert row after', type: 'unocommand', uno: '.uno:InsertRowsAfter'},
+												  {type: 'separator'},
+												  {name: 'Insert column before', type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
+												  {name: 'Insert column after', type: 'unocommand', uno: '.uno:InsertColumnsAfter'},
+												  {type: 'separator'},
+												  {name: 'Delete row', type: 'unocommand', uno: '.uno:DeleteRows'},
+												  {name: 'Delete column', type: 'unocommand', uno: '.uno:DeleteColumns'},
+												  {name: 'Delete table', type: 'unocommand', uno: '.uno:DeleteTable'},
+												  {type: 'separator'},
+												  {name: 'Merge cells', type: 'unocommand', uno: '.uno:MergeCells'}]
+			},
+			{name: 'Slide', type: 'menu', menu: [{name: 'New slide', id: 'insertpage', type: 'action'},
+												 {name: 'Duplicate slide', id: 'duplicatepage', type: 'action'},
+												 {name: 'Delete slide', id: 'deletepage', type: 'action'},
+												 {type: 'separator'},
+												 {name: 'Fullscreen Presentation', id: 'fullscreen-presentation', type: 'action'}]
 			}
 		],
 
@@ -102,15 +111,19 @@ L.Control.menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: 'Insert', type: 'menu', menu: [{name: 'Row', type: 'command'},
-												  {name: 'Column', type: 'command'},
-												  {name: 'Function', type: 'command'},
-												  {name: 'Page', type: 'command'}]
+			{name: 'Insert', type: 'menu', menu: [{name: 'Image', id: 'insertgraphic', type: 'action'},
+												  {type: 'separator'},
+												  {name: 'Row above', type: 'unocommand', uno: '.uno:InsertRows'},
+												  {name: 'Column before', type: 'unocommand', uno: '.uno:InsertColumns'},
+												  {type: 'separator'},
+												  {name: 'Delete row', type: 'unocommand', uno: '.uno:DeleteRows'},
+												  {name: 'Delete column', type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			},
-			{name: 'View', type: 'menu', menu: [{name: 'Full screen', type: 'command'},
-												{name: 'Formula bar', type: 'command'},
-												{name: 'Zoom', type: 'command'},
-												{name: 'Headings', type: 'command'}]
+			{name: 'View', type: 'menu', menu: [{name: 'Full Screen', id: 'fullscreen', type: 'action'},
+												{type: 'separator'},
+												{name: 'Zoom in', id: 'zoomin', type: 'action'},
+												{name: 'Zoom out', id: 'zoomout', type: 'action'},
+												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
 			}
 		]
 	},
@@ -196,6 +209,23 @@ L.Control.menubar = L.Control.extend({
 					document.webkitExitFullscreen();
 				}
 			}
+		} else if (id === 'fullscreen-presentation' && map.getDocType() === 'presentation') {
+			map.fire('fullscreen');
+		} else if (id === 'insertpage') {
+			map.insertPage();
+		} else if (id === 'duplicatepage') {
+			map.duplicatePage();
+		} else if (id === 'deletepage') {
+			vex.dialog.confirm({
+				message: _("Are you sure you want to delete this slide?"),
+				callback: this._onDeleteSlide
+			}, this);
+		}
+	},
+
+	_onDeleteSlide: function(e) {
+		if (e) {
+			map.deletePage();
 		}
 	},
 
