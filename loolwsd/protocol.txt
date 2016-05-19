@@ -259,6 +259,11 @@ status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=
 
 styles: {"styleFamily": ["styles in family"], etc. }
 
+statechanged: <key>=<value>
+
+    Notifies client of state changed events of <key>.
+    Eg: 'statechanged: .uno:Undo=enabled'
+
 partpagerectangles: <payload>
 
     Payload format is the same as LOK_CALLBACK_TEXT_SELECTION.
