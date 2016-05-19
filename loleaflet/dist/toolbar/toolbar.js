@@ -900,14 +900,12 @@ map.on('hyperlinkclicked', function (e) {
 map.on('editlock', function (e) {
 	var toolbar = w2ui['toolbar-down'];
 	if (e.value) {
-		toolbar.check('takeedit');
 		toolbar.disable('takeedit');
 		toolbar.set('takeedit', {hint: _('You are editing (others can only view)')});
 
 		$('#takeeditlabel').html('EDITING');
 	}
 	else {
-		toolbar.uncheck('takeedit');
 		toolbar.enable('takeedit');
 		toolbar.set('takeedit', {hint: _('Take edit lock (others can only view)')});
 		$('#takeeditlabel').html('VIEWING');
