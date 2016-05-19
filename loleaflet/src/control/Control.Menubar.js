@@ -31,8 +31,6 @@ L.Control.menubar = L.Control.extend({
 												{name: 'Zoom out', id: 'zoomout', type: 'action'},
 												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
 			},
-			{name: 'Layout', type: 'menu', menu: [{name: 'Clear formatting', type: 'unocommand', uno: '.uno:ResetAttributes'}]
-			},
 			{name: 'Tables', type: 'menu', menu: [{name: 'Insert row before', type: 'unocommand', uno: '.uno:InsertRowsBefore'},
 												  {name: 'Insert row after', type: 'unocommand', uno: '.uno:InsertRowsAfter'},
 												  {type: 'separator'},
@@ -44,8 +42,6 @@ L.Control.menubar = L.Control.extend({
 												  {name: 'Delete table', type: 'unocommand', uno: '.uno:DeleteTable'},
 												  {type: 'separator'},
 												  {name: 'Merge cells', type: 'unocommand', uno: '.uno:MergeCells'}]
-			},
-			{name: 'Review', type: 'menu', menu: [{name: 'Add comment', type: 'unocommand', uno: '.uno:InsertAnnotation'}]
 			}
 		],
 
