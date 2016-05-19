@@ -15,38 +15,6 @@ $(function () {
 		name: 'toolbar-up',
 		items: [
 			{ type: 'html',  id: 'left' },
-			// Unfortunately the toolbar does not provide access to menu items
-			// so we have to define different menu items if we want to have different
-			// entries for text / presentation / spreadsheet files
-			{ type: 'menu',   id: 'writer:menu:file', caption: _("File"), items: [
-				{ text: _("Download as PDF document (.pdf)"), id: 'downloadas-pdf' },
-				{ text: _("Download as ODF Text document (.odt)"), id: 'downloadas-odt' },
-				{ text: _("Download as Microsoft Word 2003 (.doc)"), id: 'downloadas-doc' },
-				{ text: _("Download as Microsoft Word (.docx)"), id: 'downloadas-docx' },
-				{ text: _("Print"), id: 'print' }
-			]},
-
-			{ type: 'menu', hidden: true, id: 'impress:menu:file', caption: _("File"), items: [
-				{ text: _("Download as PDF document (.pdf)"), id: 'downloadas-pdf' },
-				{ text: _("Download as ODF Presentation (.odp)"), id: 'downloadas-odp' },
-				{ text: _("Download as Microsoft Powerpoint 2003 (.ppt)"), id: 'downloadas-ppt' },
-				{ text: _("Download as Microsoft Powerpoint (.pptx)"), id: 'downloadas-pptx' },
-				{ text: _("Print"), id: 'print' }
-			]},
-
-			{ type: 'menu', hidden: true, id: 'calc:menu:file', caption: _("File"), items: [
-				{ text: _("Download as PDF document (.pdf)"), id: 'downloadas-pdf' },
-				{ text: _("Download as ODF Spreadsheet (.ods)"), id: 'downloadas-ods' },
-				{ text: _("Download as Microsoft Excel 2003 (.xls)"), id: 'downloadas-xls' },
-				{ text: _("Download as Microsoft Excel (.xlsx)"), id: 'downloadas-xlsx' },
-				{ text: _("Print"), id: 'print' }
-			]},
-
-			{ type: 'menu', hidden: true, id: 'other:menu:file', caption: _("File"), items: [
-				{ text: _("Download as PDF document (.pdf)"), id: 'downloadas-pdf' },
-				{ text: _("Print"), id: 'print' }
-			]},
-
 			{ type: 'button',  id: 'save', img: 'save', hint: _("Save"), uno: 'Save' },
 			{ type: 'break' },
 			{ type: 'button',  id: 'undo',  img: 'undo', hint: _("Undo"), uno: 'Undo' },
@@ -83,7 +51,7 @@ $(function () {
 			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
 			{ type: 'html', id: 'right' },
 			{ type: 'button',  id: 'more', img: 'more', hint: _("More") },
-			{ type: 'button',  id: 'close',  img: 'closedoc', hint: _("Close Document"), hidden: true },
+			{ type: 'button',  id: 'close',  img: 'closedoc', hint: _("Close Document"), hidden: true }
 		],
 		onClick: function (e) {
 			onClick(e.target);
@@ -224,20 +192,6 @@ function onClick(id) {
 		toolbar = w2ui['presentation-toolbar'];
 		item = toolbar.get(id);
 	}
-	else if (id.indexOf(':') >= 0) {
-		// we just handle a menu item click,
-		// like File->Download as
-		var index = id.indexOf(':');
-		var app = id.substring(0, index);
-		if (app === 'writer' ||
-			app === 'impress' ||
-			app === 'calc' ||
-			app === 'other') {
-			// remove the app from the id so that we have a single hander
-			id = id.substring(index + 1);
-		}
-		item = {};
-	}
 	else {
 		throw new Error('unknown id: ' + id);
 	}
@@ -304,11 +258,7 @@ function onClick(id) {
 		toolbar.disable('searchnext');
 		L.DomUtil.get('search-input').value = '';
 	}
-	else if (id === 'print' || id === 'menu:file:print') {
-		map.print();
-	}
-	else if ((id === 'menu:file:presentation' || id === 'presentation')
-			&& map.getDocType() === 'presentation') {
+	else if (id === 'presentation' && map.getDocType() === 'presentation') {
 		map.fire('fullscreen');
 	}
 	else if (id === 'insertpage') {
@@ -335,14 +285,6 @@ function onClick(id) {
 	}
 	else if (id === 'lastrecord') {
 		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').prop("scrollWidth"));
-	}
-	else if (id.startsWith('menu:file:downloadas-')) {
-		var format = id.substring('menu:file:downloadas-'.length);
-		// remove the extension if any
-		var fileName = title.substr(0, title.lastIndexOf('.')) || title;
-		// check if it is empty
-		fileName = fileName === '' ? 'document' : fileName;
-		map.downloadAs(fileName + '.' + format, format);
 	}
 	else if (id === 'insertgraphic') {
 		L.DomUtil.get('insertgraphic').click();
@@ -569,9 +511,7 @@ map.on('updatepermission', function (e) {
 	var toolbar = w2ui['toolbar-up'];
 	var docType = map.getDocType();
 	if (docType !== 'text') {
-		toolbar.hide('writer:menu:file');
 		if (docType === 'presentation') {
-			toolbar.show('impress:menu:file');
 			toolbar.hide('annotation');
 
 			toolbar = w2ui['presentation-toolbar'];
@@ -582,14 +522,9 @@ map.on('updatepermission', function (e) {
 			toolbar.show('deletepage');
 		}
 		else if (docType === 'drawing') {
-			toolbar.show('impress:menu:file');
 			toolbar.hide('annotation');
 		}
-		else if (docType === 'spreadsheet') {
-			toolbar.show('calc:menu:file');
-		}
-		else {
-			toolbar.show('other:menu:file');
+		else if (docType !== 'spreadsheet') {
 			toolbar.hide('annotation');
 		}
 	}
