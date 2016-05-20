@@ -5,7 +5,7 @@
 /* global */
 L.Control.ContextMenu = L.Control.extend({
 	options: {
-		SEPERATOR: '---------',
+		SEPARATOR: '---------',
 		/*
 		 * Enter UNO commands that should appear in the context menu.
 		 * Entering a UNO command under `general' would enable it for all types
@@ -87,7 +87,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 			if (item['type'] === 'separator') {
 				if (isLastItemText) {
-					contextMenu['sep' + sepIdx++] = this.options.SEPERATOR;
+					contextMenu['sep' + sepIdx++] = this.options.SEPARATOR;
 				}
 				isLastItemText = false;
 			}
@@ -138,7 +138,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 		}
 
-		// Remove seperator, if present, in the end
+		// Remove separator, if present, at the end
 		var lastItem = Object.keys(contextMenu)[Object.keys(contextMenu).length - 1];
 		if (lastItem !== undefined && lastItem.startsWith('sep')) {
 			delete contextMenu[lastItem];
