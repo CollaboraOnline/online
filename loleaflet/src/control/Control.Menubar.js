@@ -121,7 +121,9 @@ L.Control.menubar = L.Control.extend({
 												{name: 'Zoom out', id: 'zoomout', type: 'action'},
 												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
 			}
-		]
+		],
+
+		commandStates: {}
 	},
 
 	onAdd: function (map) {
@@ -131,6 +133,15 @@ L.Control.menubar = L.Control.extend({
 		this._menubarCont.id = 'main-menu';
 
 		map.on('updatepermission', this._onUpdatePermission, this);
+		map.on('commandstatechanged', this._onCommandStateChanged, this);
+	},
+
+	_onCommandStateChanged: function(e) {
+		// Store information about enabled/disabled commands
+		// Used later just before showing menu to enable/disable menu items
+		if (e.state === 'enabled' || e.state === 'disabled') {
+			this.options.commandStates[e.commandName] = e.state;
+		}
 	},
 
 	_onUpdatePermission: function() {
@@ -160,6 +171,24 @@ L.Control.menubar = L.Control.extend({
 		this._initialized = true;
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
+		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeFirstShow);
+	},
+
+	_beforeFirstShow: function(e, menu) {
+		var self = e.data.self;
+		var items = $(menu).children().children('a').not('.has-submenu');
+		$(items).each(function() {
+			var aItem = this;
+			var type = $(aItem).data('type');
+			if (type === 'unocommand') {
+				var unoCommand = $(aItem).data('uno');
+				if (self.options.commandStates[unoCommand] === 'disabled') {
+					$(aItem).addClass('disabled');
+				} else if (self.options.commandStates[unoCommand] === 'enabled') {
+					$(aItem).removeClass('disabled');
+				}
+			}
+		});
 	},
 
 	_executeAction: function(id) {
