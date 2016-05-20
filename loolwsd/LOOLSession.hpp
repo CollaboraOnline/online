@@ -52,7 +52,10 @@ public:
 
     void shutdown(Poco::UInt16 statusCode, const std::string& message)
     {
-        _ws->shutdown(statusCode, message);
+        if (_ws)
+        {
+            _ws->shutdown(statusCode, message);
+        }
     }
 
     bool isActive() const { return _isActive; }
