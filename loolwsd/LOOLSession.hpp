@@ -41,8 +41,8 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
-    void sendTextFrame(const std::string& text);
-    void sendBinaryFrame(const char *buffer, int length);
+    bool sendTextFrame(const std::string& text);
+    bool sendBinaryFrame(const char *buffer, int length);
 
     bool handleInput(const char *buffer, int length);
 

@@ -71,20 +71,19 @@ LOOLSession::~LOOLSession()
 {
 }
 
-void LOOLSession::sendTextFrame(const std::string& text)
+bool LOOLSession::sendTextFrame(const std::string& text)
 {
     if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
     {
         Log::error(getName() + ": Bad socket while sending [" + getAbbreviatedMessage(text.c_str(), text.size()) + "].");
-        return;
+        return false;
     }
 
     Log::trace(getName() + " Send: " + getAbbreviatedMessage(text.c_str(), text.size()));
-
-    std::unique_lock<std::mutex> lock(_mutex);
-
     try
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         const int length = text.size();
         if ( length > SMALL_MESSAGE_SIZE )
         {
@@ -93,29 +92,31 @@ void LOOLSession::sendTextFrame(const std::string& text)
         }
 
         _ws->sendFrame(text.data(), length);
+        return true;
     }
     catch (const Exception& exc)
     {
-        Log::warn() << "LOOLSession::sendTextFrame: "
-                    << "Exception: " << exc.displayText()
-                    << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+        Log::error() << "LOOLSession::sendTextFrame: "
+                     << "Exception: " << exc.displayText()
+                     << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
     }
+
+    return false;
 }
 
-void LOOLSession::sendBinaryFrame(const char *buffer, int length)
+bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
     if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
     {
         Log::error(getName() + ": Bad socket while sending binary frame of " + std::to_string(length) + " bytes.");
-        return;
+        return false;
     }
 
     Log::trace(getName() + " Send: " + std::to_string(length) + " bytes");
-
-    std::unique_lock<std::mutex> lock(_mutex);
-
     try
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         if ( length > SMALL_MESSAGE_SIZE )
         {
             const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
@@ -123,13 +124,16 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
         }
 
         _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+        return true;
     }
     catch (const Exception& exc)
     {
-        Log::warn() << "LOOLSession::sendBinaryFrame: "
-                    << "Exception: " << exc.displayText()
-                    << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+        Log::error() << "LOOLSession::sendBinaryFrame: "
+                     << "Exception: " << exc.displayText()
+                     << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
     }
+
+    return false;
 }
 
 void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std::string& timestamp)
