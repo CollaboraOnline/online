@@ -1051,6 +1051,8 @@ public:
             Admin::instance().rmDoc(docKey, sessionId);
         }
 
+        // Replenish.
+        prespawnChildren();
         Log::debug("Thread finished.");
     }
 };
