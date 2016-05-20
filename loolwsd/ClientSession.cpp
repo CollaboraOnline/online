@@ -166,8 +166,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         if (_peer.expired())
         {
-            Log::trace("Dispatching child to handle [" + tokens[0] + "].");
-            dispatchChild();
+            Log::warn("No peer to handle [" + tokens[0] + "].");
         }
 
         // Allow 'downloadas' for all kinds of views irrespective of editlock
@@ -193,16 +192,28 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
         return false;
     }
 
+    Log::info("Requesting document load from child.");
     try
     {
         std::string timestamp;
         parseDocOptions(tokens, _loadPart, timestamp);
 
-        // Finally, wait for the Child to connect to Master,
-        // link the document in jail and dispatch load to child.
-        Log::trace("Dispatching child to handle [load].");
-        dispatchChild();
+        std::ostringstream oss;
+        oss << "load";
+        oss << " url=" << _docBroker->getPublicUri().toString();
+        oss << " jail=" << _docBroker->getJailedUri().toString();
 
+        if (_loadPart >= 0)
+            oss << " part=" + std::to_string(_loadPart);
+
+        if (_haveDocPassword)
+            oss << " password=" << _docPassword;
+
+        if (!_docOptions.empty())
+            oss << " options=" << _docOptions;
+
+        const auto loadRequest = oss.str();
+        forwardToPeer(loadRequest.c_str(), loadRequest.size());
         return true;
     }
     catch (const Poco::SyntaxException&)
@@ -226,12 +237,6 @@ bool ClientSession::getStatus(const char *buffer, int length)
         sendTextFrame(msg);
 
         return true;
-    }
-
-    if (_peer.expired())
-    {
-        Log::trace("Dispatching child to handle [getStatus].");
-        dispatchChild();
     }
 
     forwardToPeer(buffer, length);
@@ -264,8 +269,6 @@ bool ClientSession::getCommandValues(const char *buffer, int length, StringToken
         return true;
     }
 
-    if (_peer.expired())
-        dispatchChild();
     forwardToPeer(buffer, length);
     return true;
 }
@@ -279,8 +282,6 @@ bool ClientSession::getPartPageRectangles(const char *buffer, int length)
         return true;
     }
 
-    if (_peer.expired())
-        dispatchChild();
     forwardToPeer(buffer, length);
     return true;
 }
@@ -316,8 +317,6 @@ void ClientSession::sendFontRendering(const char *buffer, int length, StringToke
         return;
     }
 
-    if (_peer.expired())
-        dispatchChild();
     forwardToPeer(buffer, length);
 }
 
@@ -408,26 +407,6 @@ void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
     }
 }
 
-void ClientSession::dispatchChild()
-{
-    std::ostringstream oss;
-    oss << "load";
-    oss << " url=" << _docBroker->getPublicUri().toString();
-    oss << " jail=" << _docBroker->getJailedUri().toString();
-
-    if (_loadPart >= 0)
-        oss << " part=" + std::to_string(_loadPart);
-
-    if (_haveDocPassword)
-        oss << " password=" << _docPassword;
-
-    if (!_docOptions.empty())
-        oss << " options=" << _docOptions;
-
-    const auto loadRequest = oss.str();
-    forwardToPeer(loadRequest.c_str(), loadRequest.size());
-}
-
 void ClientSession::forwardToPeer(const char *buffer, int length)
 {
     const auto message = getAbbreviatedMessage(buffer, length);
@@ -437,7 +416,8 @@ void ClientSession::forwardToPeer(const char *buffer, int length)
     {
         throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
     }
-    else if (peer->isCloseFrame())
+
+    if (peer->isCloseFrame())
     {
         Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
         return;
