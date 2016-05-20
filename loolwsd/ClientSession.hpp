@@ -76,8 +76,6 @@ private:
     void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
     void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-    void forwardToPeer(const char *buffer, int length);
-
 private:
 
     std::shared_ptr<DocumentBroker> _docBroker;

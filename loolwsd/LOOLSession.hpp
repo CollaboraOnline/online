@@ -95,7 +95,7 @@ protected:
     }
 
     template <typename T>
-    void forwardToPeer(T& p, const char *buffer, int length)
+    bool forwardToPeer(T& p, const char *buffer, int length)
     {
         const auto message = LOOLProtocol::getAbbreviatedMessage(buffer, length);
 
@@ -107,11 +107,11 @@ protected:
         else if (peer->isCloseFrame())
         {
             Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
-            return;
+            return false;
         }
 
         Log::trace(getName() + " -> " + peer->getName() + ": " + message);
-        peer->sendBinaryFrame(buffer, length);
+        return peer->sendBinaryFrame(buffer, length);
     }
 
     // Fields common to sessions in master and jailed processes:

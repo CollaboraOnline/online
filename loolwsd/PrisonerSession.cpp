@@ -105,7 +105,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                         errorKind == "passwordrequired:to-modify" ||
                         errorKind == "wrongpassword")
                     {
-                        forwardToPeer(buffer, length);
+                        forwardToPeer(_peer, buffer, length);
                         peer->setLoadFailed(errorKind);
                         return false;
                     }
@@ -169,13 +169,13 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             _docBroker->tileCache().saveTextFile(std::string(buffer, length), "status.txt");
 
             // Forward the status response to the client.
-            forwardToPeer(buffer, length);
+            forwardToPeer(_peer, buffer, length);
 
             // And let clients know if they hold the edit lock.
             std::string message = "editlock: ";
             message += std::to_string(peer->isEditLocked());
             Log::debug("Forwarding [" + message + "] in response to status.");
-            forwardToPeer(message.c_str(), message.size());
+            forwardToPeer(_peer, message.c_str(), message.size());
             return true;
         }
         else if (tokens[0] == "commandvalues:")
@@ -219,13 +219,8 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         }
     }
 
-    forwardToPeer(buffer, length);
+    forwardToPeer(_peer, buffer, length);
     return true;
-}
-
-void PrisonerSession::forwardToPeer(const char *buffer, int length)
-{
-    LOOLSession::forwardToPeer(_peer, buffer, length);
 }
 
 bool PrisonerSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)

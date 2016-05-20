@@ -132,7 +132,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "canceltiles")
     {
         if (!_peer.expired())
-            forwardToPeer(buffer, length);
+            forwardToPeer(_peer, buffer, length);
     }
     else if (tokens[0] == "commandvalues")
     {
@@ -174,11 +174,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";
-            forwardToPeer(dummyFrame.c_str(), dummyFrame.size());
+            forwardToPeer(_peer, dummyFrame.c_str(), dummyFrame.size());
         }
         else if (tokens[0] != "requestloksession")
         {
-            forwardToPeer(buffer, length);
+            forwardToPeer(_peer, buffer, length);
         }
     }
     return true;
@@ -213,7 +213,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
             oss << " options=" << _docOptions;
 
         const auto loadRequest = oss.str();
-        forwardToPeer(loadRequest.c_str(), loadRequest.size());
+        forwardToPeer(_peer, loadRequest.c_str(), loadRequest.size());
         return true;
     }
     catch (const Poco::SyntaxException&)
@@ -239,7 +239,7 @@ bool ClientSession::getStatus(const char *buffer, int length)
         return true;
     }
 
-    forwardToPeer(buffer, length);
+    forwardToPeer(_peer, buffer, length);
     return true;
 }
 
@@ -250,7 +250,7 @@ void ClientSession::setEditLock(const bool value)
     const auto msg = "editlock: " + std::to_string(isEditLocked());
     const auto mv = std::getenv("LOK_VIEW_CALLBACK") ? "1" : "0";
     Log::debug("Forwarding [" + msg + "] to set editlock to " + std::to_string(value) + ". MultiView: " + mv);
-    forwardToPeer(msg.data(), msg.size());
+    forwardToPeer(_peer, msg.data(), msg.size());
 }
 
 bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
@@ -269,7 +269,7 @@ bool ClientSession::getCommandValues(const char *buffer, int length, StringToken
         return true;
     }
 
-    forwardToPeer(buffer, length);
+    forwardToPeer(_peer, buffer, length);
     return true;
 }
 
@@ -282,7 +282,7 @@ bool ClientSession::getPartPageRectangles(const char *buffer, int length)
         return true;
     }
 
-    forwardToPeer(buffer, length);
+    forwardToPeer(_peer, buffer, length);
     return true;
 }
 
@@ -317,7 +317,7 @@ void ClientSession::sendFontRendering(const char *buffer, int length, StringToke
         return;
     }
 
-    forwardToPeer(buffer, length);
+    forwardToPeer(_peer, buffer, length);
 }
 
 void ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
@@ -405,11 +405,6 @@ void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
         const TileDesc tile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
         _docBroker->handleTileRequest(tile, shared_from_this());
     }
-}
-
-void ClientSession::forwardToPeer(const char *buffer, int length)
-{
-    LOOLSession::forwardToPeer(_peer, buffer, length);
 }
 
 bool ClientSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)

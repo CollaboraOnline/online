@@ -31,8 +31,6 @@ private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
 
-    void forwardToPeer(const char *buffer, int length);
-
 private:
 
     std::shared_ptr<DocumentBroker> _docBroker;
