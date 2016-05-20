@@ -48,7 +48,7 @@ public:
 
     const std::string& getDocType() const { return _docType; }
 
-    LibreOfficeKitDocument *getLoKitDocument() const { return _loKitDocument->get(); }
+    LibreOfficeKitDocument *getLoKitDocument() const { return (_loKitDocument ? _loKitDocument->get() : nullptr); }
 
     void loKitCallback(const int nType, const char* pPayload);
 

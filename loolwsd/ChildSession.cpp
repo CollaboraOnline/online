@@ -117,7 +117,11 @@ public:
         case LOK_CALLBACK_INVALIDATE_TILES:
             {
                 const auto lokitDoc = _session.getLoKitDocument();
-                assert(lokitDoc);
+                if (lokitDoc == nullptr)
+                {
+                    return;
+                }
+
                 assert(lokitDoc->pClass);
                 assert(lokitDoc->pClass->getPart);
 
