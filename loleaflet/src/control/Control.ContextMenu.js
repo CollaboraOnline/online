@@ -60,6 +60,7 @@ L.Control.ContextMenu = L.Control.extend({
 		var contextMenu = this._createContextMenuStructure(obj);
 		$.contextMenu({
 			selector: '.leaflet-layer',
+			className: 'loleaflet-font',
 			trigger: 'none',
 			build: function(triggerEle, e) {
 				return {

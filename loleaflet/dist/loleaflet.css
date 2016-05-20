@@ -29,3 +29,9 @@
 body {
     margin: 0;
 }
+
+.loleaflet-font {
+    font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+}

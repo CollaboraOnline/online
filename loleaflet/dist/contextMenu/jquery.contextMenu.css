@@ -103,8 +103,8 @@
 
 .context-menu-item {
   position: relative;
-  padding: 3px 28px;
-  color: #2f2f2f;
+  padding: 5px 28px;
+  color: #000;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
