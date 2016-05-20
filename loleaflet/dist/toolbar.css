@@ -166,9 +166,14 @@ button.leaflet-control-search-next
 /* select box */
 .select2-results__option {
     padding: 5px;
-    font-size: 14px;
+    font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.select2-selection__rendered {
+    font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
 }
 .styles-select {
     width: 180px;

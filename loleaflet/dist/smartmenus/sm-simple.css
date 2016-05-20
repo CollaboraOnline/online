@@ -6,7 +6,7 @@
     /* make room for the toggle button (sub indicator) */
     padding-right: 58px;
     color: #555555;
-    font-family: "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", Arial, sans-serif;
+    font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
     font-size: 12px;
     font-weight: normal;
     line-height: 15px;
@@ -46,7 +46,7 @@
     background: #fff;
 }
 .sm-simple ul a, .sm-simple ul a:hover, .sm-simple ul a:focus, .sm-simple ul a:active {
-    font-size: 14px;
+    font-size: 12px;
     border-left: 8px solid transparent;
 }
 .sm-simple ul ul a,
