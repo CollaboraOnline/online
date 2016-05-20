@@ -1067,22 +1067,23 @@ function walkCells() {
 				walkCells();
 			} else if (table.rows[0].cells.length>3 && cellIndex < table.rows[0].cells.length-1 ) {
 				for (var j = 0; j < table.rows.length; j++) {
-					var tr = table.rows[j]
+					var tr = table.rows[j];
 					tr.deleteCell(table.rows[0].cells.length-1);
 				}
 				walkCells();
 			}
-		}
+		};
+
 		cell.onclick = function(){
 			var cellIndex = this.cellIndex + 1;
 			var rowIndex = this.parentNode.rowIndex + 1;
 			var msg = 'uno .uno:InsertTable {' +
-				' "Columns": { "type": "long","value": '
-				cellIndex +
-				' }, "Rows": { "type": "long","value": '
-				rowIndex +' }}';
+		   ' "Columns": { "type": "long","value": ' +
+		   cellIndex +
+		   ' }, "Rows": { "type": "long","value": ' +
+		   rowIndex +' }}';
 			map._socket.sendMessage(msg);
 			L.DomUtil.get('tablePicker').style.display = 'none';
-		}
+		};
 	}
 }
