@@ -171,6 +171,8 @@ L.Control.menubar = L.Control.extend({
 			showOnClick: true,
 			hideTimeout: 0,
 			hideDuration: 0,
+			showDuration: 0,
+			showTimeout: 0,
 			collapsibleHideDuration: 0,
 			subIndicatorsPos: 'append',
 			subIndicatorsText: '&#8250;'
