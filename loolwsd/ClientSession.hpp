@@ -26,7 +26,7 @@ public:
 
     virtual ~ClientSession();
 
-    void setEditLock(const bool value);
+    bool setEditLock(const bool value);
     void markEditLock(const bool value) { _haveEditLock = (value || std::getenv("LOK_VIEW_CALLBACK")); }
     bool isEditLocked() const { return _haveEditLock; }
 
@@ -72,9 +72,9 @@ private:
     bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool getPartPageRectangles(const char *buffer, int length);
 
-    void sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    void sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
 private:
 

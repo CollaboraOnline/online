@@ -76,8 +76,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        sendTextFrame("loolserver " + GetProtocolVersion());
-        return true;
+        return sendTextFrame("loolserver " + GetProtocolVersion());
     }
 
     if (tokens[0] == "takeedit")
@@ -132,7 +131,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "canceltiles")
     {
         if (!_peer.expired())
-            forwardToPeer(_peer, buffer, length);
+        {
+            return forwardToPeer(_peer, buffer, length);
+        }
     }
     else if (tokens[0] == "commandvalues")
     {
@@ -144,7 +145,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "renderfont")
     {
-        sendFontRendering(buffer, length, tokens);
+        return sendFontRendering(buffer, length, tokens);
     }
     else if (tokens[0] == "status")
     {
@@ -152,21 +153,21 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "tile")
     {
-        sendTile(buffer, length, tokens);
+        return sendTile(buffer, length, tokens);
     }
     else if (tokens[0] == "tilecombine")
     {
-        sendCombinedTiles(buffer, length, tokens);
+        return sendCombinedTiles(buffer, length, tokens);
     }
     else
     {
         // All other commands are such that they always require a
         // LibreOfficeKitDocument session, i.e. need to be handled in
         // a child process.
-
         if (_peer.expired())
         {
-            Log::warn("No peer to handle [" + tokens[0] + "].");
+            Log::error(getName() + " has no peer to handle [" + tokens[0] + "].");
+            return false;
         }
 
         // Allow 'downloadas' for all kinds of views irrespective of editlock
@@ -174,20 +175,27 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";
-            forwardToPeer(_peer, dummyFrame.c_str(), dummyFrame.size());
+            return forwardToPeer(_peer, dummyFrame.c_str(), dummyFrame.size());
         }
         else if (tokens[0] != "requestloksession")
         {
-            forwardToPeer(_peer, buffer, length);
+            return forwardToPeer(_peer, buffer, length);
+        }
+        else
+        {
+            assert(tokens[0] == "requestloksession");
+            return true;
         }
     }
-    return true;
+
+    return false;
 }
 
 bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     if (tokens.count() < 2)
     {
+        // Failed loading ends connection.
         sendTextFrame("error: cmd=load kind=syntax");
         return false;
     }
@@ -213,8 +221,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
             oss << " options=" << _docOptions;
 
         const auto loadRequest = oss.str();
-        forwardToPeer(_peer, loadRequest.c_str(), loadRequest.size());
-        return true;
+        return forwardToPeer(_peer, loadRequest.c_str(), loadRequest.size());
     }
     catch (const Poco::SyntaxException&)
     {
@@ -234,23 +241,20 @@ bool ClientSession::getStatus(const char *buffer, int length)
         // And let clients know if they hold the edit lock.
         const auto msg = "editlock: " + std::to_string(isEditLocked());
         Log::debug("Returning [" + msg + "] in response to status.");
-        sendTextFrame(msg);
-
-        return true;
+        return sendTextFrame(msg);
     }
 
-    forwardToPeer(_peer, buffer, length);
-    return true;
+    return forwardToPeer(_peer, buffer, length);
 }
 
-void ClientSession::setEditLock(const bool value)
+bool ClientSession::setEditLock(const bool value)
 {
     // Update the sate and forward to child.
     markEditLock(value);
     const auto msg = "editlock: " + std::to_string(isEditLocked());
     const auto mv = std::getenv("LOK_VIEW_CALLBACK") ? "1" : "0";
     Log::debug("Forwarding [" + msg + "] to set editlock to " + std::to_string(value) + ". MultiView: " + mv);
-    forwardToPeer(_peer, msg.data(), msg.size());
+    return forwardToPeer(_peer, msg.data(), msg.size());
 }
 
 bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
@@ -258,19 +262,16 @@ bool ClientSession::getCommandValues(const char *buffer, int length, StringToken
     std::string command;
     if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
     {
-        sendTextFrame("error: cmd=commandvalues kind=syntax");
-        return false;
+        return sendTextFrame("error: cmd=commandvalues kind=syntax");
     }
 
     const std::string cmdValues = _docBroker->tileCache().getTextFile("cmdValues" + command + ".txt");
     if (cmdValues.size() > 0)
     {
-        sendTextFrame(cmdValues);
-        return true;
+        return sendTextFrame(cmdValues);
     }
 
-    forwardToPeer(_peer, buffer, length);
-    return true;
+    return forwardToPeer(_peer, buffer, length);
 }
 
 bool ClientSession::getPartPageRectangles(const char *buffer, int length)
@@ -278,22 +279,19 @@ bool ClientSession::getPartPageRectangles(const char *buffer, int length)
     const std::string partPageRectangles = _docBroker->tileCache().getTextFile("partpagerectangles.txt");
     if (partPageRectangles.size() > 0)
     {
-        sendTextFrame(partPageRectangles);
-        return true;
+        return sendTextFrame(partPageRectangles);
     }
 
-    forwardToPeer(_peer, buffer, length);
-    return true;
+    return forwardToPeer(_peer, buffer, length);
 }
 
-void ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
+bool ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
 {
     std::string font;
     if (tokens.count() < 2 ||
         !getTokenString(tokens[1], "font", font))
     {
-        sendTextFrame("error: cmd=renderfont kind=syntax");
-        return;
+        return sendTextFrame("error: cmd=renderfont kind=syntax");
     }
 
     const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
@@ -313,14 +311,13 @@ void ClientSession::sendFontRendering(const char *buffer, int length, StringToke
         cachedRendering->read(output.data() + pos, size);
         cachedRendering->close();
 
-        sendBinaryFrame(output.data(), output.size());
-        return;
+        return sendBinaryFrame(output.data(), output.size());
     }
 
-    forwardToPeer(_peer, buffer, length);
+    return forwardToPeer(_peer, buffer, length);
 }
 
-void ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     try
     {
@@ -330,11 +327,13 @@ void ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringToke
     catch (const std::exception& exc)
     {
         Log::error(std::string("Failed to process tile command: ") + exc.what() + ".");
-        sendTextFrame("error: cmd=tile kind=invalid");
+        return sendTextFrame("error: cmd=tile kind=invalid");
     }
+
+    return true;
 }
 
-void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
     std::string tilePositionsX, tilePositionsY;
@@ -347,16 +346,14 @@ void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
         !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
         !getTokenInteger(tokens[7], "tileheight", tileHeight))
     {
-        sendTextFrame("error: cmd=tilecombine kind=syntax");
-        return;
+        return sendTextFrame("error: cmd=tilecombine kind=syntax");
     }
 
     if (part < 0 || pixelWidth <= 0 || pixelHeight <= 0 ||
         tileWidth <= 0 || tileHeight <= 0 ||
         tilePositionsX.empty() || tilePositionsY.empty())
     {
-        sendTextFrame("error: cmd=tilecombine kind=invalid");
-        return;
+        return sendTextFrame("error: cmd=tilecombine kind=invalid");
     }
 
     std::string reqTimestamp;
@@ -382,8 +379,7 @@ void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
     // check that number of positions for X and Y is the same
     if (numberOfPositions != positionXtokens.count())
     {
-        sendTextFrame("error: cmd=tilecombine kind=invalid");
-        return;
+        return sendTextFrame("error: cmd=tilecombine kind=invalid");
     }
 
     for (size_t i = 0; i < numberOfPositions; ++i)
@@ -391,20 +387,20 @@ void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
         int x = 0;
         if (!stringToInteger(positionXtokens[i], x))
         {
-            sendTextFrame("error: cmd=tilecombine kind=syntax");
-            return;
+            return sendTextFrame("error: cmd=tilecombine kind=syntax");
         }
 
         int y = 0;
         if (!stringToInteger(positionYtokens[i], y))
         {
-            sendTextFrame("error: cmd=tilecombine kind=syntax");
-            return;
+            return sendTextFrame("error: cmd=tilecombine kind=syntax");
         }
 
         const TileDesc tile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
         _docBroker->handleTileRequest(tile, shared_from_this());
     }
+
+    return true;
 }
 
 bool ClientSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)
