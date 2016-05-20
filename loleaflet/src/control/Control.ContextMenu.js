@@ -100,13 +100,13 @@ L.Control.ContextMenu = L.Control.extend({
 						!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
 						!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
 						!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
-						!(docType === 'drawing' && this.optinos.whitelist.drawing.indexOf(commandName) !== -1)) {
+						!(docType === 'drawing' && this.options.whitelist.drawing.indexOf(commandName) !== -1)) {
 						continue;
 					}
 
 					itemName = item['text'].replace('~', '');
 					contextMenu[item['command']] = {
-						name: itemName
+						name: _(itemName)
 					};
 
 					if (item['checktype'] === 'checkmark') {
