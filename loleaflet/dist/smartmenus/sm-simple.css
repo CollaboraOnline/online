@@ -138,13 +138,15 @@ collapsible to desktop (navbar + dropdowns)
 }
 .sm-simple a, .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active, .sm-simple a.highlighted {
     padding: 5px 15px;
-    color: #555;
+    color: #000;
 }
 .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active, .sm-simple a.highlighted {
-    background: #eee;
+    background: #538ecd;
+    color: #fff;
 }
 .sm-simple > li > a:hover, .sm-simple > li > a:focus, .sm-simple > li > a:active, .sm-simple > li > a.highlighted {
     background: #fff;
+    color: #000;
     border-color: #bbbbbb;
     border-bottom: 1px solid #bbb;
 }
