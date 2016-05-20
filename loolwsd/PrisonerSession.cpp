@@ -225,21 +225,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
 
 void PrisonerSession::forwardToPeer(const char *buffer, int length)
 {
-    const auto message = getAbbreviatedMessage(buffer, length);
-
-    auto peer = _peer.lock();
-    if (!peer)
-    {
-        throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
-    }
-    else if (peer->isCloseFrame())
-    {
-        Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
-        return;
-    }
-
-    Log::trace(getName() + " -> " + peer->getName() + ": " + message);
-    peer->sendBinaryFrame(buffer, length);
+    LOOLSession::forwardToPeer(_peer, buffer, length);
 }
 
 bool PrisonerSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)

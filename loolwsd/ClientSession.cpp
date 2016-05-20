@@ -409,22 +409,7 @@ void ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
 
 void ClientSession::forwardToPeer(const char *buffer, int length)
 {
-    const auto message = getAbbreviatedMessage(buffer, length);
-
-    auto peer = _peer.lock();
-    if (!peer)
-    {
-        throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
-    }
-
-    if (peer->isCloseFrame())
-    {
-        Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
-        return;
-    }
-
-    Log::trace(getName() + " -> " + peer->getName() + ": " + message);
-    peer->sendBinaryFrame(buffer, length);
+    LOOLSession::forwardToPeer(_peer, buffer, length);
 }
 
 bool ClientSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)

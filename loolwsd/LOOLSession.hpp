@@ -24,7 +24,9 @@
 #include <Poco/Types.h>
 
 #include "MessageQueue.hpp"
+#include "LOOLProtocol.hpp"
 #include "TileCache.hpp"
+#include "Log.hpp"
 
 class LOOLSession
 {
@@ -90,6 +92,26 @@ protected:
     void updateLastActivityTime()
     {
         _lastActivityTime = std::chrono::steady_clock::now();
+    }
+
+    template <typename T>
+    void forwardToPeer(T& p, const char *buffer, int length)
+    {
+        const auto message = LOOLProtocol::getAbbreviatedMessage(buffer, length);
+
+        auto peer = p.lock();
+        if (!peer)
+        {
+            throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
+        }
+        else if (peer->isCloseFrame())
+        {
+            Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
+            return;
+        }
+
+        Log::trace(getName() + " -> " + peer->getName() + ": " + message);
+        peer->sendBinaryFrame(buffer, length);
     }
 
     // Fields common to sessions in master and jailed processes:
