@@ -390,7 +390,6 @@ private:
                     Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
                     lock.unlock();
-                    Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
                     // Wait until the client has connected with a prison socket.
                     waitBridgeCompleted(session);
@@ -402,13 +401,15 @@ private:
                     const std::string load = "load url=" + encodedFrom;
                     session->handleInput(load.data(), load.size());
 
-                    // Convert it to the requested format.
+                    //FIXME: Check for security violations.
                     Path toPath(docBroker->getPublicUri().getPath());
                     toPath.setExtension(format);
                     const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
                     std::string encodedTo;
                     URI::encode(toJailURL, "", encodedTo);
-                    std::string saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
+
+                    // Convert it to the requested format.
+                    const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
                     session->handleInput(saveas.data(), saveas.size());
 
                     // Send it back to the client.
@@ -427,6 +428,10 @@ private:
                     {
                         Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
                         docBrokers.erase(docKey);
+                    }
+                    else
+                    {
+                        Log::error("Multiple sessions during conversion. " + std::to_string(sessionsCount) + " sessions remain.");
                     }
                 }
 
@@ -988,7 +993,10 @@ public:
             auto session = std::make_shared<PrisonerSession>(sessionId, ws, docBroker);
 
             // Connect the prison session to the client.
-            docBroker->connectPeers(session);
+            if (!docBroker->connectPeers(session))
+            {
+                Log::warn("Failed to connect " + session->getName() + " to its peer.");
+            }
 
             std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
             AvailableChildSessions.emplace(sessionId, session);

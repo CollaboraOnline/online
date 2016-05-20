@@ -28,7 +28,7 @@ namespace IoUtil
     int receiveFrame(Poco::Net::WebSocket& socket, void* buffer, int length, int& flags);
 
     /// Synchronously process WebSocket requests and dispatch to handler.
-    //. Handler returns false to end.
+    /// Handler returns false to end.
     void SocketProcessor(const std::shared_ptr<Poco::Net::WebSocket>& ws,
                          const std::function<bool(const std::vector<char>&)>& handler,
                          const std::function<void()>& closeFrame,

@@ -75,11 +75,11 @@ void LOOLSession::sendTextFrame(const std::string& text)
 {
     if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
     {
-        Log::error("Socket error to send " + getAbbreviatedMessage(text.c_str(), text.size()) + " to.");
+        Log::error(getName() + ": Bad socket while sending [" + getAbbreviatedMessage(text.c_str(), text.size()) + "].");
         return;
     }
-    else
-        Log::trace(getName() + " Send: " + getAbbreviatedMessage(text.c_str(), text.size()));
+
+    Log::trace(getName() + " Send: " + getAbbreviatedMessage(text.c_str(), text.size()));
 
     std::unique_lock<std::mutex> lock(_mutex);
 
@@ -106,11 +106,11 @@ void LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
     if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
     {
-        Log::error("Socket error to send binary frame of " + std::to_string(length) + " bytes to.");
+        Log::error(getName() + ": Bad socket while sending binary frame of " + std::to_string(length) + " bytes.");
         return;
     }
-    else
-        Log::trace(getName() + " Send: " + std::to_string(length) + " bytes");
+
+    Log::trace(getName() + " Send: " + std::to_string(length) + " bytes");
 
     std::unique_lock<std::mutex> lock(_mutex);
 
