@@ -112,6 +112,26 @@ private:
     }
 };
 
+/// Check if some previously forked kids have died.
+static void cleanupChildren()
+{
+    Process::PID exitedChildPid;
+    int status;
+    while ((exitedChildPid = waitpid(-1, &status, WNOHANG)) > 0)
+    {
+        if (childJails.find(exitedChildPid) != childJails.end())
+        {
+            Log::info("Child " + std::to_string(exitedChildPid) + " has exited, removing its jail '" + childJails[exitedChildPid] + "'");
+            Util::removeFile(childJails[exitedChildPid], true);
+            childJails.erase(exitedChildPid);
+        }
+        else
+        {
+            Log::error("Unknown child " + std::to_string(exitedChildPid) + " has exited");
+        }
+    }
+}
+
 static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
@@ -142,26 +162,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
     else
     {
         // Parent
-
-        // Check if some previously forked kids have died
-        Process::PID exitedChildPid;
-        int status;
-        while ((exitedChildPid = waitpid(-1, &status, WNOHANG)) > 0)
-        {
-            if (childJails.find(exitedChildPid) != childJails.end())
-            {
-                Log::info("Child " + std::to_string(exitedChildPid) + " has exited, removing its jail '" + childJails[exitedChildPid] + "'");
-                Util::removeFile(childJails[exitedChildPid], true);
-                childJails.erase(exitedChildPid);
-            }
-            else
-            {
-                Log::error("Unknown child " + std::to_string(exitedChildPid) + " has exited");
-            }
-        }
-
         if (pid < 0)
+        {
             Log::syserror("Fork failed.");
+        }
         else
         {
             Log::info("Forked kit [" + std::to_string(pid) + "].");
@@ -342,6 +346,10 @@ int main(int argc, char** argv)
 
             // If we need to spawn more, retry later.
             ForkCounter = (newInstances >= ForkCounter ? 0 : ForkCounter - newInstances);
+        }
+        else
+        {
+            cleanupChildren();
         }
     }
 
