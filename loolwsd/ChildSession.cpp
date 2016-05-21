@@ -401,13 +401,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
     if (tokens[0] == "dummymsg")
     {
-        // Just to update the activity of view-only mode
+        // Just to update the activity of a view-only client.
         return true;
     }
     else if (tokens[0] == "canceltiles")
     {
-        // this command makes sense only on the command queue level, nothing
-        // to do here
+        // This command makes sense only on the command queue level.
+        // Shouldn't get this here.
         return true;
     }
     else if (tokens[0] == "commandvalues")
@@ -562,14 +562,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             // than for WSD to potentially stall while notifying
             // each client with the edit lock state.
             Log::trace("Echoing back [" + firstLine + "].");
-            sendTextFrame(firstLine);
-            return true;
+            return sendTextFrame(firstLine);
         }
         else
         {
-            assert(false);
+            assert(!"Unknown command token.");
         }
     }
+
     return true;
 }
 
@@ -627,7 +627,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     return true;
 }
 
-void ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string font, decodedFont;
 
@@ -635,7 +635,7 @@ void ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
         !getTokenString(tokens[1], "font", font))
     {
         sendTextFrame("error: cmd=renderfont kind=syntax");
-        return;
+        return false;
     }
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
@@ -652,21 +652,16 @@ void ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
     Timestamp timestamp;
     int width, height;
-    unsigned char *pixmap = _loKitDocument->renderFont(decodedFont.c_str(), &width, &height);
+    std::unique_ptr<unsigned char[]> pixmap(_loKitDocument->renderFont(decodedFont.c_str(), &width, &height));
     Log::trace("renderFont [" + font + "] rendered in " + std::to_string(timestamp.elapsed()/1000.) + "ms");
 
-    if (pixmap != nullptr)
+    if (!pixmap ||
+        !png::encodeBufferToPNG(pixmap.get(), width, height, output, LOK_TILEMODE_RGBA))
     {
-        if (!png::encodeBufferToPNG(pixmap, width, height, output, LOK_TILEMODE_RGBA))
-        {
-            sendTextFrame("error: cmd=renderfont kind=failure");
-            delete[] pixmap;
-            return;
-        }
-        delete[] pixmap;
+        return sendTextFrame("error: cmd=renderfont kind=failure");
     }
 
-    sendBinaryFrame(output.data(), output.size());
+    return sendBinaryFrame(output.data(), output.size());
 }
 
 bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
@@ -683,8 +678,7 @@ bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
         return false;
     }
 
-    sendTextFrame("status: " + status);
-    return true;
+    return sendTextFrame("status: " + status);
 }
 
 bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
@@ -701,8 +695,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
     if (_multiView)
         _loKitDocument->setView(_viewId);
 
-    sendTextFrame("commandvalues: " + std::string(_loKitDocument->getCommandValues(command.c_str())));
-    return true;
+    return sendTextFrame("commandvalues: " + std::string(_loKitDocument->getCommandValues(command.c_str())));
 }
 
 bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)

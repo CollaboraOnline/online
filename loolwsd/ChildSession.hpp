@@ -59,7 +59,7 @@ public:
  protected:
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-    void sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
