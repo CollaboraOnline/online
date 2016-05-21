@@ -51,6 +51,7 @@
 #include "LibreOfficeKit.hpp"
 #include "Log.hpp"
 #include "QueueHandler.hpp"
+#include "TileDesc.hpp"
 #include "Unit.hpp"
 #include "UserMessages.hpp"
 #include "Util.hpp"
@@ -561,45 +562,7 @@ public:
 
     void renderTile(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
     {
-        const auto tileMsg = Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end());
-        int part, width, height, tilePosX, tilePosY, tileWidth, tileHeight;
-
-        if (tokens.count() < 8 ||
-            !getTokenInteger(tokens[1], "part", part) ||
-            !getTokenInteger(tokens[2], "width", width) ||
-            !getTokenInteger(tokens[3], "height", height) ||
-            !getTokenInteger(tokens[4], "tileposx", tilePosX) ||
-            !getTokenInteger(tokens[5], "tileposy", tilePosY) ||
-            !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-            !getTokenInteger(tokens[7], "tileheight", tileHeight))
-        {
-            //FIXME: Return error.
-            //sendTextFrame("error: cmd=tile kind=syntax");
-            Log::error("Invalid tile request [" + tileMsg + "].");
-            return;
-        }
-
-        if (part < 0 ||
-            width <= 0 ||
-            height <= 0 ||
-            tilePosX < 0 ||
-            tilePosY < 0 ||
-            tileWidth <= 0 ||
-            tileHeight <= 0)
-        {
-            //FIXME: Return error.
-            //sendTextFrame("error: cmd=tile kind=invalid");
-            Log::error("Invalid tile request [" + tileMsg + "].");
-            return;
-        }
-
-        size_t index = 8;
-        int id = -1;
-        if (tokens.count() > index && tokens[index].find("id") == 0)
-        {
-            getTokenInteger(tokens[index], "id", id);
-            ++index;
-        }
+        auto tile = TileDesc::parse(tokens);
 
         std::unique_lock<std::recursive_mutex> lock(ChildSession::getLock());
 
@@ -614,29 +577,31 @@ public:
             //_loKitDocument->setView(_viewId);
 
         // Send back the request with all optional parameters given in the request.
+        const auto tileMsg = tile.serialize("tile:");
 #if ENABLE_DEBUG
-        const std::string response = "tile: " + tileMsg + " renderid=" + Util::UniqueId() + "\n";
+        const std::string response = tileMsg + " renderid=" + Util::UniqueId() + "\n";
 #else
-        const std::string response = "tile: " + tileMsg + "\n";
+        const std::string response = tileMsg + "\n";
 #endif
 
         std::vector<char> output;
-        output.reserve(response.size() + (4 * width * height));
+        output.reserve(response.size() + (4 * tile.getWidth() * tile.getHeight()));
         output.resize(response.size());
         std::memcpy(output.data(), response.data(), response.size());
 
         std::vector<unsigned char> pixmap;
-        pixmap.resize(4 * width * height);
+        pixmap.resize(output.capacity());
 
         Timestamp timestamp;
-        _loKitDocument->paintPartTile(pixmap.data(), part,
-                                      width, height, tilePosX, tilePosY,
-                                      tileWidth, tileHeight);
-        Log::trace() << "paintTile at [" << tilePosX << ", " << tilePosY
-                     << "] rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
+        _loKitDocument->paintPartTile(pixmap.data(), tile.getPart(),
+                                      tile.getWidth(), tile.getHeight(),
+                                      tile.getTilePosX(), tile.getTilePosY(),
+                                      tile.getTileWidth(), tile.getTileHeight());
+        Log::trace() << "paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY()
+                     << " rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
-        if (!Util::encodeBufferToPNG(pixmap.data(), width, height, output, mode))
+        if (!Util::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
@@ -1257,6 +1222,7 @@ void lokit_main(const std::string& childRoot,
                     Log::debug(socketName + ": recv [" + LOOLProtocol::getAbbreviatedMessage(message) + "].");
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
+                    // Note: Syntax or parsing errors here are unexpected and fatal.
                     if (TerminationFlag)
                     {
                         Log::debug("Too late, we're going down");
