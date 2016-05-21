@@ -32,7 +32,6 @@ const int NumToPrefork = 20;
 // Inside the WSD process
 class UnitPrefork : public UnitWSD
 {
-    int _numStarted;
     std::string _failure;
     Poco::Timestamp _startTime;
     size_t _totalPSS;
@@ -43,8 +42,7 @@ class UnitPrefork : public UnitWSD
 
 public:
     UnitPrefork()
-        : _numStarted(0),
-          _totalPSS(0),
+        : _totalPSS(0),
           _totalDirty(0)
     {
         setHasKitHooks();
@@ -99,6 +97,7 @@ public:
         if (_cv.wait_for(lock, std::chrono::milliseconds(5 * 1000)) == std::cv_status::timeout)
         {
             _failure = "Timed out waiting for child to respond to unit-memdump.";
+            Log::error(_failure);
         }
 
         totalPSS = _totalPSS;
@@ -107,19 +106,21 @@ public:
 
     virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
     {
-        ++_numStarted;
         _childSockets.push_back(socket);
-        if (_numStarted >= NumToPrefork)
+        if (_childSockets.size() > NumToPrefork)
         {
             Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
 
             auto totalTime = (1000. * elapsed)/Poco::Timestamp::resolution();
-            Log::info() << "Launched " << _numStarted << " in "
+            Log::info() << "Launched " << _childSockets.size() << " in "
                         << totalTime << Log::end;
             size_t totalPSSKb = 0;
             size_t totalDirtyKb = 0;
-            for (auto child : _childSockets)
-                getMemory(child, totalPSSKb, totalDirtyKb);
+            // Skip the last one as it's not completely initialized yet.
+            for (size_t i = 0; i < _childSockets.size() - 1; ++i)
+            {
+                getMemory(_childSockets[i], totalPSSKb, totalDirtyKb);
+            }
 
             Log::info() << "Memory use total   " << totalPSSKb << "k shared "
                         << totalDirtyKb << "k dirty" << Log::end;
