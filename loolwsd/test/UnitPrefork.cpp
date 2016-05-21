@@ -53,6 +53,11 @@ public:
     virtual void returnValue(int &retValue) override
     {
         // 0 when empty (success), otherwise failure.
+        if (!_failure.empty())
+        {
+            Log::error("UnitPrefork failed due to: " + _failure);
+        }
+
         retValue = !_failure.empty();
     }
 
@@ -108,8 +113,9 @@ public:
         {
             Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
 
+            auto totalTime = (1000. * elapsed)/Poco::Timestamp::resolution();
             Log::info() << "Launched " << _numStarted << " in "
-                        << (1.0 * elapsed)/Poco::Timestamp::resolution() << Log::end;
+                        << totalTime << Log::end;
             size_t totalPSSKb = 0;
             size_t totalDirtyKb = 0;
             for (auto child : _childSockets)
@@ -123,10 +129,19 @@ public:
             Log::info() << "Memory use average " << totalPSSKb << "k shared "
                         << totalDirtyKb << "k dirty" << Log::end;
 
+            Log::info() << "Launch time total   " << totalTime << " ms" << Log::end;
+            totalTime /= _childSockets.size();
+            Log::info() << "Launch time average " << totalTime << " ms" << Log::end;
+
             if (!_failure.empty())
+            {
+                Log::error("UnitPrefork failed due to: " + _failure);
                 exitTest(TestResult::TEST_FAILED);
+            }
             else
+            {
                 exitTest(TestResult::TEST_OK);
+            }
         }
     }
 };
@@ -140,14 +155,13 @@ namespace {
         if (!strncmp(line, tag, len))
         {
             while (!isdigit(line[len]) && line[len] != '\0')
-                len++;
+                ++len;
 
             const auto str = std::string(line + len, strlen(line + len) - 1);
-            Log::info(std::string("does start with ") + tag + " '" + str + "'");
             return line + len;
         }
-        else
-            return 0;
+
+        return nullptr;
     }
 
     std::string readMemorySizes(FILE *inStream)
@@ -172,6 +186,7 @@ namespace {
         Log::info("readMemorySize: [" + res + "].");
         if (res.empty())
         {
+            Log::error("Failed to read memory stats.");
             throw std::runtime_error("Failed to read memory stats.");
         }
 
@@ -273,7 +288,7 @@ public:
     virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> &ws,
                                   std::string &message) override
     {
-        const auto token = LOOLProtocol::getFirstToken(message.c_str(), message.length());
+        const auto token = LOOLProtocol::getFirstToken(message);
         if (token == "unit-memdump:")
         {
             std::string memory;
