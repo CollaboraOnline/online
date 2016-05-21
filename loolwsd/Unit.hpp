@@ -134,6 +134,10 @@ public:
                      Poco::Net::HTTPServerResponse& /* response */)
         { return false; }
 
+    /// Child sent a message
+    virtual bool filterChildMessage(const std::vector<char>& /* payload */)
+        { return false; }
+
     // ---------------- TileCache hooks ----------------
     /// Called before the lookupTile call returns. Should always be called to fire events.
     virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
