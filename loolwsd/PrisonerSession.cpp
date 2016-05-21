@@ -65,94 +65,90 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
 
     // Snoop at some messages and manipulate tile cache information as needed
     auto peer = _peer.lock();
-
+    if (!peer)
     {
-        if (!peer)
-        {
-            throw Poco::ProtocolException("The session has not been assigned a peer.");
-        }
+        throw Poco::ProtocolException("The session has not been assigned a peer.");
+    }
 
-        if (tokens[0] == "unocommandresult:")
+    if (tokens[0] == "unocommandresult:")
+    {
+        const std::string stringMsg(buffer, length);
+        Log::info(getName() + "Command: " + stringMsg);
+        const auto index = stringMsg.find_first_of('{');
+        if (index != std::string::npos)
         {
-            const std::string stringMsg(buffer, length);
-            Log::info(getName() + "Command: " + stringMsg);
-            const auto index = stringMsg.find_first_of('{');
-            if (index != std::string::npos)
+            const std::string stringJSON = stringMsg.substr(index);
+            Poco::JSON::Parser parser;
+            const auto result = parser.parse(stringJSON);
+            const auto& object = result.extract<Poco::JSON::Object::Ptr>();
+            if (object->get("commandName").toString() == ".uno:Save" &&
+                object->get("success").toString() == "true")
             {
-                const std::string stringJSON = stringMsg.substr(index);
-                Poco::JSON::Parser parser;
-                const auto result = parser.parse(stringJSON);
-                const auto& object = result.extract<Poco::JSON::Object::Ptr>();
-                if (object->get("commandName").toString() == ".uno:Save" &&
-                    object->get("success").toString() == "true")
-                {
-                    _docBroker->save();
-                    return true;
-                }
-            }
-        }
-
-        if (tokens[0] == "error:")
-        {
-            std::string errorCommand;
-            std::string errorKind;
-            if (getTokenString(tokens[1], "cmd", errorCommand) &&
-                getTokenString(tokens[2], "kind", errorKind) )
-            {
-                if (errorCommand == "load")
-                {
-                    if (errorKind == "passwordrequired:to-view" ||
-                        errorKind == "passwordrequired:to-modify" ||
-                        errorKind == "wrongpassword")
-                    {
-                        forwardToPeer(_peer, buffer, length);
-                        peer->setLoadFailed(errorKind);
-                        return false;
-                    }
-                }
-            }
-        }
-
-        if (tokens[0] == "curpart:" &&
-            tokens.count() == 2 &&
-            getTokenInteger(tokens[1], "part", _curPart))
-        {
-            return true;
-        }
-
-        if (tokens.count() == 2 && tokens[0] == "saveas:")
-        {
-            std::string url;
-            if (!getTokenString(tokens[1], "url", url))
+                _docBroker->save();
                 return true;
-
-            if (peer)
-            {
-                // Save as completed, inform the other (Kind::ToClient)
-                // PrisonerSession about it.
-
-                const std::string filePrefix("file:///");
-                if (url.find(filePrefix) == 0)
-                {
-                    // Rewrite file:// URLs, as they are visible to the outside world.
-                    const Path path(_docBroker->getJailRoot(), url.substr(filePrefix.length()));
-                    url = filePrefix + path.toString().substr(1);
-                }
-
-                peer->setSaveAsUrl(url);
             }
-
-            return true;
         }
-        else if (tokens.count() == 2 && tokens[0] == "statechanged:")
+    }
+    else
+    if (tokens[0] == "error:")
+    {
+        std::string errorCommand;
+        std::string errorKind;
+        if (getTokenString(tokens[1], "cmd", errorCommand) &&
+            getTokenString(tokens[2], "kind", errorKind) )
+        {
+            if (errorCommand == "load")
+            {
+                if (errorKind == "passwordrequired:to-view" ||
+                    errorKind == "passwordrequired:to-modify" ||
+                    errorKind == "wrongpassword")
+                {
+                    forwardToPeer(_peer, buffer, length);
+                    peer->setLoadFailed(errorKind);
+                    return false;
+                }
+            }
+        }
+    }
+    else
+    if (tokens[0] == "curpart:" &&
+        tokens.count() == 2 &&
+        getTokenInteger(tokens[1], "part", _curPart))
+    {
+        return true;
+    }
+    else
+    if (tokens.count() == 2 && tokens[0] == "saveas:")
+    {
+        std::string url;
+        if (!getTokenString(tokens[1], "url", url))
+        {
+            Log::error("Bad syntax for: " + firstLine);
+            return false;
+        }
+
+        // Save as completed, inform the other (Kind::ToClient)
+        // PrisonerSession about it.
+
+        const std::string filePrefix("file:///");
+        if (url.find(filePrefix) == 0)
+        {
+            // Rewrite file:// URLs, as they are visible to the outside world.
+            const Path path(_docBroker->getJailRoot(), url.substr(filePrefix.length()));
+            url = filePrefix + path.toString().substr(1);
+        }
+
+        peer->setSaveAsUrl(url);
+        return true;
+    }
+    else if (tokens.count() == 2 && tokens[0] == "statechanged:")
+    {
+        if (_docBroker)
         {
             StringTokenizer stateTokens(tokens[1], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (stateTokens.count() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
             {
-                if (_docBroker)
-                {
-                    _docBroker->setModified(stateTokens[1] == "true");
-                }
+                _docBroker->setModified(stateTokens[1] == "true");
             }
         }
     }
