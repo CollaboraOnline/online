@@ -50,6 +50,7 @@
 #include "LOOLProtocol.hpp"
 #include "LibreOfficeKit.hpp"
 #include "Log.hpp"
+#include "Png.hpp"
 #include "QueueHandler.hpp"
 #include "TileDesc.hpp"
 #include "Unit.hpp"
@@ -601,7 +602,7 @@ public:
                      << " rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
-        if (!Util::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
+        if (!png::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");

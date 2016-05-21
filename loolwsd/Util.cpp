@@ -7,10 +7,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// PNG headers are testy and don't like us including anything
-// they include. Must be first until moved and restrained.
-#include <png.h>
-
 #include "Util.hpp"
 #include "config.h"
 
@@ -44,28 +40,6 @@
 
 #include "Common.hpp"
 #include "Log.hpp"
-#include "Png.hpp"
-
-// Callback functions for libpng
-
-extern "C"
-{
-    static void user_write_status_fn(png_structp, png_uint_32, int)
-    {
-    }
-
-    static void user_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
-    {
-        std::vector<char> *outputp = (std::vector<char> *) png_get_io_ptr(png_ptr);
-        const size_t oldsize = outputp->size();
-        outputp->resize(oldsize + length);
-        std::memcpy(outputp->data() + oldsize, data, length);
-    }
-
-    static void user_flush_fn(png_structp)
-    {
-    }
-}
 
 volatile bool TerminationFlag = false;
 
@@ -143,53 +117,6 @@ namespace Util
     bool windowingAvailable()
     {
         return std::getenv("DISPLAY") != nullptr;
-    }
-
-    bool encodeBufferToPNG(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode)
-    {
-
-        return encodeSubBufferToPNG(pixmap, 0, 0, width, height, width, height, output, mode);
-    }
-
-    bool encodeSubBufferToPNG(unsigned char *pixmap, int startX, int startY, int width, int height,
-                              int bufferWidth, int bufferHeight, std::vector<char>& output, LibreOfficeKitTileMode mode)
-    {
-        if (bufferWidth < width || bufferHeight < height)
-            return false;
-
-        png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
-
-        png_infop info_ptr = png_create_info_struct(png_ptr);
-
-        if (setjmp(png_jmpbuf(png_ptr)))
-        {
-            png_destroy_write_struct(&png_ptr, nullptr);
-            return false;
-        }
-
-        png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-
-        png_set_write_fn(png_ptr, &output, user_write_fn, user_flush_fn);
-        png_set_write_status_fn(png_ptr, user_write_status_fn);
-
-        png_write_info(png_ptr, info_ptr);
-
-        if (mode == LOK_TILEMODE_BGRA)
-        {
-            png_set_write_user_transform_fn (png_ptr, unpremultiply_data);
-        }
-
-        for (int y = 0; y < height; ++y)
-        {
-            size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
-            png_write_row(png_ptr, pixmap + position);
-        }
-
-        png_write_end(png_ptr, info_ptr);
-
-        png_destroy_write_struct(&png_ptr, &info_ptr);
-
-        return true;
     }
 
     const char *signalName(const int signo)

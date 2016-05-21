@@ -28,6 +28,7 @@
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
 #include "Log.hpp"
+#include "Png.hpp"
 #include "Rectangle.hpp"
 #include "Util.hpp"
 
@@ -656,7 +657,7 @@ void ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
     if (pixmap != nullptr)
     {
-        if (!Util::encodeBufferToPNG(pixmap, width, height, output, LOK_TILEMODE_RGBA))
+        if (!png::encodeBufferToPNG(pixmap, width, height, output, LOK_TILEMODE_RGBA))
         {
             sendTextFrame("error: cmd=renderfont kind=failure");
             delete[] pixmap;

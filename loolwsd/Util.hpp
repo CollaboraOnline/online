@@ -47,14 +47,6 @@ namespace Util
 
     bool windowingAvailable();
 
-    // Sadly, older libpng headers don't use const for the pixmap pointer parameter to
-    // png_write_row(), so can't use const here for pixmap.
-    bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
-                           std::vector<char>& output, LibreOfficeKitTileMode mode);
-    bool encodeSubBufferToPNG(unsigned char* pixmap, int startX, int startY, int width, int height,
-                              int bufferWidth, int bufferHeight,
-                              std::vector<char>& output, LibreOfficeKitTileMode mode);
-
     /// Assert that a lock is already taken.
     template <typename T>
     void assertIsLocked(T& lock)

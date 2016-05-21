@@ -18,8 +18,6 @@
 #include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
-#include <png.h>
-
 #include <Poco/Buffer.h>
 #include <Poco/Process.h>
 #include <Poco/Random.h>
@@ -30,6 +28,7 @@
 #include <Poco/Util/Application.h>
 
 #include "LOKitHelper.hpp"
+#include "Png.hpp"
 #include "Util.hpp"
 
 using Poco::StringTokenizer;
@@ -170,9 +169,9 @@ protected:
                     continue;
 
                 std::vector<char> png;
-                LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(loKitDocument->pClass->getTileMode(loKitDocument));
+                const auto mode = static_cast<LibreOfficeKitTileMode>(loKitDocument->pClass->getTileMode(loKitDocument));
 
-                Util::encodeBufferToPNG(pixmap.data(), canvasWidth, canvasHeight, png, mode);
+                png::encodeBufferToPNG(pixmap.data(), canvasWidth, canvasHeight, png, mode);
 
                 TemporaryFile pngFile;
                 std::ofstream pngStream(pngFile.path(), std::ios::binary);
