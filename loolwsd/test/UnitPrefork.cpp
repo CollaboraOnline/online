@@ -14,6 +14,9 @@
 #include <sys/types.h>
 #include <dirent.h>
 
+#include <mutex>
+#include <condition_variable>
+
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
@@ -32,11 +35,17 @@ class UnitPrefork : public UnitWSD
     int _numStarted;
     std::string _failure;
     Poco::Timestamp _startTime;
+    size_t _totalPSS;
+    size_t _totalDirty;
+    std::mutex _mutex;
+    std::condition_variable _cv;
     std::vector< std::shared_ptr<Poco::Net::WebSocket> > _childSockets;
 
 public:
     UnitPrefork()
-        : _numStarted(0)
+        : _numStarted(0),
+          _totalPSS(0),
+          _totalDirty(0)
     {
         setHasKitHooks();
     }
@@ -52,29 +61,9 @@ public:
         numPrefork = NumToPrefork;
     }
 
-    void getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket,
-                   size_t &totalPSS, size_t &totalDirty)
+    virtual bool filterChildMessage(const std::vector<char>& payload)
     {
-        /// Fetch memory usage data from the last process ...
-        socket->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n")-1);
-
-        static const Poco::Timespan waitTime(COMMAND_TIMEOUT_MS * 1000);
-        if (!socket->poll(waitTime, Poco::Net::Socket::SELECT_READ))
-        {
-            _failure = "Timed out waiting for child to respond to unit-memdump command.";
-            return;
-        }
-
-        int flags;
-        char buffer[4096];
-        const int length = IoUtil::receiveFrame(*socket, buffer, sizeof (buffer), flags);
-        if (length <= 0 || ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE))
-        {
-            _failure = "Failed to read child response to unit-memdump command.";
-            return;
-        }
-
-        const std::string memory = LOOLProtocol::getFirstLine(buffer, length);
+        const std::string memory = LOOLProtocol::getFirstLine(payload);
         if (!memory.compare(0,6,"Error:"))
         {
             _failure = memory;
@@ -84,9 +73,31 @@ public:
             Log::info("Got memory stats [" + memory + "].");
             Poco::StringTokenizer tokens(memory, " ");
             assert(tokens.count() == 2);
-            totalPSS += atoi(tokens[0].c_str());
-            totalDirty += atoi(tokens[1].c_str());
+            _totalPSS += atoi(tokens[0].c_str());
+            _totalDirty += atoi(tokens[1].c_str());
         }
+
+        // Don't signal before wait.
+        std::unique_lock<std::mutex> lock(_mutex);
+        _cv.notify_one();
+        return true;
+    }
+
+    void getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket,
+                   size_t &totalPSS, size_t &totalDirty)
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        /// Fetch memory usage data from the last process ...
+        socket->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n"));
+
+        if (_cv.wait_for(lock, std::chrono::milliseconds(5 * 1000)) == std::cv_status::timeout)
+        {
+            _failure = "Timed out waiting for child to respond to unit-memdump.";
+        }
+
+        totalPSS = _totalPSS;
+        totalDirty = _totalDirty;
     }
 
     virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override

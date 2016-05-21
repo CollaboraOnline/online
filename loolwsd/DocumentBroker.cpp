@@ -20,6 +20,7 @@
 #include "LOOLProtocol.hpp"
 #include "ClientSession.hpp"
 #include "PrisonerSession.hpp"
+#include "Unit.hpp"
 
 using namespace LOOLProtocol;
 
@@ -28,6 +29,11 @@ void ChildProcess::socketProcessor()
     IoUtil::SocketProcessor(_ws,
         [this](const std::vector<char>& payload)
         {
+            if (UnitWSD::get().filterChildMessage(payload))
+            {
+                return true;
+            }
+
             auto docBroker = this->_docBroker.lock();
             if (docBroker)
             {
