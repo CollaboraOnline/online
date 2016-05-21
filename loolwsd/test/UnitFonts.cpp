@@ -75,7 +75,7 @@ public:
             return; // defer till we have all the data.
         if (_fontsKit != _fontsBroker)
         {
-            std::cout << "Error - font list mismatch" << std::endl;
+            std::cerr << "Error - font list mismatch" << std::endl;
             std::cerr << "Kit : '" << _fontsKit << "' vs. Broker : '" << _fontsBroker << "'" << std::endl;
             exitTest(TestResult::TEST_FAILED);
         }
@@ -83,7 +83,7 @@ public:
         {
             Poco::StringTokenizer tokens(_fontsKit, "\n");
             if (tokens.count() > 0)
-                std::cout << "  " << tokens[0] << std::endl;
+                std::cerr << "  " << tokens[0] << std::endl;
 
             exitTest(TestResult::TEST_OK);
         }
