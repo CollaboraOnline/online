@@ -10,10 +10,10 @@
 #ifndef INCLUDED_TILECACHE_HPP
 #define INCLUDED_TILECACHE_HPP
 
-#include <fstream>
+#include <iosfwd>
+#include <map>
 #include <memory>
 #include <mutex>
-#include <map>
 #include <string>
 
 #include <Poco/Timestamp.h>

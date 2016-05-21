@@ -15,18 +15,17 @@
 #include <iostream>
 #include <mutex>
 
-#include <Poco/Version.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PrivateKeyPassphraseHandler.h>
-#include <Poco/Net/SocketStream.h>
 #include <Poco/Net/SSLManager.h>
+#include <Poco/Net/SocketStream.h>
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Net/TCPServer.h>
 #include <Poco/Net/TCPServerConnection.h>
@@ -39,9 +38,11 @@
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
+#include <Poco/Version.h>
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
+#include "Log.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;

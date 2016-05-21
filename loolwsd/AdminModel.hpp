@@ -17,6 +17,7 @@
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
 
+#include "Log.hpp"
 #include "Util.hpp"
 
 class View

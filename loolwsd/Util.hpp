@@ -10,22 +10,21 @@
 #ifndef INCLUDED_UTIL_HPP
 #define INCLUDED_UTIL_HPP
 
-#include <string>
-#include <sstream>
+#include <cassert>
 #include <functional>
 #include <memory>
 #include <set>
+#include <sstream>
+#include <string>
 
 #include <Poco/File.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/RegularExpression.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
-
-#include "Log.hpp"
 
 /// Flag to stop pump loops.
 extern volatile bool TerminationFlag;

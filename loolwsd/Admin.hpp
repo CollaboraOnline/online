@@ -10,6 +10,8 @@
 #ifndef INCLUDED_ADMIN_HPP
 #define INCLUDED_ADMIN_HPP
 
+#include <mutex>
+
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServer.h>
@@ -20,6 +22,7 @@
 #include <Poco/Util/TimerTask.h>
 
 #include "AdminModel.hpp"
+#include "Log.hpp"
 
 class Admin;
 

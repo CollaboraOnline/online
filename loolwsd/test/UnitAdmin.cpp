@@ -13,24 +13,23 @@
 #include <condition_variable>
 #include <mutex>
 
-#include "Common.hpp"
-#include "Unit.hpp"
-#include "Util.hpp"
-#include "Log.hpp"
-
-#include <Poco/StringTokenizer.h>
 #include <Poco/Net/HTTPBasicCredentials.h>
+#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
+#include "Common.hpp"
+#include "Log.hpp"
+#include "Unit.hpp"
+#include "Util.hpp"
 #include "helpers.hpp"
 
 #define UNIT_URI "/loolwsd/unit-admin"

@@ -13,12 +13,12 @@
 
 #include <dlfcn.h>
 #include <ftw.h>
+#include <limits.h>
+#include <malloc.h>
+#include <stdlib.h>
 #include <sys/capability.h>
 #include <unistd.h>
 #include <utime.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <malloc.h>
 
 #include <atomic>
 #include <cassert>
@@ -49,6 +49,7 @@
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
 #include "LibreOfficeKit.hpp"
+#include "Log.hpp"
 #include "QueueHandler.hpp"
 #include "Unit.hpp"
 #include "UserMessages.hpp"

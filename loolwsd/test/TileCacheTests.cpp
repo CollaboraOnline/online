@@ -12,13 +12,12 @@
 #include <Poco/Net/WebSocket.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <TileCache.hpp>
-
+#include "helpers.hpp"
 #include <Common.hpp>
+#include <LOOLProtocol.hpp>
+#include <TileCache.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
-#include <LOOLProtocol.hpp>
-#include "helpers.hpp"
 
 using namespace helpers;
 

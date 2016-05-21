@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "TileCache.hpp"
 #include "config.h"
 
 #include <cassert>
@@ -29,13 +30,11 @@
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 
-#include "Common.hpp"
-#include "Storage.hpp"
-#include "LOOLProtocol.hpp"
-#include "TileCache.hpp"
-#include "Util.hpp"
 #include "ClientSession.hpp"
+#include "Common.hpp"
+#include "LOOLProtocol.hpp"
 #include "Unit.hpp"
+#include "Util.hpp"
 
 using Poco::DirectoryIterator;
 using Poco::File;

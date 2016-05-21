@@ -9,20 +9,21 @@
 
 #include <dlfcn.h>
 #include <ftw.h>
+
 #include <cassert>
 #include <iostream>
 
-#include "Common.hpp"
-#include "Util.hpp"
-#include "Unit.hpp"
-#include "LOOLProtocol.hpp"
-#include <dlfcn.h>
-
-#include <Poco/Timestamp.h>
-#include <Poco/StringTokenizer.h>
-#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPClientSession.h>
+#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
+#include <Poco/StringTokenizer.h>
+#include <Poco/Timestamp.h>
+
+#include "Common.hpp"
+#include "LOOLProtocol.hpp"
+#include "Log.hpp"
+#include "Unit.hpp"
+#include "Util.hpp"
 
 #define UNIT_URI "/loolwsd/unit-font"
 

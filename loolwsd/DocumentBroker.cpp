@@ -7,19 +7,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "DocumentBroker.hpp"
+#include "config.h"
+
 #include <cassert>
+#include <fstream>
 
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 
-#include "DocumentBroker.hpp"
+#include "ClientSession.hpp"
 #include "Exceptions.hpp"
+#include "LOOLProtocol.hpp"
 #include "LOOLWSD.hpp"
+#include "Log.hpp"
+#include "PrisonerSession.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
-#include "LOOLProtocol.hpp"
-#include "ClientSession.hpp"
-#include "PrisonerSession.hpp"
 #include "Unit.hpp"
 
 using namespace LOOLProtocol;

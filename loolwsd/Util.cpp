@@ -7,6 +7,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+// PNG headers are testy and don't like us including anything
+// they include. Must be first until moved and restrained.
+#include <png.h>
+
+#include "Util.hpp"
 #include "config.h"
 
 #include <execinfo.h>
@@ -20,27 +25,25 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <mutex>
 #include <random>
 #include <sstream>
 #include <string>
-
-#include <png.h>
 
 #include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
 #include <Poco/Format.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
+#include <Poco/TemporaryFile.h>
 #include <Poco/Thread.h>
 #include <Poco/Timestamp.h>
-#include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
 
 #include "Common.hpp"
-#include "Util.hpp"
+#include "Log.hpp"
 #include "Png.hpp"
 
 // Callback functions for libpng

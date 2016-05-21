@@ -7,16 +7,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <dlfcn.h>
-#include <ftw.h>
 #include <cassert>
-#include <iostream>
 
+#include <Poco/Util/Application.h>
+
+#include "Log.hpp"
 #include "Util.hpp"
 #include "Unit.hpp"
 
-#include <Poco/Timestamp.h>
-#include <Poco/Util/Application.h>
 using Poco::Timestamp;
 
 class UnitTimeout : public UnitWSD

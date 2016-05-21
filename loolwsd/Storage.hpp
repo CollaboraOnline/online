@@ -18,6 +18,7 @@
 #include <Poco/URI.h>
 
 #include "Auth.hpp"
+#include "Log.hpp"
 #include "Util.hpp"
 
 /// Base class of all Storage abstractions.

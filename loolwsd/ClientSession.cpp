@@ -7,7 +7,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "ClientSession.hpp"
 #include "config.h"
+
+#include <fstream>
 
 #include <Poco/FileStream.h>
 #include <Poco/JSON/Object.h>
@@ -16,16 +19,15 @@
 #include <Poco/URIStreamOpener.h>
 
 #include "Common.hpp"
+#include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
-#include "ClientSession.hpp"
+#include "Log.hpp"
 #include "PrisonerSession.hpp"
-#include "ClientSession.hpp"
 #include "Rectangle.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
-#include "IoUtil.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;

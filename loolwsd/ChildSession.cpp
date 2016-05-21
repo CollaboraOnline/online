@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "ChildSession.hpp"
 #include "config.h"
 
 #include <iostream>
@@ -23,10 +24,10 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "ChildSession.hpp"
 #include "Common.hpp"
 #include "LOKitHelper.hpp"
 #include "LOOLProtocol.hpp"
+#include "Log.hpp"
 #include "Rectangle.hpp"
 #include "Util.hpp"
 

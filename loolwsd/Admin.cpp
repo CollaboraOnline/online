@@ -7,6 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "Admin.hpp"
+#include "config.h"
+
 #include <cassert>
 #include <mutex>
 #include <sys/poll.h>
@@ -24,16 +27,16 @@
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/Timer.h>
 
-#include "Auth.hpp"
-#include "Admin.hpp"
 #include "AdminModel.hpp"
+#include "Auth.hpp"
 #include "Common.hpp"
 #include "FileServer.hpp"
-#include "TileCache.hpp"
-#include "Storage.hpp"
+#include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLWSD.hpp"
-#include "IoUtil.hpp"
+#include "Log.hpp"
+#include "Storage.hpp"
+#include "TileCache.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
 

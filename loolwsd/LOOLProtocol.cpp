@@ -7,6 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "LOOLProtocol.hpp"
+#include "config.h"
+
 #include <cassert>
 #include <cstring>
 #include <map>
@@ -16,8 +19,6 @@
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/StringTokenizer.h>
-
-#include "LOOLProtocol.hpp"
 
 using Poco::StringTokenizer;
 

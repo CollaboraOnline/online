@@ -7,6 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "IoUtil.hpp"
+#include "config.h"
+
 #include <sys/poll.h>
 
 #include <cassert>
@@ -17,16 +20,16 @@
 #include <sstream>
 #include <string>
 
-#include <Poco/StringTokenizer.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/Socket.h>
 #include <Poco/Net/WebSocket.h>
-#include <Poco/Net/NetException.h>
+#include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
-#include "IoUtil.hpp"
+#include "Log.hpp"
 #include "Util.hpp"
 
 using Poco::Net::Socket;

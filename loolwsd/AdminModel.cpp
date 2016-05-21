@@ -7,6 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "AdminModel.hpp"
+#include "config.h"
+
 #include <memory>
 #include <set>
 #include <sstream>
@@ -17,7 +20,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "AdminModel.hpp"
+#include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
 

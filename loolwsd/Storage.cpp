@@ -7,29 +7,30 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "Storage.hpp"
 #include "config.h"
 
 #include <cassert>
-#include <string>
 #include <fstream>
+#include <string>
 
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPSClientSession.h>
-#include <Poco/Net/NetworkInterface.h>
-#include <Poco/Net/DNS.h>
-#include <Poco/Net/SSLManager.h>
-#include <Poco/StreamCopier.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
+#include <Poco/Net/DNS.h>
+#include <Poco/Net/HTTPClientSession.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/NetworkInterface.h>
+#include <Poco/Net/SSLManager.h>
+#include <Poco/StreamCopier.h>
 
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "Exceptions.hpp"
-#include "Storage.hpp"
-#include "Util.hpp"
+#include "Log.hpp"
 #include "Unit.hpp"
+#include "Util.hpp"
 
 ///////////////////
 // StorageBase Impl

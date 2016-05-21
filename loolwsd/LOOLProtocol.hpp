@@ -10,6 +10,7 @@
 #ifndef INCLUDED_LOOLPROTOCOL_HPP
 #define INCLUDED_LOOLPROTOCOL_HPP
 
+#include <cstring>
 #include <map>
 #include <string>
 

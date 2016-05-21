@@ -7,9 +7,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "LOOLSession.hpp"
+#include "config.h"
+
 #include <sys/stat.h>
 #include <sys/types.h>
-
 #include <ftw.h>
 #include <utime.h>
 
@@ -30,11 +32,12 @@
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
 
+#include "ChildSession.hpp"
 #include "Common.hpp"
-#include "LOOLProtocol.hpp"
-#include "LOOLSession.hpp"
-#include "TileCache.hpp"
 #include "IoUtil.hpp"
+#include "LOOLProtocol.hpp"
+#include "Log.hpp"
+#include "TileCache.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;

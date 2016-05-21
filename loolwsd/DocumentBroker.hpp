@@ -14,17 +14,18 @@
 
 #include <atomic>
 #include <chrono>
-#include <memory>
 #include <condition_variable>
+#include <map>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <thread>
-#include <map>
 
 #include <Poco/URI.h>
 #include <Poco/Net/WebSocket.h>
 
 #include "IoUtil.hpp"
+#include "Log.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
 

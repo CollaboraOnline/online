@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "LOOLWSD.hpp"
 #include "config.h"
 
 // This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
@@ -27,6 +28,7 @@
 #include <condition_variable>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <mutex>
@@ -81,21 +83,21 @@
 
 #include "Admin.hpp"
 #include "Auth.hpp"
+#include "ClientSession.hpp"
 #include "Common.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
-#include "LOOLWSD.hpp"
-#include "ClientSession.hpp"
+#include "Log.hpp"
 #include "PrisonerSession.hpp"
 #include "QueueHandler.hpp"
 #include "Storage.hpp"
-#include "UserMessages.hpp"
-#include "Util.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
+#include "UserMessages.hpp"
+#include "Util.hpp"
 
 using namespace LOOLProtocol;
 

@@ -7,16 +7,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <dlfcn.h>
-#include <ftw.h>
-#include <cassert>
-#include <iostream>
 #include <fstream>
 #include <thread>
 
-#include "Util.hpp"
+#include "Log.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
+#include "Util.hpp"
 #include "helpers.hpp"
 
 class UnitTileCache: public UnitWSD

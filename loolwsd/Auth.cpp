@@ -7,26 +7,29 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "Auth.hpp"
+#include "config.h"
+
 #include <cstdlib>
 #include <string>
 
-#include <Poco/Base64Encoder.h>
 #include <Poco/Base64Decoder.h>
+#include <Poco/Base64Encoder.h>
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/Dynamic/Var.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/LineEndingConverter.h>
-#include <Poco/Net/NetException.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 
-#include "Auth.hpp"
+#include "Log.hpp"
 #include "Util.hpp"
 
 using Poco::Base64Decoder;

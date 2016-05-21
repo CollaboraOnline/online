@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "PrisonerSession.hpp"
 #include "config.h"
 
 #include <Poco/FileStream.h>
@@ -19,9 +20,8 @@
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
 #include "LOOLWSD.hpp"
+#include "Log.hpp"
 #include "ClientSession.hpp"
-#include "PrisonerSession.hpp"
-#include "PrisonerSession.hpp"
 #include "Rectangle.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"

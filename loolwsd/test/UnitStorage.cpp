@@ -7,12 +7,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <dlfcn.h>
-#include <ftw.h>
-#include <cassert>
-#include <iostream>
-
-#include "Util.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 
