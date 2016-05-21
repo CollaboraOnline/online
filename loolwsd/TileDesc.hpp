@@ -79,7 +79,7 @@ public:
     static
     TileDesc parse(const Poco::StringTokenizer& tokens)
     {
-        // We don't expect undocument fields and
+        // We don't expect undocumented fields and
         // assume all values to be int.
         std::map<std::string, int> pairs;
 
