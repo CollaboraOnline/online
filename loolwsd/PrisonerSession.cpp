@@ -157,7 +157,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         }
     }
 
-    if (peer && !_isDocPasswordProtected)
+    if (!_isDocPasswordProtected)
     {
         if (tokens[0] == "tile:")
         {
@@ -175,8 +175,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             std::string message = "editlock: ";
             message += std::to_string(peer->isEditLocked());
             Log::debug("Forwarding [" + message + "] in response to status.");
-            forwardToPeer(_peer, message.c_str(), message.size());
-            return true;
+            return forwardToPeer(_peer, message.c_str(), message.size());
         }
         else if (tokens[0] == "commandvalues:")
         {
@@ -200,7 +199,9 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "partpagerectangles:")
         {
             if (tokens.count() > 1 && !tokens[1].empty())
+            {
                 _docBroker->tileCache().saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
+            }
         }
         else if (tokens[0] == "invalidatetiles:")
         {
@@ -212,13 +213,17 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             std::string font;
             if (tokens.count() < 2 ||
                 !getTokenString(tokens[1], "font", font))
-                assert(false);
+            {
+                Log::error("Bad syntax for: " + firstLine);
+                return false;
+            }
 
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
             _docBroker->tileCache().saveRendering(font, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
         }
     }
 
+    // Forward everything else.
     forwardToPeer(_peer, buffer, length);
     return true;
 }
