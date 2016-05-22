@@ -24,7 +24,7 @@
 class TileDesc
 {
 public:
-    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int imgSize = 0, int id = -1) :
+    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int ver = -1, int imgSize = 0, int id = -1) :
         _part(part),
         _width(width),
         _height(height),
@@ -32,6 +32,7 @@ public:
         _tilePosY(tilePosY),
         _tileWidth(tileWidth),
         _tileHeight(tileHeight),
+        _ver(ver),
         _imgSize(imgSize),
         _id(id)
     {
@@ -55,6 +56,8 @@ public:
     int getTilePosY() const { return _tilePosY; }
     int getTileWidth() const { return _tileWidth; }
     int getTileHeight() const { return _tileHeight; }
+    int getVersion() const { return _ver; }
+    void setVersion(const int ver) { _ver = ver; }
     int getImgSize() const { return _imgSize; }
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
 
@@ -71,6 +74,7 @@ public:
             << " tileposy=" << _tilePosY
             << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight
+            << " ver=" << _ver
             << " imgsize=" << _imgSize;
         if (_id >= 0)
         {
@@ -89,8 +93,9 @@ public:
         std::map<std::string, int> pairs;
 
         // Optional.
-        pairs["id"] = -1;
+        pairs["ver"] = -1;
         pairs["imgsize"] = 0;
+        pairs["id"] = -1;
 
         for (size_t i = 0; i < tokens.count(); ++i)
         {
@@ -105,6 +110,7 @@ public:
         return TileDesc(pairs["part"], pairs["width"], pairs["height"],
                         pairs["tileposx"], pairs["tileposy"],
                         pairs["tilewidth"], pairs["tileheight"],
+                        pairs["ver"],
                         pairs["imgsize"], pairs["id"]);
     }
 
@@ -126,7 +132,8 @@ private:
     int _tilePosY;
     int _tileWidth;
     int _tileHeight;
-    int _imgSize; //< Used for responses.
+    int _ver;       //< Versioning support.
+    int _imgSize;   //< Used for responses.
     int _id;
 };
 
@@ -135,12 +142,14 @@ class TileCombined
 private:
     TileCombined(int part, int width, int height,
                  const std::string& tilePositionsX, const std::string& tilePositionsY,
-                 int tileWidth, int tileHeight, const std::string& imgSizes = "", int id = -1) :
+                 int tileWidth, int tileHeight, int ver = -1,
+                 const std::string& imgSizes = "", int id = -1) :
         _part(part),
         _width(width),
         _height(height),
         _tileWidth(tileWidth),
         _tileHeight(tileHeight),
+        _ver(ver),
         _id(id)
     {
         if (_part < 0 ||
@@ -184,7 +193,7 @@ private:
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
 
-            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, size);
+            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, size, id);
         }
     }
 
@@ -195,6 +204,8 @@ public:
     int getHeight() const { return _height; }
     int getTileWidth() const { return _tileWidth; }
     int getTileHeight() const { return _tileHeight; }
+    int getVersion() const { return _ver; }
+    void setVersion(const int ver) { _ver = ver; }
 
     const std::vector<TileDesc>& getTiles() const { return _tiles; }
     std::vector<TileDesc>& getTiles() { return _tiles; }
@@ -234,6 +245,11 @@ public:
 
         oss << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight;
+        if (_ver >= 0)
+        {
+            oss << " ver=" << _ver;
+        }
+
         if (_id >= 0)
         {
             oss << " id=" << _id;
@@ -250,7 +266,8 @@ public:
         // assume all values to be int.
         std::map<std::string, int> pairs;
 
-        // id is optional.
+        // Optional.
+        pairs["ver"] = -1;
         pairs["id"] = -1;
 
         std::string tilePositionsX;
@@ -288,6 +305,7 @@ public:
         return TileCombined(pairs["part"], pairs["width"], pairs["height"],
                             tilePositionsX, tilePositionsY,
                             pairs["tilewidth"], pairs["tileheight"],
+                            pairs["ver"],
                             imgSizes, pairs["id"]);
     }
 
@@ -308,6 +326,7 @@ private:
     int _height;
     int _tileWidth;
     int _tileHeight;
+    int _ver;       //< Versioning support.
     int _id;
 };
 
