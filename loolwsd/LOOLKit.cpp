@@ -573,10 +573,6 @@ public:
             return;
         }
 
-        //TODO: Support multiviews.
-        //if (_multiView)
-            //_loKitDocument->setView(_viewId);
-
         // Send back the request with all optional parameters given in the request.
         const auto tileMsg = tile.serialize("tile:");
 #if ENABLE_DEBUG
@@ -599,13 +595,14 @@ public:
                                       tile.getTilePosX(), tile.getTilePosY(),
                                       tile.getTileWidth(), tile.getTileHeight());
         Log::trace() << "paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY()
-                     << " rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
+                     << ") rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
 
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
         if (!png::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
+            Log::error("Failed to encode tile into PNG.");
             return;
         }
 
