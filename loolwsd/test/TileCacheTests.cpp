@@ -243,14 +243,14 @@ void TileCacheTests::testUnresponsiveClient()
     // TODO: Track memory consumption to verify we don't buffer too much.
     for (auto x = 0; x < 5; ++x)
     {
-        // As for tiles and don't read!
+        // Ask for tiles and don't read!
         sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
 
         // Verify that we get all 8 tiles.
         sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
         for (auto i = 0; i < 8; ++i)
         {
-            auto tile = getResponseMessage(socket2, "tile:");
+            auto tile = getResponseMessage(socket2, "tile:", "client2 ");
             CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile.empty());
         }
     }
@@ -320,6 +320,11 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
 
     Poco::Net::WebSocket socket2 = *connectLOKit(_uri, request, _response);
     sendTextFrame(socket2, "load url=" + documentURL);
+
+    // Wait for the invalidatetile events to pass, otherwise they
+    // remove our tile subscription.
+    assertResponseLine(socket1, "statechanged:", "client1 ");
+    assertResponseLine(socket2, "statechanged:", "client2 ");
 
     sendTextFrame(socket1, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
     sendTextFrame(socket2, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
@@ -584,7 +589,7 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
     // random setclientpart
     std::srand(std::time(0));
     std::vector<int> vParts = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    std::random_shuffle (vParts.begin(), vParts.end());
+    std::random_shuffle(vParts.begin(), vParts.end());
     for (auto it : vParts)
     {
         if (currentPart != it)
@@ -593,6 +598,11 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
             text = Poco::format("setclientpart part=%d", it);
             std::cout << text << std::endl;
             sendTextFrame(socket, text);
+            // Wait for the change to take effect otherwise we get invalidatetile
+            // which removes our next tile request subscription (expecting us to
+            // issue a new tile request as a response, which a real client would do).
+            assertResponseLine(socket, "setpart:", "checkTiles");
+
             requestTiles(socket, it, docWidth, docHeight);
         }
         currentPart = it;
