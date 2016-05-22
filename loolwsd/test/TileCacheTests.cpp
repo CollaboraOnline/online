@@ -32,6 +32,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
+    CPPUNIT_TEST(testPerformance);
     CPPUNIT_TEST(testUnresponsiveClient);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
@@ -44,6 +45,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     void testSimple();
     void testSimpleCombine();
+    void testPerformance();
     void testUnresponsiveClient();
     void testClientPartImpress();
     void testClientPartCalc();
@@ -193,6 +195,34 @@ void TileCacheTests::testSimpleCombine()
 
     socket1.shutdown();
     socket2.shutdown();
+}
+
+void TileCacheTests::testPerformance()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = *loadDocAndGetSocket(_uri, documentURL, "tile-performance ");
+    getResponseMessage(socket, "invalidatetiles:");
+
+    Poco::Timestamp timestamp;
+    for (auto x = 0; x < 5; ++x)
+    {
+        sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
+        for (auto i = 0; i < 8; ++i)
+        {
+            auto tile = getResponseMessage(socket, "tile:", "tile-performance ");
+            CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile.empty());
+        }
+    }
+
+    std::cerr << "Tile rendering roundtrip for 5 x 8 tiles combined: " << timestamp.elapsed() / 1000.
+              << " ms. Per-tilecombine: " << timestamp.elapsed() / (1000. * 5)
+              << " ms. Per-tile: " << timestamp.elapsed() / (1000. * 5 * 8) << "ms."
+              << std::endl;
+
+    socket.shutdown();
 }
 
 void TileCacheTests::testUnresponsiveClient()
