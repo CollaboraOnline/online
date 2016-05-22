@@ -566,14 +566,6 @@ public:
     {
         auto tile = TileDesc::parse(tokens);
 
-        std::unique_lock<std::recursive_mutex> lock(ChildSession::getLock());
-
-        if (!_loKitDocument)
-        {
-            Log::error("Tile rendering requested before loading document.");
-            return;
-        }
-
         // Send back the request with all optional parameters given in the request.
         const auto tileMsg = tile.serialize("tile:");
 #if ENABLE_DEBUG
@@ -590,6 +582,13 @@ public:
         std::vector<unsigned char> pixmap;
         pixmap.resize(output.capacity());
 
+        std::unique_lock<std::recursive_mutex> lock(ChildSession::getLock());
+        if (!_loKitDocument)
+        {
+            Log::error("Tile rendering requested before loading document.");
+            return;
+        }
+
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tile.getPart(),
                                       tile.getWidth(), tile.getHeight(),
@@ -597,8 +596,9 @@ public:
                                       tile.getTileWidth(), tile.getTileHeight());
         Log::trace() << "paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY()
                      << ") rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
-
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
+        lock.unlock();
+
         if (!png::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
         {
             //FIXME: Return error.
@@ -646,29 +646,32 @@ public:
 
         const int tilesByX = renderArea.getWidth() / tileCombined.getTileWidth();
         const int tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
-
         const int pixmapWidth = tilesByX * tileCombined.getWidth();
         const int pixmapHeight = tilesByY * tileCombined.getHeight();
-
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
-
         std::vector<unsigned char> pixmap(pixmapSize, 0);
+
+        std::unique_lock<std::recursive_mutex> lock(ChildSession::getLock());
+        if (!_loKitDocument)
+        {
+            Log::error("Tile rendering requested before loading document.");
+            return;
+        }
 
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
-
         Log::debug() << "paintTile (combined) called, tile at [" << renderArea.getLeft() << ", " << renderArea.getTop() << "]"
                      << " (" << renderArea.getWidth() << ", " << renderArea.getHeight() << ") rendered in "
                      << double(timestamp.elapsed())/1000 <<  " ms." << Log::end;
-
+        const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
+        lock.unlock();
 
         std::vector<char> output;
         output.reserve(pixmapWidth * pixmapHeight * 4);
 
-        const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
         size_t tileIndex = 0;
         for (Util::Rectangle& tileRect : tileRecs)
         {
