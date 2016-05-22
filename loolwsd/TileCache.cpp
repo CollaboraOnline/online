@@ -75,10 +75,13 @@ TileCache::~TileCache()
 struct TileCache::TileBeingRendered
 {
     std::vector<std::weak_ptr<ClientSession>> _subscribers;
-    TileBeingRendered()
-     : _startTime(std::chrono::steady_clock::now())
+    TileBeingRendered(const int version)
+     : _startTime(std::chrono::steady_clock::now()),
+       _ver(version)
     {
     }
+
+    int getVersion() const { return _ver; }
 
     std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
     void resetStartTime()
@@ -88,6 +91,7 @@ struct TileCache::TileBeingRendered
 
 private:
     std::chrono::steady_clock::time_point _startTime;
+    int _ver;
 };
 
 std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(const TileDesc& tileDesc)
@@ -231,9 +235,12 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
                  << ", height: " << height << Log::end;
 
     File dir(_cacheDir);
+
+    std::unique_lock<std::mutex> lock(_cacheMutex);
+    std::unique_lock<std::mutex> lockSubscribers(_tilesBeingRenderedMutex);
+
     if (dir.exists() && dir.isDirectory())
     {
-        std::unique_lock<std::mutex> lock(_cacheMutex);
         for (auto tileIterator = DirectoryIterator(dir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
             const std::string fileName = tileIterator.path().getFileName();
@@ -242,6 +249,21 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
                 Log::debug("Removing tile: " + tileIterator.path().toString());
                 Util::removeFile(tileIterator.path());
             }
+        }
+    }
+
+    // Forget this tile as it will have to be rendered again.
+    for (auto it = _tilesBeingRendered.begin(); it != _tilesBeingRendered.end(); )
+    {
+        const std::string cacheName = it->first;
+        if (intersectsTile(cacheName, part, x, y, width, height))
+        {
+            Log::debug("Removing subscriptions for: " + cacheName);
+            it = _tilesBeingRendered.erase(it);
+        }
+        else
+        {
+            ++it;
         }
     }
 }
@@ -343,7 +365,16 @@ void TileCache::notifyAndRemoveSubscribers(const TileDesc& tile)
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
     if (!tileBeingRendered)
+    {
+        // We don't have anything to send back.
         return;
+    }
+
+    if (tileBeingRendered->getVersion() != tile.getVersion())
+    {
+        Log::trace() << "Skipping unexpected tile ver: " << tile.getVersion() << ", waiting for " << tileBeingRendered->getVersion() << Log::end;
+        return;
+    }
 
     const std::string message = tile.serialize("tile");
     Log::debug("Sending tile message to subscribers: " + message);
@@ -365,7 +396,7 @@ void TileCache::notifyAndRemoveSubscribers(const TileDesc& tile)
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
-bool TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
+int TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
@@ -382,7 +413,7 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std
             if (s.lock().get() == subscriber.get())
             {
                 Log::debug("Redundant request to re-subscribe on a tile");
-                return true;
+                return 0;
             }
         }
         tileBeingRendered->_subscribers.push_back(subscriber);
@@ -391,10 +422,10 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std
         if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
         {
             // Tile painting has stalled. Reissue.
-            return false;
+            return tileBeingRendered->getVersion();
         }
 
-        return true;
+        return 0;
     }
     else
     {
@@ -405,11 +436,11 @@ bool TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std
 
         assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
 
-        tileBeingRendered = std::make_shared<TileBeingRendered>();
+        tileBeingRendered = std::make_shared<TileBeingRendered>(tile.getVersion());
         tileBeingRendered->_subscribers.push_back(subscriber);
         _tilesBeingRendered[cachedName] = tileBeingRendered;
 
-        return false;
+        return tileBeingRendered->getVersion();
     }
 }
 

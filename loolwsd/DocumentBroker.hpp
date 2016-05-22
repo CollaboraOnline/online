@@ -202,7 +202,7 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
-    void handleTileRequest(const TileDesc& tile,
+    void handleTileRequest(TileDesc& tile,
                            const std::shared_ptr<ClientSession>& session);
     void handleTileCombinedRequest(TileCombined& tileCombined,
                                    const std::shared_ptr<ClientSession>& session);
@@ -244,6 +244,10 @@ private:
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;
+
+    /// Versioning is used to prevent races between
+    /// painting and invalidation.
+    std::atomic<size_t> _tileVersion;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;

@@ -109,7 +109,8 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
     _isLoaded(false),
-    _isModified(false)
+    _isModified(false),
+    _tileVersion(0)
 {
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
@@ -411,22 +412,22 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     return true;
 }
 
-void DocumentBroker::handleTileRequest(const TileDesc& tile,
+void DocumentBroker::handleTileRequest(TileDesc& tile,
                                        const std::shared_ptr<ClientSession>& session)
 {
-    const auto tileMsg = tile.serialize();
-    Log::trace() << "Tile request for " << tileMsg << Log::end;
-
     std::unique_lock<std::mutex> lock(_mutex);
 
-    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
+    tile.setVersion(++_tileVersion);
+    const auto tileMsg = tile.serialize();
+    Log::trace() << "Tile request for " << tile.serialize() << Log::end;
 
+    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile)
     {
 #if ENABLE_DEBUG
-        const std::string response = "tile:" + tileMsg + " renderid=cached\n";
+        const std::string response = tile.serialize("tile:") + " renderid=cached\n";
 #else
-        const std::string response = "tile:" + tileMsg + "\n";
+        const std::string response = tile.serialize("tile:") + "\n";
 #endif
 
         std::vector<char> output;
@@ -447,29 +448,30 @@ void DocumentBroker::handleTileRequest(const TileDesc& tile,
         return;
     }
 
-    if (tileCache().isTileBeingRenderedIfSoSubscribe(tile, session))
-        return;
+    if (tileCache().isTileBeingRenderedIfSoSubscribe(tile, session) > 0)
+    {
+        Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
 
-    Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
-
-    // Forward to child to render.
-    const std::string request = "tile " + tileMsg;
-    _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
+        // Forward to child to render.
+        const std::string request = "tile " + tile.serialize();
+        _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
+    }
 }
 
 void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
                                                const std::shared_ptr<ClientSession>& session)
 {
-    Log::trace() << "TileCombined request for " << tileCombined.serialize() << Log::end;
-
     std::unique_lock<std::mutex> lock(_mutex);
+
+    tileCombined.setVersion(++_tileVersion);
+    Log::trace() << "TileCombined request for " << tileCombined.serialize() << Log::end;
 
     // Satisfy as many tiles from the cache.
     auto& tiles = tileCombined.getTiles();
     int i = tiles.size();
     while (--i >= 0)
     {
-        const auto& tile = tiles[i];
+        auto& tile = tiles[i];
         std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
         if (cachedTile)
         {
@@ -499,10 +501,15 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             // Remove.
             tiles.erase(tiles.begin() + i);
         }
-        else if (tileCache().isTileBeingRenderedIfSoSubscribe(tile, session))
+        else
         {
-            // Skip.
-            tiles.erase(tiles.begin() + i);
+            tile.setVersion(_tileVersion);
+            const auto ver = tileCache().isTileBeingRenderedIfSoSubscribe(tile, session);
+            if (ver <= 0)
+            {
+                // Skip.
+                tiles.erase(tiles.begin() + i);
+            }
         }
     }
 
