@@ -1351,7 +1351,6 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     checkhandler(docWidth, docHeight, newWidth, newHeight);
 }
 
-
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

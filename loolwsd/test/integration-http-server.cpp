@@ -151,7 +151,8 @@ void HTTPServerTest::testLoleafletPost()
     CPPUNIT_ASSERT(html.find(_uri.getHost()) != std::string::npos);
 }
 
-namespace {
+namespace
+{
 
 void assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr, const std::string& html, const std::string& mimetype = std::string())
 {
@@ -161,29 +162,28 @@ void assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr, c
     for (int offset = 0; expr.match(html, offset, matches) > 0; offset = static_cast<int>(matches[0].offset + matches[0].length))
     {
         found = true;
-	CPPUNIT_ASSERT_EQUAL(2, (int)matches.size());
-	Poco::URI uriScript(html.substr(matches[1].offset, matches[1].length));
-	if (uriScript.getHost().empty())
-	{
-	    std::string scriptString(uriScript.toString());
+        CPPUNIT_ASSERT_EQUAL(2, (int)matches.size());
+        Poco::URI uriScript(html.substr(matches[1].offset, matches[1].length));
+        if (uriScript.getHost().empty())
+        {
+            std::string scriptString(uriScript.toString());
 
-	    // ignore the branding bits, it's not an error when they are not
-            // present
-	    if (scriptString.find("/branding.") != std::string::npos)
-		continue;
+            // ignore the branding bits, it's not an error when they aren't present.
+            if (scriptString.find("/branding.") != std::string::npos)
+                continue;
 
             std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
 
-	    Poco::Net::HTTPRequest requestScript(Poco::Net::HTTPRequest::HTTP_GET, scriptString);
-	    session->sendRequest(requestScript);
+            Poco::Net::HTTPRequest requestScript(Poco::Net::HTTPRequest::HTTP_GET, scriptString);
+            session->sendRequest(requestScript);
 
-	    Poco::Net::HTTPResponse responseScript;
-	    session->receiveResponse(responseScript);
-	    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseScript.getStatus());
+            Poco::Net::HTTPResponse responseScript;
+            session->receiveResponse(responseScript);
+            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseScript.getStatus());
 
-	    if (!mimetype.empty())
-		CPPUNIT_ASSERT_EQUAL(mimetype, responseScript.getContentType());
-	}
+            if (!mimetype.empty())
+            CPPUNIT_ASSERT_EQUAL(mimetype, responseScript.getContentType());
+        }
     }
 
     CPPUNIT_ASSERT_MESSAGE("No match found", found);
