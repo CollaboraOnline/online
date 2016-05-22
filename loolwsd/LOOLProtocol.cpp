@@ -57,6 +57,19 @@ namespace LOOLProtocol
         return true;
     }
 
+    bool parseNameValuePair(const std::string& token, std::string& name, std::string& value)
+    {
+        const auto mid = token.find_first_of('=');
+        if (mid != std::string::npos)
+        {
+            name = token.substr(0, mid);
+            value = token.substr(mid + 1);
+            return true;
+        }
+
+        return false;
+    }
+
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
     {
         size_t nextIdx;
