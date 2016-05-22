@@ -86,6 +86,8 @@ struct TileCache::TileBeingRendered
     int getVersion() const { return _ver; }
 
     std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
+    double getElapsedTimeMs() const { return std::chrono::duration_cast<std::chrono::milliseconds>
+                                              (std::chrono::steady_clock::now() - _startTime).count(); }
     void resetStartTime()
     {
         _startTime = std::chrono::steady_clock::now();
@@ -181,6 +183,8 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
         // Remove subscriptions.
         if (tileBeingRendered->getVersion() == tile.getVersion())
         {
+            Log::debug() << "STATISTICS: tile internal roundtrip "
+                         << tileBeingRendered->getElapsedTimeMs() << " ms." << Log::end;
             _tilesBeingRendered.erase(cachedName);
         }
     }
