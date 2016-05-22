@@ -123,6 +123,167 @@ private:
     int _id;
 };
 
+class TileCombined
+{
+private:
+    TileCombined(int part, int width, int height,
+                 const std::string& tilePositionsX, const std::string& tilePositionsY,
+                 int tileWidth, int tileHeight, int id = -1) :
+        _part(part),
+        _width(width),
+        _height(height),
+        _tileWidth(tileWidth),
+        _tileHeight(tileHeight),
+        _id(id)
+    {
+        if (_part < 0 ||
+            _width <= 0 ||
+            _height <= 0 ||
+            _tileWidth <= 0 ||
+            _tileHeight <= 0)
+        {
+            throw BadArgumentException("Invalid tilecombine descriptor.");
+        }
+
+        Poco::StringTokenizer positionXtokens(tilePositionsX, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer positionYtokens(tilePositionsY, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+
+        const auto numberOfPositions = positionYtokens.count();
+
+        // check that number of positions for X and Y is the same
+        if (numberOfPositions != positionXtokens.count())
+        {
+            throw BadArgumentException("Invalid tilecombine descriptor. Uneven number of tiles.");
+        }
+
+        for (size_t i = 0; i < numberOfPositions; ++i)
+        {
+            int x = 0;
+            if (!LOOLProtocol::stringToInteger(positionXtokens[i], x))
+            {
+                throw BadArgumentException("Invalid tilecombine descriptor.");
+            }
+
+            int y = 0;
+            if (!LOOLProtocol::stringToInteger(positionYtokens[i], y))
+            {
+                throw BadArgumentException("Invalid tilecombine descriptor.");
+            }
+
+            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight);
+        }
+    }
+
+public:
+
+    int getPart() const { return _part; }
+    int getWidth() const { return _width; }
+    int getHeight() const { return _height; }
+    int getTileWidth() const { return _tileWidth; }
+    int getTileHeight() const { return _tileHeight; }
+
+    const std::vector<TileDesc>& getTiles() const { return _tiles; }
+    std::vector<TileDesc>& getTiles() { return _tiles; }
+
+    /// Serialize this instance into a string.
+    /// Optionally prepend a prefix.
+    std::string serialize(const std::string& prefix = "") const
+    {
+        std::ostringstream oss;
+        oss << prefix
+            << " part=" << _part
+            << " width=" << _width
+            << " height=" << _height
+            << " tileposx=";
+        for (const auto& tile : _tiles)
+        {
+            oss << tile.getTilePosX() << ',';
+        }
+
+        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+
+        oss << " tileposy=";
+        for (const auto& tile : _tiles)
+        {
+            oss << tile.getTilePosY() << ',';
+        }
+
+        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+
+        oss << " tilewidth=" << _tileWidth
+            << " tileheight=" << _tileHeight;
+        if (_id >= 0)
+        {
+            oss << " id=" << _id;
+        }
+
+        return oss.str();
+    }
+
+    /// Deserialize a TileDesc from a tokenized string.
+    static
+    TileCombined parse(const Poco::StringTokenizer& tokens)
+    {
+        // We don't expect undocumented fields and
+        // assume all values to be int.
+        std::map<std::string, int> pairs;
+
+        // id is optional.
+        pairs["id"] = -1;
+
+        std::string tilePositionsX;
+        std::string tilePositionsY;
+        for (size_t i = 0; i < tokens.count(); ++i)
+        {
+            std::string name;
+            std::string value;
+            if (LOOLProtocol::parseNameValuePair(tokens[i], name, value))
+            {
+                if (name == "tileposx")
+                {
+                    tilePositionsX = value;
+                }
+                else if (name == "tileposy")
+                {
+                    tilePositionsY = value;
+                }
+                else
+                {
+                    int v = 0;
+                    if (LOOLProtocol::stringToInteger(value, v))
+                    {
+                        pairs[name] = v;
+                    }
+                }
+            }
+        }
+
+        return TileCombined(pairs["part"], pairs["width"], pairs["height"],
+                            tilePositionsX, tilePositionsY,
+                            pairs["tilewidth"], pairs["tileheight"],
+                            pairs["id"]);
+    }
+
+    /// Deserialize a TileDesc from a string format.
+    static
+    TileCombined parse(const std::string& message)
+    {
+        Poco::StringTokenizer tokens(message, " ",
+                                     Poco::StringTokenizer::TOK_IGNORE_EMPTY |
+                                     Poco::StringTokenizer::TOK_TRIM);
+        return parse(tokens);
+    }
+
+private:
+    std::vector<TileDesc> _tiles;
+    int _part;
+    int _width;
+    int _height;
+    int _tileWidth;
+    int _tileHeight;
+    int _id;
+};
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
