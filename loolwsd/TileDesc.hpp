@@ -24,7 +24,7 @@
 class TileDesc
 {
 public:
-    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int id = -1) :
+    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int imgSize = 0, int id = -1) :
         _part(part),
         _width(width),
         _height(height),
@@ -32,6 +32,7 @@ public:
         _tilePosY(tilePosY),
         _tileWidth(tileWidth),
         _tileHeight(tileHeight),
+        _imgSize(imgSize),
         _id(id)
     {
         if (_part < 0 ||
@@ -40,7 +41,8 @@ public:
             _tilePosX < 0 ||
             _tilePosY < 0 ||
             _tileWidth <= 0 ||
-            _tileHeight <= 0)
+            _tileHeight <= 0 ||
+            _imgSize < 0)
         {
             throw BadArgumentException("Invalid tile descriptor.");
         }
@@ -53,6 +55,8 @@ public:
     int getTilePosY() const { return _tilePosY; }
     int getTileWidth() const { return _tileWidth; }
     int getTileHeight() const { return _tileHeight; }
+    int getImgSize() const { return _imgSize; }
+    void setImgSize(const int imgSize) { _imgSize = imgSize; }
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
@@ -66,7 +70,8 @@ public:
             << " tileposx=" << _tilePosX
             << " tileposy=" << _tilePosY
             << " tilewidth=" << _tileWidth
-            << " tileheight=" << _tileHeight;
+            << " tileheight=" << _tileHeight
+            << " imgsize=" << _imgSize;
         if (_id >= 0)
         {
             oss << " id=" << _id;
@@ -83,8 +88,9 @@ public:
         // assume all values to be int.
         std::map<std::string, int> pairs;
 
-        // id is optional.
+        // Optional.
         pairs["id"] = -1;
+        pairs["imgsize"] = 0;
 
         for (size_t i = 0; i < tokens.count(); ++i)
         {
@@ -99,7 +105,7 @@ public:
         return TileDesc(pairs["part"], pairs["width"], pairs["height"],
                         pairs["tileposx"], pairs["tileposy"],
                         pairs["tilewidth"], pairs["tileheight"],
-                        pairs["id"]);
+                        pairs["imgsize"], pairs["id"]);
     }
 
     /// Deserialize a TileDesc from a string format.
@@ -120,6 +126,7 @@ private:
     int _tilePosY;
     int _tileWidth;
     int _tileHeight;
+    int _imgSize; //< Used for responses.
     int _id;
 };
 
@@ -128,7 +135,7 @@ class TileCombined
 private:
     TileCombined(int part, int width, int height,
                  const std::string& tilePositionsX, const std::string& tilePositionsY,
-                 int tileWidth, int tileHeight, int id = -1) :
+                 int tileWidth, int tileHeight, const std::string& imgSizes = "", int id = -1) :
         _part(part),
         _width(width),
         _height(height),
@@ -147,11 +154,12 @@ private:
 
         Poco::StringTokenizer positionXtokens(tilePositionsX, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         Poco::StringTokenizer positionYtokens(tilePositionsY, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer sizeTokens(imgSizes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
 
         const auto numberOfPositions = positionYtokens.count();
 
         // check that number of positions for X and Y is the same
-        if (numberOfPositions != positionXtokens.count())
+        if (numberOfPositions != positionXtokens.count() || (!imgSizes.empty() && numberOfPositions != sizeTokens.count()))
         {
             throw BadArgumentException("Invalid tilecombine descriptor. Uneven number of tiles.");
         }
@@ -170,7 +178,13 @@ private:
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
 
-            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight);
+            int size = 0;
+            if (sizeTokens.count() && !LOOLProtocol::stringToInteger(sizeTokens[i], size))
+            {
+                throw BadArgumentException("Invalid tilecombine descriptor.");
+            }
+
+            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, size);
         }
     }
 
@@ -210,6 +224,14 @@ public:
 
         oss.seekp(-1, std::ios_base::cur); // Remove last comma.
 
+        oss << " imgsize=";
+        for (const auto& tile : _tiles)
+        {
+            oss << tile.getImgSize() << ',';
+        }
+
+        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+
         oss << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight;
         if (_id >= 0)
@@ -233,6 +255,7 @@ public:
 
         std::string tilePositionsX;
         std::string tilePositionsY;
+        std::string imgSizes;
         for (size_t i = 0; i < tokens.count(); ++i)
         {
             std::string name;
@@ -246,6 +269,10 @@ public:
                 else if (name == "tileposy")
                 {
                     tilePositionsY = value;
+                }
+                else if (name == "imgsize")
+                {
+                    imgSizes = value;
                 }
                 else
                 {
@@ -261,7 +288,7 @@ public:
         return TileCombined(pairs["part"], pairs["width"], pairs["height"],
                             tilePositionsX, tilePositionsY,
                             pairs["tilewidth"], pairs["tileheight"],
-                            pairs["id"]);
+                            imgSizes, pairs["id"]);
     }
 
     /// Deserialize a TileDesc from a string format.
