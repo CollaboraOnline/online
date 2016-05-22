@@ -386,6 +386,26 @@ void SocketProcessor(const std::string& name,
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 }
 
+inline
+void getDocSize(const std::string& message, const std::string& type,
+                int& part, int& parts, int& width, int& height)
+{
+    Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+
+    // Expected format is something like 'type= parts= current= width= height='.
+    const std::string text = tokens[0].substr(std::string("type=").size());
+    parts = std::stoi(tokens[1].substr(std::string("parts=").size()));
+    part = std::stoi(tokens[2].substr(std::string("current=").size()));
+    width = std::stoi(tokens[3].substr(std::string("width=").size()));
+    height = std::stoi(tokens[4].substr(std::string("height=").size()));
+    CPPUNIT_ASSERT_EQUAL(type, text);
+    CPPUNIT_ASSERT(parts > 0);
+    CPPUNIT_ASSERT(part >= 0);
+    CPPUNIT_ASSERT(width > 0);
+    CPPUNIT_ASSERT(height > 0);
+}
+
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
