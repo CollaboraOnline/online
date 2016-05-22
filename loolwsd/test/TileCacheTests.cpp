@@ -9,6 +9,7 @@
 
 #include "config.h"
 
+#include <png.h>
 #include <Poco/Net/WebSocket.h>
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -37,6 +38,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
 #endif
+    CPPUNIT_TEST(testLoad12ods);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -46,6 +48,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testClientPartImpress();
     void testClientPartCalc();
     void testSimultaneousTilesRenderedJustOnce();
+    void testLoad12ods();
 
     void checkTiles(Poco::Net::WebSocket& socket,
                     const std::string& type);
@@ -54,6 +57,13 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
                       const int part,
                       const int docWidth,
                       const int docHeight);
+
+    void checkBlackTiles(Poco::Net::WebSocket& socket,
+                         const int part,
+                         const int docWidth,
+                         const int docHeight);
+
+    void checkBlackTile(std::stringstream& tile);
 
     static
     std::vector<char> genRandomData(const size_t size)
@@ -308,6 +318,170 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
 
     socket1.shutdown();
     socket2.shutdown();
+}
+
+void TileCacheTests::testLoad12ods()
+{
+    try
+    {
+        int docSheet = -1;
+        int docSheets = 0;
+        int docHeight = 0;
+        int docWidth = 0;
+
+        std::string response;
+
+         // Load a document
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("load12.ods", documentPath, documentURL);
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        // check document size
+        sendTextFrame(socket, "status");
+        getResponseMessage(socket, "status:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+        getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight);
+
+        checkBlackTiles(socket, docSheet, docWidth, docWidth);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void readTileData(png_structp png_ptr, png_bytep data, png_size_t length)
+{
+    png_voidp io_ptr = png_get_io_ptr(png_ptr);
+    CPPUNIT_ASSERT(io_ptr);
+
+    std::stringstream& streamTile = *(std::stringstream*)io_ptr;
+    streamTile.read((char*)data, length);
+}
+
+void TileCacheTests::checkBlackTile(std::stringstream& tile)
+{
+    png_uint_32 width;
+    png_uint_32 height;
+    png_uint_32 itRow;
+    png_uint_32 itCol;
+    png_uint_32 black;
+    png_uint_32 rowBytes;
+
+    png_infop ptrInfo;
+    png_infop ptrEnd;
+    png_structp ptrPNG;
+    png_byte signature[0x08];
+
+    tile.read((char *)signature, 0x08);
+    CPPUNIT_ASSERT_MESSAGE( "Tile is not recognized as a PNG", !png_sig_cmp(signature, 0x00, 0x08));
+
+    ptrPNG = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    CPPUNIT_ASSERT_MESSAGE("png_create_read_struct failed", ptrPNG);
+
+    ptrInfo = png_create_info_struct(ptrPNG);
+    CPPUNIT_ASSERT_MESSAGE("png_create_info_struct failed", ptrInfo);
+
+    ptrEnd = png_create_info_struct(ptrPNG);
+    CPPUNIT_ASSERT_MESSAGE("png_create_info_struct failed", ptrEnd);
+
+    png_set_read_fn(ptrPNG, &tile, readTileData);
+    png_set_sig_bytes(ptrPNG, 0x08);
+
+    png_read_info(ptrPNG, ptrInfo);
+
+    width = png_get_image_width(ptrPNG, ptrInfo);
+    height = png_get_image_height(ptrPNG, ptrInfo);
+
+    png_set_interlace_handling(ptrPNG);
+    png_read_update_info(ptrPNG, ptrInfo);
+
+    rowBytes = png_get_rowbytes(ptrPNG, ptrInfo);
+    CPPUNIT_ASSERT_EQUAL(width, rowBytes / 4);
+
+    // rows
+    png_bytep rows[height];
+    for (itRow = 0; itRow < height; itRow++)
+    {
+        rows[itRow] = new png_byte[rowBytes];
+    }
+
+    png_read_image(ptrPNG, rows);
+
+    black = 0;
+    for (itRow = 0; itRow < height; itRow++)
+    {
+        itCol = 0;
+        while(itCol <= rowBytes)
+        {
+            png_byte R = rows[itRow][itCol + 0];
+            png_byte G = rows[itRow][itCol + 1];
+            png_byte B = rows[itRow][itCol + 2];
+            //png_byte A = rows[itRow][itCol + 3];
+            if (R == 0x00 && G == 0x00 && B == 0x00)
+                black++;
+
+            itCol += 4;
+        }
+    }
+
+    png_read_end(ptrPNG, ptrEnd);
+    png_destroy_read_struct(&ptrPNG, &ptrInfo, &ptrEnd);
+
+    for (itRow = 0; itRow < height; itRow++ )
+    {
+        delete rows[itRow];
+    }
+
+    CPPUNIT_ASSERT_MESSAGE("The tile is 100% black", black != height * width);
+    CPPUNIT_ASSERT_MESSAGE("The tile is 90% black", (black * 100) / (height * width) < 90);
+}
+
+void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int part, const int docWidth, const int docHeight)
+{
+    // twips
+    const int tileSize = 3840;
+    // pixel
+    const int pixTileSize = 256;
+
+    int rows;
+    int cols;
+    int tileX;
+    int tileY;
+    int tileWidth;
+    int tileHeight;
+
+    std::string text;
+    std::vector<char> tile;
+
+    rows = docHeight / tileSize;
+    cols = docWidth / tileSize;
+
+    for (int itRow = 0; itRow < rows; ++itRow)
+    {
+        for (int itCol = 0; itCol < cols; ++itCol)
+        {
+            tileWidth = tileSize;
+            tileHeight = tileSize;
+            tileX = tileSize * itCol;
+            tileY = tileSize * itRow;
+            text = Poco::format("tile part=%d width=%d height=%d tileposx=%d tileposy=%d tilewidth=%d tileheight=%d",
+                    part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
+
+            sendTextFrame(socket, text);
+            tile = getTileMessage(socket, "checkBlackTiles ");
+            const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+
+            std::stringstream streamTile;
+            std::copy(tile.begin() + firstLine.size() + 1, tile.end(), std::ostream_iterator<char>(streamTile));
+            checkBlackTile(streamTile);
+        }
+    }
 }
 
 void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType)

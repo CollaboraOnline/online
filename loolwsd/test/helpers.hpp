@@ -406,6 +406,68 @@ void getDocSize(const std::string& message, const std::string& type,
     CPPUNIT_ASSERT(height > 0);
 }
 
+inline
+std::vector<char> getTileMessage(Poco::Net::WebSocket& ws, const std::string& name = "")
+{
+    int flags = 0;
+    int retries = 20;
+    static const Poco::Timespan waitTime(1000000);
+    std::vector<char> response(READ_BUFFER_SIZE);
+
+    // 5 seconds timeout
+    ws.setReceiveTimeout(5000000);
+    do
+    {
+        if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
+        {
+            response.resize(READ_BUFFER_SIZE);
+            int bytes = ws.receiveFrame(response.data(), response.size(), flags);
+            response.resize(bytes >= 0 ? bytes : 0);
+            auto message = LOOLProtocol::getAbbreviatedMessage(response);
+            if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+            {
+                if (message.find("nextmessage") == 0)
+                {
+                    Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                    int size = 0;
+                    if (tokens.count() == 2 &&
+                        tokens[0] == "nextmessage:" && LOOLProtocol::getTokenInteger(tokens[1], "size", size) && size > 0)
+                    {
+                        std::cerr << name << " Got " << message << std::endl;
+                        response.resize(size);
+                        bytes = ws.receiveFrame(response.data(), response.size(), flags);
+                        response.resize(bytes >= 0 ? bytes : 0);
+
+                        const std::string firstLine = LOOLProtocol::getFirstLine(response);
+                        Poco::StringTokenizer tileTokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                        CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tileTokens[0]);
+                        CPPUNIT_ASSERT_EQUAL(std::string("part="), tileTokens[1].substr(0, std::string("part=").size()));
+                        CPPUNIT_ASSERT_EQUAL(std::string("width="), tileTokens[2].substr(0, std::string("width=").size()));
+                        CPPUNIT_ASSERT_EQUAL(std::string("height="), tileTokens[3].substr(0, std::string("height=").size()));
+                        CPPUNIT_ASSERT_EQUAL(std::string("tileposx="), tileTokens[4].substr(0, std::string("tileposx=").size()));
+                        CPPUNIT_ASSERT_EQUAL(std::string("tileposy="), tileTokens[5].substr(0, std::string("tileposy=").size()));
+                        CPPUNIT_ASSERT_EQUAL(std::string("tilewidth="), tileTokens[6].substr(0, std::string("tilewidth=").size()));
+                        CPPUNIT_ASSERT_EQUAL(std::string("tileheight="), tileTokens[7].substr(0, std::string("tileheight=").size()));
+                        std::cerr << name << " Got " << firstLine << std::endl;
+                        return response;
+                    }
+                }
+            }
+
+            std::cerr << name << "ignored " << message << std::endl;
+            retries = 10;
+        }
+        else
+        {
+            std::cerr << name << "Timeout\n";
+            --retries;
+        }
+    }
+    while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+
+    return std::vector<char>();
+}
+
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
