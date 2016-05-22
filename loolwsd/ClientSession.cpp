@@ -337,69 +337,15 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringToke
 
 bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
-    std::string tilePositionsX, tilePositionsY;
-    if (tokens.count() < 8 ||
-        !getTokenInteger(tokens[1], "part", part) ||
-        !getTokenInteger(tokens[2], "width", pixelWidth) ||
-        !getTokenInteger(tokens[3], "height", pixelHeight) ||
-        !getTokenString (tokens[4], "tileposx", tilePositionsX) ||
-        !getTokenString (tokens[5], "tileposy", tilePositionsY) ||
-        !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-        !getTokenInteger(tokens[7], "tileheight", tileHeight))
+    try
     {
-        return sendTextFrame("error: cmd=tilecombine kind=syntax");
+        auto tileCombined = TileCombined::parse(tokens);
+        _docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
     }
-
-    if (part < 0 || pixelWidth <= 0 || pixelHeight <= 0 ||
-        tileWidth <= 0 || tileHeight <= 0 ||
-        tilePositionsX.empty() || tilePositionsY.empty())
+    catch (const std::exception& exc)
     {
-        return sendTextFrame("error: cmd=tilecombine kind=invalid");
-    }
-
-    std::string reqTimestamp;
-    size_t index = 8;
-    if (tokens.count() > index && tokens[index].find("timestamp") == 0)
-    {
-        getTokenString(tokens[index], "timestamp", reqTimestamp);
-        ++index;
-    }
-
-    int id = -1;
-    if (tokens.count() > index && tokens[index].find("id") == 0)
-    {
-        getTokenInteger(tokens[index], "id", id);
-        ++index;
-    }
-
-    StringTokenizer positionXtokens(tilePositionsX, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-    StringTokenizer positionYtokens(tilePositionsY, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-    size_t numberOfPositions = positionYtokens.count();
-
-    // check that number of positions for X and Y is the same
-    if (numberOfPositions != positionXtokens.count())
-    {
-        return sendTextFrame("error: cmd=tilecombine kind=invalid");
-    }
-
-    for (size_t i = 0; i < numberOfPositions; ++i)
-    {
-        int x = 0;
-        if (!stringToInteger(positionXtokens[i], x))
-        {
-            return sendTextFrame("error: cmd=tilecombine kind=syntax");
-        }
-
-        int y = 0;
-        if (!stringToInteger(positionYtokens[i], y))
-        {
-            return sendTextFrame("error: cmd=tilecombine kind=syntax");
-        }
-
-        const TileDesc tile(part, pixelWidth, pixelHeight, x, y, tileWidth, tileHeight);
-        _docBroker->handleTileRequest(tile, shared_from_this());
+        Log::error(std::string("Failed to process tilecombine command: ") + exc.what() + ".");
+        return sendTextFrame("error: cmd=tile kind=invalid");
     }
 
     return true;

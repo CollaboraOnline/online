@@ -403,6 +403,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     {
         handleTileResponse(payload);
     }
+    else if (command == "tilecombine:")
+    {
+       handleTileCombinedResponse(payload);
+    }
 
     return true;
 }
@@ -453,6 +457,69 @@ void DocumentBroker::handleTileRequest(const TileDesc& tile,
     _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
 }
 
+void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
+                                               const std::shared_ptr<ClientSession>& session)
+{
+    Log::trace() << "TileCombined request for " << tileCombined.serialize() << Log::end;
+
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    // Satisfy as many tiles from the cache.
+    auto& tiles = tileCombined.getTiles();
+    int i = tiles.size();
+    while (--i >= 0)
+    {
+        const auto& tile = tiles[i];
+        std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
+        if (cachedTile)
+        {
+            //TODO: Combine.
+#if ENABLE_DEBUG
+            const std::string response = tile.serialize("tile:") + " renderid=cached\n";
+#else
+            const std::string response = tile.serialize("tile:") + "\n";
+#endif
+
+            std::vector<char> output;
+            output.reserve(4 * tile.getWidth() * tile.getHeight());
+            output.resize(response.size());
+            std::memcpy(output.data(), response.data(), response.size());
+
+            assert(cachedTile->is_open());
+            cachedTile->seekg(0, std::ios_base::end);
+            size_t pos = output.size();
+            std::streamsize size = cachedTile->tellg();
+            output.resize(pos + size);
+            cachedTile->seekg(0, std::ios_base::beg);
+            cachedTile->read(output.data() + pos, size);
+            cachedTile->close();
+
+            session->sendBinaryFrame(output.data(), output.size());
+
+            // Remove.
+            tiles.erase(tiles.begin() + i);
+        }
+        else if (tileCache().isTileBeingRenderedIfSoSubscribe(tile, session))
+        {
+            // Skip.
+            tiles.erase(tiles.begin() + i);
+        }
+    }
+
+    if (tiles.empty())
+    {
+        // Done.
+        return;
+    }
+
+    const auto tileMsg = tileCombined.serialize();
+    Log::debug() << "TileCombined residual request for " << tileMsg << Log::end;
+
+    // Forward to child to render.
+    const std::string request = "tilecombine " + tileMsg;
+    _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
+}
+
 void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);
@@ -472,6 +539,45 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
             Log::debug() << "Render request declined for " << firstLine << Log::end;
             std::unique_lock<std::mutex> tileBeingRenderedLock(tileCache().getTilesBeingRenderedLock());
             tileCache().forgetTileBeingRendered(tile);
+        }
+    }
+    catch (const std::exception& exc)
+    {
+        Log::error("Failed to process tile response [" + firstLine + "]: " + exc.what() + ".");
+        //FIXME: Return error.
+        //sendTextFrame("error: cmd=tile kind=syntax");
+    }
+}
+
+void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload)
+{
+    const std::string firstLine = getFirstLine(payload);
+    Log::debug("Handling tile combined: " + firstLine);
+
+    try
+    {
+        auto tileCombined = TileCombined::parse(firstLine);
+        const auto buffer = payload.data();
+        const auto length = payload.size();
+        auto offset = firstLine.size() + 1;
+
+        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+        {
+            for (const auto& tile : tileCombined.getTiles())
+            {
+                tileCache().saveTile(tile, buffer + offset, tile.getImgSize());
+                tileCache().notifyAndRemoveSubscribers(tile);
+                offset += tile.getImgSize();
+            }
+        }
+        else
+        {
+            Log::error() << "Render request failed for " << firstLine << Log::end;
+            std::unique_lock<std::mutex> tileBeingRenderedLock(tileCache().getTilesBeingRenderedLock());
+            for (const auto& tile : tileCombined.getTiles())
+            {
+                tileCache().forgetTileBeingRendered(tile);
+            }
         }
     }
     catch (const std::exception& exc)

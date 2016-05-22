@@ -204,8 +204,11 @@ public:
 
     void handleTileRequest(const TileDesc& tile,
                            const std::shared_ptr<ClientSession>& session);
+    void handleTileCombinedRequest(TileCombined& tileCombined,
+                                   const std::shared_ptr<ClientSession>& session);
 
     void handleTileResponse(const std::vector<char>& payload);
+    void handleTileCombinedResponse(const std::vector<char>& payload);
 
     // Called when the last view is going out.
     bool canDestroy();

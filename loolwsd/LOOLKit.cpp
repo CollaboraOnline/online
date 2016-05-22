@@ -52,6 +52,7 @@
 #include "Log.hpp"
 #include "Png.hpp"
 #include "QueueHandler.hpp"
+#include "Rectangle.hpp"
 #include "TileDesc.hpp"
 #include "Unit.hpp"
 #include "UserMessages.hpp"
@@ -617,79 +618,21 @@ public:
         ws->sendFrame(output.data(), length, WebSocket::FRAME_BINARY);
     }
 
-    void sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& /*tokens*/)
+    void renderCombinedTiles(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
     {
-        // This is unnecessary at this point, since the DocumentBroker will send us individual
-        // tile requests (i.e. it breaks tilecombine requests).
-        // So unless DocumentBroker combines them again, there is no point in having this here.
-        // In fact, we probably want to remove this, since we always want to render individual
-        // tiles so that we can fetch them separately in the future.
-#if 0
-        int part, pixelWidth, pixelHeight, tileWidth, tileHeight;
-        std::string tilePositionsX, tilePositionsY;
-        std::string reqTimestamp;
-
-        if (tokens.count() < 8 ||
-            !getTokenInteger(tokens[1], "part", part) ||
-            !getTokenInteger(tokens[2], "width", pixelWidth) ||
-            !getTokenInteger(tokens[3], "height", pixelHeight) ||
-            !getTokenString (tokens[4], "tileposx", tilePositionsX) ||
-            !getTokenString (tokens[5], "tileposy", tilePositionsY) ||
-            !getTokenInteger(tokens[6], "tilewidth", tileWidth) ||
-            !getTokenInteger(tokens[7], "tileheight", tileHeight))
-        {
-            //sendTextFrame("error: cmd=tilecombine kind=syntax");
-            return;
-        }
-
-        if (part < 0 || pixelWidth <= 0 || pixelHeight <= 0
-           || tileWidth <= 0 || tileHeight <= 0
-           || tilePositionsX.empty() || tilePositionsY.empty())
-        {
-            //sendTextFrame("error: cmd=tilecombine kind=invalid");
-            return;
-        }
-
-        if (tokens.count() > 8)
-            getTokenString(tokens[8], "timestamp", reqTimestamp);
-
-        bool makeSlow = delayAndRewritePart(part);
+        auto tileCombined = TileCombined::parse(tokens);
+        auto& tiles = tileCombined.getTiles();
 
         Util::Rectangle renderArea;
+        std::vector<Util::Rectangle> tileRecs;
+        tileRecs.reserve(tiles.size());
 
-        StringTokenizer positionXtokens(tilePositionsX, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        StringTokenizer positionYtokens(tilePositionsY, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-        size_t numberOfPositions = positionYtokens.count();
-        // check that number of positions for X and Y is the same
-        if (numberOfPositions != positionYtokens.count())
+        for (auto& tile : tiles)
         {
-            sendTextFrame("error: cmd=tilecombine kind=invalid");
-            return;
-        }
+            Util::Rectangle rectangle(tile.getTilePosX(), tile.getTilePosY(),
+                                      tileCombined.getTileWidth(), tileCombined.getTileHeight());
 
-        std::vector<Util::Rectangle> tiles;
-        tiles.reserve(numberOfPositions);
-
-        for (size_t i = 0; i < numberOfPositions; ++i)
-        {
-            int x = 0;
-            if (!stringToInteger(positionXtokens[i], x))
-            {
-                sendTextFrame("error: cmd=tilecombine kind=syntax");
-                return;
-            }
-
-            int y = 0;
-            if (!stringToInteger(positionYtokens[i], y))
-            {
-                sendTextFrame("error: cmd=tilecombine kind=syntax");
-                return;
-            }
-
-            Util::Rectangle rectangle(x, y, tileWidth, tileHeight);
-
-            if (tiles.empty())
+            if (tileRecs.empty())
             {
                 renderArea = rectangle;
             }
@@ -698,71 +641,77 @@ public:
                 renderArea.extend(rectangle);
             }
 
-            tiles.push_back(rectangle);
+            tileRecs.push_back(rectangle);
         }
 
-        LibreOfficeKitTileMode mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->pClass->getTileMode(_loKitDocument));
+        const int tilesByX = renderArea.getWidth() / tileCombined.getTileWidth();
+        const int tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
 
-        int tilesByX = renderArea.getWidth() / tileWidth;
-        int tilesByY = renderArea.getHeight() / tileHeight;
-
-        int pixmapWidth = tilesByX * pixelWidth;
-        int pixmapHeight = tilesByY * pixelHeight;
+        const int pixmapWidth = tilesByX * tileCombined.getWidth();
+        const int pixmapHeight = tilesByY * tileCombined.getHeight();
 
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
 
         std::vector<unsigned char> pixmap(pixmapSize, 0);
 
         Timestamp timestamp;
-        _loKitDocument->pClass->paintPartTile(_loKitDocument, pixmap.data(), part,
-                                              pixmapWidth, pixmapHeight,
-                                              renderArea.getLeft(), renderArea.getTop(),
-                                              renderArea.getWidth(), renderArea.getHeight());
+        _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
+                                      pixmapWidth, pixmapHeight,
+                                      renderArea.getLeft(), renderArea.getTop(),
+                                      renderArea.getWidth(), renderArea.getHeight());
 
         Log::debug() << "paintTile (combined) called, tile at [" << renderArea.getLeft() << ", " << renderArea.getTop() << "]"
-                    << " (" << renderArea.getWidth() << ", " << renderArea.getHeight() << ") rendered in "
-                    << double(timestamp.elapsed())/1000 <<  "ms" << Log::end;
+                     << " (" << renderArea.getWidth() << ", " << renderArea.getHeight() << ") rendered in "
+                     << double(timestamp.elapsed())/1000 <<  " ms." << Log::end;
 
-        for (Util::Rectangle& tileRect : tiles)
+
+        std::vector<char> output;
+        output.reserve(pixmapWidth * pixmapHeight * 4);
+
+        const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
+        size_t tileIndex = 0;
+        for (Util::Rectangle& tileRect : tileRecs)
         {
-            std::string response = "tile: part=" + std::to_string(part) +
-                                   " width=" + std::to_string(pixelWidth) +
-                                   " height=" + std::to_string(pixelHeight) +
-                                   " tileposx=" + std::to_string(tileRect.getLeft()) +
-                                   " tileposy=" + std::to_string(tileRect.getTop()) +
-                                   " tilewidth=" + std::to_string(tileWidth) +
-                                   " tileheight=" + std::to_string(tileHeight);
+            const int positionX = (tileRect.getLeft() - renderArea.getLeft()) / tileCombined.getTileWidth();
+            const int positionY = (tileRect.getTop() - renderArea.getTop())  / tileCombined.getTileHeight();
 
-            if (reqTimestamp != "")
-                response += " timestamp=" + reqTimestamp;
-
-#if ENABLE_DEBUG
-            response += " renderid=" + Util::UniqueId();
-#endif
-
-            response += "\n";
-
-            std::vector<char> output;
-            output.reserve(pixelWidth * pixelHeight * 4 + response.size());
-            output.resize(response.size());
-
-            std::copy(response.begin(), response.end(), output.begin());
-
-            int positionX = (tileRect.getLeft() - renderArea.getLeft()) / tileWidth;
-            int positionY = (tileRect.getTop() - renderArea.getTop())  / tileHeight;
-
-            if (!Util::encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight, pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode))
+            const auto oldSize = output.size();
+            const auto pixelWidth = tileCombined.getWidth();
+            const auto pixelHeight = tileCombined.getHeight();
+            if (!png::encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
+                                           pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode))
             {
-                sendTextFrame("error: cmd=tile kind=failure");
+                //FIXME: Return error.
+                //sendTextFrame("error: cmd=tile kind=failure");
+                Log::error("Failed to encode tile into PNG.");
                 return;
             }
 
-            sendBinaryFrame(output.data(), output.size());
+            const auto imgSize = output.size() - oldSize;
+            Log::trace() << "Encoded tile #" << tileIndex << " in " << imgSize << " bytes." << Log::end;
+            tiles[tileIndex++].setImgSize(imgSize);
         }
 
-        if (makeSlow)
-            delay();
+#if ENABLE_DEBUG
+        const auto tileMsg = tileCombined.serialize("tilecombine:") + " renderid=" + Util::UniqueId() + "\n";
+#else
+        const auto tileMsg = tileCombined.serialize("tilecombine:") + "\n";
 #endif
+        Log::trace("Sending back painted tiles for " + tileMsg);
+
+        std::vector<char> response;
+        response.resize(tileMsg.size() + output.size());
+        std::copy(tileMsg.begin(), tileMsg.end(), response.begin());
+        std::copy(output.begin(), output.end(), response.begin() + tileMsg.size());
+
+        const auto length = response.size();
+        if (length > SMALL_MESSAGE_SIZE)
+        {
+            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+            ws->sendFrame(nextmessage.data(), nextmessage.size());
+        }
+
+        ws->sendFrame(response.data(), length, WebSocket::FRAME_BINARY);
     }
 
 private:
@@ -1252,6 +1201,13 @@ void lokit_main(const std::string& childRoot,
                         if (document)
                         {
                             document->renderTile(tokens, ws);
+                        }
+                    }
+                    else if (tokens[0] == "tilecombine")
+                    {
+                        if (document)
+                        {
+                            document->renderCombinedTiles(tokens, ws);
                         }
                     }
                     else if (document && document->canDiscard())
