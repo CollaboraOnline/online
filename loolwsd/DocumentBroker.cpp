@@ -538,8 +538,7 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 
         if(firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            tileCache().saveTile(tile, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-            tileCache().notifyAndRemoveSubscribers(tile);
+            tileCache().saveTileAndNotify(tile, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
         }
         else
         {
@@ -572,8 +571,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
         {
             for (const auto& tile : tileCombined.getTiles())
             {
-                tileCache().saveTile(tile, buffer + offset, tile.getImgSize());
-                tileCache().notifyAndRemoveSubscribers(tile);
+                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
                 offset += tile.getImgSize();
             }
         }

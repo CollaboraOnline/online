@@ -75,12 +75,14 @@ TileCache::~TileCache()
 struct TileCache::TileBeingRendered
 {
     std::vector<std::weak_ptr<ClientSession>> _subscribers;
-    TileBeingRendered(const int version)
+    TileBeingRendered(const std::string& cachedName, const int version)
      : _startTime(std::chrono::steady_clock::now()),
+       _cachedName(cachedName),
        _ver(version)
     {
     }
 
+    const std::string& getCacheName() const { return _cachedName; }
     int getVersion() const { return _ver; }
 
     std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
@@ -91,6 +93,7 @@ struct TileCache::TileBeingRendered
 
 private:
     std::chrono::steady_clock::time_point _startTime;
+    std::string _cachedName;
     int _ver;
 };
 
@@ -132,15 +135,52 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
     return nullptr;
 }
 
-void TileCache::saveTile(const TileDesc& tile, const char *data, size_t size)
+void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, size_t size)
 {
-    const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
+    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
+    if (tileBeingRendered && tileBeingRendered->getVersion() != tile.getVersion())
+    {
+        Log::trace() << "Skipping unexpected tile ver: " << tile.getVersion()
+                     << ", waiting for ver " << tileBeingRendered->getVersion() << Log::end;
+        return;
+    }
+
+    // Save to disk.
+    const auto cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
+                                               : cacheFileName(tile));
+    const auto fileName = _cacheDir + "/" + cachedName;
     Log::trace() << "Saving cache tile: " << fileName << Log::end;
-
     std::fstream outStream(fileName, std::ios::out);
     outStream.write(data, size);
     outStream.close();
+
+    // Notify subscribers, if any.
+    if (tileBeingRendered)
+    {
+        if (!tileBeingRendered->_subscribers.empty())
+        {
+            const std::string message = tile.serialize("tile");
+            Log::debug("Sending tile message to subscribers: " + message);
+
+            for (const auto& i: tileBeingRendered->_subscribers)
+            {
+                auto subscriber = i.lock();
+                if (subscriber)
+                {
+                    //FIXME: This is inefficient; should just send directly to each client (although that is risky as well!
+                    // Re-emit the tile command in the other thread(s) to re-check and hit
+                    // the cache. Construct the message from scratch to contain only the
+                    // mandatory parts of the message.
+                    subscriber->sendToInputQueue(message);
+                }
+            }
+        }
+
+        // Remove subscriptions.
+        _tilesBeingRendered.erase(cachedName);
+    }
 }
 
 std::string TileCache::getTextFile(const std::string& fileName)
@@ -255,10 +295,10 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
     // Forget this tile as it will have to be rendered again.
     for (auto it = _tilesBeingRendered.begin(); it != _tilesBeingRendered.end(); )
     {
-        const std::string cacheName = it->first;
-        if (intersectsTile(cacheName, part, x, y, width, height))
+        const std::string cachedName = it->first;
+        if (intersectsTile(cachedName, part, x, y, width, height))
         {
-            Log::debug("Removing subscriptions for: " + cacheName);
+            Log::debug("Removing subscriptions for: " + cachedName);
             it = _tilesBeingRendered.erase(it);
         }
         else
@@ -359,42 +399,6 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
     modTimeFile.close();
 }
 
-void TileCache::notifyAndRemoveSubscribers(const TileDesc& tile)
-{
-    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
-
-    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
-    if (!tileBeingRendered)
-    {
-        // We don't have anything to send back.
-        return;
-    }
-
-    if (tileBeingRendered->getVersion() != tile.getVersion())
-    {
-        Log::trace() << "Skipping unexpected tile ver: " << tile.getVersion() << ", waiting for " << tileBeingRendered->getVersion() << Log::end;
-        return;
-    }
-
-    const std::string message = tile.serialize("tile");
-    Log::debug("Sending tile message to subscribers: " + message);
-
-    for (const auto& i: tileBeingRendered->_subscribers)
-    {
-        auto subscriber = i.lock();
-        if (subscriber)
-        {
-            //FIXME: This is inefficient; should just send directly to each client (although that is risky as well!
-            // Re-emit the tile command in the other thread(s) to re-check and hit
-            // the cache. Construct the message from scratch to contain only the
-            // mandatory parts of the message.
-            subscriber->sendToInputQueue(message);
-        }
-    }
-
-    forgetTileBeingRendered(tile);
-}
-
 // FIXME: to be further simplified when we centralize tile messages.
 int TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
 {
@@ -430,13 +434,14 @@ int TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std:
     else
     {
         Log::debug() << "Tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
-                     << tile.getTilePosY() << ") needs rendering, subscribing." << Log::end;
+                     << tile.getTilePosY() << ") needs rendering, subscribing for ver: "
+                     << tile.getVersion() << "." << Log::end;
 
         const std::string cachedName = cacheFileName(tile);
 
         assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
 
-        tileBeingRendered = std::make_shared<TileBeingRendered>(tile.getVersion());
+        tileBeingRendered = std::make_shared<TileBeingRendered>(cachedName, tile.getVersion());
         tileBeingRendered->_subscribers.push_back(subscriber);
         _tilesBeingRendered[cachedName] = tileBeingRendered;
 
