@@ -202,6 +202,13 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
+    /// Invalidate the cursor position.
+    void invalidateCursor(const int x, const int y)
+    {
+        _cursorPosX = x;
+        _cursorPosY = y;
+    }
+
     void handleTileRequest(TileDesc& tile,
                            const std::shared_ptr<ClientSession>& session);
     void handleTileCombinedRequest(TileCombined& tileCombined,
@@ -239,6 +246,8 @@ private:
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;
+    int _cursorPosX;
+    int _cursorPosY;
     bool _isLoaded;
     bool _isModified;
     mutable std::mutex _mutex;

@@ -108,6 +108,8 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _childProcess(childProcess),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
+    _cursorPosX(0),
+    _cursorPosY(0),
     _isLoaded(false),
     _isModified(false),
     _tileVersion(0)
@@ -507,7 +509,19 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             const auto ver = tileCache().isTileBeingRenderedIfSoSubscribe(tile, session);
             if (ver <= 0)
             {
-                // Skip.
+                // Already rendering. Skip.
+                tiles.erase(tiles.begin() + i);
+            }
+            else
+            if (_cursorPosX >= tile.getTilePosX() && _cursorPosX <= tile.getTilePosX() + tile.getTileWidth() &&
+                _cursorPosY >= tile.getTilePosY() && _cursorPosY <= tile.getTilePosY() + tile.getTileHeight())
+            {
+                // If this tile is right under the cursor, give it priority.
+                const auto req = tile.serialize("tile");
+                Log::debug() << "Priority tile request: " << req << Log::end;
+                _childProcess->getWebSocket()->sendFrame(req.data(), req.size());
+
+                // No need to process with the group anymore.
                 tiles.erase(tiles.begin() + i);
             }
         }
@@ -536,9 +550,14 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
         const auto buffer = payload.data();
         const auto length = payload.size();
 
-        if(firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            tileCache().saveTileAndNotify(tile, buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+            // If the tile right under the cursor, give it priority.
+            const auto priority = (_cursorPosX >= tile.getTilePosX() &&
+                                   _cursorPosX <= tile.getTilePosX() + tile.getTileWidth() &&
+                                   _cursorPosY >= tile.getTilePosY() &&
+                                   _cursorPosY <= tile.getTilePosY() + tile.getTileHeight());
+            tileCache().saveTileAndNotify(tile, buffer + firstLine.size() + 1, length - firstLine.size() - 1, priority);
         }
         else
         {
@@ -571,7 +590,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
         {
             for (const auto& tile : tileCombined.getTiles())
             {
-                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
+                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize(), false);
                 offset += tile.getImgSize();
             }
         }

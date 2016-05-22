@@ -135,12 +135,12 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
     return nullptr;
 }
 
-void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, size_t size)
+void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size, const bool priority)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
-    if (tileBeingRendered && tileBeingRendered->getVersion() != tile.getVersion())
+    if (!priority && tileBeingRendered && tileBeingRendered->getVersion() != tile.getVersion())
     {
         Log::trace() << "Skipping unexpected tile ver: " << tile.getVersion()
                      << ", waiting for ver " << tileBeingRendered->getVersion() << Log::end;
@@ -179,7 +179,10 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, size_t
         }
 
         // Remove subscriptions.
-        _tilesBeingRendered.erase(cachedName);
+        if (tileBeingRendered->getVersion() == tile.getVersion())
+        {
+            _tilesBeingRendered.erase(cachedName);
+        }
     }
 }
 
