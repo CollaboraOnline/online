@@ -205,7 +205,7 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
     {
         int flags = 0;
         int retries = 20;
-        static const Poco::Timespan waitTime(1000000);
+        static const Poco::Timespan waitTime(2000000);
         std::vector<char> response;
 
         ws.setReceiveTimeout(0);
