@@ -180,10 +180,10 @@ L.Control.menubar = L.Control.extend({
 		this._initialized = true;
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
-		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeFirstShow);
+		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeShow);
 	},
 
-	_beforeFirstShow: function(e, menu) {
+	_beforeShow: function(e, menu) {
 		var self = e.data.self;
 		var items = $(menu).children().children('a').not('.has-submenu');
 		$(items).each(function() {
