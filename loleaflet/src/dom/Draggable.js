@@ -104,7 +104,7 @@ L.Draggable = L.Evented.extend({
 				offset = offset.add(correction);
 			}
 			if (this._map.getDocSize().x < this._map.getSize().x) {
-				// don't pan horizontaly when the document fits in the viewing
+				// don't pan horizontally when the document fits in the viewing
 				// area horizontally (docWidth < viewAreaWidth)
 				offset.x = 0;
 			}
