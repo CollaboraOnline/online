@@ -59,8 +59,7 @@
 
 /* center the toolbar */
 #tb_presentation-toolbar_item_left,
-#tb_toolbar-up_item_left,
-#tb_formulabar_item_left {
+#tb_toolbar-up_item_left {
     width: 50%;
 }
 
