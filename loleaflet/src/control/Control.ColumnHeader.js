@@ -28,6 +28,7 @@ L.Control.ColumnHeader = L.Control.extend({
 		var colHeaderObj = this;
 		$.contextMenu({
 			selector: '.spreadsheet-header-column',
+			className: 'loleaflet-font',
 			items: {
 				'insertcolbefore': {
 					name: _('Insert column before'),

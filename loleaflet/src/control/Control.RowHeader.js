@@ -26,6 +26,7 @@ L.Control.RowHeader = L.Control.extend({
 		var rowHeaderObj = this;
 		$.contextMenu({
 			selector: '.spreadsheet-header-row',
+			className: 'loleaflet-font',
 			items: {
 				'insertrowabove': {
 					name: _('Insert row above'),
