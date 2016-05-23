@@ -130,7 +130,12 @@ L.Control.menubar = L.Control.extend({
 			}
 		],
 
-		commandStates: {}
+		commandStates: {},
+
+		allowedViewModeActions: ['downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx',
+								 'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx',
+								 'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx',
+								 'fullscreen', 'zoomin', 'zoomout', 'zoomreset']
 	},
 
 	onAdd: function (map) {
@@ -189,6 +194,24 @@ L.Control.menubar = L.Control.extend({
 		$(items).each(function() {
 			var aItem = this;
 			var type = $(aItem).data('type');
+			var id = $(aItem).data('id');
+			if (!map._editlock) {
+				var found = false;
+				for (var i in self.options.allowedViewModeActions) {
+					if (self.options.allowedViewModeActions[i] === id) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					$(aItem).addClass('disabled');
+				} else {
+					$(aItem).removeClass('disabled');
+				}
+
+				return;
+			}
+
 			if (type === 'unocommand') {
 				var unoCommand = $(aItem).data('uno');
 				if (self.options.commandStates[unoCommand] === 'disabled') {
