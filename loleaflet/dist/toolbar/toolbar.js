@@ -34,7 +34,7 @@ $(function () {
 			{ type: 'button',  id: 'backcolor', img: 'backcolor', hint: _("Highlighting") },
 			{ type: 'break' },
 			{ type: 'button',  id: 'alignleft',  img: 'alignleft', hint: _("Align left"), uno: 'LeftPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"1"}}'  },
-			{ type: 'button',  id: 'alignhorizontal',  img: 'alignhorizontal', hint: _("Center horizontaly"), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}' },
+			{ type: 'button',  id: 'alignhorizontal',  img: 'alignhorizontal', hint: _("Center horizontally"), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}' },
 			{ type: 'button',  id: 'alignright',  img: 'alignright', hint: _("Align right"), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}' },
 			{ type: 'button',  id: 'alignblock',  img: 'alignblock', hint: _("Justified"), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}' },
 			{ type: 'break' },
