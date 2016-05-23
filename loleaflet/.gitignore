@@ -11,7 +11,7 @@ component.json
 _site
 dist/*.js
 dist/branding.css
-dist/branding.js
+!dist/errormessages.js
 dist/images/toolbar-bg.png
 dist/admin/*.js
 dist/plugins/
