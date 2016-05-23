@@ -66,7 +66,7 @@ public:
         numPrefork = NumToPrefork;
     }
 
-    virtual bool filterChildMessage(const std::vector<char>& payload)
+    virtual bool filterChildMessage(const std::vector<char>& payload) override
     {
         const std::string memory = LOOLProtocol::getFirstLine(payload);
         if (!memory.compare(0,6,"Error:"))
