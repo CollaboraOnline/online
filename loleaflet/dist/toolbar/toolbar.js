@@ -226,19 +226,6 @@ function onClick(id) {
 			map.setPart(id);
 		}
 	}
-	else if (id === 'menu:file:saveas') {
-		var dialog = '<label for="url">URL</label>' +
-					'<input name="url" type="text" value=' + map._docLayer.options.doc + '/>' +
-					'<label for="format">Format</label>' +
-					'<input name="format" type="text" />' +
-					'<label for="options">Options</label>' +
-					'<input name="options" type="text" />';
-		vex.dialog.open({
-			message: 'Save as:',
-			input: dialog,
-			callback: onSaveAs
-		});
-	}
 	else if (id === 'takeedit') {
 		if (!item.checked) {
 			map._socket.sendMessage('takeedit');
