@@ -105,6 +105,7 @@ L.Control.ContextMenu = L.Control.extend({
 				}
 
 				itemName = item.text.replace('~', '');
+				itemName = itemName.replace('Â°', '°'); // bccu#1813 double encoding in cp-5.0 branch only
 				contextMenu[item.command] = {
 					name: _(itemName)
 				};
