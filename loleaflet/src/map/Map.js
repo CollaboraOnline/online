@@ -733,7 +733,7 @@ L.Map = L.Evented.extend({
 			map._active = false;
 			clearTimeout(vex.timer);
 
-			options = $.extend({}, vex.defaultOptions, {contentCSS: {'background':'rgba(0, 0, 0, 0)'}});
+			var options = $.extend({}, vex.defaultOptions, {contentCSS: {'background':'rgba(0, 0, 0, 0)'}});
 			options.id = vex.globalID;
 			vex.dialogID = options.id;
 			vex.globalID += 1;
@@ -746,7 +746,7 @@ L.Map = L.Evented.extend({
 
 			options.$vexOverlay.bind('click.vex', function(e) {
 				if (e.target !== this) {
-					return;
+					return 0;
 				}
 				return map._activate();
 			});
