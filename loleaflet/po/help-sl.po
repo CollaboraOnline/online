@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-29 15:41+0200\n"
+"POT-Creation-Date: 2016-05-23 13:29+0200\n"
 "PO-Revision-Date: 2016-03-10 00:44+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
@@ -913,6 +913,18 @@ msgstr "Zapolni navzdol"
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:166"
 msgid "Ctrl + D"
 msgstr "Krmilka + D"
+
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:167
+#, fuzzy
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
+msgid "Select All"
+msgstr "Izberi vse"
+
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:167
+#, fuzzy
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
+msgid "Ctrl + A"
+msgstr "Krmilka + A"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:168
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
