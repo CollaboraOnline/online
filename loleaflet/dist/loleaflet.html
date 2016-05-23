@@ -49,6 +49,7 @@
     <script src="/loleaflet/%VERSION%/branding.js"></script> <!-- logo onclick handler -->
     <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
     <script>var _ = function (string) {return string.toLocaleString();};</script>
+    <script src="/loleaflet/%VERSION%/errormessages.js"></script>
 
     <!--The "controls" div holds map controls such as the Zoom button and
         it's separated from the map in order to have the controls on the top
@@ -102,10 +103,10 @@
     var timestamp = getParameterByName('timestamp');
     var closebutton = getParameterByName('closebutton');
     if (wopiSrc === '' && filePath === '') {
-        vex.dialog.alert('Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: file_path=/path/to/doc/');
+        vex.dialog.alert(wrongwopisrc);
     }
     if (host === '') {
-        vex.dialog.alert('The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator.');
+        vex.dialog.alert(emptyhosturl);
     }
 
     var docURL = wopiSrc !== '' ? wopiSrc : filePath;
