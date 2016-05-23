@@ -137,7 +137,7 @@ $(function () {
 			{ type: 'break', id: 'prevnextbreak' },
 			{ type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _("Reset zoom") },
 			{ type: 'button',  id: 'zoomout', img: 'zoomout', hint: _("Zoom out") },
-			{ type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel">100%</div>'},
+			{ type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>'},
 			{ type: 'button',  id: 'zoomin', img: 'zoomin', hint: _("Zoom in") }
 		],
 		onClick: function (e) {
