@@ -533,9 +533,11 @@ map.on('updatepermission', function (e) {
 		else if (docType === 'drawing') {
 			toolbar.hide('annotation');
 		}
+		else if (docType === 'spreadsheet') {
+			toolbar.hide('inserttable');
+		}
 		else if (docType !== 'spreadsheet') {
 			toolbar.hide('annotation');
-			toolbar.hide('inserttable');
 		}
 	}
 });
