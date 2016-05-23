@@ -77,6 +77,7 @@ $(function () {
 			{ type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _("Increase Indent"), uno: 'IncrementIndent' },
 			{ type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _("Decrease Indent"), uno: 'DecrementIndent' },
 			{ type: 'break', id: 'incdecindent' },
+			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Insert Comment"), uno: 'InsertAnnotation' },
 			{ type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _("Insert Graphic") },
 			{ type: 'break' },
 			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
@@ -182,7 +183,7 @@ $(function () {
 });
 
 var formatButtons = ['undo', 'redo', 'save',
-                     'bold', 'italic', 'underline', 'strikeout',
+                     'bold', 'italic', 'underline', 'strikeout', 'annotation',
                      'fontcolor', 'backcolor', 'bullet', 'numbering', 'alignleft', 'alignhorizontal', 'alignright', 'alignblock',
                      'incrementindent', 'decrementindent', 'insertgraphic'];
 
@@ -571,6 +572,7 @@ map.on('updatepermission', function (e) {
 		toolbar.hide('writer:menu:file');
 		if (docType === 'presentation') {
 			toolbar.show('impress:menu:file');
+			toolbar.hide('annotation');
 
 			toolbar = w2ui['presentation-toolbar'];
 			toolbar.show('presentation');
@@ -581,12 +583,14 @@ map.on('updatepermission', function (e) {
 		}
 		else if (docType === 'drawing') {
 			toolbar.show('impress:menu:file');
+			toolbar.hide('annotation');
 		}
 		else if (docType === 'spreadsheet') {
 			toolbar.show('calc:menu:file');
 		}
 		else {
 			toolbar.show('other:menu:file');
+			toolbar.hide('annotation');
 		}
 	}
 });

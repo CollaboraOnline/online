@@ -206,6 +206,7 @@ button.leaflet-control-search-next
 .w2ui-icon.autosum{ background: url('/loleaflet/dist/images/lc_autosum.png') no-repeat center !important; }
 .w2ui-icon.backcolor{ background: url('/loleaflet/dist/images/lc_backcolor.png') no-repeat center !important; }
 .w2ui-icon.bold{ background: url('/loleaflet/dist/images/lc_bold.png') no-repeat center !important; }
+.w2ui-icon.annotation{ background: url('/loleaflet/dist/images/lc_showannotations.png') no-repeat center !important; }
 .w2ui-icon.bullet{ background: url('/loleaflet/dist/images/lc_defaultbullet.png') no-repeat center !important; }
 .w2ui-icon.cancel{ background: url('/loleaflet/dist/images/lc_cancel.png') no-repeat center !important; }
 .w2ui-icon.color{ background: url('/loleaflet/dist/images/lc_color.png') no-repeat center !important; }
