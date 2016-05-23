@@ -33,6 +33,7 @@ pot:
 		dist/errormessages.js \
 		dist/toolbar/toolbar.js \
 		src/control/Control.Tabs.js \
+		src/control/Control.Menubar.js \
 		src/core/Socket.js
 	html2po --pot --input=dist/loleaflet-help.html --output=po/loleaflet-help.pot
 

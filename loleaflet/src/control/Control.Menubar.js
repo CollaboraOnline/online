@@ -6,127 +6,127 @@
 L.Control.Menubar = L.Control.extend({
 	options: {
 		text:  [
-			{name: 'File', type: 'menu', menu: [{name: 'Save', type: 'unocommand', uno: '.uno:Save'},
-												{name: 'Print', id: 'print', type: 'action'},
-												{name: 'Download as', type: 'menu', menu: [{name: 'PDF Document (.pdf)', id: 'downloadas-pdf', type: 'action'},
-																						   {name: 'ODF text document (.odt)', id: 'downloadas-odt', type: 'action'},
-																						   {name: 'Microsoft Word 2003 (.doc)', id: 'downloadas-doc', type: 'action'},
-																						   {name: 'Microsoft Word (.docx)', id: 'downloadas-docx', type: 'action'}]}]
+			{name: _('File'), type: 'menu', menu: [{name: _('Save'), type: 'unocommand', uno: '.uno:Save'},
+												{name: _('Print'), id: 'print', type: 'action'},
+												{name: _('Download as'), type: 'menu', menu: [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+																						   {name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
+																						   {name: _('Microsoft Word 2003 (.doc)'), id: 'downloadas-doc', type: 'action'},
+																						   {name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'}]}]
 			},
-			{name: 'Edit', type: 'menu', menu: [{name: 'Undo', type: 'unocommand', uno: '.uno:Undo'},
-												{name: 'Redo', type: 'unocommand', uno: '.uno:Redo'},
+			{name: _('Edit'), type: 'menu', menu: [{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
+												{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},
 												{type: 'separator'},
-												{name: 'Cut', type: 'unocommand', uno: '.uno:Cut'},
-												{name: 'Copy', type: 'unocommand', uno: '.uno:Copy'},
-												{name: 'Paste', type: 'unocommand', uno: '.uno:Paste'},
+												{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
+												{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
+												{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 												{type: 'separator'},
-												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
+												{name: _('Select All'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: 'Insert', type: 'menu', menu: [{name: 'Image', id: 'insertgraphic', type: 'action'},
-												  {name: 'Comment', type: 'unocommand', uno: '.uno:InsertAnnotation'}]
+			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
+												  {name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'}]
 			},
-			{name: 'View', type: 'menu', menu: [{name: 'Full screen', id: 'fullscreen', type: 'action'},
+			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 												{type: 'separator'},
-												{name: 'Zoom in', id: 'zoomin', type: 'action'},
-												{name: 'Zoom out', id: 'zoomout', type: 'action'},
-												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
+												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
+												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
+												{name: _('Zoom reset'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: 'Tables', type: 'menu', menu: [{name: 'Insert', type: 'menu', menu: [{name: 'Rows Before', type: 'unocommand', uno: '.uno:InsertRowsBefore'},
-																						{name: 'Rows After', type: 'unocommand', uno: '.uno:InsertRowsAfter'},
+			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows Before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
+																						{name: _('Rows After'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
 																						{type: 'separator'},
-																						{name: 'Columns Left', type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
-																						{name: 'Columns Right', type: 'unocommand', uno: '.uno:InsertColumnsAfter'}]},
-												  {name: 'Delete', type: 'menu', menu: [{name: 'Rows', type: 'unocommand', uno: '.uno:DeleteRows'},
-																						{name: 'Columns', type: 'unocommand', uno: '.uno:DeleteColumns'},
-																						{name: 'Table', type: 'unocommand', uno: '.uno:DeleteTable'}]},
-												  {name: 'Select', type: 'menu', menu: [{name: 'Table', type: 'unocommand', uno: '.uno:SelectTable'},
-																						{name: 'Row', type: 'unocommand', uno: '.uno:EntireRow'},
-																						{name: 'Column', type: 'unocommand', uno: '.uno:EntireColumn'},
-																						{name: 'Cell', type: 'unocommand', uno: '.uno:EntireCell'}]},
-												  {name: 'Merge cells', type: 'unocommand', uno: '.uno:MergeCells'}]
+																						{name: _('Columns Left'), type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
+																						{name: _('Columns Right'), type: 'unocommand', uno: '.uno:InsertColumnsAfter'}]},
+												  {name: _('Delete'), type: 'menu', menu: [{name: _('Rows'), type: 'unocommand', uno: '.uno:DeleteRows'},
+																						{name: _('Columns'), type: 'unocommand', uno: '.uno:DeleteColumns'},
+																						{name: _('Table'), type: 'unocommand', uno: '.uno:DeleteTable'}]},
+												  {name: _('Select'), type: 'menu', menu: [{name: _('Table'), type: 'unocommand', uno: '.uno:SelectTable'},
+																						{name: _('Row'), type: 'unocommand', uno: '.uno:EntireRow'},
+																						{name: _('Column'), type: 'unocommand', uno: '.uno:EntireColumn'},
+																						{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
+												  {name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			}
 		],
 
 		presentation: [
-			{name: 'File', type: 'menu', menu: [{name: 'Save', type: 'unocommand', uno: '.uno:Save'},
-												{name: 'Print', id: 'print', type: 'action'},
-												{name: 'Download as', type: 'menu', menu:  [{name: 'PDF Document (.pdf)', id: 'downloadas-pdf', type: 'action'},
-																							{name: 'ODF presentation (.odp)', id: 'downloadas-odp', type: 'action'},
-																							{name: 'Microsoft Powerpoint 2003 (.ppt)', id: 'downloadas-ppt', type: 'action'},
-																							{name: 'Microsoft Powerpoint (.pptx)', id: 'downloadas-pptx', type: 'action'}]}]
+			{name: _('File'), type: 'menu', menu: [{name: _('Save'), type: 'unocommand', uno: '.uno:Save'},
+												{name: _('Print'), id: 'print', type: 'action'},
+												{name: _('Download as'), type: 'menu', menu:  [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+																							{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
+																							{name: _('Microsoft Powerpoint 2003 (.ppt)'), id: 'downloadas-ppt', type: 'action'},
+																							{name: _('Microsoft Powerpoint (.pptx)'), id: 'downloadas-pptx', type: 'action'}]}]
 			},
-			{name: 'Edit', type: 'menu', menu: [{name: 'Undo', type: 'unocommand', uno: '.uno:Undo'},
-												{name: 'Redo', type: 'unocommand', uno: '.uno:Redo'},
+			{name: _('Edit'), type: 'menu', menu: [{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
+												{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},
 												{type: 'separator'},
-												{name: 'Cut', type: 'unocommand', uno: '.uno:Cut'},
-												{name: 'Copy', type: 'unocommand', uno: '.uno:Copy'},
-												{name: 'Paste', type: 'unocommand', uno: '.uno:Paste'},
+												{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
+												{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
+												{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 												{type: 'separator'},
-												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
+												{name: _('Select All'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: 'Insert', type: 'menu', menu: [{name: 'Image', id: 'insertgraphic', type: 'action'}]
+			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'}]
 			},
-			{name: 'View', type: 'menu', menu: [{name: 'Full Screen', id: 'fullscreen', type: 'action'},
+			{name: _('View'), type: 'menu', menu: [{name: _('Full Screen'), id: 'fullscreen', type: 'action'},
 												{type: 'separator'},
-												{name: 'Zoom in', id: 'zoomin', type: 'action'},
-												{name: 'Zoom out', id: 'zoomout', type: 'action'},
-												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
+												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
+												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
+												{name: _('Zoom reset'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: 'Tables', type: 'menu', menu: [{name: 'Insert', type: 'menu', menu: [{name: 'Rows Before', type: 'unocommand', uno: '.uno:InsertRowsBefore'},
-																						{name: 'Rows After', type: 'unocommand', uno: '.uno:InsertRowsAfter'},
+			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows Before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
+																						{name: _('Rows After'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
 																						{type: 'separator'},
-																						{name: 'Columns Left', type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
-																						{name: 'Columns Right', type: 'unocommand', uno: '.uno:InsertColumnsAfter'}]},
-												  {name: 'Delete', type: 'menu', menu: [{name: 'Rows', type: 'unocommand', uno: '.uno:DeleteRows'},
-																						{name: 'Columns', type: 'unocommand', uno: '.uno:DeleteColumns'},
-																						{name: 'Table', type: 'unocommand', uno: '.uno:DeleteTable'}]},
-												  {name: 'Select', type: 'menu', menu: [{name: 'Table', type: 'unocommand', uno: '.uno:SelectTable'},
-																						{name: 'Row', type: 'unocommand', uno: '.uno:EntireRow'},
-																						{name: 'Column', type: 'unocommand', uno: '.uno:EntireColumn'},
-																						{name: 'Cell', type: 'unocommand', uno: '.uno:EntireCell'}]},
-												  {name: 'Merge cells', type: 'unocommand', uno: '.uno:MergeCells'}]
+																						{name: _('Columns Left'), type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
+																						{name: _('Columns Right'), type: 'unocommand', uno: '.uno:InsertColumnsAfter'}]},
+												  {name: _('Delete'), type: 'menu', menu: [{name: _('Rows'), type: 'unocommand', uno: '.uno:DeleteRows'},
+																						{name: _('Columns'), type: 'unocommand', uno: '.uno:DeleteColumns'},
+																						{name: _('Table'), type: 'unocommand', uno: '.uno:DeleteTable'}]},
+												  {name: _('Select'), type: 'menu', menu: [{name: _('Table'), type: 'unocommand', uno: '.uno:SelectTable'},
+																						{name: _('Row'), type: 'unocommand', uno: '.uno:EntireRow'},
+																						{name: _('Column'), type: 'unocommand', uno: '.uno:EntireColumn'},
+																						{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
+												  {name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			},
-			{name: 'Slide', type: 'menu', menu: [{name: 'New slide', id: 'insertpage', type: 'action'},
-												 {name: 'Duplicate slide', id: 'duplicatepage', type: 'action'},
-												 {name: 'Delete slide', id: 'deletepage', type: 'action'},
+			{name: _('Slide'), type: 'menu', menu: [{name: _('New slide'), id: 'insertpage', type: 'action'},
+												 {name: _('Duplicate slide'), id: 'duplicatepage', type: 'action'},
+												 {name: _('Delete slide'), id: 'deletepage', type: 'action'},
 												 {type: 'separator'},
-												 {name: 'Fullscreen Presentation', id: 'fullscreen-presentation', type: 'action'}]
+												 {name: _('Fullscreen Presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			}
 		],
 
 		spreadsheet: [
-			{name: 'File', type: 'menu', menu: [{name: 'Save', type: 'unocommand', uno: '.uno:Save'},
-												{name: 'Print', id: 'print', type: 'action'},
-												{name: 'Download as', type: 'menu', menu: [{name: 'PDF Document (.pdf)', id: 'downloadas-pdf', type: 'action'},
-																						   {name: 'ODF spreadsheet (.ods)', id: 'downloadas-ods', type: 'action'},
-																						   {name: 'Microsoft Excel 2003 (.xls)', id: 'downloadas-xls', type: 'action'},
-																						   {name: 'Microsoft Excel (.xlsx)', id: 'downloadas-xlsx', type: 'action'}]}]
+			{name: _('File'), type: 'menu', menu: [{name: _('Save'), type: 'unocommand', uno: '.uno:Save'},
+												{name: _('Print'), id: 'print', type: 'action'},
+												{name: _('Download as'), type: 'menu', menu: [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+																						   {name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
+																						   {name: _('Microsoft Excel 2003 (.xls)'), id: 'downloadas-xls', type: 'action'},
+																						   {name: _('Microsoft Excel (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]}]
 			},
-			{name: 'Edit', type: 'menu', menu: [{name: 'Undo', type: 'unocommand', uno: '.uno:Undo'},
-												{name: 'Redo', type: 'unocommand', uno: '.uno:Redo'},
+			{name: _('Edit'), type: 'menu', menu: [{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
+												{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},
 												{type: 'separator'},
-												{name: 'Cut', type: 'unocommand', uno: '.uno:Cut'},
-												{name: 'Copy', type: 'unocommand', uno: '.uno:Copy'},
-												{name: 'Paste', type: 'unocommand', uno: '.uno:Paste'},
+												{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
+												{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
+												{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 												{type: 'separator'},
-												{name: 'Select All', type: 'unocommand', uno: '.uno:SelectAll'}]
+												{name: _('Select All'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: 'Insert', type: 'menu', menu: [{name: 'Image', id: 'insertgraphic', type: 'action'},
+			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
 												  {type: 'separator'},
-												  {name: 'Row', type: 'unocommand', uno: '.uno:InsertRows'},
-												  {name: 'Column', type: 'unocommand', uno: '.uno:InsertColumns'}]
+												  {name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
+												  {name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'}]
 			},
-			{name: 'View', type: 'menu', menu: [{name: 'Full Screen', id: 'fullscreen', type: 'action'},
+			{name: _('View'), type: 'menu', menu: [{name: _('Full Screen'), id: 'fullscreen', type: 'action'},
 												{type: 'separator'},
-												{name: 'Zoom in', id: 'zoomin', type: 'action'},
-												{name: 'Zoom out', id: 'zoomout', type: 'action'},
-												{name: 'Zoom reset', id: 'zoomreset', type: 'action'}]
+												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
+												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
+												{name: _('Zoom reset'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: 'Cells', type: 'menu', menu: [{name: 'Insert Row', type: 'unocommand', uno: '.uno:InsertRows'},
-												 {name: 'Insert Column', type: 'unocommand', uno: '.uno:InsertColumns'},
+			{name: _('Cells'), type: 'menu', menu: [{name: _('Insert Row'), type: 'unocommand', uno: '.uno:InsertRows'},
+												 {name: _('Insert Column'), type: 'unocommand', uno: '.uno:InsertColumns'},
 												 {type: 'separator'},
-												 {name: 'Delete Row', type: 'unocommand', uno: '.uno:DeleteRows'},
-												 {name: 'Delete Column', type: 'unocommand', uno: '.uno:DeleteColumns'}]
+												 {name: _('Delete Row'), type: 'unocommand', uno: '.uno:DeleteRows'},
+												 {name: _('Delete Column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			}
 		],
 
