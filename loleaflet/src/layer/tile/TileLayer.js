@@ -288,10 +288,11 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('invalidatetiles:') && textMsg.match('EMPTY')) {
 			var msg = 'invalidatetiles: ';
-			if (this._docType == 'text')
+			if (this._docType === 'text') {
 				msg += 'part=0 ';
-			else
+			} else {
 				msg += 'part=' + this._selectedPart + ' ';
+			}
 			msg += 'x=0 y=0 ';
 			msg += 'width=' + this._docWidthTwips + ' ';
 			msg += 'height=' + this._docHeightTwips;
@@ -465,9 +466,11 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		}
 
-		var horizontalDirection = 0,
-			verticalDirection = 0;
-		var sign = function(x) {return x>0?1:x<0?-1:x;}
+		var horizontalDirection = 0;
+		var verticalDirection = 0;
+		var sign = function(x) {
+			return x > 0 ? 1 : x < 0 ? -1 : x;
+		};
 		if (!this._isEmptyRectangle(this._prevCellCursor) && !this._isEmptyRectangle(this._cellCursor)) {
 			horizontalDirection = sign(this._cellCursor.getWest() - this._prevCellCursor.getWest());
 			verticalDirection = sign(this._cellCursor.getNorth() - this._prevCellCursor.getNorth());

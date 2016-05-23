@@ -2,8 +2,8 @@
 * Control.Menubar
 */
 
-/* global $ _ map */
-L.Control.menubar = L.Control.extend({
+/* global $ _ map title vex */
+L.Control.Menubar = L.Control.extend({
 	options: {
 		text:  [
 			{name: 'File', type: 'menu', menu: [{name: 'Save', type: 'unocommand', uno: '.uno:Save'},
@@ -157,8 +157,9 @@ L.Control.menubar = L.Control.extend({
 	},
 
 	_onUpdatePermission: function() {
-		if (this._initialized || !this._menubarCont)
+		if (this._initialized || !this._menubarCont) {
 			return;
+		}
 
 		// Add dcoument specific menu
 		var docType = this._map.getDocType();
@@ -255,16 +256,14 @@ L.Control.menubar = L.Control.extend({
 				} else if (document.documentElement.webkitRequestFullscreen) {
 					document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
 				}
-			} else {
-				if (document.exitFullscreen) {
-					document.exitFullscreen();
-				} else if (document.msExitFullscreen) {
-					document.msExitFullscreen();
-				} else if (document.mozCancelFullScreen) {
-					document.mozCancelFullScreen();
-				} else if (document.webkitExitFullscreen) {
-					document.webkitExitFullscreen();
-				}
+			} else if (document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if (document.msExitFullscreen) {
+				document.msExitFullscreen();
+			} else if (document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			} else if (document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
 			}
 		} else if (id === 'fullscreen-presentation' && map.getDocType() === 'presentation') {
 			map.fire('fullscreen');
@@ -274,7 +273,7 @@ L.Control.menubar = L.Control.extend({
 			map.duplicatePage();
 		} else if (id === 'deletepage') {
 			vex.dialog.confirm({
-				message: _("Are you sure you want to delete this slide?"),
+				message: _('Are you sure you want to delete this slide?'),
 				callback: this._onDeleteSlide
 			}, this);
 		}
@@ -303,22 +302,22 @@ L.Control.menubar = L.Control.extend({
 		for (var i in menu) {
 			var liItem = L.DomUtil.create('li', '');
 			var aItem = L.DomUtil.create('a', '', liItem);
-			aItem.innerHTML = menu[i]['name'];
+			aItem.innerHTML = menu[i].name;
 
-			if (menu[i]['type'] === 'menu') {
+			if (menu[i].type === 'menu') {
 				var ulItem = L.DomUtil.create('ul', '', liItem);
-				var subitemList = this._createMenu(menu[i]['menu']);
+				var subitemList = this._createMenu(menu[i].menu);
 				for (var j in subitemList) {
 					ulItem.appendChild(subitemList[j]);
 				}
-			} else if (menu[i]['type'] === 'unocommand') {
+			} else if (menu[i].type === 'unocommand') {
 				$(aItem).data('type', 'unocommand');
-				$(aItem).data('uno', menu[i]['uno']);
-			} else if (menu[i]['type'] === 'separator') {
+				$(aItem).data('uno', menu[i].uno);
+			} else if (menu[i].type === 'separator') {
 				$(aItem).addClass('separator');
-			} else if (menu[i]['type'] === 'action') {
+			} else if (menu[i].type === 'action') {
 				$(aItem).data('type', 'action');
-				$(aItem).data('id', menu[i]['id']);
+				$(aItem).data('id', menu[i].id);
 			}
 
 			itemList.push(liItem);
@@ -336,5 +335,5 @@ L.Control.menubar = L.Control.extend({
 });
 
 L.control.menubar = function (options) {
-	return new L.Control.menubar(options);
+	return new L.Control.Menubar(options);
 };

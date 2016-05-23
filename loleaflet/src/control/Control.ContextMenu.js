@@ -2,7 +2,7 @@
 * Control.ContextMenu
 */
 
-/* global */
+/* global $ map _ */
 L.Control.ContextMenu = L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
@@ -62,9 +62,9 @@ L.Control.ContextMenu = L.Control.extend({
 			selector: '.leaflet-layer',
 			className: 'loleaflet-font',
 			trigger: 'none',
-			build: function(triggerEle, e) {
+			build: function() {
 				return {
-					callback: function(key, options) {
+					callback: function(key) {
 						map.sendUnoCommand(key);
 					},
 					items: contextMenu
@@ -80,63 +80,60 @@ L.Control.ContextMenu = L.Control.extend({
 		var contextMenu = {};
 		var sepIdx = 1, itemName;
 		var isLastItemText = false;
-		for (var idx in obj['menu']) {
-			var item = obj['menu'][idx];
-			if (item['enabled'] === 'false') {
+		for (var idx in obj.menu) {
+			var item = obj.menu[idx];
+			if (item.enabled === 'false') {
 				continue;
 			}
 
-			if (item['type'] === 'separator') {
+			if (item.type === 'separator') {
 				if (isLastItemText) {
 					contextMenu['sep' + sepIdx++] = this.options.SEPARATOR;
 				}
 				isLastItemText = false;
 			}
-			else {
-				if (item['type'] === 'command') {
-					// Only show whitelisted items
-					// Command name (excluding '.uno:') starts from index = 5
-					var commandName = item['command'].substring(5);
-					if (this.options.whitelist.general.indexOf(commandName) === -1 &&
-						!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
-						!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
-						!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
-						!(docType === 'drawing' && this.options.whitelist.drawing.indexOf(commandName) !== -1)) {
-						continue;
-					}
-
-					itemName = item['text'].replace('~', '');
-					contextMenu[item['command']] = {
-						name: _(itemName)
-					};
-
-					if (item['checktype'] === 'checkmark') {
-						if (item['checked'] === 'true') {
-							contextMenu[item['command']]['icon'] = 'checkmark';
-						}
-					} else if (item['checktype'] === 'radio') {
-						if (item['checked'] === 'true') {
-							contextMenu[item['command']]['icon'] = 'radio';
-						}
-					}
-
-					isLastItemText = true;
-				} else if (item['type'] === 'menu') {
-					itemName = item['text'].replace('~', '');
-					var submenu = this._createContextMenuStructure(item);
-					// ignore submenus with all items disabled
-					if (Object.keys(submenu).length === 0) {
-						continue;
-					}
-
-					contextMenu[item['command']] = {
-						name: itemName,
-						items: submenu
-					};
-					isLastItemText = true;
+			else if (item.type === 'command') {
+				// Only show whitelisted items
+				// Command name (excluding '.uno:') starts from index = 5
+				var commandName = item.command.substring(5);
+				if (this.options.whitelist.general.indexOf(commandName) === -1 &&
+					!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
+					!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
+					!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
+					!(docType === 'drawing' && this.options.whitelist.drawing.indexOf(commandName) !== -1)) {
+					continue;
 				}
-			}
 
+				itemName = item.text.replace('~', '');
+				contextMenu[item.command] = {
+					name: _(itemName)
+				};
+
+				if (item.checktype === 'checkmark') {
+					if (item.checked === 'true') {
+						contextMenu[item.command.icon] = 'checkmark';
+					}
+				} else if (item.checktype === 'radio') {
+					if (item.checked === 'true') {
+						contextMenu[item.command.icon] = 'radio';
+					}
+				}
+
+				isLastItemText = true;
+			} else if (item.type === 'menu') {
+				itemName = item.text.replace('~', '');
+				var submenu = this._createContextMenuStructure(item);
+				// ignore submenus with all items disabled
+				if (Object.keys(submenu).length === 0) {
+					continue;
+				}
+
+				contextMenu[item.command] = {
+					name: itemName,
+					items: submenu
+				};
+				isLastItemText = true;
+			}
 		}
 
 		// Remove separator, if present, at the end
