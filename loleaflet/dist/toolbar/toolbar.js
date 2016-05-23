@@ -152,7 +152,7 @@ $(function () {
 });
 
 var formatButtons = ['undo', 'redo', 'save',
-                     'bold', 'italic', 'underline', 'strikeout', 'annotation',
+                     'bold', 'italic', 'underline', 'strikeout', 'annotation', 'inserttable-html',
                      'fontcolor', 'backcolor', 'bullet', 'numbering', 'alignleft', 'alignhorizontal', 'alignright', 'alignblock',
                      'incrementindent', 'decrementindent', 'insertgraphic'];
 
@@ -535,6 +535,7 @@ map.on('updatepermission', function (e) {
 		}
 		else if (docType !== 'spreadsheet') {
 			toolbar.hide('annotation');
+			toolbar.hide('inserttable-html');
 		}
 	}
 });
