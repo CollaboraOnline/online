@@ -46,7 +46,7 @@ $(function () {
 			{ type: 'break', id: 'incdecindent' },
 			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Insert Comment"), uno: 'InsertAnnotation' },
 			{ type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _("Insert Graphic") },
-			{ type: 'html',  id: 'inserttable-html', html: '<div id="tablePicker" class="evo-pop" style="position:absolute !important;display:none"><div id="tpstatus"></div><table id="insert-table"></table></div>' },
+			{ type: 'html',  id: 'inserttable-html', html: '<div id="tablePicker" class="evo-pop loleaflet-font" style="position:absolute !important;display:none"><div id="tpstatus"></div><table id="insert-table"></table></div>' },
 			{ type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _("Insert Table") },
 			{ type: 'break' },
 			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
@@ -1042,7 +1042,7 @@ function walkCells() {
 			var cellIndex = this.cellIndex + 1;
 			var rowIndex = this.parentNode.rowIndex + 1;
 			var div = document.getElementById('tpstatus');
-			div.innerHTML = cellIndex + " x " + rowIndex;
+			div.innerHTML = cellIndex + " × " + rowIndex;
 			for (var j = 0; j < cells.length; j++) {
 				var celly = cells[j];
 				if (celly.parentNode.rowIndex < rowIndex & celly.cellIndex < cellIndex) {
