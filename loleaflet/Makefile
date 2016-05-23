@@ -28,7 +28,9 @@ dist: all
 	rm -rf loleaflet-$(VERSION)
 
 pot:
-	xgettext --keyword=_ --output=po/loleaflet-ui.pot dist/toolbar/toolbar.js src/control/Control.Tabs.js \
+	xgettext --from-code=UTF-8 --keyword=_ --output=po/loleaflet-ui.pot \
+		dist/toolbar/toolbar.js \
+		src/control/Control.Tabs.js \
 		src/core/Socket.js
 	html2po --pot --input=dist/loleaflet-help.html --output=po/loleaflet-help.pot
 
