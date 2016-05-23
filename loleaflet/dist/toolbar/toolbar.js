@@ -116,8 +116,8 @@ $(function () {
 		name: 'toolbar-down',
 		items: [
 			{ type: 'html',  id: 'search',
-				html: '<div style="padding: 3px 10px;">'+
-					  ' Search:'+
+				html: '<div style="padding: 3px 10px;" class="loleaflet-font">'+
+					  ' ' + _("Search:") +
 					  '    <input size="10" id="search-input" onkeypress="onSearch(event)"' +
 					  			'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>'+
 					  '</div>'
