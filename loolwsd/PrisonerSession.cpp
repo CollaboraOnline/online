@@ -207,12 +207,12 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "invalidatecursor:")
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
-            StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            StringTokenizer firstLineTokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             int x = 0;
             int y = 0;
-            if (tokens.count() > 2 &&
-                stringToInteger(tokens[1], x) &&
-                stringToInteger(tokens[2], y))
+            if (firstLineTokens.count() > 2 &&
+                stringToInteger(firstLineTokens[1], x) &&
+                stringToInteger(firstLineTokens[2], y))
             {
                 _docBroker->invalidateCursor(x, y);
             }
