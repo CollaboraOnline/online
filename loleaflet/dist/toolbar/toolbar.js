@@ -156,7 +156,7 @@ var formatButtons = ['undo', 'redo', 'save',
                      'fontcolor', 'backcolor', 'bullet', 'numbering', 'alignleft', 'alignhorizontal', 'alignright', 'alignblock',
                      'incrementindent', 'decrementindent', 'insertgraphic'];
 
-var takeEditPopupMessage = '<div>You are viewing now.<br/>Click here to take edit</div>';
+var takeEditPopupMessage = '<div>' + _("You are viewing now.") + '<br/>' + _("Click here to take edit.") + '</div>';
 var takeEditPopupTimeout = null;
 
 function onSearch(e) {
