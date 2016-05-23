@@ -11,6 +11,7 @@ DRAW_VERSION=0.2.4
 all:
 	npm install
 	jake build
+	jake lint
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 
