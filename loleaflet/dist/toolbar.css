@@ -71,7 +71,13 @@
     height: 29px;
     width: 800px;
 }
-
+#tb_toolbar-up_item_close {
+    position: absolute;
+    padding-right: 6px;
+    margin-top: -25px;
+    z-index: 1050;
+    right: 0;
+}
 #tb_toolbar-up_item_right {
     width: 100%;
 }
