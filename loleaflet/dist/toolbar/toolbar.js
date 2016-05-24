@@ -633,7 +633,7 @@ map.on('commandstatechanged', function (e) {
 			$('#modifiedstatuslabel').html('');
 		}
 		else {
-			$('#modifiedstatuslabel').html('Document saved');
+			$('#modifiedstatuslabel').html(_('Document saved'));
 		}
 	}
 
