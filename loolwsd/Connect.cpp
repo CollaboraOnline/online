@@ -49,7 +49,11 @@ using namespace LOOLProtocol;
 
 using Poco::Net::AcceptCertificateHandler;
 using Poco::Net::Context;
+#if ENABLE_SSL
 using Poco::Net::HTTPSClientSession;
+#else
+using Poco::Net::HTTPClientSession;
+#endif
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::InvalidCertificateHandler;
