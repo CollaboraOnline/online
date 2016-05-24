@@ -30,7 +30,7 @@ $(function () {
 			{ type: 'button',  id: 'strikeout', img: 'strikeout', hint: _("Strikeout"), uno: 'Strikeout' },
 			{ type: 'break' },
 			{ type: 'html',  id: 'fontcolor-html', html: '<input id="fontColorPicker" style="display:none;">' },
-			{ type: 'button',  id: 'fontcolor', img: 'color', hint: _("Font Color") },
+			{ type: 'button',  id: 'fontcolor', img: 'color', hint: _("Font color") },
 			{ type: 'html',  id: 'backcolor-html', html: '<input id="backColorPicker" style="display:none;">' },
 			{ type: 'button',  id: 'backcolor', img: 'backcolor', hint: _("Highlighting") },
 			{ type: 'break' },
@@ -42,18 +42,18 @@ $(function () {
 			{ type: 'button',  id: 'bullet',  img: 'bullet', hint: _("Bullets on/off"), uno: 'DefaultBullet' },
 			{ type: 'button',  id: 'numbering',  img: 'numbering', hint: _("Numbering on/off"), uno: 'DefaultNumbering' },
 			{ type: 'break' },
-			{ type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _("Increase Indent"), uno: 'IncrementIndent' },
-			{ type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _("Decrease Indent"), uno: 'DecrementIndent' },
+			{ type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _("Increase indent"), uno: 'IncrementIndent' },
+			{ type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _("Decrease indent"), uno: 'DecrementIndent' },
 			{ type: 'break', id: 'incdecindent' },
-			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Insert Comment"), uno: 'InsertAnnotation' },
-			{ type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _("Insert Graphic") },
+			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Insert comment"), uno: 'InsertAnnotation' },
+			{ type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _("Insert graphic") },
 			{ type: 'html',  id: 'inserttable-html', html: '<div id="tablePicker" class="evo-pop loleaflet-font" style="position:absolute !important;display:none"><div id="tpstatus"></div><table id="insert-table"></table></div>' },
-			{ type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _("Insert Table") },
+			{ type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _("Insert table") },
 			{ type: 'break' },
 			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
 			{ type: 'html', id: 'right' },
 			{ type: 'button',  id: 'more', img: 'more', hint: _("More") },
-			{ type: 'button',  id: 'close',  img: 'closedoc', hint: _("Close Document"), hidden: true }
+			{ type: 'button',  id: 'close',  img: 'closedoc', hint: _("Close document"), hidden: true }
 		],
 		onClick: function (e) {
 			onClick(e.target);
@@ -89,10 +89,10 @@ $(function () {
 	$('#spreadsheet-toolbar').w2toolbar({
 		name: 'spreadsheet-toolbar',
 		items: [
-			{ type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _("First Sheet") },
-			{ type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _("Previous Sheet") },
-			{ type: 'button',  id: 'nextrecord',  img: 'nextrecord', hidden: true, hint: _("Next Sheet") },
-			{ type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _("Last Sheet") }
+			{ type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _("First sheet") },
+			{ type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _("Previous sheet") },
+			{ type: 'button',  id: 'nextrecord',  img: 'nextrecord', hidden: true, hint: _("Next sheet") },
+			{ type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _("Last sheet") }
 		],
 		onClick: function (e) {
 			onClick(e.target);
@@ -104,9 +104,9 @@ $(function () {
 			{ type: 'html',  id: 'left' },
 			{ type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _("Fullscreen presentation") },
 			{ type: 'break', id: 'presentationbreak', hidden:true },
-			{ type: 'button',  id: 'insertpage', img: 'insertpage', hidden:true, hint: _("Insert Page") },
-			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hidden:true, hint: _("Duplicate Page") },
-			{ type: 'button',  id: 'deletepage', img: 'deletepage', hidden:true, hint: _("Delete Page") },
+			{ type: 'button',  id: 'insertpage', img: 'insertpage', hidden:true, hint: _("Insert slide") },
+			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hidden:true, hint: _("Duplicate slide") },
+			{ type: 'button',  id: 'deletepage', img: 'deletepage', hidden:true, hint: _("Delete slide") },
 			{ type: 'html',  id: 'right' }
 		],
 		onClick: function (e) {
