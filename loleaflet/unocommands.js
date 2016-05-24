@@ -1,0 +1,11 @@
+var CopyHyperlinkLocation = _('Copy Hyperlink');
+var DecrementLevel = _('Down One Level');
+var IncrementLevel = _('Up One Level');
+var EditAnnotation = _('Edit Comment');
+var InsertAnnotation = _('Insert Comment');
+var Merge = _('Merge');
+var MergeCells = _('Merge Cells...');
+var ObjectBackOne = _('Bring Forward');
+var ObjectForwardOne = _('Send Backward');
+var PasteSpecial = _('Paste Special');
+var PasteUnformatted = _('Unformatted Text');
