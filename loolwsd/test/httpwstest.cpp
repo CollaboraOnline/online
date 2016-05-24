@@ -78,6 +78,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInactiveClient);
     CPPUNIT_TEST(testMaxColumn);
     CPPUNIT_TEST(testMaxRow);
+    CPPUNIT_TEST(testInsertAnnotationWriter);
+    CPPUNIT_TEST(testInsertAnnotationCalc);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -105,6 +107,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInactiveClient();
     void testMaxColumn();
     void testMaxRow();
+    void testInsertAnnotationWriter();
+    void testInsertAnnotationCalc();
 
     void loadDoc(const std::string& documentURL);
 
@@ -1349,6 +1353,109 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
 
     // check new document size
     checkhandler(docWidth, docHeight, newWidth, newHeight);
+}
+
+void HTTPWSTest::testInsertAnnotationWriter()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = loadDocAndGetSocket(_uri, documentURL);
+
+    // Insert comment.
+    sendTextFrame(socket, "uno .uno:InsertAnnotation");
+
+    // Paste some text.
+    sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nxxx yyy zzzz");
+
+    // Read it back.
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    auto res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: xxx yyy zzzz"), res);
+    // Can we edit the coment?
+    sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
+
+    // Confirm that the text is in the comment and not doc body.
+    // Click in the body.
+    sendTextFrame(socket, "mouse type=buttondown x=1600 y=1600 count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "mouse type=buttonup x=1600 y=1600 count=1 buttons=1 modifier=0");
+    // Read body text.
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
+
+    // Confirm that the comment is still intact.
+    sendTextFrame(socket, "mouse type=buttondown x=13855 y=1893 count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
+
+    // Can we still edit the coment?
+    sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nand now for something completely different");
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
+
+    // Close and reopen the same document and test again.
+    socket->shutdown();
+    std::cerr << "Reloading " << std::endl;
+    socket = loadDocAndGetSocket(_uri, documentURL);
+
+    // Confirm that the text is in the comment and not doc body.
+    // Click in the body.
+    sendTextFrame(socket, "mouse type=buttondown x=1600 y=1600 count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "mouse type=buttonup x=1600 y=1600 count=1 buttons=1 modifier=0");
+    // Read body text.
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
+
+    // Confirm that the comment is still intact.
+    sendTextFrame(socket, "mouse type=buttondown x=13855 y=1893 count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
+
+    // Can we still edit the coment?
+    sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nblah blah xyz");
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: blah blah xyz"), res);
+}
+
+void HTTPWSTest::testInsertAnnotationCalc()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = loadDocAndGetSocket(_uri, documentURL);
+
+    // Insert comment.
+    sendTextFrame(socket, "uno .uno:InsertAnnotation");
+
+    // Paste some text.
+    sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
+
+    // Read it back.
+    sendTextFrame(socket, "uno .uno:SelectAll");
+    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+    auto res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationCalc ");
+    CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
