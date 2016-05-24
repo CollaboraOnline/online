@@ -58,9 +58,13 @@
 }
 
 /* center the toolbar */
-#tb_presentation-toolbar_item_left,
-#tb_toolbar-up_item_left {
+#tb_presentation-toolbar_item_left {
     width: 50%;
+}
+/* leave space for branding logo */
+#tb_toolbar-up_item_left {
+    width: 0;
+    padding-left: 125px;
 }
 
 #formulaInput {
