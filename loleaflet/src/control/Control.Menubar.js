@@ -20,7 +20,7 @@ L.Control.Menubar = L.Control.extend({
 												{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 												{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 												{type: 'separator'},
-												{name: _('Select All'), type: 'unocommand', uno: '.uno:SelectAll'}]
+												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
 			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
 												  {name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'}]
@@ -29,13 +29,13 @@ L.Control.Menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
 												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
-												{name: _('Zoom reset'), id: 'zoomreset', type: 'action'}]
+												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows Before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
-																						{name: _('Rows After'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
+			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
+																						{name: _('Rows after'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
 																						{type: 'separator'},
-																						{name: _('Columns Left'), type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
-																						{name: _('Columns Right'), type: 'unocommand', uno: '.uno:InsertColumnsAfter'}]},
+																						{name: _('Columns left'), type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
+																						{name: _('Columns right'), type: 'unocommand', uno: '.uno:InsertColumnsAfter'}]},
 												  {name: _('Delete'), type: 'menu', menu: [{name: _('Rows'), type: 'unocommand', uno: '.uno:DeleteRows'},
 																						{name: _('Columns'), type: 'unocommand', uno: '.uno:DeleteColumns'},
 																						{name: _('Table'), type: 'unocommand', uno: '.uno:DeleteTable'}]},
@@ -62,21 +62,21 @@ L.Control.Menubar = L.Control.extend({
 												{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 												{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 												{type: 'separator'},
-												{name: _('Select All'), type: 'unocommand', uno: '.uno:SelectAll'}]
+												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
 			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'}]
 			},
-			{name: _('View'), type: 'menu', menu: [{name: _('Full Screen'), id: 'fullscreen', type: 'action'},
+			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 												{type: 'separator'},
 												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
 												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
-												{name: _('Zoom reset'), id: 'zoomreset', type: 'action'}]
+												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows Before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
-																						{name: _('Rows After'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
+			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
+																						{name: _('Rows after'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
 																						{type: 'separator'},
-																						{name: _('Columns Left'), type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
-																						{name: _('Columns Right'), type: 'unocommand', uno: '.uno:InsertColumnsAfter'}]},
+																						{name: _('Columns left'), type: 'unocommand', uno: '.uno:InsertColumnsBefore'},
+																						{name: _('Columns right'), type: 'unocommand', uno: '.uno:InsertColumnsAfter'}]},
 												  {name: _('Delete'), type: 'menu', menu: [{name: _('Rows'), type: 'unocommand', uno: '.uno:DeleteRows'},
 																						{name: _('Columns'), type: 'unocommand', uno: '.uno:DeleteColumns'},
 																						{name: _('Table'), type: 'unocommand', uno: '.uno:DeleteTable'}]},
@@ -90,7 +90,7 @@ L.Control.Menubar = L.Control.extend({
 												 {name: _('Duplicate slide'), id: 'duplicatepage', type: 'action'},
 												 {name: _('Delete slide'), id: 'deletepage', type: 'action'},
 												 {type: 'separator'},
-												 {name: _('Fullscreen Presentation'), id: 'fullscreen-presentation', type: 'action'}]
+												 {name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			}
 		],
 
@@ -109,24 +109,24 @@ L.Control.Menubar = L.Control.extend({
 												{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 												{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 												{type: 'separator'},
-												{name: _('Select All'), type: 'unocommand', uno: '.uno:SelectAll'}]
+												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
 			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
 												  {type: 'separator'},
 												  {name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
 												  {name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'}]
 			},
-			{name: _('View'), type: 'menu', menu: [{name: _('Full Screen'), id: 'fullscreen', type: 'action'},
+			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 												{type: 'separator'},
 												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
 												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
-												{name: _('Zoom reset'), id: 'zoomreset', type: 'action'}]
+												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: _('Cells'), type: 'menu', menu: [{name: _('Insert Row'), type: 'unocommand', uno: '.uno:InsertRows'},
-												 {name: _('Insert Column'), type: 'unocommand', uno: '.uno:InsertColumns'},
+			{name: _('Cells'), type: 'menu', menu: [{name: _('Insert row'), type: 'unocommand', uno: '.uno:InsertRows'},
+												 {name: _('Insert column'), type: 'unocommand', uno: '.uno:InsertColumns'},
 												 {type: 'separator'},
-												 {name: _('Delete Row'), type: 'unocommand', uno: '.uno:DeleteRows'},
-												 {name: _('Delete Column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
+												 {name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
+												 {name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			}
 		],
 
