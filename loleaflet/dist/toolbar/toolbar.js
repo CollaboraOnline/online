@@ -14,6 +14,7 @@ $(function () {
 	$('#toolbar-up').w2toolbar({
 		name: 'toolbar-up',
 		items: [
+			{ type: 'html', id: 'left' },
 			{ type: 'button',  id: 'save', img: 'save', hint: _("Save"), uno: 'Save' },
 			{ type: 'break' },
 			{ type: 'button',  id: 'undo',  img: 'undo', hint: _("Undo"), uno: 'Undo' },
