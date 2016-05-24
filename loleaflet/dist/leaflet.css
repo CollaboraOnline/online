@@ -650,12 +650,6 @@ a.leaflet-control-buttons:hover:first-child {
 	margin: 0 auto;
 	}
 
-.leaflet-progress-layer {
-	background: #fff;
-	border: 2px solid #eee;
-	padding: 10px;
-}
-
 .leaflet-progress {
 	background: #ebebeb;
 	border-left: 1px solid transparent;
@@ -692,14 +686,14 @@ a.leaflet-control-buttons:hover:first-child {
 	}
 
 .leaflet-progress-spinner {
-	background-image: url(images/spinner.gif);
-	background-color: white;
-	background-repeat: no-repeat;
-	background-position: center center;
-	width: 100%;
+        width: 100%;
 	margin: 0 0 4px;
-	height: 34px;
-	}
+	text-align: center;
+        }
+
+.leaflet-progress-spinner-canvas {
+        position: static !important;
+        }
 
 .leaflet-progress-label {
 	text-align: center;
