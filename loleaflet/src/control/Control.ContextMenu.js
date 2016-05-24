@@ -130,7 +130,7 @@ L.Control.ContextMenu = L.Control.extend({
 				}
 
 				contextMenu[item.command] = {
-					name: itemName,
+					name: _(itemName),
 					items: submenu
 				};
 				isLastItemText = true;
