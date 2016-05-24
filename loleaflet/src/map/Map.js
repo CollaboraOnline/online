@@ -519,7 +519,7 @@ L.Map = L.Evented.extend({
 	},
 
 	focus: function () {
-		if (this._docLayer) {
+		if (this._docLayer && document.activeElement !== this._docLayer._textArea) {
 			this._docLayer._textArea.focus();
 		}
 	},
