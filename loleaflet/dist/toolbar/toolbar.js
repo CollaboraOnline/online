@@ -335,7 +335,7 @@ function onClick(id) {
 			containerCss: {
 				overflow : "hidden",
 				backgroundColor : "#fff",
-				padding : "12px",
+				padding : "20px",
 				border : "2px solid #000"
 			}
 		});
