@@ -849,6 +849,7 @@ map.on('editlock', function (e) {
 		$('#takeeditlabel').html(_('VIEWING'));
 		$('#tb_toolbar-down_item_takeedit')
 			.w2overlay({
+				class: 'loleaflet-font',
 				html: takeEditPopupMessage,
 				style: 'padding: 5px'
 			});
