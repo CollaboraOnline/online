@@ -59,6 +59,11 @@ $(function () {
 			onClick(e.target);
 		},
 		onRefresh: function(e) {
+			$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
+			$("#fontColorPicker").on("change.color", onColorPick);
+			$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
+			$("#backColorPicker").on("change.color", onColorPick);
+
 			if (!L.DomUtil.get('fontcolorindicator')) {
 				var fontColorIndicator = L.DomUtil.create('div', 'font-color-indicator', L.DomUtil.get('tb_toolbar-up_item_fontcolor'));
 				fontColorIndicator.id = 'fontcolorindicator';
@@ -144,11 +149,6 @@ $(function () {
 			onClick(e.target);
 		}
 	});
-
-	$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
-	$("#fontColorPicker").on("change.color", onColorPick);
-	$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
-	$("#backColorPicker").on("change.color", onColorPick);
 });
 
 // This object is used to track enabled/disabled state when one is in view mode
