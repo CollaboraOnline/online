@@ -695,7 +695,10 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
     if (_multiView)
         _loKitDocument->setView(_viewId);
 
-    return sendTextFrame("commandvalues: " + std::string(_loKitDocument->getCommandValues(command.c_str())));
+    char* ptrValues = _loKitDocument->getCommandValues(command.c_str());
+    bool success = sendTextFrame("commandvalues: " + std::string(ptrValues));
+    std::free(ptrValues);
+    return success;
 }
 
 bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
