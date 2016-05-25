@@ -81,6 +81,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInsertAnnotationWriter);
     CPPUNIT_TEST(testEditAnnotationWriter);
     CPPUNIT_TEST(testInsertAnnotationCalc);
+    CPPUNIT_TEST(testFontList);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -111,6 +112,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInsertAnnotationWriter();
     void testEditAnnotationWriter();
     void testInsertAnnotationCalc();
+    void testFontList();
 
     void loadDoc(const std::string& documentURL);
 
@@ -129,6 +131,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                                              int docWidth, int docHeight)> keyhandler,
                           std::function<void(int docWidth, int docHeight,
                                              int newWidth, int newHeight)> checkhandler);
+
+    std::string getFontList(const std::string& message);
+
 public:
     HTTPWSTest()
         : _uri(helpers::getTestServerURI())
@@ -1521,6 +1526,50 @@ void HTTPWSTest::testInsertAnnotationCalc()
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
     auto res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationCalc ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
+}
+
+std::string HTTPWSTest::getFontList(const std::string& message)
+{
+    Poco::JSON::Parser parser;
+    std::cerr << " trace FontList " << message << std::endl;
+    const auto result = parser.parse(message);
+    const auto& command = result.extract<Poco::JSON::Object::Ptr>();
+    auto text = command->get("commandName").toString();
+    CPPUNIT_ASSERT_EQUAL(std::string(".uno:CharFontName"), text);
+    text = command->get("commandValues").toString();
+    return text;
+}
+
+void HTTPWSTest::testFontList()
+{
+    try
+    {
+        // Load a document
+        std::string documentPath, documentURL;
+        std::string text;
+        std::vector<char> response;
+
+        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        sendTextFrame(socket, "commandvalues command=.uno:CharFontName");
+        response = getResponseMessage(socket, "commandvalues:", "testFontList ");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
+
+        std::stringstream streamResponse;
+        std::copy(response.begin() + std::string("commandvalues:").length() + 1, response.end(), std::ostream_iterator<char>(streamResponse));
+        text = getFontList(streamResponse.str());
+        CPPUNIT_ASSERT(!text.empty());
+        std::cerr << "testFontNames : " << text << std::endl;
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
