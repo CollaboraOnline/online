@@ -59,20 +59,23 @@ $(function () {
 			onClick(e.target);
 		},
 		onRefresh: function(e) {
-			$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
-			$("#fontColorPicker").on("change.color", onColorPick);
-			$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
-			$("#backColorPicker").on("change.color", onColorPick);
-
 			if (!L.DomUtil.get('fontcolorindicator')) {
 				var fontColorIndicator = L.DomUtil.create('div', 'font-color-indicator', L.DomUtil.get('tb_toolbar-up_item_fontcolor'));
 				fontColorIndicator.id = 'fontcolorindicator';
+
+				$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
+				$("#fontColorPicker").on("change.color", onColorPick);
 			}
 
 			if (!L.DomUtil.get('backcolorindicator')) {
 				var backColorIndicator = L.DomUtil.create('div', 'back-color-indicator', L.DomUtil.get('tb_toolbar-up_item_backcolor'));
 				backColorIndicator.id = 'backcolorindicator';
+
+				$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
+				$("#backColorPicker").on("change.color", onColorPick);
 			}
+
+			tablePickerInit();
 		}
 	});
 
@@ -329,6 +332,7 @@ function onClick(id) {
 		else {
 			toolbar.uncheck('more');
 		}
+		w2ui['toolbar-up-more'].render();
 		resizeToolbar();
 	}
 	else if (id === 'help') {
@@ -695,7 +699,6 @@ map.on('search', function (e) {
 	}
 });
 
-
 map.on('updatetoolbarcommandvalues', function (e) {
 	// we need an empty option for the place holder to work
 	var data = [''];
@@ -1015,22 +1018,24 @@ $(document).ready(function() {
 
 function resizeToolbar() {
 	var has_more_items = false;
-
+	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
 	// move items from toolbar-up-more -> toolbar-up
 	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
-		var firstItem = $('#toolbar-up-more>table>tbody>tr>td:first');
-		if (firstItem.length < 1) {
+		var item = toolbarUpMore.items[0];
+		if (!item) {
 			break;
 		}
-		var detached = $(firstItem).detach();
-		$(detached).insertAfter($('#toolbar-up>table>tbody>tr>td:nth-last-child(5)')[0]);
+		toolbarUpMore.items.shift();
+		toolbarUp.insert('right', item);
 	}
 
 	// move items from toolbar-up -> toolbar-up-more
-	while ($('#toolbar-up')[0].scrollWidth > $(window).width()) {
-		var detached = $('#toolbar-up>table>tbody>tr>td:nth-last-child(5)').detach();
-		$('#toolbar-up-more>table>tbody>tr').prepend(detached);
-
+	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
+		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
+		item = toolbarUp.get(itemId);
+		toolbarUp.remove(itemId);
+		toolbarUpMore.insert(toolbarUpMore.items[0], item);
 		has_more_items = true;
 	}
 
@@ -1045,6 +1050,7 @@ function resizeToolbar() {
 	var lastItem = $('#toolbar-up-more>table>tbody>tr>td[valign="middle"]').last();
 	if (lastItem.length) {
 		$('#toolbar-up-more').width($(lastItem).position().left + $(lastItem).width());
+		w2ui['toolbar-up-more'].render();
 	} else {
 		$('#toolbar-up-more').hide();
 		var toolbar = w2ui['toolbar-up'];
@@ -1052,18 +1058,19 @@ function resizeToolbar() {
 	}
 }
 
-// tablePicker - init
-$(function() {
+function tablePickerInit() {
 	$( "#tablePicker" ).draggable();
-	tbl = document.getElementById('insert-table');
-	for (var i = 0; i < 3; i++) {
-		var tr = tbl.insertRow();
-		for (var j = 0; j < 3; j++) {
-			var td = tr.insertCell();
+	var tbl = document.getElementById('insert-table');
+	if (!tbl.childElementCount) {
+		for (var i = 0; i < 3; i++) {
+			var tr = tbl.insertRow();
+			for (var j = 0; j < 3; j++) {
+				var td = tr.insertCell();
+			}
 		}
+		walkCells();
 	}
-	walkCells();
-});
+}
 
 // tablePicker - GUI
 function walkCells() {
