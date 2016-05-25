@@ -151,10 +151,15 @@ $(function () {
 	$("#backColorPicker").on("change.color", onColorPick);
 });
 
-var formatButtons = ['undo', 'redo', 'save',
-                     'bold', 'italic', 'underline', 'strikeout', 'annotation', 'inserttable',
-                     'fontcolor', 'backcolor', 'bullet', 'numbering', 'alignleft', 'alignhorizontal', 'alignright', 'alignblock',
-                     'incrementindent', 'decrementindent', 'insertgraphic'];
+// This object is used to track enabled/disabled state when one is in view mode
+var formatButtons = {
+	'undo': true, 'redo': true, 'save': true,
+	'bold': true, 'italic': true, 'underline': true, 'strikeout': true,
+	'annotation': true, 'inserttable': true,
+	'fontcolor': true, 'backcolor': true, 'bullet': true, 'numbering': true,
+	'alignleft': true, 'alignhorizontal': true, 'alignright': true, 'alignblock': true,
+	'incrementindent': true, 'decrementindent': true, 'insertgraphic': true
+};
 
 var takeEditPopupMessage = '<div>' + _("You are viewing now.") + '<br/>' + _("Click here to take edit.") + '</div>';
 var takeEditPopupTimeout = null;
@@ -637,22 +642,41 @@ map.on('commandstatechanged', function (e) {
 		}
 	}
 
-	formatButtons.forEach(function (id) {
-		if ('.uno:' + toolbar.get(id).uno === commandName) {
-			if (state === 'true') {
-				toolbar.check(id);
-			}
-			else if (state === 'false') {
-				toolbar.uncheck(id);
-			}
-			else if (state === 'enabled' && map._permission === 'edit') {
+	var toolbarUpMore = w2ui['toolbar-up-more'];
+	var id = commandName.toLowerCase().substr(5);
+	if (typeof formatButtons[id] !== 'undefined') {
+		if (state === 'true') {
+			toolbar.check(id);
+			toolbarUpMore.check(id);
+		}
+		else if (state === 'false') {
+			toolbar.uncheck(id);
+			toolbarUpMore.uncheck(id);
+		}
+		// only store the state for now;
+		// buttons with stored state === enabled will
+		// be enabled when we get the editlock
+		else if (state === 'enabled') {
+			formatButtons[id] = true;
+		}
+		else if (state === 'disabled') {
+			formatButtons[id] = false;
+		}
+
+		// Change the toolbar button state immediately
+		// if we already have the editlock
+		if (map._editlock && (state === 'enabled' || state === 'disabled')) {
+			// in case some buttons are in toolbar-up-more, find
+			// them and en/dis-able them.
+			if (formatButtons[id]) {
 				toolbar.enable(id);
-			}
-			else if (state === 'disabled') {
+				toolbarUpMore.enable(id);
+			} else {
 				toolbar.disable(id);
+				toolbarUpMore.disable(id);
 			}
 		}
-	});
+	}
 });
 
 map.on('search', function (e) {
@@ -873,14 +897,19 @@ map.on('editlock', function (e) {
 	}
 
 	toolbar = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
 	// {En,Dis}able toolbar buttons
-	formatButtons.forEach(function (id) {
-		if (e.value) {
+	for (var id in formatButtons) {
+		if (e.value && formatButtons[id]) {
+			// restore the state from stored object (formatButtons)
 			toolbar.enable(id);
+			// some might be hidden in toolbar-up-more
+			toolbarUpMore.enable(id);
 		} else {
 			toolbar.disable(id);
+			toolbarUpMore.disable(id);
 		}
-	});
+	}
 
 	var spreadsheetButtons = ['firstrecord', 'prevrecord', 'nextrecord', 'lastrecord'];
 	var formulaBarButtons = ['sum', 'function'];
