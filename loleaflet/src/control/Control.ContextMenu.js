@@ -66,6 +66,8 @@ L.Control.ContextMenu = L.Control.extend({
 				return {
 					callback: function(key) {
 						map.sendUnoCommand(key);
+						// Give the stolen focus back to map
+						map.focus();
 					},
 					items: contextMenu
 				};

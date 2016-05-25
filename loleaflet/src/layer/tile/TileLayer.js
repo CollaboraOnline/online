@@ -506,7 +506,6 @@ L.TileLayer = L.GridLayer.extend({
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		this._isCursorOverlayVisible = true;
 		this._onUpdateCursor();
-		this._map.focus();
 	},
 
 	_onPartPageRectanglesMsg: function (textMsg) {
