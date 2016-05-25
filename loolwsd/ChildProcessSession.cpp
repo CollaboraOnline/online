@@ -397,13 +397,13 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
 
     if (tokens[0] == "dummymsg")
     {
-        // Just to update the activity of view-only mode
+        // Just to update the activity of a view-only client.
         return true;
     }
     else if (tokens[0] == "canceltiles")
     {
-        // this command makes sense only on the command queue level, nothing
-        // to do here
+        // This command makes sense only on the command queue level.
+        // Shouldn't get this here.
         return true;
     }
     else if (tokens[0] == "commandvalues")
@@ -566,6 +566,7 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
             assert(false);
         }
     }
+
     return true;
 }
 
@@ -697,7 +698,9 @@ bool ChildProcessSession::getCommandValues(const char* /*buffer*/, int /*length*
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    sendTextFrame("commandvalues: " + std::string(_loKitDocument->pClass->getCommandValues(_loKitDocument, command.c_str())));
+    char* ptrValues = _loKitDocument->pClass->getCommandValues(_loKitDocument, command.c_str());
+    sendTextFrame("commandvalues: " + std::string(ptrValues));
+    std::free(ptrValues);
     return true;
 }
 

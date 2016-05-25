@@ -107,6 +107,7 @@ namespace LOKitHelper
     inline
     std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
     {
+        char* ptrValue;
         assert(loKitDocument && "null loKitDocument");
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
 
@@ -128,11 +129,15 @@ namespace LOKitHelper
                 oss << "\n";
                 if (type == LOK_DOCTYPE_PRESENTATION)
                 {
-                    oss << loKitDocument->pClass->getPartHash(loKitDocument, i);
+                    ptrValue = loKitDocument->pClass->getPartHash(loKitDocument, i);
+                    oss << ptrValue;
+                    std::free(ptrValue);
                 }
                 else
                 {
-                    oss << loKitDocument->pClass->getPartName(loKitDocument, i);
+                    ptrValue = loKitDocument->pClass->getPartName(loKitDocument, i);
+                    oss << ptrValue;
+                    std::free(ptrValue);
                 }
             }
         }
