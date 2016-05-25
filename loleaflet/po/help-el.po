@@ -2,33 +2,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 20:17+0000\n"
+"POT-Creation-Date: 2016-05-25 20:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: hu\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
-"X-Pootle-Path: /hu/libo_online/loleaflet-help-hu.po\n"
-"X-Pootle-Revision: 435254\n"
+"X-Pootle-Path: /el/libo_online/loleaflet-help-el.po\n"
+"X-Pootle-Revision: 435063\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
-msgstr "LOLeaflet Súgó"
+msgstr "Φυλλάδιο βοήθειας του LO"
 
 #: dist%2Floleaflet-help.html+html.body.h1%3A48
 msgid "Keyboard Shortcuts"
-msgstr "Billentyűparancsok"
+msgstr "Συντομεύσεις πληκτρολογίου"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A50
 msgid "General Keyboard Shortcuts"
-msgstr "Általános billentyűparancsok"
+msgstr "Γενικές συντομεύσεις πληκτρολογίου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Undo"
-msgstr "Visszavonás"
+msgstr "Αναίρεση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Ctrl + Z"
@@ -36,7 +36,7 @@ msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
 msgid "Redo"
-msgstr "Újra"
+msgstr "Ακύρωση αναίρεσης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
 msgid "Ctrl + Y"
@@ -44,7 +44,7 @@ msgstr "Ctrl + Y"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A54
 msgid "Cut"
-msgstr "Kivágás"
+msgstr "Αποκοπή"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A54
 msgid "Ctrl + X"
@@ -52,7 +52,7 @@ msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
 msgid "Paste as unformatted text"
-msgstr "Beillesztés formázatlan szövegként"
+msgstr "Επικόλληση ως αμορφοποίητο κείμενο"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
 msgid "Ctrl + Alt + Shift + V"
@@ -60,7 +60,7 @@ msgstr "Ctrl + Alt + Shift + V"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Print (Download as PDF)"
-msgstr "Nyomtatás (letöltés PDF-ként)"
+msgstr "Εκτύπωση (Μεταφόρτωση ως PDF)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Ctrl + P"
@@ -69,12 +69,12 @@ msgstr "Ctrl + P"
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A60
 msgctxt "dist/loleaflet-help.html html.body.div.h2:60"
 msgid "Text formatting"
-msgstr "Szövegformázás"
+msgstr "Μορφοποίηση κειμένου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A62
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
 msgid "Bold"
-msgstr "Félkövér"
+msgstr "Έντονα"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A62
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
@@ -84,7 +84,7 @@ msgstr "Ctrl + B"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A63
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
 msgid "Italic"
-msgstr "Dőlt"
+msgstr "Πλάγια"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A63
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
@@ -94,7 +94,7 @@ msgstr "Ctrl + I"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A64
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
 msgid "Underline"
-msgstr "Aláhúzott"
+msgstr "Underline"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A64
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
@@ -103,7 +103,7 @@ msgstr "Ctrl + U"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A65
 msgid "Double Underline"
-msgstr "Duplán aláhúzott"
+msgstr "Διπλή υπογράμμιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A65
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:65"
@@ -113,7 +113,7 @@ msgstr "Ctrl + D"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A66
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
 msgid "Strikethrough"
-msgstr "Áthúzott"
+msgstr "Επιγράμμιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A66
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
@@ -123,7 +123,7 @@ msgstr "Ctrl + Alt + 5"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A67
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
 msgid "Superscript"
-msgstr "Felső index"
+msgstr "Εκθέτης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A67
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
@@ -133,7 +133,7 @@ msgstr "Ctrl + Shift + P"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
 msgid "Subscript"
-msgstr "Alsó index"
+msgstr "Δείκτης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
@@ -143,7 +143,7 @@ msgstr "Ctrl + Shift + B"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
 msgid "Remove direct formatting"
-msgstr "Közvetlen formázás törlése"
+msgstr "Αφαίρεση άμεσης μορφοποίησης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
@@ -153,12 +153,12 @@ msgstr "Ctrl + M"
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A71
 msgctxt "dist/loleaflet-help.html html.body.div.h2:71"
 msgid "Paragraph formatting"
-msgstr "Bekezdésformázás"
+msgstr "Μορφοποίηση παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
 msgid "Align Center"
-msgstr "Középre igazítás"
+msgstr "Κεντραρισμένη στοίχιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
@@ -168,7 +168,7 @@ msgstr "Ctrl + E"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A74
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
 msgid "Align Left"
-msgstr "Balra igazítás"
+msgstr "Στοίχιση αριστερά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A74
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
@@ -178,7 +178,7 @@ msgstr "Ctrl + L"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A75
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
 msgid "Align Right"
-msgstr "Jobbra igazítás"
+msgstr "Στοίχιση δεξιά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A75
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
@@ -188,7 +188,7 @@ msgstr "Ctrl + R"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Justify"
-msgstr "Sorkizárás"
+msgstr "Πλήρης στοίχιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
@@ -197,7 +197,7 @@ msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
 msgid "Apply Default paragraph style"
-msgstr "Az Alapértelmezett bekezdésstílus alkalmazása"
+msgstr "Εφαρμογή προεπιλεγμένης τεχνοτροπίας παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
 msgid "Ctrl + 0"
@@ -205,7 +205,7 @@ msgstr "Ctrl + 0"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
 msgid "Apply Heading 1 paragraph style"
-msgstr "A Címsor 1 bekezdésstílus alkalmazása"
+msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 1"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
 msgid "Ctrl + 1"
@@ -213,7 +213,7 @@ msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
 msgid "Apply Heading 2 paragraph style"
-msgstr "A Címsor 2 bekezdésstílus alkalmazása"
+msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 2"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
 msgid "Ctrl + 2"
@@ -221,7 +221,7 @@ msgstr "Ctrl + 2"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
 msgid "Apply Heading 3 paragraph style"
-msgstr "A Címsor 3 bekezdésstílus alkalmazása"
+msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:80"
@@ -230,7 +230,7 @@ msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
 msgid "Apply Heading 4 paragraph style"
-msgstr "A Címsor 4 bekezdésstílus alkalmazása"
+msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 4"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
 msgid "Ctrl + 4"
@@ -238,7 +238,7 @@ msgstr "Ctrl + 4"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
 msgid "Apply Heading 5 paragraph style"
-msgstr "A Címsor 5 bekezdésstílus alkalmazása"
+msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
 msgid "Ctrl + 5"
@@ -246,12 +246,12 @@ msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A84
 msgid "Text selection and navigation in document"
-msgstr "Szövegkijelölés és navigáció a dokumentumban"
+msgstr "Επιλογή κειμένου και περιήγηση στο έγγραφο"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Select All"
-msgstr "Mindent kijelöl"
+msgstr "Επιλογή όλων"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
@@ -261,177 +261,178 @@ msgstr "Ctrl + A"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Move cursor to the left"
-msgstr "Kurzor mozgatása balra"
+msgstr "Μετακίνηση δρομέα προς τα αριστερά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Arrow Left"
-msgstr "Balra nyíl"
+msgstr "Αριστερό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Move cursor with selection to the left"
-msgstr "Kurzor mozgatása balra, kijelöléssel"
+msgstr "Μετακίνηση δρομέα με επιλογή προς τα αριστερά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Shift + Arrow Left"
-msgstr "Shift + Balra nyíl"
+msgstr "Shift + αριστερό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Go to beginning of a word"
-msgstr "Ugrás a szó elejére"
+msgstr "Μετάβαση στην αρχή μιας λέξης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + Balra nyíl"
+msgstr "Ctrl + αριστερό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Select to the left word by word"
-msgstr "Szavak egyenkénti kijelölése balra"
+msgstr "Επιλογή προς τα αριστερά λέξη-λέξη"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ctrl + Shift + Balra nyíl"
+msgstr "Ctrl + Shift + αριστερό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Move cursor to the right"
-msgstr "Kurzor léptetése jobbra"
+msgstr "Μετακίνηση δρομέα προς τα δεξιά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Arrow Right"
-msgstr "Jobbra nyíl"
+msgstr "Δεξιό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A92
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
 msgid "Move cursor with selection to the right"
-msgstr "Kurzor mozgatása jobbra, kijelöléssel"
+msgstr "Μετακίνηση δρομέα με επιλογή προς τα δεξιά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A92
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
 msgid "Shift + Arrow Right"
-msgstr "Shift + Jobbra nyíl"
+msgstr "Shift + δεξιό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
 msgid "Go to start of the next word"
-msgstr "Ugrás a következő szó elejére"
+msgstr "Μετάβαση στην αρχή της επόμενης λέξης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
 msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + Jobbra nyíl"
+msgstr "Ctrl + δεξιό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A94
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
 msgid "Select to the right word by word"
-msgstr "Szavak egyenkénti kijelölése jobbra"
+msgstr "Επιλογή προς τα δεξιά λέξη-λέξη"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A94
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
 msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl + Shift + Jobbra nyíl"
+msgstr "Ctrl + Shift + δεξιό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A95
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
 msgid "Move cursor up one line"
-msgstr "Kurzor mozgatása egy sorral feljebb"
+msgstr "Μετακίνηση δρομέα κατά μια γραμμή προς τα πάνω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A95
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
 msgid "Arrow Up"
-msgstr "Felfelé nyíl"
+msgstr "Πάνω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Select lines in upwards direction"
-msgstr "Sorok kijelölése felfelé"
+msgstr "Επιλογή γραμμών με κατεύθυνση προς τα πάνω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Shift + Arrow Up"
-msgstr "Shift + Felfelé nyíl"
+msgstr "Shift + πάνω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Kurzor mozgatása az előző bekezdés elejére"
+msgstr "Μετακίνηση δρομέα στην αρχή της προηγούμενης παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
 msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + Felfelé nyíl"
+msgstr "Ctrl + πάνω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Select to beginning of paragraph"
-msgstr "Kijelölés a bekezdés elejéig"
+msgstr "Επιλογή μέχρι την αρχή της παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Shift + Felfelé nyíl"
+msgstr "Ctrl + Shift + πάνω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A99
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
 msgid "Move cursor down one line"
-msgstr "Kurzor mozgatása egy sorral lejjebb"
+msgstr "Μετακίνηση δρομέα κατά μια γραμμή προς τα κάτω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A99
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
 msgid "Arrow Down"
-msgstr "Lefelé nyíl"
+msgstr "Κάτω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Select lines in downwards direction"
-msgstr "Sorok kijelölése felfelé"
+msgstr "Επιλογή γραμμών με κατεύθυνση προς τα κάτω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Shift + Arrow Down"
-msgstr "Shift + Lefelé nyíl"
+msgstr "Shift + κάτω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
+#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Kurzor mozgatása a következő bekezdés elejére"
+msgstr "Μετακίνηση δρομέα στην αρχή της προηγούμενης παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + Lefelé nyíl"
+msgstr "Ctrl + κάτω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Select to end of paragraph"
-msgstr "Kijelölés a bekezdés végéig"
+msgstr "Επιλογή μέχρι το τέλος της παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Shift + Lefelé nyíl"
+msgstr "Ctrl + Shift + κάτω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Go to beginning of line"
-msgstr "Ugrás a sor elejére"
+msgstr "Μετάβαση στην αρχή της γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Home"
-msgstr "Home"
+msgstr "Home (Αρχή)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
 msgid "Go and select to the beginning of a line"
-msgstr "Ugrás a sor elejére kijelöléssel"
+msgstr "Μετάβαση και επιλογή μέχρι την αρχή μιας γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
@@ -441,7 +442,7 @@ msgstr "Shift + Home"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Go to start of document"
-msgstr "Ugrás a dokumentum elejére"
+msgstr "Μετάβαση στην αρχή του εγγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
@@ -450,7 +451,7 @@ msgstr "Ctrl + Home"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
 msgid "Go and select text to start of document"
-msgstr "Ugrás a dokumentum elejére kijelöléssel"
+msgstr "Μετάβαση και επιλογή κειμένου μέχρι την αρχή του εγγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:106"
@@ -460,17 +461,17 @@ msgstr "Ctrl + Shift + Home"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "Go to end of line"
-msgstr "Ugrás a sor végére"
+msgstr "Μετάβαση στο τέλος της γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "End"
-msgstr "End"
+msgstr "End (Τέλος)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Go and select to the end of a line"
-msgstr "Ugrás a sor végére kijelöléssel"
+msgstr "Μετάβαση και επιλογή μέχρι το τέλος μιας γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
@@ -480,7 +481,7 @@ msgstr "Shift + End"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Go to end of document"
-msgstr "Ugrás a dokumentum végére"
+msgstr "Μετάβαση στο τέλος του εγγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
@@ -489,7 +490,7 @@ msgstr "Ctrl + End"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A110
 msgid "Go and select text to end of document"
-msgstr "Ugrás a dokumentum végére kijelöléssel"
+msgstr "Μετάβαση και επιλογή κειμένου μέχρι το τέλος του εγγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A110
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:110"
@@ -498,7 +499,7 @@ msgstr "Ctrl + Shift + End"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
 msgid "Move the view up one page"
-msgstr "Ugrás egy oldallal feljebb"
+msgstr "Μετακίνηση της προβολής μια σελίδα προς τα πάνω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
 msgid "PageUp"
@@ -506,7 +507,7 @@ msgstr "PageUp"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
 msgid "Switch cursor between text and header"
-msgstr "Kurzor váltása a szöveg és az élőfej között"
+msgstr "Εναλλαγή δρομέα μεταξύ κειμένου και κεφαλίδας"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
 msgid "Ctrl + PageUp"
@@ -514,7 +515,7 @@ msgstr "Ctrl + PageUp"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
 msgid "Extend the selection up one page"
-msgstr "Kijelölés kiterjesztése egy oldallal felfelé"
+msgstr "Επέκταση της επιλογής κατά μια σελίδα προς τα πάνω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
 msgid "Shift + PageUp"
@@ -522,7 +523,7 @@ msgstr "Shift + PageUp"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
 msgid "Move the view down one page"
-msgstr "Ugrás egy oldallal lejjebb"
+msgstr "Μετακίνηση της προβολής κατά μία σελίδα προς τα κάτω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
 msgid "PageDown"
@@ -530,7 +531,7 @@ msgstr "PageDown"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
 msgid "Switch cursor between text and footer"
-msgstr "Kurzor váltása a szöveg és az élőláb között"
+msgstr "Εναλλαγή δρομέα μεταξύ κειμένου και υποσέλιδου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
 msgid "Ctrl + PageDown"
@@ -538,7 +539,7 @@ msgstr "Ctrl + PageDown"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
 msgid "Extend the selection down one page"
-msgstr "Kijelölés kiterjesztése egy oldallal lefelé"
+msgstr "Επέκταση της επιλογής κατά μία σελίδα προς τα κάτω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
 msgid "Shift + PageDown"
@@ -546,7 +547,7 @@ msgstr "Shift + PageDown"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
 msgid "Delete to beginning of word"
-msgstr "Szöveg törlése a szó elejéig"
+msgstr "Διαγραφή μέχρι την αρχή της λέξης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
 msgid "Ctrl + Backspace"
@@ -554,7 +555,7 @@ msgstr "Ctrl + Backspace"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
 msgid "Delete to end of word"
-msgstr "Szöveg törlése a szó végéig"
+msgstr "Διαγραφή έως το τέλος της λέξης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
 msgid "Ctrl + Del"
@@ -562,7 +563,7 @@ msgstr "Ctrl + Del"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
 msgid "Delete to beginning of sentence"
-msgstr "Szöveg törlése a mondat elejéig"
+msgstr "Διαγραφή μέχρι την αρχή της πρότασης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
 msgid "Ctrl + Shift + Backspace"
@@ -570,7 +571,7 @@ msgstr "Ctrl + Shift + Backspace"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A120
 msgid "Delete to end of sentence"
-msgstr "Szöveg törlése a mondat végéig"
+msgstr "Διαγραφή έως το τέλος της πρότασης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A120
 msgid "Ctrl + Shift + Del"
@@ -578,7 +579,7 @@ msgstr "Ctrl + Shift + Del"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A122
 msgid "Shortcut Keys for Tables"
-msgstr "Billentyűparancsok táblázatokban"
+msgstr "Πλήκτρα συντόμευσης για πίνακες"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A124
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:124"
@@ -590,8 +591,9 @@ msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
-"Ha az aktív cella üres: kijelöli az egész táblázatot. Egyébként: kijelöli az "
-"aktív cella tartalmát. Ha újra megnyomja, kijelöli az egész táblázatot."
+"Εάν το ενεργό κελί είναι κενό: επιλέγει ολόκληρο τον πίνακα. Αλλιώς: "
+"επιλέγει τα περιεχόμενα του ενεργού κελιού. Πιέζοντας ξανά επιλέγει ολόκληρο "
+"τον πίνακα."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A125
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:125"
@@ -604,9 +606,10 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
-"Ha az aktív cella üres: a táblázat elejére ugrik. Egyébként: első alkalommal "
-"történő megnyomásakor az aktív cella elejére, másodszorra az aktuális "
-"táblázat ugrik, harmadszorra a dokumentum elejére ugrik."
+"Εάν το ενεργό κελί είναι κενό: πηγαίνει στην αρχή του πίνακα. Αλλιώς: με το "
+"πρώτο πάτημα πηγαίνει στην αρχή του ενεργού κελιού, με το δεύτερο πάτημα "
+"πηγαίνει στην αρχή του τρέχοντος πίνακα και με το τρίτο πάτημα πηγαίνει στην "
+"αρχή του εγγράφου."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A126
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:126"
@@ -619,9 +622,10 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
-"Ha az aktív cella üres: a táblázat végére ugrik. Egyébként: első alkalommal "
-"történő megnyomásakor az aktív cella végére, másodszorra az aktuális "
-"táblázat végére, harmadszorra a dokumentum végére ugrik."
+"Εάν το ενεργό κελί είναι κενό: πηγαίνει στο τέλος του πίνακα. Αλλιώς: με το "
+"πρώτο πάτημα πηγαίνει στο τέλος του ενεργού κελιού, με το δεύτερο πάτημα "
+"πηγαίνει στο τέλος του τρέχοντος πίνακα και με το τρίτο πάτημα πηγαίνει στο "
+"τέλος του εγγράφου."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
 msgid "Ctrl + Tab"
@@ -632,43 +636,47 @@ msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
 msgstr ""
-"Beszúr egy tabulátort (csak táblázatokba). A használt ablakkezelőtől függően "
-"a Alt+Tab billentyűkombináció is használható."
+"Εισάγει μια στάση στηλοθέτη (μόνο σε πίνακες). Ανάλογα με τον "
+"χρησιμοποιούμενο διαχειριστή παραθύρου, μπορεί να χρησιμοποιηθεί στη θέση "
+"του το Alt + Tab."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
 msgid "Alt + Arrow Keys"
-msgstr "Alt + Nyílbillentyűk"
+msgstr "Alt + πλήκτρα βελών"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr "Növeli/csökkenti a sor/oszlop méretét a jobb/alsó cellaszélen."
+msgstr ""
+"Αυξάνει/μειώνει το μέγεθος της στήλης/γραμμής στα δεξιό/κάτω άκρο του κελιού"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A129
 msgid "Alt + Shift + Arrow Keys"
-msgstr "Alt + Shift + Nyílbillentyűk"
+msgstr "Alt + Shift + πλήκτρα βελών"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A129
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr "Növeli/csökkenti a sor/oszlop méretét a bal/felső cellaszélen."
+msgstr ""
+"Αύξηση/μείωση του μεγέθους της στήλης/γραμμής στο αριστερό/πάνω άκρο του "
+"κελιού"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr "Alt + Ctrl + Nyílbillentyűk"
+msgstr "Alt + Ctrl + πλήκτρα βελών"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:130"
 msgid "Like Alt, but only the active cell is modified"
-msgstr "Ugyanaz, mint az Alt, de csak az aktív cella módosul"
+msgstr "Όπως το Alt, αλλά τροποποιείται μόνο το ενεργό κελί"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr "Ctrl + Alt + Shift + Nyílbillentyűk"
+msgstr "Ctrl + Alt + Shift + πλήκτρα βελών"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:131"
 msgid "Like Alt, but only the active cell is modified"
-msgstr "Ugyanaz, mint az Alt, de csak az aktív cella módosul"
+msgstr "Όπως το Alt, αλλά τροποποιείται μόνο το ενεργό κελί"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A132
 msgid "Alt + Insert"
@@ -679,8 +687,8 @@ msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
 msgstr ""
-"3 másodpercre Beszúrás módba vált: a nyílbillentyűk sort/oszlopot, a Ctrl+"
-"nyílbillentyűk cellát szúrnak be"
+"Με 3 δευτερόλεπτα στην κατάσταση εισαγωγής, το πλήκτρο βέλους εισάγει γραμμή/"
+"στήλη, ενώ το Ctrl + πλήκτρο βέλους εισάγει κελί"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
 msgid "Alt + Del"
@@ -691,8 +699,9 @@ msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
 msgstr ""
-"3 másodpercre Törlés módba vált: a nyílbillentyűk sort/oszlopot törölnek, a "
-"Ctrl+nyílbillentyűk összevonnak szomszédos cellákat"
+"Με 3 δευτερόλεπτα στην κατάσταση διαγραφής, το πλήκτρο βέλους διαγράφει "
+"γραμμή/στήλη, το Ctrl + πλήκτρο βέλους συγχωνεύει το κελί με το γειτονικό "
+"κελί."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A134
 msgid "Shift + Ctrl + Del"
@@ -704,9 +713,10 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
-"Ha nem a teljes cella van kijelölve, a szöveg a kurzortól az aktuális mondat "
-"végéig törlődik. Ha a kurzor a cella végén van, és nem a teljes cella van "
-"kijelölve, a következő cella tartalma törlődik."
+"Εάν κανένα ολόκληρο κελί δεν είναι επιλεγμένο, διαγράφεται το κείμενο από "
+"τον δρομέα μέχρι το τέλος της τρέχουσας πρότασης. Εάν ο δρομέας βρίσκεται "
+"στο τέλος ενός κελιού και κανένα ολόκληρο κελί δεν είναι επιλεγμένο, τα "
+"περιεχόμενα του επόμενου κελιού διαγράφονται."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A135
 msgid ""
@@ -714,9 +724,9 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
-"Ha nincs kijelölve cella, és a kurzor a táblázat végén van, akkor a "
-"táblázatot követő bekezdés törlésre kerül, kivéve ha a dokumentum utolsó "
-"bekezdése."
+"Αν κανένα ολόκληρο κελί δεν επιλεγεί και ο δρομέας είναι στο τέλος του "
+"πίνακα, η παράγραφος που ακολουθεί τον πίνακα θα διαγραφεί, εκτός και είναι "
+"η τελευταία παράγραφος στο έγγραφο."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A136
 msgid ""
@@ -724,17 +734,17 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
-"Ha egy vagy több cella van kijelölve, a kijelölést tartalmazó teljes sorok "
-"törölve lesznek. Ha minden sor teljesen vagy részben ki van jelölve, akkor "
-"az egész táblázat törlődik."
+"Εάν ένα ή περισσότερα κελιά είναι επιλεγμένα, ολόκληρες οι γραμμές που "
+"περιέχουν την επιλογή θα διαγραφούν. Εάν όλες οι γραμμές είναι επιλεγμένες "
+"πλήρως ή μερικώς, ολόκληρος ο πίνακας θα διαγραφεί."
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A139
 msgid "Word processor functions"
-msgstr "Szövegszerkesztési funkciók"
+msgstr "Λειτουργίες επεξεργαστή κειμένου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A141
 msgid "Insert footnote"
-msgstr "Lábjegyzet beszúrása"
+msgstr "Εισαγωγή υποσημείωσης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A141
 msgid "Ctrl + Alt + F"
@@ -742,7 +752,7 @@ msgstr "Ctrl + Alt + F"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A142
 msgid "Insert endnote"
-msgstr "Végjegyzet beszúrása"
+msgstr "Εισαγωγή σημείωσης τέλους"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A142
 msgid "Ctrl + Alt + D"
@@ -751,7 +761,7 @@ msgstr "Ctrl + Alt + D"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A143
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
 msgid "Insert comment"
-msgstr "Megjegyzés beszúrása"
+msgstr "Εισαγωγή σχολίου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A143
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
@@ -760,7 +770,7 @@ msgstr "Ctrl + Alt + C"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A145
 msgid "Insert soft hyphen"
-msgstr "Feltételes elválasztójel beszúrása"
+msgstr "Εισαγωγή ήπιου ενωτικού"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A145
 msgid "Ctrl + -"
@@ -768,7 +778,7 @@ msgstr "Ctrl + -"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A146
 msgid "Insert non-breaking hyphen"
-msgstr "Nem törő elválasztójel beillesztése"
+msgstr "Εισαγωγή αχώριστου ενωτικού"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A146
 msgid "Ctrl + Shift + -"
@@ -776,15 +786,15 @@ msgstr "Ctrl + Shift + -"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A148
 msgid "Insert non-breaking space"
-msgstr "Nem törő szóköz beszúrása"
+msgstr "Εισαγωγή μη-διακοπτόμενου κενού"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A148
 msgid "Ctrl + Shift + Space"
-msgstr "Ctrl + Shift + Space"
+msgstr "Ctrl + Shift + διάστημα"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A149
 msgid "Insert line break"
-msgstr "Sortörés beszúrása"
+msgstr "Εισαγωγή αλλαγής γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A149
 msgid "Shift + Enter"
@@ -792,7 +802,7 @@ msgstr "Shift + Enter"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A150
 msgid "Manual page break"
-msgstr "Kézi oldaltörés"
+msgstr "Χειροκίνητη αλλαγή σελίδας"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A150
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:150"
@@ -801,7 +811,7 @@ msgstr "Ctrl + Enter"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A151
 msgid "Column break (in multicolumnar text)"
-msgstr "Hasábtörés (többhasábos szövegben)"
+msgstr "Αλλαγή στήλης (σε πολύστηλο κείμενο)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A151
 msgid "Ctrl + Shift + Enter"
@@ -811,8 +821,7 @@ msgstr "Ctrl + Shift + Enter"
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
 msgstr ""
-"Új bekezdés beszúrása közvetlenül egy szakasz elé vagy mögé, vagy egy "
-"táblázat elé"
+"Εισαγωγή νέας παραγράφου αμέσως πριν ή μετά μια ενότητα, ή πριν ένα πίνακα."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A152
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:152"
@@ -824,8 +833,8 @@ msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
-"Új bekezdés beszúrása listán belüli számozás nélkül. Nem működik, ha a "
-"kurzor a lista végén van."
+"Εισαγωγή νέας παραγράφου χωρίς αρίθμηση μέσα σε κατάλογο. Δεν δουλεύει όταν "
+"ο δρομέας είναι στο τέλος του καταλόγου."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A153
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:153"
@@ -834,12 +843,12 @@ msgstr "Alt + Enter"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A157
 msgid "Cell formatting"
-msgstr "Cellaformázás"
+msgstr "Μορφοποίηση κελιού"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A159
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
 msgid "Bold"
-msgstr "Félkövér"
+msgstr "Έντονα"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A159
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
@@ -849,7 +858,7 @@ msgstr "Ctrl + B"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
 msgid "Italic"
-msgstr "Dőlt"
+msgstr "Πλάγια"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
@@ -859,7 +868,7 @@ msgstr "Ctrl + I"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
 msgid "Underline"
-msgstr "Aláhúzott"
+msgstr "Υπογράμμιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
@@ -869,7 +878,7 @@ msgstr "Ctrl + U"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
 msgid "Strikethrough"
-msgstr "Áthúzott"
+msgstr "Επιγράμμιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
@@ -879,7 +888,7 @@ msgstr "Ctrl + Alt + 5"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
 msgid "Remove direct formatting"
-msgstr "Közvetlen formázás törlése"
+msgstr "Αφαίρεση άμεσης μορφοποίησης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
@@ -889,7 +898,7 @@ msgstr "Ctrl + M"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A164
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:164"
 msgid "Insert comment"
-msgstr "Megjegyzés beszúrása"
+msgstr "Εισαγωγή σχολίου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A164
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:164"
@@ -898,15 +907,15 @@ msgstr "Ctrl + Alt + C"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A165
 msgid "Display comment"
-msgstr "Megjegyzés megjelenítése"
+msgstr "Εμφάνιση σχολίου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A165
 msgid "Ctrl + F1"
-msgstr "Ctrl + 1"
+msgstr "Ctrl + F1"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A166
 msgid "Fill Down"
-msgstr "Kitöltés lefelé"
+msgstr "Συμπλήρωση προς τα κάτω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A166
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:166"
@@ -916,7 +925,7 @@ msgstr "Ctrl + D"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A167
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
 msgid "Select All"
-msgstr "Mindent kijelöl"
+msgstr "Επιλογή όλων"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A167
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
@@ -926,7 +935,7 @@ msgstr "Ctrl + A"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A168
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
 msgid "Align Center"
-msgstr "Középre igazítás"
+msgstr "Κεντραρισμένη στοίχιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A168
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
@@ -936,7 +945,7 @@ msgstr "Ctrl + E"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A169
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
 msgid "Align Left"
-msgstr "Balra igazítás"
+msgstr "Στοίχιση αριστερά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A169
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
@@ -946,7 +955,7 @@ msgstr "Ctrl + L"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A170
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
 msgid "Align Right"
-msgstr "Jobbra igazítás"
+msgstr "Στοίχιση δεξιά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A170
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
@@ -956,7 +965,7 @@ msgstr "Ctrl + R"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A171
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
 msgid "Justify"
-msgstr "Sorkizárás"
+msgstr "Πλήρης στοίχιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A171
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
@@ -965,7 +974,7 @@ msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A172
 msgid "Set Optimal Column Width"
-msgstr "Optimális oszlopszélesség beállítása"
+msgstr "Ορισμός βέλτιστου πλάτους στήλης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A172
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:172"
@@ -974,7 +983,7 @@ msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
 msgid "Two decimal places, thousands separator"
-msgstr "Két tizedesjegy, ezreselválasztó"
+msgstr "Δύο δεκαδικά ψηφία, διαχωριστικό χιλιάδων"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
 msgid "Ctrl + Shift + 1"
@@ -982,7 +991,7 @@ msgstr "Ctrl + Shift + 1"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A174
 msgid "Standard exponential format"
-msgstr "Szabványos exponenciális-formátum"
+msgstr "Τυπική εκθετική μορφή"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A174
 msgid "Ctrl + Shift + 2"
@@ -990,7 +999,7 @@ msgstr "Ctrl + Shift + 2"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A175
 msgid "Standard date format"
-msgstr "Szabványos dátumformátum"
+msgstr "Τυπική μορφή ημερομηνίας"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A175
 msgid "Ctrl + Shift + 3"
@@ -998,7 +1007,7 @@ msgstr "Ctrl + Shift + 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A176
 msgid "Standard currency format"
-msgstr "Szabványos pénznemformátum"
+msgstr "Τυπική μορφή νομίσματος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A176
 msgid "Ctrl + Shift + 4"
@@ -1006,7 +1015,7 @@ msgstr "Ctrl + Shift + 4"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A177
 msgid "Standard percentage format (two decimal places)"
-msgstr "Szabványos százalékformátum (két tizedesjeggyel)"
+msgstr "Τυπική μορφή ποσοστού (δύο δεκαδικά ψηφία)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A177
 msgid "Ctrl + Shift + 5"
@@ -1014,7 +1023,7 @@ msgstr "Ctrl + Shift + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A178
 msgid "Standard format"
-msgstr "Szabványos formátum"
+msgstr "Τυπική μορφή"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A178
 msgid "Ctrl + Shift + 6"
@@ -1023,12 +1032,12 @@ msgstr "Ctrl + Shift + 6"
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A182
 msgctxt "dist/loleaflet-help.html html.body.div.h2:182"
 msgid "Text formatting"
-msgstr "Szövegformázás"
+msgstr "Μορφοποίηση κειμένου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A184
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
 msgid "Bold"
-msgstr "Félkövér"
+msgstr "Έντονα"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A184
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
@@ -1038,7 +1047,7 @@ msgstr "Ctrl + B"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A185
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
 msgid "Italic"
-msgstr "Dőlt"
+msgstr "Πλάγια"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A185
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
@@ -1048,7 +1057,7 @@ msgstr "Ctrl + I"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A186
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
 msgid "Underline"
-msgstr "Aláhúzott"
+msgstr "Υπογράμμιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A186
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
@@ -1058,7 +1067,7 @@ msgstr "Ctrl + U"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A187
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
 msgid "Strikethrough"
-msgstr "Áthúzott"
+msgstr "Επιγράμμιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A187
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
@@ -1068,7 +1077,7 @@ msgstr "Ctrl + Alt + 5"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A188
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
 msgid "Superscript"
-msgstr "Felső index"
+msgstr "Εκθέτης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A188
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
@@ -1078,7 +1087,7 @@ msgstr "Ctrl + Shift + P"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A189
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
 msgid "Subscript"
-msgstr "Alsó index"
+msgstr "Δείκτης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A189
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
@@ -1088,7 +1097,7 @@ msgstr "Ctrl + Shift + B"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A190
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
 msgid "Select All"
-msgstr "Mindent kijelöl"
+msgstr "Επιλογή όλων"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A190
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
@@ -1098,12 +1107,12 @@ msgstr "Ctrl + A"
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A192
 msgctxt "dist/loleaflet-help.html html.body.div.h2:192"
 msgid "Paragraph formatting"
-msgstr "Bekezdésformázás"
+msgstr "Μορφοποίηση παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A194
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
 msgid "Align Center"
-msgstr "Középre igazítás"
+msgstr "Κεντραρισμένη στοίχιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A194
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
@@ -1113,7 +1122,7 @@ msgstr "Ctrl + E"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A195
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
 msgid "Align Left"
-msgstr "Balra igazítás"
+msgstr "Στοίχιση αριστερά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A195
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
@@ -1123,7 +1132,7 @@ msgstr "Ctrl + L"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A196
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
 msgid "Align Right"
-msgstr "Jobbra igazítás"
+msgstr "Στοίχιση δεξιά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A196
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
@@ -1133,7 +1142,7 @@ msgstr "Ctrl + R"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A197
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
 msgid "Justify"
-msgstr "Sorkizárás"
+msgstr "Πλήρης στοίχιση"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A197
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
@@ -1142,16 +1151,20 @@ msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
 msgid "Demote list item (list item has to be selected)"
-msgstr "Listaelem lefokozása (a listaelemet ki kell jelölni)"
+msgstr ""
+"Υποβιβασμός αντικειμένου καταλόγου (το αντικείμενο του καταλόγου πρέπει να "
+"είναι επιλεγμένο)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:198"
 msgid "Tab"
-msgstr "Tab"
+msgstr "Καρτέλα"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
 msgid "Promote list item (list item has to be selected)"
-msgstr "Listaelem előléptetése (a listaelemet ki kell jelölni)"
+msgstr ""
+"Προβιβασμός αντικειμένου καταλόγου (το αντικείμενο του καταλόγου πρέπει να "
+"είναι επιλεγμένο)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:199"
@@ -1160,12 +1173,12 @@ msgstr "Shift + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A201
 msgid "Text selection and navigation in a textbox"
-msgstr "Szövegkijelölés és navigáció szövegdobozban"
+msgstr "Επιλογή κειμένου και περιήγηση σε ένα πλαίσιο κειμένου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A203
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
 msgid "Select All"
-msgstr "Mindent kijelöl"
+msgstr "Επιλογή όλων"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A203
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
@@ -1175,167 +1188,168 @@ msgstr "Ctrl + A"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A204
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:204"
 msgid "Move cursor to the left"
-msgstr "Kurzor mozgatása balra"
+msgstr "Μετακίνηση δρομέα προς τα αριστερά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A204
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:204"
 msgid "Arrow Left"
-msgstr "Balra nyíl"
+msgstr "Αριστερό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A205
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:205"
 msgid "Move cursor with selection to the left"
-msgstr "Kurzor mozgatása balra, kijelöléssel"
+msgstr "Μετακίνηση δρομέα με επιλογή προς τα αριστερά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A205
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:205"
 msgid "Shift + Arrow Left"
-msgstr "Shift + Balra nyíl"
+msgstr "Shift + αριστερό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A206
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
 msgid "Go to beginning of a word"
-msgstr "Ugrás a szó elejére"
+msgstr "Μετάβαση στην αρχή της λέξης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A206
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
 msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + Balra nyíl"
+msgstr "Ctrl + αριστερό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A207
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
 msgid "Select to the left word by word"
-msgstr "Szavak egyenkénti kijelölése balra"
+msgstr "Επιλογή προς τα αριστερά λέξη-λέξη"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A207
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
 msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ctrl + Shift + Balra nyíl"
+msgstr "Ctrl + Shift + αριστερό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A208
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
 msgid "Move cursor to the right"
-msgstr "Kurzor léptetése jobbra"
+msgstr "Μετακίνηση δρομέα προς τα δεξιά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A208
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
 msgid "Arrow Right"
-msgstr "Jobbra nyíl"
+msgstr "Δεξιό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A209
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
 msgid "Move cursor with selection to the right"
-msgstr "Kurzor mozgatása jobbra, kijelöléssel"
+msgstr "Μετακίνηση δρομέα με επιλογή προς τα δεξιά"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A209
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
 msgid "Shift + Arrow Right"
-msgstr "Shift + Jobbra nyíl"
+msgstr "Shift + δεξιό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Go to start of the next word"
-msgstr "Ugrás a következő szó elejére"
+msgstr "Μετάβαση στην αρχή της επόμενης λέξης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + Jobbra nyíl"
+msgstr "Ctrl + δεξιό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Select to the right word by word"
-msgstr "Szavak egyenkénti kijelölése jobbra"
+msgstr "Επιλογή προς τα δεξιά λέξη-λέξη"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl + Shift + Jobbra nyíl"
+msgstr "Ctrl + Shift + δεξιό βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Move cursor up one line"
-msgstr "Kurzor mozgatása egy sorral feljebb"
+msgstr "Μετακίνηση δρομέα κατά μια γραμμή προς τα πάνω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Arrow Up"
-msgstr "Felfelé nyíl"
+msgstr "Πάνω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Select lines in upwards direction"
-msgstr "Sorok kijelölése felfelé"
+msgstr "Επιλογή γραμμών με κατεύθυνση προς τα πάνω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Shift + Arrow Up"
-msgstr "Shift + Felfelé nyíl"
+msgstr "Shift + πάνω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Kurzor mozgatása az előző bekezdés elejére"
+msgstr "Μετακίνηση δρομέα στην αρχή της προηγούμενης παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + Felfelé nyíl"
+msgstr "Ctrl + πάνω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Select to beginning of paragraph"
-msgstr "Kijelölés a bekezdés elejéig"
+msgstr "Επιλογή μέχρι την αρχή της παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Shift + Felfelé nyíl"
+msgstr "Ctrl + Shift + πάνω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Move cursor down one line"
-msgstr "Kurzor mozgatása egy sorral lejjebb"
+msgstr "Μετακίνηση δρομέα κατά μια γραμμή προς τα κάτω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Arrow Down"
-msgstr "Lefelé nyíl"
+msgstr "Κάτω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A217
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
 msgid "Select lines in downwards direction"
-msgstr "Sorok kijelölése felfelé"
+msgstr "Επιλογή γραμμών με κατεύθυνση προς τα κάτω"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A217
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
 msgid "Shift + Arrow Down"
-msgstr "Shift + Lefelé nyíl"
+msgstr "Shift + Arrow Down"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
+#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Kurzor mozgatása a következő bekezdés elejére"
+msgstr "Μετακίνηση δρομέα στην αρχή της προηγούμενης παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + Lefelé nyíl"
+msgstr "Ctrl + κάτω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Select to end of paragraph"
-msgstr "Kijelölés a bekezdés végéig"
+msgstr "Επιλογή μέχρι το τέλος της παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Shift + Lefelé nyíl"
+msgstr "Ctrl + Shift + κάτω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
 msgid "Go to beginning of line"
-msgstr "Ugrás a sor elejére"
+msgstr "Μετάβαση στην αρχή της γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
@@ -1345,7 +1359,7 @@ msgstr "Home"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A221
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
 msgid "Go and select to the beginning of a line"
-msgstr "Ugrás a sor elejére kijelöléssel"
+msgstr "Μετάβαση και επιλογή μέχρι την αρχή μιας γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A221
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
@@ -1355,7 +1369,7 @@ msgstr "Shift + Home"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A222
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
 msgid "Go to start of document"
-msgstr "Ugrás a dokumentum elejére"
+msgstr "Μετάβαση στην αρχή του εγγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A222
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
@@ -1364,7 +1378,7 @@ msgstr "Ctrl + Home"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A223
 msgid "Go and select text to start of textbox"
-msgstr "Ugrás a szövegdoboz elejére kijelöléssel"
+msgstr "Μετάβαση και επιλογή κειμένου μέχρι την αρχή του πλαισίου κειμένου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A223
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:223"
@@ -1374,7 +1388,7 @@ msgstr "Ctrl + Shift + Home"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A224
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
 msgid "Go to end of line"
-msgstr "Ugrás a sor végére"
+msgstr "Μετάβαση στο τέλος της γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A224
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
@@ -1384,7 +1398,7 @@ msgstr "End"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A225
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
 msgid "Go and select to the end of a line"
-msgstr "Ugrás a sor végére kijelöléssel"
+msgstr "Μετάβαση και επιλογή μέχρι το τέλος μιας γραμμής"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A225
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
@@ -1394,7 +1408,7 @@ msgstr "Shift + End"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A226
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
 msgid "Go to end of document"
-msgstr "Ugrás a dokumentum végére"
+msgstr "Μετάβαση στο τέλος του εγγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A226
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
@@ -1403,7 +1417,7 @@ msgstr "Ctrl + End"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A227
 msgid "Go and select text to end of textbox"
-msgstr "Ugrás a szövegdoboz végére kijelöléssel"
+msgstr "Μετάβαση και επιλογή κειμένου μέχρι το τέλος του πλαισίου κειμένου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A227
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:227"
@@ -1412,15 +1426,16 @@ msgstr "Ctrl + Shift + End"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A229
 msgid "Slide / draw page keyboard shortcuts"
-msgstr "Billentyűparancsok diákon / rajzlapokon"
+msgstr "Συντομεύσεις πληκτρολογίου σελίδας διαφάνειας / σχεδίασης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
-"Kilépés az aktuális módból, azaz pl. szerkesztési módból objektumkijelölési "
-"módba váltás, objektumkijelölési módból nézet módba váltás."
+"Απομάκρυνση από την τρέχουσα κατάσταση, δηλαδή από την κατάσταση "
+"επεξεργασίας αλλαγή στην κατάσταση επιλογής αντικειμένου, από την κατάσταση "
+"επιλογής αντικειμένου αλλαγή στην κατάσταση προβολής."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
 msgid "Esc"
@@ -1428,7 +1443,7 @@ msgstr "Esc"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
 msgid "Select objects in the order in which they were created"
-msgstr "Kijelöli az objektumokat létrehozásuk sorrendjében"
+msgstr "Επιλογή αντικειμένων με τη σειρά με την οποία δημιουργήθηκαν"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:232"
@@ -1437,7 +1452,8 @@ msgstr "Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Kijelöli az objektumokat létrehozásuk sorrendjével ellentétesen"
+msgstr ""
+"Επιλογή αντικειμένων με την αντίστροφη σειρά με την οποία δημιουργήθηκαν"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:233"
@@ -1446,7 +1462,8 @@ msgstr "Shift + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgid "Move to next text object on slide / drawing page"
-msgstr "Ugrás a dia / rajzlap következő objektumára"
+msgstr ""
+"Μετάβαση στο επόμενο αντικείμενο κειμένου σε σελίδα διαφάνειας / σχεδίασης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:234"
@@ -1455,7 +1472,7 @@ msgstr "Ctrl + Enter"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
 msgid "Select all in slide / drawing page"
-msgstr "Minden kijelölése a dián / rajzlapon"
+msgstr "Επιλογή όλων σε σελίδα διαφάνειας / σχεδίασης"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:235"

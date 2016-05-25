@@ -1,4 +1,17 @@
 {
+    "ca": "/loleaflet/dist/l10n/help-ca.json",
+    "cy": "/loleaflet/dist/l10n/help-cy.json",
+    "de": "/loleaflet/dist/l10n/help-de.json",
+    "el": "/loleaflet/dist/l10n/help-el.json",
     "en": false,
-    "hu": "/loleaflet/dist/l10n/help-hu.json"
+    "es": "/loleaflet/dist/l10n/help-es.json",
+    "fr": "/loleaflet/dist/l10n/help-fr.json",
+    "fr": "/loleaflet/dist/l10n/help-fr.json",
+    "hu": "/loleaflet/dist/l10n/help-hu.json",
+    "is": "/loleaflet/dist/l10n/help-is.json",
+    "nb": "/loleaflet/dist/l10n/help-nb.json",
+    "nn": "/loleaflet/dist/l10n/help-nn.json",
+    "pt-br": "/loleaflet/dist/l10n/help-pt_BR.json",
+    "sl": "/loleaflet/dist/l10n/help-sl.json",
+    "sv": "/loleaflet/dist/l10n/help-sv.json"
 }
