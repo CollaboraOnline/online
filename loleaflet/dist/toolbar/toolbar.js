@@ -194,8 +194,12 @@ function onClick(id) {
 		toolbar = w2ui['spreadsheet-toolbar'];
 		item = toolbar.get(id) ;
 	}
-	else if (w2ui['presentation-toolbar'].get(id) != null) {
+	else if (w2ui['presentation-toolbar'].get(id) !== null) {
 		toolbar = w2ui['presentation-toolbar'];
+		item = toolbar.get(id);
+	}
+	else if (w2ui['toolbar-up-more'].get(id) !== null) {
+		toolbar = w2ui['toolbar-up-more'];
 		item = toolbar.get(id);
 	}
 	else {
