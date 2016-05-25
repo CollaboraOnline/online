@@ -295,6 +295,7 @@ L.Control.Menubar = L.Control.extend({
 			var id = $(item).data('id');
 			self._executeAction(id);
 		}
+		map.focus();
 	},
 
 	_createMenu: function(menu) {
