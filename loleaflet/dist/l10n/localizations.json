@@ -1,5 +1,17 @@
 {
+    "ca": "/loleaflet/dist/l10n/ui-ca.json",
+    "cy": "/loleaflet/dist/l10n/ui-cy.json",
+    "de": "/loleaflet/dist/l10n/ui-de.json",
+    "el": "/loleaflet/dist/l10n/ui-el.json",
     "en": false,
+    "es": "/loleaflet/dist/l10n/ui-es.json",
     "fr": "/loleaflet/dist/l10n/ui-fr.json",
-    "hu": "/loleaflet/dist/l10n/ui-hu.json"
+    "fr": "/loleaflet/dist/l10n/ui-fr.json",
+    "hu": "/loleaflet/dist/l10n/ui-hu.json",
+    "is": "/loleaflet/dist/l10n/ui-is.json",
+    "nb": "/loleaflet/dist/l10n/ui-nb.json",
+    "nn": "/loleaflet/dist/l10n/ui-nn.json",
+    "pt-br": "/loleaflet/dist/l10n/ui-pt_BR.json",
+    "sl": "/loleaflet/dist/l10n/ui-sl.json",
+    "sv": "/loleaflet/dist/l10n/ui-sv.json"
 }
