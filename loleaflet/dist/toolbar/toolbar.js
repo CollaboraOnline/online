@@ -692,7 +692,21 @@ map.on('updatetoolbarcommandvalues', function (e) {
 			styles = e.commandValues.CellStyles;
 		}
 		else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
-			styles = e.commandValues.Default || e.commandValues.Standard;
+			Object.keys(e.commandValues).forEach(function(style) {
+				switch (style) {
+					case 'graphics':
+					case 'table':
+					case 'cell':
+					case 'Commands':
+						break;
+
+					default:
+						if ( styles.length === 0 ) {
+							styles = e.commandValues[style];
+						}
+						break;
+				}
+			});
 		}
 
 		if (topStyles.length > 0) {
