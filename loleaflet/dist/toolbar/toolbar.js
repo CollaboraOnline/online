@@ -130,8 +130,7 @@ $(function () {
 			{ type: 'html',  id: 'right' },
 			{ type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>' },
 			{ type: 'break' },
-			{ type: 'button',  id: 'takeedit', img: 'edit', hint: _("Take edit lock (others can only view)")},
-			{ type: 'html',    id: 'takeeditlabel', html: '<div id="takeeditlabel" class="loleaflet-font">' + _("VIEWING") + '</div>' },
+			{ type: 'button',  id: 'takeedit', img: 'edit', hint: _("Take edit lock (others can only view)"), caption: _('VIEWING')},
 			{ type: 'break' },
 			{ type: 'button',  id: 'prev', img: 'prev', hint: _("Previous page") },
 			{ type: 'button',  id: 'next', img: 'next', hint: _("Next page") },
@@ -840,14 +839,11 @@ map.on('editlock', function (e) {
 	var toolbar = w2ui['toolbar-down'];
 	if (e.value) {
 		toolbar.disable('takeedit');
-		toolbar.set('takeedit', {hint: _('You are editing (others can only view)')});
-
-		$('#takeeditlabel').html(_('EDITING'));
+		toolbar.set('takeedit', {hint: _('You are editing (others can only view)'), caption: _('EDITING')});
 	}
 	else {
 		toolbar.enable('takeedit');
-		toolbar.set('takeedit', {hint: _('Take edit lock (others can only view)')});
-		$('#takeeditlabel').html(_('VIEWING'));
+		toolbar.set('takeedit', {hint: _('Take edit lock (others can only view)'), caption: _('VIEWING')});
 		$('#tb_toolbar-down_item_takeedit')
 			.w2overlay({
 				class: 'loleaflet-font',
@@ -940,7 +936,6 @@ map.on('editlock', function (e) {
 
 map.on('mouseup keypress', function(e) {
 	if (!map._editlock) {
-		$('#takeeditlabel').html(_('VIEWING'));
 		$('#tb_toolbar-down_item_takeedit')
 			.w2overlay({
 				html: takeEditPopupMessage,
