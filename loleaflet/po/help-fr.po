@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 20:19+0000\n"
+"POT-Creation-Date: 2016-05-26 16:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-help-fr.po\n"
-"X-Pootle-Revision: 435082\n"
+"X-Pootle-Revision: 440876\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -399,10 +399,9 @@ msgid "Shift + Arrow Down"
 msgstr "Maj + Flèche vers le bas"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Déplacer le curseur au début du paragraphe précédent"
+msgstr "Déplacer le curseur au début du paragraphe suivant"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
@@ -1321,10 +1320,9 @@ msgid "Shift + Arrow Down"
 msgstr "Maj + Flèche vers le bas"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Déplacer le curseur au début du paragraphe précédent"
+msgstr "Déplacer le curseur au début du paragraphe suivant"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"

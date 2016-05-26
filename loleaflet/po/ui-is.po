@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 18:32+0000\n"
+"POT-Creation-Date: 2016-05-26 16:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-ui-is.po\n"
-"X-Pootle-Revision: 435114\n"
+"X-Pootle-Revision: 438858\n"
 
 #: dist/toolbar/toolbar.js:18
 #: src/control/Control.Menubar.js:9
@@ -52,7 +52,6 @@ msgid "Strikeout"
 msgstr "Gegnumstrikað"
 
 #: dist/toolbar/toolbar.js:33
-#, fuzzy
 msgid "Font color"
 msgstr "Litur á letri"
 
@@ -65,7 +64,6 @@ msgid "Align left"
 msgstr "Jafna til vinstri"
 
 #: dist/toolbar/toolbar.js:38
-#, fuzzy
 msgid "Center horizontally"
 msgstr "Miðjað lárétt"
 
@@ -86,29 +84,24 @@ msgid "Numbering on/off"
 msgstr "Númerun af/á"
 
 #: dist/toolbar/toolbar.js:45
-#, fuzzy
 msgid "Increase indent"
 msgstr "Auka inndrátt"
 
 #: dist/toolbar/toolbar.js:46
-#, fuzzy
 msgid "Decrease indent"
 msgstr "Minnka inndrátt"
 
 #: dist/toolbar/toolbar.js:48
-#, fuzzy
 msgid "Insert comment"
 msgstr "Setja inn athugasemd"
 
 #: dist/toolbar/toolbar.js:49
-#, fuzzy
 msgid "Insert graphic"
 msgstr "Setja inn mynd"
 
 #: dist/toolbar/toolbar.js:51
-#, fuzzy
 msgid "Insert table"
-msgstr "Setja inn síðu"
+msgstr "Setja inn töflu"
 
 #: dist/toolbar/toolbar.js:53
 msgid "Help"
@@ -119,7 +112,6 @@ msgid "More"
 msgstr "Meira"
 
 #: dist/toolbar/toolbar.js:56
-#, fuzzy
 msgid "Close document"
 msgstr "Loka skjali"
 
@@ -140,22 +132,18 @@ msgid "Accept"
 msgstr "Samþykkja"
 
 #: dist/toolbar/toolbar.js:92
-#, fuzzy
 msgid "First sheet"
 msgstr "Fyrsta blað"
 
 #: dist/toolbar/toolbar.js:93
-#, fuzzy
 msgid "Previous sheet"
 msgstr "Fyrra blað"
 
 #: dist/toolbar/toolbar.js:94
-#, fuzzy
 msgid "Next sheet"
 msgstr "Næsta blað"
 
 #: dist/toolbar/toolbar.js:95
-#, fuzzy
 msgid "Last sheet"
 msgstr "Síðasta blað"
 
@@ -166,21 +154,21 @@ msgstr "Kynning í skjáfylli"
 
 #: dist/toolbar/toolbar.js:107
 msgid "Insert slide"
-msgstr ""
+msgstr "Setja inn skyggnu"
 
 #: dist/toolbar/toolbar.js:108
 #: src/control/Control.Menubar.js:90
 msgid "Duplicate slide"
-msgstr ""
+msgstr "Tvöfalda skyggnu"
 
 #: dist/toolbar/toolbar.js:109
 #: src/control/Control.Menubar.js:91
 msgid "Delete slide"
-msgstr ""
+msgstr "Eyða skyggnu"
 
 #: dist/toolbar/toolbar.js:121
 msgid "Search:"
-msgstr ""
+msgstr "Leita:"
 
 #: dist/toolbar/toolbar.js:126
 msgid "Search backwards"
@@ -188,7 +176,7 @@ msgstr "Leita afturábak"
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr ""
+msgstr "Afrita veftengil"
 
 #: dist/toolbar/toolbar.js:127
 msgid "Search forward"
@@ -196,7 +184,7 @@ msgstr "Leita áfram"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
+msgstr "Niður um eitt stig"
 
 #: dist/toolbar/toolbar.js:128
 msgid "Cancel the search"
@@ -204,7 +192,7 @@ msgstr "Hætta við leitina"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
+msgstr "Upp um eitt stig"
 
 #: dist/toolbar/toolbar.js:133
 #: dist/toolbar/toolbar.js:849
@@ -213,7 +201,7 @@ msgstr "Taktu breytingalás (aðrir geta einungis skoðað)"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Breyta athugasemd"
 
 #: unocommands.js:5
 msgid "Insert Comment"
@@ -223,7 +211,7 @@ msgstr "Setja inn athugasemd"
 #: dist/toolbar/toolbar.js:850
 #: dist/toolbar/toolbar.js:943
 msgid "VIEWING"
-msgstr ""
+msgstr "SKOÐUN"
 
 #: dist/toolbar/toolbar.js:136
 msgid "Previous page"
@@ -231,7 +219,7 @@ msgstr "Fyrri síða"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "Sameina"
 
 #: dist/toolbar/toolbar.js:137
 msgid "Next page"
@@ -239,7 +227,7 @@ msgstr "Næsta síða"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Sameina reiti..."
 
 #: dist/toolbar/toolbar.js:139
 #: src/control/Control.Menubar.js:32
@@ -250,7 +238,7 @@ msgstr "Frumstilla aðdrátt"
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "Senda framar"
 
 #: dist/toolbar/toolbar.js:140
 #: src/control/Control.Menubar.js:31
@@ -261,7 +249,7 @@ msgstr "Renna frá"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
+msgstr "Senda aftar"
 
 #: dist/toolbar/toolbar.js:142
 #: src/control/Control.Menubar.js:30
@@ -272,25 +260,27 @@ msgstr "Renna að"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "Sérstök líming"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
+msgstr "Ósniðinn texti"
 
 #: dist/toolbar/toolbar.js:160
 msgid "You are viewing now."
-msgstr ""
+msgstr "Þú ert nú að skoða."
 
 #: dist/errormessages.js:1
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
 msgstr ""
+"Rangt WOPISrc, notkun: WOPISrc=gilt kóðað URI, eða skrá_slóð, notkun: "
+"skrá_slóð=/slóð/á/skjöl/"
 
 #: dist/toolbar/toolbar.js:160
 msgid "Click here to take edit."
-msgstr ""
+msgstr "Smelltu hér til að eiga réttindin til breytinga."
 
 #: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"
@@ -301,6 +291,8 @@ msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
+"URL-slóðin á hýsilvél er auð. loolwsd-vefþjónninn er líklega rangt stilltur, "
+"hafðu samband við kerfisstjóra."
 
 #: dist/toolbar/toolbar.js:386
 #: dist/toolbar/toolbar.js:744
@@ -309,7 +301,7 @@ msgstr "Stærð"
 
 #: dist/toolbar/toolbar.js:637
 msgid "Document saved"
-msgstr ""
+msgstr "Skjalið vistað"
 
 #: dist/toolbar/toolbar.js:727
 msgid "Style"
@@ -333,7 +325,7 @@ msgstr "Þú ert í breytingaham (aðrir geta einungis skoðað)"
 
 #: dist/toolbar/toolbar.js:845
 msgid "EDITING"
-msgstr ""
+msgstr "BREYTINGAR"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -375,55 +367,55 @@ msgstr "Prenta"
 #: src/control/Control.Menubar.js:53
 #: src/control/Control.Menubar.js:100
 msgid "Download as"
-msgstr ""
+msgstr "Hlaða niður sem"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
 #: src/control/Control.Menubar.js:100
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "PDF-skjal (.pdf)"
 
 #: src/control/Control.Menubar.js:12
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ODF-textaskjal (.odt)"
 
 #: src/control/Control.Menubar.js:13
 msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgstr "Microsoft Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:14
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:16
 #: src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:105
 msgid "Edit"
-msgstr ""
+msgstr "Breyta"
 
 #: src/control/Control.Menubar.js:19
 #: src/control/Control.Menubar.js:61
 #: src/control/Control.Menubar.js:108
 msgid "Cut"
-msgstr ""
+msgstr "Klippa"
 
 #: src/control/Control.Menubar.js:20
 #: src/control/Control.Menubar.js:62
 #: src/control/Control.Menubar.js:109
 msgid "Copy"
-msgstr ""
+msgstr "Afrita"
 
 #: src/control/Control.Menubar.js:21
 #: src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:110
 msgid "Paste"
-msgstr ""
+msgstr "Líma"
 
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:65
 #: src/control/Control.Menubar.js:112
 msgid "Select all"
-msgstr ""
+msgstr "Velja allt"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:34
@@ -431,161 +423,159 @@ msgstr ""
 #: src/control/Control.Menubar.js:75
 #: src/control/Control.Menubar.js:114
 msgid "Insert"
-msgstr ""
+msgstr "Setja inn"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.Menubar.js:114
 msgid "Image"
-msgstr ""
+msgstr "Mynd"
 
 #: src/control/Control.Menubar.js:26
 msgid "Comment"
-msgstr ""
+msgstr "Athugasemd"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:119
 msgid "View"
-msgstr ""
+msgstr "Skoða"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:119
 msgid "Full screen"
-msgstr ""
+msgstr "Fylla skjá"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Tables"
-msgstr ""
+msgstr "Töflur"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Rows before"
-msgstr ""
+msgstr "Raðir á undan"
 
 #: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:76
 msgid "Rows after"
-msgstr ""
+msgstr "Raðir á eftir"
 
 #: src/control/Control.Menubar.js:37
 #: src/control/Control.Menubar.js:78
 msgid "Columns left"
-msgstr ""
+msgstr "Dálka til vinstri"
 
 #: src/control/Control.Menubar.js:38
 #: src/control/Control.Menubar.js:79
 msgid "Columns right"
-msgstr ""
+msgstr "Dálka til hægri"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Delete"
-msgstr ""
+msgstr "Eyða"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Rows"
-msgstr ""
+msgstr "Raðir"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:81
 msgid "Columns"
-msgstr ""
+msgstr "Dálkar"
 
 #: src/control/Control.Menubar.js:41
 #: src/control/Control.Menubar.js:42
 #: src/control/Control.Menubar.js:82
 #: src/control/Control.Menubar.js:83
 msgid "Table"
-msgstr ""
+msgstr "Töflu"
 
 #: src/control/Control.Menubar.js:42
 #: src/control/Control.Menubar.js:83
 msgid "Select"
-msgstr ""
+msgstr "Velja"
 
 #: src/control/Control.Menubar.js:43
 #: src/control/Control.Menubar.js:84
 #: src/control/Control.Menubar.js:116
 msgid "Row"
-msgstr ""
+msgstr "Röð"
 
 #: src/control/Control.Menubar.js:44
 #: src/control/Control.Menubar.js:85
 #: src/control/Control.Menubar.js:117
 msgid "Column"
-msgstr ""
+msgstr "Dálkur"
 
 #: src/control/Control.Menubar.js:45
 #: src/control/Control.Menubar.js:86
 msgid "Cell"
-msgstr ""
+msgstr "Reitur"
 
 #: src/control/Control.Menubar.js:46
 #: src/control/Control.Menubar.js:87
 msgid "Merge cells"
-msgstr ""
+msgstr "Sameina reiti"
 
 #: src/control/Control.Menubar.js:54
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ODF-kynning (.odp)"
 
 #: src/control/Control.Menubar.js:55
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:56
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgstr "Microsoft Powerpoint (.pptx)"
 
 #: src/control/Control.Menubar.js:89
 msgid "Slide"
-msgstr ""
+msgstr "Skyggna"
 
 #: src/control/Control.Menubar.js:89
-#, fuzzy
 msgid "New slide"
-msgstr "Næsta skyggna"
+msgstr "Ný skyggna"
 
 #: src/control/Control.Menubar.js:101
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ODF-töflureikniskjal (.ods)"
 
 #: src/control/Control.Menubar.js:102
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgstr "Microsoft Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:103
 msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgstr "Microsoft Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:125
 msgid "Cells"
-msgstr ""
+msgstr "Reitir"
 
 #: src/control/Control.Menubar.js:125
 msgid "Insert row"
-msgstr ""
+msgstr "Setja inn röð"
 
 #: src/control/Control.Menubar.js:126
 msgid "Insert column"
-msgstr ""
+msgstr "Setja inn"
 
 #: src/control/Control.Menubar.js:128
 msgid "Delete row"
-msgstr ""
+msgstr "Eyða röð"
 
 #: src/control/Control.Menubar.js:129
 msgid "Delete column"
-msgstr ""
+msgstr "Eyða dálki"
 
 #: src/control/Control.Menubar.js:276
-#, fuzzy
 msgid "Are you sure you want to delete this slide?"
-msgstr "Ertu viss um að þú viljir eyða þessari síðu?"
+msgstr "Ertu viss um að þú viljir eyða þessari skyggnu?"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
