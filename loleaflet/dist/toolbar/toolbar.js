@@ -1084,7 +1084,7 @@ function insertTable() {
 			$('.col').removeClass('bright');
 			$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
 			.addClass('bright');
-			$status.html(col+"x"+row);
+			$status.html(col + " x " + row);
 
 		},
 		click: function(){
