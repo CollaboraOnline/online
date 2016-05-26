@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 20:19+0000\n"
+"POT-Creation-Date: 2016-06-12 14:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-help-el.po\n"
-"X-Pootle-Revision: 435063\n"
+"X-Pootle-Revision: 440425\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -399,10 +399,9 @@ msgid "Shift + Arrow Down"
 msgstr "Shift + κάτω βέλος"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Μετακίνηση δρομέα στην αρχή της προηγούμενης παραγράφου"
+msgstr "Μετακίνηση του δρομέα στην αρχή της επόμενης παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
@@ -1326,10 +1325,9 @@ msgid "Shift + Arrow Down"
 msgstr "Shift + Arrow Down"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Μετακίνηση δρομέα στην αρχή της προηγούμενης παραγράφου"
+msgstr "Μετακίνηση του δρομέα στην αρχή της επόμενης παραγράφου"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"

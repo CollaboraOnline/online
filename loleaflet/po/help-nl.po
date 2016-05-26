@@ -1,0 +1,1471 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-13 18:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 1.14.0-rc1\n"
+"X-Pootle-Path: /nl/libo_online/loleaflet-help-nl.po\n"
+"X-Pootle-Revision: 462001\n"
+
+#: dist%2Floleaflet-help.html+html.head.title%3A5
+msgid "LOLeaflet Help"
+msgstr "Brochure met hulp voor LibreOffice"
+
+#: dist%2Floleaflet-help.html+html.body.h1%3A48
+msgid "Keyboard Shortcuts"
+msgstr "Sneltoetsen"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A50
+msgid "General Keyboard Shortcuts"
+msgstr "Algemene sneltoetsen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
+msgid "Ctrl + Z"
+msgstr "Ctrl + Z"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
+msgid "Redo"
+msgstr "Opnieuw uitvoeren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
+msgid "Ctrl + Y"
+msgstr "Ctrl + Y"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A54
+msgid "Cut"
+msgstr "Knippen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A54
+msgid "Ctrl + X"
+msgstr "Ctrl + X"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
+msgid "Paste as unformatted text"
+msgstr "Als niet opgemaakte tekst plakken"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
+msgid "Ctrl + Alt + Shift + V"
+msgstr "Ctrl + Alt + Shift + V"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
+msgid "Print (Download as PDF)"
+msgstr "Afdrukken (downloaden als PDF)"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
+msgid "Ctrl + P"
+msgstr "Ctrl + P"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A60
+msgctxt "dist/loleaflet-help.html html.body.div.h2:60"
+msgid "Text formatting"
+msgstr "Tekstopmaak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A62
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
+msgid "Bold"
+msgstr "Vet"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A62
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
+msgid "Ctrl + B"
+msgstr "Ctrl + B"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A63
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
+msgid "Italic"
+msgstr "Cursief"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A63
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
+msgid "Ctrl + I"
+msgstr "Ctrl + I"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A64
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
+msgid "Underline"
+msgstr "Onderlijnen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A64
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
+msgid "Ctrl + U"
+msgstr "Ctrl + U"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A65
+msgid "Double Underline"
+msgstr "Dubbel onderstrepen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A65
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:65"
+msgid "Ctrl + D"
+msgstr "Ctrl + D"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A66
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
+msgid "Strikethrough"
+msgstr "Doorhalen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A66
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
+msgid "Ctrl + Alt + 5"
+msgstr "Ctrl + Alt + 5"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A67
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
+msgid "Superscript"
+msgstr "Superscript"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A67
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
+msgid "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + P"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
+msgid "Subscript"
+msgstr "Subscript"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
+msgid "Ctrl + Shift + B"
+msgstr "Ctrl + Shift + B"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
+msgid "Remove direct formatting"
+msgstr "Directe opmaak verwijderen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
+msgid "Ctrl + M"
+msgstr "Ctrl + M"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A71
+msgctxt "dist/loleaflet-help.html html.body.div.h2:71"
+msgid "Paragraph formatting"
+msgstr "Alineaopmaak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
+msgid "Align Center"
+msgstr "Centreren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
+msgid "Ctrl + E"
+msgstr "Ctrl + E"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A74
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
+msgid "Align Left"
+msgstr "Links uitlijnen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A74
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
+msgid "Ctrl + L"
+msgstr "Ctrl + L"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A75
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
+msgid "Align Right"
+msgstr "Rechts uitlijnen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A75
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
+msgid "Ctrl + R"
+msgstr "Ctrl + R"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
+msgid "Justify"
+msgstr "Uitlijnen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
+msgid "Ctrl + J"
+msgstr "Ctrl + J"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
+msgid "Apply Default paragraph style"
+msgstr "Standaard alinea-opmaakprofiel toepassen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
+msgid "Ctrl + 0"
+msgstr "Ctrl + 0"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
+msgid "Apply Heading 1 paragraph style"
+msgstr "Alinea-opmaakprofiel Kop 1 toepassen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
+msgid "Ctrl + 1"
+msgstr "Ctrl + 1"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
+msgid "Apply Heading 2 paragraph style"
+msgstr "Alinea-opmaakprofiel Kop 2 toepassen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
+msgid "Ctrl + 2"
+msgstr "Ctrl + 2"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
+msgid "Apply Heading 3 paragraph style"
+msgstr "Alinea-opmaakprofiel Kop 3 toepassen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:80"
+msgid "Ctrl + 3"
+msgstr "Ctrl + 3"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
+msgid "Apply Heading 4 paragraph style"
+msgstr "Alinea-opmaakprofiel Kop 4 toepassen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
+msgid "Ctrl + 4"
+msgstr "Ctrl + 4"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
+msgid "Apply Heading 5 paragraph style"
+msgstr "Alinea-opmaakprofiel Kop 5 toepassen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
+msgid "Ctrl + 5"
+msgstr "Ctrl + 5"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A84
+msgid "Text selection and navigation in document"
+msgstr "Tekstselectie en navigatie in een document"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
+msgid "Select All"
+msgstr "Alles selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
+msgid "Ctrl + A"
+msgstr "Ctrl + A"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
+msgid "Move cursor to the left"
+msgstr "Verplaats cursor naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
+msgid "Arrow Left"
+msgstr "Pijl naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
+msgid "Move cursor with selection to the left"
+msgstr "Selectie met cursor naar links uitbreiden"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
+msgid "Shift + Arrow Left"
+msgstr "Shift+pijl naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
+msgid "Go to beginning of a word"
+msgstr "Ga naar het begin van een woord"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
+msgid "Ctrl + Arrow Left"
+msgstr "Ctrl+pijl naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
+msgid "Select to the left word by word"
+msgstr "Woord voor woord naar links selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
+msgid "Ctrl + Shift + Arrow Left"
+msgstr "Ctrl+Shift+pijl naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
+msgid "Move cursor to the right"
+msgstr "Verplaats de cursor naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
+msgid "Arrow Right"
+msgstr "Pijl naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A92
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
+msgid "Move cursor with selection to the right"
+msgstr "Selectie met cursor naar rechts uitbreiden"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A92
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
+msgid "Shift + Arrow Right"
+msgstr "Shift+pijl naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
+msgid "Go to start of the next word"
+msgstr "Ga naar begin van het volgende woord"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
+msgid "Ctrl + Arrow Right"
+msgstr "Ctrl+pijl naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A94
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
+msgid "Select to the right word by word"
+msgstr "Woord voor woord naar rechts selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A94
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
+msgid "Ctrl + Shift + Arrow Right"
+msgstr "Ctrl+Shift+pijl naar rechts "
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A95
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
+msgid "Move cursor up one line"
+msgstr "Verplaats de cursor één regel naar boven"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A95
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
+msgid "Arrow Up"
+msgstr "Pijl omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
+msgid "Select lines in upwards direction"
+msgstr "Regels naar boven selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
+msgid "Shift + Arrow Up"
+msgstr "Shift+pijl omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
+msgid "Move cursor to beginning of the previous paragraph"
+msgstr "Verplaats cursor naar het begin van de vorige alinea"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
+msgid "Ctrl + Arrow Up"
+msgstr "Ctrl+Pijl omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
+msgid "Select to beginning of paragraph"
+msgstr "Selecteer tot aan het begin van de alinea"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
+msgid "Ctrl + Shift + Arrow Up"
+msgstr "Ctrl+Shift+Pijl omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A99
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
+msgid "Move cursor down one line"
+msgstr "Verplaats de cursor één regel omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A99
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
+msgid "Arrow Down"
+msgstr "Pijl omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
+msgid "Select lines in downwards direction"
+msgstr "Regels naar beneden selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
+msgid "Shift + Arrow Down"
+msgstr "Shift+pijl omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
+msgid "Move cursor to beginning of the next paragraph"
+msgstr "Verplaats cursor naar het begin van de volgende alinea"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
+msgid "Ctrl + Arrow Down"
+msgstr "Ctrl+pijl omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
+msgid "Select to end of paragraph"
+msgstr "Tot aan einde alinea selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
+msgid "Ctrl + Shift + Arrow Down"
+msgstr "Ctrl+Shift+pijl omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
+msgid "Go to beginning of line"
+msgstr "Ga naar het begin van de regel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
+msgid "Home"
+msgstr "Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
+msgid "Go and select to the beginning of a line"
+msgstr "Selecteer tot aan het begin van een regel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
+msgid "Shift + Home"
+msgstr "Shift+Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
+msgid "Go to start of document"
+msgstr "Ga naar het begin van het document"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
+msgid "Ctrl + Home"
+msgstr "Shift+Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
+msgid "Go and select text to start of document"
+msgstr "Selecteer tekst tot aan het begin van het document"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:106"
+msgid "Ctrl + Shift + Home"
+msgstr "Ctrl+Shift+Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
+msgid "Go to end of line"
+msgstr "Ga naar het einde van de regel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
+msgid "End"
+msgstr "End"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
+msgid "Go and select to the end of a line"
+msgstr "Selecteer tot aan het einde van een regel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
+msgid "Shift + End"
+msgstr "Shift+End"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
+msgid "Go to end of document"
+msgstr "Ga naar het einde van het document"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
+msgid "Ctrl + End"
+msgstr "Ctrl+End"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A110
+msgid "Go and select text to end of document"
+msgstr "Selecteer tekst tot aan het einde van het document"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A110
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:110"
+msgid "Ctrl + Shift + End"
+msgstr "Ctrl+Shift+End"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
+msgid "Move the view up one page"
+msgstr "Verplaats het beeld één pagina omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
+msgid "PageUp"
+msgstr "PageUp"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
+msgid "Switch cursor between text and header"
+msgstr "Schakelt de cursor tussen tekst en koptekst"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
+msgid "Ctrl + PageUp"
+msgstr "Ctrl+PageUp"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
+msgid "Extend the selection up one page"
+msgstr "Breid de selectie één pagina naar boven uit"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
+msgid "Shift + PageUp"
+msgstr "Shift+PageUp"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
+msgid "Move the view down one page"
+msgstr "Verplaats het beeld één pagina omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
+msgid "PageDown"
+msgstr "PageDown"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
+msgid "Switch cursor between text and footer"
+msgstr "Schakelt de cursor tussen tekst en voettekst"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
+msgid "Ctrl + PageDown"
+msgstr "Ctrl+PageDown"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
+msgid "Extend the selection down one page"
+msgstr "Breid de selectie één pagina naar beneden uit"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
+msgid "Shift + PageDown"
+msgstr "Shift+PageDown"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
+msgid "Delete to beginning of word"
+msgstr "Verwijder tekst tot aan het begin van het woord"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
+msgid "Ctrl + Backspace"
+msgstr "Ctrl+Backspace"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
+msgid "Delete to end of word"
+msgstr "Verwijder tekst tot aan het einde van het woord"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
+msgid "Ctrl + Del"
+msgstr "Ctrl+Del"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
+msgid "Delete to beginning of sentence"
+msgstr "Verwijder tekst tot aan het begin van de zin"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
+msgid "Ctrl + Shift + Backspace"
+msgstr "Ctrl+Shift+Backspace"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A120
+msgid "Delete to end of sentence"
+msgstr "Verwijder tekst tot aan het einde van de zin"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A120
+msgid "Ctrl + Shift + Del"
+msgstr "Ctrl+Shift+Del"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A122
+msgid "Shortcut Keys for Tables"
+msgstr "Sneltoetsen voor tabellen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A124
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:124"
+msgid "Ctrl + A"
+msgstr "Ctrl+A"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A124
+msgid ""
+"If the active cell is empty: selects the whole table. Otherwise: selects the "
+"contents of the active cell. Pressing again selects the entire table."
+msgstr ""
+"Als de actieve cel leeg is: selecteert de hele tabel. Anders: selecteert de "
+"inhoud van de actieve cel. Wanneer u nogmaals drukt, wordt de hele tabel "
+"geselecteerd."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A125
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:125"
+msgid "Ctrl + Home"
+msgstr "Ctrl+Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A125
+msgid ""
+"If the active cell is empty: goes to the beginning of the table. Otherwise: "
+"first press goes to beginning of the active cell, second press goes to "
+"beginning of the current table, third press goes to beginning of document."
+msgstr ""
+"Als de actieve cel leeg is: gaat naar het begin van de tabel. Anders: eerste "
+"druk op toets gaat naar begin van de actieve cel; tweede druk op toets gaat "
+"naar begin van huidige tabel; derde druk op toets gaat naar begin van "
+"document."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A126
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:126"
+msgid "Ctrl + End"
+msgstr "Ctrl+End"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A126
+msgid ""
+"If the active cell is empty: goes to the end of the table. Otherwise: first "
+"press goes to the end of the active cell, second press goes to the end of "
+"the current table, third press goes to the end of the document."
+msgstr ""
+"Als de actieve cel leeg is: gaat naar het einde van de tabel. Anders: eerste "
+"druk op toets gaat naar einde van de actieve cel; tweede druk op toets gaat "
+"naar einde van de huidige tabel; derde druk op toets gaat naar einde van het "
+"document."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
+msgid "Ctrl + Tab"
+msgstr "Ctrl+Tab"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
+msgid ""
+"Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
+"Alt + Tab may be used instead."
+msgstr ""
+"Voegt een tabstop in (alleen in tabellen). Afhankelijk van de gebruikte "
+"Windowmanager moet misschien Alt+Tab worden gebruikt."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
+msgid "Alt + Arrow Keys"
+msgstr "Alt+pijltoetsen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
+msgid ""
+"Increases/decreases the size of the column/row on the right/bottom cell edge"
+msgstr "Vergroot/verkleint de kolom/rij aan de rechterkant/onderkant van de cel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A129
+msgid "Alt + Shift + Arrow Keys"
+msgstr "Alt+Shift+pijltoetsen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A129
+msgid "Increase/decrease the size of the column/row on the left/top cell edge"
+msgstr ""
+"Vergroot/verkleint de grootte van de kolom/rij aan de linkerkant/bovenkant "
+"van de cel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
+msgid "Alt + Ctrl + Arrow Keys"
+msgstr "Alt+Ctrl+pijltoetsen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:130"
+msgid "Like Alt, but only the active cell is modified"
+msgstr "Zoals Alt, maar alleen de actieve cel wordt bijgewerkt"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
+msgid "Ctrl + Alt + Shift + Arrow Keys"
+msgstr "Ctrl+Alt+Shift+pijltoetsen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:131"
+msgid "Like Alt, but only the active cell is modified"
+msgstr "Zoals Alt, maar alleen de actieve cel wordt bijgewerkt"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A132
+msgid "Alt + Insert"
+msgstr "Alt+Insert"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A132
+msgid ""
+"3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
+"inserts cell"
+msgstr ""
+"3 seconden in modus Invoegen, pijltoetsen voegen rij/kolom in, Ctrl+"
+"pijltoetsen voegen cel in"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
+msgid "Alt + Del"
+msgstr "Alt+Del"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
+msgid ""
+"3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
+"merges cell with neighboring cell"
+msgstr ""
+"3 seconden in modus Verwijderen, pijltoetsen verwijderen rij/kolom, Ctrl+"
+"pijltoetsen voegen cel samen met naastliggende cel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A134
+msgid "Shift + Ctrl + Del"
+msgstr "Shift+Ctrl+Del"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A134
+msgid ""
+"If no whole cell is selected, the text from the cursor to the end of the "
+"current sentence is deleted. If the cursor is at the end of a cell, and no "
+"whole cell is selected, the contents of the next cell are deleted."
+msgstr ""
+"Als er geen hele cel geselecteerd is, wordt de tekst vanaf de cursor tot aan "
+"het eind van de huidige zin verwijderd. Als de cursor aan het eind van een "
+"cel staat en er geen hele cel is geselecteerd, wordt de inhoud van de "
+"volgende cel verwijderd."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A135
+msgid ""
+"If no whole cell is selected and the cursor is at the end of the table, the "
+"paragraph following the table will be deleted, unless it is the last "
+"paragraph in the document."
+msgstr ""
+"Als er geen hele cel geselecteerd is aan het einde van de tabel, wordt de "
+"alinea achter de tabel verwijderd. Tenzij dit de laatste alinea is van het "
+"document."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A136
+msgid ""
+"If one or more cells are selected, the whole rows containing the selection "
+"will be deleted. If all rows are selected completely or partially, the "
+"entire table will be deleted."
+msgstr ""
+"Als er één of meer cellen zijn geselecteerd, worden de volledige rijen die "
+"de selectie bevatten verwijderd. Als alle rijen geheel of gedeeltelijk zijn "
+"geselecteerd, wordt de hele tabel verwijderd."
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A139
+msgid "Word processor functions"
+msgstr "Tekstverwerkings-functies"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A141
+msgid "Insert footnote"
+msgstr "Voetnoot invoegen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A141
+msgid "Ctrl + Alt + F"
+msgstr "Ctrl+Alt+F"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A142
+msgid "Insert endnote"
+msgstr "Eindnoot invoegen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A142
+msgid "Ctrl + Alt + D"
+msgstr "Ctrl+Alt+D"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A143
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
+msgid "Insert comment"
+msgstr "Notitie invoegen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A143
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
+msgid "Ctrl + Alt + C"
+msgstr "Ctrl+Alt+C"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A145
+msgid "Insert soft hyphen"
+msgstr "Zacht koppelteken invoegen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A145
+msgid "Ctrl + -"
+msgstr "Ctrl + -"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A146
+msgid "Insert non-breaking hyphen"
+msgstr "Vast koppelteken invoegen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A146
+msgid "Ctrl + Shift + -"
+msgstr "Ctrl+Shift+ -"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A148
+msgid "Insert non-breaking space"
+msgstr "Harde spatie invoegen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A148
+msgid "Ctrl + Shift + Space"
+msgstr "Ctrl+Shift+spatie"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A149
+msgid "Insert line break"
+msgstr "Regeleinde invoegen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A149
+msgid "Shift + Enter"
+msgstr "Shift+Enter"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A150
+msgid "Manual page break"
+msgstr "Handmatige pagina-einde"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A150
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:150"
+msgid "Ctrl + Enter"
+msgstr "Ctrl+Enter"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A151
+msgid "Column break (in multicolumnar text)"
+msgstr "Kolomeinde (in teksten met meerdere kolommen)"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A151
+msgid "Ctrl + Shift + Enter"
+msgstr "Ctrl+Shift+Enter"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A152
+msgid ""
+"Insert new paragraph directly before or after a section, or before a table"
+msgstr ""
+"Invoegen van een nieuwe alinea direct vóór of achter een sectie of vóór een "
+"tabel."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A152
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:152"
+msgid "Alt + Enter"
+msgstr "Alt+Enter"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A153
+msgid ""
+"Insert new paragraph without numbering inside a list. Does not work when the "
+"cursor is at the end of the list."
+msgstr ""
+"Invoegen van een nieuwe alinea, zonder nummering, in een lijst. Dit werkt "
+"niet als de cursor aan het einde van de lijst staat."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A153
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:153"
+msgid "Alt + Enter"
+msgstr "Alt+Enter"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A157
+msgid "Cell formatting"
+msgstr "Celopmaak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A159
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
+msgid "Bold"
+msgstr "Vet"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A159
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
+msgid "Ctrl + B"
+msgstr "Ctrl+B"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
+msgid "Italic"
+msgstr "Cursief"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
+msgid "Ctrl + I"
+msgstr "Ctrl+I"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
+msgid "Underline"
+msgstr "Onderstrepen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
+msgid "Ctrl + U"
+msgstr "Ctrl+U"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
+msgid "Strikethrough"
+msgstr "Doorhalen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
+msgid "Ctrl + Alt + 5"
+msgstr "Ctrl+Alt+5"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
+msgid "Remove direct formatting"
+msgstr "Directe opmaak wissen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
+msgid "Ctrl + M"
+msgstr "Ctrl+M"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A164
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:164"
+msgid "Insert comment"
+msgstr "Notitie invoegen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A164
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:164"
+msgid "Ctrl + Alt + C"
+msgstr "Ctrl+Alt+C"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A165
+msgid "Display comment"
+msgstr "Notitie weergeven"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A165
+msgid "Ctrl + F1"
+msgstr "Ctrl+F1"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A166
+msgid "Fill Down"
+msgstr "Neerwaards vullen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A166
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:166"
+msgid "Ctrl + D"
+msgstr "Ctrl+D"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A167
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
+msgid "Select All"
+msgstr "Alles selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A167
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
+msgid "Ctrl + A"
+msgstr "Ctrl+A"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A168
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
+msgid "Align Center"
+msgstr "Centreren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A168
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
+msgid "Ctrl + E"
+msgstr "Ctrl+E"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A169
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
+msgid "Align Left"
+msgstr "Links uitlijnen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A169
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
+msgid "Ctrl + L"
+msgstr "Ctrl+L"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A170
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
+msgid "Align Right"
+msgstr "Rechts uitlijnen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A170
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
+msgid "Ctrl + R"
+msgstr "Ctrl+R"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A171
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
+msgid "Justify"
+msgstr "Uitvullen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A171
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
+msgid "Ctrl + J"
+msgstr "Ctrl+J"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A172
+msgid "Set Optimal Column Width"
+msgstr "Optimale kolombreedte"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A172
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:172"
+msgid "Ctrl + 3"
+msgstr "Ctrl+3"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
+msgid "Two decimal places, thousands separator"
+msgstr "Twee decimalen, scheidingsteken voor duizendtallen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
+msgid "Ctrl + Shift + 1"
+msgstr "Ctrl+Shift+1"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A174
+msgid "Standard exponential format"
+msgstr "Standaard exponentiële notatie"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A174
+msgid "Ctrl + Shift + 2"
+msgstr "Ctrl+Shift+2"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A175
+msgid "Standard date format"
+msgstr "Standaard datumnotatie"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A175
+msgid "Ctrl + Shift + 3"
+msgstr "Ctrl+Shift+3"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A176
+msgid "Standard currency format"
+msgstr "Standaard valutanotatie"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A176
+msgid "Ctrl + Shift + 4"
+msgstr "Ctrl+Shift+4"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A177
+msgid "Standard percentage format (two decimal places)"
+msgstr "Standaardnotatie voor percentages (twee decimalen)"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A177
+msgid "Ctrl + Shift + 5"
+msgstr "Ctrl+Shift+5"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A178
+msgid "Standard format"
+msgstr "Standaard opmaak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A178
+msgid "Ctrl + Shift + 6"
+msgstr "Ctrl+Shift+6"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A182
+msgctxt "dist/loleaflet-help.html html.body.div.h2:182"
+msgid "Text formatting"
+msgstr "Tekstopmaak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A184
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
+msgid "Bold"
+msgstr "Vet"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A184
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
+msgid "Ctrl + B"
+msgstr "Ctrl+B"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A185
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
+msgid "Italic"
+msgstr "Cursief"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A185
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
+msgid "Ctrl + I"
+msgstr "Ctrl+I"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A186
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
+msgid "Underline"
+msgstr "Onderstrepen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A186
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
+msgid "Ctrl + U"
+msgstr "Ctrl+U"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A187
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
+msgid "Strikethrough"
+msgstr "Doorhalen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A187
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
+msgid "Ctrl + Alt + 5"
+msgstr "Ctrl+Alt+5"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A188
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
+msgid "Superscript"
+msgstr "Superscript"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A188
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
+msgid "Ctrl + Shift + P"
+msgstr "Ctrl+Shift+P"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A189
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
+msgid "Subscript"
+msgstr "Subscript"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A189
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
+msgid "Ctrl + Shift + B"
+msgstr "Ctrl+Shift+B"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A190
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
+msgid "Select All"
+msgstr "Alles selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A190
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
+msgid "Ctrl + A"
+msgstr "Ctrl+A"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A192
+msgctxt "dist/loleaflet-help.html html.body.div.h2:192"
+msgid "Paragraph formatting"
+msgstr "Alinea-opmaak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A194
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
+msgid "Align Center"
+msgstr "Centreren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A194
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
+msgid "Ctrl + E"
+msgstr "Ctrl+E"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A195
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
+msgid "Align Left"
+msgstr "Links uitlijnen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A195
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
+msgid "Ctrl + L"
+msgstr "Ctrl+L"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A196
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
+msgid "Align Right"
+msgstr "Rechts uitlijnen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A196
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
+msgid "Ctrl + R"
+msgstr "Ctrl+R"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A197
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
+msgid "Justify"
+msgstr "Uitvullen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A197
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
+msgid "Ctrl + J"
+msgstr "Ctrl+J"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
+msgid "Demote list item (list item has to be selected)"
+msgstr "Degradeer lijstitem (lijstitem moet geselecteerd zijn)"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:198"
+msgid "Tab"
+msgstr "Tabblad"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
+msgid "Promote list item (list item has to be selected)"
+msgstr "Bevorder lijstitem (lijstitem moet geselecteerd zijn)"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:199"
+msgid "Shift + Tab"
+msgstr "Shift+Tab"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A201
+msgid "Text selection and navigation in a textbox"
+msgstr "Tekstselectie en navigatie in een tekstvak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A203
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
+msgid "Select All"
+msgstr "Alles selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A203
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
+msgid "Ctrl + A"
+msgstr "Ctrl+A"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A204
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:204"
+msgid "Move cursor to the left"
+msgstr "Verplaats cursor naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A204
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:204"
+msgid "Arrow Left"
+msgstr "Pijl naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A205
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:205"
+msgid "Move cursor with selection to the left"
+msgstr "Selectie met cursor naar links uitbreiden"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A205
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:205"
+msgid "Shift + Arrow Left"
+msgstr "Shift+pijl naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A206
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
+msgid "Go to beginning of a word"
+msgstr "Ga naar het begin van het woord"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A206
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
+msgid "Ctrl + Arrow Left"
+msgstr "Ctrl+pijl naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A207
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
+msgid "Select to the left word by word"
+msgstr "Woord voor woord naar links selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A207
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
+msgid "Ctrl + Shift + Arrow Left"
+msgstr "Ctrl+Shift+pijl naar links"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A208
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
+msgid "Move cursor to the right"
+msgstr "Verplaats de cursor naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A208
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
+msgid "Arrow Right"
+msgstr "Pijl naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A209
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
+msgid "Move cursor with selection to the right"
+msgstr "Selectie met cursor naar rechts uitbreiden"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A209
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
+msgid "Shift + Arrow Right"
+msgstr "Shift+pijl naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
+msgid "Go to start of the next word"
+msgstr "Ga naar begin van het volgende woord"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
+msgid "Ctrl + Arrow Right"
+msgstr "Ctrl+pijl naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
+msgid "Select to the right word by word"
+msgstr "Woord voor woord naar rechts selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
+msgid "Ctrl + Shift + Arrow Right"
+msgstr "Ctrl+Shift+pijl naar rechts"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
+msgid "Move cursor up one line"
+msgstr "Verplaats de cursor één regel naar boven"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
+msgid "Arrow Up"
+msgstr "Pijl omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
+msgid "Select lines in upwards direction"
+msgstr "Regels naar boven selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
+msgid "Shift + Arrow Up"
+msgstr "Shift+pijl omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
+msgid "Move cursor to beginning of the previous paragraph"
+msgstr "Verplaats cursor naar het begin van de vorige alinea"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
+msgid "Ctrl + Arrow Up"
+msgstr "Ctrl+Pijl omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
+msgid "Select to beginning of paragraph"
+msgstr "Tot aan het begin van de alinea selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
+msgid "Ctrl + Shift + Arrow Up"
+msgstr "Ctrl+Shift+pijl omhoog"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
+msgid "Move cursor down one line"
+msgstr "Verplaats de cursor één regel omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
+msgid "Arrow Down"
+msgstr "Pijl omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A217
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
+msgid "Select lines in downwards direction"
+msgstr "Regels naar beneden selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A217
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
+msgid "Shift + Arrow Down"
+msgstr "Shift+pijl omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
+msgid "Move cursor to beginning of the next paragraph"
+msgstr "Verplaats de cursor naar het begin van de volgende alinea"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
+msgid "Ctrl + Arrow Down"
+msgstr "Ctrl+pijl omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
+msgid "Select to end of paragraph"
+msgstr "Tot aan het einde van de alinea selecteren"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
+msgid "Ctrl + Shift + Arrow Down"
+msgstr "Ctrl+Shift+pijl omlaag"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
+msgid "Go to beginning of line"
+msgstr "Ga naar het begin van de regel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
+msgid "Home"
+msgstr "Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A221
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
+msgid "Go and select to the beginning of a line"
+msgstr "Selecteer tot het begin van een regel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A221
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
+msgid "Shift + Home"
+msgstr "Shift+Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A222
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
+msgid "Go to start of document"
+msgstr "Naar begin van document"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A222
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
+msgid "Ctrl + Home"
+msgstr "Ctrl+Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A223
+msgid "Go and select text to start of textbox"
+msgstr "Selecteer tekst tot het begin van het tekstvak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A223
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:223"
+msgid "Ctrl + Shift + Home"
+msgstr "Ctrl+Shift+Home"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A224
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
+msgid "Go to end of line"
+msgstr "Ga naar het einde van de regel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A224
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
+msgid "End"
+msgstr "End"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A225
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
+msgid "Go and select to the end of a line"
+msgstr "Selecteren tot aan het einde van een regel"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A225
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
+msgid "Shift + End"
+msgstr "Shift+End"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A226
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
+msgid "Go to end of document"
+msgstr "Ga naar het einde van het document"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A226
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
+msgid "Ctrl + End"
+msgstr "Ctrl+End"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A227
+msgid "Go and select text to end of textbox"
+msgstr "Selecteer tekst tot aan het einde van het tekstvak"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A227
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:227"
+msgid "Ctrl + Shift + End"
+msgstr "Ctrl+Shift+End"
+
+#: dist%2Floleaflet-help.html+html.body.div.h2%3A229
+msgid "Slide / draw page keyboard shortcuts"
+msgstr "Dia/draw-pagina sneltoetsen"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
+msgid ""
+"Escape current mode, i.e. from edit mode switch to object selection mode, "
+"from object selection mode switch to view mode."
+msgstr ""
+"Verlaat huidige modus, dat wil zeggen van modus Bewerken naar modus "
+"Objectselectie, van modus Objectselectie naar Weergavemodus."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
+msgid "Esc"
+msgstr "Esc"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
+msgid "Select objects in the order in which they were created"
+msgstr "Objecten selecteren in de volgorde waarin ze zijn gemaakt"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:232"
+msgid "Tab"
+msgstr "Tabblad"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
+msgid "Select objects in the reverse order in which they were created"
+msgstr ""
+"Objecten in omgekeerde volgorde selecteren: van het laatst gemaakte naar het "
+"eerst gemaakte."
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:233"
+msgid "Shift + Tab"
+msgstr "Shift+Tab"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
+msgid "Move to next text object on slide / drawing page"
+msgstr "Ga naar het volgende tekstobject op dia/tekenpagina"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:234"
+msgid "Ctrl + Enter"
+msgstr "Ctrl+Enter"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
+msgid "Select all in slide / drawing page"
+msgstr "Selecteer alles op op dia/tekenpagina"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:235"
+msgid "Ctrl + A"
+msgstr "Ctrl+A"

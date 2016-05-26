@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 20:19+0000\n"
+"POT-Creation-Date: 2016-06-13 18:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-help-nb.po\n"
-"X-Pootle-Revision: 435172\n"
+"X-Pootle-Revision: 463932\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -399,7 +399,6 @@ msgid "Shift + Arrow Down"
 msgstr "Shift + Pil ned"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Move cursor to beginning of the next paragraph"
 msgstr "Flytt skrivemerket til begynnelsen av forrige avsnitt"
@@ -817,7 +816,7 @@ msgstr "Ctrl + Shift + Enter"
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
 msgstr ""
-"Innsetting av et nytt avsnitt like før eller etter en bolk, eller før en "
+"Innsetting av et nytt avsnitt like før eller etter en seksjpn, eller før en "
 "tabell."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A152
@@ -1319,10 +1318,9 @@ msgid "Shift + Arrow Down"
 msgstr "Shift + Pil ned"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Flytt skrivemerket til begynnelsen av forrige avsnitt"
+msgstr "Flytt skrivemerket til begynnelsen av neste avsnitt"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"

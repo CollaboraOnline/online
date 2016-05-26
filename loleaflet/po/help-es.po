@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-25 20:19+0000\n"
+"POT-Creation-Date: 2016-06-12 18:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
-"X-Pootle-Revision: 437867\n"
+"X-Pootle-Revision: 460233\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -685,6 +685,8 @@ msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
 msgstr ""
+"Tras 3 segundos en el modo de inserción, oprimir las flechas inserta filas/"
+"columnas. Mantenga oprimida Ctrl para insertar celdas"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
 msgid "Alt + Del"
@@ -695,6 +697,9 @@ msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
 msgstr ""
+"Tras 3 segundos en el modo de eliminación, oprimir las flechas elimina filas/"
+"columnas. Mantenga oprimida Ctrl para combinar la celda actual con una "
+"adyacente"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A134
 msgid "Shift + Ctrl + Del"
@@ -706,6 +711,10 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
+"Si no se ha seleccionado completamente ninguna celda, se elimina el texto "
+"entre el cursor y el final de la frase actual. Si el cursor se ubica al "
+"final de una celda y no se seleccionó completamente ninguna celda, se "
+"elimina el contenido de la próxima celda."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A135
 msgid ""
@@ -713,6 +722,9 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
+"Si no se selecciona una celda completa y el cursor se encuentra al final de "
+"la tabla, el párrafo que sigue a la tabla se eliminará, a menos que sea el "
+"último párrafo del documento."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A136
 msgid ""
@@ -720,6 +732,9 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
+"Si se seleccionan una o más celdas, se eliminarán las filas enteras "
+"incluidas en la selección. Si se seleccionan todas las filas parcial o "
+"totalmente, se eliminará toda la tabla."
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A139
 msgid "Word processor functions"
@@ -967,7 +982,7 @@ msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
 msgid "Two decimal places, thousands separator"
-msgstr ""
+msgstr "Dos decimales, separador de millares"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
 msgid "Ctrl + Shift + 1"
@@ -1135,7 +1150,7 @@ msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
 msgid "Demote list item (list item has to be selected)"
-msgstr ""
+msgstr "Mover hacia abajo un elemento de lista (debe seleccionarse el elemento)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:198"
@@ -1145,6 +1160,7 @@ msgstr "Tab"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
 msgid "Promote list item (list item has to be selected)"
 msgstr ""
+"Mover hacia arriba un elemento de lista (debe seleccionarse el elemento)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:199"
@@ -1306,10 +1322,9 @@ msgid "Shift + Arrow Down"
 msgstr "Mayús + ↓"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Mover el cursor al principio del párrafo anterior"
+msgstr "Mover el cursor al principio del párrafo siguiente"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
@@ -1440,7 +1455,7 @@ msgstr "Mayús + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgid "Move to next text object on slide / drawing page"
-msgstr ""
+msgstr "Va al siguiente objeto de texto en la diapositiva o página de dibujo"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:234"
@@ -1449,7 +1464,7 @@ msgstr "Ctrl + Intro"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "Seleccionar todo en la diapositiva o página de dibujo"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:235"

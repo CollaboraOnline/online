@@ -1,0 +1,761 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-13 18:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: am\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 1.14.0-rc1\n"
+"X-Pootle-Path: /am/libo_online/loleaflet-ui-am.po\n"
+"X-Pootle-Revision: 458584\n"
+
+#: evol.colorpicker.strings.js:2
+msgid "Theme Colors"
+msgstr ""
+
+#: evol.colorpicker.strings.js:3
+msgid "Standard Colors"
+msgstr ""
+
+#: evol.colorpicker.strings.js:4
+msgid "Web Colors"
+msgstr ""
+
+#: evol.colorpicker.strings.js:5
+msgid "Back to Palette"
+msgstr ""
+
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr ""
+
+#: evol.colorpicker.strings.js:7
+msgid "No history yet."
+msgstr ""
+
+#: unocommands.js:1
+msgid "Copy Hyperlink"
+msgstr "Hyperlink ኮፒ ማድረጊያ"
+
+#: unocommands.js:2
+msgid "Down One Level"
+msgstr "አንድ ደረጃ ወደ ታች"
+
+#: unocommands.js:3
+msgid "Up One Level"
+msgstr "አንድ ደረጃ ወደ ላይ"
+
+#: unocommands.js:4
+msgid "Edit Comment"
+msgstr "አስተያየት ማረሚያ"
+
+#: unocommands.js:5
+msgid "Insert Comment"
+msgstr "አስተያየት ማስገቢያ"
+
+#: unocommands.js:6
+msgid "Merge"
+msgstr "ማዋሀጃ"
+
+#: unocommands.js:7
+msgid "Merge Cells..."
+msgstr "ክፍሎች ማዋሀጃ..."
+
+#: unocommands.js:8
+msgid "Bring Forward"
+msgstr "ወደ ፊት ማምጫ"
+
+#: unocommands.js:9
+msgid "Send Backward"
+msgstr "ወደ ኋላ መላኪያ"
+
+#: unocommands.js:10
+msgid "Paste Special"
+msgstr "የተለየ መለጠፊያ"
+
+#: unocommands.js:11
+msgid "Unformatted Text"
+msgstr "በ ትክክል ያልቀረበ ጽሁፍ"
+
+#: dist/errormessages.js:1
+msgid ""
+"Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
+"file_path=/path/to/doc/"
+msgstr ""
+"Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
+"file_path=/path/to/doc/"
+
+#: dist/errormessages.js:2
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+
+#: dist/toolbar/toolbar.js:144
+msgid "Are you sure you want to delete this page?"
+msgstr "በ እርግጥ ይህን ገጽ ማጥፋት ይፈልጋሉ?"
+
+#: dist/toolbar/toolbar.js:336
+#: src/admin/AdminStrings.js:20
+#: src/control/Control.Menubar.js:9
+#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:93
+msgid "Save"
+msgstr "ማስቀመጫ"
+
+#: dist/toolbar/toolbar.js:338
+#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:100
+msgid "Undo"
+msgstr "መተው"
+
+#: dist/toolbar/toolbar.js:339
+#: src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:101
+msgid "Redo"
+msgstr "እንደገና መስሪያ"
+
+#: dist/toolbar/toolbar.js:345
+msgid "Bold"
+msgstr "ማድመቂያ"
+
+#: dist/toolbar/toolbar.js:346
+msgid "Italic"
+msgstr "ማዝመሚያ"
+
+#: dist/toolbar/toolbar.js:347
+msgid "Underline"
+msgstr "ከ ስሩ ማስመሪያ"
+
+#: dist/toolbar/toolbar.js:348
+msgid "Strikeout"
+msgstr "በላዩ ላይ መሰረዣ"
+
+#: dist/toolbar/toolbar.js:351
+msgid "Font color"
+msgstr "የ ፊደል ቀለም"
+
+#: dist/toolbar/toolbar.js:353
+msgid "Highlighting"
+msgstr "በማድመቅ ላይ"
+
+#: dist/toolbar/toolbar.js:355
+msgid "Align left"
+msgstr "በ ግራ ማሰለፊያ"
+
+#: dist/toolbar/toolbar.js:356
+msgid "Center horizontally"
+msgstr "በ አግድም መሀከል ላይ"
+
+#: dist/toolbar/toolbar.js:357
+msgid "Align right"
+msgstr "በ ቀኝ ማሰለፊያ"
+
+#: dist/toolbar/toolbar.js:358
+msgid "Justified"
+msgstr "እኩል ማካፈያ"
+
+#: dist/toolbar/toolbar.js:360
+msgid "Bullets on/off"
+msgstr "ነጥቦች ማብሪያ/ማጥፊያ"
+
+#: dist/toolbar/toolbar.js:361
+msgid "Numbering on/off"
+msgstr "ቁጥር መስጫ ማብሪያ/ማጥፊያ"
+
+#: dist/toolbar/toolbar.js:363
+msgid "Increase indent"
+msgstr "ማስረጊያ መጨመሪያ"
+
+#: dist/toolbar/toolbar.js:364
+msgid "Decrease indent"
+msgstr "ማስረጊያ መቀነሻ"
+
+#: dist/toolbar/toolbar.js:367
+msgid "Insert table"
+msgstr "ሰንጠረዥ ማስገቢያ"
+
+#: dist/toolbar/toolbar.js:368
+msgid "Insert comment"
+msgstr "አስተያየት ማስገቢያ"
+
+#: dist/toolbar/toolbar.js:369
+msgid "Insert graphic"
+msgstr "ንድፎች ማስገቢያ"
+
+#: dist/toolbar/toolbar.js:371
+msgid "Help"
+msgstr "እርዳታ"
+
+#: dist/toolbar/toolbar.js:373
+msgid "More"
+msgstr "ተጨማሪ"
+
+#: dist/toolbar/toolbar.js:374
+msgid "Close document"
+msgstr "ሰነድ መዝጊያ"
+
+#: dist/toolbar/toolbar.js:404
+msgid "Sum"
+msgstr "ድምር"
+
+#: dist/toolbar/toolbar.js:405
+msgid "Function"
+msgstr "ተግባር"
+
+#: dist/toolbar/toolbar.js:406
+msgid "Cancel"
+msgstr "መሰረዣ"
+
+#: dist/toolbar/toolbar.js:407
+msgid "Accept"
+msgstr "እቀበላለሁ"
+
+#: dist/toolbar/toolbar.js:418
+msgid "First sheet"
+msgstr "የ መጀመሪያ ወረቀት"
+
+#: dist/toolbar/toolbar.js:419
+msgid "Previous sheet"
+msgstr "ያለፈው ወረቀት"
+
+#: dist/toolbar/toolbar.js:420
+msgid "Next sheet"
+msgstr "የሚቀጥለው ወረቀት"
+
+#: dist/toolbar/toolbar.js:421
+msgid "Last sheet"
+msgstr "የ መጨረሻው ወረቀት"
+
+#: dist/toolbar/toolbar.js:431
+#: src/control/Control.Menubar.js:88
+msgid "Fullscreen presentation"
+msgstr "በ ሙሉ መመልከቻ ማቅረቢያ"
+
+#: dist/toolbar/toolbar.js:433
+msgid "Insert slide"
+msgstr "ተንሸራታች ማስገቢያ"
+
+#: dist/toolbar/toolbar.js:434
+#: src/control/Control.Menubar.js:85
+msgid "Duplicate slide"
+msgstr "ተንሸራታች ማባዣ"
+
+#: dist/toolbar/toolbar.js:435
+#: src/control/Control.Menubar.js:86
+msgid "Delete slide"
+msgstr "ተንሸራታች ማጥፊያ"
+
+#: dist/toolbar/toolbar.js:447
+msgid "Search:"
+msgstr "መፈለጊያ:"
+
+#: dist/toolbar/toolbar.js:452
+msgid "Search backwards"
+msgstr "የ ኋሊዮሽ መፈለጊያ"
+
+#: dist/toolbar/toolbar.js:453
+msgid "Search forward"
+msgstr "ወደ ፊት መፈለጊያ"
+
+#: dist/toolbar/toolbar.js:454
+msgid "Cancel the search"
+msgstr "ፍለጋውን መሰረዣ"
+
+#: dist/toolbar/toolbar.js:459
+#: dist/toolbar/toolbar.js:1010
+msgid "Take edit lock (others can only view)"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:459
+#: dist/toolbar/toolbar.js:1010
+msgid "VIEWING"
+msgstr "መመልከቻ"
+
+#: dist/toolbar/toolbar.js:461
+msgid "Previous page"
+msgstr "ቀደም ያለው ገጽ"
+
+#: dist/toolbar/toolbar.js:462
+msgid "Next page"
+msgstr "የሚቀጥለው ገጽ"
+
+#: dist/toolbar/toolbar.js:464
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:118
+msgid "Reset zoom"
+msgstr "እንደነበር መመለሻ ማሳያውን"
+
+#: dist/toolbar/toolbar.js:465
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:72
+#: src/control/Control.Menubar.js:117
+msgid "Zoom out"
+msgstr "በርቀት ማሳያ"
+
+#: dist/toolbar/toolbar.js:467
+#: src/control/Control.Menubar.js:30
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:116
+msgid "Zoom in"
+msgstr "በቅርብ ማሳያ"
+
+#: dist/toolbar/toolbar.js:485
+msgid "You are viewing now."
+msgstr "እርስዎ አሁን እያዩት ነው"
+
+#: dist/toolbar/toolbar.js:485
+msgid "Click here to take edit."
+msgstr "ይጫኑ እዚህ ለማረም"
+
+#: dist/toolbar/toolbar.js:549
+#: dist/toolbar/toolbar.js:908
+msgid "Size"
+msgstr "መጠን"
+
+#: dist/toolbar/toolbar.js:779
+msgid "Document saved"
+msgstr "ሰነዱ ተቀምጧል"
+
+#: dist/toolbar/toolbar.js:891
+msgid "Style"
+msgstr "ዘዴ"
+
+#: dist/toolbar/toolbar.js:903
+msgid "Font"
+msgstr "ፊደል"
+
+#: dist/toolbar/toolbar.js:927
+msgid "Previous slide"
+msgstr "ቀደም ያለው ተንሸራታች"
+
+#: dist/toolbar/toolbar.js:928
+msgid "Next slide"
+msgstr "የሚቀጥለው ተንሸራታች"
+
+#: dist/toolbar/toolbar.js:1006
+msgid "You are editing (others can only view)"
+msgstr "እርስዎ እያረሙ ነው (ሌሎች መመልከት ብቻ ይችላሉ)"
+
+#: dist/toolbar/toolbar.js:1006
+msgid "EDITING"
+msgstr "በ ማረም ላይ"
+
+#: dist/toolbar/toolbar.js:1139
+msgid "Layout"
+msgstr ""
+
+#: src/admin/AdminSocketBase.js:44
+msgid "Connection error"
+msgstr ""
+
+#: src/admin/AdminSocketOverview.js:58
+#, fuzzy
+msgid "Are you sure you want to terminate this session?"
+msgstr "በ እርግጥ ይህን ተንሸራታች ማጥፋት ይፈልጋሉ?"
+
+#: src/admin/AdminStrings.js:4
+msgid "Admin console"
+msgstr ""
+
+#: src/admin/AdminStrings.js:5
+msgid "Toggle navigation"
+msgstr ""
+
+#: src/admin/AdminStrings.js:6
+msgid "Settings"
+msgstr ""
+
+#: src/admin/AdminStrings.js:7
+msgid "Overview"
+msgstr ""
+
+#: src/admin/AdminStrings.js:8
+msgid "(current)"
+msgstr ""
+
+#: src/admin/AdminStrings.js:9
+msgid "Analytics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:10
+msgid "Dashboard"
+msgstr ""
+
+#: src/admin/AdminStrings.js:11
+msgid "Users online"
+msgstr ""
+
+#: src/admin/AdminStrings.js:12
+msgid "Documents opened"
+msgstr ""
+
+#: src/admin/AdminStrings.js:13
+msgid "Memory consumed"
+msgstr ""
+
+#: src/admin/AdminStrings.js:14
+msgid "PID"
+msgstr ""
+
+#: src/admin/AdminStrings.js:15
+msgid "Document"
+msgstr ""
+
+#: src/admin/AdminStrings.js:16
+msgid "Number of views"
+msgstr ""
+
+#: src/admin/AdminStrings.js:17
+msgid "Elapsed time"
+msgstr ""
+
+#: src/admin/AdminStrings.js:18
+msgid "Kill"
+msgstr ""
+
+#: src/admin/AdminStrings.js:19
+msgid "Graphs"
+msgstr ""
+
+#: src/admin/AdminStrings.js:21
+msgid "Cache size of memory statistics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:22
+msgid "Time interval of memory statistics (in ms)"
+msgstr ""
+
+#: src/admin/AdminStrings.js:23
+msgid "Cache size of CPU statistics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:24
+msgid "Time interval of CPU statistics (in ms)"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "kB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "MB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "GB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "TB"
+msgstr ""
+
+#: src/admin/Util.js:41
+msgid " hrs"
+msgstr ""
+
+#: src/admin/Util.js:43
+msgid " mins"
+msgstr ""
+
+#: src/admin/Util.js:45
+msgid " s"
+msgstr ""
+
+#: src/control/Control.Menubar.js:9
+#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:93
+msgid "File"
+msgstr "ፋይል"
+
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:52
+#: src/control/Control.Menubar.js:94
+msgid "Print"
+msgstr "ማተሚያ"
+
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:53
+#: src/control/Control.Menubar.js:95
+msgid "Download as"
+msgstr "የወረዱ"
+
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:53
+#: src/control/Control.Menubar.js:95
+msgid "PDF Document (.pdf)"
+msgstr "PDF ሰነድ (.pdf)"
+
+#: src/control/Control.Menubar.js:12
+msgid "ODF text document (.odt)"
+msgstr "የ ODF ጽሁፍ ሰነድ (.odt)"
+
+#: src/control/Control.Menubar.js:13
+msgid "Microsoft Word 2003 (.doc)"
+msgstr "Microsoft Word 2003 (.doc)"
+
+#: src/control/Control.Menubar.js:14
+msgid "Microsoft Word (.docx)"
+msgstr "Microsoft Word (.docx)"
+
+#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:100
+msgid "Edit"
+msgstr "ማረሚያ"
+
+#: src/control/Control.Menubar.js:19
+#: src/control/Control.Menubar.js:61
+#: src/control/Control.Menubar.js:103
+msgid "Cut"
+msgstr "መቁረጫ"
+
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:62
+#: src/control/Control.Menubar.js:104
+msgid "Copy"
+msgstr "ኮፒ"
+
+#: src/control/Control.Menubar.js:21
+#: src/control/Control.Menubar.js:63
+#: src/control/Control.Menubar.js:105
+msgid "Paste"
+msgstr "መለጠፊያ"
+
+#: src/control/Control.Menubar.js:23
+#: src/control/Control.Menubar.js:65
+#: src/control/Control.Menubar.js:107
+msgid "Select all"
+msgstr "ሁሉንም መምረጫ"
+
+#: src/control/Control.Menubar.js:25
+#: src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:109
+msgid "Insert"
+msgstr "ማስገቢያ"
+
+#: src/control/Control.Menubar.js:25
+#: src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:109
+msgid "Image"
+msgstr "ምስል"
+
+#: src/control/Control.Menubar.js:26
+msgid "Comment"
+msgstr "አስተያየት"
+
+#: src/control/Control.Menubar.js:28
+#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:114
+msgid "View"
+msgstr "መመልከቻ"
+
+#: src/control/Control.Menubar.js:28
+#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:114
+msgid "Full screen"
+msgstr "በሙሉ መመልከቻ ዘዴ"
+
+#: src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:75
+msgid "Tables"
+msgstr "ሰንጠረዦች"
+
+#: src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:75
+msgid "Rows before"
+msgstr "ረድፎች በፊት"
+
+#: src/control/Control.Menubar.js:35
+#: src/control/Control.Menubar.js:76
+msgid "Rows after"
+msgstr "ረድፎች በኋላ"
+
+#: src/control/Control.Menubar.js:37
+#: src/control/Control.Menubar.js:78
+msgid "Columns left"
+msgstr "አምዶች በ ግራ"
+
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:79
+msgid "Columns right"
+msgstr "አምዶች በ ቀኝ"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:80
+msgid "Delete"
+msgstr "ማጥፊያ"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:80
+msgid "Rows"
+msgstr "ረድፎች"
+
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:81
+msgid "Columns"
+msgstr "አምዶች"
+
+#: src/control/Control.Menubar.js:41
+#: src/control/Control.Menubar.js:42
+msgid "Table"
+msgstr "ሰንጠረዥ"
+
+#: src/control/Control.Menubar.js:42
+msgid "Select"
+msgstr "ይምረጡ"
+
+#: src/control/Control.Menubar.js:43
+#: src/control/Control.Menubar.js:111
+msgid "Row"
+msgstr "ረድፍ"
+
+#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:112
+msgid "Column"
+msgstr "አምድ"
+
+#: src/control/Control.Menubar.js:45
+msgid "Cell"
+msgstr "ክፍል"
+
+#: src/control/Control.Menubar.js:46
+#: src/control/Control.Menubar.js:82
+msgid "Merge cells"
+msgstr "ክፍሎች ማዋሀጃ"
+
+#: src/control/Control.Menubar.js:54
+msgid "ODF presentation (.odp)"
+msgstr "የ ODF ማቅረቢያ (.odp)"
+
+#: src/control/Control.Menubar.js:55
+msgid "Microsoft Powerpoint 2003 (.ppt)"
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
+
+#: src/control/Control.Menubar.js:56
+msgid "Microsoft Powerpoint (.pptx)"
+msgstr "Microsoft Powerpoint (.pptx)"
+
+#: src/control/Control.Menubar.js:84
+msgid "Slide"
+msgstr "ተንሸራታች"
+
+#: src/control/Control.Menubar.js:84
+msgid "New slide"
+msgstr "አዲስ ተንሸራታች"
+
+#: src/control/Control.Menubar.js:96
+msgid "ODF spreadsheet (.ods)"
+msgstr "የ ODF ሰንጠረዥ (.ods)"
+
+#: src/control/Control.Menubar.js:97
+msgid "Microsoft Excel 2003 (.xls)"
+msgstr "Microsoft Excel 2003 (.xls)"
+
+#: src/control/Control.Menubar.js:98
+msgid "Microsoft Excel (.xlsx)"
+msgstr "Microsoft Excel (.xlsx)"
+
+#: src/control/Control.Menubar.js:120
+msgid "Cells"
+msgstr "ክፍሎች"
+
+#: src/control/Control.Menubar.js:120
+msgid "Insert row"
+msgstr "ረድፍ ማስገቢያ"
+
+#: src/control/Control.Menubar.js:121
+msgid "Insert column"
+msgstr "አምድ ማስገቢያ"
+
+#: src/control/Control.Menubar.js:123
+msgid "Delete row"
+msgstr "ረድፍ ማጥፊያ"
+
+#: src/control/Control.Menubar.js:124
+msgid "Delete column"
+msgstr "አምድ ማጥፊያ"
+
+#: src/control/Control.Menubar.js:282
+msgid "Are you sure you want to delete this slide?"
+msgstr "በ እርግጥ ይህን ተንሸራታች ማጥፋት ይፈልጋሉ?"
+
+#: src/control/Control.Tabs.js:39
+msgid "Insert sheet before this"
+msgstr "ከዚህ በፊት ወረቀት ማስገቢያ"
+
+#: src/control/Control.Tabs.js:40
+msgid "Insert sheet after this"
+msgstr "ከዚህ በኋላ ወረቀት ማስገቢያ"
+
+#: src/control/Control.Tabs.js:41
+msgid "Delete sheet"
+msgstr "ወረቀት ማጥፊያ"
+
+#: src/control/Control.Tabs.js:45
+msgid "Are you sure you want to delete this sheet?"
+msgstr "በ እርግጥ ይህን ወረቀት ማጥፋት ይፈልጋሉ?"
+
+#: src/control/Control.Tabs.js:54
+msgid "Rename sheet"
+msgstr "ወረቀት እንደገና መሰየሚያ"
+
+#: src/control/Control.Tabs.js:58
+msgid "Enter new sheet name"
+msgstr "አዲስ የ ወረቀት ስም ያስገቡ"
+
+#: src/core/Socket.js:14
+msgid "Oops, there is a problem connecting to LibreOffice Online : "
+msgstr "ውይ! ችግር ተፈጥሯል በ መገናኘት ላይ እንዳለ ከ LibreOffice በ መስመር ላይ : "
+
+#: src/core/Socket.js:132
+msgid "Unsupported server version."
+msgstr "ያልተደገፈ የ ሰርቨር እትም"
+
+#: src/core/Socket.js:145
+msgid "Document requires password to view."
+msgstr "ሰነድ ለ መመልከት የ መግቢያ ቃል ያስፈልጋል"
+
+#: src/core/Socket.js:148
+msgid "Document requires password to modify."
+msgstr "ሰነድ ለማረም የ መግቢያ ቃል ያስፈልጋል"
+
+#: src/core/Socket.js:150
+msgid "Hit Cancel to open in view-only mode."
+msgstr "ይጫኑ መሰረዣ ለ መክፈት በ መመልከቻ-ብቻ ዘዴ"
+
+#: src/core/Socket.js:154
+msgid "Wrong password provided. Please try again."
+msgstr "የ ተሳሳተ የ መግቢያ ቃል: እባክዎን እንደገና ይሞክሩ"
+
+#: src/core/Socket.js:291
+msgid ""
+"Well, this is embarrassing, we cannot connect to your document. Please try "
+"again."
+msgstr "ውይ! ይህ አሳፋሪ ነው: ከ እርስዎ ሰነድ ጋር መገናኘት አልቻልንም: እባክዎን ትንሽ ቆይተው እንደገና ይሞክሩ"
+
+#: src/core/Socket.js:294
+msgid "We are sorry, this is an unexpected connection error. Please try again."
+msgstr "እናዝናለን: ይህ ያልተጠበቀ የ ግንኙነት ስህተት ነው: እባክዎን ትንሽ ቆይተው እንደገና ይሞክሩ"
+
+#: src/map/Map.js:116
+msgid "Initializing..."
+msgstr ""
+
+#: src/map/Map.js:802
+msgid "Saving..."
+msgstr ""
+
+#: src/map/Map.js:805
+msgid "Loading..."
+msgstr ""
