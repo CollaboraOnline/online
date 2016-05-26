@@ -269,21 +269,39 @@ button.leaflet-control-search-next
 	cursor:pointer;
 }
 
-
-#tablePicker table {
-  border: 1px solid #808080;
+.inserttable-pop {
+    z-index: 100000;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
-#tablePicker td {
-  border: 1px solid #808080 !important;
-  width: 15px;
-  height: 15px;
+/* for 10x10 grid 10x20+10*.col.margin */
+.inserttable-grid {
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.5);
+    position: relative;
+    padding: 2px;
+    display: block;
+    width: 230px;
+    height: 230px;
 }
 
-#tablePicker td:hover {
-  background: #87CEFA;
+.inserttable-grid .row {
+    height: 20px;
 }
 
-#tablePicker div {
-    text-align:left;
+.inserttable-grid .col {
+    height: 100%;
+    float: left;
+    padding: 2px;
+    width: 20px;
+    border: 1px;
+    border-style: solid;
+    border-color: rgba(120, 120, 120, 0.5);
+    background: rgba(255, 255, 255, 1);
+    margin: 3px 0 0 3px;
+}
+
+.inserttable-grid .col.bright {
+    border: 0px;
+    background: rgba(66, 151, 215, 1);
 }

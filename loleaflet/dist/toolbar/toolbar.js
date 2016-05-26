@@ -47,7 +47,7 @@ $(function () {
 			{ type: 'break', id: 'incdecindent' },
 			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Insert comment"), uno: 'InsertAnnotation' },
 			{ type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _("Insert graphic") },
-			{ type: 'html',  id: 'inserttable-html', html: '<div id="tablePicker" class="evo-pop loleaflet-font" style="position:absolute !important;display:none"><div id="tpstatus"></div><table id="insert-table"></table></div>' },
+			{ type: 'html',  id: 'inserttable-html', html: '<div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all" style="position: absolute; display: none;"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div>' },
 			{ type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _("Insert table") },
 			{ type: 'break' },
 			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
@@ -75,7 +75,7 @@ $(function () {
 				$("#backColorPicker").on("change.color", onColorPick);
 			}
 
-			tablePickerInit();
+			insertTable();
 		}
 	});
 
@@ -290,12 +290,7 @@ function onClick(id) {
 		L.DomUtil.get('insertgraphic').click();
 	}
 	else if (id === 'inserttable') {
-		// toggles tablePicker
-		if (L.DomUtil.get('tablePicker').style.display == 'none') {
-			L.DomUtil.get('tablePicker').style.display = '';
-		} else {
-			L.DomUtil.get('tablePicker').style.display = 'none';
-		}
+		$('#inserttable-popup').toggle();
 	}
 	else if (id === 'fontcolor') {
 		// absolutely no idea why, but without the timeout, the popup is
@@ -1014,6 +1009,7 @@ $(document).ready(function() {
 	if (closebutton) {
 		toolbar.show('close');
 	}
+	inserttable();
 });
 
 function resizeToolbar() {
@@ -1058,73 +1054,58 @@ function resizeToolbar() {
 	}
 }
 
-function tablePickerInit() {
-	$( "#tablePicker" ).draggable();
-	var tbl = document.getElementById('insert-table');
-	if (!tbl.childElementCount) {
-		for (var i = 0; i < 3; i++) {
-			var tr = tbl.insertRow();
-			for (var j = 0; j < 3; j++) {
-				var td = tr.insertCell();
-			}
+function insertTable() {
+	var rows = 10;
+	var cols = 10;
+	var $grid = $('.inserttable-grid');
+	var $popup = $('#inserttable-popup');
+	var $status = $("#inserttable-status");
+
+	// Return if already initialized
+	if ($grid.children().length) {
+		return;
+	}
+
+	// init
+	for (var r = 0; r < rows; r++) {
+		var $row = $('<div/>').addClass('row');
+		$grid.append($row);
+		for (var c = 0; c < cols; c++) {
+			var $col = $('<div/>').addClass('col');
+			$row.append($col);
 		}
-		walkCells();
 	}
-}
 
-// tablePicker - GUI
-function walkCells() {
-	var table = document.getElementById('insert-table');
-	var cells = table.getElementsByTagName("td");
+	// events
+	$grid.on({
+		mouseover: function () {
+			var col = $(this).index() + 1;
+			var row = $(this).parent().index() + 1;
+			$('.col').removeClass('bright');
+			$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
+			.addClass('bright');
+			$status.html(col+"x"+row);
 
-	for (var i = 0; i < cells.length; i++) {
-		var cell = cells[i];
-		cell.onmouseover = function() {
-			var cellIndex = this.cellIndex + 1;
-			var rowIndex = this.parentNode.rowIndex + 1;
-			var div = document.getElementById('tpstatus');
-			div.innerHTML = cellIndex + " × " + rowIndex;
-			for (var j = 0; j < cells.length; j++) {
-				var celly = cells[j];
-				if (celly.parentNode.rowIndex < rowIndex & celly.cellIndex < cellIndex) {
-					celly.style.background = '#87CEFA';
-				} else {
-					celly.style.background = '';
-				}
-			}
-			if (cellIndex == table.rows[0].cells.length) {
-				for (var k = 0; k < table.rows.length; k++) {
-					table.rows[k].insertCell();
-					walkCells();
-				}
-			} else if (rowIndex == table.rows.length) {
-				var tr = table.insertRow();
-				for (var j = 0; j < table.rows[0].cells.length; j++) {
-					var td = tr.insertCell();
-				}
-				walkCells();
-			} else if ((table.rows.length>3 && rowIndex < table.rows.length-1)) {
-				table.deleteRow(table.rows.length-1);
-				walkCells();
-			} else if (table.rows[0].cells.length>3 && cellIndex < table.rows[0].cells.length-1 ) {
-				for (var j = 0; j < table.rows.length; j++) {
-					var tr = table.rows[j];
-					tr.deleteCell(table.rows[0].cells.length-1);
-				}
-				walkCells();
-			}
-		};
-
-		cell.onclick = function(){
-			var cellIndex = this.cellIndex + 1;
-			var rowIndex = this.parentNode.rowIndex + 1;
+		},
+		click: function(){
+			var col = $(this).index() + 1;
+			var row = $(this).parent().index() + 1;
+			$popup.toggle();
+			$('.col').removeClass('bright');
+			$status.html('<br/>');
 			var msg = 'uno .uno:InsertTable {' +
-		   ' "Columns": { "type": "long","value": ' +
-		   cellIndex +
-		   ' }, "Rows": { "type": "long","value": ' +
-		   rowIndex +' }}';
+				' "Columns": { "type": "long","value": '
+				+ col +
+				' }, "Rows": { "type": "long","value": '
+				+ row +' }}';
 			map._socket.sendMessage(msg);
-			L.DomUtil.get('tablePicker').style.display = 'none';
-		};
-	}
+		}
+	}, ".col");
+
+	// close dialog on mouseleave
+	$popup.mouseleave(function(){
+		$(this).hide();
+		$('.col').removeClass('bright');
+		$status.html('<br/>');
+	});
 }
