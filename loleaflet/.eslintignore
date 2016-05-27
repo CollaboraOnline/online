@@ -1,1 +1,5 @@
+# We only directly edit toolbar.js in dist/
+dist/**/*.js
+!dist/toolbar/toolbar.js
+
 src/admin/Base.js
