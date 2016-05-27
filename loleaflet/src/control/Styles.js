@@ -297,5 +297,24 @@ L.Styles = {
 		'Hintergrund':'background',
 		'Hintergrundobjekte':'backgroundobjects',
 		'Notizen':'notes'
-	}
+	},
+
+	impressLayout : [
+		{id: 0, text: 'Title Slide'},
+		{id: 1, text: 'Title, Content'},
+		{id: 3, text: 'Title and 2 Content'},
+		{id: 19, text: 'Title Only'},
+		{id: 20, text: 'Blank Slide'},
+		{id: 32, text: 'Centered Text'},
+		{id: 12, text: 'Title, Content and 2 Content'},
+		{id: 15, text: 'Title, 2 Content and Content'},
+		{id: 16, text: 'Title, 2 Content over Content'},
+		{id: 14, text: 'Title, Content over Content'},
+		{id: 18, text: 'Title, 4 Content'},
+		{id: 34, text: 'Title, 6 Content'},
+		{id: 27, text: 'Vertical Title, Text, Chart'},
+		{id: 28, text: 'Vertical Title, Vertical Text'},
+		{id: 29, text: 'Title, Vertical Content'},
+		{id: 30, text: 'Title, 2 Vertical Content'}
+	]
 };

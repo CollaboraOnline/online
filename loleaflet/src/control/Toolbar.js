@@ -85,6 +85,20 @@ L.Map.include({
 		}
 	},
 
+	applyLayout: function (layout) {
+		if (!layout) {
+			this.fire('error', {cmd: 'setLayout', kind: 'incorrectparam'});
+			return;
+		}
+		if (this._permission === 'edit') {
+			var msg = 'uno .uno:AssignLayout {' +
+					'"WhatPage":{"type":"unsigned short", "value": "' + this.getCurrentPartNumber() + '"},' +
+					'"WhatLayout":{"type":"unsigned short", "value": "' + layout + '"}' +
+					'}';
+			this._socket.sendMessage(msg);
+		}
+	},
+
 	sendUnoCommand: function (command, json) {
 		if (this._permission === 'edit') {
 			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));

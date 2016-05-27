@@ -377,7 +377,7 @@ function onStyleSelect (e) {
 		map.applyStyle(style, 'CellStyles');
 	}
 	else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
-		map.applyStyle(style, 'Default');
+		map.applyLayout(style);
 	}
 	map.focus();
 }
@@ -718,21 +718,9 @@ map.on('updatetoolbarcommandvalues', function (e) {
 			styles = e.commandValues.CellStyles;
 		}
 		else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
-			Object.keys(e.commandValues).forEach(function(style) {
-				switch (style) {
-					case 'graphics':
-					case 'table':
-					case 'cell':
-					case 'Commands':
-						break;
-
-					default:
-						if ( styles.length === 0 ) {
-							styles = e.commandValues[style];
-						}
-						break;
-				}
-			});
+			L.Styles.impressLayout.forEach(function(layout) {
+				data = data.concat({id: layout.id, text: layout.text});
+			}, this);
 		}
 
 		if (topStyles.length > 0) {
