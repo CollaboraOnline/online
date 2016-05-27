@@ -110,7 +110,7 @@ L.Marker = L.Layer.extend({
 		    classToAdd = 'leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide');
 
 		var icon = options.icon.createIcon(this._icon),
-			addIcon = false;
+		    addIcon = false;
 
 		// if we're not reusing the icon, remove the old one and init new one
 		if (icon !== this._icon) {
@@ -144,7 +144,7 @@ L.Marker = L.Layer.extend({
 		}
 
 		var newShadow = options.icon.createShadow(this._shadow),
-			addShadow = false;
+		    addShadow = false;
 
 		if (newShadow !== this._shadow) {
 			this._removeShadow();
@@ -174,7 +174,7 @@ L.Marker = L.Layer.extend({
 		if (this.options.riseOnHover) {
 			this.off({
 				mouseover: this._bringToFront,
-			    mouseout: this._resetZIndex
+				mouseout: this._resetZIndex
 			});
 		}
 

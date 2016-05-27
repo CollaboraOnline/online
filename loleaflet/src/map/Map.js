@@ -230,7 +230,7 @@ L.Map = L.Evented.extend({
 
 	panInsideBounds: function (bounds, options) {
 		var center = this.getCenter(),
-			newCenter = this._limitCenter(center, this._zoom, bounds);
+		    newCenter = this._limitCenter(center, this._zoom, bounds);
 
 		if (center.equals(newCenter)) { return this; }
 
@@ -738,10 +738,10 @@ L.Map = L.Evented.extend({
 			vex.dialogID = options.id;
 			vex.globalID += 1;
 			options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
-			  vex: options
+				vex: options
 			});
 			options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
-			  vex: options
+				vex: options
 			});
 
 			options.$vexOverlay.bind('click.vex', function(e) {
@@ -753,7 +753,7 @@ L.Map = L.Evented.extend({
 			options.$vex.append(options.$vexOverlay);
 
 			options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).data({
-			  vex: options
+				vex: options
 			});
 			options.$vex.append(options.$vexContent);
 
@@ -815,7 +815,7 @@ L.Map = L.Evented.extend({
 
 	_isMouseEnteringLeaving: function (e) {
 		var target = e.target || e.srcElement,
-			related = e.relatedTarget;
+		    related = e.relatedTarget;
 
 		if (!target) { return false; }
 
@@ -830,7 +830,7 @@ L.Map = L.Evented.extend({
 		// find the layer the event is propagating from
 		var target = this._targets[L.stamp(e.target || e.srcElement)],
 			//type = e.type === 'keypress' && e.keyCode === 13 ? 'click' : e.type;
-			type = e.type;
+		    type = e.type;
 
 		// we need to keep track if we have entered/left the map
 		this._mouseEnteringLeaving = false;

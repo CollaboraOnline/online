@@ -37,8 +37,8 @@ L.Log = {
 
 	save: function () {
 		var blob = new Blob([this._getEntries()], {type: 'text/csv'}),
-			e = document.createEvent('MouseEvents'),
-			a = document.createElement('a');
+		    e = document.createEvent('MouseEvents'),
+		    a = document.createElement('a');
 
 		a.download = Date.now() + '.csv';
 		a.href = window.URL.createObjectURL(blob);

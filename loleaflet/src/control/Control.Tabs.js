@@ -53,15 +53,15 @@ L.Control.Tabs = L.Control.extend({
 				 },
 				'renamesheet': {name: _('Rename sheet'),
 							callback: function(key, options) {
-							var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
-							vex.dialog.open({
-								message: _('Enter new sheet name'),
-								input: '<input name="sheetname" type="text" required />',
-								callback: function(data) {
-									map.renamePage(data.sheetname, nPos);
-								}
-							});
-						}}
+								var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
+								vex.dialog.open({
+									message: _('Enter new sheet name'),
+									input: '<input name="sheetname" type="text" required />',
+									callback: function(data) {
+										map.renamePage(data.sheetname, nPos);
+									}
+								});
+							}}
 			},
 			zIndex: 10
 		});

@@ -66,10 +66,10 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 
 	_setUpAxis: function() {
 		this._xScale = d3.scale.linear().range([this._graphMargins.left, this._graphWidth - this._graphMargins.right]).domain([d3.min(this._memStatsData, function(d) {
-				return d.time;
-			}), d3.max(this._memStatsData, function(d) {
-				return d.time;
-			})]);
+			return d.time;
+		}), d3.max(this._memStatsData, function(d) {
+			return d.time;
+		})]);
 
 
 		this._yScale = d3.scale.linear().range([this._graphHeight - this._graphMargins.bottom, this._graphMargins.top]).domain([d3.min(this._memStatsData, function(d) {

@@ -93,7 +93,7 @@ L.cursor = function (latlng, options) {
 
 L.Cursor.getCursorURL = function (localPath) {
 	var scripts = document.getElementsByTagName('script'),
-		leafletRe = /[\/^]leaflet[\-\._]?([\w\-\._]*)\.js\??/;
+	    leafletRe = /[\/^]leaflet[\-\._]?([\w\-\._]*)\.js\??/;
 
 	var i, len, src, path;
 

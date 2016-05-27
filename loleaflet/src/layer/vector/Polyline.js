@@ -133,7 +133,7 @@ L.Polyline = L.Path.extend({
 
 		// project bounds as well to use later for Canvas hit detection/etc.
 		var w = this._clickTolerance(),
-			p = new L.Point(w, -w);
+		    p = new L.Point(w, -w);
 
 		if (this._latlngs.length) {
 			this._pxBounds = new L.Bounds(
@@ -198,7 +198,7 @@ L.Polyline = L.Path.extend({
 	// simplify each clipped part of the polyline for performance
 	_simplifyPoints: function () {
 		var parts = this._parts,
-			tolerance = this.options.smoothFactor;
+		    tolerance = this.options.smoothFactor;
 
 		for (var i = 0, len = parts.length; i < len; i++) {
 			parts[i] = L.LineUtil.simplify(parts[i], tolerance);

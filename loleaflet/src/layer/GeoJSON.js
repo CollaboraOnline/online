@@ -240,7 +240,7 @@ L.LayerGroup.include({
 		}
 
 		var isGeometryCollection = type === 'GeometryCollection',
-			jsons = [];
+		    jsons = [];
 
 		this.eachLayer(function (layer) {
 			if (layer.toGeoJSON) {
