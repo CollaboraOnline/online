@@ -181,8 +181,8 @@ L.Map.Keyboard = L.Handler.extend({
 
 	_setPanOffset: function (pan) {
 		var keys = this._panKeys = {},
-			codes = this.navigationKeyCodes,
-			i, len;
+		    codes = this.navigationKeyCodes,
+		    i, len;
 
 		for (i = 0, len = codes.left.length; i < len; i++) {
 			keys[codes.left[i]] = [-1 * pan, 0];
@@ -200,8 +200,8 @@ L.Map.Keyboard = L.Handler.extend({
 
 	_setZoomOffset: function (zoom) {
 		var keys = this._zoomKeys = {},
-			codes = this.navigationKeyCodes,
-			i, len;
+		    codes = this.navigationKeyCodes,
+		    i, len;
 
 		for (i = 0, len = codes.zoomIn.length; i < len; i++) {
 			keys[codes.zoomIn[i]] = zoom;
@@ -371,19 +371,19 @@ L.Map.Keyboard = L.Handler.extend({
 			// Ctrl + Alt
 			if (!e.originalEvent.shiftKey) {
 				switch (e.originalEvent.keyCode) {
-					case 53: // 5
-						this._map._socket.sendMessage('uno .uno:Strikeout');
-						return true;
-					case 70: // f
-						this._map._socket.sendMessage('uno .uno:InsertFootnote');
-						return true;
-					case 67: // c
-					case 77: // m
-						this._map._socket.sendMessage('uno .uno:InsertAnnotation');
-						return true;
-					case 68: // d
-						this._map._socket.sendMessage('uno .uno:InsertEndnote');
-						return true;
+				case 53: // 5
+					this._map._socket.sendMessage('uno .uno:Strikeout');
+					return true;
+				case 70: // f
+					this._map._socket.sendMessage('uno .uno:InsertFootnote');
+					return true;
+				case 67: // c
+				case 77: // m
+					this._map._socket.sendMessage('uno .uno:InsertAnnotation');
+					return true;
+				case 68: // d
+					this._map._socket.sendMessage('uno .uno:InsertEndnote');
+					return true;
 				}
 			}
 
@@ -391,45 +391,45 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		switch (e.originalEvent.keyCode) {
-			case 51: // 3
-				if (this._map.getDocType() === 'spreadsheet') {
-					this._map._socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
-					this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
-					return true;
-				}
-				return false;
-			case 53: // 5
-				if (this._map.getDocType() === 'spreadsheet') {
-					this._map._socket.sendMessage('uno .uno:Strikeout');
-					return true;
-				}
-				return false;
-			case 67: // c
-			case 88: // x
-			case 99: // c (Safari)
-			case 120: // x (Safari)
-			case 91: // Left Cmd (Safari)
-			case 93: // Right Cmd (Safari)
-				// we prepare for a copy or cut event
-				this._map._docLayer._textArea.value = 'dummy text';
-				this._map._docLayer._textArea.focus();
-				this._map._docLayer._textArea.select();
+		case 51: // 3
+			if (this._map.getDocType() === 'spreadsheet') {
+				this._map._socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
+				this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 				return true;
-			case 80: // p
-				this._map.print();
+			}
+			return false;
+		case 53: // 5
+			if (this._map.getDocType() === 'spreadsheet') {
+				this._map._socket.sendMessage('uno .uno:Strikeout');
 				return true;
-			case 86: // v
-			case 118: // v (Safari)
-				return true;
-			case 112: // f1
-				this._map._socket.sendMessage('uno .uno:NoteVisible');
-				return true;
-			case 188: // ,
-				this._map._socket.sendMessage('uno .uno:SubScript');
-				return true;
-			case 190: // .
-				this._map._socket.sendMessage('uno .uno:SuperScript');
-				return true;
+			}
+			return false;
+		case 67: // c
+		case 88: // x
+		case 99: // c (Safari)
+		case 120: // x (Safari)
+		case 91: // Left Cmd (Safari)
+		case 93: // Right Cmd (Safari)
+			// we prepare for a copy or cut event
+			this._map._docLayer._textArea.value = 'dummy text';
+			this._map._docLayer._textArea.focus();
+			this._map._docLayer._textArea.select();
+			return true;
+		case 80: // p
+			this._map.print();
+			return true;
+		case 86: // v
+		case 118: // v (Safari)
+			return true;
+		case 112: // f1
+			this._map._socket.sendMessage('uno .uno:NoteVisible');
+			return true;
+		case 188: // ,
+			this._map._socket.sendMessage('uno .uno:SubScript');
+			return true;
+		case 190: // .
+			this._map._socket.sendMessage('uno .uno:SuperScript');
+			return true;
 		}
 		if (e.type === 'keypress' && (e.originalEvent.ctrlKey || e.originalEvent.metaKey) &&
 			(e.originalEvent.key === 'c' || e.originalEvent.key === 'v' || e.originalEvent.key === 'x')) {

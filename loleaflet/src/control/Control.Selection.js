@@ -9,7 +9,7 @@ L.Control.Selection = L.Control.extend({
 
 	onAdd: function (map) {
 		var partName = 'leaflet-control-editviewswitch',
-			container = L.DomUtil.create('label', partName + ' leaflet-bar');
+		    container = L.DomUtil.create('label', partName + ' leaflet-bar');
 
 		this._checkBox = L.DomUtil.create('input', 'editview-cb', container);
 		this._checkBox.type = 'checkbox';

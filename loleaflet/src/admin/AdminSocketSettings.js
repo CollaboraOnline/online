@@ -33,7 +33,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 		this.socket.send('settings');
 	},
 
-    onSocketMessage: function(e) {
+	onSocketMessage: function(e) {
 		var textMsg;
 		if (typeof e.data === 'string') {
 			textMsg = e.data;

@@ -100,7 +100,7 @@ L.Draggable = L.Evented.extend({
 			if (e.currentTarget && e.currentTarget.frameElement
 				&& L.DomUtil.hasClass(e.currentTarget.frameElement, 'resize-detector')) {
 				var rect = this._map._container.getBoundingClientRect(),
-					correction = new L.Point(rect.left, rect.top);
+				    correction = new L.Point(rect.left, rect.top);
 				offset = offset.add(correction);
 			}
 			if (this._map.getDocSize().x < this._map.getSize().x) {

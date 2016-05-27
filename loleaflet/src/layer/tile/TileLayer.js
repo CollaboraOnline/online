@@ -127,7 +127,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._invalidateClientVisibleArea();
 	},
 
-    onAdd: function (map) {
+	onAdd: function (map) {
 		this._initContainer();
 		this._getToolbarCommandsValues();
 		this._selections = new L.LayerGroup();
@@ -620,7 +620,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onStateChangedMsg: function (textMsg) {
 		var unoMsg = textMsg.substr(14).split('=');
 		var commandName = '',
-			state = '';
+		    state = '';
 		if (unoMsg.length > 0) {
 			commandName = unoMsg[0];
 		}
@@ -1286,7 +1286,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-    _invalidatePreviews: function () {
+	_invalidatePreviews: function () {
 		if (this._map._docPreviews && this._previewInvalidations.length > 0) {
 			var toInvalidate = {};
 			for (var i = 0; i < this._previewInvalidations.length; i++) {
