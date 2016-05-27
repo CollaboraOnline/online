@@ -1,201 +1,73 @@
 /*
  * LibreOffice Online toolbar
  */
-$(function () {
-	$('#toolbar-up-more').w2toolbar({
-		name: 'toolbar-up-more',
-		items: [
-		],
-		onClick: function (e) {
-			onClick(e.target);
+
+/* global $ map closebutton w2ui vex _ */
+
+function onDelete(e) {
+	if (e !== false) {
+		map.deletePage();
+	}
+}
+
+function resizeToolbar() {
+	var hasMoreItems = false;
+	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
+	// move items from toolbar-up-more -> toolbar-up
+	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
+		var item = toolbarUpMore.items[0];
+		if (!item) {
+			break;
 		}
-	});
+		toolbarUpMore.items.shift();
+		toolbarUp.insert('right', item);
+	}
 
-	$('#toolbar-up').w2toolbar({
-		name: 'toolbar-up',
-		items: [
-			{ type: 'html', id: 'left' },
-			{ type: 'button',  id: 'save', img: 'save', hint: _("Save"), uno: 'Save' },
-			{ type: 'break' },
-			{ type: 'button',  id: 'undo',  img: 'undo', hint: _("Undo"), uno: 'Undo' },
-			{ type: 'button',  id: 'redo',  img: 'redo', hint: _("Redo"), uno: 'Redo' },
-			{ type: 'break' },
-			{ type: 'html',   id: 'styles', html: '<select class="styles-select"></select>' },
-			{ type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>' },
-			{ type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>' },
-			{ type: 'break' },
-			{ type: 'button',  id: 'bold',  img: 'bold', hint: _("Bold"), uno: 'Bold' },
-			{ type: 'button',  id: 'italic', img: 'italic', hint: _("Italic"), uno: 'Italic' },
-			{ type: 'button',  id: 'underline',  img: 'underline', hint: _("Underline"), uno: 'Underline' },
-			{ type: 'button',  id: 'strikeout', img: 'strikeout', hint: _("Strikeout"), uno: 'Strikeout' },
-			{ type: 'break' },
-			{ type: 'html',  id: 'fontcolor-html', html: '<input id="fontColorPicker" style="display:none;">' },
-			{ type: 'button',  id: 'fontcolor', img: 'color', hint: _("Font color") },
-			{ type: 'html',  id: 'backcolor-html', html: '<input id="backColorPicker" style="display:none;">' },
-			{ type: 'button',  id: 'backcolor', img: 'backcolor', hint: _("Highlighting") },
-			{ type: 'break' },
-			{ type: 'button',  id: 'alignleft',  img: 'alignleft', hint: _("Align left"), uno: 'LeftPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"1"}}'  },
-			{ type: 'button',  id: 'alignhorizontal',  img: 'alignhorizontal', hint: _("Center horizontally"), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}' },
-			{ type: 'button',  id: 'alignright',  img: 'alignright', hint: _("Align right"), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}' },
-			{ type: 'button',  id: 'alignblock',  img: 'alignblock', hint: _("Justified"), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}' },
-			{ type: 'break' },
-			{ type: 'button',  id: 'bullet',  img: 'bullet', hint: _("Bullets on/off"), uno: 'DefaultBullet' },
-			{ type: 'button',  id: 'numbering',  img: 'numbering', hint: _("Numbering on/off"), uno: 'DefaultNumbering' },
-			{ type: 'break' },
-			{ type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _("Increase indent"), uno: 'IncrementIndent' },
-			{ type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _("Decrease indent"), uno: 'DecrementIndent' },
-			{ type: 'break', id: 'incdecindent' },
-			{ type: 'html',  id: 'inserttable-html', html: '<div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all" style="position: absolute; display: none;"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div>' },
-			{ type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _("Insert table") },
-			{ type: 'button',  id: 'annotation', img: 'annotation', hint: _("Insert comment"), uno: 'InsertAnnotation' },
-			{ type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _("Insert graphic") },
-			{ type: 'break' },
-			{ type: 'button',  id: 'help',  img: 'help', hint: _("Help") },
-			{ type: 'html', id: 'right' },
-			{ type: 'button',  id: 'more', img: 'more', hint: _("More") },
-			{ type: 'button',  id: 'close',  img: 'closedoc', hint: _("Close document"), hidden: true }
-		],
-		onClick: function (e) {
-			onClick(e.target);
-		},
-		onRefresh: function(e) {
-			if (!L.DomUtil.get('fontcolorindicator')) {
-				var fontColorIndicator = L.DomUtil.create('div', 'font-color-indicator', L.DomUtil.get('tb_toolbar-up_item_fontcolor'));
-				fontColorIndicator.id = 'fontcolorindicator';
+	// move items from toolbar-up -> toolbar-up-more
+	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
+		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
+		item = toolbarUp.get(itemId);
+		toolbarUp.remove(itemId);
+		toolbarUpMore.insert(toolbarUpMore.items[0], item);
+		hasMoreItems = true;
+	}
 
-				$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
-				$("#fontColorPicker").on("change.color", onColorPick);
-			}
-
-			if (!L.DomUtil.get('backcolorindicator')) {
-				var backColorIndicator = L.DomUtil.create('div', 'back-color-indicator', L.DomUtil.get('tb_toolbar-up_item_backcolor'));
-				backColorIndicator.id = 'backcolorindicator';
-
-				$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
-				$("#backColorPicker").on("change.color", onColorPick);
-			}
-
-			insertTable();
-		}
-	});
-
-	$('#formulabar').w2toolbar({
-		name: 'formulabar',
-		items: [
-			{ type: 'html',  id: 'left' },
-			{ type: 'button',  id: 'sum',  img: 'autosum', hint: _("Sum") },
-			{ type: 'button',  id: 'function',  img: 'equal', hint: _("Function") },
-			{ type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _("Cancel") },
-			{ type: 'button', hidden: true, id: 'acceptformula',  img: 'accepttrackedchanges', hint: _("Accept") },
-			{ type: 'html', id: 'formula', html: '<input id="formulaInput" onkeyup="onFormulaInput()"' +
-			   	'onblur="onFormulaBarBlur()" onfocus="onFormulaBarFocus()" type=text>' }
-		],
-		onClick: function (e) {
-			onClick(e.target);
-		}
-	});
-	$('#spreadsheet-toolbar').w2toolbar({
-		name: 'spreadsheet-toolbar',
-		items: [
-			{ type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _("First sheet") },
-			{ type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _("Previous sheet") },
-			{ type: 'button',  id: 'nextrecord',  img: 'nextrecord', hidden: true, hint: _("Next sheet") },
-			{ type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _("Last sheet") }
-		],
-		onClick: function (e) {
-			onClick(e.target);
-		}
-	});
-	$('#presentation-toolbar').w2toolbar({
-		name: 'presentation-toolbar',
-		items: [
-			{ type: 'html',  id: 'left' },
-			{ type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _("Fullscreen presentation") },
-			{ type: 'break', id: 'presentationbreak', hidden:true },
-			{ type: 'button',  id: 'insertpage', img: 'insertpage', hidden:true, hint: _("Insert slide") },
-			{ type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hidden:true, hint: _("Duplicate slide") },
-			{ type: 'button',  id: 'deletepage', img: 'deletepage', hidden:true, hint: _("Delete slide") },
-			{ type: 'html',  id: 'right' }
-		],
-		onClick: function (e) {
-			onClick(e.target);
-		}
-	});
-	$('#toolbar-down').w2toolbar({
-		name: 'toolbar-down',
-		items: [
-			{ type: 'html',  id: 'search',
-				html: '<div style="padding: 3px 10px;" class="loleaflet-font">'+
-					  ' ' + _("Search:") +
-					  '    <input size="10" id="search-input" onkeypress="onSearch(event)"' +
-					  			'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>'+
-					  '</div>'
-			},
-			{ type: 'button',  id: 'searchprev', img: 'prev', hint: _("Search backwards"), disabled: true },
-			{ type: 'button',  id: 'searchnext', img: 'next', hint: _("Search forward"), disabled: true },
-			{ type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _("Cancel the search"), hidden: true },
-			{ type: 'html',  id: 'left' },
-			{ type: 'html',  id: 'right' },
-			{ type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>' },
-			{ type: 'break' },
-			{ type: 'button',  id: 'takeedit', img: 'edit', hint: _("Take edit lock (others can only view)"), caption: _('VIEWING')},
-			{ type: 'break' },
-			{ type: 'button',  id: 'prev', img: 'prev', hint: _("Previous page") },
-			{ type: 'button',  id: 'next', img: 'next', hint: _("Next page") },
-			{ type: 'break', id: 'prevnextbreak' },
-			{ type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _("Reset zoom") },
-			{ type: 'button',  id: 'zoomout', img: 'zoomout', hint: _("Zoom out") },
-			{ type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>'},
-			{ type: 'button',  id: 'zoomin', img: 'zoomin', hint: _("Zoom in") }
-		],
-		onClick: function (e) {
-			onClick(e.target);
-		}
-	});
-});
-
-// This object is used to track enabled/disabled state when one is in view mode
-var formatButtons = {
-	'undo': true, 'redo': true, 'save': true,
-	'bold': true, 'italic': true, 'underline': true, 'strikeout': true,
-	'annotation': true, 'inserttable': true,
-	'fontcolor': true, 'backcolor': true, 'bullet': true, 'numbering': true,
-	'alignleft': true, 'alignhorizontal': true, 'alignright': true, 'alignblock': true,
-	'incrementindent': true, 'decrementindent': true, 'insertgraphic': true
-};
-
-var takeEditPopupMessage = '<div>' + _("You are viewing now.") + '<br/>' + _("Click here to take edit.") + '</div>';
-var takeEditPopupTimeout = null;
-
-function onSearch(e) {
-	if (e.keyCode === 13) {
-		var toolbar = w2ui['toolbar-down'];
-		map.search(L.DomUtil.get('search-input').value);
-		toolbar.enable('searchprev');
-		toolbar.enable('searchnext');
-		toolbar.show('cancelsearch');
+	if (hasMoreItems) {
+		w2ui['toolbar-up'].show('more');
 	}
 	else {
-		map.fire('requestloksession');
+		w2ui['toolbar-up'].hide('more');
+	}
+
+	// resize toolbar-up-more
+	var lastItem = $('#toolbar-up-more>table>tbody>tr>td[valign="middle"]').last();
+	if (lastItem.length) {
+		$('#toolbar-up-more').width($(lastItem).position().left + $(lastItem).width());
+		w2ui['toolbar-up-more'].render();
+	} else {
+		$('#toolbar-up-more').hide();
+		var toolbar = w2ui['toolbar-up'];
+		toolbar.uncheck('more');
 	}
 }
 
 function onClick(id) {
 	if (w2ui['toolbar-up'].get(id) !== null) {
 		var toolbar = w2ui['toolbar-up'];
-		var item = toolbar.get(id) ;
+		var item = toolbar.get(id);
 	}
-	else if (w2ui['formulabar'].get(id) !== null) {
-		toolbar = w2ui['formulabar'];
-		item = toolbar.get(id) ;
+	else if (w2ui.formulabar.get(id) !== null) {
+		toolbar = w2ui.formulabar;
+		item = toolbar.get(id);
 	}
 	else if (w2ui['toolbar-down'].get(id) !== null) {
 		toolbar = w2ui['toolbar-down'];
-		item = toolbar.get(id) ;
+		item = toolbar.get(id);
 	}
 	else if (w2ui['spreadsheet-toolbar'].get(id) !== null) {
 		toolbar = w2ui['spreadsheet-toolbar'];
-		item = toolbar.get(id) ;
+		item = toolbar.get(id);
 	}
 	else if (w2ui['presentation-toolbar'].get(id) !== null) {
 		toolbar = w2ui['presentation-toolbar'];
@@ -269,7 +141,7 @@ function onClick(id) {
 	}
 	else if (id === 'deletepage') {
 		vex.dialog.confirm({
-			message: _("Are you sure you want to delete this page?"),
+			message: _('Are you sure you want to delete this page?'),
 			callback: onDelete
 		});
 	}
@@ -278,13 +150,13 @@ function onClick(id) {
 	}
 	// TODO: We should get visible tab's width instead of 60px
 	else if (id === 'nextrecord') {
-		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft()+60);
+		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() + 60);
 	}
 	else if (id === 'prevrecord') {
-		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft()-60);
+		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() - 60);
 	}
 	else if (id === 'lastrecord') {
-		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').prop("scrollWidth"));
+		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').prop('scrollWidth'));
 	}
 	else if (id === 'insertgraphic') {
 		L.DomUtil.get('insertgraphic').click();
@@ -295,12 +167,12 @@ function onClick(id) {
 	else if (id === 'fontcolor') {
 		// absolutely no idea why, but without the timeout, the popup is
 		// closed as soon as it is opend
-		setTimeout(function () {$('#fontColorPicker').colorpicker('showPalette')}, 0);
+		setTimeout(function () {$('#fontColorPicker').colorpicker('showPalette');}, 0);
 	}
 	else if (id === 'backcolor') {
 		// absolutely no idea why, but without the timeout, the popup is
 		// closed as soon as it is opend
-		setTimeout(function () {$('#backColorPicker').colorpicker('showPalette')}, 0);
+		setTimeout(function () {$('#backColorPicker').colorpicker('showPalette');}, 0);
 	}
 	else if (id === 'sum') {
 		L.DomUtil.get('formulaInput').value = '=SUM()';
@@ -337,13 +209,13 @@ function onClick(id) {
 			overlayClose:true,
 			opacity: 80,
 			overlayCss: {
-				backgroundColor : "#000"
+				backgroundColor : '#000'
 			},
 			containerCss: {
-				overflow : "hidden",
-				backgroundColor : "#fff",
-				padding : "20px",
-				border : "2px solid #000"
+				overflow : 'hidden',
+				backgroundColor : '#fff',
+				padding : '20px',
+				border : '2px solid #000'
 			}
 		});
 	}
@@ -353,19 +225,295 @@ function onClick(id) {
 	}
 }
 
-function onDelete (e) {
-	if (e !== false) {
-		map.deletePage();
+function insertTable() {
+	var rows = 10;
+	var cols = 10;
+	var $grid = $('.inserttable-grid');
+	var $popup = $('#inserttable-popup');
+	var $status = $('#inserttable-status');
+
+	// Return if already initialized
+	if ($grid.children().length) {
+		return;
+	}
+
+	// init
+	for (var r = 0; r < rows; r++) {
+		var $row = $('<div/>').addClass('row');
+		$grid.append($row);
+		for (var c = 0; c < cols; c++) {
+			var $col = $('<div/>').addClass('col');
+			$row.append($col);
+		}
+	}
+
+	// events
+	$grid.on({
+		mouseover: function () {
+			var col = $(this).index() + 1;
+			var row = $(this).parent().index() + 1;
+			$('.col').removeClass('bright');
+			$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
+			.addClass('bright');
+			$status.html(col + 'x' + row);
+
+		},
+		click: function() {
+			var col = $(this).index() + 1;
+			var row = $(this).parent().index() + 1;
+			$popup.toggle();
+			$('.col').removeClass('bright');
+			$status.html('<br/>');
+			var msg = 'uno .uno:InsertTable {' +
+				' "Columns": { "type": "long","value": '
+				+ col +
+				' }, "Rows": { "type": "long","value": '
+				+ row + ' }}';
+			map._socket.sendMessage(msg);
+		}
+	}, '.col');
+
+	// close dialog on mouseleave
+	$popup.mouseleave(function() {
+		$(this).hide();
+		$('.col').removeClass('bright');
+		$status.html('<br/>');
+	});
+}
+
+function onColorPick(e, color) {
+	if (map.getPermission() !== 'edit' || color === undefined) {
+		return;
+	}
+	// transform from #FFFFFF to an Int
+	color = parseInt(color.replace('#', ''), 16);
+	var command = {};
+	var fontcolor, backcolor;
+	if (e.target.id === 'fontColorPicker') {
+		fontcolor = {'text': 'FontColor',
+					 'spreadsheet': 'Color',
+					 'presentation': 'Color'}[map.getDocType()];
+		command[fontcolor] = {};
+		command[fontcolor].type = 'long';
+		command[fontcolor].value = color;
+		var uno = '.uno:' + fontcolor;
+	}
+	else if (e.target.id === 'backColorPicker') {
+		backcolor = {'text': 'BackColor',
+					 'spreadsheet': 'BackgroundColor',
+					 'presentation': 'CharBackColor'}[map.getDocType()];
+		command[backcolor] = {};
+		command[backcolor].type = 'long';
+		command[backcolor].value = color;
+		uno = '.uno:' + backcolor;
+	}
+	map.sendUnoCommand(uno, command);
+	map.focus();
+}
+
+$(function () {
+	$('#toolbar-up-more').w2toolbar({
+		name: 'toolbar-up-more',
+		items: [
+		],
+		onClick: function (e) {
+			onClick(e.target);
+		}
+	});
+
+	$('#toolbar-up').w2toolbar({
+		name: 'toolbar-up',
+		items: [
+			{type: 'html', id: 'left'},
+			{type: 'button',  id: 'save', img: 'save', hint: _('Save'), uno: 'Save'},
+			{type: 'break'},
+			{type: 'button',  id: 'undo',  img: 'undo', hint: _('Undo'), uno: 'Undo'},
+			{type: 'button',  id: 'redo',  img: 'redo', hint: _('Redo'), uno: 'Redo'},
+			{type: 'break'},
+			{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>'},
+			{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>'},
+			{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>'},
+			{type: 'break'},
+			{type: 'button',  id: 'bold',  img: 'bold', hint: _('Bold'), uno: 'Bold'},
+			{type: 'button',  id: 'italic', img: 'italic', hint: _('Italic'), uno: 'Italic'},
+			{type: 'button',  id: 'underline',  img: 'underline', hint: _('Underline'), uno: 'Underline'},
+			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _('Strikeout'), uno: 'Strikeout'},
+			{type: 'break'},
+			{type: 'html',  id: 'fontcolor-html', html: '<input id="fontColorPicker" style="display:none;">'},
+			{type: 'button',  id: 'fontcolor', img: 'color', hint: _('Font color')},
+			{type: 'html',  id: 'backcolor-html', html: '<input id="backColorPicker" style="display:none;">'},
+			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _('Highlighting')},
+			{type: 'break'},
+			{type: 'button',  id: 'alignleft',  img: 'alignleft', hint: _('Align left'), uno: 'LeftPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"1"}}'},
+			{type: 'button',  id: 'alignhorizontal',  img: 'alignhorizontal', hint: _('Center horizontally'), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}'},
+			{type: 'button',  id: 'alignright',  img: 'alignright', hint: _('Align right'), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}'},
+			{type: 'button',  id: 'alignblock',  img: 'alignblock', hint: _('Justified'), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}'},
+			{type: 'break'},
+			{type: 'button',  id: 'bullet',  img: 'bullet', hint: _('Bullets on/off'), uno: 'DefaultBullet'},
+			{type: 'button',  id: 'numbering',  img: 'numbering', hint: _('Numbering on/off'), uno: 'DefaultNumbering'},
+			{type: 'break'},
+			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _('Increase indent'), uno: 'IncrementIndent'},
+			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _('Decrease indent'), uno: 'DecrementIndent'},
+			{type: 'break', id: 'incdecindent'},
+			{type: 'html',  id: 'inserttable-html', html: '<div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all" style="position: absolute; display: none;"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div>'},
+			{type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table')},
+			{type: 'button',  id: 'annotation', img: 'annotation', hint: _('Insert comment'), uno: 'InsertAnnotation'},
+			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _('Insert graphic')},
+			{type: 'break'},
+			{type: 'button',  id: 'help',  img: 'help', hint: _('Help')},
+			{type: 'html', id: 'right'},
+			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
+			{type: 'button',  id: 'close',  img: 'closedoc', hint: _('Close document'), hidden: true}
+		],
+		onClick: function (e) {
+			onClick(e.target);
+		},
+		onRefresh: function() {
+			if (!L.DomUtil.get('fontcolorindicator')) {
+				var fontColorIndicator = L.DomUtil.create('div', 'font-color-indicator', L.DomUtil.get('tb_toolbar-up_item_fontcolor'));
+				fontColorIndicator.id = 'fontcolorindicator';
+
+				$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
+				$('#fontColorPicker').on('change.color', onColorPick);
+			}
+
+			if (!L.DomUtil.get('backcolorindicator')) {
+				var backColorIndicator = L.DomUtil.create('div', 'back-color-indicator', L.DomUtil.get('tb_toolbar-up_item_backcolor'));
+				backColorIndicator.id = 'backcolorindicator';
+
+				$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
+				$('#backColorPicker').on('change.color', onColorPick);
+			}
+
+			insertTable();
+		}
+	});
+
+	$('#formulabar').w2toolbar({
+		name: 'formulabar',
+		items: [
+			{type: 'html',  id: 'left'},
+			{type: 'button',  id: 'sum',  img: 'autosum', hint: _('Sum')},
+			{type: 'button',  id: 'function',  img: 'equal', hint: _('Function')},
+			{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
+			{type: 'button', hidden: true, id: 'acceptformula',  img: 'accepttrackedchanges', hint: _('Accept')},
+			{type: 'html', id: 'formula', html: '<input id="formulaInput" onkeyup="onFormulaInput()"' +
+			 'onblur="onFormulaBarBlur()" onfocus="onFormulaBarFocus()" type=text>'}
+		],
+		onClick: function (e) {
+			onClick(e.target);
+		}
+	});
+	$('#spreadsheet-toolbar').w2toolbar({
+		name: 'spreadsheet-toolbar',
+		items: [
+			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _('First sheet')},
+			{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _('Previous sheet')},
+			{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hidden: true, hint: _('Next sheet')},
+			{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _('Last sheet')}
+		],
+		onClick: function (e) {
+			onClick(e.target);
+		}
+	});
+	$('#presentation-toolbar').w2toolbar({
+		name: 'presentation-toolbar',
+		items: [
+			{type: 'html',  id: 'left'},
+			{type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _('Fullscreen presentation')},
+			{type: 'break', id: 'presentationbreak', hidden:true},
+			{type: 'button',  id: 'insertpage', img: 'insertpage', hidden:true, hint: _('Insert slide')},
+			{type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hidden:true, hint: _('Duplicate slide')},
+			{type: 'button',  id: 'deletepage', img: 'deletepage', hidden:true, hint: _('Delete slide')},
+			{type: 'html',  id: 'right'}
+		],
+		onClick: function (e) {
+			onClick(e.target);
+		}
+	});
+	$('#toolbar-down').w2toolbar({
+		name: 'toolbar-down',
+		items: [
+			{type: 'html',  id: 'search',
+			 html: '<div style="padding: 3px 10px;" class="loleaflet-font">' +
+			 ' ' + _('Search:') +
+			 '    <input size="10" id="search-input" onkeypress="onSearch(event)"' +
+			 'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
+			 '</div>'
+			},
+			{type: 'button',  id: 'searchprev', img: 'prev', hint: _('Search backwards'), disabled: true},
+			{type: 'button',  id: 'searchnext', img: 'next', hint: _('Search forward'), disabled: true},
+			{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
+			{type: 'html',  id: 'left'},
+			{type: 'html',  id: 'right'},
+			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
+			{type: 'break'},
+			{type: 'button',  id: 'takeedit', img: 'edit', hint: _('Take edit lock (others can only view)'), caption: _('VIEWING')},
+			{type: 'break'},
+			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
+			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
+			{type: 'break', id: 'prevnextbreak'},
+			{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
+			{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _('Zoom out')},
+			{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>'},
+			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _('Zoom in')}
+		],
+		onClick: function (e) {
+			onClick(e.target);
+		}
+	});
+});
+
+// This object is used to track enabled/disabled state when one is in view mode
+var formatButtons = {
+	'undo': true, 'redo': true, 'save': true,
+	'bold': true, 'italic': true, 'underline': true, 'strikeout': true,
+	'annotation': true, 'inserttable': true,
+	'fontcolor': true, 'backcolor': true, 'bullet': true, 'numbering': true,
+	'alignleft': true, 'alignhorizontal': true, 'alignright': true, 'alignblock': true,
+	'incrementindent': true, 'decrementindent': true, 'insertgraphic': true
+};
+
+var takeEditPopupMessage = '<div>' + _('You are viewing now.') + '<br/>' + _('Click here to take edit.') + '</div>';
+var takeEditPopupTimeout = null;
+
+function onSearch(e) {
+	if (e.keyCode === 13) {
+		var toolbar = w2ui['toolbar-down'];
+		map.search(L.DomUtil.get('search-input').value);
+		toolbar.enable('searchprev');
+		toolbar.enable('searchnext');
+		toolbar.show('cancelsearch');
+	}
+	else {
+		map.fire('requestloksession');
 	}
 }
 
-function onSaveAs (e) {
+function onSaveAs(e) {
 	if (e !== false) {
 		map.saveAs(e.url, e.format, e.options);
 	}
 }
 
-function onStyleSelect (e) {
+function sortFontSizes() {
+	var oldVal = $('.fontsizes-select').val();
+	var selectList = $('.fontsizes-select option');
+	selectList.sort(function (a, b) {
+		a = parseFloat($(a).text() * 1);
+		b = parseFloat($(b).text() * 1);
+		if (a > b) {
+			return 1;
+		} else if (a < b) {
+			return -1;
+		}
+		return 0;
+	});
+	$('.fontsizes-select').html(selectList);
+	$('.fontsizes-select').val(oldVal).trigger('change');
+}
+
+function onStyleSelect(e) {
 	var style = e.target.value;
 	if (style.startsWith('.uno:')) {
 		map.sendUnoCommand(style);
@@ -382,28 +530,28 @@ function onStyleSelect (e) {
 	map.focus();
 }
 
-function updateFontSizeList (font) {
-	var oldSize = $(".fontsizes-select").val();
+function updateFontSizeList(font) {
+	var oldSize = $('.fontsizes-select').val();
 	var found = false;
-	$(".fontsizes-select").find('option').remove();
+	$('.fontsizes-select').find('option').remove();
 	var data = [''];
 	data = data.concat(map.getToolbarCommandValues('.uno:CharFontName')[font]);
-	$(".fontsizes-select").select2({
+	$('.fontsizes-select').select2({
 		data: data,
-		placeholder: _("Size"),
+		placeholder: _('Size'),
 		//Allow manually entered font size.
-		createTag:function(query) {
+		createTag: function(query) {
 			return {
 				id: query.term,
 				text: query.term,
 				tag: true
-			}
+			};
 		},
-		tags: true,
+		tags: true
 	});
-	$(".fontsizes-select option").each(function (i, e) {
-		if ($(e).text() == oldSize) {
-			$(".fontsizes-select").val(oldSize).trigger('change');
+	$('.fontsizes-select option').each(function (i, e) {
+		if ($(e).text() === oldSize) {
+			$('.fontsizes-select').val(oldSize).trigger('change');
 			found = true;
 			return;
 		}
@@ -411,48 +559,31 @@ function updateFontSizeList (font) {
 	if (!found) {
 		// we need to add the size
 		$('.fontsizes-select')
-			.append($("<option></option>")
+			.append($('<option></option>')
 			.text(oldSize));
 	}
-	$(".fontsizes-select").val(oldSize).trigger('change');
+	$('.fontsizes-select').val(oldSize).trigger('change');
 	sortFontSizes();
 }
 
-function sortFontSizes() {
-	var oldVal = $('.fontsizes-select').val();
-	var selectList = $('.fontsizes-select option');
-	selectList.sort(function (a,b){
-		a = parseFloat($(a).text() * 1);
-		b = parseFloat($(b).text() * 1);
-		if(a > b) {
-		    return 1;
-		} else if (a < b) {
-		    return -1;
-		}
-		return 0;
-	});
-	$('.fontsizes-select').html(selectList);
-	$('.fontsizes-select').val(oldVal).trigger('change');
-}
-
-function onFontSelect (e) {
+function onFontSelect(e) {
 	var font = e.target.value;
 	updateFontSizeList(font);
 	map.applyFont(font);
 	map.focus();
 }
 
-function onFontSizeSelect (e) {
+function onFontSizeSelect(e) {
 	var size = e.target.value;
 	var command = {};
 	$(e.target).find('option[data-select2-tag]').removeAttr('data-select2-tag');
 	map.applyFontSize(size);
-	fontcolor = map.getDocType() === 'text' ? 'FontColor' : 'Color';
+	var fontcolor = map.getDocType() === 'text' ? 'FontColor' : 'Color';
 	command[fontcolor] = {};
 	map.focus();
 }
 
-function onInsertFile () {
+function onInsertFile() {
 	var insertGraphic = L.DomUtil.get('insertgraphic');
 	if ('files' in insertGraphic) {
 		for (var i = 0; i < insertGraphic.files.length; i++) {
@@ -462,41 +593,12 @@ function onInsertFile () {
 	}
 }
 
-function onColorPick (e, color) {
-	if (map.getPermission() !== 'edit' || color === undefined) {
-		return;
-	}
-	// transform from #FFFFFF to an Int
-	color = parseInt(color.replace('#', ''), 16);
-	var command = {};
-	if (e.target.id === 'fontColorPicker') {
-	  	fontcolor = { 'text': 'FontColor',
-			'spreadsheet': 'Color',
-			'presentation': 'Color' }[map.getDocType()];
-		command[fontcolor] = {};
-		command[fontcolor].type = 'long';
-		command[fontcolor].value = color;
-		var uno = '.uno:' + fontcolor;
-	}
-	else if (e.target.id === 'backColorPicker') {
-		backcolor = { 'text': 'BackColor',
-			'spreadsheet': 'BackgroundColor',
-			'presentation': 'CharBackColor' }[map.getDocType()];
-		command[backcolor] = {};
-		command[backcolor].type = 'long';
-		command[backcolor].value = color;
-		uno = '.uno:' + backcolor;
-	}
-	map.sendUnoCommand(uno, command);
-	map.focus();
-}
-
-function onFormulaInput () {
+function onFormulaInput() {
 	map.cellEnterString(L.DomUtil.get('formulaInput').value);
 }
 
-function onFormulaBarFocus () {
-	var formulabar = w2ui['formulabar'];
+function onFormulaBarFocus() {
+	var formulabar = w2ui.formulabar;
 	formulabar.hide('sum');
 	formulabar.hide('function');
 	formulabar.show('cancelformula');
@@ -504,14 +606,14 @@ function onFormulaBarFocus () {
 }
 
 function onFormulaBarBlur() {
-	var formulabar = w2ui['formulabar'];
+	var formulabar = w2ui.formulabar;
 	formulabar.show('sum');
 	formulabar.show('function');
 	formulabar.hide('cancelformula');
 	formulabar.hide('acceptformula');
 }
 
-map.on('updatepermission', function (e) {
+map.on('updatepermission', function () {
 	var toolbar = w2ui['toolbar-up'];
 	var docType = map.getDocType();
 	if (docType !== 'text') {
@@ -542,12 +644,13 @@ map.on('commandstatechanged', function (e) {
 	var commandName = e.commandName;
 	var state = e.state;
 	var found = false;
+	var value, color, div;
 	if (commandName === '.uno:AssignLayout') {
-		$(".styles-select").val(state).trigger('change');
-	}
-	else if (commandName === '.uno:StyleApply') {
-		if (!state)
+		$('.styles-select').val(state).trigger('change');
+	} else if (commandName === '.uno:StyleApply') {
+		if (!state) {
 			return;
+		}
 
 		// For impress documents, template name is prefixed with style name.
 		// Strip the template name until we support it
@@ -556,8 +659,8 @@ map.on('commandstatechanged', function (e) {
 			state = L.Styles.impressMapping[state];
 		}
 
-		$(".styles-select option").each(function () {
-			value = this.value;
+		$('.styles-select option').each(function () {
+			var value = this.value;
 			// For writer we get UI names; ideally we should be getting only programmatic ones
 			// For eg: 'Text body' vs 'Text Body'
 			// (likely to be fixed in core to make the pattern consistent)
@@ -570,13 +673,13 @@ map.on('commandstatechanged', function (e) {
 		if (!found) {
 			// we need to add the size
 			$('.styles-select')
-				.append($("<option></option>")
+				.append($('<option></option>')
 				.text(state));
 		}
-		$(".styles-select").val(state).trigger('change');
+		$('.styles-select').val(state).trigger('change');
 	}
 	else if (commandName === '.uno:CharFontName') {
-		$(".fonts-select option").each(function () {
+		$('.fonts-select option').each(function () {
 			value = this.value;
 			if (value.toLowerCase() === state.toLowerCase()) {
 				found = true;
@@ -587,17 +690,17 @@ map.on('commandstatechanged', function (e) {
 		if (!found) {
 			// we need to add the size
 			$('.fonts-select')
-				.append($("<option></option>")
+				.append($('<option></option>')
 				.text(state));
 		}
-		$(".fonts-select").val(state).trigger('change');
+		$('.fonts-select').val(state).trigger('change');
 	}
 	else if (commandName === '.uno:FontHeight') {
 		if (state === '0') {
 			state = '';
 		}
-		$(".fontsizes-select option").each(function (i, e) {
-			if ($(e).text() == state) {
+		$('.fontsizes-select option').each(function (i, e) {
+			if ($(e).text() === state) {
 				found = true;
 				return;
 			}
@@ -605,15 +708,15 @@ map.on('commandstatechanged', function (e) {
 		if (!found) {
 			// we need to add the size
 			$('.fontsizes-select')
-				.append($("<option></option>")
+				.append($('<option></option>')
 				.text(state).val(state));
 		}
-		$(".fontsizes-select").val(state).trigger('change');
+		$('.fontsizes-select').val(state).trigger('change');
 		sortFontSizes();
 	}
 	else if (commandName === '.uno:FontColor' || commandName === '.uno:Color') {
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
-		var color = parseInt(e.state);
+		color = parseInt(e.state);
 		if (color === -1) {
 			color = 'transparent';
 		}
@@ -622,12 +725,12 @@ map.on('commandstatechanged', function (e) {
 			color = color.toString(16);
 			color = '#' + '0'.repeat(6 - color.length) + color;
 		}
-		var div = L.DomUtil.get('fontcolorindicator');
+		div = L.DomUtil.get('fontcolorindicator');
 		L.DomUtil.setStyle(div, 'background', color);
 	}
 	else if (commandName === '.uno:BackColor' || commandName === '.uno:BackgroundColor' || commandName === '.uno:CharBackColor') {
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
-		var color = parseInt(e.state);
+		color = parseInt(e.state);
 		if (color === -1) {
 			color = 'transparent';
 		}
@@ -635,7 +738,7 @@ map.on('commandstatechanged', function (e) {
 			color = color.toString(16);
 			color = '#' + '0'.repeat(6 - color.length) + color;
 		}
-		var div = L.DomUtil.get('backcolorindicator');
+		div = L.DomUtil.get('backcolorindicator');
 		L.DomUtil.setStyle(div, 'background', color);
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
@@ -693,7 +796,9 @@ map.on('search', function (e) {
 		toolbar.disable('searchnext');
 		toolbar.hide('cancelsearch');
 		L.DomUtil.addClass(searchInput, 'search-not-found');
-		setTimeout(function () {L.DomUtil.removeClass(searchInput, 'search-not-found')}, 500);
+		setTimeout(function () {
+			L.DomUtil.removeClass(searchInput, 'search-not-found');
+		}, 500);
 	}
 });
 
@@ -751,11 +856,11 @@ map.on('updatetoolbarcommandvalues', function (e) {
 			}, this);
 		}
 
-		$(".styles-select").select2({
+		$('.styles-select').select2({
 			data: data,
-			placeholder: _("Style")
+			placeholder: _('Style')
 		});
-		$(".styles-select").on('select2:select', onStyleSelect);
+		$('.styles-select').on('select2:select', onStyleSelect);
 	}
 	else if (e.commandName === '.uno:CharFontName') {
 		// Old browsers like IE11 et al don't like Object.keys with
@@ -763,17 +868,17 @@ map.on('updatetoolbarcommandvalues', function (e) {
 		if (typeof e.commandValues === 'object') {
 			data = data.concat(Object.keys(e.commandValues));
 		}
-		$(".fonts-select").select2({
+		$('.fonts-select').select2({
 			data: data,
-			placeholder: _("Font")
+			placeholder: _('Font')
 		});
-		$(".fonts-select").on('select2:select', onFontSelect);
+		$('.fonts-select').on('select2:select', onFontSelect);
 
-		$(".fontsizes-select").select2({
-			placeholder: _("Size"),
+		$('.fontsizes-select').select2({
+			placeholder: _('Size'),
 			data: []
 		});
-		$(".fontsizes-select").on('select2:select', onFontSizeSelect);
+		$('.fontsizes-select').on('select2:select', onFontSizeSelect);
 	}
 });
 
@@ -821,7 +926,7 @@ map.on('updateparts pagenumberchanged', function (e) {
 	}
 
 	toolbar = w2ui['toolbar-up'];
-	if (e.docType !== 'text' && e.docType !== 'spreadsheet' ) {
+	if (e.docType !== 'text' && e.docType !== 'spreadsheet') {
 		toolbar.hide('incrementindent');
 		toolbar.hide('decrementindent');
 		toolbar.hide('incdecindent');
@@ -838,11 +943,10 @@ map.on('updateparts pagenumberchanged', function (e) {
 
 map.on('commandresult', function (e) {
 	var commandName = e.commandName;
-	var success = e.success;
 
-	if (commandName === '.uno:Save' && e.success == true) {
+	if (commandName === '.uno:Save' && e.success === true) {
 		// owncloud integration
-		if (typeof window.parent.documentsMain != 'undefined') {
+		if (typeof window.parent.documentsMain !== 'undefined') {
 			window.parent.documentsMain.saveDocumentBack();
 		}
 	}
@@ -855,10 +959,10 @@ map.on('cellformula', function (e) {
 	}
 });
 
-map.on('zoomend', function (e) {
-	var _zoom_ratio = map.getZoomScale(map.getZoom(), map.options.zoom);
-	var _zoom_percent = Math.round(_zoom_ratio * 100);
-	$('#zoomlevel').html(_zoom_percent + '%');
+map.on('zoomend', function () {
+	var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
+	var zoomPercent = Math.round(zoomRatio * 100);
+	$('#zoomlevel').html(zoomPercent + '%');
 });
 
 map.on('hyperlinkclicked', function (e) {
@@ -915,7 +1019,7 @@ map.on('editlock', function (e) {
 
 		// Enable formula bar
 		$('#formulaInput').prop('disabled', false);
-		toolbar = w2ui['formulabar'];
+		toolbar = w2ui.formulabar;
 		formulaBarButtons.forEach(function(id) {
 			toolbar.enable(id);
 		});
@@ -945,7 +1049,7 @@ map.on('editlock', function (e) {
 		// Disable formula bar
 		$('#formulaInput').prop('disabled', true);
 
-		toolbar = w2ui['formulabar'];
+		toolbar = w2ui.formulabar;
 		formulaBarButtons.forEach(function(id) {
 			toolbar.disable(id);
 		});
@@ -969,7 +1073,7 @@ map.on('editlock', function (e) {
 
 });
 
-map.on('mouseup keypress', function(e) {
+map.on('mouseup keypress', function() {
 	if (!map._editlock) {
 		$('#tb_toolbar-down_item_takeedit')
 			.w2overlay({
@@ -985,7 +1089,7 @@ map.on('mouseup keypress', function(e) {
 	}
 });
 
-map.on('locontextmenu', function (e) {
+map.on('locontextmenu', function () {
 	// TODO: context menu handling...
 });
 
@@ -1000,11 +1104,11 @@ map.on('statusindicator', function (e) {
 				data = data.concat({id: layout.id, text: _(layout.text)});
 			}, this);
 
-			$(".styles-select").select2({
+			$('.styles-select').select2({
 				data: data,
-				placeholder: _("Layout")
+				placeholder: _('Layout')
 			});
-			$(".styles-select").on('select2:select', onStyleSelect);
+			$('.styles-select').on('select2:select', onStyleSelect);
 		}
 	}
 });
@@ -1019,103 +1123,4 @@ $(document).ready(function() {
 	if (closebutton) {
 		toolbar.show('close');
 	}
-	inserttable();
 });
-
-function resizeToolbar() {
-	var has_more_items = false;
-	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
-	// move items from toolbar-up-more -> toolbar-up
-	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
-		var item = toolbarUpMore.items[0];
-		if (!item) {
-			break;
-		}
-		toolbarUpMore.items.shift();
-		toolbarUp.insert('right', item);
-	}
-
-	// move items from toolbar-up -> toolbar-up-more
-	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
-		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
-		item = toolbarUp.get(itemId);
-		toolbarUp.remove(itemId);
-		toolbarUpMore.insert(toolbarUpMore.items[0], item);
-		has_more_items = true;
-	}
-
-	if (has_more_items) {
-		w2ui['toolbar-up'].show('more');
-	}
-	else {
-		w2ui['toolbar-up'].hide('more');
-	}
-
-	// resize toolbar-up-more
-	var lastItem = $('#toolbar-up-more>table>tbody>tr>td[valign="middle"]').last();
-	if (lastItem.length) {
-		$('#toolbar-up-more').width($(lastItem).position().left + $(lastItem).width());
-		w2ui['toolbar-up-more'].render();
-	} else {
-		$('#toolbar-up-more').hide();
-		var toolbar = w2ui['toolbar-up'];
-		toolbar.uncheck('more');
-	}
-}
-
-function insertTable() {
-	var rows = 10;
-	var cols = 10;
-	var $grid = $('.inserttable-grid');
-	var $popup = $('#inserttable-popup');
-	var $status = $("#inserttable-status");
-
-	// Return if already initialized
-	if ($grid.children().length) {
-		return;
-	}
-
-	// init
-	for (var r = 0; r < rows; r++) {
-		var $row = $('<div/>').addClass('row');
-		$grid.append($row);
-		for (var c = 0; c < cols; c++) {
-			var $col = $('<div/>').addClass('col');
-			$row.append($col);
-		}
-	}
-
-	// events
-	$grid.on({
-		mouseover: function () {
-			var col = $(this).index() + 1;
-			var row = $(this).parent().index() + 1;
-			$('.col').removeClass('bright');
-			$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
-			.addClass('bright');
-			$status.html(col + " x " + row);
-
-		},
-		click: function(){
-			var col = $(this).index() + 1;
-			var row = $(this).parent().index() + 1;
-			$popup.toggle();
-			$('.col').removeClass('bright');
-			$status.html('<br/>');
-			var msg = 'uno .uno:InsertTable {' +
-				' "Columns": { "type": "long","value": '
-				+ col +
-				' }, "Rows": { "type": "long","value": '
-				+ row +' }}';
-			map._socket.sendMessage(msg);
-		}
-	}, ".col");
-
-	// close dialog on mouseleave
-	$popup.mouseleave(function(){
-		$(this).hide();
-		$('.col').removeClass('bright');
-		$status.html('<br/>');
-	});
-}
