@@ -35,6 +35,18 @@
     <script src="/loleaflet/%VERSION%/l10n/json2.min.js"></script>
     <script src="/loleaflet/%VERSION%/l10n/l10n.min.js"></script>
     <script>var _ = function (string) {return string.toLocaleString();};</script>
+    <script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : results[1].replace(/\+/g, " ");
+    }
+    var lang = getParameterByName('lang');
+    if (lang) {
+        String.locale = lang;
+    }
+    </script>
     <script src="/loleaflet/%VERSION%/toolbar/w2ui.min.js"></script>
     <script src="/loleaflet/%VERSION%/toolbar/select2.min.js"></script>
     <script src="/loleaflet/%VERSION%/jqueryui/1.11.1/jquery-ui.min.js"></script>
@@ -78,14 +90,6 @@
     <div id="toolbar-down"></div>
 
     <script>
-
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : results[1].replace(/\+/g, " ");
-    }
-
     var wopiSrc = getParameterByName('WOPISrc');
     var access_token = '%ACCESS_TOKEN%';
     if (wopiSrc !== '' && access_token !== '') {
@@ -102,12 +106,6 @@
     var permission = getParameterByName('permission') || 'edit';
     var timestamp = getParameterByName('timestamp');
     var closebutton = getParameterByName('closebutton');
-    var lang = getParameterByName('lang');
-    if (lang) {
-        String.locale = lang;
-        wrongwopisrc = _('Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: file_path=/path/to/doc/');
-        emptyhosturl = _('The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator.');
-    }
     if (wopiSrc === '' && filePath === '') {
         vex.dialog.alert(wrongwopisrc);
     }
