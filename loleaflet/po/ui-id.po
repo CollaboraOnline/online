@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-26 17:13+0000\n"
+"POT-Creation-Date: 2016-05-28 20:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-ui-id.po\n"
-"X-Pootle-Revision: 435112\n"
+"X-Pootle-Revision: 443201\n"
 
 #: dist/toolbar/toolbar.js:18
 #: src/control/Control.Menubar.js:9
@@ -52,9 +52,8 @@ msgid "Strikeout"
 msgstr "Coret"
 
 #: dist/toolbar/toolbar.js:33
-#, fuzzy
 msgid "Font color"
-msgstr "Warna Fonta"
+msgstr "Warna fonta"
 
 #: dist/toolbar/toolbar.js:35
 msgid "Highlighting"
@@ -65,7 +64,6 @@ msgid "Align left"
 msgstr "Rata kiri"
 
 #: dist/toolbar/toolbar.js:38
-#, fuzzy
 msgid "Center horizontally"
 msgstr "Tengah horisontal"
 
@@ -83,31 +81,31 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:43
 msgid "Numbering on/off"
-msgstr ""
+msgstr "Penomoran aktif/tidak"
 
 #: dist/toolbar/toolbar.js:45
 msgid "Increase indent"
-msgstr ""
+msgstr "Perbesar indentasi"
 
 #: dist/toolbar/toolbar.js:46
 msgid "Decrease indent"
-msgstr ""
+msgstr "Kurangi indentasi"
 
 #: dist/toolbar/toolbar.js:48
 msgid "Insert comment"
-msgstr ""
+msgstr "Sisip komentar"
 
 #: dist/toolbar/toolbar.js:49
 msgid "Insert graphic"
-msgstr ""
+msgstr "Sisip grafis"
 
 #: dist/toolbar/toolbar.js:51
 msgid "Insert table"
-msgstr ""
+msgstr "Sisip tabel"
 
 #: dist/toolbar/toolbar.js:53
 msgid "Help"
-msgstr ""
+msgstr "Bantuan"
 
 #: dist/toolbar/toolbar.js:55
 msgid "More"
@@ -115,66 +113,66 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:56
 msgid "Close document"
-msgstr ""
+msgstr "Tutup dokumen"
 
 #: dist/toolbar/toolbar.js:78
 msgid "Sum"
-msgstr ""
+msgstr "Jumlah"
 
 #: dist/toolbar/toolbar.js:79
 msgid "Function"
-msgstr ""
+msgstr "Fungsi"
 
 #: dist/toolbar/toolbar.js:80
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: dist/toolbar/toolbar.js:81
 msgid "Accept"
-msgstr ""
+msgstr "Terima"
 
 #: dist/toolbar/toolbar.js:92
 msgid "First sheet"
-msgstr ""
+msgstr "Lembar pertama"
 
 #: dist/toolbar/toolbar.js:93
 msgid "Previous sheet"
-msgstr ""
+msgstr "Lembar sebelumnya"
 
 #: dist/toolbar/toolbar.js:94
 msgid "Next sheet"
-msgstr ""
+msgstr "Lembar selanjutnya"
 
 #: dist/toolbar/toolbar.js:95
 msgid "Last sheet"
-msgstr ""
+msgstr "Lembar terakhir"
 
 #: dist/toolbar/toolbar.js:105
 #: src/control/Control.Menubar.js:93
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Presentasi layar penuh"
 
 #: dist/toolbar/toolbar.js:107
 msgid "Insert slide"
-msgstr ""
+msgstr "Sisip salindia"
 
 #: dist/toolbar/toolbar.js:108
 #: src/control/Control.Menubar.js:90
 msgid "Duplicate slide"
-msgstr ""
+msgstr "Gandakan salindia"
 
 #: dist/toolbar/toolbar.js:109
 #: src/control/Control.Menubar.js:91
 msgid "Delete slide"
-msgstr ""
+msgstr "Hapus salindia"
 
 #: dist/toolbar/toolbar.js:121
 msgid "Search:"
-msgstr ""
+msgstr "Cari:"
 
 #: dist/toolbar/toolbar.js:126
 msgid "Search backwards"
-msgstr ""
+msgstr "Cari mundur"
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -182,32 +180,32 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:127
 msgid "Search forward"
-msgstr ""
+msgstr "Cari maju"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
+msgstr "Turun Satu Tingkat"
 
 #: dist/toolbar/toolbar.js:128
 msgid "Cancel the search"
-msgstr ""
+msgstr "Batalkan pencarian"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
+msgstr "Naik Satu Tingkat"
 
 #: dist/toolbar/toolbar.js:133
 #: dist/toolbar/toolbar.js:849
 msgid "Take edit lock (others can only view)"
-msgstr ""
+msgstr "Kunci sunting (yang lain hanya dapat melihat)"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Sunting Komentar"
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
+msgstr "Sisip Komentar"
 
 #: dist/toolbar/toolbar.js:134
 #: dist/toolbar/toolbar.js:850
