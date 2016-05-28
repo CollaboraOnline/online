@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Son sütun"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Sayfa düzeni"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Boş Slayt"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Sadece Başlık"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Ortalanmış Metin"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Slayt Başlığı"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Başlık, İçerik"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Başlık ve 2 İçerik"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Başlık, İçerik ve 2 İçerik"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Başlık, 2 İçerik ve İİçerik"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Başlık, 2 İçerik üzerinde İçerik"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Başlık, İçerik üzerinde 2 İçerik"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Başlık, İçerik üzerinde İçerik"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Başlık, 4 İçerik"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Başlık, 6 İçerik"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Başlık, Dikey Metin"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Başlık, Dikey Metin, Küçük Resim"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Dikey Başlık, Metin, Çizelge"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Dikey Başlık, Dikey Metin"

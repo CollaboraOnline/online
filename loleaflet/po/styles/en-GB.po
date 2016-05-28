@@ -1902,3 +1902,7 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Last column"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Centred Text"

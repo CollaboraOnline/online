@@ -1865,3 +1865,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "अंतिम स्तंभ"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ख़ाका"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "खाली स्लाइड"
+
+#: strings.src
+msgid "Title Only"
+msgstr "सिर्फ शीर्षक"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "केंद्रित पाठ"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "शीर्षक स्लाइड"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "शीर्षक, अंतर्वस्तु"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "शीर्षक और 2 अंतर्वस्तु"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "शीर्षक, अंतर्वस्तु और 2 अंतर्वस्तु"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "शीर्षक, 2 अंतर्वस्तु और अंतर्वस्तु"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "शीर्षक, 2 अंतर्वस्तु पर अंतर्वस्तु"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "शीर्षक, 2 अंतर्वस्तु पर अंतर्वस्तु"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "शीर्षक, अंतर्वस्तु पर अंतर्वस्तु"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "शीर्षक, 4 अंतर्वस्तु"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "शीर्षक, 6 अंतर्वस्तु"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "शीर्षक, लंबवत पाठ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "शीर्षक, लंबवत शीर्षक, क्लिपआर्ट"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "लंबवत शीर्षक, पाठ, चार्ट"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "लंबवत शीर्षक, लंबवत पाठ"

@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Colofn olaf"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Cynllun"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Sleid Wag"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Teitl yn Unig"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Testun wedi ei Ganoli"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Teitl Sleid"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Teitl, Cynnwys"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Teitl a 2 Gynnwys"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Teitl, Cynnwys a 2 Gynnwys"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Teitl, 2 Cynnwys a Chynnwys"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Teitl, Cynnwys dros 2 Gynnwys"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Teitl, 2 Cynnwys dros Cynnwys"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Teitl, Cynnwys dros Gynnwys"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Teitl, 4 Cynnwys"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Teitl 6 Cynnwys"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Teitl, Testun Fertigol"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Teitl, Testun Fertigol, ClipGelf"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Teitl Fertigol, Testun, Siart"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Teitl Fertigol, Testun Fertigol"

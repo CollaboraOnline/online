@@ -1841,3 +1841,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "दावो स्तंभ "
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "अभिन्यास"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "कोरी दर्शिका"
+
+#: strings.src
+msgid "Title Only"
+msgstr "फकत मथळो"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "केंद्रीत अक्षरांCentred Text"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "मथळो दर्शिका"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "माथाळो, मजकूर"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "माथाळो आनी 2 मजकूर"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "माथाळो, मजकूर आनी 2 मजकूर"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "माथाळो, 2 मजकूर आनी मजकूर"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "माथाळो 2 मजकुराचेर मजकूर"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "माथाळो,2 मजकुराचेर मजकूर"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "माथाळो, मजकुराचेर मजकूर"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "माथाळो,4 मजकूर"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "माथाळो,6 मजकूर"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "मथळो, उबो मजकूर"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "मथळो, उबो मजकूर, क्लिपआर्ट"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "उबो मथळो, मजकूर, तक्तो"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "उबो मथळो, उबो मजकूर"

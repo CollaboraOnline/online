@@ -1907,3 +1907,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "كھوفُر  کالم"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "لےآؤٹ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "سادئ سلائڈ "
+
+#: strings.src
+msgid "Title Only"
+msgstr "صرف عنوان"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "عنوان سلائڈ"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "عنوان،كھڈا مواد"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "عنوان،عمودی  مواد ،کلیپ آرٹ۔"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr " كھڈا عنوان،مواد  ،چارٹ "
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "كھڈا عنوان، كھڈا مواد"

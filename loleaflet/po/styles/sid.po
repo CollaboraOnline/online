@@ -1883,3 +1883,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Goofimarchu caccafo"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Ofolla"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Mulla isilayide"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Umo calla"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Mereeraame borro"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Isilayidete umo"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Umo, Amado"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Umonna 2 amado"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Umo, amadonna 2 amado"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Umo, 2 amadonna amado"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Umo, amado aanaho 2 amado"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Umo, 2 amado aanaho amado"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Umo, amado aanaho amado"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Umo, 4 Amado"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Umo, 6 Amado"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Umo, hossitte borro"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Umo, hossitte borro, tircho misile"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Hossicha umo, Borro, soro"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Hossicha umo, Hossitte borro"

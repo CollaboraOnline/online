@@ -1959,3 +1959,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~Kholomo ya le Letshehadi"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Se Adilweng"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Selaete se se nang Letho"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Sehlooho Fela"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Selaete sa Sehlooho"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Sehlooho, Mongolo o Tsepameng"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Sehlooho, Mongolo o Tsepameng, Mosebetsi wa bonono"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Sehlooho se Tsepameng, Mongolo, Tjhate"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Sehlooho se Tsepameng, Mongolo o Tsepameng"

@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Zadnji stolpec"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Postavitev"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Prazna prosojnica"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Samo naslov"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Besedilo na sredini"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Naslovna prosojnica"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Naslov, vsebina"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Naslov in vsebini"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Naslov, vsebina in vsebini"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Naslov, vsebini in vsebina"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Naslov, vsebina prek dveh vsebin"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Naslov, vsebini prek vsebine"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Naslov, vsebina prek vsebine"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Naslov, štiri vsebine"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Naslov, šest vsebin"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Naslov, navpično besedilo"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Naslov, navpično besedilo, sličica"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Navpični naslov, besedilo, grafikon"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Navpični naslov, navpično besedilo"

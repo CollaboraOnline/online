@@ -1902,3 +1902,39 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Последна колона"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Изглед"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Празен слајд"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Само наслов"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Центриран текст"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Насловен слајд"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Наслов, вертикален текст"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Наслов, вертикален текст, илустрација"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Вертикален наслов, текст, графикон"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Вертикален наслов, вертикален текст"

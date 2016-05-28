@@ -1884,3 +1884,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Сүүлийн багана"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Загвар"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Хоосон Слайд"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Зөвхөн гарчиг"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Голлуулсан бичвэр"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Гарчиг Слайд"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Гарчиг, Агуулга"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Гарчиг ба 2 Агуулга"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Гарчиг, Агуулга ба 2 Агуулга"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Гарчиг, 2 Агуулга ба Агуулга"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Гарчиг, Агуулга 2-н Агуулга"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Гарчиг, 2 Агуулгын Агуулга"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Гарчиг, Агуулгын Агуулга"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Гарчиг, 4 Агуулга"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Гарчиг, 6 Агуулга"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Гарчиг, Босоо Бичвэр"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Гарчиг, Босоо Бичвэр, Клипарт"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Босоо Гарчиг, Бичвэр, Диаграмм"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Босоо Гарчиг, Босоо Бичвэр"

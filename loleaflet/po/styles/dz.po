@@ -1923,3 +1923,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "ཀེར་ཐིག་གཡོན།(~L)"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "སྒྲིག་བཀོད།"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "བཤུད་བརྙན་སྟོངམ།"
+
+#: strings.src
+msgid "Title Only"
+msgstr "མགོ་མིང་རྐྱངམ་ཅི།"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "མགོ་མིང་བཤུད་བརྙན།"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "མགོ་མིང་།,ཀེར་ཕྲང་ཚིག་ཡིག"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "མགོ་མིང་།ཀེར་ཕྲང་ཚིག་ཡིག ཀིལིཔཊ།"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "མགོ་མིང་ཀེར་ཕྲང་།  ཚིག་ཡིག ཀིལིཔཊ།"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "མགོ་མིང་ཀེར་ཕྲང་། ཚིག་ཡིག་ཀེར་ཕྲང་།"

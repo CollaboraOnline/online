@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Viimeinen sarake"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Asettelu"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Tyhjä dia"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Vain otsikko"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Keskitetty teksti"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Otsikkodia"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Otsikko, sisältö"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Otsikko ja 2 saraketta"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Otsikkoa ja 2 saraketta, toinen jaettu"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Otsikko ja 2 saraketta, ensimmäinen jaettu"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Otsikko, keskellä 1, alla 2 saraketta"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Otsikko, keskellä 2, alla 1 sarake"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Otsikko, yksi keskeltä jaettu sarake"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Otsikko, 4 objektia"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Otsikko, 6 objektia"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Otsikko, pystysuuntainen teksti"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Otsikko, pystysuuntainen teksti, leikekuva"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Pystysuuntainen otsikko, teksti, kaavio"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Pystysuuntainen otsikko, pystysuuntainen teksti"

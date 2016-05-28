@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Ultima coloană"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Aspect"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Diapozitiv gol"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Numai titlu"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Text centrat"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Diapozitiv titlu"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Titlu, Cuprins"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Titlu și 2 cuprinsuri"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Titlu, Cuprins și 2 cuprinsuri"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Titlu, 2 cuprinsuri și Cuprins"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Titlul, Conținut peste Conținut 2"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Titlu, Conținut 2 peste Conținut"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Titlu, Conținut peste Conținut"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Titlu, Conținut 4"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Titlu, Conținut 6"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Titlu, text vertical"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Titlu, text vertical, colaj"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Titlu vertical, text, diagramă"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Titlu vertical, text vertical"

@@ -1904,3 +1904,39 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Tarjaa dhumaa"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Teessuma"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Islaayidii Duwwaa"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Mataduree Qofa"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Barruu Wiirtawaa"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Mataduree Islaayidii "
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Mataduree, Barruu Sarjaa"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Mataduree, Barruu Sarjaa, Muraa Faayaa"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Mataduree Sarjaa, Barruu, Taattoo"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Mataduree Sarjaa, Barruu Sarjaa"

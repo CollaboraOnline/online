@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Cột cuối"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Bố trí"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Ảnh chiếu trắng"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Chỉ có tựa"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Text gióng hàng giữa"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Ảnh chiếu tựa"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Tiêu đề, nội dung"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Tiêu đề và 2 Nội dung"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Tiêu đề, nội dung và 2 nội dung"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Tiều đề, hai nội dung và nội dung"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Tiêu đề, nội dung trên 2 nội dung"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Tiêu đề, 2 nội dung trên nội dung "
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Tiêu đề, nội dung trên nội dung"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Tiêu đề, 4 nội dung"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Tiêu đề, 6 nội dung"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Tựa đề, Văn bản nằm dọc"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Tựa đề, Văn bản dọc, Sưu tập ảnh"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Tựa đề nằm dọc, Văn bản, Đồ thị"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Tựa đề nằm dọc, Văn bản nằm dọc"

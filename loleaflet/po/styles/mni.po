@@ -1900,3 +1900,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~ওইথংবা কলম"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "উত্পা"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "অহাংবা স্লাইদ"
+
+#: strings.src
+msgid "Title Only"
+msgstr "মিংথোলতমক"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "মযাইগী তেক্স"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "মিংথোল স্লাইদ"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "মমিং, হীরম"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "মমিং অমসুং 2 হীরম"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "মমিং, হীরম অমসু 2 হীরম"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "মমিং, 2 হীরম অমসুং হীরম"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "মমিং, 2 হীরমগী মথক্তা হীরম"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "মমিং, হীরমগী মথক্তা 2 হীরম"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "মমিং, হীরমগী মথক্তা হীরম"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "মমিং, 4 হীরম"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "মমিং, 6 হীরম"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "মিংথোল, ময়ুং ওইবা তেক্স"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "মিংথোল, ময়ুং ওইবা তেক্স, ক্লিপআৰ্ত"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "ময়ুং ওইবা মিংথোল, তেক্স, চার্ত"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "ময়ুং ওইবা মিংথোল,  ময়ুং ওইবা তেক্স"

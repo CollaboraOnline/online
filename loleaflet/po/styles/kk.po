@@ -1893,3 +1893,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Соңғы баған"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Жайма"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Бос слайд"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Тек тақырыптама ғана"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Мәтін ортасымен тураланған"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Тақырыптама слайды"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Атауы, мәтін"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Атауы, 2 мәтін блогы"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Атауы, мәтін блогы және оң жақтан 2 мәтін блогы"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Атауы, 2 мәтін блогы және оң жақтан мәтін блогы"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Атауы, 2 мәтін блогының үстіндегі мәтін блогы"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Атауы, мәтін блогының үстіндегі 2 мәтін блогы"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Атауы, мәтін үстіндегі мәтін"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Атауы, 4 мәтін блогы"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Атауы, 6 мәтін блогы"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Тақырыптама, вертикалды мәтін"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Тақырыптама, вертикалды мәтін, жиынтық суреті"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Вертикалды тақырыптама, мәтін, диаграмма"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Вертикалды тақырыптама, вертикалды мәтін"

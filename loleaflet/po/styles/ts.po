@@ -1948,3 +1948,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~Kholomu ya ximatsi"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Matshamelo"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Slayidi leyi nga riki na nchumu"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Nhlokomhaka Ntsena"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Nhlokomhaka ya Slayidi"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Nhlokomhaka, Marito yo ya Ehenhla"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Nhlokomhaka, Marito yo ya Ehenhla, Xifaniso"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Nhlokomhaka yo ya Ehenhla, Marito, Chati"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Nhlokomhaka yo ya Ehenhla, Marito yo ya Ehenhla"

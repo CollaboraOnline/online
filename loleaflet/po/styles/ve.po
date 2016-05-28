@@ -1939,3 +1939,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Khoḽomu ya ~tsha monde"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Mbonalo"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Siḽaidi tshi si na Tshithu"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Ṱhoho Fhedzi"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Siḽaidi tsha Ṱhoho"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Ṱhoho, Maṅwalwa a Vethikhaḽa"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Ṱhoho, Maṅwalwa a Vethikhaḽa, Kiḽipuathi"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Ṱhoho ya Vethikhaḽa, Ḽiṅwalwa, Tshati"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Ṱhoho ya Vethikhaḽa, Ḽiṅwalwa ḽa Vethikhaḽa"

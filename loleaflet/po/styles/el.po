@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Τελευταία στήλη"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Διάταξη"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Κενή διαφάνεια"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Μόνο τίτλος"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Κεντραρισμένο κείμενο"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Διαφάνεια τίτλου"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Τίτλος, περιεχόμενο"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Τίτλος και περιεχόμενο 2"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Τίτλος, περιεχόμενο και περιεχόμενο 2"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Τίτλος, περιεχόμενο 2 και περιεχόμενο"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Τίτλος, περιεχόμενο πάνω από το περιεχόμενο 2"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Τίτλος, περιεχόμενο 2 πάνω από το περιεχόμενο"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Τίτλος, περιεχόμενο πάνω από το περιεχόμενο"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Τίτλος, περιεχόμενο 4"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Τίτλος, περιεχόμενο 6"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Τίτλος, κάθετο κείμενο"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Τίτλος, κάθετο κείμενο, Clipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Kάθετος τίτλος, κείμενο, διάγραμμα"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Κάθετος τίτλος, κάθετο κείμενο"

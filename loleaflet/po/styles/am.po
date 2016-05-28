@@ -1893,3 +1893,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "የመጨረሻው አምድ"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ረቂቅ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ባዶ ተንሸራታች"
+
+#: strings.src
+msgid "Title Only"
+msgstr "አርእስት ብቻ"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "መሀከል ላይ መጻፊያ"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "አርእስት ማንሸራተቻ"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "አርእስት ፡ ይዞታው"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "አርእስት እና 2 ይዞታው"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "አርእስት, ይዞታው እና 2 ይዞታው"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "አርእስት, 2 ይዞታው እና ይዞታው"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "አርእስት, ይዞታው ከ 2 ይዞታው በላይ"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "አርእስት, ከ 2 ይዞታው በላይ ይዞታው"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "አርእስት, ይዞታው ከ ይዞታው በላይ"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "አርእስት , 4 ይዞታ"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "አርእስት , 6 ይዞታ"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "አርእስት , በቁመት ጽሁፍ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "አርእስት , በቁመት ጽሁፍ , Clipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "በቁመት አርእስት , ጽሁፍ , Chart"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "በቁመት አርእስት ፡ በቁመት ጽሁፍ"

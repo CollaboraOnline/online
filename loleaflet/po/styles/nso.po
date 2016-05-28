@@ -1914,3 +1914,39 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Kholomo ya mafelelo"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Tlhamego"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Selaete se se nago selo"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Sehlogo feela"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Sengwalwa se beilwego gare"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Selaete sa sehlogo"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Sehlogo, sengwala se tsepamego"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Sehlogo, sengwalwa se tsepamego, klipiate"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Sehlogo se tsepamego, sengwalwa, tšhate"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Sehlogo se tsepamego, sengwalwa se tsepamego"

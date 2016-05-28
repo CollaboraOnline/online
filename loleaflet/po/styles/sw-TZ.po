@@ -1923,3 +1923,31 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Safu-wima ya kushoto"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Slaidi Tupu"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Mada Tu"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Slaidi Mada"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Mada, Matini wima"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Mada, Matini Wima, Sanaapogoa"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Mada Wima, Matini, Chati"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Mada Wima, Matini Wima"

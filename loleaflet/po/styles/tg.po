@@ -1913,3 +1913,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Сутун аз ~боло"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Тарҳ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Слайди холӣ"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Танҳо сарлавҳа"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Сарлавҳа, слайд"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Сарлавҳа, матни амудӣ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Сарлавҳа, матни амудӣ, коллектсияи расмҳо"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Сарлавҳаи амудӣ, матн, диаграмма"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Сарлавҳаи амудӣ, матни амудӣ"

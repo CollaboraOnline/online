@@ -1893,3 +1893,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Останній стовпчик"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Розмітка"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Порожній слайд"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Тільки заголовок"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Текст у центрі"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Заголовок слайда"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Заголовок, вміст"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Заголовок, 2 блоки вмісту"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Заголовок, вміст та 2 блоки вмісту"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Заголовок, 2 блоки вмісту та блок вмісту"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Заголовок, блок вмісту над двома іншими"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Заголовок, 2 блоки вмісту над третім"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Заголовок, блок вмісту над блоком"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Заголовок, 4 блоки вмісту"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Заголовок, 6 блоків вмісту"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Заголовок, вертикальний текст"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Заголовок, вертикальний текст, картинка колекції"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Вертикальний заголовок, текст, діаграма"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Вертикальний заголовок, вертикальний текст"

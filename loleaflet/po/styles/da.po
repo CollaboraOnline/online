@@ -1902,3 +1902,71 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Sidste kolonne"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Tomt dias"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Kun titel"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Centreret tekst"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Titeldias"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Titel, indhold"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Titel og 2 indhold"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Titel, indhold og 2 indhold"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Titel, 2 indhold og indhold"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Titel, indhold og 2 indhoover"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Titel, 2 indhold over indhold"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Titel, indhold over indhold"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Titel, 4 indhold"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Titel, 6 indhold"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Titel, lodret tekst"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Titel, lodret tekst, Clipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Lodret titel, tekst, diagram"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Lodret titel, lodret tekst"

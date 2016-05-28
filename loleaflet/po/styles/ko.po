@@ -1892,3 +1892,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "마지막 열"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "레이아웃"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "빈 슬라이드"
+
+#: strings.src
+msgid "Title Only"
+msgstr "제목만"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "가운데 정렬된 텍스트"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "제목 슬라이드"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "제목, 내용"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "제목과 2개의 내용"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "제목, 내용과 2개의 내용"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "제목, 2개의 내용과 내용"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "제목, 2개의 내용 위 내용"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "제목, 내용 위 2개의 내용"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "제목, 내용 위 내용"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "제목, 4개의 내용"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "제목, 6개의 내용"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "제목, 세로 쓰기 텍스트"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "제목, 가로 쓰기 텍스트, 클립아트"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "세로 쓰기 제목, 텍스트, 차트"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "세로 쓰기 제목, 세로 쓰기 텍스트"

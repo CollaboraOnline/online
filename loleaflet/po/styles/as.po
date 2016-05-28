@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "স্তম্ভ"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "খচৰা"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "খালী শ্লাইড"
+
+#: strings.src
+msgid "Title Only"
+msgstr "কেৱল শিৰোনাম"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "কেন্দ্রীকৃত"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "শিৰোনাম শ্লাইড"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "শীৰ্ষক, সমল"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "শীৰ্ষক আৰু ২ সমল"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "শীৰ্ষক, সমল আৰু ২ সমল"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "শীৰ্ষক, ২ সমল আৰু সমল"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "শীৰ্ষক, ২ সমলৰ উপৰত সমল"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "শীৰ্ষক, সমলৰ উপৰত ২ সমল"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "শীৰ্ষক, সমলৰ উপৰত সমল"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "শীৰ্ষক, ৪ সমল"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "শীৰ্ষক, ৬ সমল"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "শিৰোনাম, উলম্ব টেক্সট"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "শিৰোনাম, উলম্ব টেক্সট, ক্লিপ আৰ্ট"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "উলম্ব শিৰোনাম, টেক্সট, ছাৰ্ট"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "উলম্ব শিৰোনাম, উলম্ব টেক্সট"

@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Cabera columna"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Diseñu"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Diapositiva balera"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Sólo títulu"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Testu centráu"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Páxina de títulu"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Títulu, Conteníu"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Títulu y conteníu 2"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Títulu, conteníu y conteníu 2"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Títulu, conteníu 2 y conteníu"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Títulu, conteníu sobro conteníu 2"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Títulu, conteníu 2 sobro conteníu"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Títulu, conteníu sobro conteníu"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Títulu, conteníu 4"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Títulu, conteníu 6"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Títulu, Testu vertical"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Títulu, Testu Vertical, Graficu Prediseñáu"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Títulu Vertical, testu, gráficu"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Títulu Vertical, Testu Vertical"

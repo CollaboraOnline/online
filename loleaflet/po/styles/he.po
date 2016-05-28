@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "עמודה אחרונה"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "מתווה"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "שקופית ריקה"
+
+#: strings.src
+msgid "Title Only"
+msgstr "כותרת בלבד"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "טקסט ממורכז"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "שקופית כותרת"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "כותרת, תוכן"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "כותרת ו-2 תכנים"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "כותרת, תוכן ו-2 תכנים"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "כותרת, 2 תכנים ותוכן"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "כותרת, תוכן מעל 2 תכנים"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "כותרת, 2 תכנים מעל תוכן"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "כותרת, תוכן מעל תוכן"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "כותרת, 4 תכנים"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "כותרת, 6 תכנים"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "כותרת, טקסט אנכי"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "כותרת, טקסט אנכי, תמונות"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "כותרת אנכית, טקסט, תרשים"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "כותרת אנכית, טקסט אנכי"

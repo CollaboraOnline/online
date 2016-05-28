@@ -1959,3 +1959,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~Uluhlu olwehlayo lwasekhohlo"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Ukumisa Kakuhle"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Islayidi Esingenanto"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Isihloko Kuphela"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Islayidi Sesihloko"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Isihloko, Isiqendu Ngokobude"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Isihloko, Isiqendu Ngokobude, i-Clipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Isihloko Ngokobude, Isiqendu, Itshati"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Isihloko Ngokobude, Isiqendu Ngokobude"

@@ -1892,3 +1892,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "နောက်ဆုံးကော်လံ"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "အဆင်အပြင်"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ရုပ်ပုံဆလိုက် အလွတ်"
+
+#: strings.src
+msgid "Title Only"
+msgstr "ခေါင်းစဉ်သာလျှင်"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "စာသားအလယ်တည့်တည့်"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "ရုပ်ပုံ ဆလိုက် ခေါင်းစဉ်"
+
+#: strings.src
+msgid "Title, Content"
+msgstr " ခေါင်းစဉ်၊မာတိကာ"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr " ခေါင်းစဉ်၊မာတိကာ၂"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr " ခေါင်းစဉ်၊မာတိကာနှင့်မာတိကာ၂"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr " ခေါင်းစဉ်၊မာတိကာ၂နှင့်မာတိကာ"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr " ခေါင်းစဉ်၊မာတိကာ"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr " ခေါင်းစဉ်၊ မာတိကာ၂ အောက်တွင်မာတိကာ"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr " ခေါင်းစဉ်၊ မာတိကာ အောက်တွင်မာတိကာ"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr " ခေါင်းစဉ်၊မာတိကာ၄"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr " ခေါင်းစဉ်၊မာတိကာ၆"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "ခေါင်းစဉ်၊ မျဉ်းမတ် စာသား"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "ခေါင်းစဉ်၊ မျဉ်းမတ် စာသား၊ အသင့်သုံးနိုင်သောပုံ"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "မျဉ်းမတ် ခေါင်းစဉ်၊ စာသား၊ အသင့်သုံးနိုင်သောပုံ"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "မျဉ်းမတ် ခေါင်းစဉ်၊မျဉ်းမတ် စာသား"

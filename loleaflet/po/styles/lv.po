@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Pēdējā kolonna"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Izkārtojums"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Tukšs slaids"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Tikai virsraksts"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Teksts vidū"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Virsraksta slaids"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Virsraksts, saturs"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Virsraksts un 2 saturi"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Virsraksts, saturs un 2 saturi"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Virsraksts, 2 saturi un saturs"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Virsraksts, saturs virs 2 saturiem"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Virsraksts, 2 saturi virs satura"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Virsraksts, saturs virs satura"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Virsraksts, 4 saturi"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Virsraksts, 6 saturi"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Virsraksts, vertikāls teksts"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Virsraksts, vertikāls teksts, attēls"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Vertikāls virsraksts, teksts, diagramma"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Vertikāls virsraksts, vertikāls teksts"
