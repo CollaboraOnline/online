@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Viimane veerg"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Paigutus"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Tühi slaid"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Ainult tiitel"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Keskjoondatud tekst"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Tiitlislaid"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Tiitel, sisu"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Tiitel ja 2 sisu"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Tiitel, sisu ja 2 sisu"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Tiitel, 2 sisu ja sisu"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Tiitel, objekt ülalpool 2 sisu"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Tiitel, 2 sisu ülalpool sisu"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Tiitel, sisu ülalpool sisu"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Tiitel, 4 sisu"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Tiitel, 6 sisu"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Tiitel, vertikaaltekst"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Tiitel, vertikaaltekst, lõikepilt"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Vertikaaltiitel, tekst, diagramm"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Vertikaaltiitel, vertikaaltekst"

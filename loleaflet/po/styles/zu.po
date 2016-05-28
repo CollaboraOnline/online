@@ -1937,3 +1937,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Ikholamu yokugcina"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Isendlalelo"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Isilayidi esingenalutho"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Isihloko kuphela"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Umbhalo ophakathi"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Isilayidi esiyisihloko"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Isihloko, okuqukethwe"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Isihloko nokuqukethwe okungu-2"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Isihloko, okuqukethwe nokuqukethwe okungu-2"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Isihloko, okuqukethwe okungu-2 nokuqukethwe"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Isihloko, okuqukethwe ekuqukathweni okungu-2"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Isihloko nokuqukethwe okungu-2"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Isihloko, okuqukethwe kokuqukethwe"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Isihloko, nokuqukethwe okungu-4"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Isihloko, nokuqukethwe okungu-6"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Isihloko, Umbhalo ome ngobude"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Isihloko, Umbhalo ome ngobude, Ibhodi lemidwebo"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Isihloko esime ngobude, Umbhalo, Ishathi"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Isihloko esime ngobude, Umbhalo ome ngobude"

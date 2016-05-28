@@ -1913,3 +1913,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Sitûna dawî"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Niştecîh"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Slayta Vala"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Tenê Sernav"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Sernavê Slaytê"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Sernav, Nivîsa Tîk"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Sernav, Nivîsa Serdirêjahiyê, Wêneyê Biçûk"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Sernavê Serdirêjahiyê, Nivîs, Xanxank"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Sernavê Serdirêjahiyê, Nivîsa Serdirêjahiyê"

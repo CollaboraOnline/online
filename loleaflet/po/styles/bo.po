@@ -1813,3 +1813,39 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "མཇུག་ཤོས་ཀྱི་སྟར་པ་གཅིག"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "པར་གཞིའི་བཀོད་པ།"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "སྒྲོན་བཪྙན་སྟོང་པ།"
+
+#: strings.src
+msgid "Title Only"
+msgstr "ཁ་བྱང་ཙམ་ཡིན་པ།"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "དཀྱིལ་གནས་ཀྱི་ཡིག་རྐྱང་སྙོམས་གཤིབ།"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "ཁ་བྱང་སྒྲོན་བཪྙན།"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "ཁ་བྱང་། གཞུང་བྲིས་ཡི་གེ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "ཁ་བྱང་། དྲས་སྦྱར་རི་མོ།  གཞུང་སྒྲིག་ཡི་གེ"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "གཞུང་སྒྲིག་ཁ་བྱང་། གཞུང་སྒྲིག་ཡི་གེ དཔེ་རིས།"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "གཞུང་སྒྲིག་ཁ་བྱང་། གཞུང་སྒྲིག་ཡི་གེ"

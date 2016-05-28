@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Seinasti dálkur"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Útlit"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Auð skyggna"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Einungis titill"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Miðjaður texti"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Titill skyggnu"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Title, efni"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Titill og 2 efni"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Titill, efni og 2 efnishlutar"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Titill, 2 efnishlutar og efni"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Titill, efni yfir 2 efnishluta"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Titill, 2 efnishlutar yfir efni"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Titill, efni yfir efni"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Titill, 4 efnishlutar"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Titill, 6 efnishlutar"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Titill, lóðréttur texti"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Titill, lóðréttur texti, úrklippumynd"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Lóðréttur titill, texti, graf"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Lóðréttur titill, lóðréttur texti"

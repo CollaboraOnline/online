@@ -1884,3 +1884,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Paha columna"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Ta'angahai"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Diapositiva Nandi"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Título'año"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Moñe'ẽrã Mombyte"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Diapositiva Títulogui"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Título, Orekóva"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Título ha Orekóva 2"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Título, Orekóva ha Orekóva 2"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Título, Orekóva 2 ha Orekóva"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Título, Orekóva Orekóva'ári-2"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Título, Orekóva-2 Orekóva'ári"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Título, Orekóva Orekóva'ári"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Título, Orekóva 4"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Título, Orekóva 6"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Título, Moñe'ẽrã Oñembo'ýva"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Título, Moñe'ẽrã Oñembo'ýva, ClipArt"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Título Oñembo'ýva, Moñe'ẽrã, Gráfico"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Título Oñembo'ýva, Moñe'ẽrã Oñembo'yva"

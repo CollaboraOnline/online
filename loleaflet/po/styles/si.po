@@ -1902,3 +1902,39 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "අවසන් තීරුව"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ආකෘතිය"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "හිස් ස්ලයිඩය"
+
+#: strings.src
+msgid "Title Only"
+msgstr "මාතෘකාව පමණක්"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "මධ්‍යස්ථ පාඨය"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "මාතෘකා ස්ලයිඩය"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "මාතෘකාව, තිරස් පාඨය"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "මාතෘකාව, තිරස් පාඨය, ක්ලිප්ආට්"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "තිරස් මාතෘකාව, පාඨය. වගුව"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "තිරස් මාතෘකාව, තිරස් පාඨය"

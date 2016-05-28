@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "ಕೊನೆಯ ಲಂಬಸಾಲು"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ರೂಪವಿನ್ಯಾಸ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ಖಾಲಿ ಜಾರುಫಲಕ"
+
+#: strings.src
+msgid "Title Only"
+msgstr "ಶೀರ್ಷಿಕೆ ಮಾತ್ರ"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "ಮಧ್ಯಕ್ಕೆ ಹೊಂದಿಸಲಾದ ಪಠ್ಯ"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "ಶೀರ್ಷಿಕೆ ಜಾರುಫಲಕ"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "ಶೀರ್ಷಿಕೆ, ವಿಷಯ"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "ಶೀರ್ಷಿಕೆ ಹಾಗು 2 ವಿಷಯ"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "ಶೀರ್ಷಿಕೆ, ವಿಷಯ ಹಾಗು 2 ವಿಷಯ"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "ಶೀರ್ಷಿಕೆ, 2 ವಿಷಯ ಹಾಗು ವಿಷಯ"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "ಶೀರ್ಷಿಕೆ, 2 ವಿಷಯದಲ್ಲಿನ ವಿಷಯ"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "ಶೀರ್ಷಿಕೆ, ವಿಷಯದಲ್ಲಿನ 2 ವಿಷಯ"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "ಶೀರ್ಷಿಕೆ, ವಿಷಯದಲ್ಲಿನ ವಿಷಯ"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "ಶೀರ್ಷಿಕೆ, 4 ವಿಷಯ"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "ಶೀರ್ಷಿಕೆ, 6 ವಿಷಯ"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "ಶೀರ್ಷಿಕೆ, ಲಂಬ ಪಠ್ಯ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "ಶೀರ್ಷಿಕೆ, ಲಂಬ ಪಠ್ಯ, ಕ್ಲಿಪ್‌ಆರ್ಟ್"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "ಲಂಬ ಶೀರ್ಷಿಕೆ, ಪಠ್ಯ, ನಕ್ಷೆ"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "ಲಂಬ ಶೀರ್ಷಿಕೆ, ಲಂಬ ಪಠ್ಯ"

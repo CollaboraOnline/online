@@ -1907,3 +1907,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~ खब्बा स्तंभ "
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr " खाका	"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "कोरी स्लाइड "
+
+#: strings.src
+msgid "Title Only"
+msgstr "सिर्फ शीर्शक "
+
+#: strings.src
+msgid "Centered Text"
+msgstr "केंदरत इबारत"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "शीर्शक स्लाइड "
+
+#: strings.src
+msgid "Title, Content"
+msgstr "शीर्शक , विशे-समग्री"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "शीर्शक ते 2 विशे-समग्री"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "शीर्शक , विशे-समग्री ते 2 विशे-समग्री"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "शीर्शक, 2 विशे-समग्री ते विशे-समग्री"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "शीर्शक , विशे-समग्री ते 2 विशे-समग्री"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "शीर्शक, 2 विशे-समग्री ते विशे-समग्री"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "शीर्शक , विशे-समग्री ते विशे-समग्री"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "शीर्शक , 4विशे-समग्री"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "शीर्शक , 6 विशे-समग्री"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "शीर्शक, खड़ोतमीं इबारत"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "शीर्शक, खड़ोतमीं इबारत, क्लिपआर्ट "
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "खड़ोतमां शीर्शक, इबारत, चार्ट "
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "खड़ोतमां शीर्शक, खड़ोतमीं इबारत"

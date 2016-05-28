@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Bann diwezhañ"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Pajennaozañ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Treyonenn diskriv"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Titl hepken"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Testenn kreizet"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Treyonenn-ditl"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Titl, Endalc'had"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Titl ha 2 Endalc'had"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Titl, Endalc'had ha 2 Endalc'had"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Titl, 2 Endalc'had hag Endalc'had"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Titl, Endalc'had war 2 Endalc'had"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Titl, Endalc'had war 2 Endalc'had"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Titl, Endalc'had war Endalc'had"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Titl, 4 Endalc'had"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Titl, 6 Endalc'had"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Titl, testenn a-serzh"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Titl, testenn a-serzh, klipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Titl a-serzh, testenn, diervad"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Titl a-serzh, testenn a-serzh"

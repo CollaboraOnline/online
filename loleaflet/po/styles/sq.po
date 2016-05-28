@@ -1903,3 +1903,71 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Kolona e fundit"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Faqosja"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Diapozitiv bosh"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Vetëm titull"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Tekst i qendërzuar"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Titull, Përmbajtje"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Titulli dhe Përmbajtja 2"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Titulli, Përmbajtja dhe Përmbajtja 2"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Titulli, Përmbajtja 2 dhe Përmbajtja"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Titulli, Përmbajtja sipër Përmbajtjes 2"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Titulli, Përmbajtja 2 sipër Përmbajtjes"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Titulli, Përmbajtja sipër Përmbajtjes"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Titulli, Përmbajtja 4"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Titulli, Përmbajtja 6"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Titull, Tekst Vertikal"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Titulli, Tekst Vertikal, Klipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Titull Vertikal, Tekst, Diagram"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Titull Vertikal, Tekst Vertikal"

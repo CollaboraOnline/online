@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "最后一列"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "版式"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "空幻灯片"
+
+#: strings.src
+msgid "Title Only"
+msgstr "只是标题"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "居中对齐文本"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "标题幻灯片"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "标题，内容"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "标题和2个内容"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "标题，内容和2个内容"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "标题，2个内容和内容"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "标题，内容层叠2个内容"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "标题，2个内容层叠内容"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "标题，内容层叠内容"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "标题，4个内容"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "标题，6个内容"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "标题，竖排文字"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "标题，竖排文字，剪贴画"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "垂直排列标题，文字，图表"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "垂直排列标题，竖排文字"

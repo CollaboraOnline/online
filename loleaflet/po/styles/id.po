@@ -1893,3 +1893,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Kolom terakhir"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Tata Letak"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Salindia Kosong"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Hanya Judul"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Teks di Tengah"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Salindia Judul"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Judul, Isi"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Judul dan 2 Isi"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Judul, Isi, dan 2 Isi"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Judul, 2 Isi, dan Isi"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Judul, Isi di atas 2 Isi"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Judul, 2 Isi di atas Isi"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Judul, Isi di atas Isi"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Judul, 4 Isi"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Judul, 6 Isi"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Judul, Teks Vertikal"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Judul, Teks Vertikal, Gambar"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Judul Vertikal, Teks, Bagan"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Judul Vertikal, Teks Vertikal"

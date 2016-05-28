@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Laatste kolom"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Lay-out"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Lege dia"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Alleen titel"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Gecentreerde tekst"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Titeldia"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Titel, inhoud"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Titel en inhoud 2"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Titel, inhoud en inhoud 2"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Titel, inhoud 2 en inhoud"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Titel, inhoud boven inhoud 2"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Titel, inhoud 2 boven inhoud"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Titel, inhoud boven inhoud"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Titel, inhoud 4"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Titel, inhoud 6"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Titel, verticale tekst"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Titel, verticale tekst, clipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Verticale titel, tekst, diagram"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Verticale titel, verticale tekst"

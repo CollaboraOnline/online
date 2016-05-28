@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Ostatnia kolumna"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Układ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Pusty slajd"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Tylko tytuł"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Tekst wyśrodkowany"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Slajd tytułowy"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Tytuł, zawartość"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Tytuł i 2 elementy zawartości"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Tytuł, zawartość i 2 elementy zawartości"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Tytuł, 2 elementy zawartości i zawartość"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Tytuł, zawartość nad 2 elementami zawartości"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Tytuł, 2 elementy zawartości nad zawartością"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Tytuł, zawartość nad zawartością"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Tytuł, 4 elementy zawartości"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Tytuł, 6 elementów zawartości"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Tytuł, tekst w pionie"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Tytuł, tekst w pionie, clipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Pionowy tytuł, tekst, wykres"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Pionowy tytuł, tekst w pionie"

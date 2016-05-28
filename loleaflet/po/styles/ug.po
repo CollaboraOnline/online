@@ -1892,3 +1892,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "ئاخىرقى رەت"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ئورۇنلاشتۇرۇلۇشى"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "بوش تام تەسۋىر"
+
+#: strings.src
+msgid "Title Only"
+msgstr "ماۋزۇلا"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "تېكستنى ئوتتۇرىغا توغرىلا"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "ماۋزۇ تام تەسۋىر"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "ماۋزۇ، مەزمۇن"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "ماۋزۇ ۋە 2 مەزمۇن"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "ماۋزۇ، مەزمۇن ۋە 2 مەزمۇن"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "ماۋزۇ، 2 مەزمۇن ۋە مەزمۇن"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "ماۋزۇ، مەزمۇن ھالقىغان 2 مەزمۇن"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "ماۋزۇ، 2 مەزمۇن ھالقىغان مەزمۇن"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "ماۋزۇ، مەزمۇن ھالقىغان مەزمۇن"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "ماۋزۇ، 4 مەزمۇن"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "ماۋزۇ، 6 مەزمۇن"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "ماۋزۇ، تىك تېكست"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "ماۋزۇ، تىك تېكست، كەسمە سۈرەت"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "تىك تېكست، تېكست، دىئاگرامما"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "تىك ماۋزۇ، تىك تېكست"

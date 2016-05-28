@@ -1892,3 +1892,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Darrièra colomna"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Mesa en pagina"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Diapositiva vèrge"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Títol unicament"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Tèxte centrat"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Diapositiva-títol"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Títol, Contengut"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Títol e 2 contenguts"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Títol, contengut e 2 contengut"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Títol, 2 contenguts e contengut"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Títol, contengut sus 2 contenguts"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Títol, 2 contenguts sus contengut"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Títol, contengut sus contengut"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Títol, 4 contenguts"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Títol, 6 contenguts"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Títol, tèxte vertical"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Títol, tèxte vertical, Clipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Títol vertical, tèxte, Diagrama"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Títol vertical, tèxte vertical"

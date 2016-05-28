@@ -1928,3 +1928,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Poslednja kolona"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Razmeštaj"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Prazan slajd"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Samo naslov"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Centriran tekst"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Naslovni slajd"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Naslov, prostor"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Naslov i 2 prostora"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Naslov, prstor pa 2 prostora"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Naslov, 2 prostora pa prostor"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Naslov, naslov iznad 2 prostora"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Naslov, 2 prostora iznad prostora"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Naslov, prostor iznad prostora"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Naslov, 4 prostora"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Naslov, 6 prostora"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Naslov, uspravni tekst"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Naslov, uspravni tekst, sličica"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Uspravni naslov, tekst, grafik"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Uspravni naslov, uspravni tekst"

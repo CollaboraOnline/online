@@ -1934,3 +1934,31 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~Molema kholomo"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Lolea Kgogelothoko"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Setlhogo Fela"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Setlhogo Kgogelothoko"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Setlhogo,Tsamaisomolema Kago"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Setlhogo,Tsamaisomolema Kago, Clipchart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Tsamaisomolema Setlhogo Kago, Chate"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Tsamaisomolema,Setlhogo,Tsamaisomolema Kago"

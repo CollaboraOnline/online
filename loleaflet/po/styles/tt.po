@@ -1906,3 +1906,7 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr ""
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Билгеләү"

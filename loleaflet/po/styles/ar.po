@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "العمود الأخير"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "تخطيط"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "شريحة فارغة"
+
+#: strings.src
+msgid "Title Only"
+msgstr "عنوان فقط"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "نص متوسط"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "شريحة عنوان"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "عنوان ومحتوى"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "عنوان واثنان من المحتوى"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "عنوان ومحتوى واثنان من المحتوى"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "عنوان واثنان من المحتوى ومحتوى"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "عنوان ومحتوى فوق اثنين من المحتوى"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "عنوان واثنان من المحتوى فوق محتوى"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "عنوان ومحتوى فوق محتوى"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "عنوان وأربعة محتويات"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "عنوان وستة محتويات"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "عنوان، نص رأسي"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "عنوان، نص رأسي، صورة"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "عنوان رأسي، نص، رسم بياني"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "عنوان رأسي، نص رأسي"

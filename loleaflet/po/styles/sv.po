@@ -1902,3 +1902,71 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Sista kolumnen"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Tom bild"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Bara rubrik"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Centrerad text"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Rubrikdiabild"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Rubrik, Innehåll"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Rubrik och 2 Innehåll"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Rubrik, Innehåll och 2 Innehåll"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Rubrik, 2 Innehåll och Innehåll"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Rubrik, Innehåll över 2 Innehåll"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Rubrik, 2 Innehåll över Innehåll"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Rubrik, Innehåll över Innehåll"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Rubrik, 4 Innehåll"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Rubrik, 6 Innehåll"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Rubrik, vertikal text"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Rubrik, vertikal text, clip art"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Vertikal rubrik, text, diagram"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Vertikal rubrik, vertikal text"

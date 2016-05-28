@@ -1893,3 +1893,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Poslední sloupec"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Rozvržení"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Prázdný snímek"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Pouze nadpis"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Text zarovnaný na střed"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Snímek s nadpisem"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Nadpis a obsah"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Nadpis a 2 obsahy"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Nadpis, obsah a 2 malé obsahy"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Nadpis, 2 malé obsahy a obsah"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Nadpis, obsah nad 2 malými obsahy"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Nadpis, 2 malé obsahy nad obsahem"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Nadpis, obsah nad obsahem"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Nadpis a 4 malé obsahy"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Nadpis a 6 malých obsahů"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Nadpis a svislý text"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Nadpis, svislý text a obrázek"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Svislý nadpis, text a graf"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Svislý nadpis a svislý text"

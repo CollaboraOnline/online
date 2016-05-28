@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Última columna"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Format"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Diapositiva buida"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Només el títol"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Text centrat"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Diapositiva títol"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Títol i contingut"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Títol i dos continguts"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Títol, contingut i dos continguts"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Títol, dos continguts i contingut"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Títol i contingut sobre dos continguts"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Títol i dos continguts sobre contingut"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Títol i contingut sobre contingut"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Títol i quatre continguts"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Títol i sis continguts"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Títol i text vertical"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Títol, text vertical i imatge"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Títol vertical, text i diagrama"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Títol vertical i text vertical"

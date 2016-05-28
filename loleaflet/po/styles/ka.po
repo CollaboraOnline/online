@@ -1900,3 +1900,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "პირველი ფერი"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "შრე"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ცარიელი სლაიდი"
+
+#: strings.src
+msgid "Title Only"
+msgstr "მხოლოდ სათაური"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "მხოლოდ სლაიდი"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "სათაური, ვერტიკალური ტექსტი"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "სათაური, ვერტიკალური ტექსტი, კლიპარტი"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "ვერტიკალური სათაური, ტექსტი, დიაგრამა"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "ვერტიკალური სათაური, ვერტიკალური ტექსტი"

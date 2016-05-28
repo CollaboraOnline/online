@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "最後一欄"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "版面配置"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "空白投影片"
+
+#: strings.src
+msgid "Title Only"
+msgstr "只有題名"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "文字置中"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "題名投影片"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "題名，物件"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "題名與 2 個物件"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "題名，1 個大物件與 2 個小物件"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "題名，2 個小物件與 1 個大物件"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "題名，1 個大物件在 2 個小物件之上"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "題名，2 個小物件在 1 個大物件之上"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "題名，物件在物件之上"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "題名，4 個物件"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "題名，6 個物件"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "題名，垂直文字"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "題名，垂直文字，美術圖形"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "垂直題名，文字，圖表"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "垂直題名，垂直文字"

@@ -1893,3 +1893,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "അവസാന നിര"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "പ്ലാന്"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ഒഴിഞ്ഞ സ്ലൈഡ്"
+
+#: strings.src
+msgid "Title Only"
+msgstr "ശീര്ഷകം മാത്രം"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "മദ്ധ്യത്തിലുള്ള വാചകം"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "ശീര്ഷക സ്ലൈഡ്"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "ശീര്‍ഷകം, ഉള്ളടക്കം"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "ശീര്‍ഷകവും 2 ഉള്ളടക്കവും"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "ശീര്‍ഷകം, ഉള്ളടക്കം, 2 ഉള്ളടക്കം"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "ശീര്‍ഷകം, 2 ഉള്ളടക്കം, ഉള്ളടക്കം"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "ശീര്‍ഷകം, ഉള്ളടക്കത്തിനു് പുറമേ 2 ഉള്ളടക്കം"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "ശീര്‍ഷകം, 2 ഉള്ളടക്കത്തിനു് പുറമേ ഉള്ളടക്കം"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "ശീര്‍ഷകം, ഉള്ളടക്കത്തിനു് പുറമേ ഉള്ളടക്കം"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "ശീര്‍ഷകം, 4 ഉള്ളടക്കം"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "ശീര്‍ഷകം, 6 ഉള്ളടക്കം"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "ശീര്ഷകം, കുത്തനെയുള്ള ടെക്സ്റ്റ്"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "ശീര്ഷകം, കുത്തനെയുള്ള ടെക്സ്റ്റ്, ക്ലിപ്പാര്ട്ട്"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "കുത്തനെയുള്ള ശീര്ഷകം,  ടെക്സ്റ്റ്,  ചാര്ട്ട്"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "കുത്തനെയുള്ള ശീര്ഷകം, കുത്തനെയുള്ള ടെക്സ്റ്റ്"

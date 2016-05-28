@@ -1896,3 +1896,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~आगसि खाम्फा"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "लेआउट"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "लांदां स्लाइड"
+
+#: strings.src
+msgid "Title Only"
+msgstr "बिमुंल'"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "बिमुं स्लाइड"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "बिमुं, थोंगोरै थानाय फराय बिजाब"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "बिमुं, थोंगोरै थानाय फराय बिजाब, क्लिपआर्ट"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "थोंगोरै थानाय बिमुं, फराय बिजाब,चार्ट"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "थोंगोरै थानाय बिमुं, थोंगोरै थानाय फराय बिजाब"

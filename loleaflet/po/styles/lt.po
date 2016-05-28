@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Paskutinis stulpelis"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Maketas"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Tuščia skaidrė"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Tik antraštė"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Centruotas tekstas"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Antraštė ir patikslinimas"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Antraštė ir turinio kadras"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Antraštė ir 2 turinio kadrai"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Antraštė, 1 ir 2 turinio kadrai"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Antraštė, 2 ir 1 turinio kadras"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Antraštė, 1 turinio kadras virš 2 turinio kadrų"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Antraštė, 2 turinio kadrai virš 1 turinio kadro"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Antraštė, turinio kadras virš turinio kadro"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Antraštė ir 4 turinio kadrai"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Antraštė ir 6 turinio kadrai"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Pavadinimas, vertikalus tekstas"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Pavadinimas, vertikalus tekstas, paveiksliukas"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Vertikalus pavadinimas, tekstas, diagrama"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Vertikalus pavadinimas, vertikalus tekstas"

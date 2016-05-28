@@ -1922,3 +1922,39 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Laaste kolom"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Uitleg"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Blanko skyfie"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Slegs titel"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Gesentreerde teks"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Titelskyfie"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Titel, vertikale teks"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Titel, vertikale teks, knipkuns"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Vertikale titel, teks, grafiek"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Vertical titel, vertikale teks"

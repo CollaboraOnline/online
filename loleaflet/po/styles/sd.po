@@ -1925,3 +1925,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "کاٻو ڪالم"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ليئائوٽ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "خالي سلائڊ"
+
+#: strings.src
+msgid "Title Only"
+msgstr "فقط عنوان"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "مرڪز ۾ آندل متن"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "عنوان جو سلائڊ"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "عنوان، موضوع"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "عنوان ۽ ٢ موضوع"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "عنوان، موضوع ۽ ٢ موضوع"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "عنوان، ٢ موضوع ۽ موضوع"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "عنوان ٢ موضوع مٿان موضوع"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "عنوان موضوع مٿان ٢ موضوع"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "عنوان موضوع مٿان موضوع"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "عنوان، ٤ موضوع"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "عنوان، ٦ موضوع"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "عنوان، عمودي متن"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "عنوان، عمودي، متن،"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "عمودي عنوان، متن، تختي"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "عمودي عنوان، عمودي متن "

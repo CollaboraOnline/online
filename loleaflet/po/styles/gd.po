@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "An colbh mu dheireadh"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Co-dhealbhachd"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Sleamhnag bhàn"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Tiotal a-mhàin"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Teacsa meadhanaichte"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Sleamhnag tiotail"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Tiotal, susbaint"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Tiotal is 2 bhall susbainte"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Tiotal, susbaint is 2 bhall susbainte"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Tiotal, 2 bhall susbainte is susbaint"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Tiotal, susbaint thairis air 2 bhall susbainte"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Tiotal, 2 bhall susbainte thairis air susbaint"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Tiotal, susbaint thairis air susbaint"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Tiotal, 4 buill susbainte"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Tiotal, 6 buill susbainte"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Tiotal, teacsa inghearach"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Tiotal, teacsa inghearach, ealain chliopaichean"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Teacsa inghearach, teacsa, cairt"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Tiotal inghearach, teacsa inghearach"

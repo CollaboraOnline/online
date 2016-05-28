@@ -1921,3 +1921,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "শেষ কলাম"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "বহির্বিন্যাস"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ফাঁকা স্লাইড"
+
+#: strings.src
+msgid "Title Only"
+msgstr "শুধুমাত্র শিরোনাম"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "কেন্দ্রস্থিত টেক্সট"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "শিরোনাম স্লাইড"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "শিরোনাম, বিষয়বস্তু"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "শিরোনাম এবং ২ বিষয়বস্তু"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "শিরোনাম, বিষয়বস্তু এবং ২ বিষয়বস্তু"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "শিরোনাম, ২ বিষয়বস্তু এবং বিষয়বস্তু"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "শিরোনাম, ২ বিষয়বস্তু এর উপর বিষয়বস্তু"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "শিরোনাম, বিষয়বস্তু এর উপর ২ বিষয়বস্তু"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "শিরোনাম, বিষয়বস্তু এর উপর বিষয়বস্তু"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "শিরোনাম, ৪ বিষয়বস্তু"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "শিরোনাম, ৬ বিষয়বস্তু"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "শিরোনাম, উল্লম্ব টেক্সট"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "শিরোনাম, উল্লম্ব টেক্সট, ক্লিপআর্ট"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "উল্লম্ব শিরোনাম, টেক্সট, লেখচিত্র"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "উল্লম্ব শিরোনাম, উল্লম্ব টেক্সট"

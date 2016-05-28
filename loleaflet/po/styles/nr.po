@@ -1887,3 +1887,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~Kholomu lesinceleni"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Ubunjalo"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Isilayidi Esinganalitho"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Isihloko Kwaphela"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Isihloko Sesilayidi"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Isihloko, Itheksithi ejame rwe"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Isihloko, Itheksithi ejame rwe, Ikliphathi"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Isihloko Esijame rwe, Itheksithi, Ikliphathi"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Isihloko esijame rwe, Itheksithi ejame rwe"

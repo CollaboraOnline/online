@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "An colún deiridh"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Leagan Amach"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Sleamhnán Bán"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Teideal Amháin"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Téacs Láraithe"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Sleamhnán Teidil"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Teideal, Ábhar"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Teideal agus 2 Ábhar"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Teideal, Ábhar agus 2 Ábhar"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Teideal, 2 Ábhar agus Ábhar"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Teideal, Ábhar os cionn 2 Ábhar"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Teideal, 2 Ábhar os cionn Ábhar"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Teideal, Ábhar os cionn Ábhar"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Teideal, 4 Ábhar"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Teideal, 6 Ábhar"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Teideal, Téacs Ingearach"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Teideal, Téacs Ingearach, Fáiscealaín"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Teideal Ingearach, Téacs, Cairt"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Teideal Ingearach, Téacs Ingearach"

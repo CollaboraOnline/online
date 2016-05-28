@@ -1934,3 +1934,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Inkingi y'ibumoso"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Imigaragarire"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Igice kiriho Ubusa"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Umutwe Gusa"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Umutwe, Igice"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Umutwe, Umwandiko Uhagaze"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Umutwe, Umwandiko Uhagaze, Agashushanyo"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Umutwe Uhagaze, Umwandiko, Igishushanyo"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Umutwe Uhagaze, Umwandiko Uhagaze"

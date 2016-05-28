@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "ជួរ​ឈរ​ចុងក្រោយ"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ប្លង់​"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ស្លាយ​ទទេ"
+
+#: strings.src
+msgid "Title Only"
+msgstr "​តែ​ចំណង​ជើង"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "ដាក់​អត្ថបទ​នៅ​កណ្ដាល"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "ស្លាយ​ចំណង​ជើង"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "ចំណង​ជើង មាតិកា"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "ចំណង​ជើង និង​ ២ មាតិកា"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "ចំណង​ជើង និង​ ២ មាតិកា"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "ចំណង​ជើង ២ មាតិកា និងមាតិកា"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "ចំណង​ជើង មាតិកា​លើ​ ២ មាតិកា"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "ចំណង​ជើង ២ មាតិកា​លើ​មាតិកា"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "ចំណង​ជើង មាតិកា​លើមាតិកា"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "ចំណង​ជើង ៤ មាតិកា"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "ចំណង​ជើង ៦ មាតិកា"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "ចំណង​ជើង  អត្ថបទ​បញ្ឈរ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "ចំណង​ជើង  អត្ថបទ​បញ្ឈរ  បន្ទប់​រូបភាព"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "ចំណង​ជើង​បញ្ឈរ  អត្ថបទ  គំនូស​តាង"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "ចំណង​ជើង​បញ្ឈរ  អត្ថបទ​បញ្ឈរ "

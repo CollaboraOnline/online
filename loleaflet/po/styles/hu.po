@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Utolsó oszlop"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Elrendezés"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Üres dia"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Csak cím"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Középre igazított szöveg"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Címdia"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Cím, Tartalom"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Cím és 2 Tartalom"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Cím, Tartalom és 2 Tartalom"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Cím, 2 Tartalom és Tartalom"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Cím, Tartalom a 2 Tartalom felett"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Cím, 2 Tartalom a Tartalom felett"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Cím, Tartalom a Tartalom felett"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Cím, 4 Tartalom"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Cím, 6 Tartalom"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Cím, függőleges szöveg"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Cím, függőleges szöveg, kép"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Függőleges cím, szöveg, diagram"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Függőleges cím, függőleges szöveg"

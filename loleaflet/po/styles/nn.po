@@ -1883,3 +1883,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Siste kolonne"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Utforming"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Tomt lysbilete"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Berre tittel"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Midtstilt tekst"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Tittellysbilete"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Tittel, innhald"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Tittel og 2 innhald"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Tittel, 2 objekt og 2 objekt"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Tittel, 2 objekt og objekt"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Tittel, objekt og meir enn 2 objekt"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Tittel, 2 objekt over objekt"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Tittel, objekt over objekt"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Tittel, 4 objekt"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Tittel, 6 objekt"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Tittel, loddrett tekst"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Tittel, loddrett tekst, utklippsbilete"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Loddrett tittel, tekst, diagram"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Loddrett tittel, loddrett tekst"

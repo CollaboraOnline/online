@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "கடைசி நிரல்"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "உருவரை"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "வெற்றுப் படவில்லை"
+
+#: strings.src
+msgid "Title Only"
+msgstr "தலைப்பு மட்டும்"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "மையமாக்கப்பட்ட உரை"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "தலைப்பு படக்காட்சி"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "தலைப்பு, உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "தலைப்பு மற்றும் 2 உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "தலைப்பு, உள்ளடக்கம் மற்றும் 2 உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "தலைப்பு, 2 உள்ளடக்கம் மற்றும் உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "தலைப்பு, 2 உள்ளடக்கத்தில் உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "தலைப்பு, உள்ளடக்கத்தில் 2 உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "தலைப்பு, உள்ளடக்கத்தில் உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "தலைப்பு, 4 உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "தலைப்பு, 6 உள்ளடக்கம்"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "தலைப்பு, நெடுக்குவச உரை"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "தலைப்பு, நெடுக்குவச உரை, சிறுபடம்"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "நெடுக்குவச தலைப்பு, உரை, வரைபடம்"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "நெடுக்குவச தலைப்பு, நெடுக்குவச உரை"

@@ -1892,3 +1892,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "చివరి నిలువువరుస"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "కూర్పు"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ఖాళీ జారు"
+
+#: strings.src
+msgid "Title Only"
+msgstr "శీర్షిక మాత్రమే"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "కేంద్రముచేసిన పాఠ్యము"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "శీర్షిక స్లైడ్ "
+
+#: strings.src
+msgid "Title, Content"
+msgstr "శీర్షిక, నిక్షిప్తము"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "శీర్షిక మరియు 2 నిక్షిప్తము"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "శీర్షిక, నిక్షిప్తము మరియు 2 సారము"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "శీర్షిక, 2 నిక్షిప్తము మరియు నిక్షిప్తము"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "శీర్షిక, నిక్షిప్తము పైన 2 నిక్షిప్తము"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "శీర్షిక, 2 నిక్షిప్తము పైన నిక్షిప్తము"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "శీర్షిక, నిక్షిప్తము పైన నిక్షిప్తము"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "శీర్షి, 4 నిక్షిప్తము"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "శీర్షిక, 6 నిక్షిప్తము"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "శీర్షిక, నిలువు పాఠ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "శీర్షిక, నిలువు పాఠ, క్లిప్ ఆర్టు"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "నిలువు శీర్షిక, పాఠం, పత్రము"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "నిలువు శీర్షిక,నిలువు పాఠం"

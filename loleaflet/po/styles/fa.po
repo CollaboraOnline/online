@@ -1911,3 +1911,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "آخرین ستون"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "صفحه‌بندی"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "اسلاید خالی"
+
+#: strings.src
+msgid "Title Only"
+msgstr "فقط عنوان"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "متن وسط‌چین"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "عنوان اسلاید"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "عنوان، محتوا"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "عنوان و 2 محتوا"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "عنوان، محتوا و 2 محتوا"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "عنوان، 2 محتوا و محتوا"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "عنوان، محتوا روی 2 محتوا"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "عنوان، 2 محتوا روی محتوا"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "عنوان، محتوا روی محتوا"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "عنوان، 4 محتوا"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "عنوان، 6 محتوا"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "عنوان، متن عمودی"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "عنوان، متن عمودی، قطعه تصویر"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "عنوان عمودی، متن، نمودار"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "عنوان عمودی، متن عمودی"

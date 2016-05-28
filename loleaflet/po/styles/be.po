@@ -1903,3 +1903,43 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Апошняя калонка"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Выклад"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Пусты слайд"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Толькі загаловак"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Тэкст у цэнтры"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Тытульны слайд"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Загаловак, змесціва"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Загаловак, вертыкальны тэкст"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Загаловак, вертыкальны тэкст, графіка"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Вертыкальны загаловак, тэкст, дыяграма"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Вертыкальны загаловак, вертыкальны тэкст"

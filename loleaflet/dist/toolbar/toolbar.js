@@ -997,7 +997,7 @@ map.on('statusindicator', function (e) {
 			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
 
 			L.Styles.impressLayout.forEach(function(layout) {
-				data = data.concat({id: layout.id, text: layout.text});
+				data = data.concat({id: layout.id, text: _(layout.text)});
 			}, this);
 
 			$(".styles-select").select2({

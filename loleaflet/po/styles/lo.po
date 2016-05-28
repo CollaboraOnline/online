@@ -1923,3 +1923,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "~ຖັນທາງຊ້າຍ"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ການຈັດໜ້າ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ສະໄລ້ວ່າງ"
+
+#: strings.src
+msgid "Title Only"
+msgstr "ມີແຕ່ຫົວຂໍ້"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "ຫົວຂໍ້ສະໄລ້"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "ຫົວຂໍ້, ແນວຕັ້ງຂອງຕົວອັກສອນ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "ຫົວຂໍ້, ແນວຕັ້ງຂອງຕົວອັກສອນ, ຕັດວ່າງ"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "ຫົວຂໍ້ແນວຕ້ັງ, ຕົວອັກສອນ,ຮູບແຜນການ"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "ຫົວຂໍ້ແນວຕັ້ງ, ຕົວອັກສອນແນວຕັ້ງ"

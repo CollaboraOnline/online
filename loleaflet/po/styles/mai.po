@@ -1906,3 +1906,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "बामाँ कॉलम (~L)"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "लेआउट"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "खाली स्लाइड"
+
+#: strings.src
+msgid "Title Only"
+msgstr "केवल शीर्षक"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "शीर्षक स्लाइड"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "शीर्षक, लंबरूप पाठ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "शीर्षक, लंबरूप शीर्षक, क्लिपआर्ट"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "लंबरूप शीर्षक, पाठ, चार्ट"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "लंबरूप शीर्षक, लंबरूप पाठ "

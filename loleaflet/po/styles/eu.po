@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Azken zutabea"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Diseinua"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Diapositiba hutsa"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Titulua soilik"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Testu zentratua"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Titulu-diapositiba"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "Titulua, edukia"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "Titulua eta 2. edukia"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "Titulua, edukia eta 2. edukia"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "Titulua, 2. edukia eta edukia"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "Titulua, edukia 2. edukiaren gainean"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "Titulua, 2. edukia edukiaren gainean"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "Titulua, edukia edukiaren gainean"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "Titulua, 4. edukia"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "Titulua, 6. edukia"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Titulua, testu bertikala"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "Titulua, testu bertikala, clipart"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Titulu bertikala, testua, diagrama"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Titulu bertikala, testu bertikala"

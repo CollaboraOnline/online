@@ -1893,3 +1893,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "最後の列"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "レイアウト"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "白紙のスライド"
+
+#: strings.src
+msgid "Title Only"
+msgstr "タイトルのみ"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "中央揃えのテキスト"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "タイトルスライド"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "タイトル、コンテンツ"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "タイトルと 2 つのコンテンツ"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "タイトル、コンテンツ、 2 コンテンツ"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "タイトル、 2 コンテンツ、コンテンツ"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "タイトル、 2 コンテンツ上にコンテンツ"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "タイトル、コンテンツ上に 2 コンテンツ"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "タイトル、コンテンツ上にコンテンツ"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "タイトル、 4 つのコンテンツ"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "タイトル、 6 つのコンテンツ"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "タイトル、垂直テキスト"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "タイトル、垂直テキスト、クリップアート"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "垂直タイトル、テキスト、グラフ"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "垂直タイトル、垂直テキスト"

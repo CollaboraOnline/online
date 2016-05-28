@@ -1925,3 +1925,35 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Oxirgi ustun"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "Joylashishi"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "Boʻsh slayd"
+
+#: strings.src
+msgid "Title Only"
+msgstr "Faqat sarlavha"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "Markazdagi matn"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "Slayd sarlavhasi"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "Sarlavha. vertikal matn"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "Vertikal sarlavha, matn, diagramma"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "Vertikal sarlavha, vertikal matn"

@@ -1902,3 +1902,75 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "ਆਖਰੀ ਕਾਲਮ"
+
+#: DrawImpressCommands.xcu
+msgid "Layout"
+msgstr "ਲੇਆਉਟ"
+
+#: strings.src
+msgid "Blank Slide"
+msgstr "ਖਾਲੀ ਸਲਾਈਡ"
+
+#: strings.src
+msgid "Title Only"
+msgstr "ਟਾਈਟਲ ਹੀ"
+
+#: strings.src
+msgid "Centered Text"
+msgstr "ਸੈਂਟਰਡ ਟੈਕਸਟ"
+
+#: strings.src
+msgid "Title Slide"
+msgstr "ਮੁੱਖ ਸਲਾਈਡ"
+
+#: strings.src
+msgid "Title, Content"
+msgstr "ਟਾਈਟਲ, ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title and 2 Content"
+msgstr "ਟਾਈਟਲ ਤੇ 2 ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title, Content and 2 Content"
+msgstr "ਟਾਈਟਲ, ਸਮੱਗਰੀ ਤੇ 2 ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title, 2 Content and Content"
+msgstr "ਟਾਈਟਲ, 2 ਸਮੱਗਰੀ ਤੇ ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title, Content over 2 Content"
+msgstr "ਟਾਈਟਲ, ਸਮੱਗਰੀ ਉੱਤੇ 2 ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title, 2 Content over Content"
+msgstr "ਟਾਈਟਲ, 2 ਸਮੱਗਰੀ ਤੇ ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title, Content over Content"
+msgstr "ਟਾਈਟਲ,  ਸਮੱਗਰੀ ਉੱਤੇ ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title, 4 Content"
+msgstr "ਟਾਈਟਲ, 4 ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title, 6 Content"
+msgstr "ਟਾਈਟਲ, 6 ਸਮੱਗਰੀ"
+
+#: strings.src
+msgid "Title, Vertical Text"
+msgstr "ਟਾਈਟਲ, ਵਰਟੀਕਲ ਪਾਠ"
+
+#: strings.src
+msgid "Title, Vertical Text, Clipart"
+msgstr "ਟਾਈਟਲ, ਵਰਟੀਕਲ ਪਾਠ, ਕਲਿੱਪਆਰਟ"
+
+#: strings.src
+msgid "Vertical Title, Text, Chart"
+msgstr "ਵਰਟੀਕਲ ਟਾਈਟਲ, ਪਾਠ, ਕਲਿੱਪਆਰਟ"
+
+#: strings.src
+msgid "Vertical Title, Vertical Text"
+msgstr "ਵਰਟੀਕਲ ਟਾਈਟਲ, ਵਰਟੀਕਲ ਪਾਠ"
