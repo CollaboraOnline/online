@@ -542,7 +542,10 @@ map.on('commandstatechanged', function (e) {
 	var commandName = e.commandName;
 	var state = e.state;
 	var found = false;
-	if (commandName === '.uno:StyleApply') {
+	if (commandName === '.uno:AssignLayout') {
+		$(".styles-select").val(state).trigger('change');
+	}
+	else if (commandName === '.uno:StyleApply') {
 		if (!state)
 			return;
 
@@ -717,10 +720,9 @@ map.on('updatetoolbarcommandvalues', function (e) {
 		else if (map.getDocType() === 'spreadsheet') {
 			styles = e.commandValues.CellStyles;
 		}
-		else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
-			L.Styles.impressLayout.forEach(function(layout) {
-				data = data.concat({id: layout.id, text: layout.text});
-			}, this);
+		else if (map.getDocType() === 'presentation') {
+			// styles are not applied for presentation
+			return;
 		}
 
 		if (topStyles.length > 0) {
@@ -985,6 +987,26 @@ map.on('mouseup keypress', function(e) {
 
 map.on('locontextmenu', function (e) {
 	// TODO: context menu handling...
+});
+
+map.on('statusindicator', function (e) {
+	if (e.statusType === 'loleafletloaded') {
+		var data = [''];
+		if (map.getDocType() === 'presentation') {
+			// Inserts a separator element
+			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+
+			L.Styles.impressLayout.forEach(function(layout) {
+				data = data.concat({id: layout.id, text: layout.text});
+			}, this);
+
+			$(".styles-select").select2({
+				data: data,
+				placeholder: _("Layout")
+			});
+			$(".styles-select").on('select2:select', onStyleSelect);
+		}
+	}
 });
 
 $(window).resize(function() {
