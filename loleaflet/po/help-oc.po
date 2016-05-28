@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-26 16:41+0000\n"
+"POT-Creation-Date: 2016-05-28 20:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /oc/libo_online/loleaflet-help-oc.po\n"
-"X-Pootle-Revision: 435188\n"
+"X-Pootle-Revision: 442600\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -364,10 +364,9 @@ msgid "Move cursor to beginning of the previous paragraph"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
 msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + Sageta esquèrra"
+msgstr "Ctrl + Sageta cap amont"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
@@ -375,10 +374,9 @@ msgid "Select to beginning of paragraph"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Maj + Sageta esquèrra"
+msgstr "Ctrl + Maj + Sageta cap amont"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A99
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
@@ -406,10 +404,9 @@ msgid "Move cursor to beginning of the next paragraph"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + Sageta esquèrra"
+msgstr "Ctrl + Sageta cap aval"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
@@ -417,10 +414,9 @@ msgid "Select to end of paragraph"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Maj + Sageta esquèrra"
+msgstr "Ctrl + Maj + Sageta cap aval"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
@@ -810,12 +806,10 @@ msgid "Alt + Enter"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A157
-#, fuzzy
 msgid "Cell formatting"
-msgstr "Formatatge de tèxte"
+msgstr "Formatatge de cellula"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A159
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
 msgid "Bold"
 msgstr "Gras"
@@ -826,7 +820,6 @@ msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
 msgid "Italic"
 msgstr "Italica"
@@ -837,10 +830,9 @@ msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
 msgid "Underline"
-msgstr "Solinhat"
+msgstr "Soslinhat"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
@@ -848,7 +840,6 @@ msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
 msgid "Strikethrough"
 msgstr "Raiat"
@@ -859,7 +850,6 @@ msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
 msgid "Remove direct formatting"
 msgstr "Suprimir lo formatatge dirècte"
@@ -897,7 +887,6 @@ msgid "Ctrl + D"
 msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A167
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
 msgid "Select All"
 msgstr "Seleccionar tot"
@@ -908,7 +897,6 @@ msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A168
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
 msgid "Align Center"
 msgstr "Centrar"
@@ -919,7 +907,6 @@ msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A169
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
 msgid "Align Left"
 msgstr "Alinhar a esquèrra"
@@ -930,7 +917,6 @@ msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A170
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
 msgid "Align Right"
 msgstr "Alinhar a dreita"
@@ -941,7 +927,6 @@ msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A171
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
 msgid "Justify"
 msgstr "Justificar"
@@ -1009,13 +994,11 @@ msgid "Ctrl + Shift + 6"
 msgstr "Ctrl + Maj + 6"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A182
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.h2:182"
 msgid "Text formatting"
 msgstr "Formatatge de tèxte"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A184
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
 msgid "Bold"
 msgstr "Gras"
@@ -1026,7 +1009,6 @@ msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A185
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
 msgid "Italic"
 msgstr "Italica"
@@ -1037,10 +1019,9 @@ msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A186
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
 msgid "Underline"
-msgstr "Solinhat"
+msgstr "Soslinhat"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A186
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
@@ -1048,7 +1029,6 @@ msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A187
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
 msgid "Strikethrough"
 msgstr "Raiat"
@@ -1059,7 +1039,6 @@ msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A188
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
 msgid "Superscript"
 msgstr "Exponent"
@@ -1070,7 +1049,6 @@ msgid "Ctrl + Shift + P"
 msgstr "Ctrl + Maj + P"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A189
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
 msgid "Subscript"
 msgstr "Indici"
@@ -1081,7 +1059,6 @@ msgid "Ctrl + Shift + B"
 msgstr "Ctrl + Maj + B"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A190
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
 msgid "Select All"
 msgstr "Seleccionar tot"
@@ -1092,13 +1069,11 @@ msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A192
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.h2:192"
 msgid "Paragraph formatting"
 msgstr "Formatatge de paragraf"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A194
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
 msgid "Align Center"
 msgstr "Centrar"
@@ -1109,7 +1084,6 @@ msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A195
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
 msgid "Align Left"
 msgstr "Alinhar a esquèrra"
@@ -1120,7 +1094,6 @@ msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A196
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
 msgid "Align Right"
 msgstr "Alinhar a dreita"
@@ -1131,7 +1104,6 @@ msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A197
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
 msgid "Justify"
 msgstr "Justificar"
@@ -1164,7 +1136,6 @@ msgid "Text selection and navigation in a textbox"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A203
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
 msgid "Select All"
 msgstr "Seleccionar tot"
@@ -1200,7 +1171,6 @@ msgid "Go to beginning of a word"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A206
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
 msgid "Ctrl + Arrow Left"
 msgstr "Ctrl + Sageta esquèrra"
@@ -1211,7 +1181,6 @@ msgid "Select to the left word by word"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A207
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
 msgid "Ctrl + Shift + Arrow Left"
 msgstr "Ctrl + Maj + Sageta esquèrra"
@@ -1242,7 +1211,6 @@ msgid "Go to start of the next word"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Ctrl + Arrow Right"
 msgstr "Ctrl + Sageta dreita"
@@ -1253,7 +1221,6 @@ msgid "Select to the right word by word"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Ctrl + Shift + Arrow Right"
 msgstr "Ctrl + Maj + Sageta dreita"
@@ -1284,10 +1251,9 @@ msgid "Move cursor to beginning of the previous paragraph"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + Sageta esquèrra"
+msgstr "Ctrl + Sageta cap amont"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
@@ -1295,10 +1261,9 @@ msgid "Select to beginning of paragraph"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Maj + Sageta esquèrra"
+msgstr "Ctrl + Maj + Sageta cap amont"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
@@ -1326,10 +1291,9 @@ msgid "Move cursor to beginning of the next paragraph"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + Sageta esquèrra"
+msgstr "Ctrl + Sageta cap aval"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
@@ -1337,10 +1301,9 @@ msgid "Select to end of paragraph"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Maj + Sageta esquèrra"
+msgstr "Ctrl + Maj + Sageta cap aval"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
@@ -1466,7 +1429,6 @@ msgid "Select all in slide / drawing page"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:235"
 msgid "Ctrl + A"
 msgstr "Ctrl + A"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-26 16:41+0000\n"
+"POT-Creation-Date: 2016-05-28 20:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /ro/libo_online/loleaflet-ui-ro.po\n"
-"X-Pootle-Revision: 435205\n"
+"X-Pootle-Revision: 442251\n"
 
 #: dist/toolbar/toolbar.js:18
 #: src/control/Control.Menubar.js:9
@@ -52,7 +52,6 @@ msgid "Strikeout"
 msgstr "Tăiat"
 
 #: dist/toolbar/toolbar.js:33
-#, fuzzy
 msgid "Font color"
 msgstr "Culoare font"
 
@@ -65,7 +64,6 @@ msgid "Align left"
 msgstr "Aliniere la stânga"
 
 #: dist/toolbar/toolbar.js:38
-#, fuzzy
 msgid "Center horizontally"
 msgstr "Centrează pe orizontală"
 
@@ -86,29 +84,24 @@ msgid "Numbering on/off"
 msgstr "Numerotare activat/dezactivat"
 
 #: dist/toolbar/toolbar.js:45
-#, fuzzy
 msgid "Increase indent"
 msgstr "Mărește spațierea"
 
 #: dist/toolbar/toolbar.js:46
-#, fuzzy
 msgid "Decrease indent"
 msgstr "Micșorează spațierea"
 
 #: dist/toolbar/toolbar.js:48
-#, fuzzy
 msgid "Insert comment"
 msgstr "Inserează o notă"
 
 #: dist/toolbar/toolbar.js:49
-#, fuzzy
 msgid "Insert graphic"
 msgstr "Inserează o grafică"
 
 #: dist/toolbar/toolbar.js:51
-#, fuzzy
 msgid "Insert table"
-msgstr "Inserează pagină"
+msgstr "Inserează un tabel"
 
 #: dist/toolbar/toolbar.js:53
 msgid "Help"
@@ -119,7 +112,6 @@ msgid "More"
 msgstr "Mai multe"
 
 #: dist/toolbar/toolbar.js:56
-#, fuzzy
 msgid "Close document"
 msgstr "Închide documentul"
 
@@ -140,22 +132,18 @@ msgid "Accept"
 msgstr "Acceptă"
 
 #: dist/toolbar/toolbar.js:92
-#, fuzzy
 msgid "First sheet"
 msgstr "Prima foaie"
 
 #: dist/toolbar/toolbar.js:93
-#, fuzzy
 msgid "Previous sheet"
 msgstr "Foaia precedentă"
 
 #: dist/toolbar/toolbar.js:94
-#, fuzzy
 msgid "Next sheet"
 msgstr "Foaia următoare"
 
 #: dist/toolbar/toolbar.js:95
-#, fuzzy
 msgid "Last sheet"
 msgstr "Ultima foaie"
 
@@ -166,21 +154,21 @@ msgstr "Prezentare pe tot ecranul"
 
 #: dist/toolbar/toolbar.js:107
 msgid "Insert slide"
-msgstr ""
+msgstr "Inserează diapozitiv"
 
 #: dist/toolbar/toolbar.js:108
 #: src/control/Control.Menubar.js:90
 msgid "Duplicate slide"
-msgstr ""
+msgstr "Duplică diapozitivul"
 
 #: dist/toolbar/toolbar.js:109
 #: src/control/Control.Menubar.js:91
 msgid "Delete slide"
-msgstr ""
+msgstr "Șterge diapozitivul"
 
 #: dist/toolbar/toolbar.js:121
 msgid "Search:"
-msgstr ""
+msgstr "Caută:"
 
 #: dist/toolbar/toolbar.js:126
 msgid "Search backwards"
@@ -188,7 +176,7 @@ msgstr "Căutare în direcție opusă"
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr ""
+msgstr "Copiază legătura web"
 
 #: dist/toolbar/toolbar.js:127
 msgid "Search forward"
@@ -196,7 +184,7 @@ msgstr "Caută înainte"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
+msgstr "Jos un nivel"
 
 #: dist/toolbar/toolbar.js:128
 msgid "Cancel the search"
@@ -204,7 +192,7 @@ msgstr "Anulează căutarea"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
+msgstr "Sus un nivel"
 
 #: dist/toolbar/toolbar.js:133
 #: dist/toolbar/toolbar.js:849
@@ -213,7 +201,7 @@ msgstr "Preluare editare (ceilalți au acces doar la citire)"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Editează notă"
 
 #: unocommands.js:5
 msgid "Insert Comment"
@@ -223,7 +211,7 @@ msgstr "Inserează o notă"
 #: dist/toolbar/toolbar.js:850
 #: dist/toolbar/toolbar.js:943
 msgid "VIEWING"
-msgstr ""
+msgstr "VIZUALIZARE"
 
 #: dist/toolbar/toolbar.js:136
 msgid "Previous page"
@@ -231,7 +219,7 @@ msgstr "Pagina anterioară"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "Combină"
 
 #: dist/toolbar/toolbar.js:137
 msgid "Next page"
@@ -239,7 +227,7 @@ msgstr "Pagina următoare"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Combină celule..."
 
 #: dist/toolbar/toolbar.js:139
 #: src/control/Control.Menubar.js:32
@@ -250,7 +238,7 @@ msgstr "Reinițializează apropierea"
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "Adu mai în față"
 
 #: dist/toolbar/toolbar.js:140
 #: src/control/Control.Menubar.js:31
@@ -261,7 +249,7 @@ msgstr "Micșorează"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
+msgstr "Trimite mai în spate"
 
 #: dist/toolbar/toolbar.js:142
 #: src/control/Control.Menubar.js:30
@@ -272,25 +260,27 @@ msgstr "Mărește"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "Lipire specială"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
+msgstr "Text neformatat"
 
 #: dist/toolbar/toolbar.js:160
 msgid "You are viewing now."
-msgstr ""
+msgstr "Sunteți în mod vizualizare."
 
 #: dist/errormessages.js:1
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
 msgstr ""
+"WOPISrc greșit, utilizare: WOPISrc=valid encoded URI, sau file_path, "
+"utilizare: file_path=/path/to/doc/"
 
 #: dist/toolbar/toolbar.js:160
 msgid "Click here to take edit."
-msgstr ""
+msgstr "Dați clic pentru editare."
 
 #: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"
@@ -301,6 +291,8 @@ msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
+"URL-ul este gol. Serverul loolwsd probabil este configurat greșit. "
+"Contactați administratorul."
 
 #: dist/toolbar/toolbar.js:386
 #: dist/toolbar/toolbar.js:744
@@ -309,7 +301,7 @@ msgstr "Dimensiune"
 
 #: dist/toolbar/toolbar.js:637
 msgid "Document saved"
-msgstr ""
+msgstr "Document salvat"
 
 #: dist/toolbar/toolbar.js:727
 msgid "Style"
@@ -333,7 +325,7 @@ msgstr "Mod de editare (ceilalți pot doar vizualiza)"
 
 #: dist/toolbar/toolbar.js:845
 msgid "EDITING"
-msgstr ""
+msgstr "EDITARE"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -375,55 +367,55 @@ msgstr "Tipărire"
 #: src/control/Control.Menubar.js:53
 #: src/control/Control.Menubar.js:100
 msgid "Download as"
-msgstr ""
+msgstr "Descarcă ca"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
 #: src/control/Control.Menubar.js:100
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "PDF Document (.pdf)"
 
 #: src/control/Control.Menubar.js:12
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ODF text document (.odt)"
 
 #: src/control/Control.Menubar.js:13
 msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgstr "Microsoft Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:14
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:16
 #: src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:105
 msgid "Edit"
-msgstr ""
+msgstr "Editează"
 
 #: src/control/Control.Menubar.js:19
 #: src/control/Control.Menubar.js:61
 #: src/control/Control.Menubar.js:108
 msgid "Cut"
-msgstr ""
+msgstr "Tăiere"
 
 #: src/control/Control.Menubar.js:20
 #: src/control/Control.Menubar.js:62
 #: src/control/Control.Menubar.js:109
 msgid "Copy"
-msgstr ""
+msgstr "Copiază"
 
 #: src/control/Control.Menubar.js:21
 #: src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:110
 msgid "Paste"
-msgstr ""
+msgstr "Lipire"
 
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:65
 #: src/control/Control.Menubar.js:112
 msgid "Select all"
-msgstr ""
+msgstr "Selectează tot"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:34
@@ -431,161 +423,159 @@ msgstr ""
 #: src/control/Control.Menubar.js:75
 #: src/control/Control.Menubar.js:114
 msgid "Insert"
-msgstr ""
+msgstr "Inserție"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.Menubar.js:114
 msgid "Image"
-msgstr ""
+msgstr "Imagine"
 
 #: src/control/Control.Menubar.js:26
 msgid "Comment"
-msgstr ""
+msgstr "Comentariu"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:119
 msgid "View"
-msgstr ""
+msgstr "Vizualizare"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:119
 msgid "Full screen"
-msgstr ""
+msgstr "Ecran complet"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Tables"
-msgstr ""
+msgstr "Tabele"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Rows before"
-msgstr ""
+msgstr "Rânduri înainte"
 
 #: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:76
 msgid "Rows after"
-msgstr ""
+msgstr "Rânduri după"
 
 #: src/control/Control.Menubar.js:37
 #: src/control/Control.Menubar.js:78
 msgid "Columns left"
-msgstr ""
+msgstr "Coloană la stânga"
 
 #: src/control/Control.Menubar.js:38
 #: src/control/Control.Menubar.js:79
 msgid "Columns right"
-msgstr ""
+msgstr "Coloană la dreapta"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Delete"
-msgstr ""
+msgstr "Șterge"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Rows"
-msgstr ""
+msgstr "Rânduri"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:81
 msgid "Columns"
-msgstr ""
+msgstr "Coloane"
 
 #: src/control/Control.Menubar.js:41
 #: src/control/Control.Menubar.js:42
 #: src/control/Control.Menubar.js:82
 #: src/control/Control.Menubar.js:83
 msgid "Table"
-msgstr ""
+msgstr "Tabel"
 
 #: src/control/Control.Menubar.js:42
 #: src/control/Control.Menubar.js:83
 msgid "Select"
-msgstr ""
+msgstr "Selecție"
 
 #: src/control/Control.Menubar.js:43
 #: src/control/Control.Menubar.js:84
 #: src/control/Control.Menubar.js:116
 msgid "Row"
-msgstr ""
+msgstr "Rând"
 
 #: src/control/Control.Menubar.js:44
 #: src/control/Control.Menubar.js:85
 #: src/control/Control.Menubar.js:117
 msgid "Column"
-msgstr ""
+msgstr "Coloană"
 
 #: src/control/Control.Menubar.js:45
 #: src/control/Control.Menubar.js:86
 msgid "Cell"
-msgstr ""
+msgstr "Celulă"
 
 #: src/control/Control.Menubar.js:46
 #: src/control/Control.Menubar.js:87
 msgid "Merge cells"
-msgstr ""
+msgstr "Combină celule"
 
 #: src/control/Control.Menubar.js:54
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ODF presentation (.odp)"
 
 #: src/control/Control.Menubar.js:55
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:56
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgstr "Microsoft Powerpoint (.pptx)"
 
 #: src/control/Control.Menubar.js:89
 msgid "Slide"
-msgstr ""
+msgstr "Diapozitiv"
 
 #: src/control/Control.Menubar.js:89
-#, fuzzy
 msgid "New slide"
 msgstr "Diapozitivul următor"
 
 #: src/control/Control.Menubar.js:101
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ODF spreadsheet (.ods)"
 
 #: src/control/Control.Menubar.js:102
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgstr "Microsoft Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:103
 msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgstr "Microsoft Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:125
 msgid "Cells"
-msgstr ""
+msgstr "Celulă"
 
 #: src/control/Control.Menubar.js:125
 msgid "Insert row"
-msgstr ""
+msgstr "Inserare rând"
 
 #: src/control/Control.Menubar.js:126
 msgid "Insert column"
-msgstr ""
+msgstr "Inserare coloană"
 
 #: src/control/Control.Menubar.js:128
 msgid "Delete row"
-msgstr ""
+msgstr "Șterge rând"
 
 #: src/control/Control.Menubar.js:129
 msgid "Delete column"
-msgstr ""
+msgstr "Șterge coloană"
 
 #: src/control/Control.Menubar.js:276
-#, fuzzy
 msgid "Are you sure you want to delete this slide?"
-msgstr "Sigur doriți să ștergeți pagina?"
+msgstr "Sigur doriți să ștergeți diapozitivul?"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "

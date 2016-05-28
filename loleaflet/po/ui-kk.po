@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-26 17:13+0000\n"
+"POT-Creation-Date: 2016-05-28 20:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /kk/libo_online/loleaflet-ui-kk.po\n"
-"X-Pootle-Revision: 435365\n"
+"X-Pootle-Revision: 441810\n"
 
 #: dist/toolbar/toolbar.js:18
 #: src/control/Control.Menubar.js:9
@@ -85,190 +85,190 @@ msgstr "Нөмiрлеуді іске қосу/сөндіру"
 
 #: dist/toolbar/toolbar.js:45
 msgid "Increase indent"
-msgstr ""
+msgstr "Шегінуді үлкейту"
 
 #: dist/toolbar/toolbar.js:46
 msgid "Decrease indent"
-msgstr ""
+msgstr "Шегінуді кішірейту"
 
 #: dist/toolbar/toolbar.js:48
 msgid "Insert comment"
-msgstr ""
+msgstr "Түсіндірмені кiрiстiру"
 
 #: dist/toolbar/toolbar.js:49
 msgid "Insert graphic"
-msgstr ""
+msgstr "Суретті кірістіру"
 
 #: dist/toolbar/toolbar.js:51
 msgid "Insert table"
-msgstr ""
+msgstr "Кестені кірістіру"
 
 #: dist/toolbar/toolbar.js:53
 msgid "Help"
-msgstr ""
+msgstr "Көмек"
 
 #: dist/toolbar/toolbar.js:55
 msgid "More"
-msgstr ""
+msgstr "Көбірек"
 
 #: dist/toolbar/toolbar.js:56
 msgid "Close document"
-msgstr ""
+msgstr "Құжатты жабу"
 
 #: dist/toolbar/toolbar.js:78
 msgid "Sum"
-msgstr ""
+msgstr "Қосынды"
 
 #: dist/toolbar/toolbar.js:79
 msgid "Function"
-msgstr ""
+msgstr "Функция"
 
 #: dist/toolbar/toolbar.js:80
 msgid "Cancel"
-msgstr ""
+msgstr "Болдырмау"
 
 #: dist/toolbar/toolbar.js:81
 msgid "Accept"
-msgstr ""
+msgstr "Қабылдау"
 
 #: dist/toolbar/toolbar.js:92
 msgid "First sheet"
-msgstr ""
+msgstr "Бірінші парақ"
 
 #: dist/toolbar/toolbar.js:93
 msgid "Previous sheet"
-msgstr ""
+msgstr "Алдыңғы парақ"
 
 #: dist/toolbar/toolbar.js:94
 msgid "Next sheet"
-msgstr ""
+msgstr "Келесі парақ"
 
 #: dist/toolbar/toolbar.js:95
 msgid "Last sheet"
-msgstr ""
+msgstr "Соңғы парақ"
 
 #: dist/toolbar/toolbar.js:105
 #: src/control/Control.Menubar.js:93
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Толық экранды презентация"
 
 #: dist/toolbar/toolbar.js:107
 msgid "Insert slide"
-msgstr ""
+msgstr "Слайдты кiрiстiру"
 
 #: dist/toolbar/toolbar.js:108
 #: src/control/Control.Menubar.js:90
 msgid "Duplicate slide"
-msgstr ""
+msgstr "Слайдты қосарлау"
 
 #: dist/toolbar/toolbar.js:109
 #: src/control/Control.Menubar.js:91
 msgid "Delete slide"
-msgstr ""
+msgstr "Слайдты өшіру"
 
 #: dist/toolbar/toolbar.js:121
 msgid "Search:"
-msgstr ""
+msgstr "Іздеу:"
 
 #: dist/toolbar/toolbar.js:126
 msgid "Search backwards"
-msgstr ""
+msgstr "Артқа қарай іздеу"
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr ""
+msgstr "Гиперсілтемені көшіріп алу"
 
 #: dist/toolbar/toolbar.js:127
 msgid "Search forward"
-msgstr ""
+msgstr "Алға іздеу"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
+msgstr "Бiр деңгейге төмен"
 
 #: dist/toolbar/toolbar.js:128
 msgid "Cancel the search"
-msgstr ""
+msgstr "Іздеуді тоқтату"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
+msgstr "Бiр деңгейге жоғары"
 
 #: dist/toolbar/toolbar.js:133
 #: dist/toolbar/toolbar.js:849
 msgid "Take edit lock (others can only view)"
-msgstr ""
+msgstr "Түзетуге блоктау (басқалар тек қарай алады)"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Түсiндірменi түзету"
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
+msgstr "Түсіндірмені кiрiстiру"
 
 #: dist/toolbar/toolbar.js:134
 #: dist/toolbar/toolbar.js:850
 #: dist/toolbar/toolbar.js:943
 msgid "VIEWING"
-msgstr ""
+msgstr "ҚАРАУ"
 
 #: dist/toolbar/toolbar.js:136
 msgid "Previous page"
-msgstr ""
+msgstr "Алдыңғы бет"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "Біріктіру"
 
 #: dist/toolbar/toolbar.js:137
 msgid "Next page"
-msgstr ""
+msgstr "Келесі бет"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Ұяшықтарды бiрiктiру..."
 
 #: dist/toolbar/toolbar.js:139
 #: src/control/Control.Menubar.js:32
 #: src/control/Control.Menubar.js:73
 #: src/control/Control.Menubar.js:123
 msgid "Reset zoom"
-msgstr ""
+msgstr "Масштабты тастау"
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "Алға жылжыту"
 
 #: dist/toolbar/toolbar.js:140
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:72
 #: src/control/Control.Menubar.js:122
 msgid "Zoom out"
-msgstr ""
+msgstr "Кішірейту"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
+msgstr "Артқа жылжыту"
 
 #: dist/toolbar/toolbar.js:142
 #: src/control/Control.Menubar.js:30
 #: src/control/Control.Menubar.js:71
 #: src/control/Control.Menubar.js:121
 msgid "Zoom in"
-msgstr ""
+msgstr "Үлкейту"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "Арнайы кiрiстiру"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
+msgstr "Пiшiмдеусiз мәтiн"
 
 #: dist/toolbar/toolbar.js:160
 msgid "You are viewing now."
-msgstr ""
+msgstr "Сіз қазір қарап отырсыз."
 
 #: dist/errormessages.js:1
 msgid ""
@@ -321,7 +321,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:845
 msgid "EDITING"
-msgstr ""
+msgstr "ТҮЗЕТУ"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -357,61 +357,61 @@ msgstr "Файл"
 #: src/control/Control.Menubar.js:52
 #: src/control/Control.Menubar.js:99
 msgid "Print"
-msgstr ""
+msgstr "Баспаға шығару"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
 #: src/control/Control.Menubar.js:100
 msgid "Download as"
-msgstr ""
+msgstr "Қалайша жүктеп алу"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
 #: src/control/Control.Menubar.js:100
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "PDF құжаты (.pdf)"
 
 #: src/control/Control.Menubar.js:12
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ODF мәтіндік құжаты (.odt)"
 
 #: src/control/Control.Menubar.js:13
 msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgstr "Microsoft Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:14
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:16
 #: src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:105
 msgid "Edit"
-msgstr ""
+msgstr "Түзету"
 
 #: src/control/Control.Menubar.js:19
 #: src/control/Control.Menubar.js:61
 #: src/control/Control.Menubar.js:108
 msgid "Cut"
-msgstr ""
+msgstr "Қиып алу"
 
 #: src/control/Control.Menubar.js:20
 #: src/control/Control.Menubar.js:62
 #: src/control/Control.Menubar.js:109
 msgid "Copy"
-msgstr ""
+msgstr "Көшіріп алу"
 
 #: src/control/Control.Menubar.js:21
 #: src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:110
 msgid "Paste"
-msgstr ""
+msgstr "Кірістіру"
 
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:65
 #: src/control/Control.Menubar.js:112
 msgid "Select all"
-msgstr ""
+msgstr "Барлығын таңдау"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:34
@@ -419,34 +419,34 @@ msgstr ""
 #: src/control/Control.Menubar.js:75
 #: src/control/Control.Menubar.js:114
 msgid "Insert"
-msgstr ""
+msgstr "Кірістіру"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.Menubar.js:114
 msgid "Image"
-msgstr ""
+msgstr "Сурет"
 
 #: src/control/Control.Menubar.js:26
 msgid "Comment"
-msgstr ""
+msgstr "Түсіндірме"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:119
 msgid "View"
-msgstr ""
+msgstr "Түрі"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:119
 msgid "Full screen"
-msgstr ""
+msgstr "Толық экранға"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Tables"
-msgstr ""
+msgstr "Кестелер"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
@@ -471,51 +471,51 @@ msgstr ""
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Delete"
-msgstr ""
+msgstr "Өшіру"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Rows"
-msgstr ""
+msgstr "Жолдар"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:81
 msgid "Columns"
-msgstr ""
+msgstr "Бағандар"
 
 #: src/control/Control.Menubar.js:41
 #: src/control/Control.Menubar.js:42
 #: src/control/Control.Menubar.js:82
 #: src/control/Control.Menubar.js:83
 msgid "Table"
-msgstr ""
+msgstr "Кесте"
 
 #: src/control/Control.Menubar.js:42
 #: src/control/Control.Menubar.js:83
 msgid "Select"
-msgstr ""
+msgstr "Таңдау"
 
 #: src/control/Control.Menubar.js:43
 #: src/control/Control.Menubar.js:84
 #: src/control/Control.Menubar.js:116
 msgid "Row"
-msgstr ""
+msgstr "Жол"
 
 #: src/control/Control.Menubar.js:44
 #: src/control/Control.Menubar.js:85
 #: src/control/Control.Menubar.js:117
 msgid "Column"
-msgstr ""
+msgstr "Баған"
 
 #: src/control/Control.Menubar.js:45
 #: src/control/Control.Menubar.js:86
 msgid "Cell"
-msgstr ""
+msgstr "Ұяшық"
 
 #: src/control/Control.Menubar.js:46
 #: src/control/Control.Menubar.js:87
 msgid "Merge cells"
-msgstr ""
+msgstr "Ұяшықтарды біріктіру"
 
 #: src/control/Control.Menubar.js:54
 msgid "ODF presentation (.odp)"

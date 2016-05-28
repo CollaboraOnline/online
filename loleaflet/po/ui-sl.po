@@ -4,245 +4,314 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-23 13:29+0200\n"
-"PO-Revision-Date: 2016-02-28 23:04+0100\n"
+"POT-Creation-Date: 2016-05-26 19:52+0200\n"
+"PO-Revision-Date: 2016-05-27 12:12+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 "X-Generator: Poedit 1.8.7\n"
 "X-Accelerator-Marker: ~\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: dist/toolbar/toolbar.js:17
+#: unocommands.js:1
+msgid "Copy Hyperlink"
+msgstr "Kopiraj hiperpovezavo"
+
+#: unocommands.js:2
+msgid "Down One Level"
+msgstr "Eno raven nižje"
+
+#: unocommands.js:3
+msgid "Up One Level"
+msgstr "Eno raven višje"
+
+#: unocommands.js:4
+msgid "Edit Comment"
+msgstr "Uredi komentar"
+
+#: unocommands.js:5
+msgid "Insert Comment"
+msgstr "Vstavi komentar"
+
+#: unocommands.js:6
+msgid "Merge"
+msgstr "Spoji"
+
+#: unocommands.js:7
+msgid "Merge Cells..."
+msgstr "Spoji celice …"
+
+#: unocommands.js:8
+msgid "Bring Forward"
+msgstr "Postavi naprej"
+
+#: unocommands.js:9
+msgid "Send Backward"
+msgstr "Pošlji nazaj"
+
+#: unocommands.js:10
+msgid "Paste Special"
+msgstr "Posebno lepljenje"
+
+#: unocommands.js:11
+msgid "Unformatted Text"
+msgstr "Neoblikovano besedilo"
+
+#: dist/errormessages.js:1
+msgid ""
+"Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
+"file_path=/path/to/doc/"
+msgstr ""
+"Napačen WOPISrc (raba: WOPISrc=veljavno kodiran URI) ali file_path (raba: "
+"file_path=/pod/do/dokumenta/)"
+
+#: dist/errormessages.js:2
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+"URL gostitelja je prazen. Strežnik loolwsd je najbrž napačno nastavljen, "
+"stopite v stik s skrbnikom."
+
+#: dist/toolbar/toolbar.js:18 src/control/Control.Menubar.js:9
+#: src/control/Control.Menubar.js:51 src/control/Control.Menubar.js:98
 msgid "Save"
 msgstr "Shrani"
 
-#: dist/toolbar/toolbar.js:19
+#: dist/toolbar/toolbar.js:20 src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:58 src/control/Control.Menubar.js:105
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: dist/toolbar/toolbar.js:20
+#: dist/toolbar/toolbar.js:21 src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:59 src/control/Control.Menubar.js:106
 msgid "Redo"
 msgstr "Ponovi"
 
-#: dist/toolbar/toolbar.js:26
+#: dist/toolbar/toolbar.js:27
 msgid "Bold"
 msgstr "Krepko"
 
-#: dist/toolbar/toolbar.js:27
+#: dist/toolbar/toolbar.js:28
 msgid "Italic"
 msgstr "Ležeče"
 
-#: dist/toolbar/toolbar.js:28
+#: dist/toolbar/toolbar.js:29
 msgid "Underline"
 msgstr "Podčrtano"
 
-#: dist/toolbar/toolbar.js:29
+#: dist/toolbar/toolbar.js:30
 msgid "Strikeout"
 msgstr "Prečrtano"
 
-#: dist/toolbar/toolbar.js:32
-msgid "Font Color"
+#: dist/toolbar/toolbar.js:33
+msgid "Font color"
 msgstr "Barva pisave"
 
-#: dist/toolbar/toolbar.js:34
+#: dist/toolbar/toolbar.js:35
 msgid "Highlighting"
 msgstr "Poudarjanje"
 
-#: dist/toolbar/toolbar.js:36
+#: dist/toolbar/toolbar.js:37
 msgid "Align left"
 msgstr "Poravnaj levo"
 
-#: dist/toolbar/toolbar.js:37
-msgid "Center horizontaly"
+#: dist/toolbar/toolbar.js:38
+msgid "Center horizontally"
 msgstr "Vodoravno na sredino"
 
-#: dist/toolbar/toolbar.js:38
+#: dist/toolbar/toolbar.js:39
 msgid "Align right"
 msgstr "Poravnaj desno"
 
-#: dist/toolbar/toolbar.js:39
+#: dist/toolbar/toolbar.js:40
 msgid "Justified"
 msgstr "Obojestransko"
 
-#: dist/toolbar/toolbar.js:41
+#: dist/toolbar/toolbar.js:42
 msgid "Bullets on/off"
 msgstr "Oznake vključene/izključene"
 
-#: dist/toolbar/toolbar.js:42
+#: dist/toolbar/toolbar.js:43
 msgid "Numbering on/off"
 msgstr "Oštevilčevanje vključeno/izključeno"
 
-#: dist/toolbar/toolbar.js:44
-msgid "Increase Indent"
+#: dist/toolbar/toolbar.js:45
+msgid "Increase indent"
 msgstr "Povečaj zamik"
 
-#: dist/toolbar/toolbar.js:45
-msgid "Decrease Indent"
+#: dist/toolbar/toolbar.js:46
+msgid "Decrease indent"
 msgstr "Zmanjšaj zamik"
 
-#: dist/toolbar/toolbar.js:47
-msgid "Insert Comment"
-msgstr ""
-
 #: dist/toolbar/toolbar.js:48
-msgid "Insert Graphic"
+msgid "Insert comment"
+msgstr "Vstavi komentar"
+
+#: dist/toolbar/toolbar.js:49
+msgid "Insert graphic"
 msgstr "Vstavi sliko"
 
-#: dist/toolbar/toolbar.js:50
-#, fuzzy
-msgid "Insert Table"
-msgstr "Vstavi stran"
+#: dist/toolbar/toolbar.js:51
+msgid "Insert table"
+msgstr "Vstavi tabelo"
 
-#: dist/toolbar/toolbar.js:52
+#: dist/toolbar/toolbar.js:53
 msgid "Help"
 msgstr "Pomoč"
 
-#: dist/toolbar/toolbar.js:54
+#: dist/toolbar/toolbar.js:55
 msgid "More"
 msgstr "Dodatno"
 
-#: dist/toolbar/toolbar.js:55
-msgid "Close Document"
+#: dist/toolbar/toolbar.js:56
+msgid "Close document"
 msgstr "Zapri dokument"
 
-#: dist/toolbar/toolbar.js:77
+#: dist/toolbar/toolbar.js:78
 msgid "Sum"
 msgstr "Vsota"
 
-#: dist/toolbar/toolbar.js:78
+#: dist/toolbar/toolbar.js:79
 msgid "Function"
 msgstr "Funkcija"
 
-#: dist/toolbar/toolbar.js:79
+#: dist/toolbar/toolbar.js:80
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: dist/toolbar/toolbar.js:80
+#: dist/toolbar/toolbar.js:81
 msgid "Accept"
 msgstr "Sprejmi"
 
-#: dist/toolbar/toolbar.js:91
-msgid "First Sheet"
+#: dist/toolbar/toolbar.js:92
+msgid "First sheet"
 msgstr "Prvi delovni list"
 
-#: dist/toolbar/toolbar.js:92
-msgid "Previous Sheet"
+#: dist/toolbar/toolbar.js:93
+msgid "Previous sheet"
 msgstr "Prejšnji delovni list"
 
-#: dist/toolbar/toolbar.js:93
-msgid "Next Sheet"
+#: dist/toolbar/toolbar.js:94
+msgid "Next sheet"
 msgstr "Naslednji delovni list"
 
-#: dist/toolbar/toolbar.js:94
-msgid "Last Sheet"
+#: dist/toolbar/toolbar.js:95
+msgid "Last sheet"
 msgstr "Zadnji delovni list"
 
-#: dist/toolbar/toolbar.js:104
+#: dist/toolbar/toolbar.js:105 src/control/Control.Menubar.js:93
 msgid "Fullscreen presentation"
 msgstr "Celozaslonska predstavitev"
 
-#: dist/toolbar/toolbar.js:106
-msgid "Insert Page"
-msgstr "Vstavi stran"
-
 #: dist/toolbar/toolbar.js:107
-msgid "Duplicate Page"
-msgstr "Podvoji stran"
+msgid "Insert slide"
+msgstr "Vstavi prosojnico"
 
-#: dist/toolbar/toolbar.js:108
-msgid "Delete Page"
-msgstr "Izbriši stran"
+#: dist/toolbar/toolbar.js:108 src/control/Control.Menubar.js:90
+msgid "Duplicate slide"
+msgstr "Podvoji prosojnico"
 
-#: dist/toolbar/toolbar.js:120
+#: dist/toolbar/toolbar.js:109 src/control/Control.Menubar.js:91
+msgid "Delete slide"
+msgstr "Izbriši prosojnico"
+
+#: dist/toolbar/toolbar.js:121
 msgid "Search:"
-msgstr ""
+msgstr "Išči:"
 
-#: dist/toolbar/toolbar.js:125
+#: dist/toolbar/toolbar.js:126
 msgid "Search backwards"
 msgstr "Išči nazaj"
 
-#: dist/toolbar/toolbar.js:126
+#: dist/toolbar/toolbar.js:127
 msgid "Search forward"
 msgstr "Išči naprej"
 
-#: dist/toolbar/toolbar.js:127
+#: dist/toolbar/toolbar.js:128
 msgid "Cancel the search"
 msgstr "Prekliči iskanje"
 
-#: dist/toolbar/toolbar.js:132 dist/toolbar/toolbar.js:861
+#: dist/toolbar/toolbar.js:133 dist/toolbar/toolbar.js:849
 msgid "Take edit lock (others can only view)"
-msgstr ""
+msgstr "Prevzemi zaklep urejanja (drugi lahko le gledajo)"
 
-#: dist/toolbar/toolbar.js:133 dist/toolbar/toolbar.js:862
-#: dist/toolbar/toolbar.js:954
+#: dist/toolbar/toolbar.js:134 dist/toolbar/toolbar.js:850
+#: dist/toolbar/toolbar.js:943
 msgid "VIEWING"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:135
-msgid "Previous page"
-msgstr ""
+msgstr "OGLEDOVANJE"
 
 #: dist/toolbar/toolbar.js:136
+msgid "Previous page"
+msgstr "Prejšnja stran"
+
+#: dist/toolbar/toolbar.js:137
 msgid "Next page"
-msgstr ""
+msgstr "Naslednja stran"
 
-#: dist/toolbar/toolbar.js:138
+#: dist/toolbar/toolbar.js:139 src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:123
 msgid "Reset zoom"
-msgstr ""
+msgstr "Ponastavi povečavo"
 
-#: dist/toolbar/toolbar.js:139
+#: dist/toolbar/toolbar.js:140 src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:122
 msgid "Zoom out"
 msgstr "Približaj"
 
-#: dist/toolbar/toolbar.js:141
+#: dist/toolbar/toolbar.js:142 src/control/Control.Menubar.js:30
+#: src/control/Control.Menubar.js:71 src/control/Control.Menubar.js:121
 msgid "Zoom in"
 msgstr "Oddalji"
 
-#: dist/toolbar/toolbar.js:159
+#: dist/toolbar/toolbar.js:160
 msgid "You are viewing now."
-msgstr ""
+msgstr "Zdaj si dokument ogledujete."
 
-#: dist/toolbar/toolbar.js:159
+#: dist/toolbar/toolbar.js:160
 msgid "Click here to take edit."
-msgstr ""
+msgstr "Kliknite sem za urejanje."
 
-#: dist/toolbar/toolbar.js:273
+#: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"
 msgstr "Ali ste prepričani, da želite izbrisati to stran?"
 
-#: dist/toolbar/toolbar.js:398 dist/toolbar/toolbar.js:756
+#: dist/toolbar/toolbar.js:386 dist/toolbar/toolbar.js:744
 msgid "Size"
 msgstr "Velikost"
 
-#: dist/toolbar/toolbar.js:739
+#: dist/toolbar/toolbar.js:637
+msgid "Document saved"
+msgstr "Dokument shranjen"
+
+#: dist/toolbar/toolbar.js:727
 msgid "Style"
 msgstr "Slog"
 
-#: dist/toolbar/toolbar.js:751
+#: dist/toolbar/toolbar.js:739
 msgid "Font"
 msgstr "Pisava"
 
-#: dist/toolbar/toolbar.js:775
+#: dist/toolbar/toolbar.js:763
 msgid "Previous slide"
-msgstr ""
+msgstr "Prejšnja prosojnica"
 
-#: dist/toolbar/toolbar.js:776
+#: dist/toolbar/toolbar.js:764
 msgid "Next slide"
-msgstr ""
+msgstr "Naslednja prosojnica"
 
-#: dist/toolbar/toolbar.js:855
+#: dist/toolbar/toolbar.js:843
 msgid "You are editing (others can only view)"
-msgstr ""
+msgstr "Ste v urejevalnem načinu (drugi lahko le gledajo)"
 
-#: dist/toolbar/toolbar.js:857
+#: dist/toolbar/toolbar.js:845
 msgid "EDITING"
-msgstr ""
+msgstr "UREJANJE"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -268,9 +337,206 @@ msgstr "Preimenuj delovni list"
 msgid "Enter new sheet name"
 msgstr "Vnesite ime za nov delovni list"
 
+#: src/control/Control.Menubar.js:9 src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:98
+msgid "File"
+msgstr "Datoteka"
+
+#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:52
+#: src/control/Control.Menubar.js:99
+msgid "Print"
+msgstr "Natisni"
+
+#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:53
+#: src/control/Control.Menubar.js:100
+msgid "Download as"
+msgstr "Prenesi kot"
+
+#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:53
+#: src/control/Control.Menubar.js:100
+msgid "PDF Document (.pdf)"
+msgstr "Dokument PDF (.pdf)"
+
+#: src/control/Control.Menubar.js:12
+msgid "ODF text document (.odt)"
+msgstr "Besedilni dokument ODF (.odt)"
+
+#: src/control/Control.Menubar.js:13
+msgid "Microsoft Word 2003 (.doc)"
+msgstr "Microsoft Word 2003 (.doc)"
+
+#: src/control/Control.Menubar.js:14
+msgid "Microsoft Word (.docx)"
+msgstr "Microsoft Word (.docx)"
+
+#: src/control/Control.Menubar.js:16 src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:105
+msgid "Edit"
+msgstr "Uredi"
+
+#: src/control/Control.Menubar.js:19 src/control/Control.Menubar.js:61
+#: src/control/Control.Menubar.js:108
+msgid "Cut"
+msgstr "Izreži"
+
+#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:62
+#: src/control/Control.Menubar.js:109
+msgid "Copy"
+msgstr "Kopiraj"
+
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:63
+#: src/control/Control.Menubar.js:110
+msgid "Paste"
+msgstr "Prilepi"
+
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:65
+#: src/control/Control.Menubar.js:112
+msgid "Select all"
+msgstr "Izberi vse"
+
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:114
+msgid "Insert"
+msgstr "Vstavi"
+
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:114
+msgid "Image"
+msgstr "Slika"
+
+#: src/control/Control.Menubar.js:26
+msgid "Comment"
+msgstr "Komentar"
+
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:119
+msgid "View"
+msgstr "Pogled"
+
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:119
+msgid "Full screen"
+msgstr "Cel zaslon"
+
+#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:75
+msgid "Tables"
+msgstr "Tabele"
+
+#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:75
+msgid "Rows before"
+msgstr "Vrstice pred"
+
+#: src/control/Control.Menubar.js:35 src/control/Control.Menubar.js:76
+msgid "Rows after"
+msgstr "Vrstice po"
+
+#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:78
+msgid "Columns left"
+msgstr "Stolpci levo"
+
+#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:79
+msgid "Columns right"
+msgstr "Stolpci desno"
+
+#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:80
+msgid "Delete"
+msgstr "Izbriši"
+
+#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:80
+msgid "Rows"
+msgstr "Vrstice"
+
+#: src/control/Control.Menubar.js:40 src/control/Control.Menubar.js:81
+msgid "Columns"
+msgstr "Stolpci"
+
+#: src/control/Control.Menubar.js:41 src/control/Control.Menubar.js:42
+#: src/control/Control.Menubar.js:82 src/control/Control.Menubar.js:83
+msgid "Table"
+msgstr "Tabela"
+
+#: src/control/Control.Menubar.js:42 src/control/Control.Menubar.js:83
+msgid "Select"
+msgstr "Izberi"
+
+#: src/control/Control.Menubar.js:43 src/control/Control.Menubar.js:84
+#: src/control/Control.Menubar.js:116
+msgid "Row"
+msgstr "Vrstica"
+
+#: src/control/Control.Menubar.js:44 src/control/Control.Menubar.js:85
+#: src/control/Control.Menubar.js:117
+msgid "Column"
+msgstr "Stolpec"
+
+#: src/control/Control.Menubar.js:45 src/control/Control.Menubar.js:86
+msgid "Cell"
+msgstr "Celica"
+
+#: src/control/Control.Menubar.js:46 src/control/Control.Menubar.js:87
+msgid "Merge cells"
+msgstr "Spoji celice"
+
+#: src/control/Control.Menubar.js:54
+msgid "ODF presentation (.odp)"
+msgstr "Predstavitev ODF (.odp)"
+
+#: src/control/Control.Menubar.js:55
+msgid "Microsoft Powerpoint 2003 (.ppt)"
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
+
+#: src/control/Control.Menubar.js:56
+msgid "Microsoft Powerpoint (.pptx)"
+msgstr "Microsoft Powerpoint (.pptx)"
+
+#: src/control/Control.Menubar.js:89
+msgid "Slide"
+msgstr "Prosojnica"
+
+#: src/control/Control.Menubar.js:89
+msgid "New slide"
+msgstr "Nova prosojnica"
+
+#: src/control/Control.Menubar.js:101
+msgid "ODF spreadsheet (.ods)"
+msgstr "Preglednica ODF (.ods)"
+
+#: src/control/Control.Menubar.js:102
+msgid "Microsoft Excel 2003 (.xls)"
+msgstr "Microsoft Excel 2003 (.xls)"
+
+#: src/control/Control.Menubar.js:103
+msgid "Microsoft Excel (.xlsx)"
+msgstr "Microsoft Excel (.xlsx)"
+
+#: src/control/Control.Menubar.js:125
+msgid "Cells"
+msgstr "Celice"
+
+#: src/control/Control.Menubar.js:125
+msgid "Insert row"
+msgstr "Vstavi vrstico"
+
+#: src/control/Control.Menubar.js:126
+msgid "Insert column"
+msgstr "Vstavi stolpec"
+
+#: src/control/Control.Menubar.js:128
+msgid "Delete row"
+msgstr "Izbriši vrstico"
+
+#: src/control/Control.Menubar.js:129
+msgid "Delete column"
+msgstr "Izbriši stolpec"
+
+#: src/control/Control.Menubar.js:276
+msgid "Are you sure you want to delete this slide?"
+msgstr "Ali ste prepričani, da želite izbrisati to prosojnico?"
+
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr ""
+msgstr "Pri povezovanju z LibreOffice Online je prišlo do težave: "
 
 #: src/core/Socket.js:132
 msgid "Unsupported server version."
@@ -297,71 +563,9 @@ msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
+"Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
 #: src/core/Socket.js:294
 msgid "We are sorry, this is an unexpected connection error. Please try again."
 msgstr ""
-
-#~ msgid "File"
-#~ msgstr "Datoteka"
-
-#~ msgid "Download as PDF document (.pdf)"
-#~ msgstr "Prenesi kot dokument PDF (.pdf)"
-
-#~ msgid "Download as ODF Text document (.odt)"
-#~ msgstr "Prenesi kot besedilni dokument ODF (.odt)"
-
-#~ msgid "Download as Microsoft Word 2003 (.doc)"
-#~ msgstr "Prenesi kot Microsoft Word 2003 (.doc)"
-
-#~ msgid "Download as Microsoft Word (.docx)"
-#~ msgstr "Prenesi kot Microsoft Word (.docx)"
-
-#~ msgid "Print"
-#~ msgstr "Natisni"
-
-#~ msgid "Download as ODF Presentation (.odp)"
-#~ msgstr "Prenesi kot predstavitev ODF (.odp)"
-
-#~ msgid "Download as Microsoft Powerpoint 2003 (.ppt)"
-#~ msgstr "Prenesi kot Microsoft Powerpoint 2003 (.ppt)"
-
-#~ msgid "Download as Microsoft Powerpoint (.pptx)"
-#~ msgstr "Prenesi kot Microsoft Powerpoint (.pptx)"
-
-#~ msgid "Download as ODF Spreadsheet (.ods)"
-#~ msgstr "Prenesi kot preglednico ODF (.ods)"
-
-#~ msgid "Download as Microsoft Excel 2003 (.xls)"
-#~ msgstr "Prenesi kot Microsoft Excel 2003 (.xls)"
-
-#~ msgid "Download as Microsoft Excel (.xlsx)"
-#~ msgstr "Prenesi kot Microsoft Excel (.xlsx)"
-
-#~ msgid "Enable editing"
-#~ msgstr "Omogoči urejanje"
-
-#~ msgid "Enable selection"
-#~ msgstr "Omogoči izbiranje"
-
-#~ msgid "Previous page/part"
-#~ msgstr "Prejšnja stran/del"
-
-#~ msgid "Next page/part"
-#~ msgstr "Naslednja stran/del"
-
-#~ msgid "Reset"
-#~ msgstr "Ponastavi"
-
-#, fuzzy
-#~ msgid "Socket connection error: "
-#~ msgstr "Napaka povezave vtiča"
-
-#~ msgid "Unexpected loolserver message."
-#~ msgstr "Nepričakovano sporočilo loolserver."
-
-#~ msgid "Socket connection error"
-#~ msgstr "Napaka povezave vtiča"
-
-#~ msgid "Socket connection closed"
-#~ msgstr "Povezava vtiča zaprta"
+"Žal gre za nepričakovano težavo pri povezovanju. Prosimo, poskusite znova."

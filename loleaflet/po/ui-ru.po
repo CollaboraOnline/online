@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-26 17:13+0000\n"
+"POT-Creation-Date: 2016-05-28 20:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /ru/libo_online/loleaflet-ui-ru.po\n"
-"X-Pootle-Revision: 440691\n"
+"X-Pootle-Revision: 441942\n"
 
 #: dist/toolbar/toolbar.js:18
 #: src/control/Control.Menubar.js:9
@@ -268,17 +268,19 @@ msgstr "Только текст"
 
 #: dist/toolbar/toolbar.js:160
 msgid "You are viewing now."
-msgstr ""
+msgstr "Режим просмотра."
 
 #: dist/errormessages.js:1
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
 msgstr ""
+"Неправильный WOPISrc, использование: WOPISrc=кодированный URI или file_path "
+"в формате: file_path=/путь/к/документу/"
 
 #: dist/toolbar/toolbar.js:160
 msgid "Click here to take edit."
-msgstr ""
+msgstr "Щёлкните для редактирования."
 
 #: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"
@@ -289,11 +291,13 @@ msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
+"URL хоста пуст. Вероятно, ошибка настройки сервера loolwsd, свяжитесь с "
+"администратором."
 
 #: dist/toolbar/toolbar.js:386
 #: dist/toolbar/toolbar.js:744
 msgid "Size"
-msgstr ""
+msgstr "Размер"
 
 #: dist/toolbar/toolbar.js:637
 msgid "Document saved"
@@ -301,11 +305,11 @@ msgstr "Документ сохранён"
 
 #: dist/toolbar/toolbar.js:727
 msgid "Style"
-msgstr ""
+msgstr "Стиль"
 
 #: dist/toolbar/toolbar.js:739
 msgid "Font"
-msgstr ""
+msgstr "Шрифт"
 
 #: dist/toolbar/toolbar.js:763
 msgid "Previous slide"
@@ -435,7 +439,7 @@ msgstr "Примечание"
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:119
 msgid "View"
-msgstr ""
+msgstr "Вид"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
@@ -601,7 +605,7 @@ msgstr "Неправильный пароль. Попробуйте снова."
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr ""
+msgstr "Не удалось подключиться к документу. Попробуйте снова."
 
 #: src/core/Socket.js:294
 msgid "We are sorry, this is an unexpected connection error. Please try again."
