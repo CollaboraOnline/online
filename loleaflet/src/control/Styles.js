@@ -314,7 +314,7 @@ L.Styles = {
 		{id: 34, text: 'Title, 6 Content'},
 		{id: 27, text: 'Vertical Title, Text, Chart'},
 		{id: 28, text: 'Vertical Title, Vertical Text'},
-		{id: 29, text: 'Title, Vertical Content'},
-		{id: 30, text: 'Title, 2 Vertical Content'}
+		{id: 29, text: 'Title, Vertical Text'},
+		{id: 30, text: 'Title, Vertical Text, Clipart'}
 	]
 };
