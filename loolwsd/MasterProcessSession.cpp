@@ -661,10 +661,11 @@ void MasterProcessSession::forwardToPeer(const char *buffer, int length)
 bool MasterProcessSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)
 {
     auto peer = _peer.lock();
-    if (peer && !peer->isCloseFrame())
+    if (peer && !peer->isCloseFrame() && peer->_ws)
     {
         peer->_ws->shutdown(statusCode, message);
     }
+
     return peer != nullptr;
 }
 
