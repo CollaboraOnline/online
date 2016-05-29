@@ -191,11 +191,12 @@ L.Control.Menubar = L.Control.extend({
 		var ua = window.navigator.userAgent;
 		var msie = ua.indexOf('MSIE '); // IE 10 or older
 		var trident = ua.indexOf('Trident/'); // IE 11
+		var edge = ua.indexOf('Edge/'); // Microsoft Edge
 		$(items).each(function() {
 			var aItem = this;
 			var type = $(aItem).data('type');
 			var id = $(aItem).data('id');
-			if (id === 'fullscreen' && (msie > 0 || trident > 0)) { // Full screen works weirdly on IE 11
+			if (id === 'fullscreen' && (msie > 0 || trident > 0 || edge > 0)) { // Full screen works weirdly on IE 11 and on Edge
 				$(aItem).addClass('disabled');
 				var index = self.options.allowedViewModeActions.indexOf('fullscreen');
 				if (index > 0) {
