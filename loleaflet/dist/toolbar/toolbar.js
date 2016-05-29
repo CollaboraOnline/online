@@ -850,7 +850,7 @@ map.on('updatetoolbarcommandvalues', function (e) {
 					localeStyle = 'Outline'.toLocaleString() + ' ' + outlineLevel;
 				} else {
 					localeStyle = L.Styles.styleMappings[style];
-					localeStyle = localeStyle === undefined ? style.toLocaleString() : localeStyle.toLocaleString();
+					localeStyle = localeStyle === undefined ? style : localeStyle.toLocaleString();
 				}
 
 				data = data.concat({id: style, text: localeStyle});
