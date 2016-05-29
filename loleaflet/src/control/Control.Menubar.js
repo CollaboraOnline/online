@@ -198,7 +198,7 @@ L.Control.Menubar = L.Control.extend({
 			if (id === 'fullscreen' && (msie > 0 || trident > 0)) { // Full screen works weirdly on IE 11
 				$(aItem).addClass('disabled');
 				var index = self.options.allowedViewModeActions.indexOf('fullscreen');
-				if(index > 0) {
+				if (index > 0) {
 					self.options.allowedViewModeActions.splice(index, 1);
 				}
 			}
