@@ -276,7 +276,11 @@ L.Styles = {
 		'List 2':'List 2',
 		'List 3':'List 3',
 		'List 4':'List 4',
-		'List 5':'List 5'
+		'List 5':'List 5',
+		'New Chapter':'New Chapter',
+		'Guide Name':'Guide Name',
+		'Heading Note':'Heading Note',
+		'Text Note':'Text Note'
 	},
 
 	// For impress documents, LOK STATE_CHANGED callback return these internal names
