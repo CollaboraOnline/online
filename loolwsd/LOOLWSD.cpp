@@ -389,7 +389,6 @@ private:
                     Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
                     lock.unlock();
-                    Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
                     // Wait until the client has connected with a prison socket.
                     waitBridgeCompleted(session);

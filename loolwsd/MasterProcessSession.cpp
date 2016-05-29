@@ -157,8 +157,18 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                     {
                         // Rewrite file:// URLs, as they are visible to the outside world.
                         const Path path(_docBroker->getJailRoot(), url.substr(filePrefix.length()));
-                        url = filePrefix + path.toString().substr(1);
+                        if (Poco::File(path).exists())
+                        {
+                            url = filePrefix + path.toString().substr(1);
+                        }
+                        else
+                        {
+                            // Blank for failure.
+                            Log::debug("SaveAs produced no output, producing blank url.");
+                            url.clear();
+                        }
                     }
+
                     peer->_saveAsQueue.put(url);
                 }
 
