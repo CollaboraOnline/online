@@ -157,7 +157,7 @@ L.Control.Menubar = L.Control.extend({
 			return;
 		}
 
-		// Add dcoument specific menu
+		// Add document specific menu
 		var docType = this._map.getDocType();
 		if (docType === 'text') {
 			this._initializeMenu(this.options.text);
