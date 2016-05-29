@@ -114,8 +114,7 @@ protected:
         return peer->sendBinaryFrame(buffer, length);
     }
 
-    // Fields common to sessions in master and jailed processes:
-
+private:
     // Our kind signifies to what we are connected to.
     const Kind _kind;
 
@@ -126,6 +125,7 @@ protected:
     // jailed process, the websocket to the parent.
     std::shared_ptr<Poco::Net::WebSocket> _ws;
 
+protected:
     // The actual URL, also in the child, even if the child never accesses that.
     std::string _docURL;
 

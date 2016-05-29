@@ -257,6 +257,7 @@ bool PrisonerSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& m
     {
         peer->shutdown(statusCode, message);
     }
+
     return peer != nullptr;
 }
 
