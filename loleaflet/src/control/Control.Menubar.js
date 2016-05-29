@@ -188,10 +188,20 @@ L.Control.Menubar = L.Control.extend({
 	_beforeShow: function(e, menu) {
 		var self = e.data.self;
 		var items = $(menu).children().children('a').not('.has-submenu');
+		var ua = window.navigator.userAgent;
+		var msie = ua.indexOf('MSIE '); // IE 10 or older
+		var trident = ua.indexOf('Trident/'); // IE 11
 		$(items).each(function() {
 			var aItem = this;
 			var type = $(aItem).data('type');
 			var id = $(aItem).data('id');
+			if (id === 'fullscreen' && (msie > 0 || trident > 0)) { // Full screen works weirdly on IE 11
+				$(aItem).addClass('disabled');
+				var index = self.options.allowedViewModeActions.indexOf('fullscreen');
+				if(index > 0) {
+					self.options.allowedViewModeActions.splice(index, 1);
+				}
+			}
 			if (!map._editlock) {
 				var found = false;
 				for (var i in self.options.allowedViewModeActions) {
