@@ -597,7 +597,6 @@ public:
         Log::trace() << "paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY()
                      << ") rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
-        lock.unlock();
 
         if (!png::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
         {
@@ -667,7 +666,6 @@ public:
                      << " (" << renderArea.getWidth() << ", " << renderArea.getHeight() << ") rendered in "
                      << double(timestamp.elapsed())/1000 <<  " ms." << Log::end;
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
-        lock.unlock();
 
         std::vector<char> output;
         output.reserve(pixmapWidth * pixmapHeight * 4);
