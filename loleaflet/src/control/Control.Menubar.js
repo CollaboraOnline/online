@@ -80,10 +80,6 @@ L.Control.Menubar = L.Control.extend({
 												  {name: _('Delete'), type: 'menu', menu: [{name: _('Rows'), type: 'unocommand', uno: '.uno:DeleteRows'},
 																						{name: _('Columns'), type: 'unocommand', uno: '.uno:DeleteColumns'},
 																						{name: _('Table'), type: 'unocommand', uno: '.uno:DeleteTable'}]},
-												  {name: _('Select'), type: 'menu', menu: [{name: _('Table'), type: 'unocommand', uno: '.uno:SelectTable'},
-																						{name: _('Row'), type: 'unocommand', uno: '.uno:EntireRow'},
-																						{name: _('Column'), type: 'unocommand', uno: '.uno:EntireColumn'},
-																						{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
 												  {name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			},
 			{name: _('Slide'), type: 'menu', menu: [{name: _('New slide'), id: 'insertpage', type: 'action'},
