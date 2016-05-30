@@ -8,7 +8,8 @@ dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
 loolwsddatadir = @LOOLWSD_DATADIR@
 
-loolwsddata_DATA = discovery.xml
+loolwsddata_DATA = discovery.xml \
+                   robots.txt
 
 loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
 
@@ -112,6 +113,7 @@ noinst_HEADERS = Admin.hpp \
 EXTRA_DIST = discovery.xml \
              loolwsd.xml.in \
              loolwsd.service \
+             robots.txt \
              sysconfig.loolwsd \
              etc/key.pem \
              etc/cert.pem \
