@@ -652,7 +652,9 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
     Timestamp timestamp;
     int width, height;
-    std::unique_ptr<unsigned char[]> pixmap(_loKitDocument->renderFont(decodedFont.c_str(), &width, &height));
+    unsigned char* ptrFont = _loKitDocument->renderFont(decodedFont.c_str(), &width, &height);
+    std::unique_ptr<unsigned char[]> pixmap(ptrFont);
+    std::free(ptrFont);
     Log::trace("renderFont [" + font + "] rendered in " + std::to_string(timestamp.elapsed()/1000.) + "ms");
 
     if (!pixmap ||
@@ -708,7 +710,9 @@ bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
     if (_multiView)
         _loKitDocument->setView(_viewId);
 
-    sendTextFrame("partpagerectangles: " + std::string(_loKitDocument->getPartPageRectangles()));
+    char* partPage = _loKitDocument->getPartPageRectangles();
+    sendTextFrame("partpagerectangles: " + std::string(partPage));
+    std::free(partPage);
     return true;
 }
 
