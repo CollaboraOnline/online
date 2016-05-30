@@ -92,6 +92,7 @@ tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 /usr/bin/loolmount
 /usr/bin/looltool
 /usr/share/loolwsd/discovery.xml
+/usr/share/loolwsd/robots.txt
 /usr/share/loolwsd/loleaflet
 %{_unitdir}/loolwsd.service
 %if 0%{?fedora} || 0%{?rhel} >= 7
