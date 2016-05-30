@@ -15,6 +15,7 @@ L.Control.ColumnHeader = L.Control.extend({
 		this._map.on('updatescrolloffset', this.setScrollPosition, this);
 		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
+		this._map.on('editlock', this._onEditLock, this);
 		var docContainer = this._map.options.documentContainer;
 		var cornerHeader = L.DomUtil.create('div', 'spreadsheet-header-corner', docContainer.parentElement);
 		L.DomEvent.addListener(cornerHeader, 'click', this._onCornerHeaderClick, this);
@@ -47,6 +48,18 @@ L.Control.ColumnHeader = L.Control.extend({
 			},
 			zIndex: 10
 		});
+	},
+
+	_onEditLock: function(e) {
+		// editlock message is received very early (before DOM setup)
+		// in that case, wait for a second before disabling/enabling the context menu
+		if ($('.spreadsheet-header-column').length === 0) {
+			setTimeout(function() {
+				$('.spreadsheet-header-column').contextMenu(e.value === 1);
+			}, 1000);
+		} else {
+			$('.spreadsheet-header-column').contextMenu(e.value === 1);
+		}
 	},
 
 	insertColumn: function(colAlpha) {
