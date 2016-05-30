@@ -906,7 +906,7 @@ private:
                 Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
                 const auto viewId = _loKitDocument->createView();
 
-                _loKitDocument->registerCallback(ViewCallback, reinterpret_cast<void*>(intSessionId));
+                _loKitDocument->registerCallback(DocumentCallback, this);
 
                 Log::info() << "Document [" << _url << "] view ["
                             << viewId << "] loaded, leaving "
