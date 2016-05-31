@@ -55,7 +55,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 		$('#rowContextMenu').on('click', 'a', function() {
 			vex.dialog.confirm({
-				message: 'Are you sure you want to terminate this session?',
+				message: _('Are you sure you want to terminate this session?'),
 				callback: function(value) {
 					if (value) {
 						var killPid = ($('#rowContextMenu').data('rowToKill')).substring('doc'.length);

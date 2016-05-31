@@ -33,10 +33,15 @@ pot:
 		unocommands.js \
 		dist/errormessages.js \
 		dist/toolbar/toolbar.js \
-		src/control/Control.Tabs.js \
+		src/admin/AdminSocketBase.js \
+		src/admin/AdminSocketOverview.js \
+		src/admin/AdminStrings.js \
+		src/admin/Util.js \
 		src/control/Control.Menubar.js \
+		src/control/Control.Tabs.js \
 		src/core/Socket.js \
 		src/map/Map.js
+
 	html2po --pot --input=dist/loleaflet-help.html --output=po/loleaflet-help.pot
 
 l10n: pot
