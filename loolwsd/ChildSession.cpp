@@ -653,16 +653,16 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
     Timestamp timestamp;
     int width, height;
     unsigned char* ptrFont = _loKitDocument->renderFont(decodedFont.c_str(), &width, &height);
-    std::unique_ptr<unsigned char[]> pixmap(ptrFont);
-    std::free(ptrFont);
     Log::trace("renderFont [" + font + "] rendered in " + std::to_string(timestamp.elapsed()/1000.) + "ms");
 
-    if (!pixmap ||
-        !png::encodeBufferToPNG(pixmap.get(), width, height, output, LOK_TILEMODE_RGBA))
+    if (!ptrFont ||
+        !png::encodeBufferToPNG(ptrFont, width, height, output, LOK_TILEMODE_RGBA))
     {
+        std::free(ptrFont);
         return sendTextFrame("error: cmd=renderfont kind=failure");
     }
 
+    std::free(ptrFont);
     return sendBinaryFrame(output.data(), output.size());
 }
 
