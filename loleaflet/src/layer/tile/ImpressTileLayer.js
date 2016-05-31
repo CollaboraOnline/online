@@ -126,14 +126,15 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				this._preFetchPart = this._selectedPart;
 				this._preFetchBorder = null;
 			}
-			var partNames = textMsg.match(/[^\r\n]+/g);
+			var partMatch = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
-			partNames = partNames.slice(partNames.length - this._parts);
+			var partHashes = partMatch.slice(partMatch.length - this._parts);
+			// var partNames = partMatch.slice(partMatch.length - 2 * this._parts, partMatch.length - this._parts - 1);
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
 				parts: this._parts,
 				docType: this._docType,
-				partNames: partNames
+				partNames: partHashes
 			});
 		}
 	}
