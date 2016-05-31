@@ -81,12 +81,26 @@ namespace rng
         return v;
     }
 
-    std::string getString(const size_t length)
+    /// Generates a random string in Base64.
+    /// Note: May contain '/' characters.
+    std::string getB64String(const size_t length)
     {
         std::stringstream ss;
         Poco::Base64Encoder b64(ss);
         b64 << getBytes(length).data();
         return ss.str().substr(0, length);
+    }
+
+    /// Generates a random string suitable for
+    /// file/directory names.
+    std::string getFilename(const size_t length)
+    {
+        std::stringstream ss;
+        Poco::Base64Encoder b64(ss);
+        b64 << getBytes(length).data();
+        std::string s = ss.str();
+        std::replace(s.begin(), s.end(), '/', '_');
+        return s.substr(0, length);
     }
 }
 }
@@ -109,10 +123,11 @@ namespace Util
         return id;
     }
 
+    /// Create a secure, random directory path.
     std::string createRandomDir(const std::string& path)
     {
         Poco::File(path).createDirectories();
-        const auto name = rng::getString(64);
+        const auto name = rng::getFilename(64);
         Poco::File(Poco::Path(path, name)).createDirectories();
         return name;
     }
