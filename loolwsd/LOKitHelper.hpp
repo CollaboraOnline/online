@@ -127,15 +127,17 @@ namespace LOKitHelper
             for (auto i = 0; i < parts; ++i)
             {
                 oss << "\n";
-                if (type == LOK_DOCTYPE_PRESENTATION)
+                ptrValue = loKitDocument->pClass->getPartName(loKitDocument, i);
+                oss << ptrValue;
+                std::free(ptrValue);
+            }
+
+            if (type == LOK_DOCTYPE_PRESENTATION)
+            {
+                for (auto i = 0; i < parts; ++i)
                 {
+                    oss << "\n";
                     ptrValue = loKitDocument->pClass->getPartHash(loKitDocument, i);
-                    oss << ptrValue;
-                    std::free(ptrValue);
-                }
-                else
-                {
-                    ptrValue = loKitDocument->pClass->getPartName(loKitDocument, i);
                     oss << ptrValue;
                     std::free(ptrValue);
                 }
