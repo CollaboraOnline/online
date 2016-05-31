@@ -35,7 +35,8 @@ pot:
 		dist/toolbar/toolbar.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Menubar.js \
-		src/core/Socket.js
+		src/core/Socket.js \
+		src/map/Map.js
 	html2po --pot --input=dist/loleaflet-help.html --output=po/loleaflet-help.pot
 
 l10n: pot
