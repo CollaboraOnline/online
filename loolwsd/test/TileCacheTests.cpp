@@ -563,8 +563,12 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
     getResponseMessage(socket, "status:", response, false);
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
     {
+        std::string line;
+        std::istringstream istr(response);
+        std::getline(istr, line);
+
         std::cout << "status: " << response << std::endl;
-        Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
 
         // Expected format is something like 'type= parts= current= width= height='.
