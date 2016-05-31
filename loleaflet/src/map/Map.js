@@ -113,7 +113,7 @@ L.Map = L.Evented.extend({
 			this.setPermission(options.permission);
 		}
 
-		this.showBusy('Initializing...', false);
+		this.showBusy(_('Initializing...'), false);
 		this.on('statusindicator', this._onUpdateProgress, this);
 	},
 
@@ -799,10 +799,10 @@ L.Map = L.Evented.extend({
 		if (e.statusType === 'start') {
 			if (this._socket.readyState === 1) {
 				// auto-save
-				this.showBusy('Saving...', true);
+				this.showBusy(_('Saving...'), true);
 			}
 			else {
-				this.showBusy('Loading...', true);
+				this.showBusy(_('Loading...'), true);
 			}
 		}
 		else if (e.statusType === 'setvalue') {
