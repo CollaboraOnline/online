@@ -787,12 +787,12 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, StringToke
         }
     }
 
+    // The file is removed upon downloading.
     const auto tmpDir = Util::createRandomDir(JAILED_DOCUMENT_ROOT);
     const auto url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + name;
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    //TODO: Cleanup the file after downloading.
     _loKitDocument->saveAs(url.c_str(),
             format.size() == 0 ? nullptr :format.c_str(),
             filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
