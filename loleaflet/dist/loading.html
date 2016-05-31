@@ -25,11 +25,20 @@
         margin-right: auto;
       }
     </style>
+    <link rel="localizations" href="/loleaflet/dist/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
   </head>
   <body>
+    <script src="/loleaflet/dist/l10n/json2.min.js"></script>
+    <script src="/loleaflet/dist/l10n/l10n.min.js"></script>
     <div class="spinner">
       <img src="/loleaflet/dist/images/spinner.gif">
       <h4>Loading...</h4>
     </div>
   </body>
+  <script>
+    var translatableContent = document.getElementsByTagName("h4");
+    for (var i=0, max=translatableContent.length; i < max; i++) {
+        translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+    }
+  </script>
 </html>
