@@ -702,9 +702,3 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-slideshow {
 	background: #FFFFFF;
 	}
-
-.leaflet-slideshow-spinner {
-	background-image: url(images/spinner.gif);
-	background-repeat: no-repeat;
-	background-position: center center;
-	}
