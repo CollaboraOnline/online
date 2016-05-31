@@ -19,7 +19,7 @@ L.Control.ContextMenu = L.Control.extend({
 			 */
 			general: ['Cut', 'Copy', 'Paste', 'PasteSpecialMenu', 'PasteUnformatted',
 					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
-					  'OpenHyperlinkLocation', 'CopyHyperlinkLocation', 'RemoveHyperlink',
+					  'OpenHyperlinkOnCursor', 'CopyHyperlinkLocation', 'RemoveHyperlink',
 					  'ArrangeFrameMenu', 'ArrangeMenu', 'BringToFront', 'ObjectForwardOne', 'ObjectBackOne', 'SendToBack',
 					  'RotateMenu', 'RotateLeft', 'RotateRight'],
 
