@@ -415,7 +415,8 @@ private:
                     if (!resultURL.getPath().empty())
                     {
                         const std::string mimeType = "application/octet-stream";
-                        response.sendFile(resultURL.getPath(), mimeType);
+                        URI::encode(resultURL.getPath(), "", encodedTo);
+                        response.sendFile(encodedTo, mimeType);
                         sent = true;
                     }
 
@@ -494,6 +495,10 @@ private:
                 //TODO: Cleanup on error.
                 Util::removeFile(dirPath, true);
                 return true;
+            }
+            else
+            {
+                Log::error("Download file [" + filePath + "] not found.");
             }
         }
 

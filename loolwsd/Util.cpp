@@ -29,14 +29,16 @@
 
 #include <png.h>
 
+#include <Poco/Base64Encoder.h>
 #include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
 #include <Poco/Format.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
+#include <Poco/RandomStream.h>
+#include <Poco/TemporaryFile.h>
 #include <Poco/Thread.h>
 #include <Poco/Timestamp.h>
-#include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
 
 #include "Common.hpp"
@@ -72,6 +74,7 @@ namespace rng
 {
     static std::random_device _rd;
     static std::mutex _rngMutex;
+    static Poco::RandomBuf _randBuf;
 
     // Create the prng with a random-device for seed.
     // If we don't have a hardware random-device, we will get the same seed.
@@ -92,6 +95,35 @@ namespace rng
     {
         std::unique_lock<std::mutex> lock(_rngMutex);
         return _rng();
+    }
+
+    std::vector<char> getBytes(const size_t length)
+    {
+        std::vector<char> v(length);
+        _randBuf.readFromDevice(v.data(), v.size());
+        return v;
+    }
+
+    /// Generates a random string in Base64.
+    /// Note: May contain '/' characters.
+    std::string getB64String(const size_t length)
+    {
+        std::stringstream ss;
+        Poco::Base64Encoder b64(ss);
+        b64 << getBytes(length).data();
+        return ss.str().substr(0, length);
+    }
+
+    /// Generates a random string suitable for
+    /// file/directory names.
+    std::string getFilename(const size_t length)
+    {
+        std::stringstream ss;
+        Poco::Base64Encoder b64(ss);
+        b64 << getBytes(length).data();
+        std::string s = ss.str();
+        std::replace(s.begin(), s.end(), '/', '_');
+        return s.substr(0, length);
     }
 }
 }
@@ -114,18 +146,13 @@ namespace Util
         return id;
     }
 
+    /// Create a secure, random directory path.
     std::string createRandomDir(const std::string& path)
     {
         Poco::File(path).createDirectories();
-        for (;;)
-        {
-            const auto name = Util::encodeId(rng::getNext());
-            Poco::File dir(Poco::Path(path, name));
-            if (dir.createDirectory())
-            {
-                return name;
-            }
-        }
+        const auto name = rng::getFilename(64);
+        Poco::File(Poco::Path(path, name)).createDirectories();
+        return name;
     }
 
     std::string getTempFilePath(const std::string srcDir, const std::string& srcFilename)
