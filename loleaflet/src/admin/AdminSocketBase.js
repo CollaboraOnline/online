@@ -41,6 +41,6 @@ var AdminSocketBase = Base.extend({
 	},
 
 	onSocketError: function() {
-		vex.dialog.alert('Connection error');
+		vex.dialog.alert(_('Connection error'));
 	}
 });
