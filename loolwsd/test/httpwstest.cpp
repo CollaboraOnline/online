@@ -1323,10 +1323,14 @@ void HTTPWSTest::testNoExtraLoolKitsLeft()
 void HTTPWSTest::getPartHashCodes(const std::string status,
                                   std::vector<std::string>& parts)
 {
+    std::string line;
+    std::istringstream istr(status);
+    std::getline(istr, line);
+
     std::cerr << "Reading parts from [" << status << "]." << std::endl;
 
     // Expected format is something like 'type= parts= current= width= height='.
-    Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
     CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
 
     const auto type = tokens[0].substr(std::string("type=").size());
