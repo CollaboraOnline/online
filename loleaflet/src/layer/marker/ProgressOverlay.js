@@ -56,34 +56,11 @@ L.ProgressOverlay = L.Layer.extend({
 
 		this._container.style.width  = this._size.x + 'px';
 
-		this._initSpinner();
+		this._spinnerInterval = L.LOUtil.startSpinner(this._spinnerCanvas, this.options.spinnerSpeed);
 
 		L.DomEvent
 			.disableClickPropagation(this._progress)
 			.disableScrollPropagation(this._container);
-	},
-
-	_initSpinner: function () {
-		this._spinnerCanvas.width = 50;
-		this._spinnerCanvas.height = 50;
-
-		var context = this._spinnerCanvas.getContext('2d');
-		context.lineWidth = 8;
-		context.strokeStyle = 'grey';
-		var x = this._spinnerCanvas.width / 2;
-		var y = this._spinnerCanvas.height / 2;
-		var radius = y - context.lineWidth / 2;
-		var self = this;
-		this._spinnerInterval = setInterval(function() {
-			context.clearRect(0, 0, x * 2, y * 2);
-			// Move to center
-			context.translate(x, y);
-			context.rotate(self.options.spinnerSpeed * Math.PI / 180);
-			context.translate(-x, -y);
-			context.beginPath();
-			context.arc(x, y, radius, 0, Math.PI * 1.3);
-			context.stroke();
-		}, 1);
 	},
 
 	_setPos: function (pos) {

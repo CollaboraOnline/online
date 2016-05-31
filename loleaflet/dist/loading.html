@@ -19,17 +19,15 @@
         width: 100px;
         height: 100px;
       }
-      .spinner img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-      }
     </style>
   </head>
   <body>
     <div class="spinner">
-      <img src="/loleaflet/dist/images/spinner.gif">
+      <canvas id="spinner" class="leaflet-progress-spinner-canvas"></canvas>
       <h4>Loading...</h4>
     </div>
   </body>
+  <script>
+    var spinnerInterval = window.parent.L.LOUtil.startSpinner(document.getElementById('spinner'), 1.5);
+  </script>
 </html>
