@@ -10,7 +10,7 @@ var Util = Base.extend({
 
 	humanizeMem: function (kbytes) {
 		var unit = 1000;
-		var units = ['kB', 'MB', 'GB', 'TB'];
+		var units = [_('kB'), _('MB'), _('GB'), _('TB')];
 		for (var i = 0; Math.abs(kbytes) >= unit && i < units.length; i++) {
 			kbytes /= unit;
 		}
@@ -38,11 +38,11 @@ var Util = Base.extend({
 		}
 
 		if (hrs) {
-			res = hrs + ':' + mins + ' hrs';
+			res = hrs + ':' + mins + _(' hrs');
 		} else if (mins) {
-			res = mins + ':' + secs + ' mins';
+			res = mins + ':' + secs + _(' mins');
 		} else if (secs) {
-			res = secs + ' s';
+			res = secs + _(' s');
 		} else {
 			res = '';
 		}

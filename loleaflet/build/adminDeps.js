@@ -32,6 +32,11 @@ var adminDeps = {
 		src: ['admin/AdminSocketSettings.js'],
 		desc: 'Socket to handle settings from server',
 		deps: ['AdminSocketBase']
+	},
+
+	AdminStrings: {
+		src: ['admin/AdminStrings.js'],
+		desc: 'String table for user interface'
 	}
 };
 
