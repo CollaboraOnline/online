@@ -408,6 +408,8 @@ public:
     UnitAdmin()
         : _uri(helpers::getTestServerURI() + "/loleaflet/dist/admin/admin.html")
     {
+        setTimeout(60 * 1000);
+
         // Register tests here.
         _tests.push_back(&UnitAdmin::testIncorrectPassword);
         _tests.push_back(&UnitAdmin::testCorrectPassword);
