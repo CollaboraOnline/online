@@ -185,11 +185,19 @@ function onClick(id) {
 		map.cellEnterString(L.DomUtil.get('formulaInput').value);
 	}
 	else if (id === 'cancelformula') {
-		L.DomUtil.get('formulaInput').value = '';
-		map.cellEnterString(L.DomUtil.get('formulaInput').value);
+		map.sendUnoCommand('.uno:Cancel');
+		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
+		w2ui['formulabar'].show('sum', 'function');
 	}
 	else if (id === 'acceptformula') {
-		map.cellEnterString(L.DomUtil.get('formulaInput').value);
+		// focus on map, and press enter
+		map.focus();
+		map._docLayer._postKeyboardEvent('input',
+		                                 map.keyboard.keyCodes.enter,
+		                                 map.keyboard._toUNOKeyCode(map.keyboard.keyCodes.enter));
+
+		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
+		w2ui['formulabar'].show('sum', 'function');
 	}
 	else if (id === 'more') {
 		$('#toolbar-up-more').toggle();
@@ -397,7 +405,7 @@ $(function () {
 			{type: 'button',  id: 'function',  img: 'equal', hint: _('Function')},
 			{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
 			{type: 'button', hidden: true, id: 'acceptformula',  img: 'accepttrackedchanges', hint: _('Accept')},
-			{type: 'html', id: 'formula', html: '<input id="formulaInput" onkeyup="onFormulaInput()"' +
+			{type: 'html', id: 'formula', html: '<input id="formulaInput" onkeyup="onFormulaInput(event)"' +
 			 'onblur="onFormulaBarBlur()" onfocus="onFormulaBarFocus()" type=text>'}
 		],
 		onClick: function (e) {
@@ -593,8 +601,23 @@ function onInsertFile() {
 	}
 }
 
-function onFormulaInput() {
-	map.cellEnterString(L.DomUtil.get('formulaInput').value);
+function onFormulaInput(e) {
+	// keycode = 13 is 'enter'
+	if (e.keyCode === 13) {
+		// formula bar should not have focus anymore
+		map.focus();
+
+		// forward the 'enter' keystroke to map to deal with the formula entered
+		var data = {
+			originalEvent: e
+		};
+		map.fire('keypress', data);
+	} else if (e.keyCode === 27) { // 27 = esc key
+		map.sendUnoCommand('.uno:Cancel');
+		map.focus();
+	} else {
+		map.cellEnterString(L.DomUtil.get('formulaInput').value);
+	}
 }
 
 function onFormulaBarFocus() {
@@ -606,11 +629,17 @@ function onFormulaBarFocus() {
 }
 
 function onFormulaBarBlur() {
-	var formulabar = w2ui.formulabar;
-	formulabar.show('sum');
-	formulabar.show('function');
-	formulabar.hide('cancelformula');
-	formulabar.hide('acceptformula');
+	// The timeout is needed because we want 'click' event on 'cancel',
+	// 'accept' button to act before we hide these buttons because
+	// once hidden, click event won't be processed.
+	// TODO: Some better way to do it ?
+	setTimeout(function() {
+		var formulabar = w2ui.formulabar;
+		formulabar.show('sum');
+		formulabar.show('function');
+		formulabar.hide('cancelformula');
+		formulabar.hide('acceptformula');
+	}, 250);
 }
 
 map.on('updatepermission', function () {

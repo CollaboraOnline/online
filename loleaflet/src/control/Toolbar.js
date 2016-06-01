@@ -123,9 +123,14 @@ L.Map.include({
 			'StringName': {
 				type: 'string',
 				value: string
+			},
+			'DontCommit': {
+				type: 'boolean',
+				value: true
 			}
 		};
-		this._socket.sendMessage('uno .uno:EnterString ' + JSON.stringify(command));
+
+		this.sendUnoCommand('.uno:EnterString ', command);
 	},
 
 	renderFont: function (fontName) {
