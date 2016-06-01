@@ -297,6 +297,7 @@ private:
         }
         _docsCount++;
 
+        Log::info(std::string("testAddDocNotify: OK"));
         return TestResult::TEST_OK;
     }
 
@@ -326,6 +327,7 @@ private:
             return TestResult::TEST_FAILED;
         }
 
+        Log::info(std::string("testUsersCount: OK"));
         return TestResult::TEST_OK;
     }
 
@@ -355,6 +357,7 @@ private:
             return TestResult::TEST_FAILED;
         }
 
+        Log::info(std::string("testDocCount: OK"));
         return TestResult::TEST_OK;
     }
 
@@ -386,6 +389,7 @@ private:
         }
         _usersCount--;
 
+        Log::info(std::string("testRmDocNotify: OK"));
         return TestResult::TEST_OK;
     }
 
