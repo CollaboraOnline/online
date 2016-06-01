@@ -141,7 +141,8 @@ L.Map.Keyboard = L.Handler.extend({
 
 	keyCodes: {
 		pageUp:   33,
-		pageDown: 34
+		pageDown: 34,
+		enter:    13
 	},
 
 	navigationKeyCodes: {
