@@ -305,7 +305,6 @@ private:
     {
         _messageReceived.clear();
 
-        // We should have 3 users by now; lets verify
         const std::string queryMessage = "active_users_count";
         _adminWs->sendFrame(queryMessage.data(), queryMessage.size());
 
@@ -313,17 +312,23 @@ private:
         if (_messageReceived.empty() &&
             _messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
-            Log::info("testAddDocNotify: Timed out waiting for admin console message");
+            Log::info("testUsersCount: Timed out waiting for admin console message");
             return TestResult::TEST_TIMED_OUT;
         }
         lock.unlock();
 
         StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         if (tokens.count() != 2 ||
-            tokens[0] != "active_users_count" ||
-            std::stoi(tokens[1]) != _usersCount)
+            tokens[0] != "active_users_count")
         {
-            Log::info("testAddDocNotify: Unrecognized message format");
+            Log::info("testUsersCount: Unrecognized message format");
+            return TestResult::TEST_FAILED;
+        }
+        else if (std::stoi(tokens[1]) != _usersCount)
+        {
+            Log::info("testUsersCount: Incorrect users count "
+                      ", expected: " + std::to_string(_usersCount) +
+                      ", actual: " + tokens[1]);
             return TestResult::TEST_FAILED;
         }
 
@@ -335,7 +340,6 @@ private:
     {
         _messageReceived.clear();
 
-        // We should have 2 total docs open by now; lets verify
         const std::string queryMessage = "active_docs_count";
         _adminWs->sendFrame(queryMessage.data(), queryMessage.size());
 
@@ -343,7 +347,7 @@ private:
         if (_messageReceived.empty() &&
             _messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
-            Log::info("testAddDocNotify: Timed out waiting for admin console message");
+            Log::info("testDocCount: Timed out waiting for admin console message");
             return TestResult::TEST_TIMED_OUT;
         }
         lock.unlock();
@@ -353,7 +357,14 @@ private:
             tokens[0] != "active_docs_count" ||
             std::stoi(tokens[1]) != _docsCount)
         {
-            Log::info("testAddDocNotify: Unrecognized message format");
+            Log::info("testDocCount: Unrecognized message format");
+            return TestResult::TEST_FAILED;
+        }
+        else if (std::stoi(tokens[1]) != _docsCount)
+        {
+            Log::info("testDocCount: Incorrect doc count "
+                      ", expected: " + std::to_string(_docsCount) +
+                      ", actual: " + tokens[1]);
             return TestResult::TEST_FAILED;
         }
 
@@ -417,7 +428,9 @@ public:
         {
             _isTestRunning = true;
             AdminTest test = _tests[_testCounter++];
+            Log::info("UnitAdmin:: Starting test #" + std::to_string(_testCounter));
             TestResult res = ((*this).*(test))();
+            Log::info("UnitAdmin:: Finished test #" + std::to_string(_testCounter));
             if (res != TestResult::TEST_OK)
             {
                 exitTest(res);
@@ -437,6 +450,7 @@ public:
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
         _messageReceivedCV.notify_all();
         _messageReceived = message;
+        Log::info("UnitAdmin:: onAdminNotifyMessage: " + message);
     }
 
     virtual void onAdminQueryMessage(const std::string& message)
@@ -444,6 +458,7 @@ public:
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
         _messageReceivedCV.notify_all();
         _messageReceived = message;
+        Log::info("UnitAdmin:: onAdminQueryMessage: " + message);
     }
 };
 
