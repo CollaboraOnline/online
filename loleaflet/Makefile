@@ -30,6 +30,7 @@ dist: all
 
 pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/loleaflet-ui.pot \
+		evol.colorpicker.strings.js \
 		unocommands.js \
 		dist/errormessages.js \
 		dist/toolbar/toolbar.js \
