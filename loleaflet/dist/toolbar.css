@@ -34,7 +34,7 @@
     width: 200px;
     top: 65px;
     border: 1px solid darkgrey;
-    z-index: 8000;
+    z-index: 1000;
     display: none;
 }
 
