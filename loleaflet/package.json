@@ -16,7 +16,8 @@
     "karma-safari-launcher": "~0.1.1",
     "mocha": "~2.1.0",
     "tin": "^0.5.0",
-    "uglify-js": "~2.4.16"
+    "uglify-js": "~2.4.16",
+    "ws": "~0.7.2"
   },
   "main": "dist/leaflet-src.js",
   "style": "dist/leaflet.css",
@@ -38,8 +39,5 @@
       "type": "BSD-2-Clause",
       "url": "https://github.com/Leaflet/Leaflet/blob/master/LICENSE"
     }
-  ],
-  "dependencies": {
-    "ws": "~0.7.2"
-  }
+  ]
 }
