@@ -504,6 +504,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursor = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+		this._visibleCursorOnLostFocus = this._visibleCursor;
 		this._isCursorOverlayVisible = true;
 		this._onUpdateCursor();
 	},
@@ -965,6 +966,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			this._graphicMarker = L.rectangle(this._graphicSelection, {fill: false});
+			this._visibleCursor = this._visibleCursorOnLostFocus = this._graphicMarker;
 			if (!this._graphicMarker) {
 				this._map.fire('error', {msg: 'Graphic marker initialization', cmd: 'marker', kind: 'failed', id: 1});
 				return;
