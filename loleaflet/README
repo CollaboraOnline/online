@@ -10,14 +10,10 @@ Build dependencies
 First you need to install 'jake'.  As root, do:
 
     npm install -g jake
-    npm install
 
 npm is provided by the nodejs package.
-Alternatively, you can use the provided zip (as a normal user):
 
-    unzip node_modules/modules.zip -d node_modules
-
-A third way is to use npm as a user, but set its prefix to a directory where
+Another way is to use npm as a user, but set its prefix to a directory where
 you have write access. If you want that, you need to have an ~/.npmrc with the
 line e.g.
 
@@ -26,11 +22,9 @@ line e.g.
 Building
 --------
 
-As a normal user:
+Just do:
 
-    jake build
-    cd plugins/draw-0.2.4
-    jake build
+    make
 
 Running
 -------
