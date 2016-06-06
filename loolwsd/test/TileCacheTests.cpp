@@ -481,7 +481,9 @@ void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int /*p
 {
     // Check the last row of tiles to verify that the tiles
     // render correctly and there are no black tiles.
-    const auto req = "tile part=0 width=256 height=256 tileposx=0 tileposy=2035200 tilewidth=3840 tileheight=3840";
+    // Current cap of table size ends at 257280 twips (for load12.ods),
+    // otherwise 2035200 should be rendered successfully.
+    const auto req = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
     sendTextFrame(socket, req);
 
     const auto tile = getResponseMessage(socket, "tile:", "checkBlackTiles ");
