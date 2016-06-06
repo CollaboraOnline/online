@@ -95,10 +95,7 @@ namespace rng
     /// file/directory names.
     std::string getFilename(const size_t length)
     {
-        std::stringstream ss;
-        Poco::Base64Encoder b64(ss);
-        b64 << getBytes(length).data();
-        std::string s = ss.str();
+        std::string s = getB64String(length);
         std::replace(s.begin(), s.end(), '/', '_');
         return s.substr(0, length);
     }
@@ -126,7 +123,6 @@ namespace Util
     /// Create a secure, random directory path.
     std::string createRandomDir(const std::string& path)
     {
-        Poco::File(path).createDirectories();
         const auto name = rng::getFilename(64);
         Poco::File(Poco::Path(path, name)).createDirectories();
         return name;
