@@ -35,9 +35,9 @@
 ///////////////////
 // StorageBase Impl
 ///////////////////
-bool StorageBase::_filesystemEnabled;
-bool StorageBase::_wopiEnabled;
-Util::RegexListMatcher StorageBase::_wopiHosts;
+bool StorageBase::FilesystemEnabled;
+bool StorageBase::WopiEnabled;
+Util::RegexListMatcher StorageBase::WopiHosts;
 
 std::string StorageBase::getLocalRootPath() const
 {
@@ -63,12 +63,12 @@ size_t StorageBase::getFileSize(const std::string& filename)
 void StorageBase::initialize()
 {
     const auto& app = Poco::Util::Application::instance();
-    _filesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
+    FilesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
 
     // Parse the WOPI settings.
-    _wopiHosts.clear();
-    _wopiEnabled = app.config().getBool("storage.wopi[@allow]", false);
-    if (_wopiEnabled)
+    WopiHosts.clear();
+    WopiEnabled = app.config().getBool("storage.wopi[@allow]", false);
+    if (WopiEnabled)
     {
         for (size_t i = 0; ; ++i)
         {
@@ -79,12 +79,12 @@ void StorageBase::initialize()
                 if (app.config().getBool(path + "[@allow]", false))
                 {
                     Log::info("Adding trusted WOPI host: [" + host + "].");
-                    _wopiHosts.allow(host);
+                    WopiHosts.allow(host);
                 }
                 else
                 {
                     Log::info("Adding blocked WOPI host: [" + host + "].");
-                    _wopiHosts.deny(host);
+                    WopiHosts.deny(host);
                 }
             }
             else if (!app.config().has(path))
@@ -141,18 +141,18 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     else if (uri.isRelative() || uri.getScheme() == "file")
     {
         Log::info("Public URI [" + uri.toString() + "] is a file.");
-        if (_filesystemEnabled)
+        if (FilesystemEnabled)
         {
             return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
         }
 
         Log::error("Local Storage is disabled by default. Specify allowlocalstorage on the command-line to enable.");
     }
-    else if (_wopiEnabled)
+    else if (WopiEnabled)
     {
         Log::info("Public URI [" + uri.toString() + "] considered WOPI.");
         const auto& targetHost = uri.getHost();
-        if (_wopiHosts.match(targetHost) || isLocalhost(targetHost))
+        if (WopiHosts.match(targetHost) || isLocalhost(targetHost))
         {
             return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
         }

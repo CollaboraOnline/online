@@ -86,10 +86,10 @@ protected:
     std::string _jailedFilePath;
     FileInfo _fileInfo;
 
-    static bool _filesystemEnabled;
-    static bool _wopiEnabled;
+    static bool FilesystemEnabled;
+    static bool WopiEnabled;
     /// Allowed/denied WOPI hosts, if any and if WOPI is enabled.
-    static Util::RegexListMatcher _wopiHosts;
+    static Util::RegexListMatcher WopiHosts;
 };
 
 /// Trivial implementation of local storage that does not need do anything.

@@ -21,7 +21,7 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
-UnitBase *UnitBase::_global = nullptr;
+UnitBase *UnitBase::Global = nullptr;
 
 static Poco::Thread TimeoutThread("unit timeout");
 
@@ -61,18 +61,18 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
 
 bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 {
-    assert(!_global);
+    assert(!Global);
     if (!unitLibPath.empty())
     {
-        _global = linkAndCreateUnit(type, unitLibPath);
-        if (_global)
+        Global = linkAndCreateUnit(type, unitLibPath);
+        if (Global)
         {
             TimeoutThread.startFunc([](){
-                    TimeoutThread.trySleep(_global->_timeoutMilliSeconds);
-                    if (!_global->_timeoutShutdown)
+                    TimeoutThread.trySleep(Global->_timeoutMilliSeconds);
+                    if (!Global->_timeoutShutdown)
                     {
                         Log::error("Unit test timeout");
-                        _global->timeout();
+                        Global->timeout();
                     }
                 });
         }
@@ -82,10 +82,10 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         switch (type)
         {
         case TYPE_WSD:
-            _global = new UnitWSD();
+            Global = new UnitWSD();
             break;
         case TYPE_KIT:
-            _global = new UnitKit();
+            Global = new UnitKit();
             break;
         default:
             assert(false);
@@ -93,10 +93,10 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         }
     }
 
-    if (_global)
-        _global->_type = type;
+    if (Global)
+        Global->_type = type;
 
-    return _global != NULL;
+    return Global != NULL;
 }
 
 void UnitBase::setTimeout(int timeoutMilliSeconds)
@@ -175,8 +175,8 @@ void UnitBase::returnValue(int &retValue)
     TimeoutThread.wakeUp();
     TimeoutThread.join();
 
-    delete _global;
-    _global = nullptr;
+    delete Global;
+    Global = nullptr;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

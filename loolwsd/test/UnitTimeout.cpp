@@ -52,12 +52,12 @@ public:
     {
         bool madeWSD = init(UnitType::TYPE_WSD, std::string());
         assert(madeWSD);
-        delete UnitBase::_global;
-        UnitBase::_global = NULL;
+        delete UnitBase::Global;
+        UnitBase::Global = NULL;
         bool madeKit = init(UnitType::TYPE_KIT, std::string());
         assert(madeKit);
-        delete UnitBase::_global;
-        UnitBase::_global = NULL;
+        delete UnitBase::Global;
+        UnitBase::Global = NULL;
     }
 };
 

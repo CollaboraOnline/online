@@ -83,7 +83,7 @@ private:
     int  _retValue;
     int  _timeoutMilliSeconds;
     std::atomic<bool> _timeoutShutdown;
-    static UnitBase *_global;
+    static UnitBase *Global;
     UnitType _type;
 };
 
@@ -97,8 +97,8 @@ public:
 
 	static UnitWSD &get()
     {
-        assert (_global && _global->_type == UnitType::TYPE_WSD);
-        return *static_cast<UnitWSD *>(_global);
+        assert (Global && Global->_type == UnitType::TYPE_WSD);
+        return *static_cast<UnitWSD *>(Global);
     }
 
     enum TestRequest { TEST_REQ_CLIENT, TEST_REQ_PRISONER };
@@ -170,8 +170,8 @@ public:
     virtual ~UnitKit();
 	static UnitKit &get()
     {
-        assert (_global && _global->_type == UnitType::TYPE_KIT);
-        return *static_cast<UnitKit *>(_global);
+        assert (Global && Global->_type == UnitType::TYPE_KIT);
+        return *static_cast<UnitKit *>(Global);
     }
 
     // ---------------- ForKit hooks ----------------
