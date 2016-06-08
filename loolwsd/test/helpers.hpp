@@ -52,7 +52,7 @@ inline
 void getDocumentPathAndURL(const char* document, std::string& documentPath, std::string& documentURL)
 {
     documentPath = Util::getTempFilePath(TDOC, document);
-    documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    documentURL = "lool/ws/file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
     std::cerr << "Test file: " << documentPath << std::endl;
 }

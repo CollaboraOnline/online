@@ -527,9 +527,12 @@ private:
         // Remove the leading '/' in the GET URL.
         std::string uri = request.getURI();
         if (uri.size() > 0 && uri[0] == '/')
-        {
             uri.erase(0, 1);
-        }
+
+        // Remove leading 'lool/ws/' from GET URL
+        if (uri.size() > 0 && uri.compare(0, 8, "lool/ws/") == 0)
+            uri.erase(0, 8);
+
 
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
@@ -802,6 +805,10 @@ public:
     {
         const auto id = LOOLWSD::GenSessionId();
 
+        Poco::URI requestUri(request.getURI());
+        std::vector<std::string> reqPathSegs;
+        requestUri.getPathSegments(reqPathSegs);
+
         Util::setThreadName("client_ws_" + id);
 
         Log::debug("Thread started.");
@@ -818,7 +825,7 @@ public:
             {
                 responded = handlePostRequest(request, response, id);
             }
-            else
+            else if (reqPathSegs.size() > 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "ws")
             {
                 auto ws = std::make_shared<WebSocket>(request, response);
                 try
@@ -1109,7 +1116,7 @@ public:
             requestHandler = _fileServer.createRequestHandler();
         }
         // Admin WebSocket Connections
-        else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "adminws")
+        else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
         {
             requestHandler = Admin::createRequestHandler();
         }
