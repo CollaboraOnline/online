@@ -181,7 +181,7 @@ void HTTPWSTest::testBadRequest()
     try
     {
         // Load a document and get its status.
-        const std::string documentURL = "file:///fake.doc";
+        const std::string documentURL = "lool/ws/file:///fake.doc";
 
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -894,7 +894,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
     try
     {
         const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
-        const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        const std::string documentURL = "lool/ws/file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
@@ -1019,7 +1019,7 @@ void HTTPWSTest::testInsertDelete()
 void HTTPWSTest::testEditLock()
 {
     const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-    const std::string documentURL = "file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    const std::string documentURL = "lool/ws/file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
     std::mutex mutex;
     std::condition_variable cv;

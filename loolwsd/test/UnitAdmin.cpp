@@ -113,7 +113,7 @@ private:
         bool httpOnly = cookies[0].getHttpOnly();
         std::string value = cookies[0].getValue();
         TestResult res = TestResult::TEST_FAILED;
-        if (cookiePath.find_first_of("/adminws/") == 0 &&
+        if (cookiePath.find_first_of("/lool/adminws/") == 0 &&
             secure &&
             httpOnly &&
             value != "")
@@ -156,7 +156,7 @@ private:
     TestResult testWebSocketWithCookie()
     {
         HTTPResponse response;
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/adminws/");
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
         std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
 
         // set cookie
@@ -192,7 +192,7 @@ private:
         _adminWs->sendFrame(subscribeMessage.data(), subscribeMessage.size());
 
         const std::string documentPath1 = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL1 = "file://" + Poco::Path(documentPath1).makeAbsolute().toString();
+        const std::string documentURL1 = std::string("lool/ws/") + "file://" + Poco::Path(documentPath1).makeAbsolute().toString();
         HTTPRequest request1(HTTPRequest::HTTP_GET, documentURL1);
         HTTPResponse response1;
         const Poco::URI docUri1(helpers::getTestServerURI());
@@ -262,7 +262,7 @@ private:
 
         // Open another document (different)
         const std::string documentPath2 = Util::getTempFilePath(TDOC, "insert-delete.odp");
-        const std::string documentURL2 = "file://" + Poco::Path(documentPath2).makeAbsolute().toString();
+        const std::string documentURL2 = std::string("lool/ws/") + "file://" + Poco::Path(documentPath2).makeAbsolute().toString();
         HTTPRequest request2(HTTPRequest::HTTP_GET, documentURL2);
         HTTPResponse response2;
         const Poco::URI docUri2(helpers::getTestServerURI());

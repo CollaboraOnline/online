@@ -99,7 +99,7 @@ public:
             JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
             const std::string jwtToken = authAgent.getAccessToken();
             Poco::Net::HTTPCookie cookie("jwt", jwtToken);
-            cookie.setPath("/adminws/");
+            cookie.setPath("/lool/adminws/");
             cookie.setSecure(true);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
