@@ -40,6 +40,7 @@ pot:
 		src/admin/Util.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.Tabs.js \
+		src/control/Toolbar.js \
 		src/core/Socket.js \
 		src/map/Map.js
 
