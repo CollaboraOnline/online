@@ -1167,7 +1167,7 @@ void HTTPWSTest::testSlideShow()
             CPPUNIT_ASSERT_EQUAL(static_cast<int>(_uri.getPort()), port);
             CPPUNIT_ASSERT_EQUAL(std::string("slideshow"), id);
 
-            const std::string path = "/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
+            const std::string path = "/lool/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
             std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
             Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
             session->sendRequest(requestSVG);

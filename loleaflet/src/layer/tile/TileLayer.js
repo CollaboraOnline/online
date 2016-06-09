@@ -378,7 +378,7 @@ L.TileLayer = L.GridLayer.extend({
 		var command = this._map._socket.parseServerCmd(textMsg);
 		var parser = document.createElement('a');
 		parser.href = this._map.options.server;
-		var url = this._map.options.webserver + '/' +
+		var url = this._map.options.webserver + '/' + this._map.options.urlPrefix + '/' +
 			command.jail + '/' + command.dir + '/' + command.name;
 
 		this._map.hideBusy();
