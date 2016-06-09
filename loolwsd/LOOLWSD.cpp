@@ -349,7 +349,7 @@ private:
     {
         Log::info("Post request: [" + request.getURI() + "]");
         StringTokenizer tokens(request.getURI(), "/?");
-        if (tokens.count() >= 2 && tokens[1] == "convert-to")
+        if (tokens.count() >= 3 && tokens[2] == "convert-to")
         {
             std::string fromPath;
             ConvertToPartHandler handler(fromPath);
@@ -452,7 +452,7 @@ private:
 
             return true;
         }
-        else if (tokens.count() >= 2 && tokens[1] == "insertfile")
+        else if (tokens.count() >= 3 && tokens[2] == "insertfile")
         {
             Log::info("Insert file request.");
             response.set("Access-Control-Allow-Origin", "*");
@@ -481,15 +481,15 @@ private:
                 }
             }
         }
-        else if (tokens.count() >= 4)
+        else if (tokens.count() >= 5)
         {
             Log::info("File download request.");
             // The user might request a file to download
             //TODO: Check that the user in question has access to this file!
-            const std::string dirPath = LOOLWSD::ChildRoot + tokens[1]
-                                      + JAILED_DOCUMENT_ROOT + tokens[2];
+            const std::string dirPath = LOOLWSD::ChildRoot + tokens[2]
+                                      + JAILED_DOCUMENT_ROOT + tokens[3];
             std::string fileName;
-            URI::decode(tokens[3], fileName);
+            URI::decode(tokens[4], fileName);
             const std::string filePath = dirPath + "/" + fileName;
             Log::info("HTTP request for: " + filePath);
             File file(filePath);
@@ -821,7 +821,9 @@ public:
                 // http://server/hosting/discovery
                 responded = handleGetWOPIDiscovery(request, response);
             }
-            else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0))
+            // All post requests have url prefix, lool
+            else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
+                     reqPathSegs[0] == "lool")
             {
                 responded = handlePostRequest(request, response, id);
             }

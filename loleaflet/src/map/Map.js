@@ -16,7 +16,8 @@ L.Map = L.Evented.extend({
 		markerZoomAnimation: true,
 		defaultZoom: 10,
 		tileWidthTwips: 3840,
-		tileHeightTwips: 3840
+		tileHeightTwips: 3840,
+		urlPrefix: 'lool'
 	},
 
 	initialize: function (id, options) { // (HTMLElement or String, Object)

@@ -14,7 +14,7 @@ L.Map.FileInserter = L.Handler.extend({
 		this._toInsert = {};
 		var parser = document.createElement('a');
 		parser.href = map.options.server;
-		this._url = map.options.webserver + '/insertfile';
+		this._url = map.options.webserver + '/' + map.options.urlPrefix + '/insertfile';
 	},
 
 	addHooks: function () {
