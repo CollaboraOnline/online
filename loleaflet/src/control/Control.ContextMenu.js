@@ -44,12 +44,19 @@ L.Control.ContextMenu = L.Control.extend({
 
 		map.on('locontextmenu', this._onContextMenu, this);
 		map.on('mousedown', this._onMouseDown, this);
+		map.on('keydown', this._onKeyDown, this);
 	},
 
 	_onMouseDown: function(e) {
 		this._prevMousePos = {x: e.originalEvent.pageX, y: e.originalEvent.pageY};
 
 		$.contextMenu('destroy', '.leaflet-layer');
+	},
+
+	_onKeyDown: function(e) {
+		if (e.originalEvent.keyCode === 27 /* ESC */) {
+			$.contextMenu('destroy', '.leaflet-layer');
+		}
 	},
 
 	_onContextMenu: function(obj) {
