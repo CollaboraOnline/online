@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 20:47+0000\n"
+"POT-Creation-Date: 2016-06-12 14:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,11 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /hi/libo_online/loleaflet-help-hi.po\n"
-"X-Pootle-Revision: 435103\n"
+"X-Pootle-Revision: 445015\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
-msgstr ""
+msgstr "एल ओ लीफलेट मदद"
 
 #: dist%2Floleaflet-help.html+html.body.h1%3A48
 msgid "Keyboard Shortcuts"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Undo"
-msgstr ""
+msgstr "पहले जैसा"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Ctrl + Z"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
 msgid "Redo"
-msgstr ""
+msgstr "फिर करें"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
 msgid "Ctrl + Y"

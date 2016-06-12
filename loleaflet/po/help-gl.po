@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 20:47+0000\n"
+"POT-Creation-Date: 2016-06-12 14:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /gl/libo_online/loleaflet-help-gl.po\n"
-"X-Pootle-Revision: 435095\n"
+"X-Pootle-Revision: 458188\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.h1%3A48
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Atallos de teclado"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A50
 msgid "General Keyboard Shortcuts"
@@ -28,27 +28,27 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Undo"
-msgstr ""
+msgstr "Desfacer"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
 msgid "Redo"
-msgstr ""
+msgstr "Refacer"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Ctrl + Y"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A54
 msgid "Cut"
-msgstr ""
+msgstr "Cortar"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A54
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
 msgid "Paste as unformatted text"
@@ -60,16 +60,16 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "Imprimir (Descargar como PDF)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Ctrl + P"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A60
 msgctxt "dist/loleaflet-help.html html.body.div.h2:60"
 msgid "Text formatting"
-msgstr ""
+msgstr "Formatado de texto"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A62
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
@@ -79,7 +79,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A62
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A63
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
@@ -89,17 +89,17 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A63
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A64
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
 msgid "Underline"
-msgstr ""
+msgstr "Subliñado"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A64
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Ctrl + U"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A65
 msgid "Double Underline"
@@ -108,22 +108,22 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A65
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:65"
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A66
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
 msgid "Strikethrough"
-msgstr ""
+msgstr "Riscado"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A66
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A67
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
 msgid "Superscript"
-msgstr ""
+msgstr "Superíndice"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A67
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
@@ -133,7 +133,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
 msgid "Subscript"
-msgstr ""
+msgstr "Subíndice"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
@@ -148,101 +148,101 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
 msgid "Ctrl + M"
-msgstr ""
+msgstr "Ctrl + M"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A71
 msgctxt "dist/loleaflet-help.html html.body.div.h2:71"
 msgid "Paragraph formatting"
-msgstr ""
+msgstr "Formatado do parágrafo"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
 msgid "Align Center"
-msgstr ""
+msgstr "Aliñar ao centro"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
 msgid "Ctrl + E"
-msgstr ""
+msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A74
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
 msgid "Align Left"
-msgstr ""
+msgstr "Aliñar á esquerda"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A74
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
 msgid "Ctrl + L"
-msgstr ""
+msgstr "Ctrl + L"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A75
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
 msgid "Align Right"
-msgstr ""
+msgstr "Aliñar á dereita"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A75
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
 msgid "Ctrl + R"
-msgstr ""
+msgstr "Ctrl + R"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Justify"
-msgstr ""
+msgstr "Xustificar"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Ctrl + J"
-msgstr ""
+msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Aplicar o estilo predefinido de parágrafo"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "Ctrl + 0"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "Aplicar o estilo de parágrafo Título 1"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "Aplicar o estilo de parágrafo Título 2"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "Ctrl + 2"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "Aplicar o estilo de parágrafo Título 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:80"
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "Aplicar o estilo de parágrafo Título 4"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "Ctrl + 4"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "Aplicar o estilo de parágrafo Título 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A84
 msgid "Text selection and navigation in document"
@@ -251,17 +251,17 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Select All"
-msgstr ""
+msgstr "Seleccionar todo"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Ctrl + A"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Mover o cursor cara á esquerda"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
@@ -421,12 +421,12 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "Ir ao inicio da liña"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
@@ -441,12 +441,12 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Go to start of document"
-msgstr ""
+msgstr "Ir ao inicio do documento"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Ctrl + Inicio"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
 msgid "Go and select text to start of document"
@@ -465,7 +465,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "End"
-msgstr ""
+msgstr "Fin"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
@@ -485,7 +485,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Ctrl + End"
-msgstr ""
+msgstr "Ctrl + Fin"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A110
 msgid "Go and select text to end of document"
@@ -550,15 +550,15 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
 msgid "Ctrl + Backspace"
-msgstr ""
+msgstr "Ctrl + Retroceso"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Eliminar ata a fin da palabra"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
 msgid "Ctrl + Del"
-msgstr ""
+msgstr "Ctrl + Supr"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
 msgid "Delete to beginning of sentence"
@@ -617,7 +617,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Ctrl + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
 msgid ""
@@ -672,7 +672,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
 msgid "Alt + Del"
-msgstr ""
+msgstr "Alt + Supr"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
 msgid ""
@@ -711,29 +711,29 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A141
 msgid "Insert footnote"
-msgstr ""
+msgstr "Inserir nota a rodapé"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A141
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Ctrl + Alt + F"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A142
 msgid "Insert endnote"
-msgstr ""
+msgstr "Inserir unha nota final"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A142
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Ctrl + Alt + D"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A143
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
 msgid "Insert comment"
-msgstr ""
+msgstr "Inserir un comentario"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A143
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
 msgid "Ctrl + Alt + C"
-msgstr ""
+msgstr "Ctrl + Alt + C"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A145
 msgid "Insert soft hyphen"
@@ -741,7 +741,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A145
 msgid "Ctrl + -"
-msgstr ""
+msgstr "Ctrl + -"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A146
 msgid "Insert non-breaking hyphen"
@@ -803,7 +803,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A153
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:153"
 msgid "Alt + Enter"
-msgstr ""
+msgstr "Alt + Intro"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A157
 msgid "Cell formatting"
@@ -817,7 +817,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A159
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
@@ -827,27 +827,27 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
 msgid "Underline"
-msgstr ""
+msgstr "Subliñar"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Ctrl + U"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
 msgid "Strikethrough"
-msgstr ""
+msgstr "Riscar"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"

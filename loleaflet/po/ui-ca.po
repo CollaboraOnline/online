@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 20:47+0000\n"
+"POT-Creation-Date: 2016-06-12 14:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,192 +12,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-ui-ca.po\n"
-"X-Pootle-Revision: 435624\n"
+"X-Pootle-Revision: 459231\n"
 
-#: dist/toolbar/toolbar.js:18
-#: src/control/Control.Menubar.js:9
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:98
-msgid "Save"
-msgstr "Desa"
+#: evol.colorpicker.strings.js:2
+msgid "Theme Colors"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:20
-#: src/control/Control.Menubar.js:16
-#: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:105
-msgid "Undo"
-msgstr "Desfés"
+#: evol.colorpicker.strings.js:3
+msgid "Standard Colors"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:21
-#: src/control/Control.Menubar.js:17
-#: src/control/Control.Menubar.js:59
-#: src/control/Control.Menubar.js:106
-msgid "Redo"
-msgstr "Refés"
+#: evol.colorpicker.strings.js:4
+msgid "Web Colors"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:27
-msgid "Bold"
-msgstr "Negreta"
+#: evol.colorpicker.strings.js:5
+msgid "Back to Palette"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:28
-msgid "Italic"
-msgstr "Cursiva"
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:29
-msgid "Underline"
-msgstr "Subratllat"
-
-#: dist/toolbar/toolbar.js:30
-msgid "Strikeout"
-msgstr "Ratllat"
-
-#: dist/toolbar/toolbar.js:33
-msgid "Font color"
-msgstr "Color del tipus de lletra"
-
-#: dist/toolbar/toolbar.js:35
-msgid "Highlighting"
-msgstr "Realçar"
-
-#: dist/toolbar/toolbar.js:37
-msgid "Align left"
-msgstr "Alinea a l'esquerra"
-
-#: dist/toolbar/toolbar.js:38
-msgid "Center horizontally"
-msgstr "Centra horitzontalment"
-
-#: dist/toolbar/toolbar.js:39
-msgid "Align right"
-msgstr "Alinea a la dreta"
-
-#: dist/toolbar/toolbar.js:40
-msgid "Justified"
-msgstr "Justifica"
-
-#: dist/toolbar/toolbar.js:42
-msgid "Bullets on/off"
-msgstr "Pics activats/desactivats"
-
-#: dist/toolbar/toolbar.js:43
-msgid "Numbering on/off"
-msgstr "Numeració activada/desactivada"
-
-#: dist/toolbar/toolbar.js:45
-msgid "Increase indent"
-msgstr "Augmenta el sagnat"
-
-#: dist/toolbar/toolbar.js:46
-msgid "Decrease indent"
-msgstr "Disminueix el sagnat"
-
-#: dist/toolbar/toolbar.js:48
-msgid "Insert comment"
-msgstr "Insereix un comentari"
-
-#: dist/toolbar/toolbar.js:49
-msgid "Insert graphic"
-msgstr "Insereix una imatge"
-
-#: dist/toolbar/toolbar.js:51
-msgid "Insert table"
-msgstr "Insereix una taula"
-
-#: dist/toolbar/toolbar.js:53
-msgid "Help"
-msgstr "Ajuda"
-
-#: dist/toolbar/toolbar.js:55
-msgid "More"
-msgstr "Més"
-
-#: dist/toolbar/toolbar.js:56
-msgid "Close document"
-msgstr "Tanca el document"
-
-#: dist/toolbar/toolbar.js:78
-msgid "Sum"
-msgstr "Suma"
-
-#: dist/toolbar/toolbar.js:79
-msgid "Function"
-msgstr "Funció"
-
-#: dist/toolbar/toolbar.js:80
-msgid "Cancel"
-msgstr "Cancel·la"
-
-#: dist/toolbar/toolbar.js:81
-msgid "Accept"
-msgstr "Accepta"
-
-#: dist/toolbar/toolbar.js:92
-msgid "First sheet"
-msgstr "Primer full"
-
-#: dist/toolbar/toolbar.js:93
-msgid "Previous sheet"
-msgstr "Full anterior"
-
-#: dist/toolbar/toolbar.js:94
-msgid "Next sheet"
-msgstr "Full següent"
-
-#: dist/toolbar/toolbar.js:95
-msgid "Last sheet"
-msgstr "Últim full"
-
-#: dist/toolbar/toolbar.js:105
-#: src/control/Control.Menubar.js:93
-msgid "Fullscreen presentation"
-msgstr "Presentació a pantalla completa"
-
-#: dist/toolbar/toolbar.js:107
-msgid "Insert slide"
-msgstr "Insereix una diapositiva"
-
-#: dist/toolbar/toolbar.js:108
-#: src/control/Control.Menubar.js:90
-msgid "Duplicate slide"
-msgstr "Duplica la diapositiva"
-
-#: dist/toolbar/toolbar.js:109
-#: src/control/Control.Menubar.js:91
-msgid "Delete slide"
-msgstr "Suprimeix la diapositiva"
-
-#: dist/toolbar/toolbar.js:121
-msgid "Search:"
-msgstr "Cerca:"
-
-#: dist/toolbar/toolbar.js:126
-msgid "Search backwards"
-msgstr "Cerca enrere"
+#: evol.colorpicker.strings.js:7
+msgid "No history yet."
+msgstr ""
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
 msgstr "Copia l'enllaç"
 
-#: dist/toolbar/toolbar.js:127
-msgid "Search forward"
-msgstr "Cerca endavant"
-
 #: unocommands.js:2
 msgid "Down One Level"
 msgstr "Avall un nivell"
 
-#: dist/toolbar/toolbar.js:128
-msgid "Cancel the search"
-msgstr "Cancel·la la cerca"
-
 #: unocommands.js:3
 msgid "Up One Level"
 msgstr "Amunt un nivell"
-
-#: dist/toolbar/toolbar.js:133
-#: dist/toolbar/toolbar.js:849
-msgid "Take edit lock (others can only view)"
-msgstr "Pren el control d'edició (altres persones només poden visualitzar)"
 
 #: unocommands.js:4
 msgid "Edit Comment"
@@ -207,56 +58,21 @@ msgstr "Edita el comentari"
 msgid "Insert Comment"
 msgstr "Insereix un comentari"
 
-#: dist/toolbar/toolbar.js:134
-#: dist/toolbar/toolbar.js:850
-#: dist/toolbar/toolbar.js:943
-msgid "VIEWING"
-msgstr "VISUALITZACIÓ"
-
-#: dist/toolbar/toolbar.js:136
-msgid "Previous page"
-msgstr "Pàgina anterior"
-
 #: unocommands.js:6
 msgid "Merge"
 msgstr "Fusiona"
-
-#: dist/toolbar/toolbar.js:137
-msgid "Next page"
-msgstr "Pàgina següent"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
 msgstr "Fusiona les cel·les..."
 
-#: dist/toolbar/toolbar.js:139
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:73
-#: src/control/Control.Menubar.js:123
-msgid "Reset zoom"
-msgstr "Reinicia el zoom"
-
 #: unocommands.js:8
 msgid "Bring Forward"
 msgstr "Envia cap avant"
 
-#: dist/toolbar/toolbar.js:140
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:72
-#: src/control/Control.Menubar.js:122
-msgid "Zoom out"
-msgstr "Allunya't"
-
 #: unocommands.js:9
 msgid "Send Backward"
 msgstr "Envia cap enrere"
-
-#: dist/toolbar/toolbar.js:142
-#: src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:121
-msgid "Zoom in"
-msgstr "Apropa't"
 
 #: unocommands.js:10
 msgid "Paste Special"
@@ -266,10 +82,6 @@ msgstr "Enganxa especial"
 msgid "Unformatted Text"
 msgstr "Text sense format"
 
-#: dist/toolbar/toolbar.js:160
-msgid "You are viewing now."
-msgstr "Ara esteu visualitzant."
-
 #: dist/errormessages.js:1
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
@@ -277,14 +89,6 @@ msgid ""
 msgstr ""
 "WOPISrc incorrecte, ús: WOPISrc=URI codificat correctament, o camí_a_fitxer, "
 "ús: camí_a_fitxer=/camí/al/document/"
-
-#: dist/toolbar/toolbar.js:160
-msgid "Click here to take edit."
-msgstr "Feu clic aquí per a editar."
-
-#: dist/toolbar/toolbar.js:261
-msgid "Are you sure you want to delete this page?"
-msgstr "Esteu segur que voleu suprimir aquesta pàgina?"
 
 #: dist/errormessages.js:2
 msgid ""
@@ -294,84 +98,401 @@ msgstr ""
 "L'URL del servidor és buit. Probablement el servidor loolwsd està mal "
 "configurat. Contacteu amb l'administrador."
 
-#: dist/toolbar/toolbar.js:386
-#: dist/toolbar/toolbar.js:744
+#: dist/toolbar/toolbar.js:144
+msgid "Are you sure you want to delete this page?"
+msgstr "Esteu segur que voleu suprimir aquesta pàgina?"
+
+#: dist/toolbar/toolbar.js:336
+#: src/admin/AdminStrings.js:20
+#: src/control/Control.Menubar.js:9
+#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:93
+msgid "Save"
+msgstr "Desa"
+
+#: dist/toolbar/toolbar.js:338
+#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:100
+msgid "Undo"
+msgstr "Desfés"
+
+#: dist/toolbar/toolbar.js:339
+#: src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:101
+msgid "Redo"
+msgstr "Refés"
+
+#: dist/toolbar/toolbar.js:345
+msgid "Bold"
+msgstr "Negreta"
+
+#: dist/toolbar/toolbar.js:346
+msgid "Italic"
+msgstr "Cursiva"
+
+#: dist/toolbar/toolbar.js:347
+msgid "Underline"
+msgstr "Subratllat"
+
+#: dist/toolbar/toolbar.js:348
+msgid "Strikeout"
+msgstr "Ratllat"
+
+#: dist/toolbar/toolbar.js:351
+msgid "Font color"
+msgstr "Color del tipus de lletra"
+
+#: dist/toolbar/toolbar.js:353
+msgid "Highlighting"
+msgstr "Realçar"
+
+#: dist/toolbar/toolbar.js:355
+msgid "Align left"
+msgstr "Alinea a l'esquerra"
+
+#: dist/toolbar/toolbar.js:356
+msgid "Center horizontally"
+msgstr "Centra horitzontalment"
+
+#: dist/toolbar/toolbar.js:357
+msgid "Align right"
+msgstr "Alinea a la dreta"
+
+#: dist/toolbar/toolbar.js:358
+msgid "Justified"
+msgstr "Justifica"
+
+#: dist/toolbar/toolbar.js:360
+msgid "Bullets on/off"
+msgstr "Pics activats/desactivats"
+
+#: dist/toolbar/toolbar.js:361
+msgid "Numbering on/off"
+msgstr "Numeració activada/desactivada"
+
+#: dist/toolbar/toolbar.js:363
+msgid "Increase indent"
+msgstr "Augmenta el sagnat"
+
+#: dist/toolbar/toolbar.js:364
+msgid "Decrease indent"
+msgstr "Disminueix el sagnat"
+
+#: dist/toolbar/toolbar.js:367
+msgid "Insert table"
+msgstr "Insereix una taula"
+
+#: dist/toolbar/toolbar.js:368
+msgid "Insert comment"
+msgstr "Insereix un comentari"
+
+#: dist/toolbar/toolbar.js:369
+msgid "Insert graphic"
+msgstr "Insereix una imatge"
+
+#: dist/toolbar/toolbar.js:371
+msgid "Help"
+msgstr "Ajuda"
+
+#: dist/toolbar/toolbar.js:373
+msgid "More"
+msgstr "Més"
+
+#: dist/toolbar/toolbar.js:374
+msgid "Close document"
+msgstr "Tanca el document"
+
+#: dist/toolbar/toolbar.js:404
+msgid "Sum"
+msgstr "Suma"
+
+#: dist/toolbar/toolbar.js:405
+msgid "Function"
+msgstr "Funció"
+
+#: dist/toolbar/toolbar.js:406
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: dist/toolbar/toolbar.js:407
+msgid "Accept"
+msgstr "Accepta"
+
+#: dist/toolbar/toolbar.js:418
+msgid "First sheet"
+msgstr "Primer full"
+
+#: dist/toolbar/toolbar.js:419
+msgid "Previous sheet"
+msgstr "Full anterior"
+
+#: dist/toolbar/toolbar.js:420
+msgid "Next sheet"
+msgstr "Full següent"
+
+#: dist/toolbar/toolbar.js:421
+msgid "Last sheet"
+msgstr "Últim full"
+
+#: dist/toolbar/toolbar.js:431
+#: src/control/Control.Menubar.js:88
+msgid "Fullscreen presentation"
+msgstr "Presentació a pantalla completa"
+
+#: dist/toolbar/toolbar.js:433
+msgid "Insert slide"
+msgstr "Insereix una diapositiva"
+
+#: dist/toolbar/toolbar.js:434
+#: src/control/Control.Menubar.js:85
+msgid "Duplicate slide"
+msgstr "Duplica la diapositiva"
+
+#: dist/toolbar/toolbar.js:435
+#: src/control/Control.Menubar.js:86
+msgid "Delete slide"
+msgstr "Suprimeix la diapositiva"
+
+#: dist/toolbar/toolbar.js:447
+msgid "Search:"
+msgstr "Cerca:"
+
+#: dist/toolbar/toolbar.js:452
+msgid "Search backwards"
+msgstr "Cerca enrere"
+
+#: dist/toolbar/toolbar.js:453
+msgid "Search forward"
+msgstr "Cerca endavant"
+
+#: dist/toolbar/toolbar.js:454
+msgid "Cancel the search"
+msgstr "Cancel·la la cerca"
+
+#: dist/toolbar/toolbar.js:459
+#: dist/toolbar/toolbar.js:1010
+msgid "Take edit lock (others can only view)"
+msgstr "Pren el control d'edició (altres persones només poden visualitzar)"
+
+#: dist/toolbar/toolbar.js:459
+#: dist/toolbar/toolbar.js:1010
+msgid "VIEWING"
+msgstr "VISUALITZACIÓ"
+
+#: dist/toolbar/toolbar.js:461
+msgid "Previous page"
+msgstr "Pàgina anterior"
+
+#: dist/toolbar/toolbar.js:462
+msgid "Next page"
+msgstr "Pàgina següent"
+
+#: dist/toolbar/toolbar.js:464
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:118
+msgid "Reset zoom"
+msgstr "Reinicia el zoom"
+
+#: dist/toolbar/toolbar.js:465
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:72
+#: src/control/Control.Menubar.js:117
+msgid "Zoom out"
+msgstr "Allunya't"
+
+#: dist/toolbar/toolbar.js:467
+#: src/control/Control.Menubar.js:30
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:116
+msgid "Zoom in"
+msgstr "Apropa't"
+
+#: dist/toolbar/toolbar.js:485
+msgid "You are viewing now."
+msgstr "Ara esteu visualitzant."
+
+#: dist/toolbar/toolbar.js:485
+msgid "Click here to take edit."
+msgstr "Feu clic aquí per a editar."
+
+#: dist/toolbar/toolbar.js:549
+#: dist/toolbar/toolbar.js:908
 msgid "Size"
 msgstr "Mida"
 
-#: dist/toolbar/toolbar.js:637
+#: dist/toolbar/toolbar.js:779
 msgid "Document saved"
 msgstr "S'ha desat el document"
 
-#: dist/toolbar/toolbar.js:727
+#: dist/toolbar/toolbar.js:891
 msgid "Style"
 msgstr "Estil"
 
-#: dist/toolbar/toolbar.js:739
+#: dist/toolbar/toolbar.js:903
 msgid "Font"
 msgstr "Tipus de lletra"
 
-#: dist/toolbar/toolbar.js:763
+#: dist/toolbar/toolbar.js:927
 msgid "Previous slide"
 msgstr "Diapositiva anterior"
 
-#: dist/toolbar/toolbar.js:764
+#: dist/toolbar/toolbar.js:928
 msgid "Next slide"
 msgstr "Diapositiva següent"
 
-#: dist/toolbar/toolbar.js:843
+#: dist/toolbar/toolbar.js:1006
 msgid "You are editing (others can only view)"
 msgstr "Esteu editant (altres persones només poden visualitzar)"
 
-#: dist/toolbar/toolbar.js:845
+#: dist/toolbar/toolbar.js:1006
 msgid "EDITING"
 msgstr "EDICIÓ"
 
-#: src/control/Control.Tabs.js:39
-msgid "Insert sheet before this"
-msgstr "Insereix el full abans d'aquest"
+#: dist/toolbar/toolbar.js:1139
+msgid "Layout"
+msgstr ""
 
-#: src/control/Control.Tabs.js:40
-msgid "Insert sheet after this"
-msgstr "Insereix el full després d'aquest"
+#: src/admin/AdminSocketBase.js:44
+msgid "Connection error"
+msgstr ""
 
-#: src/control/Control.Tabs.js:41
-msgid "Delete sheet"
-msgstr "Suprimeix el full"
+#: src/admin/AdminSocketOverview.js:58
+#, fuzzy
+msgid "Are you sure you want to terminate this session?"
+msgstr "Esteu segur que voleu suprimir aquesta diapositiva?"
 
-#: src/control/Control.Tabs.js:45
-msgid "Are you sure you want to delete this sheet?"
-msgstr "Esteu segur que voleu suprimir aquest full?"
+#: src/admin/AdminStrings.js:4
+msgid "Admin console"
+msgstr ""
 
-#: src/control/Control.Tabs.js:54
-msgid "Rename sheet"
-msgstr "Canvia el nom del full"
+#: src/admin/AdminStrings.js:5
+msgid "Toggle navigation"
+msgstr ""
 
-#: src/control/Control.Tabs.js:58
-msgid "Enter new sheet name"
-msgstr "Introduïu el nom nou del full"
+#: src/admin/AdminStrings.js:6
+msgid "Settings"
+msgstr ""
+
+#: src/admin/AdminStrings.js:7
+msgid "Overview"
+msgstr ""
+
+#: src/admin/AdminStrings.js:8
+msgid "(current)"
+msgstr ""
+
+#: src/admin/AdminStrings.js:9
+msgid "Analytics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:10
+msgid "Dashboard"
+msgstr ""
+
+#: src/admin/AdminStrings.js:11
+msgid "Users online"
+msgstr ""
+
+#: src/admin/AdminStrings.js:12
+msgid "Documents opened"
+msgstr ""
+
+#: src/admin/AdminStrings.js:13
+msgid "Memory consumed"
+msgstr ""
+
+#: src/admin/AdminStrings.js:14
+msgid "PID"
+msgstr ""
+
+#: src/admin/AdminStrings.js:15
+msgid "Document"
+msgstr ""
+
+#: src/admin/AdminStrings.js:16
+msgid "Number of views"
+msgstr ""
+
+#: src/admin/AdminStrings.js:17
+msgid "Elapsed time"
+msgstr ""
+
+#: src/admin/AdminStrings.js:18
+msgid "Kill"
+msgstr ""
+
+#: src/admin/AdminStrings.js:19
+msgid "Graphs"
+msgstr ""
+
+#: src/admin/AdminStrings.js:21
+msgid "Cache size of memory statistics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:22
+msgid "Time interval of memory statistics (in ms)"
+msgstr ""
+
+#: src/admin/AdminStrings.js:23
+msgid "Cache size of CPU statistics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:24
+msgid "Time interval of CPU statistics (in ms)"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "kB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "MB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "GB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "TB"
+msgstr ""
+
+#: src/admin/Util.js:41
+msgid " hrs"
+msgstr ""
+
+#: src/admin/Util.js:43
+msgid " mins"
+msgstr ""
+
+#: src/admin/Util.js:45
+msgid " s"
+msgstr ""
 
 #: src/control/Control.Menubar.js:9
 #: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:98
+#: src/control/Control.Menubar.js:93
 msgid "File"
 msgstr "Fitxer"
 
 #: src/control/Control.Menubar.js:10
 #: src/control/Control.Menubar.js:52
-#: src/control/Control.Menubar.js:99
+#: src/control/Control.Menubar.js:94
 msgid "Print"
 msgstr "Imprimeix"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:95
 msgid "Download as"
 msgstr "Baixa com a"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:95
 msgid "PDF Document (.pdf)"
 msgstr "Document PDF (.pdf)"
 
@@ -389,31 +510,31 @@ msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:16
 #: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:105
+#: src/control/Control.Menubar.js:100
 msgid "Edit"
 msgstr "Edita"
 
 #: src/control/Control.Menubar.js:19
 #: src/control/Control.Menubar.js:61
-#: src/control/Control.Menubar.js:108
+#: src/control/Control.Menubar.js:103
 msgid "Cut"
 msgstr "Retalla"
 
 #: src/control/Control.Menubar.js:20
 #: src/control/Control.Menubar.js:62
-#: src/control/Control.Menubar.js:109
+#: src/control/Control.Menubar.js:104
 msgid "Copy"
 msgstr "Copia"
 
 #: src/control/Control.Menubar.js:21
 #: src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:110
+#: src/control/Control.Menubar.js:105
 msgid "Paste"
 msgstr "Enganxa"
 
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:65
-#: src/control/Control.Menubar.js:112
+#: src/control/Control.Menubar.js:107
 msgid "Select all"
 msgstr "Selecciona-ho tot"
 
@@ -421,13 +542,13 @@ msgstr "Selecciona-ho tot"
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.Menubar.js:75
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:109
 msgid "Insert"
 msgstr "Insereix"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:109
 msgid "Image"
 msgstr "Imatge"
 
@@ -437,13 +558,13 @@ msgstr "Comentari"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:114
 msgid "View"
 msgstr "Visualitza"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:114
 msgid "Full screen"
 msgstr "Pantalla completa"
 
@@ -489,35 +610,29 @@ msgstr "Columnes"
 
 #: src/control/Control.Menubar.js:41
 #: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:82
-#: src/control/Control.Menubar.js:83
 msgid "Table"
 msgstr "Taula"
 
 #: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:83
 msgid "Select"
 msgstr "Selecciona"
 
 #: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:84
-#: src/control/Control.Menubar.js:116
+#: src/control/Control.Menubar.js:111
 msgid "Row"
 msgstr "Fila"
 
 #: src/control/Control.Menubar.js:44
-#: src/control/Control.Menubar.js:85
-#: src/control/Control.Menubar.js:117
+#: src/control/Control.Menubar.js:112
 msgid "Column"
 msgstr "Columna"
 
 #: src/control/Control.Menubar.js:45
-#: src/control/Control.Menubar.js:86
 msgid "Cell"
 msgstr "Cel·la"
 
 #: src/control/Control.Menubar.js:46
-#: src/control/Control.Menubar.js:87
+#: src/control/Control.Menubar.js:82
 msgid "Merge cells"
 msgstr "Fusiona les cel·les"
 
@@ -533,49 +648,73 @@ msgstr "Microsoft Powerpoint 2003 (.ppt)"
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:84
 msgid "Slide"
 msgstr "Diapositiva"
 
-#: src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:84
 msgid "New slide"
 msgstr "Diapositiva nova"
 
-#: src/control/Control.Menubar.js:101
+#: src/control/Control.Menubar.js:96
 msgid "ODF spreadsheet (.ods)"
 msgstr "Full de càlcul ODF (.ods)"
 
-#: src/control/Control.Menubar.js:102
+#: src/control/Control.Menubar.js:97
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:103
+#: src/control/Control.Menubar.js:98
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:125
+#: src/control/Control.Menubar.js:120
 msgid "Cells"
 msgstr "Cel·les"
 
-#: src/control/Control.Menubar.js:125
+#: src/control/Control.Menubar.js:120
 msgid "Insert row"
 msgstr "Insereix una fila"
 
-#: src/control/Control.Menubar.js:126
+#: src/control/Control.Menubar.js:121
 msgid "Insert column"
 msgstr "Insereix una columna"
 
-#: src/control/Control.Menubar.js:128
+#: src/control/Control.Menubar.js:123
 msgid "Delete row"
 msgstr "Suprimeix la fila"
 
-#: src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:124
 msgid "Delete column"
 msgstr "Suprimeix la columna"
 
-#: src/control/Control.Menubar.js:276
+#: src/control/Control.Menubar.js:282
 msgid "Are you sure you want to delete this slide?"
 msgstr "Esteu segur que voleu suprimir aquesta diapositiva?"
+
+#: src/control/Control.Tabs.js:39
+msgid "Insert sheet before this"
+msgstr "Insereix el full abans d'aquest"
+
+#: src/control/Control.Tabs.js:40
+msgid "Insert sheet after this"
+msgstr "Insereix el full després d'aquest"
+
+#: src/control/Control.Tabs.js:41
+msgid "Delete sheet"
+msgstr "Suprimeix el full"
+
+#: src/control/Control.Tabs.js:45
+msgid "Are you sure you want to delete this sheet?"
+msgstr "Esteu segur que voleu suprimir aquest full?"
+
+#: src/control/Control.Tabs.js:54
+msgid "Rename sheet"
+msgstr "Canvia el nom del full"
+
+#: src/control/Control.Tabs.js:58
+msgid "Enter new sheet name"
+msgstr "Introduïu el nom nou del full"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -612,3 +751,15 @@ msgstr ""
 #: src/core/Socket.js:294
 msgid "We are sorry, this is an unexpected connection error. Please try again."
 msgstr "Això és un error de connexió no esperat. Torneu-ho a intentar."
+
+#: src/map/Map.js:116
+msgid "Initializing..."
+msgstr ""
+
+#: src/map/Map.js:802
+msgid "Saving..."
+msgstr ""
+
+#: src/map/Map.js:805
+msgid "Loading..."
+msgstr ""
