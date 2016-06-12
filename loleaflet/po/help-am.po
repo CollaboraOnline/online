@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 20:47+0000\n"
+"POT-Creation-Date: 2016-06-12 14:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /am/libo_online/loleaflet-help-am.po\n"
-"X-Pootle-Revision: 441099\n"
+"X-Pootle-Revision: 452577\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -24,7 +24,7 @@ msgstr "የ ፊደል ገበታ አቋራጭ"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A50
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "ባጠቃላይ የ ፊደል ገበታ አቋራጮች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Undo"
@@ -52,7 +52,7 @@ msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "በ ትክክል እንዳልቀረበ ጽሁፍ መለጠፊያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
 msgid "Ctrl + Alt + Shift + V"
@@ -60,7 +60,7 @@ msgstr "Ctrl + Alt + Shift + V"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "ማተሚያ (ማውረጃ እንደ PDF)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Ctrl + P"
@@ -143,7 +143,7 @@ msgstr "Ctrl + Shift + B"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "በ ቀጥታ አቀራረብ ማስወገጃ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
@@ -246,7 +246,7 @@ msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A84
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "ጽሁፍ መምረጫ እና መቃኛ በ ሰነድ ውስጥ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
@@ -281,22 +281,22 @@ msgstr "Shift + Arrow Left"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "ወደ ቃላቱ መጀመሪያ መሄጃ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Ctrl + የ ግራ ቀስት"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "ቃል በቃል ወደ ግራ መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Shift + የ ግራ ቀስት"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
@@ -371,7 +371,7 @@ msgstr "Ctrl+ቀስት ወደ ላይ"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "ይምረጡ የ አንቀጹን መጀመሪያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
@@ -401,7 +401,7 @@ msgstr "Shift+ ቀስት ወደ ታች"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "መጠቆሚያውን ወደሚቀጥለው የ አንቀጽ መጀመሪያ ማንቀሳቀሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
@@ -498,7 +498,7 @@ msgstr "Ctrl + Shift + መጨረሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
 msgid "Move the view up one page"
-msgstr ""
+msgstr "መመልከቻውን አንድ ገጽ ወደ ላይ ከፍ ማድረጊያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
 msgid "PageUp"
@@ -514,7 +514,7 @@ msgstr "Ctrl + ገጽ ወደ ላይ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "ምርጫውን አንድ ገጽ ወደ ላይ ከፍ ማድረጊያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
 msgid "Shift + PageUp"
@@ -522,7 +522,7 @@ msgstr "Shift+ ገጽ ወደ ላይ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
 msgid "Move the view down one page"
-msgstr ""
+msgstr "መመልከቻውን አንድ ገጽ ወደ ታች ዝቅ ማድረጊያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
 msgid "PageDown"
@@ -538,7 +538,7 @@ msgstr "Ctrl + ገጽ ወደ ታች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "ምርጫውን አንድ ገጽ ወደ ታች ዝቅ ማድረጊያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
 msgid "Shift + PageDown"
@@ -590,6 +590,8 @@ msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
+"ንቁው ክፍል ባዶ ከሆነ: ጠቅላላ ሰንጠረዡን ይምረጡ: ያለ በለዚያ: የ ንቁውን ክፍል ይዞታዎች ይምረጡ: በ ድጋሚ መጫን "
+"ጠቅላላ ሰንጠረዡን ይምርጣል"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A125
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:125"
@@ -602,6 +604,9 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
+"ንቁው ክፍል ባዶ ከሆነ: ወደ ሰንጠረዡ መጀመሪያ ይሄዳል: ያለ በለዚያ: መጀመሪያ ሲጫኑ በ ንቁው ክፍል መጀመሪያ ጋር "
+"ይሄዳል: ሁለተኛ ጊዜ ሲጫኑ ወደ አሁኑ ሰንጠረዥ መጀመሪያ ጋር ይሄዳል: ሶስተኛ ጊዜ ሲጫኑ ወደ ሰነዱ መጀመሪያ ጋር "
+"ይሄዳል"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A126
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:126"
@@ -614,6 +619,8 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
+"ንቁው ክፍል ባዶ ከሆነ: ወደ ሰንጠረዡ መጨረሻ ይሄዳል: ያለ በለዚያ: መጀመሪያ ሲጫኑ በ ንቁው ክፍል መጨረሻ ጋር "
+"ይሄዳል: ሁለተኛ ጊዜ ሲጫኑ ወደ አሁኑ ሰንጠረዥ መጨረሻ ጋር ይሄዳል: ሶስተኛ ጊዜ ሲጫኑ ወደ ሰነዱ መጨረሻ ጋር ይሄዳል"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
 msgid "Ctrl + Tab"
@@ -644,7 +651,7 @@ msgstr "መጨመሪያ/መቀነሻ መጠኑን የ አምድ/ረድፍ በ �
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr "Alt + Ctrl +  የ ቀስት ቁልፎች"
+msgstr "Alt + Ctrl + የ ቀስት ቁልፎች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:130"
@@ -653,7 +660,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr "Ctrl + Alt + Shift +  የ ቀስት ቁልፎች"
+msgstr "Ctrl + Alt + Shift + የ ቀስት ቁልፎች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:131"
@@ -669,6 +676,8 @@ msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
 msgstr ""
+"3 ሰከንዶች በ ማስገቢያ ዘዴ: የ ቀስት ቁልፍ የሚያስገባው ረድፍ/አምድ ነው: Ctrl + የ ቀስት ቁልፍ የሚያስገባው "
+"ክፍል ነው"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
 msgid "Alt + Del"
@@ -679,6 +688,8 @@ msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
 msgstr ""
+"3 ሰከንዶች በ ማጥፊያ ዘዴ: የ ቀስት ቁልፍ የሚያጠፋው ረድፍ/አምድ ነው: Ctrl + የ ቀስት ቁልፍ የ ጎረቤት ክፍል "
+"ማዋሀጃ ነው"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A134
 msgid "Shift + Ctrl + Del"
@@ -852,7 +863,7 @@ msgstr "Ctrl + Alt + 5"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "በ ቀጥታ አቀራረብ ማስወገጃ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
@@ -871,7 +882,7 @@ msgstr "Ctrl + Alt + C"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A165
 msgid "Display comment"
-msgstr "አስተያየት ማሳያ "
+msgstr "አስተያየት ማሳያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A165
 msgid "Ctrl + F1"
@@ -947,7 +958,7 @@ msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
 msgid "Two decimal places, thousands separator"
-msgstr ""
+msgstr "ሁለት የ ዴሲማል ቦታ: ሺዎች መለያያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
 msgid "Ctrl + Shift + 1"
@@ -979,7 +990,7 @@ msgstr "Ctrl + Shift + 4"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A177
 msgid "Standard percentage format (two decimal places)"
-msgstr ""
+msgstr "መደበኛ የ ፐርሰንት አቀራረብ (ሁለት ዴሲማል ቦታዎች)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A177
 msgid "Ctrl + Shift + 5"
@@ -1115,7 +1126,7 @@ msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
 msgid "Demote list item (list item has to be selected)"
-msgstr ""
+msgstr "ዝቅ ማድረጊያ ዝርዝር እቃ (ዝርዝር እቃ መመረጥ አለበት)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:198"
@@ -1124,7 +1135,7 @@ msgstr "ማስረጊያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
 msgid "Promote list item (list item has to be selected)"
-msgstr ""
+msgstr "ከፍ ማድረጊያ ዝርዝር እቃ (ዝርዝር እቃ መመረጥ አለበት)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:199"
@@ -1133,7 +1144,7 @@ msgstr "Shift + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A201
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "ጽሁፍ መምረጫ እና መቃኛ በ ጽሁፍ ሳጥን ውስጥ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A203
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
@@ -1188,204 +1199,204 @@ msgstr "Ctrl + Shift + ቀስት ወደ ግራ"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A208
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "መጠቆሚያውን ወደ ቀኝ ማንቀሳቀሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A208
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
 msgid "Arrow Right"
-msgstr ""
+msgstr "ቀስት ወደ ቀኝ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A209
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
 msgid "Move cursor with selection to the right"
-msgstr ""
+msgstr "መጠቆሚያውን ከ ምርጫ ጋር ወደ ቀኝ ማንቀሳቀሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A209
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
 msgid "Shift + Arrow Right"
-msgstr ""
+msgstr "Shift+ ቀስት ወደ ቀኝ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Go to start of the next word"
-msgstr ""
+msgstr "ወደ ሚቀጥለው ቃላት መጀመሪያ ጋር መሄጃ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Ctrl + Arrow Right"
-msgstr ""
+msgstr "Ctrl + ቀስት ወደ ቀኝ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "ይምረጡ ቃል በቃል ወደ ቀኝ መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Shift + ቀስት ወደ ቀኝ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Move cursor up one line"
-msgstr ""
+msgstr "መጠቆሚያውን ወደ ላይ አንድ መስመር ማንቀሳቀሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Arrow Up"
-msgstr ""
+msgstr "ቀስት ወደ ላይ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "መስመሮችን ወደ ላይ አቅጣጫ መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Shift+ ቀስት ወደ ላይ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "መጠቆሚያውን ቀደም ወዳለው የ አንቀጽ መጀመሪያ ማንቀሳቀሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "Ctrl+ ቀስት ወደ ላይ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "የ አንቀጽ መጀመሪያ መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Shift + ቀስት ወደ ላይ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Move cursor down one line"
-msgstr ""
+msgstr "መጠቆሚያውን ወደ ታች አንድ መስመር ማንቀሳቀሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Arrow Down"
-msgstr ""
+msgstr "ቀስት ወደ ታች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A217
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "መስመሮችን ወደ ታች አቅጣጫ መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A217
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Shift+ ቀስት ወደ ታች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "መጠቆሚያውን ወደ አንቀጽ መጀመሪያ ማንቀሳቀሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Ctrl + Arrow Down"
-msgstr ""
+msgstr "Ctrl + ቀስት ወደ ታች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "የ አንቀጽ መጨረሻ መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Ctrl + Shift + Arrow Down"
-msgstr ""
+msgstr "Ctrl + Shift + ቀስት ወደ ታች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "ወደ መስመሩ መጀመሪያ መሄጃ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
 msgid "Home"
-msgstr ""
+msgstr "ቤት"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A221
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "ወደ መጀመሪያው መስመር መሄጃ እና መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A221
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
 msgid "Shift + Home"
-msgstr ""
+msgstr "Shift + ቤት"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A222
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
 msgid "Go to start of document"
-msgstr ""
+msgstr "ወደ ሰነዱ መጀመሪያ መሄጃ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A222
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Ctrl + ቤት"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A223
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "ወደ ሰነዱ መጀመሪያ መሄጃ እና የ ጽሁፍ ሳጥን መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A223
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:223"
 msgid "Ctrl + Shift + Home"
-msgstr ""
+msgstr "Ctrl + Shift + ቤት"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A224
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
 msgid "Go to end of line"
-msgstr ""
+msgstr "ወደ መስመሩ መጨረሻ መሄጃ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A224
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
 msgid "End"
-msgstr ""
+msgstr "መጨረሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A225
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "ወደ መጨረሻው መስመር መሄጃ እና መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A225
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
 msgid "Shift + End"
-msgstr ""
+msgstr "Shift+ መጨረሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A226
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
 msgid "Go to end of document"
-msgstr ""
+msgstr "ወደ ሰነዱ መጨረሻ መሄጃ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A226
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
 msgid "Ctrl + End"
-msgstr ""
+msgstr "Ctrl + መጨረሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A227
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "ወደ ሰነዱ መጨረሻ መሄጃ እና የ ጽሁፍ ሳጥን መምረጫ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A227
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:227"
 msgid "Ctrl + Shift + End"
-msgstr ""
+msgstr "Ctrl + Shift + መጨረሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A229
 msgid "Slide / draw page keyboard shortcuts"
-msgstr ""
+msgstr "የ ተንሸራታች / መሳያ ገጽ የ ፊደል ገበታ አቋራጮች"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
 msgid ""
@@ -1395,7 +1406,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
 msgid "Esc"
-msgstr ""
+msgstr "Esc"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
 msgid "Select objects in the order in which they were created"
@@ -1413,7 +1424,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:233"
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Shift + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgid "Move to next text object on slide / drawing page"
@@ -1422,13 +1433,13 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:234"
 msgid "Ctrl + Enter"
-msgstr ""
+msgstr "Ctrl + ማስገቢያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "ሁሉንም መምረጫ በ ተንሸራታች / መሳያ ገጽ ውስጥ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:235"
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Ctrl + A"

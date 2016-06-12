@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 20:48+0000\n"
+"POT-Creation-Date: 2016-06-12 14:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,192 +12,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /sv/libo_online/loleaflet-ui-sv.po\n"
-"X-Pootle-Revision: 436117\n"
+"X-Pootle-Revision: 463406\n"
 
-#: dist/toolbar/toolbar.js:18
-#: src/control/Control.Menubar.js:9
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:98
-msgid "Save"
-msgstr "Spara"
+#: evol.colorpicker.strings.js:2
+msgid "Theme Colors"
+msgstr "Temafärger"
 
-#: dist/toolbar/toolbar.js:20
-#: src/control/Control.Menubar.js:16
-#: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:105
-msgid "Undo"
-msgstr "Ångra"
+#: evol.colorpicker.strings.js:3
+msgid "Standard Colors"
+msgstr "Standardfärger"
 
-#: dist/toolbar/toolbar.js:21
-#: src/control/Control.Menubar.js:17
-#: src/control/Control.Menubar.js:59
-#: src/control/Control.Menubar.js:106
-msgid "Redo"
-msgstr "Gör om"
+#: evol.colorpicker.strings.js:4
+msgid "Web Colors"
+msgstr "Webbfärger"
 
-#: dist/toolbar/toolbar.js:27
-msgid "Bold"
-msgstr "Fet"
+#: evol.colorpicker.strings.js:5
+msgid "Back to Palette"
+msgstr "Tillbaka till paletten"
 
-#: dist/toolbar/toolbar.js:28
-msgid "Italic"
-msgstr "Kursiv"
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Historik"
 
-#: dist/toolbar/toolbar.js:29
-msgid "Underline"
-msgstr "Understruken"
-
-#: dist/toolbar/toolbar.js:30
-msgid "Strikeout"
-msgstr "Genomstruken"
-
-#: dist/toolbar/toolbar.js:33
-msgid "Font color"
-msgstr "Teckenfärg"
-
-#: dist/toolbar/toolbar.js:35
-msgid "Highlighting"
-msgstr "Färgmarkering"
-
-#: dist/toolbar/toolbar.js:37
-msgid "Align left"
-msgstr "Vänsterjustera"
-
-#: dist/toolbar/toolbar.js:38
-msgid "Center horizontally"
-msgstr "Centrera i sidled"
-
-#: dist/toolbar/toolbar.js:39
-msgid "Align right"
-msgstr "Högerjustera"
-
-#: dist/toolbar/toolbar.js:40
-msgid "Justified"
-msgstr "Marginaljustera"
-
-#: dist/toolbar/toolbar.js:42
-msgid "Bullets on/off"
-msgstr "Punktuppställning på/av"
-
-#: dist/toolbar/toolbar.js:43
-msgid "Numbering on/off"
-msgstr "Numrering på/av"
-
-#: dist/toolbar/toolbar.js:45
-msgid "Increase indent"
-msgstr "Öka indrag"
-
-#: dist/toolbar/toolbar.js:46
-msgid "Decrease indent"
-msgstr "Minska indragning"
-
-#: dist/toolbar/toolbar.js:48
-msgid "Insert comment"
-msgstr "Infoga kommentar"
-
-#: dist/toolbar/toolbar.js:49
-msgid "Insert graphic"
-msgstr "Infoga bild"
-
-#: dist/toolbar/toolbar.js:51
-msgid "Insert table"
-msgstr "Infoga tabell"
-
-#: dist/toolbar/toolbar.js:53
-msgid "Help"
-msgstr "Hjälp"
-
-#: dist/toolbar/toolbar.js:55
-msgid "More"
-msgstr "Fler"
-
-#: dist/toolbar/toolbar.js:56
-msgid "Close document"
-msgstr "Stäng dokument"
-
-#: dist/toolbar/toolbar.js:78
-msgid "Sum"
-msgstr "Summa"
-
-#: dist/toolbar/toolbar.js:79
-msgid "Function"
-msgstr "Funktion"
-
-#: dist/toolbar/toolbar.js:80
-msgid "Cancel"
-msgstr "Avbryt"
-
-#: dist/toolbar/toolbar.js:81
-msgid "Accept"
-msgstr "Acceptera"
-
-#: dist/toolbar/toolbar.js:92
-msgid "First sheet"
-msgstr "Första bladet"
-
-#: dist/toolbar/toolbar.js:93
-msgid "Previous sheet"
-msgstr "Föregående blad"
-
-#: dist/toolbar/toolbar.js:94
-msgid "Next sheet"
-msgstr "Nästa blad"
-
-#: dist/toolbar/toolbar.js:95
-msgid "Last sheet"
-msgstr "Sista bladet"
-
-#: dist/toolbar/toolbar.js:105
-#: src/control/Control.Menubar.js:93
-msgid "Fullscreen presentation"
-msgstr "Fullskärmspresentation"
-
-#: dist/toolbar/toolbar.js:107
-msgid "Insert slide"
-msgstr "Infoga bild"
-
-#: dist/toolbar/toolbar.js:108
-#: src/control/Control.Menubar.js:90
-msgid "Duplicate slide"
-msgstr "Duplicera bild"
-
-#: dist/toolbar/toolbar.js:109
-#: src/control/Control.Menubar.js:91
-msgid "Delete slide"
-msgstr "Ta bort sida"
-
-#: dist/toolbar/toolbar.js:121
-msgid "Search:"
-msgstr "Sök:"
-
-#: dist/toolbar/toolbar.js:126
-msgid "Search backwards"
-msgstr "Sök bakåt"
+#: evol.colorpicker.strings.js:7
+msgid "No history yet."
+msgstr "Det finns ännu ingen historik."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
 msgstr "Kopiera hyperlänk"
 
-#: dist/toolbar/toolbar.js:127
-msgid "Search forward"
-msgstr "Sök framåt"
-
 #: unocommands.js:2
 msgid "Down One Level"
 msgstr "En nivå nedåt"
 
-#: dist/toolbar/toolbar.js:128
-msgid "Cancel the search"
-msgstr "Avbryt sökning"
-
 #: unocommands.js:3
 msgid "Up One Level"
 msgstr "Upp en nivå"
-
-#: dist/toolbar/toolbar.js:133
-#: dist/toolbar/toolbar.js:849
-msgid "Take edit lock (others can only view)"
-msgstr "Aktivera redigeringslås (andra kan endast visa)"
 
 #: unocommands.js:4
 msgid "Edit Comment"
@@ -207,56 +58,21 @@ msgstr "Redigera kommentar"
 msgid "Insert Comment"
 msgstr "Infoga kommentar"
 
-#: dist/toolbar/toolbar.js:134
-#: dist/toolbar/toolbar.js:850
-#: dist/toolbar/toolbar.js:943
-msgid "VIEWING"
-msgstr "VISAR"
-
-#: dist/toolbar/toolbar.js:136
-msgid "Previous page"
-msgstr "Föregående sida"
-
 #: unocommands.js:6
 msgid "Merge"
 msgstr "Sammanfoga"
-
-#: dist/toolbar/toolbar.js:137
-msgid "Next page"
-msgstr "Nästa sida"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
 msgstr "Sammanfoga celler..."
 
-#: dist/toolbar/toolbar.js:139
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:73
-#: src/control/Control.Menubar.js:123
-msgid "Reset zoom"
-msgstr "Återställ zoomning"
-
 #: unocommands.js:8
 msgid "Bring Forward"
 msgstr "Längre fram"
 
-#: dist/toolbar/toolbar.js:140
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:72
-#: src/control/Control.Menubar.js:122
-msgid "Zoom out"
-msgstr "Zooma ut"
-
 #: unocommands.js:9
 msgid "Send Backward"
 msgstr "Längre bak"
-
-#: dist/toolbar/toolbar.js:142
-#: src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:121
-msgid "Zoom in"
-msgstr "Zooma in"
 
 #: unocommands.js:10
 msgid "Paste Special"
@@ -266,10 +82,6 @@ msgstr "Klistra in special"
 msgid "Unformatted Text"
 msgstr "Oformaterad text"
 
-#: dist/toolbar/toolbar.js:160
-msgid "You are viewing now."
-msgstr "Du visar nu."
-
 #: dist/errormessages.js:1
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
@@ -277,14 +89,6 @@ msgid ""
 msgstr ""
 "Felaktig WOPISrc, använd: WOPISrc=korrekt formaterad URI eller file_path, "
 "använd: file_path=/sökväg/till/dokument/"
-
-#: dist/toolbar/toolbar.js:160
-msgid "Click here to take edit."
-msgstr "Klicka här för att börja redigera."
-
-#: dist/toolbar/toolbar.js:261
-msgid "Are you sure you want to delete this page?"
-msgstr "Är du säker på att du vill ta bort denna sida?"
 
 #: dist/errormessages.js:2
 msgid ""
@@ -294,84 +98,400 @@ msgstr ""
 "Värdens URL är tom. Sannolikt är loolwsd-servern felkonfigurerad. Vänligen "
 "kontakta administratören."
 
-#: dist/toolbar/toolbar.js:386
-#: dist/toolbar/toolbar.js:744
+#: dist/toolbar/toolbar.js:144
+msgid "Are you sure you want to delete this page?"
+msgstr "Är du säker på att du vill ta bort denna sida?"
+
+#: dist/toolbar/toolbar.js:336
+#: src/admin/AdminStrings.js:20
+#: src/control/Control.Menubar.js:9
+#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:93
+msgid "Save"
+msgstr "Spara"
+
+#: dist/toolbar/toolbar.js:338
+#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:100
+msgid "Undo"
+msgstr "Ångra"
+
+#: dist/toolbar/toolbar.js:339
+#: src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:101
+msgid "Redo"
+msgstr "Gör om"
+
+#: dist/toolbar/toolbar.js:345
+msgid "Bold"
+msgstr "Fet"
+
+#: dist/toolbar/toolbar.js:346
+msgid "Italic"
+msgstr "Kursiv"
+
+#: dist/toolbar/toolbar.js:347
+msgid "Underline"
+msgstr "Understruken"
+
+#: dist/toolbar/toolbar.js:348
+msgid "Strikeout"
+msgstr "Genomstruken"
+
+#: dist/toolbar/toolbar.js:351
+msgid "Font color"
+msgstr "Teckenfärg"
+
+#: dist/toolbar/toolbar.js:353
+msgid "Highlighting"
+msgstr "Färgmarkering"
+
+#: dist/toolbar/toolbar.js:355
+msgid "Align left"
+msgstr "Vänsterjustera"
+
+#: dist/toolbar/toolbar.js:356
+msgid "Center horizontally"
+msgstr "Centrera i sidled"
+
+#: dist/toolbar/toolbar.js:357
+msgid "Align right"
+msgstr "Högerjustera"
+
+#: dist/toolbar/toolbar.js:358
+msgid "Justified"
+msgstr "Marginaljustera"
+
+#: dist/toolbar/toolbar.js:360
+msgid "Bullets on/off"
+msgstr "Punktuppställning på/av"
+
+#: dist/toolbar/toolbar.js:361
+msgid "Numbering on/off"
+msgstr "Numrering på/av"
+
+#: dist/toolbar/toolbar.js:363
+msgid "Increase indent"
+msgstr "Öka indrag"
+
+#: dist/toolbar/toolbar.js:364
+msgid "Decrease indent"
+msgstr "Minska indragning"
+
+#: dist/toolbar/toolbar.js:367
+msgid "Insert table"
+msgstr "Infoga tabell"
+
+#: dist/toolbar/toolbar.js:368
+msgid "Insert comment"
+msgstr "Infoga kommentar"
+
+#: dist/toolbar/toolbar.js:369
+msgid "Insert graphic"
+msgstr "Infoga bild"
+
+#: dist/toolbar/toolbar.js:371
+msgid "Help"
+msgstr "Hjälp"
+
+#: dist/toolbar/toolbar.js:373
+msgid "More"
+msgstr "Fler"
+
+#: dist/toolbar/toolbar.js:374
+msgid "Close document"
+msgstr "Stäng dokument"
+
+#: dist/toolbar/toolbar.js:404
+msgid "Sum"
+msgstr "Summa"
+
+#: dist/toolbar/toolbar.js:405
+msgid "Function"
+msgstr "Funktion"
+
+#: dist/toolbar/toolbar.js:406
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: dist/toolbar/toolbar.js:407
+msgid "Accept"
+msgstr "Acceptera"
+
+#: dist/toolbar/toolbar.js:418
+msgid "First sheet"
+msgstr "Första bladet"
+
+#: dist/toolbar/toolbar.js:419
+msgid "Previous sheet"
+msgstr "Föregående blad"
+
+#: dist/toolbar/toolbar.js:420
+msgid "Next sheet"
+msgstr "Nästa blad"
+
+#: dist/toolbar/toolbar.js:421
+msgid "Last sheet"
+msgstr "Sista bladet"
+
+#: dist/toolbar/toolbar.js:431
+#: src/control/Control.Menubar.js:88
+msgid "Fullscreen presentation"
+msgstr "Fullskärmspresentation"
+
+#: dist/toolbar/toolbar.js:433
+msgid "Insert slide"
+msgstr "Infoga bild"
+
+#: dist/toolbar/toolbar.js:434
+#: src/control/Control.Menubar.js:85
+msgid "Duplicate slide"
+msgstr "Duplicera bild"
+
+#: dist/toolbar/toolbar.js:435
+#: src/control/Control.Menubar.js:86
+msgid "Delete slide"
+msgstr "Ta bort sida"
+
+#: dist/toolbar/toolbar.js:447
+msgid "Search:"
+msgstr "Sök:"
+
+#: dist/toolbar/toolbar.js:452
+msgid "Search backwards"
+msgstr "Sök bakåt"
+
+#: dist/toolbar/toolbar.js:453
+msgid "Search forward"
+msgstr "Sök framåt"
+
+#: dist/toolbar/toolbar.js:454
+msgid "Cancel the search"
+msgstr "Avbryt sökning"
+
+#: dist/toolbar/toolbar.js:459
+#: dist/toolbar/toolbar.js:1010
+msgid "Take edit lock (others can only view)"
+msgstr "Aktivera redigeringslås (andra kan endast visa)"
+
+#: dist/toolbar/toolbar.js:459
+#: dist/toolbar/toolbar.js:1010
+msgid "VIEWING"
+msgstr "VISAR"
+
+#: dist/toolbar/toolbar.js:461
+msgid "Previous page"
+msgstr "Föregående sida"
+
+#: dist/toolbar/toolbar.js:462
+msgid "Next page"
+msgstr "Nästa sida"
+
+#: dist/toolbar/toolbar.js:464
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:118
+msgid "Reset zoom"
+msgstr "Återställ zoomning"
+
+#: dist/toolbar/toolbar.js:465
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:72
+#: src/control/Control.Menubar.js:117
+msgid "Zoom out"
+msgstr "Zooma ut"
+
+#: dist/toolbar/toolbar.js:467
+#: src/control/Control.Menubar.js:30
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:116
+msgid "Zoom in"
+msgstr "Zooma in"
+
+#: dist/toolbar/toolbar.js:485
+msgid "You are viewing now."
+msgstr "Du visar nu."
+
+#: dist/toolbar/toolbar.js:485
+msgid "Click here to take edit."
+msgstr "Klicka här för att börja redigera."
+
+#: dist/toolbar/toolbar.js:549
+#: dist/toolbar/toolbar.js:908
 msgid "Size"
 msgstr "Storlek"
 
-#: dist/toolbar/toolbar.js:637
+#: dist/toolbar/toolbar.js:779
 msgid "Document saved"
 msgstr "Dokument sparat"
 
-#: dist/toolbar/toolbar.js:727
+#: dist/toolbar/toolbar.js:891
 msgid "Style"
 msgstr "Format"
 
-#: dist/toolbar/toolbar.js:739
+#: dist/toolbar/toolbar.js:903
 msgid "Font"
 msgstr "Teckensnitt"
 
-#: dist/toolbar/toolbar.js:763
+#: dist/toolbar/toolbar.js:927
 msgid "Previous slide"
 msgstr "Föregående bild"
 
-#: dist/toolbar/toolbar.js:764
+#: dist/toolbar/toolbar.js:928
 msgid "Next slide"
 msgstr "Nästa bild"
 
-#: dist/toolbar/toolbar.js:843
+#: dist/toolbar/toolbar.js:1006
 msgid "You are editing (others can only view)"
 msgstr "Du redigerar (andra kan endast visa)"
 
-#: dist/toolbar/toolbar.js:845
+#: dist/toolbar/toolbar.js:1006
 msgid "EDITING"
 msgstr "REDIGERAR"
 
-#: src/control/Control.Tabs.js:39
-msgid "Insert sheet before this"
-msgstr "Infoga blad före detta"
+#: dist/toolbar/toolbar.js:1139
+msgid "Layout"
+msgstr "Layout"
 
-#: src/control/Control.Tabs.js:40
-msgid "Insert sheet after this"
-msgstr "Infoga blad efter detta"
+#: src/admin/AdminSocketBase.js:44
+msgid "Connection error"
+msgstr "Anslutningsfel"
 
-#: src/control/Control.Tabs.js:41
-msgid "Delete sheet"
-msgstr "Ta bort blad"
+#: src/admin/AdminSocketOverview.js:58
+msgid "Are you sure you want to terminate this session?"
+msgstr "Är du säker på att du vill avsluta sessionen?"
 
-#: src/control/Control.Tabs.js:45
-msgid "Are you sure you want to delete this sheet?"
-msgstr "Är du säker på att du vill ta bort detta blad?"
+#: src/admin/AdminStrings.js:4
+msgid "Admin console"
+msgstr "Administratörskonsoll"
 
-#: src/control/Control.Tabs.js:54
-msgid "Rename sheet"
-msgstr "Döp om blad"
+#: src/admin/AdminStrings.js:5
+msgid "Toggle navigation"
+msgstr ""
 
-#: src/control/Control.Tabs.js:58
-msgid "Enter new sheet name"
-msgstr "Ange nytt bladnamn"
+#: src/admin/AdminStrings.js:6
+msgid "Settings"
+msgstr "Inställningar"
+
+#: src/admin/AdminStrings.js:7
+msgid "Overview"
+msgstr "Översikt"
+
+#: src/admin/AdminStrings.js:8
+msgid "(current)"
+msgstr "(aktuell)"
+
+#: src/admin/AdminStrings.js:9
+msgid "Analytics"
+msgstr "Analys"
+
+#: src/admin/AdminStrings.js:10
+msgid "Dashboard"
+msgstr "Instrumentpanel"
+
+#: src/admin/AdminStrings.js:11
+msgid "Users online"
+msgstr "Anslutna användare"
+
+#: src/admin/AdminStrings.js:12
+msgid "Documents opened"
+msgstr "Öppna dokument"
+
+#: src/admin/AdminStrings.js:13
+msgid "Memory consumed"
+msgstr "Använt minne"
+
+#: src/admin/AdminStrings.js:14
+msgid "PID"
+msgstr "PID"
+
+#: src/admin/AdminStrings.js:15
+msgid "Document"
+msgstr "Dokument"
+
+#: src/admin/AdminStrings.js:16
+msgid "Number of views"
+msgstr "Antal visningar"
+
+#: src/admin/AdminStrings.js:17
+msgid "Elapsed time"
+msgstr ""
+
+#: src/admin/AdminStrings.js:18
+msgid "Kill"
+msgstr "Döda"
+
+#: src/admin/AdminStrings.js:19
+msgid "Graphs"
+msgstr "Diagram"
+
+#: src/admin/AdminStrings.js:21
+msgid "Cache size of memory statistics"
+msgstr "Cachestorlek för minnesstatistik"
+
+#: src/admin/AdminStrings.js:22
+msgid "Time interval of memory statistics (in ms)"
+msgstr "Tidsintervall för minnesstatistik (i ms)"
+
+#: src/admin/AdminStrings.js:23
+msgid "Cache size of CPU statistics"
+msgstr "Cachestorlek för CPU-statistik"
+
+#: src/admin/AdminStrings.js:24
+msgid "Time interval of CPU statistics (in ms)"
+msgstr "Tidsintervall för CPU-statistik"
+
+#: src/admin/Util.js:13
+msgid "kB"
+msgstr "kB"
+
+#: src/admin/Util.js:13
+msgid "MB"
+msgstr "MB"
+
+#: src/admin/Util.js:13
+msgid "GB"
+msgstr "GB"
+
+#: src/admin/Util.js:13
+msgid "TB"
+msgstr "TB"
+
+#: src/admin/Util.js:41
+msgid " hrs"
+msgstr " timmar"
+
+#: src/admin/Util.js:43
+msgid " mins"
+msgstr " minuter"
+
+#: src/admin/Util.js:45
+msgid " s"
+msgstr " sekunder"
 
 #: src/control/Control.Menubar.js:9
 #: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:98
+#: src/control/Control.Menubar.js:93
 msgid "File"
 msgstr "Fil"
 
 #: src/control/Control.Menubar.js:10
 #: src/control/Control.Menubar.js:52
-#: src/control/Control.Menubar.js:99
+#: src/control/Control.Menubar.js:94
 msgid "Print"
 msgstr "Skriv ut"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:95
 msgid "Download as"
 msgstr "Ladda ner som"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:95
 msgid "PDF Document (.pdf)"
 msgstr "PDF-dokument (.pdf)"
 
@@ -389,31 +509,31 @@ msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:16
 #: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:105
+#: src/control/Control.Menubar.js:100
 msgid "Edit"
 msgstr "Redigera"
 
 #: src/control/Control.Menubar.js:19
 #: src/control/Control.Menubar.js:61
-#: src/control/Control.Menubar.js:108
+#: src/control/Control.Menubar.js:103
 msgid "Cut"
 msgstr "Klipp ut"
 
 #: src/control/Control.Menubar.js:20
 #: src/control/Control.Menubar.js:62
-#: src/control/Control.Menubar.js:109
+#: src/control/Control.Menubar.js:104
 msgid "Copy"
 msgstr "Kopiera"
 
 #: src/control/Control.Menubar.js:21
 #: src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:110
+#: src/control/Control.Menubar.js:105
 msgid "Paste"
 msgstr "Klistra in"
 
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:65
-#: src/control/Control.Menubar.js:112
+#: src/control/Control.Menubar.js:107
 msgid "Select all"
 msgstr "Markera allt"
 
@@ -421,13 +541,13 @@ msgstr "Markera allt"
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.Menubar.js:75
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:109
 msgid "Insert"
 msgstr "Infoga"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:109
 msgid "Image"
 msgstr "Bild"
 
@@ -437,13 +557,13 @@ msgstr "Kommentar"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:114
 msgid "View"
 msgstr "Visa"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:114
 msgid "Full screen"
 msgstr "Helskärm"
 
@@ -489,35 +609,29 @@ msgstr "Kolumner"
 
 #: src/control/Control.Menubar.js:41
 #: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:82
-#: src/control/Control.Menubar.js:83
 msgid "Table"
 msgstr "Tabell"
 
 #: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:83
 msgid "Select"
 msgstr "Välj"
 
 #: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:84
-#: src/control/Control.Menubar.js:116
+#: src/control/Control.Menubar.js:111
 msgid "Row"
 msgstr "Rad"
 
 #: src/control/Control.Menubar.js:44
-#: src/control/Control.Menubar.js:85
-#: src/control/Control.Menubar.js:117
+#: src/control/Control.Menubar.js:112
 msgid "Column"
 msgstr "Kolumn"
 
 #: src/control/Control.Menubar.js:45
-#: src/control/Control.Menubar.js:86
 msgid "Cell"
 msgstr "Cell"
 
 #: src/control/Control.Menubar.js:46
-#: src/control/Control.Menubar.js:87
+#: src/control/Control.Menubar.js:82
 msgid "Merge cells"
 msgstr "Sammanfoga celler"
 
@@ -533,49 +647,73 @@ msgstr "Microsoft PowerPoint 2003 (.ppt)"
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:84
 msgid "Slide"
 msgstr "Bild"
 
-#: src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:84
 msgid "New slide"
 msgstr "Ny bild"
 
-#: src/control/Control.Menubar.js:101
+#: src/control/Control.Menubar.js:96
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF-kalkylblad (.ods)"
 
-#: src/control/Control.Menubar.js:102
+#: src/control/Control.Menubar.js:97
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:103
+#: src/control/Control.Menubar.js:98
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:125
+#: src/control/Control.Menubar.js:120
 msgid "Cells"
 msgstr "Celler"
 
-#: src/control/Control.Menubar.js:125
+#: src/control/Control.Menubar.js:120
 msgid "Insert row"
 msgstr "Infoga rad"
 
-#: src/control/Control.Menubar.js:126
+#: src/control/Control.Menubar.js:121
 msgid "Insert column"
 msgstr "Infoga kolumn"
 
-#: src/control/Control.Menubar.js:128
+#: src/control/Control.Menubar.js:123
 msgid "Delete row"
 msgstr "Ta bort rad"
 
-#: src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:124
 msgid "Delete column"
 msgstr "Ta bort kolumn"
 
-#: src/control/Control.Menubar.js:276
+#: src/control/Control.Menubar.js:282
 msgid "Are you sure you want to delete this slide?"
 msgstr "Är du säker på att du vill ta bort presentationsbilden?"
+
+#: src/control/Control.Tabs.js:39
+msgid "Insert sheet before this"
+msgstr "Infoga blad före detta"
+
+#: src/control/Control.Tabs.js:40
+msgid "Insert sheet after this"
+msgstr "Infoga blad efter detta"
+
+#: src/control/Control.Tabs.js:41
+msgid "Delete sheet"
+msgstr "Ta bort blad"
+
+#: src/control/Control.Tabs.js:45
+msgid "Are you sure you want to delete this sheet?"
+msgstr "Är du säker på att du vill ta bort detta blad?"
+
+#: src/control/Control.Tabs.js:54
+msgid "Rename sheet"
+msgstr "Döp om blad"
+
+#: src/control/Control.Tabs.js:58
+msgid "Enter new sheet name"
+msgstr "Ange nytt bladnamn"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -611,3 +749,15 @@ msgstr "Kan inte ansluta till ditt dokument. Vänligen försök igen."
 msgid "We are sorry, this is an unexpected connection error. Please try again."
 msgstr ""
 "Vi ber om ursäkt, detta är ett oväntat anslutningsfel. Vänligen försök igen."
+
+#: src/map/Map.js:116
+msgid "Initializing..."
+msgstr "Initierar..."
+
+#: src/map/Map.js:802
+msgid "Saving..."
+msgstr "Sparar..."
+
+#: src/map/Map.js:805
+msgid "Loading..."
+msgstr "Läser in..."

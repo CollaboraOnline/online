@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 20:48+0000\n"
+"POT-Creation-Date: 2016-06-12 14:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,597 +12,752 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
-"X-Pootle-Revision: 435224\n"
+"X-Pootle-Revision: 458679\n"
 
-#: dist/toolbar/toolbar.js:18
-#: src/control/Control.Menubar.js:9
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:98
-msgid "Save"
+#: evol.colorpicker.strings.js:2
+msgid "Theme Colors"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:20
-#: src/control/Control.Menubar.js:16
-#: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:105
-msgid "Undo"
+#: evol.colorpicker.strings.js:3
+msgid "Standard Colors"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:21
-#: src/control/Control.Menubar.js:17
-#: src/control/Control.Menubar.js:59
-#: src/control/Control.Menubar.js:106
-msgid "Redo"
+#: evol.colorpicker.strings.js:4
+msgid "Web Colors"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:27
-msgid "Bold"
+#: evol.colorpicker.strings.js:5
+msgid "Back to Palette"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:28
-msgid "Italic"
+#: evol.colorpicker.strings.js:6
+msgid "History"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:29
-msgid "Underline"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:30
-msgid "Strikeout"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:33
-msgid "Font color"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:35
-msgid "Highlighting"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:37
-msgid "Align left"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:38
-msgid "Center horizontally"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:39
-msgid "Align right"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:40
-msgid "Justified"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:42
-msgid "Bullets on/off"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:43
-msgid "Numbering on/off"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:45
-msgid "Increase indent"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:46
-msgid "Decrease indent"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:48
-msgid "Insert comment"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:49
-msgid "Insert graphic"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:51
-msgid "Insert table"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:53
-msgid "Help"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:55
-msgid "More"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:56
-msgid "Close document"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:78
-msgid "Sum"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:79
-msgid "Function"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:80
-msgid "Cancel"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:81
-msgid "Accept"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:92
-msgid "First sheet"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:93
-msgid "Previous sheet"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:94
-msgid "Next sheet"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:95
-msgid "Last sheet"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:105
-#: src/control/Control.Menubar.js:93
-msgid "Fullscreen presentation"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:107
-msgid "Insert slide"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:108
-#: src/control/Control.Menubar.js:90
-msgid "Duplicate slide"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:109
-#: src/control/Control.Menubar.js:91
-msgid "Delete slide"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:121
-msgid "Search:"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:126
-msgid "Search backwards"
+#: evol.colorpicker.strings.js:7
+msgid "No history yet."
 msgstr ""
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:127
-msgid "Search forward"
-msgstr ""
+msgstr "Skopírovať odkaz"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:128
-msgid "Cancel the search"
-msgstr ""
+msgstr "O úroveň nižšie"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:133
-#: dist/toolbar/toolbar.js:849
-msgid "Take edit lock (others can only view)"
-msgstr ""
+msgstr "O úroveň vyššie"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Upraviť poznámku"
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:134
-#: dist/toolbar/toolbar.js:850
-#: dist/toolbar/toolbar.js:943
-msgid "VIEWING"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:136
-msgid "Previous page"
-msgstr ""
+msgstr "Vložiť poznámku"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:137
-msgid "Next page"
-msgstr ""
+msgstr "Zlúčiť"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
-
-#: dist/toolbar/toolbar.js:139
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:73
-#: src/control/Control.Menubar.js:123
-msgid "Reset zoom"
-msgstr ""
+msgstr "Zlúčiť bunky..."
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:140
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:72
-#: src/control/Control.Menubar.js:122
-msgid "Zoom out"
-msgstr ""
+msgstr "Preniesť do popredia"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:142
-#: src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:121
-msgid "Zoom in"
-msgstr ""
+msgstr "Preniesť do pozadia"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "Vložiť inak"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:160
-msgid "You are viewing now."
-msgstr ""
+msgstr "Neformátovaný text"
 
 #: dist/errormessages.js:1
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
 msgstr ""
-
-#: dist/toolbar/toolbar.js:160
-msgid "Click here to take edit."
-msgstr ""
-
-#: dist/toolbar/toolbar.js:261
-msgid "Are you sure you want to delete this page?"
-msgstr ""
+"Nesprávne WOPISrc, použitie: WOPISrc=platné URI alebo cesta, použitie: "
+"cesta=/cesta/k/dokumentu/"
 
 #: dist/errormessages.js:2
 msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
+"URL servera nie je špecifikovaný. Loowsd server je pravdepodobne zle "
+"nakonfigurovaný, kontaktujte prosím administrátora."
 
-#: dist/toolbar/toolbar.js:386
-#: dist/toolbar/toolbar.js:744
+#: dist/toolbar/toolbar.js:144
+msgid "Are you sure you want to delete this page?"
+msgstr "Naozaj chcete túto stranu odstrániť?"
+
+#: dist/toolbar/toolbar.js:336
+#: src/admin/AdminStrings.js:20
+#: src/control/Control.Menubar.js:9
+#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:93
+msgid "Save"
+msgstr "Uložiť"
+
+#: dist/toolbar/toolbar.js:338
+#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:100
+msgid "Undo"
+msgstr "Vrátiť"
+
+#: dist/toolbar/toolbar.js:339
+#: src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:101
+msgid "Redo"
+msgstr "Opakovať vrátené"
+
+#: dist/toolbar/toolbar.js:345
+msgid "Bold"
+msgstr "Tučné"
+
+#: dist/toolbar/toolbar.js:346
+msgid "Italic"
+msgstr "Šikmé"
+
+#: dist/toolbar/toolbar.js:347
+msgid "Underline"
+msgstr "Podčiarknuté"
+
+#: dist/toolbar/toolbar.js:348
+msgid "Strikeout"
+msgstr "Prečiarknuté"
+
+#: dist/toolbar/toolbar.js:351
+msgid "Font color"
+msgstr "Farba písma"
+
+#: dist/toolbar/toolbar.js:353
+msgid "Highlighting"
+msgstr "Zvýraznenie"
+
+#: dist/toolbar/toolbar.js:355
+msgid "Align left"
+msgstr "Zarovnať doľava"
+
+#: dist/toolbar/toolbar.js:356
+msgid "Center horizontally"
+msgstr "Vycentrovať horizontálne"
+
+#: dist/toolbar/toolbar.js:357
+msgid "Align right"
+msgstr "Zarovnať doprava"
+
+#: dist/toolbar/toolbar.js:358
+msgid "Justified"
+msgstr "Zarovnať do bloku"
+
+#: dist/toolbar/toolbar.js:360
+msgid "Bullets on/off"
+msgstr "Odrážky zap./vyp."
+
+#: dist/toolbar/toolbar.js:361
+msgid "Numbering on/off"
+msgstr "Číslovanie zap./vyp."
+
+#: dist/toolbar/toolbar.js:363
+msgid "Increase indent"
+msgstr "Zväčšiť odsadenie"
+
+#: dist/toolbar/toolbar.js:364
+msgid "Decrease indent"
+msgstr "Zmenšiť odsadenie"
+
+#: dist/toolbar/toolbar.js:367
+msgid "Insert table"
+msgstr "Vložiť tabuľku"
+
+#: dist/toolbar/toolbar.js:368
+msgid "Insert comment"
+msgstr "Vložiť poznámku"
+
+#: dist/toolbar/toolbar.js:369
+msgid "Insert graphic"
+msgstr "Vložiť grafiku"
+
+#: dist/toolbar/toolbar.js:371
+msgid "Help"
+msgstr "Pomocník"
+
+#: dist/toolbar/toolbar.js:373
+msgid "More"
+msgstr "Viac"
+
+#: dist/toolbar/toolbar.js:374
+msgid "Close document"
+msgstr "Zavrieť dokument"
+
+#: dist/toolbar/toolbar.js:404
+msgid "Sum"
+msgstr "Súčet"
+
+#: dist/toolbar/toolbar.js:405
+msgid "Function"
+msgstr "Funkcia"
+
+#: dist/toolbar/toolbar.js:406
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: dist/toolbar/toolbar.js:407
+msgid "Accept"
+msgstr "Prijať"
+
+#: dist/toolbar/toolbar.js:418
+msgid "First sheet"
+msgstr "Prvý hárok"
+
+#: dist/toolbar/toolbar.js:419
+msgid "Previous sheet"
+msgstr "Predchádzajúci hárok"
+
+#: dist/toolbar/toolbar.js:420
+msgid "Next sheet"
+msgstr "Nasledujúci hárok"
+
+#: dist/toolbar/toolbar.js:421
+msgid "Last sheet"
+msgstr "Posledný hárok"
+
+#: dist/toolbar/toolbar.js:431
+#: src/control/Control.Menubar.js:88
+msgid "Fullscreen presentation"
+msgstr "Prezentácia na celú obrazovku"
+
+#: dist/toolbar/toolbar.js:433
+msgid "Insert slide"
+msgstr "Vložiť snímku"
+
+#: dist/toolbar/toolbar.js:434
+#: src/control/Control.Menubar.js:85
+msgid "Duplicate slide"
+msgstr "Duplikovať snímku"
+
+#: dist/toolbar/toolbar.js:435
+#: src/control/Control.Menubar.js:86
+msgid "Delete slide"
+msgstr "Odstrániť snímku"
+
+#: dist/toolbar/toolbar.js:447
+msgid "Search:"
+msgstr "Vyhľadať:"
+
+#: dist/toolbar/toolbar.js:452
+msgid "Search backwards"
+msgstr "Vyhľadať pospiatky"
+
+#: dist/toolbar/toolbar.js:453
+msgid "Search forward"
+msgstr "Vyhľadať dopredu"
+
+#: dist/toolbar/toolbar.js:454
+msgid "Cancel the search"
+msgstr "Zrušiť vyhľadávanie"
+
+#: dist/toolbar/toolbar.js:459
+#: dist/toolbar/toolbar.js:1010
+msgid "Take edit lock (others can only view)"
+msgstr "Uzamknúť úpravu (ostatní môžu len zobraziť)"
+
+#: dist/toolbar/toolbar.js:459
+#: dist/toolbar/toolbar.js:1010
+msgid "VIEWING"
+msgstr "PREZERANIE"
+
+#: dist/toolbar/toolbar.js:461
+msgid "Previous page"
+msgstr "Predchádzajúca strana"
+
+#: dist/toolbar/toolbar.js:462
+msgid "Next page"
+msgstr "Nasledujúca strana"
+
+#: dist/toolbar/toolbar.js:464
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:118
+msgid "Reset zoom"
+msgstr "Resetovať zväčšenie"
+
+#: dist/toolbar/toolbar.js:465
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:72
+#: src/control/Control.Menubar.js:117
+msgid "Zoom out"
+msgstr "Zmenšiť"
+
+#: dist/toolbar/toolbar.js:467
+#: src/control/Control.Menubar.js:30
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:116
+msgid "Zoom in"
+msgstr "Zväčšiť"
+
+#: dist/toolbar/toolbar.js:485
+msgid "You are viewing now."
+msgstr "Režim zobrazenia"
+
+#: dist/toolbar/toolbar.js:485
+msgid "Click here to take edit."
+msgstr "Kliknutím prejsť do režimu úpravy."
+
+#: dist/toolbar/toolbar.js:549
+#: dist/toolbar/toolbar.js:908
 msgid "Size"
-msgstr ""
+msgstr "Veľkosť"
 
-#: dist/toolbar/toolbar.js:637
+#: dist/toolbar/toolbar.js:779
 msgid "Document saved"
-msgstr ""
+msgstr "Dokument uložený"
 
-#: dist/toolbar/toolbar.js:727
+#: dist/toolbar/toolbar.js:891
 msgid "Style"
-msgstr ""
+msgstr "Štýl"
 
-#: dist/toolbar/toolbar.js:739
+#: dist/toolbar/toolbar.js:903
 msgid "Font"
-msgstr ""
+msgstr "Písmo"
 
-#: dist/toolbar/toolbar.js:763
+#: dist/toolbar/toolbar.js:927
 msgid "Previous slide"
-msgstr ""
+msgstr "Predchádzajúca snímka"
 
-#: dist/toolbar/toolbar.js:764
+#: dist/toolbar/toolbar.js:928
 msgid "Next slide"
-msgstr ""
+msgstr "Nasledujúca snímka"
 
-#: dist/toolbar/toolbar.js:843
+#: dist/toolbar/toolbar.js:1006
 msgid "You are editing (others can only view)"
-msgstr ""
+msgstr "Režim úpravy (ostatní môžu len zobraziť)"
 
-#: dist/toolbar/toolbar.js:845
+#: dist/toolbar/toolbar.js:1006
 msgid "EDITING"
+msgstr "UPRAVOVANIE"
+
+#: dist/toolbar/toolbar.js:1139
+msgid "Layout"
 msgstr ""
 
-#: src/control/Control.Tabs.js:39
-msgid "Insert sheet before this"
+#: src/admin/AdminSocketBase.js:44
+msgid "Connection error"
 msgstr ""
 
-#: src/control/Control.Tabs.js:40
-msgid "Insert sheet after this"
+#: src/admin/AdminSocketOverview.js:58
+#, fuzzy
+msgid "Are you sure you want to terminate this session?"
+msgstr "Naozaj chcete túto snímku odstrániť?"
+
+#: src/admin/AdminStrings.js:4
+msgid "Admin console"
 msgstr ""
 
-#: src/control/Control.Tabs.js:41
-msgid "Delete sheet"
+#: src/admin/AdminStrings.js:5
+msgid "Toggle navigation"
 msgstr ""
 
-#: src/control/Control.Tabs.js:45
-msgid "Are you sure you want to delete this sheet?"
+#: src/admin/AdminStrings.js:6
+msgid "Settings"
 msgstr ""
 
-#: src/control/Control.Tabs.js:54
-msgid "Rename sheet"
+#: src/admin/AdminStrings.js:7
+msgid "Overview"
 msgstr ""
 
-#: src/control/Control.Tabs.js:58
-msgid "Enter new sheet name"
+#: src/admin/AdminStrings.js:8
+msgid "(current)"
+msgstr ""
+
+#: src/admin/AdminStrings.js:9
+msgid "Analytics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:10
+msgid "Dashboard"
+msgstr ""
+
+#: src/admin/AdminStrings.js:11
+msgid "Users online"
+msgstr ""
+
+#: src/admin/AdminStrings.js:12
+msgid "Documents opened"
+msgstr ""
+
+#: src/admin/AdminStrings.js:13
+msgid "Memory consumed"
+msgstr ""
+
+#: src/admin/AdminStrings.js:14
+msgid "PID"
+msgstr ""
+
+#: src/admin/AdminStrings.js:15
+msgid "Document"
+msgstr ""
+
+#: src/admin/AdminStrings.js:16
+msgid "Number of views"
+msgstr ""
+
+#: src/admin/AdminStrings.js:17
+msgid "Elapsed time"
+msgstr ""
+
+#: src/admin/AdminStrings.js:18
+msgid "Kill"
+msgstr ""
+
+#: src/admin/AdminStrings.js:19
+msgid "Graphs"
+msgstr ""
+
+#: src/admin/AdminStrings.js:21
+msgid "Cache size of memory statistics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:22
+msgid "Time interval of memory statistics (in ms)"
+msgstr ""
+
+#: src/admin/AdminStrings.js:23
+msgid "Cache size of CPU statistics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:24
+msgid "Time interval of CPU statistics (in ms)"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "kB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "MB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "GB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "TB"
+msgstr ""
+
+#: src/admin/Util.js:41
+msgid " hrs"
+msgstr ""
+
+#: src/admin/Util.js:43
+msgid " mins"
+msgstr ""
+
+#: src/admin/Util.js:45
+msgid " s"
 msgstr ""
 
 #: src/control/Control.Menubar.js:9
 #: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:98
+#: src/control/Control.Menubar.js:93
 msgid "File"
-msgstr ""
+msgstr "Súbor"
 
 #: src/control/Control.Menubar.js:10
 #: src/control/Control.Menubar.js:52
-#: src/control/Control.Menubar.js:99
+#: src/control/Control.Menubar.js:94
 msgid "Print"
-msgstr ""
+msgstr "Tlačiť"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:95
 msgid "Download as"
-msgstr ""
+msgstr "Stiahnuť ako"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:95
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "PDF dokument (.pdf)"
 
 #: src/control/Control.Menubar.js:12
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ODF textový dokument (.odt)"
 
 #: src/control/Control.Menubar.js:13
 msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgstr "Microsoft Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:14
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:16
 #: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:105
+#: src/control/Control.Menubar.js:100
 msgid "Edit"
-msgstr ""
+msgstr "Upraviť"
 
 #: src/control/Control.Menubar.js:19
 #: src/control/Control.Menubar.js:61
-#: src/control/Control.Menubar.js:108
+#: src/control/Control.Menubar.js:103
 msgid "Cut"
-msgstr ""
+msgstr "Vystrihnúť"
 
 #: src/control/Control.Menubar.js:20
 #: src/control/Control.Menubar.js:62
-#: src/control/Control.Menubar.js:109
+#: src/control/Control.Menubar.js:104
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovať"
 
 #: src/control/Control.Menubar.js:21
 #: src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:110
+#: src/control/Control.Menubar.js:105
 msgid "Paste"
-msgstr ""
+msgstr "Vložiť"
 
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:65
-#: src/control/Control.Menubar.js:112
+#: src/control/Control.Menubar.js:107
 msgid "Select all"
-msgstr ""
+msgstr "Vybrať všetko"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.Menubar.js:75
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:109
 msgid "Insert"
-msgstr ""
+msgstr "Vložiť"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:109
 msgid "Image"
-msgstr ""
+msgstr "Obrázok"
 
 #: src/control/Control.Menubar.js:26
 msgid "Comment"
-msgstr ""
+msgstr "Poznámka"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:114
 msgid "View"
-msgstr ""
+msgstr "Zobraziť"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:114
 msgid "Full screen"
-msgstr ""
+msgstr "Na celú obrazovku"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Tables"
-msgstr ""
+msgstr "Tabuľky"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Rows before"
-msgstr ""
+msgstr "Riadky pred"
 
 #: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:76
 msgid "Rows after"
-msgstr ""
+msgstr "Riadky za"
 
 #: src/control/Control.Menubar.js:37
 #: src/control/Control.Menubar.js:78
 msgid "Columns left"
-msgstr ""
+msgstr "Stĺpce vľavo"
 
 #: src/control/Control.Menubar.js:38
 #: src/control/Control.Menubar.js:79
 msgid "Columns right"
-msgstr ""
+msgstr "Stĺpce vpravo"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Delete"
-msgstr ""
+msgstr "Odstrániť"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Rows"
-msgstr ""
+msgstr "Riadky"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:81
 msgid "Columns"
-msgstr ""
+msgstr "Stĺpce"
 
 #: src/control/Control.Menubar.js:41
 #: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:82
-#: src/control/Control.Menubar.js:83
 msgid "Table"
-msgstr ""
+msgstr "Tabuľka"
 
 #: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:83
 msgid "Select"
-msgstr ""
+msgstr "Vybrať"
 
 #: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:84
-#: src/control/Control.Menubar.js:116
+#: src/control/Control.Menubar.js:111
 msgid "Row"
-msgstr ""
+msgstr "Riadok"
 
 #: src/control/Control.Menubar.js:44
-#: src/control/Control.Menubar.js:85
-#: src/control/Control.Menubar.js:117
+#: src/control/Control.Menubar.js:112
 msgid "Column"
-msgstr ""
+msgstr "Stĺpec"
 
 #: src/control/Control.Menubar.js:45
-#: src/control/Control.Menubar.js:86
 msgid "Cell"
-msgstr ""
+msgstr "Bunka"
 
 #: src/control/Control.Menubar.js:46
-#: src/control/Control.Menubar.js:87
+#: src/control/Control.Menubar.js:82
 msgid "Merge cells"
-msgstr ""
+msgstr "Zlúčiť bunky"
 
 #: src/control/Control.Menubar.js:54
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ODF prezentácia (.odp)"
 
 #: src/control/Control.Menubar.js:55
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:56
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:84
 msgid "Slide"
-msgstr ""
+msgstr "Snímka"
 
-#: src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:84
 msgid "New slide"
-msgstr ""
+msgstr "Nová snímka"
 
-#: src/control/Control.Menubar.js:101
+#: src/control/Control.Menubar.js:96
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ODF tabuľkový dokument (.ods)"
 
-#: src/control/Control.Menubar.js:102
+#: src/control/Control.Menubar.js:97
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:103
+#: src/control/Control.Menubar.js:98
 msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:125
+#: src/control/Control.Menubar.js:120
 msgid "Cells"
-msgstr ""
+msgstr "Bunky"
 
-#: src/control/Control.Menubar.js:125
+#: src/control/Control.Menubar.js:120
 msgid "Insert row"
-msgstr ""
+msgstr "Vložiť riadok"
 
-#: src/control/Control.Menubar.js:126
+#: src/control/Control.Menubar.js:121
 msgid "Insert column"
-msgstr ""
+msgstr "Vložiť stĺpec"
 
-#: src/control/Control.Menubar.js:128
+#: src/control/Control.Menubar.js:123
 msgid "Delete row"
-msgstr ""
+msgstr "Odstrániť riadok"
 
-#: src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:124
 msgid "Delete column"
-msgstr ""
+msgstr "Odstrániť stĺpec"
 
-#: src/control/Control.Menubar.js:276
+#: src/control/Control.Menubar.js:282
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "Naozaj chcete túto snímku odstrániť?"
+
+#: src/control/Control.Tabs.js:39
+msgid "Insert sheet before this"
+msgstr "Vložiť hárok pred"
+
+#: src/control/Control.Tabs.js:40
+msgid "Insert sheet after this"
+msgstr "Vložiť hárok za"
+
+#: src/control/Control.Tabs.js:41
+msgid "Delete sheet"
+msgstr "Odstrániť hárok"
+
+#: src/control/Control.Tabs.js:45
+msgid "Are you sure you want to delete this sheet?"
+msgstr "Naozaj chcete tento hárok odstrániť?"
+
+#: src/control/Control.Tabs.js:54
+msgid "Rename sheet"
+msgstr "Premenovať hárok"
+
+#: src/control/Control.Tabs.js:58
+msgid "Enter new sheet name"
+msgstr "Zadajte nový názov hárku"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr ""
+msgstr "Vyskytol sa problém s pripojenín k LibreOffice Online :"
 
 #: src/core/Socket.js:132
 msgid "Unsupported server version."
-msgstr ""
+msgstr "Nepodporovaná verzia servera."
 
 #: src/core/Socket.js:145
 msgid "Document requires password to view."
-msgstr ""
+msgstr "Na zobrazenie dokumentu je potrebné heslo."
 
 #: src/core/Socket.js:148
 msgid "Document requires password to modify."
-msgstr ""
+msgstr "Na úpravu dokumentu je potrebné heslo."
 
 #: src/core/Socket.js:150
 msgid "Hit Cancel to open in view-only mode."
-msgstr ""
+msgstr "Stlačením Zrušiť otvoriť v režime zobrazenia"
 
 #: src/core/Socket.js:154
 msgid "Wrong password provided. Please try again."
-msgstr ""
+msgstr "Zadané nesprávne heslo, zopakujte."
 
 #: src/core/Socket.js:291
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr ""
+msgstr "Nepodarilo sa nadviazať spojenie s dokumentom. Prosím zopakujte."
 
 #: src/core/Socket.js:294
 msgid "We are sorry, this is an unexpected connection error. Please try again."
+msgstr "Vyskytla sa neočakávaná chyba. Prosím zopakujte. "
+
+#: src/map/Map.js:116
+msgid "Initializing..."
+msgstr ""
+
+#: src/map/Map.js:802
+msgid "Saving..."
+msgstr ""
+
+#: src/map/Map.js:805
+msgid "Loading..."
 msgstr ""
