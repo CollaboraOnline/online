@@ -49,6 +49,31 @@
 namespace helpers
 {
 inline
+std::vector<char> readDataFromFile(const std::string& filename)
+{
+    std::ifstream ifs(Poco::Path(TDOC, filename).toString());
+
+    std::istream_iterator<char> start(ifs);
+    std::istream_iterator<char> end;
+    return std::vector<char>(start, end);
+}
+
+inline
+std::vector<char> readDataFromFile(std::unique_ptr<std::fstream>& file)
+{
+    file->seekg(0, std::ios_base::end);
+    const std::streamsize size = file->tellg();
+
+    std::vector<char> v;
+    v.resize(size);
+
+    file->seekg(0, std::ios_base::beg);
+    file->read(v.data(), size);
+
+    return v;
+}
+
+inline
 void getDocumentPathAndURL(const char* document, std::string& documentPath, std::string& documentURL)
 {
     documentPath = Util::getTempFilePath(TDOC, document);

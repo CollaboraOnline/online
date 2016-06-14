@@ -86,21 +86,6 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
         return v;
     }
 
-    static
-    std::vector<char> readDataFromFile(std::unique_ptr<std::fstream>& file)
-    {
-        file->seekg(0, std::ios_base::end);
-        const std::streamsize size = file->tellg();
-
-        std::vector<char> v;
-        v.resize(size);
-
-        file->seekg(0, std::ios_base::beg);
-        file->read(v.data(), size);
-
-        return v;
-    }
-
 public:
     TileCacheTests()
         : _uri(helpers::getTestServerURI())

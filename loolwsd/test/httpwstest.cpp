@@ -14,6 +14,7 @@
 #include <mutex>
 #include <thread>
 #include <regex>
+#include <vector>
 
 #include <Poco/Dynamic/Var.h>
 #include <Poco/FileStream.h>
@@ -81,6 +82,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInsertAnnotationWriter);
     CPPUNIT_TEST(testEditAnnotationWriter);
     CPPUNIT_TEST(testInsertAnnotationCalc);
+    CPPUNIT_TEST(testCalcEditRendering);
     CPPUNIT_TEST(testFontList);
 
     CPPUNIT_TEST_SUITE_END();
@@ -112,6 +114,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInsertAnnotationWriter();
     void testEditAnnotationWriter();
     void testInsertAnnotationCalc();
+    void testCalcEditRendering();
     void testFontList();
 
     void loadDoc(const std::string& documentURL);
@@ -1530,6 +1533,44 @@ void HTTPWSTest::testInsertAnnotationCalc()
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
     auto res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationCalc ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
+}
+
+void HTTPWSTest::testCalcEditRendering()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("calc_render.xls", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = loadDocAndGetSocket(_uri, documentURL);
+
+    const std::string x = "5000";
+    const std::string y = "165";
+    sendTextFrame(socket, "mouse type=buttondown x=" + x + " y=" + y + " count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "mouse type=buttonup x=" + x + " y=" + y + " count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "key type=input char=97 key=0");
+    sendTextFrame(socket, "key type=input char=98 key=0");
+    sendTextFrame(socket, "key type=input char=99 key=0");
+
+    assertResponseLine(socket, "invalidatetiles:", "calcEditRendering ");
+    assertResponseLine(socket, "invalidatetiles:", "calcEditRendering ");
+
+    const auto req = "tilecombine part=0 width=512 height=512 tileposx=3840 tileposy=0 tilewidth=7680 tileheight=7680";
+    sendTextFrame(socket, req);
+
+    const auto tile = getResponseMessage(socket, "tile:", "calcEditRendering ");
+    const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+
+    std::stringstream streamTile;
+    std::copy(tile.begin() + firstLine.size() + 1, tile.end(), std::ostream_iterator<char>(streamTile));
+    std::istream_iterator<char> start(streamTile);
+    std::istream_iterator<char> end;
+    std::vector<char> res(start, end);
+
+    const std::vector<char> exp = readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");
+
+    CPPUNIT_ASSERT_EQUAL(exp.size(), res.size());
+    const bool eq = std::equal(exp.begin(), exp.end(), res.data());
+    CPPUNIT_ASSERT_MESSAGE("Tile not rendered as expected.", eq);
 }
 
 std::string HTTPWSTest::getFontList(const std::string& message)
