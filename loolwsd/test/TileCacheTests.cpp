@@ -41,7 +41,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 #endif
     CPPUNIT_TEST(testLoad12ods);
     CPPUNIT_TEST(testTileInvalidateWriter);
-    CPPUNIT_TEST(testTileInvalidateCalc);
+    //CPPUNIT_TEST(testTileInvalidateCalc);
 
     CPPUNIT_TEST_SUITE_END();
 
