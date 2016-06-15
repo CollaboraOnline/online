@@ -22,6 +22,7 @@
 #include <sys/wait.h>
 
 #include <time.h>
+#include <stdlib.h>
 
 #include <cassert>
 #include <condition_variable>
@@ -1254,6 +1255,12 @@ void LOOLWSD::initialize(Application& self)
     {
         // Default to 1 child.
         NumPreSpawnedChildren = config().getUInt("num_prespawn_children", 1);
+    }
+
+    const auto maxConcurrency = config().getInt("per_document.max_concurrency");
+    if (maxConcurrency > 0)
+    {
+        setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
 
     StorageBase::initialize();

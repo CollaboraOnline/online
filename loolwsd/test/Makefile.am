@@ -1,3 +1,5 @@
+# Cap threads pools to 4.
+export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
 
 check_PROGRAMS = test
