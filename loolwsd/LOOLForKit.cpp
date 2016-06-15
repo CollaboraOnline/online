@@ -68,7 +68,7 @@ public:
     bool pollAndDispatch()
     {
         std::string line;
-        const auto ready = readLine(line, [](){ return TerminationFlag; });
+        const auto ready = readLine(line, [](){ return TerminationFlag.load(); });
         if (ready == 0)
         {
             // Timeout.

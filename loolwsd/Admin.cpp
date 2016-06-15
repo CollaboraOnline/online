@@ -194,7 +194,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                                 return adminCommandHandler(payload);
                             },
                             []() { },
-                            []() { return TerminationFlag; });
+                            []() { return TerminationFlag.load(); });
 
     Log::debug() << "Finishing Admin Session " << Util::encodeId(sessionId);
 }

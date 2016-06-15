@@ -1034,7 +1034,7 @@ public:
                     return session->handleInput(payload.data(), payload.size());
                 },
                 [&session]() { session->closeFrame(); },
-                []() { return TerminationFlag; });
+                []() { return TerminationFlag.load(); });
 
             if (session->isCloseFrame())
             {

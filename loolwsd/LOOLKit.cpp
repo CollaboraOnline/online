@@ -1227,7 +1227,7 @@ void lokit_main(const std::string& childRoot,
                 {
                     if (document && document->canDiscard())
                         TerminationFlag = true;
-                    return TerminationFlag;
+                    return TerminationFlag.load();
                 });
 
         // Clean up jail if we created one

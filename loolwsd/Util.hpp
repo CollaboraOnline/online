@@ -16,6 +16,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <atomic>
 
 #include <Poco/File.h>
 #include <Poco/Net/WebSocket.h>
@@ -27,7 +28,7 @@
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 /// Flag to stop pump loops.
-extern volatile bool TerminationFlag;
+extern std::atomic<bool> TerminationFlag;
 
 namespace Util
 {

@@ -43,7 +43,7 @@
 #include "Common.hpp"
 #include "Log.hpp"
 
-volatile bool TerminationFlag = false;
+std::atomic<bool> TerminationFlag(false);
 
 namespace Util
 {
