@@ -400,6 +400,7 @@ void readTileData(png_structp png_ptr, png_bytep data, png_size_t length)
     png_voidp io_ptr = png_get_io_ptr(png_ptr);
     CPPUNIT_ASSERT(io_ptr);
 
+    assert(io_ptr != nullptr);
     std::stringstream& streamTile = *(std::stringstream*)io_ptr;
     streamTile.read((char*)data, length);
 }
@@ -479,6 +480,7 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
     }
 
     CPPUNIT_ASSERT_MESSAGE("The tile is 100% black", black != height * width);
+    assert(height * width != 0);
     CPPUNIT_ASSERT_MESSAGE("The tile is 90% black", (black * 100) / (height * width) < 90);
 }
 
