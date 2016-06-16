@@ -47,7 +47,8 @@ endif
 if HAVE_LO_PATH
 check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
-TESTS = unit-tilecache.la unit-admin.la unit-timeout.la unit-fonts.la unit-storage.la unit-prefork.la
+# FIXME unit-fonts.la is unstable, disabled for now.
+TESTS = unit-tilecache.la unit-admin.la unit-timeout.la unit-storage.la unit-prefork.la
 else
 TESTS = ${top_builddir}/test/test
 endif
