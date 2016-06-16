@@ -559,8 +559,6 @@ void TileCacheTests::testTileInvalidateWriter()
 
     auto socket = *loadDocAndGetSocket(_uri, documentURL);
 
-    CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !getResponseMessage(socket, "invalidatetiles:").empty());
-
     std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
     for (char ch : text)
     {

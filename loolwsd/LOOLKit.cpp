@@ -901,6 +901,11 @@ private:
                 return nullptr;
             }
 
+            // initializeForRendering() should be called before
+            // registerCallback(), as the previous creates a new view in
+            // Impress.
+            _loKitDocument->initializeForRendering((renderOpts.empty() ? nullptr : renderOpts.c_str()));
+
             if (_multiView)
             {
                 Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
@@ -916,8 +921,6 @@ private:
             {
                 _loKitDocument->registerCallback(DocumentCallback, this);
             }
-
-            _loKitDocument->initializeForRendering((renderOpts.empty() ? nullptr : renderOpts.c_str()));
         }
         else
         {
