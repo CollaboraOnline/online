@@ -128,7 +128,7 @@ namespace Util
         return name;
     }
 
-    std::string getTempFilePath(const std::string srcDir, const std::string& srcFilename)
+    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename)
     {
         const std::string srcPath = srcDir + '/' + srcFilename;
         const std::string dstPath = Poco::Path::temp() + encodeId(rng::getNext()) + '_' + srcFilename;

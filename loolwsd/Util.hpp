@@ -82,7 +82,7 @@ namespace Util
     /// Primarily used by tests to avoid tainting the originals.
     /// srcDir shouldn't end with '/' and srcFilename shouldn't contain '/'.
     /// Returns the created file path.
-    std::string getTempFilePath(const std::string srcDir, const std::string& srcFilename);
+    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename);
 
     /// Returns the name of the signal.
     const char *signalName(int signo);
