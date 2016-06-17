@@ -36,6 +36,7 @@ L.Control.Scroll = L.Control.extend({
 
 	_onScroll: function (e) {
 		if (this._ignoreScroll) {
+			this._ignoreScroll = null;
 			return;
 		}
 		if (this._prevScrollY === undefined) {
@@ -113,10 +114,14 @@ L.Control.Scroll = L.Control.extend({
 	},
 
 	_onUpdateSize: function (e) {
-		this._ignoreScroll = true;
+		// for writer documents, ignore scroll while document size is being reduced
+		var prevDocY = parseFloat(L.DomUtil.getStyle(this._mockDoc, 'height'));
+		if (this._map.getDocType() === 'text' && e.y < prevDocY) {
+			this._ignoreScroll = true;
+		}
+
 		L.DomUtil.setStyle(this._mockDoc, 'width', e.x + 'px');
 		L.DomUtil.setStyle(this._mockDoc, 'height', e.y + 'px');
-		this._ignoreScroll = null;
 	},
 
 	_onUpdateScrollOffset: function (e) {
