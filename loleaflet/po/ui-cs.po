@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 14:02+0000\n"
+"POT-Creation-Date: 2016-06-17 19:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 462163\n"
+"X-Pootle-Revision: 468537\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -369,7 +369,7 @@ msgstr "Administrátorská konzole"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Přepínač navigace"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
@@ -397,7 +397,7 @@ msgstr "Přihlášení uživatelé"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "Otevřené dokumenty"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
@@ -421,7 +421,7 @@ msgstr "Uplynulý čas"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "Ukončit"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
@@ -585,12 +585,12 @@ msgstr ""
 #: src/control/Control.Menubar.js:37
 #: src/control/Control.Menubar.js:78
 msgid "Columns left"
-msgstr ""
+msgstr "Sloupce vlevo"
 
 #: src/control/Control.Menubar.js:38
 #: src/control/Control.Menubar.js:79
 msgid "Columns right"
-msgstr ""
+msgstr "Sloupce vpravo"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
@@ -697,7 +697,7 @@ msgstr "Vložit list před tento"
 
 #: src/control/Control.Tabs.js:40
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "Vložit list za tento"
 
 #: src/control/Control.Tabs.js:41
 msgid "Delete sheet"

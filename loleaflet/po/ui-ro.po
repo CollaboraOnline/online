@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 14:03+0000\n"
+"POT-Creation-Date: 2016-06-17 19:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,31 +12,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /ro/libo_online/loleaflet-ui-ro.po\n"
-"X-Pootle-Revision: 459254\n"
+"X-Pootle-Revision: 465829\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Culori pentru teme"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Culori standard"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Culori Web"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Înapoi la paletă"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Istoric"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Nu există istoric."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -353,124 +353,123 @@ msgstr "EDITARE"
 
 #: dist/toolbar/toolbar.js:1139
 msgid "Layout"
-msgstr ""
+msgstr "Aranjament"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "Eroare de conexiune"
 
 #: src/admin/AdminSocketOverview.js:58
-#, fuzzy
 msgid "Are you sure you want to terminate this session?"
-msgstr "Sigur doriți să ștergeți diapozitivul?"
+msgstr "Sigur doriți să închideți sesiunea?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "Consolă administrativă"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Schimb navigație"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "Opțiuni"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
-msgstr ""
+msgstr "Prezentarea generală"
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(curent)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
-msgstr ""
+msgstr "Analizări"
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "Pagina principală"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
-msgstr ""
+msgstr "Utilizatori activi"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "Documente deschise"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
-msgstr ""
+msgstr "Memorie utilizată"
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "Document"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "Numărul vizualizărilor"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
-msgstr ""
+msgstr "Timp scurs"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "Omoară"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "Grafice"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Mărimea statistici despre memorie"
 
 #: src/admin/AdminStrings.js:22
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Intervalul statistici despre memorie (ms)"
 
 #: src/admin/AdminStrings.js:23
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "Mărimea statistici despre CPU"
 
 #: src/admin/AdminStrings.js:24
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "Intervalul statistici despre CPU (ms) "
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr " ore"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr " minute"
 
 #: src/admin/Util.js:45
 msgid " s"
-msgstr ""
+msgstr " s"
 
 #: src/control/Control.Menubar.js:9
 #: src/control/Control.Menubar.js:51
@@ -752,12 +751,12 @@ msgstr "Ne pare rău, dar a intervenit o eroare neașteptată. Încercați din n
 
 #: src/map/Map.js:116
 msgid "Initializing..."
-msgstr ""
+msgstr "Se inițializează..."
 
 #: src/map/Map.js:802
 msgid "Saving..."
-msgstr ""
+msgstr "Salvare..."
 
 #: src/map/Map.js:805
 msgid "Loading..."
-msgstr ""
+msgstr "Se încarcă..."

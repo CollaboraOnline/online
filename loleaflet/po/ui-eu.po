@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 14:02+0000\n"
+"POT-Creation-Date: 2016-06-17 19:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,75 +12,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
-"X-Pootle-Revision: 458614\n"
+"X-Pootle-Revision: 467044\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Gaiaren koloreak"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Kolore estandarrak"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Web koloreak"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Itzuli paletara"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Historia"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Ez dago historiarik oraindik"
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr ""
+msgstr "Kopiatu hiperesteka"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
+msgstr "Jaitsi maila bat"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
+msgstr "Igo maila bat"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Editatu iruzkina"
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
+msgstr "Txertatu iruzkina"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "Batu"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Batu gelaxkak..."
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "Ekarri aurrerago"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
+msgstr "Eraman atzerago"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "Itsatsi berezia"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
+msgstr "Formatu gabeko testua"
 
 #: dist/errormessages.js:1
 msgid ""
@@ -96,7 +96,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:144
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "Ziur orri hau ezabatu nahi duzula?"
 
 #: dist/toolbar/toolbar.js:336
 #: src/admin/AdminStrings.js:20
@@ -104,168 +104,169 @@ msgstr ""
 #: src/control/Control.Menubar.js:51
 #: src/control/Control.Menubar.js:93
 msgid "Save"
-msgstr ""
+msgstr "Gorde"
 
 #: dist/toolbar/toolbar.js:338
 #: src/control/Control.Menubar.js:16
 #: src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:100
 msgid "Undo"
-msgstr ""
+msgstr "Desegin"
 
 #: dist/toolbar/toolbar.js:339
 #: src/control/Control.Menubar.js:17
 #: src/control/Control.Menubar.js:59
 #: src/control/Control.Menubar.js:101
 msgid "Redo"
-msgstr ""
+msgstr "Berregin"
 
 #: dist/toolbar/toolbar.js:345
 msgid "Bold"
-msgstr ""
+msgstr "Lodia"
 
 #: dist/toolbar/toolbar.js:346
 msgid "Italic"
-msgstr ""
+msgstr "Etzana"
 
 #: dist/toolbar/toolbar.js:347
 msgid "Underline"
-msgstr ""
+msgstr "Azpimarratua"
 
 #: dist/toolbar/toolbar.js:348
 msgid "Strikeout"
-msgstr ""
+msgstr "Marratua"
 
 #: dist/toolbar/toolbar.js:351
 msgid "Font color"
-msgstr ""
+msgstr "Letra-tipoaren kolorea"
 
 #: dist/toolbar/toolbar.js:353
 msgid "Highlighting"
-msgstr ""
+msgstr "Nabarmentzea"
 
 #: dist/toolbar/toolbar.js:355
 msgid "Align left"
-msgstr ""
+msgstr "Lerrokatu ezkerrean"
 
 #: dist/toolbar/toolbar.js:356
 msgid "Center horizontally"
-msgstr ""
+msgstr "Zentratu horizontalki"
 
 #: dist/toolbar/toolbar.js:357
 msgid "Align right"
-msgstr ""
+msgstr "Lerrokatu eskuinean"
 
 #: dist/toolbar/toolbar.js:358
 msgid "Justified"
-msgstr ""
+msgstr "Justifikatuta"
 
 #: dist/toolbar/toolbar.js:360
 msgid "Bullets on/off"
-msgstr ""
+msgstr "Buletak jarri/kendu"
 
 #: dist/toolbar/toolbar.js:361
 msgid "Numbering on/off"
-msgstr ""
+msgstr "Numerazioa jarri/kendu"
 
 #: dist/toolbar/toolbar.js:363
 msgid "Increase indent"
-msgstr ""
+msgstr "Handiagotu koska"
 
 #: dist/toolbar/toolbar.js:364
 msgid "Decrease indent"
-msgstr ""
+msgstr "Txikiagotu koska"
 
 #: dist/toolbar/toolbar.js:367
 msgid "Insert table"
-msgstr ""
+msgstr "Txertatu taula"
 
 #: dist/toolbar/toolbar.js:368
 msgid "Insert comment"
-msgstr ""
+msgstr "Txertatu iruzkina"
 
 #: dist/toolbar/toolbar.js:369
 msgid "Insert graphic"
-msgstr ""
+msgstr "Txertatu grafikoa"
 
 #: dist/toolbar/toolbar.js:371
 msgid "Help"
-msgstr ""
+msgstr "Laguntza"
 
 #: dist/toolbar/toolbar.js:373
 msgid "More"
-msgstr ""
+msgstr "Gehiago"
 
 #: dist/toolbar/toolbar.js:374
 msgid "Close document"
-msgstr ""
+msgstr "Itxi dokumentua"
 
 #: dist/toolbar/toolbar.js:404
 msgid "Sum"
-msgstr ""
+msgstr "Batuketa"
 
 #: dist/toolbar/toolbar.js:405
 msgid "Function"
-msgstr ""
+msgstr "Funtzioa"
 
 #: dist/toolbar/toolbar.js:406
 msgid "Cancel"
-msgstr ""
+msgstr "Utzi"
 
 #: dist/toolbar/toolbar.js:407
 msgid "Accept"
-msgstr ""
+msgstr "Onartu"
 
 #: dist/toolbar/toolbar.js:418
 msgid "First sheet"
-msgstr ""
+msgstr "Lehen orria"
 
 #: dist/toolbar/toolbar.js:419
 msgid "Previous sheet"
-msgstr ""
+msgstr "Aurreko orria"
 
 #: dist/toolbar/toolbar.js:420
 msgid "Next sheet"
-msgstr ""
+msgstr "Hurrengo orria"
 
 #: dist/toolbar/toolbar.js:421
 msgid "Last sheet"
-msgstr ""
+msgstr "Azken orria"
 
 #: dist/toolbar/toolbar.js:431
 #: src/control/Control.Menubar.js:88
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Pantaila osoko aurkezpena"
 
 #: dist/toolbar/toolbar.js:433
 msgid "Insert slide"
-msgstr ""
+msgstr "Txertatu diapositiba"
 
 #: dist/toolbar/toolbar.js:434
 #: src/control/Control.Menubar.js:85
 msgid "Duplicate slide"
-msgstr ""
+msgstr "Bikoiztu diapositiba"
 
 #: dist/toolbar/toolbar.js:435
 #: src/control/Control.Menubar.js:86
 msgid "Delete slide"
-msgstr ""
+msgstr "Ezabatu diapositiba"
 
 #: dist/toolbar/toolbar.js:447
 msgid "Search:"
-msgstr ""
+msgstr "Bilatu:"
 
 #: dist/toolbar/toolbar.js:452
 msgid "Search backwards"
-msgstr ""
+msgstr "Bilatu atzerantz"
 
 #: dist/toolbar/toolbar.js:453
+#, fuzzy
 msgid "Search forward"
-msgstr ""
+msgstr "Bilatu aurrerantz"
 
 #: dist/toolbar/toolbar.js:454
 msgid "Cancel the search"
-msgstr ""
+msgstr "Utzi bilaketa"
 
 #: dist/toolbar/toolbar.js:459
 #: dist/toolbar/toolbar.js:1010
@@ -275,101 +276,101 @@ msgstr ""
 #: dist/toolbar/toolbar.js:459
 #: dist/toolbar/toolbar.js:1010
 msgid "VIEWING"
-msgstr ""
+msgstr "IKUSTEN"
 
 #: dist/toolbar/toolbar.js:461
 msgid "Previous page"
-msgstr ""
+msgstr "Aurreko orria"
 
 #: dist/toolbar/toolbar.js:462
 msgid "Next page"
-msgstr ""
+msgstr "Hurrengo orria"
 
 #: dist/toolbar/toolbar.js:464
 #: src/control/Control.Menubar.js:32
 #: src/control/Control.Menubar.js:73
 #: src/control/Control.Menubar.js:118
 msgid "Reset zoom"
-msgstr ""
+msgstr "Berrezarri zooma"
 
 #: dist/toolbar/toolbar.js:465
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:72
 #: src/control/Control.Menubar.js:117
 msgid "Zoom out"
-msgstr ""
+msgstr "Txikiagotu zooma"
 
 #: dist/toolbar/toolbar.js:467
 #: src/control/Control.Menubar.js:30
 #: src/control/Control.Menubar.js:71
 #: src/control/Control.Menubar.js:116
 msgid "Zoom in"
-msgstr ""
+msgstr "Handiagotu zooma"
 
 #: dist/toolbar/toolbar.js:485
 msgid "You are viewing now."
-msgstr ""
+msgstr "Ikusten ari zara."
 
 #: dist/toolbar/toolbar.js:485
 msgid "Click here to take edit."
-msgstr ""
+msgstr "Egin klik hemen edizioa hartzeko."
 
 #: dist/toolbar/toolbar.js:549
 #: dist/toolbar/toolbar.js:908
 msgid "Size"
-msgstr ""
+msgstr "Tamaina"
 
 #: dist/toolbar/toolbar.js:779
 msgid "Document saved"
-msgstr ""
+msgstr "Dokumentua gorde da"
 
 #: dist/toolbar/toolbar.js:891
 msgid "Style"
-msgstr ""
+msgstr "Estiloa"
 
 #: dist/toolbar/toolbar.js:903
 msgid "Font"
-msgstr ""
+msgstr "Letra-tipoa"
 
 #: dist/toolbar/toolbar.js:927
 msgid "Previous slide"
-msgstr ""
+msgstr "Aurreko diapositiba"
 
 #: dist/toolbar/toolbar.js:928
 msgid "Next slide"
-msgstr ""
+msgstr "Hurrengo diapositiba"
 
 #: dist/toolbar/toolbar.js:1006
 msgid "You are editing (others can only view)"
-msgstr ""
+msgstr "Editatzen ari zara (besteek ikusi besterik ezin dute egin)"
 
 #: dist/toolbar/toolbar.js:1006
 msgid "EDITING"
-msgstr ""
+msgstr "EDITATZEN"
 
 #: dist/toolbar/toolbar.js:1139
 msgid "Layout"
-msgstr ""
+msgstr "Diseinua"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "Konexio-errorea"
 
 #: src/admin/AdminSocketOverview.js:58
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "Ziur zaude saio hau itxi nahi duzula?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "Administrazio kontsola"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Txandakatu nabigazioa"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "Ezarpenak"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
@@ -377,7 +378,7 @@ msgstr ""
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(unekoa)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
@@ -385,7 +386,7 @@ msgstr ""
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "Aginte-mahaia"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
@@ -401,27 +402,27 @@ msgstr ""
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "Dokumentua"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "Ikuste kopurua"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
-msgstr ""
+msgstr "Igarotako denbora"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "Hil"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "Grafikoak"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
@@ -441,91 +442,91 @@ msgstr ""
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr " ordu"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr " minutu"
 
 #: src/admin/Util.js:45
 msgid " s"
-msgstr ""
+msgstr " s"
 
 #: src/control/Control.Menubar.js:9
 #: src/control/Control.Menubar.js:51
 #: src/control/Control.Menubar.js:93
 msgid "File"
-msgstr ""
+msgstr "Fitxategia"
 
 #: src/control/Control.Menubar.js:10
 #: src/control/Control.Menubar.js:52
 #: src/control/Control.Menubar.js:94
 msgid "Print"
-msgstr ""
+msgstr "Inprimatu"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
 #: src/control/Control.Menubar.js:95
 msgid "Download as"
-msgstr ""
+msgstr "Deskargatu honela"
 
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:53
 #: src/control/Control.Menubar.js:95
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "PDF Dokumentua (.pdf)"
 
 #: src/control/Control.Menubar.js:12
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ODF testu dokumentua (.odt)"
 
 #: src/control/Control.Menubar.js:13
 msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgstr "Microsoft Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:14
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:16
 #: src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:100
 msgid "Edit"
-msgstr ""
+msgstr "Editatu"
 
 #: src/control/Control.Menubar.js:19
 #: src/control/Control.Menubar.js:61
 #: src/control/Control.Menubar.js:103
 msgid "Cut"
-msgstr ""
+msgstr "Ebaki"
 
 #: src/control/Control.Menubar.js:20
 #: src/control/Control.Menubar.js:62
 #: src/control/Control.Menubar.js:104
 msgid "Copy"
-msgstr ""
+msgstr "Kopiatu"
 
 #: src/control/Control.Menubar.js:21
 #: src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:105
 msgid "Paste"
-msgstr ""
+msgstr "Itsatsi"
 
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:65
@@ -539,181 +540,182 @@ msgstr ""
 #: src/control/Control.Menubar.js:75
 #: src/control/Control.Menubar.js:109
 msgid "Insert"
-msgstr ""
+msgstr "Txertatu"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.Menubar.js:109
 msgid "Image"
-msgstr ""
+msgstr "Irudia"
 
 #: src/control/Control.Menubar.js:26
 msgid "Comment"
-msgstr ""
+msgstr "Iruzkina"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:114
+#, fuzzy
 msgid "View"
-msgstr ""
+msgstr "Ikuspegia"
 
 #: src/control/Control.Menubar.js:28
 #: src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:114
 msgid "Full screen"
-msgstr ""
+msgstr "Pantaila osoa"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Tables"
-msgstr ""
+msgstr "Taulak"
 
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:75
 msgid "Rows before"
-msgstr ""
+msgstr "Errenkadak aurretik"
 
 #: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:76
 msgid "Rows after"
-msgstr ""
+msgstr "Errenkadak atzetik"
 
 #: src/control/Control.Menubar.js:37
 #: src/control/Control.Menubar.js:78
 msgid "Columns left"
-msgstr ""
+msgstr "Zutabeak ezkerrean"
 
 #: src/control/Control.Menubar.js:38
 #: src/control/Control.Menubar.js:79
 msgid "Columns right"
-msgstr ""
+msgstr "Zutabeak eskuinean"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Delete"
-msgstr ""
+msgstr "Ezabatu"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:80
 msgid "Rows"
-msgstr ""
+msgstr "Errenkadak"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:81
 msgid "Columns"
-msgstr ""
+msgstr "Zutabeak"
 
 #: src/control/Control.Menubar.js:41
 #: src/control/Control.Menubar.js:42
 msgid "Table"
-msgstr ""
+msgstr "Taula"
 
 #: src/control/Control.Menubar.js:42
 msgid "Select"
-msgstr ""
+msgstr "Hautatu"
 
 #: src/control/Control.Menubar.js:43
 #: src/control/Control.Menubar.js:111
 msgid "Row"
-msgstr ""
+msgstr "Errenkada"
 
 #: src/control/Control.Menubar.js:44
 #: src/control/Control.Menubar.js:112
 msgid "Column"
-msgstr ""
+msgstr "Zutabea"
 
 #: src/control/Control.Menubar.js:45
 msgid "Cell"
-msgstr ""
+msgstr "Gelaxka"
 
 #: src/control/Control.Menubar.js:46
 #: src/control/Control.Menubar.js:82
 msgid "Merge cells"
-msgstr ""
+msgstr "Bateratu gelaxkak"
 
 #: src/control/Control.Menubar.js:54
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ODF aurkezpena (.odp)"
 
 #: src/control/Control.Menubar.js:55
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:56
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgstr "Microsoft Powerpoint (.pptx)"
 
 #: src/control/Control.Menubar.js:84
 msgid "Slide"
-msgstr ""
+msgstr "Diapositiba"
 
 #: src/control/Control.Menubar.js:84
 msgid "New slide"
-msgstr ""
+msgstr "Diapositiba berria"
 
 #: src/control/Control.Menubar.js:96
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ODF kalkulu-orria (.ods)"
 
 #: src/control/Control.Menubar.js:97
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgstr "Microsoft Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:98
 msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgstr "Microsoft Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:120
 msgid "Cells"
-msgstr ""
+msgstr "Gelaxkak"
 
 #: src/control/Control.Menubar.js:120
 msgid "Insert row"
-msgstr ""
+msgstr "Txertatu errenkada"
 
 #: src/control/Control.Menubar.js:121
 msgid "Insert column"
-msgstr ""
+msgstr "Txertatu zutabea"
 
 #: src/control/Control.Menubar.js:123
 msgid "Delete row"
-msgstr ""
+msgstr "Ezabatu errenkada"
 
 #: src/control/Control.Menubar.js:124
 msgid "Delete column"
-msgstr ""
+msgstr "Ezabatu zutabea"
 
 #: src/control/Control.Menubar.js:282
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "Ziur zaude diapositiba hau ezabatu nahi duzula?"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "Txertatu orria honen aurretik"
 
 #: src/control/Control.Tabs.js:40
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "Txertatu orria honen atzetik"
 
 #: src/control/Control.Tabs.js:41
 msgid "Delete sheet"
-msgstr ""
+msgstr "Ezabatu orria"
 
 #: src/control/Control.Tabs.js:45
 msgid "Are you sure you want to delete this sheet?"
-msgstr ""
+msgstr "Ziur zaude orri hau ezabatu nahi duzula?"
 
 #: src/control/Control.Tabs.js:54
 msgid "Rename sheet"
-msgstr ""
+msgstr "Izena aldatu orriari"
 
 #: src/control/Control.Tabs.js:58
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "Sartu orriaren izen berria"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr ""
+msgstr "Arazo bat dago LibreOffice Onlinera konektatzean: "
 
 #: src/core/Socket.js:132
 msgid "Unsupported server version."
@@ -721,38 +723,40 @@ msgstr ""
 
 #: src/core/Socket.js:145
 msgid "Document requires password to view."
-msgstr ""
+msgstr "Dokumentua ikusteko pasahitza behar da."
 
 #: src/core/Socket.js:148
 msgid "Document requires password to modify."
-msgstr ""
+msgstr "Dokumentua aldatzeko pasahitza behar da"
 
 #: src/core/Socket.js:150
 msgid "Hit Cancel to open in view-only mode."
-msgstr ""
+msgstr "Sakatu utzi soilik-ikusi moduan irekitzeko."
 
 #: src/core/Socket.js:154
 msgid "Wrong password provided. Please try again."
-msgstr ""
+msgstr "Pasahitz okerra. Saiatu berriro."
 
 #: src/core/Socket.js:291
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
+"Tira, hau lotsagarria da, ezin dugu zure dokumentuarekin konektatu. Saiatu "
+"berriro."
 
 #: src/core/Socket.js:294
 msgid "We are sorry, this is an unexpected connection error. Please try again."
-msgstr ""
+msgstr "Sentitzen dugu, ustekabeko konexio errore bat da hau. Saiatu berriro."
 
 #: src/map/Map.js:116
 msgid "Initializing..."
-msgstr ""
+msgstr "Hasieratzen..."
 
 #: src/map/Map.js:802
 msgid "Saving..."
-msgstr ""
+msgstr "Gordetzen..."
 
 #: src/map/Map.js:805
 msgid "Loading..."
-msgstr ""
+msgstr "Kargatzen..."

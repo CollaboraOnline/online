@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 14:03+0000\n"
+"POT-Creation-Date: 2016-06-17 19:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /nn/libo_online/loleaflet-ui-nn.po\n"
-"X-Pootle-Revision: 459500\n"
+"X-Pootle-Revision: 466059\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -365,7 +365,7 @@ msgstr "Er du sikker på at du vil avslutta denne økta?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "Adminkonsoll"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
@@ -425,23 +425,23 @@ msgstr ""
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "Diagram"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Storleik på mellomlageret for minnestatistikk"
 
 #: src/admin/AdminStrings.js:22
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Tidsintervall for minnestatistikk (i ms)"
 
 #: src/admin/AdminStrings.js:23
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "Storleik på mellomlageret for CPU-statistikk"
 
 #: src/admin/AdminStrings.js:24
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "Tidsintervall for CPU-statistikk (i ms)"
 
 #: src/admin/Util.js:13
 msgid "kB"

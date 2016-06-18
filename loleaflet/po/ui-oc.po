@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 14:03+0000\n"
+"POT-Creation-Date: 2016-06-17 19:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /oc/libo_online/loleaflet-ui-oc.po\n"
-"X-Pootle-Revision: 458665\n"
+"X-Pootle-Revision: 465692\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -95,9 +95,8 @@ msgid ""
 msgstr ""
 
 #: dist/toolbar/toolbar.js:144
-#, fuzzy
 msgid "Are you sure you want to delete this page?"
-msgstr "Sètz segur que volètz suprimir aqueste fuèlh ?"
+msgstr "Sètz segur que volètz suprimir aquesta pagina ?"
 
 #: dist/toolbar/toolbar.js:336
 #: src/admin/AdminStrings.js:20
@@ -357,9 +356,8 @@ msgid "Connection error"
 msgstr ""
 
 #: src/admin/AdminSocketOverview.js:58
-#, fuzzy
 msgid "Are you sure you want to terminate this session?"
-msgstr "Sètz segur que volètz suprimir aquesta diapositiva ?"
+msgstr "Sètz segur que volètz suprimir aquesta session ?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"

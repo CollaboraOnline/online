@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 14:02+0000\n"
+"POT-Creation-Date: 2016-06-18 11:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,31 +12,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-ui-cy.po\n"
-"X-Pootle-Revision: 459232\n"
+"X-Pootle-Revision: 465279\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Lliwiau Thema"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Lliwiau Safonnol"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Lliwiau Gwe"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Nôl i'r Palet"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Hanes"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Dim hanes eto."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -353,124 +353,123 @@ msgstr "GOLYGU"
 
 #: dist/toolbar/toolbar.js:1139
 msgid "Layout"
-msgstr ""
+msgstr "Cynllun"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "Gwall cysylltu"
 
 #: src/admin/AdminSocketOverview.js:58
-#, fuzzy
 msgid "Are you sure you want to terminate this session?"
-msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r sleid hwn?"
+msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r sesiwn hwn?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "Consol gweinyddol"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Toglo'r llywio"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "Gosodiadau"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
-msgstr ""
+msgstr "Trosolwg"
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(cyfredol)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
-msgstr ""
+msgstr "Dadansoddiad"
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "Bwrdd Gwaith"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
-msgstr ""
+msgstr "Defnyddwyr ar-lein"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "Dogfennau wedi eu hagor"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
-msgstr ""
+msgstr "Cof wedi ei ddefnyddio"
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "Dogfen"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "Nifer y golygon"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
-msgstr ""
+msgstr "Amser wedi mynd heibio"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "Lladd"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "Graffiau"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Maint y storfa o ystadegau cof"
 
 #: src/admin/AdminStrings.js:22
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Cyfnod amser ystadegau cof (mewn ms)"
 
 #: src/admin/AdminStrings.js:23
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "Maint storfa ystadegau CPU"
 
 #: src/admin/AdminStrings.js:24
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "Cyfnod amser ystadegau CPU (mewn ms) "
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr " awr"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr " mun"
 
 #: src/admin/Util.js:45
 msgid " s"
-msgstr ""
+msgstr " s"
 
 #: src/control/Control.Menubar.js:9
 #: src/control/Control.Menubar.js:51
@@ -753,12 +752,12 @@ msgstr "Mae'n ddrwg gennym, bu gwall cysylltu annisgwyl. Ceisiwch eto."
 
 #: src/map/Map.js:116
 msgid "Initializing..."
-msgstr ""
+msgstr "Cychwyn..."
 
 #: src/map/Map.js:802
 msgid "Saving..."
-msgstr ""
+msgstr "Yn cadw..."
 
 #: src/map/Map.js:805
 msgid "Loading..."
-msgstr ""
+msgstr "Yn llwytho..."

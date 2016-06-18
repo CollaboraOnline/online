@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 14:03+0000\n"
+"POT-Creation-Date: 2016-06-17 19:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /ro/libo_online/loleaflet-help-ro.po\n"
-"X-Pootle-Revision: 457419\n"
+"X-Pootle-Revision: 467591\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -60,7 +60,7 @@ msgstr "Ctrl + Alt + Shift + V"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "Tipărire (descărcare ca PDF)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Ctrl + P"
@@ -351,7 +351,7 @@ msgstr "Săgeată sus"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "Selectează rânduri în sus"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
@@ -391,7 +391,7 @@ msgstr "Săgeată jos"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "Selectează rânduri în jos"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
@@ -399,10 +399,9 @@ msgid "Shift + Arrow Down"
 msgstr "Shift + săgeată jos"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Mută cursorul la începutul paragrafului anterior"
+msgstr "Mută cursorul la începutul paragrafului următor"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
@@ -504,7 +503,7 @@ msgstr "Ctrl + shift + enter"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
 msgid "Move the view up one page"
-msgstr ""
+msgstr "Mută vederea o pagină în sus"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
 msgid "PageUp"
@@ -512,7 +511,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "Comută cursorul între text și antet"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
 msgid "Ctrl + PageUp"
@@ -528,7 +527,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
 msgid "Move the view down one page"
-msgstr ""
+msgstr "Mută vederea o pagină în jos"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
 msgid "PageDown"
@@ -536,16 +535,15 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "Comută cursorul între text și subsol"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
 msgid "Ctrl + PageDown"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
-#, fuzzy
 msgid "Extend the selection down one page"
-msgstr "Extinde selecția o pagină în sus"
+msgstr "Extinde selecția o pagină în jos"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
 msgid "Shift + PageDown"
@@ -760,9 +758,8 @@ msgid "Insert non-breaking hyphen"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A146
-#, fuzzy
 msgid "Ctrl + Shift + -"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + shift + -"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A148
 msgid "Insert non-breaking space"
@@ -1245,19 +1242,16 @@ msgid "Select to the right word by word"
 msgstr "Selecție spre dreapta cuvânt cu cuvânt"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Ctrl + Shift + Arrow Right"
 msgstr "Ctrl + shift + săgeată dreapta"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Move cursor up one line"
 msgstr "Mută cursorul un rând în sus"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Arrow Up"
 msgstr "Săgeată sus"
@@ -1268,13 +1262,11 @@ msgid "Select lines in upwards direction"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Shift + Arrow Up"
 msgstr "Shift + săgeată sus"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Move cursor to beginning of the previous paragraph"
 msgstr "Mută cursorul la începutul paragrafului anterior"
@@ -1285,7 +1277,6 @@ msgid "Ctrl + Arrow Up"
 msgstr "Ctrl + săgeată sus"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Select to beginning of paragraph"
 msgstr "Selectează până la începutul paragrafului"
@@ -1296,7 +1287,6 @@ msgid "Ctrl + Shift + Arrow Up"
 msgstr "Ctrl + shift + săgeată sus"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Move cursor down one line"
 msgstr "Mută cursorul un rând în jos"
@@ -1317,10 +1307,9 @@ msgid "Shift + Arrow Down"
 msgstr "Shift + săgeată jos"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Mută cursorul la începutul paragrafului anterior"
+msgstr "Mută cursorul la începutul paragrafului următor"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
@@ -1441,7 +1430,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
 msgid "Select objects in the order in which they were created"
-msgstr ""
+msgstr "Selectează obiectele în ordinea creării"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:232"
@@ -1450,12 +1439,12 @@ msgstr "Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
 msgid "Select objects in the reverse order in which they were created"
-msgstr ""
+msgstr "Selectează obiectele în ordinea inversă a creării"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:233"
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Shift + tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgid "Move to next text object on slide / drawing page"
