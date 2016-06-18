@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 18:58+0000\n"
+"POT-Creation-Date: 2016-06-17 19:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,31 +12,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /kk/libo_online/loleaflet-ui-kk.po\n"
-"X-Pootle-Revision: 459247\n"
+"X-Pootle-Revision: 467461\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Тема түстері"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Қалыпты түстер"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Веб түстері"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Палитраға оралу"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Тарихы"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Тарихы әлі жоқ."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -353,124 +353,123 @@ msgstr "ТҮЗЕТУ"
 
 #: dist/toolbar/toolbar.js:1139
 msgid "Layout"
-msgstr ""
+msgstr "Жайма"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "Байланысу қатесі"
 
 #: src/admin/AdminSocketOverview.js:58
-#, fuzzy
 msgid "Are you sure you want to terminate this session?"
-msgstr "Бұл слайдты өшіруді шынымен қалайсыз ба?"
+msgstr "Сессияны аяқтауды шынымен қалайсыз ба?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "Әкімші консолі"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Навигацияны іске қосу/сөндіру"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "Баптаулар"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
-msgstr ""
+msgstr "Шолу"
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(ағымдағы)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
-msgstr ""
+msgstr "Аналитика"
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "Аспаптар панелі"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
-msgstr ""
+msgstr "Желідегі пайдаланушылар"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "Ашылған құжаттар"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
-msgstr ""
+msgstr "Қолданыстағы жады"
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "Құжат"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "Көрулер саны"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
-msgstr ""
+msgstr "Өткен уақыт"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "Құрту"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "Графиктер"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Жады статистикасының кэш өлшемі"
 
 #: src/admin/AdminStrings.js:22
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Жады статистикасының уақыт аралығы (мс)"
 
 #: src/admin/AdminStrings.js:23
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "Процессор статистикасының кэш өлшемі"
 
 #: src/admin/AdminStrings.js:24
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "Процессор статистикасының уақыт аралығы (мс)"
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "КБ"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "МБ"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "ГБ"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "ТБ"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr " сағат"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr " минут"
 
 #: src/admin/Util.js:45
 msgid " s"
-msgstr ""
+msgstr " секунд"
 
 #: src/control/Control.Menubar.js:9
 #: src/control/Control.Menubar.js:51
@@ -752,12 +751,12 @@ msgstr "Байланыстың күтпеген үзілуі. Қайтадан �
 
 #: src/map/Map.js:116
 msgid "Initializing..."
-msgstr ""
+msgstr "Инициализация..."
 
 #: src/map/Map.js:802
 msgid "Saving..."
-msgstr ""
+msgstr "Сақтау..."
 
 #: src/map/Map.js:805
 msgid "Loading..."
-msgstr ""
+msgstr "Жүктелуде..."
