@@ -178,6 +178,7 @@ L.Control.Menubar = L.Control.extend({
 			subIndicatorsPos: 'append',
 			subIndicatorsText: '&#8250;'
 		});
+		$('#main-menu').attr('tabindex', 0);
 		this._initialized = true;
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
