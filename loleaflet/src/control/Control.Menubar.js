@@ -182,6 +182,13 @@ L.Control.Menubar = L.Control.extend({
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
 		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeShow);
+		$('#main-menu').bind('click.smapi', {self: this}, this._onClicked);
+	},
+
+	_onClicked: function(e, menu) {
+		if ($(menu).hasClass('highlighted')) {
+			$('#main-menu').smartmenus('menuHideAll');
+		}
 	},
 
 	_beforeShow: function(e, menu) {
