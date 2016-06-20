@@ -175,7 +175,7 @@ pong
 server -> client
 ================
 
-loolserver <major.minor[-patch]>
+loolserver <loolwsd version> <loolwsd git hash> <major.minor[-patch]>
 
     Upon connection, the server must announce the version number it supports.
     Major: an integer that must always match between client and server,
@@ -184,6 +184,12 @@ loolserver <major.minor[-patch]>
     Minor: an integer is more flexible and is at the discretion of either party.
            Security fixes that do not alter the API would bump the minor version number.
     Patch: an optional string that is informational.
+
+lokitversion <product_name> <product_version> <product_extension> <build_id>
+
+    Version information of underlying LOKit process.
+
+    Eg: LibreOfficeDev 5.3 .0.0.alpha0 <git hash>
 
 contextmenu: <json description of the context menu>
 
