@@ -25,6 +25,7 @@
     left: 0;
     padding-left: 125px;
     z-index: 1000;
+    outline: none;
 }
 
 body {
