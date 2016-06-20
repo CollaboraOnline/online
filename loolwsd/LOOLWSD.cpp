@@ -915,6 +915,10 @@ public:
                 {
                     pid = std::stoi(param.second);
                 }
+                else if (param.first == "version")
+                {
+                    LOOLWSD::LOKitVersion = param.second;
+                }
             }
 
             if (pid <= 0)
@@ -1157,6 +1161,7 @@ std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::AdminCreds;
+std::string LOOLWSD::LOKitVersion;
 bool LOOLWSD::AllowLocalStorage = false;
 bool LOOLWSD::SSLEnabled =
 #if ENABLE_SSL

@@ -71,11 +71,17 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         if (std::get<0>(versionTuple) != ProtocolMajorVersionNumber ||
             std::get<1>(versionTuple) != ProtocolMinorVersionNumber)
         {
-            sendTextFrame("error: cmd=loolclient kind=badversion");
+            sendTextFrame("error: cmd=loolclient kind=badprotocolversion");
             return false;
         }
 
-        sendTextFrame("loolserver " + GetProtocolVersion());
+        // Send LOOL version information
+        std::string version, hash;
+        Util::getVersionInfo(version, hash);
+        sendTextFrame("loolserver " + version + " " + hash + " " + GetProtocolVersion());
+        // Send LOKit version information
+        sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
+
         return true;
     }
 

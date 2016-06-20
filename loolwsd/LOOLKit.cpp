@@ -1109,7 +1109,8 @@ void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
-                bool noCapabilities)
+                bool noCapabilities,
+                bool queryVersion)
 {
     // Reinitialize logging when forked.
     Log::initialize("kit");
@@ -1260,7 +1261,17 @@ void lokit_main(const std::string& childRoot,
         // Open websocket connection between the child process and WSD.
         HTTPClientSession cs("127.0.0.1", MasterPortNumber);
         cs.setTimeout(0);
-        HTTPRequest request(HTTPRequest::HTTP_GET, std::string(NEW_CHILD_URI) + "pid=" + pid);
+
+        std::string requestUrl = std::string(NEW_CHILD_URI) + "pid=" + pid;
+        if (queryVersion)
+        {
+            char* versionInfo = loKit->pClass->getVersionInfo(loKit);
+            std::string encodedVersionStr;
+            URI::encode(std::string(versionInfo), "", encodedVersionStr);
+            requestUrl += "&version=" + encodedVersionStr;
+            free(versionInfo);
+        }
+        HTTPRequest request(HTTPRequest::HTTP_GET, requestUrl);
         HTTPResponse response;
         auto ws = std::make_shared<WebSocket>(cs, request, response);
         ws->setReceiveTimeout(0);

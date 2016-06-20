@@ -13,7 +13,8 @@ void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
-                bool noCapabilities);
+                bool noCapabilities,
+                bool queryVersionInfo);
 
 bool globalPreinit(const std::string &loTemplate);
 

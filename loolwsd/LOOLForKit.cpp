@@ -135,7 +135,8 @@ static void cleanupChildren()
 static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
-                                const std::string& loSubPath)
+                                const std::string& loSubPath,
+                                bool queryVersion = false)
 {
     Log::debug("Forking a loolkit process.");
 
@@ -157,7 +158,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
             Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
         }
 
-        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, NoCapsForKit);
+        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, NoCapsForKit, queryVersion);
     }
     else
     {
@@ -308,7 +309,8 @@ int main(int argc, char** argv)
     Log::info("Preinit stage OK.");
 
     // We must have at least one child, more are created dynamically.
-    if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
+    // Ask this first child to send version information to master process
+    if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true) < 0)
     {
         Log::error("Failed to create a kit process.");
         std::_Exit(Application::EXIT_SOFTWARE);
