@@ -1487,7 +1487,11 @@ Process::PID LOOLWSD::createForKit()
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
     if (DisplayVersion)
-        Util::displayVersionInfo("loolwsd");
+    {
+        std::string version, hash;
+        Util::getVersionInfo(version, hash);
+        std::cout << "loolwsd " << version << " - " << hash << std::endl;
+    }
 
 #if ENABLE_SSL
     initializeSSL();
