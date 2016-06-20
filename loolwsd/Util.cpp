@@ -383,11 +383,11 @@ namespace Util
             Log::syserror("Cannot set thread name to " + s + ".");
     }
 
-    void displayVersionInfo(const char *app)
+    void getVersionInfo(std::string& version, std::string& hash)
     {
-        std::string hash(LOOLWSD_VERSION_HASH);
+        version = std::string(LOOLWSD_VERSION);
+        hash = std::string(LOOLWSD_VERSION_HASH);
         hash.resize(std::min(8, (int)hash.length()));
-        std::cout << app << " " << LOOLWSD_VERSION << " - " << hash << std::endl;
     }
 
     std::string UniqueId()

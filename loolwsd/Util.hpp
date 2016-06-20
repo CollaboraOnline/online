@@ -101,8 +101,8 @@ namespace Util
 
     void setThreadName(const std::string& s);
 
-    /// Display version information
-    void displayVersionInfo(const char *app);
+    /// Get version information
+    void getVersionInfo(std::string& version, std::string& hash);
 
     /// Return a string that is unique across processes and calls.
     std::string UniqueId();

@@ -252,7 +252,9 @@ int main(int argc, char** argv)
         }
         else if (std::strstr(cmd, "--version") == cmd)
         {
-            Util::displayVersionInfo("loolforkit");
+            std::string version, hash;
+            Util::getVersionInfo(version, hash);
+            std::cout << "loolforkit " << version << " - " << hash << std::endl;
         }
 #if ENABLE_DEBUG
         // this process has various privileges - don't run arbitrary code.
