@@ -307,7 +307,7 @@ void HTTPWSTest::testCloseAfterClose()
         {
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
         }
-        while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+        while (bytes && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
         // no more messages is received.
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
