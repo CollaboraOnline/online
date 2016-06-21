@@ -211,21 +211,7 @@ function onClick(id) {
 		resizeToolbar();
 	}
 	else if (id === 'help') {
-		var w = window.innerWidth / 2;
-		var h = window.innerHeight / 2;
-		$.modal('<iframe src="/loleaflet/dist/loleaflet-help.html" width="' + w + '" height="' + h + '" style="border:0">', {
-			overlayClose:true,
-			opacity: 80,
-			overlayCss: {
-				backgroundColor : '#000'
-			},
-			containerCss: {
-				overflow : 'hidden',
-				backgroundColor : '#fff',
-				padding : '20px',
-				border : '2px solid #000'
-			}
-		});
+		map.showLOKeyboardHelp();
 	}
 	else if (id === 'close') {
 		window.parent.postMessage('close', '*');
