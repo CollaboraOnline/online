@@ -127,16 +127,20 @@ L.Socket = L.Class.extend({
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('loolserver ')) {
 			// This must be the first message, unless we reconnect.
-			var versionStr = textMsg.split(' ');
-			$('#loolwsd-version').text(versionStr[1] + ' ' + versionStr[2]);
+			var loolwsdVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			$('#loolwsd-version').text(loolwsdVersionObj.Version +
+			                           ' (git hash: ' + loolwsdVersionObj.Hash + ')');
 
 			// TODO: For now we expect perfect match in protocol versions
-			if (versionStr[3] !== this.ProtocolVersionNumber) {
+			if (loolwsdVersionObj.Protocol !== this.ProtocolVersionNumber) {
 				this.fire('error', {msg: _('Unsupported server version.')});
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
-			$('#lokit-version').text(textMsg.substring(13));
+			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			$('#lokit-version').text(lokitVersionObj.ProductName + ' ' +
+			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension +
+			                         ' (git hash: ' + lokitVersionObj.BuildId.substring(0, 7) + ')');
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
 			this.close();
