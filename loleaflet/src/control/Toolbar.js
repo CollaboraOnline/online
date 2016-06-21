@@ -1,6 +1,8 @@
 /*
  * Toolbar handler
  */
+
+/* global $ window */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -8,6 +10,20 @@ L.Map.include({
 		'.uno:StyleApply',
 		'.uno:CharFontName'
 	],
+
+	_modalDialogOptions: {
+		overlayClose:true,
+		opacity: 80,
+		overlayCss: {
+			backgroundColor : '#000'
+		},
+		containerCss: {
+			overflow : 'hidden',
+			backgroundColor : '#fff',
+			padding : '20px',
+			border : '2px solid #000'
+		}
+	},
 
 	applyFont: function (fontName) {
 		if (this.getPermission() === 'edit') {
@@ -135,5 +151,16 @@ L.Map.include({
 
 	renderFont: function (fontName) {
 		this._socket.sendMessage('renderfont font=' + window.encodeURIComponent(fontName));
+	},
+
+	showLOKeyboardHelp: function() {
+		var w = window.innerWidth / 2;
+		var h = window.innerHeight / 2;
+		$.modal('<iframe src="/loleaflet/dist/loleaflet-help.html" width="' + w + '" height="' + h + '" style="border:0">',
+		        this._modalDialogOptions);
+	},
+
+	showLOAboutDialog: function() {
+		$('#about-dialog').modal(this._modalDialogOptions);
 	}
 });

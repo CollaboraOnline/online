@@ -46,7 +46,8 @@ L.Control.Menubar = L.Control.extend({
 																						{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
 												  {name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			},
-			{name: _('Help'), type: 'menu', menu: [{name: _('About'), id: 'about', type: 'action'}]
+			{name: _('Help'), type: 'menu', menu: [{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+			                                       {name: _('About'), id: 'about', type: 'action'}]
 			}
 		],
 
@@ -90,7 +91,8 @@ L.Control.Menubar = L.Control.extend({
 												 {type: 'separator'},
 												 {name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
-			{name: _('Help'), type: 'menu', menu: [{name: _('About'), id: 'about', type: 'action'}]
+			{name: _('Help'), type: 'menu', menu: [{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+			                                       {name: _('About'), id: 'about', type: 'action'}]
 			}
 		],
 
@@ -128,7 +130,8 @@ L.Control.Menubar = L.Control.extend({
 												 {name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
 												 {name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			},
-			{name: _('Help'), type: 'menu', menu: [{name: _('About'), id: 'about', type: 'action'}]
+			{name: _('Help'), type: 'menu', menu: [{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+			                                       {name: _('About'), id: 'about', type: 'action'}]
 			}
 		],
 
@@ -298,19 +301,9 @@ L.Control.Menubar = L.Control.extend({
 				callback: this._onDeleteSlide
 			}, this);
 		} else if (id === 'about') {
-			$('#about-dialog').modal({
-				overlayClose:true,
-				opacity: 80,
-				overlayCss: {
-					backgroundColor : '#000'
-				},
-				containerCss: {
-					overflow : 'hidden',
-					backgroundColor : '#fff',
-					padding : '20px',
-					border : '2px solid #000'
-				}
-			});
+			map.showLOAboutDialog();
+		} else if (id === 'keyboard-shortcuts') {
+			map.showLOKeyboardHelp();
 		}
 	},
 
