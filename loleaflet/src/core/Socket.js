@@ -2,7 +2,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global _ vex */
+/* global _ vex $ */
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 
@@ -127,10 +127,16 @@ L.Socket = L.Class.extend({
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('loolserver ')) {
 			// This must be the first message, unless we reconnect.
-			// TODO: For now we expect perfect match.
-			if (textMsg.substring(11) !== this.ProtocolVersionNumber) {
+			var versionStr = textMsg.split(' ');
+			$('#loolwsd-version').text(versionStr[1] + ' ' + versionStr[2]);
+
+			// TODO: For now we expect perfect match in protocol versions
+			if (versionStr[3] !== this.ProtocolVersionNumber) {
 				this.fire('error', {msg: _('Unsupported server version.')});
 			}
+		}
+		else if (textMsg.startsWith('lokitversion ')) {
+			$('#lokit-version').text(textMsg.substring(13));
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
 			this.close();
