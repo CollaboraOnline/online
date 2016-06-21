@@ -1275,7 +1275,7 @@ void LOOLWSD::initialize(Application& self)
         NumPreSpawnedChildren = config().getUInt("num_prespawn_children", 1);
     }
 
-    const auto maxConcurrency = config().getInt("per_document.max_concurrency");
+    const auto maxConcurrency = config().getInt("per_document.max_concurrency", 4);
     if (maxConcurrency > 0)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
