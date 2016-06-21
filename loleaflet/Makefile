@@ -38,7 +38,9 @@ pot:
 		src/admin/AdminSocketOverview.js \
 		src/admin/AdminStrings.js \
 		src/admin/Util.js \
+		src/control/Control.ColumnHeader.js \
 		src/control/Control.Menubar.js \
+		src/control/Control.RowHeader.js \
 		src/control/Control.Tabs.js \
 		src/control/Toolbar.js \
 		src/core/Socket.js \
