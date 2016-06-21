@@ -4,6 +4,7 @@
 
 /* global $ _ map title vex */
 L.Control.Menubar = L.Control.extend({
+	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
 		text:  [
 			{name: _('File'), type: 'menu', menu: [{name: _('Save'), type: 'unocommand', uno: '.uno:Save'},
@@ -44,6 +45,8 @@ L.Control.Menubar = L.Control.extend({
 																						{name: _('Column'), type: 'unocommand', uno: '.uno:EntireColumn'},
 																						{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
 												  {name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
+			},
+			{name: _('Help'), type: 'menu', menu: [{name: _('About'), id: 'about', type: 'action'}]
 			}
 		],
 
@@ -86,6 +89,8 @@ L.Control.Menubar = L.Control.extend({
 												 {name: _('Delete slide'), id: 'deletepage', type: 'action'},
 												 {type: 'separator'},
 												 {name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
+			},
+			{name: _('Help'), type: 'menu', menu: [{name: _('About'), id: 'about', type: 'action'}]
 			}
 		],
 
@@ -122,6 +127,8 @@ L.Control.Menubar = L.Control.extend({
 												 {type: 'separator'},
 												 {name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
 												 {name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
+			},
+			{name: _('Help'), type: 'menu', menu: [{name: _('About'), id: 'about', type: 'action'}]
 			}
 		],
 
@@ -290,6 +297,20 @@ L.Control.Menubar = L.Control.extend({
 				message: _('Are you sure you want to delete this slide?'),
 				callback: this._onDeleteSlide
 			}, this);
+		} else if (id === 'about') {
+			$('#about-dialog').modal({
+				overlayClose:true,
+				opacity: 80,
+				overlayCss: {
+					backgroundColor : '#000'
+				},
+				containerCss: {
+					overflow : 'hidden',
+					backgroundColor : '#fff',
+					padding : '20px',
+					border : '2px solid #000'
+				}
+			});
 		}
 	},
 
