@@ -955,7 +955,8 @@ public:
                 }
                 else if (param.first == "docKey")
                 {
-                    docKey = param.second;
+                    // We store encoded docKey in DocumentBroker only
+                    URI::encode(param.second, "", docKey);
                 }
             }
 
