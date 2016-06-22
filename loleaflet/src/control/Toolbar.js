@@ -189,6 +189,15 @@ L.Map.include({
 					for (i = 0, max = translatableContent.length; i < max; i++) {
 						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
 					}
+
+					// workaround for https://github.com/HubSpot/vex/issues/43
+					$('.vex-overlay').css({ 'pointer-events': 'none'});
+					$('.vex').click(function() {
+						vex.close($vexContent.data().vex.id);
+					});
+					$('.vex-content').click(function(e) {
+						e.stopPropagation();
+					});
 				}
 			});
 		});
