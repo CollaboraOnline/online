@@ -139,7 +139,7 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('lokitversion ')) {
 			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			$('#lokit-version').text(lokitVersionObj.ProductName + ' ' +
-			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension +
+			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
 			                         ' (git hash: ' + lokitVersionObj.BuildId.substring(0, 7) + ')');
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {

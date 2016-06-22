@@ -210,9 +210,6 @@ function onClick(id) {
 		w2ui['toolbar-up-more'].render();
 		resizeToolbar();
 	}
-	else if (id === 'help') {
-		map.showLOKeyboardHelp();
-	}
 	else if (id === 'close') {
 		window.parent.postMessage('close', '*');
 		map.remove();
@@ -353,8 +350,6 @@ $(function () {
 			{type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table')},
 			{type: 'button',  id: 'annotation', img: 'annotation', hint: _('Insert comment'), uno: 'InsertAnnotation'},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _('Insert graphic')},
-			{type: 'break'},
-			{type: 'button',  id: 'help',  img: 'help', hint: _('Help')},
 			{type: 'html', id: 'right'},
 			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
 			{type: 'button',  id: 'close',  img: 'closedoc', hint: _('Close document'), hidden: true}

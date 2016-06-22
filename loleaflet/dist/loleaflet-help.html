@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>LOLeaflet Help</title>
-    <meta charset="utf-8">
-    <link rel="localizations" href="/loleaflet/dist/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
-</head>
-<body onload="selectHelp()">
     <style>
         h1 {
             text-align: center;
@@ -30,21 +21,7 @@
             width: 30%;
         }
     </style>
-    <script src="/loleaflet/dist/l10n/json2.min.js"></script>
-    <script src="/loleaflet/dist/l10n/l10n.min.js"></script>
-    <script>
-        function selectHelp() {
-                if (parent.map.getDocType() === 'text') {
-                        document.getElementById('text-shortcuts').style.display='block';
-                }
-                else if (parent.map.getDocType() === 'spreadsheet') {
-                        document.getElementById('spreadsheet-shortcuts').style.display='block';
-                }
-                else if (parent.map.getDocType() === 'presentation' || parent.map.getDocType() === 'drawing') {
-                        document.getElementById('presentation-shortcuts').style.display='block';
-                }
-        }
-    </script>
+<div>
     <h1>Keyboard Shortcuts</h1>
     <div id="general-shortcuts">
         <h2>General Keyboard Shortcuts</h2>
@@ -235,19 +212,4 @@
             <tr> <td class="function">Select all in slide / drawing page</td> <td class="shortcut">Ctrl + A</td> </tr>
         </table>
     </div>
-    <script>
-        var translatableContent = document.getElementsByTagName("h1");
-        for (var i=0, max=translatableContent.length; i < max; i++) {
-            translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
-        }
-        translatableContent = document.getElementsByTagName("h2");
-        for (var i=0, max=translatableContent.length; i < max; i++) {
-            translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
-        }
-        translatableContent = document.getElementsByTagName("td");
-        for (var i=0, max=translatableContent.length; i < max; i++) {
-            translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
-        }
-    </script>
-</body>
-</html>
+</div>

@@ -29,6 +29,7 @@
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/styles-localizations.json" type="application/vnd.oftn.l10n+json" />
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
+<link rel="localizations" href="/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
 <style type="text/css"></style></head>
 <body>
     <script src="/loleaflet/%VERSION%/jquery/2.1.0/jquery.min.js"></script>
@@ -51,7 +52,6 @@
     <script src="/loleaflet/%VERSION%/toolbar/select2.min.js"></script>
     <script src="/loleaflet/%VERSION%/jqueryui/1.11.1/jquery-ui.min.js"></script>
     <script src="/loleaflet/%VERSION%/toolbar/evol.colorpicker.min.js"></script>
-    <script src="/loleaflet/%VERSION%/toolbar/jquery.simplemodal.1.4.4.min.js"></script>
     <script src="/loleaflet/%VERSION%/leaflet-src.js"></script>
     <script src="/loleaflet/%VERSION%/plugins/draw-0.2.4/dist/leaflet.draw.js"></script>
     <script src="/loleaflet/%VERSION%/scrollbar/jquery.mCustomScrollbar.js"></script>
@@ -135,6 +135,20 @@
     map.addControl(L.control.menubar());
 
     </script>
+
+    <div id="about-dialog" style="display:none; text-align: center;">
+      <h1 id="product-name">LibreOffice Online</h1>
+      <hr/>
+      <h3 id="product-string"></h3>
+      <p>
+        <h3>LOOLWSD</h3>
+        <div id="loolwsd-version"></div>
+      </p>
+      <p>
+        <h3>LOKit</h3>
+        <div id="lokit-version"></div>
+      </p>
+    </div>
 
     <script src="/loleaflet/%VERSION%/toolbar/toolbar.js"></script>
 </body></html>

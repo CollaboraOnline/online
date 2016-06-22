@@ -2,7 +2,7 @@
  * Toolbar handler
  */
 
-/* global $ window */
+/* global $ window vex brandProductName */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -155,12 +155,80 @@ L.Map.include({
 
 	showLOKeyboardHelp: function() {
 		var w = window.innerWidth / 2;
-		var h = window.innerHeight / 2;
-		$.modal('<iframe src="/loleaflet/dist/loleaflet-help.html" width="' + w + '" height="' + h + '" style="border:0">',
-		        this._modalDialogOptions);
+		$.get('/loleaflet/dist/loleaflet-help.html', function(data) {
+			vex.open({
+				content: data,
+				showCloseButton: true,
+				escapeButtonCloses: true,
+				overlayClosesOnClick: true,
+				contentCSS: {width: w + 'px'},
+				buttons: {},
+				afterOpen: function($vexContent) {
+					// Display help according to document opened
+					if (map.getDocType() === 'text') {
+						document.getElementById('text-shortcuts').style.display='block';
+					}
+					else if (map.getDocType() === 'spreadsheet') {
+						document.getElementById('spreadsheet-shortcuts').style.display='block';
+					}
+					else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
+						document.getElementById('presentation-shortcuts').style.display='block';
+					}
+
+					// Lets transalte
+					var i, max;
+					var translatableContent = $vexContent.find('h1');
+					for (i = 0, max = translatableContent.length; i < max; i++) {
+						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+					}
+					translatableContent = $vexContent.find('h2');
+					for (i = 0, max = translatableContent.length; i < max; i++) {
+						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+					}
+					translatableContent = $vexContent.find('td');
+					for (i = 0, max = translatableContent.length; i < max; i++) {
+						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+					}
+
+					// workaround for https://github.com/HubSpot/vex/issues/43
+					$('.vex-overlay').css({ 'pointer-events': 'none'});
+					$('.vex').click(function() {
+						vex.close($vexContent.data().vex.id);
+					});
+					$('.vex-content').click(function(e) {
+						e.stopPropagation();
+					});
+				}
+			});
+		});
 	},
 
 	showLOAboutDialog: function() {
-		$('#about-dialog').modal(this._modalDialogOptions);
+		// Move the div sitting in 'body' as vex-content and make it visible
+		var content = $('#about-dialog').clone().css({display: 'block'});
+		// fill product-name and product-string
+		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
+		content.find('#product-name').text(productName);
+		var productString = _('This version of %productName is powered by');
+		content.find('#product-string').text(productString.replace('%productName', productName));
+		var w = window.innerWidth / 2;
+		vex.open({
+			content: content,
+			showCloseButton: true,
+			escapeButtonCloses: true,
+			overlayClosesOnClick: true,
+			contentCSS: { width: w + 'px'},
+			buttons: {},
+			afterOpen: function($vexContent) {
+				// workaround for https://github.com/HubSpot/vex/issues/43
+				$('.vex-overlay').css({ 'pointer-events': 'none'});
+				$('.vex').click(function() {
+					vex.close($vexContent.data().vex.id);
+				});
+				$('.vex-content').click(function(e) {
+					e.stopPropagation();
+				});
+			}
+		});
 	}
 });
