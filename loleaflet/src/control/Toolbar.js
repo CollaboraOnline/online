@@ -209,7 +209,8 @@ L.Map.include({
 		// fill product-name and product-string
 		var productName = brandProductName || 'LibreOffice Online';
 		content.find('#product-name').text(productName);
-		content.find('#product-string').text(_('This version of ' + productName + ' is powered by'));
+		var productString = _('This version of %productName is powered by');
+		content.find('#product-string').text(productString.replace('%productName', productName));
 		var w = window.innerWidth / 2;
 		vex.open({
 			content: content,
