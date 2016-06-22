@@ -10,7 +10,8 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 noinst_LTLIBRARIES = \
         unit-timeout.la unit-prefork.la \
         unit-storage.la unit-fonts.la \
-        unit-admin.la unit-tilecache.la
+        unit-admin.la unit-tilecache.la \
+	unit-fuzz.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
@@ -31,6 +32,7 @@ test_SOURCES = TileCacheTests.cpp WhiteBoxTests.cpp integration-http-server.cpp 
 test_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
+unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
 unit_fonts_la_SOURCES = UnitFonts.cpp
