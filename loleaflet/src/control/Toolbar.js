@@ -2,7 +2,7 @@
  * Toolbar handler
  */
 
-/* global $ window vex */
+/* global $ window vex brandProductName */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -204,6 +204,30 @@ L.Map.include({
 	},
 
 	showLOAboutDialog: function() {
-		$('#about-dialog').modal(this._modalDialogOptions);
+		// Move the div sitting in 'body' as vex-content and make it visible
+		var content = $('#about-dialog').clone().css({display: 'block'});
+		// fill product-name and product-string
+		var productName = brandProductName || 'LibreOffice Online';
+		content.find('#product-name').text(productName);
+		content.find('#product-string').text(_('This version of ' + productName + ' is powered by'));
+		var w = window.innerWidth / 2;
+		vex.open({
+			content: content,
+			showCloseButton: true,
+			escapeButtonCloses: true,
+			overlayClosesOnClick: true,
+			contentCSS: { width: w + 'px'},
+			buttons: {},
+			afterOpen: function($vexContent) {
+				// workaround for https://github.com/HubSpot/vex/issues/43
+				$('.vex-overlay').css({ 'pointer-events': 'none'});
+				$('.vex').click(function() {
+					vex.close($vexContent.data().vex.id);
+				});
+				$('.vex-content').click(function(e) {
+					e.stopPropagation();
+				});
+			}
+		});
 	}
 });

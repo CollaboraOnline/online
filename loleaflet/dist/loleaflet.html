@@ -138,9 +138,9 @@
     </script>
 
     <div id="about-dialog" style="display:none; text-align: center;">
-      <h1 class="translatable">About LibreOffice Online</h1>
+      <h1 id="product-name">LibreOffice Online</h1>
       <hr/>
-      <h3 class="translatable">This version of LibreOffice Online is powered by</h3>
+      <h3 id="product-string"></h3>
       <p>
         <h3>LOOLWSD</h3>
         <div id="loolwsd-version"></div>
@@ -150,13 +150,6 @@
         <div id="lokit-version"></div>
       </p>
     </div>
-
-    <script>
-        var translatableContent = document.getElementsByClassName("translatable");
-        for (var i=0; i < translatableContent.length; i++) {
-            translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
-        }
-    </script>
 
     <script src="/loleaflet/%VERSION%/toolbar/toolbar.js"></script>
 </body></html>
