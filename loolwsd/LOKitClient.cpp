@@ -67,6 +67,8 @@ extern "C"
             CASE(DOCUMENT_PASSWORD_TO_MODIFY);
             CASE(ERROR);
             CASE(CONTEXT_MENU);
+            CASE(INVALIDATE_VIEW_CURSOR);
+            CASE(TEXT_VIEW_SELECTION);
 #undef CASE
         }
         std::cout << " payload: " << pPayload << std::endl;
