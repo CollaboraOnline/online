@@ -207,7 +207,7 @@ L.Map.include({
 		// Move the div sitting in 'body' as vex-content and make it visible
 		var content = $('#about-dialog').clone().css({display: 'block'});
 		// fill product-name and product-string
-		var productName = brandProductName || 'LibreOffice Online';
+		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
 		content.find('#product-name').text(productName);
 		var productString = _('This version of %productName is powered by');
 		content.find('#product-string').text(productString.replace('%productName', productName));
