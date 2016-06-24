@@ -83,7 +83,7 @@ L.Map = L.Evented.extend({
 
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
-			'docLayer': false,
+			'doclayerinit': false,
 			'statusindicatorfinish': false,
 			'StyleApply': false,
 			'CharFontName': false,
@@ -92,10 +92,14 @@ L.Map = L.Evented.extend({
 		this.initComplete = false;
 
 		this.on('updatepermission', function() {
-			if (this.initComplete) {
-				return;
+			if (!this.initComplete) {
+				this._fireInitComplete('updatepermission');
 			}
-			this._fireInitComplete('updatepermission');
+		});
+		this.on('doclayerinit', function() {
+			if (!this.initComplete) {
+				this._fireInitComplete('doclayerinit');
+			}
 		});
 		this.on('updatetoolbarcommandvalues', function(e) {
 			if (this.initComplete) {
@@ -108,11 +112,6 @@ L.Map = L.Evented.extend({
 				this._fireInitComplete('CharFontName');
 			}
 		});
-
-		// when editing, we need the LOK session right away
-		if (options.permission === 'edit') {
-			this.setPermission(options.permission);
-		}
 
 		this.showBusy(_('Initializing...'), false);
 		this.on('statusindicator', this._onUpdateProgress, this);

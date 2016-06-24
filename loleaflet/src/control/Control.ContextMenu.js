@@ -60,7 +60,7 @@ L.Control.ContextMenu = L.Control.extend({
 	},
 
 	_onContextMenu: function(obj) {
-		if (!map._editlock) {
+		if (map._permission !== 'edit') {
 			return;
 		}
 

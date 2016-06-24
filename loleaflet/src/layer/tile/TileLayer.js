@@ -174,11 +174,18 @@ L.TileLayer = L.GridLayer.extend({
 			},
 		this);
 
-		map.on('editlock', function(e) {
+		map.on('updatepermission', function(e) {
 			// {En,Dis}able selection handles
 			for (var key in this._selectionHandles) {
-				this._selectionHandles[key].setDraggable(e.value);
+				this._selectionHandles[key].setDraggable(e.perm === 'edit');
 			}
+
+			// we want graphic selection handles to appear
+			// when in editmode, and dissappear when in view mode
+			if (e.perm !== 'edit') {
+				this._graphicSelection = null;
+			}
+			this._onUpdateGraphicSelection();
 		}, this);
 
 		for (var key in this._selectionHandles) {
@@ -186,14 +193,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._textArea = map._textArea;
 		this._textArea.focus();
-		if (this.options.permission === 'edit' ||
-				this.options.permission === 'view' ||
-				this.options.permission === 'readonly') {
-			map.setPermission(this.options.permission);
-		}
-		else {
-			map.setPermission(this.options.defaultPermission);
-		}
+
+		map.setPermission(this.options.permission);
 
 		map.fire('statusindicator', {statusType: 'loleafletloaded'});
 	},
@@ -697,7 +698,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onTextSelectionEndMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null && this._map._editlock) {
+		if (strTwips != null && this._map._permission === 'edit') {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
@@ -712,7 +713,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onTextSelectionStartMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null && this._map._editlock) {
+		if (strTwips != null && this._map._permission === 'edit') {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
@@ -774,7 +775,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_mapOnError: function (e) {
-		if (e.msg) {
+		if (e.msg && this._map._permission === 'edit') {
 			this._map.setPermission('view');
 		}
 	},
@@ -961,7 +962,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.removeLayer(this._graphicMarker);
 			}
 
-			if (!this._map._editlock) {
+			if (this._map._permission !== 'edit') {
 				return;
 			}
 
@@ -1274,17 +1275,15 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onEditLock: function (textMsg) {
-		var val = parseInt(textMsg.split(' ')[1]);
-		if (!isNaN(val) && val !== this._map._editlock) {
-			this._map._editlock = val;
-			this._map.fire('editlock', {value: val});
+		// if we have explicitly set this as readonly,
+		// then never listen server for editlock
+		if (this._map._permission === 'readonly') {
+			return;
+		}
 
-			// we want graphic selection handles to appear ...
-			// when editlock is taken, and dissappear when it is taken away
-			if (!val) {
-				this._graphicSelection = null;
-			}
-			this._onUpdateGraphicSelection();
+		var perm = parseInt(textMsg.split(' ')[1]) === 1 ? 'edit' : 'view';
+		if (perm !== this._map._permission) {
+			this._map.setPermission(perm);
 		}
 	},
 

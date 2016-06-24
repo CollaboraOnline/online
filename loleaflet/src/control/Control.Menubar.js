@@ -221,7 +221,7 @@ L.Control.Menubar = L.Control.extend({
 					self.options.allowedViewModeActions.splice(index, 1);
 				}
 			}
-			if (!map._editlock) {
+			if (map._permission !== 'edit') {
 				var found = false;
 				for (var i in self.options.allowedViewModeActions) {
 					if (self.options.allowedViewModeActions[i] === id) {

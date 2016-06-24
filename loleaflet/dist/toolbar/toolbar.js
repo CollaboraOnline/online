@@ -623,7 +623,7 @@ function onFormulaBarBlur() {
 	}, 250);
 }
 
-map.on('updatepermission', function () {
+map.on('doclayerinit', function () {
 	var toolbar = w2ui['toolbar-up'];
 	var docType = map.getDocType();
 	if (docType !== 'text') {
@@ -784,7 +784,7 @@ map.on('commandstatechanged', function (e) {
 
 		// Change the toolbar button state immediately
 		// if we already have the editlock
-		if (map._editlock && (state === 'enabled' || state === 'disabled')) {
+		if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
 			// in case some buttons are in toolbar-up-more, find
 			// them and en/dis-able them.
 			if (formatButtons[id]) {
@@ -980,13 +980,13 @@ map.on('hyperlinkclicked', function (e) {
 	window.open(e.url, '_blank');
 });
 
-map.on('editlock', function (e) {
+map.on('updatepermission', function (e) {
 	var toolbar = w2ui['toolbar-down'];
-	if (e.value) {
+	if (e.perm === 'edit') {
 		toolbar.disable('takeedit');
 		toolbar.set('takeedit', {hint: _('You are editing (others can only view)'), caption: _('EDITING')});
 	}
-	else {
+	else if (e.perm === 'view') {
 		toolbar.enable('takeedit');
 		toolbar.set('takeedit', {hint: _('Take edit lock (others can only view)'), caption: _('VIEWING')});
 		$('#tb_toolbar-down_item_takeedit')
@@ -1002,12 +1002,16 @@ map.on('editlock', function (e) {
 			takeEditPopupTimeout = null;
 		}, 3000);
 	}
+	else if (e.perm === 'readonly') {
+		toolbar.disable('takeedit');
+		toolbar.set('takeedit', {hint: _('You are locked in readonly mode'), caption: _('READONLY')});
+	}
 
 	toolbar = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
 	// {En,Dis}able toolbar buttons
 	for (var id in formatButtons) {
-		if (e.value && formatButtons[id]) {
+		if (e.perm === 'edit' && formatButtons[id]) {
 			// restore the state from stored object (formatButtons)
 			toolbar.enable(id);
 			// some might be hidden in toolbar-up-more
@@ -1022,7 +1026,7 @@ map.on('editlock', function (e) {
 	var formulaBarButtons = ['sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
 	var toolbarDownButtons = ['next', 'prev'];
-	if (e.value) {
+	if (e.perm === 'edit') {
 		// Enable list boxes
 		$('.styles-select').prop('disabled', false);
 		$('.fonts-select').prop('disabled', false);
@@ -1081,11 +1085,10 @@ map.on('editlock', function (e) {
 		});
 		$('#search-input').prop('disabled', true);
 	}
-
 });
 
 map.on('mouseup keypress', function() {
-	if (!map._editlock) {
+	if (map._permission === 'view') {
 		$('#tb_toolbar-down_item_takeedit')
 			.w2overlay({
 				html: takeEditPopupMessage,

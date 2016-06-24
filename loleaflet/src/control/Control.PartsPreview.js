@@ -78,7 +78,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		if (!map._editlock) {
+		if (map._permission !== 'edit') {
 			return;
 		}
 		var part = $('.parts-preview .mCSB_container .preview-frame').index(e.target.parentNode);
