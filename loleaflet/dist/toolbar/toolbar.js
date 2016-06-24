@@ -1103,10 +1103,6 @@ map.on('mouseup keypress', function() {
 	}
 });
 
-map.on('locontextmenu', function () {
-	// TODO: context menu handling...
-});
-
 map.on('statusindicator', function (e) {
 	if (e.statusType === 'loleafletloaded') {
 		var data = [''];
