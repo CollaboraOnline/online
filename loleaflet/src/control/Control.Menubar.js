@@ -8,8 +8,9 @@ L.Control.Menubar = L.Control.extend({
 	options: {
 		text:  [
 			{name: _('File'), type: 'menu', menu: [{name: _('Save'), type: 'unocommand', uno: '.uno:Save'},
-												{name: _('Print'), id: 'print', type: 'action'},
-												{name: _('Download as'), type: 'menu', menu: [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+												   {name: _('Print'), id: 'print', type: 'action'},
+												   {name: _('See revision history'), id: 'rev-history', type: 'action'},
+												   {name: _('Download as'), type: 'menu', menu: [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 																						   {name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
 																						   {name: _('Microsoft Word 2003 (.doc)'), id: 'downloadas-doc', type: 'action'},
 																						   {name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'}]}]
@@ -53,8 +54,9 @@ L.Control.Menubar = L.Control.extend({
 
 		presentation: [
 			{name: _('File'), type: 'menu', menu: [{name: _('Save'), type: 'unocommand', uno: '.uno:Save'},
-												{name: _('Print'), id: 'print', type: 'action'},
-												{name: _('Download as'), type: 'menu', menu:  [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+												   {name: _('Print'), id: 'print', type: 'action'},
+												   {name: _('See revision history'), id: 'rev-history', type: 'action'},
+												   {name: _('Download as'), type: 'menu', menu:	 [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 																							{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
 																							{name: _('Microsoft Powerpoint 2003 (.ppt)'), id: 'downloadas-ppt', type: 'action'},
 																							{name: _('Microsoft Powerpoint (.pptx)'), id: 'downloadas-pptx', type: 'action'}]}]
@@ -98,8 +100,9 @@ L.Control.Menubar = L.Control.extend({
 
 		spreadsheet: [
 			{name: _('File'), type: 'menu', menu: [{name: _('Save'), type: 'unocommand', uno: '.uno:Save'},
-												{name: _('Print'), id: 'print', type: 'action'},
-												{name: _('Download as'), type: 'menu', menu: [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+												   {name: _('Print'), id: 'print', type: 'action'},
+												   {name: _('See revision history'), id: 'rev-history', type: 'action'},
+												   {name: _('Download as'), type: 'menu', menu: [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 																						   {name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
 																						   {name: _('Microsoft Excel 2003 (.xls)'), id: 'downloadas-xls', type: 'action'},
 																						   {name: _('Microsoft Excel (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]}]
@@ -305,6 +308,12 @@ L.Control.Menubar = L.Control.extend({
 			map.showLOAboutDialog();
 		} else if (id === 'keyboard-shortcuts') {
 			map.showLOKeyboardHelp();
+		} else if (id === 'rev-history') {
+			// if we are being loaded inside an iframe, ask
+			// our host to show revision history mode
+			if (window.top !== window.self) {
+				window.parent.postMessage('rev-history', '*');
+			}
 		}
 	},
 
