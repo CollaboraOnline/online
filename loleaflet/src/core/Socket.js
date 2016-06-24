@@ -262,7 +262,7 @@ L.Socket = L.Class.extend({
 
 			this._map._docLayer = docLayer;
 			this._map.addLayer(docLayer);
-			this._map._fireInitComplete('docLayer');
+			this._map.fire('doclayerinit');
 		}
 
 		// these can arrive very early during the startup

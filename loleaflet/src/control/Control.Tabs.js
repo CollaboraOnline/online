@@ -9,10 +9,17 @@ L.Control.Tabs = L.Control.extend({
 		this._initalized = false;
 	},
 
-	_onUpdatePermission: function() {
-		if (this._map.getDocType() === 'spreadsheet' && !this._initialized) {
+	_onUpdatePermission: function(e) {
+		if (this._map.getDocType() !== 'spreadsheet') {
+			return;
+		}
+
+		if (!this._initialized) {
 			this._initialize();
 		}
+		setTimeout(function() {
+			$('.spreadsheet-context-menu').contextMenu(e.perm === 'edit');
+		}, 1000);
 	},
 
 	_initialize: function () {
@@ -67,15 +74,6 @@ L.Control.Tabs = L.Control.extend({
 		});
 
 		map.on('updateparts', this._updateDisabled, this);
-		map.on('editlock', this._enableTabsContextMenu, this);
-	},
-
-	_enableTabsContextMenu: function(e) {
-		if (!e.value) {
-			$('.spreadsheet-context-menu').contextMenu(false);
-		} else {
-			$('.spreadsheet-context-menu').contextMenu(true);
-		}
 	},
 
 	_updateDisabled: function (e) {
@@ -125,7 +123,7 @@ L.Control.Tabs = L.Control.extend({
 					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-context-menu-selected');
 				}
 
-				if (map._editlock) {
+				if (map._permission === 'edit') {
 					L.DomUtil.removeClass(this._spreadsheetTabs[key], 'context-menu-disabled');
 				} else {
 					L.DomUtil.addClass(this._spreadsheetTabs[key], 'context-menu-disabled');
@@ -135,7 +133,7 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		if (!map._editlock) {
+		if (map._permission !== 'edit') {
 			return;
 		}
 		var part =  e.target.id.match(/\d+/g)[0];

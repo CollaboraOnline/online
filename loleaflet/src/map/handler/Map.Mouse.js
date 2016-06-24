@@ -146,13 +146,6 @@ L.Map.Mouse = L.Handler.extend({
 				}
 				this._mouseEventsQueue.push(L.bind(function() {
 					var docLayer = this._map._docLayer;
-					// if it's a click or mouseup after selecting
-					if (this._mouseEventsQueue.length > 1) {
-						// it's a click
-						if (this._map._permission === 'view') {
-							docLayer._map.setPermission('edit');
-						}
-					}
 					this._mouseEventsQueue = [];
 					docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, buttons, modifier);
 					docLayer._textArea.focus();
