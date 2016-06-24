@@ -140,7 +140,8 @@ L.Control.Menubar = L.Control.extend({
 		allowedViewModeActions: ['downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx',
 								 'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx',
 								 'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx',
-								 'fullscreen', 'zoomin', 'zoomout', 'zoomreset']
+								 'fullscreen', 'zoomin', 'zoomout', 'zoomreset',
+								 'about', 'keyboard-shortcuts']
 	},
 
 	onAdd: function (map) {
