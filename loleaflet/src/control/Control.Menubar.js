@@ -153,7 +153,7 @@ L.Control.Menubar = L.Control.extend({
 		this._menubarCont = L.DomUtil.create('ul', 'sm sm-simple', docContainer.parentElement);
 		this._menubarCont.id = 'main-menu';
 
-		map.on('updatepermission', this._onUpdatePermission, this);
+		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('commandstatechanged', this._onCommandStateChanged, this);
 	},
 
@@ -165,11 +165,7 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
-	_onUpdatePermission: function() {
-		if (this._initialized || !this._menubarCont) {
-			return;
-		}
-
+	_onDocLayerInit: function() {
 		// Add document specific menu
 		var docType = this._map.getDocType();
 		if (docType === 'text') {
@@ -193,11 +189,12 @@ L.Control.Menubar = L.Control.extend({
 			subIndicatorsText: '&#8250;'
 		});
 		$('#main-menu').attr('tabindex', 0);
-		this._initialized = true;
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
 		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeShow);
 		$('#main-menu').bind('click.smapi', {self: this}, this._onClicked);
+
+		this._initialized = true;
 	},
 
 	_onClicked: function(e, menu) {
