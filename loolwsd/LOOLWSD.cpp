@@ -1248,6 +1248,10 @@ void LOOLWSD::initialize(Application& self)
         loadConfiguration(configPath, PRIO_DEFAULT);
     }
 
+    // Override any settings passed on the command-line.
+    AutoPtr<AppConfigMap> pOverrideConfig(new AppConfigMap(_overrideSettings));
+    conf.addWriteable(pOverrideConfig, PRIO_APPLICATION); // Highest priority
+
     // This overrides whatever is in the config file,
     // which forces admins to set this flag on the command-line.
     config().setBool("storage.filesystem[@allow]", AllowLocalStorage);
@@ -1304,10 +1308,10 @@ void LOOLWSD::initialize(Application& self)
     if (NumPreSpawnedChildren == 0)
     {
         // Default to 1 child.
-        NumPreSpawnedChildren = config().getUInt("num_prespawn_children", 1);
+        NumPreSpawnedChildren = getUIntConfigValue(conf, "num_prespawn_children", 1);
     }
 
-    const auto maxConcurrency = config().getInt("per_document.max_concurrency", 4);
+    const auto maxConcurrency = getUIntConfigValue(conf, "per_document.max_concurrency", 4);
     if (maxConcurrency > 0)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
@@ -1426,6 +1430,11 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
+    optionSet.addOption(Option("override", "o", "Override any setting by providing fullxmlpath=value.")
+                        .required(false)
+                        .repeatable(true)
+                        .argument("xmlpath"));
+
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -1482,6 +1491,13 @@ void LOOLWSD::handleOption(const std::string& optionName,
         NoCapsForKit = true;
     else if (optionName == "careerspan")
         careerSpanSeconds = std::stoi(value);
+    else if (optionName == "override")
+    {
+        std::string optName;
+        std::string optValue;
+        LOOLProtocol::parseNameValuePair(value, optName, optValue);
+        _overrideSettings[optName] = optValue;
+    }
 
     static const char* clientPort = getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
