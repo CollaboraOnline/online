@@ -77,6 +77,7 @@
 #include <Poco/ThreadPool.h>
 #include <Poco/URI.h>
 #include <Poco/Util/HelpFormatter.h>
+#include <Poco/Util/MapConfiguration.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionException.h>
 #include <Poco/Util/OptionSet.h>
@@ -1185,6 +1186,18 @@ static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 
+class AppConfigMap : public Poco::Util::MapConfiguration
+{
+public:
+    AppConfigMap(const std::map<std::string, std::string>& map)
+    {
+        for (const auto& pair : map)
+        {
+            setRaw(pair.first, pair.second);
+        }
+    }
+};
+
 LOOLWSD::LOOLWSD()
 {
 }
@@ -1208,12 +1221,43 @@ void LOOLWSD::initialize(Application& self)
         throw std::runtime_error("Failed to load wsd unit test library.");
     }
 
+    auto& conf = config();
+
+    // Add default values of new entries here.
+    static const std::map<std::string, std::string> DefAppConfig = {
+        { "tile_cache_path", "/usr/local/var/cache/loolwsd" },
+        { "sys_template_path", "systemplate" },
+        { "lo_template_path", "/opt/collaboraoffice5.0" },
+        { "child_root_path", "jails" },
+        { "lo_jail_subpath", "lo" },
+        { "server_name", "" },
+        { "file_server_root_path", "../loleaflet/../" },
+        { "num_prespawn_children", "1" },
+        { "per_document.max_concurrency", "4" },
+        { "loleaflet_html", "loleaflet.html" },
+        { "logging.color", "true" },
+        { "logging.level", "trace" },
+        { "ssl.cert_file_path", "/etc/loolwsd/cert.pem" },
+        { "ssl.key_file_path", "/etc/loolwsd/key.pem" },
+        { "ssl.ca_file_path", "/etc/loolwsd/ca-chain.cert.pem" },
+        { "storage.filesystem[@allow]", "false" },
+        { "storage.wopi[@allow]", "true" },
+        { "storage.wopi.host[0][@allow]", "true" },
+        { "storage.wopi.host[0]", "localhost" },
+        { "storage.wopi.max_file_size", "0" },
+        { "storage.webdav[@allow]", "false" },
+    };
+
+    // Set default values, in case they are missing from the config file.
+    AutoPtr<AppConfigMap> pDefConfig(new AppConfigMap(DefAppConfig));
+    conf.addWriteable(pDefConfig, PRIO_SYSTEM); // Lowest priority
+
     // Load default configuration files, if present.
-    if (loadConfiguration() == 0)
+    if (loadConfiguration(PRIO_DEFAULT) == 0)
     {
         // Fallback to the default path.
         const std::string configPath = LOOLWSD_CONFIGDIR "/loolwsd.xml";
-        loadConfiguration(configPath);
+        loadConfiguration(configPath, PRIO_DEFAULT);
     }
 
     // This overrides whatever is in the config file,
