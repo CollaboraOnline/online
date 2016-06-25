@@ -1,6 +1,7 @@
 <config>
 
     <!-- Note: 'default' attributes are used to document a setting's default value as well as to use as fallback. -->
+    <!-- Note: When adding a new entry, a default must be set in WSD in case the entry is missing upon deployment. -->
 
     <tile_cache_path desc="Path to a directory where to keep the tile cache." type="path" relative="false" default="@LOOLWSD_CACHEDIR@"></tile_cache_path>
     <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="true" default="systemplate"></sys_template_path>
@@ -44,7 +45,7 @@
             <max_file_size desc="Maximum document size in bytes to load. 0 for unlimited." type="uint">0</max_file_size>
         </wopi>
         <webdav desc="Allow/deny webdav storage. Mutually exclusive with wopi." allow="false">
-            <host desc="Hostname to allow">localhost</host>
+            <host desc="Hostname to allow" allow="false">localhost</host>
         </webdav>
     </storage>
 </config>
