@@ -66,10 +66,37 @@ private:
     void displayHelp();
     Poco::Process::PID createForKit();
 
+    static
+    bool getSafeUIntConfig(Poco::Util::LayeredConfiguration& config, const std::string& name, unsigned int& value)
+    {
+        try
+        {
+            value = config.getUInt(name);
+            return true;
+        }
+        catch (Poco::SyntaxException)
+        {
+        }
+
+        return false;
+    }
+
+    static
+    unsigned int getUIntConfigValue(Poco::Util::LayeredConfiguration& config, const std::string& name, const unsigned int def)
+    {
+        unsigned int value = def;
+        if (getSafeUIntConfig(config, name, value) ||
+            getSafeUIntConfig(config, name + "[@default]", value))
+        {
+            return value;
+        }
+
+        return def;
+    }
+
     /// Reads and processes path entries with the given property
     /// from the configuration.
     /// Converts relative paths to absolute.
-    //TODO: Move to a better namespace.
     std::string getPathFromConfig(const std::string& property) const
     {
         auto path = config().getString(property);
@@ -88,6 +115,10 @@ private:
 
         return path;
     }
+
+private:
+    /// Settings passed from the command-line to override those in the config file.
+    std::map<std::string, std::string> _overrideSettings;
 };
 
 #endif
