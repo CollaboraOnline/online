@@ -7,7 +7,7 @@
     <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="true" default="systemplate"></sys_template_path>
     <lo_template_path desc="Path to a LibreOffice installation tree to be copied (linked) into the jails for child processes. Should be on the same file system as systemplate." type="path" relative="false" default="/opt/collaboraoffice5.0"></lo_template_path>
     <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="true" default="jails"></child_root_path>
-    <lo_jail_subpath desc="Relative path where the LibreOffice installation will be copied inside a jail." type="path" relative="true" default="lo">lo</lo_jail_subpath>
+    <lo_jail_subpath desc="Relative path where the LibreOffice installation will be copied inside a jail. Set relative to false to prevent expanding the path." type="path" relative="false" default="lo">lo</lo_jail_subpath>
 
     <server_name desc="Hostname:port of the server running loolwsd. If empty, it's derived from the request." type="string" default=""></server_name>
     <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing loleaflet." type="path" relative="true" default="../loleaflet/../"></file_server_root_path>

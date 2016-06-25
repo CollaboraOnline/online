@@ -107,7 +107,8 @@ private:
         }
 
         // Reconstruct absolute path if relative.
-        if (config().hasProperty(property + "[@relative]") &&
+        if (!Poco::Path(path).isAbsolute() &&
+            config().hasProperty(property + "[@relative]") &&
             config().getBool(property + "[@relative]"))
         {
             path = Poco::Path(Application::instance().commandPath()).parent().append(path).toString();
