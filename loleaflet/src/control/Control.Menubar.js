@@ -214,36 +214,41 @@ L.Control.Menubar = L.Control.extend({
 			var aItem = this;
 			var type = $(aItem).data('type');
 			var id = $(aItem).data('id');
-			if (id === 'fullscreen' && (msie > 0 || trident > 0 || edge > 0)) { // Full screen works weirdly on IE 11 and on Edge
-				$(aItem).addClass('disabled');
-				var index = self.options.allowedViewModeActions.indexOf('fullscreen');
-				if (index > 0) {
-					self.options.allowedViewModeActions.splice(index, 1);
-				}
-			}
-			if (map._permission !== 'edit') {
-				var found = false;
-				for (var i in self.options.allowedViewModeActions) {
-					if (self.options.allowedViewModeActions[i] === id) {
-						found = true;
-						break;
+			if (map._permission === 'edit') {
+				if (type === 'unocommand') { // enable all depending on stored commandStates
+					var unoCommand = $(aItem).data('uno');
+					if (self.options.commandStates[unoCommand] === 'disabled') {
+						$(aItem).addClass('disabled');
+					} else {
+						$(aItem).removeClass('disabled');
+					}
+				} else if (type === 'action') { // enable all except fullscreen on windows
+					if (id === 'fullscreen' && (msie > 0 || trident > 0 || edge > 0)) { // Full screen works weirdly on IE 11 and on Edge
+						$(aItem).addClass('disabled');
+						var index = self.options.allowedViewModeActions.indexOf('fullscreen');
+						if (index > 0) {
+							self.options.allowedViewModeActions.splice(index, 1);
+						}
+					} else {
+						$(aItem).removeClass('disabled');
 					}
 				}
-				if (!found) {
+			} else { // eslint-disable-next-line no-lonely-if
+				if (type === 'unocommand') { // disable all uno commands
 					$(aItem).addClass('disabled');
-				} else {
-					$(aItem).removeClass('disabled');
-				}
-
-				return;
-			}
-
-			if (type === 'unocommand') {
-				var unoCommand = $(aItem).data('uno');
-				if (self.options.commandStates[unoCommand] === 'disabled') {
-					$(aItem).addClass('disabled');
-				} else if (self.options.commandStates[unoCommand] === 'enabled') {
-					$(aItem).removeClass('disabled');
+				} else if (type === 'action') { // disable all except allowedViewModeActions
+					var found = false;
+					for (var i in self.options.allowedViewModeActions) {
+						if (self.options.allowedViewModeActions[i] === id) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						$(aItem).addClass('disabled');
+					} else {
+						$(aItem).removeClass('disabled');
+					}
 				}
 			}
 		});
