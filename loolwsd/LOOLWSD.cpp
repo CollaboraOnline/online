@@ -1282,46 +1282,14 @@ void LOOLWSD::initialize(Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
 
-    if (Cache.empty())
-    {
-        Cache = getPathFromConfig("tile_cache_path");
-    }
-
-    if (SysTemplate.empty())
-    {
-        SysTemplate = getPathFromConfig("sys_template_path");
-    }
-
-    if (LoTemplate.empty())
-    {
-        LoTemplate = getPathFromConfig("lo_template_path");
-    }
-
-    if (ChildRoot.empty())
-    {
-        ChildRoot = getPathFromConfig("child_root_path");
-    }
-
-    if (LoSubPath.empty())
-    {
-        LoSubPath = getPathFromConfig("lo_jail_subpath");
-    }
-
-    if (ServerName.empty())
-    {
-        ServerName = config().getString("server_name");
-    }
-
-    if (FileServerRoot.empty())
-    {
-        FileServerRoot = getPathFromConfig("file_server_root_path");
-    }
-
-    if (NumPreSpawnedChildren == 0)
-    {
-        // Default to 1 child.
-        NumPreSpawnedChildren = getUIntConfigValue(conf, "num_prespawn_children", 1);
-    }
+    Cache = getPathFromConfig("tile_cache_path");
+    SysTemplate = getPathFromConfig("sys_template_path");
+    LoTemplate = getPathFromConfig("lo_template_path");
+    ChildRoot = getPathFromConfig("child_root_path");
+    LoSubPath = getPathFromConfig("lo_jail_subpath");
+    ServerName = config().getString("server_name");
+    FileServerRoot = getPathFromConfig("file_server_root_path");
+    NumPreSpawnedChildren = getUIntConfigValue(conf, "num_prespawn_children", 1);
 
     const auto maxConcurrency = getUIntConfigValue(conf, "per_document.max_concurrency", 4);
     if (maxConcurrency > 0)
@@ -1398,41 +1366,6 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("port number"));
 
-    optionSet.addOption(Option("cache", "", "Path to a directory where to keep the tile cache (default: " + std::string(LOOLWSD_CACHEDIR) + ").")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("directory"));
-
-    optionSet.addOption(Option("systemplate", "", "Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("directory"));
-
-    optionSet.addOption(Option("lotemplate", "", "Path to a LibreOffice installation tree to be copied (linked) into the jails for child processes. Should be on the same file system as systemplate.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("directory"));
-
-    optionSet.addOption(Option("childroot", "", "Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("directory"));
-
-    optionSet.addOption(Option("losubpath", "", "Relative path where the LibreOffice installation will be copied inside a jail (default: '" + LoSubPath + "').")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("relative path"));
-
-    optionSet.addOption(Option("fileserverroot", "", "Path to the directory that should be considered root for the file server (default: '../loleaflet/').")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("directory"));
-
-    optionSet.addOption(Option("numprespawns", "", "Number of child processes to keep started in advance and waiting for new clients.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("number"));
-
     optionSet.addOption(Option("admincreds", "", "Admin 'username/password' used to access the admin console.")
                         .required(false)
                         .repeatable(false)
@@ -1478,20 +1411,6 @@ void LOOLWSD::handleOption(const std::string& optionName,
         DisplayVersion = true;
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
-    else if (optionName == "cache")
-        Cache = value;
-    else if (optionName == "systemplate")
-        SysTemplate = value;
-    else if (optionName == "lotemplate")
-        LoTemplate = value;
-    else if (optionName == "childroot")
-        ChildRoot = value;
-    else if (optionName == "losubpath")
-        LoSubPath = value;
-    else if (optionName == "fileserverroot")
-        FileServerRoot = value;
-    else if (optionName == "numprespawns")
-        NumPreSpawnedChildren = std::stoi(value);
     else if (optionName == "admincreds")
         AdminCreds = value;
     else if (optionName == "allowlocalstorage")
