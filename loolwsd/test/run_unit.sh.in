@@ -50,10 +50,12 @@ echo > $test_output
 if test "z$tst" == "z"; then
      echo "executing external tests"
      ${valgrind} \
-     ${abs_top_builddir}/loolwsd --systemplate="$systemplate_path" \
-                                 --lotemplate="$lo_path" \
-                                 --childroot="$jails_path" \
-                                 --allowlocalstorage > "$tst_log" 2>&1 &
+     ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
+                                 --o:lo_template_path="$lo_path" \
+                                 --o:child_root_path="$jails_path" \
+                                 --o:storage.filesystem[@allow]=true \
+                                 --o:admin_console.username=admin --o:admin_console.password=admin \
+                                 > "$tst_log" 2>&1 &
 
      echo "  executing test"
 
@@ -78,11 +80,11 @@ if test "z$tst" == "z"; then
 else # newer unit tests.
     echo "Running $tst | $tst_log ...";
 	if ${valgrind} \
-        ${abs_top_builddir}/loolwsd --systemplate="$systemplate_path" \
-                                   --lotemplate="$lo_path" \
-                                   --childroot="$jails_path" \
-                                   --allowlocalstorage \
-                                   --admincreds="admin/admin" \
+       ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
+                                   --o:lo_template_path="$lo_path" \
+                                   --o:child_root_path="$jails_path" \
+                                   --o:storage.filesystem[@allow]=true \
+                                   --o:admin_console.username=admin --o:admin_console.password=admin \
                                    --unitlib=".libs/$tst.so" > "$tst_log" 2>&1; then
         echo "Test $tst passed."
         echo ":test-result: PASS $tst" >> $test_output
@@ -90,9 +92,11 @@ else # newer unit tests.
         cat "$tst_log"
         echo "============================================================="
         echo "Test failed on unit: $tst re-run with:"
-        echo "   $ gdb --args ../loolwsd --systemplate=\"$systemplate_path\" \\"
-        echo "         --lotemplate=\"$lo_path\" \\"
-        echo "         --childroot=\"$jails_path\" --allowlocalstorage --admincreds="admin/admin" \\"
+        echo "   $ gdb ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
+        echo "         --o:lo_template_path=\"$lo_path\" \\"
+        echo "         --o:child_root_path=\"$jails_path\" \\"
+        echo "         --o:storage.filesystem[@allow]=true \\"
+        echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
         echo "         --unitlib=\".libs/$tst.so\""
         echo "============================================================="
         echo ":test-result: FAIL $tst" >> $test_output

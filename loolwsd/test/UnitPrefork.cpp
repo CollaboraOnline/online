@@ -88,7 +88,7 @@ public:
         return true;
     }
 
-    void getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket,
+    bool getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket,
                    size_t &totalPSS, size_t &totalDirty)
     {
         std::unique_lock<std::mutex> lock(_mutex);
@@ -100,10 +100,12 @@ public:
         {
             _failure = "Timed out waiting for child to respond to unit-memdump.";
             Log::error(_failure);
+            return false;
         }
 
         totalPSS = _totalPSS;
         totalDirty = _totalDirty;
+        return true;
     }
 
     virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
@@ -121,7 +123,12 @@ public:
             // Skip the last one as it's not completely initialized yet.
             for (size_t i = 0; i < _childSockets.size() - 1; ++i)
             {
-                getMemory(_childSockets[i], totalPSSKb, totalDirtyKb);
+                Log::info() << "Getting memory of child #" << i + 1 << " of " << _childSockets.size() << Log::end;
+                if (!getMemory(_childSockets[i], totalPSSKb, totalDirtyKb))
+                {
+                    exitTest(TestResult::TEST_FAILED);
+                    return;
+                }
             }
 
             Log::info() << "Memory use total   " << totalPSSKb << "k shared "
@@ -143,6 +150,7 @@ public:
             }
             else
             {
+                Log::error("UnitPrefork success.");
                 exitTest(TestResult::TEST_OK);
             }
         }
