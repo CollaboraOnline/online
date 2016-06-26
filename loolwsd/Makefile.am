@@ -140,8 +140,9 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@PROTOCOL="http" ; if test "z@ENABLE_SSL@" != "z"; then PROTOCOL="https" ; fi ; \
 		echo "   $$PROTOCOL://localhost:9980/loleaflet/@LOOLWSD_VERSION_HASH@/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
 	@echo
-	./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
-                  --childroot="@JAILS_PATH@" --allowlocalstorage --admincreds=admin/admin
+	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
+			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:admin_console.username=admin --o:admin_console.password=admin
 else
 
 SYSTEM_STAMP =

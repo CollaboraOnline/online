@@ -82,8 +82,8 @@ public:
             Log::info("Invalid JWT token, let the administrator re-login");
         }
 
-        const auto user = config.getString("admin_console_username", "");
-        const auto pass = config.getString("admin_console_password", "");
+        const auto user = config.getString("admin_console.username", "");
+        const auto pass = config.getString("admin_console.password", "");
         if (user.empty() || pass.empty())
         {
             Log::error("Admin Console credentials missing. Denying access until set.");

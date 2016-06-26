@@ -48,4 +48,10 @@
             <host desc="Hostname to allow" allow="false">localhost</host>
         </webdav>
     </storage>
+
+    <admin_console desc="Web admin console settings.">
+        <username desc="The username of the admin console. Must be set."></username>
+        <password desc="The password of the admin console. Must be set."></password>
+    </admin_console>
+
 </config>

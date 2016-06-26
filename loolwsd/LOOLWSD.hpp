@@ -43,9 +43,7 @@ public:
     static std::string LoSubPath;
     static std::string ServerName;
     static std::string FileServerRoot;
-    static std::string AdminCreds;
     static std::string LOKitVersion;
-    static bool AllowLocalStorage;
     static bool SSLEnabled;
 
     static

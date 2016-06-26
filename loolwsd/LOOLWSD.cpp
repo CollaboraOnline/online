@@ -845,6 +845,10 @@ public:
                     }
                 }
             }
+            else
+            {
+                Log::error("Unknown resource: " + request.getURI());
+            }
         }
         catch (const Exception& exc)
         {
@@ -1161,9 +1165,7 @@ std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
-std::string LOOLWSD::AdminCreds;
 std::string LOOLWSD::LOKitVersion;
-bool LOOLWSD::AllowLocalStorage = false;
 bool LOOLWSD::SSLEnabled =
 #if ENABLE_SSL
     true;
@@ -1252,21 +1254,6 @@ void LOOLWSD::initialize(Application& self)
     AutoPtr<AppConfigMap> pOverrideConfig(new AppConfigMap(_overrideSettings));
     conf.addWriteable(pOverrideConfig, PRIO_APPLICATION); // Highest priority
 
-    // This overrides whatever is in the config file,
-    // which forces admins to set this flag on the command-line.
-    config().setBool("storage.filesystem[@allow]", AllowLocalStorage);
-
-    if (!AdminCreds.empty())
-    {
-        // Set the Admin Console credentials, if provided.
-        StringTokenizer tokens(AdminCreds, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        if (tokens.count() == 2)
-        {
-            config().setString("admin_console_username", tokens[0]);
-            config().setString("admin_console_password", tokens[1]);
-        }
-    }
-
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
 
@@ -1354,15 +1341,6 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("port number"));
 
-    optionSet.addOption(Option("admincreds", "", "Admin 'username/password' used to access the admin console.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("credentials"));
-
-    optionSet.addOption(Option("allowlocalstorage", "", "When true will allow highly insecure loading of files from local storage.")
-                        .required(false)
-                        .repeatable(false));
-
     optionSet.addOption(Option("override", "o", "Override any setting by providing fullxmlpath=value.")
                         .required(false)
                         .repeatable(true)
@@ -1399,10 +1377,6 @@ void LOOLWSD::handleOption(const std::string& optionName,
         DisplayVersion = true;
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
-    else if (optionName == "admincreds")
-        AdminCreds = value;
-    else if (optionName == "allowlocalstorage")
-        AllowLocalStorage = true;
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
@@ -1510,17 +1484,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         ChildRoot += '/';
 
     if (FileServerRoot.empty())
-        FileServerRoot = Path(Application::instance().commandPath()).parent().parent().toString();
+        FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().parent().toString();
     FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
     Log::debug("FileServerRoot: " + FileServerRoot);
 
     if (ClientPortNumber == MasterPortNumber)
         throw IncompatibleOptionsException("port");
-
-    if (AdminCreds.empty())
-    {
-        Log::warn("No admin credentials set via 'admincreds' command-line argument. Admin Console will be disabled.");
-    }
 
     // Create the directory where the fifo pipe with ForKit will be.
     const Path pipePath = Path::forDirectory(ChildRoot + "/" + FIFO_PATH);
