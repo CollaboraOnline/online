@@ -39,11 +39,11 @@ To see an example:
 
 * run loolwsd, like:
 
-    ./loolwsd --systemplate=${SYSTEMPLATE} --lotemplate=${MASTER}/instdir --childroot=${ROOTFORJAILS}
+    ./loolwsd --o:sys_template_path=${SYSTEMPLATE} --o:lo_template_path=${MASTER}/instdir --o:child_root_path=${ROOTFORJAILS}
 
 Note that this will, by default, set the loolwsd's file server's root to the parent directory of loolwsd,
 which means you can access all the files in loleaflet using /loleaflet/ path. It is advised to set
-fileserverroot manually for more control. See loolwsd/README for more information.
+file_server_root_path manually for more control. See loolwsd/README for more information.
 
 * open debug/document/document_simple_example.html or dist/loleaflet.html through loolwsd's fileserver
 
@@ -65,11 +65,11 @@ For example:
 
     https://localhost:9980/loleaflet/dist/admin/admin.html
 
-It will ask for username and password which is set by the --admincreds option of loolwsd. For example you can
-pass --admincreds=admin/admin which will make username and password 'admin', 'admin' respectively. After entering
-the correct password you should be able to monitor the live documents opened, total users, memory consumption,
-document URLs with number of users viewing that document etc. You can also kill the documents directly from
-the panel which would result in closing the socket connection to the respective document.
+It will ask for username and password which is set by the admin_console options of loolwsd. For example you can
+pass --o:admin_console.username=admin --o:admin_console.password=admin in command line, or set these values in
+loolwsd.xml. After entering the correct password you should be able to monitor the live documents opened, total
+users, memory consumption, document URLs with number of users viewing that document etc. You can also kill the
+documents directly from the panel which would result in closing the socket connection to the respective document.
 
 Testing
 -------
