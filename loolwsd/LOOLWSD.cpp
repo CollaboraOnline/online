@@ -1215,7 +1215,7 @@ void LOOLWSD::initialize(Application& self)
 
     // Add default values of new entries here.
     static const std::map<std::string, std::string> DefAppConfig = {
-        { "tile_cache_path", "/usr/local/var/cache/loolwsd" },
+        { "tile_cache_path", LOOLWSD_CACHEDIR },
         { "sys_template_path", "systemplate" },
         { "lo_template_path", "/opt/collaboraoffice5.0" },
         { "child_root_path", "jails" },
@@ -1227,9 +1227,9 @@ void LOOLWSD::initialize(Application& self)
         { "loleaflet_html", "loleaflet.html" },
         { "logging.color", "true" },
         { "logging.level", "trace" },
-        { "ssl.cert_file_path", "/etc/loolwsd/cert.pem" },
-        { "ssl.key_file_path", "/etc/loolwsd/key.pem" },
-        { "ssl.ca_file_path", "/etc/loolwsd/ca-chain.cert.pem" },
+        { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
+        { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
+        { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
         { "storage.filesystem[@allow]", "false" },
         { "storage.wopi[@allow]", "true" },
         { "storage.wopi.host[0][@allow]", "true" },
