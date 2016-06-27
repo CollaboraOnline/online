@@ -150,8 +150,9 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 run_valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
-		./loolwsd --systemplate="@SYSTEMPLATE_PATH@" --lotemplate="@LO_PATH@" \
-                  --childroot="@JAILS_PATH@" --allowlocalstorage --admincreds=admin/admin
+		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
+			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:admin_console.username=admin --o:admin_console.password=admin
 else
 
 SYSTEM_STAMP =
