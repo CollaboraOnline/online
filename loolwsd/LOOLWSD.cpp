@@ -1174,7 +1174,6 @@ std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
-std::string LOOLWSD::LoSubPath = "lo";
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::LOKitVersion;
@@ -1273,7 +1272,6 @@ void LOOLWSD::initialize(Application& self)
     SysTemplate = getPathFromConfig("sys_template_path");
     LoTemplate = getPathFromConfig("lo_template_path");
     ChildRoot = getPathFromConfig("child_root_path");
-    LoSubPath = getPathFromConfig("lo_jail_subpath");
     ServerName = config().getString("server_name");
     FileServerRoot = getPathFromConfig("file_server_root_path");
     NumPreSpawnedChildren = getUIntConfigValue(conf, "num_prespawn_children", 1);
@@ -1427,7 +1425,7 @@ Process::PID LOOLWSD::createForKit()
 {
     Process::Args args;
 
-    args.push_back("--losubpath=" + LOOLWSD::LoSubPath);
+    args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
