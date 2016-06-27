@@ -36,6 +36,7 @@ constexpr auto FIFO_PATH = "pipe";
 constexpr auto JAILED_DOCUMENT_ROOT = "/user/docs/";
 constexpr auto CHILD_URI = "/loolws/child?";
 constexpr auto NEW_CHILD_URI = "/loolws/newchild?";
+constexpr auto LO_JAIL_SUBPATH = "lo";
 
 // The client port number, both loolwsd and the kits have this.
 extern int ClientPortNumber;

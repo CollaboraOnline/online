@@ -40,7 +40,6 @@ public:
     static std::string SysTemplate;
     static std::string LoTemplate;
     static std::string ChildRoot;
-    static std::string LoSubPath;
     static std::string ServerName;
     static std::string FileServerRoot;
     static std::string LOKitVersion;
