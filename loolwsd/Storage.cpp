@@ -370,7 +370,7 @@ bool WopiStorage::saveLocalFileToStorage()
     Log::info("WOPI::PutFile response: " + oss.str());
     const auto success = (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
     Log::info() << "WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath  << "]:"
-                << "] -> [" << _uri << "]: "
+                << "] -> [" << url << "]: "
                 <<  response.getStatus() << " " << response.getReason() << Log::end;
 
     return success;
