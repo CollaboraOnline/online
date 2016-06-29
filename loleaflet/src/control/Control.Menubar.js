@@ -2,7 +2,7 @@
 * Control.Menubar
 */
 
-/* global $ _ map title vex */
+/* global $ _ map title vex revHistoryEnabled */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
@@ -341,6 +341,12 @@ L.Control.Menubar = L.Control.extend({
 	_createMenu: function(menu) {
 		var itemList = [];
 		for (var i in menu) {
+			if (menu[i].type === 'action' &&
+			    menu[i].id === 'rev-history' &&
+			    !revHistoryEnabled) {
+				continue;
+			}
+
 			var liItem = L.DomUtil.create('li', '');
 			var aItem = L.DomUtil.create('a', '', liItem);
 			aItem.innerHTML = menu[i].name;
