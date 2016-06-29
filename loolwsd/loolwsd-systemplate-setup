@@ -80,11 +80,11 @@ mkdir -p $CHROOT/usr/bin/
 cd $CHROOT || exit 1
 
 mkdir -p usr/share || exit 1
-cp -r -p /usr/share/fonts usr/share
+cp -r -p -L /usr/share/fonts usr/share
 
 if [ -h usr/share/fonts/ghostscript ]; then
     mkdir usr/share/ghostscript || exit 1
-    cp -r -p /usr/share/ghostscript/fonts usr/share/ghostscript
+    cp -r -p -L /usr/share/ghostscript/fonts usr/share/ghostscript
 fi
 
 # Debugging only hackery to avoid confusion.
