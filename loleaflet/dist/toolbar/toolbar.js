@@ -647,6 +647,49 @@ map.on('doclayerinit', function () {
 			toolbar.hide('annotation');
 		}
 	}
+
+	var statusbar = w2ui['toolbar-down'];
+	switch (docType) {
+	case 'spreadsheet':
+		statusbar.insert('left', [
+			{type: 'break', id:'break1'},
+			{type: 'html',  id: 'StatusDocPos',  html: '<div id="StatusDocPos" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break2'},
+			{type: 'html',  id: 'RowColSelCount',  html: '<div id="RowColSelCount" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break3'},
+			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break5'},
+			{type: 'html',  id: 'StatusSelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break8'},
+			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+		]);
+		statusbar.refresh();
+		break;
+	case 'text':
+		statusbar.insert('left', [
+			{type: 'break', id:'break1'},
+			{type: 'html',  id: 'StatePageNumber',  html: '<div id="StatePageNumber" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break2'},
+			{type: 'html',  id: 'StateWordCount',  html: '<div id="StateWordCount" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break5'},
+			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break6'},
+			{type: 'html',  id: 'SelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+		]);
+		statusbar.refresh();
+		break;
+	case 'presentation':
+		statusbar.insert('left', [
+			{type: 'break', id:'break1'},
+			{type: 'html',  id: 'PageStatus',  html: '<div id="PageStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break2'},
+			{type: 'html',  id: 'LayoutStatus',  html: '<div id="LayoutStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break3'},
+			{type: 'html',  id: 'Context',  html: '<div id="Context" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+		]);
+		statusbar.refresh();
+		break;
+	}
 });
 
 map.on('commandstatechanged', function (e) {
@@ -759,6 +802,45 @@ map.on('commandstatechanged', function (e) {
 		else {
 			$('#modifiedstatuslabel').html(_('Document saved'));
 		}
+	}
+	else if (commandName === '.uno:StatusDocPos') {
+		$('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:RowColSelCount') {
+		$('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:StatusPageStyle') {
+		$('#StatusPageStyle').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:InsertMode') {
+		$('#InsertMode').html(state ? L.Styles.insertMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:StatusSelectionMode' ||
+		 commandName === '.uno:SelectionMode') {
+		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:Position' ||
+		 commandName === '.uno:StateTableCell' ||
+		 commandName === '.uno:StatusBarFunc' ||
+		 commandName === '.uno:Size') {
+		if (state) {
+			$('#StateTableCell').html(state);
+		}
+	}
+	else if (commandName === '.uno:StatePageNumber') {
+		$('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:StateWordCount') {
+		$('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:PageStatus') {
+		$('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:LayoutStatus') {
+		$('#LayoutStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:Context') {
+		$('#Context').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 
 	var toolbarUpMore = w2ui['toolbar-up-more'];

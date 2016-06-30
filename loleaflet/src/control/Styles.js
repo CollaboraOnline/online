@@ -316,5 +316,17 @@ L.Styles = {
 		{id: 28, text: 'Vertical Title, Vertical Text'},
 		{id: 29, text: 'Title, Vertical Text'},
 		{id: 30, text: 'Title, Vertical Text, Clipart'}
-	]
+	],
+
+	insertMode : {
+		'true'  : 'Insert',
+		'false' : 'Overwrite'
+	},
+
+	selectionMode : [
+		'Standard selection',
+		'Extending selection',
+		'Adding selection',
+		'Block selection'
+	],
 };
