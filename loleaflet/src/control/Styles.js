@@ -316,5 +316,25 @@ L.Styles = {
 		{id: 28, text: 'Vertical Title, Vertical Text'},
 		{id: 29, text: 'Title, Vertical Text'},
 		{id: 30, text: 'Title, Vertical Text, Clipart'}
-	]
+	],
+
+	insertMode : {
+		'true'  : 'Insert',
+		'false' : 'Overwrite'
+	},
+
+	selectionMode : [
+		'Standard selection',
+		'Extending selection',
+		'Adding selection',
+		'Selección de bloque'
+	],
+
+	signatureState : {
+		'-1' : 'The document is not signed.',
+		'0'  : 'The document signature is OK.',
+		'1'  : 'The document signature does not match the document content',
+		'2'  : 'The document signature is OK, but the certificates could not be validated.',
+		'3'  : 'The document signature and the certificate are OK'
+	},
 };
