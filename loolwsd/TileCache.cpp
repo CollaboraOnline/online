@@ -169,7 +169,7 @@ void TileCache::saveTextFile(const std::string& text, const std::string& fileNam
     }
     else
     {
-        Log::info("Saving '" + text + "' to " + fullFileName);
+        Log::info("Saving '" + LOOLProtocol::getAbbreviatedMessage(text.c_str(), text.size()) + "' to " + fullFileName);
     }
 
     textStream << text << std::endl;
