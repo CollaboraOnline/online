@@ -653,25 +653,25 @@ map.on('doclayerinit', function () {
 	case 'spreadsheet':
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'StatusDocPos',  html: '<div id="StatusDocPos" style="padding: 5px 5px;">_____</div>' },
+			{type: 'html',  id: 'StatusDocPos',  html: '<div id="StatusDocPos" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'RowColSelCount',  html: '<div id="RowColSelCount" style="padding: 5px 5px;">_____</div>' },
+			{type: 'html',  id: 'RowColSelCount',  html: '<div id="RowColSelCount" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'SatusPageStyle',  html: '<div id="StatusPageStyle" style="padding: 5px 5px;">_____</div>' },
+			{type: 'html',  id: 'SatusPageStyle',  html: '<div id="StatusPageStyle" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break4'},
-			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" style="padding: 5px 5px;">_____</div>' },
+			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'StatusSelectionMode',  html: '<div id="StatusSelectionMode" style="padding: 5px 5px;">_____</div>' },
+			{type: 'html',  id: 'StatusSelectionMode',  html: '<div id="StatusSelectionMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break6'},
-			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" style="padding: 5px 5px;">_____</div>' },
+			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break7'},
-			{type: 'html',  id: 'Signature',  html: '<div id="Signature" style="padding: 5px 5px;">_____</div>' },
+			{type: 'html',  id: 'Signature',  html: '<div id="Signature" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break8'},
-			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" style="padding: 5px 5px;">_____</div>' },
+			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break9'},
-			//{type: 'html',  id: 'ZoomSlider',  html: '<div id="Zoomslider" style="padding: 5px 5px;">_____</div>' },
+			//{type: 'html',  id: 'ZoomSlider',  html: '<div id="Zoomslider" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break10'},
-			//{type: 'html',  id: 'Zoom',  html: '<div id="Zoom" style="padding: 5px 5px;">_____</div>' },
+			//{type: 'html',  id: 'Zoom',  html: '<div id="Zoom" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		])
 		statusbar.refresh();
 		break;
@@ -794,22 +794,22 @@ map.on('commandstatechanged', function (e) {
 		}
 	}
 	else if (commandName === '.uno:StatusDocPos') {
-		$('#StatusDocPos').html(state ? state : '_____');
+		$('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:RowColSelCount') {
-		$('#RowColSelCount').html(state ? state : '_____');
+		$('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:StatusPageStyle') {
-		$('#StatusPageStyle').html(state ? state : '_____');
+		$('#StatusPageStyle').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:InsertMode') {
-		$('#InsertMode').html(state ? L.Styles.insertMode[state] : '_____');
+		$('#InsertMode').html(state ? L.Styles.insertMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:StatusSelectionMode') {
-		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state] : '_____');
+		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:Signature') {
-		$('#Signature').html(state ? L.Styles.signatureState[state] : '_____');
+		$('#Signature').html(state ? L.Styles.signatureState[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:Position' ||
 		 commandName === '.uno:StateTableCell' ||

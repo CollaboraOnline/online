@@ -327,7 +327,7 @@ L.Styles = {
 		'Standard selection',
 		'Extending selection',
 		'Adding selection',
-		'Selección de bloque'
+		'Block selection'
 	],
 
 	signatureState : {
