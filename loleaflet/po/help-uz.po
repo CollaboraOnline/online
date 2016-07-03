@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-17 19:04+0000\n"
+"POT-Creation-Date: 2016-07-03 11:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /uz/libo_online/loleaflet-help-uz.po\n"
-"X-Pootle-Revision: 435269\n"
+"X-Pootle-Revision: 484293\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -67,7 +67,6 @@ msgid "Ctrl + P"
 msgstr "Ctrl + P"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A60
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.h2:60"
 msgid "Text formatting"
 msgstr "Matnni formatlash"
@@ -134,7 +133,7 @@ msgstr "Ctrl + Shift + P"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
 msgid "Subscript"
-msgstr ""
+msgstr "Ostiga chizilgan"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
@@ -189,133 +188,125 @@ msgstr "Ctrl + R"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Justify"
-msgstr ""
+msgstr "Eniga"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Ctrl + J"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Standart paragraf uslubini qo‘llash"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
-#, fuzzy
 msgid "Ctrl + 0"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 0"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "1-sarlavha paragraf uslubini qo‘llash"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
-#, fuzzy
 msgid "Ctrl + 1"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "2-sarlavha paragraf uslubini qo‘llash"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
-#, fuzzy
 msgid "Ctrl + 2"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 2"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "3-sarlavha paragraf uslubini qo‘llash"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:80"
 msgid "Ctrl + 3"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "4-sarlavha paragraf uslubini qo‘llash"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
-#, fuzzy
 msgid "Ctrl + 4"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 4"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "5-sarlavha paragraf uslubini qo‘llash"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
-#, fuzzy
 msgid "Ctrl + 5"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A84
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "Hujjatdagi matnni tanlash kuzatish"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Select All"
-msgstr ""
+msgstr "Barchasini tanlash"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Ctrl + A"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + A"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Kursorni chapga surish"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Arrow Left"
-msgstr ""
+msgstr "Chapga strelkasi"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "Chapga tanlab kursorni surish"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Shift + Arrow Left"
-msgstr ""
+msgstr "Shift + Chapga strelkasi"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "So‘zning boshiga o‘tish"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Ctrl + chapga strelkasi"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "Chapdagilarni so‘zma-so‘z belgilash"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Shift + chapga strelkasi"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "Kursorni o‘ngga surish"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Arrow Right"
-msgstr ""
+msgstr "O‘ngga strelkasi"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A92
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"

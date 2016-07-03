@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-17 19:38+0000\n"
+"POT-Creation-Date: 2016-07-03 11:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /ro/libo_online/loleaflet-help-ro.po\n"
-"X-Pootle-Revision: 467591\n"
+"X-Pootle-Revision: 482774\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -670,9 +670,8 @@ msgid "Like Alt, but only the active cell is modified"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A132
-#, fuzzy
 msgid "Alt + Insert"
-msgstr "Alt + enter"
+msgstr "Alt + insert"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A132
 msgid ""

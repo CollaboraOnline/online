@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-17 19:38+0000\n"
+"POT-Creation-Date: 2016-07-03 11:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /kk/libo_online/loleaflet-help-kk.po\n"
-"X-Pootle-Revision: 457197\n"
+"X-Pootle-Revision: 476283\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -264,14 +264,15 @@ msgid "Move cursor to the left"
 msgstr "Курсорды солға жылжыту"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
+#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Arrow Left"
-msgstr ""
+msgstr "Сол жақ бағдаршасы"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "Курсорды сол жаққа таңдаумен жылжыту"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"

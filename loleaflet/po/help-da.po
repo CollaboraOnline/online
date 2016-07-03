@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-17 19:03+0000\n"
+"POT-Creation-Date: 2016-07-03 11:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,11 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-help-da.po\n"
-"X-Pootle-Revision: 450794\n"
+"X-Pootle-Revision: 484628\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
-msgstr ""
+msgstr "LO hjælpebrochure"
 
 #: dist%2Floleaflet-help.html+html.body.h1%3A48
 msgid "Keyboard Shortcuts"
@@ -24,7 +24,7 @@ msgstr "Tastaturgenveje"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A50
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "Globale genvejstaster"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Undo"
@@ -52,7 +52,7 @@ msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "Indsæt som uformateret tekst"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
 msgid "Ctrl + Alt + Shift + V"
@@ -60,7 +60,7 @@ msgstr "Ctrl + Alt + Skift + V"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "Udskriv (hent som PDF)"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
 msgid "Ctrl + P"
@@ -143,7 +143,7 @@ msgstr "Ctrl + Skift + B"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "Fjern direkte formatering"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
@@ -153,7 +153,7 @@ msgstr "Ctrl + M"
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A71
 msgctxt "dist/loleaflet-help.html html.body.div.h2:71"
 msgid "Paragraph formatting"
-msgstr ""
+msgstr "Afsnitsformatering"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
@@ -246,7 +246,7 @@ msgstr "Anvend afsnitstypografien Overskrift 5"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A84
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "Tekstmarkering og navigation i dokument"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
@@ -261,7 +261,7 @@ msgstr "Ctrl + A"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Flyt markøren til venstre"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
@@ -281,27 +281,27 @@ msgstr "Skift + Højrepil"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "Gå til begyndelsen af et ord"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Ctrl + venstrepil"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "Marker til venstre ord for ord"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Skift + venstrepil"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "Flyt markøren til højre"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
@@ -321,22 +321,22 @@ msgstr "Skift + Højrepil"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
 msgid "Go to start of the next word"
-msgstr ""
+msgstr "Gå til begyndelsen af næste ord"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
 msgid "Ctrl + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Højrepil"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A94
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "Marker mod højre ord for ord"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A94
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Skift + Højrepil"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A95
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
@@ -351,12 +351,12 @@ msgstr "Pil Op"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "Marker linjer i opadgående retning"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Skift + Pil Op"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
@@ -366,17 +366,17 @@ msgstr "Flyt markør til begyndelse af det foregående afsnit"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Pil Op"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "Marker til begyndelsen af afsnit"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Skift + Pil Op"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A99
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
@@ -391,12 +391,12 @@ msgstr "Pil Ned"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "Markerer linjer i nedadgående retning"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Skift+Pil ned"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
@@ -406,22 +406,23 @@ msgstr "Flyt markør til begyndelse af det foregående afsnit"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Ctrl + Arrow Down"
-msgstr ""
+msgstr "Ctrl + Pil Ned"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "Marker til slutningen af afsnittet"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Ctrl + Shift + Arrow Down"
-msgstr ""
+msgstr "Ctrl + Skift + Pil Ned"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
+#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "Gå til begyndelse af linje"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
@@ -431,26 +432,26 @@ msgstr "Hjem"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "Gå hen og vælg til begyndelsen af en linje"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
 msgid "Shift + Home"
-msgstr ""
+msgstr "Skift + Home"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Go to start of document"
-msgstr ""
+msgstr "Gå til begyndelsen af dokumentet"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Ctrl + Home"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "Gå til og marker tekst til begyndelsen af dokumentet"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:106"
@@ -460,7 +461,7 @@ msgstr "Ctrl + Shift + P"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "Go to end of line"
-msgstr ""
+msgstr "Gå til slutningen af linjen"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
@@ -470,17 +471,17 @@ msgstr "Afslut"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "Marker til og gå til slutningen af linjen"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Shift + End"
-msgstr ""
+msgstr "Skift + End"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Go to end of document"
-msgstr ""
+msgstr "Gå til slutningen af dokumentet"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
@@ -498,31 +499,31 @@ msgstr "Ctrl + Shift + P"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
 msgid "Move the view up one page"
-msgstr ""
+msgstr "Flyt visningen en side op"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
 msgid "PageUp"
-msgstr ""
+msgstr "Page Up"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "Skift markør mellem tekst og sidehoved"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
 msgid "Ctrl + PageUp"
-msgstr ""
+msgstr "Ctrl + Page Up"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "Udvid markeringen med en side opad"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
 msgid "Shift + PageUp"
-msgstr ""
+msgstr "Shift + Page Up"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
 msgid "Move the view down one page"
-msgstr ""
+msgstr "Flyt visningen en side nedad"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
 msgid "PageDown"
@@ -530,7 +531,7 @@ msgstr "PageDown"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "Skift markør mellem tekst og sidefod"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
 msgid "Ctrl + PageDown"
@@ -538,23 +539,23 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "Udvid markeringen med en side nedad"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
 msgid "Shift + PageDown"
-msgstr ""
+msgstr "Shift + Page Down"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "Slet til begyndelsen af ordet"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
 msgid "Ctrl + Backspace"
-msgstr ""
+msgstr "Ctrl + Backspace"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Slet til slutningen af ordet"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
 msgid "Ctrl + Del"
@@ -562,15 +563,15 @@ msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "Slet til begyndelsen af sætningen"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Ctrl + Skift + Backspace"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A120
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Slet til slutningen af sætningen"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A120
 msgid "Ctrl + Shift + Del"
@@ -578,7 +579,7 @@ msgstr "Ctrl + Shift + P"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A122
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "Genvejstaster for tabeller"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A124
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:124"
@@ -596,7 +597,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A125
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:125"
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Ctrl + Home"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A125
 msgid ""
@@ -627,39 +628,45 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Ctrl + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
 msgstr ""
+"Indsætter et tabulatorstop (kun i tabeller). Afhængigt af den brugte "
+"vindueshåndtering kan Alt +Tab evt. bruges."
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
 msgid "Alt + Arrow Keys"
-msgstr ""
+msgstr "Alt + piletaster"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
+"Forøger/formindsker størrelsen af kolonnen/rækken ved den højre/nederste "
+"cellekant"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A129
 msgid "Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt + Skift + piletaster"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A129
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
+"Forøger/formindsker størrelsen af kolonnen/rækken ved den venstre/øverste "
+"cellekant"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr ""
+msgstr "Alt +Ctrl + piletaster"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:130"
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Som Alt, men kun den aktive celle ændres"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
 msgid "Ctrl + Alt + Shift + Arrow Keys"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-17 19:38+0000\n"
+"POT-Creation-Date: 2016-07-03 11:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,31 +12,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 458702\n"
+"X-Pootle-Revision: 482782\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "主题颜色"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "标准颜色"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "网页颜色"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "返回调色板"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "历史"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "还没有历史。"
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -99,595 +99,618 @@ msgstr "主机URL为空。loolwsd服务器的配置可能不正确，请联系�
 msgid "Are you sure you want to delete this page?"
 msgstr "您确定要删除该页面吗？"
 
-#: dist/toolbar/toolbar.js:336
+#: dist/toolbar/toolbar.js:319
 #: src/admin/AdminStrings.js:20
-#: src/control/Control.Menubar.js:9
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:93
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:55
+#: src/control/Control.Menubar.js:100
 msgid "Save"
 msgstr "保存"
 
-#: dist/toolbar/toolbar.js:338
-#: src/control/Control.Menubar.js:16
-#: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:100
+#: dist/toolbar/toolbar.js:321
+#: src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:62
+#: src/control/Control.Menubar.js:107
 msgid "Undo"
 msgstr "撤销"
 
-#: dist/toolbar/toolbar.js:339
-#: src/control/Control.Menubar.js:17
-#: src/control/Control.Menubar.js:59
-#: src/control/Control.Menubar.js:101
+#: dist/toolbar/toolbar.js:322
+#: src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:63
+#: src/control/Control.Menubar.js:108
 msgid "Redo"
 msgstr "重做"
 
-#: dist/toolbar/toolbar.js:345
+#: dist/toolbar/toolbar.js:328
 msgid "Bold"
 msgstr "加粗"
 
-#: dist/toolbar/toolbar.js:346
+#: dist/toolbar/toolbar.js:329
 msgid "Italic"
 msgstr "斜体"
 
-#: dist/toolbar/toolbar.js:347
+#: dist/toolbar/toolbar.js:330
 msgid "Underline"
 msgstr "下划线"
 
-#: dist/toolbar/toolbar.js:348
+#: dist/toolbar/toolbar.js:331
 msgid "Strikeout"
 msgstr "删除线"
 
-#: dist/toolbar/toolbar.js:351
+#: dist/toolbar/toolbar.js:334
 msgid "Font color"
 msgstr "文字颜色"
 
-#: dist/toolbar/toolbar.js:353
+#: dist/toolbar/toolbar.js:336
 msgid "Highlighting"
 msgstr "高亮"
 
-#: dist/toolbar/toolbar.js:355
+#: dist/toolbar/toolbar.js:338
 msgid "Align left"
 msgstr "左对齐"
 
-#: dist/toolbar/toolbar.js:356
+#: dist/toolbar/toolbar.js:339
 msgid "Center horizontally"
 msgstr "水平居中"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:340
 msgid "Align right"
 msgstr "右对齐"
 
-#: dist/toolbar/toolbar.js:358
+#: dist/toolbar/toolbar.js:341
 msgid "Justified"
 msgstr "两端对齐"
 
-#: dist/toolbar/toolbar.js:360
+#: dist/toolbar/toolbar.js:343
 msgid "Bullets on/off"
 msgstr "打开/关闭项目符号"
 
-#: dist/toolbar/toolbar.js:361
+#: dist/toolbar/toolbar.js:344
 msgid "Numbering on/off"
 msgstr "打开/关闭编号"
 
-#: dist/toolbar/toolbar.js:363
+#: dist/toolbar/toolbar.js:346
 msgid "Increase indent"
 msgstr "增大缩进"
 
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:347
 msgid "Decrease indent"
 msgstr "减少缩进"
 
-#: dist/toolbar/toolbar.js:367
+#: dist/toolbar/toolbar.js:350
 msgid "Insert table"
 msgstr "插入表格"
 
-#: dist/toolbar/toolbar.js:368
+#: dist/toolbar/toolbar.js:351
 msgid "Insert comment"
 msgstr "插入批注"
 
-#: dist/toolbar/toolbar.js:369
+#: dist/toolbar/toolbar.js:352
 msgid "Insert graphic"
 msgstr "插入图形"
 
-#: dist/toolbar/toolbar.js:371
-msgid "Help"
-msgstr "帮助"
-
-#: dist/toolbar/toolbar.js:373
+#: dist/toolbar/toolbar.js:354
 msgid "More"
 msgstr "更多"
 
-#: dist/toolbar/toolbar.js:374
+#: dist/toolbar/toolbar.js:355
 msgid "Close document"
 msgstr "关闭文档"
 
-#: dist/toolbar/toolbar.js:404
+#: dist/toolbar/toolbar.js:385
 msgid "Sum"
 msgstr "求和"
 
-#: dist/toolbar/toolbar.js:405
+#: dist/toolbar/toolbar.js:386
 msgid "Function"
 msgstr "函数"
 
-#: dist/toolbar/toolbar.js:406
+#: dist/toolbar/toolbar.js:387
 msgid "Cancel"
 msgstr "取消"
 
-#: dist/toolbar/toolbar.js:407
+#: dist/toolbar/toolbar.js:388
 msgid "Accept"
 msgstr "接受"
 
-#: dist/toolbar/toolbar.js:418
+#: dist/toolbar/toolbar.js:399
 msgid "First sheet"
 msgstr "第一个工作表"
 
-#: dist/toolbar/toolbar.js:419
+#: dist/toolbar/toolbar.js:400
 msgid "Previous sheet"
 msgstr "上一个工作表"
 
-#: dist/toolbar/toolbar.js:420
+#: dist/toolbar/toolbar.js:401
 msgid "Next sheet"
 msgstr "下一个工作表"
 
-#: dist/toolbar/toolbar.js:421
+#: dist/toolbar/toolbar.js:402
 msgid "Last sheet"
 msgstr "最后一个工作表"
 
-#: dist/toolbar/toolbar.js:431
-#: src/control/Control.Menubar.js:88
+#: dist/toolbar/toolbar.js:412
+#: src/control/Control.Menubar.js:92
 msgid "Fullscreen presentation"
 msgstr "全屏演示"
 
-#: dist/toolbar/toolbar.js:433
+#: dist/toolbar/toolbar.js:414
 msgid "Insert slide"
 msgstr "插入幻灯片"
 
-#: dist/toolbar/toolbar.js:434
-#: src/control/Control.Menubar.js:85
+#: dist/toolbar/toolbar.js:415
+#: src/control/Control.Menubar.js:89
 msgid "Duplicate slide"
 msgstr "复制幻灯片"
 
-#: dist/toolbar/toolbar.js:435
-#: src/control/Control.Menubar.js:86
+#: dist/toolbar/toolbar.js:416
+#: src/control/Control.Menubar.js:90
 msgid "Delete slide"
 msgstr "删除幻灯片"
 
-#: dist/toolbar/toolbar.js:447
+#: dist/toolbar/toolbar.js:428
 msgid "Search:"
 msgstr "搜索："
 
-#: dist/toolbar/toolbar.js:452
+#: dist/toolbar/toolbar.js:433
 msgid "Search backwards"
 msgstr "反向搜索"
 
-#: dist/toolbar/toolbar.js:453
+#: dist/toolbar/toolbar.js:434
 msgid "Search forward"
 msgstr "向前搜索"
 
-#: dist/toolbar/toolbar.js:454
+#: dist/toolbar/toolbar.js:435
 msgid "Cancel the search"
 msgstr "取消搜索"
 
-#: dist/toolbar/toolbar.js:459
-#: dist/toolbar/toolbar.js:1010
+#: dist/toolbar/toolbar.js:440
+#: dist/toolbar/toolbar.js:991
 msgid "Take edit lock (others can only view)"
 msgstr "编辑加锁（其他人只可以查看）"
 
-#: dist/toolbar/toolbar.js:459
-#: dist/toolbar/toolbar.js:1010
+#: dist/toolbar/toolbar.js:440
+#: dist/toolbar/toolbar.js:991
 msgid "VIEWING"
 msgstr "正在查看"
 
-#: dist/toolbar/toolbar.js:461
+#: dist/toolbar/toolbar.js:442
 msgid "Previous page"
 msgstr "上一页"
 
-#: dist/toolbar/toolbar.js:462
+#: dist/toolbar/toolbar.js:443
 msgid "Next page"
 msgstr "下一页"
 
-#: dist/toolbar/toolbar.js:464
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:73
-#: src/control/Control.Menubar.js:118
+#: dist/toolbar/toolbar.js:445
+#: src/control/Control.Menubar.js:33
+#: src/control/Control.Menubar.js:77
+#: src/control/Control.Menubar.js:125
 msgid "Reset zoom"
 msgstr "重置缩放"
 
-#: dist/toolbar/toolbar.js:465
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:72
-#: src/control/Control.Menubar.js:117
+#: dist/toolbar/toolbar.js:446
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:76
+#: src/control/Control.Menubar.js:124
 msgid "Zoom out"
 msgstr "缩小"
 
-#: dist/toolbar/toolbar.js:467
-#: src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:116
+#: dist/toolbar/toolbar.js:448
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:123
 msgid "Zoom in"
 msgstr "放大"
 
-#: dist/toolbar/toolbar.js:485
+#: dist/toolbar/toolbar.js:466
 msgid "You are viewing now."
 msgstr "你正在查看。"
 
-#: dist/toolbar/toolbar.js:485
+#: dist/toolbar/toolbar.js:466
 msgid "Click here to take edit."
 msgstr "单击此处编辑文档。"
 
-#: dist/toolbar/toolbar.js:549
-#: dist/toolbar/toolbar.js:908
+#: dist/toolbar/toolbar.js:530
+#: dist/toolbar/toolbar.js:889
 msgid "Size"
 msgstr "大小"
 
-#: dist/toolbar/toolbar.js:779
+#: dist/toolbar/toolbar.js:760
 msgid "Document saved"
 msgstr "文档已保存"
 
-#: dist/toolbar/toolbar.js:891
+#: dist/toolbar/toolbar.js:872
 msgid "Style"
 msgstr "样式"
 
-#: dist/toolbar/toolbar.js:903
+#: dist/toolbar/toolbar.js:884
 msgid "Font"
 msgstr "字体"
 
-#: dist/toolbar/toolbar.js:927
+#: dist/toolbar/toolbar.js:908
 msgid "Previous slide"
 msgstr "上一张幻灯片"
 
-#: dist/toolbar/toolbar.js:928
+#: dist/toolbar/toolbar.js:909
 msgid "Next slide"
 msgstr "下一张幻灯片"
 
-#: dist/toolbar/toolbar.js:1006
+#: dist/toolbar/toolbar.js:987
 msgid "You are editing (others can only view)"
 msgstr "您正在编辑（其他人只能查看）"
 
-#: dist/toolbar/toolbar.js:1006
+#: dist/toolbar/toolbar.js:987
 msgid "EDITING"
 msgstr "正在编辑"
 
-#: dist/toolbar/toolbar.js:1139
+#: dist/toolbar/toolbar.js:1120
 msgid "Layout"
-msgstr ""
+msgstr "布局"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "连接错误"
 
 #: src/admin/AdminSocketOverview.js:58
-#, fuzzy
 msgid "Are you sure you want to terminate this session?"
-msgstr "您确定要删除这张幻灯片吗？"
+msgstr "您确定要停止此次会话吗？"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "管理员控制台"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "导航切换"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
-msgstr ""
+msgstr "预览"
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(当前)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
-msgstr ""
+msgstr "分析"
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "控制台"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
-msgstr ""
+msgstr "在线的用户"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "打开的文档"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
-msgstr ""
+msgstr "消耗的内存"
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "文档"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "视图数"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
-msgstr ""
+msgstr "已用时间"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "杀死"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "图表"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "内存统计的缓存大小"
 
 #: src/admin/AdminStrings.js:22
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "内存统计的时间间隔（毫秒）"
 
 #: src/admin/AdminStrings.js:23
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "CPU统计的缓存大小"
 
 #: src/admin/AdminStrings.js:24
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "CPU统计的时间间隔（毫秒）"
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "KB"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr " hrs"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr " mins"
 
 #: src/admin/Util.js:45
 msgid " s"
+msgstr " s"
+
+#: src/control/Control.ColumnHeader.js:35
+msgid "Insert column before"
 msgstr ""
 
-#: src/control/Control.Menubar.js:9
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:93
-msgid "File"
-msgstr "文件"
-
-#: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:52
-#: src/control/Control.Menubar.js:94
-msgid "Print"
-msgstr "打印"
-
-#: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:95
-msgid "Download as"
-msgstr "下载为"
-
-#: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:95
-msgid "PDF Document (.pdf)"
-msgstr "PDF文档 (.pdf)"
-
-#: src/control/Control.Menubar.js:12
-msgid "ODF text document (.odt)"
-msgstr "ODF文本文档 (.odt)"
-
-#: src/control/Control.Menubar.js:13
-msgid "Microsoft Word 2003 (.doc)"
-msgstr "Microsoft Word 2003 (.doc)"
-
-#: src/control/Control.Menubar.js:14
-msgid "Microsoft Word (.docx)"
-msgstr "Microsoft Word (.docx)"
-
-#: src/control/Control.Menubar.js:16
-#: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:100
-msgid "Edit"
-msgstr "编辑"
-
-#: src/control/Control.Menubar.js:19
-#: src/control/Control.Menubar.js:61
-#: src/control/Control.Menubar.js:103
-msgid "Cut"
-msgstr "剪切"
-
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:62
-#: src/control/Control.Menubar.js:104
-msgid "Copy"
-msgstr "复制"
-
-#: src/control/Control.Menubar.js:21
-#: src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:105
-msgid "Paste"
-msgstr "粘贴"
-
-#: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:65
-#: src/control/Control.Menubar.js:107
-msgid "Select all"
-msgstr "全选"
-
-#: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:67
-#: src/control/Control.Menubar.js:75
-#: src/control/Control.Menubar.js:109
-msgid "Insert"
-msgstr "插入"
-
-#: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:67
-#: src/control/Control.Menubar.js:109
-msgid "Image"
-msgstr "图像"
-
-#: src/control/Control.Menubar.js:26
-msgid "Comment"
-msgstr "批注"
-
-#: src/control/Control.Menubar.js:28
-#: src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:114
-msgid "View"
-msgstr "查看"
-
-#: src/control/Control.Menubar.js:28
-#: src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:114
-msgid "Full screen"
-msgstr "全屏"
-
-#: src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:75
-msgid "Tables"
-msgstr "表格"
-
-#: src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:75
-msgid "Rows before"
-msgstr "在上方插入行"
-
-#: src/control/Control.Menubar.js:35
-#: src/control/Control.Menubar.js:76
-msgid "Rows after"
-msgstr "在下方插入行"
-
-#: src/control/Control.Menubar.js:37
-#: src/control/Control.Menubar.js:78
-msgid "Columns left"
-msgstr "在左侧插入列"
-
-#: src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:79
-msgid "Columns right"
-msgstr "在右侧插入列"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:80
-msgid "Delete"
-msgstr "删除"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:80
-msgid "Rows"
-msgstr "行"
-
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:81
-msgid "Columns"
-msgstr "列"
-
-#: src/control/Control.Menubar.js:41
-#: src/control/Control.Menubar.js:42
-msgid "Table"
-msgstr "表格"
-
-#: src/control/Control.Menubar.js:42
-msgid "Select"
-msgstr "选择"
-
-#: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:111
-msgid "Row"
-msgstr "行"
-
-#: src/control/Control.Menubar.js:44
-#: src/control/Control.Menubar.js:112
-msgid "Column"
-msgstr "列"
-
-#: src/control/Control.Menubar.js:45
-msgid "Cell"
-msgstr "单元格"
-
-#: src/control/Control.Menubar.js:46
-#: src/control/Control.Menubar.js:82
-msgid "Merge cells"
-msgstr "合并单元格"
-
-#: src/control/Control.Menubar.js:54
-msgid "ODF presentation (.odp)"
-msgstr "ODF演示文稿 (.odp)"
-
-#: src/control/Control.Menubar.js:55
-msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Microsoft Powerpoint 2003 (.ppt)"
-
-#: src/control/Control.Menubar.js:56
-msgid "Microsoft Powerpoint (.pptx)"
-msgstr "Microsoft Powerpoint (.pptx)"
-
-#: src/control/Control.Menubar.js:84
-msgid "Slide"
-msgstr "幻灯片"
-
-#: src/control/Control.Menubar.js:84
-msgid "New slide"
-msgstr "新建幻灯片"
-
-#: src/control/Control.Menubar.js:96
-msgid "ODF spreadsheet (.ods)"
-msgstr "ODF电子表格 (.ods)"
-
-#: src/control/Control.Menubar.js:97
-msgid "Microsoft Excel 2003 (.xls)"
-msgstr "Microsoft Excel 2003 (.xls)"
-
-#: src/control/Control.Menubar.js:98
-msgid "Microsoft Excel (.xlsx)"
-msgstr "Microsoft Excel (.xlsx)"
-
-#: src/control/Control.Menubar.js:120
-msgid "Cells"
-msgstr "单元格"
-
-#: src/control/Control.Menubar.js:120
-msgid "Insert row"
-msgstr "插入行"
-
-#: src/control/Control.Menubar.js:121
-msgid "Insert column"
-msgstr "插入列"
-
-#: src/control/Control.Menubar.js:123
-msgid "Delete row"
-msgstr "删除行"
-
-#: src/control/Control.Menubar.js:124
+#: src/control/Control.ColumnHeader.js:42
+#: src/control/Control.Menubar.js:131
 msgid "Delete column"
 msgstr "删除列"
 
-#: src/control/Control.Menubar.js:282
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:55
+#: src/control/Control.Menubar.js:100
+msgid "File"
+msgstr "文件"
+
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:56
+#: src/control/Control.Menubar.js:101
+msgid "Print"
+msgstr "打印"
+
+#: src/control/Control.Menubar.js:12
+#: src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:102
+msgid "Download as"
+msgstr "下载为"
+
+#: src/control/Control.Menubar.js:12
+#: src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:102
+msgid "PDF Document (.pdf)"
+msgstr "PDF文档 (.pdf)"
+
+#: src/control/Control.Menubar.js:13
+msgid "ODF text document (.odt)"
+msgstr "ODF文本文档 (.odt)"
+
+#: src/control/Control.Menubar.js:14
+msgid "Microsoft Word 2003 (.doc)"
+msgstr "Microsoft Word 2003 (.doc)"
+
+#: src/control/Control.Menubar.js:15
+msgid "Microsoft Word (.docx)"
+msgstr "Microsoft Word (.docx)"
+
+#: src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:62
+#: src/control/Control.Menubar.js:107
+msgid "Edit"
+msgstr "编辑"
+
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:65
+#: src/control/Control.Menubar.js:110
+msgid "Cut"
+msgstr "剪切"
+
+#: src/control/Control.Menubar.js:21
+#: src/control/Control.Menubar.js:66
+#: src/control/Control.Menubar.js:111
+msgid "Copy"
+msgstr "复制"
+
+#: src/control/Control.Menubar.js:22
+#: src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:112
+msgid "Paste"
+msgstr "粘贴"
+
+#: src/control/Control.Menubar.js:24
+#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:114
+msgid "Select all"
+msgstr "全选"
+
+#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:35
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:79
+#: src/control/Control.Menubar.js:116
+msgid "Insert"
+msgstr "插入"
+
+#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:116
+msgid "Image"
+msgstr "图像"
+
+#: src/control/Control.Menubar.js:27
+msgid "Comment"
+msgstr "批注"
+
+#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:121
+msgid "View"
+msgstr "查看"
+
+#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:121
+msgid "Full screen"
+msgstr "全屏"
+
+#: src/control/Control.Menubar.js:35
+#: src/control/Control.Menubar.js:79
+msgid "Tables"
+msgstr "表格"
+
+#: src/control/Control.Menubar.js:35
+#: src/control/Control.Menubar.js:79
+msgid "Rows before"
+msgstr "在上方插入行"
+
+#: src/control/Control.Menubar.js:36
+#: src/control/Control.Menubar.js:80
+msgid "Rows after"
+msgstr "在下方插入行"
+
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:82
+msgid "Columns left"
+msgstr "在左侧插入列"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:83
+msgid "Columns right"
+msgstr "在右侧插入列"
+
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:84
+msgid "Delete"
+msgstr "删除"
+
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:84
+msgid "Rows"
+msgstr "行"
+
+#: src/control/Control.Menubar.js:41
+#: src/control/Control.Menubar.js:85
+msgid "Columns"
+msgstr "列"
+
+#: src/control/Control.Menubar.js:42
+#: src/control/Control.Menubar.js:43
+msgid "Table"
+msgstr "表格"
+
+#: src/control/Control.Menubar.js:43
+msgid "Select"
+msgstr "选择"
+
+#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:118
+msgid "Row"
+msgstr "行"
+
+#: src/control/Control.Menubar.js:45
+#: src/control/Control.Menubar.js:119
+msgid "Column"
+msgstr "列"
+
+#: src/control/Control.Menubar.js:46
+msgid "Cell"
+msgstr "单元格"
+
+#: src/control/Control.Menubar.js:47
+#: src/control/Control.Menubar.js:86
+msgid "Merge cells"
+msgstr "合并单元格"
+
+#: src/control/Control.Menubar.js:49
+#: src/control/Control.Menubar.js:94
+#: src/control/Control.Menubar.js:133
+msgid "Help"
+msgstr "帮助"
+
+#: src/control/Control.Menubar.js:49
+#: src/control/Control.Menubar.js:94
+#: src/control/Control.Menubar.js:133
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: src/control/Control.Menubar.js:50
+#: src/control/Control.Menubar.js:95
+#: src/control/Control.Menubar.js:134
+msgid "About"
+msgstr ""
+
+#: src/control/Control.Menubar.js:58
+msgid "ODF presentation (.odp)"
+msgstr "ODF演示文稿 (.odp)"
+
+#: src/control/Control.Menubar.js:59
+msgid "Microsoft Powerpoint 2003 (.ppt)"
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
+
+#: src/control/Control.Menubar.js:60
+msgid "Microsoft Powerpoint (.pptx)"
+msgstr "Microsoft Powerpoint (.pptx)"
+
+#: src/control/Control.Menubar.js:88
+msgid "Slide"
+msgstr "幻灯片"
+
+#: src/control/Control.Menubar.js:88
+msgid "New slide"
+msgstr "新建幻灯片"
+
+#: src/control/Control.Menubar.js:103
+msgid "ODF spreadsheet (.ods)"
+msgstr "ODF电子表格 (.ods)"
+
+#: src/control/Control.Menubar.js:104
+msgid "Microsoft Excel 2003 (.xls)"
+msgstr "Microsoft Excel 2003 (.xls)"
+
+#: src/control/Control.Menubar.js:105
+msgid "Microsoft Excel (.xlsx)"
+msgstr "Microsoft Excel (.xlsx)"
+
+#: src/control/Control.Menubar.js:127
+msgid "Cells"
+msgstr "单元格"
+
+#: src/control/Control.Menubar.js:127
+msgid "Insert row"
+msgstr "插入行"
+
+#: src/control/Control.Menubar.js:128
+msgid "Insert column"
+msgstr "插入列"
+
+#: src/control/Control.Menubar.js:130
+#: src/control/Control.RowHeader.js:40
+msgid "Delete row"
+msgstr "删除行"
+
+#: src/control/Control.Menubar.js:300
 msgid "Are you sure you want to delete this slide?"
 msgstr "您确定要删除这张幻灯片吗？"
+
+#: src/control/Control.RowHeader.js:33
+msgid "Insert row above"
+msgstr ""
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -713,48 +736,58 @@ msgstr "重命名工作表"
 msgid "Enter new sheet name"
 msgstr "输入新的工作表名"
 
+#: src/control/Toolbar.js:59
+#: src/control/Toolbar.js:68
+msgid "Downloading..."
+msgstr ""
+
+#: src/control/Toolbar.js:80
+#: src/map/Map.js:803
+msgid "Saving..."
+msgstr "正在保存..."
+
+#: src/control/Toolbar.js:212
+msgid "This version of %productName is powered by"
+msgstr ""
+
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "糟糕，连接到LibreOffice Online时出现了问题："
 
-#: src/core/Socket.js:132
+#: src/core/Socket.js:136
 msgid "Unsupported server version."
 msgstr "不被支持的服务器版本。"
 
-#: src/core/Socket.js:145
+#: src/core/Socket.js:155
 msgid "Document requires password to view."
 msgstr "文档需要密码才能查看。"
 
-#: src/core/Socket.js:148
+#: src/core/Socket.js:158
 msgid "Document requires password to modify."
 msgstr "文档需要密码才能修改。"
 
-#: src/core/Socket.js:150
+#: src/core/Socket.js:160
 msgid "Hit Cancel to open in view-only mode."
 msgstr "点击“取消”在只读模式下打开。"
 
-#: src/core/Socket.js:154
+#: src/core/Socket.js:164
 msgid "Wrong password provided. Please try again."
 msgstr "密码错误。请重试。"
 
-#: src/core/Socket.js:291
+#: src/core/Socket.js:301
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "很抱歉，无法连接到您的文档。请重试。"
 
-#: src/core/Socket.js:294
+#: src/core/Socket.js:304
 msgid "We are sorry, this is an unexpected connection error. Please try again."
 msgstr "这是一个意想不到的连接错误。请重试。"
 
-#: src/map/Map.js:116
+#: src/map/Map.js:117
 msgid "Initializing..."
-msgstr ""
+msgstr "正在初始化..."
 
-#: src/map/Map.js:802
-msgid "Saving..."
-msgstr ""
-
-#: src/map/Map.js:805
+#: src/map/Map.js:806
 msgid "Loading..."
-msgstr ""
+msgstr "正在载入..."

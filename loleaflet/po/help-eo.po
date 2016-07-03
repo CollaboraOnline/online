@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-18 11:25+0000\n"
+"POT-Creation-Date: 2016-07-03 11:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,31 +12,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-help-eo.po\n"
-"X-Pootle-Revision: 435071\n"
+"X-Pootle-Revision: 485029\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
-msgstr ""
+msgstr "LOLeaflet-helpo"
 
 #: dist%2Floleaflet-help.html+html.body.h1%3A48
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Fulmoklavoj"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A50
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "Ĝeneralaj fulmoklavoj"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Undo"
-msgstr ""
+msgstr "Malfari"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
 msgid "Redo"
-msgstr ""
+msgstr "Refari"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
 msgid "Ctrl + Y"
