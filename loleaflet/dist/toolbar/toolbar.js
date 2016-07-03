@@ -653,53 +653,53 @@ map.on('doclayerinit', function () {
 	case 'spreadsheet':
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'StatusDocPos',  html: '<div id="StatusDocPos" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StatusDocPos',  html: '<div id="StatusDocPos" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'RowColSelCount',  html: '<div id="RowColSelCount" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'RowColSelCount',  html: '<div id="RowColSelCount" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'SatusPageStyle',  html: '<div id="StatusPageStyle" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'SatusPageStyle',  html: '<div id="StatusPageStyle" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break4'},
-			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'StatusSelectionMode',  html: '<div id="StatusSelectionMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StatusSelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break6'},
-			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break8'},
-			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break9'},
-			//{type: 'html',  id: 'ZoomSlider',  html: '<div id="Zoomslider" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			//{type: 'html',  id: 'ZoomSlider',  html: '<div id="Zoomslider" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break10'},
-			//{type: 'html',  id: 'Zoom',  html: '<div id="Zoom" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			//{type: 'html',  id: 'Zoom',  html: '<div id="Zoom" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		])
 		statusbar.refresh();
 		break;
 	case 'text':
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'StatePageNumber',  html: '<div id="StatePageNumber" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StatePageNumber',  html: '<div id="StatePageNumber" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'StateWordCount',  html: '<div id="StateWordCount" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StateWordCount',  html: '<div id="StateWordCount" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'PageStyleName',  html: '<div id="PageStyleName" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'PageStyleName',  html: '<div id="PageStyleName" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break4'},
-			//{type: 'html',  id: 'LanguageStatus',  html: '<div id="LanguageStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			//{type: 'html',  id: 'LanguageStatus',  html: '<div id="LanguageStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break6'},
-			{type: 'html',  id: 'SelectionMode',  html: '<div id="StatusSelectionMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'SelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break7'},
-			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		])
 		statusbar.refresh();
 		break;
 	case 'presentation':
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'PageStatus',  html: '<div id="PageStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'PageStatus',  html: '<div id="PageStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'LayoutStatus',  html: '<div id="LayoutStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'LayoutStatus',  html: '<div id="LayoutStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'Context',  html: '<div id="Context" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'Context',  html: '<div id="Context" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		])
 		statusbar.refresh();
 		break;
