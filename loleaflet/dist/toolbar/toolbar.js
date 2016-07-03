@@ -676,6 +676,25 @@ map.on('doclayerinit', function () {
 		statusbar.refresh();
 		break;
 	case 'text':
+		statusbar.insert('left', [
+			{type: 'break', id:'break1'},
+			{type: 'html',  id: 'StatePageNumber',  html: '<div id="StatePageNumber" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break2'},
+			{type: 'html',  id: 'StateWordCount',  html: '<div id="StateWordCount" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break3'},
+			{type: 'html',  id: 'PageStyleName',  html: '<div id="PageStyleName" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			//{type: 'break', id:'break4'},
+			//{type: 'html',  id: 'LanguageStatus',  html: '<div id="LanguageStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break5'},
+			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break6'},
+			{type: 'html',  id: 'SelectionMode',  html: '<div id="StatusSelectionMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			//{type: 'break', id:'break7'},
+			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break8'},
+			{type: 'html',  id: 'Signature',  html: '<div id="Signature" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+		])
+		statusbar.refresh();
 		break;
 	case 'presentation':
 		break;
@@ -805,7 +824,8 @@ map.on('commandstatechanged', function (e) {
 	else if (commandName === '.uno:InsertMode') {
 		$('#InsertMode').html(state ? L.Styles.insertMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
-	else if (commandName === '.uno:StatusSelectionMode') {
+	else if (commandName === '.uno:StatusSelectionMode' ||
+		 commandName === '.uno:SelectionMode') {
 		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:Signature') {
@@ -818,6 +838,15 @@ map.on('commandstatechanged', function (e) {
 		if (state) {
 			$('#StateTableCell').html(state);
 		}
+	}
+	else if (commandName === '.uno:StatePageNumber') {
+		$('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:StateWordCount') {
+		$('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:PageStyleName') {
+		$('#PageStyleName').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 
 	var toolbarUpMore = w2ui['toolbar-up-more'];
