@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-18 11:25+0000\n"
+"POT-Creation-Date: 2016-07-03 11:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
-"X-Pootle-Revision: 460233\n"
+"X-Pootle-Revision: 482749\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -273,15 +273,15 @@ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Move cursor with selection to the left"
 msgstr "Mover el cursor a la izquierda seleccionando el texto"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
-msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
-msgid "Go to beginning of a word"
-msgstr "Ir al principio de una palabra"
-
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Shift + Arrow Left"
 msgstr "Mayús + ←"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
+msgid "Go to beginning of a word"
+msgstr "Ir al principio de una palabra"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
@@ -313,15 +313,15 @@ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
 msgid "Move cursor with selection to the right"
 msgstr "Mover el cursor a la derecha seleccionando el texto"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
-msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
-msgid "Go to start of the next word"
-msgstr "Ir al principio de la palabra siguiente"
-
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A92
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
 msgid "Shift + Arrow Right"
 msgstr "Mayús + →"
+
+#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
+msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
+msgid "Go to start of the next word"
+msgstr "Ir al principio de la palabra siguiente"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
