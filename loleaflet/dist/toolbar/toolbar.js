@@ -697,6 +697,15 @@ map.on('doclayerinit', function () {
 		statusbar.refresh();
 		break;
 	case 'presentation':
+		statusbar.insert('left', [
+			{type: 'break', id:'break1'},
+			{type: 'html',  id: 'PageStatus',  html: '<div id="PageStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break2'},
+			{type: 'html',  id: 'LayoutStatus',  html: '<div id="LayoutStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break3'},
+			{type: 'html',  id: 'Context',  html: '<div id="Context" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+		])
+		statusbar.refresh();
 		break;
 	}
 });
@@ -847,6 +856,15 @@ map.on('commandstatechanged', function (e) {
 	}
 	else if (commandName === '.uno:PageStyleName') {
 		$('#PageStyleName').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:PageStatus') {
+		$('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:LayoutStatus') {
+		$('#LayoutStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:Context') {
+		$('#Context').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 
 	var toolbarUpMore = w2ui['toolbar-up-more'];
