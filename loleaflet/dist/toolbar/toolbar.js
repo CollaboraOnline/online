@@ -664,8 +664,6 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'StatusSelectionMode',  html: '<div id="StatusSelectionMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break6'},
 			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break7'},
-			{type: 'html',  id: 'Signature',  html: '<div id="Signature" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break8'},
 			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break9'},
@@ -691,8 +689,6 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'SelectionMode',  html: '<div id="StatusSelectionMode" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break7'},
 			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break8'},
-			{type: 'html',  id: 'Signature',  html: '<div id="Signature" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		])
 		statusbar.refresh();
 		break;
@@ -836,9 +832,6 @@ map.on('commandstatechanged', function (e) {
 	else if (commandName === '.uno:StatusSelectionMode' ||
 		 commandName === '.uno:SelectionMode') {
 		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
-	}
-	else if (commandName === '.uno:Signature') {
-		$('#Signature').html(state ? L.Styles.signatureState[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:Position' ||
 		 commandName === '.uno:StateTableCell' ||
