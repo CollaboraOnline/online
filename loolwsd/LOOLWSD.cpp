@@ -1375,13 +1375,6 @@ void LOOLWSD::handleOption(const std::string& optionName,
         DisplayVersion = true;
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
-#if ENABLE_DEBUG
-    else if (optionName == "unitlib")
-        UnitTestLibrary = value;
-    else if (optionName == "nocaps")
-        NoCapsForKit = true;
-    else if (optionName == "careerspan")
-        careerSpanSeconds = std::stoi(value);
     else if (optionName == "override")
     {
         std::string optName;
@@ -1389,6 +1382,13 @@ void LOOLWSD::handleOption(const std::string& optionName,
         LOOLProtocol::parseNameValuePair(value, optName, optValue);
         _overrideSettings[optName] = optValue;
     }
+#if ENABLE_DEBUG
+    else if (optionName == "unitlib")
+        UnitTestLibrary = value;
+    else if (optionName == "nocaps")
+        NoCapsForKit = true;
+    else if (optionName == "careerspan")
+        careerSpanSeconds = std::stoi(value);
 
     static const char* clientPort = getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
