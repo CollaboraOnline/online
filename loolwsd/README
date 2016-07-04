@@ -204,6 +204,30 @@ Use the ps command to find out exactly the path to use.
 
 Set LOOL_DEBUG=1 to trap SIGSEGV and SEGBUS and prompt for debugger.
 
+In order to run and debug one unit test:
+TODO. Improve like LO Core (i.e. make -sr CppunitTest_svtools_graphic CPPUNIT_TEST_NAME="GraphicObjectTest::testPdf")
+
+	Example to run httpgettest.cpp unit test
+
+	// file test.cpp
+	// uncomment line codes
+	CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpwstest");
+	runner.addTest(registry.makeTest());
+
+	// file test.cpp
+	// disable line code to avoid running all unit tests
+	// auto all = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
+	// runner.addTest(all);
+
+	// file httpwstest.cpp
+	// it requires a Named Registration, add following line code
+	CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(HTTPWSTest, "httpwstest");
+	// disable default registration
+	// CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
+
+	// execute the unit test
+	make check
+
 Protocol description
 --------------------
 
