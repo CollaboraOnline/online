@@ -339,10 +339,10 @@ $(function () {
 			{type: 'button',  id: 'alignhorizontal',  img: 'alignhorizontal', hint: _('Center horizontally'), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}'},
 			{type: 'button',  id: 'alignright',  img: 'alignright', hint: _('Align right'), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}'},
 			{type: 'button',  id: 'alignblock',  img: 'alignblock', hint: _('Justified'), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}'},
-			{type: 'break'},
+			{type: 'break',   id: 'break-align'},
 			{type: 'button',  id: 'bullet',  img: 'bullet', hint: _('Bullets on/off'), uno: 'DefaultBullet'},
 			{type: 'button',  id: 'numbering',  img: 'numbering', hint: _('Numbering on/off'), uno: 'DefaultNumbering'},
-			{type: 'break'},
+			{type: 'break',   id: 'break-numbering'},
 			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _('Increase indent'), uno: 'IncrementIndent'},
 			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _('Decrease indent'), uno: 'DecrementIndent'},
 			{type: 'break', id: 'incdecindent'},
@@ -465,6 +465,31 @@ var formatButtons = {
 
 var takeEditPopupMessage = '<div>' + _('You are viewing now.') + '<br/>' + _('Click here to take edit.') + '</div>';
 var takeEditPopupTimeout = null;
+
+
+function toggleButton(toolbar, state, command)
+{
+	var checked;
+	command = command.replace('.uno:', '');
+	var item = toolbar.get(command);
+	if (!item) {
+		return;
+	}
+
+	if (state) {
+		checked = item.disabled ? toolbar.enable(command) : undefined;
+
+		if (state == 'true') {
+			checked = !item.checked ? toolbar.check(command) : undefined;
+		}
+		else {
+			checked = item.checked ? toolbar.uncheck(command) : undefined;
+		}
+	}
+	else {
+		checked = !item.disabled ? toolbar.disable(command) : undefined;
+	}
+}
 
 function onSearch(e) {
 	if (e.keyCode === 13) {
@@ -663,7 +688,20 @@ map.on('doclayerinit', function () {
 			{type: 'break', id:'break8'},
 			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
+		toolbar.remove('alignblock', 'bullet', 'numbering', 'break-numbering');
+		toolbar.insert('break-align', [
+			{type: 'button',  id: 'WrapText',  img: 'wraptext', hint: _('Wrap Text'), uno: 'WrapText'},
+			{type: 'button',  id: 'ToggleMergeCells',  img: 'togglemergecells', hint: _('Merge and Center Cells'), uno: 'ToggleMergeCells'},
+			{type: 'break',   id: 'break-toggle'},
+			{type: 'button',  id: 'NumberFormatCurrency',  img: 'numberformatcurrency', hint: _('Format as Currency'), uno: 'NumberFormatCurrency'},
+			{type: 'button',  id: 'NumberFormatPercent',  img: 'numberformatpercent', hint: _('Format as Percent'), uno: 'NumberFormatPercent'},
+			{type: 'button',  id: 'NumberFormatDecimal',  img: 'numberformatdecimal', hint: _('Format as Number'), uno: 'NumberFormatDecimal'},
+			{type: 'button',  id: 'NumberFormatDate',  img: 'numberformatdate', hint: _('Format as Date'), uno: 'NumberFormatDate'},
+			{type: 'button',  id: 'NumberFormatIncDecimals',  img: 'numberformatincdecimals', hint: _('Add Decimal Place'), uno: 'NumberFormatIncDecimals'},
+			{type: 'button',  id: 'NumberFormatDecDecimals',  img: 'numberformatdecdecimals', hint: _('Delete Decimal Place'), uno: 'NumberFormatDecDecimals'},
+		]);
 		statusbar.refresh();
+		toolbar.refresh();
 		break;
 	case 'text':
 		statusbar.insert('left', [
@@ -841,6 +879,13 @@ map.on('commandstatechanged', function (e) {
 	}
 	else if (commandName === '.uno:Context') {
 		$('#Context').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:WrapText' ||
+		 commandName === '.uno:ToggleMergeCells' ||
+		 commandName === '.uno:NumberFormatCurrency' ||
+		 commandName === '.uno:NumberFormatPercent' ||
+		 commandName === '.uno:NumberFormatDate') {
+		toggleButton(toolbar, state, commandName);
 	}
 
 	var toolbarUpMore = w2ui['toolbar-up-more'];
