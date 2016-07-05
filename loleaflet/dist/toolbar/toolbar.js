@@ -580,6 +580,11 @@ function onInsertFile() {
 			map.insertFile(file);
 		}
 	}
+
+	// Set the value to null everytime so that onchange event is triggered,
+	// even if the same file is selected
+	insertGraphic.value = null;
+	return false;
 }
 
 function onFormulaInput(e) {
