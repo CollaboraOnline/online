@@ -967,7 +967,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			this._graphicMarker = L.rectangle(this._graphicSelection, {fill: false});
-			this._visibleCursor = this._visibleCursorOnLostFocus = this._graphicMarker;
+			this._visibleCursor = this._visibleCursorOnLostFocus = this._graphicMarker._bounds;
 			if (!this._graphicMarker) {
 				this._map.fire('error', {msg: 'Graphic marker initialization', cmd: 'marker', kind: 'failed', id: 1});
 				return;
