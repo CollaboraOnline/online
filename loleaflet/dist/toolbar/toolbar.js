@@ -342,7 +342,7 @@ $(function () {
 			{type: 'break'},
 			{type: 'button',  id: 'bullet',  img: 'bullet', hint: _('Bullets on/off'), uno: 'DefaultBullet'},
 			{type: 'button',  id: 'numbering',  img: 'numbering', hint: _('Numbering on/off'), uno: 'DefaultNumbering'},
-			{type: 'break'},
+			{type: 'break',   id: 'break-numbering'},
 			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _('Increase indent'), uno: 'IncrementIndent'},
 			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _('Decrease indent'), uno: 'DecrementIndent'},
 			{type: 'break', id: 'incdecindent'},
@@ -675,8 +675,10 @@ map.on('doclayerinit', function () {
 			//{type: 'html',  id: 'ZoomSlider',  html: '<div id="Zoomslider" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break10'},
 			//{type: 'html',  id: 'Zoom',  html: '<div id="Zoom" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-		])
+		]);
+		toolbar.remove('alignblock', 'bullet', 'numbering', 'break-numbering');
 		statusbar.refresh();
+		toolbar.refresh();
 		break;
 	case 'text':
 		statusbar.insert('left', [
@@ -694,7 +696,7 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'SelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			//{type: 'break', id:'break7'},
 			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-		])
+		]);
 		statusbar.refresh();
 		break;
 	case 'presentation':
@@ -705,7 +707,7 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'LayoutStatus',  html: '<div id="LayoutStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
 			{type: 'html',  id: 'Context',  html: '<div id="Context" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-		])
+		]);
 		statusbar.refresh();
 		break;
 	}
