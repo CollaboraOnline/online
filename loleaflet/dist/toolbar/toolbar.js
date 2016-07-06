@@ -339,7 +339,7 @@ $(function () {
 			{type: 'button',  id: 'alignhorizontal',  img: 'alignhorizontal', hint: _('Center horizontally'), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}'},
 			{type: 'button',  id: 'alignright',  img: 'alignright', hint: _('Align right'), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}'},
 			{type: 'button',  id: 'alignblock',  img: 'alignblock', hint: _('Justified'), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}'},
-			{type: 'break'},
+			{type: 'break',   id: 'break-align'},
 			{type: 'button',  id: 'bullet',  img: 'bullet', hint: _('Bullets on/off'), uno: 'DefaultBullet'},
 			{type: 'button',  id: 'numbering',  img: 'numbering', hint: _('Numbering on/off'), uno: 'DefaultNumbering'},
 			{type: 'break',   id: 'break-numbering'},
@@ -465,6 +465,31 @@ var formatButtons = {
 
 var takeEditPopupMessage = '<div>' + _('You are viewing now.') + '<br/>' + _('Click here to take edit.') + '</div>';
 var takeEditPopupTimeout = null;
+
+
+function toggleButton(toolbar, state, command)
+{
+	var checked;
+	command = command.replace('.uno:', '');
+	var item = toolbar.get(command);
+	if (!item) {
+		return;
+	}
+
+	if (state) {
+		checked = item.disabled ? toolbar.enable(command) : undefined;
+
+		if (state == 'true') {
+			checked = !item.checked ? toolbar.check(command) : undefined;
+		}
+		else {
+			checked = item.checked ? toolbar.uncheck(command) : undefined;
+		}
+	}
+	else {
+		checked = !item.disabled ? toolbar.disable(command) : undefined;
+	}
+}
 
 function onSearch(e) {
 	if (e.keyCode === 13) {
@@ -677,6 +702,10 @@ map.on('doclayerinit', function () {
 			//{type: 'html',  id: 'Zoom',  html: '<div id="Zoom" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
 		toolbar.remove('alignblock', 'bullet', 'numbering', 'break-numbering');
+		toolbar.insert('break-align', [
+			{type: 'button',  id: 'WrapText',  img: 'wraptext', hint: _('Wrap Text'), uno: 'WrapText'},
+			{type: 'button',  id: 'ToggleMergeCells',  img: 'togglemergecells', hint: _('"Merge and Center Cells'), uno: 'ToggleMergeCells'},
+		]);
 		statusbar.refresh();
 		toolbar.refresh();
 		break;
@@ -865,6 +894,10 @@ map.on('commandstatechanged', function (e) {
 	}
 	else if (commandName === '.uno:Context') {
 		$('#Context').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:WrapText' ||
+		 commandName === '.uno:ToggleMergeCells') {
+		toggleButton(toolbar, state, commandName);
 	}
 
 	var toolbarUpMore = w2ui['toolbar-up-more'];

@@ -256,6 +256,8 @@ button.leaflet-control-search-next
 .w2ui-icon.nextrecord{ background: url('/loleaflet/dist/images/lc_nextrecord.png') no-repeat center !important; }
 .w2ui-icon.prevrecord{ background: url('/loleaflet/dist/images/lc_prevrecord.png') no-repeat center !important; }
 .w2ui-icon.lastrecord{ background: url('/loleaflet/dist/images/lc_lastrecord.png') no-repeat center !important; }
+.w2ui-icon.wraptext{ background: url('/loleaflet/dist/images/sc_wraptext.png') no-repeat center !important; }
+.w2ui-icon.togglemergecells{ background: url('/loleaflet/dist/images/sc_togglemergecells.png') no-repeat center !important; }
 
 .inserttable-pop {
     z-index: 100000;
