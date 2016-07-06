@@ -146,7 +146,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
             return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
         }
 
-        Log::error("Local Storage is disabled by default. Specify allowlocalstorage on the command-line to enable.");
+        Log::error("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
     }
     else if (WopiEnabled)
     {
