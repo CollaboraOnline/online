@@ -51,7 +51,11 @@ namespace helpers
 inline
 std::vector<char> readDataFromFile(const std::string& filename)
 {
-    std::ifstream ifs(Poco::Path(TDOC, filename).toString());
+    std::ifstream ifs(Poco::Path(TDOC, filename).toString(), std::ios::binary);
+
+    // Apparently std::ios::binary is not good
+    // enough to stop eating new-line chars!
+    ifs.unsetf(std::ios::skipws);
 
     std::istream_iterator<char> start(ifs);
     std::istream_iterator<char> end;
@@ -312,7 +316,7 @@ template <typename T>
 std::string assertResponseLine(T& ws, const std::string& prefix, const std::string name = "")
 {
     const auto res = getResponseLine(ws, prefix, name);
-    CPPUNIT_ASSERT_EQUAL(prefix, LOOLProtocol::getFirstToken(res));
+    CPPUNIT_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
     return res;
 }
 

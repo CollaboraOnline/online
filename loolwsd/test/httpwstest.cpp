@@ -1346,6 +1346,9 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
     getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight);
 
+    // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
+    sendTextFrame(socket, "key type=input char=0 key=1027");
+
     text.clear();
     Poco::format(text, "commandvalues command=.uno:CellCursor?outputHeight=%d&outputWidth=%d&tileHeight=%d&tileWidth=%d",
         256, 256, 3840, 3840);
@@ -1544,27 +1547,22 @@ void HTTPWSTest::testCalcEditRendering()
     auto socket = loadDocAndGetSocket(_uri, documentURL);
 
     const std::string x = "5000";
-    const std::string y = "165";
+    const std::string y = "5";
     sendTextFrame(socket, "mouse type=buttondown x=" + x + " y=" + y + " count=1 buttons=1 modifier=0");
-    sendTextFrame(socket, "mouse type=buttonup x=" + x + " y=" + y + " count=1 buttons=1 modifier=0");
     sendTextFrame(socket, "key type=input char=97 key=0");
     sendTextFrame(socket, "key type=input char=98 key=0");
     sendTextFrame(socket, "key type=input char=99 key=0");
 
-    assertResponseLine(socket, "invalidatetiles:", "calcEditRendering ");
-    assertResponseLine(socket, "invalidatetiles:", "calcEditRendering ");
+    assertResponseLine(socket, "cellformula: abc", "calcEditRendering ");
 
     const auto req = "tilecombine part=0 width=512 height=512 tileposx=3840 tileposy=0 tilewidth=7680 tileheight=7680";
     sendTextFrame(socket, req);
 
     const auto tile = getResponseMessage(socket, "tile:", "calcEditRendering ");
+    std::cout << "size: " << tile.size() << std::endl;
     const std::string firstLine = LOOLProtocol::getFirstLine(tile);
 
-    std::stringstream streamTile;
-    std::copy(tile.begin() + firstLine.size() + 1, tile.end(), std::ostream_iterator<char>(streamTile));
-    std::istream_iterator<char> start(streamTile);
-    std::istream_iterator<char> end;
-    std::vector<char> res(start, end);
+    std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
 
     const std::vector<char> exp = readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");
 
