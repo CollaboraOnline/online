@@ -252,7 +252,7 @@ public:
                 assert(len<sizeof(buffer));
                 numSockets++;
                 char *extDot = strrchr(buffer, '.');
-//                fprintf(stdout, "fd: %s -> %s\n", ent->d_name, buffer);
+                Log::info() << "fd:" << ent->d_name << " -> " << buffer << Log::end;
                 if (!strncmp(buffer, "/dev/", sizeof ("/dev/") -1))
                     deviceCount++;
                 else if (extDot && !strcmp(extDot, ".res"))
@@ -274,7 +274,8 @@ public:
         }
         fprintf(stderr, "%d devices, %d rdb %d resources, %d pipes, %d descriptors total: %d unexpected\n",
                 deviceCount, rdbCount, resCount, pipeCount, numSockets, numUnexpected);
-        if (pipeCount > 2 || numUnexpected > 0)
+        // 3 Pipes at most: 1 input, 1 output, file redirection (or so I imagine them).
+        if (pipeCount > 3 || numUnexpected > 0)
             _failure = std::string("Error: unexpected inherited sockets ") +
                 std::to_string(numUnexpected) + " and pipes " +
                 std::to_string(pipeCount);
