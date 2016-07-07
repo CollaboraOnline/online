@@ -1564,6 +1564,10 @@ void HTTPWSTest::testCalcEditRendering()
 
     std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
 
+    // Dump the tile we got to help debugging. Should be removed to minimize noise and clutter.
+    std::ofstream pngStream("/tmp/testCalcEditRendering.png", std::ios::binary);
+    pngStream.write(res.data(), res.size());
+
     const std::vector<char> exp = readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");
 
     CPPUNIT_ASSERT_EQUAL(exp.size(), res.size());
