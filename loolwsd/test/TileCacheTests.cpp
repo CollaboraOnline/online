@@ -159,8 +159,6 @@ void TileCacheTests::testSimpleCombine()
 
     auto socket1 = *loadDocAndGetSocket(_uri, documentURL, "simpleCombine-1 ");
 
-    getResponseMessage(socket1, "invalidatetiles");
-
     sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
     auto tile1a = getResponseMessage(socket1, "tile:");
@@ -194,7 +192,6 @@ void TileCacheTests::testPerformance()
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
     auto socket = *loadDocAndGetSocket(_uri, documentURL, "tile-performance ");
-    getResponseMessage(socket, "invalidatetiles:");
 
     Poco::Timestamp timestamp;
     for (auto x = 0; x < 5; ++x)
@@ -222,8 +219,6 @@ void TileCacheTests::testUnresponsiveClient()
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
     auto socket1 = *loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-1 ");
-
-    getResponseMessage(socket1, "invalidatetiles");
 
     std::cerr << "Connecting second client." << std::endl;
     auto socket2 = *loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-2 ", true);
