@@ -613,7 +613,7 @@ public:
             ws->sendFrame(nextmessage.data(), nextmessage.size());
         }
 
-        Log::trace("Sending render-tile response for: " + response);
+        Log::trace("Sending render-tile response (" + std::to_string(length) + " bytes) for: " + response);
         ws->sendFrame(output.data(), length, WebSocket::FRAME_BINARY);
     }
 
@@ -1217,12 +1217,20 @@ void lokit_main(const std::string& childRoot,
                         {
                             document->renderTile(tokens, ws);
                         }
+                        else
+                        {
+                            Log::warn("No document while processing tile request.");
+                        }
                     }
                     else if (tokens[0] == "tilecombine")
                     {
                         if (document)
                         {
                             document->renderCombinedTiles(tokens, ws);
+                        }
+                        else
+                        {
+                            Log::warn("No document while processing tilecombine request.");
                         }
                     }
                     else if (document && document->canDiscard())
