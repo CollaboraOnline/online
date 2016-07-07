@@ -816,7 +816,7 @@ public:
             }
             // All post requests have url prefix, lool
             else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
-                     reqPathSegs[0] == "lool")
+                     reqPathSegs.size() > 0 && reqPathSegs[0] == "lool")
             {
                 responded = handlePostRequest(request, response, id);
             }
@@ -848,6 +848,7 @@ public:
             else
             {
                 Log::error("Unknown resource: " + request.getURI());
+                response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
             }
         }
         catch (const Exception& exc)
