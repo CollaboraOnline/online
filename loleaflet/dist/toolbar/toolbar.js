@@ -704,7 +704,14 @@ map.on('doclayerinit', function () {
 		toolbar.remove('alignblock', 'bullet', 'numbering', 'break-numbering');
 		toolbar.insert('break-align', [
 			{type: 'button',  id: 'WrapText',  img: 'wraptext', hint: _('Wrap Text'), uno: 'WrapText'},
-			{type: 'button',  id: 'ToggleMergeCells',  img: 'togglemergecells', hint: _('"Merge and Center Cells'), uno: 'ToggleMergeCells'},
+			{type: 'button',  id: 'ToggleMergeCells',  img: 'togglemergecells', hint: _('Merge and Center Cells'), uno: 'ToggleMergeCells'},
+			{type: 'break',   id: 'break-toggle'},
+			{type: 'button',  id: 'NumberFormatCurrency',  img: 'numberformatcurrency', hint: _('Format as Currency'), uno: 'NumberFormatCurrency'},
+			{type: 'button',  id: 'NumberFormatPercent',  img: 'numberformatpercent', hint: _('Format as Percent'), uno: 'NumberFormatPercent'},
+			{type: 'button',  id: 'NumberFormatDecimal',  img: 'numberformatdecimal', hint: _('Format as Number'), uno: 'NumberFormatDecimal'},
+			{type: 'button',  id: 'NumberFormatDate',  img: 'numberformatdate', hint: _('Format as Date'), uno: 'NumberFormatDate'},
+			{type: 'button',  id: 'NumberFormatIncDecimals',  img: 'numberformatincdecimals', hint: _('Add Decimal Place'), uno: 'NumberFormatIncDecimals'},
+			{type: 'button',  id: 'NumberFormatDecDecimals',  img: 'numberformatdecdecimals', hint: _('Delete Decimal Place'), uno: 'NumberFormatDecDecimals'},
 		]);
 		statusbar.refresh();
 		toolbar.refresh();
@@ -896,7 +903,10 @@ map.on('commandstatechanged', function (e) {
 		$('#Context').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:WrapText' ||
-		 commandName === '.uno:ToggleMergeCells') {
+		 commandName === '.uno:ToggleMergeCells' ||
+		 commandName === '.uno:NumberFormatCurrency' ||
+		 commandName === '.uno:NumberFormatPercent' ||
+		 commandName === '.uno:NumberFormatDate') {
 		toggleButton(toolbar, state, commandName);
 	}
 
