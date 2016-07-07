@@ -69,6 +69,8 @@ extern "C"
             CASE(CONTEXT_MENU);
             CASE(INVALIDATE_VIEW_CURSOR);
             CASE(TEXT_VIEW_SELECTION);
+            CASE(CELL_VIEW_CURSOR);
+            CASE(GRAPHIC_VIEW_SELECTION);
 #undef CASE
         }
         std::cout << " payload: " << pPayload << std::endl;
