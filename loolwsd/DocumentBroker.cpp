@@ -212,7 +212,6 @@ bool DocumentBroker::save()
     {
         _isModified = false;
         _tileCache->setUnsavedChanges(false);
-        const auto fileInfo = _storage->getFileInfo(_uriPublic);
         _lastFileModifiedTime = newFileModifiedTime;
         _tileCache->saveLastModified(_lastFileModifiedTime);
         _lastSaveTime = std::chrono::steady_clock::now();
