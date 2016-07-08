@@ -18,22 +18,6 @@
 
 class HTTPGetTest;
 
-/// Dump all the tests registered.
-void dumpTests(CPPUNIT_NS::Test* test)
-{
-    if (test != nullptr)
-    {
-        std::cout << test->getName() << std::endl;
-        if (test->getChildTestCount())
-        {
-            for (auto i = 0; i < test->getChildTestCount(); ++i)
-            {
-                dumpTests(test->getChildTestAt(i));
-            }
-        }
-    }
-}
-
 int main(int /*argc*/, char** /*argv*/)
 {
     CPPUNIT_NS::TestResult controller;
@@ -43,16 +27,27 @@ int main(int /*argc*/, char** /*argv*/)
     controller.addListener(&progress);
     controller.addListener(new CPPUNIT_NS::TextTestProgressListener());
 
-    auto all = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
-    //dumpTests(all);
-    //CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpgettest");
-    //CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpposttest");
-    //CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpwstest");
-    //CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("httpcrashtest");
-
     CPPUNIT_NS::TestRunner runner;
-    runner.addTest(all);
-    //runner.addTest(registry.makeTest());
+    const char* testName = getenv("CPPUNIT_TEST_NAME");
+    if (testName)
+    {
+        // Single test.
+        CPPUNIT_NS::Test* testRegistry = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
+        for (int i = 0; i < testRegistry->getChildTestCount(); ++i)
+        {
+            CPPUNIT_NS::Test* testSuite = testRegistry->getChildTestAt(i);
+            for (int j = 0; j < testSuite->getChildTestCount(); ++j)
+            {
+                CPPUNIT_NS::Test* testCase = testSuite->getChildTestAt(j);
+                if (testCase->getName() == testName)
+                    runner.addTest(testCase);
+            }
+        }
+    }
+    else
+        // All tests.
+        runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
+
     runner.run(controller);
 
     CPPUNIT_NS::CompilerOutputter outputter(&result, std::cerr);

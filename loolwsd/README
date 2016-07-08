@@ -204,6 +204,12 @@ Use the ps command to find out exactly the path to use.
 
 Set LOOL_DEBUG=1 to trap SIGSEGV and SEGBUS and prompt for debugger.
 
+In order to run and debug one unit test, set CPPUNIT_TEST_NAME to something
+non-empty:
+
+    make check CPPUNIT_TEST_NAME="unit-prefork"
+    make check CPPUNIT_TEST_NAME="HTTPWSTest::testCalcEditRendering"
+
 Protocol description
 --------------------
 
