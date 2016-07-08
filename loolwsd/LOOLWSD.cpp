@@ -668,8 +668,7 @@ private:
             {
                 std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
 
-                // We can destory if this is the last session.
-                // If not, we have to remove the session and check again.
+                // We cannot destroy it, before save, if this is the last session
                 // Otherwise, we may end up removing the one and only session.
                 bool removedSession = false;
                 auto canDestroy = docBroker->canDestroy();
@@ -679,7 +678,6 @@ private:
                     sessionsCount = docBroker->removeSession(id);
                     removedSession = true;
                     Log::trace(docKey + ", ws_sessions--: " + std::to_string(sessionsCount));
-                    canDestroy = docBroker->canDestroy();
                 }
 
                 // If we are the last, we must wait for the save to complete.
