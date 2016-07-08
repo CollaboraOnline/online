@@ -603,7 +603,7 @@ private:
         // Validate the broker.
         if (!docBroker || !docBroker->isAlive())
         {
-            Log::error("DocBroker is invalid or child had SDS. Service Unavailable.");
+            Log::error("DocBroker is invalid or premature termination of child process. Service Unavailable.");
             if (!newDoc)
             {
                 // Remove.
