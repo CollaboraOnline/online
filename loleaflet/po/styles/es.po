@@ -1974,3 +1974,19 @@ msgstr "Título vertical, texto, diagrama"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Título vertical, texto vertical"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Selección estándar"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Selección extendida"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Selección de añadido"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Selección de bloque"

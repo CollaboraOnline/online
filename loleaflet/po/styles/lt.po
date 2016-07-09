@@ -1974,3 +1974,19 @@ msgstr "Vertikalus pavadinimas, tekstas, diagrama"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Vertikalus pavadinimas, vertikalus tekstas"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Įprastinė atranka"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Išplėstinė atranka"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Pridėtinė atranka"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blokinė atranka"

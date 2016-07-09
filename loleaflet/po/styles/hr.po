@@ -1974,3 +1974,19 @@ msgstr "Okomiti naslov, tekst, grafikon"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Okomiti naslov, okomiti tekst"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standardni odabir"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Proširivanje odabira"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Dodavanje odabira"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blokiranje odabira"

@@ -1965,3 +1965,19 @@ msgstr "Вертикално заглавие, текст, диаграма"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Вертикално заглавие, вертикален текст"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Стандартна селекция"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Разширяване на селекцията"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Добавяне на селекция"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Блокова селекция"

@@ -1974,3 +1974,19 @@ msgstr "Вертикальный заголовок, текст, диаграм�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Вертикальный заголовок, вертикальный текст"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Обычное выделение"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Расширяемое выделение"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Добавляемое выделение"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Блочное выделение"

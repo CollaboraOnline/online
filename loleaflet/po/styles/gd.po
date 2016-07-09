@@ -1974,3 +1974,19 @@ msgstr "Teacsa inghearach, teacsa, cairt"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Tiotal inghearach, teacsa inghearach"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Taghadh bunaiteach"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Taghadh leudachaidh"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Taghadh cuir ris"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Taghadh bloca"

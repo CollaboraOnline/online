@@ -1974,3 +1974,19 @@ msgstr "Títulu Vertical, testu, gráficu"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Títulu Vertical, Testu Vertical"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Seleición estándar"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Estender seleición"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Amestar seleición"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Bloquiar seleición"

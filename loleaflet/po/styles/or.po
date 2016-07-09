@@ -1964,3 +1964,19 @@ msgstr "ଲମ୍ବରୂପ ଶୀର୍ଷକ,ଟେକ୍ସଟ ,ଚାର�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ଲମ୍ବରୂପ ଶୀର୍ଷକ,ଲମ୍ବରୂପ ଟେକ୍ସଟ"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "ମାନକ ଚୟନ"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "ଚୟନ ବିସ୍ତାର"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "ଚୟନ ଯୋଗକରୁଅଛି"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "ଚୟନକୁ ଅଟକାନ୍ତୁ"

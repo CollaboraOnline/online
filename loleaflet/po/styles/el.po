@@ -1974,3 +1974,19 @@ msgstr "Kάθετος τίτλος, κείμενο, διάγραμμα"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Κάθετος τίτλος, κάθετο κείμενο"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Τυπική επιλογή"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Επεκταμένη επιλογή"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Προσθήκη επιλογής"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Επιλογή ομάδας"

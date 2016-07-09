@@ -1974,3 +1974,19 @@ msgstr "כותרת אנכית, טקסט, תרשים"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "כותרת אנכית, טקסט אנכי"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "בחירה סטנדרטית"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "הרחבת בחירה"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "הוספת בחירה"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "בלוק בחירה"

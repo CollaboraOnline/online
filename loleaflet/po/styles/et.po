@@ -1974,3 +1974,19 @@ msgstr "Vertikaaltiitel, tekst, diagramm"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Vertikaaltiitel, vertikaaltekst"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Tavaline valimine"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Laienev valimine"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Lisav valimine"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Plokkidena valimine"

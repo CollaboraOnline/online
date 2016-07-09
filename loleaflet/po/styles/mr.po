@@ -1974,3 +1974,19 @@ msgstr "उभ्या स्वरूपाचे शीर्षक, पा�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "उभ्या स्वरूपाचे शीर्षक, उभे पाठ्य"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "मानक निवड"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "निवड वाढवत आहे"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "निवड समाविष्ट करत आहे"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "ब्लॉक निवड"

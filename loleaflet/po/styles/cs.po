@@ -1965,3 +1965,19 @@ msgstr "Svislý nadpis, text a graf"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Svislý nadpis a svislý text"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standardní výběr"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Rozšiřitelný výběr"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Doplnitelný výběr"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Výběr bloku"

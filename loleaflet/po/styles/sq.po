@@ -1971,3 +1971,7 @@ msgstr "Titull Vertikal, Tekst, Diagram"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Titull Vertikal, Tekst Vertikal"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Përzgjedhje normale"

@@ -1974,3 +1974,19 @@ msgstr "Titulu bertikala, testua, diagrama"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Titulu bertikala, testu bertikala"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Hautapen estandarra"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Hautapen hedatua"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Gehikuntza-hautapena"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Bloke-hautapena"

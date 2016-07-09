@@ -1974,3 +1974,19 @@ msgstr "Pionowy tytuł, tekst, wykres"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Pionowy tytuł, tekst w pionie"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Zaznaczenie standardowe"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Zaznaczenie rozszerzone"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Zaznaczenie dodające"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Zaznaczenie blokowe"

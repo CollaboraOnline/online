@@ -1974,3 +1974,19 @@ msgstr "Vertikálny názov, text, graf"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Vertikálny názov, vertikálny text"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Štandardný výber"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Rozšíriť výber"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Doplniť výber"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Výber bloku"

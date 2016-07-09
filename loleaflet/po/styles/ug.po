@@ -1964,3 +1964,19 @@ msgstr "تىك تېكست، تېكست، دىئاگرامما"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "تىك ماۋزۇ، تىك تېكست"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "ئۆلچەملىك تاللاش"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "كېڭەيتىلگەن تاللاش"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "تاللاش قوشۇۋاتىدۇ"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "بۆلەك تاللاش"

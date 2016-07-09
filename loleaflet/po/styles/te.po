@@ -1964,3 +1964,19 @@ msgstr "నిలువు శీర్షిక, పాఠం, పత్రమ�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "నిలువు శీర్షిక,నిలువు పాఠం"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "ప్రామాణిక యెంపిక"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "ఎంపికను విస్తరించుట"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "ఎంపికను జతచేయుట"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "బ్లాక్ యెంపిక"

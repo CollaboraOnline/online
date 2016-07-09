@@ -1924,3 +1924,7 @@ msgstr "ठाडो शीर्षक, पाठ, चित्रपट"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ठाडो शीर्षक, ठाडो पाठ"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "मानक विचलन"

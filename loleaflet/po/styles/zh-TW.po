@@ -1974,3 +1974,19 @@ msgstr "垂直題名，文字，圖表"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "垂直題名，垂直文字"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "標準選取"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "擴展選取"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "追加選取"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "區塊選取"

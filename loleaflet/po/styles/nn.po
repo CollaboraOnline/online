@@ -1955,3 +1955,19 @@ msgstr "Loddrett tittel, tekst, diagram"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Loddrett tittel, loddrett tekst"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standardmerking"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Utvida merking"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Tilføyingsmerking"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blokkmerking"

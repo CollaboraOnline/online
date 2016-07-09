@@ -1974,3 +1974,19 @@ msgstr "Függőleges cím, szöveg, diagram"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Függőleges cím, függőleges szöveg"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Normál kijelölés"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Bővítő kijelölés"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Hozzáadó kijelölés"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blokk-kijelölés"

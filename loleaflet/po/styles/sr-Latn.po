@@ -2000,3 +2000,19 @@ msgstr "Uspravni naslov, tekst, grafik"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Uspravni naslov, uspravni tekst"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Običan izbor"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Prošireni izbor"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Dodavanje u izbor"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Izbor bloka"

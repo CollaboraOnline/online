@@ -1943,3 +1943,19 @@ msgstr "Вертыкальны загаловак, тэкст, дыяграма"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Вертыкальны загаловак, вертыкальны тэкст"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Звычайнае пазначэнне"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Пазначэнне з працягам"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Пазначэнне з дадаваннем"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Блокавае пазначэнне"
