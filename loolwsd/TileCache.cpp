@@ -152,7 +152,7 @@ std::string TileCache::getTextFile(const std::string& fileName)
         buffer.pop_back();
 
     std::string result = std::string(buffer.data(), buffer.size());
-    Log::info("Read '" + result + "' from " + fullFileName);
+    Log::info("Read '" + LOOLProtocol::getAbbreviatedMessage(result.c_str(), result.size()) + "' from " + fullFileName);
 
     return result;
 }
