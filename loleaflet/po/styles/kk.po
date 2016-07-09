@@ -1965,3 +1965,19 @@ msgstr "Вертикалды тақырыптама, мәтін, диаграм�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Вертикалды тақырыптама, вертикалды мәтін"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Қалыпты таңдау"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Кеңейтілген таңдау"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Қосылатын таңдау"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Блоктық таңдау"

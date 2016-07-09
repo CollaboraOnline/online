@@ -1955,3 +1955,19 @@ msgstr "Hossicha umo, Borro, soro"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Hossicha umo, Hossitte borro"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Mereggisa doorsha"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Seedisate doorsha"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Ledate doorsha"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Tayshu doorsha"

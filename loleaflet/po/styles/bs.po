@@ -1964,3 +1964,19 @@ msgstr "Naslov uspravno, tekst, grafik"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Naslov uspravno, tekst uspravno"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standardna selekcija"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Selekcija produženja"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Selekcija dodavanja"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blok selekcija"

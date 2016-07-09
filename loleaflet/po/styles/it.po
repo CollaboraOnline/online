@@ -1961,3 +1961,19 @@ msgstr "Titolo verticale, testo, grafico"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Titolo verticale, testo verticale"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Selezione standard"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Selezione estesa"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Selezione con aggiunta"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Selezione a blocchi"

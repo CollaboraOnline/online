@@ -1965,3 +1965,19 @@ msgstr "Вертикальний заголовок, текст, діаграм�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Вертикальний заголовок, вертикальний текст"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Стандартний вибір"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Розширюваний вибір"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Додатковий вибір"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Блоковий вибір"

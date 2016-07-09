@@ -1964,3 +1964,11 @@ msgstr "မျဉ်းမတ် ခေါင်းစဉ်၊ စာသား�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "မျဉ်းမတ် ခေါင်းစဉ်၊မျဉ်းမတ် စာသား"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "စံသွေဖယ်မှု"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "တိုးချဲ့သောရွေးချယ်ခြင်းများ"

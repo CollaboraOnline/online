@@ -1970,3 +1970,19 @@ msgstr "Lodret titel, tekst, diagram"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Lodret titel, lodret tekst"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standardmarkering"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Udvidet markering"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Tilføj markering"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blokmarkering"

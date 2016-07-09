@@ -1974,3 +1974,19 @@ msgstr "Vertikāls virsraksts, teksts, diagramma"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Vertikāls virsraksts, vertikāls teksts"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standarta izvēle"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Paplašina izveli"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Pievieno izvēli"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Bloka izvēle"

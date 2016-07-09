@@ -1974,3 +1974,19 @@ msgstr "ઊભું શીર્ષક, લખાણ, આલેખ"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ઊભું શીર્ષક, ઊભું લખાણ"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "મૂળભૂત પસંદગી"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "પસંદગીને વિસ્તારી રહ્યા છે"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "પસંદગીને ઉમેરી રહ્યા છે"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "બ્લોક પસંદગી"

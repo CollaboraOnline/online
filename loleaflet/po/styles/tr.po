@@ -1974,3 +1974,19 @@ msgstr "Dikey Başlık, Metin, Çizelge"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Dikey Başlık, Dikey Metin"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standart Seçim"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Seçim genişletiliyor"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Seçim ekleniyor"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blok seçim"

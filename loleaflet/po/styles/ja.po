@@ -1965,3 +1965,19 @@ msgstr "垂直タイトル、テキスト、グラフ"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "垂直タイトル、垂直テキスト"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "標準選択"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "拡張選択"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "追加選択"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "ブロック選択"

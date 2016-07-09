@@ -1938,3 +1938,11 @@ msgstr "තිරස් මාතෘකාව, පාඨය. වගුව"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "තිරස් මාතෘකාව, තිරස් පාඨය"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "සම්මත අපගමනය"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "තේරීම දීර්ඝ කරන්න"

@@ -1965,3 +1965,19 @@ msgstr "Judul Vertikal, Teks, Bagan"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Judul Vertikal, Teks Vertikal"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Pilihan standar"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Memperluas pilihan"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Menambah pilihan"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Pilihan blok"

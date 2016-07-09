@@ -1974,3 +1974,7 @@ msgstr "Teideal Ingearach, Téacs, Cairt"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Teideal Ingearach, Téacs Ingearach"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Roghnú caighdeánach"

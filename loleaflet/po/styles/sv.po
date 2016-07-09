@@ -1970,3 +1970,19 @@ msgstr "Vertikal rubrik, text, diagram"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Vertikal rubrik, vertikal text"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standardmarkering"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Utökning av markering"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Additiv markering"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blockmarkering"

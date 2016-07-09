@@ -1974,3 +1974,19 @@ msgstr "Pystysuuntainen otsikko, teksti, kaavio"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Pystysuuntainen otsikko, pystysuuntainen teksti"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Normaali valintatila"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Valinnan laajennustila"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Valinnan lisäystila"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Pystylohkon valintatila"

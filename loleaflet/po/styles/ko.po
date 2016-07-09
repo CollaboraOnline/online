@@ -1964,3 +1964,19 @@ msgstr "세로 쓰기 제목, 텍스트, 차트"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "세로 쓰기 제목, 세로 쓰기 텍스트"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "표준 선택"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "확장 선택"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "추가 선택"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "블록 선택"

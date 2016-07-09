@@ -1932,3 +1932,7 @@ msgstr "ვერტიკალური სათაური, ტექსტ
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ვერტიკალური სათაური, ვერტიკალური ტექსტი"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "~სტანდარტული გადახრა"

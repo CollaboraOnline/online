@@ -1974,3 +1974,19 @@ msgstr "Vertikala titolo, teksto, diagramo"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "vertikala titolo, vertikala teksto"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Apriora elekto"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Etendi elektaĵon"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Aldoni elektaĵon"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Elekti blokon"

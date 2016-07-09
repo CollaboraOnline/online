@@ -1974,3 +1974,11 @@ msgstr "Tựa đề nằm dọc, Văn bản, Đồ thị"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Tựa đề nằm dọc, Văn bản nằm dọc"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Độ lệch chuẩn"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Mở rộng lựa chọn"

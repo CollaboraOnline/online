@@ -1974,3 +1974,19 @@ msgstr "நெடுக்குவச தலைப்பு, உரை, வர�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "நெடுக்குவச தலைப்பு, நெடுக்குவச உரை"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "செந்தரத் தெரிவு"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "தெரிவை நீட்டிக்கிறது"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "தெரிவைச் சேர்க்கிறது"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "தொகுப்புத் தேர்வு"

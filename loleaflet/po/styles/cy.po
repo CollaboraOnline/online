@@ -1974,3 +1974,19 @@ msgstr "Teitl Fertigol, Testun, Siart"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Teitl Fertigol, Testun Fertigol"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Dewis safonol"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Dewis estynedig"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Ychwanegu dewis"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Rhwystro dewis"

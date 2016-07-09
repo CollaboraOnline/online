@@ -1974,3 +1974,19 @@ msgstr "উল্লম্ব শিরোনাম, টেক্সট, লে�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "উল্লম্ব শিরোনাম, উল্লম্ব টেক্সট"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "প্রমিত নির্বাচন"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "অতিরিক্ত নির্বাচন"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "নির্বাচন সংযোজন"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "নির্বাচন প্রতিরোধ"

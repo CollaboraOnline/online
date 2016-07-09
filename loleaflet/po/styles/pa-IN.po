@@ -1974,3 +1974,19 @@ msgstr "ਵਰਟੀਕਲ ਟਾਈਟਲ, ਪਾਠ, ਕਲਿੱਪਆਰਟ"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ਵਰਟੀਕਲ ਟਾਈਟਲ, ਵਰਟੀਕਲ ਪਾਠ"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "ਮਾਨਕ ਚੋਣ"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "ਚੋਣ ਦਾ ਵਿੱਸਥਾਰ"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "ਚੋਣ ਜੋੜੋ"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "ਚੋਣ ਰੋਕੋ"

@@ -855,7 +855,7 @@ map.on('commandstatechanged', function (e) {
 	}
 	else if (commandName === '.uno:StatusSelectionMode' ||
 		 commandName === '.uno:SelectionMode') {
-		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:Position' ||
 		 commandName === '.uno:StateTableCell' ||

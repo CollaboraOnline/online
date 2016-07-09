@@ -1974,3 +1974,19 @@ msgstr "Titl a-serzh, testenn, diervad"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Titl a-serzh, testenn a-serzh"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Diuz skoueriek"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Diuz astennet"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Diuz gant ouzhpennadenn"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Diuz dre vloc'had"

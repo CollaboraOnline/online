@@ -1937,3 +1937,19 @@ msgstr "लंबवत शीर्षक, पाठ, चार्ट"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "लंबवत शीर्षक, लंबवत पाठ"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "मानक चयन"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "चयन का विस्तार"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "चयन संयोजन"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "ब्लॉक चयन"

@@ -1965,3 +1965,19 @@ msgstr "በቁመት አርእስት , ጽሁፍ , Chart"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "በቁመት አርእስት ፡ በቁመት ጽሁፍ"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "መደበኛ ምርጫዎች"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "ምርጫዎችን ማስፋፊያ"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "ምርጫዎችን መጨመሪያ"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "ምርጫዎችን መከልከያ"

@@ -1974,3 +1974,19 @@ msgstr "Lóðréttur titill, texti, graf"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Lóðréttur titill, lóðréttur texti"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Staðlað val"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Stækka val"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Bæta við vali"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Blokkarval"

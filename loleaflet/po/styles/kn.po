@@ -1974,3 +1974,19 @@ msgstr "ಲಂಬ ಶೀರ್ಷಿಕೆ, ಪಠ್ಯ, ನಕ್ಷೆ"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ಲಂಬ ಶೀರ್ಷಿಕೆ, ಲಂಬ ಪಠ್ಯ"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "ಶಿಷ್ಟ ಆಯ್ಕೆ"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "ಆಯ್ಕೆಯ ವಿಸ್ತರಣೆ"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "ಆಯ್ಕೆಯನ್ನು ಸೇರಿಸುವಿಕೆ"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "ಆಯ್ಕೆಯನ್ನು ನಿರ್ಬಂಧಿಸುವಿಕೆ"

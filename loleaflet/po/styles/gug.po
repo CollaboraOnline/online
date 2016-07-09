@@ -1956,3 +1956,7 @@ msgstr "Título Oñembo'ýva, Moñe'ẽrã, Gráfico"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Título Oñembo'ýva, Moñe'ẽrã Oñembo'yva"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Jeporavo estándar"

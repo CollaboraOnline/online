@@ -1974,3 +1974,19 @@ msgstr "Navpični naslov, besedilo, grafikon"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Navpični naslov, navpično besedilo"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "Standardno izbiranje"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "Izbiranje s širjenjem"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "Izbiranje z dodajanjem"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "Izbiranje v blokih"

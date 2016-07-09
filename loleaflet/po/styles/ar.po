@@ -1974,3 +1974,19 @@ msgstr "عنوان رأسي، نص، رسم بياني"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "عنوان رأسي، نص رأسي"
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "التحديد القياسي"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "يمدّد التحديد"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "يضيف التحديد"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "اختيار الوحدة"

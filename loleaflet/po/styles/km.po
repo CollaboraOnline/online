@@ -1974,3 +1974,19 @@ msgstr "ចំណង​ជើង​បញ្ឈរ  អត្ថបទ  គំ�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ចំណង​ជើង​បញ្ឈរ  អត្ថបទ​បញ្ឈរ "
+
+#: stbctrls.src
+msgid "Standard selection"
+msgstr "ការ​ជ្រើ​សស្តង់ដារ"
+
+#: stbctrls.src
+msgid "Extending selection"
+msgstr "ការ​ជ្រើស​ពង្រីក"
+
+#: stbctrls.src
+msgid "Adding selection"
+msgstr "ការជ្រើស​បន្ថែម"
+
+#: stbctrls.src
+msgid "Block selection"
+msgstr "ទប់ស្កាត់​កា​រជ្រើស"
