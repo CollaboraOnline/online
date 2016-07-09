@@ -93,7 +93,7 @@
     var wopiSrc = getParameterByName('WOPISrc');
     var access_token = '%ACCESS_TOKEN%';
     if (wopiSrc !== '' && access_token !== '') {
-        wopiSrc += '?access_token=' + access_token;
+        var wopiParams = { 'access_token': access_token }
     }
 
     var filePath = getParameterByName('file_path');
@@ -116,12 +116,20 @@
         vex.dialog.alert(emptyhosturl);
     }
 
-    var docURL = wopiSrc !== '' ? wopiSrc : filePath;
+    var docURL, docParams;
+    if (wopiSrc != '') {
+        docURL = wopiSrc;
+        docParams = wopiParams;
+    } else {
+        docURL = filePath;
+        docParams = {};
+    }
 
     document.title = title;
     var map = L.map('map', {
 			server: host,
 			doc: docURL,
+			docParams: docParams,
 			permission: permission,
 			timestamp: timestamp,
 			documentContainer: 'document-container'
