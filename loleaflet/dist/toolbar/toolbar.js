@@ -687,19 +687,11 @@ map.on('doclayerinit', function () {
 			{type: 'break', id:'break2'},
 			{type: 'html',  id: 'RowColSelCount',  html: '<div id="RowColSelCount" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'SatusPageStyle',  html: '<div id="StatusPageStyle" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break4'},
 			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
 			{type: 'html',  id: 'StatusSelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			//{type: 'break', id:'break6'},
-			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break8'},
 			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			//{type: 'break', id:'break9'},
-			//{type: 'html',  id: 'ZoomSlider',  html: '<div id="Zoomslider" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			//{type: 'break', id:'break10'},
-			//{type: 'html',  id: 'Zoom',  html: '<div id="Zoom" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
 		toolbar.remove('alignblock', 'bullet', 'numbering', 'break-numbering');
 		toolbar.insert('break-align', [
@@ -722,16 +714,10 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'StatePageNumber',  html: '<div id="StatePageNumber" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
 			{type: 'html',  id: 'StateWordCount',  html: '<div id="StateWordCount" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'PageStyleName',  html: '<div id="PageStyleName" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			//{type: 'break', id:'break4'},
-			//{type: 'html',  id: 'LanguageStatus',  html: '<div id="LanguageStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
 			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break6'},
 			{type: 'html',  id: 'SelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			//{type: 'break', id:'break7'},
-			//{type: 'html',  id: 'ModifiedStatus',  html: '<div id="ModfiedStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
 		statusbar.refresh();
 		break;
@@ -889,9 +875,6 @@ map.on('commandstatechanged', function (e) {
 	}
 	else if (commandName === '.uno:StateWordCount') {
 		$('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
-	}
-	else if (commandName === '.uno:PageStyleName') {
-		$('#PageStyleName').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:PageStatus') {
 		$('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
