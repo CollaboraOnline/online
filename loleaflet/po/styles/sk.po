@@ -1990,3 +1990,11 @@ msgstr "Doplniť výber"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Výber bloku"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Prepisovanie"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Vložiť"

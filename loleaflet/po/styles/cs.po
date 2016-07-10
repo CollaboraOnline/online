@@ -1981,3 +1981,11 @@ msgstr "Doplnitelný výběr"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Výběr bloku"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Přepis"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Vložit"

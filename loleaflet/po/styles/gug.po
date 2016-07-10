@@ -1960,3 +1960,11 @@ msgstr "Título Oñembo'ýva, Moñe'ẽrã Oñembo'yva"
 #: stbctrls.src
 msgid "Standard selection"
 msgstr "Jeporavo estándar"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Hai ári"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Moĩngue"

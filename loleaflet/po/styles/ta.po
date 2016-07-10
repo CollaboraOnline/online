@@ -1990,3 +1990,11 @@ msgstr "தெரிவைச் சேர்க்கிறது"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "தொகுப்புத் தேர்வு"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "மேலெழுது"
+
+#: globstr.src
+msgid "Insert"
+msgstr "உள்நுழை"

@@ -1990,3 +1990,11 @@ msgstr "Aldoni elektaĵon"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Elekti blokon"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Anstataŭigi"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Enmeti"

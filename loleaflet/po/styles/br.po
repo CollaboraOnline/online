@@ -1990,3 +1990,11 @@ msgstr "Diuz gant ouzhpennadenn"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Diuz dre vloc'had"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Flastrañ"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Enlakaat"

@@ -1990,3 +1990,11 @@ msgstr "Προσθήκη επιλογής"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Επιλογή ομάδας"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Αντικατάσταση"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Εισαγωγή"

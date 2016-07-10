@@ -1972,3 +1972,11 @@ msgstr "စံသွေဖယ်မှု"
 #: stbctrls.src
 msgid "Extending selection"
 msgstr "တိုးချဲ့သောရွေးချယ်ခြင်းများ"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "⁠~အချက်အလက်သစ်များထပ်မံဖြည့်စွပ်ပါ"
+
+#: globstr.src
+msgid "Insert"
+msgstr "ထပ်ထည့်ပါ"

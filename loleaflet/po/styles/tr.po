@@ -1990,3 +1990,11 @@ msgstr "Seçim ekleniyor"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Blok seçim"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Üzerine Yaz"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Ekle"

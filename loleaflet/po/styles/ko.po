@@ -1980,3 +1980,11 @@ msgstr "추가 선택"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "블록 선택"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "덮어쓰기"
+
+#: globstr.src
+msgid "Insert"
+msgstr "삽입"

@@ -1928,3 +1928,11 @@ msgstr "ठाडो शीर्षक, ठाडो पाठ"
 #: stbctrls.src
 msgid "Standard selection"
 msgstr "मानक विचलन"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "अधिलेखन"
+
+#: globstr.src
+msgid "Insert"
+msgstr "घुसाउनुहोस्"

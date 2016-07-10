@@ -1990,3 +1990,11 @@ msgstr "הוספת בחירה"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "בלוק בחירה"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "דריסה"
+
+#: globstr.src
+msgid "Insert"
+msgstr "הוספה"

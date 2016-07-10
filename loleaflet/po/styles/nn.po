@@ -1971,3 +1971,11 @@ msgstr "Tilføyingsmerking"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Blokkmerking"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Overskriv"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Set inn"

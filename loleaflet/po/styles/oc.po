@@ -1980,3 +1980,11 @@ msgstr "Seleccion amb apondon"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Seleccion per blòt"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Espotir"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Inserir"

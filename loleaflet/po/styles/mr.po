@@ -1990,3 +1990,11 @@ msgstr "निवड समाविष्ट करत आहे"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "ब्लॉक निवड"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "खोडून पुनः लिहा"
+
+#: globstr.src
+msgid "Insert"
+msgstr "अंतर्भुत करा"

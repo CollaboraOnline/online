@@ -1990,3 +1990,11 @@ msgstr "Bæta við vali"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Blokkarval"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Skrifa yfir"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Setja inn"

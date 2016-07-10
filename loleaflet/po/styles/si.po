@@ -1946,3 +1946,11 @@ msgstr "සම්මත අපගමනය"
 #: stbctrls.src
 msgid "Extending selection"
 msgstr "තේරීම දීර්ඝ කරන්න"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "උඩින් ලියන්න (~O)"
+
+#: globstr.src
+msgid "Insert"
+msgstr "ඇතුල් කරන්න"

@@ -2016,3 +2016,11 @@ msgstr "Dodavanje u izbor"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Izbor bloka"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Prepiši"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Umetni"

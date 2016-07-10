@@ -1990,3 +1990,11 @@ msgstr "ਚੋਣ ਜੋੜੋ"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "ਚੋਣ ਰੋਕੋ"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "ਓਵਰਰਾਇਟ"
+
+#: globstr.src
+msgid "Insert"
+msgstr "ਸ਼ਾਮਲ"

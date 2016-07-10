@@ -1990,3 +1990,11 @@ msgstr "Lisav valimine"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Plokkidena valimine"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Ülekirjutus"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Lisamine"

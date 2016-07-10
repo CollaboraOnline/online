@@ -1990,3 +1990,11 @@ msgstr "Hozzáadó kijelölés"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Blokk-kijelölés"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Felülírás"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Beszúrás"

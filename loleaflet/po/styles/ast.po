@@ -1990,3 +1990,11 @@ msgstr "Amestar seleición"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Bloquiar seleición"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Sobrescribir"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Inxertar"

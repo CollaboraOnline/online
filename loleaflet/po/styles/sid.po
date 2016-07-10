@@ -1971,3 +1971,11 @@ msgstr "Ledate doorsha"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Tayshu doorsha"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Hunte-borreessi"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Surki"

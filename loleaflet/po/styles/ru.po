@@ -1990,3 +1990,11 @@ msgstr "Добавляемое выделение"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Блочное выделение"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Замена"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Вставить"

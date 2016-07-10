@@ -1981,3 +1981,11 @@ msgstr "ምርጫዎችን መጨመሪያ"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "ምርጫዎችን መከልከያ"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "በላዩ ላይ ደርቦ መጻፊያ"
+
+#: globstr.src
+msgid "Insert"
+msgstr "ማስገቢያ"

@@ -1980,3 +1980,11 @@ msgstr "Selekcija dodavanja"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Blok selekcija"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Prepiši"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Ubaci"

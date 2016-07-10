@@ -1981,3 +1981,11 @@ msgstr "追加選択"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "ブロック選択"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "上書き"
+
+#: globstr.src
+msgid "Insert"
+msgstr "挿入"

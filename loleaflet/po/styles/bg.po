@@ -1981,3 +1981,11 @@ msgstr "Добавяне на селекция"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Блокова селекция"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Заместване"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Вмъкване"
