@@ -1990,3 +1990,11 @@ msgstr "Pievieno izvēli"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Bloka izvēle"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Pārrakstīt"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Ievietot"

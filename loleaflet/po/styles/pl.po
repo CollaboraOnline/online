@@ -1990,3 +1990,11 @@ msgstr "Zaznaczenie dodające"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Zaznaczenie blokowe"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Nadpisać"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Wstaw"

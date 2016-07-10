@@ -1990,3 +1990,11 @@ msgstr "ការជ្រើស​បន្ថែម"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "ទប់ស្កាត់​កា​រជ្រើស"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "សរសេរ​ជាន់​លើ"
+
+#: globstr.src
+msgid "Insert"
+msgstr "បញ្ចូល​"

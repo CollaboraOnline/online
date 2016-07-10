@@ -1990,3 +1990,11 @@ msgstr "ಆಯ್ಕೆಯನ್ನು ಸೇರಿಸುವಿಕೆ"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "ಆಯ್ಕೆಯನ್ನು ನಿರ್ಬಂಧಿಸುವಿಕೆ"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "ತಿದ್ದಿಬರೆ"
+
+#: globstr.src
+msgid "Insert"
+msgstr "ಸೇರಿಸು"

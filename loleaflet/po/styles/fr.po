@@ -1981,3 +1981,11 @@ msgstr "Sélection avec ajout"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Sélection par bloc"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Écraser"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Insérer"

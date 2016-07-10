@@ -1990,3 +1990,11 @@ msgstr "Valinnan lisäystila"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Pystylohkon valintatila"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Päällekirj."
+
+#: globstr.src
+msgid "Insert"
+msgstr "Lisää"

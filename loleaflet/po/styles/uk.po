@@ -1981,3 +1981,11 @@ msgstr "Додатковий вибір"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Блоковий вибір"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "~Замінити"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Вставити"

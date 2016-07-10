@@ -1990,3 +1990,11 @@ msgstr "Ychwanegu dewis"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Rhwystro dewis"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Trosysgrifo"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Mewnosod"

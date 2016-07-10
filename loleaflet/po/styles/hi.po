@@ -1953,3 +1953,11 @@ msgstr "चयन संयोजन"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "ब्लॉक चयन"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "मिटाकर लिखें"
+
+#: globstr.src
+msgid "Insert"
+msgstr "जोड़ें"

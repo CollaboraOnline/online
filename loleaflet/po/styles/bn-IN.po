@@ -1990,3 +1990,11 @@ msgstr "নির্বাচন সংযোজন"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "নির্বাচন প্রতিরোধ"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "প্রতিস্থাপন"
+
+#: globstr.src
+msgid "Insert"
+msgstr "সন্নিবেশ"

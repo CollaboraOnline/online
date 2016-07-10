@@ -1936,3 +1936,11 @@ msgstr "ვერტიკალური სათაური, ვერტი
 #: stbctrls.src
 msgid "Standard selection"
 msgstr "~სტანდარტული გადახრა"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "~ზედ გადაწერა"
+
+#: globstr.src
+msgid "Insert"
+msgstr "ჩასმა"

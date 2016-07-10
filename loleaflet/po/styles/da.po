@@ -1986,3 +1986,11 @@ msgstr "Tilføj markering"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Blokmarkering"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Overskriv"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Indsæt"

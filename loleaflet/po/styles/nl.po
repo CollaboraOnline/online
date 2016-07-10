@@ -1990,3 +1990,11 @@ msgstr "Selectie toevoegen"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Blokselectie"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Overschrijven"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Invoegen"

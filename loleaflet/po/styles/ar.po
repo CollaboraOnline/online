@@ -1990,3 +1990,11 @@ msgstr "يضيف التحديد"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "اختيار الوحدة"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "الكتابة على"
+
+#: globstr.src
+msgid "Insert"
+msgstr "إدراج"

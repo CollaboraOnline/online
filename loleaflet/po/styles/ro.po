@@ -1990,3 +1990,11 @@ msgstr "Selecție adăugatoare"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Selecție în bloc"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Suprascriere"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Inserare"

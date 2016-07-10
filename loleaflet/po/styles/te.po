@@ -1980,3 +1980,11 @@ msgstr "ఎంపికను జతచేయుట"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "బ్లాక్ యెంపిక"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "వోవర్‌రైట్"
+
+#: globstr.src
+msgid "Insert"
+msgstr "ప్రవేశపెట్టు"

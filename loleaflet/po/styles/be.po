@@ -1959,3 +1959,11 @@ msgstr "Пазначэнне з дадаваннем"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Блокавае пазначэнне"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Паўзверх"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Уставіць"

@@ -1980,3 +1980,11 @@ msgstr "ଚୟନ ଯୋଗକରୁଅଛି"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "ଚୟନକୁ ଅଟକାନ୍ତୁ"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "ନବଲିଖନ"
+
+#: globstr.src
+msgid "Insert"
+msgstr "ଭର୍ତ୍ତି କରନ୍ତୁ"

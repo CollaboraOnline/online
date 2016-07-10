@@ -1990,3 +1990,11 @@ msgstr "Taghadh cuir ris"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Taghadh bloca"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Tar-sgrìobh"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Cuir a-steach"

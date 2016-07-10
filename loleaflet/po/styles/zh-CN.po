@@ -1990,3 +1990,11 @@ msgstr "追加选择"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "区块选择"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "改写"
+
+#: globstr.src
+msgid "Insert"
+msgstr "插入"

@@ -1990,3 +1990,11 @@ msgstr "Pridėtinė atranka"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "Blokinė atranka"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Perrašymas"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Įterpti"

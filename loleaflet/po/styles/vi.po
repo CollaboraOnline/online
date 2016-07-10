@@ -1982,3 +1982,11 @@ msgstr "Độ lệch chuẩn"
 #: stbctrls.src
 msgid "Extending selection"
 msgstr "Mở rộng lựa chọn"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "~Ghi đè"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Chèn"

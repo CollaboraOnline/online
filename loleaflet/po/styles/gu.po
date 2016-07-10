@@ -1990,3 +1990,11 @@ msgstr "પસંદગીને ઉમેરી રહ્યા છે"
 #: stbctrls.src
 msgid "Block selection"
 msgstr "બ્લોક પસંદગી"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "ઉપર લખો"
+
+#: globstr.src
+msgid "Insert"
+msgstr "દાખલ કરો"

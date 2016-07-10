@@ -1978,3 +1978,11 @@ msgstr "Teideal Ingearach, Téacs Ingearach"
 #: stbctrls.src
 msgid "Standard selection"
 msgstr "Roghnú caighdeánach"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Forscríobh"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Ionsáigh"

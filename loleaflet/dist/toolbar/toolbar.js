@@ -856,7 +856,7 @@ map.on('commandstatechanged', function (e) {
 		$('#StatusPageStyle').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:InsertMode') {
-		$('#InsertMode').html(state ? L.Styles.insertMode[state] : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		$('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:StatusSelectionMode' ||
 		 commandName === '.uno:SelectionMode') {

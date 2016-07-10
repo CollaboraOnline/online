@@ -1975,3 +1975,11 @@ msgstr "Titull Vertikal, Tekst Vertikal"
 #: stbctrls.src
 msgid "Standard selection"
 msgstr "Përzgjedhje normale"
+
+#: stbctrls.src
+msgid "Overwrite"
+msgstr "Mbishkruaj"
+
+#: globstr.src
+msgid "Insert"
+msgstr "Shto"
