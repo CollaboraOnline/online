@@ -1567,11 +1567,26 @@ void HTTPWSTest::testCalcEditRendering()
 
     std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
 
-    // Dump the tile we got to help debugging. Should be removed to minimize noise and clutter.
-    std::ofstream pngStream("/tmp/testCalcEditRendering.png", std::ios::binary);
-    pngStream.write(res.data(), res.size());
-
     const std::vector<char> exp = readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");
+
+    // Return early for now when on LO >= 5.2.
+    std::string clientVersion = "loolclient 0.1";
+    sendTextFrame(socket, clientVersion);
+    std::vector<char> loVersion = getResponseMessage(socket, "lokitversion");
+    std::string line = LOOLProtocol::getFirstLine(loVersion.data(), loVersion.size());
+    line = line.substr(strlen("lokitversion "));
+    Poco::JSON::Parser parser;
+    Poco::Dynamic::Var loVersionVar = parser.parse(line);
+    const Poco::SharedPtr<Poco::JSON::Object>& loVersionObject = loVersionVar.extract<Poco::JSON::Object::Ptr>();
+    std::string loProductVersion = loVersionObject->get("ProductVersion").toString();
+    std::istringstream stream(loProductVersion);
+    int major = 0;
+    stream >> major;
+    assert(stream.get() == '.');
+    int minor = 0;
+    stream >> minor;
+    if (major > 5 || (major == 5 && minor >= 2))
+        return;
 
     CPPUNIT_ASSERT_EQUAL(exp.size(), res.size());
     const bool eq = std::equal(exp.begin(), exp.end(), res.data());
