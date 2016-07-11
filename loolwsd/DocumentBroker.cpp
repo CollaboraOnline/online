@@ -352,11 +352,11 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
         _sessions.begin()->second->markEditLock(true);
         _isEditLockHeld = true;
     }
-    else
-    {
-        assert(_sessions.size() > 1);
-        _markToDestroy = false;
-    }
+
+    // Below values are recalculated when startDestroy() is called (before destroying the
+    // document). It is safe to reset their values to their defaults whenever a new session is added
+    _lastEditableSession = false;
+    _markToDestroy = false;
 
     return _sessions.size();
 }
