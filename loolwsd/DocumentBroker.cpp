@@ -646,7 +646,7 @@ void DocumentBroker::startDestroy(const std::string& id)
     assert(currentSession != _sessions.end());
 
     // Check if session which is being destroyed is last non-readonly session
-    bool isLastEditableSession = !currentSession->second->isReadOnly();
+    bool lastEditableSession = !currentSession->second->isReadOnly();
     for (auto& it: _sessions)
     {
         if (it.second->getId() == id)
@@ -654,12 +654,12 @@ void DocumentBroker::startDestroy(const std::string& id)
 
         if (!it.second->isReadOnly())
         {
-            isLastEditableSession = false;
+            lastEditableSession = false;
         }
     }
 
     // Last editable session going away
-    _lastEditableSession = isLastEditableSession;
+    _lastEditableSession = lastEditableSession;
 
     // Last view going away, can destroy.
     _markToDestroy = (_sessions.size() <= 1);
