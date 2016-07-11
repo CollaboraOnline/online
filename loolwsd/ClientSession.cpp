@@ -38,12 +38,12 @@ ClientSession::ClientSession(const std::string& id,
                              std::shared_ptr<Poco::Net::WebSocket> ws,
                              std::shared_ptr<DocumentBroker> docBroker,
                              std::shared_ptr<BasicTileQueue> queue,
-                             bool isReadOnly) :
+                             bool readOnly) :
     LOOLSession(id, Kind::ToClient, ws),
     _docBroker(docBroker),
     _queue(queue),
     _haveEditLock(std::getenv("LOK_VIEW_CALLBACK")),
-    _isReadOnly(isReadOnly),
+    _isReadOnly(readOnly),
     _loadFailed(false),
     _loadPart(-1)
 {
