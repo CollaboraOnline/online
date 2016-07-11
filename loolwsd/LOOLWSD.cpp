@@ -624,6 +624,15 @@ private:
             docBrokers.emplace(docKey, docBroker);
         }
 
+        // Check if readonly session is required
+        bool isReadOnly = false;
+        for (auto& param: uriPublic.getQueryParameters())
+        {
+            Log::debug("Query param: " + param.first + ", value: " + param.second);
+            if (param.first == "permission")
+                isReadOnly = param.second == "readonly";
+        }
+
         // Above this point exceptions are safe and will auto-cleanup.
         // Below this, we need to cleanup internal references.
         std::shared_ptr<ClientSession> session;
@@ -632,7 +641,7 @@ private:
             // For ToClient sessions, we store incoming messages in a queue and have a separate
             // thread to pump them. This is to empty the queue when we get a "canceltiles" message.
             auto queue = std::make_shared<BasicTileQueue>();
-            session = std::make_shared<ClientSession>(id, ws, docBroker, queue);
+            session = std::make_shared<ClientSession>(id, ws, docBroker, queue, isReadOnly);
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);
@@ -671,7 +680,10 @@ private:
                 // We cannot destroy it, before save, if this is the last session
                 // Otherwise, we may end up removing the one and only session.
                 bool removedSession = false;
-                auto canDestroy = docBroker->canDestroy();
+                docBroker->startDestroy(id);
+
+                // We issue a force-save when last editable (non-readonly) session is going away
+                bool forceSave = docBroker->isLastEditableSession();
                 sessionsCount = docBroker->getSessionsCount();
                 if (sessionsCount > 1)
                 {
@@ -681,14 +693,14 @@ private:
                 }
 
                 // If we are the last, we must wait for the save to complete.
-                if (canDestroy)
+                if (forceSave)
                 {
-                    Log::info("Shutdown of the last session, saving the document before tearing down.");
+                    Log::info("Shutdown of the last editable (non-readonly) session, saving the document before tearing down.");
                 }
 
                 // We need to wait until the save notification reaches us
                 // and Storage persists the document.
-                if (!docBroker->autoSave(canDestroy, COMMAND_TIMEOUT_MS))
+                if (!docBroker->autoSave(forceSave, COMMAND_TIMEOUT_MS))
                 {
                     Log::error("Auto-save before closing failed.");
                 }

@@ -37,11 +37,13 @@ using Poco::StringTokenizer;
 ClientSession::ClientSession(const std::string& id,
                              std::shared_ptr<Poco::Net::WebSocket> ws,
                              std::shared_ptr<DocumentBroker> docBroker,
-                             std::shared_ptr<BasicTileQueue> queue) :
+                             std::shared_ptr<BasicTileQueue> queue,
+                             bool isReadOnly) :
     LOOLSession(id, Kind::ToClient, ws),
     _docBroker(docBroker),
     _queue(queue),
     _haveEditLock(std::getenv("LOK_VIEW_CALLBACK")),
+    _isReadOnly(isReadOnly),
     _loadFailed(false),
     _loadPart(-1)
 {
@@ -92,7 +94,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return true;
     }
 
-    if (tokens[0] == "takeedit")
+    if (!isReadOnly() && tokens[0] == "takeedit")
     {
         _docBroker->takeEditLock(getId());
         return true;
@@ -184,8 +186,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
 
         // Allow 'downloadas' for all kinds of views irrespective of editlock
-        if (!isEditLocked() && tokens[0] != "downloadas" &&
-            tokens[0] != "userinactive" && tokens[0] != "useractive")
+        if ( (isReadOnly() || !isEditLocked()) && tokens[0] != "downloadas" &&
+             tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";
             return forwardToPeer(_peer, dummyFrame.c_str(), dummyFrame.size());
