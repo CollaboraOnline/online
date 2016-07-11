@@ -203,9 +203,12 @@ public:
 
     void handleTileResponse(const std::vector<char>& payload);
 
-    // Called when the last view is going out.
-    bool canDestroy();
+    // Called before destroying any session
+    // This method calculates and sets important states of
+    // session being destroyed.
+    void startDestroy(const std::string& id);
     bool isMarkedToDestroy() const { return _markToDestroy; }
+    bool isLastEditableSession() const { return _lastEditableSession; }
 
     bool handleInput(const std::vector<char>& payload);
 
@@ -232,6 +235,7 @@ private:
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;
+    std::atomic<bool> _lastEditableSession;
     bool _isLoaded;
     bool _isModified;
     mutable std::mutex _mutex;

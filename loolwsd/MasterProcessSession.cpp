@@ -35,12 +35,14 @@ MasterProcessSession::MasterProcessSession(const std::string& id,
                                            const Kind kind,
                                            std::shared_ptr<Poco::Net::WebSocket> ws,
                                            std::shared_ptr<DocumentBroker> docBroker,
-                                           std::shared_ptr<BasicTileQueue> queue) :
+                                           std::shared_ptr<BasicTileQueue> queue,
+                                           const bool isReadOnly) :
     LOOLSession(id, kind, ws),
     _curPart(0),
     _loadPart(-1),
     _docBroker(docBroker),
-    _queue(queue)
+    _queue(queue),
+    _isReadOnly(isReadOnly)
 {
     Log::info("MasterProcessSession ctor [" + getName() + "].");
 }
@@ -280,7 +282,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         Log::error(getName() + ": Unexpected request [" + tokens[0] + "].");
         assert(false);
     }
-    else if (tokens[0] == "takeedit")
+    else if (!isReadOnly() && tokens[0] == "takeedit")
     {
         _docBroker->takeEditLock(getId());
         return true;
@@ -371,7 +373,7 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
         }
 
         // Allow 'downloadas' for all kinds of views irrespective of editlock
-        if (_kind == Kind::ToClient && !isEditLocked() && tokens[0] != "downloadas" &&
+        if (_kind == Kind::ToClient && (isReadOnly() || !isEditLocked()) && tokens[0] != "downloadas" &&
             tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";

@@ -96,6 +96,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _childProcess(childProcess),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
+    _lastEditableSession(false),
     _isLoaded(false),
     _isModified(false)
 {
@@ -193,7 +194,7 @@ bool DocumentBroker::save(bool success, const std::string& result)
     // If we aren't destroying the last editable session just yet, and the file
     // timestamp hasn't changed, skip saving.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
-    if (!isMarkedToDestroy() && newFileModifiedTime == _lastFileModifiedTime)
+    if (!isLastEditableSession() && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
         Log::debug() << "Skipping unnecessary saving to URI [" << uri
@@ -369,7 +370,13 @@ size_t DocumentBroker::addSession(std::shared_ptr<MasterProcessSession>& session
         Log::warn("DocumentBroker: Trying to add already existing session.");
     }
 
-    if (_sessions.size() == 1)
+    if (session->isReadOnly())
+    {
+        Log::debug("Adding a readonly session [" + id + "]");
+    }
+    // TODO: Below is not always true. What if readonly session is already opened
+    // In that case we still have to give edit lock to this *second* session.
+    else if (_sessions.size() == 1)
     {
         Log::debug("Giving editing lock to the first session [" + id + "].");
         _sessions.begin()->second->markEditLock(true);
@@ -413,11 +420,14 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
         if (haveEditLock)
         {
-            // pass the edit lock to first session in map
-            it = _sessions.begin();
-            if (it != _sessions.end())
+            // pass the edit lock to first non-readonly session in map
+            for (auto& session: _sessions)
             {
-                it->second->setEditLock(true);
+                if (!session.second->isReadOnly())
+                {
+                    session.second->setEditLock(true);
+                    break;
+                }
             }
         }
     }
@@ -546,14 +556,31 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
     }
 }
 
-bool DocumentBroker::canDestroy()
+void DocumentBroker::startDestroy(const std::string& id)
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
+    auto currentSession = _sessions.find(id);
+    assert(currentSession != _sessions.end());
+
+    // Check if session which is being destroyed is last non-readonly session
+    bool isLastEditableSession = !currentSession->second->isReadOnly();
+    for (auto& it: _sessions)
+    {
+        if (it.second->getId() == id)
+            continue;
+
+        if (!it.second->isReadOnly())
+        {
+            isLastEditableSession = false;
+        }
+    }
+
+    // Last editable session going away
+    _lastEditableSession = isLastEditableSession;
+
     // Last view going away, can destroy.
     _markToDestroy = (_sessions.size() <= 1);
-
-    return _markToDestroy;
 }
 
 void DocumentBroker::setModified(const bool value)

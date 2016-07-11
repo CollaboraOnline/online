@@ -26,7 +26,8 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
                          const Kind kind,
                          std::shared_ptr<Poco::Net::WebSocket> ws,
                          std::shared_ptr<DocumentBroker> docBroker,
-                         std::shared_ptr<BasicTileQueue> queue);
+                         std::shared_ptr<BasicTileQueue> queue,
+                         const bool isReadOnly = false);
     virtual ~MasterProcessSession();
 
     virtual bool getStatus(const char *buffer, int length) override;
@@ -50,6 +51,7 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
     void setEditLock(const bool value);
     void markEditLock(const bool value) { _bEditLock = value; }
     bool isEditLocked() const { return _bEditLock; }
+    bool isReadOnly() const { return _isReadOnly; }
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
@@ -97,6 +99,9 @@ public:
     // An edit lock will only allow the current session to make edits,
     // while other session opening the same document can only see
     bool _bEditLock = false;
+
+    // Whether session is opened as readonly
+    bool _isReadOnly;
 };
 
 #endif
