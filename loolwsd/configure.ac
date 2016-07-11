@@ -99,10 +99,8 @@ AC_SUBST(ENABLE_DEBUG)
 # Test for build environment
 
 CXXFLAGS="$CXXFLAGS -std=c++11"
-CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror"
+CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror -Wshadow"
 CFLAGS="$CFLAGS -Wall -Wextra -Werror"
-AS_IF([test -z "$with_poco_libs"],
-      [CXXFLAGS="$CXXFLAGS -Wshadow"])
 
 with_lokit_path=`readlink -f $with_lokit_path`
 AS_IF([test -n "$with_lokit_path"],
@@ -139,13 +137,13 @@ AC_SUBST(SYSTEMPLATE_PATH)
 AM_CONDITIONAL(HAVE_LO_PATH,[test "$have_lo_path" = "true"])
 
 AS_IF([test -n "$with_poco_includes"],
-      [CPPFLAGS="$CPPFLAGS -I${with_poco_includes}"])
+      [CPPFLAGS="$CPPFLAGS -isystem ${with_poco_includes}"])
 
 AS_IF([test -n "$with_poco_libs"],
       [LDFLAGS="$LDFLAGS -L${with_poco_libs}"])
 
 AS_IF([test -n "$with_libpng_includes"],
-      [CPPFLAGS="$CPPFLAGS -I${with_libpng_includes}"])
+      [CPPFLAGS="$CPPFLAGS -isystem ${with_libpng_includes}"])
 
 AS_IF([test -n "$with_libpng_libs"],
       [LDFLAGS="$LDFLAGS -L${with_libpng_libs}"])
