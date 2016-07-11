@@ -113,6 +113,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _cursorPosY(0),
     _isLoaded(false),
     _isModified(false),
+    _isEditLockHeld(false),
     _tileVersion(0)
 {
     assert(!_docKey.empty());
@@ -345,12 +346,11 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     {
         Log::debug("Adding a readonly session [" + id + "]");
     }
-    // TODO: Below is not always true. What if readonly session is already opened
-    // In that case we still have to give edit lock to this *second* session.
-    else if (_sessions.size() == 1)
+    else if (!_isEditLockHeld)
     {
-        Log::debug("Giving editing lock to the first session [" + id + "].");
+        Log::debug("Giving editing lock to the first editable session [" + id + "].");
         _sessions.begin()->second->markEditLock(true);
+        _isEditLockHeld = true;
     }
     else
     {
@@ -392,14 +392,18 @@ size_t DocumentBroker::removeSession(const std::string& id)
         if (haveEditLock)
         {
             // pass the edit lock to first non-readonly session in map
+            bool editLockGiven = false;
             for (auto& session: _sessions)
             {
                 if (!session.second->isReadOnly())
                 {
                     session.second->setEditLock(true);
+                    editLockGiven = true;
                     break;
                 }
             }
+
+            _isEditLockHeld = editLockGiven;
         }
     }
 

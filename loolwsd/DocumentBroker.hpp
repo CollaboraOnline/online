@@ -257,6 +257,7 @@ private:
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;
+    std::atomic<bool> _isEditLockHeld;
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.
