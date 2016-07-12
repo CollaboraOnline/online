@@ -1998,3 +1998,7 @@ msgstr "Felülírás"
 #: globstr.src
 msgid "Insert"
 msgstr "Beszúrás"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "%1. munkalap, összesen %2"

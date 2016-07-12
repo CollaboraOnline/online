@@ -1985,3 +1985,7 @@ msgstr "Sovrascrittura"
 #: globstr.src
 msgid "Insert"
 msgstr "Inserisci"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Foglio %1 di %2"

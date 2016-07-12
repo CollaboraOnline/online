@@ -1998,3 +1998,7 @@ msgstr "Sobreescriu"
 #: globstr.src
 msgid "Insert"
 msgstr "Insereix"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Full %1 de %2"

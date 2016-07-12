@@ -1998,3 +1998,7 @@ msgstr "Overschrijven"
 #: globstr.src
 msgid "Insert"
 msgstr "Invoegen"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Blad %1 van %2"

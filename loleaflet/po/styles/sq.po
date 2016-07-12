@@ -1983,3 +1983,7 @@ msgstr "Mbishkruaj"
 #: globstr.src
 msgid "Insert"
 msgstr "Shto"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Fleta %1 ndër %2"

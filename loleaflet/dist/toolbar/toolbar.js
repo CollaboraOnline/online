@@ -741,6 +741,7 @@ map.on('commandstatechanged', function (e) {
 	var state = e.state;
 	var found = false;
 	var value, color, div;
+	var matches;
 	if (commandName === '.uno:AssignLayout') {
 		$('.styles-select').val(state).trigger('change');
 	} else if (commandName === '.uno:StyleApply') {
@@ -847,6 +848,11 @@ map.on('commandstatechanged', function (e) {
 		}
 	}
 	else if (commandName === '.uno:StatusDocPos') {
+		matches = new RegExp('Sheet (\\d+) of (\\d+)', 'g').exec(state);
+		if (matches && matches.length === 3) {
+			state = _('Sheet %1 of %2');
+			state = state.replace('%1', matches[1]).replace('%2', matches[2]);
+		}
 		$('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:RowColSelCount') {

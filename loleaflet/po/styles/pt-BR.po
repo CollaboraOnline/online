@@ -1994,3 +1994,7 @@ msgstr "Sobrescrever"
 #: globstr.src
 msgid "Insert"
 msgstr "Inserir"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Planilha %1 de %2"

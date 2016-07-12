@@ -1998,3 +1998,7 @@ msgstr "Perrašymas"
 #: globstr.src
 msgid "Insert"
 msgstr "Įterpti"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "%1 lakštas iš %2"

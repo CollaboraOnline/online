@@ -1998,3 +1998,7 @@ msgstr "Prepiši"
 #: globstr.src
 msgid "Insert"
 msgstr "Vstavi"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Delovni list %1 od %2"

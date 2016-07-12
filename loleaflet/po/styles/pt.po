@@ -1998,3 +1998,7 @@ msgstr "Substituir"
 #: globstr.src
 msgid "Insert"
 msgstr "Inserir"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Folha %1 de %2"

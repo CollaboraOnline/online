@@ -1989,3 +1989,7 @@ msgstr "Přepis"
 #: globstr.src
 msgid "Insert"
 msgstr "Vložit"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "List %1 z %2"

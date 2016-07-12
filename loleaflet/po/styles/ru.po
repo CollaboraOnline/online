@@ -1998,3 +1998,7 @@ msgstr "Замена"
 #: globstr.src
 msgid "Insert"
 msgstr "Вставить"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Лист %1 из %2"

@@ -1998,3 +1998,7 @@ msgstr "Prebriši"
 #: globstr.src
 msgid "Insert"
 msgstr "Umetni"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "List %1 od %2"

@@ -1968,3 +1968,7 @@ msgstr "Hai ári"
 #: globstr.src
 msgid "Insert"
 msgstr "Moĩngue"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Kuatia %1 de %2"

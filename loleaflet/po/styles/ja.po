@@ -1989,3 +1989,7 @@ msgstr "上書き"
 #: globstr.src
 msgid "Insert"
 msgstr "挿入"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "シート %1 / %2"
