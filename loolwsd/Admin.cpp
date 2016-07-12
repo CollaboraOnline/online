@@ -72,14 +72,14 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
     }
     else if (tokens[0] == "subscribe" && tokens.count() > 1)
     {
-        for (unsigned i = 0; i < tokens.count() - 1; i++)
+        for (std::size_t i = 0; i < tokens.count() - 1; i++)
         {
             model.subscribe(_sessionId, tokens[i + 1]);
         }
     }
     else if (tokens[0] == "unsubscribe" && tokens.count() > 1)
     {
-        for (unsigned i = 0; i < tokens.count() - 1; i++)
+        for (std::size_t i = 0; i < tokens.count() - 1; i++)
         {
             model.unsubscribe(_sessionId, tokens[i + 1]);
         }
