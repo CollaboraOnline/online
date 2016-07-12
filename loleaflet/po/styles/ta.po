@@ -1998,3 +1998,7 @@ msgstr "மேலெழுது"
 #: globstr.src
 msgid "Insert"
 msgstr "உள்நுழை"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "தாள் %2 இல் %1"

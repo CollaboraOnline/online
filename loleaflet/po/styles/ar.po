@@ -1998,3 +1998,7 @@ msgstr "الكتابة على"
 #: globstr.src
 msgid "Insert"
 msgstr "إدراج"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "الورقة %1 من %2"

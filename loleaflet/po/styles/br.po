@@ -1998,3 +1998,7 @@ msgstr "Flastrañ"
 #: globstr.src
 msgid "Insert"
 msgstr "Enlakaat"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Follenn %1 eus %2"

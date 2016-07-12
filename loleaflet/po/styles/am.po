@@ -1989,3 +1989,7 @@ msgstr "በላዩ ላይ ደርቦ መጻፊያ"
 #: globstr.src
 msgid "Insert"
 msgstr "ማስገቢያ"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "ወረቀት %1 ከ %2"

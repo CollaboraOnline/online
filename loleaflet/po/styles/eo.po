@@ -1998,3 +1998,7 @@ msgstr "Anstataŭigi"
 #: globstr.src
 msgid "Insert"
 msgstr "Enmeti"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Folio %1 el %2"

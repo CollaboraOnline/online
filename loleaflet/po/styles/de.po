@@ -1985,3 +1985,7 @@ msgstr "Überschreiben"
 #: globstr.src
 msgid "Insert"
 msgstr "Einfügen"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Tabelle %1 von %2"

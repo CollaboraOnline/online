@@ -1988,3 +1988,7 @@ msgstr "Espotir"
 #: globstr.src
 msgid "Insert"
 msgstr "Inserir"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Fuèlh %1 sus %2"

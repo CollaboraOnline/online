@@ -1998,3 +1998,7 @@ msgstr "Prepisovanie"
 #: globstr.src
 msgid "Insert"
 msgstr "Vložiť"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Hárok %1 z %2"

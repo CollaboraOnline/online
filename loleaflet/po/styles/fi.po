@@ -1998,3 +1998,7 @@ msgstr "Päällekirj."
 #: globstr.src
 msgid "Insert"
 msgstr "Lisää"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Taulukko %1 / %2"

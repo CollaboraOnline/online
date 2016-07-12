@@ -1998,3 +1998,7 @@ msgstr "Skrifa yfir"
 #: globstr.src
 msgid "Insert"
 msgstr "Setja inn"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Blað %1 af %2"

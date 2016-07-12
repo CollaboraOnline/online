@@ -1998,3 +1998,7 @@ msgstr "Αντικατάσταση"
 #: globstr.src
 msgid "Insert"
 msgstr "Εισαγωγή"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Φύλλο %1 από %2"

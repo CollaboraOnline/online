@@ -1988,3 +1988,7 @@ msgstr "덮어쓰기"
 #: globstr.src
 msgid "Insert"
 msgstr "삽입"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "%2의 %1 시트"

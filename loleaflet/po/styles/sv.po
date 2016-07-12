@@ -1994,3 +1994,7 @@ msgstr "Överskrivning"
 #: globstr.src
 msgid "Insert"
 msgstr "Infoga"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Blad %1 av %2"

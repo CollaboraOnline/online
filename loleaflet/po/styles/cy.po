@@ -1998,3 +1998,7 @@ msgstr "Trosysgrifo"
 #: globstr.src
 msgid "Insert"
 msgstr "Mewnosod"
+
+#: globstr.src
+msgid "Sheet %1 of %2"
+msgstr "Dalen %1 o %2"
