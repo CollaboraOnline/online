@@ -2002,3 +2002,7 @@ msgstr "Mewnosod"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Dalen %1 o %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 rhes, $2 colofn wedi eu dewis"

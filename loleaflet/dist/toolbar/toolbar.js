@@ -491,6 +491,14 @@ function toggleButton(toolbar, state, command)
 	}
 }
 
+function toLocalePattern (pattern, regex, text, sub1, sub2) {
+	var matches = new RegExp(regex, 'g').exec(text);
+	if (matches) {
+		text = pattern.toLocaleString().replace(sub1, matches[1]).replace(sub2, matches[2]);
+	}
+	return text;
+}
+
 function onSearch(e) {
 	if (e.keyCode === 13) {
 		var toolbar = w2ui['toolbar-down'];
@@ -848,14 +856,11 @@ map.on('commandstatechanged', function (e) {
 		}
 	}
 	else if (commandName === '.uno:StatusDocPos') {
-		matches = new RegExp('Sheet (\\d+) of (\\d+)', 'g').exec(state);
-		if (matches && matches.length === 3) {
-			state = _('Sheet %1 of %2');
-			state = state.replace('%1', matches[1]).replace('%2', matches[2]);
-		}
+		state = toLocalePattern('Sheet %1 of %2', 'Sheet (\\d+) of (\\d+)', state, '%1', '%2');
 		$('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:RowColSelCount') {
+		state = toLocalePattern('$1 rows, $2 columns selected', '(\\d+) rows, (\\d+) columns selected', state, '$1', '$2');
 		$('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:StatusPageStyle') {

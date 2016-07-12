@@ -2002,3 +2002,7 @@ msgstr "Εισαγωγή"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Φύλλο %1 από %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "επιλέχτηκε $1 γραμμή, $2 στήλη"

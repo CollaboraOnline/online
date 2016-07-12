@@ -2002,3 +2002,7 @@ msgstr "Enmeti"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Folio %1 el %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 vicoj, $2 kolumnoj elektitaj"

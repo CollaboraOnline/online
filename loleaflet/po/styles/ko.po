@@ -1992,3 +1992,7 @@ msgstr "삽입"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "%2의 %1 시트"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "%1 행, %2 열이 선택됨"

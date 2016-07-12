@@ -2002,3 +2002,7 @@ msgstr "Lisää"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Taulukko %1 / %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 riviä, $2 saraketta valittu"

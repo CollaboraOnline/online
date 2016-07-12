@@ -2002,3 +2002,7 @@ msgstr "Umetni"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "List %1 od %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "Odabrano $1 redova, $2 stupaca"
