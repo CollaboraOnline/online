@@ -14,6 +14,7 @@
 #include <mutex>
 #include <thread>
 #include <regex>
+#include <vector>
 
 #include <Poco/Dynamic/Var.h>
 #include <Poco/FileStream.h>
@@ -81,6 +82,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInsertAnnotationWriter);
     CPPUNIT_TEST(testEditAnnotationWriter);
     CPPUNIT_TEST(testInsertAnnotationCalc);
+    CPPUNIT_TEST(testStateUnoCommand);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -111,6 +113,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInsertAnnotationWriter();
     void testEditAnnotationWriter();
     void testInsertAnnotationCalc();
+    void testStateUnoCommand();
 
     void loadDoc(const std::string& documentURL);
 
@@ -136,6 +139,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                                              int docWidth, int docHeight)> keyhandler,
                           std::function<void(int docWidth, int docHeight,
                                              int newWidth, int newHeight)> checkhandler);
+
+    void testStateChanged(const std::string& filename, std::vector<std::string>& vecComands);
+
 public:
     HTTPWSTest()
         : _uri(helpers::getTestServerURI())
@@ -1630,6 +1636,214 @@ void HTTPWSTest::testInsertAnnotationCalc()
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
     auto res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationCalc ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
+}
+
+void HTTPWSTest::testStateChanged(const std::string& filename, std::vector<std::string>& vecCommands)
+{
+    std::string docPath;
+    std::string docURL;
+    std::string response;
+    std::string text;
+
+    getDocumentPathAndURL(filename.c_str(), docPath, docURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+
+    auto socket = loadDocAndGetSocket(_uri, docURL, "testCommands ");
+    SocketProcessor("", socket,
+        [&](const std::string& msg)
+        {
+            Poco::RegularExpression::MatchVec matches;
+            Poco::RegularExpression reUno("\\.[a-zA-Z]*\\:[a-zA-Z]*\\=");
+
+            if (reUno.match(msg, 0, matches) > 0 && matches.size() == 1)
+            {
+                const auto str = msg.substr(matches[0].offset, matches[0].length);
+                auto result = std::find(std::begin(vecCommands), std::end(vecCommands), str);
+
+                if (result != std::end(vecCommands))
+                {
+                    vecCommands.erase(result);
+                }
+            }
+
+            if (vecCommands.size() == 0)
+                return false;
+
+            return true;
+        });
+
+    if (vecCommands.size() > 0 )
+    {
+        std::ostringstream ostr;
+
+        ostr << filename << " : Missing Uno Commands: " << std::endl;
+        for (auto itUno : vecCommands)
+            ostr << itUno << std::endl;
+
+        CPPUNIT_FAIL(ostr.str());
+    }
+}
+
+void HTTPWSTest::testStateUnoCommand()
+{
+    std::vector<std::string> calcCommands
+    {
+        ".uno:BackgroundColor=",
+        ".uno:Bold=",
+        ".uno:CenterPara=",
+        ".uno:CharBackColor=",
+        ".uno:CharFontName=",
+        ".uno:Color=",
+        ".uno:FontHeight=",
+        ".uno:Italic=",
+        ".uno:JustifyPara=",
+        ".uno:OutlineFont=",
+        ".uno:LeftPara=",
+        ".uno:RightPara=",
+        ".uno:Shadowed=",
+        ".uno:SubScript=",
+        ".uno:SuperScript=",
+        ".uno:Strikeout=",
+        ".uno:StyleApply=",
+        ".uno:Underline=",
+        ".uno:ModifiedStatus=",
+        ".uno:Undo=",
+        ".uno:Redo=",
+        ".uno:Cut=",
+        ".uno:Copy=",
+        ".uno:Paste=",
+        ".uno:SelectAll=",
+        ".uno:InsertAnnotation=",
+        ".uno:DeleteRows=",
+        ".uno:DeleteColumns=",
+        ".uno:MergeCells=",
+        ".uno:StatusDocPos=",
+        ".uno:RowColSelCount=",
+        ".uno:StatusPageStyle=",
+        ".uno:InsertMode=",
+        ".uno:StatusSelectionMode=",
+        ".uno:StateTableCell=",
+        ".uno:StatusBarFunc=",
+        ".uno:WrapText=",
+        ".uno:ToggleMergeCells=",
+        ".uno:NumberFormatCurrency=",
+        ".uno:NumberFormatPercent=",
+        ".uno:NumberFormatDate="
+    };
+
+    std::vector<std::string> writerCommands
+    {
+        ".uno:BackColor=",
+        ".uno:BackgroundColor=",
+        ".uno:Bold=",
+        ".uno:CenterPara=",
+        ".uno:CharBackColor=",
+        ".uno:CharBackgroundExt=",
+        ".uno:CharFontName=",
+        ".uno:Color=",
+        ".uno:DefaultBullet=",
+        ".uno:DefaultNumbering=",
+        ".uno:FontColor=",
+        ".uno:FontHeight=",
+        ".uno:Italic=",
+        ".uno:JustifyPara=",
+        ".uno:OutlineFont=",
+        ".uno:LeftPara=",
+        ".uno:RightPara=",
+        ".uno:Shadowed=",
+        ".uno:SubScript=",
+        ".uno:SuperScript=",
+        ".uno:Strikeout=",
+        ".uno:StyleApply=",
+        ".uno:Underline=",
+        ".uno:ModifiedStatus=",
+        ".uno:Undo=",
+        ".uno:Redo=",
+        ".uno:Cut=",
+        ".uno:Copy=",
+        ".uno:Paste=",
+        ".uno:SelectAll=",
+        ".uno:InsertAnnotation=",
+        ".uno:InsertRowsBefore=",
+        ".uno:InsertRowsAfter=",
+        ".uno:InsertColumnsBefore=",
+        ".uno:InsertColumnsAfter=",
+        ".uno:DeleteRows=",
+        ".uno:DeleteColumns=",
+        ".uno:DeleteTable=",
+        ".uno:SelectTable=",
+        ".uno:EntireRow=",
+        ".uno:EntireColumn=",
+        ".uno:EntireCell=",
+        ".uno:MergeCells=",
+        ".uno:InsertMode=",
+        ".uno:StateTableCell=",
+        ".uno:StatePageNumber=",
+        ".uno:StateWordCount=",
+        ".uno:SelectionMode=",
+        ".uno:NumberFormatCurrency=",
+        ".uno:NumberFormatPercent=",
+        ".uno:NumberFormatDate="
+    };
+
+    std::vector<std::string> impressCommands
+    {
+        ".uno:Bold=",
+        ".uno:CenterPara=",
+        ".uno:CharBackColor=",
+        ".uno:CharFontName=",
+        ".uno:Color=",
+        ".uno:DefaultBullet=",
+        ".uno:DefaultNumbering=",
+        ".uno:FontHeight=",
+        ".uno:Italic=",
+        ".uno:JustifyPara=",
+        ".uno:OutlineFont=",
+        ".uno:LeftPara=",
+        ".uno:RightPara=",
+        ".uno:Shadowed=",
+        ".uno:SubScript=",
+        ".uno:SuperScript=",
+        ".uno:Strikeout=",
+        ".uno:StyleApply=",
+        ".uno:Underline=",
+        ".uno:ModifiedStatus=",
+        ".uno:Undo=",
+        ".uno:Redo=",
+        ".uno:InsertPage=",
+        ".uno:DeletePage=",
+        ".uno:DuplicatePage=",
+        ".uno:Cut=",
+        ".uno:Copy=",
+        ".uno:Paste=",
+        ".uno:SelectAll=",
+        ".uno:InsertAnnotation=",
+        ".uno:InsertRowsBefore=",
+        ".uno:InsertRowsAfter=",
+        ".uno:InsertColumnsBefore=",
+        ".uno:InsertColumnsAfter=",
+        ".uno:DeleteRows=",
+        ".uno:DeleteColumns=",
+        ".uno:SelectTable=",
+        ".uno:EntireRow=",
+        ".uno:EntireColumn=",
+        ".uno:MergeCells=",
+        ".uno:AssignLayout=",
+        ".uno:PageStatus=",
+        ".uno:LayoutStatus=",
+        ".uno:Context=",
+    };
+
+    try
+    {
+        testStateChanged(std::string("setclientpart.ods"), calcCommands);
+        testStateChanged(std::string("hello.odt"), writerCommands);
+        testStateChanged(std::string("setclientpart.odp"), impressCommands);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
