@@ -2002,3 +2002,7 @@ msgstr "Cuir a-steach"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Siota %1 de %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 ràgh(an), $2 colbh(an) air an taghadh"

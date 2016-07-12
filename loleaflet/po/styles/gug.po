@@ -1972,3 +1972,7 @@ msgstr "Moĩngue"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Kuatia %1 de %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 tysỹi kuéra, $2 columnas ojeporavo va'ekue"

@@ -1987,3 +1987,7 @@ msgstr "Shto"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Fleta %1 ndër %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 rreshta, $2 kolona të përzgjedhura"

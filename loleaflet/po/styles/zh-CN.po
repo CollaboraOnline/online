@@ -2002,3 +2002,7 @@ msgstr "插入"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "工作表 %1，共%2张"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "已选择 $1 行，$2 列"

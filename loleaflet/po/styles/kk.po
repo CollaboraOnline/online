@@ -1993,3 +1993,7 @@ msgstr "Кірістіру"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Парақ %1, барлығы %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 жол, $2 таңба таңдалған"

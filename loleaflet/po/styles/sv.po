@@ -1998,3 +1998,7 @@ msgstr "Infoga"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Blad %1 av %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 rader, $2 kolumner markerade"

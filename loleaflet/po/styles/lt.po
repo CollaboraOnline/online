@@ -2002,3 +2002,7 @@ msgstr "Įterpti"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "%1 lakštas iš %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "Pažymėta $1 eil., $2 stulp."

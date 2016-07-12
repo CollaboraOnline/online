@@ -1989,3 +1989,7 @@ msgstr "Einfügen"
 #: globstr.src
 msgid "Sheet %1 of %2"
 msgstr "Tabelle %1 von %2"
+
+#: globstr.src
+msgid "$1 rows, $2 columns selected"
+msgstr "$1 Zeilen, $2 Spalten ausgewählt"
