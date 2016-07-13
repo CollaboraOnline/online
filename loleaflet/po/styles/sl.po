@@ -2006,3 +2006,7 @@ msgstr "Delovni list %1 od %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "Izbrano: $1 vrst. in $2 stolp."
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Stran %1 od %2"

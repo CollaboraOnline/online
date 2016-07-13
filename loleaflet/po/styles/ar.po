@@ -2006,3 +2006,7 @@ msgstr "الورقة %1 من %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 صفّ، $2 عمود محدّد"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "الصفحة %1 من %2"

@@ -2006,3 +2006,7 @@ msgstr "Blað %1 af %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 raðir, $2 dálkar valdir"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Síða %1 af %2"

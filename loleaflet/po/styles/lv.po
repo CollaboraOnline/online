@@ -2006,3 +2006,7 @@ msgstr "Loksne %1 no %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "Izvēlētas $1 rindas, $2 kolonnas"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Lappuse %1 no %2"

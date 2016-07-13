@@ -2006,3 +2006,7 @@ msgstr "Arkusz %1 z %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "Zaznaczono $1 wierszy, $2 kolumn"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Strona %1 z %2"

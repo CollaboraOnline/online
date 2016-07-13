@@ -2006,3 +2006,7 @@ msgstr "Çalışma sayfası %1 / %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 satır, $2 sütun seçildi"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Sayfa %1 / %2"
