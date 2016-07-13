@@ -2010,3 +2010,7 @@ msgstr "$1 vicoj, $2 kolumnoj elektitaj"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Paĝo %1 de %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 vortoj, %2 signoj"

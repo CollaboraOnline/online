@@ -2010,3 +2010,7 @@ msgstr "$1 صفّ، $2 عمود محدّد"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "الصفحة %1 من %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 كلمات، %2 أحرف"

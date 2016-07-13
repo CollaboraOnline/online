@@ -2010,3 +2010,7 @@ msgstr "$1 renk, $2 a vannoù bet diuzet"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Pajenn %1 eus %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 a c'herioù, %2 arouezenn"

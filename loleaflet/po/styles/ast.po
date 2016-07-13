@@ -1998,3 +1998,7 @@ msgstr "Sobrescribir"
 #: globstr.src
 msgid "Insert"
 msgstr "Inxertar"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 pallabres, %2 caráuteres"

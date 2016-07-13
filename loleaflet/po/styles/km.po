@@ -1998,3 +1998,7 @@ msgstr "សរសេរ​ជាន់​លើ"
 #: globstr.src
 msgid "Insert"
 msgstr "បញ្ចូល​"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 ពាក្យ, %2 តួអក្សរ"

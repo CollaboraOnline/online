@@ -2006,3 +2006,7 @@ msgstr "$1 rader, $2 kolumner markerade"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Sida %1 av %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 ord, %2 tecken"

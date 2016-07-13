@@ -2010,3 +2010,7 @@ msgstr "επιλέχτηκε $1 γραμμή, $2 στήλη"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Σελίδα %1 από %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 λέξεις, %2 χαρακτήρες"

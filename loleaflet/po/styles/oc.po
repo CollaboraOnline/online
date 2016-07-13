@@ -2000,3 +2000,7 @@ msgstr "$1 linhas, $2 colomnas seleccionadas"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Pagina %1 de %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 mots, %2 caractèrs"

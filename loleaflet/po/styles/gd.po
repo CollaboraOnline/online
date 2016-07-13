@@ -2010,3 +2010,7 @@ msgstr "$1 ràgh(an), $2 colbh(an) air an taghadh"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Duilleag %1 à %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 facal, %2 caractar"

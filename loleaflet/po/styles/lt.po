@@ -2010,3 +2010,7 @@ msgstr "Pažymėta $1 eil., $2 stulp."
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "%1 puslapis iš %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "Žodžių: %1; rašmenų: %2"

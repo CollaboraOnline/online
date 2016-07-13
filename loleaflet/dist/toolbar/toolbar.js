@@ -886,6 +886,7 @@ map.on('commandstatechanged', function (e) {
 		$('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:StateWordCount') {
+		state = toLocalePattern('%1 words, %2 characters', '(\\d+) words, (\\d+) characters', state, '%1', '%2');
 		$('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:PageStatus') {

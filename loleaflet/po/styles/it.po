@@ -1997,3 +1997,7 @@ msgstr "$1 righe, $2 colonne selezionate"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Pagina %1 di %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 parole, %2 caratteri"

@@ -2010,3 +2010,7 @@ msgstr "$1 rader, $2 kolonner valgte"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Side: %1 av %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 ord, %2 tegn"

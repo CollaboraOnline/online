@@ -2010,3 +2010,7 @@ msgstr "$1 satır, $2 sütun seçildi"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Sayfa %1 / %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 kelime, %2 karakter"

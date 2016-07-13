@@ -2001,3 +2001,7 @@ msgstr "$1 行、$2 列選択"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "ページ %1 / %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "単語 %1、文字数 %2"

@@ -2000,3 +2000,7 @@ msgstr "%1 행, %2 열이 선택됨"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "%1 / %2 페이지"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "단어 %1 개, 문자 %2 개"
