@@ -2001,3 +2001,7 @@ msgstr "$1 ረድፎች, $2 አምዶች ተመርጠዋል"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "ገጽ %1 ከ %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 ቃላቶች, %2 ባህሪዎች"

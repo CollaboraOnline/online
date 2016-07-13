@@ -2010,3 +2010,7 @@ msgstr "$1 riviä, $2 saraketta valittu"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Sivu %1 / %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 sanaa, %2 merkkiä"

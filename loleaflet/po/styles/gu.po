@@ -1998,3 +1998,7 @@ msgstr "ઉપર લખો"
 #: globstr.src
 msgid "Insert"
 msgstr "દાખલ કરો"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 શબ્દો, %2 અક્ષરો"

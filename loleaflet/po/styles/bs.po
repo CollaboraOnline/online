@@ -1988,3 +1988,7 @@ msgstr "Prepiši"
 #: globstr.src
 msgid "Insert"
 msgstr "Ubaci"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 riječi, %2 znakova"

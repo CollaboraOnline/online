@@ -2010,3 +2010,7 @@ msgstr "Izbrano: $1 vrst. in $2 stolp."
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Stran %1 od %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 besed, %2 znakov"

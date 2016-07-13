@@ -2010,3 +2010,7 @@ msgstr "Odabrano $1 redova, $2 stupaca"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Stranica %1 od %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 riječi, %2 znakova"

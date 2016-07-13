@@ -2001,3 +2001,7 @@ msgstr "$1 жол, $2 таңба таңдалған"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Бет %1, барлығы %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 сөз, %2 таңба"

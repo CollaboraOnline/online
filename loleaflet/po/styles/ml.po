@@ -1989,3 +1989,7 @@ msgstr "തിരുത്തിയെഴുതുക"
 #: globstr.src
 msgid "Insert"
 msgstr "ചേര്ക്കുക"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 വാക്കുകള്‍, %2 അക്ഷരങ്ങള്‍"

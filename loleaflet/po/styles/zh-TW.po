@@ -2010,3 +2010,7 @@ msgstr "已選取 $1 列，$2 欄"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "頁 %1 / %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 個字，%2 個字元"

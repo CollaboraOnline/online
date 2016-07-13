@@ -2010,3 +2010,7 @@ msgstr "Valitud $1 rida, $2 veergu"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Lehekülg %1 / %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 sõna (%2 märki)"

@@ -2010,3 +2010,7 @@ msgstr "$1 строк, $2 столбцов выбрано"
 #: shells.src
 msgid "Page %1 of %2"
 msgstr "Страница %1 из %2"
+
+#: app.src
+msgid "%1 words, %2 characters"
+msgstr "%1 слов, %2 символов"
