@@ -404,7 +404,7 @@ public:
         _tests.push_back(&UnitAdmin::testAddDocNotify);
         _tests.push_back(&UnitAdmin::testUsersCount);
         _tests.push_back(&UnitAdmin::testDocCount);
-        // FIXME make this one reliable, and enable again _tests.push_back(&UnitAdmin::testRmDocNotify);
+        _tests.push_back(&UnitAdmin::testRmDocNotify);
         _tests.push_back(&UnitAdmin::testUsersCount);
         _tests.push_back(&UnitAdmin::testDocCount);
     }
