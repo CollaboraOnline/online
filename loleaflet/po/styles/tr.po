@@ -2014,3 +2014,7 @@ msgstr "Sayfa %1 / %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 kelime, %2 karakter"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Slayt %1 / %2"

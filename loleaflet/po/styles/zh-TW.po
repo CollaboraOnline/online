@@ -2014,3 +2014,7 @@ msgstr "頁 %1 / %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 個字，%2 個字元"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "投影片 %1 / %2"

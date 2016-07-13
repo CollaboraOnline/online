@@ -2005,3 +2005,7 @@ msgstr "ページ %1 / %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "単語 %1、文字数 %2"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "スライド %1 / %2"

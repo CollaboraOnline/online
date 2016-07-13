@@ -2014,3 +2014,7 @@ msgstr "Lappuse %1 no %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 vārdi, %2 rakstzīmes"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Slaids %1 no %2"

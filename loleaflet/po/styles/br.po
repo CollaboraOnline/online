@@ -2014,3 +2014,7 @@ msgstr "Pajenn %1 eus %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 a c'herioù, %2 arouezenn"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Treyonenn %1 eus %2"

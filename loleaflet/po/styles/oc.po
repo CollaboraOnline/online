@@ -2004,3 +2004,7 @@ msgstr "Pagina %1 de %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 mots, %2 caractèrs"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Diapositiva %1 sus %2"

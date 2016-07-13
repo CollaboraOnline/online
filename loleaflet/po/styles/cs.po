@@ -2005,3 +2005,7 @@ msgstr "Stránka %1 z %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 slov, %2 znaků"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Snímek %1 z %2"

@@ -2014,3 +2014,7 @@ msgstr "עמוד %1 מתוך %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 מילים, %2 תווים"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "שקופית %1 מתוך %2"

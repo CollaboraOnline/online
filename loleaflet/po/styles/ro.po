@@ -2014,3 +2014,7 @@ msgstr "Pagina %1 din %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 cuvinte, %2 caractere"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Diapozitiv %1 din %2"

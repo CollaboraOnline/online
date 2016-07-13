@@ -2010,3 +2010,7 @@ msgstr "Side %1 af %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 ord, %2 tegn"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Dias %1 af %2"

@@ -2014,3 +2014,7 @@ msgstr "Sivu %1 / %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 sanaa, %2 merkkiä"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Dia %1 / %2"

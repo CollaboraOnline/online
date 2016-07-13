@@ -2014,3 +2014,7 @@ msgstr "பக்கம் %2 இல் %1"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 சொற்கள், %2 எழுத்துக்கள்"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "படவில்லை %2 இல் %1"
