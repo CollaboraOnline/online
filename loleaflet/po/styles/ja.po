@@ -1997,3 +1997,7 @@ msgstr "シート %1 / %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 行、$2 列選択"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "ページ %1 / %2"

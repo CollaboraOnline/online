@@ -1997,3 +1997,7 @@ msgstr "Парақ %1, барлығы %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 жол, $2 таңба таңдалған"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Бет %1, барлығы %2"

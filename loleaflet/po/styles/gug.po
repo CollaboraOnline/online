@@ -1976,3 +1976,7 @@ msgstr "Kuatia %1 de %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 tysỹi kuéra, $2 columnas ojeporavo va'ekue"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Rogue %1 de %2"

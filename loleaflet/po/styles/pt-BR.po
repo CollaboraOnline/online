@@ -2002,3 +2002,7 @@ msgstr "Planilha %1 de %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 linhas, $2 colunas selecionadas"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Página %1 de %2"

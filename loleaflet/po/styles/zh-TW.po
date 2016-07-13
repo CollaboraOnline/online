@@ -2006,3 +2006,7 @@ msgstr "工作表 %1 / %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "已選取 $1 列，$2 欄"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "頁 %1 / %2"

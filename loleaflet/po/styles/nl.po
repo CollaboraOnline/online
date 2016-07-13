@@ -2006,3 +2006,7 @@ msgstr "Blad %1 van %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 rijen, $2 kolommen geselecteerd"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Pagina %1 van %2"

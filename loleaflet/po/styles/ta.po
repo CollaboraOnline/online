@@ -2006,3 +2006,7 @@ msgstr "தாள் %2 இல் %1"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 நிரைகள், $2 நிரல்கள் தேரப்பட்டன"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "பக்கம் %2 இல் %1"

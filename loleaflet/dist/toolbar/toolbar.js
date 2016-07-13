@@ -882,6 +882,7 @@ map.on('commandstatechanged', function (e) {
 		}
 	}
 	else if (commandName === '.uno:StatePageNumber') {
+		state = toLocalePattern('Page %1 of %2', 'Page (\\d+) of (\\d+)', state, '%1', '%2');
 		$('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:StateWordCount') {

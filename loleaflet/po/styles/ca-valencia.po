@@ -2006,3 +2006,7 @@ msgstr "Full %1 de %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 files, $2 columnes seleccionades"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Pàgina %1 de %2"

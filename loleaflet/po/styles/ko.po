@@ -1996,3 +1996,7 @@ msgstr "%2의 %1 시트"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "%1 행, %2 열이 선택됨"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "%1 / %2 페이지"

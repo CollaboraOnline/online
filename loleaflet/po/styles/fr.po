@@ -1997,3 +1997,7 @@ msgstr "Feuille %1 sur %2"
 #: globstr.src
 msgid "$1 rows, $2 columns selected"
 msgstr "$1 lignes, $2 colonnes sélectionnées"
+
+#: shells.src
+msgid "Page %1 of %2"
+msgstr "Page %1 de %2"
