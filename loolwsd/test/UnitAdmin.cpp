@@ -295,14 +295,12 @@ private:
 
     TestResult testUsersCount()
     {
+        const std::string queryMessage = "active_users_count";
         _messageReceived.clear();
 
-        const std::string queryMessage = "active_users_count";
-        _adminWs->sendFrame(queryMessage.data(), queryMessage.size());
-
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
-        if (_messageReceived.empty() &&
-            _messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
+        _adminWs->sendFrame(queryMessage.data(), queryMessage.size());
+        if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testUsersCount: Timed out waiting for admin console message");
             return TestResult::TEST_TIMED_OUT;
@@ -330,14 +328,12 @@ private:
 
     TestResult testDocCount()
     {
+        const std::string queryMessage = "active_docs_count";
         _messageReceived.clear();
 
-        const std::string queryMessage = "active_docs_count";
-        _adminWs->sendFrame(queryMessage.data(), queryMessage.size());
-
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
-        if (_messageReceived.empty() &&
-            _messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
+        _adminWs->sendFrame(queryMessage.data(), queryMessage.size());
+        if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testDocCount: Timed out waiting for admin console message");
             return TestResult::TEST_TIMED_OUT;
@@ -366,16 +362,14 @@ private:
 
     TestResult testRmDocNotify()
     {
-        _messageReceived.clear();
-
         // subscribe to rmdoc notification on admin websocket
         const std::string subscribeMessage = "subscribe rmdoc";
         _adminWs->sendFrame(subscribeMessage.data(), subscribeMessage.size());
+        _messageReceived.clear();
 
-        _docWs1->close();
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
-        if (_messageReceived.empty() &&
-            _messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
+        _docWs1->close();
+        if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testRmDocNotify: Timed out waiting for admin console message");
             return TestResult::TEST_TIMED_OUT;
