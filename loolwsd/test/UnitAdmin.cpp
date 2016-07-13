@@ -199,22 +199,19 @@ private:
         const std::string loadMessage1 = "load url=" + documentURL1;
         std::unique_ptr<HTTPClientSession> session1(helpers::createSession(docUri1));
         std::unique_ptr<HTTPClientSession> session2(helpers::createSession(docUri1));
+
+        std::unique_lock<std::mutex> lock(_messageReceivedMutex);
+        _messageReceived.clear();
         _docWs1 = std::make_shared<Poco::Net::WebSocket>(*session1, request1, response1);
-        _docWs2 = std::make_shared<Poco::Net::WebSocket>(*session2, request1, response1);
+        _docWs1->sendFrame(loadMessage1.data(), loadMessage1.size());
+        if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
+        {
+            Log::info("testAddDocNotify: Timed out waiting for admin console message");
+            return TestResult::TEST_TIMED_OUT;
+        }
+        lock.unlock();
 
         {
-            _messageReceived.clear();
-            _docWs1->sendFrame(loadMessage1.data(), loadMessage1.size());
-
-            std::unique_lock<std::mutex> lock(_messageReceivedMutex);
-            if (_messageReceived.empty() &&
-                _messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
-            {
-                Log::info("testAddDocNotify: Timed out waiting for admin console message");
-                return TestResult::TEST_TIMED_OUT;
-            }
-            lock.unlock();
-
             StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() != 5 ||
                 tokens[0] != "adddoc" ||
@@ -230,22 +227,19 @@ private:
         }
         _docsCount++;
 
-
         // Open another view of same document
+        lock.lock(); // lock _messageReceivedMutex
+        _messageReceived.clear();
+        _docWs2 = std::make_shared<Poco::Net::WebSocket>(*session2, request1, response1);
+        _docWs2->sendFrame(loadMessage1.data(), loadMessage1.size());
+        if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
-            // Send another load request for same document
-            _messageReceived.clear();
-            _docWs2->sendFrame(loadMessage1.data(), loadMessage1.size());
+            Log::info("testAddDocNotify: Timed out waiting for admin console message");
+            return TestResult::TEST_TIMED_OUT;
+        }
+        lock.unlock();
 
-            std::unique_lock<std::mutex> lock(_messageReceivedMutex);
-            if (_messageReceived.empty() &&
-                _messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
-            {
-                Log::info("testAddDocNotify: Timed out waiting for admin console message");
-                return TestResult::TEST_TIMED_OUT;
-            }
-            lock.unlock();
-
+        {
             StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() != 5 ||
                 tokens[0] != "adddoc" ||
@@ -268,21 +262,19 @@ private:
         const Poco::URI docUri2(helpers::getTestServerURI());
         const std::string loadMessage2 = "load url=" + documentURL2;
         std::unique_ptr<HTTPClientSession> session3(helpers::createSession(docUri1));
+
+        lock.lock(); // lock _messageReceivedMutex
+        _messageReceived.clear();
         _docWs3 = std::make_shared<Poco::Net::WebSocket>(*session3, request2, response2);
+        _docWs3->sendFrame(loadMessage2.data(), loadMessage2.size());
+        if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
+        {
+            Log::info("testAddDocNotify: Timed out waiting for admin console message");
+            return TestResult::TEST_TIMED_OUT;
+        }
+        lock.unlock();
 
         {
-            _messageReceived.clear();
-            _docWs3->sendFrame(loadMessage2.data(), loadMessage2.size());
-
-            std::unique_lock<std::mutex> lock(_messageReceivedMutex);
-            if (_messageReceived.empty() &&
-                _messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
-            {
-                Log::info("testAddDocNotify: Timed out waiting for admin console message");
-                return TestResult::TEST_TIMED_OUT;
-            }
-            lock.unlock();
-
             StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() != 5 ||
                 tokens[0] != "adddoc" ||
