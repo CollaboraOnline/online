@@ -2014,3 +2014,7 @@ msgstr "%1. / %2 oldal"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 szó, %2 karakter"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "%1. dia, összesen: %2"

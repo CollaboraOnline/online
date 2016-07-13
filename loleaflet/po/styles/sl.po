@@ -2014,3 +2014,7 @@ msgstr "Stran %1 od %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 besed, %2 znakov"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Prosojnica %1 od %2"

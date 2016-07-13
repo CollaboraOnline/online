@@ -2004,3 +2004,7 @@ msgstr "%1 / %2 페이지"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "단어 %1 개, 문자 %2 개"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "%2 의 %1 슬라이드"

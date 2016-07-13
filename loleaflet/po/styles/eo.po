@@ -2014,3 +2014,7 @@ msgstr "Paĝo %1 de %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 vortoj, %2 signoj"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Lumbildo %1 el %2"

@@ -2014,3 +2014,7 @@ msgstr "Orrialdea: %1 / %2"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 hitza, %2 karaktere"
+
+#: strings.src
+msgid "Slide %1 of %2"
+msgstr "Diapositiba: %1 / %2"
