@@ -301,8 +301,8 @@ ChildSession::ChildSession(const std::string& id,
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
     _viewId(0),
-    _onLoad(onLoad),
-    _onUnload(onUnload),
+    _onLoad(std::move(onLoad)),
+    _onUnload(std::move(onUnload)),
     _callbackWorker(new CallbackWorker(_callbackQueue, *this))
 {
     Log::info("ChildSession ctor [" + getName() + "].");
@@ -464,7 +464,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "tile" || tokens[0] == "tilecombine")
     {
-        assert(!"Tile traffic should go through the DocumentBroker-LoKit WS.");
+        assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
     }
     else
     {
@@ -566,7 +566,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else
         {
-            assert(!"Unknown command token.");
+            assert(false && "Unknown command token.");
         }
     }
 
