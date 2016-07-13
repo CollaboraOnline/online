@@ -728,10 +728,6 @@ map.on('doclayerinit', function () {
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'PageStatus',  html: '<div id="PageStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'LayoutStatus',  html: '<div id="LayoutStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'Context',  html: '<div id="Context" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
 		statusbar.refresh();
 		break;
@@ -858,9 +854,6 @@ map.on('commandstatechanged', function (e) {
 		state = toLocalePattern('$1 rows, $2 columns selected', '(\\d+) rows, (\\d+) columns selected', state, '$1', '$2');
 		$('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
-	else if (commandName === '.uno:StatusPageStyle') {
-		$('#StatusPageStyle').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
-	}
 	else if (commandName === '.uno:InsertMode') {
 		$('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
@@ -887,12 +880,6 @@ map.on('commandstatechanged', function (e) {
 	else if (commandName === '.uno:PageStatus') {
 		state = toLocalePattern('Slide %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
 		$('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
-	}
-	else if (commandName === '.uno:LayoutStatus') {
-		$('#LayoutStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
-	}
-	else if (commandName === '.uno:Context') {
-		$('#Context').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:WrapText' ||
 		 commandName === '.uno:ToggleMergeCells' ||
