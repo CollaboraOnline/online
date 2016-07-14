@@ -171,13 +171,22 @@ bool DocumentBroker::load(const std::string& jailId)
     return false;
 }
 
-bool DocumentBroker::save()
+bool DocumentBroker::save(bool success, const std::string& result)
 {
     std::unique_lock<std::mutex> lock(_saveMutex);
 
     const auto uri = _uriPublic.toString();
 
-    // If we aren't potentially destroying just yet, and the file
+    // If save requested, but core didn't save because document was unmodified
+    // notify the waiting thread, if any.
+    if (!success && result == "unmodified")
+    {
+        Log::debug() << "Save skipped as document was not modified";
+        _saveCV.notify_all();
+        return true;
+    }
+
+    // If we aren't destroying the last editable session just yet, and the file
     // timestamp hasn't changed, skip saving.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
     if (!isMarkedToDestroy() && newFileModifiedTime == _lastFileModifiedTime)
@@ -229,7 +238,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
     if (force)
     {
         Log::trace("Sending forced save command for [" + _docKey + "].");
-        sent = sendUnoSave();
+        sent = sendUnoSave(true);
     }
     else if (_isModified)
     {
@@ -249,7 +258,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
             timeSinceLastSaveMs >= AutoSaveDurationMs)
         {
             Log::trace("Sending timed save command for [" + _docKey + "].");
-            sent = sendUnoSave();
+            sent = sendUnoSave(true);
         }
     }
 
@@ -258,7 +267,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
         Log::trace("Waiting for save event for [" + _docKey + "].");
         if (_saveCV.wait_for(lock, std::chrono::milliseconds(waitTimeoutMs)) == std::cv_status::no_timeout)
         {
-            Log::debug("Successfully persisted document [" + _docKey + "].");
+            Log::debug("Successfully persisted document [" + _docKey + "] or document was not modified");
             return true;
         }
 
@@ -268,7 +277,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
     return sent;
 }
 
-bool DocumentBroker::sendUnoSave()
+bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
 {
     Log::info("Autosave triggered for doc [" + _docKey + "].");
     Util::assertIsLocked(_mutex);
@@ -284,8 +293,34 @@ bool DocumentBroker::sendUnoSave()
                 // Invalidate the timestamp to force persisting.
                 _lastFileModifiedTime.fromEpochTime(0);
 
+                std::ostringstream oss;
+                // arguments init
+                oss << "{";
+
                 // We do not want save to terminate editing mode if we are in edit mode now
-                queue->put("uno .uno:Save {\"DontTerminateEdit\":{\"type\":\"boolean\",\"value\":true}}");
+                // Mention DontTerminateEdit always
+                oss << "\"DontTerminateEdit\":"
+                    << "{"
+                    << "\"type\":\"boolean\","
+                    << "\"value\":true"
+                    << "}";
+
+                // Mention DontSaveIfUnmodified
+                if (dontSaveIfUnmodified)
+                {
+                  oss << ","
+                      << "\"DontSaveIfUnmodified\":"
+                      << "{"
+                      << "\"type\":\"boolean\","
+                      << "\"value\":true"
+                      << "}";
+                }
+
+                // arguments end
+                oss << "}";
+
+                Log::debug(".uno:Save arguments: " + oss.str());
+                queue->put("uno .uno:Save " + oss.str());
                 return true;
             }
         }

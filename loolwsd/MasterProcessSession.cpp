@@ -112,12 +112,21 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
                 {
                     const std::string stringJSON = stringMsg.substr(index);
                     Poco::JSON::Parser parser;
-                    const auto result = parser.parse(stringJSON);
-                    const auto& object = result.extract<Poco::JSON::Object::Ptr>();
-                    if (object->get("commandName").toString() == ".uno:Save" &&
-                        object->get("success").toString() == "true")
+                    const auto parsedJSON = parser.parse(stringJSON);
+                    const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
+                    if (object->get("commandName").toString() == ".uno:Save")
                     {
-                        _docBroker->save();
+                        bool success = object->get("success").toString() == "true";
+                        std::string result;
+                        if (object->has("result"))
+                        {
+                            const auto parsedResultJSON = object->get("result");
+                            const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
+                            if (resultObj->get("type").toString() == "string")
+                                result = resultObj->get("value").toString();
+                        }
+
+                        _docBroker->save(success, result);
                         return true;
                     }
                 }
