@@ -1596,7 +1596,6 @@ void HTTPWSTest::testCalcEditRendering()
 std::string HTTPWSTest::getFontList(const std::string& message)
 {
     Poco::JSON::Parser parser;
-    std::cerr << " trace FontList " << message << std::endl;
     const auto result = parser.parse(message);
     const auto& command = result.extract<Poco::JSON::Object::Ptr>();
     auto text = command->get("commandName").toString();
