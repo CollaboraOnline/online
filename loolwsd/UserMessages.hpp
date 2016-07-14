@@ -13,6 +13,7 @@
 #define INCLUDED_USERMESSAGES_HPP
 
 constexpr auto SERVICE_UNAVALABLE_INTERNAL_ERROR = "Service is unavailable. Please try again later and report to your administrator if the issue persists.";
+constexpr auto SERVICE_UNAVALABLE_LIMIT_REACHED = "This server has reached the number of connections or documents it supports at a given time.";
 
 #endif
 

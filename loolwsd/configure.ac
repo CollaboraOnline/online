@@ -80,6 +80,14 @@ AC_ARG_ENABLE([ssl],
             AS_HELP_STRING([--disable-ssl],
                            [Compile without SSL support]))
 
+AC_ARG_WITH([max-documents],
+             AS_HELP_STRING([--max-documents],
+                            [Compile with a hard-coded limit on the number of documents]))
+
+AC_ARG_WITH([max-connections],
+            AS_HELP_STRING([--max-connections],
+                           [Compile with a hard-coded limit on the total number of client connections]))
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -95,6 +103,18 @@ else
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
 fi
 AC_SUBST(ENABLE_DEBUG)
+
+MAX_DOCUMENTS=0
+AS_IF([test -n "$with_max_documents"],
+      [MAX_DOCUMENTS="$with_max_documents"])
+AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
+AC_SUBST(MAX_DOCUMENTS)
+
+MAX_CONNECTIONS=0
+AS_IF([test -n "$with_max_connections"],
+      [MAX_CONNECTIONS="$with_max_connections"])
+AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum number of open documents])
+AC_SUBST(MAX_CONNECTIONS)
 
 # Test for build environment
 

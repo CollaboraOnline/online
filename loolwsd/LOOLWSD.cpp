@@ -585,6 +585,15 @@ private:
                 throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
             }
 
+#if MAX_DOCUMENTS > 0
+            if (++LOOLWSD::NumDocBrokers > MAX_DOCUMENTS)
+            {
+                --LOOLWSD::NumDocBrokers;
+                Log::error("Maximum number of open documents reached.");
+                throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_LIMIT_REACHED);
+            }
+#endif
+
             // Set one we just created.
             Log::debug("New DocumentBroker for docKey [" + docKey + "].");
             docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
@@ -600,6 +609,9 @@ private:
                 // Remove.
                 std::unique_lock<std::mutex> lock(docBrokersMutex);
                 docBrokers.erase(docKey);
+#if MAX_DOCUMENTS > 0
+                --LOOLWSD::NumDocBrokers;
+#endif
             }
 
             throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
@@ -704,6 +716,9 @@ private:
                 std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
                 Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
                 docBrokers.erase(docKey);
+#if MAX_DOCUMENTS > 0
+                --LOOLWSD::NumDocBrokers;
+#endif
                 Log::info("Removing complete doc [" + docKey + "] from Admin.");
                 Admin::instance().rmDoc(docKey);
             }
@@ -791,7 +806,20 @@ public:
                 request, response))
             return;
 
+#if MAX_CONNECTIONS > 0
+        if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
+        {
+            --LOOLWSD::NumConnections;
+            Log::error("Maximum number of connections reached.");
+            throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_LIMIT_REACHED);
+        }
+#endif
+
         handleClientRequest(request,response);
+
+#if MAX_CONNECTIONS > 0
+        --LOOLWSD::NumConnections;
+#endif
     }
 
     static void handleClientRequest(HTTPServerRequest& request, HTTPServerResponse& response)
@@ -1175,6 +1203,8 @@ bool LOOLWSD::SSLEnabled =
 static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
+std::atomic<unsigned> LOOLWSD::NumDocBrokers;
+std::atomic<unsigned> LOOLWSD::NumConnections;
 
 class AppConfigMap : public Poco::Util::MapConfiguration
 {
@@ -1270,6 +1300,17 @@ void LOOLWSD::initialize(Application& self)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
+
+    // In Trial Versions we might want to set some limits.
+    LOOLWSD::NumDocBrokers = 0;
+    LOOLWSD::NumConnections = 0;
+    Log::info() << "Open Documents Limit: " << (MAX_DOCUMENTS > 0 ?
+                                                std::to_string(MAX_DOCUMENTS) :
+                                                std::string("unlimited")) << Log::end;
+
+    Log::info() << "Client Connections Limit: " << (MAX_CONNECTIONS > 0 ?
+                                                    std::to_string(MAX_CONNECTIONS) :
+                                                    std::string("unlimited")) << Log::end;
 
     StorageBase::initialize();
 
