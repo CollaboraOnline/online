@@ -44,6 +44,8 @@ public:
     static std::string FileServerRoot;
     static std::string LOKitVersion;
     static bool SSLEnabled;
+    static std::atomic<unsigned> NumDocBrokers;
+    static std::atomic<unsigned> NumConnections;
 
     static
     std::string GenSessionId()
