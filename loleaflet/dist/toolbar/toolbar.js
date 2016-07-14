@@ -491,6 +491,23 @@ function toggleButton(toolbar, state, command)
 	}
 }
 
+function disableButton(toolbar, state, command)
+{
+	var disabled;
+	command = command.replace('.uno:', '');
+	var item = toolbar.get(command);
+	if (!item) {
+		return;
+	}
+
+	if (state) {
+		disabled = item.disabled ? toolbar.enable(command) : undefined;
+	}
+	else {
+		disabled = !item.disabled ? toolbar.disable(command) : undefined;
+	}
+}
+
 function toLocalePattern (pattern, regex, text, sub1, sub2) {
 	var matches = new RegExp(regex, 'g').exec(text);
 	if (matches) {
@@ -707,6 +724,9 @@ map.on('doclayerinit', function () {
 			{type: 'button',  id: 'NumberFormatDate',  img: 'numberformatdate', hint: _('Format as Date'), uno: 'NumberFormatDate'},
 			{type: 'button',  id: 'NumberFormatIncDecimals',  img: 'numberformatincdecimals', hint: _('Add Decimal Place'), uno: 'NumberFormatIncDecimals'},
 			{type: 'button',  id: 'NumberFormatDecDecimals',  img: 'numberformatdecdecimals', hint: _('Delete Decimal Place'), uno: 'NumberFormatDecDecimals'},
+			{type: 'break',   id: 'break-number'},
+			{type: 'button',  id: 'SortAscending',  img: 'sortascending', hint: _('Sort Ascending'), uno: 'SortAscending'},
+			{type: 'button',  id: 'SortDescending',  img: 'sortdescending', hint: _('Sort Descending'), uno: 'SortDescending'},
 		]);
 		statusbar.refresh();
 		toolbar.refresh();
@@ -887,6 +907,10 @@ map.on('commandstatechanged', function (e) {
 		 commandName === '.uno:NumberFormatPercent' ||
 		 commandName === '.uno:NumberFormatDate') {
 		toggleButton(toolbar, state, commandName);
+	}
+	else if (commandName === '.uno:SortAscending' ||
+		 commandName === '.uno:SortDescending') {
+		disableButton(toolbar, state, commandName);
 	}
 
 	var toolbarUpMore = w2ui['toolbar-up-more'];
