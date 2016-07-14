@@ -156,7 +156,7 @@ public:
     void setLoaded() { _isLoaded = true; }
 
     /// Save the document to Storage if needs persisting.
-    bool save();
+    bool save(bool success, const std::string& result = "");
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
 
@@ -229,7 +229,7 @@ public:
 private:
 
     /// Sends the .uno:Save command to LoKit.
-    bool sendUnoSave();
+    bool sendUnoSave(const bool dontSaveIfUnmodified);
 
     /// Saves the document to Storage (assuming LO Core saved to local copy).
     bool saveToStorage();
