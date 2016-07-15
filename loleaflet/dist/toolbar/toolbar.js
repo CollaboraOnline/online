@@ -52,7 +52,7 @@ function resizeToolbar() {
 	}
 }
 
-function onClick(id) {
+function onClick(id, item, subItem) {
 	if (w2ui['toolbar-up'].get(id) !== null) {
 		var toolbar = w2ui['toolbar-up'];
 		var item = toolbar.get(id);
@@ -76,6 +76,16 @@ function onClick(id) {
 	else if (w2ui['toolbar-up-more'].get(id) !== null) {
 		toolbar = w2ui['toolbar-up-more'];
 		item = toolbar.get(id);
+	}
+	else if (item && subItem)
+	{
+		var command = {
+			'StatusBarFunc': {
+				type: 'unsigned short',
+				value: subItem.func
+			}
+		};
+		map.sendUnoCommand('.uno:StatusBarFunc', command);
 	}
 	else {
 		throw new Error('unknown id: ' + id);
@@ -448,7 +458,7 @@ $(function () {
 			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _('Zoom in')}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e.target, e.item, e.subItem);
 		}
 	});
 });
@@ -514,6 +524,23 @@ function toLocalePattern (pattern, regex, text, sub1, sub2) {
 		text = pattern.toLocaleString().replace(sub1, matches[1]).replace(sub2, matches[2]);
 	}
 	return text;
+}
+
+function selectItem(item, func)
+{
+	var index = -1;
+	for (var it = 0; it < item.items.length; it++) {
+		if (item.items[it].func === func) {
+			index = it;
+			break;
+		}
+	}
+
+	if (index !== -1) {
+		item.items[item.current].icon = '';
+		item.items[index].icon = 'selected';
+		item.current = index;
+	}
 }
 
 function onSearch(e) {
@@ -703,15 +730,30 @@ map.on('doclayerinit', function () {
 	case 'spreadsheet':
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'StatusDocPos',  html: '<div id="StatusDocPos" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StatusDocPos',
+				html: '<div id="StatusDocPos" class="loleaflet-font" title="'+_('Number of Sheets')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'RowColSelCount',  html: '<div id="RowColSelCount" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'RowColSelCount',
+				html: '<div id="RowColSelCount" class="loleaflet-font" title="'+_('Selected range of cells')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'InsertMode',
+				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'StatusSelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StatusSelectionMode',
+				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break8'},
-			{type: 'html',  id: 'StateTableCell',  html: '<div id="StateTableCell" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StateTableCell',
+				html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+		        {type: 'menu', id: 'StateTableCellMenu', caption: '', current: 7, items: [
+				{ func: '1', text: _('Average'), icon: ''},
+				{ func: '3', text: _('CountA'), icon: ''},
+				{ func: '2', text: _('Count'), icon: ''},
+				{ func: '4', text: _('Maximum'), icon: ''},
+				{ func: '5', text: _('Minimum'), icon: ''},
+				{ func: '9', text: _('Sum'), icon: ''},
+				{ func: '12', text: _('Selection count'), icon: ''},
+				{ func: '16', text: _('None'), icon: 'selected'},
+		]},
 		]);
 		toolbar.remove('alignblock', 'bullet', 'numbering', 'break-numbering');
 		toolbar.insert('break-align', [
@@ -734,20 +776,25 @@ map.on('doclayerinit', function () {
 	case 'text':
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'StatePageNumber',  html: '<div id="StatePageNumber" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StatePageNumber',
+				html: '<div id="StatePageNumber" class="loleaflet-font" title="'+_('Number of Pages')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'StateWordCount',  html: '<div id="StateWordCount" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'StateWordCount',
+				html: '<div id="StateWordCount" class="loleaflet-font" title="'+_('Word Counter')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'InsertMode',  html: '<div id="InsertMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'InsertMode',
+				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break6'},
-			{type: 'html',  id: 'SelectionMode',  html: '<div id="StatusSelectionMode" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'SelectionMode',
+				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
 		statusbar.refresh();
 		break;
 	case 'presentation':
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'PageStatus',  html: '<div id="PageStatus" class="loleaflet-font" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'html',  id: 'PageStatus',
+				html: '<div id="PageStatus" class="loleaflet-font" title="'+_('Number of Slides')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
 		statusbar.refresh();
 		break;
@@ -756,6 +803,7 @@ map.on('doclayerinit', function () {
 
 map.on('commandstatechanged', function (e) {
 	var toolbar = w2ui['toolbar-up'];
+	var statusbar = w2ui['toolbar-down'];
 	var commandName = e.commandName;
 	var state = e.state;
 	var found = false;
@@ -881,12 +929,12 @@ map.on('commandstatechanged', function (e) {
 		 commandName === '.uno:SelectionMode') {
 		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
-	else if (commandName === '.uno:Position' ||
-		 commandName === '.uno:StateTableCell' ||
-		 commandName === '.uno:StatusBarFunc' ||
-		 commandName === '.uno:Size') {
+	else if (commandName == '.uno:StateTableCell') {
+		$('#StateTableCell').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+	}
+	else if (commandName === '.uno:StatusBarFunc') {
 		if (state) {
-			$('#StateTableCell').html(state);
+			selectItem(statusbar.get('StateTableCellMenu'), state);
 		}
 	}
 	else if (commandName === '.uno:StatePageNumber') {
