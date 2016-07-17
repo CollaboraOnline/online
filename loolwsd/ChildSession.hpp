@@ -44,7 +44,7 @@ public:
     bool getPartPageRectangles(const char *buffer, int length);
     virtual void disconnect() override;
 
-    int getViewId() const  { return _viewId; }
+    int getViewId() const { return _viewId; }
 
     const std::string& getDocType() const { return _docType; }
 

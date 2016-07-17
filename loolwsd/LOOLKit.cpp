@@ -901,26 +901,9 @@ private:
                 return nullptr;
             }
 
-            // initializeForRendering() should be called before
-            // registerCallback(), as the previous creates a new view in
-            // Impress.
-            _loKitDocument->initializeForRendering((renderOpts.empty() ? nullptr : renderOpts.c_str()));
-
-            if (_multiView)
-            {
-                Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
-                const auto viewId = _loKitDocument->createView();
-
-                _loKitDocument->registerCallback(DocumentCallback, this);
-
-                Log::info() << "Document [" << _url << "] view ["
-                            << viewId << "] loaded, leaving "
-                            << (_clientViews + 1) << " views." << Log::end;
-            }
-            else
-            {
-                _loKitDocument->registerCallback(DocumentCallback, this);
-            }
+            // Only save the options on opening the document.
+            // No support for changing them after opening a document.
+            _renderOpts = renderOpts;
         }
         else
         {
@@ -945,6 +928,22 @@ private:
             }
         }
 
+        if (_multiView)
+        {
+            Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
+            const auto viewId = _loKitDocument->createView();
+
+            Log::info() << "Document [" << _url << "] view ["
+                        << viewId << "] loaded, leaving "
+                        << (_clientViews + 1) << " views." << Log::end;
+        }
+
+        // initializeForRendering() should be called before
+        // registerCallback(), as the previous creates a new view in Impress.
+        _loKitDocument->initializeForRendering(_renderOpts.c_str());
+
+        _loKitDocument->registerCallback(DocumentCallback, this);
+
         return _loKitDocument;
     }
 
@@ -956,6 +955,7 @@ private:
     const std::string _docKey;
     const std::string _url;
     std::string _jailedUrl;
+    std::string _renderOpts;
 
     std::shared_ptr<lok::Document> _loKitDocument;
 

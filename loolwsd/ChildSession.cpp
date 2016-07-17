@@ -609,7 +609,6 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     if (_multiView)
     {
         _viewId = _loKitDocument->getView();
-        _loKitDocument->initializeForRendering((renderOpts.empty() ? nullptr : renderOpts.c_str()));
     }
 
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());
@@ -619,7 +618,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     }
 
     // Respond by the document status, which has no arguments.
-    Log::debug("Sending status after load.");
+    Log::debug("Sending status after loading view " + std::to_string(_viewId) + ".");
     if (!getStatus(nullptr, 0))
         return false;
 

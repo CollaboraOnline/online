@@ -405,6 +405,7 @@ public:
     int createView()
     {
         std::unique_lock<std::mutex> lock(_mutex);
+        Log::trace() << "lok::Document: createView" << Log::end;
         return _pDoc->pClass->createView(_pDoc);
     }
 
@@ -415,6 +416,7 @@ public:
     void destroyView(int nId)
     {
         std::unique_lock<std::mutex> lock(_mutex);
+        Log::trace() << "lok::Document: destroyView: " << nId << Log::end;
         _pDoc->pClass->destroyView(_pDoc, nId);
     }
 
@@ -425,6 +427,7 @@ public:
     void setView(int nId)
     {
         std::unique_lock<std::mutex> lock(_mutex);
+        Log::trace() << "lok::Document: setView: " << nId << Log::end;
         _pDoc->pClass->setView(_pDoc, nId);
     }
 
