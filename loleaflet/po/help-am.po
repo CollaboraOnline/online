@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:02+0000\n"
+"POT-Creation-Date: 2016-07-18 14:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /am/libo_online/loleaflet-help-am.po\n"
-"X-Pootle-Revision: 452577\n"
+"X-Pootle-Revision: 509423\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -631,6 +631,8 @@ msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
 msgstr ""
+"የ ማስረጊያ ማስቆሚያ ማስገቢያ (ለ ሰንጠረዥ ብቻ). እርስዎ እንደሚጠቀሙት የ መስኮት አስተዳዳሪ ይለያያል Alt + "
+"Tab መጠቀም ይቻላል"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
 msgid "Alt + Arrow Keys"
@@ -656,7 +658,7 @@ msgstr "Alt + Ctrl + የ ቀስት ቁልፎች"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:130"
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "እንደ Alt, ነገር ግን ንቁ ክፍል ብቻ ይሻሻላል"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
 msgid "Ctrl + Alt + Shift + Arrow Keys"
@@ -665,7 +667,7 @@ msgstr "Ctrl + Alt + Shift + የ ቀስት ቁልፎች"
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:131"
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "እንደ Alt, ነገር ግን ንቁ ክፍል ብቻ ይሻሻላል"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A132
 msgid "Alt + Insert"
@@ -1410,16 +1412,16 @@ msgstr "Esc"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
 msgid "Select objects in the order in which they were created"
-msgstr ""
+msgstr "ይምረጡ እቃዎች እንደ ተፈጠሩበት ቅደም ተከተል መሰረት"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:232"
 msgid "Tab"
-msgstr ""
+msgstr "ማስረጊያ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
 msgid "Select objects in the reverse order in which they were created"
-msgstr ""
+msgstr "ይምረጡ እቃዎች እንደ ተፈጠሩበት ቅደም ተከተል መሰረት በ ግልባጭ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:233"
@@ -1428,7 +1430,7 @@ msgstr "Shift + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgid "Move to next text object on slide / drawing page"
-msgstr ""
+msgstr "በ ተንሸራታች ላይ ወደሚቀጥለው የ ጽሁፍ እቃ ማንቀሳቀሻ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:234"

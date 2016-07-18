@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:06+0000\n"
+"POT-Creation-Date: 2016-07-18 14:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 482782\n"
+"X-Pootle-Revision: 497659\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -466,7 +466,7 @@ msgstr " s"
 
 #: src/control/Control.ColumnHeader.js:35
 msgid "Insert column before"
-msgstr ""
+msgstr "在之前插入列"
 
 #: src/control/Control.ColumnHeader.js:42
 #: src/control/Control.Menubar.js:131
@@ -647,13 +647,13 @@ msgstr "帮助"
 #: src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:133
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "键盘快捷键"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:134
 msgid "About"
-msgstr ""
+msgstr "关于"
 
 #: src/control/Control.Menubar.js:58
 msgid "ODF presentation (.odp)"
@@ -710,7 +710,7 @@ msgstr "您确定要删除这张幻灯片吗？"
 
 #: src/control/Control.RowHeader.js:33
 msgid "Insert row above"
-msgstr ""
+msgstr "在上方插入行"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -739,7 +739,7 @@ msgstr "输入新的工作表名"
 #: src/control/Toolbar.js:59
 #: src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "正在下载..."
 
 #: src/control/Toolbar.js:80
 #: src/map/Map.js:803
@@ -748,7 +748,7 @@ msgstr "正在保存..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "当前版本 %productName 的提供者为"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:04+0000\n"
+"POT-Creation-Date: 2016-07-18 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-ui-hr.po\n"
-"X-Pootle-Revision: 482757\n"
+"X-Pootle-Revision: 516669\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -469,7 +469,7 @@ msgstr " s"
 
 #: src/control/Control.ColumnHeader.js:35
 msgid "Insert column before"
-msgstr ""
+msgstr "Umetni stupac poslije"
 
 #: src/control/Control.ColumnHeader.js:42
 #: src/control/Control.Menubar.js:131
@@ -650,7 +650,7 @@ msgstr "Pomoć"
 #: src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:133
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Tipkovničke kratice"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:95
@@ -713,7 +713,7 @@ msgstr "Sigurni ste da želite izbrisati slajd?"
 
 #: src/control/Control.RowHeader.js:33
 msgid "Insert row above"
-msgstr ""
+msgstr "Umetni redak iznad"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -742,7 +742,7 @@ msgstr "Unesite ime novog radnog lista"
 #: src/control/Toolbar.js:59
 #: src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "Preuzimanje..."
 
 #: src/control/Toolbar.js:80
 #: src/map/Map.js:803
@@ -751,7 +751,7 @@ msgstr "Spremanje..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Ova %productName inačica je omogućena od"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "

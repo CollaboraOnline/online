@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:03+0000\n"
+"POT-Creation-Date: 2016-07-18 14:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
-"X-Pootle-Revision: 482747\n"
+"X-Pootle-Revision: 502956\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -469,7 +469,7 @@ msgstr " δευτερόλεπτα"
 
 #: src/control/Control.ColumnHeader.js:35
 msgid "Insert column before"
-msgstr ""
+msgstr "Εισαγωγή στήλης πριν"
 
 #: src/control/Control.ColumnHeader.js:42
 #: src/control/Control.Menubar.js:131
@@ -650,13 +650,13 @@ msgstr "Βοήθεια"
 #: src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:133
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Συντομεύσεις πληκτρολογίου"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:134
 msgid "About"
-msgstr ""
+msgstr "Περί"
 
 #: src/control/Control.Menubar.js:58
 msgid "ODF presentation (.odp)"
@@ -713,7 +713,7 @@ msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε 
 
 #: src/control/Control.RowHeader.js:33
 msgid "Insert row above"
-msgstr ""
+msgstr "Εισαγωγή γραμμής από πάνω"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -742,7 +742,7 @@ msgstr "Εισάγετε ένα νέο όνομα φύλλου."
 #: src/control/Toolbar.js:59
 #: src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "Μεταφορτώνεται..."
 
 #: src/control/Toolbar.js:80
 #: src/map/Map.js:803
@@ -751,7 +751,7 @@ msgstr "Αποθήκευση..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Αυτή η έκδοση του %productName παρέχεται από"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
