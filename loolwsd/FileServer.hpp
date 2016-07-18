@@ -217,7 +217,7 @@ private:
     {
         HTMLForm form(request, request.stream());
 
-        const auto host = (LOOLWSD::SSLEnabled ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+        const auto host = (LOOLWSD::isSSLEnabled() ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
         const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
 
         Log::debug("Preprocessing file: " + path.toString());

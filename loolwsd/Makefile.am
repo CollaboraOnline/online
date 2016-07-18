@@ -138,10 +138,8 @@ clean-local:
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 
 run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
-	@echo "Launching loolwsd - launch this in your browser:"
+	@echo "Launching loolwsd"
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
-	@PROTOCOL="http" ; if test "z@ENABLE_SSL@" != "z"; then PROTOCOL="https" ; fi ; \
-		echo "   $$PROTOCOL://localhost:9980/loleaflet/@LOOLWSD_VERSION_HASH@/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
 	@echo
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \

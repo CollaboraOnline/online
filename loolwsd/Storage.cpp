@@ -28,6 +28,7 @@
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "Exceptions.hpp"
+#include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
@@ -236,6 +237,17 @@ bool LocalStorage::saveLocalFileToStorage()
     return true;
 }
 
+namespace {
+
+static inline
+Poco::Net::HTTPClientSession* lcl_getHTTPClientSession(const Poco::URI& uri)
+{
+    return (LOOLWSD::isSSLEnabled()) ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(), Poco::Net::SSLManager::instance().defaultClientContext())
+                       : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+}
+
+} // anonymous namespace
+
 ///////////////////
 // WopiStorage Impl
 ///////////////////
@@ -243,17 +255,14 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
 {
     Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
 
-#if ENABLE_SSL
-    Poco::Net::HTTPSClientSession session(uri.getHost(), uri.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
-#else
-    Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
-#endif
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uri));
+
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
-    session.sendRequest(request);
+    psession->sendRequest(request);
 
     Poco::Net::HTTPResponse response;
-    std::istream& rs = session.receiveResponse(response);
+    std::istream& rs = psession->receiveResponse(response);
 
     auto logger = Log::trace();
     logger << "WOPI::CheckFileInfo header for URI [" << uri.toString() << "]:\n";
@@ -303,17 +312,14 @@ std::string WopiStorage::loadStorageFileToLocal()
     const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
     Log::debug("Wopi requesting: " + url);
 
-#if ENABLE_SSL
-    Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
-#else
-    Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
-#endif
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uriObject));
+
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url, Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
-    session.sendRequest(request);
+    psession->sendRequest(request);
 
     Poco::Net::HTTPResponse response;
-    std::istream& rs = session.receiveResponse(response);
+    std::istream& rs = psession->receiveResponse(response);
 
     auto logger = Log::trace();
     logger << "WOPI::GetFile header for URI [" << _uri << "]:\n";
@@ -348,22 +354,19 @@ bool WopiStorage::saveLocalFileToStorage()
     const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
     Log::debug("Wopi posting: " + url);
 
-#if ENABLE_SSL
-    Poco::Net::HTTPSClientSession session(uriObject.getHost(), uriObject.getPort(), Poco::Net::SSLManager::instance().defaultClientContext());
-#else
-    Poco::Net::HTTPClientSession session(uriObject.getHost(), uriObject.getPort());
-#endif
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uriObject));
+
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, url, Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("X-WOPIOverride", "PUT");
     request.setContentType("application/octet-stream");
     request.setContentLength(size);
 
-    std::ostream& os = session.sendRequest(request);
+    std::ostream& os = psession->sendRequest(request);
     std::ifstream ifs(_jailedFilePath);
     Poco::StreamCopier::copyStream(ifs, os);
 
     Poco::Net::HTTPResponse response;
-    std::istream& rs = session.receiveResponse(response);
+    std::istream& rs = psession->receiveResponse(response);
     std::ostringstream oss;
     Poco::StreamCopier::copyStream(rs, oss);
 

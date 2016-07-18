@@ -43,7 +43,6 @@ public:
     static std::string ServerName;
     static std::string FileServerRoot;
     static std::string LOKitVersion;
-    static bool SSLEnabled;
     static std::atomic<unsigned> NumDocBrokers;
     static std::atomic<unsigned> NumConnections;
 
@@ -51,6 +50,12 @@ public:
     std::string GenSessionId()
     {
         return Util::encodeId(++NextSessionId, 4);
+    }
+
+    static
+    bool isSSLEnabled()
+    {
+        return LOOLWSD::SSLEnabled.get();
     }
 
 protected:
@@ -61,16 +66,37 @@ protected:
     int main(const std::vector<std::string>& args) override;
 
 private:
+    static Util::RuntimeCostant<bool> SSLEnabled;
+
     void initializeSSL();
     void displayHelp();
     Poco::Process::PID createForKit();
 
+
+    class ConfigValueGetter
+    {
+        Poco::Util::LayeredConfiguration& mconfig;
+        const std::string& mname;
+
+    public:
+        ConfigValueGetter(Poco::Util::LayeredConfiguration& config,
+                          const std::string& name)
+            : mconfig(config)
+            , mname(name)
+        {}
+
+        void operator()(unsigned int& value) { value = mconfig.getUInt(mname); }
+        void operator()(bool& value) { value = mconfig.getBool(mname); }
+    };
+
+    template<typename T>
     static
-    bool getSafeUIntConfig(Poco::Util::LayeredConfiguration& config, const std::string& name, unsigned int& value)
+    bool getSafeConfig(Poco::Util::LayeredConfiguration& config,
+                       const std::string& name, T& value)
     {
         try
         {
-            value = config.getUInt(name);
+            ConfigValueGetter(config, name)(value);
             return true;
         }
         catch (Poco::SyntaxException)
@@ -80,12 +106,14 @@ private:
         return false;
     }
 
+    template<typename T>
     static
-    unsigned int getUIntConfigValue(Poco::Util::LayeredConfiguration& config, const std::string& name, const unsigned int def)
+    T getConfigValue(Poco::Util::LayeredConfiguration& config,
+                     const std::string& name, const T def)
     {
-        unsigned int value = def;
-        if (getSafeUIntConfig(config, name, value) ||
-            getSafeUIntConfig(config, name + "[@default]", value))
+        T value = def;
+        if (getSafeConfig(config, name, value) ||
+            getSafeConfig(config, name + "[@default]", value))
         {
             return value;
         }

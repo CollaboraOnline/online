@@ -185,7 +185,44 @@ namespace Util
         std::set<std::string> _denied;
     };
 
-};
+    template<typename T>
+    class RuntimeCostant
+    {
+        T mValue;
+        bool mInitialized;
+
+    public:
+        RuntimeCostant()
+            : mValue()
+            , mInitialized(false)
+        {}
+
+        const T& get()
+        {
+            if(mInitialized)
+            {
+                return mValue;
+            }
+            else
+            {
+                throw std::runtime_error("RuntimeCostant instance read before being initialized.");
+            }
+        }
+
+        void set(const T& value)
+        {
+            if(mInitialized)
+            {
+                throw std::runtime_error("RuntimeCostant instance already initialized.");
+            }
+            else
+            {
+                mInitialized = true;
+                mValue = value;
+            }
+        }
+    };
+} // end namespace Util
 
 #endif
 
