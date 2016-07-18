@@ -23,7 +23,7 @@ BuildRequires:  libcap-progs systemd-rpm-macros
 %endif
 %endif
 
-Requires:       collaboraoffice5.0 collaboraoffice5.0-en-US collaboraoffice5.0-ure collaboraofficebasis5.0-core collaboraofficebasis5.0-writer collaboraofficebasis5.0-impress collaboraofficebasis5.0-graphicfilter collaboraofficebasis5.0-en-US collaboraofficebasis5.0-calc collaboraofficebasis5.0-en-US-res collaboraofficebasis5.0-en-US-calc collaboraofficebasis5.0-ooofonts collaboraofficebasis5.0-images collaboraofficebasis5.0-filter-data collaboraofficebasis5.0-draw collaboraofficebasis5.0-base collaboraofficebasis5.0-en-US-writer collaboraofficebasis5.0-en-US-math collaboraofficebasis5.0-en-US-base
+Requires:       collaboraoffice5.1 collaboraoffice5.1-en-US collaboraoffice5.1-ure collaboraofficebasis5.1-core collaboraofficebasis5.1-writer collaboraofficebasis5.1-impress collaboraofficebasis5.1-graphicfilter collaboraofficebasis5.1-en-US collaboraofficebasis5.1-calc collaboraofficebasis5.1-en-US-res collaboraofficebasis5.1-en-US-calc collaboraofficebasis5.1-ooofonts collaboraofficebasis5.1-images collaboraofficebasis5.1-filter-data collaboraofficebasis5.1-draw collaboraofficebasis5.1-base collaboraofficebasis5.1-en-US-writer collaboraofficebasis5.1-en-US-math collaboraofficebasis5.1-en-US-base
 Requires:       systemd
 Requires(post): coreutils grep sed
 %if 0%{?fedora} || 0%{?rhel} >= 7
@@ -66,7 +66,7 @@ env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 %install
 env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
 %if %{default_admin} == "YES"
-sed -i "s|ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:lo_template_path=/opt/collaboraoffice5.0 --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd|ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:lo_template_path=/opt/collaboraoffice5.0 --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd --o:admin_console.username=admin --o:admin_console.password=admin|" loolwsd.service
+sed -i "s|ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:lo_template_path=/opt/collaboraoffice5.1 --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd|ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:lo_template_path=/opt/collaboraoffice5.1 --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd --o:admin_console.username=admin --o:admin_console.password=admin|" loolwsd.service
 %endif
 %__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
@@ -130,7 +130,7 @@ rm -rf /var/cache/loolwsd/*
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system
-loroot=`rpm -ql collaboraoffice5.0 | grep '/soffice$' | sed -e 's-/program/soffice--'`
+loroot=`rpm -ql collaboraoffice5.1 | grep '/soffice$' | sed -e 's-/program/soffice--'`
 loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
 rm -rf ${loolparent}/lool

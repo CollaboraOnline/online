@@ -1247,7 +1247,7 @@ void LOOLWSD::initialize(Application& self)
     static const std::map<std::string, std::string> DefAppConfig = {
         { "tile_cache_path", LOOLWSD_CACHEDIR },
         { "sys_template_path", "systemplate" },
-        { "lo_template_path", "/opt/collaboraoffice5.0" },
+        { "lo_template_path", "/opt/collaboraoffice5.1" },
         { "child_root_path", "jails" },
         { "lo_jail_subpath", "lo" },
         { "server_name", "" },
