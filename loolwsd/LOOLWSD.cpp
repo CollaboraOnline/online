@@ -9,6 +9,16 @@
 
 #include "config.h"
 
+/* Default host used in the start test URI */
+#define LOOLWSD_TEST_HOST "localhost"
+
+/* Default loleaflet UI used in the start test URI */
+#define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/loleaflet.html"
+
+/* Default document used in the start test URI */
+#define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH "test/data/hello-world.odt"
+
+
 // This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
 // parent process that listens on the TCP port and accepts connections from LOOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
@@ -772,7 +782,7 @@ private:
         const std::string urlsrc = "urlsrc";
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string uriValue = (LOOLWSD::SSLEnabled ? "https://" : "http://") +
+        const std::string uriValue = (LOOLWSD::isSSLEnabled() ? "https://" : "http://") +
             (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName) +
             "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + "?";
 
@@ -1189,6 +1199,35 @@ public:
     }
 };
 
+namespace {
+
+static inline
+ServerSocket* lcl_getServerSocket(int nClientPortNumber)
+{
+    return (LOOLWSD::isSSLEnabled()) ? new SecureServerSocket(nClientPortNumber)
+                       : new ServerSocket(nClientPortNumber);
+}
+
+static inline
+std::string lcl_getLaunchURI()
+{
+    std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
+    aAbsTopSrcDir = Poco::Path(aAbsTopSrcDir).absolute().toString();
+
+    std::string aLaunchURI("    ");
+    aLaunchURI += ((LOOLWSD::isSSLEnabled()) ? "https://" : "http://");
+    aLaunchURI += LOOLWSD_TEST_HOST ":";
+    aLaunchURI += std::to_string(ClientPortNumber);
+    aLaunchURI += LOOLWSD_TEST_LOLEAFLET_UI;
+    aLaunchURI += "?file_path=file://";
+    aLaunchURI += aAbsTopSrcDir;
+    aLaunchURI += LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH;
+
+    return aLaunchURI;
+}
+
+} // anonymous namespace
+
 std::atomic<unsigned> LOOLWSD::NextSessionId;
 int LOOLWSD::ForKitWritePipe = -1;
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
@@ -1198,12 +1237,8 @@ std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::LOKitVersion;
-bool LOOLWSD::SSLEnabled =
-#if ENABLE_SSL
-    true;
-#else
-    false;
-#endif
+Util::RuntimeCostant<bool> LOOLWSD::SSLEnabled;
+
 static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
@@ -1261,6 +1296,7 @@ void LOOLWSD::initialize(Application& self)
         { "loleaflet_html", "loleaflet.html" },
         { "logging.color", "true" },
         { "logging.level", "trace" },
+        { "ssl.enable", "true" },
         { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
         { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
         { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
@@ -1291,19 +1327,37 @@ void LOOLWSD::initialize(Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
 
+#if ENABLE_SSL
+    LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
+#else
+    LOOLWSD::SSLEnabled.set(false);
+#endif
+
+    if (LOOLWSD::isSSLEnabled())
+    {
+        Log::info("SSL support: SSL is enabled.");
+    }
+    else
+    {
+        Log::warn("SSL support: SSL is disabled.");
+    }
+
     Cache = getPathFromConfig("tile_cache_path");
     SysTemplate = getPathFromConfig("sys_template_path");
     LoTemplate = getPathFromConfig("lo_template_path");
     ChildRoot = getPathFromConfig("child_root_path");
     ServerName = config().getString("server_name");
     FileServerRoot = getPathFromConfig("file_server_root_path");
-    NumPreSpawnedChildren = getUIntConfigValue(conf, "num_prespawn_children", 1);
+    NumPreSpawnedChildren = getConfigValue<unsigned int>(conf, "num_prespawn_children", 1);
 
-    const auto maxConcurrency = getUIntConfigValue(conf, "per_document.max_concurrency", 4);
+    const auto maxConcurrency = getConfigValue<unsigned int>(conf, "per_document.max_concurrency", 4);
     if (maxConcurrency > 0)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
+
+    Log::warn("Launch this in your browser:");
+    Log::warn(lcl_getLaunchURI());
 
     // In Trial Versions we might want to set some limits.
     LOOLWSD::NumDocBrokers = 0;
@@ -1321,9 +1375,13 @@ void LOOLWSD::initialize(Application& self)
     ServerApplication::initialize(self);
 }
 
-#if ENABLE_SSL
 void LOOLWSD::initializeSSL()
 {
+    if (!LOOLWSD::isSSLEnabled())
+    {
+        return;
+    }
+
     const auto ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
     Log::info("SSL Cert file: " + ssl_cert_file_path);
 
@@ -1360,7 +1418,6 @@ void LOOLWSD::initializeSSL()
     Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 }
-#endif
 
 void LOOLWSD::uninitialize()
 {
@@ -1384,6 +1441,10 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false)
                         .argument("port number"));
+
+    optionSet.addOption(Option("disable-ssl", "", "Disable SSL security layer.")
+                        .required(false)
+                        .repeatable(false));
 
     optionSet.addOption(Option("override", "o", "Override any setting by providing fullxmlpath=value.")
                         .required(false)
@@ -1421,6 +1482,8 @@ void LOOLWSD::handleOption(const std::string& optionName,
         DisplayVersion = true;
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
+    else if (optionName == "disable-ssl")
+        _overrideSettings["ssl.enable"] = "false";
     else if (optionName == "override")
     {
         std::string optName;
@@ -1495,9 +1558,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         std::cout << "loolwsd " << version << " - " << hash << std::endl;
     }
 
-#if ENABLE_SSL
     initializeSSL();
-#endif
 
     char *locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
@@ -1567,13 +1628,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     params2->setMaxThreads(MAX_SESSIONS);
 
     // Start a server listening on the port for clients
-#if ENABLE_SSL
-    SecureServerSocket svs(ClientPortNumber);
-#else
-    ServerSocket svs(ClientPortNumber);
-#endif
+
+    std::unique_ptr<ServerSocket> psvs(lcl_getServerSocket(ClientPortNumber));
+
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
-    HTTPServer srv(new ClientRequestHandlerFactory(fileServer), threadPool, svs, params1);
+    HTTPServer srv(new ClientRequestHandlerFactory(fileServer), threadPool, *psvs, params1);
     Log::info("Starting master server listening on " + std::to_string(ClientPortNumber));
     srv.start();
 
@@ -1739,10 +1798,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Util::removeFile(path, true);
     }
 
-#if ENABLE_SSL
-    Poco::Net::uninitializeSSL();
-    Poco::Crypto::uninitializeCrypto();
-#endif
+    if (LOOLWSD::isSSLEnabled())
+    {
+        Poco::Net::uninitializeSSL();
+        Poco::Crypto::uninitializeCrypto();
+    }
+
 
     Log::info("Process [loolwsd] finished.");
 
