@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:05+0000\n"
+"POT-Creation-Date: 2016-07-18 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /nn/libo_online/loleaflet-ui-nn.po\n"
-"X-Pootle-Revision: 482769\n"
+"X-Pootle-Revision: 515194\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -365,7 +365,7 @@ msgstr "Adminkonsoll"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Navigasjonsveksling"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
@@ -385,7 +385,7 @@ msgstr "Analytisk"
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "Oversyn"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
@@ -751,7 +751,7 @@ msgstr "Lagrar …"
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Denne versjonen av %productName vert driven av"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:02+0000\n"
+"POT-Creation-Date: 2016-07-18 14:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 480960\n"
+"X-Pootle-Revision: 510702\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -36,7 +36,7 @@ msgstr "Historie"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr "Zatím žádná historie."
+msgstr "Prázdná historie."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -580,12 +580,12 @@ msgstr "Tabulky"
 #: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:79
 msgid "Rows before"
-msgstr ""
+msgstr "Řádek nad"
 
 #: src/control/Control.Menubar.js:36
 #: src/control/Control.Menubar.js:80
 msgid "Rows after"
-msgstr ""
+msgstr "Řádek pod"
 
 #: src/control/Control.Menubar.js:38
 #: src/control/Control.Menubar.js:82
@@ -656,7 +656,7 @@ msgstr "Kávesové zkratky"
 #: src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:134
 msgid "About"
-msgstr ""
+msgstr "O aplikaci"
 
 #: src/control/Control.Menubar.js:58
 msgid "ODF presentation (.odp)"
@@ -713,7 +713,7 @@ msgstr "Opravdu si přejete smazat tento snímek?"
 
 #: src/control/Control.RowHeader.js:33
 msgid "Insert row above"
-msgstr ""
+msgstr "Vložit řádek nad"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"

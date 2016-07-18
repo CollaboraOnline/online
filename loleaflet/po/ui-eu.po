@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:03+0000\n"
+"POT-Creation-Date: 2016-07-18 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
-"X-Pootle-Revision: 482752\n"
+"X-Pootle-Revision: 486391\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -36,7 +36,7 @@ msgstr "Historia"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr "Ez dago historiarik oraindik"
+msgstr "Ez dago historiarik oraindik."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -469,7 +469,7 @@ msgstr " s"
 
 #: src/control/Control.ColumnHeader.js:35
 msgid "Insert column before"
-msgstr ""
+msgstr "Txertatu zutabea aurretik"
 
 #: src/control/Control.ColumnHeader.js:42
 #: src/control/Control.Menubar.js:131
@@ -650,13 +650,13 @@ msgstr "Laguntza"
 #: src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:133
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Laster-teklak"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:134
 msgid "About"
-msgstr ""
+msgstr "Honi buruz"
 
 #: src/control/Control.Menubar.js:58
 msgid "ODF presentation (.odp)"
@@ -713,7 +713,7 @@ msgstr "Ziur zaude diapositiba hau ezabatu nahi duzula?"
 
 #: src/control/Control.RowHeader.js:33
 msgid "Insert row above"
-msgstr ""
+msgstr "Txertatu errenkada gainean"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -742,7 +742,7 @@ msgstr "Sartu orriaren izen berria"
 #: src/control/Toolbar.js:59
 #: src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "Deskargatzen..."
 
 #: src/control/Toolbar.js:80
 #: src/map/Map.js:803
@@ -751,15 +751,15 @@ msgstr "Gordetzen..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "%productName bertsio honen oinarria"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Arazo bat dago LibreOffice Onlinera konektatzean: "
+msgstr "Arazo bat dago LibreOffice Onlinera konektatzean:  "
 
 #: src/core/Socket.js:136
 msgid "Unsupported server version."
-msgstr "Euskarririk gabeko zerbitzari bertsioa"
+msgstr "Euskarririk gabeko zerbitzari bertsioa."
 
 #: src/core/Socket.js:155
 msgid "Document requires password to view."
@@ -767,7 +767,7 @@ msgstr "Dokumentua ikusteko pasahitza behar da."
 
 #: src/core/Socket.js:158
 msgid "Document requires password to modify."
-msgstr "Dokumentua aldatzeko pasahitza behar da"
+msgstr "Dokumentua aldatzeko pasahitza behar da."
 
 #: src/core/Socket.js:160
 msgid "Hit Cancel to open in view-only mode."

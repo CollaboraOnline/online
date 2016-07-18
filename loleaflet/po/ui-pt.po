@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:05+0000\n"
+"POT-Creation-Date: 2016-07-18 14:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-ui-pt.po\n"
-"X-Pootle-Revision: 482771\n"
+"X-Pootle-Revision: 505514\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -469,7 +469,7 @@ msgstr " segundos"
 
 #: src/control/Control.ColumnHeader.js:35
 msgid "Insert column before"
-msgstr ""
+msgstr "Inserir coluna antes"
 
 #: src/control/Control.ColumnHeader.js:42
 #: src/control/Control.Menubar.js:131
@@ -650,13 +650,13 @@ msgstr "Ajuda"
 #: src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:133
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Atalhos de teclado"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:134
 msgid "About"
-msgstr ""
+msgstr "Sobre"
 
 #: src/control/Control.Menubar.js:58
 msgid "ODF presentation (.odp)"
@@ -713,7 +713,7 @@ msgstr "Tem a certeza que deseja apagar este diapositivo?"
 
 #: src/control/Control.RowHeader.js:33
 msgid "Insert row above"
-msgstr ""
+msgstr "Inserir linha acima"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -742,7 +742,7 @@ msgstr "Introduza o nome da nova folha"
 #: src/control/Toolbar.js:59
 #: src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "Descarregar..."
 
 #: src/control/Toolbar.js:80
 #: src/map/Map.js:803
@@ -751,7 +751,7 @@ msgstr "A guardar..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Esta versão do %productName é disponibilizada por"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "

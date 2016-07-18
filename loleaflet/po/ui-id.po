@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:04+0000\n"
+"POT-Creation-Date: 2016-07-18 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-ui-id.po\n"
-"X-Pootle-Revision: 482760\n"
+"X-Pootle-Revision: 498558\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -469,7 +469,7 @@ msgstr " d"
 
 #: src/control/Control.ColumnHeader.js:35
 msgid "Insert column before"
-msgstr ""
+msgstr "Sisip kolom sebelum"
 
 #: src/control/Control.ColumnHeader.js:42
 #: src/control/Control.Menubar.js:131
@@ -650,13 +650,13 @@ msgstr "Bantuan"
 #: src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:133
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Pintasan papan tik"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:134
 msgid "About"
-msgstr ""
+msgstr "Ihwal"
 
 #: src/control/Control.Menubar.js:58
 msgid "ODF presentation (.odp)"
@@ -713,7 +713,7 @@ msgstr "Anda yakin ingin menghapus salindia ini?"
 
 #: src/control/Control.RowHeader.js:33
 msgid "Insert row above"
-msgstr ""
+msgstr "Sisip baris di atas"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -742,7 +742,7 @@ msgstr "Masukkan nama lembar baru"
 #: src/control/Toolbar.js:59
 #: src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "Mengunduh..."
 
 #: src/control/Toolbar.js:80
 #: src/map/Map.js:803
@@ -751,7 +751,7 @@ msgstr "Menyimpan..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Versi %productName ini ditenagai oleh"
 
 #: src/core/Socket.js:14
 msgid "Oops, there is a problem connecting to LibreOffice Online : "

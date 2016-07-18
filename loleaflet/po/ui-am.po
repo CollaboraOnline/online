@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 11:02+0000\n"
+"POT-Creation-Date: 2016-07-18 14:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,19 +12,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /am/libo_online/loleaflet-ui-am.po\n"
-"X-Pootle-Revision: 475639\n"
+"X-Pootle-Revision: 508624\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "የ ገጽታ ቀለሞች"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "መደበኛ ቀለሞች"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "የ ዌብ ቀለሞች"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
@@ -32,11 +32,11 @@ msgstr ""
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "ታሪክ"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "ምንም ታሪክ የለም"
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -347,16 +347,15 @@ msgstr "በ ማረም ላይ"
 
 #: dist/toolbar/toolbar.js:1120
 msgid "Layout"
-msgstr ""
+msgstr "እቅድ"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "የ ግንኙነት ስህተት"
 
 #: src/admin/AdminSocketOverview.js:58
-#, fuzzy
 msgid "Are you sure you want to terminate this session?"
-msgstr "በ እርግጥ ይህን ተንሸራታች ማጥፋት ይፈልጋሉ?"
+msgstr "በ እርግጥ ይህን ክፍል ጊዜ ማጥፋት ይፈልጋሉ?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
@@ -364,19 +363,19 @@ msgstr ""
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "መቃኛ መቀያየሪያ"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "ማሰናጃዎች"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
-msgstr ""
+msgstr "ባጠቃላይ"
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(አሁን)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
@@ -388,15 +387,15 @@ msgstr ""
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
-msgstr ""
+msgstr "ተጠቃሚዎች በ መስመር ላይ"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "የ ተከፈቱ ሰነዶች"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
-msgstr ""
+msgstr "የ ተጠቀሙት ማስታወሻ"
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
@@ -404,11 +403,11 @@ msgstr ""
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "ሰነድ"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "የ መመልከቻ ቁጥር"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
@@ -440,35 +439,35 @@ msgstr ""
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "ኪባ"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "ሜባ"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "ጌባ"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "ቴባ"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr " ሰአት"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr " ደቂቃ"
 
 #: src/admin/Util.js:45
 msgid " s"
-msgstr ""
+msgstr " ሰከንድ"
 
 #: src/control/Control.ColumnHeader.js:35
 msgid "Insert column before"
-msgstr ""
+msgstr "አምድ መጀመሪያ ማስገቢያ"
 
 #: src/control/Control.ColumnHeader.js:42
 #: src/control/Control.Menubar.js:131
@@ -649,13 +648,13 @@ msgstr "እርዳታ"
 #: src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:133
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "የ ፊደል ገበታ አቋራጭ"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:134
 msgid "About"
-msgstr ""
+msgstr "ስለ"
 
 #: src/control/Control.Menubar.js:58
 msgid "ODF presentation (.odp)"
@@ -712,7 +711,7 @@ msgstr "በ እርግጥ ይህን ተንሸራታች ማጥፋት ይፈልጋ�
 
 #: src/control/Control.RowHeader.js:33
 msgid "Insert row above"
-msgstr ""
+msgstr "ረድ ፍ ከ ላይ ማስገቢያ"
 
 #: src/control/Control.Tabs.js:39
 msgid "Insert sheet before this"
@@ -741,12 +740,12 @@ msgstr "አዲስ የ ወረቀት ስም ያስገቡ"
 #: src/control/Toolbar.js:59
 #: src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "በማውረድ ላይ..."
 
 #: src/control/Toolbar.js:80
 #: src/map/Map.js:803
 msgid "Saving..."
-msgstr ""
+msgstr "በማስቀመጥ ላይ..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
@@ -788,8 +787,8 @@ msgstr "እናዝናለን: ይህ ያልተጠበቀ የ ግንኙነት ስህ
 
 #: src/map/Map.js:117
 msgid "Initializing..."
-msgstr ""
+msgstr "በማስጀመር ላይ..."
 
 #: src/map/Map.js:806
 msgid "Loading..."
-msgstr ""
+msgstr "በመጫን ላይ..."
