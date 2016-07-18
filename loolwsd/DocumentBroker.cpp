@@ -105,7 +105,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _docKey(docKey),
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
-    _childProcess(childProcess),
+    _childProcess(std::move(childProcess)),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
     _lastEditableSession(false),
@@ -181,7 +181,7 @@ bool DocumentBroker::load(const std::string& jailId)
         _lastFileModifiedTime = Poco::File(storage->getLocalRootPath()).getLastModified();
         _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
 
-        _storage.reset(storage.release());
+        _storage = std::move(storage);
         return true;
     }
 
@@ -482,7 +482,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
 #endif
 
         std::vector<char> output;
-        output.reserve(4 * tile.getWidth() * tile.getHeight());
+        output.reserve(static_cast<size_t>(4) * tile.getWidth() * tile.getHeight());
         output.resize(response.size());
         std::memcpy(output.data(), response.data(), response.size());
 
@@ -533,7 +533,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 #endif
 
             std::vector<char> output;
-            output.reserve(4 * tile.getWidth() * tile.getHeight());
+            output.reserve(static_cast<size_t>(4) * tile.getWidth() * tile.getHeight());
             output.resize(response.size());
             std::memcpy(output.data(), response.data(), response.size());
 
