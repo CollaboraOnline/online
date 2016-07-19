@@ -104,13 +104,13 @@ else
 fi
 AC_SUBST(ENABLE_DEBUG)
 
-MAX_DOCUMENTS=0
+MAX_DOCUMENTS=10
 AS_IF([test -n "$with_max_documents"],
       [MAX_DOCUMENTS="$with_max_documents"])
 AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
 AC_SUBST(MAX_DOCUMENTS)
 
-MAX_CONNECTIONS=0
+MAX_CONNECTIONS=20
 AS_IF([test -n "$with_max_connections"],
       [MAX_CONNECTIONS="$with_max_connections"])
 AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum number of open documents])
