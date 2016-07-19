@@ -44,6 +44,7 @@ loolwsd_SOURCES = Admin.cpp \
                   DocumentBroker.cpp \
                   LOOLWSD.cpp \
                   ClientSession.cpp \
+                  FileServer.cpp \
                   PrisonerSession.cpp \
                   Storage.cpp \
                   TileCache.cpp \
@@ -175,4 +176,3 @@ all-local: loolforkit @JAILS_PATH@ $(SYSTEM_STAMP)
 	else \
 	    echo "Skipping capability setting"; \
 	fi
-
