@@ -7,7 +7,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "Admin.hpp"
 #include "config.h"
 
 #include <cassert>
@@ -27,6 +26,7 @@
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/Timer.h>
 
+#include "Admin.hpp"
 #include "AdminModel.hpp"
 #include "Auth.hpp"
 #include "Common.hpp"

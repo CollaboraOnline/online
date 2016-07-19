@@ -15,8 +15,7 @@
 #include <string>
 #include <vector>
 
-#include <Poco/Net/NetException.h>
-
+#include <Poco/FileStream.h>
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPBasicCredentials.h>
 #include <Poco/Net/HTMLForm.h>
@@ -26,20 +25,21 @@
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/SecureServerSocket.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/RegularExpression.h>
 #include <Poco/Runnable.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
-#include <Poco/FileStream.h>
-#include <Poco/RegularExpression.h>
-#include <Poco/StreamCopier.h>
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/Timer.h>
 
 #include "Common.hpp"
 #include "LOOLWSD.hpp"
 
+using Poco::FileInputStream;
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPRequestHandler;
@@ -50,7 +50,6 @@ using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::SecureServerSocket;
 using Poco::Net::HTTPBasicCredentials;
-using Poco::FileInputStream;
 using Poco::StreamCopier;
 using Poco::Util::Application;
 
