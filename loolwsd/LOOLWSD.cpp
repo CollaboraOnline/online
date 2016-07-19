@@ -69,6 +69,7 @@
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/MessageHeader.h>
+#include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/Net.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
