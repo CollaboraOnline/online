@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include <Poco/Exception.h>
 #include <Poco/FileStream.h>
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPBasicCredentials.h>
@@ -22,6 +23,7 @@
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
+#include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/SecureServerSocket.h>
 #include <Poco/Net/WebSocket.h>
@@ -46,6 +48,7 @@ using Poco::Net::HTTPResponse;
 using Poco::Net::HTTPServerParams;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
+using Poco::Net::NameValueCollection;
 using Poco::Net::SecureServerSocket;
 using Poco::Net::HTTPBasicCredentials;
 using Poco::StreamCopier;
@@ -56,14 +59,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
     const auto& config = Application::instance().config();
     const auto sslKeyPath = config.getString("ssl.key_file_path", "");
 
-    if (request.find("Cookie") != request.end())
+    NameValueCollection cookies;
+    request.getCookies(cookies);
+    try
     {
-        // FIXME: Handle other cookie params like '; httponly; secure'
-        const std::size_t pos = request["Cookie"].find_first_of("=");
-        if (pos == std::string::npos)
-            throw Poco::Net::NotAuthenticatedException("Missing JWT");
-
-        const std::string jwtToken = request["Cookie"].substr(pos + 1);
+        const std::string jwtToken = cookies.get("jwt");
         Log::info("Verifying JWT token: " + jwtToken);
         JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
         if (authAgent.verify(jwtToken))
@@ -74,7 +74,12 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
 
         Log::info("Invalid JWT token, let the administrator re-login");
     }
+    catch (const Poco::Exception& exc)
+    {
+        Log::info("No existing JWT cookie found");
+    }
 
+    // If no cookie found, or is invalid, let admin re-login
     const auto user = config.getString("admin_console.username", "");
     const auto pass = config.getString("admin_console.password", "");
     if (user.empty() || pass.empty())
