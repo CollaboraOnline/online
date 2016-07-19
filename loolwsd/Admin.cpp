@@ -67,8 +67,11 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
         tokens[0] == "mem_stats" ||
         tokens[0] == "cpu_stats" )
     {
-        const std::string responseFrame = tokens[0] + " " + model.query(tokens[0]);
-        sendTextFrame(responseFrame);
+        std::string responseFrame = tokens[0] + " ";
+        const std::string result = model.query(tokens[0]);
+        responseFrame += result;
+        if (result != "")
+            sendTextFrame(responseFrame);
     }
     else if (tokens[0] == "subscribe" && tokens.count() > 1)
     {
