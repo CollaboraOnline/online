@@ -94,17 +94,17 @@ namespace
         {
         case COPY_NO_USR:
             // bind mounted.
-            return strcmp(path,"usr");
+            return strcmp(path,"usr") != 0;
         case COPY_LO:
             return
-                strcmp(path, "program/wizards") &&
-                strcmp(path, "sdk") &&
-                strcmp(path, "share/basic") &&
-                strcmp(path, "share/gallery") &&
-                strcmp(path, "share/Scripts") &&
-                strcmp(path, "share/template") &&
-                strcmp(path, "share/config/wizard") &&
-                strcmp(path, "share/config/wizard");
+                strcmp(path, "program/wizards") != 0 &&
+                strcmp(path, "sdk") != 0 &&
+                strcmp(path, "share/basic") != 0 &&
+                strcmp(path, "share/gallery") != 0 &&
+                strcmp(path, "share/Scripts") != 0 &&
+                strcmp(path, "share/template") != 0 &&
+                strcmp(path, "share/config/wizard") != 0 &&
+                strcmp(path, "share/config/wizard") != 0;
         default: // COPY_ALL
             return true;
         }
@@ -1050,7 +1050,7 @@ void lokit_main(const std::string& childRoot,
             char *resolved = realpath(loTemplate.c_str(), NULL);
             if (resolved)
             {
-                if (strcmp(loTemplate.c_str(), resolved))
+                if (strcmp(loTemplate.c_str(), resolved) != 0)
                     symlinkPathToJail(jailPath, std::string(resolved), loSubPath);
                 free (resolved);
             }
