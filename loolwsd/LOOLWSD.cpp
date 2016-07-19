@@ -1255,7 +1255,7 @@ std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::LOKitVersion;
-Util::RuntimeCostant<bool> LOOLWSD::SSLEnabled;
+Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 
 static std::string UnitTestLibrary;
 

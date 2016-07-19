@@ -66,7 +66,7 @@ protected:
     int main(const std::vector<std::string>& args) override;
 
 private:
-    static Util::RuntimeCostant<bool> SSLEnabled;
+    static Util::RuntimeConstant<bool> SSLEnabled;
 
     void initializeSSL();
     void displayHelp();

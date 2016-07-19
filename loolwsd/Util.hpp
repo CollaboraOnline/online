@@ -186,13 +186,13 @@ namespace Util
     };
 
     template<typename T>
-    class RuntimeCostant
+    class RuntimeConstant
     {
         T mValue;
         bool mInitialized;
 
     public:
-        RuntimeCostant()
+        RuntimeConstant()
             : mValue()
             , mInitialized(false)
         {}
@@ -205,21 +205,16 @@ namespace Util
             }
             else
             {
-                throw std::runtime_error("RuntimeCostant instance read before being initialized.");
+                throw std::runtime_error("RuntimeConstant instance read before being initialized.");
             }
         }
 
         void set(const T& value)
         {
-            if(mInitialized)
-            {
-                throw std::runtime_error("RuntimeCostant instance already initialized.");
-            }
-            else
-            {
-                mInitialized = true;
-                mValue = value;
-            }
+            assert(!mInitialized);
+
+            mInitialized = true;
+            mValue = value;
         }
     };
 } // end namespace Util
