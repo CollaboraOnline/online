@@ -26,11 +26,11 @@
 
 #include "IoUtil.hpp"
 #include "Log.hpp"
+#include "Storage.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
 
 // Forwards.
-class StorageBase;
 class DocumentBroker;
 
 /// Represents a new LOK child that is read
