@@ -76,53 +76,42 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = '';
 		}
 
-		var tableContainer = document.getElementById('doclist');
-		var rowContainer;
-		var pidEle, nameEle, viewsEle, memEle, sDocTimeEle, docEle, aEle;
+		var $rowContainer;
+		var $pid, $name, $views, $mem, $docTime, $doc, $a;
 		var nViews, nTotalViews;
 		var docProps, sPid, sName, sViews, sMem, sDocTime;
 		if (textMsg.startsWith('documents')) {
 			var documents = textMsg.substring('documents'.length);
 			documents = documents.trim().split('\n');
 			for (var i = 0; i < documents.length; i++) {
-				if (documents[i] === '') {
-					continue;
-				}
 				docProps = documents[i].trim().split(' ');
 				sPid = docProps[0];
 				sName = decodeURI(docProps[1]);
 				sViews = docProps[2];
 				sMem = docProps[3];
 				sDocTime = docProps[4];
-				if (sName === '0') {
-					continue;
-				}
-				rowContainer = document.createElement('tr');
-				rowContainer.id = 'doc' + sPid;
-				tableContainer.appendChild(rowContainer);
 
-				pidEle = document.createElement('td');
-				pidEle.innerHTML = sPid;
-				rowContainer.appendChild(pidEle);
+				$rowContainer = $(document.createElement('tr')).attr('id', 'doc' + sPid);
 
-				nameEle = document.createElement('td');
-				nameEle.innerHTML = sName;
-				rowContainer.appendChild(nameEle);
+				$pid = $(document.createElement('td')).text(sPid);
+				$rowContainer.append($pid);
 
-				viewsEle = document.createElement('td');
-				viewsEle.id = 'docview' + sPid;
-				viewsEle.innerHTML = sViews;
-				rowContainer.appendChild(viewsEle);
+				$name = $(document.createElement('td')).text(sName);
+				$rowContainer.append($name);
 
-				memEle = document.createElement('td');
-				memEle.innerHTML = Util.humanizeMem(parseInt(sMem));
-				rowContainer.appendChild(memEle);
+				$views = $(document.createElement('td')).attr('id', 'docview' + sPid)
+					                                    .text(sViews);
+				$rowContainer.append($views);
 
-				sDocTimeEle = document.createElement('td');
-				sDocTimeEle.className = 'elapsed_time';
-				sDocTimeEle.value = parseInt(sDocTime);
-				sDocTimeEle.innerHTML = Util.humanizeSecs(sDocTime);
-				rowContainer.appendChild(sDocTimeEle);
+				$mem = $(document.createElement('td')).text(Util.humanizeMem(parseInt(sMem)));
+				$rowContainer.append($mem);
+
+				$docTime = $(document.createElement('td')).addClass('elapsed_time')
+					                                      .val(parseInt(sDocTime))
+					                                      .text(Util.humanizeSecs(sDocTime));
+				$rowContainer.append($docTime);
+
+				$('#doclist').append($rowContainer);
 			}
 		}
 		else if (textMsg.startsWith('adddoc')) {
@@ -133,52 +122,41 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			// docProps[2] == sessionid
 			sMem = docProps[3];
 
-			docEle = document.getElementById('doc' + sPid);
-			if (!docEle) {
+			$doc = $('#doc' + sPid);
+			if ($doc.length === 0) {
+				$rowContainer = $(document.createElement('tr')).attr('id', 'doc' + sPid);
 
-				if (sName === '0') {
-					return;
-				}
+				$pid = $(document.createElement('td')).text(sPid);
+				$rowContainer.append($pid);
 
-				rowContainer = document.createElement('tr');
-				rowContainer.id = 'doc' + sPid;
-				tableContainer.appendChild(rowContainer);
+				$name = $(document.createElement('td')).text(sName);
+				$rowContainer.append($name);
 
-				pidEle = document.createElement('td');
-				pidEle.innerHTML = sPid;
-				rowContainer.appendChild(pidEle);
+				$views = $(document.createElement('td')).attr('id', 'docview' + sPid)
+					                                    .text(0);
+				$rowContainer.append($views);
 
-				nameEle = document.createElement('td');
-				nameEle.innerHTML = sName;
-				rowContainer.appendChild(nameEle);
+				$mem = $(document.createElement('td')).text(Util.humanizeMem(parseInt(sMem)));
+				$rowContainer.append($mem);
 
-				viewsEle = document.createElement('td');
-				viewsEle.innerHTML = 0;
-				viewsEle.id = 'docview' + sPid;
-				rowContainer.appendChild(viewsEle);
+				$docTime = $(document.createElement('td')).addClass('elapsed_time')
+					                                      .val(0)
+					                                      .text(Util.humanizeSecs(0));
+				$rowContainer.append($docTime);
 
-				memEle = document.createElement('td');
-				memEle.innerHTML = Util.humanizeMem(parseInt(sMem));
-				rowContainer.appendChild(memEle);
+				$('#doclist').append($rowContainer);
 
-				sDocTimeEle = document.createElement('td');
-				sDocTimeEle.className = 'elapsed_time';
-				sDocTimeEle.value = 0;
-				sDocTimeEle.innerHTML = Util.humanizeSecs(0);
-				rowContainer.appendChild(sDocTimeEle);
-
-				var totalUsersEle = document.getElementById('active_docs_count');
-				totalUsersEle.innerHTML = parseInt(totalUsersEle.innerHTML) + 1;
-
+				$a = $(document.getElementById('active_docs_count'));
+				$a.text(parseInt($a.text()) + 1);
 			}
 
-			viewsEle = document.getElementById('docview' + sPid);
-			nViews = parseInt(viewsEle.innerHTML);
-			viewsEle.innerHTML = nViews + 1;
+			$views = $(document.getElementById('docview' + sPid));
+			nViews = parseInt($views.text());
+			$views.text(nViews + 1);
 
-			aEle = document.getElementById('active_users_count');
-			nTotalViews = parseInt(aEle.innerHTML);
-			aEle.innerHTML = nTotalViews + 1;
+			$a = $(document.getElementById('active_users_count'));
+			nTotalViews = parseInt($a.text());
+			$a.text(nTotalViews + 1);
 		}
 		else if (textMsg.startsWith('total_mem') ||
 			textMsg.startsWith('active_docs_count') ||
@@ -191,7 +169,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			if (sCommand === 'total_mem') {
 				nData = Util.humanizeMem(nData);
 			}
-			document.getElementById(sCommand).innerHTML = nData;
+			$(document.getElementById(sCommand)).text(nData);
 		}
 		else if (textMsg.startsWith('rmdoc')) {
 			textMsg = textMsg.substring('rmdoc'.length);
@@ -199,18 +177,18 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			sPid = docProps[0];
 			// docProps[1] == sessionid
 
-			docEle = document.getElementById('doc' + sPid);
-			if (docEle) {
-				viewsEle = document.getElementById('docview' + sPid);
-				nViews = parseInt(viewsEle.innerHTML) - 1;
-				viewsEle.innerHTML = nViews;
-				if (!nViews) {
-					tableContainer.removeChild(docEle);
+			$doc = $('#doc' + sPid);
+			if ($doc.length !== 0) {
+				$views = $('#docview' + sPid);
+				nViews = parseInt($views.text()) - 1;
+				$views.text(nViews);
+				if (nViews === 0) {
+					$doc.remove();
 				}
 
-				aEle = document.getElementById('active_users_count');
-				nTotalViews = parseInt(aEle.innerHTML);
-				aEle.innerHTML = nTotalViews - 1;
+				$a = $(document.getElementById('active_users_count'));
+				nTotalViews = parseInt($a.text());
+				$a.text(nTotalViews - 1);
 			}
 		}
 	},
