@@ -228,8 +228,8 @@ class Connection: public Runnable
 public:
     Connection(std::shared_ptr<ChildSession> session,
                std::shared_ptr<WebSocket> ws) :
-        _session(session),
-        _ws(ws),
+        _session(std::move(session)),
+        _ws(std::move(ws)),
         _stop(false),
         _joined(false)
     {
@@ -643,10 +643,10 @@ public:
             tileRecs.push_back(rectangle);
         }
 
-        const int tilesByX = renderArea.getWidth() / tileCombined.getTileWidth();
-        const int tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
-        const int pixmapWidth = tilesByX * tileCombined.getWidth();
-        const int pixmapHeight = tilesByY * tileCombined.getHeight();
+        const size_t tilesByX = renderArea.getWidth() / tileCombined.getTileWidth();
+        const size_t tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
+        const size_t pixmapWidth = tilesByX * tileCombined.getWidth();
+        const size_t pixmapHeight = tilesByY * tileCombined.getHeight();
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<unsigned char> pixmap(pixmapSize, 0);
 
