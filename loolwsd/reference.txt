@@ -2,6 +2,6 @@ LibreOffice On-Line API
 =======================
 
 Document conversion:
-    - API: HTTP POST to /convert-to
+    - API: HTTP POST to /lool/convert-to
         - parameters: format=<format> (see e.g. "png", "pdf" or "txt"), and the file itself in the payload
-    - example: curl -F "data=@test.txt" -F "format=pdf" http://localhost:9980/convert-to
+    - example: curl -F "data=@test.txt" -F "format=pdf" https://localhost:9980/lool/convert-to
