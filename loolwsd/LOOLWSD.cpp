@@ -417,8 +417,9 @@ private:
                     if (!resultURL.getPath().empty())
                     {
                         const std::string mimeType = "application/octet-stream";
-                        URI::encode(resultURL.getPath(), "", encodedTo);
-                        response.sendFile(encodedTo, mimeType);
+                        std::string encodedFilePath;
+                        URI::encode(resultURL.getPath(), "", encodedFilePath);
+                        response.sendFile(encodedFilePath, mimeType);
                         sent = true;
                     }
 
