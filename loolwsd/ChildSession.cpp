@@ -788,7 +788,10 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, StringToke
 
     // The file is removed upon downloading.
     const auto tmpDir = Util::createRandomDir(JAILED_DOCUMENT_ROOT);
-    const auto url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + name;
+    // Prevent user inputting anything funny here.
+    // A "name" should always be a name, not a path
+    const Poco::Path filenameParam(name);
+    const auto url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + filenameParam.getFileName();
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
