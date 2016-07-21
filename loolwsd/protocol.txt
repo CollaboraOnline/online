@@ -185,11 +185,15 @@ loolserver <loolwsd version> <loolwsd git hash> <major.minor[-patch]>
            Security fixes that do not alter the API would bump the minor version number.
     Patch: an optional string that is informational.
 
-lokitversion <product_name> <product_version> <product_extension> <build_id>
+lokitversion <JSON string>
 
-    Version information of underlying LOKit process.
+    JSON string contains version information in format:
+    {ProductName: <>, ProductVersion: <>, ProductExtension: <>, BuildId: <>}
 
-    Eg: LibreOfficeDev 5.3 .0.0.alpha0 <git hash>
+    Eg: {"ProductName": "LibreOffice",
+         "ProductVersion": "5.3",
+         "ProductExtension": ".0.0.alpha0",
+         "BuildId": "<full 40 char git hash>"}
 
 contextmenu: <json description of the context menu>
 
