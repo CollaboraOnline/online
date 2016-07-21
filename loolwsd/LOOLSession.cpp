@@ -53,7 +53,7 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _kind(kind),
     _kindString(kind == Kind::ToClient ? "ToClient" :
                 kind == Kind::ToMaster ? "ToMaster" : "ToPrisoner"),
-    _ws(ws),
+    _ws(std::move(ws)),
     _docPassword(""),
     _haveDocPassword(false),
     _isDocLoaded(false),
