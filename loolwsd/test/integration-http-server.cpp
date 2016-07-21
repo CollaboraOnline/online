@@ -42,6 +42,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLoleafletPost);
     CPPUNIT_TEST(testScriptsAndLinksGet);
     CPPUNIT_TEST(testScriptsAndLinksPost);
+    CPPUNIT_TEST(testConvertTo);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -52,6 +53,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     void testLoleafletPost();
     void testScriptsAndLinksGet();
     void testScriptsAndLinksPost();
+    void testConvertTo();
 
     void testNoExtraLoolKitsLeft();
 
@@ -233,6 +235,41 @@ void HTTPServerTest::testScriptsAndLinksPost()
 
     Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
     assertHTTPFilesExist(_uri, link, html);
+}
+
+void HTTPServerTest::testConvertTo()
+{
+    const auto srcPath = Util::getTempFilePath(TDOC, "hello.odt");
+    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+    Poco::Net::HTMLForm form;
+    form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+    form.set("format", "txt");
+    form.addPart("data", new Poco::Net::FilePartSource(srcPath));
+    form.prepareSubmit(request);
+    // If this results in a Poco::Net::ConnectionRefusedException, loolwsd is not running.
+    form.write(session->sendRequest(request));
+
+    Poco::Net::HTTPResponse response;
+    std::stringstream actualStream;
+    // receiveResponse() resulted in a Poco::Net::NoMessageException.
+    std::istream& responseStream = session->receiveResponse(response);
+    Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+    std::ifstream fileStream(TDOC "/hello.txt");
+    std::stringstream expectedStream;
+    expectedStream << fileStream.rdbuf();
+
+    // Remove the temp files.
+    Util::removeFile(srcPath);
+
+    // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
+    // (U+FEFF). Skip that.
+    std::string actualString = actualStream.str();
+    if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
+        actualString = actualString.substr(3);
+    CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualString);
 }
 
 void HTTPServerTest::testNoExtraLoolKitsLeft()
