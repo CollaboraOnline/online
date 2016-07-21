@@ -75,6 +75,9 @@ public:
 
     Kind getKind() const { return _kind; }
 
+    void setHeadless(bool val) { _isHeadless = val; }
+    bool isHeadless() const { return _isHeadless; }
+
 protected:
     LOOLSession(const std::string& id, const Kind kind,
                 std::shared_ptr<Poco::Net::WebSocket> ws);
@@ -108,6 +111,13 @@ protected:
         {
             Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
             return false;
+        }
+        else if (peer->isHeadless())
+        {
+            // Fail silently and return as there is no actual websocket
+            // connection in this case.
+            Log::info(getName() + ": Ignoring forward message due to peer being headless");
+            return true;
         }
 
         Log::trace(getName() + " -> " + peer->getName() + ": " + message);
@@ -149,7 +159,6 @@ protected:
 
     // Whether websocket received close frame.  Closing Handshake
     std::atomic<bool> _isCloseFrame;
-
 private:
 
     virtual bool _handleInput(const char *buffer, int length) = 0;
@@ -165,6 +174,11 @@ private:
     bool _isActive;
 
     std::chrono::steady_clock::time_point _lastActivityTime;
+
+    // Whether it is dummy session
+    // For eg. In case of convert-to requests (HTTP Post), there is no actual websocket
+    // connection on client side
+    bool _isHeadless;
 
     std::mutex _mutex;
 

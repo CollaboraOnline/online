@@ -61,7 +61,8 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _isCloseFrame(false),
     _disconnected(false),
     _isActive(true),
-    _lastActivityTime(std::chrono::steady_clock::now())
+    _lastActivityTime(std::chrono::steady_clock::now()),
+    _isHeadless(false)
 {
     // Only a post request can have a null ws.
     if (_kind != Kind::ToClient)
