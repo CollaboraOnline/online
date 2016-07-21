@@ -316,7 +316,10 @@ public:
 
         Path tempPath = Path::forDirectory(TemporaryFile().tempName() + "/");
         File(tempPath).createDirectories();
-        tempPath.setFileName(params.get("filename"));
+        // Prevent user inputting anything funny here.
+        // A "filename" should always be a filename, not a path
+        const Path filenameParam(params.get("filename"));
+        tempPath.setFileName(filenameParam.getFileName());
         _filename = tempPath.toString();
 
         // Copy the stream to _filename.
