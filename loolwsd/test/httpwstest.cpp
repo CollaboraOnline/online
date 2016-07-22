@@ -1148,6 +1148,8 @@ void HTTPWSTest::testInactiveClient()
                                             token == "invalidatetiles:" ||
                                             token == "invalidatecursor:" ||
                                             token == "statechanged:" ||
+                                            token == "graphicselection:" ||
+                                            token == "cursorvisible:" ||
                                             token == "editlock:");
 
                     // End when we get state changed.
