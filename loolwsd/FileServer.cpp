@@ -42,14 +42,10 @@
 using Poco::FileInputStream;
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPRequestHandler;
-using Poco::Net::HTTPRequestHandlerFactory;
 using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPServerParams;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::NameValueCollection;
-using Poco::Net::SecureServerSocket;
 using Poco::Net::HTTPBasicCredentials;
 using Poco::StreamCopier;
 using Poco::Util::Application;
@@ -150,7 +146,7 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
                 throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + filepath + "].");
             }
 
-            const std::size_t extPoint = endPoint.find_last_of(".");
+            const std::size_t extPoint = endPoint.find_last_of('.');
             if (extPoint == std::string::npos)
                 throw Poco::FileNotFoundException("Invalid file.");
 
