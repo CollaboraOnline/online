@@ -39,13 +39,13 @@ Note that this will, by default, set the loolwsd's file server's root to the par
 which means you can access all the files in loleaflet using /loleaflet/ path. It is advised to set
 file_server_root_path manually for more control. See loolwsd/README for more information.
 
-* open debug/document/document_simple_example.html or dist/loleaflet.html through loolwsd's fileserver
+* open dist/loleaflet.html through loolwsd's fileserver
 
     https://localhost:9980/loleaflet/dist/loleaflet.html?file_path=file:///PATH/TO_DOC&host=wss://localhost:9980
 
 and you should see the document in the browser.
-Note that file_path parameter is disabled by default for security reasons. You need to explicitly enable it
-with the --allowlocalstorage option of loolwsd. In case anything goes wrong, check the loolwsd console for
+Note that accessing local storage is disabled by default for security reasons. You need to explicitly enable it
+with the --o:storage.filesystem[@allow]=true option of loolwsd. In case anything goes wrong, check the loolwsd console for
 the debugging output. You might be asked to confirm the certificate if you are using self-signed certificate
 for loolwsd.
 
