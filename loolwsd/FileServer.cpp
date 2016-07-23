@@ -110,6 +110,7 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
     try
     {
         Poco::URI requestUri(request.getURI());
+        Log::trace("Fileserver request: " + requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
 
         std::vector<std::string> requestSegments;
