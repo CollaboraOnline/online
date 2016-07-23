@@ -716,7 +716,7 @@ L.Map = L.Evented.extend({
 	_deactivate: function () {
 		clearTimeout(vex.timer);
 
-		if (!this._active || vex.dialogID > 0) {
+		if (!window.devtools.open && (!this._active || vex.dialogID > 0)) {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;
@@ -730,6 +730,10 @@ L.Map = L.Evented.extend({
 
 		var map = this;
 		vex.timer = setTimeout(function() {
+			if (window.devtools.open) {
+				return;
+			}
+
 			map._active = false;
 			clearTimeout(vex.timer);
 
