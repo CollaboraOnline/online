@@ -760,7 +760,7 @@ map.on('doclayerinit', function () {
 				{ func: '16', text: _('None'), icon: 'selected'},
 		]},
 		]);
-		toolbar.remove('alignblock', 'bullet', 'numbering', 'break-numbering');
+		toolbar.remove('styles', 'alignblock', 'bullet', 'numbering', 'break-numbering');
 		toolbar.insert('break-align', [
 			{type: 'button',  id: 'WrapText',  img: 'wraptext', hint: _('Wrap Text'), uno: 'WrapText'},
 			{type: 'button',  id: 'ToggleMergeCells',  img: 'togglemergecells', hint: _('Merge and Center Cells'), uno: 'ToggleMergeCells'},
