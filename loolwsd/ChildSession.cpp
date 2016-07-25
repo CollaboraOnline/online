@@ -327,7 +327,7 @@ void ChildSession::disconnect()
     {
         std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-        if (_multiView)
+        if (_multiView && _loKitDocument)
             _loKitDocument->setView(_viewId);
 
         _onUnload(getId());
