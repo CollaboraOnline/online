@@ -165,13 +165,6 @@ userinactive
 
     See 'useractive'.
 
-pong
-
-    Sent instead of a PONG frame as reply to a PING frame. A comment
-    in our code says "Technically, we should send back a PONG control
-    frame. However Firefox (probably) or Node.js (possibly) doesn't
-    like that and closes the socket when we do."
-
 server -> client
 ================
 
@@ -314,10 +307,6 @@ unocommandresult: <payload>
 
 Callback that an UNO command has finished.
 See LOK_CALLBACK_UNO_COMMAND_RESULT for details.
-
-pong:
-
-    See above.
 
 invalidateviewcursor:
 

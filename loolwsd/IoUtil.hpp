@@ -22,8 +22,7 @@
 namespace IoUtil
 {
     // Wrapper for WebSocket::receiveFrame() that handles PING frames (by replying with a
-    // "pseudo-PONG" frame, see protocol.txt) and PONG frames. Also our "pseudo-PONG" frames are
-    // ignored.
+    // PONG frame) and PONG frames. PONG frames are ignored.
     // Should we also factor out the handling of non-final and continuation frames into this?
     int receiveFrame(Poco::Net::WebSocket& socket, void* buffer, int length, int& flags);
 

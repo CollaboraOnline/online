@@ -45,19 +45,11 @@ int receiveFrame(WebSocket& socket, void* buffer, int length, int& flags)
         int n = socket.receiveFrame(buffer, length, flags);
         if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
         {
-            // Technically, we should send back a PONG control frame. However Firefox (probably) or
-            // Node.js (possibly) doesn't like that and closes the socket when we do.
-            socket.sendFrame("pong", strlen("pong"));
+            socket.sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG);
         }
         else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
         {
             // In case we do send pongs in the future.
-        }
-        else if (((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_TEXT ||
-                  (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_BINARY) &&
-                 n == 4 && memcmp((char*)buffer, "pong", 4) == 0)
-        {
-            // Ignore what we send above. Be lenient, also ignore binary "pong" frames.
         }
         else
         {
