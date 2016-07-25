@@ -220,7 +220,7 @@ static void prespawnChildren()
     }
 
     const auto duration = (std::chrono::steady_clock::now() - lastForkRequestTime);
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_SECS * 1000)
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= static_cast<int64_t>(CHILD_TIMEOUT_SECS) * 1000)
     {
         // Not enough time passed to balance children.
         return;
@@ -284,7 +284,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
 
         Log::debug("getNewChild: No live child, forking more.");
     }
-    while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() < CHILD_TIMEOUT_SECS * 4000);
+    while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() < static_cast<int64_t>(CHILD_TIMEOUT_SECS) * 4000);
 
     Log::debug("getNewChild: Timed out while waiting for new child.");
     return nullptr;
