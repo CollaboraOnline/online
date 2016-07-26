@@ -37,7 +37,7 @@ PrisonerSession::PrisonerSession(const std::string& id,
                                  std::shared_ptr<Poco::Net::WebSocket> ws,
                                  std::shared_ptr<DocumentBroker> docBroker) :
     LOOLSession(id, Kind::ToPrisoner, ws),
-    _docBroker(docBroker),
+    _docBroker(std::move(docBroker)),
     _curPart(0)
 {
     Log::info("PrisonerSession ctor [" + getName() + "].");
@@ -175,7 +175,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     {
         if (tokens[0] == "tile:")
         {
-            assert(!"Tile traffic should go through the DocumentBroker-LoKit WS.");
+            assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
         }
         else if (tokens[0] == "status:")
         {
