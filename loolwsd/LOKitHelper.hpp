@@ -120,7 +120,8 @@ namespace LOKitHelper
         long width, height;
         loKitDocument->pClass->getDocumentSize(loKitDocument, &width, &height);
         oss << " width=" << width
-            << " height=" << height;
+            << " height=" << height
+            << " viewid=" << loKitDocument->pClass->getView(loKitDocument);
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION)
         {

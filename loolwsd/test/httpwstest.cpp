@@ -340,7 +340,7 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
                     {
                         const auto status = msg.substr(prefix.length());
                         // Might be too strict, consider something flexible instread.
-                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
+                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408 viewid=0"), status);
                     }
                     else if (msg.find("editlock") == 0)
                     {
@@ -615,7 +615,7 @@ void HTTPWSTest::testExcelLoad()
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.count());
     }
     catch (const Poco::Exception& exc)
     {
@@ -719,7 +719,7 @@ void HTTPWSTest::testRenderingOptions()
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.count());
 
         const std::string token = tokens[5];
         const std::string prefix = "height=";
@@ -1259,9 +1259,9 @@ void HTTPWSTest::getPartHashCodes(const std::string status,
 
     std::cerr << "Reading parts from [" << status << "]." << std::endl;
 
-    // Expected format is something like 'type= parts= current= width= height='.
+    // Expected format is something like 'type= parts= current= width= height= viewid='.
     Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 
     const auto type = tokens[0].substr(std::string("type=").size());
     CPPUNIT_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
@@ -1327,6 +1327,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     int docSheets = 0;
     int docHeight = 0;
     int docWidth = 0;
+    int docViewId = -1;
     int newSheet = -1;
     int newSheets = 0;
     int newHeight = 0;
@@ -1349,7 +1350,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     sendTextFrame(socket, "status");
     getResponseMessage(socket, "status:", response, false);
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-    getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight);
+    getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
     // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
     sendTextFrame(socket, "key type=input char=0 key=1027");
@@ -1368,7 +1369,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     // filter messages, and expect to receive new document size
     getResponseMessage(socket, "status:", response, false);
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-    getDocSize(response, "spreadsheet", newSheet, newSheets, newWidth, newHeight);
+    getDocSize(response, "spreadsheet", newSheet, newSheets, newWidth, newHeight, docViewId);
 
     CPPUNIT_ASSERT_EQUAL(docSheets, newSheets);
     CPPUNIT_ASSERT_EQUAL(docSheet, newSheet);

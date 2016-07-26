@@ -981,7 +981,7 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringToke
 
 bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    if (tokens.count() == 1)
+    if (tokens.count() <= 1)
     {
         sendTextFrame("error: cmd=uno kind=syntax");
         return false;

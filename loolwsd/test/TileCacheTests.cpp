@@ -348,6 +348,7 @@ void TileCacheTests::testLoad12ods()
         int docSheets = 0;
         int docHeight = 0;
         int docWidth = 0;
+        int docViewId = -1;
 
         std::string response;
 
@@ -365,7 +366,7 @@ void TileCacheTests::testLoad12ods()
         sendTextFrame(socket, "status");
         getResponseMessage(socket, "status:", response, false);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight);
+        getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
         checkBlackTiles(socket, docSheet, docWidth, docWidth);
     }
@@ -723,7 +724,7 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
 
         std::cout << "status: " << response << std::endl;
         Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 
         // Expected format is something like 'type= parts= current= width= height='.
         text = tokens[0].substr(type.size());
