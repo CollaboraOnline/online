@@ -63,7 +63,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
     CPPUNIT_TEST(testReload);
-    CPPUNIT_TEST(testSaveOnDisconnect);
+    CPPUNIT_TEST(testGetTextSelection);
+    CPPUNIT_TEST(testSaveOnDisconnect); // Broken with multiview.
     CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPaste);
@@ -80,9 +81,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testMaxColumn);
     CPPUNIT_TEST(testMaxRow);
     CPPUNIT_TEST(testInsertAnnotationWriter);
-    CPPUNIT_TEST(testEditAnnotationWriter);
+    CPPUNIT_TEST(testEditAnnotationWriter);  // Broken with multiview.
     CPPUNIT_TEST(testInsertAnnotationCalc);
-    CPPUNIT_TEST(testCalcEditRendering);
+    CPPUNIT_TEST(testCalcEditRendering);  // Broken with multiview.
     CPPUNIT_TEST(testFontList);
     CPPUNIT_TEST(testStateUnoCommand);
 
@@ -95,6 +96,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testLoad();
     void testBadLoad();
     void testReload();
+    void testGetTextSelection();
     void testSaveOnDisconnect();
     void testReloadWhileDisconnecting();
     void testExcelLoad();
@@ -421,6 +423,35 @@ void HTTPWSTest::testReload()
     }
 }
 
+void HTTPWSTest::testGetTextSelection()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+
+    try
+    {
+        // Load a document and get its status.
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+
+        Poco::Net::WebSocket socket2 = *connectLOKit(_uri, request, _response);
+        sendTextFrame(socket2, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket2, "", true));
+
+        sendTextFrame(socket, "uno .uno:SelectAll");
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), selection);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
 void HTTPWSTest::testSaveOnDisconnect()
 {
     std::string documentPath, documentURL;
@@ -444,6 +475,12 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket, "uno .uno:SelectAll");
         sendTextFrame(socket, "uno .uno:Delete");
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
+
+        // Check if the document contains the pasted text.
+        sendTextFrame(socket, "uno .uno:SelectAll");
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
+        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
 
         // Closing connection too fast might not flush buffers.
         // Often nothing more than the SelectAll reaches the server before
@@ -481,28 +518,8 @@ void HTTPWSTest::testSaveOnDisconnect()
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll");
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-        std::string selection;
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << '\n';
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
-                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
-                const std::string prefix = "textselectioncontent: ";
-                if (line.find(prefix) == 0)
-                {
-                    selection = line.substr(prefix.length());
-                    break;
-                }
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
+        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
     {
@@ -926,6 +943,12 @@ void HTTPWSTest::testInsertDelete()
 
 void HTTPWSTest::testEditLock()
 {
+    if (std::getenv("LOK_VIEW_CALLBACK"))
+    {
+        // Editlocking is disabled in multiview.
+        return;
+    }
+
     const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
     const std::string documentURL = "lool/ws/file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
