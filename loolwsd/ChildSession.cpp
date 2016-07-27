@@ -237,6 +237,23 @@ public:
         case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
             _session.sendTextFrame("statusindicatorfinish:");
             break;
+        case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
+            _session.sendTextFrame("invalidateviewcursor: " + rPayload);
+            break;
+        case LOK_CALLBACK_TEXT_VIEW_SELECTION:
+            _session.sendTextFrame("textviewselection: " + rPayload);
+            break;
+        case LOK_CALLBACK_CELL_VIEW_CURSOR:
+            _session.sendTextFrame("cellviewcursor: " + rPayload);
+            break;
+        case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
+            _session.sendTextFrame("graphicviewselection: " + rPayload);
+            break;
+        case LOK_CALLBACK_VIEW_LOCK:
+            _session.sendTextFrame("viewlock: " + rPayload);
+            break;
+        default:
+            Log::error("Unknown callback event (" + std::to_string(nType) + "): " + rPayload);
         }
     }
 
