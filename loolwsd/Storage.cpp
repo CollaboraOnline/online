@@ -386,7 +386,7 @@ StorageBase::FileInfo WebDAVStorage::getFileInfo(const Poco::URI& uri)
 {
     Log::debug("Getting info for webdav uri [" + uri.toString() + "].");
     (void)uri;
-    assert(!"Not Implemented!");
+    assert(false && "Not Implemented!");
     return FileInfo({"bazinga", Poco::Timestamp(), 0});
 }
 

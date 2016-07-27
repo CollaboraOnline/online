@@ -42,9 +42,9 @@ class Document
 {
 public:
     Document(std::string docKey, Poco::Process::PID pid, std::string filename)
-        : _docKey(docKey),
+        : _docKey(std::move(docKey)),
           _pid(pid),
-          _filename(filename),
+          _filename(std::move(filename)),
           _start(std::time(nullptr))
     {
         Log::info("Document " + _docKey + " ctor.");
