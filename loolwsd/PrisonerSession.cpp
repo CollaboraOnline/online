@@ -70,6 +70,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         throw Poco::ProtocolException("The session has not been assigned a peer.");
     }
 
+    bool isBinary = true;
     if (tokens[0] == "unocommandresult:")
     {
         const std::string stringMsg(buffer, length);
@@ -112,7 +113,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
                 {
-                    forwardToPeer(_peer, buffer, length);
+                    forwardToPeer(_peer, buffer, length, isBinary);
                     peer->setLoadFailed(errorKind);
                     return false;
                 }
@@ -183,13 +184,13 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             _docBroker->tileCache().saveTextFile(std::string(buffer, length), "status.txt");
 
             // Forward the status response to the client.
-            forwardToPeer(_peer, buffer, length);
+            forwardToPeer(_peer, buffer, length, isBinary);
 
             // And let clients know if they hold the edit lock.
             std::string message = "editlock: ";
             message += std::to_string(peer->isEditLocked());
             Log::debug("Forwarding [" + message + "] in response to status.");
-            return forwardToPeer(_peer, message.c_str(), message.size());
+            return forwardToPeer(_peer, message.c_str(), message.size(), isBinary);
         }
         else if (tokens[0] == "commandvalues:")
         {
@@ -254,8 +255,13 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         }
     }
 
+    // Detect json messages, since we must send those as text even though they are multiline.
+    // If not, the UI will read the first line of a binary payload, assuming that's the only
+    // text part and the rest is binary.
+    isBinary = buffer[length - 1] != '}' && firstLine.find('{') == std::string::npos;
+
     // Forward everything else.
-    forwardToPeer(_peer, buffer, length);
+    forwardToPeer(_peer, buffer, length, isBinary);
     return true;
 }
 

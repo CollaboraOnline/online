@@ -41,8 +41,12 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
-    bool sendTextFrame(const std::string& text);
     bool sendBinaryFrame(const char *buffer, int length);
+    bool sendTextFrame(const char* buffer, const int length);
+    bool sendTextFrame(const std::string& text)
+    {
+        return sendTextFrame(text.data(), text.size());
+    }
 
     bool handleInput(const char *buffer, int length);
 
@@ -98,7 +102,7 @@ protected:
     }
 
     template <typename T>
-    bool forwardToPeer(T& p, const char *buffer, int length)
+    bool forwardToPeer(T& p, const char *buffer, int length, const bool binary)
     {
         const auto message = LOOLProtocol::getAbbreviatedMessage(buffer, length);
 
@@ -121,7 +125,8 @@ protected:
         }
 
         Log::trace(getName() + " -> " + peer->getName() + ": " + message);
-        return peer->sendBinaryFrame(buffer, length);
+        return binary ? peer->sendBinaryFrame(buffer, length)
+                      : peer->sendTextFrame(buffer, length);
     }
 
 private:

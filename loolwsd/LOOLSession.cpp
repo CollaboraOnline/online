@@ -75,27 +75,26 @@ LOOLSession::~LOOLSession()
 {
 }
 
-bool LOOLSession::sendTextFrame(const std::string& text)
+bool LOOLSession::sendTextFrame(const char* buffer, const int length)
 {
     if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
     {
-        Log::error(getName() + ": Bad socket while sending [" + getAbbreviatedMessage(text.c_str(), text.size()) + "].");
+        Log::error(getName() + ": Bad socket while sending [" + getAbbreviatedMessage(buffer, length) + "].");
         return false;
     }
 
-    Log::trace(getName() + " Send: " + getAbbreviatedMessage(text.c_str(), text.size()));
+    Log::trace(getName() + " Send: " + getAbbreviatedMessage(buffer, length));
     try
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        const int length = text.size();
         if ( length > SMALL_MESSAGE_SIZE )
         {
             const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
             _ws->sendFrame(nextmessage.data(), nextmessage.size());
         }
 
-        _ws->sendFrame(text.data(), length);
+        _ws->sendFrame(buffer, length);
         return true;
     }
     catch (const Exception& exc)

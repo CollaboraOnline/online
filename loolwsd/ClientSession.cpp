@@ -147,7 +147,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         if (!_peer.expired())
         {
-            return forwardToPeer(_peer, buffer, length);
+            return forwardToPeer(_peer, buffer, length, false);
         }
     }
     else if (tokens[0] == "commandvalues")
@@ -190,11 +190,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";
-            return forwardToPeer(_peer, dummyFrame.c_str(), dummyFrame.size());
+            return forwardToPeer(_peer, dummyFrame.c_str(), dummyFrame.size(), false);
         }
         else if (tokens[0] != "requestloksession")
         {
-            return forwardToPeer(_peer, buffer, length);
+            return forwardToPeer(_peer, buffer, length, false);
         }
         else
         {
@@ -236,7 +236,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
             oss << " options=" << _docOptions;
 
         const auto loadRequest = oss.str();
-        return forwardToPeer(_peer, loadRequest.c_str(), loadRequest.size());
+        return forwardToPeer(_peer, loadRequest.c_str(), loadRequest.size(), false);
     }
     catch (const Poco::SyntaxException&)
     {
@@ -259,7 +259,7 @@ bool ClientSession::getStatus(const char *buffer, int length)
         return sendTextFrame(msg);
     }
 
-    return forwardToPeer(_peer, buffer, length);
+    return forwardToPeer(_peer, buffer, length, false);
 }
 
 bool ClientSession::setEditLock(const bool value)
@@ -269,7 +269,7 @@ bool ClientSession::setEditLock(const bool value)
     const auto msg = "editlock: " + std::to_string(isEditLocked());
     const auto mv = std::getenv("LOK_VIEW_CALLBACK") ? "1" : "0";
     Log::debug("Forwarding [" + msg + "] to set editlock to " + std::to_string(value) + ". MultiView: " + mv);
-    return forwardToPeer(_peer, msg.data(), msg.size());
+    return forwardToPeer(_peer, msg.data(), msg.size(), false);
 }
 
 bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
@@ -286,7 +286,7 @@ bool ClientSession::getCommandValues(const char *buffer, int length, StringToken
         return sendTextFrame(cmdValues);
     }
 
-    return forwardToPeer(_peer, buffer, length);
+    return forwardToPeer(_peer, buffer, length, false);
 }
 
 bool ClientSession::getPartPageRectangles(const char *buffer, int length)
@@ -297,7 +297,7 @@ bool ClientSession::getPartPageRectangles(const char *buffer, int length)
         return sendTextFrame(partPageRectangles);
     }
 
-    return forwardToPeer(_peer, buffer, length);
+    return forwardToPeer(_peer, buffer, length, false);
 }
 
 bool ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
@@ -329,7 +329,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, StringToke
         return sendBinaryFrame(output.data(), output.size());
     }
 
-    return forwardToPeer(_peer, buffer, length);
+    return forwardToPeer(_peer, buffer, length, false);
 }
 
 bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
