@@ -683,13 +683,13 @@ private:
 
             // Wait until the client has connected with a prison socket.
             waitBridgeCompleted(session);
-            // Now the bridge beetween the client and kit process is connected
-            // Let messages flow
 
+            // Now the bridge beetween the client and kit process is connected
             status = "statusindicator: ready";
             Log::trace("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), (int) status.size());
 
+            // Let messages flow
             QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
             Thread queueHandlerThread;
             queueHandlerThread.start(handler);

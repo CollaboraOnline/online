@@ -743,6 +743,7 @@ private:
             return;
         }
 
+        // Broadcast to all clients.
         for (auto& it: self->_connections)
         {
             if (it.second->isRunning())
