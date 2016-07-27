@@ -315,9 +315,30 @@ unocommandresult: <payload>
 Callback that an UNO command has finished.
 See LOK_CALLBACK_UNO_COMMAND_RESULT for details.
 
-pong
+pong:
 
     See above.
+
+invalidateviewcursor:
+
+    Per-view cursor position invalidation. JSON payload.
+
+textviewselection:
+
+    Per-view text selection bounds. JSON payload.
+
+cellviewcursor:
+
+    Per-view cell cursor position. JSON payload.
+
+graphicviewselection:
+
+    Per-view graphic selection. JSON payload.
+
+viewlock:
+
+    Per-view lock rectangle. JSON payload.
+
 
 child -> parent
 ===============
