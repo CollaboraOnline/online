@@ -188,20 +188,20 @@ namespace Util
     template<typename T>
     class RuntimeConstant
     {
-        T mValue;
-        bool mInitialized;
+        T _value;
+        bool _initialized;
 
     public:
         RuntimeConstant()
-            : mValue()
-            , mInitialized(false)
+            : _value()
+            , _initialized(false)
         {}
 
         const T& get()
         {
-            if(mInitialized)
+            if(_initialized)
             {
-                return mValue;
+                return _value;
             }
             else
             {
@@ -211,10 +211,10 @@ namespace Util
 
         void set(const T& value)
         {
-            assert(!mInitialized);
+            assert(!_initialized);
 
-            mInitialized = true;
-            mValue = value;
+            _initialized = true;
+            _value = value;
         }
     };
 } // end namespace Util

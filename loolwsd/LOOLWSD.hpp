@@ -75,18 +75,18 @@ private:
 
     class ConfigValueGetter
     {
-        Poco::Util::LayeredConfiguration& mconfig;
-        const std::string& mname;
+        Poco::Util::LayeredConfiguration& _config;
+        const std::string& _name;
 
     public:
         ConfigValueGetter(Poco::Util::LayeredConfiguration& config,
                           const std::string& name)
-            : mconfig(config)
-            , mname(name)
+            : _config(config)
+            , _name(name)
         {}
 
-        void operator()(unsigned int& value) { value = mconfig.getUInt(mname); }
-        void operator()(bool& value) { value = mconfig.getBool(mname); }
+        void operator()(unsigned int& value) { value = _config.getUInt(_name); }
+        void operator()(bool& value) { value = _config.getBool(_name); }
     };
 
     template<typename T>
