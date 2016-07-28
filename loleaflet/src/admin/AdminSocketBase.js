@@ -2,7 +2,7 @@
 	Abstract class
 */
 
-/* global vex Base */
+/* global Util vex Base */
 /* eslint no-unused-vars:0 */
 var AdminSocketBase = Base.extend({
 	socket: null,
@@ -26,7 +26,8 @@ var AdminSocketBase = Base.extend({
 	},
 
 	onSocketOpen: function() {
-		/* Implemented by child */
+		// Authenticate
+		this.socket.send('auth ' + Util.getCookie('jwt'));
 	},
 
 	onSocketMessage: function() {

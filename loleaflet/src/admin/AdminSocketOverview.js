@@ -19,6 +19,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 	},
 
 	onSocketOpen: function() {
+		// Base class' onSocketOpen handles authentication
+		this.base.call(this);
+
 		this.socket.send('documents');
 		this.socket.send('subscribe adddoc rmdoc');
 

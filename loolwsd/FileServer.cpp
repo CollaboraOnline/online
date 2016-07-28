@@ -93,9 +93,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
         JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
         const std::string jwtToken = authAgent.getAccessToken();
         Poco::Net::HTTPCookie cookie("jwt", jwtToken);
-        cookie.setPath("/lool/adminws/");
+        cookie.setPath("/loleaflet/dist/admin/");
         cookie.setSecure(true);
-        cookie.setHttpOnly(true);
         response.addCookie(cookie);
 
         return true;

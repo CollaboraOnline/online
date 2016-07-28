@@ -109,83 +109,98 @@ private:
         // Check cookie properties
         std::string cookiePath = cookies[0].getPath();
         bool secure = cookies[0].getSecure();
-        bool httpOnly = cookies[0].getHttpOnly();
         std::string value = cookies[0].getValue();
         TestResult res = TestResult::TEST_FAILED;
-        if (cookiePath.find_first_of("/lool/adminws/") == 0 &&
-            secure &&
-            httpOnly &&
-            value != "")
+        if (cookiePath.find_first_of("/loleaflet/dist/admin/") == 0 &&
+            value != "" &&
+            secure)
         {
             // Set JWT cookie to be used for subsequent tests
             _jwtCookie = value;
             res = TestResult::TEST_OK;
+        }
+        else
+        {
+            Log::info("testCorrectPassword: Invalid cookie properties");
         }
 
         Log::info(std::string("testCorrectPassword: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
         return res;
     }
 
-    TestResult testWebSocketWithoutCookie()
+    TestResult testWebSocketWithoutAuthToken()
     {
-        // try connecting without cookie; should result in exception
-        HTTPResponse response;
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/adminws/");
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
-        bool authorized = true;
-        try
-        {
-            _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
-        }
-        catch (const Poco::Net::WebSocketException& exc)
-        {
-            Log::info() << "Admin websocket: Not authorized " << Log::end;
-            authorized = false;
-        }
-
-        // no cookie -> should result in not authorized exception
-        TestResult res = TestResult::TEST_FAILED;
-        if (!authorized)
-            res = TestResult::TEST_OK;
-
-        Log::info(std::string("testWebSocketWithoutCookie: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
-        return res;
-    }
-
-    TestResult testWebSocketWithCookie()
-    {
+        // try connecting without authentication; should result in NotAuthenticated
         HTTPResponse response;
         HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
         std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
 
-        // set cookie
-        assert(_jwtCookie != "");
-        HTTPCookie cookie("jwt", _jwtCookie);
-        Poco::Net::NameValueCollection nvc;
-        nvc.add("jwt", _jwtCookie);
-        request.setCookies(nvc);
-
-        bool authorized = true;
-        try
+        _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+        const std::string testMessage = "documents";
+        std::unique_lock<std::mutex> lock(_messageReceivedMutex);
+        _messageReceived.clear();
+        _adminWs->sendFrame(testMessage.data(), testMessage.size());
+        if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
-            _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+            Log::info("testWebSocketWithoutAuth: Timed out waiting for admin console message");
+            return TestResult::TEST_TIMED_OUT;
         }
-        catch (const Poco::Net::WebSocketException& exc)
+        lock.unlock();
+
+        StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        if (tokens.count() != 1 ||
+            tokens[0] != "NotAuthenticated")
         {
-            Log::info() << "Admin websocket: Not authorized " << Log::end;
-            authorized = false;
+            Log::info("testWebSocketWithoutAuth: Unrecognized message format");
+            return TestResult::TEST_FAILED;
         }
 
-        TestResult res = TestResult::TEST_FAILED;
-        if (authorized)
-            res = TestResult::TEST_OK;
+        Log::info(std::string("testWebSocketWithoutAuth: OK"));
+        return TestResult::TEST_OK;
+    }
 
-        Log::info(std::string("testWebSocketWithCookie: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
-        return res;
+    TestResult testWebSocketWithIncorrectAuthToken()
+    {
+        // try connecting with incorrect auth token; should result in InvalidToken
+        HTTPResponse response;
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
+
+        _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+        const std::string testMessage = "auth jwt=incorrectJWT";
+        std::unique_lock<std::mutex> lock(_messageReceivedMutex);
+        _messageReceived.clear();
+        _adminWs->sendFrame(testMessage.data(), testMessage.size());
+        if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
+        {
+            Log::info("testWebSocketWithIncorrectAuthToken: Timed out waiting for admin console message");
+            return TestResult::TEST_TIMED_OUT;
+        }
+        lock.unlock();
+
+        StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        if (tokens.count() != 1 ||
+            tokens[0] != "InvalidAuthToken")
+        {
+            Log::info("testWebSocketWithIncorrectAuthToken: Unrecognized message format");
+            return TestResult::TEST_FAILED;
+        }
+
+        Log::info(std::string("testWebSocketWithIncorrectAuthToken: OK"));
+        return TestResult::TEST_OK;
     }
 
     TestResult testAddDocNotify()
     {
+        // Authenticate first
+        HTTPResponse response;
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
+
+        _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+        const std::string authMessage = "auth jwt=" + _jwtCookie;
+        _adminWs->sendFrame(authMessage.data(), authMessage.size());
+
         // subscribe notification on admin websocket
         const std::string subscribeMessage = "subscribe adddoc";
         _adminWs->sendFrame(subscribeMessage.data(), subscribeMessage.size());
@@ -399,8 +414,8 @@ public:
         // Register tests here.
         _tests.push_back(&UnitAdmin::testIncorrectPassword);
         _tests.push_back(&UnitAdmin::testCorrectPassword);
-        _tests.push_back(&UnitAdmin::testWebSocketWithoutCookie);
-        _tests.push_back(&UnitAdmin::testWebSocketWithCookie);
+        _tests.push_back(&UnitAdmin::testWebSocketWithoutAuthToken);
+        _tests.push_back(&UnitAdmin::testWebSocketWithIncorrectAuthToken);
         _tests.push_back(&UnitAdmin::testAddDocNotify);
         _tests.push_back(&UnitAdmin::testUsersCount);
         _tests.push_back(&UnitAdmin::testDocCount);

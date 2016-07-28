@@ -44,6 +44,7 @@ private:
     Admin* _admin;
     std::shared_ptr<Poco::Net::WebSocket> _adminWs;
     int _sessionId;
+    bool _isAuthenticated;
 };
 
 /// An admin command processor.

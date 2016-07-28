@@ -38,6 +38,9 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 	},
 
 	onSocketOpen: function() {
+		// Base class' onSocketOpen handles authentication
+		this.base.call(this);
+
 		this.socket.send('subscribe mem_stats cpu_stats settings');
 		this.socket.send('settings');
 		this.socket.send('mem_stats');

@@ -48,6 +48,7 @@ using Poco::Net::HTTPResponse;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::WebSocket;
+using Poco::Util::Application;
 
 bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
 {
@@ -61,7 +62,32 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
     std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
 
-    if (tokens[0] == "documents" ||
+    if (tokens.count() > 1 && tokens[0] == "auth") {
+        std::string jwtToken;
+        LOOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
+        const auto& config = Application::instance().config();
+        const auto sslKeyPath = config.getString("ssl.key_file_path", "");
+
+        Log::info("Verifying JWT token: " + jwtToken);
+        JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
+        if (authAgent.verify(jwtToken))
+        {
+            Log::trace("JWT token is valid");
+            _isAuthenticated = true;
+        }
+        else
+        {
+            sendTextFrame("InvalidAuthToken");
+            return false;
+        }
+    }
+
+    if (!_isAuthenticated)
+    {
+        sendTextFrame("NotAuthenticated");
+        return false;
+    }
+    else if (tokens[0] == "documents" ||
         tokens[0] == "active_users_count" ||
         tokens[0] == "active_docs_count" ||
         tokens[0] == "mem_stats" ||
@@ -203,7 +229,8 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
 }
 
 AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
-    : _admin(adminManager)
+    : _admin(adminManager),
+      _isAuthenticated(false)
 {    }
 
 void AdminRequestHandler::sendTextFrame(const std::string& message)
@@ -228,9 +255,6 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 
         if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
         {
-            if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
-                throw Poco::Net::NotAuthenticatedException("Invalid admin login");
-
             handleWSRequests(request, response, sessionId);
         }
     }

@@ -29,6 +29,9 @@ var AdminSocketSettings = AdminSocketBase.extend({
 	},
 
 	onSocketOpen: function() {
+		// Base class' onSocketOpen handles authentication
+		this.base.call(this);
+
 		this.socket.send('subscribe settings');
 		this.socket.send('settings');
 	},

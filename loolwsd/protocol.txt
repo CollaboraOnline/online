@@ -374,8 +374,16 @@ Admin console can also opt to get notified of various events on the server. For
 example, getting notified when a new document is opened or closed. Notifications
 are commands sent from server to the client over established websocket.
 
+Before doing anything, clients must authenticate by providing an auth token with
+'auth' command.
+
 client -> admin
 ==============
+
+auth jwt=<jwtToken>
+
+    Authenticate the client with provided jwtToken. This is necessary before any
+    other command.
 
 subscribe <space seperated list of commands>
 
@@ -452,6 +460,14 @@ section). Others are just response messages to some client command.
     <memory consumed> in kilobytes sent from admin -> client after every
     mem_stats_interval (see `set` command for list of settings)
 
+InvalidAuthToken
+
+    This is sent when invalid auth token is provided in 'auth' command. See
+    above.
+
+NotAuthenticated
+
+    When client sends an admin command that requires authentication.
 
 documents <pid> <filename> <number of views> <memory consumed> <elapsed time>
 <pid> <filename> ....
