@@ -210,38 +210,38 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
 {
     HTMLForm form(request, request.stream());
 
-        const auto host = (LOOLWSD::isSSLEnabled() ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
-        const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
+    const auto host = (LOOLWSD::isSSLEnabled() ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+    const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
 
-        Log::debug("Preprocessing file: " + path.toString());
+    Log::debug("Preprocessing file: " + path.toString());
 
-        std::string preprocess;
-        FileInputStream file(path.toString());
-        StreamCopier::copyToString(file, preprocess);
-        file.close();
+    std::string preprocess;
+    FileInputStream file(path.toString());
+    StreamCopier::copyToString(file, preprocess);
+    file.close();
 
-        const std::string& accessToken = form.get("access_token", "");
-        const std::string& accessTokenTtl = form.get("access_token_ttl", "");
+    const std::string& accessToken = form.get("access_token", "");
+    const std::string& accessTokenTtl = form.get("access_token_ttl", "");
 
-        // As of now only alphanumeric characters are allowed in access token
-        // Sanitize user input before replacing
-        Poco::RegularExpression re("[a-zA-Z0-9_]*", Poco::RegularExpression::RE_ANCHORED);
-        if (!re.match(accessToken, 0, 0) || !re.match(accessTokenTtl, 0, 0))
-        {
-            throw Poco::FileAccessDeniedException("Invalid access token provided. Only alphanumeric and _ are allowed ");
-        }
+    // As of now only alphanumeric characters are allowed in access token
+    // Sanitize user input before replacing
+    Poco::RegularExpression re("[a-zA-Z0-9_]*", Poco::RegularExpression::RE_ANCHORED);
+    if (!re.match(accessToken, 0, 0) || !re.match(accessTokenTtl, 0, 0))
+    {
+        throw Poco::FileAccessDeniedException("Invalid access token provided. Only alphanumeric and _ are allowed ");
+    }
 
-        Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), accessToken);
-        Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), accessTokenTtl);
-        Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
-        Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), accessToken);
+    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), accessTokenTtl);
+    Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
+    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
 
-        response.setContentType("text/html");
-        response.setContentLength(preprocess.length());
-        response.setChunkedTransferEncoding(false);
+    response.setContentType("text/html");
+    response.setContentLength(preprocess.length());
+    response.setChunkedTransferEncoding(false);
 
-        std::ostream& ostr = response.send();
-        ostr << preprocess;
+    std::ostream& ostr = response.send();
+    ostr << preprocess;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
