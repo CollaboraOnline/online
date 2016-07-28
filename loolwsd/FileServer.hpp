@@ -37,23 +37,26 @@ public:
     void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) override;
 };
 
+// Singleton
 class FileServer
 {
 public:
-    FileServer()
+    static FileServer& instance()
     {
-        Log::info("File server ctor.");
+        static FileServer fileServer;
+        return fileServer;
     }
 
-    ~FileServer()
-    {
-        Log::info("File Server dtor.");
-    }
-
-    FileServerRequestHandler* createRequestHandler()
+    static FileServerRequestHandler* createRequestHandler()
     {
         return new FileServerRequestHandler();
     }
+
+    FileServer(FileServer const&) = delete;
+    void operator=(FileServer const&) = delete;
+
+private:
+    FileServer();
 };
 
 #endif

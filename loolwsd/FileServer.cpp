@@ -244,4 +244,9 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
     ostr << preprocess;
 }
 
+FileServer::FileServer()
+{
+    Log::info("FileServer ctor.");
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

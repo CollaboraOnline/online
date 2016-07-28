@@ -1152,8 +1152,7 @@ public:
 class ClientRequestHandlerFactory: public HTTPRequestHandlerFactory
 {
 public:
-    ClientRequestHandlerFactory(FileServer& fileServer)
-        : _fileServer(fileServer)
+    ClientRequestHandlerFactory()
         { }
 
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
@@ -1182,7 +1181,7 @@ public:
         // File server
         if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
         {
-            requestHandler = _fileServer.createRequestHandler();
+            requestHandler = FileServer::createRequestHandler();
         }
         // Admin WebSocket Connections
         else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
@@ -1197,9 +1196,6 @@ public:
 
         return requestHandler;
     }
-
-private:
-    FileServer& _fileServer;
 };
 
 class PrisonerRequestHandlerFactory: public HTTPRequestHandlerFactory
@@ -1638,9 +1634,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    // Init the file server
-    FileServer fileServer;
-
     // Configure the Server.
     // Note: TCPServer internally uses a ThreadPool to
     // dispatch connections (the default if not given).
@@ -1657,7 +1650,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     std::unique_ptr<ServerSocket> psvs(lcl_getServerSocket(ClientPortNumber));
 
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
-    HTTPServer srv(new ClientRequestHandlerFactory(fileServer), threadPool, *psvs, params1);
+    HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
     Log::info("Starting master server listening on " + std::to_string(ClientPortNumber));
     srv.start();
 
