@@ -211,8 +211,16 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
 
     const auto host = (LOOLWSD::isSSLEnabled() ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
-
     Log::debug("Preprocessing file: " + path.toString());
+
+    if (!Poco::File(path).exists())
+    {
+        Log::error("File [" + path.toString() + "] does not exist.");
+        response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
+        response.setContentLength(0); // TODO return some 404 page?
+        response.send();
+        return;
+    }
 
     std::string preprocess;
     FileInputStream file(path.toString());
