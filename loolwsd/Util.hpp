@@ -10,6 +10,7 @@
 #ifndef INCLUDED_UTIL_HPP
 #define INCLUDED_UTIL_HPP
 
+#include <cassert>
 #include <string>
 #include <sstream>
 #include <functional>
