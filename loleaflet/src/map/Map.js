@@ -767,7 +767,7 @@ L.Map = L.Evented.extend({
 			map._docLayer._onMessage('textselection:', null);
 			map._socket.sendMessage('userinactive');
 
-		}, 10 * 1000);
+		}, 30 * 1000); // Dim in 30 seconds.
 	},
 
 	_onLostFocus: function () {
