@@ -31,7 +31,7 @@ public:
 class JWTAuth: public AuthBase
 {
 public:
-    JWTAuth(const std::string keyPath, const std::string name, const std::string sub, const std::string aud)
+    JWTAuth(const std::string& keyPath, const std::string& name, const std::string& sub, const std::string& aud)
         : _name(name),
           _sub(sub),
           _aud(aud),
