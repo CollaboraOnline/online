@@ -1572,6 +1572,9 @@ Process::PID LOOLWSD::createForKit()
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+    Util::setTerminationSignals();
+    Util::setFatalSignals();
+
     if (DisplayVersion)
     {
         std::string version, hash;
@@ -1584,9 +1587,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     char *locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
         setlocale(LC_ALL, "en_US.utf8");
-
-    Util::setTerminationSignals();
-    Util::setFatalSignals();
 
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
