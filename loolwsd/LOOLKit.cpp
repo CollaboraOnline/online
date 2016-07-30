@@ -1005,7 +1005,7 @@ void lokit_main(const std::string& childRoot,
                 bool queryVersion)
 {
     // Reinitialize logging when forked.
-    Log::initialize("kit");
+    Log::initialize("kit", getenv("LOOL_LOGLEVEL"), getenv("LOOL_LOGCOLOR"));
     Util::rng::reseed();
 
     assert(!childRoot.empty());

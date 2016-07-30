@@ -202,7 +202,7 @@ int main(int argc, char** argv)
     }
 
     // Initialization
-    Log::initialize("frk");
+    Log::initialize("frk", getenv("LOOL_LOGLEVEL"), getenv("LOOL_LOGCOLOR"));
 
     Util::setTerminationSignals();
     Util::setFatalSignals();

@@ -18,11 +18,9 @@
 
     <loleaflet_html desc="Allows UI customization by replacing the single endpoint of loleaflet.html" type="string" default="loleaflet.html">loleaflet.html</loleaflet_html>
 
-    <!-- FIXME: logging cannot be set from here. Use LOOL_LOGLEVEL environment variable. LOOL_LOGLEVEL can be 0-8, or
-         none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace -->
     <logging>
         <color type="bool">true</color>
-        <level type="string">trace</level>
+        <level type="string" desc="Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="trace">trace</level>
     </logging>
 
     <ssl desc="SSL settings">

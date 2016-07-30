@@ -1288,8 +1288,6 @@ LOOLWSD::~LOOLWSD()
 
 void LOOLWSD::initialize(Application& self)
 {
-    Log::initialize("wsd");
-
     if (geteuid() == 0)
     {
         throw std::runtime_error("Do not run as root. Please run as lool user.");
@@ -1347,6 +1345,13 @@ void LOOLWSD::initialize(Application& self)
 
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
+
+    const auto logLevel = config().getString("logging.level", "trace");
+    setenv("LOOL_LOGLEVEL", logLevel.c_str(), true);
+    const auto withColor = config().getBool("logging.color", true);
+    if (withColor)
+        setenv("LOOL_LOGCOLOR", "1", true);
+    Log::initialize("wsd", logLevel, withColor);
 
 #if ENABLE_SSL
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
