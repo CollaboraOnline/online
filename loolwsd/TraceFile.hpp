@@ -15,6 +15,7 @@ class TraceFile
 {
 public:
     TraceFile(const std::string& path) :
+        _epochStart(Poco::Timestamp().epochMicroseconds()),
         _stream(path, std::ios::out)
     {
     }
@@ -24,13 +25,21 @@ public:
         _stream.close();
     }
 
-    void write(const std::string& data)
+    void writeIncoming(const std::string& data)
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+        const Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - _epochStart;
+        _stream.write(">", 1);
+        _stream << usec;
+        _stream.write(">", 1);
         _stream.write(data.c_str(), data.size());
+        _stream.write("\n", 1);
     }
 
 private:
+    const Poco::Int64 _epochStart;
     std::fstream _stream;
+    std::mutex _mutex;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -62,11 +62,11 @@ public:
     }
 
     static
-    void dumpTrace(const std::string& data)
+    void dumpIncomingTrace(const std::string& data)
     {
         if (TraceDumper)
         {
-            TraceDumper->write(data);
+            TraceDumper->writeIncoming(data);
         }
     }
 

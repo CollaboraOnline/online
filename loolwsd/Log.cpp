@@ -17,6 +17,7 @@
 #include <Poco/ConsoleChannel.h>
 #include <Poco/Process.h>
 #include <Poco/Thread.h>
+#include <Poco/Timestamp.h>
 
 #include "Log.hpp"
 
