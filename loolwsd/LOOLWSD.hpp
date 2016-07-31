@@ -88,6 +88,7 @@ private:
 
         void operator()(unsigned int& value) { value = _config.getUInt(_name); }
         void operator()(bool& value) { value = _config.getBool(_name); }
+        void operator()(std::string& value) { value = _config.getString(_name); }
     };
 
     template<typename T>

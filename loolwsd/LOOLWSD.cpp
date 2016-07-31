@@ -1346,9 +1346,9 @@ void LOOLWSD::initialize(Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
 
-    const auto logLevel = config().getString("logging.level", "trace");
+    const auto logLevel = getConfigValue<std::string>(conf, "logging.level", "trace");
     setenv("LOOL_LOGLEVEL", logLevel.c_str(), true);
-    const auto withColor = config().getBool("logging.color", true);
+    const auto withColor = getConfigValue<bool>(conf, "logging.color", true);
     if (withColor)
         setenv("LOOL_LOGCOLOR", "1", true);
     Log::initialize("wsd", logLevel, withColor);
@@ -1382,9 +1382,6 @@ void LOOLWSD::initialize(Application& self)
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
 
-    Log::warn("Launch this in your browser:");
-    Log::warn(lcl_getLaunchURI());
-
     // In Trial Versions we might want to set some limits.
     LOOLWSD::NumDocBrokers = 0;
     LOOLWSD::NumConnections = 0;
@@ -1399,6 +1396,9 @@ void LOOLWSD::initialize(Application& self)
     StorageBase::initialize();
 
     ServerApplication::initialize(self);
+
+    Log::warn("Launch this in your browser:");
+    Log::warn(lcl_getLaunchURI());
 }
 
 void LOOLWSD::initializeSSL()
