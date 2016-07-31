@@ -61,9 +61,15 @@ class TraceFileRecord
 public:
     enum class Direction
     {
+        Invalid,
         Incoming,
         Outgoing
     };
+
+    TraceFileRecord() :
+        Dir(Direction::Invalid)
+    {
+    }
 
     Direction Dir;
     unsigned TimestampNs;
@@ -75,12 +81,43 @@ class TraceFileReader
 public:
     TraceFileReader(const std::string& path) :
         _epochStart(Poco::Timestamp().epochMicroseconds()),
-        _stream(path)
+        _stream(path),
+        _indexIn(-1),
+        _indexOut(-1)
     {
+        readFile();
     }
 
+    TraceFileRecord getNextRecord(const TraceFileRecord::Direction dir)
+    {
+        if (dir == TraceFileRecord::Direction::Incoming)
+        {
+            if (_indexIn < _records.size())
+            {
+                const TraceFileRecord rec = _records[_indexIn];
+                _indexIn = advance(_indexIn, dir);
+                return rec;
+            }
+        }
+        else
+        {
+            if (_indexOut < _records.size())
+            {
+                const TraceFileRecord rec = _records[_indexOut];
+                _indexOut = advance(_indexOut, dir);
+                return rec;
+            }
+        }
+
+        // Invalid.
+        return TraceFileRecord();
+    }
+
+private:
     void readFile()
     {
+        _records.clear();
+
         std::string line;
         while (std::getline(_stream, line) && !line.empty())
         {
@@ -94,10 +131,12 @@ public:
                 _records.push_back(rec);
             }
         }
+
+        _indexIn = advance(-1, TraceFileRecord::Direction::Incoming);
+        _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
     }
 
-private:
-    std::vector<std::string> split(const std::string& s, const char delim)
+    std::vector<std::string> split(const std::string& s, const char delim) const
     {
         std::stringstream ss(s);
         std::string item;
@@ -113,10 +152,25 @@ private:
         return v;
     }
 
+    unsigned advance(unsigned index, const TraceFileRecord::Direction dir)
+    {
+        while (++index < _records.size())
+        {
+            if (_records[index].Dir == dir)
+            {
+                break;
+            }
+        }
+
+        return index;
+    }
+
 private:
     const Poco::Int64 _epochStart;
     std::ifstream _stream;
     std::vector<TraceFileRecord> _records;
+    unsigned _indexIn;
+    unsigned _indexOut;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
