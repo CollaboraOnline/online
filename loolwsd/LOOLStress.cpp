@@ -16,14 +16,9 @@
 #include <iostream>
 #include <random>
 
-#include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/FilePartSource.h>
-#include <Poco/Net/SSLManager.h>
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/StreamCopier.h>
@@ -39,13 +34,14 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
-#include "Common.hpp"
-#include "LOOLProtocol.hpp"
-#include "Util.hpp"
-#include "test/helpers.hpp"
-
 #include <Poco/Util/Application.h>
 #include <Poco/Util/OptionSet.h>
+
+#include "Common.hpp"
+#include "LOOLProtocol.hpp"
+#include "TraceFile.hpp"
+#include "Util.hpp"
+#include "test/helpers.hpp"
 
 /// Stress testing and performance/scalability benchmarking tool.
 
@@ -115,7 +111,7 @@ public:
 
 private:
     Stress& _app;
-    std::string _traceFilePath;
+    TraceFileReader _traceFile;
 };
 
 Stress::Stress() :

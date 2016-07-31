@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <string>
 #include <fstream>
+#include <mutex>
+#include <string>
 
 /// Dumps commands and notification trace.
 class TraceFileWriter
@@ -51,6 +52,20 @@ private:
     const Poco::Int64 _epochStart;
     std::fstream _stream;
     std::mutex _mutex;
+};
+
+class TraceFileReader
+{
+public:
+    TraceFileReader(const std::string& path) :
+        _epochStart(Poco::Timestamp().epochMicroseconds()),
+        _stream(path, std::ios::in)
+    {
+    }
+
+private:
+    const Poco::Int64 _epochStart;
+    std::fstream _stream;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
