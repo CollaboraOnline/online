@@ -43,6 +43,10 @@
 #include <Util.hpp>
 #include <LOOLProtocol.hpp>
 
+#ifndef TDOC
+#    define TDOC ""
+#endif
+
 /// Common helper testing functions.
 /// Avoid the temptation to reuse from LOOL code!
 /// These are supposed to be testing the latter.
