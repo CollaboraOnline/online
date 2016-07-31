@@ -70,6 +70,15 @@ public:
         }
     }
 
+    static
+    void dumpOutgoingTrace(const std::string& data)
+    {
+        if (TraceDumper)
+        {
+            TraceDumper->writeOutgoing(data);
+        }
+    }
+
 protected:
     void initialize(Poco::Util::Application& self) override;
     void uninitialize() override;

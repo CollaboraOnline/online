@@ -36,6 +36,17 @@ public:
         _stream.write("\n", 1);
     }
 
+    void writeOutgoing(const std::string& data)
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+        const Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - _epochStart;
+        _stream.write("<", 1);
+        _stream << usec;
+        _stream.write("<", 1);
+        _stream.write(data.c_str(), data.size());
+        _stream.write("\n", 1);
+    }
+
 private:
     const Poco::Int64 _epochStart;
     std::fstream _stream;
