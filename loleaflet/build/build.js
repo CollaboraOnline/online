@@ -2,7 +2,7 @@ var fs = require('fs'),
     UglifyJS = require('uglify-js'),
     zlib = require('zlib'),
 
-    deps = require('./deps.js').deps;
+    deps = require('./deps.js').deps,
     adminDeps = require('./adminDeps.js').adminDeps;
 
 function getFiles(compsBase32) {
