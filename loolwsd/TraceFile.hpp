@@ -11,16 +11,16 @@
 #include <fstream>
 
 /// Dumps commands and notification trace.
-class TraceFile
+class TraceFileWriter
 {
 public:
-    TraceFile(const std::string& path) :
+    TraceFileWriter(const std::string& path) :
         _epochStart(Poco::Timestamp().epochMicroseconds()),
         _stream(path, std::ios::out)
     {
     }
 
-    ~TraceFile()
+    ~TraceFileWriter()
     {
         _stream.close();
     }

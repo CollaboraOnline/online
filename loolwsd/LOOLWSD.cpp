@@ -1265,7 +1265,7 @@ static std::string UnitTestLibrary;
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 std::atomic<unsigned> LOOLWSD::NumDocBrokers;
 std::atomic<unsigned> LOOLWSD::NumConnections;
-std::unique_ptr<TraceFile> LOOLWSD::TraceDumper;
+std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 
 class AppConfigMap : public Poco::Util::MapConfiguration
 {
@@ -1398,7 +1398,7 @@ void LOOLWSD::initialize(Application& self)
     if (getConfigValue<bool>(conf, "trace[@enable]", false))
     {
         const auto& path = getConfigValue<std::string>(conf, "trace.path", "");
-        TraceDumper.reset(new TraceFile(path));
+        TraceDumper.reset(new TraceFileWriter(path));
         Log::info("Command trace dumping enabled to file: " + path);
     }
 
