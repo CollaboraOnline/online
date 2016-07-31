@@ -1265,6 +1265,7 @@ static std::string UnitTestLibrary;
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 std::atomic<unsigned> LOOLWSD::NumDocBrokers;
 std::atomic<unsigned> LOOLWSD::NumConnections;
+std::unique_ptr<TraceFile> LOOLWSD::TraceDumper;
 
 class AppConfigMap : public Poco::Util::MapConfiguration
 {
@@ -1392,6 +1393,14 @@ void LOOLWSD::initialize(Application& self)
     Log::info() << "Client Connections Limit: " << (MAX_CONNECTIONS > 0 ?
                                                     std::to_string(MAX_CONNECTIONS) :
                                                     std::string("unlimited")) << Log::end;
+
+    // Command Tracing.
+    if (getConfigValue<bool>(conf, "trace[@enable]", false))
+    {
+        const auto& path = getConfigValue<std::string>(conf, "trace.path", "");
+        TraceDumper.reset(new TraceFile(path));
+        Log::info("Command trace dumping enabled to file: " + path);
+    }
 
     StorageBase::initialize();
 

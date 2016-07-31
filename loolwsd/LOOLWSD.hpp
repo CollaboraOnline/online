@@ -23,6 +23,7 @@
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "DocumentBroker.hpp"
+#include "TraceFile.hpp"
 #include "Util.hpp"
 
 class LOOLWSD: public Poco::Util::ServerApplication
@@ -46,6 +47,7 @@ public:
     static std::string LOKitVersion;
     static std::atomic<unsigned> NumDocBrokers;
     static std::atomic<unsigned> NumConnections;
+    static std::unique_ptr<TraceFile> TraceDumper;
 
     static
     std::string GenSessionId()
@@ -57,6 +59,15 @@ public:
     bool isSSLEnabled()
     {
         return LOOLWSD::SSLEnabled.get();
+    }
+
+    static
+    void dumpTrace(const std::string& data)
+    {
+        if (TraceDumper)
+        {
+            TraceDumper->write(data);
+        }
     }
 
 protected:

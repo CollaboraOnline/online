@@ -23,6 +23,10 @@
         <level type="string" desc="Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="trace">trace</level>
     </logging>
 
+    <trace desc="Dump commands and notifications for replay" enable="true">
+        <path desc="Output file path">/tmp/dump</path>
+    </trace>
+
     <ssl desc="SSL settings">
         <enable type="bool" default="true">true</enable>
         <cert_file_path desc="Path to the cert file" relative="false">/etc/loolwsd/cert.pem</cert_file_path>
