@@ -2,7 +2,7 @@ SUBDIRS = . test
 
 export ENABLE_DEBUG
 
-bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool
+bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool loolstress
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -77,6 +77,8 @@ loolmount_SOURCES = loolmount.c
 loolmap_SOURCES = loolmap.c
 
 looltool_SOURCES = LOOLTool.cpp
+
+loolstress_SOURCES = LOOLStress.cpp
 
 noinst_HEADERS = Admin.hpp \
                  AdminModel.hpp \
