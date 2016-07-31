@@ -79,12 +79,14 @@ class Worker: public Runnable
 public:
 
     Worker(Stress& app, const std::string& traceFilePath) :
-        _app(app), _traceFilePath(traceFilePath)
+        _app(app), _traceFile(traceFilePath)
     {
     }
 
     void run() override
     {
+        _traceFile.readFile();
+
         std::cerr << "Connecting to server: " << _app._serverURI << "\n";
 
         Poco::URI uri(_app._serverURI);

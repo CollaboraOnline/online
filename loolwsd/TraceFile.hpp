@@ -9,7 +9,9 @@
 
 #include <fstream>
 #include <mutex>
+#include <sstream>
 #include <string>
+#include <vector>
 
 /// Dumps commands and notification trace.
 class TraceFileWriter
@@ -54,18 +56,67 @@ private:
     std::mutex _mutex;
 };
 
+class TraceFileRecord
+{
+public:
+    enum class Direction
+    {
+        Incoming,
+        Outgoing
+    };
+
+    Direction Dir;
+    unsigned TimestampNs;
+    std::string Payload;
+};
+
 class TraceFileReader
 {
 public:
     TraceFileReader(const std::string& path) :
         _epochStart(Poco::Timestamp().epochMicroseconds()),
-        _stream(path, std::ios::in)
+        _stream(path)
     {
+    }
+
+    void readFile()
+    {
+        std::string line;
+        while (std::getline(_stream, line) && !line.empty())
+        {
+            const auto v = split(line, line[0]);
+            if (v.size() == 2)
+            {
+                TraceFileRecord rec;
+                rec.Dir = (line[0] == '>' ? TraceFileRecord::Direction::Incoming : TraceFileRecord::Direction::Outgoing);
+                rec.TimestampNs = std::atoi(v[0].c_str());
+                rec.Payload = v[1];
+                _records.push_back(rec);
+            }
+        }
+    }
+
+private:
+    std::vector<std::string> split(const std::string& s, const char delim)
+    {
+        std::stringstream ss(s);
+        std::string item;
+        std::vector<std::string> v;
+        while (std::getline(ss, item, delim))
+        {
+            if (!item.empty())
+            {
+                v.push_back(item);
+            }
+        }
+
+        return v;
     }
 
 private:
     const Poco::Int64 _epochStart;
-    std::fstream _stream;
+    std::ifstream _stream;
+    std::vector<TraceFileRecord> _records;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
