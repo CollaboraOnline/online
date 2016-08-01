@@ -164,9 +164,12 @@ bool DocumentBroker::load(const std::string& jailId)
 
     // user/doc/jailId
     const auto jailPath = Poco::Path(JAILED_DOCUMENT_ROOT, jailId);
-    const std::string jailRoot = getJailRoot();
+    std::string jailRoot = getJailRoot();
 
     Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
+
+    if (LOOLWSD::NoCapsForKit)
+        jailRoot = jailPath.toString() + "/" + getJailRoot();
 
     auto storage = StorageBase::create(jailRoot, jailPath.toString(), _uriPublic);
     if (storage)

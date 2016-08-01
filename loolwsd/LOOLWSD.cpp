@@ -161,7 +161,6 @@ int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
 static bool DisplayVersion = false;
-static bool NoCapsForKit = false;
 static std::vector<std::shared_ptr<ChildProcess>> newChildren;
 static std::mutex newChildrenMutex;
 static std::condition_variable newChildrenCV;
@@ -1251,6 +1250,7 @@ std::string lcl_getLaunchURI()
 
 std::atomic<unsigned> LOOLWSD::NextSessionId;
 int LOOLWSD::ForKitWritePipe = -1;
+bool LOOLWSD::NoCapsForKit = false;
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;

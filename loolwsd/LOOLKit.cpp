@@ -1029,19 +1029,21 @@ void lokit_main(const std::string& childRoot,
     Util::setTerminationSignals();
     Util::setFatalSignals();
 
+    std::string userdir_url;
     std::string instdir_path;
 
     Path jailPath;
     bool bRunInsideJail = !noCapabilities;
     try
     {
+        jailPath = Path::forDirectory(childRoot + "/" + jailId);
+        Log::info("Jail path: " + jailPath.toString());
+        File(jailPath).createDirectories();
+
         if (bRunInsideJail)
         {
+            userdir_url = "file:///user";
             instdir_path = "/" + loSubPath + "/program";
-
-            jailPath = Path::forDirectory(childRoot + "/" + jailId);
-            Log::info("Jail path: " + jailPath.toString());
-            File(jailPath).createDirectories();
 
             // Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
             // interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
@@ -1131,13 +1133,14 @@ void lokit_main(const std::string& childRoot,
         else // noCapabilities set
         {
             Log::info("Using template " + loTemplate + " as install subpath - skipping jail setup");
+            userdir_url = "file:///" + jailPath.toString() + "/user";
             instdir_path = "/" + loTemplate + "/program";
         }
 
         std::shared_ptr<lok::Office> loKit;
         {
             const char *instdir = instdir_path.c_str();
-            const char *userdir = "file:///user";
+            const char *userdir = userdir_url.c_str();
             auto kit = UnitKit::get().lok_init(instdir, userdir);
             if (!kit)
             {

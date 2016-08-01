@@ -35,6 +35,7 @@ public:
     // so just keep these as statics.
     static std::atomic<unsigned> NextSessionId;
     static unsigned int NumPreSpawnedChildren;
+    static bool NoCapsForKit;
     static int ForKitWritePipe;
     static std::string Cache;
     static std::string SysTemplate;
