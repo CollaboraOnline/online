@@ -99,7 +99,7 @@ private:
             ConfigValueGetter(config, name)(value);
             return true;
         }
-        catch (Poco::SyntaxException)
+        catch (const Poco::SyntaxException&)
         {
         }
 
