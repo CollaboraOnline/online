@@ -31,39 +31,7 @@
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
 <style type="text/css"></style></head>
-<body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="/loleaflet/%VERSION%/l10n/json2.min.js"></script>
-    <script src="/loleaflet/%VERSION%/l10n/l10n.min.js"></script>
-    <script>var _ = function (string) {return string.toLocaleString();};</script>
-    <script>
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : results[1].replace(/\+/g, " ");
-    }
-    var lang = getParameterByName('lang');
-    if (lang) {
-        String.locale = lang;
-    }
-    </script>
-    <script src="/loleaflet/%VERSION%/toolbar/w2ui.min.js"></script>
-    <script src="/loleaflet/%VERSION%/toolbar/select2.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <script src="/loleaflet/%VERSION%/toolbar/evol.colorpicker.min.js"></script>
-    <script src="/loleaflet/%VERSION%/leaflet-src.js"></script>
-    <script src="/loleaflet/%VERSION%/plugins/draw-0.2.4/dist/leaflet.draw.js"></script>
-    <script src="/loleaflet/%VERSION%/scrollbar/jquery.mCustomScrollbar.js"></script>
-    <script src="/loleaflet/%VERSION%/contextMenu/jquery.contextMenu.js"></script>
-    <script src="/loleaflet/%VERSION%/contextMenu/jquery.ui.position.min.js"></script>
-    <script src="/loleaflet/%VERSION%/smartmenus/jquery.smartmenus.js"></script>
-    <script src="/loleaflet/%VERSION%/dialog/vex.combined.min.js"></script>
-    <script src="/loleaflet/%VERSION%/branding.js"></script> <!-- logo onclick handler -->
-    <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
-    <script src="/loleaflet/%VERSION%/errormessages.js"></script>
-    <script src="/loleaflet/%VERSION%/devtools-detect/index.js"></script>
-
+  <body>
     <!--The "controls" div holds map controls such as the Zoom button and
         it's separated from the map in order to have the controls on the top
         of the page all the time.
@@ -76,77 +44,19 @@
         cause the content to overflow, creating scrollbars -->
     <div id="logo" class="logo"></div>
     <div>
-        <div id="toolbar" style="visibility: hidden;"></div>
-        <div id="toolbar-up"></div>
-        <div id="formulabar"></div>
-        <div id="toolbar-up-more"></div>
+      <div id="toolbar" style="visibility: hidden;"></div>
+      <div id="toolbar-up"></div>
+      <div id="formulabar"></div>
+      <div id="toolbar-up-more"></div>
     </div>
     <input id="insertgraphic" type="file" onchange="onInsertFile()" style="position: fixed; top: -100em">
 
     <div id="document-container">
-        <div id="map"></div>
+      <div id="map"></div>
     </div>
     <div id="spreadsheet-toolbar"></div>
     <div id="presentation-toolbar"></div>
     <div id="toolbar-down"></div>
-
-    <script>
-    var wopiSrc = getParameterByName('WOPISrc');
-    var access_token = '%ACCESS_TOKEN%';
-    if (wopiSrc !== '' && access_token !== '') {
-        var wopiParams = { 'access_token': access_token }
-    }
-
-    var filePath = getParameterByName('file_path');
-    var title = getParameterByName('title');
-    if (title === '') {
-        title = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
-    }
-
-    var host = '%HOST%';
-    var permission = getParameterByName('permission');
-    var timestamp = getParameterByName('timestamp');
-    <!-- Shows close button if non-zero value provided -->
-    var closebutton = getParameterByName('closebutton');
-    <!-- Shows revision history file menu option -->
-    var revHistoryEnabled = getParameterByName('revisionhistory');
-    if (wopiSrc === '' && filePath === '') {
-        vex.dialog.alert(wrongwopisrc);
-    }
-    if (host === '') {
-        vex.dialog.alert(emptyhosturl);
-    }
-
-    var docURL, docParams;
-    if (wopiSrc != '') {
-        docURL = wopiSrc;
-        docParams = wopiParams;
-    } else {
-        docURL = filePath;
-        docParams = {};
-    }
-
-    document.title = title;
-    var map = L.map('map', {
-			server: host,
-			doc: docURL,
-			docParams: docParams,
-			permission: permission,
-			timestamp: timestamp,
-			documentContainer: 'document-container'
-	});
-
-    ////// Controls /////
-    map.addControl(L.control.scroll());
-    map.addControl(L.control.dialog());
-    map.addControl(L.control.partsPreview());
-    map.addControl(L.control.tabs());
-    map.addControl(L.control.columnHeader());
-    map.addControl(L.control.rowHeader());
-    map.addControl(L.control.contextMenu());
-    map.addControl(L.control.menubar());
-
-    </script>
 
     <div id="about-dialog" style="display:none; text-align: center;">
       <h1 id="product-name">LibreOffice Online</h1>
@@ -162,5 +72,12 @@
       </p>
     </div>
 
+    <script>
+      window.host = '%HOST%';
+      window.access_token = '%ACCESS_TOKEN%';
+    </script>
+    <script src="/loleaflet/%VERSION%/branding.js"></script> <!-- logo onclick handler -->
+    <script src="/loleaflet/%VERSION%/bundle.js"></script>
+    <script src="/loleaflet/%VERSION%/toolbar/w2ui.min.js"></script>
     <script src="/loleaflet/%VERSION%/toolbar/toolbar.js"></script>
 </body></html>

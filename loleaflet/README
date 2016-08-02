@@ -7,9 +7,9 @@ This is the client part of LibreOffice On-Line.  For the server part, see the
 Build dependencies
 ------------------
 
-First you need to install 'jake'.  As root, do:
+First you need to install 'jake', and 'browserify'.  As root, do:
 
-    npm install -g jake
+    npm install -g jake browserify
 
 npm is provided by the nodejs package.
 
@@ -25,6 +25,12 @@ Building
 Just do:
 
     make
+
+To build bundle.js with debug-info, i.e with sourcemaps, after 'make', additionally run:
+
+    npm run bundle-debug
+
+Above will produce a larger-sized bundle.js in dist/ with source-maps so that you can debug while browsing.
 
 Running
 -------

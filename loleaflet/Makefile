@@ -14,6 +14,7 @@ all:
 	jake build
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
+	npm run bundle
 
 .PHONY: dist
 dist: all
