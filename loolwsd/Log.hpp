@@ -48,12 +48,12 @@ namespace Log
     {
         public:
             StreamLogger(std::function<void(const std::string&)> func)
-              : _func(func)
+              : _func(std::move(func))
             {
             }
 
             StreamLogger(StreamLogger&& sl)
-              : _stream(std::move(sl._stream.str()))
+              : _stream(sl._stream.str())
               , _func(std::move(sl._func))
             {
             }
