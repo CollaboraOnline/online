@@ -5,6 +5,7 @@
   "devDependencies": {
     "copyfiles": "0.1.0",
     "browserify": "^13.1.0",
+    "browserify-css": "^0.9.1",
     "devtools-detect": "2.1.1",
     "eslint": "^2.8.0",
     "evol-colorpicker": "3.2.6",
@@ -34,6 +35,11 @@
   },
   "browser": {
     "loleaflet": "./dist/leaflet-src.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-css"
+    ]
   },
   "main": "main.js",
   "style": "main.css",

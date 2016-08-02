@@ -1,3 +1,6 @@
+// Include our main css file
+require('./main.css');
+
 var $ = require('jquery');
 global.$ = global.jQuery = $;
 
