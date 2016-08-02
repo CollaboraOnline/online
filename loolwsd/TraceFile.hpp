@@ -14,6 +14,27 @@
 #include <vector>
 
 /// Dumps commands and notification trace.
+class TraceFileRecord
+{
+public:
+    enum class Direction : char
+    {
+        Invalid = 0,
+        Incoming = '>',
+        Outgoing = '<'
+    };
+
+    TraceFileRecord() :
+        Dir(Direction::Invalid)
+    {
+    }
+
+    Direction Dir;
+    unsigned Pid;
+    unsigned TimestampNs;
+    std::string Payload;
+};
+
 class TraceFileWriter
 {
 public:
@@ -30,22 +51,24 @@ public:
 
     void writeIncoming(const std::string& data)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-        const Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - _epochStart;
-        _stream.write(">", 1);
-        _stream << usec;
-        _stream.write(">", 1);
-        _stream.write(data.c_str(), data.size());
-        _stream.write("\n", 1);
+        write(data, static_cast<char>(TraceFileRecord::Direction::Incoming));
     }
 
     void writeOutgoing(const std::string& data)
     {
+        write(data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
+    }
+
+private:
+    void write(const std::string& data, const char delim)
+    {
         std::unique_lock<std::mutex> lock(_mutex);
         const Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - _epochStart;
-        _stream.write("<", 1);
+        _stream.write(&delim, 1);
+        _stream << getpid();
+        _stream.write(&delim, 1);
         _stream << usec;
-        _stream.write("<", 1);
+        _stream.write(&delim, 1);
         _stream.write(data.c_str(), data.size());
         _stream.write("\n", 1);
     }
@@ -54,26 +77,6 @@ private:
     const Poco::Int64 _epochStart;
     std::fstream _stream;
     std::mutex _mutex;
-};
-
-class TraceFileRecord
-{
-public:
-    enum class Direction
-    {
-        Invalid,
-        Incoming,
-        Outgoing
-    };
-
-    TraceFileRecord() :
-        Dir(Direction::Invalid)
-    {
-    }
-
-    Direction Dir;
-    unsigned TimestampNs;
-    std::string Payload;
 };
 
 class TraceFileReader
@@ -124,12 +127,13 @@ private:
         while (std::getline(_stream, line) && !line.empty())
         {
             const auto v = split(line, line[0]);
-            if (v.size() == 2)
+            if (v.size() == 3)
             {
                 TraceFileRecord rec;
-                rec.Dir = (line[0] == '>' ? TraceFileRecord::Direction::Incoming : TraceFileRecord::Direction::Outgoing);
-                rec.TimestampNs = std::atoi(v[0].c_str());
-                rec.Payload = v[1];
+                rec.Dir = static_cast<TraceFileRecord::Direction>(line[0]);
+                rec.Pid = std::atoi(v[0].c_str());
+                rec.TimestampNs = std::atoi(v[1].c_str());
+                rec.Payload = v[2];
                 _records.push_back(rec);
             }
         }

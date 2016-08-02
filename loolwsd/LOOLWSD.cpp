@@ -862,6 +862,8 @@ public:
         const auto id = LOOLWSD::GenSessionId();
 
         Poco::URI requestUri(request.getURI());
+        Log::debug("Handling GET: " + request.getURI());
+
         std::vector<std::string> reqPathSegs;
         requestUri.getPathSegments(reqPathSegs);
 
