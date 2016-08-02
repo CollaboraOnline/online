@@ -10,11 +10,13 @@
 #include <unistd.h>
 
 #include <algorithm>
+#include <chrono>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <thread>
 
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -87,9 +89,6 @@ public:
     {
         std::cerr << "Connecting to server: " << _app._serverURI << "\n";
 
-        const auto rec = _traceFile.getNextRecord(TraceFileRecord::Direction::Incoming);
-        std::cout << rec.Payload << "\n";
-
         Poco::URI uri(_app._serverURI);
 
         const auto documentURL = _traceFile.getDocURI();
@@ -100,9 +99,26 @@ public:
         Poco::Net::HTTPResponse response;
         auto socket = helpers::connectLOKit(uri, request, response, "loolStress ");
 
+        const auto epochStart(std::chrono::steady_clock::now());
         try
         {
+            for (;;)
+            {
+                const auto rec = _traceFile.getNextRecord(TraceFileRecord::Direction::Incoming);
+                if (rec.Dir == TraceFileRecord::Direction::Invalid)
+                {
+                    break;
+                }
 
+                const auto delta = (epochStart - std::chrono::steady_clock::now());
+                const auto delay = rec.TimestampNs - std::chrono::duration_cast<std::chrono::microseconds>(delta).count();
+                if (delay > 0)
+                {
+                    std::this_thread::sleep_for(std::chrono::microseconds(delay));
+                }
+
+                helpers::sendTextFrame(socket, rec.Payload);
+            }
         }
         catch (const Poco::Exception &e)
         {
