@@ -88,6 +88,8 @@ public:
         readFile();
     }
 
+    const std::string& getDocURI() const { return _docURI; }
+
     TraceFileRecord getNextRecord(const TraceFileRecord::Direction dir)
     {
         if (dir == TraceFileRecord::Direction::Incoming)
@@ -134,6 +136,25 @@ private:
 
         _indexIn = advance(-1, TraceFileRecord::Direction::Incoming);
         _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
+
+        if (_records.size() > 1)
+        {
+            if (_records[0].Payload.find("loolclient") == 0 &&
+                _records[1].Payload.find("load url=") == 0)
+            {
+                _docURI = _records[1].Payload.substr(9);
+                return;
+            }
+            else if (_records[0].Payload.find("load url=") == 0)
+            {
+                _docURI = _records[0].Payload.substr(9);
+                return;
+            }
+        }
+
+        fprintf(stderr, "Invalid trace file with %ld records. First record: %s\n", _records.size(),
+                _records.empty() ? "<empty>" : _records[0].Payload.c_str());
+        throw std::runtime_error("Invalid trace file.");
     }
 
     std::vector<std::string> split(const std::string& s, const char delim) const
@@ -169,6 +190,7 @@ private:
     const Poco::Int64 _epochStart;
     std::ifstream _stream;
     std::vector<TraceFileRecord> _records;
+    std::string _docURI;
     unsigned _indexIn;
     unsigned _indexOut;
 };

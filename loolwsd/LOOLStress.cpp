@@ -85,19 +85,20 @@ public:
 
     void run() override
     {
-        _traceFile.readFile();
-
         std::cerr << "Connecting to server: " << _app._serverURI << "\n";
+
+        const auto rec = _traceFile.getNextRecord(TraceFileRecord::Direction::Incoming);
+        std::cout << rec.Payload << "\n";
 
         Poco::URI uri(_app._serverURI);
 
-        const auto documentURL = "lool/ws/file://" + Poco::Path(_traceFilePath).makeAbsolute().toString();
+        const auto documentURL = _traceFile.getDocURI();
+        std::cerr << "Loading: " << documentURL << "\n";
 
-        std::unique_ptr<Poco::Net::HTTPClientSession> session;
-        if (_app._serverURI.compare(0, 5, "https"))
-            session.reset(new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort()));
-        else
-            session.reset(new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort()));
+        // Load a document and get its status.
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::HTTPResponse response;
+        auto socket = helpers::connectLOKit(uri, request, response, "loolStress ");
 
         try
         {
@@ -117,7 +118,7 @@ private:
 };
 
 Stress::Stress() :
-    _numClients(4),
+    _numClients(1),
 #if ENABLE_SSL
     _serverURI("https://127.0.0.1:" + std::to_string(DEFAULT_CLIENT_PORT_NUMBER))
 #else

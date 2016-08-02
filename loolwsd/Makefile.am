@@ -78,7 +78,8 @@ loolmap_SOURCES = loolmap.c
 
 looltool_SOURCES = LOOLTool.cpp
 
-loolstress_SOURCES = LOOLStress.cpp
+loolstress_SOURCES = LOOLStress.cpp \
+                     LOOLProtocol.cpp
 
 noinst_HEADERS = Admin.hpp \
                  AdminModel.hpp \
