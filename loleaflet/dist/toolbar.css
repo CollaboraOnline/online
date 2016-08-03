@@ -256,16 +256,16 @@ button.leaflet-control-search-next
 .w2ui-icon.nextrecord{ background: url('/loleaflet/dist/images/lc_nextrecord.png') no-repeat center !important; }
 .w2ui-icon.prevrecord{ background: url('/loleaflet/dist/images/lc_prevrecord.png') no-repeat center !important; }
 .w2ui-icon.lastrecord{ background: url('/loleaflet/dist/images/lc_lastrecord.png') no-repeat center !important; }
-.w2ui-icon.wraptext{ background: url('/loleaflet/dist/images/sc_wraptext.png') no-repeat center !important; }
-.w2ui-icon.togglemergecells{ background: url('/loleaflet/dist/images/sc_togglemergecells.png') no-repeat center !important; }
-.w2ui-icon.numberformatcurrency{ background: url('/loleaflet/dist/images/sc_currencyfield.png') no-repeat center !important; }
-.w2ui-icon.numberformatpercent{ background: url('/loleaflet/dist/images/sc_numberformatpercent.png') no-repeat center !important; }
-.w2ui-icon.numberformatdecimal{ background: url('/loleaflet/dist/images/sc_numberformatdecimal.png') no-repeat center !important; }
+.w2ui-icon.wraptext{ background: url('/loleaflet/dist/images/lc_wraptext.png') no-repeat center !important; }
+.w2ui-icon.togglemergecells{ background: url('/loleaflet/dist/images/lc_togglemergecells.png') no-repeat center !important; }
+.w2ui-icon.numberformatcurrency{ background: url('/loleaflet/dist/images/lc_currencyfield.png') no-repeat center !important; }
+.w2ui-icon.numberformatpercent{ background: url('/loleaflet/dist/images/lc_numberformatpercent.png') no-repeat center !important; }
+.w2ui-icon.numberformatdecimal{ background: url('/loleaflet/dist/images/lc_numberformatdecimal.png') no-repeat center !important; }
 .w2ui-icon.numberformatdate{ background: url('/loleaflet/dist/images/lc_datefield.png') no-repeat center !important; }
 .w2ui-icon.numberformatincdecimals{ background: url('/loleaflet/dist/images/lc_numberformatincdecimals.png') no-repeat center !important; }
 .w2ui-icon.numberformatdecdecimals{ background: url('/loleaflet/dist/images/lc_numberformatdecdecimals.png') no-repeat center !important; }
-.w2ui-icon.sortascending{ background: url('/loleaflet/dist/images/sc_sortascending.png') no-repeat center !important; }
-.w2ui-icon.sortdescending{ background: url('/loleaflet/dist/images/sc_sortdescending.png') no-repeat center !important; }
+.w2ui-icon.sortascending{ background: url('/loleaflet/dist/images/lc_sortascending.png') no-repeat center !important; }
+.w2ui-icon.sortdescending{ background: url('/loleaflet/dist/images/lc_sortdescending.png') no-repeat center !important; }
 .w2ui-icon.selected{ background: url('/loleaflet/dist/images/lc_ok.png') no-repeat center !important; }
 
 .inserttable-pop {
