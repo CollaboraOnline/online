@@ -52,7 +52,7 @@ namespace Log
             {
             }
 
-            StreamLogger(StreamLogger&& sl)
+            StreamLogger(StreamLogger&& sl) noexcept
               : _stream(sl._stream.str())
               , _func(std::move(sl._func))
             {
