@@ -99,6 +99,16 @@ namespace LOKitHelper
             return "ERROR";
         case LOK_CALLBACK_CONTEXT_MENU:
             return "CONTEXT_MENU";
+        case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
+            return "INVALIDATE_VIEW_CURSOR";
+        case LOK_CALLBACK_TEXT_VIEW_SELECTION:
+            return "TEXT_VIEW_SELECTION";
+        case LOK_CALLBACK_CELL_VIEW_CURSOR:
+            return "CELL_VIEW_CURSOR";
+        case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
+            return "GRAPHIC_VIEW_SELECTION";
+        case LOK_CALLBACK_VIEW_LOCK:
+            return "VIEW_LOCK";
         }
 
         return std::to_string(nType);
