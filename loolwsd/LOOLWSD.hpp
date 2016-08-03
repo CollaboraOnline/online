@@ -62,6 +62,15 @@ public:
     }
 
     static
+    void dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
+    {
+        if (TraceDumper)
+        {
+            TraceDumper->writeEvent(pId, sessionId, data);
+        }
+    }
+
+    static
     void dumpIncomingTrace(const std::string& data)
     {
         if (TraceDumper)

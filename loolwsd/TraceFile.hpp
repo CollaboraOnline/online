@@ -21,7 +21,8 @@ public:
     {
         Invalid = 0,
         Incoming = '>',
-        Outgoing = '<'
+        Outgoing = '<',
+        Event = '-'
     };
 
     TraceFileRecord() :
@@ -47,6 +48,13 @@ public:
     ~TraceFileWriter()
     {
         _stream.close();
+    }
+
+    void writeEvent(const std::string& pId, const std::string& sessionId, const std::string& data)
+    {
+        (void)pId;
+        (void)sessionId;
+        write(data, static_cast<char>(TraceFileRecord::Direction::Event));
     }
 
     void writeIncoming(const std::string& data)

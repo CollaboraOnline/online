@@ -683,6 +683,8 @@ private:
             // Wait until the client has connected with a prison socket.
             waitBridgeCompleted(session);
 
+            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession");
+
             // Now the bridge beetween the client and kit process is connected
             status = "statusindicator: ready";
             Log::trace("Sending to Client [" + status + "].");
@@ -758,6 +760,7 @@ private:
                 Admin::instance().rmDoc(docKey);
             }
 
+            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession");
             Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
             queue->put("eof");
             queueHandlerThread.join();
