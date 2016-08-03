@@ -2119,9 +2119,9 @@
       "resolved": "./node_shrinkwrap/jquery-2.2.4.tgz"
     },
     "jquery-contextmenu": {
-      "version": "2.1.0",
-      "from": "jquery-contextmenu@2.1.0",
-      "resolved": "./node_shrinkwrap/jquery-contextmenu-2.1.0.tgz"
+      "version": "2.2.3",
+      "from": "jquery-contextmenu@2.2.3",
+      "resolved": "./node_shrinkwrap/jquery-contextmenu-2.2.3.tgz"
     },
     "jquery-ui": {
       "version": "1.10.5",
