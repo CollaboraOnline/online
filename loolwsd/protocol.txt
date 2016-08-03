@@ -324,6 +324,10 @@ graphicviewselection:
 
     Per-view graphic selection. JSON payload.
 
+viewcursorvisible:
+
+    Per-view cursor visible. JSON payload.
+
 viewlock:
 
     Per-view lock rectangle. JSON payload.

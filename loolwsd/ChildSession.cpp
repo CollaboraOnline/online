@@ -249,6 +249,9 @@ public:
         case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
             _session.sendTextFrame("graphicviewselection: " + rPayload);
             break;
+        case LOK_CALLBACK_VIEW_CURSOR_VISIBLE:
+            _session.sendTextFrame("viewcursorvisible: " + rPayload);
+            break;
         case LOK_CALLBACK_VIEW_LOCK:
             _session.sendTextFrame("viewlock: " + rPayload);
             break;

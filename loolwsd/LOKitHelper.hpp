@@ -107,6 +107,8 @@ namespace LOKitHelper
             return "CELL_VIEW_CURSOR";
         case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
             return "GRAPHIC_VIEW_SELECTION";
+        case LOK_CALLBACK_VIEW_CURSOR_VISIBLE:
+            return "VIEW_CURSOR_VISIBLE";
         case LOK_CALLBACK_VIEW_LOCK:
             return "VIEW_LOCK";
         }
