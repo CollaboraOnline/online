@@ -3,7 +3,6 @@
   "version": "0.8.0-dev",
   "description": "JavaScript library for mobile-friendly interactive maps",
   "devDependencies": {
-    "copyfiles": "0.1.0",
     "browserify": "^13.1.0",
     "browserify-css": "^0.9.1",
     "devtools-detect": "2.1.1",
@@ -45,8 +44,6 @@
   "style": "main.css",
   "scripts": {
     "test": "jake test",
-    "prepublish": "jake build",
-    "publish": "./build/publish.sh",
     "bundle": "browserify . > dist/bundle.js",
     "bundle-debug": "browserify -d . > dist/bundle.js"
   },
