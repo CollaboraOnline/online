@@ -19,6 +19,20 @@ line e.g.
 
     prefix=/opt/npm
 
+All of the dependency tree is locked in the repository, so there is no need to fetch
+data from npm registry at all. An npm install will use the tarballs in node_shrinkwrap/
+directory, so build process can move forward even without an internet connection.
+
+To update any of the dependency, process often goes like this:
+
+1.) Change version of the dependency in package.json
+2.) Do an `npm update', which fetches the new module from npm registry
+3.) Do `shrinkpack', which should remove the old tarball, add new one, and make appropriate
+    changes to npm-shrinkwrap.json
+
+If you have not installed `shrinkpack' globally using `npm install -g shrinkpack', it should be
+in node_modules/.bin/shrinkpack, so you can use the binary from there.
+
 Building
 --------
 
