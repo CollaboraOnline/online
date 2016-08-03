@@ -72,6 +72,7 @@ if (host === '') {
 // TODO: Get rid of these globals
 global.closebutton = closebutton;
 global.revHistoryEnabled = revHistoryEnabled;
+global.title = title;
 var docURL, docParams;
 if (wopiSrc != '') {
     docURL = wopiSrc;
