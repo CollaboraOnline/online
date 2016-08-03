@@ -54,7 +54,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     Log::trace(getName() + ": handling [" + firstLine + "].");
 
-    LOOLWSD::dumpOutgoingTrace(firstLine);
+    LOOLWSD::dumpOutgoingTrace(_docBroker->getJailId(), getId(), firstLine);
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {

@@ -71,20 +71,20 @@ public:
     }
 
     static
-    void dumpIncomingTrace(const std::string& data)
+    void dumpIncomingTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
         if (TraceDumper)
         {
-            TraceDumper->writeIncoming(data);
+            TraceDumper->writeIncoming(pId, sessionId, data);
         }
     }
 
     static
-    void dumpOutgoingTrace(const std::string& data)
+    void dumpOutgoingTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
         if (TraceDumper)
         {
-            TraceDumper->writeOutgoing(data);
+            TraceDumper->writeOutgoing(pId, sessionId, data);
         }
     }
 

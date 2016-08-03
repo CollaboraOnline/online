@@ -64,7 +64,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     Log::trace(getName() + ": handling [" + firstLine + "].");
 
-    LOOLWSD::dumpIncomingTrace(firstLine);
+    LOOLWSD::dumpIncomingTrace(_docBroker->getJailId(), getId(), firstLine);
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {

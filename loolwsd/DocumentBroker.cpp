@@ -454,7 +454,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     Log::trace("DocumentBroker got child message: [" + LOOLProtocol::getAbbreviatedMessage(payload) + "].");
 
     const auto command = LOOLProtocol::getFirstToken(payload);
-    LOOLWSD::dumpOutgoingTrace(command);
+    LOOLWSD::dumpOutgoingTrace(getJailId(), "0", command);
 
     if (command == "tile:")
     {

@@ -31,8 +31,9 @@ public:
     }
 
     Direction Dir;
-    unsigned Pid;
     unsigned TimestampNs;
+    unsigned Pid;
+    unsigned SessionId;
     std::string Payload;
 };
 
@@ -52,30 +53,30 @@ public:
 
     void writeEvent(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
-        (void)pId;
-        (void)sessionId;
-        write(data, static_cast<char>(TraceFileRecord::Direction::Event));
+        write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
     }
 
-    void writeIncoming(const std::string& data)
+    void writeIncoming(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
-        write(data, static_cast<char>(TraceFileRecord::Direction::Incoming));
+        write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
     }
 
-    void writeOutgoing(const std::string& data)
+    void writeOutgoing(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
-        write(data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
+        write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
     }
 
 private:
-    void write(const std::string& data, const char delim)
+    void write(const std::string& pId, const std::string& sessionId, const std::string& data, const char delim)
     {
         std::unique_lock<std::mutex> lock(_mutex);
         const Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - _epochStart;
         _stream.write(&delim, 1);
-        _stream << getpid();
-        _stream.write(&delim, 1);
         _stream << usec;
+        _stream.write(&delim, 1);
+        _stream << pId;
+        _stream.write(&delim, 1);
+        _stream << sessionId;
         _stream.write(&delim, 1);
         _stream.write(data.c_str(), data.size());
         _stream.write("\n", 1);
