@@ -103,7 +103,7 @@ unpremultiply_data (png_structp /*png*/, png_row_infop row_info, png_bytep data)
 // Sadly, older libpng headers don't use const for the pixmap pointer parameter to
 // png_write_row(), so can't use const here for pixmap.
 inline
-bool encodeSubBufferToPNG(unsigned char* pixmap, int startX, int startY,
+bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
                           int width, int height,
                           int bufferWidth, int bufferHeight,
                           std::vector<char>& output, LibreOfficeKitTileMode mode)
