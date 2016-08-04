@@ -1402,7 +1402,23 @@ void LOOLWSD::initialize(Application& self)
     if (getConfigValue<bool>(conf, "trace[@enable]", false))
     {
         const auto& path = getConfigValue<std::string>(conf, "trace.path", "");
-        TraceDumper.reset(new TraceFileWriter(path, getConfigValue<bool>(conf, "trace.outgoing.record", false)));
+        const auto recordOutgoing = getConfigValue<bool>(conf, "trace.outgoing.record", false);
+        std::vector<std::string> filters;
+        for (size_t i = 0; ; ++i)
+        {
+            const std::string confPath = "trace.filter.message[" + std::to_string(i) + "]";
+            const auto regex = config().getString(confPath, "");
+            if (!regex.empty())
+            {
+                filters.push_back(regex);
+            }
+            else if (!config().has(confPath))
+            {
+                break;
+            }
+        }
+
+        TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, filters));
         Log::info("Command trace dumping enabled to file: " + path);
     }
 

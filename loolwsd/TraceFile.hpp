@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+#include "Util.hpp"
+
 /// Dumps commands and notification trace.
 class TraceFileRecord
 {
@@ -40,11 +42,16 @@ public:
 class TraceFileWriter
 {
 public:
-    TraceFileWriter(const std::string& path, const bool recordOugoing) :
+    TraceFileWriter(const std::string& path, const bool recordOugoing, const std::vector<std::string>& filters) :
         _epochStart(Poco::Timestamp().epochMicroseconds()),
         _recordOutgoing(recordOugoing),
+        _filter(true),
         _stream(path, std::ios::out)
     {
+        for (const auto& f : filters)
+        {
+            _filter.deny(f);
+        }
     }
 
     ~TraceFileWriter()
@@ -59,12 +66,15 @@ public:
 
     void writeIncoming(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
-        write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
+        if (_filter.match(data))
+        {
+            write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
+        }
     }
 
     void writeOutgoing(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
-        if (_recordOutgoing)
+        if (_recordOutgoing && _filter.match(data))
         {
             write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
         }
@@ -89,6 +99,7 @@ private:
 private:
     const Poco::Int64 _epochStart;
     const bool _recordOutgoing;
+    Util::RegexListMatcher _filter;
     std::fstream _stream;
     std::mutex _mutex;
 };

@@ -114,18 +114,33 @@ namespace Util
     class RegexListMatcher
     {
     public:
-        RegexListMatcher()
+        RegexListMatcher() :
+            _allowByDefault(false)
+        {
+        }
+
+        RegexListMatcher(const bool allowByDefault) :
+            _allowByDefault(allowByDefault)
         {
         }
 
         RegexListMatcher(std::initializer_list<std::string> allowed) :
+            _allowByDefault(false),
             _allowed(allowed)
         {
         }
 
         RegexListMatcher(std::initializer_list<std::string> allowed,
                          std::initializer_list<std::string> denied) :
+            _allowByDefault(false),
             _allowed(allowed),
+            _denied(denied)
+        {
+        }
+
+        RegexListMatcher(const bool allowByDefault,
+                         std::initializer_list<std::string> denied) :
+            _allowByDefault(allowByDefault),
             _denied(denied)
         {
         }
@@ -145,7 +160,8 @@ namespace Util
 
         bool match(const std::string& subject) const
         {
-            return (match(_allowed, subject) && !match(_denied, subject));
+            return (_allowByDefault || match(_allowed, subject)) &&
+                    !match(_denied, subject);
         }
 
     private:
@@ -181,6 +197,7 @@ namespace Util
         }
 
     private:
+        const bool _allowByDefault;
         std::set<std::string> _allowed;
         std::set<std::string> _denied;
     };
