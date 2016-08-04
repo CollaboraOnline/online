@@ -92,24 +92,27 @@ L.Control.ColumnHeader = L.Control.extend({
 	},
 
 	fillColumns: function (columns, converter, context) {
-		var iterator, twip, width, text;
+		var iterator, twip, width, column, text, resize;
 
 		this.clearColumns();
 		for (iterator = 0; iterator < columns.length; iterator++) {
 			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
 			twip = new L.Point(width, width);
-			text = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
+			column = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
+			text = L.DomUtil.create('div', 'spreadsheet-header-column-text', column);
+			resize = L.DomUtil.create('div', 'spreadsheet-header-column-resize', column);
 			var content = columns[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
 			text.innerHTML = content;
-			width = Math.round(converter.call(context, twip).x) - 1 + 'px';
-			if (width === '-1px') {
+			width = Math.round(converter.call(context, twip).x) - 1;
+			if (width === -1) {
 				L.DomUtil.setStyle(text, 'display', 'none');
 			}
 			else {
-				L.DomUtil.setStyle(text, 'width', width);
+				L.DomUtil.setStyle(column, 'width', width + 'px');
+				L.DomUtil.setStyle(text, 'width', width - 3 + 'px');
+				L.DomUtil.setStyle(resize, 'width', '3px');
 			}
-
 			L.DomEvent.addListener(text, 'click', this._onColumnHeaderClick, this);
 		}
 	},
