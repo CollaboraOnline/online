@@ -6,7 +6,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+%if 0%{?name_suffix:1}
+Name:           loolwsd%{name_suffix}
+%else
 Name:           loolwsd
+%endif
 Version:        @PACKAGE_VERSION@
 Release:        1%{?dist}
 Vendor:         Collabora
@@ -42,14 +46,14 @@ Requires:       libPocoCrypto42 >= 1.7.1 libPocoFoundation42 >= 1.7.1 libPocoJSO
 Requires:       Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig libatk-1_0-0 libavahi-client3 libavahi-common3 libavahi-glib1 libbz2-1 libcairo2 libcom_err2 libdbus-1-3 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgraphite2-3 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libkeyutils1 liblzma5 libpixman-1-0 libpng16-16 libuuid1 libxml2 libffi4 libgbm1 libICE6 libselinux1 libSM6 libwayland-client0 libwayland-server0 libX11-6 libX11-xcb1 libXau6 libxcb1 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-render0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libXdamage1 libXext6 libXfixes3 libXrender1 libxshmfence1 libXxf86vm1
 %endif
 %endif
-Provides:       loleaflet = 1.5.8
+Provides:       loleaflet = 1.5.8, loolwsd
 Obsoletes:      loleaflet <= 1.5.8
 
 %description
 
 %prep
-%setup
-%setup -T -D -a 1
+%setup -n loolwsd-@PACKAGE_VERSION@
+%setup -n loolwsd-@PACKAGE_VERSION@ -T -D -a 1
 
 %build
 %configure \
