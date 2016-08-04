@@ -3,6 +3,13 @@
  */
 
 L.CalcTileLayer = L.TileLayer.extend({
+	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
+                              * 0.1986cm with TeX points,
+                              * 0.1993cm with PS points. */
+
+	twipsToHMM: function (twips) {
+		return (twips * 127 + 36) / 72;
+	},
 
 	beforeAdd: function (map) {
 		map._addZoomLimit(this);

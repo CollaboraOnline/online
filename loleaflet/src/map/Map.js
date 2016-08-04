@@ -65,6 +65,7 @@ L.Map = L.Evented.extend({
 		this._sizeChanged = true;
 		this._bDisableKeyboard = false;
 		this._active = true;
+		this._enabled = true;
 
 		vex.dialogID = -1;
 
@@ -825,7 +826,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_handleDOMEvent: function (e) {
-		if (!this._loaded || L.DomEvent._skipped(e)) { return; }
+		if (!this._loaded || !this._enabled || L.DomEvent._skipped(e)) { return; }
 
 		// find the layer the event is propagating from
 		var target = this._targets[L.stamp(e.target || e.srcElement)],
@@ -996,6 +997,16 @@ L.Map = L.Evented.extend({
 		    max = this.getMaxZoom();
 
 		return Math.max(min, Math.min(max, zoom));
+	},
+
+	enable: function(enabled) {
+		this._enabled = enabled;
+		if (this._enabled) {
+			$('.scroll-container').mCustomScrollbar('update');
+		}
+		else {
+			$('.scroll-container').mCustomScrollbar('disable');
+		}
 	}
 });
 

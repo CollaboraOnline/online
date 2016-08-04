@@ -260,30 +260,44 @@ var deps = {
 		desc: 'Parts preview sidebar'
 	},
 
+	ControlHeader: {
+		src: ['control/Control.js',
+		      'control/Control.Header.js'],
+		heading: 'Controls',
+		desc: 'Header Item'
+	},
+
 	ControlColumnHeader: {
 		src: ['control/Control.js',
-			  'control/Control.ColumnHeader.js'],
+		      'control/Control.ColumnHeader.js'],
 		heading: 'Controls',
 		desc: 'Column Header bar'
 	},
 
 	ControlRowHeader: {
 		src: ['control/Control.js',
-			  'control/Control.RowHeader.js'],
+		      'control/Control.RowHeader.js'],
 		heading: 'Controls',
 		desc: 'Row Header bar'
 	},
 
+	ControlMetricInput: {
+		src: ['control/Control.js',
+		      'control/Control.MetricInput.js'],
+		heading: 'Controls',
+		desc: 'Metric Input'
+	},
+
 	ControlContextmenu: {
 		src: ['control/Control.js',
-			'control/Control.ContextMenu.js'],
+		      'control/Control.ContextMenu.js'],
 		heading: 'Controls',
 		desc: 'Context Menu'
 	},
 
 	ControlMenubar: {
 		src: ['control/Control.js',
-			'control/Control.Menubar.js'],
+		      'control/Control.Menubar.js'],
 		heading: 'Controls',
 		desc: 'Menu bar'
 	},

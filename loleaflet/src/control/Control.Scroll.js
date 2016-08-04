@@ -35,6 +35,10 @@ L.Control.Scroll = L.Control.extend({
 	},
 
 	_onScroll: function (e) {
+		if (!this._map._enabled) {
+			return;
+		}
+
 		if (this._ignoreScroll) {
 			this._ignoreScroll = null;
 			return;

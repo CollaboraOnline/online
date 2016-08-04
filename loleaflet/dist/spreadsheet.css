@@ -99,24 +99,13 @@
 
 .spreadsheet-header-column {
 	border-right: 1px solid darkgrey;
-	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
-
 	display: inline-block;
-	text-align: center;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	text-align: left;
 	padding: 0px;
 	padding-top: 1px;
 	margin: 0px;
 	height: 100%;
-	cursor: pointer;
-
-	/* Make the text unselectable for all browsers */
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
+	overflow: hidden;
 	}
 
 .spreadsheet-header-column:hover {
@@ -146,14 +135,28 @@
 
 .spreadsheet-header-row {
 	border-bottom: 1px solid darkgrey;
-	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
-
-	text-overflow: ellipsis;
-	text-align: center;
-	white-space: nowrap;
 	padding: 0px;
 	margin: 0px;
 	height: 100%;
+	cursor: pointer;
+	overflow: hidden;
+	}
+
+.spreadsheet-header-row:hover {
+	background-color: #DDD;
+	}
+
+.spreadsheet-header-column-text {
+	display: inline-block;
+	vertical-align: top;
+	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: center;
+	height: 100%;
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
 	cursor: pointer;
 
 	/* Make the text unselectable for all browsers */
@@ -164,6 +167,39 @@
 	-ms-user-select: none;
 	}
 
-.spreadsheet-header-row:hover {
-	background-color: #DDD;
+.spreadsheet-header-column-resize {
+	display: inline-block;
+	vertical-align: top;
+	cursor: col-resize;
+	height: 100%;
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
+	}
+
+.spreadsheet-header-row-text {
+	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: center;
+	height: 100%;
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
+	cursor: pointer;
+
+	/* Make the text unselectable for all browsers */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	}
+
+.spreadsheet-header-row-resize {
+	cursor: row-resize;
+	height: 100%;
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
 	}

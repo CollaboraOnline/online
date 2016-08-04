@@ -111,6 +111,9 @@
 .leaflet-top {
 	top: 0;
 	}
+.leaflet-middle {
+	left: 50%;
+	}
 .leaflet-right {
 	right: 0;
 	}

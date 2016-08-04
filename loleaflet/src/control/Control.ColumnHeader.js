@@ -3,7 +3,11 @@
 */
 
 /* global $ _ */
-L.Control.ColumnHeader = L.Control.extend({
+L.Control.ColumnHeader = L.Control.Header.extend({
+	options: {
+		cursor: 'col-resize'
+	},
+
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
 		this._initialized = false;
@@ -27,7 +31,7 @@ L.Control.ColumnHeader = L.Control.extend({
 
 		var colHeaderObj = this;
 		$.contextMenu({
-			selector: '.spreadsheet-header-column',
+			selector: '.spreadsheet-header-column-text',
 			className: 'loleaflet-font',
 			items: {
 				'insertcolbefore': {
@@ -43,10 +47,29 @@ L.Control.ColumnHeader = L.Control.extend({
 						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
 						colHeaderObj.deleteColumn.call(colHeaderObj, colAlpha);
 					}
+				},
+				'optimalwidth': {
+					name: _('Optimal Width') + '...',
+					callback: function(key, options) {
+						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
+						colHeaderObj.optimalWidth.call(colHeaderObj, colAlpha);
+					}
 				}
 			},
 			zIndex: 10
 		});
+	},
+
+	optimalWidth: function(colAlpha) {
+		if (!this._dialog) {
+			this._dialog = L.control.metricInput(this._onDialogResult, this,
+							     this._map._docLayer.twipsToHMM(this._map._docLayer.STD_EXTRA_WIDTH),
+							     {title: _('Optimal Column Width')});
+		}
+		this._selectColumn(colAlpha, 0);
+		this._dialog.addTo(this._map);
+		this._map.enable(false);
+		this._dialog.show();
 	},
 
 	insertColumn: function(colAlpha) {
@@ -92,24 +115,37 @@ L.Control.ColumnHeader = L.Control.extend({
 	},
 
 	fillColumns: function (columns, converter, context) {
-		var iterator, twip, width, text;
+		var iterator, twip, width, column, text, resize;
 
 		this.clearColumns();
 		for (iterator = 0; iterator < columns.length; iterator++) {
 			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
 			twip = new L.Point(width, width);
-			text = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
+			column = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
+			text = L.DomUtil.create('div', 'spreadsheet-header-column-text', column);
+			resize = L.DomUtil.create('div', 'spreadsheet-header-column-resize', column);
 			var content = columns[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
 			text.innerHTML = content;
-			width = Math.round(converter.call(context, twip).x) - 1 + 'px';
-			if (width === '-1px') {
-				L.DomUtil.setStyle(text, 'display', 'none');
+			width = Math.round(converter.call(context, twip).x) - 1;
+			if (width <= 0) {
+				L.DomUtil.setStyle(column, 'display', 'none');
+			} else if (width < 10) {
+				text.column = iterator + 1;
+				text.width = width;
+				L.DomUtil.setStyle(column, 'width', width + 'px');
+				L.DomUtil.setStyle(column, 'cursor', 'col-resize');
+				L.DomUtil.setStyle(text, 'cursor', 'col-resize');
+				L.DomUtil.setStyle(resize, 'display', 'none');
+				this.mouseInit(text);
+			} else {
+				resize.column = iterator + 1;
+				resize.width = width;
+				L.DomUtil.setStyle(column, 'width', width + 'px');
+				L.DomUtil.setStyle(text, 'width', width - 3 + 'px');
+				L.DomUtil.setStyle(resize, 'width', '3px');
+				this.mouseInit(resize);
 			}
-			else {
-				L.DomUtil.setStyle(text, 'width', width);
-			}
-
 			L.DomEvent.addListener(text, 'click', this._onColumnHeaderClick, this);
 		}
 	},
@@ -158,6 +194,90 @@ L.Control.ColumnHeader = L.Control.extend({
 
 	_onCornerHeaderClick: function() {
 		this._map.sendUnoCommand('.uno:SelectAll');
+	},
+
+	_onDialogResult: function (e) {
+		if (e.type === 'submit' && !isNaN(e.value)) {
+			var extra = {
+				aExtraWidth: {
+					type: 'unsigned short',
+					value: e.value
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:SetOptimalColumnWidth', extra);
+		}
+
+		this._map.enable(true);
+	},
+
+	_getVertLatLng: function (start, offset, e) {
+		var limit = this._map.mouseEventToContainerPoint({clientX: start.x, clientY: start.y});
+		var drag = this._map.mouseEventToContainerPoint(e);
+		return [
+			this._map.containerPointToLatLng(new L.Point(Math.max(limit.x, drag.x + offset.x), 0)),
+			this._map.containerPointToLatLng(new L.Point(Math.max(limit.x, drag.x + offset.x), this._map.getSize().y))
+		];
+	},
+
+	onDragStart: function (item, start, offset, e) {
+		if (!this._vertLine) {
+			this._vertLine = L.polyline(this._getVertLatLng(start, offset, e), {color: 'darkblue', weight: 1});
+		}
+		else {
+			this._vertLine.setLatLngs(this._getVertLatLng(start, offset, e));
+		}
+
+		this._map.addLayer(this._vertLine);
+	},
+
+	onDragMove: function (item, start, offset, e) {
+		if (this._vertLine) {
+			this._vertLine.setLatLngs(this._getVertLatLng(start, offset, e));
+		}
+	},
+
+	onDragEnd: function (item, start, offset, e) {
+		var end = new L.Point(e.clientX + offset.x, e.clientY);
+		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
+
+		if (item.width != distance.x) {
+			var command = {
+				Column: {
+					type: 'unsigned short',
+					value: item.parentNode && item.parentNode.nextSibling &&
+					       L.DomUtil.getStyle(item.parentNode.nextSibling, 'display') === 'none' ? item.column + 1 : item.column
+				},
+				Width: {
+					type: 'unsigned short',
+					value: Math.max(distance.x, 0)
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:ColumnWidth', command);
+		}
+
+		this._map.removeLayer(this._vertLine);
+	},
+
+	onDragClick: function (item, clicks, e) {
+		this._map.removeLayer(this._vertLine);
+
+		if (clicks === 2) {
+			var command = {
+				Col: {
+					type: 'unsigned short',
+					value: item.column - 1
+				},
+				Modifier: {
+					type: 'unsigned short',
+					value: 0
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:SelectColumn ', command);
+			this._map.sendUnoCommand('.uno:SetOptimalColumnWidthDirect');
+		}
 	},
 
 	_onUpdatePermission: function (e) {
