@@ -76,37 +76,63 @@ using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 
+class Connection
+{
+public:
+    static
+    std::unique_ptr<Connection> create(const std::string& serverURI, const std::string& documentURL, const std::string& sessionId)
+    {
+        Poco::URI uri(serverURI);
+
+        // Load a document and get its status.
+        std::cerr << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/ws/" + documentURL);
+        Poco::Net::HTTPResponse response;
+        auto ws = helpers::connectLOKit(uri, request, response, "loolStress ");
+        std::cerr << "Connected.\n";
+        return std::unique_ptr<Connection>(new Connection(documentURL, sessionId, ws));
+    }
+
+    void send(const std::string& data) const
+    {
+        helpers::sendTextFrame(_ws, data, "loolstress ");
+    }
+
+private:
+    Connection(const std::string& documentURL, const std::string& sessionId, std::shared_ptr<Poco::Net::WebSocket>& ws) :
+        _documentURL(documentURL),
+        _sessionId(sessionId),
+        _ws(ws)
+    {
+    }
+
+private:
+    const std::string _documentURL;
+    const std::string _sessionId;
+    std::shared_ptr<Poco::Net::WebSocket> _ws;
+};
+
 class Worker: public Runnable
 {
 public:
 
     Worker(Stress& app, const std::string& traceFilePath) :
-        _app(app), _traceFile(traceFilePath)
+        _app(app),
+        _traceFile(traceFilePath)
     {
     }
 
     void run() override
     {
-        std::cerr << "Connecting to server: " << _app._serverURI << "\n";
-
-        Poco::URI uri(_app._serverURI);
-
-        const auto documentURL = _traceFile.getDocURI();
-        std::cerr << "Loading: " << documentURL << "\n";
-
-        // Load a document and get its status.
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::HTTPResponse response;
-        auto socket = helpers::connectLOKit(uri, request, response, "loolStress ");
-
         const auto epochStart(std::chrono::steady_clock::now());
         try
         {
             for (;;)
             {
-                const auto rec = _traceFile.getNextRecord(TraceFileRecord::Direction::Incoming);
+                const auto rec = _traceFile.getNextRecord();
                 if (rec.Dir == TraceFileRecord::Direction::Invalid)
                 {
+                    // End of trace file.
                     break;
                 }
 
@@ -117,7 +143,82 @@ public:
                     std::this_thread::sleep_for(std::chrono::microseconds(delay));
                 }
 
-                helpers::sendTextFrame(socket, rec.Payload);
+                if (rec.Dir == TraceFileRecord::Direction::Event)
+                {
+                    // Meta info about about an event.
+                    static const std::string NewSession("NewSession: ");
+                    static const std::string EndSession("EndSession: ");
+
+                    if (rec.Payload.find(NewSession) == 0)
+                    {
+                        const auto& uri = rec.Payload.substr(NewSession.size());
+                        auto it = Sessions.find(uri);
+                        if (it != Sessions.end())
+                        {
+                            // Add a new session.
+                            if (it->second.find(rec.SessionId) != it->second.end())
+                            {
+                                std::cerr << "ERROR: session [" << rec.SessionId << "] already exists on doc [" << uri << "]\n";
+                            }
+                            else
+                            {
+                                it->second.emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
+                            }
+                        }
+                        else
+                        {
+                            std::cerr << "New Document: " << uri << "\n";
+                            ChildToDoc.emplace(rec.Pid, uri);
+                            Sessions[uri].emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
+                        }
+                    }
+                    else if (rec.Payload.find(EndSession) == 0)
+                    {
+                        const auto& uri = rec.Payload.substr(EndSession.size());
+                        auto it = Sessions.find(uri);
+                        if (it != Sessions.end())
+                        {
+                            std::cerr << "EndSession [" << rec.SessionId << "]: " << uri << "\n";
+
+                            it->second.erase(rec.SessionId);
+                            if (it->second.empty())
+                            {
+                                std::cerr << "End Doc [" << uri << "].\n";
+                                Sessions.erase(it);
+                                ChildToDoc.erase(rec.Pid);
+                            }
+                        }
+                        else
+                        {
+                            std::cerr << "ERROR: Doc [" << uri << "] does not exist.\n";
+                        }
+                    }
+                }
+                else if (rec.Dir == TraceFileRecord::Direction::Incoming)
+                {
+                    auto docIt = ChildToDoc.find(rec.Pid);
+                    if (docIt != ChildToDoc.end())
+                    {
+                        const auto& uri = docIt->second;
+                        auto it = Sessions.find(uri);
+                        if (it != Sessions.end())
+                        {
+                            const auto sessionIt = it->second.find(rec.SessionId);
+                            if (sessionIt != it->second.end())
+                            {
+                                sessionIt->second->send(rec.Payload);
+                            }
+                        }
+                        else
+                        {
+                            std::cerr << "ERROR: Doc [" << uri << "] does not exist.\n";
+                        }
+                    }
+                    else
+                    {
+                        std::cerr << "ERROR: Unknown PID [" << rec.Pid << "] maps to no active document.\n";
+                    }
+                }
             }
         }
         catch (const Poco::Exception &e)
@@ -131,6 +232,12 @@ public:
 private:
     Stress& _app;
     TraceFileReader _traceFile;
+
+    /// LOK child process PID to Doc URI map.
+    std::map<unsigned, std::string> ChildToDoc;
+
+    /// Doc URI to Sessions map. Sessions are maps of SessionID to Connection.
+    std::map<std::string, std::map<std::string, std::unique_ptr<Connection>>> Sessions;
 };
 
 Stress::Stress() :

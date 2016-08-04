@@ -33,7 +33,7 @@ public:
     Direction Dir;
     unsigned TimestampNs;
     unsigned Pid;
-    unsigned SessionId;
+    std::string SessionId;
     std::string Payload;
 };
 
@@ -94,13 +94,23 @@ public:
     TraceFileReader(const std::string& path) :
         _epochStart(Poco::Timestamp().epochMicroseconds()),
         _stream(path),
+        _index(0),
         _indexIn(-1),
         _indexOut(-1)
     {
         readFile();
     }
 
-    const std::string& getDocURI() const { return _docURI; }
+    TraceFileRecord getNextRecord()
+    {
+        if (_index < _records.size())
+        {
+            return _records[_index++];
+        }
+
+        // Invalid.
+        return TraceFileRecord();
+    }
 
     TraceFileRecord getNextRecord(const TraceFileRecord::Direction dir)
     {
@@ -136,38 +146,34 @@ private:
         while (std::getline(_stream, line) && !line.empty())
         {
             const auto v = split(line, line[0]);
-            if (v.size() == 3)
+            if (v.size() == 4)
             {
                 TraceFileRecord rec;
                 rec.Dir = static_cast<TraceFileRecord::Direction>(line[0]);
-                rec.Pid = std::atoi(v[0].c_str());
-                rec.TimestampNs = std::atoi(v[1].c_str());
-                rec.Payload = v[2];
+                unsigned index = 0;
+                rec.TimestampNs = std::atoi(v[index++].c_str());
+                rec.Pid = std::atoi(v[index++].c_str());
+                rec.SessionId = v[index++];
+                rec.Payload = v[index++];
                 _records.push_back(rec);
+            }
+            else
+            {
+                fprintf(stderr, "Invalid trace file record, expected 4 tokens. [%s]\n", line.c_str());
             }
         }
 
         _indexIn = advance(-1, TraceFileRecord::Direction::Incoming);
         _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
 
-        if (_records.size() > 1)
+        if (_records.empty() ||
+            _records[0].Dir != TraceFileRecord::Direction::Event ||
+            _records[0].Payload.find("NewSession") != 0)
         {
-            if (_records[0].Payload.find("loolclient") == 0 &&
-                _records[1].Payload.find("load url=") == 0)
-            {
-                _docURI = _records[1].Payload.substr(9);
-                return;
-            }
-            else if (_records[0].Payload.find("load url=") == 0)
-            {
-                _docURI = _records[0].Payload.substr(9);
-                return;
-            }
+            fprintf(stderr, "Invalid trace file with %ld records. First record: %s\n", _records.size(),
+                    _records.empty() ? "<empty>" : _records[0].Payload.c_str());
+            throw std::runtime_error("Invalid trace file.");
         }
-
-        fprintf(stderr, "Invalid trace file with %ld records. First record: %s\n", _records.size(),
-                _records.empty() ? "<empty>" : _records[0].Payload.c_str());
-        throw std::runtime_error("Invalid trace file.");
     }
 
     std::vector<std::string> split(const std::string& s, const char delim) const
@@ -203,7 +209,7 @@ private:
     const Poco::Int64 _epochStart;
     std::ifstream _stream;
     std::vector<TraceFileRecord> _records;
-    std::string _docURI;
+    unsigned _index;
     unsigned _indexIn;
     unsigned _indexOut;
 };

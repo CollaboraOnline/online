@@ -551,7 +551,6 @@ private:
         if (uri.size() > 0 && uri.compare(0, 8, "lool/ws/") == 0)
             uri.erase(0, 8);
 
-
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
         std::shared_ptr<DocumentBroker> docBroker;
@@ -683,7 +682,7 @@ private:
             // Wait until the client has connected with a prison socket.
             waitBridgeCompleted(session);
 
-            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession");
+            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
             // Now the bridge beetween the client and kit process is connected
             status = "statusindicator: ready";
@@ -760,7 +759,7 @@ private:
                 Admin::instance().rmDoc(docKey);
             }
 
-            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession");
+            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
             Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
             queue->put("eof");
             queueHandlerThread.join();
