@@ -92,7 +92,7 @@ class TraceFileReader
 {
 public:
     TraceFileReader(const std::string& path) :
-        _epochStart(Poco::Timestamp().epochMicroseconds()),
+        _epochStart(0),
         _stream(path),
         _index(0),
         _indexIn(-1),
@@ -100,6 +100,8 @@ public:
     {
         readFile();
     }
+
+    Poco::Int64 getEpoch() const { return _epochStart; }
 
     TraceFileRecord getNextRecord()
     {
@@ -163,9 +165,6 @@ private:
             }
         }
 
-        _indexIn = advance(-1, TraceFileRecord::Direction::Incoming);
-        _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
-
         if (_records.empty() ||
             _records[0].Dir != TraceFileRecord::Direction::Event ||
             _records[0].Payload.find("NewSession") != 0)
@@ -174,6 +173,11 @@ private:
                     _records.empty() ? "<empty>" : _records[0].Payload.c_str());
             throw std::runtime_error("Invalid trace file.");
         }
+
+        _indexIn = advance(-1, TraceFileRecord::Direction::Incoming);
+        _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
+
+        _epochStart = _records[0].TimestampNs;
     }
 
     std::vector<std::string> split(const std::string& s, const char delim) const
@@ -206,7 +210,7 @@ private:
     }
 
 private:
-    const Poco::Int64 _epochStart;
+    Poco::Int64 _epochStart;
     std::ifstream _stream;
     std::vector<TraceFileRecord> _records;
     unsigned _index;

@@ -124,108 +124,119 @@ public:
 
     void run() override
     {
-        const auto epochStart(std::chrono::steady_clock::now());
         try
         {
-            for (;;)
+            doRun();
+        }
+        catch (const Poco::Exception &e)
+        {
+            std::cerr << "Error: " << e.name() << ' '
+                      << e.message() << std::endl;
+        }
+    }
+
+private:
+
+    void doRun()
+    {
+        auto epochFile(_traceFile.getEpoch());
+        auto epochCurrent(std::chrono::steady_clock::now());
+        for (;;)
+        {
+            const auto rec = _traceFile.getNextRecord();
+            if (rec.Dir == TraceFileRecord::Direction::Invalid)
             {
-                const auto rec = _traceFile.getNextRecord();
-                if (rec.Dir == TraceFileRecord::Direction::Invalid)
-                {
-                    // End of trace file.
-                    break;
-                }
+                // End of trace file.
+                break;
+            }
 
-                const auto delta = (epochStart - std::chrono::steady_clock::now());
-                const auto delay = rec.TimestampNs - std::chrono::duration_cast<std::chrono::microseconds>(delta).count();
-                if (delay > 0)
-                {
-                    std::this_thread::sleep_for(std::chrono::microseconds(delay));
-                }
+            const auto deltaCurrent = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - epochCurrent).count();
+            const auto deltaFile = rec.TimestampNs - epochFile;
+            const auto delay = deltaFile - deltaCurrent;
+            if (delay > 0)
+            {
+                std::this_thread::sleep_for(std::chrono::microseconds(delay));
+            }
 
-                if (rec.Dir == TraceFileRecord::Direction::Event)
-                {
-                    // Meta info about about an event.
-                    static const std::string NewSession("NewSession: ");
-                    static const std::string EndSession("EndSession: ");
+            if (rec.Dir == TraceFileRecord::Direction::Event)
+            {
+                // Meta info about about an event.
+                static const std::string NewSession("NewSession: ");
+                static const std::string EndSession("EndSession: ");
 
-                    if (rec.Payload.find(NewSession) == 0)
+                if (rec.Payload.find(NewSession) == 0)
+                {
+                    const auto& uri = rec.Payload.substr(NewSession.size());
+                    auto it = Sessions.find(uri);
+                    if (it != Sessions.end())
                     {
-                        const auto& uri = rec.Payload.substr(NewSession.size());
-                        auto it = Sessions.find(uri);
-                        if (it != Sessions.end())
+                        // Add a new session.
+                        if (it->second.find(rec.SessionId) != it->second.end())
                         {
-                            // Add a new session.
-                            if (it->second.find(rec.SessionId) != it->second.end())
-                            {
-                                std::cerr << "ERROR: session [" << rec.SessionId << "] already exists on doc [" << uri << "]\n";
-                            }
-                            else
-                            {
-                                it->second.emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
-                            }
+                            std::cerr << "ERROR: session [" << rec.SessionId << "] already exists on doc [" << uri << "]\n";
                         }
                         else
                         {
-                            std::cerr << "New Document: " << uri << "\n";
-                            ChildToDoc.emplace(rec.Pid, uri);
-                            Sessions[uri].emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
-                        }
-                    }
-                    else if (rec.Payload.find(EndSession) == 0)
-                    {
-                        const auto& uri = rec.Payload.substr(EndSession.size());
-                        auto it = Sessions.find(uri);
-                        if (it != Sessions.end())
-                        {
-                            std::cerr << "EndSession [" << rec.SessionId << "]: " << uri << "\n";
-
-                            it->second.erase(rec.SessionId);
-                            if (it->second.empty())
-                            {
-                                std::cerr << "End Doc [" << uri << "].\n";
-                                Sessions.erase(it);
-                                ChildToDoc.erase(rec.Pid);
-                            }
-                        }
-                        else
-                        {
-                            std::cerr << "ERROR: Doc [" << uri << "] does not exist.\n";
-                        }
-                    }
-                }
-                else if (rec.Dir == TraceFileRecord::Direction::Incoming)
-                {
-                    auto docIt = ChildToDoc.find(rec.Pid);
-                    if (docIt != ChildToDoc.end())
-                    {
-                        const auto& uri = docIt->second;
-                        auto it = Sessions.find(uri);
-                        if (it != Sessions.end())
-                        {
-                            const auto sessionIt = it->second.find(rec.SessionId);
-                            if (sessionIt != it->second.end())
-                            {
-                                sessionIt->second->send(rec.Payload);
-                            }
-                        }
-                        else
-                        {
-                            std::cerr << "ERROR: Doc [" << uri << "] does not exist.\n";
+                            it->second.emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
                         }
                     }
                     else
                     {
-                        std::cerr << "ERROR: Unknown PID [" << rec.Pid << "] maps to no active document.\n";
+                        std::cerr << "New Document: " << uri << "\n";
+                        ChildToDoc.emplace(rec.Pid, uri);
+                        Sessions[uri].emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
+                    }
+                }
+                else if (rec.Payload.find(EndSession) == 0)
+                {
+                    const auto& uri = rec.Payload.substr(EndSession.size());
+                    auto it = Sessions.find(uri);
+                    if (it != Sessions.end())
+                    {
+                        std::cerr << "EndSession [" << rec.SessionId << "]: " << uri << "\n";
+
+                        it->second.erase(rec.SessionId);
+                        if (it->second.empty())
+                        {
+                            std::cerr << "End Doc [" << uri << "].\n";
+                            Sessions.erase(it);
+                            ChildToDoc.erase(rec.Pid);
+                        }
+                    }
+                    else
+                    {
+                        std::cerr << "ERROR: Doc [" << uri << "] does not exist.\n";
                     }
                 }
             }
-        }
-        catch (const Poco::Exception &e)
-        {
-            std::cerr << "Failed to write data: " << e.name() <<
-                  " " << e.message() << "\n";
-            return;
+            else if (rec.Dir == TraceFileRecord::Direction::Incoming)
+            {
+                auto docIt = ChildToDoc.find(rec.Pid);
+                if (docIt != ChildToDoc.end())
+                {
+                    const auto& uri = docIt->second;
+                    auto it = Sessions.find(uri);
+                    if (it != Sessions.end())
+                    {
+                        const auto sessionIt = it->second.find(rec.SessionId);
+                        if (sessionIt != it->second.end())
+                        {
+                            sessionIt->second->send(rec.Payload);
+                        }
+                    }
+                    else
+                    {
+                        std::cerr << "ERROR: Doc [" << uri << "] does not exist.\n";
+                    }
+                }
+                else
+                {
+                    std::cerr << "ERROR: Unknown PID [" << rec.Pid << "] maps to no active document.\n";
+                }
+            }
+
+            epochCurrent = std::chrono::steady_clock::now();
+            epochFile = rec.TimestampNs;
         }
     }
 
