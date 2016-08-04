@@ -25,6 +25,9 @@
 
     <trace desc="Dump commands and notifications for replay" enable="true">
         <path desc="Output file path">/tmp/dump</path>
+        <outgoing>
+            <record desc="Whether or not to record outgoing messages" default="false">false</record>
+        </outgoing>
     </trace>
 
     <ssl desc="SSL settings">

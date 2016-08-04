@@ -40,8 +40,9 @@ public:
 class TraceFileWriter
 {
 public:
-    TraceFileWriter(const std::string& path) :
+    TraceFileWriter(const std::string& path, const bool recordOugoing) :
         _epochStart(Poco::Timestamp().epochMicroseconds()),
+        _recordOutgoing(recordOugoing),
         _stream(path, std::ios::out)
     {
     }
@@ -63,7 +64,10 @@ public:
 
     void writeOutgoing(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
-        write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
+        if (_recordOutgoing)
+        {
+            write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
+        }
     }
 
 private:
@@ -84,6 +88,7 @@ private:
 
 private:
     const Poco::Int64 _epochStart;
+    const bool _recordOutgoing;
     std::fstream _stream;
     std::mutex _mutex;
 };
