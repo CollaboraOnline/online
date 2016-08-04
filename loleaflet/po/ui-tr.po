@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 14:44+0000\n"
+"POT-Creation-Date: 2016-08-03 16:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,781 +12,902 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /tr/libo_online/loleaflet-ui-tr.po\n"
-"X-Pootle-Revision: 475742\n"
+"X-Pootle-Revision: 525548\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Tema Renkleri"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Standart Renkler"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Web Renkleri"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Palete geri dön"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Geçmiş"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Henüz geçmiş yok."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr ""
+msgstr "Köprüyü Kopyala"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
+msgstr "Bir Seviye Aşağı"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
+msgstr "Bir Seviye Yukarı"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Yorumu Düzenle"
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
+msgstr "Yorum Ekle"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "Birleştir"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Hücreleri Birleştir..."
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "Öne al"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
+msgstr "Geriye gönder"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "Özel Yapıştır"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
+msgstr "Biçimlendirilmemiş Metin"
 
 #: dist/errormessages.js:1
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
 msgstr ""
+"Hatalı WOPISrc, kullanım: WOPISrc=geçerli kodlanmış URI, veya file_path, "
+"kullanım: file_path=/dosyanin/bulundugu/dizin/"
 
 #: dist/errormessages.js:2
 msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
+"İstemci adresi boş. loolwsd sunucusu muhtemelen hayalı yapılandırılmış, "
+"lütfen sistem yöneticisiyle görüşün."
 
-#: dist/toolbar/toolbar.js:144
+#: dist/toolbar/toolbar.js:154
 msgid "Are you sure you want to delete this page?"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:319
-#: src/admin/AdminStrings.js:20
-#: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:55
-#: src/control/Control.Menubar.js:100
-msgid "Save"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:321
-#: src/control/Control.Menubar.js:17
-#: src/control/Control.Menubar.js:62
-#: src/control/Control.Menubar.js:107
-msgid "Undo"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:322
-#: src/control/Control.Menubar.js:18
-#: src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:108
-msgid "Redo"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:328
-msgid "Bold"
-msgstr ""
+msgstr "Bu sayfayı silmek istediğinizden emin misiniz?"
 
 #: dist/toolbar/toolbar.js:329
-msgid "Italic"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:330
-msgid "Underline"
-msgstr ""
+#: src/admin/AdminStrings.js:20
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:56
+#: src/control/Control.Menubar.js:102
+msgid "Save"
+msgstr "Kaydet"
 
 #: dist/toolbar/toolbar.js:331
-msgid "Strikeout"
-msgstr ""
+#: src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:64
+#: src/control/Control.Menubar.js:110
+msgid "Undo"
+msgstr "Geri al"
 
-#: dist/toolbar/toolbar.js:334
-msgid "Font color"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:336
-msgid "Highlighting"
-msgstr ""
+#: dist/toolbar/toolbar.js:332
+#: src/control/Control.Menubar.js:19
+#: src/control/Control.Menubar.js:65
+#: src/control/Control.Menubar.js:111
+msgid "Redo"
+msgstr "Yinele"
 
 #: dist/toolbar/toolbar.js:338
-msgid "Align left"
-msgstr ""
+msgid "Bold"
+msgstr "Kalın"
 
 #: dist/toolbar/toolbar.js:339
-msgid "Center horizontally"
-msgstr ""
+msgid "Italic"
+msgstr "Eğik"
 
 #: dist/toolbar/toolbar.js:340
-msgid "Align right"
-msgstr ""
+msgid "Underline"
+msgstr "Altı çizili"
 
 #: dist/toolbar/toolbar.js:341
-msgid "Justified"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:343
-msgid "Bullets on/off"
-msgstr ""
+msgid "Strikeout"
+msgstr "Üzeri çizili"
 
 #: dist/toolbar/toolbar.js:344
-msgid "Numbering on/off"
-msgstr ""
+msgid "Font color"
+msgstr "Yazı tipi rengi"
 
 #: dist/toolbar/toolbar.js:346
-msgid "Increase indent"
-msgstr ""
+msgid "Highlighting"
+msgstr "Vurgulama"
 
-#: dist/toolbar/toolbar.js:347
-msgid "Decrease indent"
-msgstr ""
+#: dist/toolbar/toolbar.js:348
+msgid "Align left"
+msgstr "Sola hizala"
+
+#: dist/toolbar/toolbar.js:349
+msgid "Center horizontally"
+msgstr "Yatay olarak ortala"
 
 #: dist/toolbar/toolbar.js:350
-msgid "Insert table"
-msgstr ""
+msgid "Align right"
+msgstr "Sağa hizala"
 
 #: dist/toolbar/toolbar.js:351
-msgid "Insert comment"
-msgstr ""
+msgid "Justified"
+msgstr "İki Yana Hizalanmış"
 
-#: dist/toolbar/toolbar.js:352
-msgid "Insert graphic"
-msgstr ""
+#: dist/toolbar/toolbar.js:353
+msgid "Bullets on/off"
+msgstr "Madde imleri açık/kapalı"
 
 #: dist/toolbar/toolbar.js:354
+msgid "Numbering on/off"
+msgstr "Numaralandırma açık/kapalı"
+
+#: dist/toolbar/toolbar.js:356
+msgid "Increase indent"
+msgstr "Girintiyi arttır"
+
+#: dist/toolbar/toolbar.js:357
+msgid "Decrease indent"
+msgstr "Girintiyi azalt"
+
+#: dist/toolbar/toolbar.js:360
+msgid "Insert table"
+msgstr "Tablo ekle"
+
+#: dist/toolbar/toolbar.js:361
+msgid "Insert comment"
+msgstr "Yorum ekle"
+
+#: dist/toolbar/toolbar.js:362
+msgid "Insert graphic"
+msgstr "Grafik ekle"
+
+#: dist/toolbar/toolbar.js:364
 msgid "More"
-msgstr ""
+msgstr "Daha fazla"
 
-#: dist/toolbar/toolbar.js:355
+#: dist/toolbar/toolbar.js:365
 msgid "Close document"
-msgstr ""
+msgstr "Belgeyi kapat"
 
-#: dist/toolbar/toolbar.js:385
+#: dist/toolbar/toolbar.js:395
+#: dist/toolbar/toolbar.js:758
 msgid "Sum"
-msgstr ""
+msgstr "Toplam"
 
-#: dist/toolbar/toolbar.js:386
+#: dist/toolbar/toolbar.js:396
 msgid "Function"
-msgstr ""
+msgstr "İşlev"
 
-#: dist/toolbar/toolbar.js:387
+#: dist/toolbar/toolbar.js:397
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
-#: dist/toolbar/toolbar.js:388
+#: dist/toolbar/toolbar.js:398
 msgid "Accept"
-msgstr ""
+msgstr "Kabul Et"
 
-#: dist/toolbar/toolbar.js:399
+#: dist/toolbar/toolbar.js:409
 msgid "First sheet"
-msgstr ""
+msgstr "İlk sayfa"
 
-#: dist/toolbar/toolbar.js:400
+#: dist/toolbar/toolbar.js:410
 msgid "Previous sheet"
-msgstr ""
+msgstr "Önceki sayfa"
 
-#: dist/toolbar/toolbar.js:401
+#: dist/toolbar/toolbar.js:411
 msgid "Next sheet"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:402
-msgid "Last sheet"
-msgstr ""
+msgstr "Sonraki sayfa"
 
 #: dist/toolbar/toolbar.js:412
-#: src/control/Control.Menubar.js:92
+msgid "Last sheet"
+msgstr "Son sayfa"
+
+#: dist/toolbar/toolbar.js:422
+#: src/control/Control.Menubar.js:94
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Tam ekran sunum"
 
-#: dist/toolbar/toolbar.js:414
+#: dist/toolbar/toolbar.js:424
 msgid "Insert slide"
-msgstr ""
+msgstr "Slayt ekle"
 
-#: dist/toolbar/toolbar.js:415
-#: src/control/Control.Menubar.js:89
+#: dist/toolbar/toolbar.js:425
+#: src/control/Control.Menubar.js:91
 msgid "Duplicate slide"
-msgstr ""
+msgstr "Slaytı çoğalt"
 
-#: dist/toolbar/toolbar.js:416
-#: src/control/Control.Menubar.js:90
+#: dist/toolbar/toolbar.js:426
+#: src/control/Control.Menubar.js:92
 msgid "Delete slide"
-msgstr ""
+msgstr "Slaytı sil"
 
-#: dist/toolbar/toolbar.js:428
+#: dist/toolbar/toolbar.js:438
 msgid "Search:"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:433
-msgid "Search backwards"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:434
-msgid "Search forward"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:435
-msgid "Cancel the search"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:440
-#: dist/toolbar/toolbar.js:991
-msgid "Take edit lock (others can only view)"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:440
-#: dist/toolbar/toolbar.js:991
-msgid "VIEWING"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:442
-msgid "Previous page"
-msgstr ""
+msgstr "Ara:"
 
 #: dist/toolbar/toolbar.js:443
-msgid "Next page"
-msgstr ""
+msgid "Search backwards"
+msgstr "Geriye doğru ara"
+
+#: dist/toolbar/toolbar.js:444
+msgid "Search forward"
+msgstr "İleri doğru ara"
 
 #: dist/toolbar/toolbar.js:445
-#: src/control/Control.Menubar.js:33
-#: src/control/Control.Menubar.js:77
-#: src/control/Control.Menubar.js:125
+msgid "Cancel the search"
+msgstr "Aramayı iptal et"
+
+#: dist/toolbar/toolbar.js:450
+#: dist/toolbar/toolbar.js:1196
+msgid "Take edit lock (others can only view)"
+msgstr "Düzenlemeyi kilitle (başkaları sadece görüntüleyebilir)"
+
+#: dist/toolbar/toolbar.js:450
+#: dist/toolbar/toolbar.js:1196
+msgid "VIEWING"
+msgstr "GÖRÜNTÜLENİYOR"
+
+#: dist/toolbar/toolbar.js:452
+msgid "Previous page"
+msgstr "Önceki sayfa"
+
+#: dist/toolbar/toolbar.js:453
+msgid "Next page"
+msgstr "Sonraki sayfa"
+
+#: dist/toolbar/toolbar.js:455
+#: src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:79
+#: src/control/Control.Menubar.js:128
 msgid "Reset zoom"
-msgstr ""
+msgstr "Yakınlaştırmayı sıfırla"
 
-#: dist/toolbar/toolbar.js:446
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:76
-#: src/control/Control.Menubar.js:124
+#: dist/toolbar/toolbar.js:456
+#: src/control/Control.Menubar.js:33
+#: src/control/Control.Menubar.js:78
+#: src/control/Control.Menubar.js:127
 msgid "Zoom out"
-msgstr ""
+msgstr "Uzaklaştır"
 
-#: dist/toolbar/toolbar.js:448
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:75
-#: src/control/Control.Menubar.js:123
+#: dist/toolbar/toolbar.js:458
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:77
+#: src/control/Control.Menubar.js:126
 msgid "Zoom in"
-msgstr ""
+msgstr "Yakınlaştır"
 
-#: dist/toolbar/toolbar.js:466
+#: dist/toolbar/toolbar.js:476
 msgid "You are viewing now."
-msgstr ""
+msgstr "Şimdi görüntülüyorsunuz."
 
-#: dist/toolbar/toolbar.js:466
+#: dist/toolbar/toolbar.js:476
 msgid "Click here to take edit."
-msgstr ""
+msgstr "Düzenlemeyi başlatmak için tıklayın."
 
-#: dist/toolbar/toolbar.js:530
-#: dist/toolbar/toolbar.js:889
+#: dist/toolbar/toolbar.js:607
+#: dist/toolbar/toolbar.js:1094
 msgid "Size"
-msgstr ""
+msgstr "Boyut"
+
+#: dist/toolbar/toolbar.js:739
+msgid "Number of Sheets"
+msgstr "Çalışma sayfası sayısı"
+
+#: dist/toolbar/toolbar.js:742
+msgid "Selected range of cells"
+msgstr "Seçilen hücrelerin aralığı"
+
+#: dist/toolbar/toolbar.js:745
+#: dist/toolbar/toolbar.js:791
+msgid "Entering text mode"
+msgstr "Metin kipine geçiliyor"
+
+#: dist/toolbar/toolbar.js:748
+#: dist/toolbar/toolbar.js:794
+msgid "Selection Mode"
+msgstr "Seçim Kipi"
+
+#: dist/toolbar/toolbar.js:751
+msgid "Choice of functions"
+msgstr "Fonksiyonların seçimi"
+
+#: dist/toolbar/toolbar.js:753
+msgid "Average"
+msgstr "Ortalama"
+
+#: dist/toolbar/toolbar.js:754
+msgid "CountA"
+msgstr "SayımA"
+
+#: dist/toolbar/toolbar.js:755
+msgid "Count"
+msgstr "Sayım"
+
+#: dist/toolbar/toolbar.js:756
+msgid "Maximum"
+msgstr "En Büyük"
+
+#: dist/toolbar/toolbar.js:757
+msgid "Minimum"
+msgstr "En Küçük"
+
+#: dist/toolbar/toolbar.js:759
+msgid "Selection count"
+msgstr "Seçim sayısı"
 
 #: dist/toolbar/toolbar.js:760
+msgid "None"
+msgstr "Hiçbiri"
+
+#: dist/toolbar/toolbar.js:765
+msgid "Wrap Text"
+msgstr "Metni Kaydır"
+
+#: dist/toolbar/toolbar.js:766
+msgid "Merge and Center Cells"
+msgstr "Hücreleri Birleştir ve Ortala"
+
+#: dist/toolbar/toolbar.js:768
+msgid "Format as Currency"
+msgstr "Para olarak Biçemle"
+
+#: dist/toolbar/toolbar.js:769
+msgid "Format as Percent"
+msgstr "Yüzdelik sayı olarak Biçemle"
+
+#: dist/toolbar/toolbar.js:770
+msgid "Format as Number"
+msgstr "Sayı olarak Biçemle"
+
+#: dist/toolbar/toolbar.js:771
+msgid "Format as Date"
+msgstr "Tarih olarak Biçemle"
+
+#: dist/toolbar/toolbar.js:772
+msgid "Add Decimal Place"
+msgstr "Ondalık Alan Ekle"
+
+#: dist/toolbar/toolbar.js:773
+msgid "Delete Decimal Place"
+msgstr "Ondalık Alan Sil"
+
+#: dist/toolbar/toolbar.js:775
+msgid "Sort Ascending"
+msgstr "Artan Sıralama"
+
+#: dist/toolbar/toolbar.js:776
+msgid "Sort Descending"
+msgstr "Azalan Sıralama"
+
+#: dist/toolbar/toolbar.js:785
+msgid "Number of Pages"
+msgstr "Sayfa Sayısı"
+
+#: dist/toolbar/toolbar.js:788
+msgid "Word Counter"
+msgstr "Sözcük Sayacı"
+
+#: dist/toolbar/toolbar.js:802
+msgid "Number of Slides"
+msgstr "Slayt Sayısı"
+
+#: dist/toolbar/toolbar.js:919
 msgid "Document saved"
-msgstr ""
+msgstr "Belge kaydedildi"
 
-#: dist/toolbar/toolbar.js:872
+#: dist/toolbar/toolbar.js:1077
 msgid "Style"
-msgstr ""
+msgstr "Biçem"
 
-#: dist/toolbar/toolbar.js:884
+#: dist/toolbar/toolbar.js:1089
 msgid "Font"
-msgstr ""
+msgstr "Yazı tipi"
 
-#: dist/toolbar/toolbar.js:908
+#: dist/toolbar/toolbar.js:1113
 msgid "Previous slide"
-msgstr ""
+msgstr "Önceki slayt"
 
-#: dist/toolbar/toolbar.js:909
+#: dist/toolbar/toolbar.js:1114
 msgid "Next slide"
-msgstr ""
+msgstr "Sonraki slayt"
 
-#: dist/toolbar/toolbar.js:987
+#: dist/toolbar/toolbar.js:1192
 msgid "You are editing (others can only view)"
-msgstr ""
+msgstr "Düzenliyorsunuz (diğerleri sadece görüntüleyebilir)"
 
-#: dist/toolbar/toolbar.js:987
+#: dist/toolbar/toolbar.js:1192
 msgid "EDITING"
-msgstr ""
+msgstr "DÜZENLENİYOR"
 
-#: dist/toolbar/toolbar.js:1120
+#: dist/toolbar/toolbar.js:1212
+msgid "You are locked in readonly mode"
+msgstr "Salt okunur kipe kilitlendiniz"
+
+#: dist/toolbar/toolbar.js:1212
+msgid "READONLY"
+msgstr "SALT-OKUNUR"
+
+#: dist/toolbar/toolbar.js:1324
 msgid "Layout"
-msgstr ""
+msgstr "Yerleşim"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "Bağlantı hatası"
 
 #: src/admin/AdminSocketOverview.js:58
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "Bu oturumu kapatmak istediğinizden emin misiniz?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "Yönetici konsolu"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Gezintiyi değiştir"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
-msgstr ""
+msgstr "Genel Görünüm"
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(mevcut)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
-msgstr ""
+msgstr "Analizler"
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "Kontrol Paneli"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
-msgstr ""
+msgstr "Bağlı kullanıcılar"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "Açık belgeler"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
-msgstr ""
+msgstr "Kullanılan bellek miktarı"
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "Belge"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "Görüntülenme sayısı"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
-msgstr ""
+msgstr "Geçen süre"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "Sonlandır"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "Grafikler"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Bellek istatistiklerinin ön belleğe alınacak miktarı"
 
 #: src/admin/AdminStrings.js:22
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Bellek istatistiklerinin zaman aralığı (ms cinsinden)"
 
 #: src/admin/AdminStrings.js:23
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "İşlemci istatistiklerinin ön belleğe alınacak miktarı"
 
 #: src/admin/AdminStrings.js:24
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "İşlemci istatistiklerinin zaman aralığı (ms cinsinden)"
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr " saat"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr " dk"
 
 #: src/admin/Util.js:45
 msgid " s"
-msgstr ""
+msgstr " s"
 
-#: src/control/Control.ColumnHeader.js:35
+#: src/control/Control.ColumnHeader.js:34
 msgid "Insert column before"
-msgstr ""
+msgstr "Öncesinde bir sütun ekle"
 
-#: src/control/Control.ColumnHeader.js:42
-#: src/control/Control.Menubar.js:131
+#: src/control/Control.ColumnHeader.js:41
+#: src/control/Control.Menubar.js:134
 msgid "Delete column"
-msgstr ""
+msgstr "Sütunu sil"
 
 #: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:55
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:56
+#: src/control/Control.Menubar.js:102
 msgid "File"
-msgstr ""
+msgstr "Dosya"
 
 #: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:56
-#: src/control/Control.Menubar.js:101
+#: src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:103
 msgid "Print"
-msgstr ""
+msgstr "Yazdır"
 
 #: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:102
-msgid "Download as"
-msgstr ""
-
-#: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:102
-msgid "PDF Document (.pdf)"
-msgstr ""
+#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:104
+msgid "See revision history"
+msgstr "Sürüm tarihçesini gör"
 
 #: src/control/Control.Menubar.js:13
-msgid "ODF text document (.odt)"
-msgstr ""
+#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:105
+msgid "Download as"
+msgstr "Farklı indir"
+
+#: src/control/Control.Menubar.js:13
+#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:105
+msgid "PDF Document (.pdf)"
+msgstr "PDF Belgesi (.pdf)"
 
 #: src/control/Control.Menubar.js:14
-msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgid "ODF text document (.odt)"
+msgstr "ODF metin belgesi (.odt)"
 
 #: src/control/Control.Menubar.js:15
+msgid "Microsoft Word 2003 (.doc)"
+msgstr "Microsoft Word 2003 (.doc)"
+
+#: src/control/Control.Menubar.js:16
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:17
-#: src/control/Control.Menubar.js:62
-#: src/control/Control.Menubar.js:107
-msgid "Edit"
-msgstr ""
-
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:65
+#: src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:64
 #: src/control/Control.Menubar.js:110
-msgid "Cut"
-msgstr ""
+msgid "Edit"
+msgstr "Düzenle"
 
 #: src/control/Control.Menubar.js:21
-#: src/control/Control.Menubar.js:66
-#: src/control/Control.Menubar.js:111
-msgid "Copy"
-msgstr ""
+#: src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:113
+msgid "Cut"
+msgstr "Kes"
 
 #: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:67
-#: src/control/Control.Menubar.js:112
-msgid "Paste"
-msgstr ""
-
-#: src/control/Control.Menubar.js:24
-#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:68
 #: src/control/Control.Menubar.js:114
+msgid "Copy"
+msgstr "Kopyala"
+
+#: src/control/Control.Menubar.js:23
+#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:115
+msgid "Paste"
+msgstr "Yapıştır"
+
+#: src/control/Control.Menubar.js:25
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:117
 msgid "Select all"
-msgstr ""
-
-#: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:35
-#: src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:79
-#: src/control/Control.Menubar.js:116
-msgid "Insert"
-msgstr ""
-
-#: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:116
-msgid "Image"
-msgstr ""
+msgstr "Tümünü seç"
 
 #: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:36
+#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:119
+msgid "Insert"
+msgstr "Araya Ekle"
+
+#: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:119
+msgid "Image"
+msgstr "Görüntü"
+
+#: src/control/Control.Menubar.js:28
 msgid "Comment"
-msgstr ""
+msgstr "Yorum"
 
-#: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:73
-#: src/control/Control.Menubar.js:121
+#: src/control/Control.Menubar.js:30
+#: src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:124
 msgid "View"
-msgstr ""
+msgstr "Görünüm"
 
-#: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:73
-#: src/control/Control.Menubar.js:121
+#: src/control/Control.Menubar.js:30
+#: src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:124
 msgid "Full screen"
-msgstr ""
-
-#: src/control/Control.Menubar.js:35
-#: src/control/Control.Menubar.js:79
-msgid "Tables"
-msgstr ""
-
-#: src/control/Control.Menubar.js:35
-#: src/control/Control.Menubar.js:79
-msgid "Rows before"
-msgstr ""
+msgstr "Tam ekran"
 
 #: src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:80
-msgid "Rows after"
-msgstr ""
+#: src/control/Control.Menubar.js:81
+msgid "Tables"
+msgstr "Tablolar"
 
-#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:36
+#: src/control/Control.Menubar.js:81
+msgid "Rows before"
+msgstr "Öncesine satırlar"
+
+#: src/control/Control.Menubar.js:37
 #: src/control/Control.Menubar.js:82
-msgid "Columns left"
-msgstr ""
+msgid "Rows after"
+msgstr "Sonrasına satırlar"
 
 #: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:83
+#: src/control/Control.Menubar.js:84
+msgid "Columns left"
+msgstr "Sola sütun"
+
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:85
 msgid "Columns right"
-msgstr ""
-
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:84
-msgid "Delete"
-msgstr ""
-
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:84
-msgid "Rows"
-msgstr ""
+msgstr "Sağa sütun"
 
 #: src/control/Control.Menubar.js:41
-#: src/control/Control.Menubar.js:85
-msgid "Columns"
-msgstr ""
+#: src/control/Control.Menubar.js:86
+msgid "Delete"
+msgstr "Sil"
+
+#: src/control/Control.Menubar.js:41
+#: src/control/Control.Menubar.js:86
+msgid "Rows"
+msgstr "Satırlar"
 
 #: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:43
-msgid "Table"
-msgstr ""
+#: src/control/Control.Menubar.js:87
+msgid "Columns"
+msgstr "Sütunlar"
 
 #: src/control/Control.Menubar.js:43
-msgid "Select"
-msgstr ""
+#: src/control/Control.Menubar.js:44
+msgid "Table"
+msgstr "Tablo"
 
 #: src/control/Control.Menubar.js:44
-#: src/control/Control.Menubar.js:118
-msgid "Row"
-msgstr ""
+msgid "Select"
+msgstr "Seç"
 
 #: src/control/Control.Menubar.js:45
-#: src/control/Control.Menubar.js:119
-msgid "Column"
-msgstr ""
+#: src/control/Control.Menubar.js:121
+msgid "Row"
+msgstr "Satır"
 
 #: src/control/Control.Menubar.js:46
-msgid "Cell"
-msgstr ""
+#: src/control/Control.Menubar.js:122
+msgid "Column"
+msgstr "Sütun"
 
 #: src/control/Control.Menubar.js:47
-#: src/control/Control.Menubar.js:86
+msgid "Cell"
+msgstr "Hücre"
+
+#: src/control/Control.Menubar.js:48
+#: src/control/Control.Menubar.js:88
 msgid "Merge cells"
-msgstr ""
-
-#: src/control/Control.Menubar.js:49
-#: src/control/Control.Menubar.js:94
-#: src/control/Control.Menubar.js:133
-msgid "Help"
-msgstr ""
-
-#: src/control/Control.Menubar.js:49
-#: src/control/Control.Menubar.js:94
-#: src/control/Control.Menubar.js:133
-msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Hücreleri birleştir"
 
 #: src/control/Control.Menubar.js:50
-#: src/control/Control.Menubar.js:95
-#: src/control/Control.Menubar.js:134
+#: src/control/Control.Menubar.js:96
+#: src/control/Control.Menubar.js:136
+msgid "Help"
+msgstr "Yardım"
+
+#: src/control/Control.Menubar.js:50
+#: src/control/Control.Menubar.js:96
+#: src/control/Control.Menubar.js:136
+msgid "Keyboard shortcuts"
+msgstr "Klavye kısayolları"
+
+#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:97
+#: src/control/Control.Menubar.js:137
 msgid "About"
-msgstr ""
-
-#: src/control/Control.Menubar.js:58
-msgid "ODF presentation (.odp)"
-msgstr ""
-
-#: src/control/Control.Menubar.js:59
-msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgstr "Hakkında"
 
 #: src/control/Control.Menubar.js:60
+msgid "ODF presentation (.odp)"
+msgstr "ODF sunum (.odp)"
+
+#: src/control/Control.Menubar.js:61
+msgid "Microsoft Powerpoint 2003 (.ppt)"
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
+
+#: src/control/Control.Menubar.js:62
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:90
 msgid "Slide"
-msgstr ""
+msgstr "Slayt"
 
-#: src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:90
 msgid "New slide"
-msgstr ""
+msgstr "Yeni slayt"
 
-#: src/control/Control.Menubar.js:103
+#: src/control/Control.Menubar.js:106
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ODF çalışma sayfası (.ods)"
 
-#: src/control/Control.Menubar.js:104
+#: src/control/Control.Menubar.js:107
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:105
+#: src/control/Control.Menubar.js:108
 msgid "Microsoft Excel (.xlsx)"
-msgstr ""
-
-#: src/control/Control.Menubar.js:127
-msgid "Cells"
-msgstr ""
-
-#: src/control/Control.Menubar.js:127
-msgid "Insert row"
-msgstr ""
-
-#: src/control/Control.Menubar.js:128
-msgid "Insert column"
-msgstr ""
+msgstr "Microsoft Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:130
-#: src/control/Control.RowHeader.js:40
+msgid "Cells"
+msgstr "Hücreler"
+
+#: src/control/Control.Menubar.js:130
+msgid "Insert row"
+msgstr "Satır ekle"
+
+#: src/control/Control.Menubar.js:131
+msgid "Insert column"
+msgstr "Sütun ekle"
+
+#: src/control/Control.Menubar.js:133
+#: src/control/Control.RowHeader.js:39
 msgid "Delete row"
-msgstr ""
+msgstr "Satır sil"
 
-#: src/control/Control.Menubar.js:300
+#: src/control/Control.Menubar.js:306
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "Bu slaytı silmek istediğinizden emin misiniz?"
 
-#: src/control/Control.RowHeader.js:33
+#: src/control/Control.RowHeader.js:32
 msgid "Insert row above"
-msgstr ""
+msgstr "Yukarıya satır ekle"
 
-#: src/control/Control.Tabs.js:39
+#: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "Altına sayfa ekle"
 
-#: src/control/Control.Tabs.js:40
+#: src/control/Control.Tabs.js:47
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "Bundan sonra sayfa ekle"
 
-#: src/control/Control.Tabs.js:41
+#: src/control/Control.Tabs.js:48
 msgid "Delete sheet"
-msgstr ""
+msgstr "Sayfayı sil"
 
-#: src/control/Control.Tabs.js:45
+#: src/control/Control.Tabs.js:52
 msgid "Are you sure you want to delete this sheet?"
-msgstr ""
+msgstr "Bu sayfayı silmek istediğinizden emin misiniz?"
 
-#: src/control/Control.Tabs.js:54
+#: src/control/Control.Tabs.js:61
 msgid "Rename sheet"
-msgstr ""
+msgstr "Sayfayı yeniden adlandır"
 
-#: src/control/Control.Tabs.js:58
+#: src/control/Control.Tabs.js:65
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "Yeni sayfa adını girin"
 
 #: src/control/Toolbar.js:59
 #: src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "İndiriliyor..."
 
 #: src/control/Toolbar.js:80
-#: src/map/Map.js:803
+#: src/map/Map.js:802
 msgid "Saving..."
-msgstr ""
+msgstr "Kaydediyor..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Bu %productName sürümü bunlarla güçlendirildi"
 
-#: src/core/Socket.js:14
+#: src/core/Socket.js:17
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr ""
+msgstr "LibreOffice Online'a bağlanırken bir sorunla karşılaşıldı: "
 
-#: src/core/Socket.js:136
+#: src/core/Socket.js:139
 msgid "Unsupported server version."
-msgstr ""
-
-#: src/core/Socket.js:155
-msgid "Document requires password to view."
-msgstr ""
+msgstr "Desteklenmeyen sunucu sürümü."
 
 #: src/core/Socket.js:158
+msgid "Document requires password to view."
+msgstr "Belgenin görüntülenebilmesi için bir parola gerekiyor."
+
+#: src/core/Socket.js:161
 msgid "Document requires password to modify."
-msgstr ""
+msgstr "Belgenin düzenlenebilmesi için parola gerekiyor."
 
-#: src/core/Socket.js:160
+#: src/core/Socket.js:163
 msgid "Hit Cancel to open in view-only mode."
-msgstr ""
+msgstr "Sadece görüntüleme kipinde açmak için İptal'e tıklayın."
 
-#: src/core/Socket.js:164
+#: src/core/Socket.js:167
 msgid "Wrong password provided. Please try again."
-msgstr ""
+msgstr "Hatalı parola. Lütfen tekrar deneyin."
 
-#: src/core/Socket.js:301
+#: src/core/Socket.js:304
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr ""
+msgstr "Utanç verici ama belgenize bağlanamadık. Lütfen tekrar deneyin."
 
-#: src/core/Socket.js:304
+#: src/core/Socket.js:307
 msgid "We are sorry, this is an unexpected connection error. Please try again."
-msgstr ""
+msgstr "Üzgünüz bu beklenmeyen bir bağlantı problemi. Lütfen tekrar deneyin."
 
-#: src/map/Map.js:117
+#: src/map/Map.js:116
 msgid "Initializing..."
-msgstr ""
+msgstr "Başlatılıyor..."
 
-#: src/map/Map.js:806
+#: src/map/Map.js:805
 msgid "Loading..."
-msgstr ""
+msgstr "Yükleniyor..."
