@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 14:42+0000\n"
+"POT-Creation-Date: 2016-08-03 16:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-help-da.po\n"
-"X-Pootle-Revision: 504863\n"
+"X-Pootle-Revision: 519583\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
@@ -419,10 +419,9 @@ msgid "Ctrl + Shift + Arrow Down"
 msgstr "Ctrl + Skift + Pil Ned"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Go to beginning of line"
-msgstr "Gå til begyndelse af linje"
+msgstr "Gå til begyndelse af linjen"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 14:42+0000\n"
+"POT-Creation-Date: 2016-08-04 08:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,11 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.14.0-rc1\n"
 "X-Pootle-Path: /am/libo_online/loleaflet-help-am.po\n"
-"X-Pootle-Revision: 509423\n"
+"X-Pootle-Revision: 533760\n"
 
 #: dist%2Floleaflet-help.html+html.head.title%3A5
 msgid "LOLeaflet Help"
-msgstr ""
+msgstr "LOLeaflet እርዳታ"
 
 #: dist%2Floleaflet-help.html+html.body.h1%3A48
 msgid "Keyboard Shortcuts"
@@ -703,6 +703,8 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
+"ሙሉ ክፍል ካልተመረጠ: ጽሁፉ መጠቆሚያው ካለበት ቦታ ጀምሮ እስከ መጨረሻው ድረስ ያለው በ አሁኑ አረፍተ ነገር ውስጥ "
+"ይጠፋል: መጠቆሚያው ከ ክፍሉ መጨረሻ በኩል ከሆነ: እና ሙሉ ክፍል ካልተመረጠ: የሚቀጥለው ክፍል ይዞታዎች ይጠፋሉ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A135
 msgid ""
@@ -710,6 +712,8 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
+"ሙሉ ክፍል ካልተመረጠ: እና መጠቆሚያው በ ሰንጠረዥ መጨረሻ ላይ ከሆነ: ሰንጠረዡን የሚከተለው አንቀጽ ይጠፋል: በ ሰነዱ "
+"ውስጥ የ መጨረሻው አንቀጽ ካልሆነ በስተቀር"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A136
 msgid ""
@@ -717,6 +721,8 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
+"አንድ ወይንም ከዚያ በላይ ክፍሎች ከ ተመረጡ: ጠቅላላ ረድፎቹ የ ተመረጠውን የያዙ ይጠፋሉ: ሁሉም ረድፎች ከ ተመረጡ "
+"ወይንም በከፊል: ጠቅላላ ሰንጠረዡ ይጠፋል"
 
 #: dist%2Floleaflet-help.html+html.body.div.h2%3A139
 msgid "Word processor functions"
@@ -811,7 +817,7 @@ msgstr "Alt + ማስገቢያ"
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
-msgstr ""
+msgstr "አዲስ አንቀጽ ያስገቡ ቁጥር ሳይሰጡ ለ ውስጥ ዝርዝር: መጠቆሚያው ከ ዝርዝሩ ውጪ ከሆነ አይሰራም"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A153
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:153"
@@ -968,7 +974,7 @@ msgstr "Ctrl + Shift + 1"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A174
 msgid "Standard exponential format"
-msgstr ""
+msgstr "መደበኛ exponential አቀራረብ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A174
 msgid "Ctrl + Shift + 2"
@@ -1405,6 +1411,8 @@ msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
+"መዝለያ ከ አሁኑ ዘዴ ውስጥ: ይህ ማለት ከ ማረሚያ ዘዴ ውስጥ መቀየሪያ ወደ እቃ መምረጫ ዘዴ: ከ እቃ መምረጫ ዘዴ "
+"መቀየሪያ ወደ መመልከቻ ዘዴ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
 msgid "Esc"
@@ -1430,7 +1438,7 @@ msgstr "Shift + Tab"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgid "Move to next text object on slide / drawing page"
-msgstr "በ ተንሸራታች ላይ ወደሚቀጥለው የ ጽሁፍ እቃ ማንቀሳቀሻ"
+msgstr "በ ተንሸራታች ላይ ወደሚቀጥለው የ ጽሁፍ እቃ ማንቀሳቀሻ / በ መሳያ ገጽ ላይ"
 
 #: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:234"
