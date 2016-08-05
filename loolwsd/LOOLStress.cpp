@@ -53,6 +53,7 @@ public:
     Stress();
     ~Stress() {}
 
+    static bool NoDelay;
     unsigned    _numClients;
     std::string _serverURI;
 
@@ -152,9 +153,14 @@ private:
 
             const auto deltaCurrent = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - epochCurrent).count();
             const auto deltaFile = rec.TimestampNs - epochFile;
-            const auto delay = deltaFile - deltaCurrent;
+            const auto delay = (Stress::NoDelay ? 0 : deltaFile - deltaCurrent);
             if (delay > 0)
             {
+                if (delay > 1e6)
+                {
+                    std::cerr << "Sleeping for " << delay / 1000 << " ms.\n";
+                }
+
                 std::this_thread::sleep_for(std::chrono::microseconds(delay));
             }
 
@@ -251,6 +257,8 @@ private:
     std::map<std::string, std::map<std::string, std::unique_ptr<Connection>>> Sessions;
 };
 
+bool Stress::NoDelay = false;
+
 Stress::Stress() :
     _numClients(1),
 #if ENABLE_SSL
@@ -266,6 +274,8 @@ void Stress::defineOptions(OptionSet& optionSet)
     Application::defineOptions(optionSet);
 
     optionSet.addOption(Option("help", "", "Display help information on command line arguments.")
+                        .required(false).repeatable(false));
+    optionSet.addOption(Option("nodelay", "", "Replay at full speed disregarding original timing.")
                         .required(false).repeatable(false));
     optionSet.addOption(Option("clientsperdoc", "", "Number of simultaneous clients on each doc.")
                         .required(false).repeatable(false)
@@ -290,6 +300,8 @@ void Stress::handleOption(const std::string& optionName,
         helpFormatter.format(std::cout);
         std::exit(Application::EXIT_OK);
     }
+    else if (optionName == "nodelay")
+        Stress::NoDelay = true;
     else if (optionName == "clientsperdoc")
         _numClients = std::max(std::stoi(value), 1);
     else if (optionName == "server")
