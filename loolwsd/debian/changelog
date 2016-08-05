@@ -1,8 +1,12 @@
-loolwsd (1.0.34-1) UNRELEASED; urgency=medium
+loolwsd (1.8.0-1) unstable; urgency=medium
 
+  [ Tor Lillqvist ]
   * Back to packaging this for Debian.
 
- -- Tor Lillqvist <tml@collabora.com>  Wed, 03 Jun 2015 20:24:50 +0300
+  [ Jan Holesovsky ]
+  * Update to match Collabora Office 5.1
+
+ -- Jan Holesovsky <kendy@collabora.com>  Fri, 05 Aug 2016 16:51:54 +0100
 
 loolwsd (1.0.0-1) unstable; urgency=low
 
