@@ -13,6 +13,11 @@ First you need to install 'jake', and 'browserify'.  As root, do:
 
 npm is provided by the nodejs package.
 
+npm should be at least 2.14, if not 3.x. Use `npm -v` to find the current version.
+Upgrade npm (as root):
+
+    npm install -g npm
+
 Another way is to use npm as a user, but set its prefix to a directory where
 you have write access. If you want that, you need to have an ~/.npmrc with the
 line e.g.
