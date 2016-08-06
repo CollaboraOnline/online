@@ -48,6 +48,8 @@
 #define PNG_SKIP_SETJMP_CHECK
 #include <png.h>
 
+#include <cassert>
+
 namespace png
 {
 
@@ -153,6 +155,79 @@ bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
                        std::vector<char>& output, LibreOfficeKitTileMode mode)
 {
     return encodeSubBufferToPNG(pixmap, 0, 0, width, height, width, height, output, mode);
+}
+
+static
+void readTileData(png_structp png_ptr, png_bytep data, png_size_t length)
+{
+    png_voidp io_ptr = png_get_io_ptr(png_ptr);
+    assert(io_ptr);
+
+    assert(io_ptr != nullptr);
+    std::stringstream& streamTile = *(std::stringstream*)io_ptr;
+    streamTile.read((char*)data, length);
+}
+
+inline
+std::vector<png_bytep> decodePNG(std::stringstream& stream, png_uint_32& height, png_uint_32& width, png_uint_32& rowBytes)
+{
+    png_byte signature[0x08];
+    stream.read((char *)signature, 0x08);
+    if (png_sig_cmp(signature, 0x00, 0x08))
+    {
+        throw std::runtime_error("Invalid PNG signature.");
+    }
+
+    png_structp ptrPNG = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (ptrPNG == nullptr)
+    {
+        throw std::runtime_error("png_create_read_struct failed.");
+    }
+
+    png_infop ptrInfo = png_create_info_struct(ptrPNG);
+    if (ptrInfo == nullptr)
+    {
+        throw std::runtime_error("png_create_info_struct failed.");
+    }
+
+    png_infop ptrEnd = png_create_info_struct(ptrPNG);
+    if (ptrEnd == nullptr)
+    {
+        throw std::runtime_error("png_create_info_struct failed.");
+    }
+
+    png_set_read_fn(ptrPNG, &stream, readTileData);
+    png_set_sig_bytes(ptrPNG, 0x08);
+
+    png_read_info(ptrPNG, ptrInfo);
+
+    width = png_get_image_width(ptrPNG, ptrInfo);
+    height = png_get_image_height(ptrPNG, ptrInfo);
+
+    png_set_interlace_handling(ptrPNG);
+    png_read_update_info(ptrPNG, ptrInfo);
+
+    rowBytes = png_get_rowbytes(ptrPNG, ptrInfo);
+    assert(width == rowBytes / 4);
+
+    const size_t dataSize = (rowBytes + sizeof(png_bytep)) * height / sizeof(png_bytep);
+    const size_t size = dataSize + height + sizeof(png_bytep);
+
+    std::vector<png_bytep> rows;
+    rows.resize(size);
+
+    // rows
+    for (png_uint_32 itRow = 0; itRow < height; itRow++)
+    {
+        const auto index = height + (itRow * rowBytes + sizeof(png_bytep) - 1) / sizeof(png_bytep);
+        rows[itRow] = reinterpret_cast<png_bytep>(&rows[index]);
+    }
+
+    png_read_image(ptrPNG, rows.data());
+    png_read_end(ptrPNG, ptrEnd);
+    png_destroy_read_struct(&ptrPNG, &ptrInfo, &ptrEnd);
+
+    return rows;
 }
 
 }

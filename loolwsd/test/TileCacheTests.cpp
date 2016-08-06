@@ -9,16 +9,16 @@
 
 #include "config.h"
 
-#include <png.h>
 #include <Poco/Net/WebSocket.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include "Common.hpp"
+#include "LOOLProtocol.hpp"
+#include "Png.hpp"
+#include "TileCache.hpp"
+#include "Unit.hpp"
+#include "Util.hpp"
 #include "helpers.hpp"
-#include <Common.hpp>
-#include <LOOLProtocol.hpp>
-#include <TileCache.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
 
 using namespace helpers;
 
@@ -376,88 +376,31 @@ void TileCacheTests::testLoad12ods()
     }
 }
 
-void readTileData(png_structp png_ptr, png_bytep data, png_size_t length)
-{
-    png_voidp io_ptr = png_get_io_ptr(png_ptr);
-    CPPUNIT_ASSERT(io_ptr);
-
-    assert(io_ptr != nullptr);
-    std::stringstream& streamTile = *(std::stringstream*)io_ptr;
-    streamTile.read((char*)data, length);
-}
-
 void TileCacheTests::checkBlackTile(std::stringstream& tile)
 {
-    png_uint_32 width;
-    png_uint_32 height;
-    png_uint_32 itRow;
-    png_uint_32 itCol;
-    png_uint_32 black;
-    png_uint_32 rowBytes;
+    png_uint_32 height = 0;
+    png_uint_32 width = 0;
+    png_uint_32 rowBytes = 0;
 
-    png_infop ptrInfo;
-    png_infop ptrEnd;
-    png_structp ptrPNG;
-    png_byte signature[0x08];
+    auto rows = png::decodePNG(tile, height, width, rowBytes);
 
-    tile.read((char *)signature, 0x08);
-    CPPUNIT_ASSERT_MESSAGE( "Tile is not recognized as a PNG", !png_sig_cmp(signature, 0x00, 0x08));
-
-    ptrPNG = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    CPPUNIT_ASSERT_MESSAGE("png_create_read_struct failed", ptrPNG);
-
-    ptrInfo = png_create_info_struct(ptrPNG);
-    CPPUNIT_ASSERT_MESSAGE("png_create_info_struct failed", ptrInfo);
-
-    ptrEnd = png_create_info_struct(ptrPNG);
-    CPPUNIT_ASSERT_MESSAGE("png_create_info_struct failed", ptrEnd);
-
-    png_set_read_fn(ptrPNG, &tile, readTileData);
-    png_set_sig_bytes(ptrPNG, 0x08);
-
-    png_read_info(ptrPNG, ptrInfo);
-
-    width = png_get_image_width(ptrPNG, ptrInfo);
-    height = png_get_image_height(ptrPNG, ptrInfo);
-
-    png_set_interlace_handling(ptrPNG);
-    png_read_update_info(ptrPNG, ptrInfo);
-
-    rowBytes = png_get_rowbytes(ptrPNG, ptrInfo);
-    CPPUNIT_ASSERT_EQUAL(width, rowBytes / 4);
-
-    // rows
-    png_bytep rows[height];
-    for (itRow = 0; itRow < height; itRow++)
+    png_uint_32 black = 0;
+    for (png_uint_32 itRow = 0; itRow < height; ++itRow)
     {
-        rows[itRow] = new png_byte[rowBytes];
-    }
-
-    png_read_image(ptrPNG, rows);
-
-    black = 0;
-    for (itRow = 0; itRow < height; itRow++)
-    {
-        itCol = 0;
-        while(itCol <= rowBytes)
+        png_uint_32 itCol = 0;
+        while (itCol <= rowBytes)
         {
             png_byte R = rows[itRow][itCol + 0];
             png_byte G = rows[itRow][itCol + 1];
             png_byte B = rows[itRow][itCol + 2];
             //png_byte A = rows[itRow][itCol + 3];
             if (R == 0x00 && G == 0x00 && B == 0x00)
-                black++;
+            {
+                ++black;
+            }
 
             itCol += 4;
         }
-    }
-
-    png_read_end(ptrPNG, ptrEnd);
-    png_destroy_read_struct(&ptrPNG, &ptrInfo, &ptrEnd);
-
-    for (itRow = 0; itRow < height; itRow++ )
-    {
-        delete rows[itRow];
     }
 
     CPPUNIT_ASSERT_MESSAGE("The tile is 100% black", black != height * width);
