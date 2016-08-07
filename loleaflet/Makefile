@@ -8,13 +8,26 @@ VERSION=1.9.0
 # Version number of the bundled 'draw' thing
 DRAW_VERSION=0.2.4
 
-all:
+DEBUG=false
+
+.PHONY: build
+build:
 	npm install
 	jake lint
 	jake build
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
-	npm run bundle
+	if $(DEBUG); then \
+		npm run bundle-debug; \
+	else \
+		npm run bundle; \
+	fi;
+
+all: build
+
+.PHONY: debug
+debug: DEBUG=true
+debug: build
 
 .PHONY: dist
 dist: all
