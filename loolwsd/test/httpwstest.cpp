@@ -38,13 +38,13 @@
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <Common.hpp>
-#include <UserMessages.hpp>
-#include <Util.hpp>
-#include <LOOLProtocol.hpp>
-
-#include "helpers.hpp"
+#include "Common.hpp"
+#include "LOOLProtocol.hpp"
+#include "Png.hpp"
+#include "UserMessages.hpp"
+#include "Util.hpp"
 #include "countloolkits.hpp"
+#include "helpers.hpp"
 
 using namespace helpers;
 
@@ -1589,11 +1589,6 @@ void HTTPWSTest::testCalcEditRendering()
 
     const auto tile = getResponseMessage(socket, "tile:", "calcEditRendering ");
     std::cout << "size: " << tile.size() << std::endl;
-    const std::string firstLine = LOOLProtocol::getFirstLine(tile);
-
-    std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
-
-    const std::vector<char> exp = readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");
 
     // Return early for now when on LO >= 5.2.
     std::string clientVersion = "loolclient 0.1";
@@ -1614,9 +1609,38 @@ void HTTPWSTest::testCalcEditRendering()
     if (major > 5 || (major == 5 && minor >= 2))
         return;
 
-    CPPUNIT_ASSERT_EQUAL(exp.size(), res.size());
-    const bool eq = std::equal(exp.begin(), exp.end(), res.data());
-    CPPUNIT_ASSERT_MESSAGE("Tile not rendered as expected.", eq);
+    const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+    std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
+    std::stringstream streamRes;
+    std::copy(res.begin(), res.end(), std::ostream_iterator<char>(streamRes));
+
+    std::fstream outStream("/tmp/res.png", std::ios::out);
+    outStream.write(res.data(), res.size());
+    outStream.close();
+
+    png_uint_32 height = 0;
+    png_uint_32 width = 0;
+    png_uint_32 rowBytes = 0;
+    auto rows = png::decodePNG(streamRes, height, width, rowBytes);
+
+    const std::vector<char> exp = readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");
+    std::stringstream streamExp;
+    std::copy(exp.begin(), exp.end(), std::ostream_iterator<char>(streamExp));
+
+    png_uint_32 heightExp = 0;
+    png_uint_32 widthExp = 0;
+    png_uint_32 rowBytesExp = 0;
+    auto rowsExp = png::decodePNG(streamExp, heightExp, widthExp, rowBytesExp);
+
+    CPPUNIT_ASSERT_EQUAL(heightExp, height);
+    CPPUNIT_ASSERT_EQUAL(widthExp, width);
+    CPPUNIT_ASSERT_EQUAL(rowBytesExp, rowBytes);
+
+    for (png_uint_32 itRow = 0; itRow < height; ++itRow)
+    {
+        const bool eq = std::equal(rowsExp[itRow], rowsExp[itRow] + rowBytes, rows[itRow]);
+        CPPUNIT_ASSERT_MESSAGE("Tile not rendered as expected @ row #" + std::to_string(itRow), eq);
+    }
 }
 
 std::string HTTPWSTest::getFontList(const std::string& message)
