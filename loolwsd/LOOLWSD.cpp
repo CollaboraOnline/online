@@ -1418,7 +1418,8 @@ void LOOLWSD::initialize(Application& self)
             }
         }
 
-        TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, filters));
+        const auto compress = getConfigValue<bool>(conf, "trace.path[@compress]", false);
+        TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, compress, filters));
         Log::info("Command trace dumping enabled to file: " + path);
     }
 

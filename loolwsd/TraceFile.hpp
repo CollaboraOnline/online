@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+#include <Poco/DeflatingStream.h>
+
 #include "Util.hpp"
 
 /// Dumps commands and notification trace.
@@ -42,11 +44,14 @@ public:
 class TraceFileWriter
 {
 public:
-    TraceFileWriter(const std::string& path, const bool recordOugoing, const std::vector<std::string>& filters) :
+    TraceFileWriter(const std::string& path, const bool recordOugoing, const bool compress,
+                    const std::vector<std::string>& filters) :
         _epochStart(Poco::Timestamp().epochMicroseconds()),
         _recordOutgoing(recordOugoing),
+        _compress(compress),
         _filter(true),
-        _stream(path, std::ios::out)
+        _stream(path, compress ? std::ios::binary : std::ios::out),
+        _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
     {
         for (const auto& f : filters)
         {
@@ -56,6 +61,7 @@ public:
 
     ~TraceFileWriter()
     {
+        _deflater.close();
         _stream.close();
     }
 
@@ -85,22 +91,39 @@ private:
     {
         std::unique_lock<std::mutex> lock(_mutex);
         const Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - _epochStart;
-        _stream.write(&delim, 1);
-        _stream << usec;
-        _stream.write(&delim, 1);
-        _stream << pId;
-        _stream.write(&delim, 1);
-        _stream << sessionId;
-        _stream.write(&delim, 1);
-        _stream.write(data.c_str(), data.size());
-        _stream.write("\n", 1);
+        if (_compress)
+        {
+            _deflater.write(&delim, 1);
+            _deflater << usec;
+            _deflater.write(&delim, 1);
+            _deflater << pId;
+            _deflater.write(&delim, 1);
+            _deflater << sessionId;
+            _deflater.write(&delim, 1);
+            _deflater.write(data.c_str(), data.size());
+            _deflater.write("\n", 1);
+        }
+        else
+        {
+            _stream.write(&delim, 1);
+            _stream << usec;
+            _stream.write(&delim, 1);
+            _stream << pId;
+            _stream.write(&delim, 1);
+            _stream << sessionId;
+            _stream.write(&delim, 1);
+            _stream.write(data.c_str(), data.size());
+            _stream.write("\n", 1);
+        }
     }
 
 private:
     const Poco::Int64 _epochStart;
     const bool _recordOutgoing;
+    const bool _compress;
     Util::RegexListMatcher _filter;
-    std::fstream _stream;
+    std::ofstream _stream;
+    Poco::DeflatingOutputStream _deflater;
     std::mutex _mutex;
 };
 

@@ -419,11 +419,13 @@ void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int /*p
 
     const auto tile = getResponseMessage(socket, "tile:", "checkBlackTiles ");
     const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+
 #if 0
     std::fstream outStream("/tmp/black.png", std::ios::out);
     outStream.write(tile.data() + firstLine.size() + 1, tile.size() - firstLine.size() - 1);
     outStream.close();
 #endif
+
     std::stringstream streamTile;
     std::copy(tile.begin() + firstLine.size() + 1, tile.end(), std::ostream_iterator<char>(streamTile));
     checkBlackTile(streamTile);

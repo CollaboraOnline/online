@@ -24,7 +24,7 @@
     </logging>
 
     <trace desc="Dump commands and notifications for replay" enable="true">
-        <path desc="Output file path">/tmp/dump</path>
+        <path desc="Output file path" compress="true">/tmp/looltrace.gz</path>
         <filter>
             <message desc="Regex pattern of messages to exlcude">tile.*</message>
         </filter>
