@@ -3,7 +3,11 @@
 */
 
 /* global $ _ */
-L.Control.ColumnHeader = L.Control.extend({
+L.Control.ColumnHeader = L.Control.Header.extend({
+	options: {
+		cursor: 'col-resize'
+	},
+
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
 		this._initialized = false;
@@ -101,6 +105,8 @@ L.Control.ColumnHeader = L.Control.extend({
 			column = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
 			text = L.DomUtil.create('div', 'spreadsheet-header-column-text', column);
 			resize = L.DomUtil.create('div', 'spreadsheet-header-column-resize', column);
+			resize.column = iterator + 1;
+			resize.width = width;
 			var content = columns[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
 			text.innerHTML = content;
@@ -114,6 +120,7 @@ L.Control.ColumnHeader = L.Control.extend({
 				L.DomUtil.setStyle(resize, 'width', '3px');
 			}
 			L.DomEvent.addListener(text, 'click', this._onColumnHeaderClick, this);
+			this.mouseInit(resize);
 		}
 	},
 
@@ -161,6 +168,35 @@ L.Control.ColumnHeader = L.Control.extend({
 
 	_onCornerHeaderClick: function() {
 		this._map.sendUnoCommand('.uno:SelectAll');
+	},
+
+	onDragStart: function (item, start, end) {
+		// add vertical line
+	},
+
+	onDragMove: function (item, start, end) {
+		// move vertical line
+	},
+
+	onDragEnd: function (item, start, end) {
+		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
+
+		if (distance.x > 0 && item.width != distance.x) {
+			var command = {
+				Column: {
+					type: 'unsigned short',
+					value: item.column
+				},
+				Width: {
+					type: 'unsigned short',
+					value: distance.x
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:ColumnWidth', command);
+		}
+
+		// remove vertical line
 	},
 
 	_onUpdatePermission: function (e) {

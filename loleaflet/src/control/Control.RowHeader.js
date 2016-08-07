@@ -3,7 +3,11 @@
 */
 
 /* global $ _ */
-L.Control.RowHeader = L.Control.extend({
+L.Control.RowHeader = L.Control.Header.extend({
+	options: {
+		cursor: 'row-resize'
+	},
+
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
 		this._initialized = false;
@@ -99,6 +103,8 @@ L.Control.RowHeader = L.Control.extend({
 			row = L.DomUtil.create('div', 'spreadsheet-header-row', this._rows);
 			text = L.DomUtil.create('div', 'spreadsheet-header-row-text', row);
 			resize = L.DomUtil.create('div', 'spreadsheet-header-row-resize', row);
+			resize.row = iterator + 1;
+			resize.height = height;
 			var content = rows[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-row-' + content); // for easy addressing
 			text.innerHTML = content;
@@ -113,6 +119,7 @@ L.Control.RowHeader = L.Control.extend({
 			}
 
 			L.DomEvent.addListener(text, 'click', this._onRowHeaderClick, this);
+			this.mouseInit(resize);
 		}
 	},
 
@@ -142,6 +149,35 @@ L.Control.RowHeader = L.Control.extend({
 		}
 
 		this._selectRow(row, modifier);
+	},
+
+	onDragStart: function (item, start, end) {
+		// add horizontal line
+	},
+
+	onDragMove: function (item, start, end) {
+		// move horizontal line
+	},
+
+	onDragEnd: function (item, start, end) {
+		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
+
+		if (distance.y > 0 && item.height != distance.y) {
+			var command = {
+				Row: {
+					type: 'unsigned short',
+					value: item.row
+				},
+				Height: {
+					type: 'unsigned short',
+					value: distance.y
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:RowHeight', command);
+		}
+
+		// remove horizontal line
 	},
 
 	_onUpdatePermission: function (e) {
