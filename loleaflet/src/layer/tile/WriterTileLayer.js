@@ -122,6 +122,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 			this._parts = 1;
 			this._currentPage = command.selectedPart;
 			this._pages = command.parts;
+			this._viewId = parseInt(command.viewid);
 			this._map.fire('pagenumberchanged', {
 				currentPage: this._currentPage,
 				pages: this._pages,
