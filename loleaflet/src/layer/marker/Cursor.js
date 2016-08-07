@@ -48,9 +48,9 @@ L.Cursor = L.Layer.extend({
 	},
 
 	_initLayout: function () {
-		this._container = L.DomUtil.create('div', 'leaflet-cursor');
+		this._container = L.DomUtil.create('div', 'leaflet-cursor-container');
 		// a black rectangle
-		this._cursor = L.DomUtil.create('div', 'blinking-cursor', this._container);
+		this._cursor = L.DomUtil.create('div', 'leaflet-cursor blinking-cursor', this._container);
 
 		L.DomEvent
 			.disableClickPropagation(this._cursor)

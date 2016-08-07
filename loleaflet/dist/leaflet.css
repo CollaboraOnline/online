@@ -559,15 +559,18 @@ a.leaflet-control-buttons:hover:first-child {
 	border: 1px solid #666;
 	}
 
-.leaflet-cursor {
+.leaflet-cursor-container {
 	position: absolute;
 	text-align: center;
 	}
 
-.blinking-cursor {
+.leaflet-cursor {
 	background: black;
 	width: 2px;
 	pointer-events: none;
+	}
+
+.blinking-cursor {
 	-webkit-animation: 1s blink step-end 0s infinite;
 	-moz-animation: 1s blink step-end 0s infinite;
 	-ms-animation: 1s blink step-end 0s infinite;
