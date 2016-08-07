@@ -872,7 +872,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.removeLayer(this._cursorMarker);
 			}
 
-			this._cursorMarker = L.cursor(cursorPos);
+			this._cursorMarker = L.cursor(cursorPos, {blink: true});
 			this._map.addLayer(this._cursorMarker);
 			this._cursorMarker.setSize(pixBounds.getSize().multiplyBy(
 						this._map.getZoomScale(this._map.getZoom())));
