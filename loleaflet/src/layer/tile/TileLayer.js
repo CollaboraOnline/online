@@ -354,6 +354,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('invalidateviewcursor:')) {
 			this._onInvalidateViewCursorMsg(textMsg);
 		}
+		else if (textMsg.startsWith('viewcursorvisible:')) {
+			this._onViewCursorVisibleMsg(textMsg);
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -538,6 +541,23 @@ L.TileLayer = L.GridLayer.extend({
 			this._twipsToLatLng(bottomRightTwips, this._map.getZoom())),
 		this._viewCursors[viewId].part = obj.part;
 		this._viewCursors[viewId].visible = true;
+
+		this._onUpdateViewCursor(viewId);
+	},
+
+	_onViewCursorVisibleMsg: function(textMsg) {
+		textMsg = textMsg.substring('viewcursorvisible:'.length + 1);
+		var obj = JSON.parse(textMsg);
+		var viewId = parseInt(obj.viewId);
+
+		// Ignore if viewid=0 or is same as ours
+		if (viewId === 0 || viewId === this._viewId) {
+			return;
+		}
+
+		if (typeof this._viewCursors[viewId] !== 'undefined') {
+			this._viewCursors[viewId].visible = (obj.visible === 'true');
+		}
 
 		this._onUpdateViewCursor(viewId);
 	},
