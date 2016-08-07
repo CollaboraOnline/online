@@ -522,6 +522,11 @@ L.TileLayer = L.GridLayer.extend({
 		var obj = JSON.parse(textMsg);
 		var viewId = parseInt(obj.viewId);
 
+		// Ignore if viewid=0 or is same as ours
+		if (viewId === 0 || viewId === this._viewId) {
+			return;
+		}
+
 		var strTwips = obj.rectangle.match(/\d+/g);
 		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
