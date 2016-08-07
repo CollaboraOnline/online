@@ -95,6 +95,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._prevCellCursor = L.LatLngBounds.createDefault();
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
+		// View cursors with viewId to 'cursor info' mapping
+		// Eg: 1: {rectangle: 'x, y, w, h', visible: false}
+		this._viewCursors = {};
+
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
@@ -347,6 +351,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('contextmenu:')) {
 			this._onContextMenuMsg(textMsg);
 		}
+		else if (textMsg.startsWith('invalidateviewcursor:')) {
+			this._onInvalidateViewCursorMsg(textMsg);
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -508,6 +515,26 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursorOnLostFocus = this._visibleCursor;
 		this._isCursorOverlayVisible = true;
 		this._onUpdateCursor();
+	},
+
+	_onInvalidateViewCursorMsg: function (textMsg) {
+		textMsg = textMsg.substring('invalidateviewcursor:'.length + 1);
+		var obj = JSON.parse(textMsg);
+		var viewId = parseInt(obj.viewId);
+
+		var strTwips = obj.rectangle.match(/\d+/g);
+		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+		var bottomRightTwips = topLeftTwips.add(offset);
+
+		this._viewCursors[viewId] = this._viewCursors[viewId] || {};
+		this._viewCursors[viewId].bounds = new L.LatLngBounds(
+			this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+			this._twipsToLatLng(bottomRightTwips, this._map.getZoom())),
+		this._viewCursors[viewId].part = obj.part;
+		this._viewCursors[viewId].visible = true;
+
+		this._onUpdateViewCursor(viewId);
 	},
 
 	_onPartPageRectanglesMsg: function (textMsg) {
@@ -881,6 +908,38 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._cursorMarker);
 			this._isCursorOverlayVisible = false;
 		}
+	},
+
+	// Update colored non-blinking view cursor
+	_onUpdateViewCursor: function(viewId) {
+		if (typeof this._viewCursors[viewId] !== 'object' ||
+		    typeof this._viewCursors[viewId].bounds !== 'object') {
+			return;
+		}
+
+		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._viewCursors[viewId].bounds.getSouthWest()),
+		                         this._map.latLngToLayerPoint(this._viewCursors[viewId].bounds.getNorthEast()));
+		var viewCursorPos = this._viewCursors[viewId].bounds.getNorthWest();
+		var viewCursorMarker = this._viewCursors[viewId].marker;
+		var viewCursorVisible = this._viewCursors[viewId].visible;
+
+		if (viewCursorVisible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds)) {
+			if (viewCursorMarker) {
+				this._map.removeLayer(viewCursorMarker);
+			}
+			var viewCursorOptions = {
+				color: L.LOUtil.getViewIdHexColor(viewId),
+				blink: false
+			};
+			viewCursorMarker = L.cursor(viewCursorPos, viewCursorOptions);
+			this._map.addLayer(viewCursorMarker);
+			viewCursorMarker.setSize(pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
+
+		} else if (viewCursorMarker) {
+			this._map.removeLayer(this._viewCursors[viewId].marker);
+		}
+
+		this._viewCursors[viewId].marker = viewCursorMarker;
 	},
 
 	// Update dragged graphics selection resize.
