@@ -18,7 +18,11 @@
 
 namespace Log
 {
-    void initialize(const std::string& name, const std::string& logLevel = "trace", const bool withColor = true);
+    void initialize(const std::string& name,
+                    const std::string& logLevel = "trace",
+                    const bool withColor = true,
+                    const bool logToFile = false,
+                    std::map<std::string, std::string> config = {});
     Poco::Logger& logger();
     std::string prefix();
 

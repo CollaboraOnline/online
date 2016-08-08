@@ -9,13 +9,18 @@
 
 #include <sys/prctl.h>
 
+#include <atomic>
 #include <cassert>
 #include <iomanip>
 #include <sstream>
 #include <string>
 
 #include <Poco/ConsoleChannel.h>
+#include <Poco/FileChannel.h>
+#include <Poco/FormattingChannel.h>
+#include <Poco/PatternFormatter.h>
 #include <Poco/Process.h>
+#include <Poco/SplitterChannel.h>
 #include <Poco/Thread.h>
 #include <Poco/Timestamp.h>
 
@@ -25,10 +30,12 @@ static char LogPrefix[256] = { '\0' };
 
 namespace Log
 {
+    using namespace Poco;
+
     static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
     // help avoid destruction ordering issues.
     struct StaticNames {
-        bool inited;
+        std::atomic<bool> inited;
         std::string name;
         std::string id;
         StaticNames() :
@@ -101,7 +108,11 @@ namespace Log
         signalLog(buffer);
     }
 
-    void initialize(const std::string& name, const std::string& logLevel, const bool withColor)
+    void initialize(const std::string& name,
+                    const std::string& logLevel,
+                    const bool withColor,
+                    const bool logToFile,
+                    std::map<std::string, std::string> config)
     {
         Source.name = name;
         std::ostringstream oss;
@@ -112,11 +123,27 @@ namespace Log
         strncpy(LogPrefix, oss.str().c_str(), sizeof(LogPrefix));
 
         // Configure the logger.
-        auto channel = (isatty(fileno(stderr)) || withColor
-                     ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
-                     : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
+        AutoPtr<Channel> channelConsole = (isatty(fileno(stderr)) || withColor
+                            ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
+                            : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
+
+        AutoPtr<Channel> channel = channelConsole;
+        if (logToFile)
+        {
+            AutoPtr<SplitterChannel> splitterChannel(new SplitterChannel());
+            splitterChannel->addChannel(channelConsole);
+
+            AutoPtr<FileChannel> rotatedFileChannel(new FileChannel("loolwsd.log"));
+            for (const auto& pair : config)
+            {
+                rotatedFileChannel->setProperty(pair.first, pair.second);
+            }
+
+            splitterChannel->addChannel(rotatedFileChannel);
+            channel = splitterChannel;
+        }
+
         auto& logger = Poco::Logger::create(Source.name, channel, Poco::Message::PRIO_TRACE);
-        channel->release();
 
         logger.setLevel(logLevel.empty() ? std::string("trace") : logLevel);
 

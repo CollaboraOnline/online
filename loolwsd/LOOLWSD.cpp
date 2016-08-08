@@ -1330,6 +1330,15 @@ void LOOLWSD::initialize(Application& self)
         { "storage.wopi.host[0]", "localhost" },
         { "storage.wopi.max_file_size", "0" },
         { "storage.webdav[@allow]", "false" },
+        { "logging.file[@enable]", "false" },
+        { "logging.file.property[0][@name]", "path" },
+        { "logging.file.property[0]", "loolwsd.log" },
+        { "logging.file.property[1][@name]", "rotation" },
+        { "logging.file.property[1]", "never" },
+        { "logging.file.property[2][@name]", "compress" },
+        { "logging.file.property[2]", "true" },
+        { "logging.file.property[3][@name]", "flush" },
+        { "logging.file.property[3]", "false" }
     };
 
     // Set default values, in case they are missing from the config file.
@@ -1356,7 +1365,25 @@ void LOOLWSD::initialize(Application& self)
     const auto withColor = getConfigValue<bool>(conf, "logging.color", true);
     if (withColor)
         setenv("LOOL_LOGCOLOR", "1", true);
-    Log::initialize("wsd", logLevel, withColor);
+
+    const auto logToFile = getConfigValue<bool>(conf, "logging.file[@enable]", false);
+    std::map<std::string, std::string> logProperties;
+    for (size_t i = 0; ; ++i)
+    {
+        const std::string confPath = "logging.file.property[" + std::to_string(i) + "]";
+        const auto name = config().getString(confPath + "[@name]", "");
+        if (!name.empty())
+        {
+            const auto value = config().getString(confPath, "");
+            logProperties.emplace(name, value);
+        }
+        else if (!config().has(confPath))
+        {
+            break;
+        }
+    }
+
+    Log::initialize("wsd", logLevel, withColor, logToFile, logProperties);
 
 #if ENABLE_SSL
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
