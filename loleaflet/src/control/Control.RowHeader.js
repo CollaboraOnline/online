@@ -113,7 +113,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 				L.DomUtil.setStyle(text, 'display', 'none');
 			} else {
 				L.DomUtil.setStyle(row, 'height', height + 'px');
-				L.DomUtil.setStyle(row, 'line-height', height + 'px');
+				L.DomUtil.setStyle(text, 'line-height', height + 'px');
 				L.DomUtil.setStyle(text, 'height', height - 3 + 'px');
 				L.DomUtil.setStyle(resize, 'height', '3px');
 			}
