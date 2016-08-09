@@ -17,6 +17,7 @@
     "bootstrap": "3.3.6",
     "browserify": "^13.1.0",
     "browserify-css": "^0.9.1",
+    "d3": "3.5.17",
     "devtools-detect": "2.1.1",
     "eslint": "^2.8.0",
     "evol-colorpicker": "3.2.6",

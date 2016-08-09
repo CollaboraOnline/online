@@ -1140,6 +1140,11 @@
         }
       }
     },
+    "d3": {
+      "version": "3.5.17",
+      "from": "d3@3.5.17",
+      "resolved": "./node_shrinkwrap/d3-3.5.17.tgz"
+    },
     "devtools-detect": {
       "version": "2.1.1",
       "from": "devtools-detect@2.1.1",
