@@ -247,3 +247,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		clearInterval(this._basicStatsIntervalId);
 	}
 });
+
+Admin.Analytics = function(host) {
+	return new AdminSocketAnalytics(host);
+};

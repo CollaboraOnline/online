@@ -201,3 +201,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		clearInterval(this._docElapsedTimeIntervalId);
 	}
 });
+
+Admin.Overview = function(host) {
+	return new AdminSocketOverview(host);
+};

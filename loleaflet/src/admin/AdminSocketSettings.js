@@ -61,3 +61,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 		clearInterval(this._basicStatsIntervalId);
 	}
 });
+
+Admin.Settings = function(host) {
+	return new AdminSocketSettings(host);
+};

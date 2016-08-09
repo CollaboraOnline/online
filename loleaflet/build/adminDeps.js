@@ -1,42 +1,33 @@
 var adminDeps = {
-	Base: {
-		src: ['admin/Base.js'],
-		desc: 'Base.js used for JS Inheritence.'
+	AdminCore: {
+		src: ['admin/Base.js',
+		      'admin/Admin.js',
+		      'admin/AdminSocketBase.js'],
+		desc: 'Core admin scripts infrastructure'
 	},
 
 	Util: {
 		src: ['admin/Util.js'],
 		desc: 'Utility class',
-		deps: ['Base']
-	},
-
-	AdminSocketBase: {
-		src: ['admin/AdminSocketBase.js'],
-		desc: 'Abstract base class for Admin sockets',
-		deps: ['Base']
+		deps: ['AdminCore']
 	},
 
 	AdminSocketOverview: {
 		src: ['admin/AdminSocketOverview.js'],
 		desc: 'Socket to handle messages in overview page.',
-		deps: ['AdminSocketBase']
+		deps: ['AdminCore']
 	},
 
 	AdminSocketAnalytics: {
 		src: ['admin/AdminSocketAnalytics.js'],
 		desc: 'Socket to handle messages in analytics page.',
-		deps: ['AdminSocketBase']
+		deps: ['AdminCore']
 	},
 
 	AdminSocketSettings: {
 		src: ['admin/AdminSocketSettings.js'],
 		desc: 'Socket to handle settings from server',
-		deps: ['AdminSocketBase']
-	},
-
-	AdminStrings: {
-		src: ['admin/AdminStrings.js'],
-		desc: 'String table for user interface'
+		deps: ['AdminCore']
 	}
 };
 
