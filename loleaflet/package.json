@@ -14,6 +14,7 @@
   "//": "mocha: ~2.1.0",
   "//": "ws: ~0.7.2",
   "devDependencies": {
+    "bootstrap": "3.3.6",
     "browserify": "^13.1.0",
     "browserify-css": "^0.9.1",
     "devtools-detect": "2.1.1",
@@ -46,7 +47,9 @@
   "scripts": {
     "test": "jake test",
     "bundle": "browserify . > dist/bundle.js",
-    "bundle-debug": "browserify -d . > dist/bundle.js"
+    "bundle-debug": "browserify -d . > dist/bundle.js",
+    "bundle-admin": "browserify main-admin.js > dist/admin-bundle.js",
+    "bundle-admin-debug": "browserify -d main-admin.js > dist/admin-bundle.js"
   },
   "repository": {
     "type": "git",

@@ -19,8 +19,10 @@ build:
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	if $(DEBUG); then \
 		npm run bundle-debug; \
+		npm run bundle-admin-debug; \
 	else \
 		npm run bundle; \
+		npm run bundle-admin; \
 	fi;
 
 all: build

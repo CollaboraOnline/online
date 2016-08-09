@@ -2,6 +2,11 @@
   "name": "leaflet",
   "version": "0.8.0-dev",
   "dependencies": {
+    "bootstrap": {
+      "version": "3.3.6",
+      "from": "bootstrap@3.3.6",
+      "resolved": "./node_shrinkwrap/bootstrap-3.3.6.tgz"
+    },
     "browserify": {
       "version": "13.1.0",
       "from": "browserify@>=13.1.0 <14.0.0",

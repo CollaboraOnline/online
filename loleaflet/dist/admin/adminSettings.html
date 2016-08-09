@@ -10,18 +10,6 @@
 
     <title>LibreOffice Online - Admin console</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../bootstrap/dashboard.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="../dialog/vex.css" />
-    <link rel="stylesheet" href="../dialog/vex-theme-plain.css" />
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -29,45 +17,36 @@
     <![endif]-->
     <link rel="localizations" href="/loleaflet/dist/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
   </head>
-
   <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../dialog/vex.combined.min.js"></script>
-    <script src="/loleaflet/dist/l10n/json2.min.js"></script>
-    <script src="/loleaflet/dist/l10n/l10n.min.js"></script>
-    <script>var _ = function (string) {return string.toLocaleString();};</script>
+    <script src="/loleaflet/dist/admin-bundle.js"></script>
     <script src="/loleaflet/dist/branding.js"></script>
-    <script>vex.defaultOptions.className = 'vex-theme-plain';</script>
-    <script src="admin-src.js"></script>
-    <script>if (brandProductName) {strProductName = brandProductName}</script>
-    <script>document.title = strProductName + ' - ' + strAdminConsole</script>
+    <script>if (brandProductName) {l10nstrings.strProductName = brandProductName}</script>
+    <script>document.title = l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole</script>
     <script>
-
         if (window.location.protocol == "https:") {
            host = 'wss://' + window.location.host + '/lool/adminws/'
         }
         else {
            host = 'ws://' + window.location.host + '/lool/adminws/'
         }
-	new AdminSocketSettings(host);
 
+        Admin.Settings(host);
     </script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only"><script>document.write(strToggleNavigation)</script></span>
+            <span class="sr-only"><script>document.write(l10nstrings.strToggleNavigation)</script></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><script>document.write(strProductName + ' - ' + strAdminConsole)</script></a>
+          <a class="navbar-brand" href="#"><script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="adminSettings.html"><script>document.write(strSettings)</script></a></li>
+            <li><a href="adminSettings.html"><script>document.write(l10nstrings.strSettings)</script></a></li>
           </ul>
         </div>
       </div>
@@ -77,35 +56,26 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="admin.html"><script>document.write(strOverview)</script> <span class="sr-only"><script>document.write(strCurrent)</script></span></a></li>
-            <li><a href="adminAnalytics.html"><script>document.write(strAnalytics)</script></a></li>
+            <li><a href="admin.html"><script>document.write(l10nstrings.strOverview)</script> <span class="sr-only"><script>document.write(l10nstrings.strCurrent)</script></span></a></li>
+            <li><a href="adminAnalytics.html"><script>document.write(l10nstrings.strAnalytics)</script></a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header"><script>document.write(strSettings)</script></h1>
+          <h1 class="page-header"><script>document.write(l10nstrings.strSettings)</script></h1>
 	  <form id="admin_settings">
-	    <label for="mem_stats_size"><script>document.write(strMemoryStatsCachesize)</script></label>
+	    <label for="mem_stats_size"><script>document.write(l10nstrings.strMemoryStatsCachesize)</script></label>
 	    <input type="text" id="mem_stats_size" name="Memory Stats Size"><br/>
-	    <label for="mem_stats_interval"><script>document.write(strMemoryStatsInterval)</script></label>
+	    <label for="mem_stats_interval"><script>document.write(l10nstrings.strMemoryStatsInterval)</script></label>
 	    <input type="text" id="mem_stats_interval" name="Memory Stats Interval"><br/>
-	    <label for="cpu_stats_size"><script>document.write(strCpuStatsCachesize)</script></label>
+	    <label for="cpu_stats_size"><script>document.write(l10nstrings.strCpuStatsCachesize)</script></label>
 	    <input type="text" id="cpu_stats_size" name="Cpu Stats Size"><br/>
-	    <label for="cpu_stats_interval"><script>document.write(strCpuStatsInterval)</script></label>
+	    <label for="cpu_stats_interval"><script>document.write(l10nstrings.strCpuStatsInterval)</script></label>
 	    <input type="text" id="cpu_stats_interval" name="Cpu Stats Interval"><br/>
-	    <script>document.write('<input type="submit" value="' + strSave + '"/><br/>')</script>
+	    <script>document.write('<input type="submit" value="' + l10nstrings.strSave + '"/><br/>')</script>
 	  </form>
 	</div>
       </div>
       </div>
     </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../bootstrap/assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
