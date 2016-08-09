@@ -1761,15 +1761,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         {
             if (forKitPid == pid)
             {
-                if (WIFEXITED(status))
+                if (WIFEXITED(status) == true)
                 {
                     Log::info() << "Child process [" << pid << "] exited with code: "
                                 << WEXITSTATUS(status) << "." << Log::end;
 
                     break;
                 }
-                else
-                if (WIFSIGNALED(status))
+                else if (WIFSIGNALED(status) == true)
                 {
                     std::string fate = "died";
                     if (WCOREDUMP(status))
@@ -1780,13 +1779,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
                     break;
                 }
-                else if (WIFSTOPPED(status))
+                else if (WIFSTOPPED(status) == true)
                 {
                     Log::info() << "Child process [" << pid << "] stopped with "
                                 << Util::signalName(WSTOPSIG(status))
                                 << Log::end;
                 }
-                else if (WIFCONTINUED(status))
+                else if (WIFCONTINUED(status) == true)
                 {
                     Log::info() << "Child process [" << pid << "] resumed with SIGCONT."
                                 << Log::end;
