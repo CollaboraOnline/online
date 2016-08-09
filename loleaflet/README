@@ -32,8 +32,11 @@ To update any of the dependency, process often goes like this:
 
 1.) Change version of the dependency in package.json
 2.) Do an `npm update', which fetches the new module from npm registry
-3.) Do `shrinkpack', which should remove the old tarball, add new one, and make appropriate
-    changes to npm-shrinkwrap.json
+3.) `npm shrinkwrap --dev` to update npm-shrinkwrap.json with newer information. You might see
+    that this tool updates path convention of tarballs inside node_shrinkwrap/ also, but this
+    should get corrected in next step.
+4.) Do `shrinkpack', which should remove the old tarball, add new one, and make appropriate
+    changes to npm-shrinkwrap.json (removing path convention changes by step 3).
 
 If you have not installed `shrinkpack' globally using `npm install -g shrinkpack', it should be
 in node_modules/.bin/shrinkpack, so you can use the binary from there.
@@ -45,11 +48,14 @@ Just do:
 
     make
 
-To build bundle.js with debug-info, i.e with sourcemaps, after 'make', additionally run:
+Above step would create bundle.js and admin-bundle.js in dist/ for main loleaflet and admin console
+respectively.
 
-    npm run bundle-debug
+To build with debug-info, i.e with sourcemaps:
 
-Above will produce a larger-sized bundle.js in dist/ with source-maps so that you can debug while browsing.
+    make debug
+
+Above will produce a larger-sized bundle.js and admin-bundle.js in dist/ with source-maps so that you can debug while browsing.
 
 Running
 -------
