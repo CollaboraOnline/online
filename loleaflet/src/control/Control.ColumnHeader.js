@@ -170,15 +170,33 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:SelectAll');
 	},
 
-	onDragStart: function (item, start, end) {
-		// add vertical line
+	_getVertLatLng: function (e) {
+		var drag = this._map.mouseEventToContainerPoint(e);
+		return [
+			this._map.containerPointToLatLng(new L.Point(drag.x, 0)),
+			this._map.containerPointToLatLng(new L.Point(drag.x, this._map.getSize().y))
+		];
 	},
 
-	onDragMove: function (item, start, end) {
-		// move vertical line
+	onDragStart: function (item, start, e) {
+		if (!this._vertLine) {
+			this._vertLine = L.polyline(this._getVertLatLng(e), {color: 'darkblue', weight: 1});
+		}
+		else {
+			this._vertLine.setLatLngs(this._getVertLatLng(e));
+		}
+
+		this._map.addLayer(this._vertLine);
 	},
 
-	onDragEnd: function (item, start, end) {
+	onDragMove: function (item, start, e) {
+		if (this._vertLine) {
+			this._vertLine.setLatLngs(this._getVertLatLng(e));
+		}
+	},
+
+	onDragEnd: function (item, start, e) {
+		var end = new L.Point(e.clientX, e.clientY);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
 		if (distance.x > 0 && item.width != distance.x) {
@@ -196,7 +214,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._map.sendUnoCommand('.uno:ColumnWidth', command);
 		}
 
-		// remove vertical line
+		this._map.removeLayer(this._vertLine);
 	},
 
 	_onUpdatePermission: function (e) {

@@ -151,15 +151,33 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._selectRow(row, modifier);
 	},
 
-	onDragStart: function (item, start, end) {
-		// add horizontal line
+	_getHorzLatLng: function (e) {
+		var drag = this._map.mouseEventToContainerPoint(e);
+		return [
+			this._map.containerPointToLatLng(new L.Point(0, drag.y)),
+			this._map.containerPointToLatLng(new L.Point(this._map.getSize().x, drag.y))
+		];
 	},
 
-	onDragMove: function (item, start, end) {
-		// move horizontal line
+	onDragStart: function (item, start, e) {
+		if (!this._horzLine) {
+			this._horzLine = L.polyline(this._getHorzLatLng(e), {color: 'darkblue', weight: 1});
+		}
+		else {
+			this._horzLine.setLatLngs(this._getHorzLatLng(e));
+		}
+
+		this._map.addLayer(this._horzLine);
 	},
 
-	onDragEnd: function (item, start, end) {
+	onDragMove: function (item, start, e) {
+		if (this._horzLine) {
+			this._horzLine.setLatLngs(this._getHorzLatLng(e));
+		}
+	},
+
+	onDragEnd: function (item, start, e) {
+		var end = new L.Point(e.clientX, e.clientY);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
 		if (distance.y > 0 && item.height != distance.y) {
@@ -177,7 +195,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._map.sendUnoCommand('.uno:RowHeight', command);
 		}
 
-		// remove horizontal line
+		this._map.removeLayer(this._horzLine);
 	},
 
 	_onUpdatePermission: function (e) {

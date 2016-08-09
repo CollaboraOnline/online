@@ -28,13 +28,11 @@ L.Control.Header = L.Control.extend({
 		var rectangle = target.parentNode.getBoundingClientRect();
 		this._item = target;
 		this._start = new L.Point(rectangle.left, rectangle.top);
-		this._end = new L.Point(e.clientX, e.clientY);
 
-		this.onDragStart(this.item, this._start, this._end);
+		this.onDragStart(this.item, this._start, e);
 	},
 
 	_onMouseMove: function (e) {
-		this._end = new L.Point(e.clientX, e.clientY);
 		this._dragging = true;
 
 		var target = e.target || e.srcElement;
@@ -48,12 +46,10 @@ L.Control.Header = L.Control.extend({
 
 		L.DomEvent.preventDefault(e);
 
-		this.onDragMove(this._item, this._start, this._end);
+		this.onDragMove(this._item, this._start, e);
 	},
 
 	_onMouseUp: function (e) {
-		this._end = new L.Point(e.clientX, e.clientY);
-
 		if (this._target) {
 			this._target.style.cursor = this._oldCursor;
 		}
@@ -64,8 +60,8 @@ L.Control.Header = L.Control.extend({
 		L.DomUtil.enableImageDrag();
 		L.DomUtil.enableTextSelection();
 
-		this.onDragEnd(this._item, this._start, this._end);
-		this._target = this._cursor = this._item = this._start = this._end = null;
+		this.onDragEnd(this._item, this._start, e);
+		this._target = this._cursor = this._item = this._start = null;
 		this._dragging = false;
 	},
 
