@@ -143,10 +143,44 @@ and certificates (in PEM format only). The name and location of key,
 certificate and CA certificate chain is defined in
 ${sysconfdir}/loolwsd/loolwsd.xml. Dummy self-signed cert.pem,
 ca-chain.cert.pem and key.pem are already included, but it is better
-to replace those with your own files. HTTPS is the default. HTTP-only
-mode can be enabled with --disable-ssl configure option. key.pem is
-required even in HTTP-only mode, because it is used to generate the
-secure token for the admin console.
+to replace those with your own files.
+
+To generate the new self-signed certificate, you can do the following.  Maybe
+there is a less verbose way, but this worked for me:
+
+    # create tha ca-chain.cert.pem
+
+    mkdir private
+
+    openssl genrsa -aes256 -out private/ca.key.pem 4096
+
+    # You will be asked many questions, put the IP in Common Name
+    openssl req -new -x509 -days 365 -key private/ca.key.pem -sha256 -extensions v3_ca -out ca.cert.pem
+
+    openssl genrsa -aes256 -out private/intermediate.key.pem 4096
+
+    openssl req -sha256 -new -key private/intermediate.key.pem -out intermediate.csr.pem
+
+    mkdir -p demoCA/newcerts
+    touch demoCA/index.txt
+    echo 1000 > demoCA/serial
+    openssl ca -keyfile private/ca.key.pem -cert ca.cert.pem -extensions v3_ca -notext -md sha256 -in intermediate.csr.pem -out intermediate.cert.pem
+
+    cat intermediate.cert.pem ca.cert.pem > ca-chain.cert.pem
+
+    # create the key / cert
+
+    openssl genrsa -out key.pem 2048
+
+    openssl req -sha256 -new -key key.pem -out csr.pem
+
+    # change "unique_subject = yes" to "unique_subject = no" in demoCA/index.txt.attr
+
+    openssl ca -keyfile private/ca.key.pem -cert ca.cert.pem -extensions usr_cert -notext -md sha256 -in csr.pem -out cert.pem
+
+HTTPS is the default. HTTP-only mode can be enabled with --disable-ssl
+configure option. key.pem is required even in HTTP-only mode, because it is
+used to generate the secure token for the admin console.
 
 If you plan to hack on loolwsd, you probably want to familiarize
 yourself with loolwsd's --numprespawns switch, and the 'connect'
