@@ -6,3 +6,7 @@ The translated .po files are then committed from the pootle server.
 
 Remark the directory styles, are not translated by merged from the core translation.
 
+if files are added to the po directory, they are automatically compared/updated from pootle.
+
+Automatic commits from pootle are done with the user "pootlebot"
+

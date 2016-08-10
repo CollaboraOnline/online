@@ -45,7 +45,7 @@ dist: all
 	rm -rf loleaflet-$(VERSION)
 
 pot:
-	xgettext --from-code=UTF-8 --keyword=_ --output=po/template/loleaflet-ui.pot \
+	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
 		evol.colorpicker.strings.js \
 		unocommands.js \
 		dist/errormessages.js \
@@ -62,11 +62,11 @@ pot:
 		src/core/Socket.js \
 		src/map/Map.js
 
-	html2po --pot --input=dist/loleaflet-help.html --output=po/template/loleaflet-help.pot
+	html2po --pot --input=dist/loleaflet-help.html --output=po/templates/loleaflet-help.pot
 
 l10n: pot
-	for i in po/ui-*.po; do pot2po --input=po/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
-	for i in po/help-*.po; do pot2po --input=po/loleaflet-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
+	for i in po/ui-*.po; do pot2po --input=po/templates/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
+	for i in po/help-*.po; do pot2po --input=po/templates/loleaflet-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 	rm po/loleaflet-ui.pot
 	rm po/loleaflet-help.pot
 
