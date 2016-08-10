@@ -673,8 +673,8 @@ public:
         size_t tileIndex = 0;
         for (Util::Rectangle& tileRect : tileRecs)
         {
-            const int positionX = (tileRect.getLeft() - renderArea.getLeft()) / tileCombined.getTileWidth();
-            const int positionY = (tileRect.getTop() - renderArea.getTop())  / tileCombined.getTileHeight();
+            const size_t positionX = (tileRect.getLeft() - renderArea.getLeft()) / tileCombined.getTileWidth();
+            const size_t positionY = (tileRect.getTop() - renderArea.getTop())  / tileCombined.getTileHeight();
 
             const auto oldSize = output.size();
             const auto pixelWidth = tileCombined.getWidth();
