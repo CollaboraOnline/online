@@ -170,33 +170,33 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:SelectAll');
 	},
 
-	_getVertLatLng: function (e) {
+	_getVertLatLng: function (offset, e) {
 		var drag = this._map.mouseEventToContainerPoint(e);
 		return [
-			this._map.containerPointToLatLng(new L.Point(drag.x, 0)),
-			this._map.containerPointToLatLng(new L.Point(drag.x, this._map.getSize().y))
+			this._map.containerPointToLatLng(new L.Point(drag.x + offset.x, 0)),
+			this._map.containerPointToLatLng(new L.Point(drag.x + offset.x, this._map.getSize().y))
 		];
 	},
 
-	onDragStart: function (item, start, e) {
+	onDragStart: function (item, start, offset, e) {
 		if (!this._vertLine) {
-			this._vertLine = L.polyline(this._getVertLatLng(e), {color: 'darkblue', weight: 1});
+			this._vertLine = L.polyline(this._getVertLatLng(offset, e), {color: 'darkblue', weight: 1});
 		}
 		else {
-			this._vertLine.setLatLngs(this._getVertLatLng(e));
+			this._vertLine.setLatLngs(this._getVertLatLng(offset, e));
 		}
 
 		this._map.addLayer(this._vertLine);
 	},
 
-	onDragMove: function (item, start, e) {
+	onDragMove: function (item, start, offset, e) {
 		if (this._vertLine) {
-			this._vertLine.setLatLngs(this._getVertLatLng(e));
+			this._vertLine.setLatLngs(this._getVertLatLng(offset, e));
 		}
 	},
 
-	onDragEnd: function (item, start, e) {
-		var end = new L.Point(e.clientX, e.clientY);
+	onDragEnd: function (item, start, offset, e) {
+		var end = new L.Point(e.clientX + offset.x, e.clientY);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
 		if (distance.x > 0 && item.width != distance.x) {

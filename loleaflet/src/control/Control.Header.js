@@ -25,11 +25,12 @@ L.Control.Header = L.Control.extend({
 		L.DomEvent.on(document, 'mousemove', this._onMouseMove, this)
 		L.DomEvent.on(document, 'mouseup', this._onMouseUp, this);
 
-		var rectangle = target.parentNode.getBoundingClientRect();
+		var rect = target.parentNode.getBoundingClientRect();
+		this._start = new L.Point(rect.left, rect.top);
+		this._offset = new L.Point(rect.right - e.clientX, rect.bottom - e.clientY);
 		this._item = target;
-		this._start = new L.Point(rectangle.left, rectangle.top);
 
-		this.onDragStart(this.item, this._start, e);
+		this.onDragStart(this.item, this._start, this._offset, e);
 	},
 
 	_onMouseMove: function (e) {
@@ -46,7 +47,7 @@ L.Control.Header = L.Control.extend({
 
 		L.DomEvent.preventDefault(e);
 
-		this.onDragMove(this._item, this._start, e);
+		this.onDragMove(this._item, this._start, this._offset, e);
 	},
 
 	_onMouseUp: function (e) {
@@ -60,8 +61,8 @@ L.Control.Header = L.Control.extend({
 		L.DomUtil.enableImageDrag();
 		L.DomUtil.enableTextSelection();
 
-		this.onDragEnd(this._item, this._start, e);
-		this._target = this._cursor = this._item = this._start = null;
+		this.onDragEnd(this._item, this._start, this._offset, e);
+		this._target = this._cursor = this._item = this._start = this._offset = null;
 		this._dragging = false;
 	},
 

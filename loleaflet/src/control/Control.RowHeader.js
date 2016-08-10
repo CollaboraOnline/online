@@ -151,33 +151,33 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._selectRow(row, modifier);
 	},
 
-	_getHorzLatLng: function (e) {
+	_getHorzLatLng: function (offset, e) {
 		var drag = this._map.mouseEventToContainerPoint(e);
 		return [
-			this._map.containerPointToLatLng(new L.Point(0, drag.y)),
-			this._map.containerPointToLatLng(new L.Point(this._map.getSize().x, drag.y))
+			this._map.containerPointToLatLng(new L.Point(0, drag.y + offset.y)),
+			this._map.containerPointToLatLng(new L.Point(this._map.getSize().x, drag.y + offset.y))
 		];
 	},
 
-	onDragStart: function (item, start, e) {
+	onDragStart: function (item, start, offset, e) {
 		if (!this._horzLine) {
-			this._horzLine = L.polyline(this._getHorzLatLng(e), {color: 'darkblue', weight: 1});
+			this._horzLine = L.polyline(this._getHorzLatLng(offset, e), {color: 'darkblue', weight: 1});
 		}
 		else {
-			this._horzLine.setLatLngs(this._getHorzLatLng(e));
+			this._horzLine.setLatLngs(this._getHorzLatLng(offset, e));
 		}
 
 		this._map.addLayer(this._horzLine);
 	},
 
-	onDragMove: function (item, start, e) {
+	onDragMove: function (item, start, offset, e) {
 		if (this._horzLine) {
-			this._horzLine.setLatLngs(this._getHorzLatLng(e));
+			this._horzLine.setLatLngs(this._getHorzLatLng(offset, e));
 		}
 	},
 
-	onDragEnd: function (item, start, e) {
-		var end = new L.Point(e.clientX, e.clientY);
+	onDragEnd: function (item, start, offset, e) {
+		var end = new L.Point(e.clientX, e.clientY + offset.y);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
 		if (distance.y > 0 && item.height != distance.y) {
