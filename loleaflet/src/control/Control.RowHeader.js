@@ -110,7 +110,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			text.innerHTML = content;
 			height = Math.round(converter.call(context, twip).y) - 1;
 			if (height === -1) {
-				L.DomUtil.setStyle(text, 'display', 'none');
+				L.DomUtil.setStyle(row, 'display', 'none');
 			} else {
 				L.DomUtil.setStyle(row, 'height', height + 'px');
 				L.DomUtil.setStyle(text, 'line-height', height + 'px');
@@ -151,20 +151,21 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._selectRow(row, modifier);
 	},
 
-	_getHorzLatLng: function (offset, e) {
+	_getHorzLatLng: function (start, offset, e) {
+		var limit = this._map.mouseEventToContainerPoint({clientX: start.x, clientY: start.y});
 		var drag = this._map.mouseEventToContainerPoint(e);
 		return [
-			this._map.containerPointToLatLng(new L.Point(0, drag.y + offset.y)),
-			this._map.containerPointToLatLng(new L.Point(this._map.getSize().x, drag.y + offset.y))
+			this._map.containerPointToLatLng(new L.Point(0, Math.max(limit.y, drag.y + offset.y))),
+			this._map.containerPointToLatLng(new L.Point(this._map.getSize().x, Math.max(limit.y, drag.y + offset.y)))
 		];
 	},
 
 	onDragStart: function (item, start, offset, e) {
 		if (!this._horzLine) {
-			this._horzLine = L.polyline(this._getHorzLatLng(offset, e), {color: 'darkblue', weight: 1});
+			this._horzLine = L.polyline(this._getHorzLatLng(start, offset, e), {color: 'darkblue', weight: 1});
 		}
 		else {
-			this._horzLine.setLatLngs(this._getHorzLatLng(offset, e));
+			this._horzLine.setLatLngs(this._getHorzLatLng(start, offset, e));
 		}
 
 		this._map.addLayer(this._horzLine);
@@ -172,7 +173,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 	onDragMove: function (item, start, offset, e) {
 		if (this._horzLine) {
-			this._horzLine.setLatLngs(this._getHorzLatLng(offset, e));
+			this._horzLine.setLatLngs(this._getHorzLatLng(start, offset, e));
 		}
 	},
 
@@ -180,7 +181,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var end = new L.Point(e.clientX, e.clientY + offset.y);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
-		if (distance.y > 0 && item.height != distance.y) {
+		if (item.height != distance.y) {
 			var command = {
 				Row: {
 					type: 'unsigned short',
@@ -188,7 +189,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 				},
 				Height: {
 					type: 'unsigned short',
-					value: distance.y
+					value: Math.max(distance.y, 0)
 				}
 			};
 

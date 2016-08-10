@@ -112,7 +112,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			text.innerHTML = content;
 			width = Math.round(converter.call(context, twip).x) - 1;
 			if (width === -1) {
-				L.DomUtil.setStyle(text, 'display', 'none');
+				L.DomUtil.setStyle(column, 'display', 'none');
 			}
 			else {
 				L.DomUtil.setStyle(column, 'width', width + 'px');
@@ -170,20 +170,21 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:SelectAll');
 	},
 
-	_getVertLatLng: function (offset, e) {
+	_getVertLatLng: function (start, offset, e) {
+		var limit = this._map.mouseEventToContainerPoint({clientX: start.x, clientY: start.y});
 		var drag = this._map.mouseEventToContainerPoint(e);
 		return [
-			this._map.containerPointToLatLng(new L.Point(drag.x + offset.x, 0)),
-			this._map.containerPointToLatLng(new L.Point(drag.x + offset.x, this._map.getSize().y))
+			this._map.containerPointToLatLng(new L.Point(Math.max(limit.x, drag.x + offset.x), 0)),
+			this._map.containerPointToLatLng(new L.Point(Math.max(limit.x, drag.x + offset.x), this._map.getSize().y))
 		];
 	},
 
 	onDragStart: function (item, start, offset, e) {
 		if (!this._vertLine) {
-			this._vertLine = L.polyline(this._getVertLatLng(offset, e), {color: 'darkblue', weight: 1});
+			this._vertLine = L.polyline(this._getVertLatLng(start, offset, e), {color: 'darkblue', weight: 1});
 		}
 		else {
-			this._vertLine.setLatLngs(this._getVertLatLng(offset, e));
+			this._vertLine.setLatLngs(this._getVertLatLng(start, offset, e));
 		}
 
 		this._map.addLayer(this._vertLine);
@@ -191,7 +192,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 	onDragMove: function (item, start, offset, e) {
 		if (this._vertLine) {
-			this._vertLine.setLatLngs(this._getVertLatLng(offset, e));
+			this._vertLine.setLatLngs(this._getVertLatLng(start, offset, e));
 		}
 	},
 
@@ -199,7 +200,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var end = new L.Point(e.clientX + offset.x, e.clientY);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
-		if (distance.x > 0 && item.width != distance.x) {
+		if (item.width != distance.x) {
 			var command = {
 				Column: {
 					type: 'unsigned short',
@@ -207,7 +208,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				},
 				Width: {
 					type: 'unsigned short',
-					value: distance.x
+					value: Math.max(distance.x, 0)
 				}
 			};
 
