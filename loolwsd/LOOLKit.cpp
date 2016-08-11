@@ -753,6 +753,25 @@ public:
 
 private:
 
+    static void GlobalCallback(const int nType, const char* pPayload, void* pData)
+    {
+        const std::string payload = pPayload ? pPayload : "(nil)";
+        Log::trace() << "Document::GlobalCallback "
+                     << LOKitHelper::kitCallbackTypeToString(nType)
+                     << " [" << payload << "]." << Log::end;
+        Document* self = reinterpret_cast<Document*>(pData);
+        if (nType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
+            nType == LOK_CALLBACK_DOCUMENT_PASSWORD)
+        {
+            // Mark the document password type.
+            self->setDocumentPassword(nType);
+            return;
+        }
+
+        // Broadcast leftover status indicator callbacks to all clients
+        self->broadcastCallbackToClients(nType, payload);
+    }
+
     static void ViewCallback(const int nType, const char* pPayload, void* pData)
     {
         CallbackDescriptor* pDescr = reinterpret_cast<CallbackDescriptor*>(pData);
@@ -788,23 +807,15 @@ private:
                      << LOKitHelper::kitCallbackTypeToString(nType)
                      << " [" << payload << "]." << Log::end;
         Document* self = reinterpret_cast<Document*>(pData);
-        if (self == nullptr)
-        {
-            return;
-        }
+        self->broadcastCallbackToClients(nType, pPayload);
+    }
 
-        std::unique_lock<std::mutex> lock(self->_mutex);
+    /// Helper method to broadcast callback and its payload to all clients
+    void broadcastCallbackToClients(const int nType, const std::string& payload)
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
 
-        if (nType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
-            nType == LOK_CALLBACK_DOCUMENT_PASSWORD)
-        {
-            // Mark the document password type.
-            self->setDocumentPassword(nType);
-            return;
-        }
-
-        // Broadcast to all clients.
-        for (auto& it: self->_connections)
+        for (auto& it: _connections)
         {
             if (it.second->isRunning())
             {
@@ -812,7 +823,7 @@ private:
                 if (session)
                 {
                     auto pNotif = new CallbackNotification(session, nType, payload);
-                    self->_callbackQueue.enqueueNotification(pNotif);
+                    _callbackQueue.enqueueNotification(pNotif);
                 }
             }
         }
@@ -939,8 +950,7 @@ private:
             auto lock(_loKit->getLock());
             if (LIBREOFFICEKIT_HAS(_loKit->get(), registerCallback))
             {
-                //TODO: Use GlobalCallback for Password and statusindicator.
-                _loKit->get()->pClass->registerCallback(_loKit->get(), DocumentCallback, this);
+                _loKit->get()->pClass->registerCallback(_loKit->get(), GlobalCallback, this);
                 const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
                                  | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY;
                 _loKit->setOptionalFeatures(flags);
