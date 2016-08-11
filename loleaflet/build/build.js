@@ -1,6 +1,8 @@
 var fs = require('fs'),
     UglifyJS = require('uglify-js'),
     zlib = require('zlib'),
+    browserify = require('browserify'),
+    browserifyCss = require('browserify-css');
 
     deps = require('./deps.js').deps,
     adminDeps = require('./adminDeps.js').adminDeps;
@@ -93,6 +95,25 @@ function combineFiles(files) {
 function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2) + ' KB';
 }
+
+function bundle(files, destFilename) {
+	var bundler = browserify(files);
+	bundler.transform(browserifyCss);
+	var bundleFs = fs.createWriteStream('dist/' + destFilename);
+	bundler.bundle().pipe(bundleFs);
+
+	bundleFs.on('finish', function() {
+		console.log('Finish writing to dist/' + destFilename);
+	});
+};
+
+exports.bundle = function() {
+	bundle(['main.js'], 'bundle.js');
+};
+
+exports.bundleAdmin = function() {
+	bundle(['main-admin.js'], 'admin-bundle.js');
+};
 
 exports.build = function (callback, version, compsBase32, buildName) {
 

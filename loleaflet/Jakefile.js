@@ -46,6 +46,15 @@ task('build', {async: true}, function (compsBase32, buildName) {
 	});
 });
 
+desc('Browserify and bundle all js and css files');
+task('bundle', {async: true}, function (type) {
+	if (type === 'admin') {
+		build.bundleAdmin();
+	} else {
+		build.bundle();
+	}
+});
+
 desc('Run PhantomJS tests');
 task('test', ['lint', 'lintspec'], {async: true}, function () {
 	build.test(complete);
