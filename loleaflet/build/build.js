@@ -104,7 +104,11 @@ function bundle(files, destFilename, debug) {
 			   global: true
 		   }, 'uglifyify');
 	var bundleFs = fs.createWriteStream('dist/' + destFilename);
-	bundler.bundle().pipe(exorcist('dist/' + destFilename + '.map')).pipe(bundleFs);
+	var res = bundler.bundle();
+	if (debug) {
+		res = res.pipe(exorcist('dist/' + destFilename + '.map'));
+	}
+	res.pipe(bundleFs);
 
 	bundleFs.on('finish', function() {
 		console.log('Finish writing to dist/' + destFilename);
