@@ -136,6 +136,9 @@ L.TileLayer = L.GridLayer.extend({
 		this._getToolbarCommandsValues();
 		this._selections = new L.LayerGroup();
 		map.addLayer(this._selections);
+		this._viewSelectionsGroup = new L.LayerGroup();
+		map.addLayer(this._viewSelectionsGroup);
+		this._viewSelections = {};
 
 		this._searchResultsLayer = new L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
@@ -365,6 +368,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('remallviews:')) {
 			this._onRemAllViewMsg(textMsg);
+		}
+		else if (textMsg.startsWith('textviewselection:')) {
+			this._onTextViewSelectionMsg(textMsg);
 		}
 	},
 
@@ -787,6 +793,48 @@ L.TileLayer = L.GridLayer.extend({
 				this._map._socket.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
 		}
 		this._onUpdateTextSelection();
+	},
+
+	_onTextViewSelectionMsg: function (textMsg) {
+		textMsg = textMsg.substring('textviewselection:'.length + 1);
+		var obj = JSON.parse(textMsg);
+		var viewId = parseInt(obj.viewId);
+
+		// Ignore if viewid is same as ours
+		if (viewId === this._viewId) {
+			return;
+		}
+
+		var strTwips = obj.selection.match(/\d+/g);
+		if (this._viewSelections[viewId]) {
+			this._viewSelectionsGroup.removeLayer(this._viewSelections[viewId]);
+		}
+		if (strTwips != null) {
+			var rectangles = [];
+			var selectionCenter = new L.Point(0, 0);
+			for (var i = 0; i < strTwips.length; i += 4) {
+				var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
+				var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
+				var topRightTwips = topLeftTwips.add(new L.Point(offset.x, 0));
+				var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
+				var bottomRightTwips = topLeftTwips.add(offset);
+				rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
+				selectionCenter = selectionCenter.add(topLeftTwips);
+				selectionCenter = selectionCenter.add(offset.divideBy(2));
+			}
+
+			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
+			for (i = 0; i < polygons.length; i++) {
+				var selection = new L.Polygon(polygons[i], {
+					pointerEvents: 'none',
+					fillColor: L.LOUtil.getViewIdHexColor(viewId),
+					fillOpacity: 0.25,
+					weight: 2,
+					opacity: 0.25});
+				this._viewSelections[viewId] = selection;
+				this._viewSelectionsGroup.addLayer(selection);
+			}
+		}
 	},
 
 	_onTextSelectionContentMsg: function (textMsg) {
