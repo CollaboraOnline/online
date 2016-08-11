@@ -47,11 +47,11 @@ task('build', {async: true}, function (compsBase32, buildName) {
 });
 
 desc('Browserify and bundle all js and css files');
-task('bundle', {async: true}, function (type) {
+task('bundle', {async: true}, function (type, debug) {
 	if (type === 'admin') {
-		build.bundleAdmin();
+		build.bundleAdmin(debug);
 	} else {
-		build.bundle();
+		build.bundle(debug);
 	}
 });
 

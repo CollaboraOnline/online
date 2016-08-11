@@ -96,8 +96,8 @@ function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2) + ' KB';
 }
 
-function bundle(files, destFilename) {
-	var bundler = browserify(files);
+function bundle(files, destFilename, debug) {
+	var bundler = browserify(files, {debug: debug});
 	bundler.transform(browserifyCss);
 	var bundleFs = fs.createWriteStream('dist/' + destFilename);
 	bundler.bundle().pipe(bundleFs);
@@ -107,12 +107,12 @@ function bundle(files, destFilename) {
 	});
 };
 
-exports.bundle = function() {
-	bundle(['main.js'], 'bundle.js');
+exports.bundle = function(debug) {
+	bundle(['main.js'], 'bundle.js', debug);
 };
 
-exports.bundleAdmin = function() {
-	bundle(['main-admin.js'], 'admin-bundle.js');
+exports.bundleAdmin = function(debug) {
+	bundle(['main-admin.js'], 'admin-bundle.js', debug);
 };
 
 exports.build = function (callback, version, compsBase32, buildName) {
