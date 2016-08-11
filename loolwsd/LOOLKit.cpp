@@ -927,16 +927,16 @@ private:
                     return nullptr;
                 }
             }
-        }
 
-        if (_multiView)
-        {
-            Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
-            const auto viewId = _loKitDocument->createView();
+            if (_multiView)
+            {
+                Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
+                const auto viewId = _loKitDocument->createView();
 
-            Log::info() << "Document [" << _url << "] view ["
-                        << viewId << "] loaded, leaving "
-                        << (_clientViews + 1) << " views." << Log::end;
+                Log::info() << "Document [" << _url << "] view ["
+                            << viewId << "] loaded, leaving "
+                            << (_clientViews + 1) << " views." << Log::end;
+            }
         }
 
         // initializeForRendering() should be called before
