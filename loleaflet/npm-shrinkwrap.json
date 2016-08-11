@@ -2038,6 +2038,40 @@
       "from": "evol-colorpicker@3.2.6",
       "resolved": "./node_shrinkwrap/evol-colorpicker-3.2.6.tgz"
     },
+    "exorcist": {
+      "version": "0.4.0",
+      "from": "exorcist@latest",
+      "resolved": "./node_shrinkwrap/exorcist-0.4.0.tgz",
+      "dependencies": {
+        "minimist": {
+          "version": "0.0.5",
+          "from": "minimist@0.0.5",
+          "resolved": "./node_shrinkwrap/minimist-0.0.5.tgz"
+        },
+        "mold-source-map": {
+          "version": "0.4.0",
+          "from": "mold-source-map@>=0.4.0 <0.5.0",
+          "resolved": "./node_shrinkwrap/mold-source-map-0.4.0.tgz",
+          "dependencies": {
+            "convert-source-map": {
+              "version": "1.3.0",
+              "from": "convert-source-map@>=1.1.0 <2.0.0",
+              "resolved": "./node_shrinkwrap/convert-source-map-1.3.0.tgz"
+            },
+            "through": {
+              "version": "2.2.7",
+              "from": "through@>=2.2.7 <2.3.0",
+              "resolved": "./node_shrinkwrap/through-2.2.7.tgz"
+            }
+          }
+        },
+        "nave": {
+          "version": "0.5.3",
+          "from": "nave@>=0.5.1 <0.6.0",
+          "resolved": "./node_shrinkwrap/nave-0.5.3.tgz"
+        }
+      }
+    },
     "jake": {
       "version": "8.0.12",
       "from": "jake@>=8.0.10 <8.1.0",
