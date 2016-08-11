@@ -8,7 +8,6 @@ L.LOUtil = {
 	// Maybe move the color logic to separate file when it becomes complex
 	darkColors: [
 		[198, 146, 0],
-		[6,  70, 162],
 		[87, 157,  28],
 		[105,  43, 157],
 		[197,   0,  11],
