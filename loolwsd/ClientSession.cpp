@@ -250,17 +250,6 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
 
 bool ClientSession::getStatus(const char *buffer, int length)
 {
-    const std::string status = _docBroker->tileCache().getTextFile("status.txt");
-    if (!status.empty())
-    {
-        sendTextFrame(status);
-
-        // And let clients know if they hold the edit lock.
-        const auto msg = "editlock: " + std::to_string(isEditLocked());
-        Log::debug("Returning [" + msg + "] in response to status.");
-        return sendTextFrame(msg);
-    }
-
     return forwardToPeer(_peer, buffer, length, false);
 }
 

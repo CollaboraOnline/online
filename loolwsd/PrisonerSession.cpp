@@ -183,7 +183,6 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "status:")
         {
             _docBroker->setLoaded();
-            _docBroker->tileCache().saveTextFile(std::string(buffer, length), "status.txt");
 
             // Forward the status response to the client.
             forwardToPeer(_peer, buffer, length, isBinary);
