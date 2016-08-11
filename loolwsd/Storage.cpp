@@ -337,7 +337,7 @@ std::string WopiStorage::loadStorageFileToLocal()
               std::ostreambuf_iterator<char>(ofs));
     const auto size = getFileSize(_jailedFilePath);
 
-    Log::info() << "WOPI::GetFile downloaded " << size << " bytes from [" << _uri
+    Log::info() << "WOPI::GetFile downloaded " << size << " bytes from [" << url
                 << "] -> " << _jailedFilePath << ": "
                 << response.getStatus() << " " << response.getReason() << Log::end;
 
