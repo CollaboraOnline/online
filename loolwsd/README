@@ -175,6 +175,9 @@ there is a less verbose way, but this worked for me:
     openssl req -sha256 -new -key key.pem -out csr.pem
 
     # change "unique_subject = yes" to "unique_subject = no" in demoCA/index.txt.attr
+    # otherwise you'll get the following error:
+    #   failed to update database
+    #   TXT_DB error number 2
 
     openssl ca -keyfile private/ca.key.pem -cert ca.cert.pem -extensions usr_cert -notext -md sha256 -in csr.pem -out cert.pem
 
