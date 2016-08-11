@@ -98,7 +98,10 @@ function bytesToKB(bytes) {
 
 function bundle(files, destFilename, debug) {
 	var bundler = browserify(files, {debug: debug});
-	bundler.transform(browserifyCss);
+	bundler.transform(browserifyCss)
+		   .transform({
+			   global: true
+		   }, 'uglifyify');
 	var bundleFs = fs.createWriteStream('dist/' + destFilename);
 	bundler.bundle().pipe(bundleFs);
 
