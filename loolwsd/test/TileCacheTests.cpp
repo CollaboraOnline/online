@@ -236,7 +236,7 @@ void TileCacheTests::testUnresponsiveClient()
         for (auto i = 0; i < 8; ++i)
         {
             auto tile = getResponseMessage(socket2, "tile:", "client2 ");
-            CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile.empty());
+            CPPUNIT_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
         }
     }
 
