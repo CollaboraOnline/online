@@ -3,6 +3,7 @@ var fs = require('fs'),
     zlib = require('zlib'),
     browserify = require('browserify'),
     browserifyCss = require('browserify-css'),
+    exorcist = require('exorcist'),
 
     deps = require('./deps.js').deps,
     adminDeps = require('./adminDeps.js').adminDeps;
@@ -103,7 +104,7 @@ function bundle(files, destFilename, debug) {
 			   global: true
 		   }, 'uglifyify');
 	var bundleFs = fs.createWriteStream('dist/' + destFilename);
-	bundler.bundle().pipe(bundleFs);
+	bundler.bundle().pipe(exorcist('dist/' + destFilename + '.map')).pipe(bundleFs);
 
 	bundleFs.on('finish', function() {
 		console.log('Finish writing to dist/' + destFilename);
