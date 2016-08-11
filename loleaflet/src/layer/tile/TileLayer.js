@@ -525,8 +525,8 @@ L.TileLayer = L.GridLayer.extend({
 		var obj = JSON.parse(textMsg);
 		var viewId = parseInt(obj.viewId);
 
-		// Ignore if viewid=0 or is same as ours
-		if (viewId === 0 || viewId === this._viewId) {
+		// Ignore if viewid is same as ours
+		if (viewId === this._viewId) {
 			return;
 		}
 
@@ -550,8 +550,8 @@ L.TileLayer = L.GridLayer.extend({
 		var obj = JSON.parse(textMsg);
 		var viewId = parseInt(obj.viewId);
 
-		// Ignore if viewid=0 or is same as ours
-		if (viewId === 0 || viewId === this._viewId) {
+		// Ignore if viewid is same as ours
+		if (viewId === this._viewId) {
 			return;
 		}
 
