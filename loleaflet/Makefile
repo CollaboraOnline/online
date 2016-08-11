@@ -18,11 +18,11 @@ build:
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	if $(DEBUG); then \
-		npm run bundle-debug; \
-		npm run bundle-admin-debug; \
+		jake bundle[,true]; \
+		jake bundle[admin,true]; \
 	else \
-		npm run bundle; \
-		npm run bundle-admin; \
+		jake bundle; \
+		jake bundle[admin]; \
 	fi;
 
 all: build

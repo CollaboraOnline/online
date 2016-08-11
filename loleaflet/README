@@ -7,9 +7,9 @@ This is the client part of LibreOffice On-Line.  For the server part, see the
 Build dependencies
 ------------------
 
-First you need to install 'jake', and 'browserify'.  As root, do:
+First you need to install 'jake'.  As root, do:
 
-    npm install -g jake browserify
+    npm install -g jake
 
 npm is provided by the nodejs package.
 
