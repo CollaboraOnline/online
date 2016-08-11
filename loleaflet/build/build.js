@@ -2,7 +2,7 @@ var fs = require('fs'),
     UglifyJS = require('uglify-js'),
     zlib = require('zlib'),
     browserify = require('browserify'),
-    browserifyCss = require('browserify-css');
+    browserifyCss = require('browserify-css'),
 
     deps = require('./deps.js').deps,
     adminDeps = require('./adminDeps.js').adminDeps;
