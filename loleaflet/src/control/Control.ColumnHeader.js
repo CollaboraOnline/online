@@ -105,22 +105,29 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			column = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
 			text = L.DomUtil.create('div', 'spreadsheet-header-column-text', column);
 			resize = L.DomUtil.create('div', 'spreadsheet-header-column-resize', column);
-			resize.column = iterator + 1;
-			resize.width = width;
 			var content = columns[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
 			text.innerHTML = content;
 			width = Math.round(converter.call(context, twip).x) - 1;
 			if (width === -1) {
 				L.DomUtil.setStyle(column, 'display', 'none');
-			}
-			else {
+			} else if (width < 10) {
+				text.column = iterator + 1;
+				text.width = width;
+				L.DomUtil.setStyle(column, 'width', width + 'px');
+				L.DomUtil.setStyle(column, 'cursor', 'col-resize');
+				L.DomUtil.setStyle(text, 'cursor', 'col-resize');
+				L.DomUtil.setStyle(resize, 'display', 'none');
+				this.mouseInit(text);
+			} else {
+				resize.column = iterator + 1;
+				resize.width = width;
 				L.DomUtil.setStyle(column, 'width', width + 'px');
 				L.DomUtil.setStyle(text, 'width', width - 3 + 'px');
 				L.DomUtil.setStyle(resize, 'width', '3px');
+				this.mouseInit(resize);
 			}
 			L.DomEvent.addListener(text, 'click', this._onColumnHeaderClick, this);
-			this.mouseInit(resize);
 		}
 	},
 

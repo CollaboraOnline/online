@@ -103,23 +103,31 @@ L.Control.RowHeader = L.Control.Header.extend({
 			row = L.DomUtil.create('div', 'spreadsheet-header-row', this._rows);
 			text = L.DomUtil.create('div', 'spreadsheet-header-row-text', row);
 			resize = L.DomUtil.create('div', 'spreadsheet-header-row-resize', row);
-			resize.row = iterator + 1;
-			resize.height = height;
 			var content = rows[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-row-' + content); // for easy addressing
 			text.innerHTML = content;
 			height = Math.round(converter.call(context, twip).y) - 1;
 			if (height === -1) {
 				L.DomUtil.setStyle(row, 'display', 'none');
+			} else if (height < 10) {
+				text.row = iterator + 1;
+				text.height = height;
+				L.DomUtil.setStyle(row, 'height', height + 'px');
+				L.DomUtil.setStyle(row, 'cursor', 'row-resize');
+				L.DomUtil.setStyle(text, 'line-height', height + 'px');
+				L.DomUtil.setStyle(text, 'cursor', 'row-resize');
+				L.DomUtil.setStyle(resize, 'display', 'none');
+				this.mouseInit(text);
 			} else {
+				resize.row = iterator + 1;
+				resize.height = height;
 				L.DomUtil.setStyle(row, 'height', height + 'px');
 				L.DomUtil.setStyle(text, 'line-height', height + 'px');
 				L.DomUtil.setStyle(text, 'height', height - 3 + 'px');
 				L.DomUtil.setStyle(resize, 'height', '3px');
+				this.mouseInit(resize);
 			}
-
 			L.DomEvent.addListener(text, 'click', this._onRowHeaderClick, this);
-			this.mouseInit(resize);
 		}
 	},
 
