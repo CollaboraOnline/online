@@ -639,8 +639,12 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
 
     // Respond by the document status, which has no arguments.
     Log::debug("Sending status after loading view " + std::to_string(_viewId) + ".");
-    if (!getStatus(nullptr, 0))
+    const auto status = LOKitHelper::documentStatus(_loKitDocument->get());
+    if (status.empty() || !sendTextFrame("status: " + status))
+    {
+        Log::error("Failed to get/forward document status [" + status + "].");
         return false;
+    }
 
     Log::info("Loaded session " + getId());
     return true;
