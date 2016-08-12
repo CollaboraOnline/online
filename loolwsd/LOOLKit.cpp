@@ -26,6 +26,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <memory>
+#include <regex>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -337,6 +338,9 @@ private:
     std::mutex _threadMutex;
     std::atomic<bool> _joined;
 };
+
+/// Regex to parse the ViewId from json.
+static std::regex ViewIdRegex("\"viewId\"\\s*:\\s*\"(\\d*)\"");
 
 /// A document container.
 /// Owns LOKitDocument instance and connections.
@@ -739,7 +743,18 @@ private:
             return;
         }
 
-        const auto viewId = self->_loKitDocument->getView();
+        // We can't invoke loKitDocument here as that could deadlock.
+        // We have to parse the message to get the target view.
+        // We can do it here once at the expense of the lok thread, or,
+        // dispatch swiftly and prase multiple times in each session.
+        int viewId = -1;
+        std::smatch match;
+        if (std::regex_search(payload.begin(), payload.end(), match, ViewIdRegex) &&
+            match.length() > 1)
+        {
+            const auto strViewId = match[1].str();
+            viewId = std::stoi(strViewId);
+        }
 
         // Forward to the same view only.
         for (auto& it: self->_connections)
@@ -747,9 +762,13 @@ private:
             if (it.second->isRunning())
             {
                 auto session = it.second->getSession();
-                if (session && session->getViewId() == viewId)
+                if (session)
                 {
-                    session->loKitCallback(nType, pPayload);
+                    if (viewId < 0 || session->getViewId() == viewId)
+                    {
+                        // Broadcast if not view-specific.
+                        session->loKitCallback(nType, payload);
+                    }
                 }
             }
         }
