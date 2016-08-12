@@ -719,9 +719,10 @@ private:
 
     static void ViewCallback(const int nType, const char* pPayload, void* pData)
     {
+        const std::string payload = pPayload ? pPayload : "(nil)";
         Log::trace() << "Document::ViewCallback "
                      << LOKitHelper::kitCallbackTypeToString(nType)
-                     << " [" << (pPayload ? pPayload : "") << "]." << Log::end;
+                     << " [" << payload << "]." << Log::end;
         Document* self = reinterpret_cast<Document*>(pData);
         if (self == nullptr)
         {
@@ -756,9 +757,10 @@ private:
 
     static void DocumentCallback(const int nType, const char* pPayload, void* pData)
     {
+        const std::string payload = pPayload ? pPayload : "(nil)";
         Log::trace() << "Document::DocumentCallback "
                      << LOKitHelper::kitCallbackTypeToString(nType)
-                     << " [" << (pPayload ? pPayload : "") << "]." << Log::end;
+                     << " [" << payload << "]." << Log::end;
         Document* self = reinterpret_cast<Document*>(pData);
         if (self == nullptr)
         {
@@ -783,7 +785,7 @@ private:
                 auto session = it.second->getSession();
                 if (session)
                 {
-                    session->loKitCallback(nType, pPayload);
+                    session->loKitCallback(nType, payload);
                 }
             }
         }

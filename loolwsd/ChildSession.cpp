@@ -1185,9 +1185,9 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
     return true;
 }
 
-void ChildSession::loKitCallback(const int nType, const char *pPayload)
+void ChildSession::loKitCallback(const int nType, const std::string& payload)
 {
-    auto pNotif = new CallbackNotification(nType, pPayload ? pPayload : "(nil)");
+    auto pNotif = new CallbackNotification(nType, payload);
     _callbackQueue.enqueueNotification(pNotif);
 }
 

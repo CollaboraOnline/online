@@ -50,7 +50,7 @@ public:
 
     LibreOfficeKitDocument *getLoKitDocument() const { return (_loKitDocument ? _loKitDocument->get() : nullptr); }
 
-    void loKitCallback(const int nType, const char* pPayload);
+    void loKitCallback(const int nType, const std::string& payload);
 
     static std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
 
