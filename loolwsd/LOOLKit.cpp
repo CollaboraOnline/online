@@ -717,9 +717,41 @@ public:
 
 private:
 
-    static void ViewCallback(int , const char* , void* )
+    static void ViewCallback(const int nType, const char* pPayload, void* pData)
     {
-        //TODO: Delegate the callback.
+        Log::trace() << "Document::ViewCallback "
+                     << LOKitHelper::kitCallbackTypeToString(nType)
+                     << " [" << (pPayload ? pPayload : "") << "]." << Log::end;
+        Document* self = reinterpret_cast<Document*>(pData);
+        if (self == nullptr)
+        {
+            return;
+        }
+
+        std::unique_lock<std::mutex> lock(self->_mutex);
+
+        if (nType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
+            nType == LOK_CALLBACK_DOCUMENT_PASSWORD)
+        {
+            // Mark the document password type.
+            self->setDocumentPassword(nType);
+            return;
+        }
+
+        const auto viewId = self->_loKitDocument->getView();
+
+        // Forward to the same view only.
+        for (auto& it: self->_connections)
+        {
+            if (it.second->isRunning())
+            {
+                auto session = it.second->getSession();
+                if (session && session->getViewId() == viewId)
+                {
+                    session->loKitCallback(nType, pPayload);
+                }
+            }
+        }
     }
 
     static void DocumentCallback(const int nType, const char* pPayload, void* pData)
@@ -848,6 +880,7 @@ private:
         }
 
         auto session = it->second->getSession();
+        auto& callback = _multiView ? ViewCallback : DocumentCallback;
 
         if (!_loKitDocument)
         {
@@ -858,6 +891,7 @@ private:
             auto lock(_loKit->getLock());
             if (LIBREOFFICEKIT_HAS(_loKit->get(), registerCallback))
             {
+                //TODO: Use GlobalCallback for Password and statusindicator.
                 _loKit->get()->pClass->registerCallback(_loKit->get(), DocumentCallback, this);
                 const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
                                  | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY;
@@ -943,7 +977,7 @@ private:
         // registerCallback(), as the previous creates a new view in Impress.
         _loKitDocument->initializeForRendering(_renderOpts.c_str());
 
-        _loKitDocument->registerCallback(DocumentCallback, this);
+        _loKitDocument->registerCallback(callback, this);
 
         return _loKitDocument;
     }
