@@ -342,6 +342,14 @@ private:
 /// Regex to parse the ViewId from json.
 static std::regex ViewIdRegex("\"viewId\"\\s*:\\s*\"(\\d*)\"");
 
+class Document;
+
+struct CallbackDescriptor
+{
+    const Document* const Doc;
+    const unsigned ViewId;
+};
+
 /// A document container.
 /// Owns LOKitDocument instance and connections.
 /// Manages the lifetime of a document.
@@ -727,49 +735,22 @@ private:
         Log::trace() << "Document::ViewCallback "
                      << LOKitHelper::kitCallbackTypeToString(nType)
                      << " [" << payload << "]." << Log::end;
-        Document* self = reinterpret_cast<Document*>(pData);
-        if (self == nullptr)
-        {
-            return;
-        }
+        CallbackDescriptor* pDescr = reinterpret_cast<CallbackDescriptor*>(pData);
+        assert(pDescr && "Null callback data.");
+        assert(pDescr->Doc && "Null Document instance.");
 
-        std::unique_lock<std::mutex> lock(self->_mutex);
-
-        if (nType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
-            nType == LOK_CALLBACK_DOCUMENT_PASSWORD)
-        {
-            // Mark the document password type.
-            self->setDocumentPassword(nType);
-            return;
-        }
-
-        // We can't invoke loKitDocument here as that could deadlock.
-        // We have to parse the message to get the target view.
-        // We can do it here once at the expense of the lok thread, or,
-        // dispatch swiftly and prase multiple times in each session.
-        int viewId = -1;
-        std::smatch match;
-        if (std::regex_search(payload.begin(), payload.end(), match, ViewIdRegex) &&
-            match.length() > 1)
-        {
-            const auto strViewId = match[1].str();
-            viewId = std::stoi(strViewId);
-        }
+        std::unique_lock<std::mutex> lock(pDescr->Doc->_mutex);
 
         // Forward to the same view only.
-        for (auto& it: self->_connections)
+        // Demultiplexing is done by Core.
+        // TODO: replace with a map to be faster.
+        for (auto& it: pDescr->Doc->_connections)
         {
-            if (it.second->isRunning())
+            auto session = it.second->getSession();
+            if (session && it.second->isRunning() &&
+                session->getViewId() == pDescr->ViewId)
             {
-                auto session = it.second->getSession();
-                if (session)
-                {
-                    if (viewId < 0 || session->getViewId() == viewId)
-                    {
-                        // Broadcast if not view-specific.
-                        session->loKitCallback(nType, payload);
-                    }
-                }
+                session->loKitCallback(nType, payload);
             }
         }
     }
@@ -879,6 +860,7 @@ private:
                         << _clientViews << " views." << Log::end;
 
             const auto viewId = _loKitDocument->getView();
+            _viewIdToCallbackDescr.erase(viewId);
             _loKitDocument->registerCallback(nullptr, nullptr);
             _loKitDocument->destroyView(viewId);
         }
@@ -901,7 +883,7 @@ private:
         }
 
         auto session = it->second->getSession();
-        auto& callback = _multiView ? ViewCallback : DocumentCallback;
+        unsigned viewId = 0;
 
         if (!_loKitDocument)
         {
@@ -986,7 +968,7 @@ private:
             if (_multiView)
             {
                 Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
-                const auto viewId = _loKitDocument->createView();
+                viewId = _loKitDocument->createView();
 
                 Log::info() << "Document [" << _url << "] view ["
                             << viewId << "] loaded, leaving "
@@ -998,7 +980,17 @@ private:
         // registerCallback(), as the previous creates a new view in Impress.
         _loKitDocument->initializeForRendering(_renderOpts.c_str());
 
-        _loKitDocument->registerCallback(callback, this);
+        if (_multiView)
+        {
+            _viewIdToCallbackDescr.emplace(viewId,
+                std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
+
+            _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
+        }
+        else
+        {
+            _loKitDocument->registerCallback(DocumentCallback, this);
+        }
 
         return _loKitDocument;
     }
@@ -1024,9 +1016,10 @@ private:
     // Whether password is required to view the document, or modify it
     PasswordType _docPasswordType;
 
-    std::mutex _mutex;
+    mutable std::mutex _mutex;
     std::condition_variable _cvLoading;
     std::atomic_size_t _isLoading;
+    std::map<unsigned, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
     std::atomic_size_t _clientViews;
 };
