@@ -42,21 +42,16 @@ public:
 
     bool getStatus(const char *buffer, int length);
     bool getPartPageRectangles(const char *buffer, int length);
-    virtual void disconnect() override;
-
     unsigned getViewId() const { return _viewId; }
+    int getPart() const { return _loKitDocument->getPart(); }
 
-    const std::string& getDocType() const { return _docType; }
-
-    LibreOfficeKitDocument *getLoKitDocument() const { return (_loKitDocument ? _loKitDocument->get() : nullptr); }
+    void setDocState(const int type, const std::string& payload) { _lastDocStates[type] = payload; }
 
     void loKitCallback(const int nType, const std::string& payload);
 
     static std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
 
-    void setDocState(const int type, const std::string& payload) { _lastDocStates[type] = payload; }
-
- protected:
+private:
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
@@ -79,8 +74,7 @@ public:
     bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool setPage(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
-private:
-
+    virtual void disconnect() override;
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:

@@ -118,19 +118,7 @@ public:
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
             {
-                const auto lokitDoc = _session.getLoKitDocument();
-                if (lokitDoc == nullptr)
-                {
-                    return;
-                }
-
-                assert(lokitDoc->pClass);
-                assert(lokitDoc->pClass->getPart);
-
-                // Text docs have a single coordinate system.
-                const auto curPart = (_session.getDocType() == "text")
-                                   ? 0
-                                   : lokitDoc->pClass->getPart(lokitDoc);
+                const auto curPart = _session.getPart();
 
                 StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (tokens.count() == 4)

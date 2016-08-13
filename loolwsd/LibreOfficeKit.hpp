@@ -41,7 +41,9 @@ public:
     }
 
     /// This lock must be held while calling
-    /// one or more member of this class.
+    /// one or more members of this class if
+    /// the client is multi-threaded.
+    /// No member function takes this lock otherwise.
     std::unique_lock<std::mutex> getLock()
     {
         return std::unique_lock<std::mutex>(_mutex);
@@ -110,9 +112,11 @@ public:
     }
 
     /// Get the current part of the document.
+    /// Note: For Writer documents this always returns 0
+    /// since text docs have a single coordinate system.
     inline int getPart()
     {
-        return _pDoc->pClass->getPart(_pDoc);
+        return getDocumentType() == LOK_DOCTYPE_TEXT ? 0 : _pDoc->pClass->getPart(_pDoc);
     }
 
     /// Set the current part of the document.
