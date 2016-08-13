@@ -52,7 +52,6 @@
 #include "LibreOfficeKit.hpp"
 #include "Log.hpp"
 #include "Png.hpp"
-#include "QueueHandler.hpp"
 #include "Rectangle.hpp"
 #include "TileDesc.hpp"
 #include "Unit.hpp"
@@ -284,27 +283,21 @@ public:
 
         try
         {
-            auto queue = std::make_shared<TileQueue>();
-            QueueHandler handler(queue, _session, "kit_queue_" + _session->getId());
-
-            Thread queueHandlerThread;
-            queueHandlerThread.start(handler);
-            std::shared_ptr<ChildSession> session = _session;
-
             IoUtil::SocketProcessor(_ws,
-                [&queue](const std::vector<char>& payload)
+                [this](const std::vector<char>& payload)
                 {
-                    queue->put(payload);
+                    if (!_session->handleInput(payload.data(), payload.size()))
+                    {
+                        Log::info("Socket handler flagged for finishing.");
+                        return false;
+                    }
+
                     return true;
                 },
-                [&session]() { session->closeFrame(); },
-                [&queueHandlerThread]() { return TerminationFlag || !queueHandlerThread.isRunning(); });
+                [this]() { _session->closeFrame(); },
+                []() { return !!TerminationFlag; });
 
-            queue->clear();
-            queue->put("eof");
-            queueHandlerThread.join();
-
-            if (session->isCloseFrame())
+            if (_session->isCloseFrame())
             {
                 Log::trace("Normal close handshake.");
                 _ws->shutdown();
@@ -760,14 +753,14 @@ private:
 
     static void ViewCallback(const int nType, const char* pPayload, void* pData)
     {
-        const std::string payload = pPayload ? pPayload : "(nil)";
-        Log::trace() << "Document::ViewCallback "
-                     << LOKitHelper::kitCallbackTypeToString(nType)
-                     << " [" << payload << "]." << Log::end;
-
         CallbackDescriptor* pDescr = reinterpret_cast<CallbackDescriptor*>(pData);
         assert(pDescr && "Null callback data.");
         assert(pDescr->Doc && "Null Document instance.");
+
+        const std::string payload = pPayload ? pPayload : "(nil)";
+        Log::trace() << "Document::ViewCallback [" << pDescr->ViewId
+                     << "] [" << LOKitHelper::kitCallbackTypeToString(nType)
+                     << "] [" << payload << "]." << Log::end;
 
         // Forward to the same view only.
         // Demultiplexing is done by Core.
