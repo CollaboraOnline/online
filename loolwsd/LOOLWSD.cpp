@@ -1371,11 +1371,11 @@ void LOOLWSD::initialize(Application& self)
     for (size_t i = 0; ; ++i)
     {
         const std::string confPath = "logging.file.property[" + std::to_string(i) + "]";
-        const auto name = config().getString(confPath + "[@name]", "");
-        if (!name.empty())
+        const auto confName = config().getString(confPath + "[@name]", "");
+        if (!confName.empty())
         {
             const auto value = config().getString(confPath, "");
-            logProperties.emplace(name, value);
+            logProperties.emplace(confName, value);
         }
         else if (!config().has(confPath))
         {
