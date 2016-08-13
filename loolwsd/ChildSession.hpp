@@ -47,7 +47,7 @@ public:
 
     void setDocState(const int type, const std::string& payload) { _lastDocStates[type] = payload; }
 
-    void loKitCallback(const int nType, const std::string& payload);
+    void loKitCallback(const int nType, const std::string& rPayload);
 
     static std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
 
@@ -87,10 +87,6 @@ private:
     std::map<int, std::string> _lastDocStates;
     OnLoadCallback _onLoad;
     OnUnloadCallback _onUnload;
-
-    std::unique_ptr<CallbackWorker> _callbackWorker;
-    Poco::Thread _callbackThread;
-    Poco::NotificationQueue _callbackQueue;
 
     /// Synchronize _loKitDocument acess.
     /// This should be owned by Document.

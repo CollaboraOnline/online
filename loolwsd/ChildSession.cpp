@@ -46,258 +46,6 @@ using Poco::StringTokenizer;
 using Poco::Timestamp;
 using Poco::URI;
 
-class CallbackNotification: public Notification
-{
-public:
-    typedef AutoPtr<CallbackNotification> Ptr;
-
-    CallbackNotification(const int nType, const std::string& rPayload)
-      : _nType(nType),
-        _aPayload(rPayload)
-    {
-    }
-
-    const int _nType;
-    const std::string _aPayload;
-};
-
-/// This thread handles callbacks from the lokit instance.
-class CallbackWorker: public Runnable
-{
-public:
-    CallbackWorker(NotificationQueue& queue, ChildSession& session):
-        _queue(queue),
-        _session(session),
-        _stop(false)
-    {
-    }
-
-    void callback(const int nType, const std::string& rPayload)
-    {
-        auto lock = _session.getLock();
-
-        // Cache important notifications to replay them when our client
-        // goes inactive and loses them.
-        if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-            nType == LOK_CALLBACK_CURSOR_VISIBLE ||
-            nType == LOK_CALLBACK_CELL_CURSOR ||
-            nType == LOK_CALLBACK_CELL_FORMULA ||
-            nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
-            nType == LOK_CALLBACK_TEXT_SELECTION ||
-            nType == LOK_CALLBACK_TEXT_SELECTION_START ||
-            nType == LOK_CALLBACK_TEXT_SELECTION_END ||
-            nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
-        {
-            _session.setDocState(nType, rPayload);
-        }
-
-        const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
-        if (_session.isCloseFrame())
-        {
-            Log::trace("Skipping callback [" + typeName + "] on closing session " + _session.getName());
-            return;
-        }
-        else if (_session.isDisconnected())
-        {
-            Log::trace("Skipping callback [" + typeName + "] on disconnected session " + _session.getName());
-            return;
-        }
-        else if (!_session.isActive())
-        {
-            // Pass save notifications through.
-            if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
-            {
-                Log::trace("Skipping callback [" + typeName + "] on inactive session " + _session.getName());
-                return;
-            }
-        }
-
-        Log::trace() << "CallbackWorker::callback [" << _session.getName() << "]: "
-                     << typeName << " [" << rPayload << "]." << Log::end;
-        switch (nType)
-        {
-        case LOK_CALLBACK_INVALIDATE_TILES:
-            {
-                const auto curPart = _session.getPart();
-
-                StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                if (tokens.count() == 4)
-                {
-                    int x, y, width, height;
-                    try
-                    {
-                        x = std::stoi(tokens[0]);
-                        y = std::stoi(tokens[1]);
-                        width = std::stoi(tokens[2]);
-                        height = std::stoi(tokens[3]);
-                    }
-                    catch (const std::out_of_range&)
-                    {
-                        // something went wrong, invalidate everything
-                        Log::warn("Ignoring integer values out of range: " + rPayload);
-                        x = 0;
-                        y = 0;
-                        width = INT_MAX;
-                        height = INT_MAX;
-                    }
-
-                    _session.sendTextFrame("invalidatetiles:"
-                                           " part=" + std::to_string(curPart) +
-                                           " x=" + std::to_string(x) +
-                                           " y=" + std::to_string(y) +
-                                           " width=" + std::to_string(width) +
-                                           " height=" + std::to_string(height));
-                }
-                else
-                {
-                    _session.sendTextFrame("invalidatetiles: " + rPayload);
-                }
-            }
-            break;
-        case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
-            _session.sendTextFrame("invalidatecursor: " + rPayload);
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION:
-            _session.sendTextFrame("textselection: " + rPayload);
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION_START:
-            _session.sendTextFrame("textselectionstart: " + rPayload);
-            break;
-        case LOK_CALLBACK_TEXT_SELECTION_END:
-            _session.sendTextFrame("textselectionend: " + rPayload);
-            break;
-        case LOK_CALLBACK_CURSOR_VISIBLE:
-            _session.sendTextFrame("cursorvisible: " + rPayload);
-            break;
-        case LOK_CALLBACK_GRAPHIC_SELECTION:
-            _session.sendTextFrame("graphicselection: " + rPayload);
-            break;
-        case LOK_CALLBACK_CELL_CURSOR:
-            _session.sendTextFrame("cellcursor: " + rPayload);
-            break;
-        case LOK_CALLBACK_CELL_FORMULA:
-            _session.sendTextFrame("cellformula: " + rPayload);
-            break;
-        case LOK_CALLBACK_MOUSE_POINTER:
-            _session.sendTextFrame("mousepointer: " + rPayload);
-            break;
-        case LOK_CALLBACK_HYPERLINK_CLICKED:
-            _session.sendTextFrame("hyperlinkclicked: " + rPayload);
-            break;
-        case LOK_CALLBACK_STATE_CHANGED:
-            _session.sendTextFrame("statechanged: " + rPayload);
-            break;
-        case LOK_CALLBACK_SEARCH_NOT_FOUND:
-            _session.sendTextFrame("searchnotfound: " + rPayload);
-            break;
-        case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
-            _session.sendTextFrame("searchresultselection: " + rPayload);
-            break;
-        case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-            _session.getStatus("", 0);
-            _session.getPartPageRectangles("", 0);
-            break;
-        case LOK_CALLBACK_SET_PART:
-            _session.sendTextFrame("setpart: " + rPayload);
-            break;
-        case LOK_CALLBACK_UNO_COMMAND_RESULT:
-            _session.sendTextFrame("unocommandresult: " + rPayload);
-            break;
-        case LOK_CALLBACK_ERROR:
-            {
-                Parser parser;
-                Poco::Dynamic::Var var = parser.parse(rPayload);
-                Object::Ptr object = var.extract<Object::Ptr>();
-
-                _session.sendTextFrame("error: cmd=" + object->get("cmd").toString() +
-                        " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
-            }
-            break;
-        case LOK_CALLBACK_CONTEXT_MENU:
-            _session.sendTextFrame("contextmenu: " + rPayload);
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_START:
-            _session.sendTextFrame("statusindicatorstart:");
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-            _session.sendTextFrame("statusindicatorsetvalue: " + rPayload);
-            break;
-        case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-            _session.sendTextFrame("statusindicatorfinish:");
-            break;
-        case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
-            _session.sendTextFrame("invalidateviewcursor: " + rPayload);
-            break;
-        case LOK_CALLBACK_TEXT_VIEW_SELECTION:
-            _session.sendTextFrame("textviewselection: " + rPayload);
-            break;
-        case LOK_CALLBACK_CELL_VIEW_CURSOR:
-            _session.sendTextFrame("cellviewcursor: " + rPayload);
-            break;
-        case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
-            _session.sendTextFrame("graphicviewselection: " + rPayload);
-            break;
-        case LOK_CALLBACK_VIEW_CURSOR_VISIBLE:
-            _session.sendTextFrame("viewcursorvisible: " + rPayload);
-            break;
-        case LOK_CALLBACK_VIEW_LOCK:
-            _session.sendTextFrame("viewlock: " + rPayload);
-            break;
-        default:
-            Log::error("Unknown callback event (" + std::to_string(nType) + "): " + rPayload);
-        }
-    }
-
-    void run()
-    {
-        Util::setThreadName("kit_callback");
-
-        Log::debug("Thread started.");
-
-        while (!_stop && !TerminationFlag)
-        {
-            Notification::Ptr aNotification(_queue.waitDequeueNotification());
-            if (!_stop && !TerminationFlag && aNotification)
-            {
-                CallbackNotification::Ptr aCallbackNotification = aNotification.cast<CallbackNotification>();
-                assert(aCallbackNotification);
-
-                const auto nType = aCallbackNotification->_nType;
-                try
-                {
-                    callback(nType, aCallbackNotification->_aPayload);
-                }
-                catch (const Exception& exc)
-                {
-                    Log::error() << "CallbackWorker::run: Exception while handling callback [" << LOKitHelper::kitCallbackTypeToString(nType) << "]: "
-                                 << exc.displayText()
-                                 << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                                 << Log::end;
-                }
-                catch (const std::exception& exc)
-                {
-                    Log::error("CallbackWorker::run: Exception while handling callback [" + LOKitHelper::kitCallbackTypeToString(nType) + "]: " + exc.what());
-                }
-            }
-            else
-                break;
-        }
-
-        Log::debug("Thread finished.");
-    }
-
-    void stop()
-    {
-        _stop = true;
-        _queue.wakeUpAll();
-    }
-
-private:
-    NotificationQueue& _queue;
-    ChildSession& _session;
-    volatile bool _stop;
-};
-
 std::recursive_mutex ChildSession::Mutex;
 
 ChildSession::ChildSession(const std::string& id,
@@ -310,12 +58,9 @@ ChildSession::ChildSession(const std::string& id,
     _jailId(jailId),
     _viewId(0),
     _onLoad(std::move(onLoad)),
-    _onUnload(std::move(onUnload)),
-    _callbackWorker(new CallbackWorker(_callbackQueue, *this))
+    _onUnload(std::move(onUnload))
 {
     Log::info("ChildSession ctor [" + getName() + "].");
-
-    _callbackThread.start(*_callbackWorker);
 }
 
 ChildSession::~ChildSession()
@@ -323,10 +68,6 @@ ChildSession::~ChildSession()
     Log::info("~ChildSession dtor [" + getName() + "].");
 
     disconnect();
-
-    // Wait for the callback worker to finish.
-    _callbackWorker->stop();
-    _callbackThread.join();
 }
 
 void ChildSession::disconnect()
@@ -1173,10 +914,180 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
     return true;
 }
 
-void ChildSession::loKitCallback(const int nType, const std::string& payload)
+void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
 {
-    auto pNotif = new CallbackNotification(nType, payload);
-    _callbackQueue.enqueueNotification(pNotif);
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
+
+    // Cache important notifications to replay them when our client
+    // goes inactive and loses them.
+    if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+        nType == LOK_CALLBACK_CURSOR_VISIBLE ||
+        nType == LOK_CALLBACK_CELL_CURSOR ||
+        nType == LOK_CALLBACK_CELL_FORMULA ||
+        nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
+        nType == LOK_CALLBACK_TEXT_SELECTION ||
+        nType == LOK_CALLBACK_TEXT_SELECTION_START ||
+        nType == LOK_CALLBACK_TEXT_SELECTION_END ||
+        nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
+    {
+        setDocState(nType, rPayload);
+    }
+
+    const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
+    if (isCloseFrame())
+    {
+        Log::trace("Skipping callback [" + typeName + "] on closing session " + getName());
+        return;
+    }
+    else if (isDisconnected())
+    {
+        Log::trace("Skipping callback [" + typeName + "] on disconnected session " + getName());
+        return;
+    }
+    else if (!isActive())
+    {
+        // Pass save notifications through.
+        if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
+        {
+            Log::trace("Skipping callback [" + typeName + "] on inactive session " + getName());
+            return;
+        }
+    }
+
+    Log::trace() << "CallbackWorker::callback [" << getName() << "]: "
+                 << typeName << " [" << rPayload << "]." << Log::end;
+    switch (nType)
+    {
+    case LOK_CALLBACK_INVALIDATE_TILES:
+        {
+            const auto curPart = getPart();
+
+            StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            if (tokens.count() == 4)
+            {
+                int x, y, width, height;
+                try
+                {
+                    x = std::stoi(tokens[0]);
+                    y = std::stoi(tokens[1]);
+                    width = std::stoi(tokens[2]);
+                    height = std::stoi(tokens[3]);
+                }
+                catch (const std::out_of_range&)
+                {
+                    // something went wrong, invalidate everything
+                    Log::warn("Ignoring integer values out of range: " + rPayload);
+                    x = 0;
+                    y = 0;
+                    width = INT_MAX;
+                    height = INT_MAX;
+                }
+
+                sendTextFrame("invalidatetiles:"
+                                       " part=" + std::to_string(curPart) +
+                                       " x=" + std::to_string(x) +
+                                       " y=" + std::to_string(y) +
+                                       " width=" + std::to_string(width) +
+                                       " height=" + std::to_string(height));
+            }
+            else
+            {
+                sendTextFrame("invalidatetiles: " + rPayload);
+            }
+        }
+        break;
+    case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
+        sendTextFrame("invalidatecursor: " + rPayload);
+        break;
+    case LOK_CALLBACK_TEXT_SELECTION:
+        sendTextFrame("textselection: " + rPayload);
+        break;
+    case LOK_CALLBACK_TEXT_SELECTION_START:
+        sendTextFrame("textselectionstart: " + rPayload);
+        break;
+    case LOK_CALLBACK_TEXT_SELECTION_END:
+        sendTextFrame("textselectionend: " + rPayload);
+        break;
+    case LOK_CALLBACK_CURSOR_VISIBLE:
+        sendTextFrame("cursorvisible: " + rPayload);
+        break;
+    case LOK_CALLBACK_GRAPHIC_SELECTION:
+        sendTextFrame("graphicselection: " + rPayload);
+        break;
+    case LOK_CALLBACK_CELL_CURSOR:
+        sendTextFrame("cellcursor: " + rPayload);
+        break;
+    case LOK_CALLBACK_CELL_FORMULA:
+        sendTextFrame("cellformula: " + rPayload);
+        break;
+    case LOK_CALLBACK_MOUSE_POINTER:
+        sendTextFrame("mousepointer: " + rPayload);
+        break;
+    case LOK_CALLBACK_HYPERLINK_CLICKED:
+        sendTextFrame("hyperlinkclicked: " + rPayload);
+        break;
+    case LOK_CALLBACK_STATE_CHANGED:
+        sendTextFrame("statechanged: " + rPayload);
+        break;
+    case LOK_CALLBACK_SEARCH_NOT_FOUND:
+        sendTextFrame("searchnotfound: " + rPayload);
+        break;
+    case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
+        sendTextFrame("searchresultselection: " + rPayload);
+        break;
+    case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
+        getStatus("", 0);
+        getPartPageRectangles("", 0);
+        break;
+    case LOK_CALLBACK_SET_PART:
+        sendTextFrame("setpart: " + rPayload);
+        break;
+    case LOK_CALLBACK_UNO_COMMAND_RESULT:
+        sendTextFrame("unocommandresult: " + rPayload);
+        break;
+    case LOK_CALLBACK_ERROR:
+        {
+            Parser parser;
+            Poco::Dynamic::Var var = parser.parse(rPayload);
+            Object::Ptr object = var.extract<Object::Ptr>();
+
+            sendTextFrame("error: cmd=" + object->get("cmd").toString() +
+                    " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
+        }
+        break;
+    case LOK_CALLBACK_CONTEXT_MENU:
+        sendTextFrame("contextmenu: " + rPayload);
+        break;
+    case LOK_CALLBACK_STATUS_INDICATOR_START:
+        sendTextFrame("statusindicatorstart:");
+        break;
+    case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
+        sendTextFrame("statusindicatorsetvalue: " + rPayload);
+        break;
+    case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
+        sendTextFrame("statusindicatorfinish:");
+        break;
+    case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
+        sendTextFrame("invalidateviewcursor: " + rPayload);
+        break;
+    case LOK_CALLBACK_TEXT_VIEW_SELECTION:
+        sendTextFrame("textviewselection: " + rPayload);
+        break;
+    case LOK_CALLBACK_CELL_VIEW_CURSOR:
+        sendTextFrame("cellviewcursor: " + rPayload);
+        break;
+    case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
+        sendTextFrame("graphicviewselection: " + rPayload);
+        break;
+    case LOK_CALLBACK_VIEW_CURSOR_VISIBLE:
+        sendTextFrame("viewcursorvisible: " + rPayload);
+        break;
+    case LOK_CALLBACK_VIEW_LOCK:
+        sendTextFrame("viewlock: " + rPayload);
+        break;
+    default:
+        Log::error("Unknown callback event (" + std::to_string(nType) + "): " + rPayload);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

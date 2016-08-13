@@ -26,7 +26,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <memory>
-#include <regex>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -37,6 +36,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/NotificationQueue.h>
 #include <Poco/Process.h>
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
@@ -66,21 +66,24 @@ typedef int (LokHookPreInit)  (const char *install_path, const char *user_profil
 
 using namespace LOOLProtocol;
 
+using Poco::AutoPtr;
 using Poco::Exception;
 using Poco::File;
-using Poco::Net::NetException;
 using Poco::Net::HTTPClientSession;
-using Poco::Net::HTTPResponse;
 using Poco::Net::HTTPRequest;
+using Poco::Net::HTTPResponse;
+using Poco::Net::NetException;
 using Poco::Net::WebSocket;
+using Poco::Notification;
+using Poco::NotificationQueue;
 using Poco::Path;
 using Poco::Process;
 using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::Timestamp;
-using Poco::Util::Application;
 using Poco::URI;
+using Poco::Util::Application;
 
 namespace
 {
@@ -339,15 +342,24 @@ private:
     std::atomic<bool> _joined;
 };
 
-/// Regex to parse the ViewId from json.
-static std::regex ViewIdRegex("\"viewId\"\\s*:\\s*\"(\\d*)\"");
-
-class Document;
-
-struct CallbackDescriptor
+/// Worker callback notification object.
+/// Used to pass callback data to the worker
+/// thread to invoke sessions with the data.
+class CallbackNotification : public Notification
 {
-    const Document* const Doc;
-    const unsigned ViewId;
+public:
+    typedef AutoPtr<CallbackNotification> Ptr;
+
+    CallbackNotification(const std::shared_ptr<ChildSession>& session, const int nType, const std::string& rPayload)
+      : _session(session),
+        _nType(nType),
+        _aPayload(rPayload)
+    {
+    }
+
+    const std::shared_ptr<ChildSession> _session;
+    const int _nType;
+    const std::string _aPayload;
 };
 
 /// A document container.
@@ -357,7 +369,7 @@ struct CallbackDescriptor
 /// per process. But for security reasons don't.
 /// However, we could have a loolkit instance
 /// per user or group of users (a trusted circle).
-class Document
+class Document : public Runnable
 {
 public:
     /// We have two types of password protected documents
@@ -365,6 +377,15 @@ public:
     /// 2) Document which require password to modify
     enum class PasswordType { ToView, ToModify };
 
+    /// Descriptor class used to link a LOK
+    /// callback to a specific view.
+    struct CallbackDescriptor
+    {
+        Document* const Doc;
+        const unsigned ViewId;
+    };
+
+public:
     Document(const std::shared_ptr<lok::Office>& loKit,
              const std::string& jailId,
              const std::string& docKey,
@@ -378,18 +399,25 @@ public:
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
+        _stop(false),
         _isLoading(0),
         _clientViews(0)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
         assert(_loKit && _loKit->get());
+
+        _callbackThread.start(*this);
     }
 
     ~Document()
     {
         Log::info("~Document dtor for url [" + _url + "] on child [" + _jailId +
                   "]. There are " + std::to_string(_clientViews) + " views.");
+
+        // Wait for the callback worker to finish.
+        stop();
+        _callbackThread.join();
 
         // Flag all connections to stop.
         for (auto aIterator : _connections)
@@ -735,22 +763,24 @@ private:
         Log::trace() << "Document::ViewCallback "
                      << LOKitHelper::kitCallbackTypeToString(nType)
                      << " [" << payload << "]." << Log::end;
+
         CallbackDescriptor* pDescr = reinterpret_cast<CallbackDescriptor*>(pData);
         assert(pDescr && "Null callback data.");
         assert(pDescr->Doc && "Null Document instance.");
 
-        std::unique_lock<std::mutex> lock(pDescr->Doc->_mutex);
-
         // Forward to the same view only.
         // Demultiplexing is done by Core.
         // TODO: replace with a map to be faster.
-        for (auto& it: pDescr->Doc->_connections)
+        for (auto& it : pDescr->Doc->_connections)
         {
-            auto session = it.second->getSession();
-            if (session && it.second->isRunning() &&
-                session->getViewId() == pDescr->ViewId)
+            if (it.second->isRunning())
             {
-                session->loKitCallback(nType, payload);
+                auto session = it.second->getSession();
+                if (session && session->getViewId() == pDescr->ViewId)
+                {
+                    auto pNotif = new CallbackNotification(session, nType, payload);
+                    pDescr->Doc->_callbackQueue.enqueueNotification(pNotif);
+                }
             }
         }
     }
@@ -785,7 +815,8 @@ private:
                 auto session = it.second->getSession();
                 if (session)
                 {
-                    session->loKitCallback(nType, payload);
+                    auto pNotif = new CallbackNotification(session, nType, payload);
+                    self->_callbackQueue.enqueueNotification(pNotif);
                 }
             }
         }
@@ -995,6 +1026,50 @@ private:
         return _loKitDocument;
     }
 
+    void run()
+    {
+        Util::setThreadName("kit_callback");
+
+        Log::debug("Thread started.");
+
+        while (!_stop && !TerminationFlag)
+        {
+            Notification::Ptr aNotification(_callbackQueue.waitDequeueNotification());
+            if (!_stop && !TerminationFlag && aNotification)
+            {
+                CallbackNotification::Ptr aCallbackNotification = aNotification.cast<CallbackNotification>();
+                assert(aCallbackNotification);
+
+                const auto nType = aCallbackNotification->_nType;
+                try
+                {
+                    aCallbackNotification->_session->loKitCallback(nType, aCallbackNotification->_aPayload);
+                }
+                catch (const Exception& exc)
+                {
+                    Log::error() << "CallbackWorker::run: Exception while handling callback [" << LOKitHelper::kitCallbackTypeToString(nType) << "]: "
+                                 << exc.displayText()
+                                 << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                                 << Log::end;
+                }
+                catch (const std::exception& exc)
+                {
+                    Log::error("CallbackWorker::run: Exception while handling callback [" + LOKitHelper::kitCallbackTypeToString(nType) + "]: " + exc.what());
+                }
+            }
+            else
+                break;
+        }
+
+        Log::debug("Thread finished.");
+    }
+
+    void stop()
+    {
+        _stop = true;
+        _callbackQueue.wakeUpAll();
+    }
+
 private:
 
     const bool _multiView;
@@ -1016,11 +1091,14 @@ private:
     // Whether password is required to view the document, or modify it
     PasswordType _docPasswordType;
 
+    std::atomic<bool> _stop;
     mutable std::mutex _mutex;
     std::condition_variable _cvLoading;
     std::atomic_size_t _isLoading;
     std::map<unsigned, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
+    Poco::Thread _callbackThread;
+    Poco::NotificationQueue _callbackQueue;
     std::atomic_size_t _clientViews;
 };
 
