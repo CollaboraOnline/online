@@ -109,7 +109,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
 			text.innerHTML = content;
 			width = Math.round(converter.call(context, twip).x) - 1;
-			if (width === -1) {
+			if (width <= 0) {
 				L.DomUtil.setStyle(column, 'display', 'none');
 			} else if (width < 10) {
 				text.column = iterator + 1;
@@ -211,7 +211,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			var command = {
 				Column: {
 					type: 'unsigned short',
-					value: item.column
+					value: item.parentNode && item.parentNode.nextSibling &&
+					       L.DomUtil.getStyle(item.parentNode.nextSibling, 'display') === 'none' ? item.column + 1 : item.column
 				},
 				Width: {
 					type: 'unsigned short',

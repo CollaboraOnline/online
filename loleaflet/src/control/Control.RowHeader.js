@@ -107,7 +107,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			text.setAttribute('rel', 'spreadsheet-row-' + content); // for easy addressing
 			text.innerHTML = content;
 			height = Math.round(converter.call(context, twip).y) - 1;
-			if (height === -1) {
+			if (height <= 0) {
 				L.DomUtil.setStyle(row, 'display', 'none');
 			} else if (height < 10) {
 				text.row = iterator + 1;
@@ -193,7 +193,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 			var command = {
 				Row: {
 					type: 'unsigned short',
-					value: item.row
+					value: item.parentNode && item.parentNode.nextSibling &&
+					       L.DomUtil.getStyle(item.parentNode.nextSibling, 'display') === 'none' ? item.row + 1 : item.row
 				},
 				Height: {
 					type: 'unsigned short',
