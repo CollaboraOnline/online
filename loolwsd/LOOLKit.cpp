@@ -64,8 +64,6 @@
 
 typedef int (LokHookPreInit)  (const char *install_path, const char *user_profile_path);
 
-using namespace LOOLProtocol;
-
 using Poco::AutoPtr;
 using Poco::Exception;
 using Poco::File;
@@ -84,6 +82,8 @@ using Poco::Thread;
 using Poco::Timestamp;
 using Poco::URI;
 using Poco::Util::Application;
+
+using namespace LOOLProtocol;
 
 namespace
 {
@@ -416,7 +416,8 @@ public:
                   "]. There are " + std::to_string(_clientViews) + " views.");
 
         // Wait for the callback worker to finish.
-        stop();
+        _stop = true;
+        _callbackQueue.wakeUpAll();
         _callbackThread.join();
 
         // Flag all connections to stop.
@@ -824,10 +825,10 @@ private:
 
     /// Load a document (or view) and register callbacks.
     std::shared_ptr<lok::Document> onLoad(const std::string& sessionId,
-                                   const std::string& uri,
-                                   const std::string& docPassword,
-                                   const std::string& renderOpts,
-                                   bool haveDocPassword)
+                                          const std::string& uri,
+                                          const std::string& docPassword,
+                                          const std::string& renderOpts,
+                                          bool haveDocPassword)
     {
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
 
@@ -1062,12 +1063,6 @@ private:
         }
 
         Log::debug("Thread finished.");
-    }
-
-    void stop()
-    {
-        _stop = true;
-        _callbackQueue.wakeUpAll();
     }
 
 private:

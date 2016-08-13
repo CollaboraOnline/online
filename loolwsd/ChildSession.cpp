@@ -10,41 +10,25 @@
 #include "ChildSession.hpp"
 #include "config.h"
 
-#include <iostream>
-#include <thread>
-
-#include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/WebSocket.h>
-#include <Poco/Notification.h>
-#include <Poco/NotificationQueue.h>
-#include <Poco/Path.h>
-#include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "Common.hpp"
 #include "LOKitHelper.hpp"
-#include "LOOLProtocol.hpp"
 #include "Log.hpp"
 #include "Png.hpp"
-#include "Rectangle.hpp"
 #include "Util.hpp"
 
-using namespace LOOLProtocol;
-
-using Poco::AutoPtr;
-using Poco::Exception;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
 using Poco::Net::WebSocket;
-using Poco::Notification;
-using Poco::NotificationQueue;
-using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Timestamp;
 using Poco::URI;
+
+using namespace LOOLProtocol;
 
 std::recursive_mutex ChildSession::Mutex;
 
