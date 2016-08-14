@@ -25,10 +25,10 @@
 
 #include "IoUtil.hpp"
 #include "MasterProcessSession.hpp"
+#include "Storage.hpp"
 #include "Util.hpp"
 
 // Forwards.
-class StorageBase;
 class TileCache;
 
 /// Represents a new LOK child that is read
@@ -143,7 +143,7 @@ public:
                     << " sessions left." << Log::end;
     }
 
-    void validate(const Poco::URI& uri);
+    const StorageBase::FileInfo validate(const Poco::URI& uri);
 
     /// Loads a document from the public URI into the jail.
     bool load(const std::string& jailId);

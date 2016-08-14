@@ -691,8 +691,8 @@ private:
         }
 
         // Validate the URI and Storage before moving on.
-        docBroker->validate(uriPublic);
-        Log::debug("Validated [" + uriPublic.toString() + "].");
+        const auto fileinfo = docBroker->validate(uriPublic);
+        Log::debug("Validated [" + uriPublic.toString() + "]");
 
         if (newDoc)
         {
@@ -709,6 +709,11 @@ private:
             // thread to pump them. This is to empty the queue when we get a "canceltiles" message.
             auto queue = std::make_shared<BasicTileQueue>();
             session = std::make_shared<MasterProcessSession>(id, LOOLSession::Kind::ToClient, ws, docBroker, queue);
+            if (!fileinfo._userName.empty())
+            {
+                Log::debug(uriPublic.toString() + " requested with username [" + fileinfo._userName + "]");
+                session->setUserName(fileinfo._userName);
+            }
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);

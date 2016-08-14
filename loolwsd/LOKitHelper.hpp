@@ -105,7 +105,7 @@ namespace LOKitHelper
     }
 
     inline
-    std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
+    std::string documentStatus(LibreOfficeKitDocument *loKitDocument, unsigned sessionId)
     {
         char* ptrValue;
         assert(loKitDocument && "null loKitDocument");
@@ -119,8 +119,10 @@ namespace LOKitHelper
 
         long width, height;
         loKitDocument->pClass->getDocumentSize(loKitDocument, &width, &height);
+        // Lets use sessionId in non-multiview case like viewid in multiview case
         oss << " width=" << width
-            << " height=" << height;
+            << " height=" << height
+            << " viewid=" << sessionId;
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION)
         {

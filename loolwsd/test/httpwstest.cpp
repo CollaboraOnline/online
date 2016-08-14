@@ -1233,6 +1233,7 @@ void HTTPWSTest::testInactiveClient()
                                             token == "invalidatetiles:" ||
                                             token == "invalidatecursor:" ||
                                             token == "statechanged:" ||
+                                            token == "viewinfo:" ||
                                             token == "editlock:");
 
                     // End when we get state changed.

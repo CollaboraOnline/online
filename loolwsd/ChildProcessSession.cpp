@@ -10,6 +10,7 @@
 #include "config.h"
 
 #include <iostream>
+#include <sstream>
 #include <thread>
 
 #include <Poco/Exception.h>
@@ -290,15 +291,13 @@ ChildProcessSession::ChildProcessSession(const std::string& id,
                                          std::shared_ptr<WebSocket> ws,
                                          LibreOfficeKitDocument * loKitDocument,
                                          const std::string& jailId,
-                                         OnLoadCallback onLoad,
-                                         OnUnloadCallback onUnload) :
+                                         IDocumentManager& docManager) :
     LOOLSession(id, Kind::ToMaster, ws),
     _loKitDocument(loKitDocument),
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
     _viewId(0),
-    _onLoad(onLoad),
-    _onUnload(onUnload),
+    _docManager(docManager),
     _callbackWorker(new CallbackWorker(_callbackQueue, *this))
 {
     Log::info("ChildProcessSession ctor [" + getName() + "].");
@@ -326,7 +325,8 @@ void ChildProcessSession::disconnect()
         if (_multiView)
             _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-        _onUnload(getId());
+        _docManager.onUnload(getId());
+        _docManager.notifyViewInfo();
 
         LOOLSession::disconnect();
     }
@@ -347,6 +347,9 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
 
         if (_multiView)
             _loKitDocument->pClass->setView(_loKitDocument, _viewId);
+
+        // Notify all views about updated view info
+        _docManager.notifyViewInfo();
 
         const int curPart = _loKitDocument->pClass->getPart(_loKitDocument);
         sendTextFrame("curpart: part=" + std::to_string(curPart));
@@ -596,7 +599,7 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    _loKitDocument = _onLoad(getId(), _jailedFilePath, _docPassword, renderOpts, _haveDocPassword);
+    _loKitDocument = _docManager.onLoad(getId(), _jailedFilePath, _userName, _docPassword, renderOpts, _haveDocPassword);
     if (!_loKitDocument)
     {
         Log::error("Failed to get LoKitDocument instance.");
@@ -605,8 +608,17 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
 
     if (_multiView)
     {
+        std::ostringstream ossViewInfo;
         _viewId = _loKitDocument->pClass->getView(_loKitDocument);
-        _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderOpts.empty() ? nullptr : renderOpts.c_str()));
+        const auto viewId = std::to_string(_viewId);
+
+        // Create a message object
+        Object::Ptr viewInfoObj = new Object();
+        viewInfoObj->set("id", viewId);
+        viewInfoObj->set("username", _userName);
+        viewInfoObj->stringify(ossViewInfo);
+
+        Log::info("Created new view with viewid: [" + viewId + "] for username: [" + _userName + "].");
     }
 
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument);
@@ -616,9 +628,12 @@ bool ChildProcessSession::loadDocument(const char * /*buffer*/, int /*length*/, 
     }
 
     // Respond by the document status, which has no arguments.
-    Log::debug("Sending status after load.");
+    Log::debug("Sending status after loading view " + std::to_string(_viewId) + ".");
     if (!getStatus(nullptr, 0))
         return false;
+
+    // Inform everyone (including this one) about updated view info
+    _docManager.notifyViewInfo();
 
     Log::info("Loaded session " + getId());
     return true;
@@ -673,7 +688,7 @@ bool ChildProcessSession::getStatus(const char* /*buffer*/, int /*length*/)
     if (_multiView)
         _loKitDocument->pClass->setView(_loKitDocument, _viewId);
 
-    const auto status = LOKitHelper::documentStatus(_loKitDocument);
+    const auto status = LOKitHelper::documentStatus(_loKitDocument, Util::decodeId(getId()));
     if (status.empty())
     {
         Log::error("Failed to get document status.");

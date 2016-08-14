@@ -302,6 +302,12 @@ unocommandresult: <payload>
 Callback that an UNO command has finished.
 See LOK_CALLBACK_UNO_COMMAND_RESULT for details.
 
+viewinfo: <payload>
+
+    Message is sent everytime there is any change in view information.
+    <payload> consists of an array of JSON objects. Structure of JSON
+    objects is like : {"id": <viewid>, "username": <Full Name of the user>}
+
 pong
 
     See above.

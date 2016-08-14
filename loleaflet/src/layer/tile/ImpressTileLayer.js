@@ -119,6 +119,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._updateMaxBounds(true);
 			this._documentInfo = textMsg;
 			this._parts = command.parts;
+			this._viewId = parseInt(command.viewid);
 			this._selectedPart = command.selectedPart;
 			this._resetPreFetching(true);
 			this._update();

@@ -36,6 +36,8 @@ public:
         std::string _filename;
         Poco::Timestamp _modifiedTime;
         size_t _size;
+        std::string _userId;
+        std::string _userName;
     };
 
     /// localStorePath the absolute root path of the chroot.

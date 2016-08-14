@@ -365,7 +365,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 			// need to handle Ctrl + Alt + C separately for Firefox
 			if (e.originalEvent.key === 'c' && e.originalEvent.altKey) {
-				this._map._socket.sendMessage('uno .uno:InsertAnnotation');
+				this._map.sendUnoCommand('.uno:InsertAnnotation');
 				return true;
 			}
 
@@ -380,7 +380,7 @@ L.Map.Keyboard = L.Handler.extend({
 					return true;
 				case 67: // c
 				case 77: // m
-					this._map._socket.sendMessage('uno .uno:InsertAnnotation');
+					this._map.sendUnoCommand('.uno:InsertAnnotation');
 					return true;
 				case 68: // d
 					this._map._socket.sendMessage('uno .uno:InsertEndnote');

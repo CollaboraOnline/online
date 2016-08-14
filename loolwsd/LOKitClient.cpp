@@ -143,7 +143,7 @@ protected:
                     std::cout << "? syntax" << std::endl;
                     continue;
                 }
-                std::cout << LOKitHelper::documentStatus(loKitDocument) << std::endl;
+                std::cout << LOKitHelper::documentStatus(loKitDocument, 0) << std::endl;
                 for (int i = 0; i < loKitDocument->pClass->getParts(loKitDocument); i++)
                 {
                     std::cout << "  " << i << ": '" << loKitDocument->pClass->getPartName(loKitDocument, i) << "'" << std::endl;

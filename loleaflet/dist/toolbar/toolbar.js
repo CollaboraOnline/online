@@ -430,6 +430,7 @@ $(function () {
 			onClick(e.target);
 		}
 	});
+
 	$('#toolbar-down').w2toolbar({
 		name: 'toolbar-down',
 		items: [
@@ -449,6 +450,8 @@ $(function () {
 			{type: 'break'},
 			{type: 'button',  id: 'takeedit', img: 'edit', hint: _('Take edit lock (others can only view)'), caption: _('VIEWING')},
 			{type: 'break'},
+			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table></div>' },
+			{type: 'break'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
 			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
 			{type: 'break', id: 'prevnextbreak'},
@@ -458,6 +461,9 @@ $(function () {
 			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _('Zoom in')}
 		],
 		onClick: function (e) {
+			if (e.item.id === 'userlist') {
+				return;
+			}
 			onClick(e.target, e.item, e.subItem);
 		}
 	});
@@ -475,7 +481,9 @@ var formatButtons = {
 
 var takeEditPopupMessage = '<div>' + _('You are viewing now.') + '<br/>' + _('Click here to take edit.') + '</div>';
 var takeEditPopupTimeout = null;
-
+var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
+var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
+var userPopupTimeout = null;
 
 function toggleButton(toolbar, state, command)
 {
@@ -1325,6 +1333,76 @@ map.on('statusindicator', function (e) {
 			$('.styles-select').on('select2:select', onStyleSelect);
 		}
 	}
+});
+
+function getUserItem(viewId, userName) {
+	var html = '<tr class="useritem" id="user-' + viewId + '">' +
+	             '<td class="username">' + userName + '</td>' +
+	           '</tr>';
+	return html;
+}
+var nUsers = _('%n users');
+function updateUserListCount() {
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
+	if (count > 1) {
+		userlistItem.text = nUsers.replace('%n', count);
+	} else if (count === 1) {
+		userlistItem.text = _('1 user');
+	} else {
+		userlistItem.text = _('No users');
+	}
+
+	w2ui['toolbar-down'].refresh();
+}
+
+map.on('addview', function(e) {
+	if (!e.viewId || !e.username)
+		return;
+
+	$('#tb_toolbar-down_item_userlist')
+		.w2overlay({
+			class: 'loleaflet-font',
+			html: userJoinedPopupMessage.replace('%user', e.username),
+			style: 'padding: 5px'
+		});
+	clearTimeout(userPopupTimeout);
+	userPopupTimeout = setTimeout(function() {
+		$('#tb_toolbar-down_item_userlist').w2overlay('');
+		clearTimeout(userPopupTimeout);
+		userPopupTimeout = null;
+	}, 3000);
+
+	var username = e.username;
+	if (e.viewId === map._docLayer._viewId) {
+		username = _('You');
+	}
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username)).parent().parent()[0].outerHTML;
+	userlistItem.html = newhtml;
+	updateUserListCount();
+});
+
+map.on('removeview', function(e) {
+	if (!e.viewId || !e.username)
+		return;
+
+	$('#tb_toolbar-down_item_userlist')
+		.w2overlay({
+			class: 'loleaflet-font',
+			html: userLeftPopupMessage.replace('%user', e.username),
+			style: 'padding: 5px'
+		});
+	clearTimeout(userPopupTimeout);
+	userPopupTimeout = setTimeout(function() {
+		$('#tb_toolbar-down_item_userlist').w2overlay('');
+		clearTimeout(userPopupTimeout);
+		userPopupTimeout = null;
+	}, 3000);
+
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
+	updateUserListCount();
 });
 
 $(window).resize(function() {

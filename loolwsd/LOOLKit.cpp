@@ -26,12 +26,15 @@
 #include <cstdlib>
 #include <iostream>
 #include <memory>
+#include <sstream>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/Exception.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -63,6 +66,10 @@ using namespace LOOLProtocol;
 
 using Poco::Exception;
 using Poco::File;
+using Poco::JSON::Array;
+using Poco::JSON::Object;
+using Poco::JSON::Parser;
+
 using Poco::Net::NetException;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPResponse;
@@ -341,7 +348,7 @@ private:
 /// per process. But for security reasons don't.
 /// However, we could have a loolkit instance
 /// per user or group of users (a trusted circle).
-class Document
+class Document : public IDocumentManager
 {
 public:
     /// We have two types of password protected documents
@@ -463,10 +470,7 @@ public:
             auto ws = std::make_shared<WebSocket>(cs, request, response);
             ws->setReceiveTimeout(0);
 
-            auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId,
-                           [this](const std::string& id, const std::string& uri, const std::string& docPassword,
-                                  const std::string& renderOpts, bool haveDocPassword) { return onLoad(id, uri, docPassword, renderOpts, haveDocPassword); },
-                           [this](const std::string& id) { onUnload(id); });
+            auto session = std::make_shared<ChildProcessSession>(sessionId, ws, _loKitDocument, _jailId, *this);
 
             auto thread = std::make_shared<Connection>(session, ws);
             const auto aInserted = _connections.emplace(intSessionId, thread);
@@ -878,9 +882,10 @@ private:
     /// Load a document (or view) and register callbacks.
     LibreOfficeKitDocument* onLoad(const std::string& sessionId,
                                    const std::string& uri,
+                                   const std::string& userName,
                                    const std::string& docPassword,
                                    const std::string& renderOpts,
-                                   bool haveDocPassword)
+                                   const bool haveDocPassword) override
     {
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
 
@@ -896,7 +901,11 @@ private:
 
         try
         {
-            load(sessionId, uri, docPassword, renderOpts, haveDocPassword);
+            load(sessionId, uri, userName, docPassword, renderOpts, haveDocPassword);
+            if (!_loKitDocument)
+            {
+                return nullptr;
+            }
         }
         catch (const std::exception& exc)
         {
@@ -913,10 +922,11 @@ private:
         return _loKitDocument;
     }
 
-    void onUnload(const std::string& sessionId)
+    void onUnload(const std::string& sessionId) override
     {
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
+        Log::info("Unloading [" + sessionId + "].");
         if (it == _connections.end() || !it->second || !_loKitDocument)
         {
             // Nothing to do.
@@ -944,13 +954,53 @@ private:
         }
     }
 
+    /// Notify all views of viewId and their associated usernames
+    void notifyViewInfo() override
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        // Store the list of viewid, username mapping in a map
+        Array::Ptr viewInfoArray = new Array();
+        int arrayIndex = 0;
+        for (auto& connectionIt : _connections)
+        {
+            Object::Ptr viewInfoObj = new Object();
+
+            if (connectionIt.second->isRunning())
+            {
+                const auto session = connectionIt.second->getSession();
+                viewInfoObj->set("id", Util::decodeId(session->getId()));
+                viewInfoObj->set("username", session->getViewUserName());
+
+                viewInfoArray->set(arrayIndex++, viewInfoObj);
+            }
+        }
+
+        std::ostringstream ossViewInfo;
+        viewInfoArray->stringify(ossViewInfo);
+
+        // Broadcast updated viewinfo to all _active_ connections
+        for (auto& connectionIt: _connections)
+        {
+            if (connectionIt.second->isRunning())
+            {
+                auto session = connectionIt.second->getSession();
+                if (session->isActive())
+                {
+                    session->sendTextFrame("viewinfo: " + ossViewInfo.str());
+                }
+            }
+        }
+    }
+
 private:
 
     LibreOfficeKitDocument* load(const std::string& sessionId,
                                  const std::string& uri,
+                                 const std::string& userName,
                                  const std::string& docPassword,
                                  const std::string& renderOpts,
-                                 bool haveDocPassword)
+                                 const bool haveDocPassword)
     {
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
@@ -1013,27 +1063,9 @@ private:
                 return nullptr;
             }
 
-            // initializeForRendering() should be called before
-            // registerCallback(), as the previous creates a new view in
-            // Impress.
-            _loKitDocument->pClass->initializeForRendering(_loKitDocument, (renderOpts.empty() ? nullptr : renderOpts.c_str()));
-
-            if (_multiView)
-            {
-                Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
-                const auto viewId = _loKitDocument->pClass->createView(_loKitDocument);
-
-                _loKitDocument->pClass->registerCallback(_loKitDocument, ViewCallback, reinterpret_cast<void*>(intSessionId));
-
-                Log::info() << "Document [" << _url << "] view ["
-                            << viewId << "] loaded, leaving "
-                            << (_clientViews + 1) << " views." << Log::end;
-            }
-            else
-            {
-                _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
-            }
-
+            // Only save the options on opening the document.
+            // No support for changing them after opening a document.
+            _renderOpts = renderOpts;
         }
         else
         {
@@ -1058,6 +1090,51 @@ private:
             }
         }
 
+        Object::Ptr renderOptsObj = new Object();
+
+        // Fill the object with renderoptions, if any
+        if (!_renderOpts.empty()) {
+            Parser parser;
+            Poco::Dynamic::Var var = parser.parse(_renderOpts);
+            renderOptsObj = var.extract<Object::Ptr>();
+        }
+
+        // Append name of the user, if any, who opened the document to rendering options
+        if (!userName.empty())
+        {
+            Object::Ptr authorContainer = new Object();
+            Object::Ptr authorObj = new Object();
+            authorObj->set("type", "string");
+            std::string decodedUserName;
+            URI::decode(userName, decodedUserName);
+            authorObj->set("value", decodedUserName);
+
+            renderOptsObj->set(".uno:Author", authorObj);
+        }
+
+        std::ostringstream ossRenderOpts;
+        renderOptsObj->stringify(ossRenderOpts);
+
+        // initializeForRendering() should be called before
+        // registerCallback(), as the previous creates a new view in Impress.
+        _loKitDocument->pClass->initializeForRendering(_loKitDocument, ossRenderOpts.str().c_str());
+
+        if (_multiView)
+        {
+            Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
+            const auto viewId = _loKitDocument->pClass->createView(_loKitDocument);
+
+            Log::info() << "Document [" << _url << "] view ["
+                        << viewId << "] loaded, leaving "
+                        << (_clientViews + 1) << " views." << Log::end;
+        }
+
+        // initializeForRendering() should be called before
+        // registerCallback(), as the previous creates a new view in Impress.
+        _loKitDocument->pClass->initializeForRendering(_loKitDocument, _renderOpts.c_str());
+
+        _loKitDocument->pClass->registerCallback(_loKitDocument, DocumentCallback, this);
+
         return _loKitDocument;
     }
 
@@ -1069,6 +1146,7 @@ private:
     const std::string _docKey;
     const std::string _url;
     std::string _jailedUrl;
+    std::string _renderOpts;
 
     LibreOfficeKitDocument *_loKitDocument;
 

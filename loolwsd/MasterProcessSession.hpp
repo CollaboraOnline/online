@@ -53,6 +53,8 @@ class MasterProcessSession final : public LOOLSession, public std::enable_shared
 
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
+    void setUserName(const std::string& userName) { _userName = userName; }
+
 public:
     // Raise this flag on ToClient from ToPrisoner to let ToClient know of load failures
     bool _bLoadError = false;

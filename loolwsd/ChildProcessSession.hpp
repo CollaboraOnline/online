@@ -23,8 +23,28 @@
 #include "LOOLSession.hpp"
 
 class CallbackWorker;
-typedef std::function<LibreOfficeKitDocument*(const std::string&, const std::string&, const std::string&, const std::string&, bool)> OnLoadCallback;
-typedef std::function<void(const std::string&)> OnUnloadCallback;
+/// An abstract interface that defines the
+/// DocumentManager interface and functionality.
+class IDocumentManager
+{
+public:
+    /// Reqest loading a document, or a new view, if one exists.
+    virtual
+    LibreOfficeKitDocument* onLoad(const std::string& sessionId,
+                                   const std::string& jailedFilePath,
+                                   const std::string& userName,
+                                   const std::string& docPassword,
+                                   const std::string& renderOpts,
+                                   const bool haveDocPassword) = 0;
+    /// Unload a client session, which unloads the document
+    /// if it is the last and only.
+    virtual
+    void onUnload(const std::string& sessionId) = 0;
+
+    /// Send updated view info to all active sessions
+    virtual
+    void notifyViewInfo() = 0;
+};
 
 class ChildProcessSession final : public LOOLSession
 {
@@ -40,8 +60,7 @@ public:
                         std::shared_ptr<Poco::Net::WebSocket> ws,
                         LibreOfficeKitDocument * loKitDocument,
                         const std::string& jailId,
-                        OnLoadCallback onLoad,
-                        OnUnloadCallback onUnload);
+                        IDocumentManager& docManager);
     virtual ~ChildProcessSession();
 
     virtual bool getStatus(const char *buffer, int length) override;
@@ -52,7 +71,8 @@ public:
 
     virtual void disconnect() override;
 
-    int getViewId() const  { return _viewId; }
+    int getViewId() const { return _viewId; }
+    const std::string getViewUserName() const { return _userName; }
 
     const std::string& getDocType() const { return _docType; }
 
@@ -98,8 +118,7 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     std::map<int, std::string> _lastDocStates;
-    OnLoadCallback _onLoad;
-    OnUnloadCallback _onUnload;
+    IDocumentManager& _docManager;
 
     std::unique_ptr<CallbackWorker> _callbackWorker;
     Poco::Thread _callbackThread;

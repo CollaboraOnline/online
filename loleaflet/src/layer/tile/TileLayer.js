@@ -347,6 +347,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('contextmenu:')) {
 			this._onContextMenuMsg(textMsg);
 		}
+		else if (textMsg.startsWith('viewinfo:')) {
+			this._onViewInfoMsg(textMsg);
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -508,6 +511,35 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursorOnLostFocus = this._visibleCursor;
 		this._isCursorOverlayVisible = true;
 		this._onUpdateCursor();
+	},
+
+	_addView: function(viewId, username) {
+		this._map.addView(viewId, username);
+	},
+
+	_removeView: function(viewId) {
+		this._map.removeView(viewId);
+	},
+
+	_onViewInfoMsg: function(textMsg) {
+		textMsg = textMsg.substring('viewinfo: '.length);
+		var viewInfo = JSON.parse(textMsg);
+
+		// A new view
+		var viewIds = [];
+		for (var viewInfoIdx in viewInfo) {
+			if (!(parseInt(viewInfo[viewInfoIdx].id) in this._map._viewInfo)) {
+				this._addView(viewInfo[viewInfoIdx].id, viewInfo[viewInfoIdx].username);
+			}
+			viewIds.push(viewInfo[viewInfoIdx].id);
+		}
+
+		// Check if any view is deleted
+		for (viewInfoIdx in this._map._viewInfo) {
+			if (viewIds.indexOf(parseInt(viewInfoIdx)) === -1) {
+				this._removeView(parseInt(viewInfoIdx));
+			}
+		}
 	},
 
 	_onPartPageRectanglesMsg: function (textMsg) {

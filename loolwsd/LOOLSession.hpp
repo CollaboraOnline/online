@@ -130,6 +130,9 @@ protected:
     // Whether websocket received close frame.  Closing Handshake
     std::atomic<bool> _isCloseFrame;
 
+    /// Name of the user to whom the session belongs to
+    std::string _userName;
+
 private:
 
     virtual bool _handleInput(const char *buffer, int length) = 0;

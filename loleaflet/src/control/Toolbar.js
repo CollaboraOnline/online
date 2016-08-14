@@ -121,6 +121,14 @@ L.Map.include({
 
 	sendUnoCommand: function (command, json) {
 		if (this._permission === 'edit') {
+			if (typeof json === 'undefined' && command === '.uno:InsertAnnotation') {
+				json = {
+					Author: {
+						type: 'string',
+						value: this._viewInfo[this._docLayer._viewId]
+					}
+				};
+			}
 			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},

@@ -154,6 +154,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._docType = command.type;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
+			this._viewId = parseInt(command.viewid);
 			var mapSize = this._map.getSize();
 			var width = this._docWidthTwips / this._tileWidthTwips * this._tileSize;
 			var height = this._docHeightTwips / this._tileHeightTwips * this._tileSize;

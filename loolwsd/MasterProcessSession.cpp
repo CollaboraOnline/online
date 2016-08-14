@@ -645,6 +645,13 @@ void MasterProcessSession::dispatchChild()
     oss << " url=" << _docBroker->getPublicUri().toString();
     oss << " jail=" << _docBroker->getJailedUri().toString();
 
+    if (!_userName.empty())
+    {
+        std::string encodedUserName;
+        Poco::URI::encode(_userName, "", encodedUserName);
+        oss << " author=" + encodedUserName;
+    }
+
     if (_loadPart >= 0)
         oss << " part=" + std::to_string(_loadPart);
 
