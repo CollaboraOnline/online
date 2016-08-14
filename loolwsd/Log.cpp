@@ -33,7 +33,7 @@ namespace Log
     using namespace Poco;
 
     static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
-    // help avoid destruction ordering issues.
+    /// Helper to avoid destruction ordering issues.
     struct StaticNames {
         std::atomic<bool> inited;
         std::string name;

@@ -26,6 +26,8 @@ class StorageBase
 {
 public:
 
+    /// Represents a file's attributes.
+    /// Used for local and network files.
     class FileInfo
     {
     public:
@@ -117,6 +119,7 @@ private:
     bool _isCopy;
 };
 
+/// WOPI protocol backed storage.
 class WopiStorage : public StorageBase
 {
 public:
@@ -137,6 +140,7 @@ public:
     bool saveLocalFileToStorage() override;
 };
 
+/// WebDAV protocol backed storage.
 class WebDAVStorage : public StorageBase
 {
 public:

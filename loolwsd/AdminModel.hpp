@@ -20,6 +20,7 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
+/// A client view in Admin controller.
 class View
 {
 public:
@@ -38,6 +39,7 @@ private:
     std::time_t _end = 0;
 };
 
+/// A document in Admin controller.
 class Document
 {
 public:
@@ -85,6 +87,7 @@ private:
     std::time_t _end = 0;
 };
 
+/// An Admin session subscriber.
 class Subscriber
 {
 public:
@@ -123,6 +126,7 @@ private:
     std::time_t _end = 0;
 };
 
+/// The Admin controller implementation.
 class AdminModel
 {
 public:

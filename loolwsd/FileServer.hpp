@@ -24,6 +24,7 @@
 
 #include "Log.hpp"
 
+/// Handles file requests over HTTP(S).
 class FileServerRequestHandler: public Poco::Net::HTTPRequestHandler
 {
     std::string getRequestPathname(const Poco::Net::HTTPServerRequest& request);
@@ -37,7 +38,7 @@ public:
     void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) override;
 };
 
-// Singleton
+/// Singleton class to serve files over HTTP(S).
 class FileServer
 {
 public:

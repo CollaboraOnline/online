@@ -137,6 +137,9 @@ private:
     int _id;
 };
 
+/// One or more tile header.
+/// Used to request the rendering of multiple
+/// tiles as well as the header of the response.
 class TileCombined
 {
 private:

@@ -1152,11 +1152,14 @@ public:
     }
 };
 
+/// External (client) connection handler factory.
+/// Creates handler objects.
 class ClientRequestHandlerFactory: public HTTPRequestHandlerFactory
 {
 public:
     ClientRequestHandlerFactory()
-        { }
+    {
+    }
 
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
     {
@@ -1201,6 +1204,8 @@ public:
     }
 };
 
+/// Internal (prisoner) connection handler factory.
+/// Creates handler objects.
 class PrisonerRequestHandlerFactory: public HTTPRequestHandlerFactory
 {
 public:
@@ -1271,6 +1276,7 @@ std::atomic<unsigned> LOOLWSD::NumDocBrokers;
 std::atomic<unsigned> LOOLWSD::NumConnections;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 
+/// Helper class to hold default configuration entries.
 class AppConfigMap : public Poco::Util::MapConfiguration
 {
 public:

@@ -28,6 +28,7 @@
 #include "TileCache.hpp"
 #include "Log.hpp"
 
+/// Base class of a client session.
 class LOOLSession
 {
 public:

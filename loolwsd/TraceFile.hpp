@@ -41,6 +41,8 @@ public:
     std::string Payload;
 };
 
+/// Trace-file generator class.
+/// Writes records into a trace file.
 class TraceFileWriter
 {
 public:
@@ -127,6 +129,8 @@ private:
     std::mutex _mutex;
 };
 
+/// Trace-file parser class.
+/// Reads records from a trace file.
 class TraceFileReader
 {
 public:

@@ -79,7 +79,7 @@ extern "C"
     }
 }
 
-
+/// The application class implementing a client.
 class LOKitClient: public Application
 {
 public:

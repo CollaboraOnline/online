@@ -46,7 +46,6 @@
 #include "test/helpers.hpp"
 
 /// Stress testing and performance/scalability benchmarking tool.
-
 class Stress: public Poco::Util::Application
 {
 public:
@@ -77,6 +76,7 @@ using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 
+/// Connection class with WSD.
 class Connection
 {
 public:
@@ -113,6 +113,7 @@ private:
     std::shared_ptr<Poco::Net::WebSocket> _ws;
 };
 
+/// Main thread class to replay a trace file.
 class Worker: public Runnable
 {
 public:

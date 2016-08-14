@@ -48,6 +48,8 @@ namespace Log
         }
     } end;
 
+    /// Helper class to support implementing streaming
+    /// operator for logging.
     class StreamLogger
     {
         public:

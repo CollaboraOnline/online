@@ -26,6 +26,8 @@
 #include "TraceFile.hpp"
 #include "Util.hpp"
 
+/// The Server class which is responsible for all
+/// external interactions.
 class LOOLWSD: public Poco::Util::ServerApplication
 {
 public:

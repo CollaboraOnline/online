@@ -71,7 +71,8 @@ using Poco::Util::Application;
 static bool closeExpected = false;
 static std::mutex coutMutex;
 
-class Output: public Runnable
+/// Prints incoming data from a WebSocket.
+class Output : public Runnable
 {
 public:
     Output(WebSocket& ws) :
@@ -132,7 +133,7 @@ public:
     WebSocket& _ws;
 };
 
-/** Program for interactive or scripted testing of a lool server. */
+/// Program for interactive or scripted testing of a lool server.
 class Connect: public Poco::Util::Application
 {
 public:

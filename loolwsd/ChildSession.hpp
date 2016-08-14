@@ -23,6 +23,8 @@ class CallbackWorker;
 typedef std::function<std::shared_ptr<lok::Document>(const std::string&, const std::string&, const std::string&, const std::string&, bool)> OnLoadCallback;
 typedef std::function<void(const std::string&)> OnUnloadCallback;
 
+/// Represents a client session, with the socket end-point,
+/// and handles all incoming UI traffic.
 class ChildSession final : public LOOLSession
 {
 public:

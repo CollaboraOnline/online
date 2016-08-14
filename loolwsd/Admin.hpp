@@ -26,6 +26,7 @@
 
 class Admin;
 
+/// Admin requests over HTTP(S) handler.
 class AdminRequestHandler: public Poco::Net::HTTPRequestHandler
 {
 public:
@@ -111,6 +112,7 @@ private:
     unsigned _cpuStatsTaskInterval = 5000;
 };
 
+/// Memory statistics.
 class MemoryStats : public Poco::Util::TimerTask
 {
 public:
@@ -133,6 +135,7 @@ private:
     long _lastTotalMemory;
 };
 
+/// CPU statistics.
 class CpuStats : public Poco::Util::TimerTask
 {
 public:

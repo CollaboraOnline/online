@@ -72,6 +72,9 @@ TileCache::~TileCache()
     Log::info("~TileCache dtor for uri [" + _docURL + "].");
 }
 
+/// Tracks the rendering of a given tile
+/// to avoid duplication and help clock
+/// rendering latency.
 struct TileCache::TileBeingRendered
 {
     std::vector<std::weak_ptr<ClientSession>> _subscribers;

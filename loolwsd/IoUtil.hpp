@@ -45,6 +45,7 @@ namespace IoUtil
 
     ssize_t readFIFO(int pipe, char* buffer, ssize_t size);
 
+    /// Helper class to handle reading from a pipe.
     class PipeReader
     {
     public:

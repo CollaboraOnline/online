@@ -28,6 +28,7 @@ public:
     virtual bool verify(const std::string& token) = 0;
 };
 
+/// JWT Authorization.
 class JWTAuth: public AuthBase
 {
 public:
@@ -61,6 +62,7 @@ private:
     Poco::Crypto::RSADigestEngine _digestEngine;
 };
 
+/// OAuth Authorization.
 class OAuth : public AuthBase
 {
 public:

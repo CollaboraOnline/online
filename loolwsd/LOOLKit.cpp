@@ -226,6 +226,7 @@ namespace
 
 }
 
+/// Connection thread with a client (via WSD).
 class Connection: public Runnable
 {
 public:
