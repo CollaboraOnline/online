@@ -357,6 +357,12 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('viewcursorvisible:')) {
 			this._onViewCursorVisibleMsg(textMsg);
 		}
+		else if (textMsg.startsWith('addview:')) {
+			this._onAddViewMsg(textMsg);
+		}
+		else if (textMsg.startsWith('remview:')) {
+			this._onRemViewMsg(textMsg);
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -560,6 +566,40 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateViewCursor(viewId);
+	},
+
+	_onAddViewMsg: function(textMsg) {
+		textMsg = textMsg.substring('addview:'.length + 1);
+		var viewId = parseInt(textMsg);
+
+		// Ignore if viewid is same as ours
+		if (viewId === this._viewId) {
+			return;
+		}
+
+		//TODO: We can initialize color and other properties here.
+		if (typeof this._viewCursors[viewId] !== 'undefined') {
+			this._viewCursors[viewId] = {};
+		}
+
+		this._onUpdateViewCursor(viewId);
+	},
+
+	_onRemViewMsg: function(textMsg) {
+		textMsg = textMsg.substring('remview:'.length + 1);
+		var viewId = parseInt(textMsg);
+
+		// Ignore if viewid is same as ours
+		if (viewId === this._viewId) {
+			return;
+		}
+
+		// Just remove the view and update (to refresh as needed).
+		if (typeof this._viewCursors[viewId] !== 'undefined') {
+			this._viewCursors[viewId].visible = false;
+			this._onUpdateViewCursor(viewId);
+			delete this._viewCursors[viewId];
+		}
 	},
 
 	_onPartPageRectanglesMsg: function (textMsg) {

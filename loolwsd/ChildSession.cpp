@@ -60,6 +60,8 @@ void ChildSession::disconnect()
     {
         std::unique_lock<std::recursive_mutex> lock(Mutex);
 
+        sendTextFrame("remview: " + std::to_string(_viewId));
+
         if (_multiView && _loKitDocument)
             _loKitDocument->setView(_viewId);
 
@@ -342,6 +344,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     if (_multiView)
     {
         _viewId = _loKitDocument->getView();
+        sendTextFrame("addview: " + std::to_string(_viewId));
     }
 
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());
