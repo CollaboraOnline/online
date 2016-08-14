@@ -232,17 +232,18 @@ class Connection: public Runnable
 public:
     Connection(std::shared_ptr<ChildSession> session,
                std::shared_ptr<WebSocket> ws) :
+        _sessionId(session->getId()),
         _session(std::move(session)),
         _ws(std::move(ws)),
         _stop(false),
         _joined(false)
     {
-        Log::info("Connection ctor in child for " + _session->getId());
+        Log::info("Connection ctor in child for " + _sessionId);
     }
 
     ~Connection()
     {
-        Log::info("~Connection dtor in child for " + _session->getId());
+        Log::info("~Connection dtor in child for " + _sessionId);
         stop();
         join();
     }
@@ -278,7 +279,7 @@ public:
 
     void run() override
     {
-        Util::setThreadName("kit_ws_" + _session->getId());
+        Util::setThreadName("kit_ws_" + _sessionId);
 
         Log::debug("Thread started.");
 
@@ -324,15 +325,18 @@ public:
             Log::error("Connection::run:: Unexpected exception");
         }
 
+        // Release the session and unload view.
+        _session.reset();
         Log::debug("Thread finished.");
     }
 
 private:
+    const std::string _sessionId;
     Thread _thread;
     std::shared_ptr<ChildSession> _session;
     std::shared_ptr<WebSocket> _ws;
-    std::atomic<bool> _stop;
     std::mutex _threadMutex;
+    std::atomic<bool> _stop;
     std::atomic<bool> _joined;
 };
 
@@ -862,22 +866,22 @@ private:
 
     void onUnload(const std::string& sessionId)
     {
+        Log::info("Unloading [" + sessionId + "].");
         const unsigned intSessionId = Util::decodeId(sessionId);
+
+        std::unique_lock<std::mutex> lock(_mutex);
+
         const auto it = _connections.find(intSessionId);
         if (it == _connections.end() || !it->second || !_loKitDocument)
         {
             // Nothing to do.
+            Log::error("No [" + sessionId + "] session!");
             return;
         }
 
-        auto session = it->second->getSession();
-        auto sessionLock = session->getLock();
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        Log::info("Session " + sessionId + " is unloading. Erasing connection.");
-        _connections.erase(it);
         --_clientViews;
-        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) + " views will remain.");
+        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) +
+                  " view" + (_clientViews != 1 ? "s" : "") + " remain.");
 
         if (_multiView && _loKitDocument)
         {
