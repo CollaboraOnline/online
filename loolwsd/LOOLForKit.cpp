@@ -56,19 +56,21 @@ int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 
 static int pipeFd = -1;
 
-class ChildDispatcher : public IoUtil::PipeReader
+/// Dispatcher class to demultiplex requests from
+/// WSD and handles them.
+class CommandDispatcher : public IoUtil::PipeReader
 {
 public:
-    ChildDispatcher(const int pipe) :
+    CommandDispatcher(const int pipe) :
         PipeReader("wsd_pipe_rd", pipe)
     {
     }
 
-    /// Polls WSD commands and dispatches them to the appropriate child.
+    /// Polls WSD commands and handles them.
     bool pollAndDispatch()
     {
-        std::string line;
-        const auto ready = readLine(line, [](){ return TerminationFlag.load(); });
+        std::string message;
+        const auto ready = readLine(message, [](){ return TerminationFlag.load(); });
         if (ready == 0)
         {
             // Timeout.
@@ -85,15 +87,7 @@ public:
             return false;
         }
 
-        handleInput(line);
-        return true;
-    }
-
-private:
-    void handleInput(const std::string& message)
-    {
         Log::info("ForKit command: [" + message + "].");
-
         StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
         if (tokens[0] == "spawn" && tokens.count() == 2)
@@ -109,6 +103,8 @@ private:
                 Log::warn("Cannot spawn " + tokens[1] + " children as requested.");
             }
         }
+
+        return true;
     }
 };
 
@@ -316,14 +312,14 @@ int main(int argc, char** argv)
         std::_Exit(Application::EXIT_SOFTWARE);
     }
 
-    ChildDispatcher childDispatcher(pipeFd);
+    CommandDispatcher commandDispatcher(pipeFd);
     Log::info("ForKit process is ready.");
 
     while (!TerminationFlag)
     {
         UnitKit::get().invokeForKitTest();
 
-        if (!childDispatcher.pollAndDispatch())
+        if (!commandDispatcher.pollAndDispatch())
         {
             Log::info("Child dispatcher flagged for termination.");
             break;
