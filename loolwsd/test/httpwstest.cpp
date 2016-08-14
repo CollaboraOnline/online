@@ -83,6 +83,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testEditAnnotationWriter);
     CPPUNIT_TEST(testInsertAnnotationCalc);
     CPPUNIT_TEST(testStateUnoCommand);
+    CPPUNIT_TEST(testColumnRowResize);
+    CPPUNIT_TEST(testOptimalResize);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -114,6 +116,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testEditAnnotationWriter();
     void testInsertAnnotationCalc();
     void testStateUnoCommand();
+    void testColumnRowResize();
+    void testOptimalResize();
 
     void loadDoc(const std::string& documentURL);
 
@@ -141,6 +145,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                                              int newWidth, int newHeight)> checkhandler);
 
     void testStateChanged(const std::string& filename, std::vector<std::string>& vecComands);
+    double getColRowSize(const std::string& property, const std::string& message, int index);
+    double getColRowSize(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& item, int index);
 
 public:
     HTTPWSTest()
@@ -1839,6 +1845,228 @@ void HTTPWSTest::testStateUnoCommand()
         testStateChanged(std::string("setclientpart.ods"), calcCommands);
         testStateChanged(std::string("hello.odt"), writerCommands);
         testStateChanged(std::string("setclientpart.odp"), impressCommands);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+double HTTPWSTest::getColRowSize(const std::string& property, const std::string& message, int index)
+{
+    Poco::JSON::Parser parser;
+    const auto result = parser.parse(message);
+    const auto& command = result.extract<Poco::JSON::Object::Ptr>();
+    auto text = command->get("commandName").toString();
+
+    CPPUNIT_ASSERT_EQUAL(std::string(".uno:ViewRowColumnHeaders"), text);
+    CPPUNIT_ASSERT(command->isArray(property));
+
+    auto array = command->getArray(property);
+
+    CPPUNIT_ASSERT(array->isObject(index));
+
+    auto item = array->getObject(index);
+
+    CPPUNIT_ASSERT(item->has("size"));
+
+    return item->getValue<double>("size");
+}
+
+double HTTPWSTest::getColRowSize(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& item, int index)
+{
+    std::vector<char> response;
+    response = getResponseMessage(socket, "commandvalues:", "testColumnRowResize ");
+    CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
+    std::vector<char> json(response.begin() + std::string("commandvalues:").length(), response.end());
+    json.push_back(0);
+    return getColRowSize(item, json.data(), index);
+}
+
+void HTTPWSTest::testColumnRowResize()
+{
+    try
+    {
+        std::vector<char> response;
+        std::string documentPath, documentURL;
+        double oldHeight, oldWidth;
+
+        getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+        auto socket = loadDocAndGetSocket(_uri, documentURL, "testColumnRowResize ");
+
+        const std::string commandValues = "commandvalues command=.uno:ViewRowColumnHeaders";
+        sendTextFrame(socket, commandValues);
+        response = getResponseMessage(socket, "commandvalues:", "testColumnRowResize ");
+        CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
+        {
+            std::vector<char> json(response.begin() + std::string("commandvalues:").length(), response.end());
+            json.push_back(0);
+
+            // get column 2
+            oldHeight = getColRowSize("rows", json.data(), 1);
+            // get row 2
+            oldWidth = getColRowSize("columns", json.data(), 1);
+        }
+
+        // send column width
+        {
+            std::ostringstream oss;
+            Poco::JSON::Object objJSON, objColumn, objWidth;
+            double newWidth;
+
+            // change column 2
+            objColumn.set("type", "unsigned short");
+            objColumn.set("value", 2);
+
+            objWidth.set("type", "unsigned short");
+            objWidth.set("value", oldWidth + 100);
+
+            objJSON.set("Column", objColumn);
+            objJSON.set("Width", objWidth);
+
+            Poco::JSON::Stringifier::stringify(objJSON, oss);
+            sendTextFrame(socket, "uno .uno:ColumnWidth " + oss.str());
+            sendTextFrame(socket, commandValues);
+            response = getResponseMessage(socket, "commandvalues:", "testColumnRowResize ");
+            CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
+            std::vector<char> json(response.begin() + std::string("commandvalues:").length(), response.end());
+            json.push_back(0);
+            newWidth = getColRowSize("columns", json.data(), 1);
+            CPPUNIT_ASSERT(newWidth > oldWidth);
+        }
+
+        // send row height
+        {
+            std::ostringstream oss;
+            Poco::JSON::Object objJSON, objRow, objHeight;
+            double newHeight;
+
+            // change row 2
+            objRow.set("type", "unsigned short");
+            objRow.set("value", 2);
+
+            objHeight.set("type", "unsigned short");
+            objHeight.set("value", oldHeight + 100);
+
+            objJSON.set("Row", objRow);
+            objJSON.set("Height", objHeight);
+
+            Poco::JSON::Stringifier::stringify(objJSON, oss);
+            sendTextFrame(socket, "uno .uno:RowHeight " + oss.str());
+            sendTextFrame(socket, commandValues);
+            response = getResponseMessage(socket, "commandvalues:", "testColumnRowResize ");
+            CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
+            std::vector<char> json(response.begin() + std::string("commandvalues:").length(), response.end());
+            json.push_back(0);
+            newHeight = getColRowSize("rows", json.data(), 1);
+            CPPUNIT_ASSERT(newHeight > oldHeight);
+        }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testOptimalResize()
+{
+    try
+    {
+        //std::vector<char> response;
+        std::string documentPath, documentURL;
+        double newWidth, newHeight;
+        Poco::JSON::Object objIndex, objSize, objModifier;
+
+        // row/column index 0
+        objIndex.set("type", "unsigned short");
+        objIndex.set("value", 1);
+
+        // size in twips
+        objSize.set("type", "unsigned short");
+        objSize.set("value", 3840);
+
+        // keyboard modifier
+        objModifier.set("type", "unsigned short");
+        objModifier.set("value", 0);
+
+        getDocumentPathAndURL("empty.ods", documentPath, documentURL);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        auto socket = loadDocAndGetSocket(_uri, documentURL, "testOptimalResize ");
+
+        const std::string commandValues = "commandvalues command=.uno:ViewRowColumnHeaders";
+        // send new column width
+        {
+            std::ostringstream oss;
+            Poco::JSON::Object objJSON;
+
+            objJSON.set("Column", objIndex);
+            objJSON.set("Width", objSize);
+
+            Poco::JSON::Stringifier::stringify(objJSON, oss);
+            sendTextFrame(socket, "uno .uno:ColumnWidth " + oss.str());
+            sendTextFrame(socket, commandValues);
+            newWidth = getColRowSize(socket, "columns", 0);
+        }
+        // send new row height
+        {
+            std::ostringstream oss;
+            Poco::JSON::Object objJSON;
+
+            objJSON.set("Row", objIndex);
+            objJSON.set("Height", objSize);
+
+            Poco::JSON::Stringifier::stringify(objJSON, oss);
+            sendTextFrame(socket, "uno .uno:RowHeight " + oss.str());
+            sendTextFrame(socket, commandValues);
+            newHeight = getColRowSize(socket, "rows", 0);
+        }
+
+        objIndex.set("value", 0);
+
+        // send optimal column width
+        {
+            std::ostringstream oss;
+            Poco::JSON::Object objJSON;
+            double optimalWidth;
+
+            objJSON.set("Col", objIndex);
+            objJSON.set("Modifier", objModifier);
+
+            Poco::JSON::Stringifier::stringify(objJSON, oss);
+            sendTextFrame(socket, "uno .uno:SelectColumn " + oss.str());
+            sendTextFrame(socket, "uno .uno:SetOptimalColumnWidthDirect");
+            sendTextFrame(socket, commandValues);
+            optimalWidth = getColRowSize(socket, "columns", 0);
+            CPPUNIT_ASSERT(optimalWidth < newWidth);
+        }
+
+        // send optimal row height
+        {
+            std::ostringstream oss;
+            Poco::JSON::Object objSelect, objOptHeight, objExtra;
+            double optimalHeight;
+
+            objSelect.set("Row", objIndex);
+            objSelect.set("Modifier", objModifier);
+
+            objExtra.set("type", "unsigned short");
+            objExtra.set("value", 0);
+
+            objOptHeight.set("aExtraHeight", objExtra);
+
+            Poco::JSON::Stringifier::stringify(objSelect, oss);
+            sendTextFrame(socket, "uno .uno:SelectRow " + oss.str());
+            oss.str(""); oss.clear();
+
+            Poco::JSON::Stringifier::stringify(objOptHeight, oss);
+            sendTextFrame(socket, "uno .uno:SetOptimalRowHeight " + oss.str());
+
+            sendTextFrame(socket, commandValues);
+            optimalHeight = getColRowSize(socket, "rows", 0);
+            CPPUNIT_ASSERT(optimalHeight < newHeight);
+        }
     }
     catch (const Poco::Exception& exc)
     {
