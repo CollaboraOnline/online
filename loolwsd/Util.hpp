@@ -202,28 +202,32 @@ namespace Util
         std::set<std::string> _denied;
     };
 
+    /// A logical constant that is allowed to initialize
+    /// exactly once and checks usage before initialization.
     template<typename T>
     class RuntimeConstant
     {
         T _value;
-        bool _initialized;
+        std::atomic<bool> _initialized;
 
     public:
         RuntimeConstant()
             : _value()
             , _initialized(false)
-        {}
+        {
+        }
+
+        /// Use a compile-time const instead.
+        RuntimeConstant(const T& value) = delete;
 
         const T& get()
         {
-            if(_initialized)
+            if (_initialized)
             {
                 return _value;
             }
-            else
-            {
-                throw std::runtime_error("RuntimeConstant instance read before being initialized.");
-            }
+
+            throw std::runtime_error("RuntimeConstant instance read before being initialized.");
         }
 
         void set(const T& value)
