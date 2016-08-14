@@ -19,9 +19,24 @@
 #include "LOOLSession.hpp"
 #include "LibreOfficeKit.hpp"
 
-class CallbackWorker;
-typedef std::function<std::shared_ptr<lok::Document>(const std::string&, const std::string&, const std::string&, const std::string&, bool)> OnLoadCallback;
-typedef std::function<void(const std::string&)> OnUnloadCallback;
+/// An abstract interface that defines the
+/// DocumentManager interface and functionality.
+class IDocumentManager
+{
+public:
+    /// Reqest loading a document, or a new view, if one exists.
+    virtual
+    std::shared_ptr<lok::Document> onLoad(const std::string& sessionId,
+                                          const std::string& jailedFilePath,
+                                          const std::string& docPassword,
+                                          const std::string& renderOpts,
+                                          const bool haveDocPassword) = 0;
+
+    /// Unload a client session, which unloads the document
+    /// if it is the last and only.
+    virtual
+    void onUnload(const std::string& sessionId) = 0;
+};
 
 /// Represents a client session, with the socket end-point,
 /// and handles all incoming UI traffic.
@@ -38,8 +53,7 @@ public:
     ChildSession(const std::string& id,
                  std::shared_ptr<Poco::Net::WebSocket> ws,
                  const std::string& jailId,
-                 OnLoadCallback onLoad,
-                 OnUnloadCallback onUnload);
+                 IDocumentManager& docManager);
     virtual ~ChildSession();
 
     bool getStatus(const char *buffer, int length);
@@ -87,8 +101,7 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     std::map<int, std::string> _lastDocStates;
-    OnLoadCallback _onLoad;
-    OnUnloadCallback _onUnload;
+    IDocumentManager& _docManager;
 
     /// Synchronize _loKitDocument acess.
     /// This should be owned by Document.

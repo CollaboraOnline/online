@@ -35,14 +35,12 @@ std::recursive_mutex ChildSession::Mutex;
 ChildSession::ChildSession(const std::string& id,
                            std::shared_ptr<WebSocket> ws,
                            const std::string& jailId,
-                           OnLoadCallback onLoad,
-                           OnUnloadCallback onUnload) :
+                           IDocumentManager& docManager) :
     LOOLSession(id, Kind::ToMaster, ws),
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
     _viewId(0),
-    _onLoad(std::move(onLoad)),
-    _onUnload(std::move(onUnload))
+    _docManager(docManager)
 {
     Log::info("ChildSession ctor [" + getName() + "].");
 }
@@ -65,7 +63,7 @@ void ChildSession::disconnect()
         if (_multiView && _loKitDocument)
             _loKitDocument->setView(_viewId);
 
-        _onUnload(getId());
+        _docManager.onUnload(getId());
 
         LOOLSession::disconnect();
     }
@@ -334,7 +332,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    _loKitDocument = _onLoad(getId(), _jailedFilePath, _docPassword, renderOpts, _haveDocPassword);
+    _loKitDocument = _docManager.onLoad(getId(), _jailedFilePath, _docPassword, renderOpts, _haveDocPassword);
     if (!_loKitDocument)
     {
         Log::error("Failed to get LoKitDocument instance.");

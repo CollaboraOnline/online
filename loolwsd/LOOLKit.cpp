@@ -367,7 +367,7 @@ public:
 /// per process. But for security reasons don't.
 /// However, we could have a loolkit instance
 /// per user or group of users (a trusted circle).
-class Document : public Runnable
+class Document : public Runnable, public IDocumentManager
 {
 public:
     /// We have two types of password protected documents
@@ -490,10 +490,7 @@ public:
             auto ws = std::make_shared<WebSocket>(cs, request, response);
             ws->setReceiveTimeout(0);
 
-            auto session = std::make_shared<ChildSession>(sessionId, ws, _jailId,
-                           [this](const std::string& id, const std::string& uri, const std::string& docPassword,
-                                  const std::string& renderOpts, bool haveDocPassword) { return onLoad(id, uri, docPassword, renderOpts, haveDocPassword); },
-                           [this](const std::string& id) { onUnload(id); });
+            auto session = std::make_shared<ChildSession>(sessionId, ws, _jailId, *this);
 
             auto thread = std::make_shared<Connection>(session, ws);
             const auto aInserted = _connections.emplace(intSessionId, thread);
@@ -826,7 +823,7 @@ private:
                                           const std::string& uri,
                                           const std::string& docPassword,
                                           const std::string& renderOpts,
-                                          bool haveDocPassword)
+                                          const bool haveDocPassword) override
     {
         Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
 
@@ -864,7 +861,7 @@ private:
         return _loKitDocument;
     }
 
-    void onUnload(const std::string& sessionId)
+    void onUnload(const std::string& sessionId) override
     {
         Log::info("Unloading [" + sessionId + "].");
         const unsigned intSessionId = Util::decodeId(sessionId);
@@ -902,7 +899,7 @@ private:
                                         const std::string& uri,
                                         const std::string& docPassword,
                                         const std::string& renderOpts,
-                                        bool haveDocPassword)
+                                        const bool haveDocPassword)
     {
         const unsigned intSessionId = Util::decodeId(sessionId);
         const auto it = _connections.find(intSessionId);
