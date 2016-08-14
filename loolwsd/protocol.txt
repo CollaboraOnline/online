@@ -340,6 +340,11 @@ remview: <viewId>
 
     The view with the given viewId has been destroyed.
 
+remallviews:
+
+    Removes all views to send only current ones.
+    The UI should still maintain its own view and cursor.
+
 child -> parent
 ===============
 

@@ -363,6 +363,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('remview:')) {
 			this._onRemViewMsg(textMsg);
 		}
+		else if (textMsg.startsWith('remallviews:')) {
+			this._onRemAllViewMsg(textMsg);
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -599,6 +602,12 @@ L.TileLayer = L.GridLayer.extend({
 			this._viewCursors[viewId].visible = false;
 			this._onUpdateViewCursor(viewId);
 			delete this._viewCursors[viewId];
+		}
+	},
+
+	_onRemAllViewMsg: function(textMsg) {
+		for (var viewId in this._viewCursors) {
+			this._onRemViewMsg('remview: ' + viewId);
 		}
 	},
 
