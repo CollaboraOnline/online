@@ -358,7 +358,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
         _loKitDocument->setPart(part);
     }
 
-    // Respond by the document status, which has no arguments.
+    // Respond by the document status
     Log::debug("Sending status after loading view " + std::to_string(_viewId) + ".");
     const auto status = LOKitHelper::documentStatus(_loKitDocument->get());
     if (status.empty() || !sendTextFrame("status: " + status))
