@@ -246,6 +246,7 @@ button.leaflet-control-search-next
 .w2ui-icon.save{ background: url('/loleaflet/dist/images/lc_save.png') no-repeat center !important; }
 .w2ui-icon.saveas{ background: url('/loleaflet/dist/images/lc_saveas.png') no-repeat center !important; }
 .w2ui-icon.strikeout{ background: url('/loleaflet/dist/images/lc_strikeout.png') no-repeat center !important; }
+.w2ui-icon.insertfootnote{ background: url('/loleaflet/dist/images/lc_insertfootnote.png') no-repeat center !important; }
 .w2ui-icon.underline{ background: url('/loleaflet/dist/images/lc_underline.png') no-repeat center !important; }
 .w2ui-icon.undo{ background: url('/loleaflet/dist/images/lc_undo.png') no-repeat center !important; }
 .w2ui-icon.zoomin{ background: url('/loleaflet/dist/images/plus.png') no-repeat center !important; }

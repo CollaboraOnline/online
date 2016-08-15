@@ -168,6 +168,11 @@ function onClick(id, item, subItem) {
 	else if (id === 'lastrecord') {
 		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').prop('scrollWidth'));
 	}
+	else if (id.startsWith('menu:wrap:wrap-'))
+	{
+		var wrapType = id.substring('menu:wrap:wrap-'.length);
+		map.toggleCommandState(wrapType);
+	}
 	else if (id === 'insertgraphic') {
 		L.DomUtil.get('insertgraphic').click();
 	}
@@ -326,6 +331,15 @@ $(function () {
 		name: 'toolbar-up',
 		items: [
 			{type: 'html', id: 'left'},
+			{type: 'menu', id: 'writer:menu:wrap', caption: _('Textwrap'), items: [
+				{ text: _('No wrap'), id: 'wrap-WrapOff' },
+				{ text: _('Page wrap'), id: 'wrap-WrapOn' },
+				{ text: _('Wrap anchor only'), id: 'wrap-WrapAnchorOnly' },
+				{ text: _('Ideal wrap'), id: 'wrap-WrapIdeal' },
+				{ text: _('Left wrap'), id: 'wrap-WrapLeft' },
+				{ text: _('Right wrap'), id: 'wrap-WrapRight' },
+				{ text: _('Wrap through'), id: 'wrap-WrapThrough' }
+			]},
 			{type: 'button',  id: 'save', img: 'save', hint: _('Save'), uno: 'Save'},
 			{type: 'break'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _('Undo'), uno: 'Undo'},
@@ -340,6 +354,8 @@ $(function () {
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _('Underline'), uno: 'Underline'},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _('Strikeout'), uno: 'Strikeout'},
 			{type: 'break'},
+			{type: 'button',  id: 'insertfootnote', img: 'insertfootnote', hint: _('Insert Footnote'), uno: 'InsertFootnote' },
+			{type: 'break' },
 			{type: 'html',  id: 'fontcolor-html', html: '<input id="fontColorPicker" style="display:none;">'},
 			{type: 'button',  id: 'fontcolor', img: 'color', hint: _('Font color')},
 			{type: 'html',  id: 'backcolor-html', html: '<input id="backColorPicker" style="display:none;">'},
