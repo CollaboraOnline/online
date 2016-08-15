@@ -141,7 +141,7 @@ void HTTPCrashTest::testBarren()
                     if (msg.find(prefix) == 0)
                     {
                         const auto status = msg.substr(prefix.length());
-                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
+                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408 viewid=0"), status);
                         return false;
                     }
                     else if (msg.find("Service") == 0)

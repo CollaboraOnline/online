@@ -1176,7 +1176,10 @@ void HTTPWSTest::testInactiveClient()
                                             token == "statechanged:" ||
                                             token == "graphicselection:" ||
                                             token == "cursorvisible:" ||
-                                            token == "editlock:");
+                                            token == "editlock:" ||
+                                            token == "addview:" ||
+                                            token == "remview:" ||
+                                            token == "remallviews:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");
