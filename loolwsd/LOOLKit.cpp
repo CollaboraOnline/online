@@ -1013,11 +1013,7 @@ private:
             if (_multiView)
             {
                 Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
-                viewId = _loKitDocument->createView();
-
-                Log::info() << "Document [" << _url << "] view ["
-                            << viewId << "] loaded, leaving "
-                            << (_clientViews + 1) << " views." << Log::end;
+                _loKitDocument->createView();
             }
         }
 
@@ -1027,10 +1023,14 @@ private:
 
         if (_multiView)
         {
+            viewId = _loKitDocument->getView();
             _viewIdToCallbackDescr.emplace(viewId,
-                std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
-
+                                           std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
             _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
+
+            Log::info() << "Document [" << _url << "] view ["
+                        << viewId << "] loaded, leaving "
+                        << (_clientViews + 1) << " views." << Log::end;
         }
         else
         {
