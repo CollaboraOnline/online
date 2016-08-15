@@ -65,8 +65,6 @@ public:
     unsigned getViewId() const { return _viewId; }
     int getPart() const { return _loKitDocument->getPart(); }
 
-    void setDocState(const int type, const std::string& payload) { _lastDocStates[type] = payload; }
-
     void loKitCallback(const int nType, const std::string& rPayload);
 
     static std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }

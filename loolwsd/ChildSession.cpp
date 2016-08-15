@@ -74,9 +74,16 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
+    if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
+    {
+        // Keep track of timestamps of incoming client messages that indicate user activity.
+        updateLastActivityTime();
+    }
+
     if (tokens.count() > 0 && tokens[0] == "useractive" && _loKitDocument != nullptr)
     {
         Log::debug("Handling message after inactivity of " + std::to_string(getInactivityMS()) + "ms.");
+        setIsActive(true);
 
         // Client is getting active again.
         // Send invalidation and other sync-up messages.
@@ -99,44 +106,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         //TODO: Is the order of these important?
         for (const auto& pair : _lastDocStates)
         {
-            switch (pair.first)
-            {
-                case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
-                    sendTextFrame("invalidatecursor: " + pair.second);
-                    break;
-                case LOK_CALLBACK_TEXT_SELECTION:
-                    sendTextFrame("textselection: " + pair.second);
-                    break;
-                case LOK_CALLBACK_TEXT_SELECTION_START:
-                    sendTextFrame("textselectionstart: " + pair.second);
-                    break;
-                case LOK_CALLBACK_TEXT_SELECTION_END:
-                    sendTextFrame("textselectionend: " + pair.second);
-                    break;
-                case LOK_CALLBACK_CURSOR_VISIBLE:
-                    sendTextFrame("cursorvisible: " + pair.second);
-                    break;
-                case LOK_CALLBACK_GRAPHIC_SELECTION:
-                    sendTextFrame("graphicselection: " + pair.second);
-                    break;
-                case LOK_CALLBACK_CELL_CURSOR:
-                    sendTextFrame("cellcursor: " + pair.second);
-                    break;
-                case LOK_CALLBACK_CELL_FORMULA:
-                    sendTextFrame("cellformula: " + pair.second);
-                    break;
-                case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-                    getStatus("", 0);
-                    getPartPageRectangles("", 0);
-                    break;
-            }
+            loKitCallback(pair.first, pair.second);
         }
-    }
 
-    if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
-    {
-        // Keep track of timestamps of incoming client messages that indicate user activity.
-        updateLastActivityTime();
+        Log::debug("Finished replaying messages.");
     }
 
     if (tokens[0] == "dummymsg")
@@ -920,9 +893,15 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         nType == LOK_CALLBACK_TEXT_SELECTION ||
         nType == LOK_CALLBACK_TEXT_SELECTION_START ||
         nType == LOK_CALLBACK_TEXT_SELECTION_END ||
-        nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
+        nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
+        nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+        nType == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
+        nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
+        nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
+        nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
+        nType == LOK_CALLBACK_VIEW_LOCK)
     {
-        setDocState(nType, rPayload);
+        _lastDocStates[nType] = rPayload;
     }
 
     const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
