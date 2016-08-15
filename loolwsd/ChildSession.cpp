@@ -85,6 +85,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         if (_multiView)
             _loKitDocument->setView(_viewId);
 
+        // Refresh the viewIds.
+        sendTextFrame("remallviews:");
+        for (const auto viewId : _docManager.getViewIds())
+        {
+            sendTextFrame("addview: " + std::to_string(viewId));
+        }
+
         const int curPart = _loKitDocument->getPart();
         sendTextFrame("curpart: part=" + std::to_string(curPart));
         sendTextFrame("setpart: part=" + std::to_string(curPart));

@@ -36,6 +36,10 @@ public:
     /// if it is the last and only.
     virtual
     void onUnload(const std::string& sessionId) = 0;
+
+    /// Get a list of all current view IDs.
+    virtual
+    std::vector<unsigned> getViewIds() const = 0;
 };
 
 /// Represents a client session, with the socket end-point,

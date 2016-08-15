@@ -893,6 +893,24 @@ private:
         }
     }
 
+    std::vector<unsigned> getViewIds() const override
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        std::vector<unsigned> v;
+        v.reserve(_connections.size());
+        for (const auto& connection : _connections)
+        {
+            const auto& session = connection.second->getSession();
+            if (session)
+            {
+                v.push_back(session->getViewId());
+            }
+        }
+
+        return v;
+    }
+
 private:
 
     std::shared_ptr<lok::Document> load(const std::string& sessionId,
