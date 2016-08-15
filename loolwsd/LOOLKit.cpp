@@ -1040,7 +1040,7 @@ private:
         return _loKitDocument;
     }
 
-    void run()
+    void run() override
     {
         Util::setThreadName("kit_callback");
 
