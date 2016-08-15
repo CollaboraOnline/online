@@ -123,15 +123,14 @@ namespace Log
         strncpy(LogPrefix, oss.str().c_str(), sizeof(LogPrefix));
 
         // Configure the logger.
-        AutoPtr<Channel> channelConsole = (isatty(fileno(stderr)) || withColor
-                            ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
-                            : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
+        AutoPtr<Channel> channel = (isatty(fileno(stderr)) || withColor
+                                    ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
+                                    : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
 
-        AutoPtr<Channel> channel = channelConsole;
         if (logToFile)
         {
-            AutoPtr<SplitterChannel> splitterChannel(new SplitterChannel());
-            splitterChannel->addChannel(channelConsole);
+            auto splitterChannel(new SplitterChannel());
+            splitterChannel->addChannel(channel);
 
             AutoPtr<FileChannel> rotatedFileChannel(new FileChannel("loolwsd.log"));
             for (const auto& pair : config)
