@@ -714,11 +714,11 @@ L.TileLayer = L.GridLayer.extend({
 				}
 				var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
 				var selection = new L.Polygon(polygons, {
-						pointerEvents: 'none',
-						fillColor: _fillColor,
-						fillOpacity: 0.25,
-						weight: 2,
-						opacity: 0.25});
+					pointerEvents: 'none',
+					fillColor: _fillColor,
+					fillOpacity: 0.25,
+					weight: 2,
+					opacity: 0.25});
 				this._searchResultsLayer.addLayer(selection);
 			}
 		}
