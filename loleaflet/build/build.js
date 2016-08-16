@@ -97,12 +97,15 @@ function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2) + ' KB';
 }
 
-function bundle(files, destFilename, debug) {
+function bundle(files, destFilename, debug, minify) {
 	var bundler = browserify(files, {debug: debug});
-	bundler.transform(browserifyCss)
-		   .transform({
-			   global: true
-		   }, 'uglifyify');
+	bundler = bundler.transform(browserifyCss);
+	if (minify) {
+		console.log('uglifying');
+		bundler.transform({
+			global: true
+		}, 'uglifyify');
+	}
 	var bundleFs = fs.createWriteStream('dist/' + destFilename);
 	var res = bundler.bundle();
 	if (debug) {
@@ -115,12 +118,12 @@ function bundle(files, destFilename, debug) {
 	});
 };
 
-exports.bundle = function(debug) {
-	bundle(['main.js'], 'bundle.js', debug);
+exports.bundle = function(debug, minify) {
+	bundle(['main.js'], 'bundle.js', debug, minify);
 };
 
-exports.bundleAdmin = function(debug) {
-	bundle(['main-admin.js'], 'admin-bundle.js', debug);
+exports.bundleAdmin = function(debug, minify) {
+	bundle(['main-admin.js'], 'admin-bundle.js', debug, minify);
 };
 
 exports.build = function (callback, version, compsBase32, buildName) {

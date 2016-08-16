@@ -9,6 +9,7 @@ VERSION=1.9.0
 DRAW_VERSION=0.2.4
 
 DEBUG=false
+MINIFY=false
 
 .PHONY: build
 build:
@@ -17,21 +18,13 @@ build:
 	jake build
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
-	if $(DEBUG); then \
-		jake bundle[,true]; \
-		jake bundle[admin,true]; \
-	else \
-		jake bundle; \
-		jake bundle[admin]; \
-	fi;
+	jake bundle[,$(DEBUG),$(MINIFY)]
+	jake bundle[admin,$(DEBUG),$(MINIFY)]
 
 all: build
 
-.PHONY: debug
-debug: DEBUG=true
-debug: build
-
 .PHONY: dist
+dist: MINIFY=true
 dist: all
 	rm -rf loleaflet-$(VERSION)
 	mkdir loleaflet-$(VERSION)
