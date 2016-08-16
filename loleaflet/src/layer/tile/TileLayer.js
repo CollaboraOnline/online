@@ -1188,7 +1188,11 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._cellCursorMarker) {
 				this._map.removeLayer(this._cellCursorMarker);
 			}
-			this._cellCursorMarker = L.rectangle(this._cellCursor, {fill: false, color: '#000000', weight: 2});
+			this._cellCursorMarker = L.rectangle(this._cellCursor, {
+				pointerEvents: 'none',
+				fill: false,
+				color: '#000000',
+				weight: 2});
 			if (!this._cellCursorMarker) {
 				this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
 				return;
