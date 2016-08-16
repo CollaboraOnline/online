@@ -1344,7 +1344,8 @@ void LOOLWSD::initialize(Application& self)
         { "logging.file.property[2][@name]", "compress" },
         { "logging.file.property[2]", "true" },
         { "logging.file.property[3][@name]", "flush" },
-        { "logging.file.property[3]", "false" }
+        { "logging.file.property[3]", "false" },
+        { "trace[@enable]", "false" }
     };
 
     // Set default values, in case they are missing from the config file.
