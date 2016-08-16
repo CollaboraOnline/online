@@ -6542,6 +6542,15 @@ Popups will also be automatically opened when the layer is clicked on and closed
 
 		<td>Clips the polygon geometry defined by the given points by rectangular bounds. Used by Leaflet to only show polygon points that are on the screen or near, increasing performance. Note that polygon points needs different algorithm for clipping than polyline, so there's a separate method for it.</td>
 	</tr>
+	<tr>
+		<td><code><b>rectanglesToPolygons</b>(
+			<nobr>&lt;<a href="#rectangle">Rectangles</a>[]&gt; <i>rectangles</i></nobr>,
+			<nobr>&lt;<a href="#tilelayer">TileLayer</a>&gt; <i>tilelayer</i> )</nobr>
+		</code></td>
+
+		<td><code><a href="#latlng">LatLng</a>[]</code></td>
+		<td>Accepts a array of rectangles and convert that into a polygon. Returned value consists of an array of <a href="#latlng">LatLng</a> pairs.</td>
+	</tr>
 </table>
 
 
