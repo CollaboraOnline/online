@@ -48,17 +48,24 @@ Just do:
 
     make
 
-Above step would create a minified bundle.js and admin-bundle.js in dist/ for main loleaflet and admin console
+Above step would create a non-minified bundle.js and admin-bundle.js without source-maps in dist/ for main loleaflet and admin console
 respectively.
 
 To build with debug-info, i.e with sourcemaps:
 
-    make debug
+    make DEBUG=true
 
 Above will produce source-map files, bundle.js.map and admin-bundle.js.map, for bundle.js and admin-bundle.js respectively.
 It will also link existing bundle.js and admin-bundle.js to their map files by adding a sourceMappingURL to them. While debugging,
 these .map files will be fetched from the server if present in dist/, otherwise there is no way to debug while browsing without these
 source-map files.
+
+To minify our bundle.js and admin-bundle.js passing a MINIFY=true flag to 'make' will minify it. This can be helpful in production
+environments.
+
+    make MINIFY=true
+
+'make dist' forces minifying.
 
 Running
 -------
