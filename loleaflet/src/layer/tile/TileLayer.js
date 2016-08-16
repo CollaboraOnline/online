@@ -713,15 +713,13 @@ L.TileLayer = L.GridLayer.extend({
 					rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
 				}
 				var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
-				for (var j = 0; j < polygons.length; j++) {
-					var selection = new L.Polygon(polygons[j], {
+				var selection = new L.Polygon(polygons, {
 						pointerEvents: 'none',
 						fillColor: _fillColor,
 						fillOpacity: 0.25,
 						weight: 2,
 						opacity: 0.25});
-					this._searchResultsLayer.addLayer(selection);
-				}
+				this._searchResultsLayer.addLayer(selection);
 			}
 		}
 	},
@@ -777,15 +775,13 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
-			for (i = 0; i < polygons.length; i++) {
-				var selection = new L.Polygon(polygons[i], {
-					pointerEvents: 'none',
-					fillColor: '#43ACE8',
-					fillOpacity: 0.25,
-					weight: 2,
-					opacity: 0.25});
-				this._selections.addLayer(selection);
-			}
+			var selection = new L.Polygon(polygons, {
+				pointerEvents: 'none',
+				fillColor: '#43ACE8',
+				fillOpacity: 0.25,
+				weight: 2,
+				opacity: 0.25});
+			this._selections.addLayer(selection);
 			if (this._selectionContentRequest) {
 				clearTimeout(this._selectionContentRequest);
 			}
