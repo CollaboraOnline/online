@@ -820,16 +820,14 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
-			for (i = 0; i < polygons.length; i++) {
-				var selection = new L.Polygon(polygons[i], {
-					pointerEvents: 'none',
-					fillColor: L.LOUtil.getViewIdHexColor(viewId),
-					fillOpacity: 0.25,
-					weight: 2,
-					opacity: 0.25});
-				this._viewSelections[viewId] = selection;
-				this._viewSelectionsGroup.addLayer(selection);
-			}
+			var selection = new L.Polygon(polygons, {
+				pointerEvents: 'none',
+				fillColor: L.LOUtil.getViewIdHexColor(viewId),
+				fillOpacity: 0.25,
+				weight: 2,
+				opacity: 0.25});
+			this._viewSelections[viewId] = selection;
+			this._viewSelectionsGroup.addLayer(selection);
 		}
 	},
 
