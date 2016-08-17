@@ -9,6 +9,8 @@
 #ifndef INCLUDED_UNITHTTP_HPP
 #define INCLUDED_UNITHTTP_HPP
 
+#include <sstream>
+
 #include <Poco/Version.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPServerParams.h>
@@ -25,11 +27,12 @@ using Poco::Net::HTTPServerParams;
 class UnitHTTPServerResponse : public Poco::Net::HTTPServerResponse
 {
     bool _sent;
+    std::stringstream _dummyStream;
 public:
     UnitHTTPServerResponse() : _sent (false) {}
     virtual void sendContinue() override {}
     virtual std::ostream& send() override
-		{ _sent = true; return *(static_cast<std::ostream *>(nullptr)); }
+		{ _sent = true; return _dummyStream; }
     virtual void sendFile(const std::string& /* path */,
                           const std::string& /* mediaType */) override {}
     virtual void sendBuffer(const void* /* pBuffer */,
@@ -40,6 +43,13 @@ public:
     virtual bool sent() const override { return _sent; }
 };
 
+/// Unit test stub for server params with a public dtor
+class UnitHTTPServerParams : public Poco::Net::HTTPServerParams
+{
+public:
+    ~UnitHTTPServerParams() { }
+};
+
 /// Unit test stub for a server request
 class UnitHTTPServerRequest : public Poco::Net::HTTPServerRequest
 {
@@ -47,6 +57,8 @@ protected:
     UnitHTTPServerResponse &_response;
     Poco::Net::SocketAddress _clientAddress;
     Poco::Net::SocketAddress _serverAddress;
+    std::stringstream _dummyStream;
+    UnitHTTPServerParams _dummyParams;
 public:
     UnitHTTPServerRequest(UnitHTTPServerResponse &inResponse,
                           const std::string &uri)
@@ -55,7 +67,7 @@ public:
           _serverAddress(MasterPortNumber)
         { setURI(uri); }
     virtual std::istream& stream() override
-        { return *(static_cast<std::istream *>(nullptr)); }
+        { return _dummyStream; }
 #if POCO_VERSION < 0x02000000
     virtual bool expectContinue() const override
         { return false; }
@@ -66,7 +78,7 @@ public:
 	virtual const SocketAddress& serverAddress() const override
         { return _serverAddress; }
 	virtual const HTTPServerParams& serverParams() const override
-        { return *(static_cast<HTTPServerParams *>(nullptr)); }
+        { return _dummyParams; }
     virtual Poco::Net::HTTPServerResponse& response() const override
         { return _response; }
 };
