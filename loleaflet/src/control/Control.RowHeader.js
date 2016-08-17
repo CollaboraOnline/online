@@ -208,6 +208,33 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._map.removeLayer(this._horzLine);
 	},
 
+	onDragClick: function (item, clicks, e) {
+		this._map.removeLayer(this._horzLine);
+
+		if (clicks === 2) {
+			var command = {
+				Row: {
+					type: 'long',
+					value: item.row - 1
+				},
+				Modifier: {
+					type: 'unsigned short',
+					value: 0
+				}
+			};
+
+			var extra = {
+				aExtraHeight: {
+					type: 'unsigned short',
+					value: this._map._docLayer.STD_EXTRA_WIDTH
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:SelectRow', command);
+			this._map.sendUnoCommand('.uno:SetOptimalRowHeight', extra);
+		}
+	},
+
 	_onUpdatePermission: function (e) {
 		if (this._map.getDocType() !== 'spreadsheet') {
 			return;

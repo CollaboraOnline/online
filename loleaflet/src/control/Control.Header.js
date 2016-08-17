@@ -7,6 +7,10 @@ L.Control.Header = L.Control.extend({
 		cursor: 'col-resize'
 	},
 
+	initialize: function () {
+		this._clicks = 0;
+	},
+
 	mouseInit: function (element) {
 		L.DomEvent.on(element, 'mousedown', this._onMouseDown, this);
 	},
@@ -61,12 +65,20 @@ L.Control.Header = L.Control.extend({
 		L.DomUtil.enableImageDrag();
 		L.DomUtil.enableTextSelection();
 
-		this.onDragEnd(this._item, this._start, this._offset, e);
+		if (this._dragging) {
+			this.onDragEnd(this._item, this._start, this._offset, e);
+			this._clicks = 0;
+		} else {
+			this.onDragClick(this._item, ++this._clicks, e);
+			setTimeout(L.bind(this.initialize, this), 200);
+		}
+
 		this._target = this._cursor = this._item = this._start = this._offset = null;
 		this._dragging = false;
 	},
 
 	onDragStart: function () {},
 	onDragMove: function () {},
-	onDragEnd: function () {}
+	onDragEnd: function () {},
+	onDragClick: function () {}
 });

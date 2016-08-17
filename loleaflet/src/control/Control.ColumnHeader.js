@@ -226,6 +226,26 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.removeLayer(this._vertLine);
 	},
 
+	onDragClick: function (item, clicks, e) {
+		this._map.removeLayer(this._vertLine);
+
+		if (clicks === 2) {
+			var command = {
+				Col: {
+					type: 'unsigned short',
+					value: item.column - 1
+				},
+				Modifier: {
+					type: 'unsigned short',
+					value: 0
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:SelectColumn ', command);
+			this._map.sendUnoCommand('.uno:SetOptimalColumnWidthDirect');
+		}
+	},
+
 	_onUpdatePermission: function (e) {
 		if (this._map.getDocType() !== 'spreadsheet') {
 			return;
