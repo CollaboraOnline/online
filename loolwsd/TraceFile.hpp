@@ -14,6 +14,7 @@
 #include <vector>
 
 #include <Poco/DeflatingStream.h>
+#include <Poco/InflatingStream.h>
 
 #include "Util.hpp"
 
@@ -135,13 +136,20 @@ class TraceFileReader
 {
 public:
     TraceFileReader(const std::string& path) :
+        _compressed(path.size() > 2 && path.substr(path.size() - 2) == "gz"),
         _epochStart(0),
-        _stream(path),
+        _stream(path, _compressed ? std::ios::binary : std::ios::in),
+        _inflater(_stream, Poco::InflatingStreamBuf::STREAM_GZIP),
         _index(0),
         _indexIn(-1),
         _indexOut(-1)
     {
         readFile();
+    }
+
+    ~TraceFileReader()
+    {
+        _stream.close();
     }
 
     Poco::Int64 getEpoch() const { return _epochStart; }
@@ -188,8 +196,22 @@ private:
         _records.clear();
 
         std::string line;
-        while (std::getline(_stream, line) && !line.empty())
+        for (;;)
         {
+            if (_compressed)
+            {
+                std::getline(_inflater, line);
+            }
+            else
+            {
+                std::getline(_stream, line);
+            }
+
+            if (line.empty())
+            {
+                break;
+            }
+
             const auto v = split(line, line[0]);
             if (v.size() == 4)
             {
@@ -253,8 +275,10 @@ private:
     }
 
 private:
+    const bool _compressed;
     Poco::Int64 _epochStart;
     std::ifstream _stream;
+    Poco::InflatingInputStream _inflater;
     std::vector<TraceFileRecord> _records;
     unsigned _index;
     unsigned _indexIn;
