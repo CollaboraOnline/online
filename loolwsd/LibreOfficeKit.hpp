@@ -432,6 +432,7 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Document: setView: " << nId << Log::end;
+        assert(nId >= 0 && "ViewID must be non-negative.");
         _pDoc->pClass->setView(_pDoc, nId);
     }
 

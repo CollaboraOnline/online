@@ -600,6 +600,7 @@ public:
 
     void renderTile(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
     {
+        assert(ws && "Expected a non-null websocket.");
         auto tile = TileDesc::parse(tokens);
 
         // Send back the request with all optional parameters given in the request.
@@ -655,6 +656,7 @@ public:
 
     void renderCombinedTiles(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
     {
+        assert(ws && "Expected a non-null websocket.");
         auto tileCombined = TileCombined::parse(tokens);
         auto& tiles = tileCombined.getTiles();
 

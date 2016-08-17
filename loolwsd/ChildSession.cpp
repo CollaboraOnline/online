@@ -39,7 +39,7 @@ ChildSession::ChildSession(const std::string& id,
     LOOLSession(id, Kind::ToMaster, ws),
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
-    _viewId(0),
+    _viewId(-1),
     _docManager(docManager)
 {
     Log::info("ChildSession ctor [" + getName() + "].");
@@ -60,10 +60,17 @@ void ChildSession::disconnect()
 
         sendTextFrame("remview: " + std::to_string(_viewId));
 
-        if (_multiView && _loKitDocument)
-            _loKitDocument->setView(_viewId);
+        if (_viewId >= 0)
+        {
+            if (_multiView && _loKitDocument)
+                _loKitDocument->setView(_viewId);
 
-        _docManager.onUnload(getId());
+            _docManager.onUnload(getId());
+        }
+        else
+        {
+            Log::warn("Skipping unload on incomplete view.");
+        }
 
         LOOLSession::disconnect();
     }
@@ -87,7 +94,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         // Client is getting active again.
         // Send invalidation and other sync-up messages.
-        std::unique_lock<std::recursive_mutex> lock(Mutex);
+        std::unique_lock<std::recursive_mutex> lock(Mutex); //TODO: Move to top of function?
 
         if (_multiView)
             _loKitDocument->setView(_viewId);
@@ -322,7 +329,9 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     if (_multiView)
     {
         _viewId = _loKitDocument->getView();
-        sendTextFrame("addview: " + std::to_string(_viewId));
+        const auto viewId = std::to_string(_viewId);
+        Log::info("Created new view: " + viewId);
+        sendTextFrame("addview: " + viewId);
     }
 
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());
@@ -1018,6 +1027,7 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         break;
     case LOK_CALLBACK_ERROR:
         {
+            Log::error("CALLBACK_ERROR: " + rPayload);
             Parser parser;
             Poco::Dynamic::Var var = parser.parse(rPayload);
             Object::Ptr object = var.extract<Object::Ptr>();
