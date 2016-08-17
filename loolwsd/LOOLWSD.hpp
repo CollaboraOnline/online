@@ -23,8 +23,9 @@
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "DocumentBroker.hpp"
-#include "TraceFile.hpp"
 #include "Util.hpp"
+
+class TraceFileWriter;
 
 /// The Server class which is responsible for all
 /// external interactions.
@@ -64,31 +65,13 @@ public:
     }
 
     static
-    void dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
-    {
-        if (TraceDumper)
-        {
-            TraceDumper->writeEvent(pId, sessionId, data);
-        }
-    }
+    void dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
 
     static
-    void dumpIncomingTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
-    {
-        if (TraceDumper)
-        {
-            TraceDumper->writeIncoming(pId, sessionId, data);
-        }
-    }
+    void dumpIncomingTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
 
     static
-    void dumpOutgoingTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
-    {
-        if (TraceDumper)
-        {
-            TraceDumper->writeOutgoing(pId, sessionId, data);
-        }
-    }
+    void dumpOutgoingTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
 
 protected:
     void initialize(Poco::Util::Application& self) override;

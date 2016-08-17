@@ -107,6 +107,7 @@
 #include "PrisonerSession.hpp"
 #include "QueueHandler.hpp"
 #include "Storage.hpp"
+#include "TraceFile.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 #include "UserMessages.hpp"
@@ -1512,6 +1513,30 @@ void LOOLWSD::initializeSSL()
 void LOOLWSD::uninitialize()
 {
     ServerApplication::uninitialize();
+}
+
+void LOOLWSD::dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
+{
+    if (TraceDumper)
+    {
+        TraceDumper->writeEvent(pId, sessionId, data);
+    }
+}
+
+void LOOLWSD::dumpIncomingTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
+{
+    if (TraceDumper)
+    {
+        TraceDumper->writeIncoming(pId, sessionId, data);
+    }
+}
+
+void LOOLWSD::dumpOutgoingTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
+{
+    if (TraceDumper)
+    {
+        TraceDumper->writeOutgoing(pId, sessionId, data);
+    }
 }
 
 void LOOLWSD::defineOptions(OptionSet& optionSet)
