@@ -318,7 +318,13 @@ int Stress::main(const std::vector<std::string>& args)
 {
     std::vector<std::unique_ptr<Thread>> clients(_numClients * args.size());
 
-    std::cout << "Args: " << args.size() << std::endl;
+    if (args.size() == 0)
+    {
+        std::cerr << "Usage: loolstress <tracefile> " << std::endl;
+        std::cerr << "       Trace files may be plain text or gzipped (with .gz extension)." << std::endl;
+        std::cerr << "       --help for full arguments list." << std::endl;
+        return Application::EXIT_NOINPUT;
+    }
 
     unsigned index = 0;
     for (unsigned i = 0; i < args.size(); ++i)
