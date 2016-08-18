@@ -504,7 +504,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
         return;
     }
 
-    if (tileCache().isTileBeingRenderedIfSoSubscribe(tile, session) > 0)
+    if (tileCache().subscribeToTileRendering(tile, session) > 0)
     {
         Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
 
@@ -530,7 +530,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
         std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
         if (cachedTile)
         {
-            //TODO: Combine.
+            //TODO: Combine the response to reduce latency.
 #if ENABLE_DEBUG
             const std::string response = tile.serialize("tile:") + " renderid=cached\n";
 #else
@@ -556,8 +556,9 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
         }
         else
         {
+            // Not cached, needs rendering.
             tile.setVersion(_tileVersion);
-            const auto ver = tileCache().isTileBeingRenderedIfSoSubscribe(tile, session);
+            const auto ver = tileCache().subscribeToTileRendering(tile, session);
             if (ver <= 0)
             {
                 // Already rendering. Skip.

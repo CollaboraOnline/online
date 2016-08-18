@@ -410,7 +410,7 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
-int TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
+int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
@@ -418,8 +418,10 @@ int TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std:
 
     if (tileBeingRendered)
     {
-        Log::debug() << "Tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
-                     << tile.getTilePosY() << ") is already being rendered, subscribing." << Log::end;
+        Log::debug() << "Subscribing to tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
+                     << tile.getTilePosY() << ") which has "
+                     << tileBeingRendered->_subscribers.size()
+                     << " subscribers already. Adding one more." << Log::end;
         assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
 
         for (const auto &s : tileBeingRendered->_subscribers)
@@ -443,8 +445,8 @@ int TileCache::isTileBeingRenderedIfSoSubscribe(const TileDesc& tile, const std:
     }
     else
     {
-        Log::debug() << "Tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
-                     << tile.getTilePosY() << ") needs rendering, subscribing for ver: "
+        Log::debug() << "Subscribing to tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
+                     << tile.getTilePosY() << ") which has no subscribers. Subscribing for ver: "
                      << tile.getVersion() << "." << Log::end;
 
         const std::string cachedName = cacheFileName(tile);
