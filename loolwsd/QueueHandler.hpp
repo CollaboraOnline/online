@@ -21,7 +21,7 @@ public:
     QueueHandler(std::shared_ptr<MessageQueue> queue,
                  const std::shared_ptr<LOOLSession>& session,
                  const std::string& name):
-        _queue(queue),
+        _queue(std::move(queue)),
         _session(session),
         _name(name)
     {
