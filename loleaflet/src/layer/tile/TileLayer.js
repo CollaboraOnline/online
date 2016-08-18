@@ -99,6 +99,9 @@ L.TileLayer = L.GridLayer.extend({
 		// Eg: 1: {rectangle: 'x, y, w, h', visible: false}
 		this._viewCursors = {};
 
+		// View cell cursors with viewId to 'cursor info' mapping.
+		this._cellViewCursors = {};
+
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
@@ -360,6 +363,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('viewcursorvisible:')) {
 			this._onViewCursorVisibleMsg(textMsg);
 		}
+		else if (textMsg.startsWith('cellviewcursor:')) {
+			this._onCellViewCursorMsg(textMsg);
+		}
 		else if (textMsg.startsWith('addview:')) {
 			this._onAddViewMsg(textMsg);
 		}
@@ -558,6 +564,60 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewCursors[viewId].visible = true;
 
 		this._onUpdateViewCursor(viewId);
+	},
+
+	_onCellViewCursorMsg: function (textMsg) {
+		textMsg = textMsg.substring('cellviewcursor:'.length + 1);
+		var obj = JSON.parse(textMsg);
+		var viewId = parseInt(obj.viewId);
+
+		// Ignore if viewid is same as ours
+		if (viewId === this._viewId) {
+			return;
+		}
+
+		this._cellViewCursors[viewId] = this._cellViewCursors[viewId] || {};
+		if (!this._cellViewCursors[viewId].bounds) {
+			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
+		}
+		if (obj.rectangle.match('EMPTY')) {
+			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
+		}
+		else {
+			var strTwips = obj.rectangle.match(/\d+/g);
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+			this._cellViewCursors[viewId].bounds = new L.LatLngBounds(
+				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+		}
+
+		this._onUpdateCellViewCursor(viewId);
+	},
+
+	_onUpdateCellViewCursor: function (viewId) {
+		if (!this._cellViewCursors[viewId] || !this._cellViewCursors[viewId].bounds)
+			return;
+
+		var cellViewCursorsMarker = this._cellViewCursors[viewId].marker;
+		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds)) {
+
+			if (cellViewCursorsMarker) {
+				this._map.removeLayer(cellViewCursorsMarker);
+			}
+			cellViewCursorsMarker = L.rectangle(this._cellViewCursors[viewId].bounds, {fill: false, color: L.LOUtil.getViewIdHexColor(viewId), weight: 2});
+			if (!cellViewCursorsMarker) {
+				this._map.fire('error', {msg: 'Cell View Cursor marker initialization', cmd: 'cellViewCursor', kind: 'failed', id: 1});
+				return;
+			}
+			this._map.addLayer(cellViewCursorsMarker);
+		}
+		else if (cellViewCursorsMarker) {
+			this._map.removeLayer(cellViewCursorsMarker);
+		}
+
+		this._cellViewCursors[viewId].marker = cellViewCursorsMarker;
 	},
 
 	_onViewCursorVisibleMsg: function(textMsg) {
