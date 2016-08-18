@@ -156,6 +156,12 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bo
 }
 
 inline
+bool isDocumentLoaded(std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& name = "", bool isView = false)
+{
+    return isDocumentLoaded(*ws, name, isView);
+}
+
+inline
 Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
 {
 #if ENABLE_SSL

@@ -60,6 +60,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testBadRequest);
     CPPUNIT_TEST(testHandShake);
     CPPUNIT_TEST(testCloseAfterClose);
+    CPPUNIT_TEST(testConnectNoLoad);
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
     CPPUNIT_TEST(testReload);
@@ -94,6 +95,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testBadRequest();
     void testHandShake();
     void testCloseAfterClose();
+    void testConnectNoLoad();
     void testLoad();
     void testBadLoad();
     void testReload();
@@ -363,6 +365,31 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
     {
         CPPUNIT_FAIL(exc.displayText());
     }
+}
+
+void HTTPWSTest::testConnectNoLoad()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+    auto socket = connectLOKit(_uri, request, _response);
+    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket);
+    socket.reset();
+
+    // Connect and load first view.
+    auto socket1 = connectLOKit(_uri, request, _response);
+    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket1);
+    sendTextFrame(socket1, "load url=" + documentURL);
+    CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1));
+
+    // Connect but don't load second view.
+    auto socket2 = connectLOKit(_uri, request, _response);
+    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket2);
+    socket2.reset();
+
+    sendTextFrame(socket1, "status");
+    assertResponseLine(socket1, "status:");
 }
 
 void HTTPWSTest::testLoad()
