@@ -174,8 +174,8 @@ private:
                 if (rec.Payload.find(NewSession) == 0)
                 {
                     const auto& uri = rec.Payload.substr(NewSession.size());
-                    auto it = Sessions.find(uri);
-                    if (it != Sessions.end())
+                    auto it = _sessions.find(uri);
+                    if (it != _sessions.end())
                     {
                         // Add a new session.
                         if (it->second.find(rec.SessionId) != it->second.end())
@@ -190,15 +190,15 @@ private:
                     else
                     {
                         std::cerr << "New Document: " << uri << "\n";
-                        ChildToDoc.emplace(rec.Pid, uri);
-                        Sessions[uri].emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
+                        _childToDoc.emplace(rec.Pid, uri);
+                        _sessions[uri].emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
                     }
                 }
                 else if (rec.Payload.find(EndSession) == 0)
                 {
                     const auto& uri = rec.Payload.substr(EndSession.size());
-                    auto it = Sessions.find(uri);
-                    if (it != Sessions.end())
+                    auto it = _sessions.find(uri);
+                    if (it != _sessions.end())
                     {
                         std::cerr << "EndSession [" << rec.SessionId << "]: " << uri << "\n";
 
@@ -206,8 +206,8 @@ private:
                         if (it->second.empty())
                         {
                             std::cerr << "End Doc [" << uri << "].\n";
-                            Sessions.erase(it);
-                            ChildToDoc.erase(rec.Pid);
+                            _sessions.erase(it);
+                            _childToDoc.erase(rec.Pid);
                         }
                     }
                     else
@@ -218,12 +218,12 @@ private:
             }
             else if (rec.Dir == TraceFileRecord::Direction::Incoming)
             {
-                auto docIt = ChildToDoc.find(rec.Pid);
-                if (docIt != ChildToDoc.end())
+                auto docIt = _childToDoc.find(rec.Pid);
+                if (docIt != _childToDoc.end())
                 {
                     const auto& uri = docIt->second;
-                    auto it = Sessions.find(uri);
-                    if (it != Sessions.end())
+                    auto it = _sessions.find(uri);
+                    if (it != _sessions.end())
                     {
                         const auto sessionIt = it->second.find(rec.SessionId);
                         if (sessionIt != it->second.end())
@@ -252,10 +252,10 @@ private:
     TraceFileReader _traceFile;
 
     /// LOK child process PID to Doc URI map.
-    std::map<unsigned, std::string> ChildToDoc;
+    std::map<unsigned, std::string> _childToDoc;
 
-    /// Doc URI to Sessions map. Sessions are maps of SessionID to Connection.
-    std::map<std::string, std::map<std::string, std::unique_ptr<Connection>>> Sessions;
+    /// Doc URI to _sessions map. _sessions are maps of SessionID to Connection.
+    std::map<std::string, std::map<std::string, std::unique_ptr<Connection>>> _sessions;
 };
 
 bool Stress::NoDelay = false;
