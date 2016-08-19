@@ -73,6 +73,7 @@ extern "C"
             CASE(GRAPHIC_VIEW_SELECTION);
             CASE(VIEW_CURSOR_VISIBLE);
             CASE(VIEW_LOCK);
+            CASE(REDLINE_TABLE_SIZE_CHANGED);
 #undef CASE
         }
         std::cout << " payload: " << pPayload << std::endl;
