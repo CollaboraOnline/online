@@ -50,7 +50,7 @@ L.Map.FileInserter = L.Handler.extend({
 		var xmlHttp = new XMLHttpRequest();
 		var socket = this._map._socket;
 		var map = this._map;
-		this._map.showBusy('Uploading...', false);
+		this._map.showBusy(_('Uploading...'), false);
 		xmlHttp.onreadystatechange = function () {
 			if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
 				map.hideBusy();

@@ -53,7 +53,8 @@ pot:
 		src/control/Control.Tabs.js \
 		src/control/Toolbar.js \
 		src/core/Socket.js \
-		src/map/Map.js
+		src/map/Map.js \
+		src/map/handler/Map.FileInserter.js
 
 	html2po --pot --input=dist/loleaflet-help.html --output=po/templates/loleaflet-help.pot
 

@@ -192,7 +192,7 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
-			this._map.showBusy('Connecting...', false);
+			this._map.showBusy(_('Connecting...'), false);
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
 			// log the tile msg separately as we need the tile coordinates
