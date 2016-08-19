@@ -626,6 +626,12 @@ public:
             return;
         }
 
+        if (_loKitDocument->getViews() <= 0)
+        {
+            Log::error("Tile rendering requested without views.");
+            return;
+        }
+
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tile.getPart(),
                                       tile.getWidth(), tile.getHeight(),
