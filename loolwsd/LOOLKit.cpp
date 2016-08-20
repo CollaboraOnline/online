@@ -619,13 +619,13 @@ public:
         std::vector<unsigned char> pixmap;
         pixmap.resize(output.capacity());
 
-        std::unique_lock<std::recursive_mutex> lock(ChildSession::getLock());
         if (!_loKitDocument)
         {
             Log::error("Tile rendering requested before loading document.");
             return;
         }
 
+        std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
         if (_loKitDocument->getViews() <= 0)
         {
             Log::error("Tile rendering requested without views.");
@@ -694,13 +694,13 @@ public:
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<unsigned char> pixmap(pixmapSize, 0);
 
-        std::unique_lock<std::recursive_mutex> lock(ChildSession::getLock());
         if (!_loKitDocument)
         {
             Log::error("Tile rendering requested before loading document.");
             return;
         }
 
+        std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,

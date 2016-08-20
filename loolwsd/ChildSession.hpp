@@ -67,8 +67,6 @@ public:
 
     void loKitCallback(const int nType, const std::string& rPayload);
 
-    static std::unique_lock<std::recursive_mutex> getLock() { return std::unique_lock<std::recursive_mutex>(Mutex); }
-
 private:
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
