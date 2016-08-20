@@ -135,13 +135,11 @@ public:
     /// Get the current part's hash.
     inline char* getPartHash(int nPart)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->getPartHash(_pDoc, nPart);
     }
 
     inline void setPartMode(int nMode)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Document: setPartMode: Mode: " << nMode << "." << Log::end;
         _pDoc->pClass->setPartMode(_pDoc, nMode);
     }
@@ -169,7 +167,6 @@ public:
                           const int nTileWidth,
                           const int nTileHeight)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->paintTile(_pDoc, pBuffer, nCanvasWidth, nCanvasHeight,
                                 nTilePosX, nTilePosY, nTileWidth, nTileHeight);
     }
@@ -181,14 +178,12 @@ public:
      */
     inline int getTileMode()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->getTileMode(_pDoc);
     }
 
     /// Get the document sizes in TWIPs.
     inline void getDocumentSize(long* pWidth, long* pHeight)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pDoc->pClass->getDocumentSize(_pDoc, pWidth, pHeight);
     }
 
@@ -214,7 +209,6 @@ public:
      */
     inline void initializeForRendering(const char* pArguments = NULL)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Document: initializeForRendering: Arguments: [" << pArguments << "]." << Log::end;
         _pDoc->pClass->initializeForRendering(_pDoc, pArguments);
     }
@@ -228,7 +222,6 @@ public:
      */
     inline void registerCallback(LibreOfficeKitCallback pCallback, void* pData)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pDoc->pClass->registerCallback(_pDoc, pCallback, pData);
     }
 
@@ -241,7 +234,6 @@ public:
      */
     inline void postKeyEvent(int nType, int nCharCode, int nKeyCode)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pDoc->pClass->postKeyEvent(_pDoc, nType, nCharCode, nKeyCode);
     }
 
@@ -257,7 +249,6 @@ public:
      */
     inline void postMouseEvent(int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pDoc->pClass->postMouseEvent(_pDoc, nType, nX, nY, nCount, nButtons, nModifier);
     }
 
@@ -284,7 +275,6 @@ public:
      */
     inline void postUnoCommand(const char* pCommand, const char* pArguments = NULL, bool bNotifyWhenFinished = false)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pDoc->pClass->postUnoCommand(_pDoc, pCommand, pArguments, bNotifyWhenFinished);
     }
 
@@ -297,7 +287,6 @@ public:
      */
     inline void setTextSelection(int nType, int nX, int nY)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pDoc->pClass->setTextSelection(_pDoc, nType, nX, nY);
     }
 
@@ -309,7 +298,6 @@ public:
      */
     inline char* getTextSelection(const char* pMimeType, char** pUsedMimeType = NULL)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->getTextSelection(_pDoc, pMimeType, pUsedMimeType);
     }
 
@@ -322,7 +310,6 @@ public:
      */
     inline bool paste(const char* pMimeType, const char* pData, size_t nSize)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->paste(_pDoc, pMimeType, pData, nSize);
     }
 
@@ -335,7 +322,6 @@ public:
      */
     inline void setGraphicSelection(int nType, int nX, int nY)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pDoc->pClass->setGraphicSelection(_pDoc, nType, nX, nY);
     }
 
@@ -344,7 +330,6 @@ public:
      */
     inline void resetSelection()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         _pDoc->pClass->resetSelection(_pDoc);
     }
 
@@ -356,7 +341,6 @@ public:
      */
     inline char* getCommandValues(const char* pCommand)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->getCommandValues(_pDoc, pCommand);
     }
 
@@ -374,7 +358,6 @@ public:
             int nTileTwipWidth,
             int nTileTwipHeight)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Document: setClientZoom: TilePixelWidth: " << nTilePixelWidth
                      << ", TilePixelHeight: " << nTileTwipHeight
                      <<  ", TileTwipWidth: " << nTileTwipWidth
@@ -394,7 +377,6 @@ public:
      */
     inline void setClientVisibleArea(int nX, int nY, int nWidth, int nHeight)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Document: setClientVisibleArea: X: " << nX
                      << ", Y: " << nY << ", Width: " << nWidth
                      << ", Height: " << nHeight << "." << Log::end;
@@ -408,7 +390,6 @@ public:
      */
     int createView()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Document: createView" << Log::end;
         return _pDoc->pClass->createView(_pDoc);
     }
@@ -419,7 +400,6 @@ public:
      */
     void destroyView(int nId)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Document: destroyView: " << nId << Log::end;
         _pDoc->pClass->destroyView(_pDoc, nId);
     }
@@ -430,7 +410,6 @@ public:
      */
     void setView(int nId)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         Log::trace() << "lok::Document: setView: " << nId << Log::end;
         assert(nId >= 0 && "ViewID must be non-negative.");
         _pDoc->pClass->setView(_pDoc, nId);
@@ -442,7 +421,6 @@ public:
      */
     int getView()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->getView(_pDoc);
     }
 
@@ -451,7 +429,6 @@ public:
      */
     inline int getViews()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->getViews(_pDoc);
     }
 
@@ -463,7 +440,6 @@ public:
                           int *pFontWidth,
                           int *pFontHeight)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->renderFont(_pDoc, pFontName, pFontWidth, pFontHeight);
     }
 
@@ -482,7 +458,6 @@ public:
                               const int nTileWidth,
                               const int nTileHeight)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _pDoc->pClass->paintPartTile(_pDoc, pBuffer, nPart,
                                             nCanvasWidth, nCanvasHeight,
                                             nTilePosX, nTilePosY,
