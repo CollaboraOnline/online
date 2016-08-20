@@ -791,6 +791,8 @@ private:
                      << "] [" << LOKitHelper::kitCallbackTypeToString(nType)
                      << "] [" << payload << "]." << Log::end;
 
+        std::unique_lock<std::mutex> lock(pDescr->Doc->_mutex);
+
         // Forward to the same view only.
         // Demultiplexing is done by Core.
         // TODO: replace with a map to be faster.
@@ -885,27 +887,47 @@ private:
         Log::info("Unloading [" + sessionId + "].");
         const unsigned intSessionId = Util::decodeId(sessionId);
 
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        const auto it = _connections.find(intSessionId);
-        if (it == _connections.end() || !it->second || !_loKitDocument || !_loKitDocument->get())
+        if (_loKitDocument == nullptr)
         {
-            // Nothing to do.
-            Log::error("No [" + sessionId + "] session!");
+            Log::error("Unloading session [" + sessionId + "] without loKitDocument.");
             return;
+        }
+
+        // Find this session connection.
+        int sessionViewId = -1;
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            const auto it = _connections.find(intSessionId);
+            if (it == _connections.end() || !it->second || !it->second->getSession())
+            {
+                Log::error("Session [" + sessionId + "] not found to unload.");
+                return;
+            }
+
+            sessionViewId = it->second->getSession()->getViewId();
         }
 
         --_clientViews;
         Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) +
                   " view" + (_clientViews != 1 ? "s" : "") + " remain.");
 
-        if (_multiView && _loKitDocument)
+        if (_multiView)
         {
             Log::info() << "Document [" << _url << "] session ["
                         << sessionId << "] unloaded, leaving "
                         << _clientViews << " views." << Log::end;
 
+            std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
+
             const auto viewId = _loKitDocument->getView();
+            if (viewId != sessionViewId)
+            {
+                Log::error() << "Unloading view [" << sessionViewId
+                             << "] from view [" << viewId << "]." << Log::end;
+                return;
+            }
+
             _viewIdToCallbackDescr.erase(viewId);
             _loKitDocument->registerCallback(nullptr, nullptr);
             _loKitDocument->destroyView(viewId);
