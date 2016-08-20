@@ -1177,7 +1177,6 @@ void HTTPWSTest::testInactiveClient()
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
         auto socket1 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-1 ");
-        getResponseMessage(socket1, "invalidatetiles");
 
         // Connect another and go inactive.
         std::cerr << "Connecting second client." << std::endl;
@@ -1206,7 +1205,10 @@ void HTTPWSTest::testInactiveClient()
                                             token == "editlock:" ||
                                             token == "addview:" ||
                                             token == "remview:" ||
-                                            token == "remallviews:");
+                                            token == "remallviews:" ||
+                                            token == "textviewselection:" ||
+                                            token == "invalidateviewcursor:" ||
+                                            token == "viewcursorvisible:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");
