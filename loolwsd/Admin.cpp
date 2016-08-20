@@ -62,7 +62,8 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
     std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
 
-    if (tokens.count() > 1 && tokens[0] == "auth") {
+    if (tokens.count() > 1 && tokens[0] == "auth")
+    {
         std::string jwtToken;
         LOOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
         const auto& config = Application::instance().config();
@@ -88,16 +89,16 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
         return false;
     }
     else if (tokens[0] == "documents" ||
-        tokens[0] == "active_users_count" ||
-        tokens[0] == "active_docs_count" ||
-        tokens[0] == "mem_stats" ||
-        tokens[0] == "cpu_stats" )
+             tokens[0] == "active_users_count" ||
+             tokens[0] == "active_docs_count" ||
+             tokens[0] == "mem_stats" ||
+             tokens[0] == "cpu_stats" )
     {
-        std::string responseFrame = tokens[0] + " ";
         const std::string result = model.query(tokens[0]);
-        responseFrame += result;
-        if (result != "")
-            sendTextFrame(responseFrame);
+        if (!result.empty())
+        {
+            sendTextFrame(tokens[0] + ' ' + result);
+        }
     }
     else if (tokens[0] == "subscribe" && tokens.count() > 1)
     {
@@ -115,9 +116,8 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
     }
     else if (tokens[0] == "total_mem")
     {
-        unsigned totalMem = _admin->getTotalMemoryUsage(model);
-        std::string responseFrame = "total_mem " + std::to_string(totalMem);
-        sendTextFrame(responseFrame);
+        const auto totalMem = _admin->getTotalMemoryUsage(model);
+        sendTextFrame("total_mem " + std::to_string(totalMem));
     }
     else if (tokens[0] == "kill" && tokens.count() == 2)
     {
@@ -231,7 +231,8 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
 AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
     : _admin(adminManager),
       _isAuthenticated(false)
-{    }
+{
+}
 
 void AdminRequestHandler::sendTextFrame(const std::string& message)
 {
@@ -273,6 +274,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
         response.setContentLength(0);
         response.send();
     }
+
     Log::debug("Thread finished.");
 }
 
