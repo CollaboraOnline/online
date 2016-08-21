@@ -880,7 +880,7 @@ private:
         std::unique_lock<std::mutex> lock(_mutex);
 
         const auto it = _connections.find(intSessionId);
-        if (it == _connections.end() || !it->second || !_loKitDocument)
+        if (it == _connections.end() || !it->second || !_loKitDocument || !_loKitDocument->get())
         {
             // Nothing to do.
             Log::error("No [" + sessionId + "] session!");
