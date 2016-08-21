@@ -31,7 +31,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		var colHeaderObj = this;
 		$.contextMenu({
-			selector: '.spreadsheet-header-column',
+			selector: '.spreadsheet-header-column-text',
 			className: 'loleaflet-font',
 			items: {
 				'insertcolbefore': {
@@ -47,10 +47,26 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
 						colHeaderObj.deleteColumn.call(colHeaderObj, colAlpha);
 					}
+				},
+				'optimalwidth': {
+					name: _('Optimal Width'),
+					callback: function(key, options) {
+						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
+						colHeaderObj.optimalWidth.call(colHeaderObj, colAlpha);
+					}
 				}
 			},
 			zIndex: 10
 		});
+	},
+
+	optimalWidth: function(colAlpha) {
+		if (!this._dialog) {
+			this._dialog = L.control.metricInput(this._onDialogResult, this, {title: _('Optimal Column Width')});
+		}
+		this._dialog.addTo(this._map);
+		this._map.enable(false);
+		this._dialog.update();
 	},
 
 	insertColumn: function(colAlpha) {
@@ -175,6 +191,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 	_onCornerHeaderClick: function() {
 		this._map.sendUnoCommand('.uno:SelectAll');
+	},
+
+	_onDialogResult: function (e) {
+		this._map.enable(true);
 	},
 
 	_getVertLatLng: function (start, offset, e) {

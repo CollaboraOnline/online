@@ -281,6 +281,13 @@ var deps = {
 		desc: 'Row Header bar'
 	},
 
+	ControlMetricInput: {
+		src: ['control/Control.js',
+		      'control/Control.MetricInput.js'],
+		heading: 'Controls',
+		desc: 'Metric Input'
+	},
+
 	ControlContextmenu: {
 		src: ['control/Control.js',
 		      'control/Control.ContextMenu.js'],

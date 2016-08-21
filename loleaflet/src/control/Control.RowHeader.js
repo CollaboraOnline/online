@@ -29,7 +29,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		var rowHeaderObj = this;
 		$.contextMenu({
-			selector: '.spreadsheet-header-row',
+			selector: '.spreadsheet-header-row-text',
 			className: 'loleaflet-font',
 			items: {
 				'insertrowabove': {
@@ -45,10 +45,26 @@ L.Control.RowHeader = L.Control.Header.extend({
 						var row = parseInt(options.$trigger.attr('rel').split('spreadsheet-row-')[1]);
 						rowHeaderObj.deleteRow.call(rowHeaderObj, row);
 					}
+				},
+				'optimalheight': {
+					name: _('Optimal Height'),
+					callback: function(key, options) {
+						var row = parseInt(options.$trigger.attr('rel').split('spreadsheet-row-')[1]);
+						rowHeaderObj.optimalHeight.call(rowHeaderObj, row);
+					}
 				}
 			},
 			zIndex: 10
 		});
+	},
+
+	optimalHeight: function(row) {
+		if (!this._dialog) {
+			this._dialog = L.control.metricInput(this._onDialogResult, this, {title: _('Optimal Row Height')});
+		}
+		this._dialog.addTo(this._map);
+		this._map.enable(false);
+		this._dialog.update();
 	},
 
 	insertRow: function(row) {
@@ -157,6 +173,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 		}
 
 		this._selectRow(row, modifier);
+	},
+
+	_onDialogResult: function (e) {
+		this._map.enable(true);
 	},
 
 	_getHorzLatLng: function (start, offset, e) {
