@@ -402,8 +402,6 @@ private:
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
                     auto session = std::make_shared<ClientSession>(id, ws, docBroker, nullptr);
-                    // There is no actual client websocket connnection here
-                    session->setHeadless(true);
 
                     // Request the child to connect to us and add this session.
                     auto sessionsCount = docBroker->addSession(session);

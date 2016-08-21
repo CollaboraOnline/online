@@ -80,19 +80,12 @@ public:
 
     Kind getKind() const { return _kind; }
 
-    void setHeadless(bool val) { _isHeadless = val; }
-    bool isHeadless() const { return _isHeadless; }
+    bool isHeadless() const { return _ws == nullptr; }
 
 protected:
     LOOLSession(const std::string& id, const Kind kind,
                 std::shared_ptr<Poco::Net::WebSocket> ws);
     virtual ~LOOLSession();
-
-    void setId(const std::string& id)
-    {
-        _id = id;
-        _name = _kindString + '-' + id;
-    }
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
     void parseDocOptions(const Poco::StringTokenizer& tokens, int& part, std::string& timestamp);
@@ -131,15 +124,38 @@ protected:
     }
 
 private:
+
+    virtual bool _handleInput(const char *buffer, int length) = 0;
+
+private:
+
+    /// A session ID specific to an end-to-end connection (from user to lokit).
+    const std::string _id;
+
     // Our kind signifies to what we are connected to.
     const Kind _kind;
 
     // The kind cached as a string.
     const std::string _kindString;
 
+    /// A readable name that identifies our peer and ID.
+    const std::string _name;
+
     // In the master process, the websocket to the LOOL client or the jailed child process. In a
     // jailed process, the websocket to the parent.
     std::shared_ptr<Poco::Net::WebSocket> _ws;
+
+    /// True if we have been disconnected.
+    bool _disconnected;
+    /// True if the user is active, otherwise false (switched tabs).
+    bool _isActive;
+
+    std::chrono::steady_clock::time_point _lastActivityTime;
+
+    // Whether websocket received close frame.  Closing Handshake
+    std::atomic<bool> _isCloseFrame;
+
+    std::mutex _mutex;
 
 protected:
     // The actual URL, also in the child, even if the child never accesses that.
@@ -154,41 +170,11 @@ protected:
     // If password is provided or not
     bool _haveDocPassword;
 
-    // Whether document has been opened succesfuly
-    bool _isDocLoaded;
-
     // Whether document is password protected
     bool _isDocPasswordProtected;
 
     /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
     std::string _docOptions;
-
-    // Whether websocket received close frame.  Closing Handshake
-    std::atomic<bool> _isCloseFrame;
-private:
-
-    virtual bool _handleInput(const char *buffer, int length) = 0;
-
-private:
-    /// A session ID specific to an end-to-end connection (from user to lokit).
-    std::string _id;
-    /// A readable name that identifies our peer and ID.
-    std::string _name;
-    /// True if we have been disconnected.
-    bool _disconnected;
-    /// True if the user is active, otherwise false (switched tabs).
-    bool _isActive;
-
-    std::chrono::steady_clock::time_point _lastActivityTime;
-
-    // Whether it is dummy session
-    // For eg. In case of convert-to requests (HTTP Post), there is no actual websocket
-    // connection on client side
-    bool _isHeadless;
-
-    std::mutex _mutex;
-
-    static constexpr auto InactivityThresholdMS = 120 * 1000;
 };
 
 template<typename charT, typename traits>

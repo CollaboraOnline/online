@@ -50,25 +50,23 @@ using Poco::StringTokenizer;
 
 LOOLSession::LOOLSession(const std::string& id, const Kind kind,
                          std::shared_ptr<WebSocket> ws) :
+    _id(id),
     _kind(kind),
     _kindString(kind == Kind::ToClient ? "ToClient" :
                 kind == Kind::ToMaster ? "ToMaster" : "ToPrisoner"),
+    _name(_kindString + '-' + id),
     _ws(std::move(ws)),
-    _docPassword(""),
-    _haveDocPassword(false),
-    _isDocLoaded(false),
-    _isDocPasswordProtected(false),
-    _isCloseFrame(false),
     _disconnected(false),
     _isActive(true),
     _lastActivityTime(std::chrono::steady_clock::now()),
-    _isHeadless(false)
+    _isCloseFrame(false),
+    _docPassword(""),
+    _haveDocPassword(false),
+    _isDocPasswordProtected(false)
 {
     // Only a post request can have a null ws.
     if (_kind != Kind::ToClient)
         assert(_ws);
-
-    setId(id);
 }
 
 LOOLSession::~LOOLSession()
