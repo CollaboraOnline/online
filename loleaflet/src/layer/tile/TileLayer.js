@@ -658,12 +658,17 @@ L.TileLayer = L.GridLayer.extend({
 		textMsg = textMsg.substring('remview:'.length + 1);
 		var viewId = parseInt(textMsg);
 
-		// Ignore if viewid is same as ours
+		// Couldn't be ours, now could it?!
 		if (viewId === this._viewId) {
 			return;
 		}
 
-		// Just remove the view and update (to refresh as needed).
+		// Remove selection, if any.
+		if (this._viewSelections[viewId]) {
+			this._viewSelectionsGroup.removeLayer(this._viewSelections[viewId]);
+		}
+
+		// Remove the view and update (to refresh as needed).
 		if (typeof this._viewCursors[viewId] !== 'undefined') {
 			this._viewCursors[viewId].visible = false;
 			this._onUpdateViewCursor(viewId);
