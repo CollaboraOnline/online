@@ -39,8 +39,9 @@ ChildSession::ChildSession(const std::string& id,
     LOOLSession(id, Kind::ToMaster, ws),
     _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
+    _docManager(docManager),
     _viewId(-1),
-    _docManager(docManager)
+    _isDocLoaded(false)
 {
     Log::info("ChildSession ctor [" + getName() + "].");
 }
@@ -935,7 +936,7 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
     {
     case LOK_CALLBACK_INVALIDATE_TILES:
         {
-            const auto curPart = getPart();
+            const auto curPart = _loKitDocument->getPart();
 
             StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() == 4)

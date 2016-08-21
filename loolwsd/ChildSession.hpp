@@ -65,7 +65,6 @@ public:
     bool getStatus(const char *buffer, int length);
     bool getPartPageRectangles(const char *buffer, int length);
     unsigned getViewId() const { return _viewId; }
-    int getPart() const { return _loKitDocument->getPart(); }
 
     void loKitCallback(const int nType, const std::string& rPayload);
 
@@ -96,16 +95,21 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
-    std::shared_ptr<lok::Document> _loKitDocument;
-    std::string _docType;
     const bool _multiView;
     const std::string _jailId;
-    /// View ID, returned by createView() or 0 by default.
-    int _viewId;
-    std::map<int, std::string> _lastDocStates;
     IDocumentManager& _docManager;
 
-    /// Synchronize _loKitDocument acess.
+    /// View ID, returned by createView() or 0 by default.
+    int _viewId;
+
+    /// Whether document has been opened succesfuly
+    bool _isDocLoaded;
+
+    std::shared_ptr<lok::Document> _loKitDocument;
+    std::string _docType;
+    std::map<int, std::string> _lastDocStates;
+
+    /// Synchronize _loKitDocument access.
     /// This should be owned by Document.
     static std::recursive_mutex Mutex;
 };
