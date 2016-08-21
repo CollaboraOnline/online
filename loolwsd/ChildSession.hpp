@@ -19,6 +19,8 @@
 #include "LOOLSession.hpp"
 #include "LibreOfficeKit.hpp"
 
+class ChildSession;
+
 /// An abstract interface that defines the
 /// DocumentManager interface and functionality.
 class IDocumentManager
@@ -35,7 +37,7 @@ public:
     /// Unload a client session, which unloads the document
     /// if it is the last and only.
     virtual
-    void onUnload(const std::string& sessionId) = 0;
+    void onUnload(const ChildSession& session) = 0;
 
     /// Get a list of all current view IDs.
     virtual

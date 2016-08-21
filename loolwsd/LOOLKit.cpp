@@ -248,6 +248,7 @@ public:
         join();
     }
 
+    const std::string& getSessionId() const { return _sessionId; };
     std::shared_ptr<WebSocket> getWebSocket() const { return _ws; }
     std::shared_ptr<ChildSession> getSession() { return _session; }
 
@@ -325,8 +326,6 @@ public:
             Log::error("Connection::run:: Unexpected exception");
         }
 
-        // Release the session and unload view.
-        _session.reset();
         Log::debug("Thread finished.");
     }
 
@@ -882,55 +881,46 @@ private:
         return _loKitDocument;
     }
 
-    void onUnload(const std::string& sessionId) override
+    void onUnload(const ChildSession& session) override
     {
+        const auto sessionId = session.getId();
         Log::info("Unloading [" + sessionId + "].");
-        const unsigned intSessionId = Util::decodeId(sessionId);
 
-        if (_loKitDocument == nullptr)
-        {
-            Log::error("Unloading session [" + sessionId + "] without loKitDocument.");
-            return;
-        }
-
-        // Find this session connection.
-        int sessionViewId = -1;
+        // Broadcast the demise and removal of session.
         {
             std::unique_lock<std::mutex> lock(_mutex);
 
-            const auto it = _connections.find(intSessionId);
-            if (it == _connections.end() || !it->second || !it->second->getSession())
+            // We should be removed by this point, otherwise
+            // our closed connection will throw, if not segfault.
+            for (const auto& pair : _connections)
             {
-                Log::error("Session [" + sessionId + "] not found to unload.");
-                return;
+                assert(sessionId != pair.second->getSessionId() && "Unloading connection still lingering.");
+                pair.second->getSession()->sendTextFrame("remview: " + sessionId);
             }
 
-            sessionViewId = it->second->getSession()->getViewId();
+            if (_loKitDocument == nullptr)
+            {
+                Log::error("Unloading session [" + sessionId + "] without loKitDocument.");
+                return;
+            }
         }
 
         --_clientViews;
-        Log::info("Session " + sessionId + " is unloading. " + std::to_string(_clientViews) +
-                  " view" + (_clientViews != 1 ? "s" : "") + " remain.");
+        Log::info() << "Document [" << _url << "] session ["
+                    << sessionId << "] unloaded, " << _clientViews
+                    << " view" << (_clientViews != 1 ? "s" : "")
+                    << Log::end;
 
         if (_multiView)
         {
-            Log::info() << "Document [" << _url << "] session ["
-                        << sessionId << "] unloaded, leaving "
-                        << _clientViews << " views." << Log::end;
-
             std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
 
-            const auto viewId = _loKitDocument->getView();
-            if (viewId != sessionViewId)
-            {
-                Log::error() << "Unloading view [" << sessionViewId
-                             << "] from view [" << viewId << "]." << Log::end;
-                return;
-            }
-
+            const auto viewId = session.getViewId();
             _viewIdToCallbackDescr.erase(viewId);
+            _loKitDocument->setView(viewId);
             _loKitDocument->registerCallback(nullptr, nullptr);
             _loKitDocument->destroyView(viewId);
+            Log::debug("Destroyed view " + std::to_string(viewId));
         }
     }
 

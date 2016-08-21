@@ -58,14 +58,9 @@ void ChildSession::disconnect()
     {
         std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-        sendTextFrame("remview: " + std::to_string(_viewId));
-
         if (_viewId >= 0)
         {
-            if (_multiView && _loKitDocument)
-                _loKitDocument->setView(_viewId);
-
-            _docManager.onUnload(getId());
+            _docManager.onUnload(*this);
         }
         else
         {
