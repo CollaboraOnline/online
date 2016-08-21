@@ -113,7 +113,7 @@ AC_SUBST(MAX_DOCUMENTS)
 MAX_CONNECTIONS=20
 AS_IF([test -n "$with_max_connections"],
       [MAX_CONNECTIONS="$with_max_connections"])
-AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum number of open documents])
+AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum number of open connections])
 AC_SUBST(MAX_CONNECTIONS)
 
 # Test for build environment
