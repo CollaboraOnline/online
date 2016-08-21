@@ -52,8 +52,9 @@ public:
     Stress();
     ~Stress() {}
 
+    static bool Benchmark;
     static bool NoDelay;
-    unsigned    _numClients;
+    unsigned _numClients;
     std::string _serverURI;
 
 protected:
@@ -91,20 +92,35 @@ public:
         std::cout << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/ws/" + documentURL);
         Poco::Net::HTTPResponse response;
-        auto ws = helpers::connectLOKit(uri, request, response, "loolStress ");
+        auto ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
         std::cerr << "Connected.\n";
         return std::unique_ptr<Connection>(new Connection(documentURL, sessionId, ws));
     }
 
+    /// Send a command to the server.
     void send(const std::string& data) const
     {
-        helpers::sendTextFrame(_ws, data, _sessionId + ' ');
+        helpers::sendTextFrame(_ws, data, _name);
+    }
+
+    /// Poll socket until expected prefix is fetched, or timeout.
+    std::vector<char> recv(const std::string& prefix)
+    {
+        return helpers::getResponseMessage(_ws, prefix, _name);
+    }
+
+    /// Request loading the document and wait for completion.
+    bool load()
+    {
+        send("load url=" + _documentURL);
+        return helpers::isDocumentLoaded(_ws, _name);
     }
 
 private:
     Connection(const std::string& documentURL, const std::string& sessionId, std::shared_ptr<Poco::Net::WebSocket>& ws) :
         _documentURL(documentURL),
         _sessionId(sessionId),
+        _name(sessionId + ' '),
         _ws(ws)
     {
     }
@@ -112,6 +128,7 @@ private:
 private:
     const std::string _documentURL;
     const std::string _sessionId;
+    const std::string _name;
     std::shared_ptr<Poco::Net::WebSocket> _ws;
     static std::mutex Mutex;
 };
@@ -123,9 +140,9 @@ class Worker: public Runnable
 {
 public:
 
-    Worker(Stress& app, const std::string& traceFilePath) :
+    Worker(Stress& app, const std::string& uri) :
         _app(app),
-        _traceFile(traceFilePath)
+        _uri(uri)
     {
     }
 
@@ -133,7 +150,14 @@ public:
     {
         try
         {
-            doRun();
+            if (Stress::Benchmark)
+            {
+                benchmark();
+            }
+            else
+            {
+                replay();
+            }
         }
         catch (const Poco::Exception &e)
         {
@@ -148,14 +172,23 @@ public:
 
 private:
 
-    void doRun()
+    void benchmark()
     {
-        auto epochFile(_traceFile.getEpoch());
+        auto connection = Connection::create(_app._serverURI, _uri, "0001");
+
+        connection->load();
+    }
+
+    void replay()
+    {
+        TraceFileReader traceFile(_uri);
+
+        auto epochFile(traceFile.getEpoch());
         auto epochCurrent(std::chrono::steady_clock::now());
 
         for (;;)
         {
-            const auto rec = _traceFile.getNextRecord();
+            const auto rec = traceFile.getNextRecord();
             if (rec.Dir == TraceFileRecord::Direction::Invalid)
             {
                 // End of trace file.
@@ -260,7 +293,7 @@ private:
 
 private:
     Stress& _app;
-    TraceFileReader _traceFile;
+    const std::string _uri;
 
     /// LOK child process PID to Doc URI map.
     std::map<unsigned, std::string> _childToDoc;
@@ -270,6 +303,7 @@ private:
 };
 
 bool Stress::NoDelay = false;
+bool Stress::Benchmark = false;
 
 Stress::Stress() :
     _numClients(1),
@@ -286,6 +320,8 @@ void Stress::defineOptions(OptionSet& optionSet)
     Application::defineOptions(optionSet);
 
     optionSet.addOption(Option("help", "", "Display help information on command line arguments.")
+                        .required(false).repeatable(false));
+    optionSet.addOption(Option("bench", "", "Performance benchmark. The argument is a document URL to load.")
                         .required(false).repeatable(false));
     optionSet.addOption(Option("nodelay", "", "Replay at full speed disregarding original timing.")
                         .required(false).repeatable(false));
@@ -312,6 +348,8 @@ void Stress::handleOption(const std::string& optionName,
         helpFormatter.format(std::cout);
         std::exit(Application::EXIT_OK);
     }
+    else if (optionName == "bench")
+        Stress::Benchmark = true;
     else if (optionName == "nodelay")
         Stress::NoDelay = true;
     else if (optionName == "clientsperdoc")
@@ -331,7 +369,7 @@ int Stress::main(const std::vector<std::string>& args)
 
     if (args.size() == 0)
     {
-        std::cerr << "Usage: loolstress <tracefile> " << std::endl;
+        std::cerr << "Usage: loolstress [--bench] <tracefile | url> " << std::endl;
         std::cerr << "       Trace files may be plain text or gzipped (with .gz extension)." << std::endl;
         std::cerr << "       --help for full arguments list." << std::endl;
         return Application::EXIT_NOINPUT;
