@@ -206,8 +206,11 @@ L.Socket = L.Class.extend({
 					textMsg = this._utf8ToString(imgBytes);
 				}
 			}
-			// Decode UTF-8.
-			textMsg = decodeURIComponent(window.escape(textMsg));
+
+			// Decode UTF-8 in case it is binary frame
+			if (typeof e.data === 'object') {
+				textMsg = decodeURIComponent(window.escape(textMsg));
+			}
 		}
 		else {
 			var data = imgBytes.subarray(index + 1);
