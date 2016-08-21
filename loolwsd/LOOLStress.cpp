@@ -85,6 +85,8 @@ public:
     {
         Poco::URI uri(serverURI);
 
+        std::unique_lock<std::mutex> lock(Mutex);
+
         // Load a document and get its status.
         std::cerr << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/ws/" + documentURL);
@@ -111,7 +113,10 @@ private:
     const std::string _documentURL;
     const std::string _sessionId;
     std::shared_ptr<Poco::Net::WebSocket> _ws;
+    static std::mutex Mutex;
 };
+
+std::mutex Connection::Mutex;
 
 /// Main thread class to replay a trace file.
 class Worker: public Runnable
