@@ -1345,6 +1345,7 @@ void lokit_main(const std::string& childRoot,
             requestUrl += "&version=" + encodedVersionStr;
             free(versionInfo);
         }
+
         HTTPRequest request(HTTPRequest::HTTP_GET, requestUrl);
         HTTPResponse response;
         auto ws = std::make_shared<WebSocket>(cs, request, response);

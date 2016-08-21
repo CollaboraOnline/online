@@ -88,7 +88,7 @@ public:
         std::unique_lock<std::mutex> lock(Mutex);
 
         // Load a document and get its status.
-        std::cerr << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
+        std::cout << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/ws/" + documentURL);
         Poco::Net::HTTPResponse response;
         auto ws = helpers::connectLOKit(uri, request, response, "loolStress ");
@@ -98,7 +98,7 @@ public:
 
     void send(const std::string& data) const
     {
-        helpers::sendTextFrame(_ws, data, "loolstress ");
+        helpers::sendTextFrame(_ws, data, _sessionId + ' ');
     }
 
 private:
@@ -140,6 +140,10 @@ public:
             std::cerr << "Error: " << e.name() << ' '
                       << e.message() << std::endl;
         }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
     }
 
 private:
@@ -148,6 +152,7 @@ private:
     {
         auto epochFile(_traceFile.getEpoch());
         auto epochCurrent(std::chrono::steady_clock::now());
+
         for (;;)
         {
             const auto rec = _traceFile.getNextRecord();
@@ -233,6 +238,7 @@ private:
                         const auto sessionIt = it->second.find(rec.SessionId);
                         if (sessionIt != it->second.end())
                         {
+                            // Send the command.
                             sessionIt->second->send(rec.Payload);
                         }
                     }

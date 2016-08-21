@@ -339,10 +339,10 @@ unsigned AdminModel::getTotalActiveViews()
     unsigned nTotalViews = 0;
     for (auto& it: _documents)
     {
-        if (it.second.isExpired())
-            continue;
-
-        nTotalViews += it.second.getActiveViews();
+        if (!it.second.isExpired())
+        {
+            nTotalViews += it.second.getActiveViews();
+        }
     }
 
     return nTotalViews;
@@ -356,18 +356,18 @@ std::string AdminModel::getDocuments()
         if (it.second.isExpired())
             continue;
 
-        std::string sPid = std::to_string(it.second.getPid());
-        std::string sFilename = it.second.getFilename();
-        std::string sViews = std::to_string(it.second.getActiveViews());
-        std::string sMem = std::to_string(Util::getMemoryUsage(it.second.getPid()));
-        std::string sElapsed = std::to_string(it.second.getElapsedTime());
+        const auto sPid = std::to_string(it.second.getPid());
+        const auto sFilename = it.second.getFilename();
+        const auto sViews = std::to_string(it.second.getActiveViews());
+        const auto sMem = std::to_string(Util::getMemoryUsage(it.second.getPid()));
+        const auto sElapsed = std::to_string(it.second.getElapsedTime());
 
         std::string encodedFilename;
         Poco::URI::encode(sFilename, " ", encodedFilename);
-        oss << sPid << " "
-            << encodedFilename << " "
-            << sViews << " "
-            << sMem << " "
+        oss << sPid << ' '
+            << encodedFilename << ' '
+            << sViews << ' '
+            << sMem << ' '
             << sElapsed << " \n ";
     }
 
