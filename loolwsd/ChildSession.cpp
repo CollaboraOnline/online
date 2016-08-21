@@ -1061,6 +1061,9 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
     case LOK_CALLBACK_VIEW_LOCK:
         sendTextFrame("viewlock: " + rPayload);
         break;
+    case LOK_CALLBACK_REDLINE_TABLE_SIZE_CHANGED:
+        sendTextFrame("redlinetablechanged: " + rPayload);
+        break;
     default:
         Log::error("Unknown callback event (" + std::to_string(nType) + "): " + rPayload);
     }

@@ -345,6 +345,12 @@ remallviews:
     Removes all views to send only current ones.
     The UI should still maintain its own view and cursor.
 
+redlinetablechanged:
+
+    Signals that the redlines table has been modified.
+    Redlines are used for tracking changes.
+
+
 child -> parent
 ===============
 
