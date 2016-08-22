@@ -77,6 +77,26 @@ using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 
+long percentile(std::vector<long>& v, const double percentile)
+{
+    std::sort(v.begin(), v.end());
+
+    const auto N = v.size();
+    const double n = (N - 1) * percentile / 100.0 + 1;
+    if (n <= 1)
+    {
+        return v[0];
+    }
+    else if (n >= N)
+    {
+        return v[N - 1];
+    }
+
+    const auto k = static_cast<int>(n);
+    const double d = n - k;
+    return v[k - 1] + d * (v[k] - v[k - 1]);
+}
+
 /// Connection class with WSD.
 class Connection
 {
@@ -181,21 +201,36 @@ private:
 
     bool modifyDoc(const std::shared_ptr<Connection>& con)
     {
-        const auto start = std::chrono::steady_clock::now();
-
         con->send("key type=input char=97 key=0");
-        if (con->recv("invalidatetiles:").empty())
+        return !con->recv("invalidatetiles:").empty();
+    }
+
+    bool renderTile(const std::shared_ptr<Connection>& con)
+    {
+        const auto startModify = std::chrono::steady_clock::now();
+
+        modifyDoc(con);
+
+        const auto startRendering = std::chrono::steady_clock::now();
+
+        con->send("tilecombine part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
+        if (helpers::getTileMessage(*con->getWS(), con->getName()).empty())
         {
             return false;
         }
 
-        const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
-        std::cout << "Round-trip in: " << delta << std::endl;
-        _latencyStats.push_back(delta);
+        const auto now = std::chrono::steady_clock::now();
+
+        const auto deltaRendering = std::chrono::duration_cast<std::chrono::microseconds>(now - startRendering).count();
+        _renderingStats.push_back(deltaRendering);
+
+        const auto deltaModify = std::chrono::duration_cast<std::chrono::microseconds>(now - startModify).count();
+        _latencyStats.push_back(deltaModify);
+
         return true;
     }
 
-    bool fetchTile(const std::shared_ptr<Connection>& con)
+    bool fetchCachedTile(const std::shared_ptr<Connection>& con)
     {
         const auto start = std::chrono::steady_clock::now();
 
@@ -206,8 +241,7 @@ private:
         }
 
         const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
-        std::cout << "Rendered in: " << delta << std::endl;
-        _renderingStats.push_back(delta);
+        _cacheStats.push_back(delta);
         return true;
     }
 
@@ -219,12 +253,12 @@ private:
 
         connection->load();
 
-        for (auto i = 0; i < 100; ++i)
+        for (auto i = 0; i < 10; ++i)
         {
-            modifyDoc(connection);
-        }
+            renderTile(connection);
 
-        fetchTile(connection);
+            fetchCachedTile(connection);
+        }
     }
 
     void replay()
@@ -427,20 +461,57 @@ int Stress::main(const std::vector<std::string>& args)
         return Application::EXIT_NOINPUT;
     }
 
+    std::vector<std::shared_ptr<Worker>> workers;
+
     unsigned index = 0;
     for (unsigned i = 0; i < args.size(); ++i)
     {
         std::cout << "Arg: " << args[i] << std::endl;
         for (unsigned j = 0; j < _numClients; ++j, ++index)
         {
+            workers.emplace_back(new Worker(*this, args[i]));
             clients[index].reset(new Thread());
-            clients[index]->start(*(new Worker(*this, args[i])));
+            clients[index]->start(*workers[workers.size() - 1]);
         }
     }
 
     for (const auto& client : clients)
     {
         client->join();
+    }
+
+    if (Stress::Benchmark)
+    {
+        std::vector<long> latencyStats;
+        std::vector<long> renderingStats;
+        std::vector<long> cachedStats;
+
+        for (const auto& worker : workers)
+        {
+            const auto latencyStat = worker->getLatencyStats();
+            latencyStats.insert(latencyStats.end(), latencyStat.begin(), latencyStat.end());
+
+            const auto renderingStat = worker->getRenderingStats();
+            renderingStats.insert(renderingStats.end(), renderingStat.begin(), renderingStat.end());
+
+            const auto cachedStat = worker->getCacheStats();
+            cachedStats.insert(cachedStats.end(), cachedStat.begin(), cachedStat.end());
+        }
+
+        std::cout << "\nResults:\n";
+        std::cout << "Latency best: " << latencyStats[0] << " microsecs, 95th percentile: " << percentile(latencyStats, 95) << " microsecs." << std::endl;
+        std::cout << "Tile best: " << renderingStats[0] << " microsecs, rendering 95th percentile: " << percentile(renderingStats, 95) << " microsecs." << std::endl;
+        std::cout << "Cached best: " << cachedStats[0] << " microsecs, tile 95th percentile: " << percentile(cachedStats, 95) << " microsecs." << std::endl;
+
+        const auto renderingTime = std::accumulate(renderingStats.begin(), renderingStats.end(), 0);
+        const double renderedPixels = 256 * 256 * renderingStats.size();
+        const auto pixelsPerSecRendered = renderedPixels / renderingTime;
+        std::cout << "Rendering power: " << pixelsPerSecRendered << " MPixels/sec." << std::endl;
+
+        const auto cacheTime = std::accumulate(cachedStats.begin(), cachedStats.end(), 0);
+        const double cachePixels = 256 * 256 * cachedStats.size();
+        const auto pixelsPerSecCached = cachePixels / cacheTime;
+        std::cout << "Cache power: " << pixelsPerSecCached << " MPixels/sec." << std::endl;
     }
 
     return Application::EXIT_OK;

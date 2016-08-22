@@ -225,7 +225,7 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
             }
             else
             {
-                std::cerr << "Timeout\n";
+                std::cerr << "Timeout waiting for " << prefix << "\n";
                 --retries;
             }
         }
@@ -296,7 +296,7 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
             }
             else
             {
-                std::cerr << name << "Timeout\n";
+                std::cerr << name << "Timeout waiting for " << prefix << "\n";
                 --retries;
             }
         }
@@ -404,7 +404,7 @@ void SocketProcessor(const std::string& name,
     {
         if (!socket->poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
-            std::cerr << name << "Timeout." << std::endl;
+            std::cerr << name << "Timeout polling." << std::endl;
             break;
         }
 
@@ -488,7 +488,7 @@ std::vector<char> getTileMessage(Poco::Net::WebSocket& ws, const std::string& na
         }
         else
         {
-            std::cerr << name << "Timeout\n";
+            std::cerr << name << "Timeout waiting for nextmessage:\n";
             --retries;
         }
     }
