@@ -68,7 +68,7 @@ load [part=<partNumber>] url=<url> [timestamp=<time>] [options=<options>]
     timestamp is an optional parameter.  <time> is provided in microseconds
     since the Unix epoch - midnight, January 1, 1970.
 
-    options are the whole rest of the line, not URL-encoded
+    options are the whole rest of the line, not URL-encoded, and must be valid JSON.
 
 loolclient <major.minor[-patch]>
 
