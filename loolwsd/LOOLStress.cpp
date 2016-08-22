@@ -82,7 +82,7 @@ class Connection
 {
 public:
     static
-    std::unique_ptr<Connection> create(const std::string& serverURI, const std::string& documentURL, const std::string& sessionId)
+    std::shared_ptr<Connection> create(const std::string& serverURI, const std::string& documentURL, const std::string& sessionId)
     {
         Poco::URI uri(serverURI);
 
@@ -94,8 +94,11 @@ public:
         Poco::Net::HTTPResponse response;
         auto ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
         std::cerr << "Connected.\n";
-        return std::unique_ptr<Connection>(new Connection(documentURL, sessionId, ws));
+        return std::shared_ptr<Connection>(new Connection(documentURL, sessionId, ws));
     }
+
+    const std::string& getName() const { return _name; }
+    std::shared_ptr<Poco::Net::WebSocket> getWS() const { return _ws; };
 
     /// Send a command to the server.
     void send(const std::string& data) const
@@ -146,6 +149,10 @@ public:
     {
     }
 
+    std::vector<long> getLatencyStats() const { return _latencyStats; }
+    std::vector<long> getRenderingStats() const { return _renderingStats; }
+    std::vector<long> getCacheStats() const { return _cacheStats; }
+
     void run() override
     {
         try
@@ -172,11 +179,52 @@ public:
 
 private:
 
+    bool modifyDoc(const std::shared_ptr<Connection>& con)
+    {
+        const auto start = std::chrono::steady_clock::now();
+
+        con->send("key type=input char=97 key=0");
+        if (con->recv("invalidatetiles:").empty())
+        {
+            return false;
+        }
+
+        const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
+        std::cout << "Round-trip in: " << delta << std::endl;
+        _latencyStats.push_back(delta);
+        return true;
+    }
+
+    bool fetchTile(const std::shared_ptr<Connection>& con)
+    {
+        const auto start = std::chrono::steady_clock::now();
+
+        con->send("tilecombine part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
+        if (helpers::getTileMessage(*con->getWS(), con->getName()).empty())
+        {
+            return false;
+        }
+
+        const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
+        std::cout << "Rendered in: " << delta << std::endl;
+        _renderingStats.push_back(delta);
+        return true;
+    }
+
     void benchmark()
     {
-        auto connection = Connection::create(_app._serverURI, _uri, "0001");
+        static std::atomic<unsigned> SessionId;
+        const auto sessionId = ++SessionId;
+        auto connection = Connection::create(_app._serverURI, _uri, std::to_string(sessionId));
 
         connection->load();
+
+        for (auto i = 0; i < 100; ++i)
+        {
+            modifyDoc(connection);
+        }
+
+        fetchTile(connection);
     }
 
     void replay()
@@ -299,7 +347,11 @@ private:
     std::map<unsigned, std::string> _childToDoc;
 
     /// Doc URI to _sessions map. _sessions are maps of SessionID to Connection.
-    std::map<std::string, std::map<std::string, std::unique_ptr<Connection>>> _sessions;
+    std::map<std::string, std::map<std::string, std::shared_ptr<Connection>>> _sessions;
+
+    std::vector<long> _latencyStats;
+    std::vector<long> _renderingStats;
+    std::vector<long> _cacheStats;
 };
 
 bool Stress::NoDelay = false;
