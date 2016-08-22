@@ -257,7 +257,7 @@ nextmessage: size=<byteSize>
     message). Can be ignored by clients using an API that can read
     arbitrarily large buffers from a WebSocket (like JavaScript), but
     must be handled by clients that cannot (like those using Poco
-    1.6.0, like the "loadtest" program in the loolwsd sources).
+    1.6.0.
 
 status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height> viewid=<viewId> [partNames]
 
