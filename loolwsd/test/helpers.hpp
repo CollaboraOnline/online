@@ -478,18 +478,6 @@ std::vector<char> getTileMessage(Poco::Net::WebSocket& ws, const std::string& na
                         response.resize(size);
                         bytes = ws.receiveFrame(response.data(), response.size(), flags);
                         response.resize(bytes >= 0 ? bytes : 0);
-
-                        const std::string firstLine = LOOLProtocol::getFirstLine(response);
-                        Poco::StringTokenizer tileTokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                        CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tileTokens[0]);
-                        CPPUNIT_ASSERT_EQUAL(std::string("part="), tileTokens[1].substr(0, std::string("part=").size()));
-                        CPPUNIT_ASSERT_EQUAL(std::string("width="), tileTokens[2].substr(0, std::string("width=").size()));
-                        CPPUNIT_ASSERT_EQUAL(std::string("height="), tileTokens[3].substr(0, std::string("height=").size()));
-                        CPPUNIT_ASSERT_EQUAL(std::string("tileposx="), tileTokens[4].substr(0, std::string("tileposx=").size()));
-                        CPPUNIT_ASSERT_EQUAL(std::string("tileposy="), tileTokens[5].substr(0, std::string("tileposy=").size()));
-                        CPPUNIT_ASSERT_EQUAL(std::string("tilewidth="), tileTokens[6].substr(0, std::string("tilewidth=").size()));
-                        CPPUNIT_ASSERT_EQUAL(std::string("tileheight="), tileTokens[7].substr(0, std::string("tileheight=").size()));
-                        std::cerr << name << " Got " << firstLine << std::endl;
                         return response;
                     }
                 }
@@ -507,6 +495,31 @@ std::vector<char> getTileMessage(Poco::Net::WebSocket& ws, const std::string& na
     while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
     return std::vector<char>();
+}
+
+inline
+std::vector<char> assertTileMessage(Poco::Net::WebSocket& ws, const std::string& name = "")
+{
+    const auto response = getTileMessage(ws, name);
+
+    const std::string firstLine = LOOLProtocol::getFirstLine(response);
+    Poco::StringTokenizer tileTokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tileTokens[0]);
+    CPPUNIT_ASSERT_EQUAL(std::string("part="), tileTokens[1].substr(0, std::string("part=").size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("width="), tileTokens[2].substr(0, std::string("width=").size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("height="), tileTokens[3].substr(0, std::string("height=").size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("tileposx="), tileTokens[4].substr(0, std::string("tileposx=").size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("tileposy="), tileTokens[5].substr(0, std::string("tileposy=").size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("tilewidth="), tileTokens[6].substr(0, std::string("tilewidth=").size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("tileheight="), tileTokens[7].substr(0, std::string("tileheight=").size()));
+
+    return response;
+}
+
+inline
+std::vector<char> assertTileMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& name = "")
+{
+    return assertTileMessage(*ws, name);
 }
 
 enum SpecialKey { skNone=0, skShift=0x1000, skCtrl=0x2000, skAlt=0x4000 };
