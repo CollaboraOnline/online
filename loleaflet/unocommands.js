@@ -9,3 +9,7 @@ var ObjectBackOne = _('Bring Forward');
 var ObjectForwardOne = _('Send Backward');
 var PasteSpecial = _('Paste Special');
 var PasteUnformatted = _('Unformatted Text');
+var NoWrap = _('No Wrap');
+var WrapBefore = _('Wrap Before');
+var WrapAfter = _('Wrap After');
+var EnableContour = _('Enable Contour');

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LODIR=/home/timar/cp-5.0
+LODIR=/home/timar/cp-5.1
 LEAFLETDIR=/home/timar/online
 
 for lang in `ls -1 $LODIR/translations/source`; do
