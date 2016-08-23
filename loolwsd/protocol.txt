@@ -70,6 +70,12 @@ load [part=<partNumber>] url=<url> [timestamp=<time>] [options=<options>]
 
     options are the whole rest of the line, not URL-encoded, and must be valid JSON.
 
+    The JSON may contain values for the following attributes:
+
+    ".uno:Author" The user's name in the form the user wishes it to be
+                  used in metadata of the document, especially in the
+                  change tracking.
+
 loolclient <major.minor[-patch]>
 
     Upon connection, a client must announce the version number it supports.
