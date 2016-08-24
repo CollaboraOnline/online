@@ -2,121 +2,110 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-03 16:55+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-07-17 13:27+0200\n"
+"PO-Revision-Date: 2016-05-25 10:47+0000\n"
+"Last-Translator: uzadmin <akmalxster@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: uz\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.14.0-rc1\n"
-"X-Pootle-Path: /uz/libo_online/loleaflet-ui-uz.po\n"
-"X-Pootle-Revision: 524754\n"
+"X-Generator: Pootle 2.7\n"
+"X-POOTLE-MTIME: 1464173270.000000\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Mavzu ranglari"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Standard ranglar"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Veb ranglar"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Palitraga qaytish"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Tarix"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Haligacha birorta ham tarix saqlanmagan."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr ""
+msgstr "Havoladan nusxa olish"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
+msgstr "Bir bosqich pastga"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
+msgstr "Bir bosqich tepaga"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Sharhni tahrirlash"
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
+msgstr "Sharh qoldirish"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "Birlashtirish"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Kataklarni birlashtirish…"
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "Oldinga o‘tkazish"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
+msgstr "Orqaga o‘tkazish"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "Maxsus qo‘yish"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
+msgstr "Formatlanmagan matn"
 
 #: dist/errormessages.js:1
-msgid ""
-"Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
-"file_path=/path/to/doc/"
-msgstr ""
+msgid "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: file_path=/path/to/doc/"
+msgstr "Noto‘g‘ri WOPISrc, Sarf: WOPISrc=valid encoded URI yoki file_path, sarf: file_path=/path/to/doc/"
 
 #: dist/errormessages.js:2
-msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
-"contact the administrator."
-msgstr ""
+msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
+msgstr "Host URL manzili bo‘sh. loolwsd serveri noto‘g‘ri sozlangan bo‘lishi mumkin. Administratorga xabar bering."
 
 #: dist/toolbar/toolbar.js:154
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "Bu sahifani o‘chirishni xohlaysizmi?"
 
-#: dist/toolbar/toolbar.js:329
-#: src/admin/AdminStrings.js:20
-#: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:56
+#: dist/toolbar/toolbar.js:329 src/admin/AdminStrings.js:20
+#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:56
 #: src/control/Control.Menubar.js:102
 msgid "Save"
 msgstr "Saqlash"
 
-#: dist/toolbar/toolbar.js:331
-#: src/control/Control.Menubar.js:18
-#: src/control/Control.Menubar.js:64
-#: src/control/Control.Menubar.js:110
+#: dist/toolbar/toolbar.js:331 src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:110
 msgid "Undo"
 msgstr "Bekor qilish"
 
-#: dist/toolbar/toolbar.js:332
-#: src/control/Control.Menubar.js:19
-#: src/control/Control.Menubar.js:65
-#: src/control/Control.Menubar.js:111
+#: dist/toolbar/toolbar.js:332 src/control/Control.Menubar.js:19
+#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:111
 msgid "Redo"
 msgstr "Qaytarish"
 
@@ -137,7 +126,6 @@ msgid "Strikeout"
 msgstr "Ustiga chizilgan"
 
 #: dist/toolbar/toolbar.js:344
-#, fuzzy
 msgid "Font color"
 msgstr "Shriftning rangi"
 
@@ -150,7 +138,6 @@ msgid "Align left"
 msgstr "Chap tomonga tekislash"
 
 #: dist/toolbar/toolbar.js:349
-#, fuzzy
 msgid "Center horizontally"
 msgstr "Gorizontal markazda"
 
@@ -171,743 +158,690 @@ msgid "Numbering on/off"
 msgstr "Raqamlashni yoqish/oʻchirish"
 
 #: dist/toolbar/toolbar.js:356
-#, fuzzy
 msgid "Increase indent"
-msgstr "Chekinishni koʻpaytirish"
+msgstr "Xat boshini kattalashtirish"
 
 #: dist/toolbar/toolbar.js:357
-#, fuzzy
 msgid "Decrease indent"
-msgstr "Chekinishni qisqartirish"
+msgstr "Xat boshini qisqartirish"
 
 #: dist/toolbar/toolbar.js:360
 msgid "Insert table"
-msgstr ""
+msgstr "Jadval kiritish"
 
 #: dist/toolbar/toolbar.js:361
 msgid "Insert comment"
-msgstr ""
+msgstr "Sharh qoldirish"
 
 #: dist/toolbar/toolbar.js:362
 msgid "Insert graphic"
-msgstr ""
+msgstr "Tasvir kiritish"
 
 #: dist/toolbar/toolbar.js:364
 msgid "More"
-msgstr ""
+msgstr "Ko‘proq"
 
 #: dist/toolbar/toolbar.js:365
 msgid "Close document"
-msgstr ""
+msgstr "Hujatni yopish"
 
-#: dist/toolbar/toolbar.js:395
-#: dist/toolbar/toolbar.js:758
+#: dist/toolbar/toolbar.js:395 dist/toolbar/toolbar.js:758
 msgid "Sum"
-msgstr ""
+msgstr "Sum"
 
 #: dist/toolbar/toolbar.js:396
 msgid "Function"
-msgstr ""
+msgstr "Funksiya"
 
 #: dist/toolbar/toolbar.js:397
 msgid "Cancel"
-msgstr ""
+msgstr "Bekor qilish"
 
 #: dist/toolbar/toolbar.js:398
 msgid "Accept"
-msgstr ""
+msgstr "Qabul qilish"
 
 #: dist/toolbar/toolbar.js:409
 msgid "First sheet"
-msgstr ""
+msgstr "Birinchi varaq"
 
 #: dist/toolbar/toolbar.js:410
 msgid "Previous sheet"
-msgstr ""
+msgstr "Oldingi varaq"
 
 #: dist/toolbar/toolbar.js:411
 msgid "Next sheet"
-msgstr ""
+msgstr "Keyingi varaq"
 
 #: dist/toolbar/toolbar.js:412
 msgid "Last sheet"
-msgstr ""
+msgstr "So‘nggi varaq"
 
-#: dist/toolbar/toolbar.js:422
-#: src/control/Control.Menubar.js:94
+#: dist/toolbar/toolbar.js:422 src/control/Control.Menubar.js:94
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "To‘liq ekranda namoyish etish"
 
 #: dist/toolbar/toolbar.js:424
 msgid "Insert slide"
-msgstr ""
+msgstr "Slayd kiritish"
 
-#: dist/toolbar/toolbar.js:425
-#: src/control/Control.Menubar.js:91
+#: dist/toolbar/toolbar.js:425 src/control/Control.Menubar.js:91
 msgid "Duplicate slide"
-msgstr ""
+msgstr "Slayddan nusxa ko‘chirish"
 
-#: dist/toolbar/toolbar.js:426
-#: src/control/Control.Menubar.js:92
+#: dist/toolbar/toolbar.js:426 src/control/Control.Menubar.js:92
 msgid "Delete slide"
-msgstr ""
+msgstr "Slaydni o‘chirish"
 
 #: dist/toolbar/toolbar.js:438
 msgid "Search:"
-msgstr ""
+msgstr "Izlash:"
 
 #: dist/toolbar/toolbar.js:443
 msgid "Search backwards"
-msgstr ""
+msgstr "Orqadagilardan izlash"
 
 #: dist/toolbar/toolbar.js:444
 msgid "Search forward"
-msgstr ""
+msgstr "Oldindagilardan izlash"
 
 #: dist/toolbar/toolbar.js:445
 msgid "Cancel the search"
-msgstr ""
+msgstr "Izlashni bekor qilish"
 
-#: dist/toolbar/toolbar.js:450
-#: dist/toolbar/toolbar.js:1196
+#: dist/toolbar/toolbar.js:450 dist/toolbar/toolbar.js:1196
 msgid "Take edit lock (others can only view)"
-msgstr ""
+msgstr "Tahrirlash (boshqalar faqat ko‘rishi mumkin)"
 
-#: dist/toolbar/toolbar.js:450
-#: dist/toolbar/toolbar.js:1196
+#: dist/toolbar/toolbar.js:450 dist/toolbar/toolbar.js:1196
 msgid "VIEWING"
-msgstr ""
+msgstr "KO‘RMOQDA"
 
 #: dist/toolbar/toolbar.js:452
 msgid "Previous page"
-msgstr ""
+msgstr "Oldingi sahifa"
 
 #: dist/toolbar/toolbar.js:453
 msgid "Next page"
-msgstr ""
+msgstr "Keyingi sahifa"
 
-#: dist/toolbar/toolbar.js:455
-#: src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:79
-#: src/control/Control.Menubar.js:128
+#: dist/toolbar/toolbar.js:455 src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:128
 msgid "Reset zoom"
-msgstr ""
+msgstr "Masshtabni tiklash"
 
-#: dist/toolbar/toolbar.js:456
-#: src/control/Control.Menubar.js:33
-#: src/control/Control.Menubar.js:78
-#: src/control/Control.Menubar.js:127
+#: dist/toolbar/toolbar.js:456 src/control/Control.Menubar.js:33
+#: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:127
 msgid "Zoom out"
-msgstr ""
+msgstr "Kichiklashtirish"
 
-#: dist/toolbar/toolbar.js:458
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:77
-#: src/control/Control.Menubar.js:126
+#: dist/toolbar/toolbar.js:458 src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:126
 msgid "Zoom in"
-msgstr ""
+msgstr "Kattalashtirish"
 
 #: dist/toolbar/toolbar.js:476
 msgid "You are viewing now."
-msgstr ""
+msgstr "Siz hozir ko‘ryapsiz."
 
 #: dist/toolbar/toolbar.js:476
 msgid "Click here to take edit."
-msgstr ""
+msgstr "Tahrirlash uchun bu yerga bosing."
 
-#: dist/toolbar/toolbar.js:607
-#: dist/toolbar/toolbar.js:1094
+#: dist/toolbar/toolbar.js:607 dist/toolbar/toolbar.js:1094
 msgid "Size"
-msgstr ""
+msgstr "Hajmi"
 
 #: dist/toolbar/toolbar.js:739
 msgid "Number of Sheets"
-msgstr ""
+msgstr "Varaqlar soni"
 
 #: dist/toolbar/toolbar.js:742
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Kataklarning tanlangan oralig‘i"
 
-#: dist/toolbar/toolbar.js:745
-#: dist/toolbar/toolbar.js:791
+#: dist/toolbar/toolbar.js:745 dist/toolbar/toolbar.js:791
 msgid "Entering text mode"
-msgstr ""
+msgstr "Matn rejimiga kirilmoqda"
 
-#: dist/toolbar/toolbar.js:748
-#: dist/toolbar/toolbar.js:794
+#: dist/toolbar/toolbar.js:748 dist/toolbar/toolbar.js:794
 msgid "Selection Mode"
-msgstr ""
+msgstr "Tanlash rejimi"
 
 #: dist/toolbar/toolbar.js:751
 msgid "Choice of functions"
-msgstr ""
+msgstr "Funksiyalar tanlovi"
 
 #: dist/toolbar/toolbar.js:753
 msgid "Average"
-msgstr ""
+msgstr "O‘rtacha"
 
 #: dist/toolbar/toolbar.js:754
 msgid "CountA"
-msgstr ""
+msgstr "A hisob"
 
 #: dist/toolbar/toolbar.js:755
 msgid "Count"
-msgstr ""
+msgstr "Hisob"
 
 #: dist/toolbar/toolbar.js:756
 msgid "Maximum"
-msgstr ""
+msgstr "Maksimal"
 
 #: dist/toolbar/toolbar.js:757
 msgid "Minimum"
-msgstr ""
+msgstr "Minimal"
 
 #: dist/toolbar/toolbar.js:759
 msgid "Selection count"
-msgstr ""
+msgstr "Tanlanganlar soni"
 
 #: dist/toolbar/toolbar.js:760
 msgid "None"
-msgstr ""
+msgstr "Yo‘q"
 
 #: dist/toolbar/toolbar.js:765
 msgid "Wrap Text"
-msgstr ""
+msgstr "Mattni joylash"
 
 #: dist/toolbar/toolbar.js:766
 msgid "Merge and Center Cells"
-msgstr ""
+msgstr "Kataklar birlashtirilsin va markazga"
 
 #: dist/toolbar/toolbar.js:768
 msgid "Format as Currency"
-msgstr ""
+msgstr "Pul birligi kabi format"
 
 #: dist/toolbar/toolbar.js:769
 msgid "Format as Percent"
-msgstr ""
+msgstr "Foiz kabi format"
 
 #: dist/toolbar/toolbar.js:770
 msgid "Format as Number"
-msgstr ""
+msgstr "Raqam kabi format"
 
 #: dist/toolbar/toolbar.js:771
 msgid "Format as Date"
-msgstr ""
+msgstr "Sana kabi format"
 
 #: dist/toolbar/toolbar.js:772
 msgid "Add Decimal Place"
-msgstr ""
+msgstr "Onlik joy qo‘shish"
 
 #: dist/toolbar/toolbar.js:773
 msgid "Delete Decimal Place"
-msgstr ""
+msgstr "O‘nlik joyni o‘chirish"
 
 #: dist/toolbar/toolbar.js:775
 msgid "Sort Ascending"
-msgstr ""
+msgstr "Alifbo tartibida"
 
 #: dist/toolbar/toolbar.js:776
 msgid "Sort Descending"
-msgstr ""
+msgstr "Teskari tartibda"
 
 #: dist/toolbar/toolbar.js:785
 msgid "Number of Pages"
-msgstr ""
+msgstr "Sahifalar soni"
 
 #: dist/toolbar/toolbar.js:788
 msgid "Word Counter"
-msgstr ""
+msgstr "So‘z hisoblagich"
 
 #: dist/toolbar/toolbar.js:802
 msgid "Number of Slides"
-msgstr ""
+msgstr "Slaydlar soni"
 
 #: dist/toolbar/toolbar.js:919
 msgid "Document saved"
-msgstr ""
+msgstr "Hujjat saqlandi"
 
 #: dist/toolbar/toolbar.js:1077
 msgid "Style"
-msgstr ""
+msgstr "Uslub"
 
 #: dist/toolbar/toolbar.js:1089
 msgid "Font"
-msgstr ""
+msgstr "Shrift"
 
 #: dist/toolbar/toolbar.js:1113
 msgid "Previous slide"
-msgstr ""
+msgstr "Oldingi slayd"
 
 #: dist/toolbar/toolbar.js:1114
 msgid "Next slide"
-msgstr ""
+msgstr "Keyingi slayd"
 
 #: dist/toolbar/toolbar.js:1192
 msgid "You are editing (others can only view)"
-msgstr ""
+msgstr "Siz tahrirlayapsiz (boshqalar faqat ko‘ra olishadi)"
 
 #: dist/toolbar/toolbar.js:1192
 msgid "EDITING"
-msgstr ""
+msgstr "TAHRIRLANMOQDA"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "You are locked in readonly mode"
-msgstr ""
+msgstr "Faqat o‘qish rejimida tahrirlay olmaysiz"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "READONLY"
-msgstr ""
+msgstr "FAQAT O‘QISH"
 
 #: dist/toolbar/toolbar.js:1324
 msgid "Layout"
-msgstr ""
+msgstr "Tartib"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "Ulanishda xatolik yuz berdi"
 
 #: src/admin/AdminSocketOverview.js:58
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "Bu seansni to‘xtatmoqchimisiz?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "Administrator terminali"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Kuzatishni yoqib/o‘chirib qo‘yish"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "Sozlamalar"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
-msgstr ""
+msgstr "Umumiy ko‘rinishi"
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(joriy)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
-msgstr ""
+msgstr "Tashxis"
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "Boshqarub paneli"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
-msgstr ""
+msgstr "Onlayn foydalanuvchilar"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "Ochiq hujjatlar"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
-msgstr ""
+msgstr "Sarflangan xotira"
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "Hujjat"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "Ko‘rilgan:"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
-msgstr ""
+msgstr "Sarflangan vaqt"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "Tugatish"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "Tasvirlar"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Xotira keshi hajmi ma’lumotlari"
 
 #: src/admin/AdminStrings.js:22
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Xotira vaqti oralig‘i ma’lumotlari (ms)"
 
 #: src/admin/AdminStrings.js:23
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "CPU keshi hajmi ma’lumotlari"
 
 #: src/admin/AdminStrings.js:24
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "CPU vaqti oralig‘i ma’lumotlari (ms)"
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr "soat"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr "daq"
 
 #: src/admin/Util.js:45
 msgid " s"
-msgstr ""
+msgstr "s"
 
 #: src/control/Control.ColumnHeader.js:34
 msgid "Insert column before"
-msgstr ""
+msgstr "Oldin ustun kiriting"
 
-#: src/control/Control.ColumnHeader.js:41
-#: src/control/Control.Menubar.js:134
+#: src/control/Control.ColumnHeader.js:41 src/control/Control.Menubar.js:134
 msgid "Delete column"
-msgstr ""
+msgstr "Ustunni o‘chirish"
 
-#: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:56
+#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:56
 #: src/control/Control.Menubar.js:102
 msgid "File"
 msgstr "Fayl"
 
-#: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:57
 #: src/control/Control.Menubar.js:103
 msgid "Print"
 msgstr "Chop etish"
 
-#: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:104
 msgid "See revision history"
-msgstr ""
+msgstr "Tarixni qaytadan ko‘rish"
 
-#: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
 #: src/control/Control.Menubar.js:105
 msgid "Download as"
-msgstr ""
+msgstr "Yuklab olish"
 
-#: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
 #: src/control/Control.Menubar.js:105
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "PDF hujjat (.pdf)"
 
 #: src/control/Control.Menubar.js:14
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ODF matn hujjati (.odt)"
 
 #: src/control/Control.Menubar.js:15
 msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgstr "Microsoft Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:16
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:18
-#: src/control/Control.Menubar.js:64
+#: src/control/Control.Menubar.js:18 src/control/Control.Menubar.js:64
 #: src/control/Control.Menubar.js:110
 msgid "Edit"
-msgstr ""
+msgstr "Tahrirlash"
 
-#: src/control/Control.Menubar.js:21
-#: src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:67
 #: src/control/Control.Menubar.js:113
 msgid "Cut"
-msgstr ""
+msgstr "Kesib olish"
 
-#: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:68
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:68
 #: src/control/Control.Menubar.js:114
 msgid "Copy"
-msgstr ""
+msgstr "Nusxa olish"
 
-#: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:69
 #: src/control/Control.Menubar.js:115
 msgid "Paste"
-msgstr ""
+msgstr "Qo‘yish"
 
-#: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:71
 #: src/control/Control.Menubar.js:117
 msgid "Select all"
-msgstr ""
+msgstr "Barchasini belgilash"
 
-#: src/control/Control.Menubar.js:27
-#: src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:73
-#: src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:36
+#: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:81
 #: src/control/Control.Menubar.js:119
 msgid "Insert"
-msgstr ""
+msgstr "Kiritish"
 
-#: src/control/Control.Menubar.js:27
-#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:73
 #: src/control/Control.Menubar.js:119
 msgid "Image"
-msgstr ""
+msgstr "Tasvir"
 
 #: src/control/Control.Menubar.js:28
 msgid "Comment"
-msgstr ""
+msgstr "Sharh"
 
-#: src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:75
 #: src/control/Control.Menubar.js:124
 msgid "View"
-msgstr ""
+msgstr "Ko‘rinishi"
 
-#: src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:75
 #: src/control/Control.Menubar.js:124
 msgid "Full screen"
-msgstr ""
+msgstr "To‘liq ekran"
 
-#: src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:81
 msgid "Tables"
-msgstr ""
+msgstr "Jadvallar"
 
-#: src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:81
 msgid "Rows before"
-msgstr ""
+msgstr "Qatorlar oldinga"
 
-#: src/control/Control.Menubar.js:37
-#: src/control/Control.Menubar.js:82
+#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:82
 msgid "Rows after"
-msgstr ""
+msgstr "Qatorlar orqaga"
 
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:84
+#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:84
 msgid "Columns left"
-msgstr ""
+msgstr "Chapdagi ustunlar"
 
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:85
+#: src/control/Control.Menubar.js:40 src/control/Control.Menubar.js:85
 msgid "Columns right"
-msgstr ""
+msgstr "O‘ngdagi ustunlar"
 
-#: src/control/Control.Menubar.js:41
-#: src/control/Control.Menubar.js:86
+#: src/control/Control.Menubar.js:41 src/control/Control.Menubar.js:86
 msgid "Delete"
-msgstr ""
+msgstr "O‘chirish"
 
-#: src/control/Control.Menubar.js:41
-#: src/control/Control.Menubar.js:86
+#: src/control/Control.Menubar.js:41 src/control/Control.Menubar.js:86
 msgid "Rows"
-msgstr ""
+msgstr "Qatorlar"
 
-#: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:87
+#: src/control/Control.Menubar.js:42 src/control/Control.Menubar.js:87
 msgid "Columns"
-msgstr ""
+msgstr "Ustunlar"
 
-#: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:43 src/control/Control.Menubar.js:44
 msgid "Table"
-msgstr ""
+msgstr "Jadval"
 
 #: src/control/Control.Menubar.js:44
 msgid "Select"
-msgstr ""
+msgstr "Tanlash"
 
-#: src/control/Control.Menubar.js:45
-#: src/control/Control.Menubar.js:121
+#: src/control/Control.Menubar.js:45 src/control/Control.Menubar.js:121
 msgid "Row"
-msgstr ""
+msgstr "Qator"
 
-#: src/control/Control.Menubar.js:46
-#: src/control/Control.Menubar.js:122
+#: src/control/Control.Menubar.js:46 src/control/Control.Menubar.js:122
 msgid "Column"
-msgstr ""
+msgstr "Ustun"
 
 #: src/control/Control.Menubar.js:47
 msgid "Cell"
-msgstr ""
+msgstr "Katak"
 
-#: src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:48 src/control/Control.Menubar.js:88
 msgid "Merge cells"
-msgstr ""
+msgstr "Kataklarni birlashtirish"
 
-#: src/control/Control.Menubar.js:50
-#: src/control/Control.Menubar.js:96
+#: src/control/Control.Menubar.js:50 src/control/Control.Menubar.js:96
 #: src/control/Control.Menubar.js:136
 msgid "Help"
-msgstr ""
+msgstr "Yordam"
 
-#: src/control/Control.Menubar.js:50
-#: src/control/Control.Menubar.js:96
+#: src/control/Control.Menubar.js:50 src/control/Control.Menubar.js:96
 #: src/control/Control.Menubar.js:136
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Tugmalar birikmasi"
 
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:97
+#: src/control/Control.Menubar.js:51 src/control/Control.Menubar.js:97
 #: src/control/Control.Menubar.js:137
 msgid "About"
-msgstr ""
+msgstr "Dastur haqida"
 
 #: src/control/Control.Menubar.js:60
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ODF prezintatsiya (.odp)"
 
 #: src/control/Control.Menubar.js:61
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:62
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgstr "Microsoft Powerpoint (.pptx)"
 
 #: src/control/Control.Menubar.js:90
 msgid "Slide"
-msgstr ""
+msgstr "Slayd"
 
 #: src/control/Control.Menubar.js:90
 msgid "New slide"
-msgstr ""
+msgstr "Yangi slayd"
 
 #: src/control/Control.Menubar.js:106
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ODF spreadsheet (.ods)"
 
 #: src/control/Control.Menubar.js:107
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgstr "Microsoft Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:108
 msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgstr "Microsoft Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:130
 msgid "Cells"
-msgstr ""
+msgstr "Kataklar"
 
 #: src/control/Control.Menubar.js:130
 msgid "Insert row"
-msgstr ""
+msgstr "Qator kiritish"
 
 #: src/control/Control.Menubar.js:131
 msgid "Insert column"
-msgstr ""
+msgstr "Ustun kiritish"
 
-#: src/control/Control.Menubar.js:133
-#: src/control/Control.RowHeader.js:39
+#: src/control/Control.Menubar.js:133 src/control/Control.RowHeader.js:39
 msgid "Delete row"
-msgstr ""
+msgstr "Qatorni o‘chirish"
 
 #: src/control/Control.Menubar.js:306
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "Bu slaydni o‘chirishni xohlaysizmi?"
 
 #: src/control/Control.RowHeader.js:32
 msgid "Insert row above"
-msgstr ""
+msgstr "Qatorni tepaga kiritish"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "Bundan oldin varaqni kiriting"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "Bundan keyin varaqni kiriting"
 
 #: src/control/Control.Tabs.js:48
 msgid "Delete sheet"
-msgstr ""
+msgstr "Varaqni o‘chirish"
 
 #: src/control/Control.Tabs.js:52
 msgid "Are you sure you want to delete this sheet?"
-msgstr ""
+msgstr "Bu varaqni o‘chirishni xohlaysizmi?"
 
 #: src/control/Control.Tabs.js:61
 msgid "Rename sheet"
-msgstr ""
+msgstr "Varaq nomini o‘zgartirish"
 
 #: src/control/Control.Tabs.js:65
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "Yangi varaq nomini kiriting"
 
-#: src/control/Toolbar.js:59
-#: src/control/Toolbar.js:68
+#: src/control/Toolbar.js:59 src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "Yuklab olinmoqda…"
 
-#: src/control/Toolbar.js:80
-#: src/map/Map.js:802
+#: src/control/Toolbar.js:80 src/map/Map.js:802
 msgid "Saving..."
-msgstr ""
+msgstr "Saqlanmoqda..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "%productName dasturining ushbu versiyasi yaratuvchisi:"
 
 #: src/core/Socket.js:17
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr ""
+msgstr "Obbo! LibreOffice Online xizmatiga ulanishda muammo yuz berdi: "
 
 #: src/core/Socket.js:139
 msgid "Unsupported server version."
-msgstr ""
+msgstr "Mos kelmaydigan server versiyasi."
 
 #: src/core/Socket.js:158
 msgid "Document requires password to view."
-msgstr ""
+msgstr "Hujjatni ko‘rish uchun parolni kiriting."
 
 #: src/core/Socket.js:161
 msgid "Document requires password to modify."
-msgstr ""
+msgstr "Hujjatni o‘zgartirish uchun parolni kiriting."
 
 #: src/core/Socket.js:163
 msgid "Hit Cancel to open in view-only mode."
-msgstr ""
+msgstr "Faqat ko‘rish rejimida ochish uchun “Bekor qilish” tugmasiga bosing."
 
 #: src/core/Socket.js:167
 msgid "Wrong password provided. Please try again."
-msgstr ""
+msgstr "Noto‘g‘ri parolni kiritdingiz. Yana urinib ko‘ring."
 
 #: src/core/Socket.js:304
-msgid ""
-"Well, this is embarrassing, we cannot connect to your document. Please try "
-"again."
-msgstr ""
+msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
+msgstr "Bizni afv eting: hujjatingizga ulana olmadik. Yana urinib ko‘ring."
 
 #: src/core/Socket.js:307
 msgid "We are sorry, this is an unexpected connection error. Please try again."
-msgstr ""
+msgstr "Kechirasiz, ulanishda kutilmagan xatolik yuz berdi. Yana urinib ko‘ring."
 
 #: src/map/Map.js:116
 msgid "Initializing..."
-msgstr ""
+msgstr "Ishga tushirilmoqda…"
 
 #: src/map/Map.js:805
 msgid "Loading..."
-msgstr ""
+msgstr "Yuklanmoqda..."

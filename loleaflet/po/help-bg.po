@@ -2,1578 +2,1521 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-03 16:50+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-25 11:51+0200\n"
+"PO-Revision-Date: 2016-05-16 18:57+0000\n"
+"Last-Translator: Mihail Balabanov <m.balabanov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: bg\n"
+"Language: templates\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.14.0-rc1\n"
-"X-Pootle-Path: /bg/libo_online/loleaflet-help-bg.po\n"
-"X-Pootle-Revision: 524598\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.7\n"
+"X-POOTLE-MTIME: 1463059002.000000\n"
 
-#: dist%2Floleaflet-help.html+html.head.title%3A5
+#: dist/loleaflet-help.html+html.head.title:5
 msgid "LOLeaflet Help"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.h1%3A48
+#: dist/loleaflet-help.html+html.body.h1:48
 msgid "Keyboard Shortcuts"
 msgstr "Клавишни комбинации"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A50
+#: dist/loleaflet-help.html+html.body.div.h2:50
 msgid "General Keyboard Shortcuts"
 msgstr "Общи клавишни комбинации"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:52
 msgid "Undo"
 msgstr "Отмяна"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A52
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:52
 msgid "Ctrl + Z"
 msgstr "Ctrl + Z"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:53
 msgid "Redo"
 msgstr "Възстановяване"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A53
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:53
 msgid "Ctrl + Y"
 msgstr "Ctrl + Y"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A54
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:54
 msgid "Cut"
 msgstr "Изрязване"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A54
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:54
 msgid "Ctrl + X"
 msgstr "Ctrl + X"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:55
 msgid "Paste as unformatted text"
 msgstr "Поставяне като неформатиран текст"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A55
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:55
 msgid "Ctrl + Alt + Shift + V"
 msgstr "Ctrl + Alt + Shift + V"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:56
 msgid "Print (Download as PDF)"
 msgstr "Печат (изтегляне като PDF)"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A56
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:56
 msgid "Ctrl + P"
 msgstr "Ctrl + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A60
+#: dist/loleaflet-help.html+html.body.div.h2:60
 msgctxt "dist/loleaflet-help.html html.body.div.h2:60"
 msgid "Text formatting"
 msgstr "Форматиране на текст"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A62
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:62
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
 msgid "Bold"
 msgstr "Получер"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A62
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:62
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:62"
 msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A63
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:63
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
 msgid "Italic"
 msgstr "Курсив"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A63
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:63
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:63"
 msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A64
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:64
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
 msgid "Underline"
 msgstr "Подчертан"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A64
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:64
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:64"
 msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A65
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:65
 msgid "Double Underline"
 msgstr "Двойно подчертан"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A65
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:65
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:65"
 msgid "Ctrl + D"
 msgstr "Ctrl + D"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A66
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:66
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
 msgid "Strikethrough"
 msgstr "Зачертан"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A66
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:66
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:66"
 msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A67
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:67
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
 msgid "Superscript"
 msgstr "Горен индекс"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A67
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:67
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:67"
 msgid "Ctrl + Shift + P"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
 msgid "Subscript"
 msgstr "Долен индекс"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A68
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:68
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:68"
 msgid "Ctrl + Shift + B"
 msgstr "Ctrl + Shift + B"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
 msgid "Remove direct formatting"
 msgstr "Премахване на прякото форматиране"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A69
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:69
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:69"
 msgid "Ctrl + M"
 msgstr "Ctrl + M"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A71
+#: dist/loleaflet-help.html+html.body.div.h2:71
 msgctxt "dist/loleaflet-help.html html.body.div.h2:71"
 msgid "Paragraph formatting"
 msgstr "Форматиране на абзаци"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
 msgid "Align Center"
 msgstr "Центрирано подравняване"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A73
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:73
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:73"
 msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A74
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:74
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
 msgid "Align Left"
 msgstr "Подравняване отляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A74
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:74
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:74"
 msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A75
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:75
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
 msgid "Align Right"
 msgstr "Подравняване отдясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A75
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:75
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:75"
 msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Justify"
 msgstr "Двустранно подравняване"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A76
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:76
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:76"
 msgid "Ctrl + J"
 msgstr "Ctrl + J"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:77
 msgid "Apply Default paragraph style"
 msgstr "Прилагане на подразбрания стил за абзаци"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A77
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:77
 msgid "Ctrl + 0"
 msgstr "Ctrl + 0"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:78
 msgid "Apply Heading 1 paragraph style"
 msgstr "Прилагане на стила за абзаци Заглавие 1"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A78
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:78
 msgid "Ctrl + 1"
 msgstr "Ctrl + 1"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:79
 msgid "Apply Heading 2 paragraph style"
 msgstr "Прилагане на стила за абзаци Заглавие 2"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A79
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:79
 msgid "Ctrl + 2"
 msgstr "Ctrl + 2"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:80
 msgid "Apply Heading 3 paragraph style"
 msgstr "Прилагане на стила за абзаци Заглавие 3"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A80
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:80
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:80"
 msgid "Ctrl + 3"
 msgstr "Ctrl + 3"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:81
 msgid "Apply Heading 4 paragraph style"
 msgstr "Прилагане на стила за абзаци Заглавие 4"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A81
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:81
 msgid "Ctrl + 4"
 msgstr "Ctrl + 4"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:82
 msgid "Apply Heading 5 paragraph style"
 msgstr "Прилагане на стила за абзаци Заглавие 5"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A82
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:82
 msgid "Ctrl + 5"
 msgstr "Ctrl + 5"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A84
+#: dist/loleaflet-help.html+html.body.div.h2:84
 msgid "Text selection and navigation in document"
 msgstr "Избиране на текст и навигация в документ"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Select All"
 msgstr "Избиране на всичко"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A86
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:86
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:86"
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Move cursor to the left"
 msgstr "Преместване на курсора наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A87
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:87
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:87"
 msgid "Arrow Left"
 msgstr "Стрелка наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Move cursor with selection to the left"
 msgstr "Преместване на курсора наляво с избиране"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A88
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:88
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:88"
 msgid "Shift + Arrow Left"
 msgstr "Shift + стрелка наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Go to beginning of a word"
 msgstr "Преход към началото на думата"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A89
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:89
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:89"
 msgid "Ctrl + Arrow Left"
 msgstr "Ctrl + стрелка наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Select to the left word by word"
 msgstr "Избиране наляво дума по дума"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A90
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:90
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:90"
 msgid "Ctrl + Shift + Arrow Left"
 msgstr "Ctrl + Shift + стрелка наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Move cursor to the right"
 msgstr "Преместване на курсора надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A91
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:91
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:91"
 msgid "Arrow Right"
 msgstr "Стрелка надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A92
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:92
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
 msgid "Move cursor with selection to the right"
 msgstr "Преместване на курсора надясно с избиране"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A92
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:92
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:92"
 msgid "Shift + Arrow Right"
 msgstr "Shift + стрелка надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
 msgid "Go to start of the next word"
 msgstr "Преход към началото на следващата дума"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A93
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:93
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:93"
 msgid "Ctrl + Arrow Right"
 msgstr "Ctrl + стрелка надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A94
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:94
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
 msgid "Select to the right word by word"
 msgstr "Избиране надясно дума по дума"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A94
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:94
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:94"
 msgid "Ctrl + Shift + Arrow Right"
 msgstr "Ctrl + Shift + стрелка надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A95
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:95
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
 msgid "Move cursor up one line"
 msgstr "Преместване на курсора с един ред нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A95
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:95
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:95"
 msgid "Arrow Up"
 msgstr "Стрелка нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Select lines in upwards direction"
 msgstr "Избиране на редове нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A96
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:96
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:96"
 msgid "Shift + Arrow Up"
 msgstr "Shift + стрелка нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:97
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
 msgid "Move cursor to beginning of the previous paragraph"
 msgstr "Преместване на курсора в началото на предишния абзац"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A97
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:97
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:97"
 msgid "Ctrl + Arrow Up"
 msgstr "Ctrl + Стрелка нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Select to beginning of paragraph"
 msgstr "Избиране до началото на абзаца"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A98
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:98
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:98"
 msgid "Ctrl + Shift + Arrow Up"
 msgstr "Ctrl + Shift + стрелка нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A99
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:99
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
 msgid "Move cursor down one line"
 msgstr "Преместване на курсора с един ред надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A99
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:99
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:99"
 msgid "Arrow Down"
 msgstr "Стрелка надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Select lines in downwards direction"
 msgstr "Избиране на редове надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A100
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:100
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:100"
 msgid "Shift + Arrow Down"
 msgstr "Shift + стрелка надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:101
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Move cursor to beginning of the next paragraph"
 msgstr "Преместване на курсора в началото на предишния абзац"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A101
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:101
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:101"
 msgid "Ctrl + Arrow Down"
 msgstr "Ctrl + стрелка надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Select to end of paragraph"
 msgstr "Избиране до края на абзаца"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A102
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:102
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:102"
 msgid "Ctrl + Shift + Arrow Down"
 msgstr "Ctrl + Shift + стрелка надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Go to beginning of line"
 msgstr "Преход към началото на реда"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A103
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:103
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:103"
 msgid "Home"
 msgstr "Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
 msgid "Go and select to the beginning of a line"
 msgstr "Преход с избиране до началото на реда"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A104
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:104
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:104"
 msgid "Shift + Home"
 msgstr "Shift + Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Go to start of document"
 msgstr "Преход към началото на документа"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A105
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:105
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:105"
 msgid "Ctrl + Home"
 msgstr "Ctrl + Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:106
 msgid "Go and select text to start of document"
 msgstr "Избиране на текста до началото на документа"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A106
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:106
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:106"
 msgid "Ctrl + Shift + Home"
 msgstr "Ctrl + Shift + Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "Go to end of line"
 msgstr "Преход към края на реда"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A107
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "End"
 msgstr "End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Go and select to the end of a line"
 msgstr "Преход с избиране до края на реда"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A108
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Shift + End"
 msgstr "Shift + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Go to end of document"
 msgstr "Преход към края на документа"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A109
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Ctrl + End"
 msgstr "Ctrl + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A110
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:110
 msgid "Go and select text to end of document"
 msgstr "Избиране на текста до края на документа"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A110
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:110
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:110"
 msgid "Ctrl + Shift + End"
 msgstr "Ctrl + Shift + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:111
 msgid "Move the view up one page"
 msgstr "Преместване на изгледа с една страница нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A111
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:111
 msgid "PageUp"
 msgstr "PageUp"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:112
 msgid "Switch cursor between text and header"
 msgstr "Превключване на курсора между текста и горния колонтитул"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A112
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:112
 msgid "Ctrl + PageUp"
 msgstr "Ctrl + PageUp"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:113
 msgid "Extend the selection up one page"
 msgstr "Разширяване на селекцията с една страница нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A113
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:113
 msgid "Shift + PageUp"
 msgstr "Shift + PageUp"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:114
 msgid "Move the view down one page"
 msgstr "Преместване на изгледа с една страница надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A114
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:114
 msgid "PageDown"
 msgstr "PageDown"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:115
 msgid "Switch cursor between text and footer"
 msgstr "Превключване на курсора между текста и долния колонтитул"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A115
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:115
 msgid "Ctrl + PageDown"
 msgstr "Ctrl + PageDown"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:116
 msgid "Extend the selection down one page"
 msgstr "Разширяване на селекцията с една страница надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A116
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:116
 msgid "Shift + PageDown"
 msgstr "Shift + PageDown"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:117
 msgid "Delete to beginning of word"
 msgstr "Изтриване до началото на думата"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A117
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:117
 msgid "Ctrl + Backspace"
 msgstr "Ctrl + Backspace"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:118
 msgid "Delete to end of word"
 msgstr "Изтриване до края на думата"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A118
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:118
 msgid "Ctrl + Del"
 msgstr "Ctrl + Del"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:119
 msgid "Delete to beginning of sentence"
 msgstr "Изтриване до началото на изречението"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A119
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:119
 msgid "Ctrl + Shift + Backspace"
 msgstr "Ctrl + Shift + Backspace"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A120
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:120
 msgid "Delete to end of sentence"
 msgstr "Изтриване до края на изречението"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A120
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:120
 msgid "Ctrl + Shift + Del"
 msgstr "Ctrl + Shift + Del"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A122
+#: dist/loleaflet-help.html+html.body.div.h2:122
 msgid "Shortcut Keys for Tables"
 msgstr "Клавишни комбинации за таблици"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A124
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:124
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:124"
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A124
-msgid ""
-"If the active cell is empty: selects the whole table. Otherwise: selects the "
-"contents of the active cell. Pressing again selects the entire table."
-msgstr ""
-"Ако активната клетка е празна: избира цялата таблица. В противен случай: "
-"избира съдържанието на активната клетка. Повторното натискане избира цялата "
-"таблица."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:124
+msgid "If the active cell is empty: selects the whole table. Otherwise: selects the contents of the active cell. Pressing again selects the entire table."
+msgstr "Ако активната клетка е празна: избира цялата таблица. В противен случай: избира съдържанието на активната клетка. Повторното натискане избира цялата таблица."
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A125
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:125
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:125"
 msgid "Ctrl + Home"
 msgstr "Ctrl + Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A125
-msgid ""
-"If the active cell is empty: goes to the beginning of the table. Otherwise: "
-"first press goes to beginning of the active cell, second press goes to "
-"beginning of the current table, third press goes to beginning of document."
-msgstr ""
-"Ако активната клетка е празна: мести курсора в началото на таблицата. В "
-"противен случай: при първо натискане мести курсора в началото на активната "
-"клетка, при второ - в началото на таблицата и при трето - в началото на "
-"документа."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:125
+msgid "If the active cell is empty: goes to the beginning of the table. Otherwise: first press goes to beginning of the active cell, second press goes to beginning of the current table, third press goes to beginning of document."
+msgstr "Ако активната клетка е празна: мести курсора в началото на таблицата. В противен случай: при първо натискане мести курсора в началото на активната клетка, при второ - в началото на таблицата и при трето - в началото на документа."
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A126
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:126
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:126"
 msgid "Ctrl + End"
 msgstr "Ctrl + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A126
-msgid ""
-"If the active cell is empty: goes to the end of the table. Otherwise: first "
-"press goes to the end of the active cell, second press goes to the end of "
-"the current table, third press goes to the end of the document."
-msgstr ""
-"Ако активната клетка е празна: мести курсора в края на таблицата. В противен "
-"случай: при първо натискане мести курсора в края на активната клетка, при "
-"второ - в края на таблицата и при трето - в края на документа."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:126
+msgid "If the active cell is empty: goes to the end of the table. Otherwise: first press goes to the end of the active cell, second press goes to the end of the current table, third press goes to the end of the document."
+msgstr "Ако активната клетка е празна: мести курсора в края на таблицата. В противен случай: при първо натискане мести курсора в края на активната клетка, при второ - в края на таблицата и при трето - в края на документа."
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:127
 msgid "Ctrl + Tab"
 msgstr "Ctrl + Tab"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A127
-msgid ""
-"Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
-"Alt + Tab may be used instead."
-msgstr ""
-"Вмъква позиция за табулация (само в таблици). В зависимост от използвания "
-"диспечер на прозорци, вместо това може да се използва Alt + Tab."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:127
+msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
+msgstr "Вмъква позиция за табулация (само в таблици). В зависимост от използвания диспечер на прозорци, вместо това може да се използва Alt + Tab."
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:128
 msgid "Alt + Arrow Keys"
 msgstr "Alt + клавишите със стрелки"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A128
-msgid ""
-"Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr ""
-"Увеличава/намалява размера на колоната/реда откъм десния/долния ръб на "
-"клетката"
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:128
+msgid "Increases/decreases the size of the column/row on the right/bottom cell edge"
+msgstr "Увеличава/намалява размера на колоната/реда откъм десния/долния ръб на клетката"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A129
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:129
 msgid "Alt + Shift + Arrow Keys"
 msgstr "Alt + Shift + клавишите със стрелки"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A129
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:129
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr ""
-"Увеличава/намалява размера на колоната/реда откъм левия/горния ръб на "
-"клетката"
+msgstr "Увеличава/намалява размера на колоната/реда откъм левия/горния ръб на клетката"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:130
 msgid "Alt + Ctrl + Arrow Keys"
 msgstr "Alt + Ctrl + клавишите със стрелки"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A130
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:130
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:130"
 msgid "Like Alt, but only the active cell is modified"
 msgstr "Като Alt, но се променя само текущата клетка"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:131
 msgid "Ctrl + Alt + Shift + Arrow Keys"
 msgstr "Ctrl + Alt + Shift + клавишите със стрелки"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A131
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:131
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:131"
 msgid "Like Alt, but only the active cell is modified"
 msgstr "Като Alt, но се променя само активната клетка"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A132
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:132
 msgid "Alt + Insert"
 msgstr "Alt + Insert"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A132
-msgid ""
-"3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
-"inserts cell"
-msgstr ""
-"3 секунди в режим „Вмъкване“, клавиш със стрелка вмъква ред/колона, Ctrl + "
-"стрелка вмъква клетка"
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:132
+msgid "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key inserts cell"
+msgstr "3 секунди в режим „Вмъкване“, клавиш със стрелка вмъква ред/колона, Ctrl + стрелка вмъква клетка"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:133
 msgid "Alt + Del"
 msgstr "Alt + Del"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A133
-msgid ""
-"3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
-"merges cell with neighboring cell"
-msgstr ""
-"3 секунди в режим „Изтриване“, клавиш със стрелка изтрива ред/колона, Ctrl + "
-"стрелка обединява клетка със съседна"
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:133
+msgid "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key merges cell with neighboring cell"
+msgstr "3 секунди в режим „Изтриване“, клавиш със стрелка изтрива ред/колона, Ctrl + стрелка обединява клетка със съседна"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A134
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:134
 msgid "Shift + Ctrl + Del"
 msgstr "Shift + Ctrl + Del"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A134
-msgid ""
-"If no whole cell is selected, the text from the cursor to the end of the "
-"current sentence is deleted. If the cursor is at the end of a cell, and no "
-"whole cell is selected, the contents of the next cell are deleted."
-msgstr ""
-"Ако не е избрана цяла клетка, се изтрива текстът от курсора до края на "
-"текущото изречение. Ако курсорът е в края на клетка и не е избрана цяла "
-"клетка, се изтрива съдържанието на следващата клетка."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td.p:134
+msgid "If no whole cell is selected, the text from the cursor to the end of the current sentence is deleted. If the cursor is at the end of a cell, and no whole cell is selected, the contents of the next cell are deleted."
+msgstr "Ако не е избрана цяла клетка, се изтрива текстът от курсора до края на текущото изречение. Ако курсорът е в края на клетка и не е избрана цяла клетка, се изтрива съдържанието на следващата клетка."
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A135
-msgid ""
-"If no whole cell is selected and the cursor is at the end of the table, the "
-"paragraph following the table will be deleted, unless it is the last "
-"paragraph in the document."
-msgstr ""
-"Ако не е избрана цяла клетка и курсорът е в края на таблицата, ще бъде "
-"изтрит абзацът след таблицата, освен ако е последният абзац в документа."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td.p:135
+msgid "If no whole cell is selected and the cursor is at the end of the table, the paragraph following the table will be deleted, unless it is the last paragraph in the document."
+msgstr "Ако не е избрана цяла клетка и курсорът е в края на таблицата, ще бъде изтрит абзацът след таблицата, освен ако е последният абзац в документа."
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td.p%3A136
-msgid ""
-"If one or more cells are selected, the whole rows containing the selection "
-"will be deleted. If all rows are selected completely or partially, the "
-"entire table will be deleted."
-msgstr ""
-"Ако са избрани една или повече клетки, ще бъдат изтрити всички редове, "
-"съдържащи селекцията. Ако са избрани всички редове, изцяло или частично, се "
-"изтрива цялата таблица."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td.p:136
+msgid "If one or more cells are selected, the whole rows containing the selection will be deleted. If all rows are selected completely or partially, the entire table will be deleted."
+msgstr "Ако са избрани една или повече клетки, ще бъдат изтрити всички редове, съдържащи селекцията. Ако са избрани всички редове, изцяло или частично, се изтрива цялата таблица."
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A139
+#: dist/loleaflet-help.html+html.body.div.h2:139
 msgid "Word processor functions"
 msgstr "Функции за текстообработка"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A141
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:141
 msgid "Insert footnote"
 msgstr "Вмъкване на бележка под линия"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A141
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:141
 msgid "Ctrl + Alt + F"
 msgstr "Ctrl + Alt + F"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A142
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:142
 msgid "Insert endnote"
 msgstr "Вмъкване на бележка в края"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A142
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:142
 msgid "Ctrl + Alt + D"
 msgstr "Ctrl + Alt + D"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A143
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:143
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
 msgid "Insert comment"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A143
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:143
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:143"
 msgid "Ctrl + Alt + C"
 msgstr "Ctrl + Alt + 5"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A145
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:145
 msgid "Insert soft hyphen"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A145
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:145
 #, fuzzy
 msgid "Ctrl + -"
 msgstr "Ctrl + Z"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A146
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:146
 msgid "Insert non-breaking hyphen"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A146
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:146
 #, fuzzy
 msgid "Ctrl + Shift + -"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A148
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:148
 msgid "Insert non-breaking space"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A148
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:148
 #, fuzzy
 msgid "Ctrl + Shift + Space"
 msgstr "Ctrl + Shift + Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A149
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:149
 msgid "Insert line break"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A149
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:149
 #, fuzzy
 msgid "Shift + Enter"
 msgstr "Shift + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A150
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:150
 msgid "Manual page break"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A150
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:150
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:150"
 msgid "Ctrl + Enter"
 msgstr "Ctrl + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A151
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:151
 msgid "Column break (in multicolumnar text)"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A151
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:151
 #, fuzzy
 msgid "Ctrl + Shift + Enter"
 msgstr "Ctrl + Shift + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A152
-msgid ""
-"Insert new paragraph directly before or after a section, or before a table"
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:152
+msgid "Insert new paragraph directly before or after a section, or before a table"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A152
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:152
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:152"
 msgid "Alt + Enter"
 msgstr "Alt + Insert"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A153
-msgid ""
-"Insert new paragraph without numbering inside a list. Does not work when the "
-"cursor is at the end of the list."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:153
+msgid "Insert new paragraph without numbering inside a list. Does not work when the cursor is at the end of the list."
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A153
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:153
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:153"
 msgid "Alt + Enter"
 msgstr "Alt + Insert"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A157
+#: dist/loleaflet-help.html+html.body.div.h2:157
 #, fuzzy
 msgid "Cell formatting"
 msgstr "Форматиране на текст"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A159
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:159
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
 msgid "Bold"
 msgstr "Получер"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A159
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:159
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
 msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:160
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
 msgid "Italic"
 msgstr "Курсив"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A160
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:160
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
 msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:161
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
 msgid "Underline"
 msgstr "Подчертан"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A161
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:161
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
 msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:162
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
 msgid "Strikethrough"
 msgstr "Зачертан"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A162
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:162
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:162"
 msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:163
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
 msgid "Remove direct formatting"
 msgstr "Премахване на прякото форматиране"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A163
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:163
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
 msgid "Ctrl + M"
 msgstr "Ctrl + M"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A164
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:164
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:164"
 msgid "Insert comment"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A164
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:164
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:164"
 msgid "Ctrl + Alt + C"
 msgstr "Ctrl + Alt + 5"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A165
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:165
 msgid "Display comment"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A165
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:165
 #, fuzzy
 msgid "Ctrl + F1"
 msgstr "Ctrl + 1"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A166
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:166
 msgid "Fill Down"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A166
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:166
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:166"
 msgid "Ctrl + D"
 msgstr "Ctrl + D"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A167
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:167
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
 msgid "Select All"
 msgstr "Избиране на всичко"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A167
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:167
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A168
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:168
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
 msgid "Align Center"
 msgstr "Центрирано подравняване"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A168
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:168
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
 msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A169
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:169
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
 msgid "Align Left"
 msgstr "Подравняване отляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A169
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:169
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
 msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A170
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:170
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
 msgid "Align Right"
 msgstr "Подравняване отдясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A170
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:170
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
 msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A171
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:171
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
 msgid "Justify"
 msgstr "Двустранно подравняване"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A171
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:171
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
 msgid "Ctrl + J"
 msgstr "Ctrl + J"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A172
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:172
 msgid "Set Optimal Column Width"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A172
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:172
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:172"
 msgid "Ctrl + 3"
 msgstr "Ctrl + 3"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:173
 msgid "Two decimal places, thousands separator"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A173
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:173
 #, fuzzy
 msgid "Ctrl + Shift + 1"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A174
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:174
 msgid "Standard exponential format"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A174
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:174
 #, fuzzy
 msgid "Ctrl + Shift + 2"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A175
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:175
 msgid "Standard date format"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A175
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:175
 #, fuzzy
 msgid "Ctrl + Shift + 3"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A176
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:176
 msgid "Standard currency format"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A176
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:176
 #, fuzzy
 msgid "Ctrl + Shift + 4"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A177
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:177
 msgid "Standard percentage format (two decimal places)"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A177
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:177
 #, fuzzy
 msgid "Ctrl + Shift + 5"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A178
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:178
 msgid "Standard format"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A178
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:178
 #, fuzzy
 msgid "Ctrl + Shift + 6"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A182
+#: dist/loleaflet-help.html+html.body.div.h2:182
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.h2:182"
 msgid "Text formatting"
 msgstr "Форматиране на текст"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A184
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:184
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
 msgid "Bold"
 msgstr "Получер"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A184
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:184
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
 msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A185
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:185
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
 msgid "Italic"
 msgstr "Курсив"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A185
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:185
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
 msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A186
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:186
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
 msgid "Underline"
 msgstr "Подчертан"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A186
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:186
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
 msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A187
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:187
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
 msgid "Strikethrough"
 msgstr "Зачертан"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A187
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:187
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:187"
 msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A188
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:188
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
 msgid "Superscript"
 msgstr "Горен индекс"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A188
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:188
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:188"
 msgid "Ctrl + Shift + P"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A189
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:189
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
 msgid "Subscript"
 msgstr "Долен индекс"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A189
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:189
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:189"
 msgid "Ctrl + Shift + B"
 msgstr "Ctrl + Shift + B"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A190
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:190
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
 msgid "Select All"
 msgstr "Избиране на всичко"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A190
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:190
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A192
+#: dist/loleaflet-help.html+html.body.div.h2:192
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.h2:192"
 msgid "Paragraph formatting"
 msgstr "Форматиране на абзаци"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A194
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:194
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
 msgid "Align Center"
 msgstr "Центрирано подравняване"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A194
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:194
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
 msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A195
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:195
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
 msgid "Align Left"
 msgstr "Подравняване отляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A195
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:195
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
 msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A196
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:196
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
 msgid "Align Right"
 msgstr "Подравняване отдясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A196
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:196
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
 msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A197
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:197
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
 msgid "Justify"
 msgstr "Двустранно подравняване"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A197
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:197
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
 msgid "Ctrl + J"
 msgstr "Ctrl + J"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:198
 msgid "Demote list item (list item has to be selected)"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A198
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:198
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:198"
 msgid "Tab"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:199
 msgid "Promote list item (list item has to be selected)"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A199
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:199
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:199"
 msgid "Shift + Tab"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A201
+#: dist/loleaflet-help.html+html.body.div.h2:201
 #, fuzzy
 msgid "Text selection and navigation in a textbox"
 msgstr "Избиране на текст и навигация в документ"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A203
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:203
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
 msgid "Select All"
 msgstr "Избиране на всичко"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A203
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:203
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A204
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:204
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:204"
 msgid "Move cursor to the left"
 msgstr "Преместване на курсора наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A204
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:204
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:204"
 msgid "Arrow Left"
 msgstr "Стрелка наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A205
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:205
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:205"
 msgid "Move cursor with selection to the left"
 msgstr "Преместване на курсора наляво с избиране"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A205
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:205
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:205"
 msgid "Shift + Arrow Left"
 msgstr "Shift + стрелка наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A206
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:206
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
 msgid "Go to beginning of a word"
 msgstr "Преход към началото на думата"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A206
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:206
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:206"
 msgid "Ctrl + Arrow Left"
 msgstr "Ctrl + стрелка наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A207
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:207
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
 msgid "Select to the left word by word"
 msgstr "Избиране наляво дума по дума"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A207
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:207
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:207"
 msgid "Ctrl + Shift + Arrow Left"
 msgstr "Ctrl + Shift + стрелка наляво"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A208
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:208
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
 msgid "Move cursor to the right"
 msgstr "Преместване на курсора надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A208
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:208
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:208"
 msgid "Arrow Right"
 msgstr "Стрелка надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A209
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:209
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
 msgid "Move cursor with selection to the right"
 msgstr "Преместване на курсора надясно с избиране"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A209
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:209
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:209"
 msgid "Shift + Arrow Right"
 msgstr "Shift + стрелка надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:210
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Go to start of the next word"
 msgstr "Преход към началото на следващата дума"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A210
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:210
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:210"
 msgid "Ctrl + Arrow Right"
 msgstr "Ctrl + стрелка надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:211
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Select to the right word by word"
 msgstr "Избиране надясно дума по дума"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A211
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:211
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:211"
 msgid "Ctrl + Shift + Arrow Right"
 msgstr "Ctrl + Shift + стрелка надясно"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:212
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Move cursor up one line"
 msgstr "Преместване на курсора с един ред нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A212
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:212
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:212"
 msgid "Arrow Up"
 msgstr "Стрелка нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:213
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Select lines in upwards direction"
 msgstr "Избиране на редове нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A213
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:213
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:213"
 msgid "Shift + Arrow Up"
 msgstr "Shift + стрелка нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:214
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Move cursor to beginning of the previous paragraph"
 msgstr "Преместване на курсора в началото на предишния абзац"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A214
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:214
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:214"
 msgid "Ctrl + Arrow Up"
 msgstr "Ctrl + Стрелка нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:215
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Select to beginning of paragraph"
 msgstr "Избиране до началото на абзаца"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A215
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:215
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:215"
 msgid "Ctrl + Shift + Arrow Up"
 msgstr "Ctrl + Shift + стрелка нагоре"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:216
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Move cursor down one line"
 msgstr "Преместване на курсора с един ред надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A216
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:216
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:216"
 msgid "Arrow Down"
 msgstr "Стрелка надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A217
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:217
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
 msgid "Select lines in downwards direction"
 msgstr "Избиране на редове надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A217
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:217
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:217"
 msgid "Shift + Arrow Down"
 msgstr "Shift + стрелка надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:218
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Move cursor to beginning of the next paragraph"
 msgstr "Преместване на курсора в началото на предишния абзац"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A218
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:218
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:218"
 msgid "Ctrl + Arrow Down"
 msgstr "Ctrl + стрелка надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:219
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Select to end of paragraph"
 msgstr "Избиране до края на абзаца"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A219
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:219
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:219"
 msgid "Ctrl + Shift + Arrow Down"
 msgstr "Ctrl + Shift + стрелка надолу"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:220
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
 msgid "Go to beginning of line"
 msgstr "Преход към началото на реда"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A220
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:220
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:220"
 msgid "Home"
 msgstr "Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A221
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:221
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
 msgid "Go and select to the beginning of a line"
 msgstr "Преход с избиране до началото на реда"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A221
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:221
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:221"
 msgid "Shift + Home"
 msgstr "Shift + Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A222
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:222
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
 msgid "Go to start of document"
 msgstr "Преход към началото на документа"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A222
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:222
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:222"
 msgid "Ctrl + Home"
 msgstr "Ctrl + Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A223
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:223
 #, fuzzy
 msgid "Go and select text to start of textbox"
 msgstr "Избиране на текста до началото на документа"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A223
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:223
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:223"
 msgid "Ctrl + Shift + Home"
 msgstr "Ctrl + Shift + Home"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A224
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:224
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
 msgid "Go to end of line"
 msgstr "Преход към края на реда"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A224
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:224
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:224"
 msgid "End"
 msgstr "End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A225
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:225
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
 msgid "Go and select to the end of a line"
 msgstr "Преход с избиране до края на реда"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A225
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:225
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:225"
 msgid "Shift + End"
 msgstr "Shift + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A226
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:226
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
 msgid "Go to end of document"
 msgstr "Преход към края на документа"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A226
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:226
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:226"
 msgid "Ctrl + End"
 msgstr "Ctrl + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A227
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:227
 #, fuzzy
 msgid "Go and select text to end of textbox"
 msgstr "Избиране на текста до края на документа"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A227
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:227
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:227"
 msgid "Ctrl + Shift + End"
 msgstr "Ctrl + Shift + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.h2%3A229
+#: dist/loleaflet-help.html+html.body.div.h2:229
 msgid "Slide / draw page keyboard shortcuts"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
-msgid ""
-"Escape current mode, i.e. from edit mode switch to object selection mode, "
-"from object selection mode switch to view mode."
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:231
+msgid "Escape current mode, i.e. from edit mode switch to object selection mode, from object selection mode switch to view mode."
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A231
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:231
 msgid "Esc"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:232
 msgid "Select objects in the order in which they were created"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A232
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:232
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:232"
 msgid "Tab"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:233
 msgid "Select objects in the reverse order in which they were created"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A233
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:233
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:233"
 msgid "Shift + Tab"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:234
 msgid "Move to next text object on slide / drawing page"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A234
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:234
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:234"
 msgid "Ctrl + Enter"
 msgstr "Ctrl + End"
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:235
 msgid "Select all in slide / drawing page"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+html.body.div.table.tr.td%3A235
+#: dist/loleaflet-help.html+html.body.div.table.tr.td:235
 #, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:235"
 msgid "Ctrl + A"

@@ -1,0 +1,847 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-17 13:27+0200\n"
+"PO-Revision-Date: 2016-05-12 14:35+0000\n"
+"Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 2.7\n"
+"X-POOTLE-MTIME: 1463059003.000000\n"
+
+#: evol.colorpicker.strings.js:2
+msgid "Theme Colors"
+msgstr ""
+
+#: evol.colorpicker.strings.js:3
+msgid "Standard Colors"
+msgstr ""
+
+#: evol.colorpicker.strings.js:4
+msgid "Web Colors"
+msgstr ""
+
+#: evol.colorpicker.strings.js:5
+msgid "Back to Palette"
+msgstr ""
+
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr ""
+
+#: evol.colorpicker.strings.js:7
+msgid "No history yet."
+msgstr ""
+
+#: unocommands.js:1
+msgid "Copy Hyperlink"
+msgstr ""
+
+#: unocommands.js:2
+msgid "Down One Level"
+msgstr ""
+
+#: unocommands.js:3
+msgid "Up One Level"
+msgstr ""
+
+#: unocommands.js:4
+msgid "Edit Comment"
+msgstr ""
+
+#: unocommands.js:5
+msgid "Insert Comment"
+msgstr ""
+
+#: unocommands.js:6
+msgid "Merge"
+msgstr ""
+
+#: unocommands.js:7
+msgid "Merge Cells..."
+msgstr ""
+
+#: unocommands.js:8
+msgid "Bring Forward"
+msgstr ""
+
+#: unocommands.js:9
+msgid "Send Backward"
+msgstr ""
+
+#: unocommands.js:10
+msgid "Paste Special"
+msgstr ""
+
+#: unocommands.js:11
+msgid "Unformatted Text"
+msgstr ""
+
+#: dist/errormessages.js:1
+msgid "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: file_path=/path/to/doc/"
+msgstr ""
+
+#: dist/errormessages.js:2
+msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
+msgstr ""
+
+#: dist/toolbar/toolbar.js:154
+msgid "Are you sure you want to delete this page?"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:329 src/admin/AdminStrings.js:20
+#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:56
+#: src/control/Control.Menubar.js:102
+msgid "Save"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:331 src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:110
+msgid "Undo"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:332 src/control/Control.Menubar.js:19
+#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:111
+msgid "Redo"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:338
+msgid "Bold"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:339
+msgid "Italic"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:340
+msgid "Underline"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:341
+msgid "Strikeout"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:344
+msgid "Font color"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:346
+msgid "Highlighting"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:348
+msgid "Align left"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:349
+msgid "Center horizontally"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:350
+msgid "Align right"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:351
+msgid "Justified"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:353
+msgid "Bullets on/off"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:354
+msgid "Numbering on/off"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:356
+msgid "Increase indent"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:357
+msgid "Decrease indent"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:360
+msgid "Insert table"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:361
+msgid "Insert comment"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:362
+msgid "Insert graphic"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:364
+msgid "More"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:365
+msgid "Close document"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:395 dist/toolbar/toolbar.js:758
+msgid "Sum"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:396
+msgid "Function"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:397
+msgid "Cancel"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:398
+msgid "Accept"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:409
+msgid "First sheet"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:410
+msgid "Previous sheet"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:411
+msgid "Next sheet"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:412
+msgid "Last sheet"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:422 src/control/Control.Menubar.js:94
+msgid "Fullscreen presentation"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:424
+msgid "Insert slide"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:425 src/control/Control.Menubar.js:91
+msgid "Duplicate slide"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:426 src/control/Control.Menubar.js:92
+msgid "Delete slide"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:438
+msgid "Search:"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:443
+msgid "Search backwards"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:444
+msgid "Search forward"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:445
+msgid "Cancel the search"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:450 dist/toolbar/toolbar.js:1196
+msgid "Take edit lock (others can only view)"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:450 dist/toolbar/toolbar.js:1196
+msgid "VIEWING"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:452
+msgid "Previous page"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:453
+msgid "Next page"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:455 src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:128
+msgid "Reset zoom"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:456 src/control/Control.Menubar.js:33
+#: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:127
+msgid "Zoom out"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:458 src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:126
+msgid "Zoom in"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:476
+msgid "You are viewing now."
+msgstr ""
+
+#: dist/toolbar/toolbar.js:476
+msgid "Click here to take edit."
+msgstr ""
+
+#: dist/toolbar/toolbar.js:607 dist/toolbar/toolbar.js:1094
+msgid "Size"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:739
+msgid "Number of Sheets"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:742
+msgid "Selected range of cells"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:745 dist/toolbar/toolbar.js:791
+msgid "Entering text mode"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:748 dist/toolbar/toolbar.js:794
+msgid "Selection Mode"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:751
+msgid "Choice of functions"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:753
+msgid "Average"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:754
+msgid "CountA"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:755
+msgid "Count"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:756
+msgid "Maximum"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:757
+msgid "Minimum"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:759
+msgid "Selection count"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:760
+msgid "None"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:765
+msgid "Wrap Text"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:766
+msgid "Merge and Center Cells"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:768
+msgid "Format as Currency"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:769
+msgid "Format as Percent"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:770
+msgid "Format as Number"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:771
+msgid "Format as Date"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:772
+msgid "Add Decimal Place"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:773
+msgid "Delete Decimal Place"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:775
+msgid "Sort Ascending"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:776
+msgid "Sort Descending"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:785
+msgid "Number of Pages"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:788
+msgid "Word Counter"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:802
+msgid "Number of Slides"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:919
+msgid "Document saved"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1077
+msgid "Style"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1089
+msgid "Font"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1113
+msgid "Previous slide"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1114
+msgid "Next slide"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1192
+msgid "You are editing (others can only view)"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1192
+msgid "EDITING"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1212
+msgid "You are locked in readonly mode"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1212
+msgid "READONLY"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1324
+msgid "Layout"
+msgstr ""
+
+#: src/admin/AdminSocketBase.js:44
+msgid "Connection error"
+msgstr ""
+
+#: src/admin/AdminSocketOverview.js:58
+msgid "Are you sure you want to terminate this session?"
+msgstr ""
+
+#: src/admin/AdminStrings.js:4
+msgid "Admin console"
+msgstr ""
+
+#: src/admin/AdminStrings.js:5
+msgid "Toggle navigation"
+msgstr ""
+
+#: src/admin/AdminStrings.js:6
+msgid "Settings"
+msgstr ""
+
+#: src/admin/AdminStrings.js:7
+msgid "Overview"
+msgstr ""
+
+#: src/admin/AdminStrings.js:8
+msgid "(current)"
+msgstr ""
+
+#: src/admin/AdminStrings.js:9
+msgid "Analytics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:10
+msgid "Dashboard"
+msgstr ""
+
+#: src/admin/AdminStrings.js:11
+msgid "Users online"
+msgstr ""
+
+#: src/admin/AdminStrings.js:12
+msgid "Documents opened"
+msgstr ""
+
+#: src/admin/AdminStrings.js:13
+msgid "Memory consumed"
+msgstr ""
+
+#: src/admin/AdminStrings.js:14
+msgid "PID"
+msgstr ""
+
+#: src/admin/AdminStrings.js:15
+msgid "Document"
+msgstr ""
+
+#: src/admin/AdminStrings.js:16
+msgid "Number of views"
+msgstr ""
+
+#: src/admin/AdminStrings.js:17
+msgid "Elapsed time"
+msgstr ""
+
+#: src/admin/AdminStrings.js:18
+msgid "Kill"
+msgstr ""
+
+#: src/admin/AdminStrings.js:19
+msgid "Graphs"
+msgstr ""
+
+#: src/admin/AdminStrings.js:21
+msgid "Cache size of memory statistics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:22
+msgid "Time interval of memory statistics (in ms)"
+msgstr ""
+
+#: src/admin/AdminStrings.js:23
+msgid "Cache size of CPU statistics"
+msgstr ""
+
+#: src/admin/AdminStrings.js:24
+msgid "Time interval of CPU statistics (in ms)"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "kB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "MB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "GB"
+msgstr ""
+
+#: src/admin/Util.js:13
+msgid "TB"
+msgstr ""
+
+#: src/admin/Util.js:41
+msgid " hrs"
+msgstr ""
+
+#: src/admin/Util.js:43
+msgid " mins"
+msgstr ""
+
+#: src/admin/Util.js:45
+msgid " s"
+msgstr ""
+
+#: src/control/Control.ColumnHeader.js:34
+msgid "Insert column before"
+msgstr ""
+
+#: src/control/Control.ColumnHeader.js:41 src/control/Control.Menubar.js:134
+msgid "Delete column"
+msgstr ""
+
+#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:56
+#: src/control/Control.Menubar.js:102
+msgid "File"
+msgstr ""
+
+#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:103
+msgid "Print"
+msgstr ""
+
+#: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:104
+msgid "See revision history"
+msgstr ""
+
+#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:105
+msgid "Download as"
+msgstr ""
+
+#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:105
+msgid "PDF Document (.pdf)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:14
+msgid "ODF text document (.odt)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:15
+msgid "Microsoft Word 2003 (.doc)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:16
+msgid "Microsoft Word (.docx)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:18 src/control/Control.Menubar.js:64
+#: src/control/Control.Menubar.js:110
+msgid "Edit"
+msgstr ""
+
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:113
+msgid "Cut"
+msgstr ""
+
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:68
+#: src/control/Control.Menubar.js:114
+msgid "Copy"
+msgstr ""
+
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:115
+msgid "Paste"
+msgstr ""
+
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:117
+msgid "Select all"
+msgstr ""
+
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:36
+#: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:119
+msgid "Insert"
+msgstr ""
+
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:119
+msgid "Image"
+msgstr ""
+
+#: src/control/Control.Menubar.js:28
+msgid "Comment"
+msgstr ""
+
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:124
+msgid "View"
+msgstr ""
+
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:124
+msgid "Full screen"
+msgstr ""
+
+#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:81
+msgid "Tables"
+msgstr ""
+
+#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:81
+msgid "Rows before"
+msgstr ""
+
+#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:82
+msgid "Rows after"
+msgstr ""
+
+#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:84
+msgid "Columns left"
+msgstr ""
+
+#: src/control/Control.Menubar.js:40 src/control/Control.Menubar.js:85
+msgid "Columns right"
+msgstr ""
+
+#: src/control/Control.Menubar.js:41 src/control/Control.Menubar.js:86
+msgid "Delete"
+msgstr ""
+
+#: src/control/Control.Menubar.js:41 src/control/Control.Menubar.js:86
+msgid "Rows"
+msgstr ""
+
+#: src/control/Control.Menubar.js:42 src/control/Control.Menubar.js:87
+msgid "Columns"
+msgstr ""
+
+#: src/control/Control.Menubar.js:43 src/control/Control.Menubar.js:44
+msgid "Table"
+msgstr ""
+
+#: src/control/Control.Menubar.js:44
+msgid "Select"
+msgstr ""
+
+#: src/control/Control.Menubar.js:45 src/control/Control.Menubar.js:121
+msgid "Row"
+msgstr ""
+
+#: src/control/Control.Menubar.js:46 src/control/Control.Menubar.js:122
+msgid "Column"
+msgstr ""
+
+#: src/control/Control.Menubar.js:47
+msgid "Cell"
+msgstr ""
+
+#: src/control/Control.Menubar.js:48 src/control/Control.Menubar.js:88
+msgid "Merge cells"
+msgstr ""
+
+#: src/control/Control.Menubar.js:50 src/control/Control.Menubar.js:96
+#: src/control/Control.Menubar.js:136
+msgid "Help"
+msgstr ""
+
+#: src/control/Control.Menubar.js:50 src/control/Control.Menubar.js:96
+#: src/control/Control.Menubar.js:136
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: src/control/Control.Menubar.js:51 src/control/Control.Menubar.js:97
+#: src/control/Control.Menubar.js:137
+msgid "About"
+msgstr ""
+
+#: src/control/Control.Menubar.js:60
+msgid "ODF presentation (.odp)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:61
+msgid "Microsoft Powerpoint 2003 (.ppt)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:62
+msgid "Microsoft Powerpoint (.pptx)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:90
+msgid "Slide"
+msgstr ""
+
+#: src/control/Control.Menubar.js:90
+msgid "New slide"
+msgstr ""
+
+#: src/control/Control.Menubar.js:106
+msgid "ODF spreadsheet (.ods)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:107
+msgid "Microsoft Excel 2003 (.xls)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:108
+msgid "Microsoft Excel (.xlsx)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:130
+msgid "Cells"
+msgstr ""
+
+#: src/control/Control.Menubar.js:130
+msgid "Insert row"
+msgstr ""
+
+#: src/control/Control.Menubar.js:131
+msgid "Insert column"
+msgstr ""
+
+#: src/control/Control.Menubar.js:133 src/control/Control.RowHeader.js:39
+msgid "Delete row"
+msgstr ""
+
+#: src/control/Control.Menubar.js:306
+msgid "Are you sure you want to delete this slide?"
+msgstr ""
+
+#: src/control/Control.RowHeader.js:32
+msgid "Insert row above"
+msgstr ""
+
+#: src/control/Control.Tabs.js:46
+msgid "Insert sheet before this"
+msgstr ""
+
+#: src/control/Control.Tabs.js:47
+msgid "Insert sheet after this"
+msgstr ""
+
+#: src/control/Control.Tabs.js:48
+msgid "Delete sheet"
+msgstr ""
+
+#: src/control/Control.Tabs.js:52
+msgid "Are you sure you want to delete this sheet?"
+msgstr ""
+
+#: src/control/Control.Tabs.js:61
+msgid "Rename sheet"
+msgstr ""
+
+#: src/control/Control.Tabs.js:65
+msgid "Enter new sheet name"
+msgstr ""
+
+#: src/control/Toolbar.js:59 src/control/Toolbar.js:68
+msgid "Downloading..."
+msgstr ""
+
+#: src/control/Toolbar.js:80 src/map/Map.js:802
+msgid "Saving..."
+msgstr ""
+
+#: src/control/Toolbar.js:212
+msgid "This version of %productName is powered by"
+msgstr ""
+
+#: src/core/Socket.js:17
+msgid "Oops, there is a problem connecting to LibreOffice Online : "
+msgstr ""
+
+#: src/core/Socket.js:139
+msgid "Unsupported server version."
+msgstr ""
+
+#: src/core/Socket.js:158
+msgid "Document requires password to view."
+msgstr ""
+
+#: src/core/Socket.js:161
+msgid "Document requires password to modify."
+msgstr ""
+
+#: src/core/Socket.js:163
+msgid "Hit Cancel to open in view-only mode."
+msgstr ""
+
+#: src/core/Socket.js:167
+msgid "Wrong password provided. Please try again."
+msgstr ""
+
+#: src/core/Socket.js:304
+msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
+msgstr ""
+
+#: src/core/Socket.js:307
+msgid "We are sorry, this is an unexpected connection error. Please try again."
+msgstr ""
+
+#: src/map/Map.js:116
+msgid "Initializing..."
+msgstr ""
+
+#: src/map/Map.js:805
+msgid "Loading..."
+msgstr ""
