@@ -1110,7 +1110,8 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			var viewCursorOptions = {
 				color: L.LOUtil.getViewIdHexColor(viewId),
-				blink: false
+				blink: false,
+				header: true // we want a 'hat' to our view cursors (which will contain view user names)
 			};
 			viewCursorMarker = L.cursor(viewCursorPos, viewCursorOptions);
 			this._map.addLayer(viewCursorMarker);
