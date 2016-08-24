@@ -15,7 +15,8 @@ L.Control.Menubar = L.Control.extend({
 												   {name: _('Microsoft Word 2003 (.doc)'), id: 'downloadas-doc', type: 'action'},
 												   {name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'}]}]
 			},
-			{name: _('Edit'), type: 'menu', menu: [{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
+			{name: _('Edit'), type: 'menu', menu: [{name: _('Repair'), id: 'repair',  type: 'action'},
+												{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
 												{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},
 												{type: 'separator'},
 												{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
@@ -316,6 +317,8 @@ L.Control.Menubar = L.Control.extend({
 			if (window.top !== window.self) {
 				window.parent.postMessage('rev-history', '*');
 			}
+		} else if (id === 'repair') {
+			map.showRepairDialog();
 		}
 	},
 

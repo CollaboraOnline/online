@@ -230,5 +230,11 @@ L.Map.include({
 				});
 			}
 		});
+	},
+
+	showRepairDialog: function() {
+		vex.open({
+		});
 	}
+
 });
