@@ -11,9 +11,9 @@ L.Control.Menubar = L.Control.extend({
 												   {name: _('Print'), id: 'print', type: 'action'},
 												   {name: _('See revision history'), id: 'rev-history', type: 'action'},
 												   {name: _('Download as'), type: 'menu', menu: [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
-																						   {name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
-																						   {name: _('Microsoft Word 2003 (.doc)'), id: 'downloadas-doc', type: 'action'},
-																						   {name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'}]}]
+												   {name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
+												   {name: _('Microsoft Word 2003 (.doc)'), id: 'downloadas-doc', type: 'action'},
+												   {name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'}]}]
 			},
 			{name: _('Edit'), type: 'menu', menu: [{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
 												{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},
@@ -57,9 +57,9 @@ L.Control.Menubar = L.Control.extend({
 												   {name: _('Print'), id: 'print', type: 'action'},
 												   {name: _('See revision history'), id: 'rev-history', type: 'action'},
 												   {name: _('Download as'), type: 'menu', menu:	 [{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
-																							{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
-																							{name: _('Microsoft Powerpoint 2003 (.ppt)'), id: 'downloadas-ppt', type: 'action'},
-																							{name: _('Microsoft Powerpoint (.pptx)'), id: 'downloadas-pptx', type: 'action'}]}]
+													{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
+													{name: _('Microsoft Powerpoint 2003 (.ppt)'), id: 'downloadas-ppt', type: 'action'},
+													{name: _('Microsoft Powerpoint (.pptx)'), id: 'downloadas-pptx', type: 'action'}]}]
 			},
 			{name: _('Edit'), type: 'menu', menu: [{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
 												{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},

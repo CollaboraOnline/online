@@ -725,8 +725,8 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringToke
     else
     {
         _loKitDocument->postUnoCommand(tokens[1].c_str(),
-                                               Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
-                                               bNotify);
+                                       Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
+                                       bNotify);
     }
 
     return true;
