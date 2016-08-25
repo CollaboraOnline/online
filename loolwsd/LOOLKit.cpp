@@ -895,7 +895,7 @@ private:
             for (const auto& pair : _connections)
             {
                 assert(sessionId != pair.second->getSessionId() && "Unloading connection still lingering.");
-                pair.second->getSession()->sendTextFrame("remview: " + sessionId);
+                pair.second->getSession()->sendTextFrame("remview: " + std::to_string(session.getViewId()));
             }
 
             if (_loKitDocument == nullptr)
