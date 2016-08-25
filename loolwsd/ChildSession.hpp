@@ -42,6 +42,10 @@ public:
     /// Get a list of all current view IDs.
     virtual
     std::vector<unsigned> getViewIds() const = 0;
+
+    /// Send message to all other sessions except 'sessionId'
+    virtual
+    void notifyOtherSessions(const std::string& sessionId, const std::string& message) const = 0;
 };
 
 /// Represents a client session, with the socket end-point,

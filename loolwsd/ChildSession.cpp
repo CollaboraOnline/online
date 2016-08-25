@@ -327,7 +327,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
         _viewId = _loKitDocument->getView();
         const auto viewId = std::to_string(_viewId);
         Log::info("Created new view: " + viewId);
-        sendTextFrame("addview: " + viewId);
+        _docManager.notifyOtherSessions(getId(), "addview: " + viewId);
     }
 
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());

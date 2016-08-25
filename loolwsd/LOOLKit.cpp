@@ -942,6 +942,23 @@ private:
         return v;
     }
 
+    void notifyOtherSessions(const std::string& sessionId, const std::string& message) const override
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        for (auto& it: _connections)
+        {
+            if (it.second->isRunning() && it.second->getSessionId() != sessionId)
+            {
+                auto session = it.second->getSession();
+                if (session)
+                {
+                    session->sendTextFrame(message);
+                }
+            }
+        }
+    }
+
 private:
 
     std::shared_ptr<lok::Document> load(const std::string& sessionId,
