@@ -1111,7 +1111,8 @@ L.TileLayer = L.GridLayer.extend({
 			var viewCursorOptions = {
 				color: L.LOUtil.getViewIdHexColor(viewId),
 				blink: false,
-				header: true // we want a 'hat' to our view cursors (which will contain view user names)
+				header: true, // we want a 'hat' to our view cursors (which will contain view user names)
+				headerTimeout: 1500 // hide after some interval
 			};
 			viewCursorMarker = L.cursor(viewCursorPos, viewCursorOptions);
 			this._map.addLayer(viewCursorMarker);
