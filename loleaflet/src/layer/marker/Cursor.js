@@ -52,6 +52,8 @@ L.Cursor = L.Layer.extend({
 		if (this.options.header) {
 			this._cursorHeader = L.DomUtil.create('div', 'leaflet-cursor-header', this._container);
 
+			this._cursorHeader.innerHTML = this.options.headerName;
+
 			setTimeout(L.bind(function() {
 				L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'hidden');
 			}, this), this.options.headerTimeout);

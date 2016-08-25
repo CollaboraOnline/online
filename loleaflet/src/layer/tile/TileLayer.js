@@ -1112,7 +1112,8 @@ L.TileLayer = L.GridLayer.extend({
 				color: L.LOUtil.getViewIdHexColor(viewId),
 				blink: false,
 				header: true, // we want a 'hat' to our view cursors (which will contain view user names)
-				headerTimeout: 1500 // hide after some interval
+				headerTimeout: 1500, // hide after some interval
+				headerName: 'Anonymous LOOL User'
 			};
 			viewCursorMarker = L.cursor(viewCursorPos, viewCursorOptions);
 			this._map.addLayer(viewCursorMarker);
