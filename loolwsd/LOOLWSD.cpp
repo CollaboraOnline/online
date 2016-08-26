@@ -875,6 +875,18 @@ public:
         bool responded = false;
         try
         {
+            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
+            {
+                std::string mimeType = "image/vnd.microsoft.icon";
+                std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
+                if (!File(faviconPath).exists())
+                {
+                    faviconPath = LOOLWSD_DATADIR "/favicon.ico";
+                }
+                response.setContentType(mimeType);
+                response.sendFile(faviconPath, mimeType);
+                responded = true;
+            }
             if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
             {
                 // http://server/hosting/discovery
