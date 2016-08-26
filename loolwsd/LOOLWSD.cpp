@@ -875,6 +875,17 @@ public:
         bool responded = false;
         try
         {
+            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/")
+            {
+                std::string mimeType = "text/plain";
+                std::string responseString = "OK";
+                response.setContentLength(responseString.length());
+                response.setContentType(mimeType);
+                response.setChunkedTransferEncoding(false);
+                std::ostream& ostr = response.send();
+                ostr << responseString;
+                responded = true;
+            }
             if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
             {
                 std::string mimeType = "image/vnd.microsoft.icon";
