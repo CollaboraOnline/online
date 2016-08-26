@@ -851,7 +851,19 @@ public:
         bool responded = false;
         try
         {
-            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
+            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
+            {
+                std::string mimeType = "image/vnd.microsoft.icon";
+                std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
+                if (!File(faviconPath).exists())
+                {
+                    faviconPath = LOOLWSD_DATADIR "/favicon.ico";
+                }
+                response.setContentType(mimeType);
+                response.sendFile(faviconPath, mimeType);
+                responded = true;
+            }
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
             {
                 // http://server/hosting/discovery
                 responded = handleGetWOPIDiscovery(request, response);
@@ -1148,7 +1160,6 @@ public:
         logger << Log::end;
 
         // Routing
-        // FIXME: Some browsers (all?) hit for /favicon.ico. Create a nice favicon and add to routes
         Poco::URI requestUri(request.getURI());
         std::vector<std::string> reqPathSegs;
         requestUri.getPathSegments(reqPathSegs);
