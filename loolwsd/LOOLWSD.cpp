@@ -851,7 +851,21 @@ public:
         bool responded = false;
         try
         {
-            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
+            if ((request.getMethod() == HTTPRequest::HTTP_GET || request.getMethod() == HTTPRequest::HTTP_HEAD) && request.getURI() == "/")
+            {
+                std::string mimeType = "text/plain";
+                std::string responseString = "OK";
+                response.setContentLength(responseString.length());
+                response.setContentType(mimeType);
+                response.setChunkedTransferEncoding(false);
+                std::ostream& ostr = response.send();
+                if (request.getMethod() == HTTPRequest::HTTP_GET)
+                {
+                    ostr << responseString;
+                }
+                responded = true;
+            }
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
             {
                 std::string mimeType = "image/vnd.microsoft.icon";
                 std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
