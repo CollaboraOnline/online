@@ -8,15 +8,61 @@
  */
 
 #include <iostream>
-#include <cppunit/TestRunner.h>
+
+#include <cppunit/BriefTestProgressListener.h>
+#include <cppunit/CompilerOutputter.h>
 #include <cppunit/TestResult.h>
 #include <cppunit/TestResultCollector.h>
+#include <cppunit/TestRunner.h>
 #include <cppunit/TextTestProgressListener.h>
-#include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
-#include <cppunit/CompilerOutputter.h>
+
+#include <Poco/RegularExpression.h>
 
 class HTTPGetTest;
+
+bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry)
+{
+    const char* envar = getenv("CPPUNIT_TEST_NAME");
+    if (envar)
+    {
+        std::string testName(envar);
+        if (testName.empty())
+        {
+            return false;
+        }
+
+        Poco::RegularExpression re(testName, Poco::RegularExpression::RE_CASELESS);
+        Poco::RegularExpression::Match reMatch;
+
+        bool haveTests = false;
+        for (int i = 0; i < testRegistry->getChildTestCount(); ++i)
+        {
+            CPPUNIT_NS::Test* testSuite = testRegistry->getChildTestAt(i);
+            for (int j = 0; j < testSuite->getChildTestCount(); ++j)
+            {
+                CPPUNIT_NS::Test* testCase = testSuite->getChildTestAt(j);
+                try
+                {
+                    if (re.match(testCase->getName(), reMatch))
+                    {
+                        runner.addTest(testCase);
+                        haveTests = true;
+                    }
+                }
+                catch (const std::exception& exc)
+                {
+                    // Nothing to do; skip.
+                }
+            }
+        }
+
+        std::cerr << "Failed to match [" << testName << "] to any names in the test-suite. Running all tests." << std::endl;
+        return haveTests;
+    }
+
+    return false;
+}
 
 int main(int /*argc*/, char** /*argv*/)
 {
@@ -27,26 +73,14 @@ int main(int /*argc*/, char** /*argv*/)
     controller.addListener(&progress);
     controller.addListener(new CPPUNIT_NS::TextTestProgressListener());
 
+    CPPUNIT_NS::Test* testRegistry = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
+
     CPPUNIT_NS::TestRunner runner;
-    const char* testName = getenv("CPPUNIT_TEST_NAME");
-    if (testName)
+    if (!filterTests(runner, testRegistry))
     {
-        // Single test.
-        CPPUNIT_NS::Test* testRegistry = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
-        for (int i = 0; i < testRegistry->getChildTestCount(); ++i)
-        {
-            CPPUNIT_NS::Test* testSuite = testRegistry->getChildTestAt(i);
-            for (int j = 0; j < testSuite->getChildTestCount(); ++j)
-            {
-                CPPUNIT_NS::Test* testCase = testSuite->getChildTestAt(j);
-                if (testCase->getName() == testName)
-                    runner.addTest(testCase);
-            }
-        }
-    }
-    else
         // All tests.
-        runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
+        runner.addTest(testRegistry);
+    }
 
     runner.run(controller);
 
