@@ -106,6 +106,8 @@ noinst_HEADERS = Admin.hpp \
                  Rectangle.hpp \
                  Storage.hpp \
                  TileCache.hpp \
+                 TileDesc.hpp \
+                 TraceFile.hpp \
                  Unit.hpp \
                  UnitHTTP.hpp \
                  UserMessages.hpp \
