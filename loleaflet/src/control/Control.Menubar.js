@@ -318,7 +318,7 @@ L.Control.Menubar = L.Control.extend({
 				window.parent.postMessage('rev-history', '*');
 			}
 		} else if (id === 'repair') {
-			map.showRepairDialog();
+			map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		}
 	},
 
