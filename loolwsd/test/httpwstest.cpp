@@ -88,6 +88,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testFontList);
     CPPUNIT_TEST(testStateUnoCommand);
     CPPUNIT_TEST(testColumnRowResize);
+    CPPUNIT_TEST(testEmptyRepairActions);
+    CPPUNIT_TEST(testRepairActions);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -124,6 +126,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testFontList();
     void testStateUnoCommand();
     void testColumnRowResize();
+    void testEmptyRepairActions();
+    void testRepairActions();
 
     void loadDoc(const std::string& documentURL);
 
@@ -2023,6 +2027,76 @@ void HTTPWSTest::testColumnRowResize()
             newHeight = getColRowSize("rows", json.data(), 1);
             CPPUNIT_ASSERT(newHeight > oldHeight);
         }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testEmptyRepairActions()
+{
+    try
+    {
+        const auto testname = "repairactions ";
+        auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
+
+        // Check if the document contains the pasted text.
+        sendTextFrame(socket, "getrepairactions");
+        const std::string prefix = "repairactions:";
+        const auto response = getResponseMessage(socket, prefix, testname);
+        const std::string repairActions(response.data(), response.size());
+        CPPUNIT_ASSERT_EQUAL(std::string("repairactions: [{ \"undo\": {\n    \"actions\": \"\"\n}\n}, { \"redo\": {\n    \"actions\": \"\"\n}\n}]"), repairActions);
+
+        const auto jsonString = repairActions.substr(prefix.size());
+
+        Poco::JSON::Parser parser;
+        const auto result = parser.parse(jsonString);
+        const auto& json = result.extract<Poco::JSON::Array::Ptr>();
+        auto redo = json->getObject(0);
+        auto redoActions = redo->getArray("actions");
+        CPPUNIT_ASSERT(!redoActions);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testRepairActions()
+{
+    try
+    {
+        const auto testname = "repairactions ";
+        auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
+
+        sendTextFrame(socket, "uno .uno:SelectAll");
+        sendTextFrame(socket, "uno .uno:Delete");
+
+        // Check if the document contains the pasted text.
+        sendTextFrame(socket, "getrepairactions");
+        const std::string prefix = "repairactions:";
+        const auto response = getResponseMessage(socket, prefix, testname);
+        const std::string repairActions(response.data(), response.size());
+
+        const auto jsonString = repairActions.substr(prefix.size());
+
+        Poco::JSON::Parser parser;
+        const auto result = parser.parse(jsonString);
+        const auto& json = result.extract<Poco::JSON::Array::Ptr>();
+
+        auto undo = json->getObject(0)->get("undo");
+        auto subUndo = undo.extract<Poco::JSON::Object::Ptr>();
+        auto undoActionsVar = subUndo->get("actions");
+        auto undoActions = undoActionsVar.extract<Poco::JSON::Array::Ptr>();
+        CPPUNIT_ASSERT_MESSAGE("Expected one undo action in the actions array.", !!undoActions);
+        CPPUNIT_ASSERT_EQUAL(std::size_t(1), undoActions->size());
+        CPPUNIT_ASSERT_EQUAL(std::string("Delete 'Hello world'"), undoActions->getObject(0)->get("comment").toString());
+
+        auto redo = json->getObject(1)->get("redo");
+        auto subRedo = redo.extract<Poco::JSON::Object::Ptr>();
+        auto redoActionsVar = subRedo->get("actions");
+        CPPUNIT_ASSERT_EQUAL(std::string(), redoActionsVar.toString());
     }
     catch (const Poco::Exception& exc)
     {
