@@ -57,6 +57,12 @@ public:
     {
         return LOOLWSD::SSLEnabled.get();
     }
+    static
+    bool isSSLTermination()
+    {
+        return LOOLWSD::SSLTermination.get();
+    }
+
 
 protected:
     void initialize(Poco::Util::Application& self) override;
@@ -67,6 +73,7 @@ protected:
 
 private:
     static Util::RuntimeConstant<bool> SSLEnabled;
+    static Util::RuntimeConstant<bool> SSLTermination;
 
     void initializeSSL();
     void displayHelp();
