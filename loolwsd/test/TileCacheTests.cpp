@@ -58,12 +58,14 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testTileInvalidateCalc();
 
     void checkTiles(Poco::Net::WebSocket& socket,
-                    const std::string& type);
+                    const std::string& type,
+                    const std::string& name = "checkTiles ");
 
     void requestTiles(Poco::Net::WebSocket& socket,
                       const int part,
                       const int docWidth,
-                      const int docHeight);
+                      const int docHeight,
+                      const std::string& name = "requestTiles ");
 
     void checkBlackTiles(Poco::Net::WebSocket& socket,
                          const int part,
@@ -153,11 +155,8 @@ void TileCacheTests::testSimple()
 
 void TileCacheTests::testSimpleCombine()
 {
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-
-    auto socket1 = *loadDocAndGetSocket(_uri, documentURL, "simpleCombine-1 ");
+    const std::string docFilename = "hello.odt";
+    auto socket1 = *loadDocAndGetSocket(docFilename, _uri, "simpleCombine-1 ");
 
     sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
@@ -173,7 +172,7 @@ void TileCacheTests::testSimpleCombine()
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = *loadDocAndGetSocket(_uri, documentURL, "simpleCombine-2 ", true);
+    auto socket2 = *loadDocAndGetSocket(docFilename, _uri, "simpleCombine-2 ", true);
     sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
     auto tile2a = getResponseMessage(socket2, "tile:");
@@ -187,11 +186,7 @@ void TileCacheTests::testSimpleCombine()
 
 void TileCacheTests::testPerformance()
 {
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-
-    auto socket = *loadDocAndGetSocket(_uri, documentURL, "tile-performance ");
+    auto socket = *loadDocAndGetSocket("hello.odt", _uri, "performance ");
 
     Poco::Timestamp timestamp;
     for (auto x = 0; x < 5; ++x)
@@ -214,14 +209,12 @@ void TileCacheTests::testPerformance()
 
 void TileCacheTests::testUnresponsiveClient()
 {
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-
-    auto socket1 = *loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-1 ");
+    const std::string docFilename = "hello.odt";
+    std::cerr << "Connecting first client." << std::endl;
+    auto socket1 = *loadDocAndGetSocket(docFilename, _uri, "unresponsiveClient-1 ");
 
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = *loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-2 ", true);
+    auto socket2 = *loadDocAndGetSocket(docFilename, _uri, "unresponsiveClient-2 ", true);
 
     // Pathologically request tiles and fail to read (say slow connection).
     // Meanwhile, verify that others can get all tiles fine.
@@ -248,20 +241,12 @@ void TileCacheTests::testClientPartImpress()
 {
     try
     {
-        // Load a document
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
+        const std::string testName = "clientPartImpress ";
+        auto socket = *loadDocAndGetSocket("setclientpart.odp", _uri, testName);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
-
-        checkTiles(socket, "presentation");
+        checkTiles(socket, "presentation", testName);
 
         socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -273,20 +258,12 @@ void TileCacheTests::testClientPartCalc()
 {
     try
     {
-        // Load a document
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL);
+        const std::string testName = "clientPartCalc ";
+        auto socket = *loadDocAndGetSocket("setclientpart.ods", _uri, testName);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
-
-        checkTiles(socket, "spreadsheet");
+        checkTiles(socket, "spreadsheet", testName);
 
         socket.shutdown();
-        Util::removeFile(documentPath);
     }
     catch (const Poco::Exception& exc)
     {
@@ -642,7 +619,7 @@ void TileCacheTests::testTileInvalidateCalc()
     socket.shutdown();
 }
 
-void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType)
+void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType, const std::string& name)
 {
     const std::string current = "current=";
     const std::string height = "height=";
@@ -687,7 +664,7 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
     if (docType == "presentation")
     {
         // request tiles
-        requestTiles(socket, currentPart, docWidth, docHeight);
+        requestTiles(socket, currentPart, docWidth, docHeight, name);
     }
 
     // random setclientpart
@@ -707,13 +684,14 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
             // issue a new tile request as a response, which a real client would do).
             assertResponseLine(socket, "setpart:", "checkTiles");
 
-            requestTiles(socket, it, docWidth, docHeight);
+            requestTiles(socket, it, docWidth, docHeight, name);
         }
+
         currentPart = it;
     }
 }
 
-void TileCacheTests::requestTiles(Poco::Net::WebSocket& socket, const int part, const int docWidth, const int docHeight)
+void TileCacheTests::requestTiles(Poco::Net::WebSocket& socket, const int part, const int docWidth, const int docHeight, const std::string& name)
 {
     // twips
     const int tileSize = 3840;
@@ -756,7 +734,7 @@ void TileCacheTests::requestTiles(Poco::Net::WebSocket& socket, const int part, 
                     part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
 
             sendTextFrame(socket, text);
-            tile = assertResponseLine(socket, "tile:", "requestTiles ");
+            tile = assertResponseLine(socket, "tile:", name);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
