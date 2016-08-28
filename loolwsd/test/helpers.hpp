@@ -82,9 +82,9 @@ std::vector<char> readDataFromFile(std::unique_ptr<std::fstream>& file)
 }
 
 inline
-void getDocumentPathAndURL(const char* document, std::string& documentPath, std::string& documentURL)
+void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath, std::string& documentURL)
 {
-    documentPath = Util::getTempFilePath(TDOC, document);
+    documentPath = Util::getTempFilePath(TDOC, docFilename);
     documentURL = "lool/ws/file://" + Poco::Path(documentPath).makeAbsolute().toString();
 
     std::cerr << "Test file: " << documentPath << std::endl;
@@ -256,7 +256,7 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                 int bytes = ws.receiveFrame(response.data(), response.size(), flags);
                 response.resize(bytes >= 0 ? bytes : 0);
                 auto message = LOOLProtocol::getAbbreviatedMessage(response);
-                std::cerr << name << "Got " << bytes << " bytes: " << message << std::endl;
+                std::cerr << name << "Got " << bytes << " bytes: " << std::string(response.data(), response.size()) << std::endl;
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
                     if (message.find(prefix) == 0)
@@ -378,6 +378,24 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, 
 
         std::cerr << name << "Loaded document [" << documentURL << "]." << std::endl;
         return socket;
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+
+    // Really couldn't reach here, but the compiler doesn't know any better.
+    return nullptr;
+}
+
+inline
+std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& name = "", bool isView = false)
+{
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL(docFilename, documentPath, documentURL);
+        return loadDocAndGetSocket(uri, documentURL, name, isView);
     }
     catch (const Poco::Exception& exc)
     {
