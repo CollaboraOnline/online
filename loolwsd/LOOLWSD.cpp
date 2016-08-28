@@ -875,7 +875,7 @@ public:
         bool responded = false;
         try
         {
-            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/")
+            if ((request.getMethod() == HTTPRequest::HTTP_GET || request.getMethod() == HTTPRequest::HTTP_HEAD) && request.getURI() == "/")
             {
                 std::string mimeType = "text/plain";
                 std::string responseString = "OK";
@@ -883,10 +883,13 @@ public:
                 response.setContentType(mimeType);
                 response.setChunkedTransferEncoding(false);
                 std::ostream& ostr = response.send();
-                ostr << responseString;
+                if (request.getMethod() == HTTPRequest::HTTP_GET)
+                {
+                    ostr << responseString;
+                }
                 responded = true;
             }
-            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
             {
                 std::string mimeType = "image/vnd.microsoft.icon";
                 std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
@@ -898,7 +901,7 @@ public:
                 response.sendFile(faviconPath, mimeType);
                 responded = true;
             }
-            if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
             {
                 // http://server/hosting/discovery
                 responded = handleGetWOPIDiscovery(request, response);
@@ -1200,7 +1203,6 @@ public:
         logger << Log::end;
 
         // Routing
-        // FIXME: Some browsers (all?) hit for /favicon.ico. Create a nice favicon and add to routes
         Poco::URI requestUri(request.getURI());
         std::vector<std::string> reqPathSegs;
         requestUri.getPathSegments(reqPathSegs);
