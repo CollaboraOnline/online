@@ -103,6 +103,9 @@ function onClick(id, item, subItem) {
 			map.toggleCommandState(item.uno);
 		}
 	}
+	else if (id === 'repair') {
+		map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
+	}
 	else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
 		map.zoomIn(1);
 	}
@@ -344,6 +347,7 @@ $(function () {
 			{type: 'break'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _('Undo'), uno: 'Undo'},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _('Redo'), uno: 'Redo'},
+			{type: 'button',  id: 'repair', img: 'repair', hint: _('Document repair')},
 			{type: 'break'},
 			{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>'},
 			{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>'},

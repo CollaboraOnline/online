@@ -382,7 +382,10 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCommandValuesMsg: function (textMsg) {
 		var obj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-		if (obj.commandName === '.uno:CellCursor') {
+		if (obj.commandName == '.uno:DocumentRepair') {
+			this._onDocumentRepair(obj);
+		}
+		else if (obj.commandName === '.uno:CellCursor') {
 			this._onCellCursorMsg(obj.commandValues);
 		} else if (this._map.unoToolbarCommands.indexOf(obj.commandName) !== -1) {
 			this._toolbarCommandValues[obj.commandName] = obj.commandValues;
@@ -513,6 +516,19 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateCellCursor(horizontalDirection, verticalDirection);
+	},
+
+	_onDocumentRepair: function (textMsg) {
+		if (!this._docRepair) {
+			this._docRepair = L.control.documentRepair();
+		}
+
+		if (!this._docRepair.isVisible()) {
+			this._docRepair.addTo(this._map);
+			this._docRepair.fillActions(textMsg);
+			this._map.enable(false);
+			this._docRepair.show();
+		}
 	},
 
 	_onMousePointerMsg: function (textMsg) {
