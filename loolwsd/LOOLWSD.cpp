@@ -804,7 +804,7 @@ private:
         const std::string urlsrc = "urlsrc";
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string uriValue = (LOOLWSD::isSSLEnabled() ? "https://" : "http://") +
+        const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://") +
             (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName) +
             "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + "?";
 
@@ -1266,7 +1266,7 @@ std::string lcl_getLaunchURI()
     aAbsTopSrcDir = Poco::Path(aAbsTopSrcDir).absolute().toString();
 
     std::string aLaunchURI("    ");
-    aLaunchURI += ((LOOLWSD::isSSLEnabled()) ? "https://" : "http://");
+    aLaunchURI += ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://");
     aLaunchURI += LOOLWSD_TEST_HOST ":";
     aLaunchURI += std::to_string(ClientPortNumber);
     aLaunchURI += LOOLWSD_TEST_LOLEAFLET_UI;
@@ -1290,6 +1290,7 @@ std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::LOKitVersion;
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
+Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 
 static std::string UnitTestLibrary;
 
@@ -1349,6 +1350,7 @@ void LOOLWSD::initialize(Application& self)
         { "logging.color", "true" },
         { "logging.level", "trace" },
         { "ssl.enable", "true" },
+        { "ssl.termination", "true" },
         { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
         { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
         { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
@@ -1428,6 +1430,8 @@ void LOOLWSD::initialize(Application& self)
     {
         Log::warn("SSL support: SSL is disabled.");
     }
+
+    LOOLWSD::SSLTermination.set(getConfigValue<bool>(conf, "ssl.termination", true));
 
     Cache = getPathFromConfig("tile_cache_path");
     SysTemplate = getPathFromConfig("sys_template_path");

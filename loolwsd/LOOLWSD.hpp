@@ -65,6 +65,12 @@ public:
     }
 
     static
+    bool isSSLTermination()
+    {
+        return LOOLWSD::SSLTermination.get();
+    }
+
+    static
     void dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
 
     static
@@ -82,6 +88,7 @@ protected:
 
 private:
     static Util::RuntimeConstant<bool> SSLEnabled;
+    static Util::RuntimeConstant<bool> SSLTermination;
 
     void initializeSSL();
     void displayHelp();

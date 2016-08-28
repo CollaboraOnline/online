@@ -209,7 +209,7 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
 {
     HTMLForm form(request, request.stream());
 
-    const auto host = (LOOLWSD::isSSLEnabled() ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+    const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
     Log::debug("Preprocessing file: " + path.toString());
 

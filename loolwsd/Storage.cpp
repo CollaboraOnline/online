@@ -242,7 +242,7 @@ namespace {
 static inline
 Poco::Net::HTTPClientSession* lcl_getHTTPClientSession(const Poco::URI& uri)
 {
-    return (LOOLWSD::isSSLEnabled()) ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(), Poco::Net::SSLManager::instance().defaultClientContext())
+    return (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(), Poco::Net::SSLManager::instance().defaultClientContext())
                        : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
 
