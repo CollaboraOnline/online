@@ -481,6 +481,17 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-popup-content p {
 	margin: 18px 0;
 	}
+.leaflet-popup-content tr:hover {
+	background-color: #eee;
+	cursor: pointer;
+	}
+.leaflet-popup-content tbody {
+	display: block;
+	overflow-y: auto;
+	}
+.leaflet-popup-selected {
+	background-color: #eee;
+	}
 .leaflet-popup-tip-container {
 	margin: 0 auto;
 	width: 40px;

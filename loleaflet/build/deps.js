@@ -288,6 +288,13 @@ var deps = {
 		desc: 'Metric Input'
 	},
 
+	ControlDocumentRepair: {
+		src: ['control/Control.js',
+		      'control/Control.DocumentRepair.js'],
+		heading: 'Controls',
+		desc: 'Document Repair'
+	},
+
 	ControlContextmenu: {
 		src: ['control/Control.js',
 		      'control/Control.ContextMenu.js'],
