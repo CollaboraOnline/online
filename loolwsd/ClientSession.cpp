@@ -117,6 +117,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "downloadas" &&
              tokens[0] != "getchildid" &&
              tokens[0] != "gettextselection" &&
+             tokens[0] != "getrepairactions" &&
              tokens[0] != "paste" &&
              tokens[0] != "insertfile" &&
              tokens[0] != "key" &&

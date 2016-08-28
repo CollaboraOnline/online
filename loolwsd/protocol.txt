@@ -165,6 +165,15 @@ userinactive
 
     See 'useractive'.
 
+getrepairactions
+
+    Requests both Undo and Redo repair results.
+    They are both merged into a single json with two nodes, "redo" and "undo".
+    The value of each is the actions array.
+
+    See 'repairactions' response.
+
+
 server -> client
 ================
 
@@ -349,6 +358,28 @@ redlinetablechanged:
 
     Signals that the redlines table has been modified.
     Redlines are used for tracking changes.
+
+repairactions:
+
+    The response to getrepairactions request.
+    Returns the actions arrays of both Undo and Redo repair.
+    This is a json with two entries, "undo" and "redo", each
+    with its respective actions array.
+    Example:
+    repairactions: [{ "undo": {
+        "actions": [
+            {
+                "index": "0",
+                "comment": "Delete 'Hello world'",
+                "viewId": "0",
+                "dateTime": "2016-08-28T11:57:57,967527310"
+            }
+        ]
+    }
+    }, { "redo": {
+        "actions": ""
+    }
+    }]
 
 
 child -> parent

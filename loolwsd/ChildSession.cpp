@@ -203,7 +203,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "saveas" ||
                tokens[0] == "useractive" ||
                tokens[0] == "userinactive" ||
-               tokens[0] == "editlock:");
+               tokens[0] == "editlock:" ||
+               tokens[0] == "getrepairactions");
 
         if (tokens[0] == "clientzoom")
         {
@@ -279,6 +280,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             // each client with the edit lock state.
             Log::trace("Echoing back [" + firstLine + "].");
             return sendTextFrame(firstLine);
+        }
+        else if (tokens[0] == "getrepairactions")
+        {
+            return getRepairActions(buffer, length, tokens);
         }
         else
         {
@@ -439,6 +444,29 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
     }
 
     return success;
+}
+
+bool ChildSession::getRepairActions(const char* /*buffer*/, int /*length*/, StringTokenizer& /*tokens*/)
+{
+    std::unique_lock<std::recursive_mutex> lock(Mutex);
+
+    if (_multiView)
+        _loKitDocument->setView(_viewId);
+
+    std::ostringstream oss;
+
+    char* ptrValues = _loKitDocument->getCommandValues(".uno:Undo");
+    oss << "[{ \"undo\": " << ptrValues << "}, ";
+    std::free(ptrValues);
+
+    ptrValues = _loKitDocument->getCommandValues(".uno:Redo");
+
+    oss << "{ \"redo\": " << ptrValues << "}]";
+    std::free(ptrValues);
+
+    Log::trace(oss.str());
+
+    return sendTextFrame("repairactions: " + oss.str());
 }
 
 bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)

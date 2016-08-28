@@ -77,6 +77,7 @@ private:
 
     bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool getRepairActions(const char *buffer, int length, Poco::StringTokenizer& tokens);
 
     bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
     bool clientVisibleArea(const char *buffer, int length, Poco::StringTokenizer& tokens);
