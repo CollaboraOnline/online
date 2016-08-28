@@ -407,6 +407,8 @@ bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
 
 bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
+    bool success;
+    char* pValues;
     std::string command;
     if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
     {
@@ -419,9 +421,23 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
     if (_multiView)
         _loKitDocument->setView(_viewId);
 
-    char* ptrValues = _loKitDocument->getCommandValues(command.c_str());
-    bool success = sendTextFrame("commandvalues: " + std::string(ptrValues));
-    std::free(ptrValues);
+    if (command == ".uno:DocumentRepair")
+    {
+        char* pUndo;
+        const std::string json("{\"commandName\":\".uno:DocumentRepair\",\"Redo\":%s,\"Undo\":%s}");
+        pValues = _loKitDocument->getCommandValues(".uno:Redo");
+        pUndo = _loKitDocument->getCommandValues(".uno:Undo");
+        success = sendTextFrame("commandvalues: " + Poco::format(json, std::string(pValues), std::string(pUndo)));
+        std::free(pValues);
+        std::free(pUndo);
+    }
+    else
+    {
+        pValues = _loKitDocument->getCommandValues(command.c_str());
+        success = sendTextFrame("commandvalues: " + std::string(pValues));
+        std::free(pValues);
+    }
+
     return success;
 }
 
