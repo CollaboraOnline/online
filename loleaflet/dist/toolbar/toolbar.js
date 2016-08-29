@@ -467,8 +467,6 @@ $(function () {
 			{type: 'html',  id: 'right'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break'},
-			{type: 'button',  id: 'takeedit', img: 'edit', hint: _('Take edit lock (others can only view)'), caption: _('VIEWING')},
-			{type: 'break'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
 			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
 			{type: 'break', id: 'prevnextbreak'},
