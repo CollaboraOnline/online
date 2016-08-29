@@ -883,7 +883,7 @@ private:
 
     void onUnload(const ChildSession& session) override
     {
-        const auto sessionId = session.getId();
+        const auto& sessionId = session.getId();
         Log::info("Unloading [" + sessionId + "].");
 
         // Broadcast the demise and removal of session.
