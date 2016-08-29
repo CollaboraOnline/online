@@ -175,7 +175,7 @@ StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uri)
     const auto file = Poco::File(path);
     const auto lastModified = file.getLastModified();
     const auto size = file.getSize();
-    return FileInfo({filename, lastModified, size});
+    return FileInfo({filename, lastModified, size, "localhost", "Local Host"});
 }
 
 std::string LocalStorage::loadStorageFileToLocal()
@@ -276,6 +276,8 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
     // Parse the response.
     std::string filename;
     size_t size = 0;
+    std::string userId;
+    std::string userName;
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
     Log::debug("WOPI::CheckFileInfo returned: " + resMsg);
@@ -288,10 +290,12 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
         const auto& object = result.extract<Poco::JSON::Object::Ptr>();
         filename = object->get("BaseFileName").toString();
         size = std::stoul (object->get("Size").toString(), nullptr, 0);
+        userId = object->get("UserId").toString();
+        userName = object->get("UserFriendlyName").toString();
     }
 
     // WOPI doesn't support file last modified time.
-    return FileInfo({filename, Poco::Timestamp(), size});
+    return FileInfo({filename, Poco::Timestamp(), size, userId, userName});
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -387,7 +391,7 @@ StorageBase::FileInfo WebDAVStorage::getFileInfo(const Poco::URI& uri)
     Log::debug("Getting info for webdav uri [" + uri.toString() + "].");
     (void)uri;
     assert(false && "Not Implemented!");
-    return FileInfo({"bazinga", Poco::Timestamp(), 0});
+    return FileInfo({"bazinga", Poco::Timestamp(), 0, "admin", "admin"});
 }
 
 std::string WebDAVStorage::loadStorageFileToLocal()

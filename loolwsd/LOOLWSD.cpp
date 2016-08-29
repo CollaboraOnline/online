@@ -641,8 +641,8 @@ private:
         }
 
         // Validate the URI and Storage before moving on.
-        docBroker->validate(uriPublic);
-        Log::debug("Validated [" + uriPublic.toString() + "].");
+        const auto fileinfo = docBroker->validate(uriPublic);
+        Log::debug("Validated [" + uriPublic.toString() + "] requested with userid [" + fileinfo._userId + "] and username [" + fileinfo._userName + "]");
 
         if (newDoc)
         {
