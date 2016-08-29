@@ -41,7 +41,7 @@ public:
 
     /// Get a list of all current view IDs.
     virtual
-    std::vector<unsigned> getViewIds() const = 0;
+    std::vector<int> getViewIds() const = 0;
 
     /// Send message to all other sessions except 'sessionId'
     virtual
@@ -68,7 +68,7 @@ public:
 
     bool getStatus(const char *buffer, int length);
     bool getPartPageRectangles(const char *buffer, int length);
-    unsigned getViewId() const { return _viewId; }
+    int getViewId() const { return _viewId; }
 
     void loKitCallback(const int nType, const std::string& rPayload);
 

@@ -379,7 +379,7 @@ public:
     struct CallbackDescriptor
     {
         Document* const Doc;
-        const unsigned ViewId;
+        const int ViewId;
     };
 
 public:
@@ -924,11 +924,11 @@ private:
         }
     }
 
-    std::vector<unsigned> getViewIds() const override
+    std::vector<int> getViewIds() const override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        std::vector<unsigned> v;
+        std::vector<int> v;
         v.reserve(_connections.size());
         for (const auto& connection : _connections)
         {
@@ -976,7 +976,7 @@ private:
         }
 
         auto session = it->second->getSession();
-        unsigned viewId = 0;
+        int viewId = 0;
 
         if (!_loKitDocument)
         {
@@ -1150,7 +1150,7 @@ private:
     mutable std::mutex _mutex;
     std::condition_variable _cvLoading;
     std::atomic_size_t _isLoading;
-    std::map<unsigned, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
+    std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
     Poco::Thread _callbackThread;
     Poco::NotificationQueue _callbackQueue;
