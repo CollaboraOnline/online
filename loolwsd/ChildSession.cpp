@@ -307,7 +307,9 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
         Parser parser;
         Poco::Dynamic::Var var = parser.parse(_docOptions);
         Object::Ptr object = var.extract<Object::Ptr>();
-        renderOpts = object->get("rendering").toString();
+        Poco::Dynamic::Var rendering = object->get("rendering");
+        if (!rendering.isEmpty())
+            renderOpts = rendering.toString();
     }
 
     assert(!_docURL.empty());
