@@ -51,22 +51,34 @@ extern "C"
                       );
     }
 
-    inline char *lok_dlerror(void)
+#ifndef __OBJC__
+    inline
+#endif
+    char *lok_dlerror(void)
     {
         return dlerror();
     }
 
-    inline void *lok_dlsym(void *Hnd, const char *pName)
+#ifndef __OBJC__
+    inline
+#endif
+    void *lok_dlsym(void *Hnd, const char *pName)
     {
         return dlsym(Hnd, pName);
     }
 
-    inline int lok_dlclose(void *Hnd)
+#ifndef __OBJC__
+    inline
+#endif
+    int lok_dlclose(void *Hnd)
     {
         return dlclose(Hnd);
     }
 
-    inline void extendUnoPath(const char *pPath)
+#ifndef __OBJC__
+    inline
+#endif
+    void extendUnoPath(const char *pPath)
     {
         (void)pPath;
     }
@@ -146,7 +158,7 @@ static void *lok_dlopen( const char *install_path, char ** _imp_lib )
 
     *_imp_lib = NULL;
 
-#if !(defined(__APPLE__) && defined(__arm__))
+#if !(defined(__APPLE__) && (defined(__arm__) || defined(__arm64__)))
     size_t partial_length;
 
     if (!install_path)
