@@ -655,12 +655,16 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onAddViewMsg: function(textMsg) {
 		textMsg = textMsg.substring('addview:'.length + 1);
-		var viewId = parseInt(textMsg);
+		var obj = JSON.parse(textMsg);
+		var viewId = parseInt(obj.viewId);
+		var username = obj.username;
 
 		// Ignore if viewid is same as ours
 		if (viewId === this._viewId) {
 			return;
 		}
+
+		this._map.addView(viewId, username);
 
 		//TODO: We can initialize color and other properties here.
 		if (typeof this._viewCursors[viewId] !== 'undefined') {
@@ -690,6 +694,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._onUpdateViewCursor(viewId);
 			delete this._viewCursors[viewId];
 		}
+
+		this._map.removeView(viewId);
 	},
 
 	_onRemAllViewMsg: function(textMsg) {
