@@ -159,6 +159,11 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
             _jailedFilePath = tokens[i].substr(strlen("jail="));
             ++offset;
         }
+        else if (tokens[i].find("author=") == 0)
+        {
+            _userName = tokens[i].substr(strlen("author="));
+            ++offset;
+        }
         else if (tokens[i].find("timestamp=") == 0)
         {
             timestamp = tokens[i].substr(strlen("timestamp="));

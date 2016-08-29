@@ -30,6 +30,7 @@ public:
     virtual
     std::shared_ptr<lok::Document> onLoad(const std::string& sessionId,
                                           const std::string& jailedFilePath,
+                                          const std::string& userName,
                                           const std::string& docPassword,
                                           const std::string& renderOpts,
                                           const bool haveDocPassword) = 0;

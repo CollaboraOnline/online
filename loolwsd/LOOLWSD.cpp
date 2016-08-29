@@ -642,7 +642,7 @@ private:
 
         // Validate the URI and Storage before moving on.
         const auto fileinfo = docBroker->validate(uriPublic);
-        Log::debug("Validated [" + uriPublic.toString() + "] requested with userid [" + fileinfo._userId + "] and username [" + fileinfo._userName + "]");
+        Log::debug("Validated [" + uriPublic.toString() + "]");
 
         if (newDoc)
         {
@@ -668,6 +668,11 @@ private:
             // thread to pump them. This is to empty the queue when we get a "canceltiles" message.
             auto queue = std::make_shared<BasicTileQueue>();
             session = std::make_shared<ClientSession>(id, ws, docBroker, queue, isReadOnly);
+            if (!fileinfo._userName.empty())
+            {
+                Log::debug(uriPublic.toString() + " requested with username [" + fileinfo._userName + "]");
+                session->setUserName(fileinfo._userName);
+            }
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);

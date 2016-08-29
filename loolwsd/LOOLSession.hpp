@@ -175,6 +175,9 @@ protected:
 
     /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
     std::string _docOptions;
+
+    /// Name of the user to whom the session belongs to
+    std::string _userName;
 };
 
 template<typename charT, typename traits>

@@ -36,6 +36,8 @@ public:
     void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
+    void setUserName(const std::string& userName) { _userName = userName; }
+
     /**
      * Return the URL of the saved-as document when it's ready. If called
      * before it's ready, the call blocks till then.

@@ -228,6 +228,9 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
         oss << " url=" << _docBroker->getPublicUri().toString();
         oss << " jail=" << _docBroker->getJailedUri().toString();
 
+        if (!_userName.empty())
+            oss << " author=" + _userName;
+
         if (_loadPart >= 0)
             oss << " part=" + std::to_string(_loadPart);
 
