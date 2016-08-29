@@ -116,10 +116,27 @@ L.Map = L.Evented.extend({
 
 		this.showBusy(_('Initializing...'), false);
 		this.on('statusindicator', this._onUpdateProgress, this);
+
+		// View info (user names and view ids)
+		this._viewInfo = {};
 	},
 
 
 	// public methods that modify map state
+
+	addView: function(viewid, username) {
+		this._viewInfo[viewid] = username;
+		this.fire('addview', {viewId: viewid, username: username});
+	},
+
+	removeView: function(viewid) {
+		delete this._viewInfo[viewid];
+		this.fire('removeview', {viewId: viewid});
+	},
+
+	getViewName: function(viewid) {
+		return this._viewInfo[viewid];
+	},
 
 	// replaced by animation-powered implementation in Map.PanAnimation.js
 	setView: function (center, zoom) {
