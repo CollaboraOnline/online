@@ -11,7 +11,7 @@
 #include "config.h"
 
 #include <execinfo.h>
-#include <signal.h>
+#include <csignal>
 #include <sys/poll.h>
 #include <sys/prctl.h>
 #include <sys/uio.h>

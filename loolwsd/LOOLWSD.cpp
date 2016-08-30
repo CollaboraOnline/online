@@ -24,16 +24,16 @@
 // parent process that listens on the TCP port and accepts connections from LOOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
 
-#include <errno.h>
-#include <locale.h>
+#include <cerrno>
+#include <clocale>
 #include <unistd.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-#include <time.h>
-#include <stdlib.h>
+#include <ctime>
+#include <cstdlib>
 
 #include <cassert>
 #include <condition_variable>

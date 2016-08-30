@@ -12,7 +12,7 @@
 #include <string>
 #include <memory>
 #include <atomic>
-#include <assert.h>
+#include <cassert>
 
 #include <Poco/Net/WebSocket.h>
 

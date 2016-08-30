@@ -10,7 +10,7 @@
 #ifndef INCLUDED_DOCUMENTBROKER_HPP
 #define INCLUDED_DOCUMENTBROKER_HPP
 
-#include <signal.h>
+#include <csignal>
 
 #include <atomic>
 #include <chrono>

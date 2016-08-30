@@ -13,9 +13,9 @@
 
 #include <dlfcn.h>
 #include <ftw.h>
-#include <limits.h>
+#include <climits>
 #include <malloc.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <sys/capability.h>
 #include <unistd.h>
 #include <utime.h>
