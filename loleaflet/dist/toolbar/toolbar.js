@@ -478,7 +478,7 @@ $(function () {
 			{type: 'html',  id: 'right'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break'},
-			{type: 'html', id: 'userlistcontainer', html: '<div><label>Users: </label><input id="userlist" type="list" /></div>'},
+			{type: 'html', id: 'userlistcontainer', html: '<div class="loleaflet-font"><label>' + _('Users:') + ' </label><input id="userlist" type="list" /></div>'},
 			{type: 'break'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
 			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
