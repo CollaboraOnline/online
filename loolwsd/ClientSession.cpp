@@ -229,7 +229,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
         oss << " jail=" << _docBroker->getJailedUri().toString();
 
         if (!_userName.empty())
-            oss << " author=" + _userName;
+        {
+            std::string encodedUserName;
+            Poco::URI::encode(_userName, "", encodedUserName);
+            oss << " author=" + encodedUserName;
+        }
 
         if (_loadPart >= 0)
             oss << " part=" + std::to_string(_loadPart);
