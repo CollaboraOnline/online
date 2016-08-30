@@ -1535,6 +1535,7 @@ bool globalPreinit(const std::string &loTemplate)
     void *handle;
     if (File(libMerged).exists())
     {
+        Log::trace("dlopen(" + libMerged + ", RTLD_GLOBAL|RTLD_NOW)");
         handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
         if (!handle)
         {
@@ -1547,6 +1548,7 @@ bool globalPreinit(const std::string &loTemplate)
     {
         if (File(libSofficeapp).exists())
         {
+            Log::trace("dlopen(" + libSofficeapp + ", RTLD_GLOBAL|RTLD_NOW)");
             handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
             if (!handle)
             {
@@ -1569,6 +1571,7 @@ bool globalPreinit(const std::string &loTemplate)
         return false;
     }
 
+    Log::trace("lok_preinit(" + loTemplate + "/program\", \"file:///user\")");
     if (preInit((loTemplate + "/program").c_str(), "file:///user") != 0)
     {
         Log::error("lok_preinit() in " + loadedLibrary + " failed");
