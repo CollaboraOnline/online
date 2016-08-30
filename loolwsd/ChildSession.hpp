@@ -47,6 +47,10 @@ public:
     /// Send message to all other sessions except 'sessionId'
     virtual
     void notifyOtherSessions(const std::string& sessionId, const std::string& message) const = 0;
+
+    /// Send other view's information to current view (one with sessionId)
+    virtual
+    void notifyCurrentViewOfOtherViews(const std::string& sessionId) const = 0;
 };
 
 /// Represents a client session, with the socket end-point,
@@ -70,6 +74,7 @@ public:
     bool getStatus(const char *buffer, int length);
     bool getPartPageRectangles(const char *buffer, int length);
     int getViewId() const { return _viewId; }
+    const std::string getViewUserName() const { return _userName; }
 
     void loKitCallback(const int nType, const std::string& rPayload);
 

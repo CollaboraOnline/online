@@ -10,6 +10,8 @@
 #include "ChildSession.hpp"
 #include "config.h"
 
+#include <sstream>
+
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/WebSocket.h>
@@ -97,10 +99,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         // Refresh the viewIds.
         sendTextFrame("remallviews:");
-        for (const auto viewId : _docManager.getViewIds())
-        {
-            sendTextFrame("addview: " + std::to_string(viewId));
-        }
+        _docManager.notifyCurrentViewOfOtherViews(getId());
 
         const int curPart = _loKitDocument->getPart();
         sendTextFrame("curpart: part=" + std::to_string(curPart));
@@ -326,10 +325,18 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
 
     if (_multiView)
     {
+        std::ostringstream ossViewInfo;
         _viewId = _loKitDocument->getView();
         const auto viewId = std::to_string(_viewId);
-        Log::info("Created new view: " + viewId);
-        _docManager.notifyOtherSessions(getId(), "addview: " + viewId);
+
+        // Create a message object
+        Object::Ptr viewInfoObj = new Object();
+        viewInfoObj->set("id", viewId);
+        viewInfoObj->set("username", _userName);
+        viewInfoObj->stringify(ossViewInfo);
+
+        Log::info("Created new view with viewid: [" + viewId + "] for username: [" + _userName + "].");
+        _docManager.notifyOtherSessions(getId(), "addview: " + ossViewInfo.str());
     }
 
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());
@@ -348,13 +355,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     }
 
     // Inform this view of other views
-    for (const auto viewId: _docManager.getViewIds())
-    {
-        if (viewId != _viewId)
-        {
-            sendTextFrame("addview: " + std::to_string(viewId));
-        }
-    }
+    _docManager.notifyCurrentViewOfOtherViews(getId());
 
     Log::info("Loaded session " + getId());
     return true;

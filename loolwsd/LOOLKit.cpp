@@ -965,6 +965,38 @@ private:
         }
     }
 
+    void notifyCurrentViewOfOtherViews(const std::string& sessionId) const override
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        const auto& it = _connections.find(Util::decodeId(sessionId));
+        if (it == _connections.end() || !it->second)
+        {
+            Log::error("Cannot find current session [" + sessionId + "].");
+            return;
+        }
+
+        auto currentSession = it->second->getSession();
+        for (auto& connectionIt: _connections)
+        {
+            if (connectionIt.second->isRunning() && connectionIt.second->getSessionId() != sessionId)
+            {
+                auto session = connectionIt.second->getSession();
+                const auto viewId = session->getViewId();
+                const auto viewUserName = session->getViewUserName();
+
+                // Create a message object
+                Object::Ptr viewInfoObj = new Object();
+                viewInfoObj->set("id", viewId);
+                viewInfoObj->set("username", viewUserName);
+                std::ostringstream ossViewInfo;
+                viewInfoObj->stringify(ossViewInfo);
+
+                currentSession->sendTextFrame("addview: " + ossViewInfo.str());
+            }
+        }
+    }
+
 private:
 
     std::shared_ptr<lok::Document> load(const std::string& sessionId,

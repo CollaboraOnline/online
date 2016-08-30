@@ -332,9 +332,12 @@ viewlock:
 
     Per-view lock rectangle. JSON payload.
 
-addview: <viewId>
+addview: <JSON string>
 
-    New view with the given viewId is created.
+    Eg: {"id": "<viewid>",
+         "username": "<name of the user>"}
+
+    New view with the given view information is created.
 
 remview: <viewId>
 
