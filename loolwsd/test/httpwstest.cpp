@@ -562,18 +562,15 @@ void HTTPWSTest::testSaveOnDisconnect()
 
 void HTTPWSTest::testReloadWhileDisconnecting()
 {
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    const auto testname = "reloadWhileDisconnecting ";
 
-    int kitcount = -1;
     try
     {
-        // Load a document and get its status.
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+        // Load a document and get its status.
+        auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
 
         sendTextFrame(socket, "uno .uno:SelectAll");
         sendTextFrame(socket, "uno .uno:Delete");
@@ -583,28 +580,16 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         // Often nothing more than the SelectAll reaches the server before
         // the socket is closed, when the doc is not even modified yet.
         getResponseMessage(socket, "statechanged");
-        std::cerr << "Closing connection after pasting." << std::endl;
 
-        kitcount = getLoolKitProcessCount();
+        const auto kitcount = getLoolKitProcessCount();
 
         // Shutdown abruptly.
+        std::cerr << "Closing connection after pasting." << std::endl;
         socket.shutdown();
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
 
-    std::cout << "Loading again." << std::endl;
-    try
-    {
         // Load the same document and check that the last changes (pasted text) is saved.
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        sendTextFrame(socket, "status");
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+        std::cout << "Loading again." << std::endl;
+        socket = *loadDocAndGetSocket(_uri, documentURL, testname);
 
         // Should have no new instances.
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
@@ -612,34 +597,8 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll");
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-        std::string selection;
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << '\n';
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << '\n';
-                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
-                if (line.find("editlock: ") == 0)
-                {
-                    // We must have the editlock, otherwise we aren't alone.
-                    CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), line);
-                }
-
-                const std::string prefix = "textselectioncontent: ";
-                if (line.find(prefix) == 0)
-                {
-                    selection = line.substr(prefix.length());
-                    break;
-                }
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        CPPUNIT_ASSERT_EQUAL(std::string("aaa bbb ccc"), selection);
+        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
     {
@@ -1442,8 +1401,12 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
 void HTTPWSTest::testInsertAnnotationWriter()
 {
     const auto testname = "insertAnnotationWriter ";
-    const std::string docFilename = "hello.odt";
-    auto socket = loadDocAndGetSocket(docFilename, _uri, testname);
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     // Insert comment.
     sendTextFrame(socket, "uno .uno:InsertAnnotation");
@@ -1491,7 +1454,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
     // Close and reopen the same document and test again.
     socket->shutdown();
     std::cerr << "Reloading " << std::endl;
-    socket = loadDocAndGetSocket(docFilename, _uri, testname);
+    socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     // Confirm that the text is in the comment and not doc body.
     // Click in the body.
@@ -1522,8 +1485,11 @@ void HTTPWSTest::testInsertAnnotationWriter()
 void HTTPWSTest::testEditAnnotationWriter()
 {
     const auto testname = "editAnnotationWriter ";
-    const std::string docFilename = "with_comment.odt";
-    auto socket = loadDocAndGetSocket(docFilename, _uri, testname);
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("with_comment.odt", documentPath, documentURL);
+
+    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     // Click in the body.
     sendTextFrame(socket, "mouse type=buttondown x=1600 y=1600 count=1 buttons=1 modifier=0");
@@ -1549,10 +1515,17 @@ void HTTPWSTest::testEditAnnotationWriter()
     res = getResponseLine(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
+    const auto kitcount = getLoolKitProcessCount();
+
     // Close and reopen the same document and test again.
+    std::cerr << "Closing connection after pasting." << std::endl;
     socket->shutdown();
+
     std::cerr << "Reloading " << std::endl;
-    socket = loadDocAndGetSocket(docFilename, _uri, testname);
+    socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // Should have no new instances.
+    CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
     // Confirm that the text is in the comment and not doc body.
     // Click in the body.
