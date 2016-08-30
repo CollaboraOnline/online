@@ -70,7 +70,8 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void checkBlackTiles(Poco::Net::WebSocket& socket,
                          const int part,
                          const int docWidth,
-                         const int docHeight);
+                         const int docHeight,
+                         const std::string& name = "checkBlackTiles ");
 
     void checkBlackTile(std::stringstream& tile);
 
@@ -321,31 +322,24 @@ void TileCacheTests::testLoad12ods()
 {
     try
     {
+        const auto testName = "load12Ods ";
+        auto socket = *loadDocAndGetSocket("load12.ods", _uri, testName);
+
         int docSheet = -1;
         int docSheets = 0;
         int docHeight = 0;
         int docWidth = 0;
         int docViewId = -1;
 
-        std::string response;
-
-         // Load a document
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("load12.ods", documentPath, documentURL);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
-
         // check document size
         sendTextFrame(socket, "status");
+
+        std::string response;
         getResponseMessage(socket, "status:", response, false);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         parseDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
-        checkBlackTiles(socket, docSheet, docWidth, docWidth);
+        checkBlackTiles(socket, docSheet, docWidth, docWidth, testName);
     }
     catch (const Poco::Exception& exc)
     {
@@ -385,7 +379,7 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
     CPPUNIT_ASSERT_MESSAGE("The tile is 90% black", (black * 100) / (height * width) < 90);
 }
 
-void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int /*part*/, const int /*docWidth*/, const int /*docHeight*/)
+void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int /*part*/, const int /*docWidth*/, const int /*docHeight*/, const std::string& name)
 {
     // Check the last row of tiles to verify that the tiles
     // render correctly and there are no black tiles.
@@ -394,7 +388,7 @@ void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int /*p
     const auto req = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
     sendTextFrame(socket, req);
 
-    const auto tile = getResponseMessage(socket, "tile:", "checkBlackTiles ");
+    const auto tile = getResponseMessage(socket, "tile:", name);
     const std::string firstLine = LOOLProtocol::getFirstLine(tile);
 
 #if 0
@@ -406,52 +400,6 @@ void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int /*p
     std::stringstream streamTile;
     std::copy(tile.begin() + firstLine.size() + 1, tile.end(), std::ostream_iterator<char>(streamTile));
     checkBlackTile(streamTile);
-
-#if 0
-    // twips
-    const int tileSize = 3840;
-    // pixel
-    const int pixTileSize = 256;
-
-    int rows;
-    int cols;
-    int tileX;
-    int tileY;
-    int tileWidth;
-    int tileHeight;
-
-    std::string text;
-    std::vector<char> tile;
-
-    rows = docHeight / tileSize;
-    cols = docWidth / tileSize;
-
-    // This is extremely slow due to an issue in Core.
-    // For each tile the full tab's cell info iss collected
-    // and that function is painfully slow.
-    // Also, this is unnecessary as we check for the last
-    // row of tiles, which is more than enough.
-    for (int itRow = 0; itRow < rows; ++itRow)
-    {
-        for (int itCol = 0; itCol < cols; ++itCol)
-        {
-            tileWidth = tileSize;
-            tileHeight = tileSize;
-            tileX = tileSize * itCol;
-            tileY = tileSize * itRow;
-            text = Poco::format("tile part=%d width=%d height=%d tileposx=%d tileposy=%d tilewidth=%d tileheight=%d",
-                    part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
-
-            sendTextFrame(socket, text);
-            tile = getTileMessage(socket, "checkBlackTiles ");
-            const std::string firstLine = LOOLProtocol::getFirstLine(tile);
-
-            std::stringstream streamTile;
-            std::copy(tile.begin() + firstLine.size() + 1, tile.end(), std::ostream_iterator<char>(streamTile));
-            checkBlackTile(streamTile);
-        }
-    }
-#endif
 }
 
 void TileCacheTests::testTileInvalidateWriter()
