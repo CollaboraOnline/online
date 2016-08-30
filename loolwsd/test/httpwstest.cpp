@@ -1370,7 +1370,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     sendTextFrame(socket, "status");
     getResponseMessage(socket, "status:", response, false);
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-    getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
+    parseDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
     // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
     sendTextFrame(socket, "key type=input char=0 key=1027");
@@ -1389,7 +1389,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     // filter messages, and expect to receive new document size
     getResponseMessage(socket, "status:", response, false);
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-    getDocSize(response, "spreadsheet", newSheet, newSheets, newWidth, newHeight, docViewId);
+    parseDocSize(response, "spreadsheet", newSheet, newSheets, newWidth, newHeight, docViewId);
 
     CPPUNIT_ASSERT_EQUAL(docSheets, newSheets);
     CPPUNIT_ASSERT_EQUAL(docSheet, newSheet);

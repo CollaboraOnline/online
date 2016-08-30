@@ -343,7 +343,7 @@ void TileCacheTests::testLoad12ods()
         sendTextFrame(socket, "status");
         getResponseMessage(socket, "status:", response, false);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
+        parseDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
         checkBlackTiles(socket, docSheet, docWidth, docWidth);
     }

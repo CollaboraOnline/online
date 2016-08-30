@@ -444,8 +444,8 @@ void SocketProcessor(const std::string& name,
 }
 
 inline
-void getDocSize(const std::string& message, const std::string& type,
-                int& part, int& parts, int& width, int& height, int& viewid)
+void parseDocSize(const std::string& message, const std::string& type,
+                  int& part, int& parts, int& width, int& height, int& viewid)
 {
     Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
     CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
