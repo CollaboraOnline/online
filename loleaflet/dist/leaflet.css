@@ -593,6 +593,10 @@ a.leaflet-control-buttons:hover:first-child {
         font-size: 9px;
         }
 
+div.leaflet-cursor-container:hover > .leaflet-cursor-header {
+        visibility: visible !important;
+        }
+
 .blinking-cursor {
 	-webkit-animation: 1s blink step-end 0s infinite;
 	-moz-animation: 1s blink step-end 0s infinite;
