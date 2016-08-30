@@ -11,14 +11,14 @@ function onDelete(e) {
 }
 
 function onChangeUserList() {
-	var usernames = [];
+	var usernames = ['You'];
+	var userlist = w2ui['toolbar-down'].get('userlist');
 	for (var viewid in map._viewInfo) {
 		usernames.push(map._viewInfo[viewid]);
 	}
 
-	$('#userlist').w2field('list', {
-		items: usernames
-	});
+	userlist.items = usernames;
+	w2ui['toolbar-down'].refresh();
 }
 
 function resizeToolbar() {
@@ -478,7 +478,9 @@ $(function () {
 			{type: 'html',  id: 'right'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break'},
-			{type: 'html', id: 'userlistcontainer', html: '<div class="loleaflet-font"><label>' + _('Users:') + ' </label><input id="userlist" type="list" /></div>'},
+			{type: 'menu', id: 'userlist', caption: _('Users'), items: [
+				_('You'),
+			]},
 			{type: 'break'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
 			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
