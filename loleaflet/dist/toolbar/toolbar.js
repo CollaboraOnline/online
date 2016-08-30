@@ -508,6 +508,9 @@ var formatButtons = {
 
 var takeEditPopupMessage = '<div>' + _('You are viewing now.') + '<br/>' + _('Click here to take edit.') + '</div>';
 var takeEditPopupTimeout = null;
+var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
+var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
+var userPopupTimeout = null;
 
 function toggleButton(toolbar, state, command)
 {
@@ -1362,10 +1365,36 @@ map.on('statusindicator', function (e) {
 
 // TODO: Dynamically add/remove users from list
 map.on('addview', function(e) {
+	$('#tb_toolbar-down_item_userlist')
+		.w2overlay({
+			class: 'loleaflet-font',
+			html: userJoinedPopupMessage.replace('%user', e.username),
+			style: 'padding: 5px'
+		});
+	clearTimeout(userPopupTimeout);
+	userPopupTimeout = setTimeout(function() {
+		$('#tb_toolbar-down_item_userlist').w2overlay('');
+		clearTimeout(userPopupTimeout);
+		userPopupTimeout = null;
+	}, 3000);
+
 	onChangeUserList();
 });
 
 map.on('removeview', function(e) {
+	$('#tb_toolbar-down_item_userlist')
+		.w2overlay({
+			class: 'loleaflet-font',
+			html: userLeftPopupMessage.replace('%user', e.username),
+			style: 'padding: 5px'
+		});
+	clearTimeout(userPopupTimeout);
+	userPopupTimeout = setTimeout(function() {
+		$('#tb_toolbar-down_item_userlist').w2overlay('');
+		clearTimeout(userPopupTimeout);
+		userPopupTimeout = null;
+	}, 3000);
+
 	onChangeUserList();
 });
 
