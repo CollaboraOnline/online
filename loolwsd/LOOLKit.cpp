@@ -930,24 +930,6 @@ private:
         }
     }
 
-    std::vector<int> getViewIds() const override
-    {
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        std::vector<int> v;
-        v.reserve(_connections.size());
-        for (const auto& connection : _connections)
-        {
-            const auto& session = connection.second->getSession();
-            if (session)
-            {
-                v.push_back(session->getViewId());
-            }
-        }
-
-        return v;
-    }
-
     void notifyOtherSessions(const std::string& sessionId, const std::string& message) const override
     {
         std::unique_lock<std::mutex> lock(_mutex);

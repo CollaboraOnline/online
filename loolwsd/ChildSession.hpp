@@ -40,10 +40,6 @@ public:
     virtual
     void onUnload(const ChildSession& session) = 0;
 
-    /// Get a list of all current view IDs.
-    virtual
-    std::vector<int> getViewIds() const = 0;
-
     /// Send message to all other sessions except 'sessionId'
     virtual
     void notifyOtherSessions(const std::string& sessionId, const std::string& message) const = 0;
