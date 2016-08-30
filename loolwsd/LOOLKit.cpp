@@ -1467,6 +1467,7 @@ void lokit_main(const std::string& childRoot,
                     }
                     else if (document && document->canDiscard())
                     {
+                        Log::info("Last session discarded. Terminating.");
                         TerminationFlag = true;
                     }
                     else
@@ -1480,7 +1481,11 @@ void lokit_main(const std::string& childRoot,
                 [&document]()
                 {
                     if (document && document->canDiscard())
+                    {
+                        Log::info("Last session discarded. Terminating.");
                         TerminationFlag = true;
+                    }
+
                     return TerminationFlag.load();
                 });
 

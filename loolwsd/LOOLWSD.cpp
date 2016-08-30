@@ -911,18 +911,18 @@ public:
                 // http://server/hosting/discovery
                 responded = handleGetWOPIDiscovery(request, response);
             }
-            // All post requests have url prefix, lool
             else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
                      reqPathSegs.size() > 0 && reqPathSegs[0] == "lool")
             {
+                // All post requests have url prefix 'lool'.
                 responded = handlePostRequest(request, response, id);
             }
             else if (reqPathSegs.size() > 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "ws")
             {
                 auto ws = std::make_shared<WebSocket>(request, response);
+                responded = true; // After upgrading to WS we should not set HTTP response.
                 try
                 {
-                    responded = true; // After upgrading to WS we should not set HTTP response.
                     handleGetRequest(request, ws, id);
                 }
                 catch (const WebSocketErrorMessageException& exc)
@@ -1868,9 +1868,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         else if (pid < 0)
         {
             Log::syserror("waitpid failed.");
-            // No child processes
             if (errno == ECHILD)
             {
+                // No child processes.
+                Log::error("No Forkit instance. Terminating.");
                 TerminationFlag = true;
                 continue;
             }
