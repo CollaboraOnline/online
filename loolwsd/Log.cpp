@@ -69,7 +69,7 @@ namespace Log
         }
     }
 
-    static void getPrefix(char *buffer)
+    static void getPrefix(char *buffer, const char* level)
     {
         Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - epochStart;
 
@@ -88,23 +88,23 @@ namespace Log
         const char *appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
         assert(strlen(appName) + 32 + 28 < 1024 - 1);
 
-        snprintf(buffer, 4095, "%s-%.2d %.2d:%.2d:%.2d.%.6d [ %s ] ", appName,
+        snprintf(buffer, 4095, "%s-%.2d %d:%.2d:%.2d.%.6d [ %s ] %s  ", appName,
                  (Poco::Thread::current() ? Poco::Thread::current()->id() : 0),
                  (int)hours, (int)minutes, (int)seconds, (int)usec,
-                 procName);
+                 procName, level);
     }
 
-    std::string prefix()
+    std::string prefix(const char* level)
     {
         char buffer[1024];
-        getPrefix(buffer);
+        getPrefix(buffer, level);
         return std::string(buffer);
     }
 
     void signalLogPrefix()
     {
         char buffer[1024];
-        getPrefix(buffer);
+        getPrefix(buffer, "SIG");
         signalLog(buffer);
     }
 
@@ -157,32 +157,32 @@ namespace Log
 
     void trace(const std::string& msg)
     {
-        logger().trace(prefix() + msg);
+        logger().trace(prefix("TRC") + msg);
     }
 
     void debug(const std::string& msg)
     {
-        logger().debug(prefix() + msg);
+        logger().debug(prefix("DBG") + msg);
     }
 
     void info(const std::string& msg)
     {
-        logger().information(prefix() + msg);
+        logger().information(prefix("INF") + msg);
     }
 
     void warn(const std::string& msg)
     {
-        logger().warning(prefix() + msg);
+        logger().warning(prefix("WRN") + msg);
     }
 
     void error(const std::string& msg)
     {
-        logger().error(prefix() + msg);
+        logger().error(prefix("ERR") + msg);
     }
 
     void syserror(const std::string& msg)
     {
-        logger().error(prefix() + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
+        logger().error(prefix("SYS") + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
     }
 }
 
