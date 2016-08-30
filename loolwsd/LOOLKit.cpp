@@ -705,6 +705,12 @@ public:
         }
 
         std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
+        if (_loKitDocument->getViews() <= 0)
+        {
+            Log::error("Tile rendering requested without views.");
+            return;
+        }
+
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,
@@ -998,14 +1004,15 @@ private:
 
         auto session = it->second->getSession();
         int viewId = 0;
+        std::unique_lock<std::mutex> lockLokDoc;
 
         if (!_loKitDocument)
         {
             // This is the first time we are loading the document
             Log::info("Loading new document from URI: [" + uri + "] for session [" + sessionId + "].");
 
-
             auto lock(_loKit->getLock());
+
             if (LIBREOFFICEKIT_HAS(_loKit->get(), registerCallback))
             {
                 _loKit->get()->pClass->registerCallback(_loKit->get(), GlobalCallback, this);
@@ -1023,6 +1030,8 @@ private:
             Log::debug("Calling lokit::documentLoad.");
             _loKitDocument = _loKit->documentLoad(uri.c_str());
             Log::debug("Returned lokit::documentLoad.");
+            auto l(_loKitDocument->getLock());
+            lockLokDoc.swap(l);
 
             if (!_loKitDocument || !_loKitDocument->get())
             {
@@ -1058,6 +1067,9 @@ private:
         }
         else
         {
+            auto l(_loKitDocument->getLock());
+            lockLokDoc.swap(l);
+
             // Check if this document requires password
             if (_isDocPasswordProtected)
             {
