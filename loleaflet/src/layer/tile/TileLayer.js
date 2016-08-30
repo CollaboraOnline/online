@@ -656,7 +656,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onAddViewMsg: function(textMsg) {
 		textMsg = textMsg.substring('addview:'.length + 1);
 		var obj = JSON.parse(textMsg);
-		var viewId = parseInt(obj.viewId);
+		var viewId = parseInt(obj.id);
 		var username = obj.username;
 
 		// Ignore if viewid is same as ours
@@ -1135,7 +1135,7 @@ L.TileLayer = L.GridLayer.extend({
 				blink: false,
 				header: true, // we want a 'hat' to our view cursors (which will contain view user names)
 				headerTimeout: 1500, // hide after some interval
-				headerName: 'Anonymous LOOL User'
+				headerName: this._map.getViewName(viewId)
 			};
 			viewCursorMarker = L.cursor(viewCursorPos, viewCursorOptions);
 			this._map.addLayer(viewCursorMarker);
