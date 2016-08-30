@@ -642,7 +642,7 @@ public:
                                       tile.getTilePosX(), tile.getTilePosY(),
                                       tile.getTileWidth(), tile.getTileHeight());
         Log::trace() << "paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY()
-                     << ") rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
+                     << ") " << "ver: " << tile.getVersion() << " rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         if (!png::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
@@ -710,9 +710,9 @@ public:
                                       pixmapWidth, pixmapHeight,
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
-        Log::debug() << "paintTile (combined) called, tile at [" << renderArea.getLeft() << ", " << renderArea.getTop() << "]"
-                     << " (" << renderArea.getWidth() << ", " << renderArea.getHeight() << ") rendered in "
-                     << double(timestamp.elapsed())/1000 <<  " ms." << Log::end;
+        Log::debug() << "paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), ("
+                     << renderArea.getWidth() << ", " << renderArea.getHeight() << ") ver: " << tileCombined.getVersion()
+                     << " rendered in " << (timestamp.elapsed()/1000.) <<  " ms." << Log::end;
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         std::vector<char> output;
