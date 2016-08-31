@@ -291,9 +291,11 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
         const auto result = parser.parse(stringJSON);
         const auto& object = result.extract<Poco::JSON::Object::Ptr>();
         filename = object->get("BaseFileName").toString();
-        size = std::stoul (object->get("Size").toString(), nullptr, 0);
-        userId = object->get("UserId").toString();
-        userName = object->get("UserFriendlyName").toString();
+        size = std::stoul(object->get("Size").toString(), nullptr, 0);
+        const auto userIdVar = object->get("UserId");
+        userId = (userIdVar.isString() ? userIdVar.toString() : "");
+        const auto userNameVar = object->get("UserFriendlyName");
+        userName = (userNameVar.isString() ? userNameVar.toString() : "anonymous");
     }
 
     // WOPI doesn't support file last modified time.
