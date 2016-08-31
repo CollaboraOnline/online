@@ -42,6 +42,9 @@ public:
     /// Otherwise returns 0 to signify a subscription exists.
     int subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber);
 
+    /// Cancels all tile requests by the given subscriber.
+    void cancelTiles(const std::shared_ptr<ClientSession> &subscriber);
+
     std::unique_ptr<std::fstream> lookupTile(const TileDesc& tile);
 
     void saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size);
