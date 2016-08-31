@@ -613,6 +613,13 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     }
 }
 
+void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& session)
+{
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    tileCache().cancelTiles(session);
+}
+
 void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);

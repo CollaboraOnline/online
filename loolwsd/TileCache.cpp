@@ -461,4 +461,26 @@ int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_
     }
 }
 
+void TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscriber)
+{
+    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
+
+    const auto sub = subscriber.get();
+
+    Log::trace("Cancelling tiles for " + subscriber->getName());
+
+    for (auto it = _tilesBeingRendered.begin(); it != _tilesBeingRendered.end(); )
+    {
+        auto& subscribers = it->second->_subscribers;
+        Log::trace("Tile " + it->first + " has " + std::to_string(subscribers.size()) + " subscribers.");
+        subscribers.erase(std::remove_if(subscribers.begin(), subscribers.end(),
+                                         [sub](std::weak_ptr<ClientSession>& ptr){ return ptr.lock().get() == sub; }),
+                          subscribers.end());
+        Log::trace(" Tile " + it->first + " has " + std::to_string(subscribers.size()) + " subscribers.");
+
+        // Remove if there are no more subscribers on this tile.
+        it = (subscribers.empty() ? _tilesBeingRendered.erase(it) : ++it);
+    }
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
