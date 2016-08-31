@@ -148,6 +148,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "canceltiles")
     {
         _docBroker->cancelTileRequests(shared_from_this());
+        return true;
     }
     else if (tokens[0] == "commandvalues")
     {
