@@ -1452,6 +1452,9 @@ void LOOLWSD::initialize(Application& self)
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
 
+    // Otherwise we profile the soft-device at jail creation time.
+    setenv ("SAL_DISABLE_OPENCL", "true", 1);
+
     // In Trial Versions we might want to set some limits.
     LOOLWSD::NumDocBrokers = 0;
     LOOLWSD::NumConnections = 0;
