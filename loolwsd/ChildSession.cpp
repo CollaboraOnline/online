@@ -117,12 +117,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // Just to update the activity of a view-only client.
         return true;
     }
-    else if (tokens[0] == "canceltiles")
-    {
-        // This command makes sense only on the command queue level.
-        // Shouldn't get this here.
-        return true;
-    }
     else if (tokens[0] == "commandvalues")
     {
         return getCommandValues(buffer, length, tokens);
