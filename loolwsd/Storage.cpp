@@ -138,6 +138,8 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     if (UnitWSD::get().createStorage(jailRoot, jailPath, uri, storage))
     {
         Log::info("Storage load hooked.");
+        if (storage)
+            return storage;
     }
     else if (uri.isRelative() || uri.getScheme() == "file")
     {

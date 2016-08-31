@@ -130,7 +130,7 @@ const StorageBase::FileInfo DocumentBroker::validate(const Poco::URI& uri)
         auto storage = StorageBase::create("", "", uri);
         auto fileinfo = storage->getFileInfo(uri);
         Log::info("After checkfileinfo: " + fileinfo._filename);
-        if (storage == nullptr || !fileinfo.isValid())
+        if (!fileinfo.isValid())
         {
             throw BadRequestException("Invalid URI or access denied.");
         }
