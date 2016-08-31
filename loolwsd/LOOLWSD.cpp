@@ -1359,6 +1359,9 @@ void LOOLWSD::initialize(Application& self)
     Log::warn("Launch this in your browser:");
     Log::warn(lcl_getLaunchURI());
 
+    // Otherwise we profile the soft-device at jail creation time.
+    setenv ("SAL_DISABLE_OPENCL", "true", 1);
+
     // In Trial Versions we might want to set some limits.
     LOOLWSD::NumDocBrokers = 0;
     LOOLWSD::NumConnections = 0;
