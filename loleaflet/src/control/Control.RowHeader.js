@@ -246,7 +246,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			var extra = {
 				aExtraHeight: {
 					type: 'unsigned short',
-					value: this._map._docLayer.STD_EXTRA_WIDTH
+					value: 0
 				}
 			};
 

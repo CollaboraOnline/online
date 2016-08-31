@@ -70,7 +70,7 @@ L.Control.Header = L.Control.extend({
 			this._clicks = 0;
 		} else {
 			this.onDragClick(this._item, ++this._clicks, e);
-			setTimeout(L.bind(this.initialize, this), 200);
+			setTimeout(L.bind(this.initialize, this), 400);
 		}
 
 		this._target = this._cursor = this._item = this._start = this._offset = null;
