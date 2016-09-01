@@ -49,7 +49,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					}
 				},
 				'optimalwidth': {
-					name: _('Optimal Width'),
+					name: _('Optimal Width') + '...',
 					callback: function(key, options) {
 						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
 						colHeaderObj.optimalWidth.call(colHeaderObj, colAlpha);
@@ -62,11 +62,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 	optimalWidth: function(colAlpha) {
 		if (!this._dialog) {
-			this._dialog = L.control.metricInput(this._onDialogResult, this, {title: _('Optimal Column Width')});
+			this._dialog = L.control.metricInput(this._onDialogResult, this,
+							     this._map._docLayer.twipsToHMM(this._map._docLayer.STD_EXTRA_WIDTH),
+							     {title: _('Optimal Column Width')});
 		}
+		this._selectColumn(colAlpha, 0);
 		this._dialog.addTo(this._map);
 		this._map.enable(false);
-		this._dialog.update();
+		this._dialog.show();
 	},
 
 	insertColumn: function(colAlpha) {
@@ -194,6 +197,17 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_onDialogResult: function (e) {
+		if (e.type === 'submit' && !isNaN(e.value)) {
+			var extra = {
+				aExtraWidth: {
+					type: 'unsigned short',
+					value: e.value
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:SetOptimalColumnWidth', extra);
+		}
+
 		this._map.enable(true);
 	},
 

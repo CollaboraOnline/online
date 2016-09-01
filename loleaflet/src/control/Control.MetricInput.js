@@ -8,11 +8,12 @@ L.Control.MetricInput = L.Control.extend({
 		title: ''
 	},
 
-	initialize: function (callback, context, options) {
+	initialize: function (callback, context, value, options) {
 		L.setOptions(this, options);
 
 		this._callback = callback;
 		this._context = context;
+		this._default = value;
 	},
 
 	onAdd: function (map) {
@@ -34,7 +35,7 @@ L.Control.MetricInput = L.Control.extend({
 		var wrapper = L.DomUtil.create('div', 'leaflet-popup-content-wrapper', container);
 		var content = L.DomUtil.create('div', 'leaflet-popup-content', wrapper);
 		var labelTitle = document.createElement('span');
-		labelTitle.innerHTML = '<b>' + this.options.title + '</b>';
+		labelTitle.innerHTML = '<b>' + this.options.title + ' ' + _('(100th/mm)') + '</b>';
 		content.appendChild(labelTitle);
 		content.appendChild(document.createElement('br'));
 		content.appendChild(document.createElement('br'));
@@ -43,8 +44,9 @@ L.Control.MetricInput = L.Control.extend({
 		labelAdd.innerHTML = _('Add: ');
 		content.appendChild(labelAdd);
 
-		var inputMetric = document.createElement('input');
+		var inputMetric = this._input = document.createElement('input');
 		inputMetric.type = 'text';
+		inputMetric.value = this._default;
 		content.appendChild(inputMetric);
 		content.appendChild(document.createElement('br'));
 		content.appendChild(document.createElement('br'));
@@ -52,6 +54,7 @@ L.Control.MetricInput = L.Control.extend({
 		var inputValue = document.createElement('input');
 		inputValue.type = 'checkbox';
 		inputValue.checked = true;
+		L.DomEvent.on(inputValue, 'click', this._onDefaultClick, this);
 		content.appendChild(inputValue);
 
 		var labelValue = document.createElement('span');
@@ -62,28 +65,38 @@ L.Control.MetricInput = L.Control.extend({
 
 		var inputButton = document.createElement('input');
 		inputButton.type = 'button';
-		inputButton.value = _('OK');
+		inputButton.value = _('Submit');
 		L.DomEvent.on(inputButton, 'click', this._onOKButtonClick, this);
 
 		content.appendChild(inputButton);
 	},
 
-	update: function () {
+	onRemove: function (map) {
+		this._input = null;
+	},
+
+	show: function () {
 		this._container.style.marginLeft = (-this._container.offsetWidth / 2) + 'px';
 		this._container.style.visibility = '';
+		this._input.focus();
+	},
+
+	_onDefaultClick: function (e) {
+		this._input.value = this._default;
 	},
 
 	_onOKButtonClick: function (e) {
+		var data = parseFloat(this._input.value);
 		this.remove();
-		this._callback.call(this._context, {type: 'ok', data: 0});
+		this._callback.call(this._context, {type: 'submit', value: data});
 	},
 
 	_onCloseButtonClick: function (e) {
 		this.remove();
-		this._callback.call(this._context, {type : 'cancel'});
+		this._callback.call(this._context, {type : 'close'});
 	}
 });
 
-L.control.metricInput = function (callback, context, options) {
-	return new L.Control.MetricInput(callback, context, options);
+L.control.metricInput = function (callback, context, value, options) {
+	return new L.Control.MetricInput(callback, context, value, options);
 };

@@ -47,7 +47,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					}
 				},
 				'optimalheight': {
-					name: _('Optimal Height'),
+					name: _('Optimal Height') + '...',
 					callback: function(key, options) {
 						var row = parseInt(options.$trigger.attr('rel').split('spreadsheet-row-')[1]);
 						rowHeaderObj.optimalHeight.call(rowHeaderObj, row);
@@ -60,11 +60,12 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 	optimalHeight: function(row) {
 		if (!this._dialog) {
-			this._dialog = L.control.metricInput(this._onDialogResult, this, {title: _('Optimal Row Height')});
+			this._dialog = L.control.metricInput(this._onDialogResult, this, 0, {title: _('Optimal Row Height')});
 		}
+		this._selectRow(row, 0);
 		this._dialog.addTo(this._map);
 		this._map.enable(false);
-		this._dialog.update();
+		this._dialog.show();
 	},
 
 	insertRow: function(row) {
@@ -176,6 +177,17 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	_onDialogResult: function (e) {
+		if (e.type === 'submit' && !isNaN(e.value)) {
+			var extra = {
+				aExtraHeight: {
+					type: 'unsigned short',
+					value: e.value
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:SetOptimalRowHeight', extra);
+		}
+
 		this._map.enable(true);
 	},
 

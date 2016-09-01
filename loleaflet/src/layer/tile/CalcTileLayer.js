@@ -7,6 +7,10 @@ L.CalcTileLayer = L.TileLayer.extend({
                               * 0.1986cm with TeX points,
                               * 0.1993cm with PS points. */
 
+	twipsToHMM: function (twips) {
+		return (twips * 127 + 36) / 72;
+	},
+
 	beforeAdd: function (map) {
 		map._addZoomLimit(this);
 		map.on('zoomend', this._onZoomRowColumns, this);
