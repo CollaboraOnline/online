@@ -124,21 +124,24 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
 
 const StorageBase::FileInfo DocumentBroker::validate(const Poco::URI& uri)
 {
-    Log::info("Validating: " + uri.toString());
+    const auto uriString = uri.toString();
+    Log::info("Validating: " + uriString);
     try
     {
         auto storage = StorageBase::create("", "", uri);
         auto fileinfo = storage->getFileInfo(uri);
-        Log::info("After checkfileinfo: " + fileinfo._filename);
+        Log::info("After checkfileinfo: " + uriString + " -> " + fileinfo._filename);
         if (!fileinfo.isValid())
         {
+            Log::error("Invalid file info for uri " + uriString);
             throw BadRequestException("Invalid URI or access denied.");
         }
 
         return fileinfo;
     }
-    catch (const std::exception&)
+    catch (const std::exception& ex)
     {
+        Log::error("Exception while getting file info for uri " + uriString + ": " + ex.what());
         throw BadRequestException("Invalid URI or access denied.");
     }
 }
