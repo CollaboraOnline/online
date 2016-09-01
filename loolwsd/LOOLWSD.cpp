@@ -905,6 +905,9 @@ public:
                 responded = true; // After upgrading to WS we should not set HTTP response.
                 try
                 {
+                    // First, setup WS options.
+                    ws->setBlocking(false);
+                    ws->setSendTimeout(WS_SEND_TIMEOUT_MICROSECS);
                     handleGetRequest(request, ws, id);
                 }
                 catch (const WebSocketErrorMessageException& exc)
