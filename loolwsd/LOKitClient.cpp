@@ -69,6 +69,9 @@ extern "C"
             CASE(ERROR);
             CASE(CONTEXT_MENU);
 #undef CASE
+            default:
+                std::cout << "Unknown callback " << nType;
+                break;
         }
         std::cout << " payload: " << pPayload << std::endl;
     }
