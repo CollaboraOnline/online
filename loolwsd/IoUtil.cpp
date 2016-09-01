@@ -96,7 +96,15 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
             }
 
             payload.resize(payload.capacity());
-            n = receiveFrame(*ws, payload.data(), payload.capacity(), flags);
+            try
+            {
+                n = receiveFrame(*ws, payload.data(), payload.capacity(), flags);
+            }
+            catch (const TimeoutException &)
+            {
+                Log::debug("SocketProcessor: Spurious TimeoutException, ignored");
+                continue;
+            }
             payload.resize(n > 0 ? n : 0);
 
             if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
