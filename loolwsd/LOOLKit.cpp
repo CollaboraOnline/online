@@ -241,7 +241,6 @@ public:
         _sessionId(session->getId()),
         _session(std::move(session)),
         _ws(std::move(ws)),
-        _stop(false),
         _joined(false)
     {
         Log::info("Connection ctor in child for " + _sessionId);
@@ -270,7 +269,7 @@ public:
 
     void stop()
     {
-        _stop = true;
+        // What should we do here?
     }
 
     void join()
@@ -347,7 +346,6 @@ private:
     std::shared_ptr<ChildSession> _session;
     std::shared_ptr<WebSocket> _ws;
     std::mutex _threadMutex;
-    std::atomic<bool> _stop;
     std::atomic<bool> _joined;
 };
 
