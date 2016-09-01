@@ -294,7 +294,9 @@ the client, consisting of the FOO_BAR part in lowercase, without
 underscore, followed by a colon, space and the callback payload. For
 instance:
 
-invalidatecursor:
+invalidatecursor: <payload>
+
+The payload contains a rectangle describing the cursor position.
 
 invalidatetiles: <payload>
 

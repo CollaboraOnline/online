@@ -60,6 +60,13 @@ public:
     void setVersion(const int ver) { _ver = ver; }
     int getImgSize() const { return _imgSize; }
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
+    bool intersectsWithRect(int x, int y, int w, int h) const
+    {
+        return x + w >= getTilePosX() &&
+               x <= getTilePosX() + getTileWidth() &&
+               y + h >= getTilePosY() &&
+               y <= getTilePosY() + getTileHeight();
+    }
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.

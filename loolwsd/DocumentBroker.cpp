@@ -111,6 +111,8 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _lastEditableSession(false),
     _cursorPosX(0),
     _cursorPosY(0),
+    _cursorWidth(0),
+    _cursorHeight(0),
     _isLoaded(false),
     _isModified(false),
     _isEditLockHeld(false),
@@ -572,8 +574,8 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
                 continue;
             }
             else
-            if (_cursorPosX >= tile.getTilePosX() && _cursorPosX <= tile.getTilePosX() + tile.getTileWidth() &&
-                _cursorPosY >= tile.getTilePosY() && _cursorPosY <= tile.getTilePosY() + tile.getTileHeight())
+            if (tile.intersectsWithRect(_cursorPosX, _cursorPosY,
+                                        _cursorWidth, _cursorHeight))
             {
                 // If this tile is right under the cursor, give it priority.
                 const auto req = tile.serialize("tile");
@@ -628,11 +630,12 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
             // If the tile right under the cursor, give it priority.
-            const auto priority = (_cursorPosX >= tile.getTilePosX() &&
-                                   _cursorPosX <= tile.getTilePosX() + tile.getTileWidth() &&
-                                   _cursorPosY >= tile.getTilePosY() &&
-                                   _cursorPosY <= tile.getTilePosY() + tile.getTileHeight());
-            tileCache().saveTileAndNotify(tile, buffer + firstLine.size() + 1, length - firstLine.size() - 1, priority);
+            const bool priority = tile.intersectsWithRect(
+                _cursorPosX, _cursorPosY,
+                _cursorWidth, _cursorHeight);
+            tileCache().saveTileAndNotify(
+                tile, buffer + firstLine.size() + 1,
+                length - firstLine.size() - 1, priority);
         }
         else
         {
