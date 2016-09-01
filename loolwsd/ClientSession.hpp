@@ -23,7 +23,6 @@ public:
     ClientSession(const std::string& id,
                   std::shared_ptr<Poco::Net::WebSocket> ws,
                   std::shared_ptr<DocumentBroker> docBroker,
-                  std::shared_ptr<BasicTileQueue> queue,
                   bool isReadOnly = false);
 
     virtual ~ClientSession();
@@ -60,11 +59,6 @@ public:
         _loadFailed = true;
     }
 
-    void sendToInputQueue(const std::string& message)
-    {
-        _queue->put(message);
-    }
-
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
 private:
@@ -84,9 +78,6 @@ private:
 private:
 
     std::shared_ptr<DocumentBroker> _docBroker;
-
-    /// The incoming message queue.
-    std::shared_ptr<BasicTileQueue> _queue;
 
     // If this document holds the edit lock.
     // An edit lock will only allow the current session to make edits,
