@@ -1439,7 +1439,11 @@ void LOOLWSD::initialize(Application& self)
         Log::warn("SSL support: SSL is disabled.");
     }
 
+#if ENABLE_SSL
     LOOLWSD::SSLTermination.set(getConfigValue<bool>(conf, "ssl.termination", true));
+#else
+    LOOLWSD::SSLTermination.set(false);
+#endif
 
     Cache = getPathFromConfig("tile_cache_path");
     SysTemplate = getPathFromConfig("sys_template_path");
