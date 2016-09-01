@@ -164,7 +164,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
             }
         }
 
-        Log::info() << "SocketProcessor finishing. TerminationFlag: " << stop
+        Log::info() << "SocketProcessor finishing. stop: " << (stop ? "true" : "false")
                      << ", n: " << n
                      << ", payload size: " << payload.size()
                      << ", flags: " << std::hex << flags << Log::end;
