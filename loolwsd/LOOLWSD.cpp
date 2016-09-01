@@ -399,7 +399,7 @@ private:
 
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
-                    auto session = std::make_shared<ClientSession>(id, ws, docBroker, nullptr);
+                    auto session = std::make_shared<ClientSession>(id, ws, docBroker);
 
                     // Request the child to connect to us and add this session.
                     auto sessionsCount = docBroker->addSession(session);
@@ -686,10 +686,7 @@ private:
         std::shared_ptr<ClientSession> session;
         try
         {
-            // For ToClient sessions, we store incoming messages in a queue and have a separate
-            // thread to pump them. This is to empty the queue when we get a "canceltiles" message.
-            auto queue = std::make_shared<BasicTileQueue>();
-            session = std::make_shared<ClientSession>(id, ws, docBroker, queue, isReadOnly);
+            session = std::make_shared<ClientSession>(id, ws, docBroker, isReadOnly);
             if (!fileinfo._userName.empty())
             {
                 Log::debug(uriPublic.toString() + " requested with username [" + fileinfo._userName + "]");
@@ -716,18 +713,13 @@ private:
             ws->sendFrame(status.data(), (int) status.size());
 
             // Let messages flow
-            QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
-            Thread queueHandlerThread;
-            queueHandlerThread.start(handler);
-
             IoUtil::SocketProcessor(ws,
-                [&queue](const std::vector<char>& payload)
+                [&session](const std::vector<char>& payload)
                 {
-                    queue->put(payload);
-                    return true;
+                    return session->handleInput(payload.data(), payload.size());
                 },
                 [&session]() { session->closeFrame(); },
-                [&queueHandlerThread]() { return TerminationFlag || !queueHandlerThread.isRunning(); });
+                []() { return !!TerminationFlag; });
 
             {
                 std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
@@ -767,12 +759,6 @@ private:
                 }
             }
 
-            if (session->isLoadFailed())
-            {
-                Log::info("Clearing the queue.");
-                queue->clear();
-            }
-
             if (sessionsCount == 0)
             {
                 std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
@@ -786,9 +772,7 @@ private:
             }
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
-            Log::info("Finishing GET request handler for session [" + id + "]. Joining the queue.");
-            queue->put("eof");
-            queueHandlerThread.join();
+            Log::info("Finishing GET request handler for session [" + id + "].");
         }
         catch (const std::exception& exc)
         {
