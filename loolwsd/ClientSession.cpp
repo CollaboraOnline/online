@@ -147,8 +147,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "canceltiles")
     {
-        _docBroker->cancelTileRequests(shared_from_this());
-        return true;
+        if (!_peer.expired())
+        {
+            return forwardToPeer(_peer, buffer, length, false);
+        }
     }
     else if (tokens[0] == "commandvalues")
     {

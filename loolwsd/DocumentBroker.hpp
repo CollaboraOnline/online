@@ -214,8 +214,6 @@ public:
     void handleTileCombinedRequest(TileCombined& tileCombined,
                                    const std::shared_ptr<ClientSession>& session);
 
-    void cancelTileRequests(const std::shared_ptr<ClientSession>& session);
-
     void handleTileResponse(const std::vector<char>& payload);
     void handleTileCombinedResponse(const std::vector<char>& payload);
 
