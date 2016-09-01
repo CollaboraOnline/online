@@ -491,7 +491,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
 #if ENABLE_DEBUG
         const std::string response = tile.serialize("tile:") + " renderid=cached\n";
 #else
-        const std::string response = tile.serialize("tile:") + "\n";
+        const std::string response = tile.serialize("tile:") + '\n';
 #endif
 
         std::vector<char> output;
@@ -501,7 +501,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
 
         assert(cachedTile->is_open());
         cachedTile->seekg(0, std::ios_base::end);
-        size_t pos = output.size();
+        const auto pos = output.size();
         std::streamsize size = cachedTile->tellg();
         output.resize(pos + size);
         cachedTile->seekg(0, std::ios_base::beg);

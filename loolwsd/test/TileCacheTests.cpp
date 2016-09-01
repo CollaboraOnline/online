@@ -234,8 +234,23 @@ void TileCacheTests::testUnresponsiveClient()
     // Pathologically request tiles and fail to read (say slow connection).
     // Meanwhile, verify that others can get all tiles fine.
     // TODO: Track memory consumption to verify we don't buffer too much.
-    for (auto x = 0; x < 5; ++x)
+
+    std::ostringstream oss;
+    for (auto i = 0; i < 1000; ++i)
     {
+        oss << Util::encodeId(Util::rng::getNext(), 6);
+    }
+
+    const auto documentContents = oss.str();
+    for (auto x = 0; x < 8; ++x)
+    {
+        // Invalidate to force re-rendering.
+        sendTextFrame(socket2, "uno .uno:SelectAll");
+        sendTextFrame(socket2, "uno .uno:Delete");
+        assertResponseLine(socket2, "invalidatetiles:", "client2 ");
+        sendTextFrame(socket2, "paste mimetype=text/html\n" + documentContents);
+        assertResponseLine(socket2, "invalidatetiles:", "client2 ");
+
         // Ask for tiles and don't read!
         sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
 

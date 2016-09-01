@@ -689,6 +689,7 @@ void HTTPWSTest::testLargePaste()
         {
             oss << Util::encodeId(Util::rng::getNext(), 6);
         }
+
         const auto documentContents = oss.str();
         std::cerr << "Pasting " << documentContents.size() << " characters into document." << std::endl;
         sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents);
