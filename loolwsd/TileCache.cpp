@@ -166,32 +166,19 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     {
         if (!tileBeingRendered->_subscribers.empty())
         {
-            std::string response = tile.serialize("tile:");
-            Log::debug("Sending tile message to subscribers: " + response);
-            response += '\n';
-
-            std::vector<char> output;
-            output.reserve(static_cast<size_t>(4) * tile.getWidth() * tile.getHeight());
-            output.resize(response.size());
-            std::memcpy(output.data(), response.data(), response.size());
-
-            const auto pos = output.size();
-            output.resize(pos + size);
-            std::memcpy(output.data() + pos, data, size);
+            const std::string message = tile.serialize("tile");
+            Log::debug("Sending tile message to subscribers: " + message);
 
             for (const auto& i: tileBeingRendered->_subscribers)
             {
                 auto subscriber = i.lock();
                 if (subscriber)
                 {
-                    try
-                    {
-                        subscriber->sendBinaryFrame(output.data(), output.size());
-                    }
-                    catch (const std::exception& ex)
-                    {
-                        Log::warn("Failed to send tile to " + subscriber->getName() + ": " + ex.what());
-                    }
+                    //FIXME: This is inefficient; should just send directly to each client (although that is risky as well!
+                    // Re-emit the tile command in the other thread(s) to re-check and hit
+                    // the cache. Construct the message from scratch to contain only the
+                    // mandatory parts of the message.
+                    subscriber->sendToInputQueue(message);
                 }
             }
         }

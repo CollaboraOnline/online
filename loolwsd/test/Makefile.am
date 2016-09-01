@@ -21,7 +21,6 @@ wsd_sources = \
             ../IoUtil.cpp \
             ../Log.cpp \
             ../LOOLProtocol.cpp \
-            ../LOOLSession.cpp \
             ../TileCache.cpp \
             ../MessageQueue.cpp \
             ../Unit.cpp \

@@ -317,6 +317,7 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
             _lastFileModifiedTime.fromEpochTime(0);
 
             // We do not want save to terminate editing mode if we are in edit mode now
+
             std::ostringstream oss;
             // arguments init
             oss << "{";
@@ -342,10 +343,8 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
             // arguments end
             oss << "}";
 
-            const auto saveArgs = oss.str();
-            Log::trace(".uno:Save arguments: " + saveArgs);
-            const auto command = "uno .uno:Save " + saveArgs;
-            sessionIt.second->handleInput(command.data(), command.size());
+            Log::debug(".uno:Save arguments: " + oss.str());
+            sessionIt.second->sendToInputQueue("uno .uno:Save " + oss.str());
             return true;
         }
     }
