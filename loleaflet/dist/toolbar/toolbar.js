@@ -10,17 +10,6 @@ function onDelete(e) {
 	}
 }
 
-function onChangeUserList() {
-	var usernames = ['You'];
-	var userlist = w2ui['toolbar-down'].get('userlist');
-	for (var viewid in map._viewInfo) {
-		usernames.push(map._viewInfo[viewid]);
-	}
-
-	userlist.items = usernames;
-	w2ui['toolbar-down'].refresh();
-}
-
 function resizeToolbar() {
 	var hasMoreItems = false;
 	var toolbarUp = w2ui['toolbar-up'];
@@ -461,6 +450,7 @@ $(function () {
 			onClick(e.target);
 		}
 	});
+
 	$('#toolbar-down').w2toolbar({
 		name: 'toolbar-down',
 		items: [
@@ -479,7 +469,7 @@ $(function () {
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break'},
 			{type: 'menu', id: 'userlist', caption: _('Users'), items: [
-				_('You'),
+				{ id: '-1', text: _('You'), disabled: true },
 			]},
 			{type: 'break'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
@@ -1363,7 +1353,10 @@ map.on('statusindicator', function (e) {
 	}
 });
 
-// TODO: Dynamically add/remove users from list
+function getUserListItem(viewId, userName) {
+	var userListItem = { id: viewId, text: userName, disabled: true };
+	return userListItem;
+}
 map.on('addview', function(e) {
 	$('#tb_toolbar-down_item_userlist')
 		.w2overlay({
@@ -1378,7 +1371,10 @@ map.on('addview', function(e) {
 		userPopupTimeout = null;
 	}, 3000);
 
-	onChangeUserList();
+	var userlist = w2ui['toolbar-down'].get('userlist');
+	userlist.items.push(getUserListItem(e.viewId, e.username));
+
+	w2ui['toolbar-down'].refresh();
 });
 
 map.on('removeview', function(e) {
@@ -1395,7 +1391,14 @@ map.on('removeview', function(e) {
 		userPopupTimeout = null;
 	}, 3000);
 
-	onChangeUserList();
+	var userlist = w2ui['toolbar-down'].get('userlist');
+	for (var idx in userlist.items) {
+		if (userlist.items[idx].id == e.viewId) {
+			userlist.items.splice(idx, 1);
+		}
+	}
+
+	w2ui['toolbar-down'].refresh();
 });
 
 $(window).resize(function() {
