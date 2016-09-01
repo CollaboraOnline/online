@@ -11,6 +11,8 @@
 
 #include <algorithm>
 
+#include <Log.hpp>
+
 MessageQueue::~MessageQueue()
 {
     clear();
@@ -93,24 +95,35 @@ void BasicTileQueue::put_impl(const Payload& value)
 
 void TileQueue::put_impl(const Payload& value)
 {
-    const auto msg = std::string(&value[0], value.size());
-    if (msg.compare(0, 5, "tile ") == 0)
+    if (!_queue.empty())
     {
-        // TODO: implement a real re-ordering here, so that the tiles closest to
-        // the cursor are returned first.
-        // * we will want to put just a general "tile" message to the queue
-        // * add a std::set that handles the tiles
-        // * change the get_impl() to decide which tile is the correct one to
-        //   be returned
-        // * we will also need to be informed about the position of the cursor
-        //   so that get_impl() returns optimal results
-        //
-        // For now: just don't put duplicates into the queue
-        for (const auto& it : _queue)
+        const auto msg = std::string(value.data(), value.size());
+        if (msg.compare(0, 4, "tile") == 0 || msg.compare(0, 10, "tilecombine") == 0)
         {
-            if (value == it)
+            const auto newMsg = msg.substr(0, msg.find(" ver"));
+
+            // TODO: implement a real re-ordering here, so that the tiles closest to
+            // the cursor are returned first.
+            // * we will want to put just a general "tile" message to the queue
+            // * add a std::set that handles the tiles
+            // * change the get_impl() to decide which tile is the correct one to
+            //   be returned
+            // * we will also need to be informed about the position of the cursor
+            //   so that get_impl() returns optimal results
+            //
+            // For now: just don't put duplicates into the queue
+            for (size_t i = 0; i < _queue.size(); ++i)
             {
-                return;
+                auto& it = _queue[i];
+                const std::string old(it.data(), it.size());
+                const auto oldMsg = old.substr(0, old.find(" ver"));
+                Log::error(std::to_string(i) + ": " + oldMsg);
+                if (newMsg == oldMsg)
+                {
+                    Log::trace("Replacing duplicate tile: " + oldMsg + " -> " + newMsg);
+                    _queue[i] = value;
+                    return;
+                }
             }
         }
     }

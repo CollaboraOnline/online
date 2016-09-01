@@ -27,6 +27,7 @@
 #include <iostream>
 #include <memory>
 #include <sstream>
+#include <thread>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -396,18 +397,23 @@ public:
     Document(const std::shared_ptr<lok::Office>& loKit,
              const std::string& jailId,
              const std::string& docKey,
-             const std::string& url)
+             const std::string& url,
+             std::shared_ptr<TileQueue> queue,
+             const std::shared_ptr<WebSocket>& ws)
       : _multiView(std::getenv("LOK_VIEW_CALLBACK")),
         _loKit(loKit),
         _jailId(jailId),
         _docKey(docKey),
         _url(url),
+        _queue(queue),
+        _ws(ws),
         _docPassword(""),
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
         _stop(false),
         _isLoading(0),
+        _tilesThread(tilesThread, this),
         _clientViews(0)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
@@ -1188,6 +1194,44 @@ private:
         Log::debug("Thread finished.");
     }
 
+    static void tilesThread(Document* pThis)
+    {
+        Util::setThreadName("tile_renderer");
+
+        Log::debug("Thread started.");
+
+        try
+        {
+            while (true)
+            {
+                const auto input = pThis->_queue->get();
+                const std::string message(input.data(), input.size());
+                StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+                if (tokens[0] == "eof")
+                {
+                    Log::info("Received EOF. Finishing.");
+                    break;
+                }
+
+                if (tokens[0] == "tile")
+                {
+                    pThis->renderTile(tokens, pThis->_ws);
+                }
+                else if (tokens[0] == "tilecombine")
+                {
+                    pThis->renderCombinedTiles(tokens, pThis->_ws);
+                }
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            Log::error(std::string("QueueHandler::run: Exception: ") + exc.what());
+        }
+
+        Log::debug("Thread finished.");
+    }
+
 private:
 
     const bool _multiView;
@@ -1199,6 +1243,8 @@ private:
     std::string _renderOpts;
 
     std::shared_ptr<lok::Document> _loKitDocument;
+    std::shared_ptr<TileQueue> _queue;
+    std::shared_ptr<WebSocket> _ws;
 
     // Document password provided
     std::string _docPassword;
@@ -1216,6 +1262,7 @@ private:
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
     Poco::Thread _callbackThread;
+    std::thread _tilesThread;
     Poco::NotificationQueue _callbackQueue;
     std::atomic_size_t _clientViews;
 };
@@ -1420,9 +1467,11 @@ void lokit_main(const std::string& childRoot,
         auto ws = std::make_shared<WebSocket>(cs, request, response);
         ws->setReceiveTimeout(0);
 
+        auto queue = std::make_shared<TileQueue>();
+
         const std::string socketName = "ChildControllerWS";
         IoUtil::SocketProcessor(ws,
-                [&socketName, &ws, &document, &loKit](const std::vector<char>& data)
+                [&socketName, &ws, &document, &loKit, &queue](const std::vector<char>& data)
                 {
                     std::string message(data.data(), data.size());
 
@@ -1449,7 +1498,7 @@ void lokit_main(const std::string& childRoot,
 
                         if (!document)
                         {
-                            document = std::make_shared<Document>(loKit, jailId, docKey, url);
+                            document = std::make_shared<Document>(loKit, jailId, docKey, url, queue, ws);
                         }
 
                         // Validate and create session.
@@ -1463,7 +1512,7 @@ void lokit_main(const std::string& childRoot,
                     {
                         if (document)
                         {
-                            document->renderTile(tokens, ws);
+                            queue->put(message);
                         }
                         else
                         {
@@ -1474,7 +1523,7 @@ void lokit_main(const std::string& childRoot,
                     {
                         if (document)
                         {
-                            document->renderCombinedTiles(tokens, ws);
+                            queue->put(message);
                         }
                         else
                         {
