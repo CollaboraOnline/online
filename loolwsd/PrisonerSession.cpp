@@ -228,13 +228,17 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
             StringTokenizer firstLineTokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            int x = 0;
-            int y = 0;
+            int x = 0, y = 0, w = 0, h = 0;
             if (firstLineTokens.count() > 2 &&
                 stringToInteger(firstLineTokens[1], x) &&
                 stringToInteger(firstLineTokens[2], y))
             {
-                _docBroker->invalidateCursor(x, y);
+                if (firstLineTokens.count() > 3)
+                {
+                    stringToInteger(firstLineTokens[3], w);
+                    stringToInteger(firstLineTokens[4], h);
+                }
+                _docBroker->invalidateCursor(x, y, w, h);
             }
             else
             {

@@ -203,10 +203,12 @@ public:
     size_t removeSession(const std::string& id);
 
     /// Invalidate the cursor position.
-    void invalidateCursor(const int x, const int y)
+    void invalidateCursor(int x, int y, int w, int h)
     {
         _cursorPosX = x;
         _cursorPosY = y;
+        _cursorWidth = w;
+        _cursorHeight = h;
     }
 
     void handleTileRequest(TileDesc& tile,
@@ -252,6 +254,8 @@ private:
     std::atomic<bool> _lastEditableSession;
     int _cursorPosX;
     int _cursorPosY;
+    int _cursorWidth;
+    int _cursorHeight;
     bool _isLoaded;
     bool _isModified;
     mutable std::mutex _mutex;
