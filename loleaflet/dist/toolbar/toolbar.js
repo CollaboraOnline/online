@@ -1368,9 +1368,6 @@ function updateUserListCount(userlist) {
 }
 
 map.on('addview', function(e) {
-	if (!e.viewId || !e.username)
-		return;
-
 	$('#tb_toolbar-down_item_userlist')
 		.w2overlay({
 			class: 'loleaflet-font',
@@ -1392,9 +1389,6 @@ map.on('addview', function(e) {
 });
 
 map.on('removeview', function(e) {
-	if (!e.viewId || !e.username)
-		return;
-
 	$('#tb_toolbar-down_item_userlist')
 		.w2overlay({
 			class: 'loleaflet-font',
