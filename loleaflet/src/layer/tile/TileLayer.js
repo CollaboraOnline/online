@@ -699,7 +699,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onRemAllViewMsg: function(textMsg) {
-		for (var viewId in this._viewCursors) {
+		for (var viewId in this._map._viewInfo) {
 			this._onRemViewMsg('remview: ' + viewId);
 		}
 	},
