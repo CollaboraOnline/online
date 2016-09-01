@@ -443,16 +443,13 @@ void TileCacheTests::testTileInvalidateWriter()
     for (char ch : text)
     {
         sendChar(socket, ch); // Send ordinary characters and wait for response -> one tile invalidation for each
-        auto response = getResponseMessage(socket, "invalidatetiles:");
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+        assertResponseLine(socket, "invalidatetiles:");
     }
 
     text = "\n\n\n";
     for (char ch : text)
     {
-        sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages; I see 3 tiles invalidated for each
-        assertResponseLine(socket, "invalidatetiles:");
-        assertResponseLine(socket, "invalidatetiles:");
+        sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages
         assertResponseLine(socket, "invalidatetiles:");
     }
 
@@ -460,8 +457,7 @@ void TileCacheTests::testTileInvalidateWriter()
     for (char ch : text)
     {
         sendChar(socket, ch);
-        auto response = getResponseMessage(socket, "invalidatetiles:");
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+        assertResponseLine(socket, "invalidatetiles:");
     }
 
     // While extra invalidates are not desirable, they are inevitable at the moment.
