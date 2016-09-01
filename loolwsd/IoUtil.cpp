@@ -100,7 +100,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
             {
                 n = receiveFrame(*ws, payload.data(), payload.capacity(), flags);
             }
-            catch (const TimeoutException &)
+            catch (const Poco::TimeoutException&)
             {
                 Log::debug("SocketProcessor: Spurious TimeoutException, ignored");
                 continue;
