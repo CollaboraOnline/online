@@ -53,6 +53,7 @@ public:
     ~Stress() {}
 
     static bool Benchmark;
+    static int Iterations;
     static bool NoDelay;
     unsigned _numClients;
     std::string _serverURI;
@@ -246,13 +247,14 @@ private:
 
     void benchmark()
     {
+        std::cout << "Running " << Stress::Iterations << " iterations of Benchmark." << std::endl;
         static std::atomic<unsigned> SessionId;
         const auto sessionId = ++SessionId;
         auto connection = Connection::create(_app._serverURI, _uri, std::to_string(sessionId));
 
         connection->load();
 
-        for (auto i = 0; i < 10; ++i)
+        for (auto i = 0; i < Stress::Iterations; ++i)
         {
             renderTile(connection);
 
@@ -389,6 +391,7 @@ private:
 
 bool Stress::NoDelay = false;
 bool Stress::Benchmark = false;
+int Stress::Iterations = 100;
 
 Stress::Stress() :
     _numClients(1),
@@ -408,6 +411,9 @@ void Stress::defineOptions(OptionSet& optionSet)
                         .required(false).repeatable(false));
     optionSet.addOption(Option("bench", "", "Performance benchmark. The argument is a document URL to load.")
                         .required(false).repeatable(false));
+    optionSet.addOption(Option("iter", "", "Number of iterations to use for Benchmarking.")
+                        .required(false).repeatable(false)
+                        .argument("iter"));
     optionSet.addOption(Option("nodelay", "", "Replay at full speed disregarding original timing.")
                         .required(false).repeatable(false));
     optionSet.addOption(Option("clientsperdoc", "", "Number of simultaneous clients on each doc.")
@@ -435,6 +441,8 @@ void Stress::handleOption(const std::string& optionName,
     }
     else if (optionName == "bench")
         Stress::Benchmark = true;
+    else if (optionName == "iter")
+        Stress::Iterations = std::max(std::stoi(value), 10);
     else if (optionName == "nodelay")
         Stress::NoDelay = true;
     else if (optionName == "clientsperdoc")
