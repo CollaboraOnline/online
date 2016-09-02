@@ -22,6 +22,10 @@ On Debian 8 (Linux x86_64) you can use in /etc/apt/sources.list:
 
     deb https://www.collaboraoffice.com/apt-poco/ /
 
+On Fedora 24 at least, you must run against a LibreOffice built with
+--without-system-nss. Otherwise opening of password-protected
+documents will fail.
+
 Building
 --------
 
