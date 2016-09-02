@@ -112,7 +112,7 @@ public:
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/ws/" + documentURL);
         Poco::Net::HTTPResponse response;
         auto ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
-        std::cerr << "Connected.\n";
+        std::cout << "Connected.\n";
         return std::shared_ptr<Connection>(new Connection(documentURL, sessionId, ws));
     }
 
@@ -187,12 +187,12 @@ public:
         }
         catch (const Poco::Exception &e)
         {
-            std::cerr << "Error: " << e.name() << ' '
+            std::cout << "Error: " << e.name() << ' '
                       << e.message() << std::endl;
         }
         catch (const std::exception &e)
         {
-            std::cerr << "Error: " << e.what() << std::endl;
+            std::cout << "Error: " << e.what() << std::endl;
         }
     }
 
@@ -283,7 +283,7 @@ private:
             {
                 if (delay > 1e6)
                 {
-                    std::cerr << "Sleeping for " << delay / 1000 << " ms.\n";
+                    std::cout << "Sleeping for " << delay / 1000 << " ms.\n";
                 }
 
                 std::this_thread::sleep_for(std::chrono::microseconds(delay));
@@ -304,7 +304,7 @@ private:
                         // Add a new session.
                         if (it->second.find(rec.SessionId) != it->second.end())
                         {
-                            std::cerr << "ERROR: session [" << rec.SessionId << "] already exists on doc [" << uri << "]\n";
+                            std::cout << "ERROR: session [" << rec.SessionId << "] already exists on doc [" << uri << "]\n";
                         }
                         else
                         {
@@ -313,7 +313,7 @@ private:
                     }
                     else
                     {
-                        std::cerr << "New Document: " << uri << "\n";
+                        std::cout << "New Document: " << uri << "\n";
                         _childToDoc.emplace(rec.Pid, uri);
                         _sessions[uri].emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
                     }
@@ -324,19 +324,19 @@ private:
                     auto it = _sessions.find(uri);
                     if (it != _sessions.end())
                     {
-                        std::cerr << "EndSession [" << rec.SessionId << "]: " << uri << "\n";
+                        std::cout << "EndSession [" << rec.SessionId << "]: " << uri << "\n";
 
                         it->second.erase(rec.SessionId);
                         if (it->second.empty())
                         {
-                            std::cerr << "End Doc [" << uri << "].\n";
+                            std::cout << "End Doc [" << uri << "].\n";
                             _sessions.erase(it);
                             _childToDoc.erase(rec.Pid);
                         }
                     }
                     else
                     {
-                        std::cerr << "ERROR: Doc [" << uri << "] does not exist.\n";
+                        std::cout << "ERROR: Doc [" << uri << "] does not exist.\n";
                     }
                 }
             }
@@ -358,12 +358,12 @@ private:
                     }
                     else
                     {
-                        std::cerr << "ERROR: Doc [" << uri << "] does not exist.\n";
+                        std::cout << "ERROR: Doc [" << uri << "] does not exist.\n";
                     }
                 }
                 else
                 {
-                    std::cerr << "ERROR: Unknown PID [" << rec.Pid << "] maps to no active document.\n";
+                    std::cout << "ERROR: Unknown PID [" << rec.Pid << "] maps to no active document.\n";
                 }
             }
 
@@ -430,7 +430,7 @@ void Stress::handleOption(const std::string& optionName,
         helpFormatter.setCommand(commandName());
         helpFormatter.setUsage("OPTIONS");
         helpFormatter.setHeader("LibreOffice On-Line tool.");
-        helpFormatter.format(std::cout);
+        helpFormatter.format(std::cerr);
         std::exit(Application::EXIT_OK);
     }
     else if (optionName == "bench")
@@ -443,7 +443,7 @@ void Stress::handleOption(const std::string& optionName,
         _serverURI = value;
     else
     {
-        std::cerr << "Unknown option: " << optionName << std::endl;
+        std::cout << "Unknown option: " << optionName << std::endl;
         exit(1);
     }
 }
@@ -497,20 +497,20 @@ int Stress::main(const std::vector<std::string>& args)
             cachedStats.insert(cachedStats.end(), cachedStat.begin(), cachedStat.end());
         }
 
-        std::cout << "\nResults:\n";
-        std::cout << "Latency best: " << latencyStats[0] << " microsecs, 95th percentile: " << percentile(latencyStats, 95) << " microsecs." << std::endl;
-        std::cout << "Tile best: " << renderingStats[0] << " microsecs, rendering 95th percentile: " << percentile(renderingStats, 95) << " microsecs." << std::endl;
-        std::cout << "Cached best: " << cachedStats[0] << " microsecs, tile 95th percentile: " << percentile(cachedStats, 95) << " microsecs." << std::endl;
+        std::cerr << "\nResults:\n";
+        std::cerr << "Latency best: " << latencyStats[0] << " microsecs, 95th percentile: " << percentile(latencyStats, 95) << " microsecs." << std::endl;
+        std::cerr << "Tile best: " << renderingStats[0] << " microsecs, rendering 95th percentile: " << percentile(renderingStats, 95) << " microsecs." << std::endl;
+        std::cerr << "Cached best: " << cachedStats[0] << " microsecs, tile 95th percentile: " << percentile(cachedStats, 95) << " microsecs." << std::endl;
 
         const auto renderingTime = std::accumulate(renderingStats.begin(), renderingStats.end(), 0L);
         const double renderedPixels = 256 * 256 * renderingStats.size();
         const auto pixelsPerSecRendered = renderedPixels / renderingTime;
-        std::cout << "Rendering power: " << pixelsPerSecRendered << " MPixels/sec." << std::endl;
+        std::cerr << "Rendering power: " << pixelsPerSecRendered << " MPixels/sec." << std::endl;
 
         const auto cacheTime = std::accumulate(cachedStats.begin(), cachedStats.end(), 0L);
         const double cachePixels = 256 * 256 * cachedStats.size();
         const auto pixelsPerSecCached = cachePixels / cacheTime;
-        std::cout << "Cache power: " << pixelsPerSecCached << " MPixels/sec." << std::endl;
+        std::cerr << "Cache power: " << pixelsPerSecCached << " MPixels/sec." << std::endl;
     }
 
     return Application::EXIT_OK;
