@@ -532,8 +532,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     Log::trace() << "TileCombined request for " << tileCombined.serialize() << Log::end;
 
     // Satisfy as many tiles from the cache.
-    // The rest, group by rows.
-    std::map<int, std::vector<TileDesc>> rows;
+    std::vector<TileDesc> tiles;
     for (auto& tile : tileCombined.getTiles())
     {
         std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
@@ -587,34 +586,16 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             }
         }
 
-        const auto tilePosY = tile.getTilePosY();
-        auto it = rows.lower_bound(tilePosY);
-        if (it != rows.end())
-        {
-            it->second.emplace_back(tile);
-        }
-        else
-        {
-            rows.emplace_hint(it, tilePosY, std::vector<TileDesc>({ tile }));
-        }
+        tiles.push_back(tile);
     }
 
-    if (rows.empty())
+    for (auto& tile : tiles)
     {
-        // Done.
-        return;
-    }
-
-    auto& tiles = tileCombined.getTiles();
-    for (auto& row : rows)
-    {
-        tiles = row.second;
-        const auto tileMsg = tileCombined.serialize();
+        const auto tileMsg = tile.serialize("tile ");
         Log::debug() << "TileCombined residual request for " << tileMsg << Log::end;
 
         // Forward to child to render.
-        const std::string request = "tilecombine " + tileMsg;
-        _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
+        _childProcess->getWebSocket()->sendFrame(tileMsg.data(), tileMsg.size());
     }
 }
 
