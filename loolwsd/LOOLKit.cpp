@@ -956,7 +956,7 @@ private:
             if (it.second->isRunning() && it.second->getSessionId() != sessionId)
             {
                 auto session = it.second->getSession();
-                if (session)
+                if (session && session->isActive())
                 {
                     session->sendTextFrame(message);
                 }
@@ -976,6 +976,11 @@ private:
         }
 
         auto currentSession = it->second->getSession();
+        if (!currentSession->isActive())
+        {
+            return;
+        }
+
         for (auto& connectionIt: _connections)
         {
             if (connectionIt.second->isRunning() && connectionIt.second->getSessionId() != sessionId)
