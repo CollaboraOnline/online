@@ -419,7 +419,6 @@ public:
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
         assert(_loKit && _loKit->get());
-
         _callbackThread.start(*this);
     }
 
@@ -910,22 +909,12 @@ private:
         Log::info("Unloading [" + sessionId + "].");
 
         // Broadcast the demise and removal of session.
+        notifyOtherSessions(sessionId, "remview: " + std::to_string(session.getViewId()));
+
+        if (_loKitDocument == nullptr)
         {
-            std::unique_lock<std::mutex> lock(_mutex);
-
-            // We should be removed by this point, otherwise
-            // our closed connection will throw, if not segfault.
-            for (const auto& pair : _connections)
-            {
-                assert(sessionId != pair.second->getSessionId() && "Unloading connection still lingering.");
-                pair.second->getSession()->sendTextFrame("remview: " + std::to_string(session.getViewId()));
-            }
-
-            if (_loKitDocument == nullptr)
-            {
-                Log::error("Unloading session [" + sessionId + "] without loKitDocument.");
-                return;
-            }
+            Log::error("Unloading session [" + sessionId + "] without loKitDocument.");
+            return;
         }
 
         --_clientViews;
