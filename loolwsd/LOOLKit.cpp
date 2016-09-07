@@ -936,7 +936,7 @@ private:
         }
     }
 
-    /// Notify all currently active sessions of session with given 'sessionId'
+    /// Notify all currently active sessions about session with given 'sessionId'
     void notifyOtherSessions(const std::string& sessionId, const std::string& message) const override
     {
         std::unique_lock<std::mutex> lock(_mutex);
@@ -954,7 +954,7 @@ private:
         }
     }
 
-    /// Notify session (with given 'sessionId') of other currently active views
+    /// Notify session (with given 'sessionId'), if active, of other existing views
     void notifyCurrentViewOfOtherViews(const std::string& sessionId) const override
     {
         std::unique_lock<std::mutex> lock(_mutex);
