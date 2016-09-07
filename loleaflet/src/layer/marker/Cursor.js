@@ -8,18 +8,25 @@ L.Cursor = L.Layer.extend({
 		opacity: 1
 	},
 
-	initialize: function (latlng, options) {
+	initialize: function (latlng, size, options) {
 		L.setOptions(this, options);
 		this._latlng = L.latLng(latlng);
+		this._size = L.point(size);
 	},
 
 	onAdd: function () {
-		this._initLayout();
+		if (!this._container) {
+			this._initLayout();
+		}
+
 		this.update();
+		this.getPane().appendChild(this._container);
 	},
 
 	onRemove: function () {
-		L.DomUtil.remove(this._container);
+		if (this._container) {
+			this.getPane().removeChild(this._container);
+		}
 	},
 
 	getEvents: function () {
@@ -32,16 +39,18 @@ L.Cursor = L.Layer.extend({
 		return this._latlng;
 	},
 
-	setLatLng: function (latlng) {
+	setLatLng: function (latlng, size) {
 		var oldLatLng = this._latlng;
 		this._latlng = L.latLng(latlng);
+		this._size = L.point(size);
 		this.update();
 		return this.fire('move', {oldLatLng: oldLatLng, latlng: this._latlng});
 	},
 
 	update: function () {
-		if (this._container) {
+		if (this._container && this._map) {
 			var pos = this._map.latLngToLayerPoint(this._latlng).round();
+			this._setSize();
 			this._setPos(pos);
 		}
 		return this;
@@ -71,10 +80,6 @@ L.Cursor = L.Layer.extend({
 		L.DomEvent
 			.disableClickPropagation(this._cursor)
 			.disableScrollPropagation(this._container);
-
-		if (this._container) {
-			this.getPane().appendChild(this._container);
-		}
 	},
 
 	_setPos: function (pos) {
@@ -97,14 +102,14 @@ L.Cursor = L.Layer.extend({
 		L.DomUtil.setOpacity(this._container, opacity);
 	},
 
-	setSize: function (size) {
-		this._cursor.style.height = size.y + 'px';
-		this._container.style.top = '-' + (this._container.clientHeight - size.y - 2) / 2 + 'px';
+	_setSize: function () {
+		this._cursor.style.height = this._size.y + 'px';
+		this._container.style.top = '-' + (this._container.clientHeight - this._size.y - 2) / 2 + 'px';
 	}
 });
 
-L.cursor = function (latlng, options) {
-	return new L.Cursor(latlng, options);
+L.cursor = function (latlng, size, options) {
+	return new L.Cursor(latlng, size, options);
 };
 
 L.Cursor.getCursorURL = function (localPath) {

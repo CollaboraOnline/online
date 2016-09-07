@@ -576,8 +576,12 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewCursors[viewId].bounds = new L.LatLngBounds(
 			this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 			this._twipsToLatLng(bottomRightTwips, this._map.getZoom())),
-		this._viewCursors[viewId].part = obj.part;
-		this._viewCursors[viewId].visible = true;
+		this._viewCursors[viewId].part = parseInt(obj.part);
+
+		// FIXME. Server not sending view visible cursor
+		if (typeof this._viewCursors[viewId].visible === 'undefined') {
+			this._viewCursors[viewId].visible = true;
+		}
 
 		this._onUpdateViewCursor(viewId);
 	},
@@ -1098,14 +1102,12 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (this._map._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
 				&& !this._isEmptyRectangle(this._visibleCursor)) {
-			if (this._cursorMarker) {
-				this._map.removeLayer(this._cursorMarker);
+			if (!this._cursorMarker) {
+				this._cursorMarker = L.cursor(null, null, {blink: true});
 			}
 
-			this._cursorMarker = L.cursor(cursorPos, {blink: true});
+			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			this._map.addLayer(this._cursorMarker);
-			this._cursorMarker.setSize(pixBounds.getSize().multiplyBy(
-						this._map.getZoomScale(this._map.getZoom())));
 		}
 		else if (this._cursorMarker) {
 			this._map.removeLayer(this._cursorMarker);
@@ -1125,27 +1127,35 @@ L.TileLayer = L.GridLayer.extend({
 		var viewCursorPos = this._viewCursors[viewId].bounds.getNorthWest();
 		var viewCursorMarker = this._viewCursors[viewId].marker;
 		var viewCursorVisible = this._viewCursors[viewId].visible;
+		var viewPart = this._viewCursors[viewId].part;
 
-		if (viewCursorVisible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds)) {
-			if (viewCursorMarker) {
-				this._map.removeLayer(viewCursorMarker);
+		if (viewCursorVisible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds) &&
+		   (this._docType === 'text' || this._selectedPart === viewPart)) {
+			if (!viewCursorMarker) {
+				var viewCursorOptions = {
+					color: L.LOUtil.getViewIdHexColor(viewId),
+					blink: false,
+					header: true, // we want a 'hat' to our view cursors (which will contain view user names)
+					headerTimeout: 3000, // hide after some interval
+					headerName: this._map.getViewName(viewId)
+				};
+
+				viewCursorMarker = L.cursor(null, null, viewCursorOptions);
+				this._viewCursors[viewId].marker = viewCursorMarker;
 			}
-			var viewCursorOptions = {
-				color: L.LOUtil.getViewIdHexColor(viewId),
-				blink: false,
-				header: true, // we want a 'hat' to our view cursors (which will contain view user names)
-				headerTimeout: 3000, // hide after some interval
-				headerName: this._map.getViewName(viewId)
-			};
-			viewCursorMarker = L.cursor(viewCursorPos, viewCursorOptions);
+
+			viewCursorMarker.setLatLng(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			this._map.addLayer(viewCursorMarker);
-			viewCursorMarker.setSize(pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
-
-		} else if (viewCursorMarker) {
-			this._map.removeLayer(this._viewCursors[viewId].marker);
 		}
+		else if (viewCursorMarker) {
+			this._map.removeLayer(viewCursorMarker);
+		}
+	},
 
-		this._viewCursors[viewId].marker = viewCursorMarker;
+	_updateViewCursors: function () {
+		for (var key in this._viewCursors) {
+			this._onUpdateViewCursor(key);
+		}
 	},
 
 	// Update dragged graphics selection resize.
