@@ -89,6 +89,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStateUnoCommand);
     CPPUNIT_TEST(testColumnRowResize);
     CPPUNIT_TEST(testOptimalResize);
+    CPPUNIT_TEST(testInvalidateViewCursor);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -126,6 +127,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testStateUnoCommand();
     void testColumnRowResize();
     void testOptimalResize();
+    void testInvalidateViewCursor();
 
     void loadDoc(const std::string& documentURL);
 
@@ -2114,6 +2116,55 @@ void HTTPWSTest::testOptimalResize()
             optimalHeight = getColRowSize(socket, "rows", 0);
             CPPUNIT_ASSERT(optimalHeight < newHeight);
         }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testInvalidateViewCursor()
+{
+    try
+    {
+        int docSlide = -1;
+        int docSlides = 0;
+        int docHeight = 0;
+        int docWidth = 0;
+        int docViewId = -1;
+
+        // Load a document
+        std::string documentPath, documentURL, response, text;
+        getDocumentPathAndURL("viewcursor.odp", documentPath, documentURL);
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket1 = *connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket1, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1));
+
+        // Check document size
+        sendTextFrame(socket1, "status");
+        getResponseMessage(socket1, "status:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+        parseDocSize(response, "presentation", docSlide, docSlides, docWidth, docHeight, docViewId);
+
+        // Click to show a cursor
+        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttondown"), docWidth/2, docHeight/6);
+        sendTextFrame(socket1, text); text.clear();
+        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/2, docHeight/6);
+        sendTextFrame(socket1, text);
+        getResponseMessage(socket1, "invalidatecursor:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatecursor: message as expected", !response.empty());
+
+        // Connect and load second view.
+        Poco::Net::WebSocket socket2 = *connectLOKit(_uri, request, _response);
+        sendTextFrame(socket2, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket2, "", true));
+
+        // Expected to receive invalidateviewcursor second view
+        getResponseMessage(socket2, "invalidateviewcursor:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidateviewcursor: message as expected", !response.empty());
     }
     catch (const Poco::Exception& exc)
     {
