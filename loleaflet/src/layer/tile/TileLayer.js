@@ -102,6 +102,9 @@ L.TileLayer = L.GridLayer.extend({
 		// View cell cursors with viewId to 'cursor info' mapping.
 		this._cellViewCursors = {};
 
+		// Graphic view selection rectangles
+		this._graphicViewMarkers = {};
+
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
@@ -142,6 +145,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewSelectionsGroup = new L.LayerGroup();
 		map.addLayer(this._viewSelectionsGroup);
 		this._viewSelections = {};
+
+		this._graphicViewMarkersGroup = new L.LayerGroup();
+		map.addLayer(this._graphicViewMarkersGroup);
+		this._graphicViewMarkers = {};
 
 		this._searchResultsLayer = new L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
@@ -378,6 +385,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('textviewselection:')) {
 			this._onTextViewSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('graphicviewselection:')) {
+			this._onGraphicViewSelectionMsg(textMsg);
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -477,6 +487,36 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateGraphicSelection();
+	},
+
+	_onGraphicViewSelectionMsg: function (textMsg) {
+		textMsg = textMsg.substring('graphicviewselection:'.length + 1);
+		var obj = JSON.parse(textMsg);
+		var viewId = parseInt(obj.viewId);
+
+		// Ignore yourself
+		if (viewId === this._viewId) {
+			return;
+		}
+
+		var strTwips = obj.selection.match(/\d+/g);
+		if (this._graphicViewMarkers[viewId]) {
+			this._graphicViewMarkersGroup.removeLayer(this._graphicViewMarkers[viewId]);
+		}
+		if (strTwips != null) {
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+			var graphicSelection = new L.LatLngBounds(
+				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+			this._graphicViewMarkers[viewId] = L.rectangle(graphicSelection, {
+				pointerEvents: 'none',
+				fill: false,
+				color: L.LOUtil.getViewIdHexColor(viewId)
+			});
+			this._graphicViewMarkersGroup.addLayer(this._graphicViewMarkers[viewId]);
+		}
 	},
 
 	_onCellCursorMsg: function (textMsg) {
