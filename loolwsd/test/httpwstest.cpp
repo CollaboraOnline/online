@@ -91,6 +91,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testOptimalResize);
     CPPUNIT_TEST(testInvalidateViewCursor);
     CPPUNIT_TEST(testViewCursorVisible);
+    CPPUNIT_TEST(testCellViewCursor);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -130,6 +131,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testOptimalResize();
     void testInvalidateViewCursor();
     void testViewCursorVisible();
+    void testCellViewCursor();
 
     void loadDoc(const std::string& documentURL);
 
@@ -2223,6 +2225,66 @@ void HTTPWSTest::testViewCursorVisible()
     }
 }
 
+void HTTPWSTest::testCellViewCursor()
+{
+    try
+    {
+        int docSheet = -1;
+        int docSheets = 0;
+        int docHeight = 0;
+        int docWidth = 0;
+        int docViewId = -1;
+        int itView = 0;
+
+        // 0..N Views
+        std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
+
+        // Load a document
+        std::string documentPath, documentURL, response, text;
+        getDocumentPathAndURL("empty.ods", documentPath, documentURL);
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        Poco::Net::WebSocket socket1 = *connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket1, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1));
+
+        // Check document size
+        sendTextFrame(socket1, "status");
+        getResponseMessage(socket1, "status:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+        parseDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
+
+        // Click to show a cell cursor
+        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttondown"), docWidth/10, docHeight/10);
+        sendTextFrame(socket1, text); text.clear();
+        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/10, docHeight/10);
+        sendTextFrame(socket1, text);
+        getResponseMessage(socket1, "cellcursor:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a cellcursor: message as expected", !response.empty());
+
+        // Connect 0..N Views
+        for (itView = 0; itView < 10; ++itView)
+        {
+            views.emplace_back(connectLOKit(_uri, request, _response));
+        }
+
+        // Load 0..N view and expect to receive cellviewcursor
+        for (auto socketView : views)
+        {
+            sendTextFrame(*socketView, "load url=" + documentURL);
+            CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socketView, "", true));
+
+            // Expected to receive cellviewcursor second view
+            getResponseMessage(*socketView, "cellviewcursor:", response, false);
+            CPPUNIT_ASSERT_MESSAGE("did not receive a cellviewcursor: message as expected", !response.empty());
+        }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSTest);
 
