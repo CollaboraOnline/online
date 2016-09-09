@@ -1138,7 +1138,7 @@ private:
             viewId = _loKitDocument->getView();
             _viewIdToCallbackDescr.emplace(viewId,
                                            std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
-            _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
+            _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get(), /*callback latch*/ true);
 
             Log::info() << "Document [" << _url << "] view ["
                         << viewId << "] loaded, leaving "

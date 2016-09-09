@@ -357,6 +357,8 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     // Inform this view of other views
     _docManager.notifyCurrentViewOfOtherViews(getId());
 
+    _loKitDocument->setCallbackLatch(false);
+
     Log::info("Loaded session " + getId());
     return true;
 }
