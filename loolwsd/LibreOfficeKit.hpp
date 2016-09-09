@@ -214,15 +214,27 @@ public:
     }
 
     /**
+     * Enable/disable callbacks latch. LOK will set the latch when it wants to
+     * queue new callbacks but not flush them.
+     *
+     * @param bCallbackLatch: true enables the latch, false disables it.
+     */
+    inline void setCallbackLatch(bool bCallbackLatch)
+    {
+        _pDoc->pClass->setCallbackLatch(_pDoc, bCallbackLatch);
+    }
+
+    /**
      * Registers a callback. LOK will invoke this function when it wants to
      * inform the client about events.
      *
      * @param pCallback the callback to invoke
      * @param pData the user data, will be passed to the callback on invocation
+     * @param bCallbackLatch the event latch status to be set before the callback is registered
      */
-    inline void registerCallback(LibreOfficeKitCallback pCallback, void* pData)
+    inline void registerCallback(LibreOfficeKitCallback pCallback, void* pData, bool bCallbackLatch = false)
     {
-        _pDoc->pClass->registerCallback(_pDoc, pCallback, pData);
+        _pDoc->pClass->registerCallback(_pDoc, pCallback, pData, bCallbackLatch);
     }
 
     /**

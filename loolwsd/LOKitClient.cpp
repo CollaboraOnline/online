@@ -112,7 +112,7 @@ protected:
             return Application::EXIT_UNAVAILABLE;
         }
 
-        loKitDocument->pClass->registerCallback(loKitDocument, myCallback, nullptr);
+        loKitDocument->pClass->registerCallback(loKitDocument, myCallback, nullptr, /*callback latch*/ false);
 
         loKitDocument->pClass->initializeForRendering(loKitDocument, nullptr);
 
