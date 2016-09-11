@@ -213,19 +213,23 @@ private:
 
         const auto startRendering = std::chrono::steady_clock::now();
 
-        con->send("tilecombine part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
-        if (helpers::getTileMessage(*con->getWS(), con->getName()).empty())
+        auto expectedTilesCount = 3;
+        con->send("tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
+        for (int i = 0; i < expectedTilesCount; ++i)
         {
-            return false;
-        }
+            if (helpers::getTileMessage(*con->getWS(), con->getName()).empty())
+            {
+                return false;
+            }
 
         const auto now = std::chrono::steady_clock::now();
 
         const auto deltaRendering = std::chrono::duration_cast<std::chrono::microseconds>(now - startRendering).count();
         _renderingStats.push_back(deltaRendering);
 
-        const auto deltaModify = std::chrono::duration_cast<std::chrono::microseconds>(now - startModify).count();
-        _latencyStats.push_back(deltaModify);
+            const auto deltaModify = std::chrono::duration_cast<std::chrono::microseconds>(now - startModify).count();
+            _latencyStats.push_back(deltaModify);
+        }
 
         return true;
     }
@@ -234,20 +238,30 @@ private:
     {
         const auto start = std::chrono::steady_clock::now();
 
-        con->send("tilecombine part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840");
-        if (helpers::getTileMessage(*con->getWS(), con->getName()).empty())
+        auto expectedTilesCount = 3;
+        con->send("tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
+        for (int i = 0; i < expectedTilesCount; ++i)
         {
-            return false;
+            if (helpers::getTileMessage(*con->getWS(), con->getName()).empty())
+            {
+                return false;
+            }
+
+            const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
+            _cacheStats.push_back(delta);
         }
 
-        const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
-        _cacheStats.push_back(delta);
         return true;
     }
 
     void benchmark()
     {
         std::cout << "Running " << Stress::Iterations << " iterations of Benchmark." << std::endl;
+
+        _cacheStats.reserve(Stress::Iterations * 4);
+        _latencyStats.reserve(Stress::Iterations * 4);
+        _renderingStats.reserve(Stress::Iterations * 4);
+
         static std::atomic<unsigned> SessionId;
         const auto sessionId = ++SessionId;
         auto connection = Connection::create(_app._serverURI, _uri, std::to_string(sessionId));
@@ -505,20 +519,24 @@ int Stress::main(const std::vector<std::string>& args)
             cachedStats.insert(cachedStats.end(), cachedStat.begin(), cachedStat.end());
         }
 
-        std::cerr << "\nResults:\n";
-        std::cerr << "Latency best: " << latencyStats[0] << " microsecs, 95th percentile: " << percentile(latencyStats, 95) << " microsecs." << std::endl;
-        std::cerr << "Tile best: " << renderingStats[0] << " microsecs, rendering 95th percentile: " << percentile(renderingStats, 95) << " microsecs." << std::endl;
-        std::cerr << "Cached best: " << cachedStats[0] << " microsecs, tile 95th percentile: " << percentile(cachedStats, 95) << " microsecs." << std::endl;
+        if (!latencyStats.empty() && !renderingStats.empty() && !cachedStats.empty())
+        {
+            std::cerr << "\nResults:\n";
 
-        const auto renderingTime = std::accumulate(renderingStats.begin(), renderingStats.end(), 0L);
-        const double renderedPixels = 256 * 256 * renderingStats.size();
-        const auto pixelsPerSecRendered = renderedPixels / renderingTime;
-        std::cerr << "Rendering power: " << pixelsPerSecRendered << " MPixels/sec." << std::endl;
+            std::cerr << "Latency best: " << latencyStats[0] << " microsecs, 95th percentile: " << percentile(latencyStats, 95) << " microsecs." << std::endl;
+            std::cerr << "Tile best: " << renderingStats[0] << " microsecs, rendering 95th percentile: " << percentile(renderingStats, 95) << " microsecs." << std::endl;
+            std::cerr << "Cached best: " << cachedStats[0] << " microsecs, tile 95th percentile: " << percentile(cachedStats, 95) << " microsecs." << std::endl;
 
-        const auto cacheTime = std::accumulate(cachedStats.begin(), cachedStats.end(), 0L);
-        const double cachePixels = 256 * 256 * cachedStats.size();
-        const auto pixelsPerSecCached = cachePixels / cacheTime;
-        std::cerr << "Cache power: " << pixelsPerSecCached << " MPixels/sec." << std::endl;
+            const auto renderingTime = std::accumulate(renderingStats.begin(), renderingStats.end(), 0L);
+            const double renderedPixels = 256 * 256 * renderingStats.size();
+            const auto pixelsPerSecRendered = renderedPixels / renderingTime;
+            std::cerr << "Rendering power: " << pixelsPerSecRendered << " MPixels/sec." << std::endl;
+
+            const auto cacheTime = std::accumulate(cachedStats.begin(), cachedStats.end(), 0L);
+            const double cachePixels = 256 * 256 * cachedStats.size();
+            const auto pixelsPerSecCached = cachePixels / cacheTime;
+            std::cerr << "Cache power: " << pixelsPerSecCached << " MPixels/sec." << std::endl;
+        }
     }
 
     return Application::EXIT_OK;
