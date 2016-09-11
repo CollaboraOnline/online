@@ -33,6 +33,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
     CPPUNIT_TEST(testPerformance);
+    CPPUNIT_TEST(testCancelTiles);
     CPPUNIT_TEST(testUnresponsiveClient);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
@@ -48,6 +49,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testSimple();
     void testSimpleCombine();
     void testPerformance();
+    void testCancelTiles();
     void testUnresponsiveClient();
     void testClientPartImpress();
     void testClientPartCalc();
@@ -206,6 +208,18 @@ void TileCacheTests::testPerformance()
               << std::endl;
 
     socket.shutdown();
+}
+
+void TileCacheTests::testCancelTiles()
+{
+    const auto testName = "cancelTiles ";
+    auto socket = *loadDocAndGetSocket("load12.ods", _uri, testName);
+
+    // Request a huge tile, and cancel immediately.
+    sendTextFrame(socket, "tilecombine part=0 width=2560 height=2560 tileposx=0 tileposy=0 tilewidth=38400 tileheight=38400");
+    sendTextFrame(socket, "canceltiles");
+
+    assertNotInResponse(socket, "tile:", testName);
 }
 
 void TileCacheTests::testUnresponsiveClient()

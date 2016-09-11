@@ -330,6 +330,15 @@ std::string assertResponseLine(T& ws, const std::string& prefix, const std::stri
     return res;
 }
 
+/// Assert that we don't get a response with the given prefix.
+template <typename T>
+std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string name = "")
+{
+    const auto res = getResponseLine(ws, prefix, name);
+    CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
+    return res;
+}
+
 inline
 void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, std::string& response, const bool isLine)
 {
