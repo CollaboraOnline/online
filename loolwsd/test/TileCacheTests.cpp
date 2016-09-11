@@ -245,20 +245,20 @@ void TileCacheTests::testUnresponsiveClient()
     for (auto x = 0; x < 8; ++x)
     {
         // Invalidate to force re-rendering.
-        sendTextFrame(socket2, "uno .uno:SelectAll");
-        sendTextFrame(socket2, "uno .uno:Delete");
-        assertResponseLine(socket2, "invalidatetiles:", "client2 ");
-        sendTextFrame(socket2, "paste mimetype=text/html\n" + documentContents);
-        assertResponseLine(socket2, "invalidatetiles:", "client2 ");
+        sendTextFrame(socket2, "uno .uno:SelectAll", "unresponsiveClient-2 ");
+        sendTextFrame(socket2, "uno .uno:Delete", "unresponsiveClient-2 ");
+        assertResponseLine(socket2, "invalidatetiles:", "unresponsiveClient-2 ");
+        sendTextFrame(socket2, "paste mimetype=text/html\n" + documentContents, "unresponsiveClient-2 ");
+        assertResponseLine(socket2, "invalidatetiles:", "unresponsiveClient-2 ");
 
         // Ask for tiles and don't read!
-        sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
+        sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "unresponsiveClient-1 ");
 
         // Verify that we get all 8 tiles.
-        sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
+        sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "unresponsiveClient-2 ");
         for (auto i = 0; i < 8; ++i)
         {
-            auto tile = getResponseMessage(socket2, "tile:", "client2 ");
+            auto tile = getResponseMessage(socket2, "tile:", "unresponsiveClient-2 ");
             CPPUNIT_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
         }
     }

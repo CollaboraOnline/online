@@ -106,6 +106,7 @@ void sendTextFrame(const std::shared_ptr<Poco::Net::WebSocket>& socket, const st
 inline
 bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bool isView = false)
 {
+    const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
     bool isLoaded = false;
     try
     {
@@ -124,7 +125,6 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bo
                 {
                     std::cerr << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
                     const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
-                    const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
                     if (line.find(prefix) == 0)
                     {
                         isLoaded = true;
@@ -141,7 +141,7 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bo
             }
             else
             {
-                std::cerr << "Timeout\n";
+                std::cerr << "Timeout waiting for " << prefix << "\n";
                 --retries;
             }
         }
