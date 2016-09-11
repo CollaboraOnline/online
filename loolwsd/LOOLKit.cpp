@@ -398,14 +398,14 @@ public:
              const std::string& jailId,
              const std::string& docKey,
              const std::string& url,
-             std::shared_ptr<TileQueue> queue,
+             std::shared_ptr<TileQueue> tileQueue,
              const std::shared_ptr<WebSocket>& ws)
       : _multiView(std::getenv("LOK_VIEW_CALLBACK")),
         _loKit(loKit),
         _jailId(jailId),
         _docKey(docKey),
         _url(url),
-        _queue(std::move(queue)),
+        _tileQueue(std::move(tileQueue)),
         _ws(ws),
         _docPassword(""),
         _haveDocPassword(false),
@@ -419,6 +419,7 @@ public:
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
         assert(_loKit && _loKit->get());
+
         _callbackThread.start(*this);
     }
 
@@ -1230,7 +1231,7 @@ private:
         {
             while (true)
             {
-                const auto input = pThis->_queue->get();
+                const auto input = pThis->_tileQueue->get();
                 const std::string message(input.data(), input.size());
                 StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -1269,7 +1270,7 @@ private:
     std::string _renderOpts;
 
     std::shared_ptr<lok::Document> _loKitDocument;
-    std::shared_ptr<TileQueue> _queue;
+    std::shared_ptr<TileQueue> _tileQueue;
     std::shared_ptr<WebSocket> _ws;
 
     // Document password provided
