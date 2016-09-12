@@ -244,7 +244,6 @@ struct _LibreOfficeKitDocumentClass
                            const int nTileWidth,
                            const int nTileHeight);
 
-
     /// @see lok::Document::setCallbackLatch().
     void (*setCallbackLatch) (LibreOfficeKitDocument* pThis,
                               bool bCallbackLatch);
