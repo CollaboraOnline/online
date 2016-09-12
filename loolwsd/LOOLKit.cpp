@@ -405,7 +405,7 @@ public:
         _jailId(jailId),
         _docKey(docKey),
         _url(url),
-        _queue(queue),
+        _queue(std::move(queue)),
         _ws(ws),
         _docPassword(""),
         _haveDocPassword(false),
