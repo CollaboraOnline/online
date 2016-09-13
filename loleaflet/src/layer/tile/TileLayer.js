@@ -1208,21 +1208,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_updateViewCursors: function () {
-		for (var key in this._viewCursors) {
-			this._onUpdateViewCursor(key);
-		}
-	},
-
-	_updateCellViewCursors: function () {
-		for (var key in this._cellViewCursors) {
-			this._onUpdateCellViewCursor(key);
-		}
-	},
-
-	_updateGraphicViewSelections: function () {
-		for (var key in this._graphicViewMarkers) {
-			this._onUpdateGraphicViewSelection(key);
+	eachView: function (view, method, context) {
+		for (var key in view) {
+			method.call(context, key);
 		}
 	},
 
