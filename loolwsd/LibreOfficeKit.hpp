@@ -464,17 +464,6 @@ public:
                                             nTileWidth, nTileHeight);
     }
 
-    /**
-     * Enable/disable callbacks latch. LOK will set the latch when it wants to
-     * queue new callbacks but not flush them.
-     *
-     * @param bCallbackLatch: true enables the latch, false disables it.
-     */
-    inline void setCallbackLatch(bool bCallbackLatch)
-    {
-        _pDoc->pClass->setCallbackLatch(_pDoc, bCallbackLatch);
-    }
-
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
 
