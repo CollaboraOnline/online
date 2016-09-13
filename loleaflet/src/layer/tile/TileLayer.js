@@ -146,10 +146,6 @@ L.TileLayer = L.GridLayer.extend({
 		map.addLayer(this._viewSelectionsGroup);
 		this._viewSelections = {};
 
-		this._graphicViewMarkersGroup = new L.LayerGroup();
-		map.addLayer(this._graphicViewMarkersGroup);
-		this._graphicViewMarkers = {};
-
 		this._searchResultsLayer = new L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
 
@@ -500,23 +496,21 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		var strTwips = obj.selection.match(/\d+/g);
-		if (this._graphicViewMarkers[viewId]) {
-			this._graphicViewMarkersGroup.removeLayer(this._graphicViewMarkers[viewId]);
-		}
+		this._graphicViewMarkers[viewId] = this._graphicViewMarkers[viewId] || {};
+		this._graphicViewMarkers[viewId].part = parseInt(obj.part);
 		if (strTwips != null) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			var graphicSelection = new L.LatLngBounds(
+			this._graphicViewMarkers[viewId].bounds = new L.LatLngBounds(
 				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
-			this._graphicViewMarkers[viewId] = L.rectangle(graphicSelection, {
-				pointerEvents: 'none',
-				fill: false,
-				color: L.LOUtil.getViewIdHexColor(viewId)
-			});
-			this._graphicViewMarkersGroup.addLayer(this._graphicViewMarkers[viewId]);
 		}
+		else {
+			this._graphicViewMarkers[viewId].bounds = L.LatLngBounds.createDefault();
+		}
+
+		this._onUpdateGraphicViewSelection(viewId);
 	},
 
 	_onCellCursorMsg: function (textMsg) {
@@ -1153,7 +1147,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	// Update colored non-blinking view cursor
-	_onUpdateViewCursor: function(viewId) {
+	_onUpdateViewCursor: function (viewId) {
 		if (typeof this._viewCursors[viewId] !== 'object' ||
 		    typeof this._viewCursors[viewId].bounds !== 'object') {
 			return;
@@ -1189,6 +1183,31 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_onUpdateGraphicViewSelection: function (viewId) {
+		var viewBounds = this._graphicViewMarkers[viewId].bounds;
+		var viewMarker = this._graphicViewMarkers[viewId].marker;
+		var viewPart = this._graphicViewMarkers[viewId].part;
+
+		if (!this._isEmptyRectangle(viewBounds) &&
+		   (this._docType === 'text' || this._selectedPart === viewPart)) {
+			if (!viewMarker) {
+				viewMarker = L.rectangle(viewBounds, {
+					pointerEvents: 'none',
+					fill: false,
+					color: L.LOUtil.getViewIdHexColor(viewId)
+				});
+				this._graphicViewMarkers[viewId].marker = viewMarker;
+			}
+			else {
+				viewMarker.setBounds(viewBounds);
+			}
+			this._map.addLayer(viewMarker);
+		}
+		else if (viewMarker) {
+			this._map.removeLayer(viewMarker);
+		}
+	},
+
 	_updateViewCursors: function () {
 		for (var key in this._viewCursors) {
 			this._onUpdateViewCursor(key);
@@ -1198,6 +1217,12 @@ L.TileLayer = L.GridLayer.extend({
 	_updateCellViewCursors: function () {
 		for (var key in this._cellViewCursors) {
 			this._onUpdateCellViewCursor(key);
+		}
+	},
+
+	_updateGraphicViewSelections: function () {
+		for (var key in this._graphicViewMarkers) {
+			this._onUpdateGraphicViewSelection(key);
 		}
 	},
 
