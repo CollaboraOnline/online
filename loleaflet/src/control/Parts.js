@@ -31,9 +31,9 @@ L.Map.include({
 			docType: docLayer._docType
 		});
 		this._socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
-		docLayer._updateViewCursors();
-		docLayer._updateCellViewCursors();
-		docLayer._updateGraphicViewSelections();
+		docLayer.eachView(docLayer._viewCursors, docLayer._onUpdateViewCursor, docLayer);
+		docLayer.eachView(docLayer._cellViewCursors, docLayer._onUpdateCellViewCursor, docLayer);
+		docLayer.eachView(docLayer._graphicViewMarkers, docLayer._onUpdateGraphicViewSelection, docLayer);
 		docLayer._clearSelections();
 		docLayer._updateOnChangePart();
 		docLayer._pruneTiles();
