@@ -33,6 +33,7 @@ L.Map.include({
 		this._socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
 		docLayer._updateViewCursors();
 		docLayer._updateCellViewCursors();
+		docLayer._updateGraphicViewSelections();
 		docLayer._clearSelections();
 		docLayer._updateOnChangePart();
 		docLayer._pruneTiles();
