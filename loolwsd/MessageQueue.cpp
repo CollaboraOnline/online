@@ -120,7 +120,7 @@ void TileQueue::put_impl(const Payload& value)
                 Log::error(std::to_string(i) + ": " + oldMsg);
                 if (newMsg == oldMsg)
                 {
-                    Log::trace("Replacing duplicate tile: " + oldMsg + " -> " + newMsg);
+                    Log::trace() << "Replacing duplicate tile: " << oldMsg << " -> " << newMsg << Log::end;
                     _queue[i] = value;
                     return;
                 }
