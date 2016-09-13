@@ -574,7 +574,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
             assert(cachedTile->is_open());
             cachedTile->seekg(0, std::ios_base::end);
-            size_t pos = output.size();
+            const auto pos = output.size();
             std::streamsize size = cachedTile->tellg();
             output.resize(pos + size);
             cachedTile->seekg(0, std::ios_base::beg);
