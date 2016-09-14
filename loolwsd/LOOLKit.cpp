@@ -813,6 +813,35 @@ private:
 
         std::unique_lock<std::mutex> lock(pDescr->Doc->_mutex);
 
+        if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+            nType == LOK_CALLBACK_CELL_CURSOR)
+        {
+            Poco::StringTokenizer tokens(payload, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            auto cursorX = std::stoi(tokens[0]);
+            auto cursorY = std::stoi(tokens[1]);
+            auto cursorWidth = std::stoi(tokens[2]);
+            auto cursorHeight = std::stoi(tokens[3]);
+
+            pDescr->Doc->_tileQueue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
+        }
+        else if (nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+                 nType == LOK_CALLBACK_CELL_VIEW_CURSOR)
+        {
+            Poco::JSON::Parser parser;
+            const auto result = parser.parse(payload);
+            const auto& command = result.extract<Poco::JSON::Object::Ptr>();
+            auto viewId = command->get("viewId").toString();
+            auto part = command->get("part").toString();
+            auto text = command->get("rectangle").toString();
+            Poco::StringTokenizer tokens(text, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            auto cursorX = std::stoi(tokens[0]);
+            auto cursorY = std::stoi(tokens[1]);
+            auto cursorWidth = std::stoi(tokens[2]);
+            auto cursorHeight = std::stoi(tokens[3]);
+
+            pDescr->Doc->_tileQueue->updateCursorPosition(std::stoi(viewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
+        }
+
         // Forward to the same view only.
         // Demultiplexing is done by Core.
         // TODO: replace with a map to be faster.
