@@ -34,6 +34,7 @@ L.Map.include({
 		docLayer.eachView(docLayer._viewCursors, docLayer._onUpdateViewCursor, docLayer);
 		docLayer.eachView(docLayer._cellViewCursors, docLayer._onUpdateCellViewCursor, docLayer);
 		docLayer.eachView(docLayer._graphicViewMarkers, docLayer._onUpdateGraphicViewSelection, docLayer);
+		docLayer.eachView(docLayer._viewSelections, docLayer._onUpdateTextViewSelection, docLayer);
 		docLayer._clearSelections();
 		docLayer._updateOnChangePart();
 		docLayer._pruneTiles();

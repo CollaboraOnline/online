@@ -719,8 +719,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		// Remove selection, if any.
-		if (this._viewSelections[viewId]) {
-			this._viewSelectionsGroup.removeLayer(this._viewSelections[viewId]);
+		if (this._viewSelections[viewId] && this._viewSelections[viewId].selection) {
+			this._viewSelectionsGroup.removeLayer(this._viewSelections[viewId].selection);
 		}
 
 		// Remove the view and update (to refresh as needed).
@@ -914,6 +914,7 @@ L.TileLayer = L.GridLayer.extend({
 		textMsg = textMsg.substring('textviewselection:'.length + 1);
 		var obj = JSON.parse(textMsg);
 		var viewId = parseInt(obj.viewId);
+		var viewPart = parseInt(obj.part);
 
 		// Ignore if viewid is same as ours
 		if (viewId === this._viewId) {
@@ -921,9 +922,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		var strTwips = obj.selection.match(/\d+/g);
-		if (this._viewSelections[viewId]) {
-			this._viewSelectionsGroup.removeLayer(this._viewSelections[viewId]);
-		}
+		this._viewSelections[viewId] = this._viewSelections[viewId] || {};
 		if (strTwips != null) {
 			var rectangles = [];
 			for (var i = 0; i < strTwips.length; i += 4) {
@@ -935,16 +934,13 @@ L.TileLayer = L.GridLayer.extend({
 				rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
 			}
 
-			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
-			var selection = new L.Polygon(polygons, {
-				pointerEvents: 'none',
-				fillColor: L.LOUtil.getViewIdHexColor(viewId),
-				fillOpacity: 0.25,
-				weight: 2,
-				opacity: 0.25});
-			this._viewSelections[viewId] = selection;
-			this._viewSelectionsGroup.addLayer(selection);
+			this._viewSelections[viewId].part = viewPart;
+			this._viewSelections[viewId].polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
+		} else {
+			this._viewSelections[viewId].polygons = null;
 		}
+
+		this._onUpdateTextViewSelection(viewId);
 	},
 
 	_onTextSelectionContentMsg: function (textMsg) {
@@ -1174,6 +1170,35 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (viewCursorMarker) {
 			this._map.removeLayer(viewCursorMarker);
+		}
+	},
+
+	_onUpdateTextViewSelection: function (viewId) {
+		viewId = parseInt(viewId);
+		var viewPolygons = this._viewSelections[viewId].polygons;
+		var viewSelection = this._viewSelections[viewId].selection;
+		var viewPart = this._viewSelections[viewId].part;
+
+		if (viewPolygons &&
+		    (this._docType === 'text' || this._selectedPart === viewPart)) {
+
+			// Reset previous selections
+			if (viewSelection) {
+				this._viewSelectionsGroup.removeLayer(viewSelection);
+			}
+
+			viewSelection = new L.Polygon(viewPolygons, {
+				pointerEvents: 'none',
+				fillColor: L.LOUtil.getViewIdHexColor(viewId),
+				fillOpacity: 0.25,
+				weight: 2,
+				opacity: 0.25
+			});
+			this._viewSelections[viewId].selection = viewSelection;
+			this._viewSelectionsGroup.addLayer(viewSelection);
+		}
+		else if (viewSelection) {
+			this._viewSelectionsGroup.removeLayer(viewSelection);
 		}
 	},
 
