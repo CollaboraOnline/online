@@ -45,9 +45,30 @@ L.SVG = L.Renderer.extend({
 
 		if (layer.options.interactive) {
 			L.DomUtil.addClass(path, 'leaflet-interactive');
+
+			var events = ['mouseenter', 'mouseout'];
+			for (var i = 0; i < events.length; i++) {
+				L.DomEvent.on(path, events[i], this._fireMouseEvent, this);
+			}
 		}
 
 		this._updateStyle(layer);
+	},
+
+	_fireMouseEvent: function (e) {
+		if (!this._map || !this.hasEventListeners(e.type)) { return; }
+
+		var map = this._map,
+		    containerPoint = map.mouseEventToContainerPoint(e),
+		    layerPoint = map.containerPointToLayerPoint(containerPoint),
+		    latlng = map.layerPointToLatLng(layerPoint);
+
+		this.fire(e.type, {
+			latlng: latlng,
+			layerPoint: layerPoint,
+			containerPoint: containerPoint,
+			originalEvent: e
+		});
 	},
 
 	_addPath: function (layer) {
