@@ -19,6 +19,8 @@
 
 #include <Poco/RegularExpression.h>
 
+#include <Log.hpp>
+
 class HTTPGetTest;
 
 bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry)
@@ -57,7 +59,11 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry)
             }
         }
 
-        std::cerr << "Failed to match [" << testName << "] to any names in the test-suite. Running all tests." << std::endl;
+        if (!haveTests)
+        {
+            std::cerr << "Failed to match [" << testName << "] to any names in the test-suite. Running all tests." << std::endl;
+        }
+
         return haveTests;
     }
 
@@ -66,6 +72,9 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry)
 
 int main(int /*argc*/, char** /*argv*/)
 {
+    Log::initialize("tst", "trace", true, false);
+
+
     CPPUNIT_NS::TestResult controller;
     CPPUNIT_NS::TestResultCollector result;
     controller.addListener(&result);
