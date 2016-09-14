@@ -940,6 +940,7 @@ private:
 
         // Broadcast the demise and removal of session.
         notifyOtherSessions(sessionId, "remview: " + std::to_string(session.getViewId()));
+        _tileQueue->removeCursorPosition(session.getViewId());
 
         if (_loKitDocument == nullptr)
         {
