@@ -119,7 +119,8 @@ var deps = {
 	Path: {
 		src: [
 			'layer/vector/Renderer.js',
-			'layer/vector/Path.js'
+			'layer/vector/Path.js',
+			'layer/vector/Path.Popup.js'
 		],
 		desc: 'Vector rendering core.',
 		heading: 'Vector layers'
