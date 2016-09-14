@@ -884,7 +884,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._selections.clearLayers();
 		if (strTwips != null) {
 			var rectangles = [];
-			var selectionCenter = new L.Point(0, 0);
 			for (var i = 0; i < strTwips.length; i += 4) {
 				var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
 				var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
@@ -892,8 +891,6 @@ L.TileLayer = L.GridLayer.extend({
 				var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
 				var bottomRightTwips = topLeftTwips.add(offset);
 				rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
-				selectionCenter = selectionCenter.add(topLeftTwips);
-				selectionCenter = selectionCenter.add(offset.divideBy(2));
 			}
 
 			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
@@ -929,7 +926,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		if (strTwips != null) {
 			var rectangles = [];
-			var selectionCenter = new L.Point(0, 0);
 			for (var i = 0; i < strTwips.length; i += 4) {
 				var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
 				var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
@@ -937,8 +933,6 @@ L.TileLayer = L.GridLayer.extend({
 				var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
 				var bottomRightTwips = topLeftTwips.add(offset);
 				rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
-				selectionCenter = selectionCenter.add(topLeftTwips);
-				selectionCenter = selectionCenter.add(offset.divideBy(2));
 			}
 
 			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
