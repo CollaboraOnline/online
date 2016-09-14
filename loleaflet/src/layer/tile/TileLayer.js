@@ -1211,10 +1211,11 @@ L.TileLayer = L.GridLayer.extend({
 		   (this._docType === 'text' || this._selectedPart === viewPart)) {
 			if (!viewMarker) {
 				viewMarker = L.rectangle(viewBounds, {
-					pointerEvents: 'none',
+					pointerEvents: 'auto',
 					fill: false,
 					color: L.LOUtil.getViewIdHexColor(viewId)
 				});
+				viewMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false});
 				this._graphicViewMarkers[viewId].marker = viewMarker;
 			}
 			else {
