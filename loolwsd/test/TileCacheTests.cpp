@@ -14,6 +14,7 @@
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
+#include "MessageQueue.hpp"
 #include "Png.hpp"
 #include "TileCache.hpp"
 #include "Unit.hpp"
@@ -21,6 +22,24 @@
 #include "helpers.hpp"
 
 using namespace helpers;
+
+namespace CPPUNIT_NS
+{
+template<>
+struct assertion_traits<std::vector<char>>
+{
+    static bool equal(const std::vector<char>& x, const std::vector<char>& y)
+    {
+        return x == y;
+    }
+
+    static std::string toString(const std::vector<char>& x)
+    {
+        const std::string text = '"' + (!x.empty() ? std::string(x.data(), x.size()) : "<empty>") + '"';
+        return text;
+    }
+};
+}
 
 /// TileCache unit-tests.
 class TileCacheTests : public CPPUNIT_NS::TestFixture
@@ -42,6 +61,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLoad12ods);
     CPPUNIT_TEST(testTileInvalidateWriter);
     //CPPUNIT_TEST(testTileInvalidateCalc);
+    CPPUNIT_TEST(testTileQueuePriority);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -56,6 +76,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testTileInvalidateWriter();
     void testWriterAnyKey();
     void testTileInvalidateCalc();
+    void testTileQueuePriority();
 
     void checkTiles(Poco::Net::WebSocket& socket,
                     const std::string& type,
@@ -576,6 +597,50 @@ void TileCacheTests::testTileInvalidateCalc()
     //CPPUNIT_ASSERT_MESSAGE("received unexpected invalidatetiles: message", getResponseMessage(socket, "invalidatetiles:").empty());
 
     socket.shutdown();
+}
+
+void TileCacheTests::testTileQueuePriority()
+{
+    const std::string reqHigh = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
+    const TileQueue::Payload payloadHigh(reqHigh.data(), reqHigh.data() + reqHigh.size());
+    const std::string reqLow = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
+    const TileQueue::Payload payloadLow(reqLow.data(), reqLow.data() + reqLow.size());
+
+    TileQueue queue;
+
+    // Request the tiles.
+    queue.put(reqLow);
+    queue.put(reqHigh);
+
+    // Original order.
+    CPPUNIT_ASSERT_EQUAL(payloadLow, queue.get());
+    CPPUNIT_ASSERT_EQUAL(payloadHigh, queue.get());
+
+    // Request the tiles.
+    queue.put(reqLow);
+    queue.put(reqHigh);
+    queue.put(reqHigh);
+    queue.put(reqLow);
+
+    // Set cursor above reqHigh.
+    queue.updateCursorPosition(0, 0, 0, 0, 10, 100);
+
+    // Prioritized order.
+    //CPPUNIT_ASSERT_EQUAL(payloadHigh, queue.get());
+    //CPPUNIT_ASSERT_EQUAL(payloadLow, queue.get());
+
+    // Repeat with cursor position set.
+    queue.put(reqLow);
+    queue.put(reqHigh);
+    CPPUNIT_ASSERT_EQUAL(payloadHigh, queue.get());
+    CPPUNIT_ASSERT_EQUAL(payloadLow, queue.get());
+
+    // Repeat by changing cursor position.
+    queue.put(reqLow);
+    queue.put(reqHigh);
+    queue.updateCursorPosition(0, 0, 0, 253450, 10, 100);
+    CPPUNIT_ASSERT_EQUAL(payloadLow, queue.get());
+    CPPUNIT_ASSERT_EQUAL(payloadHigh, queue.get());
 }
 
 void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType, const std::string& name)
