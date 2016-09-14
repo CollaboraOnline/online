@@ -158,6 +158,11 @@ void TileQueue::reprioritize(const CursorPosition& cursorPosition)
     {
         auto& it = _queue[i];
         const std::string msg(it.data(), it.size());
+        if (msg.compare(0, 5, "tile ") != 0)
+        {
+            continue;
+        }
+
         auto tile = TileDesc::parse(msg); //FIXME: Expensive, avoid.
 
         if (tile.intersectsWithRect(cursorPosition.X, cursorPosition.Y, cursorPosition.Width, cursorPosition.Height))
@@ -178,6 +183,11 @@ void TileQueue::reprioritize(const CursorPosition& cursorPosition)
 
 bool TileQueue::priority(const std::string& tileMsg)
 {
+    if (tileMsg.compare(0, 5, "tile ") != 0)
+    {
+        return false;
+    }
+
     auto tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
 
     for (auto& pair : _cursorPositions)
