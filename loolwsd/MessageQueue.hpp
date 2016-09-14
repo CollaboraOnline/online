@@ -11,8 +11,9 @@
 #define INCLUDED_MESSAGEQUEUE_HPP
 
 #include <condition_variable>
-#include <mutex>
 #include <deque>
+#include <map>
+#include <mutex>
 #include <vector>
 
 /** Thread-safe message queue (FIFO).
@@ -85,8 +86,55 @@ that the ones closest to the cursor position are returned first.
 */
 class TileQueue : public BasicTileQueue
 {
+private:
+
+    class CursorPosition
+    {
+    public:
+        int Part;
+        int X;
+        int Y;
+        int Width;
+        int Height;
+    };
+
+public:
+
+    void updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
+    {
+        auto cursorPosition = CursorPosition({part, x, y, width, height});
+        auto it = _cursorPositions.find(viewId);
+        if (it != _cursorPositions.end())
+        {
+            it->second = cursorPosition;
+        }
+        else
+        {
+            _cursorPositions[viewId] = cursorPosition;
+        }
+
+        reprioritize(cursorPosition);
+    }
+
+    void removeCursorPosition(int viewId)
+    {
+        _cursorPositions.erase(viewId);
+    }
+
 protected:
     virtual void put_impl(const Payload& value) override;
+
+private:
+
+    /// Bring the underlying tile (if any) to the top.
+    /// There should be only one overlapping tile at most.
+    void reprioritize(const CursorPosition& cursorPosition);
+
+    /// Check if the given tile msg underlies a cursor.
+    bool priority(const std::string& tileMsg);
+
+private:
+    std::map<int, CursorPosition> _cursorPositions;
 };
 
 #endif
