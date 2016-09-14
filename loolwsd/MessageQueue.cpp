@@ -11,6 +11,7 @@
 
 #include <algorithm>
 
+#include <TileDesc.hpp>
 #include <Log.hpp>
 
 MessageQueue::~MessageQueue()
@@ -95,9 +96,10 @@ void BasicTileQueue::put_impl(const Payload& value)
 
 void TileQueue::put_impl(const Payload& value)
 {
+    const auto msg = std::string(value.data(), value.size());
+    Log::trace() << "Putting [" << msg << "]" << Log::end;
     if (!_queue.empty())
     {
-        const auto msg = std::string(value.data(), value.size());
         if (msg.compare(0, 4, "tile") == 0 || msg.compare(0, 10, "tilecombine") == 0)
         {
             const auto newMsg = msg.substr(0, msg.find(" ver"));
@@ -117,18 +119,76 @@ void TileQueue::put_impl(const Payload& value)
                 auto& it = _queue[i];
                 const std::string old(it.data(), it.size());
                 const auto oldMsg = old.substr(0, old.find(" ver"));
-                Log::error(std::to_string(i) + ": " + oldMsg);
+                Log::trace() << "TileQueue #" << i << ": " << oldMsg << Log::end;
                 if (newMsg == oldMsg)
                 {
-                    Log::trace() << "Replacing duplicate tile: " << oldMsg << " -> " << newMsg << Log::end;
+                    Log::debug() << "Replacing duplicate tile: " << oldMsg << " -> " << newMsg << Log::end;
                     _queue[i] = value;
+
+                    if (priority(msg))
+                    {
+                        // Bump to top.
+                        Log::debug() << "And bumping tile to top: " << msg << Log::end;
+                        _queue.erase(_queue.begin() + i);
+                        _queue.push_front(value);
+                    }
+
                     return;
                 }
             }
         }
     }
 
-    BasicTileQueue::put_impl(value);
+    if (priority(msg))
+    {
+        Log::debug() << "Priority tile [" << msg << "]" << Log::end;
+        _queue.push_front(value);
+    }
+    else
+    {
+        BasicTileQueue::put_impl(value);
+    }
+}
+
+/// Bring the underlying tile (if any) to the top.
+/// There should be only one overlapping tile at most.
+void TileQueue::reprioritize(const CursorPosition& cursorPosition)
+{
+    for (size_t i = 0; i < _queue.size(); ++i)
+    {
+        auto& it = _queue[i];
+        const std::string msg(it.data(), it.size());
+        auto tile = TileDesc::parse(msg); //FIXME: Expensive, avoid.
+
+        if (tile.intersectsWithRect(cursorPosition.X, cursorPosition.Y, cursorPosition.Width, cursorPosition.Height))
+        {
+            if (i != 0)
+            {
+                // Bump to top.
+                Log::trace() << "Bumping tile to top: " << msg << Log::end;
+                const Payload payload = it;
+                _queue.erase(_queue.begin() + i);
+                _queue.push_front(payload);
+            }
+
+            return;
+        }
+    }
+}
+
+bool TileQueue::priority(const std::string& tileMsg)
+{
+    auto tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
+
+    for (auto& pair : _cursorPositions)
+    {
+        if (tile.intersectsWithRect(pair.second.X, pair.second.Y, pair.second.Width, pair.second.Height))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
