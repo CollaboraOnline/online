@@ -66,7 +66,6 @@ protected:
 
 using namespace LOOLProtocol;
 
-using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Runnable;
@@ -503,12 +502,12 @@ int Stress::main(const std::vector<std::string>& args)
         std::cout << "Tile best: " << renderingStats[0] << " microsecs, rendering 95th percentile: " << percentile(renderingStats, 95) << " microsecs." << std::endl;
         std::cout << "Cached best: " << cachedStats[0] << " microsecs, tile 95th percentile: " << percentile(cachedStats, 95) << " microsecs." << std::endl;
 
-        const auto renderingTime = std::accumulate(renderingStats.begin(), renderingStats.end(), 0);
+        const auto renderingTime = std::accumulate(renderingStats.begin(), renderingStats.end(), 0L);
         const double renderedPixels = 256 * 256 * renderingStats.size();
         const auto pixelsPerSecRendered = renderedPixels / renderingTime;
         std::cout << "Rendering power: " << pixelsPerSecRendered << " MPixels/sec." << std::endl;
 
-        const auto cacheTime = std::accumulate(cachedStats.begin(), cachedStats.end(), 0);
+        const auto cacheTime = std::accumulate(cachedStats.begin(), cachedStats.end(), 0L);
         const double cachePixels = 256 * 256 * cachedStats.size();
         const auto pixelsPerSecCached = cachePixels / cacheTime;
         std::cout << "Cache power: " << pixelsPerSecCached << " MPixels/sec." << std::endl;
