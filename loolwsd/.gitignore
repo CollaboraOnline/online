@@ -4,6 +4,7 @@
 
 # Autofoo
 .deps
+.dirstamp
 Makefile
 Makefile.in
 loolwsd.spec
