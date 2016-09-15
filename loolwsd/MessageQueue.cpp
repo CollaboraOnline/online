@@ -48,6 +48,8 @@ void MessageQueue::remove_if(const std::function<bool(const Payload&)>& pred)
 
 void MessageQueue::put_impl(const Payload& value)
 {
+    const auto msg = std::string(value.data(), value.size());
+    Log::trace() << "Pushing into MQ [" << msg << "]" << Log::end;
     _queue.push_back(value);
 }
 
@@ -73,6 +75,8 @@ void BasicTileQueue::put_impl(const Payload& value)
     const auto msg = std::string(&value[0], value.size());
     if (msg == "canceltiles")
     {
+        Log::error("Unexpected canceltiles!");
+
         // remove all the existing tiles from the queue
         _queue.erase(std::remove_if(_queue.begin(), _queue.end(),
                     [](const Payload& v)
@@ -104,16 +108,6 @@ void TileQueue::put_impl(const Payload& value)
         {
             const auto newMsg = msg.substr(0, msg.find(" ver"));
 
-            // TODO: implement a real re-ordering here, so that the tiles closest to
-            // the cursor are returned first.
-            // * we will want to put just a general "tile" message to the queue
-            // * add a std::set that handles the tiles
-            // * change the get_impl() to decide which tile is the correct one to
-            //   be returned
-            // * we will also need to be informed about the position of the cursor
-            //   so that get_impl() returns optimal results
-            //
-            // For now: just don't put duplicates into the queue
             for (size_t i = 0; i < _queue.size(); ++i)
             {
                 auto& it = _queue[i];
@@ -199,6 +193,66 @@ bool TileQueue::priority(const std::string& tileMsg)
     }
 
     return false;
+}
+
+MessageQueue::Payload TileQueue::get_impl()
+{
+    std::vector<TileDesc> tiles;
+    const auto front = _queue.front();
+    _queue.pop_front();
+
+    auto msg = std::string(front.data(), front.size());
+    Log::trace() << "MessageQueue Get, Size: " << _queue.size() << ", Front: " << msg << Log::end;
+
+    if (msg.compare(0, 5, "tile ") != 0 || msg.find("id=") != std::string::npos)
+    {
+        // Don't combine non-tiles or tiles with id.
+        Log::trace() << "MessageQueue res: " << msg << Log::end;
+        return front;
+    }
+
+    tiles.emplace_back(TileDesc::parse(msg));
+
+    // Combine as many tiles as possible with the top one.
+    for (size_t i = 0; i < _queue.size(); )
+    {
+        auto& it = _queue[i];
+        msg = std::string(it.data(), it.size());
+        if (msg.compare(0, 5, "tile ") != 0 ||
+            msg.find("id=") != std::string::npos)
+        {
+            // Don't combine non-tiles or tiles with id.
+            continue;
+        }
+
+        auto tile2 = TileDesc::parse(msg);
+        bool found = false;
+        Log::trace() << "combining?: " << msg << Log::end;
+
+        // Check if adjacent tiles.
+        for (auto& tile : tiles)
+        {
+            if (tile.isAdjacent(tile2))
+            {
+                tiles.emplace_back(tile2);
+                _queue.erase(_queue.begin() + i);
+                found = true;
+                break;
+            }
+        }
+
+        i += !found;
+    }
+
+    if (tiles.size() == 1)
+    {
+        msg = tiles[0].serialize("tile");
+        return Payload(msg.data(), msg.data() + msg.size());
+    }
+
+    auto tileCombined = TileCombined::create(tiles).serialize("tilecombine");
+    Log::trace() << "MessageQueue res: " << tileCombined << Log::end;
+    return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

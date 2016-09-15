@@ -10,6 +10,7 @@
 #ifndef INCLUDED_TILEDESC_HPP
 #define INCLUDED_TILEDESC_HPP
 
+#include <cassert>
 #include <map>
 #include <sstream>
 #include <string>
@@ -60,12 +61,33 @@ public:
     void setVersion(const int ver) { _ver = ver; }
     int getImgSize() const { return _imgSize; }
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
+
     bool intersectsWithRect(int x, int y, int w, int h) const
     {
         return x + w >= getTilePosX() &&
                x <= getTilePosX() + getTileWidth() &&
                y + h >= getTilePosY() &&
                y <= getTilePosY() + getTileHeight();
+    }
+
+    bool intersects(const TileDesc& other) const
+    {
+        return intersectsWithRect(other.getTilePosX(), other.getTilePosY(),
+                                  other.getTileWidth(), other.getTileHeight());
+    }
+
+    bool isAdjacent(const TileDesc& other) const
+    {
+        if (other.getPart() != getPart() ||
+            other.getWidth() != getWidth() ||
+            other.getHeight() != getHeight() ||
+            other.getTileWidth() != getTileWidth() ||
+            other.getTileHeight() != getTileHeight())
+        {
+            return false;
+        }
+
+        return intersects(other);
     }
 
     /// Serialize this instance into a string.
@@ -332,6 +354,26 @@ public:
                                      Poco::StringTokenizer::TOK_IGNORE_EMPTY |
                                      Poco::StringTokenizer::TOK_TRIM);
         return parse(tokens);
+    }
+
+    static
+    TileCombined create(const std::vector<TileDesc>& tiles)
+    {
+        assert(!tiles.empty());
+
+        std::ostringstream xs;
+        std::ostringstream ys;
+        int ver = -1;
+
+        for (auto& tile : tiles)
+        {
+            xs << tile.getTilePosX() << ',';
+            ys << tile.getTilePosY() << ',';
+            ver = std::max(tile.getVersion(), ver);
+        }
+
+        return TileCombined(tiles[0].getPart(), tiles[0].getWidth(), tiles[0].getHeight(),
+                            xs.str(), ys.str(), tiles[0].getTileWidth(), tiles[0].getTileHeight(), ver, "", -1);
     }
 
 private:
