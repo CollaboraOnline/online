@@ -44,7 +44,7 @@
 #include <LOOLProtocol.hpp>
 
 #ifndef TDOC
-#    define TDOC ""
+#error TDOC must be defined (see Makefile.am)
 #endif
 
 /// Common helper testing functions.
