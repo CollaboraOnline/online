@@ -1249,6 +1249,10 @@ private:
                 {
                     pThis->renderCombinedTiles(tokens, pThis->_ws);
                 }
+                else
+                {
+                    Log::error("Unexpected tile request: [" + message + "].");
+                }
             }
         }
         catch (const std::exception& exc)

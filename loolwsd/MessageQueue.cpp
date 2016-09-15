@@ -201,4 +201,62 @@ bool TileQueue::priority(const std::string& tileMsg)
     return false;
 }
 
+MessageQueue::Payload TileQueue::get_impl()
+{
+    std::vector<TileDesc> tiles;
+    const auto front = _queue.front();
+    _queue.pop_front();
+
+    auto msg = std::string(front.data(), front.size());
+    Log::error() << "Queue: " << _queue.size() << Log::end;
+    Log::error() << "get: " << msg << Log::end;
+    if (msg.compare(0, 5, "tile ") != 0)
+    {
+        return front;
+    }
+
+    tiles.emplace_back(TileDesc::parse(msg));
+
+    // Combine as many tiles as possible with the top one.
+    for (size_t i = 0; i < _queue.size(); )
+    {
+        auto& it = _queue[i];
+        msg = std::string(it.data(), it.size());
+        if (msg.compare(0, 5, "tile ") != 0 ||
+            msg.find("id=") != std::string::npos)
+        {
+            // Don't combine non-tiles or tiles with id.
+            continue;
+        }
+
+        auto tile2 = TileDesc::parse(msg);
+        bool found = false;
+        Log::error() << "combining?: " << msg << Log::end;
+
+        // Check if adjacent tiles.
+        for (auto& tile : tiles)
+        {
+            if (tile.isAdjacent(tile2))
+            {
+                tiles.emplace_back(tile2);
+                _queue.erase(_queue.begin() + i);
+                found = true;
+                break;
+            }
+        }
+
+        i += !found;
+    }
+
+    if (tiles.size() == 1)
+    {
+        msg = tiles[0].serialize("tile");
+        return Payload(msg.data(), msg.data() + msg.size());
+    }
+
+    auto tileCombined = TileCombined::create(tiles).serialize("tilecombine");
+    Log::error() << "res: " << tileCombined << Log::end;
+    return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
