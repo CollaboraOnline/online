@@ -97,6 +97,27 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
     return docKey;
 }
 
+DocumentBroker::DocumentBroker() :
+    _uriPublic(),
+    _docKey(),
+    _childRoot(),
+    _cacheRoot(),
+    _childProcess(),
+    _lastSaveTime(std::chrono::steady_clock::now()),
+    _markToDestroy(true),
+    _lastEditableSession(true),
+    _cursorPosX(0),
+    _cursorPosY(0),
+    _cursorWidth(0),
+    _cursorHeight(0),
+    _isLoaded(false),
+    _isModified(false),
+    _isEditLockHeld(false),
+    _tileVersion(0)
+{
+    Log::info("Empty DocumentBroker (marked to destroy) created.");
+}
+
 DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
                                const std::string& docKey,
                                const std::string& childRoot,

@@ -136,6 +136,9 @@ public:
     static
     std::string getDocKey(const Poco::URI& uri);
 
+    /// Dummy document broker that is marked to destroy.
+    DocumentBroker();
+
     DocumentBroker(const Poco::URI& uriPublic,
                    const std::string& docKey,
                    const std::string& childRoot,

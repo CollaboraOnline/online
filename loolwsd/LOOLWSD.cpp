@@ -565,6 +565,15 @@ private:
                 docBroker = it->second;
                 assert(docBroker);
             }
+            else
+            {
+                // Store a dummy (marked to destroy) document broker until we
+                // have the real one, so that the other requests block
+                Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily.");
+
+                std::shared_ptr<DocumentBroker> tempBroker = std::make_shared<DocumentBroker>();
+                docBrokers.emplace(docKey, tempBroker);
+            }
         }
 
         if (docBroker)
@@ -645,7 +654,7 @@ private:
         if (newDoc)
         {
             std::unique_lock<std::mutex> lock(docBrokersMutex);
-            docBrokers.emplace(docKey, docBroker);
+            docBrokers[docKey] = docBroker;
         }
 
         // Check if readonly session is required
