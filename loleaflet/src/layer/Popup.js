@@ -167,6 +167,11 @@ L.Popup = L.Layer.extend({
 
 		this._tipContainer = L.DomUtil.create('div', prefix + '-tip-container', container);
 		this._tip = L.DomUtil.create('div', prefix + '-tip', this._tipContainer);
+
+		if (this.options.borderColor) {
+			this._tip.style['border'] = this._wrapper.style['border'] = '2px solid ' + this.options.borderColor;
+			this._closeButton.style['color'] = this.options.borderColor;
+		}
 	},
 
 	_updateContent: function () {
