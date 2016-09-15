@@ -92,6 +92,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidateViewCursor);
     CPPUNIT_TEST(testViewCursorVisible);
     CPPUNIT_TEST(testCellViewCursor);
+    CPPUNIT_TEST(testGraphicViewSelection);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -132,6 +133,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInvalidateViewCursor();
     void testViewCursorVisible();
     void testCellViewCursor();
+    void testGraphicViewSelection();
 
     void loadDoc(const std::string& documentURL);
 
@@ -155,6 +157,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testStateChanged(const std::string& filename, std::vector<std::string>& vecComands);
     double getColRowSize(const std::string& property, const std::string& message, int index);
     double getColRowSize(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& item, int index);
+    void testGraphicViewSelection(const std::string& doc, const std::string& type);
 
 public:
     HTTPWSTest()
@@ -2279,6 +2282,81 @@ void HTTPWSTest::testCellViewCursor()
             getResponseMessage(*socketView, "cellviewcursor:", response, false);
             CPPUNIT_ASSERT_MESSAGE("did not receive a cellviewcursor: message as expected", !response.empty());
         }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testGraphicViewSelection(const std::string& doc, const std::string& type)
+{
+    int docPart = -1;
+    int docParts = 0;
+    int docHeight = 0;
+    int docWidth = 0;
+    int docViewId = -1;
+    int itView = 0;
+
+    // 0..N Views
+    std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
+
+    // Load a document
+    std::string documentPath, documentURL, response, text;
+    getDocumentPathAndURL(doc, documentPath, documentURL);
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+    Poco::Net::WebSocket socket0 = *connectLOKit(_uri, request, _response);
+
+    sendTextFrame(socket0, "load url=" + documentURL);
+    CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket0));
+
+    // Check document size
+    sendTextFrame(socket0, "status");
+    getResponseMessage(socket0, "status:", response, false);
+    CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+    parseDocSize(response, type, docPart, docParts, docWidth, docHeight, docViewId);
+
+    // Click to show a cursor
+    Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttondown"), docWidth/2, docHeight/6);
+    sendTextFrame(socket0, text); text.clear();
+    Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/2, docHeight/6);
+    sendTextFrame(socket0, text);
+    getResponseMessage(socket0, "graphicselection:", response, false);
+    CPPUNIT_ASSERT_MESSAGE("did not receive a graphicselection: message as expected", !response.empty());
+
+    // Connect 0..N Views, where N=10
+    for (itView = 0; itView < 10; ++itView)
+    {
+        views.emplace_back(connectLOKit(_uri, request, _response));
+    }
+
+    // Load 0..N view and expect to receive graphicviewselection
+    for (auto socketView : views)
+    {
+        sendTextFrame(*socketView, "load url=" + documentURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socketView, "", true));
+
+        // Expected to receive graphicviewselection each view
+        getResponseMessage(*socketView, "graphicviewselection:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a graphicviewselection: message as expected", !response.empty());
+    }
+
+    // main view should receive graphicviewselection for each view
+    for (auto socketView : views)
+    {
+        getResponseMessage(socket0, "graphicviewselection:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a graphicviewselection: message as expected", !response.empty());
+    }
+}
+
+void HTTPWSTest::testGraphicViewSelection()
+{
+    try
+    {
+        testGraphicViewSelection("graphicviewselection.odp", "presentation");
+        testGraphicViewSelection("graphicviewselection.odt", "text");
+        testGraphicViewSelection("graphicviewselection.ods", "spreadsheet");
     }
     catch (const Poco::Exception& exc)
     {
