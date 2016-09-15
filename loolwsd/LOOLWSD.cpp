@@ -593,6 +593,11 @@ private:
                 {
                     // went away successfully
                     docBroker.reset();
+                    Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily after the other instance is gone.");
+
+                    std::shared_ptr<DocumentBroker> tempBroker = std::make_shared<DocumentBroker>();
+                    docBrokers.emplace(docKey, tempBroker);
+
                     timedOut = false;
                     break;
                 }
