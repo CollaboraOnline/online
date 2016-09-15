@@ -62,6 +62,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTileInvalidateWriter);
     //CPPUNIT_TEST(testTileInvalidateCalc);
     CPPUNIT_TEST(testTileQueuePriority);
+    CPPUNIT_TEST(testTileCombinedRendering);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -77,6 +78,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testWriterAnyKey();
     void testTileInvalidateCalc();
     void testTileQueuePriority();
+    void testTileCombinedRendering();
 
     void checkTiles(Poco::Net::WebSocket& socket,
                     const std::string& type,
@@ -602,9 +604,11 @@ void TileCacheTests::testTileInvalidateCalc()
 void TileCacheTests::testTileQueuePriority()
 {
     const std::string reqHigh = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
-    const TileQueue::Payload payloadHigh(reqHigh.data(), reqHigh.data() + reqHigh.size());
+    const std::string resHigh = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1 imgsize=0";
+    const TileQueue::Payload payloadHigh(resHigh.data(), resHigh.data() + resHigh.size());
     const std::string reqLow = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
-    const TileQueue::Payload payloadLow(reqLow.data(), reqLow.data() + reqLow.size());
+    const std::string resLow = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840 ver=-1 imgsize=0";
+    const TileQueue::Payload payloadLow(resLow.data(), resLow.data() + resLow.size());
 
     TileQueue queue;
 
@@ -626,8 +630,8 @@ void TileCacheTests::testTileQueuePriority()
     queue.updateCursorPosition(0, 0, 0, 0, 10, 100);
 
     // Prioritized order.
-    //CPPUNIT_ASSERT_EQUAL(payloadHigh, queue.get());
-    //CPPUNIT_ASSERT_EQUAL(payloadLow, queue.get());
+    CPPUNIT_ASSERT_EQUAL(payloadHigh, queue.get());
+    CPPUNIT_ASSERT_EQUAL(payloadLow, queue.get());
 
     // Repeat with cursor position set.
     queue.put(reqLow);
@@ -641,6 +645,39 @@ void TileCacheTests::testTileQueuePriority()
     queue.updateCursorPosition(0, 0, 0, 253450, 10, 100);
     CPPUNIT_ASSERT_EQUAL(payloadLow, queue.get());
     CPPUNIT_ASSERT_EQUAL(payloadHigh, queue.get());
+}
+
+void TileCacheTests::testTileCombinedRendering()
+{
+    const std::string req1 = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
+    const std::string req2 = "tile part=0 width=256 height=256 tileposx=3840 tileposy=0 tilewidth=3840 tileheight=3840";
+    const std::string req3 = "tile part=0 width=256 height=256 tileposx=0 tileposy=3840 tilewidth=3840 tileheight=3840";
+    const std::string req4 = "tile part=0 width=256 height=256 tileposx=3840 tileposy=3840 tilewidth=3840 tileheight=3840";
+
+    const std::string resHor = "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 imgsize=0,0 tilewidth=3840 tileheight=3840";
+    const TileQueue::Payload payloadHor(resHor.data(), resHor.data() + resHor.size());
+    const std::string resVer = "tilecombine part=0 width=256 height=256 tileposx=0,0 tileposy=0,3840 imgsize=0,0 tilewidth=3840 tileheight=3840";
+    const TileQueue::Payload payloadVer(resVer.data(), resVer.data() + resVer.size());
+    const std::string resFull = "tilecombine part=0 width=256 height=256 tileposx=0,3840,0 tileposy=0,0,3840 imgsize=0,0,0 tilewidth=3840 tileheight=3840";
+    const TileQueue::Payload payloadFull(resFull.data(), resFull.data() + resFull.size());
+
+    TileQueue queue;
+
+    // Horizontal.
+    queue.put(req1);
+    queue.put(req2);
+    CPPUNIT_ASSERT_EQUAL(payloadHor, queue.get());
+
+    // Vertical.
+    queue.put(req1);
+    queue.put(req3);
+    CPPUNIT_ASSERT_EQUAL(payloadVer, queue.get());
+
+    // Vertical.
+    queue.put(req1);
+    queue.put(req2);
+    queue.put(req3);
+    CPPUNIT_ASSERT_EQUAL(payloadFull, queue.get());
 }
 
 void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType, const std::string& name)
