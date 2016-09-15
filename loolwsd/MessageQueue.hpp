@@ -58,7 +58,7 @@ protected:
 
     bool wait_impl() const;
 
-    Payload get_impl();
+    virtual Payload get_impl();
 
     void clear_impl();
 
@@ -123,6 +123,8 @@ public:
 
 protected:
     virtual void put_impl(const Payload& value) override;
+
+    virtual Payload get_impl() override;
 
 private:
 
