@@ -1210,12 +1210,13 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._isEmptyRectangle(viewBounds) &&
 		   (this._docType === 'text' || this._selectedPart === viewPart)) {
 			if (!viewMarker) {
+				var color = L.LOUtil.getViewIdHexColor(viewId);
 				viewMarker = L.rectangle(viewBounds, {
 					pointerEvents: 'auto',
 					fill: false,
-					color: L.LOUtil.getViewIdHexColor(viewId)
+					color: color
 				});
-				viewMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false});
+				viewMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, borderColor: color});
 				this._graphicViewMarkers[viewId].marker = viewMarker;
 			}
 			else {
