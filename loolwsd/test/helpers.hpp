@@ -311,7 +311,7 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
 }
 
 inline
-std::vector<char> getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, const std::string name = "")
+std::vector<char> getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, const std::string& name = "")
 {
     return getResponseMessage(*ws, prefix, name);
 }
@@ -342,7 +342,7 @@ void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const s
 // connectLOKit ensures the websocket is connected to a kit process.
 inline
 std::shared_ptr<Poco::Net::WebSocket>
-connectLOKit(Poco::URI uri,
+connectLOKit(const Poco::URI& uri,
              Poco::Net::HTTPRequest& request,
              Poco::Net::HTTPResponse& response,
              const std::string& name = "")
@@ -409,7 +409,7 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const std::string& doc
 inline
 void SocketProcessor(const std::string& name,
                      const std::shared_ptr<Poco::Net::WebSocket>& socket,
-                     std::function<bool(const std::string& msg)> handler,
+                     const std::function<bool(const std::string& msg)>& handler,
                      const size_t timeoutMs = 10000)
 {
     socket->setReceiveTimeout(0);
