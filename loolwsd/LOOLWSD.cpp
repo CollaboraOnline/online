@@ -576,41 +576,39 @@ private:
             }
         }
 
-        if (docBroker)
+        if (docBroker && docBroker->isMarkedToDestroy())
         {
             // If this document is going out, wait.
-            if (docBroker->isMarkedToDestroy())
+            Log::debug("Document [" + docKey + "] is marked to destroy, waiting to reload.");
+
+            const auto timeout = POLL_TIMEOUT_MS / 2;
+            bool timedOut = true;
+            for (size_t i = 0; i < COMMAND_TIMEOUT_MS / timeout; ++i)
             {
-                Log::debug("Document [" + docKey + "] is marked to destroy, waiting to reload.");
-                const auto timeout = POLL_TIMEOUT_MS / 2;
-                bool timedOut = true;
-                for (size_t i = 0; i < COMMAND_TIMEOUT_MS / timeout; ++i)
-                {
-                    std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+                std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
 
-                    std::unique_lock<std::mutex> lock(docBrokersMutex);
-                    auto it = docBrokers.find(docKey);
-                    if (it == docBrokers.end())
-                    {
-                        // went away successfully
-                        docBroker.reset();
-                        timedOut = false;
-                        break;
-                    }
-                    else if (it->second && !it->second->isMarkedToDestroy())
-                    {
-                        // was actually replaced by a real document
-                        docBroker = it->second;
-                        timedOut = false;
-                        break;
-                    }
-                }
-
-                if (timedOut)
+                std::unique_lock<std::mutex> lock(docBrokersMutex);
+                auto it = docBrokers.find(docKey);
+                if (it == docBrokers.end())
                 {
-                    // Still here, but marked to destroy. Proceed and hope to recover.
-                    Log::error("Timed out while waiting for document to unload before loading.");
+                    // went away successfully
+                    docBroker.reset();
+                    timedOut = false;
+                    break;
                 }
+                else if (it->second && !it->second->isMarkedToDestroy())
+                {
+                    // was actually replaced by a real document
+                    docBroker = it->second;
+                    timedOut = false;
+                    break;
+                }
+            }
+
+            if (timedOut)
+            {
+                // Still here, but marked to destroy. Proceed and hope to recover.
+                Log::error("Timed out while waiting for document to unload before loading.");
             }
         }
 
