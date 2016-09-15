@@ -33,9 +33,6 @@
 #include "Unit.hpp"
 #include "Util.hpp"
 
-///////////////////
-// StorageBase Impl
-///////////////////
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
 Util::RegexListMatcher StorageBase::WopiHosts;
@@ -166,9 +163,6 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     throw BadRequestException("No Storage configured or invalid URI.");
 }
 
-////////////////////
-// LocalStorage Impl
-/////////////////////
 StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uri)
 {
     const auto path = Poco::Path(uri.getPath());
@@ -250,9 +244,6 @@ Poco::Net::HTTPClientSession* lcl_getHTTPClientSession(const Poco::URI& uri)
 
 } // anonymous namespace
 
-///////////////////
-// WopiStorage Impl
-///////////////////
 StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
 {
     Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
@@ -387,9 +378,6 @@ bool WopiStorage::saveLocalFileToStorage()
     return success;
 }
 
-//////////////////////
-// WebDAVStorage Impl
-///////////////////////
 StorageBase::FileInfo WebDAVStorage::getFileInfo(const Poco::URI& uri)
 {
     Log::debug("Getting info for webdav uri [" + uri.toString() + "].");

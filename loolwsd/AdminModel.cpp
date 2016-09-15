@@ -26,9 +26,6 @@
 
 using Poco::StringTokenizer;
 
-/////////////////
-// Document Impl
-////////////////
 void Document::addView(const std::string& sessionId)
 {
     const auto ret = _views.emplace(sessionId, View(sessionId));
@@ -57,9 +54,6 @@ int Document::expireView(const std::string& sessionId)
     return _activeViews;
 }
 
-///////////////////
-// Subscriber Impl
-//////////////////
 bool Subscriber::notify(const std::string& message)
 {
     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -90,10 +84,6 @@ void  Subscriber::unsubscribe(const std::string& command)
 {
     _subscriptions.erase(command);
 }
-
-///////////////////
-// AdminModel Impl
-//////////////////
 
 std::string AdminModel::query(const std::string& command)
 {

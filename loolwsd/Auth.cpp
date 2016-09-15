@@ -36,9 +36,6 @@ using Poco::Base64Decoder;
 using Poco::Base64Encoder;
 using Poco::OutputLineEndingConverter;
 
-//////////////
-// JWTAuth Impl
-//////////////
 const std::string JWTAuth::getAccessToken()
 {
     std::string encodedHeader = createHeader();
@@ -185,11 +182,6 @@ const std::string JWTAuth::createPayload()
 
     return ostr.str();
 }
-
-
-//////////////
-// OAuth Impl
-//////////////
 
 //TODO: This MUST be done over TLS to protect the token.
 const std::string OAuth::getAccessToken()
