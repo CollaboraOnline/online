@@ -66,9 +66,11 @@ int getLoolKitProcessCount()
 }
 
 static
-int countLoolKitProcesses(const int expected, const int timeoutMs = POLL_TIMEOUT_MS * 10)
+int countLoolKitProcesses(const int expected)
 {
-    const size_t repeat = 1 + (2 * timeoutMs / POLL_TIMEOUT_MS);
+    // Fairly random number, I don't think there is any actual reason for using exactly this repeat
+    // count.
+    const size_t repeat = 21;
     auto count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {
