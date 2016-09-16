@@ -33,7 +33,6 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "ChildSession.hpp"
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
