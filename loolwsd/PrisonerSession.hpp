@@ -15,8 +15,7 @@
 class DocumentBroker;
 class ClientSession;
 
-/// An internal end-point in WSD with Kit process
-/// for a given client.
+/// Represents a session to a Kit process, in the WSD process.
 class PrisonerSession final : public LOOLSession, public std::enable_shared_from_this<PrisonerSession>
 {
 public:

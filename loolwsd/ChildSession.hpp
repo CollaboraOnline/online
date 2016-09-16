@@ -49,8 +49,7 @@ public:
     void notifyCurrentViewOfOtherViews(const std::string& sessionId) const = 0;
 };
 
-/// Represents a client session, with the socket end-point,
-/// and handles all incoming UI traffic.
+/// Represents the session to the WSD process, in the Kit process.
 class ChildSession final : public LOOLSession
 {
 public:

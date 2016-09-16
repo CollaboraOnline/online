@@ -16,7 +16,7 @@
 class DocumentBroker;
 class PrisonerSession;
 
-/// Represents client sessions and socket end-point in WSD.
+/// Represents a session to a LOOL client, in the WSD process.
 class ClientSession final : public LOOLSession, public std::enable_shared_from_this<ClientSession>
 {
 public:
