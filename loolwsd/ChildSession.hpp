@@ -49,7 +49,7 @@ public:
     void notifyCurrentViewOfOtherViews(const std::string& sessionId) const = 0;
 };
 
-/// Represents the session to the WSD process, in the Kit process.
+/// Represents the session to the WSD process, in a Kit process.
 class ChildSession final : public LOOLSession
 {
 public:
