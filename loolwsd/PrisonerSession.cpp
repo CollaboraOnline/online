@@ -76,7 +76,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     if (tokens[0] == "unocommandresult:")
     {
         const std::string stringMsg(buffer, length);
-        Log::info(getName() + "Command: " + stringMsg);
+        Log::info(getName() + ": Command: " + stringMsg);
         const auto index = stringMsg.find_first_of('{');
         if (index != std::string::npos)
         {

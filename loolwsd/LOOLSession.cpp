@@ -81,7 +81,7 @@ bool LOOLSession::sendTextFrame(const char* buffer, const int length)
         return false;
     }
 
-    Log::trace(getName() + " Send: " + getAbbreviatedMessage(buffer, length));
+    Log::trace(getName() + ": Send: " + getAbbreviatedMessage(buffer, length));
     try
     {
         std::unique_lock<std::mutex> lock(_mutex);
@@ -113,7 +113,7 @@ bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
         return false;
     }
 
-    Log::trace(getName() + " Send: " + std::to_string(length) + " bytes");
+    Log::trace(getName() + ": Send: " + std::to_string(length) + " bytes");
     try
     {
         std::unique_lock<std::mutex> lock(_mutex);
