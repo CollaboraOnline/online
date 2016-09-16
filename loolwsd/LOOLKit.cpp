@@ -641,7 +641,7 @@ public:
         }
 
         std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
-        if (_loKitDocument->getViews() <= 0)
+        if (_loKitDocument->getViewsCount() <= 0)
         {
             Log::error("Tile rendering requested without views.");
             return;
@@ -716,7 +716,7 @@ public:
         }
 
         std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
-        if (_loKitDocument->getViews() <= 0)
+        if (_loKitDocument->getViewsCount() <= 0)
         {
             Log::error("Tile rendering requested without views.");
             return;
