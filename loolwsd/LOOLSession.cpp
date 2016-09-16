@@ -218,7 +218,7 @@ bool LOOLSession::handleInput(const char *buffer, int length)
     const auto summary = getAbbreviatedMessage(buffer, length);
     try
     {
-        Log::trace(getName() + " Recv: " + summary);
+        Log::trace(getName() + ": Recv: " + summary);
         if (TerminationFlag)
         {
             Log::warn("Input while terminating: [" + summary + "].");
