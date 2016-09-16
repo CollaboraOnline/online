@@ -108,13 +108,13 @@ protected:
         else if (peer->isCloseFrame())
         {
             Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
-            return false;
+            return true;
         }
         else if (peer->isHeadless())
         {
             // Fail silently and return as there is no actual websocket
             // connection in this case.
-            Log::info(getName() + ": Ignoring forward message due to peer being headless");
+            Log::info(getName() + ": Headless peer, not forwarding message [" + message + "].");
             return true;
         }
 
