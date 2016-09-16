@@ -427,9 +427,9 @@ public:
     /**
      * Get number of views of this document.
      */
-    inline int getViews()
+    inline int getViewsCount()
     {
-        return _pDoc->pClass->getViews(_pDoc);
+        return _pDoc->pClass->getViewsCount(_pDoc);
     }
 
     /**
