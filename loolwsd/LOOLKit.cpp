@@ -289,7 +289,6 @@ public:
         Util::setThreadName("kit_ws_" + _sessionId);
 
         Log::debug("Thread started.");
-
         try
         {
             auto queue = std::make_shared<TileQueue>();
@@ -332,10 +331,6 @@ public:
         catch (const std::exception& exc)
         {
             Log::error(std::string("Connection::run: Exception: ") + exc.what());
-        }
-        catch (...)
-        {
-            Log::error("Connection::run:: Unexpected exception");
         }
 
         Log::debug("Thread finished.");

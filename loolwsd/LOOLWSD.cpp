@@ -995,10 +995,6 @@ public:
             Log::error(std::string("ClientRequestHandler::handleRequest: Exception: ") + exc.what());
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
         }
-        catch (...)
-        {
-            Log::error("ClientRequestHandler::handleRequest:: Unexpected exception");
-        }
 
         if (!responded)
         {
@@ -1189,10 +1185,6 @@ public:
         catch (const std::exception& exc)
         {
             Log::error(std::string("PrisonerRequestHandler::handleRequest: Exception: ") + exc.what());
-        }
-        catch (...)
-        {
-            Log::error("PrisonerRequestHandler::handleRequest:: Unexpected exception");
         }
 
         if (!jailId.empty())
