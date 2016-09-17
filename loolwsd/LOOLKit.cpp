@@ -28,6 +28,7 @@
 #include <memory>
 #include <sstream>
 #include <thread>
+#include <thread>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -279,6 +280,16 @@ public:
     void start()
     {
         _thread.start(*this);
+
+        // Busy-wait until we run.
+        // This is important to make sure we can process
+        // callbacks, which if we're late to start will
+        // be dropped. No need for async notification here.
+        constexpr auto delay = COMMAND_TIMEOUT_MS / 20;
+        for (auto i = 0; i < 20 && !isRunning(); ++i)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+        }
     }
 
     bool isRunning()
@@ -871,15 +882,23 @@ private:
         bool isFound = false;
         for (auto& it : pDescr->Doc->_connections)
         {
-            if (it.second->isRunning())
+            auto session = it.second->getSession();
+            if (session && session->getViewId() == pDescr->ViewId)
             {
-                auto session = it.second->getSession();
-                if (session && session->getViewId() == pDescr->ViewId)
+                if (it.second->isRunning())
                 {
                     isFound = true;
                     auto pNotif = new CallbackNotification(session, nType, payload);
                     pDescr->Doc->_callbackQueue.enqueueNotification(pNotif);
                 }
+                else
+                {
+                    Log::error() << "Connection thread for session " << it.second->getSessionId() << " for view "
+                                 << pDescr->ViewId << " is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(nType)
+                                 << "] payload [" << payload << "]." << Log::end;
+                }
+
+                break;
             }
         }
 
