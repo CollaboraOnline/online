@@ -188,7 +188,7 @@ std::string getTestServerURI()
 }
 
 inline
-void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string& response, const bool isLine)
+void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string& response, const bool isLine, const std::string& name = "")
 {
     try
     {
@@ -206,7 +206,7 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
                 int bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
-                    std::cerr << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
+                    std::cerr << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
                     const std::string message = isLine ?
                                                 LOOLProtocol::getFirstLine(buffer, bytes) :
                                                 std::string(buffer, bytes);
@@ -219,13 +219,13 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
                 }
                 else
                 {
-                    std::cerr << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
+                    std::cerr << name << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
                 }
                 retries = 10;
             }
             else
             {
-                std::cerr << "Timeout waiting for " << prefix << "\n";
+                std::cerr << name << "Timeout waiting for " << prefix << "\n";
                 --retries;
             }
         }
@@ -335,9 +335,9 @@ std::string assertResponseLine(T& ws, const std::string& prefix, const std::stri
 }
 
 inline
-void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, std::string& response, const bool isLine)
+void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, std::string& response, const bool isLine, const std::string& name = "")
 {
-    getResponseMessage(*ws, prefix, response, isLine);
+    getResponseMessage(*ws, prefix, response, isLine, name);
 }
 
 // Connecting to a Kit process is managed by document broker, that it does several
