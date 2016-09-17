@@ -846,6 +846,7 @@ private:
         // Forward to the same view only.
         // Demultiplexing is done by Core.
         // TODO: replace with a map to be faster.
+        bool isFound = false;
         for (auto& it : pDescr->Doc->_connections)
         {
             if (it.second->isRunning())
@@ -853,10 +854,18 @@ private:
                 auto session = it.second->getSession();
                 if (session && session->getViewId() == pDescr->ViewId)
                 {
+                    isFound = true;
                     auto pNotif = new CallbackNotification(session, nType, payload);
                     pDescr->Doc->_callbackQueue.enqueueNotification(pNotif);
                 }
             }
+        }
+
+        if (!isFound)
+        {
+            Log::warn() << "Document::ViewCallback. The message [" << pDescr->ViewId
+                        << "] [" << LOKitHelper::kitCallbackTypeToString(nType)
+                        << "] [" << payload << "] is not sent to Master Session." << Log::end;
         }
     }
 
