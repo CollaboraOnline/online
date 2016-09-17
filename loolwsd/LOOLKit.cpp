@@ -231,6 +231,24 @@ namespace
         cap_free(caps);
     }
 
+    void symlinkPathToJail(const Path& jailPath, const std::string &loTemplate,
+                           const std::string &loSubPath)
+    {
+        Path symlinkSource(jailPath, Path(loTemplate.substr(1)));
+        File(symlinkSource.parent()).createDirectories();
+
+        std::string symlinkTarget;
+        for (auto i = 0; i < Path(loTemplate).depth(); i++)
+            symlinkTarget += "../";
+        symlinkTarget += loSubPath;
+
+        Log::debug("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
+        if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
+        {
+            Log::syserror("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
+            throw Exception("symlink() failed");
+        }
+    }
 }
 
 /// Connection thread with a client (via WSD).
@@ -1291,27 +1309,6 @@ private:
     Poco::NotificationQueue _callbackQueue;
     std::atomic_size_t _clientViews;
 };
-
-namespace {
-    void symlinkPathToJail(const Path& jailPath, const std::string &loTemplate,
-                           const std::string &loSubPath)
-    {
-        Path symlinkSource(jailPath, Path(loTemplate.substr(1)));
-        File(symlinkSource.parent()).createDirectories();
-
-        std::string symlinkTarget;
-        for (auto i = 0; i < Path(loTemplate).depth(); i++)
-            symlinkTarget += "../";
-        symlinkTarget += loSubPath;
-
-        Log::debug("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
-        if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
-        {
-            Log::syserror("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
-            throw Exception("symlink() failed");
-        }
-    }
-}
 
 void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
