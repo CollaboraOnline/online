@@ -326,7 +326,6 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     if (_multiView)
     {
         std::ostringstream ossViewInfo;
-        _viewId = _loKitDocument->getView();
         const auto viewId = std::to_string(_viewId);
 
         // Create a message object

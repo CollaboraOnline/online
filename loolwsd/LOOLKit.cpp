@@ -1175,7 +1175,7 @@ private:
 
         if (_multiView)
         {
-            viewId = _loKitDocument->getView();
+            session->setViewId((viewId = _loKitDocument->getView()));
             _viewIdToCallbackDescr.emplace(viewId,
                                            std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
             _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
