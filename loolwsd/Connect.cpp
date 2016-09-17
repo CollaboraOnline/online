@@ -14,6 +14,7 @@
 #include <fstream>
 #include <iostream>
 #include <mutex>
+#include <thread>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
@@ -200,7 +201,8 @@ protected:
                     std::unique_lock<std::mutex> lock(coutMutex);
                     std::cout << "Sleeping " << sleepTime << " seconds" << std::endl;
                 }
-                Thread::sleep(sleepTime * 1000);
+
+                std::this_thread::sleep_for(std::chrono::seconds(sleepTime));
             }
             else if (line == "exit")
             {

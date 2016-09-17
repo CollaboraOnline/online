@@ -1923,7 +1923,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 }
             }
 
-            sleep(WSD_SLEEP_SECS);
+            std::this_thread::sleep_for(std::chrono::seconds(WSD_SLEEP_SECS));
 
             // Make sure we have sufficient reserves.
             prespawnChildren();
