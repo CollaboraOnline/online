@@ -57,7 +57,6 @@
 #include "LibreOfficeKit.hpp"
 #include "Log.hpp"
 #include "Png.hpp"
-#include "QueueHandler.hpp"
 #include "Rectangle.hpp"
 #include "TileDesc.hpp"
 #include "Unit.hpp"
@@ -320,27 +319,21 @@ public:
         Log::debug("Thread started.");
         try
         {
-            auto queue = std::make_shared<TileQueue>();
-            QueueHandler handler(queue, _session, "kit_queue_" + _session->getId());
-
-            Thread queueHandlerThread;
-            queueHandlerThread.start(handler);
-            std::shared_ptr<ChildSession> session = _session;
-
             IoUtil::SocketProcessor(_ws,
-                [&queue](const std::vector<char>& payload)
+                [this](const std::vector<char>& payload)
                 {
-                    queue->put(payload);
+                    if (!_session->handleInput(payload.data(), payload.size()))
+                    {
+                        Log::info("Socket handler flagged for finishing.");
+                        return false;
+                    }
+
                     return true;
                 },
-                [&session]() { session->closeFrame(); },
-                [&queueHandlerThread]() { return TerminationFlag || !queueHandlerThread.isRunning(); });
+                [this]() { _session->closeFrame(); },
+                []() { return !!TerminationFlag; });
 
-            queue->clear();
-            queue->put("eof");
-            queueHandlerThread.join();
-
-            if (session->isCloseFrame())
+            if (_session->isCloseFrame())
             {
                 Log::trace("Normal close handshake.");
                 _ws->shutdown();
@@ -1503,6 +1496,7 @@ void lokit_main(const std::string& childRoot,
             requestUrl += "&version=" + encodedVersionStr;
             free(versionInfo);
         }
+
         HTTPRequest request(HTTPRequest::HTTP_GET, requestUrl);
         HTTPResponse response;
         auto ws = std::make_shared<WebSocket>(cs, request, response);
