@@ -2130,7 +2130,7 @@ void HTTPWSTest::testOptimalResize()
     }
 }
 
-void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, const std::string& protocol, const std::string& view)
+void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, const std::string& protocol, const std::string& protocolView)
 {
     int docPart = -1;
     int docParts = 0;
@@ -2141,6 +2141,9 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
 
     // 0..N Views
     std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
+    const std::string view = "view %d -> ";
+    const std::string load = "view %d, cannot load the document ";
+    const std::string error = "view %d, did not receive a %s message as expected";
 
     // Load a document
     std::string documentPath, documentURL, response, text;
@@ -2150,21 +2153,21 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
     Poco::Net::WebSocket socket0 = *connectLOKit(_uri, request, _response);
 
     sendTextFrame(socket0, "load url=" + documentURL);
-    CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket0));
+    CPPUNIT_ASSERT_MESSAGE(Poco::format(load, itView) + documentURL, isDocumentLoaded(socket0, Poco::format(view, itView)));
 
     // Check document size
     sendTextFrame(socket0, "status");
-    getResponseMessage(socket0, "status:", response, false);
-    CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+    getResponseMessage(socket0, "status:", response, false, Poco::format(view, itView));
+    CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, std::string("status:")), !response.empty());
     parseDocSize(response, type, docPart, docParts, docWidth, docHeight, docViewId);
 
-    // Click to show a cursor
+    // Send click message
     Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttondown"), docWidth/2, docHeight/6);
     sendTextFrame(socket0, text); text.clear();
     Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/2, docHeight/6);
     sendTextFrame(socket0, text);
-    getResponseMessage(socket0, protocol, response, false);
-    CPPUNIT_ASSERT_MESSAGE(Poco::format("did not receive a %s message as expected", protocol), !response.empty());
+    getResponseMessage(socket0, protocol, response, false, Poco::format(view, itView));
+    CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
     // Connect 0..N Views, where N=10
     for (itView = 0; itView < 10; ++itView)
@@ -2172,24 +2175,25 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
         views.emplace_back(connectLOKit(_uri, request, _response));
     }
 
-    const std::string error = Poco::format("did not receive a %s message as expected", view);
-
+    itView = 1;
     // Load 0..N view
     for (auto socketView : views)
     {
         sendTextFrame(*socketView, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socketView, "", true));
+        CPPUNIT_ASSERT_MESSAGE(Poco::format(load, itView) + documentURL, isDocumentLoaded(*socketView, Poco::format(view, itView), true));
 
         // Expected to receive response each view
-        getResponseMessage(*socketView, view, response, false);
-        CPPUNIT_ASSERT_MESSAGE(error, !response.empty());
+        getResponseMessage(*socketView, protocolView, response, false, Poco::format(view, itView));
+        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
+        ++itView;
     }
 
+    itView = 0;
     // main view should receive response each view
     for (auto socketView : views)
     {
-        getResponseMessage(socket0, view, response, false);
-        CPPUNIT_ASSERT_MESSAGE(error, !response.empty());
+        getResponseMessage(socket0, protocolView, response, false, Poco::format(view, itView));
+        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
     }
 }
 
