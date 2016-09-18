@@ -29,7 +29,7 @@ L.Control.DocumentRepair = L.Control.extend({
 		var wrapper = L.DomUtil.create('div', 'leaflet-popup-content-wrapper', this._container);
 		var content = L.DomUtil.create('div', 'leaflet-popup-content', wrapper);
 		var labelTitle = document.createElement('span');
-		labelTitle.innerHTML = '<b>Repair Document</b>';
+		labelTitle.innerHTML = '<b>' + _('Repair Document') + '</b>';
 		content.appendChild(labelTitle);
 		content.appendChild(document.createElement('br'));
 		content.appendChild(document.createElement('br'));
