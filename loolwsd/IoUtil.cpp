@@ -40,7 +40,7 @@ namespace IoUtil
 
 int receiveFrame(WebSocket& socket, void* buffer, int length, int& flags)
 {
-    while (true)
+    while (!TerminationFlag)
     {
         int n = socket.receiveFrame(buffer, length, flags);
         if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
@@ -56,6 +56,8 @@ int receiveFrame(WebSocket& socket, void* buffer, int length, int& flags)
             return n;
         }
     }
+
+    return -1;
 }
 
 // Synchronously process WebSocket requests and dispatch to handler.
