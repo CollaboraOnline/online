@@ -997,21 +997,20 @@ void HTTPWSTest::testInactiveClient()
     {
         std::string documentPath, documentURL;
         getDocumentPathAndURL("hello.odt", documentPath, documentURL);
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
         auto socket1 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-1 ");
 
         // Connect another and go inactive.
         std::cerr << "Connecting second client." << std::endl;
         auto socket2 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-2 ", true);
-        sendTextFrame(socket2, "userinactive");
+        sendTextFrame(socket2, "userinactive", "inactiveClient-2 ");
 
         // While second is inactive, make some changes.
-        sendTextFrame(socket1, "uno .uno:SelectAll");
-        sendTextFrame(socket1, "uno .uno:Delete");
+        sendTextFrame(socket1, "uno .uno:SelectAll", "inactiveClient-1 ");
+        sendTextFrame(socket1, "uno .uno:Delete", "inactiveClient-1 ");
 
         // Activate second.
-        sendTextFrame(socket2, "useractive");
+        sendTextFrame(socket2, "useractive", "inactiveClient-2 ");
         SocketProcessor("Second ", socket2, [&](const std::string& msg)
                 {
                     const auto token = LOOLProtocol::getFirstToken(msg);
