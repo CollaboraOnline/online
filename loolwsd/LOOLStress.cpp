@@ -53,7 +53,7 @@ public:
     ~Stress() {}
 
     static bool Benchmark;
-    static int Iterations;
+    static size_t Iterations;
     static bool NoDelay;
     unsigned _numClients;
     std::string _serverURI;
@@ -268,7 +268,7 @@ private:
 
         connection->load();
 
-        for (auto i = 0; i < Stress::Iterations; ++i)
+        for (size_t i = 0; i < Stress::Iterations; ++i)
         {
             renderTile(connection);
 
@@ -405,7 +405,7 @@ private:
 
 bool Stress::NoDelay = false;
 bool Stress::Benchmark = false;
-int Stress::Iterations = 100;
+size_t Stress::Iterations = 100;
 
 Stress::Stress() :
     _numClients(1),
