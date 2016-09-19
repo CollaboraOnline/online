@@ -472,18 +472,23 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
-    Log::trace("DocumentBroker got child message: [" + LOOLProtocol::getAbbreviatedMessage(payload) + "].");
+    const auto msg = LOOLProtocol::getAbbreviatedMessage(payload);
+    Log::trace("DocumentBroker got child message: [" + msg + "].");
 
-    const auto command = LOOLProtocol::getFirstToken(payload);
-    LOOLWSD::dumpOutgoingTrace(getJailId(), "0", command);
+    LOOLWSD::dumpOutgoingTrace(getJailId(), "0", msg);
 
-    if (command == "tile:")
+    if (msg.find("tile:") == 0)
     {
         handleTileResponse(payload);
     }
-    else if (command == "tilecombine:")
+    else if (msg.find("tilecombine:") == 0)
     {
        handleTileCombinedResponse(payload);
+    }
+    else
+    {
+        Log::error("Unexpected message: [" + msg + "].");
+        return false;
     }
 
     return true;
