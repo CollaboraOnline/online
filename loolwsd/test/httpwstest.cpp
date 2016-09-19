@@ -1020,6 +1020,7 @@ void HTTPWSTest::testInactiveClient()
                                             token == "cursorvisible:" ||
                                             token == "editlock:" ||
                                             token == "graphicselection:" ||
+                                            token == "graphicviewselection:" ||
                                             token == "invalidatecursor:" ||
                                             token == "invalidatetiles:" ||
                                             token == "invalidateviewcursor:" ||
