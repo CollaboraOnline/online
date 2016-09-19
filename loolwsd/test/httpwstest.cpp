@@ -80,6 +80,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInactiveClient);
     CPPUNIT_TEST(testMaxColumn);
     CPPUNIT_TEST(testMaxRow);
+    CPPUNIT_TEST(testEmptyCellCursor);
     CPPUNIT_TEST(testInsertAnnotationWriter);
     CPPUNIT_TEST(testEditAnnotationWriter);  // Broken with multiview.
     CPPUNIT_TEST(testInsertAnnotationCalc);
@@ -120,6 +121,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInactiveClient();
     void testMaxColumn();
     void testMaxRow();
+    void testEmptyCellCursor();
     void testInsertAnnotationWriter();
     void testEditAnnotationWriter();
     void testInsertAnnotationCalc();
@@ -1123,6 +1125,27 @@ void HTTPWSTest::testMaxRow()
     {
         CPPUNIT_FAIL(exc.displayText());
     }
+}
+
+void HTTPWSTest::testEmptyCellCursor()
+{
+    // Load a document, and make sure a cell cursor shows up.
+    std::string docPath;
+    std::string docURL;
+    getDocumentPathAndURL("setclientpart.ods", docPath, docURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+    std::shared_ptr<Poco::Net::WebSocket> socket = loadDocAndGetSocket(_uri, docURL);
+    std::string response;
+    getResponseMessage(socket, "cellcursor:", response, false);
+
+    // Begin text edit of a cell.
+    sendTextFrame(socket, "key type=input char=115 key=97");
+
+    // Make sure the cell cursor is now hidden.
+    getResponseMessage(socket, "cellcursor: ", response, false);
+    // This failed as response was "", not "EMPTY", because code in
+    // Document::ViewCallback() crashed.
+    CPPUNIT_ASSERT_EQUAL(std::string("EMPTY"), response);
 }
 
 void HTTPWSTest::testNoExtraLoolKitsLeft()
