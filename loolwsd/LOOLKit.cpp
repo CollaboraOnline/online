@@ -426,6 +426,9 @@ public:
         _callbackQueue.wakeUpAll();
         _callbackThread.join();
 
+        _tileQueue->put("eof");
+        _tilesThread.join();
+
         // Flag all connections to stop.
         for (auto aIterator : _connections)
         {
@@ -1218,7 +1221,7 @@ private:
 
         try
         {
-            while (true)
+            while (!pThis->_stop)
             {
                 const auto input = pThis->_tileQueue->get();
                 const std::string message(input.data(), input.size());
