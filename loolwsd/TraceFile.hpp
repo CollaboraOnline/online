@@ -71,6 +71,7 @@ public:
     void writeEvent(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
         write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
+        flush();
     }
 
     void writeIncoming(const std::string& pId, const std::string& sessionId, const std::string& data)
@@ -87,6 +88,12 @@ public:
         {
             write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
         }
+    }
+
+    void flush()
+    {
+        _deflater.flush();
+        _stream.flush();
     }
 
 private:
