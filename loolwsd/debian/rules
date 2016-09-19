@@ -24,3 +24,6 @@ override_dh_auto_test:
 override_dh_auto_install:
 	make install DESTDIR=`pwd`/debian/loolwsd/
 	cp -ar `pwd`/loleaflet  `pwd`/debian/loolwsd/usr/share/loolwsd
+
+override_dh_installinit:
+	# no init.d scripts here, assume systemd
