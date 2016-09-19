@@ -188,8 +188,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             forwardToPeer(_peer, buffer, length, isBinary);
 
             // And let clients know if they hold the edit lock.
-            std::string message = "editlock: ";
-            message += std::to_string(peer->isEditLocked());
+            std::string message = "editlock: 1";
             Log::debug("Forwarding [" + message + "] in response to status.");
             return forwardToPeer(_peer, message.c_str(), message.size(), isBinary);
         }

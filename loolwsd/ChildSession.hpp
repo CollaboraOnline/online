@@ -101,7 +101,6 @@ private:
     virtual bool _handleInput(const char *buffer, int length) override;
 
 private:
-    const bool _multiView;
     const std::string _jailId;
     IDocumentManager& _docManager;
 
