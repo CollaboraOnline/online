@@ -1438,9 +1438,7 @@ void HTTPWSTest::testCalcEditRendering()
     const auto testname = "calcEditRendering ";
     auto socket = loadDocAndGetSocket("calc_render.xls", _uri, testname);
 
-    const std::string x = "5000";
-    const std::string y = "5";
-    sendTextFrame(socket, "mouse type=buttondown x=" + x + " y=" + y + " count=1 buttons=1 modifier=0");
+    sendTextFrame(socket, "mouse type=buttondown x=5000 y=5 count=1 buttons=1 modifier=0");
     sendTextFrame(socket, "key type=input char=97 key=0");
     sendTextFrame(socket, "key type=input char=98 key=0");
     sendTextFrame(socket, "key type=input char=99 key=0");
