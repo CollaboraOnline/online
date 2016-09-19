@@ -1016,21 +1016,21 @@ void HTTPWSTest::testInactiveClient()
                 {
                     const auto token = LOOLProtocol::getFirstToken(msg);
                     CPPUNIT_ASSERT_MESSAGE("unexpected message: " + msg,
-                                            token == "setpart:" ||
-                                            token == "textselection:" ||
-                                            token == "textselectionstart:" ||
-                                            token == "textselectionend:" ||
-                                            token == "invalidatetiles:" ||
-                                            token == "invalidatecursor:" ||
-                                            token == "statechanged:" ||
-                                            token == "graphicselection:" ||
+                                            token == "addview:" ||
                                             token == "cursorvisible:" ||
                                             token == "editlock:" ||
-                                            token == "addview:" ||
-                                            token == "remview:" ||
-                                            token == "remallviews:" ||
-                                            token == "textviewselection:" ||
+                                            token == "graphicselection:" ||
+                                            token == "invalidatecursor:" ||
+                                            token == "invalidatetiles:" ||
                                             token == "invalidateviewcursor:" ||
+                                            token == "remallviews:" ||
+                                            token == "remview:" ||
+                                            token == "setpart:" ||
+                                            token == "statechanged:" ||
+                                            token == "textselection:" ||
+                                            token == "textselectionend:" ||
+                                            token == "textselectionstart:" ||
+                                            token == "textviewselection:" ||
                                             token == "viewcursorvisible:");
 
                     // End when we get state changed.
