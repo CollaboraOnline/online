@@ -400,8 +400,7 @@ public:
              const std::string& url,
              std::shared_ptr<TileQueue> tileQueue,
              const std::shared_ptr<WebSocket>& ws)
-      : _multiView(std::getenv("LOK_VIEW_CALLBACK")),
-        _loKit(loKit),
+      : _loKit(loKit),
         _jailId(jailId),
         _docKey(docKey),
         _url(url),
@@ -416,8 +415,7 @@ public:
         _tilesThread(tilesThread, this),
         _clientViews(0)
     {
-        Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
-                  "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
+        Log::info("Document ctor for url [" + _url + "] on child [" + _jailId + "].");
         assert(_loKit && _loKit->get());
 
         _callbackThread.start(*this);
@@ -963,17 +961,14 @@ private:
                     << " view" << (_clientViews != 1 ? "s" : "")
                     << Log::end;
 
-        if (_multiView)
-        {
-            std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
+        std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
 
-            const auto viewId = session.getViewId();
-            _viewIdToCallbackDescr.erase(viewId);
-            _loKitDocument->setView(viewId);
-            _loKitDocument->registerCallback(nullptr, nullptr);
-            _loKitDocument->destroyView(viewId);
-            Log::debug("Destroyed view " + std::to_string(viewId));
-        }
+        const auto viewId = session.getViewId();
+        _viewIdToCallbackDescr.erase(viewId);
+        _loKitDocument->setView(viewId);
+        _loKitDocument->registerCallback(nullptr, nullptr);
+        _loKitDocument->destroyView(viewId);
+        Log::debug("Destroyed view " + std::to_string(viewId));
     }
 
     /// Notify all currently active sessions about session with given 'sessionId'
@@ -1137,11 +1132,8 @@ private:
                 }
             }
 
-            if (_multiView)
-            {
-                Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
-                _loKitDocument->createView();
-            }
+            Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
+            _loKitDocument->createView();
         }
 
         Object::Ptr renderOptsObj = new Object();
@@ -1173,21 +1165,14 @@ private:
         // registerCallback(), as the previous creates a new view in Impress.
         _loKitDocument->initializeForRendering(ossRenderOpts.str().c_str());
 
-        if (_multiView)
-        {
-            session->setViewId((viewId = _loKitDocument->getView()));
-            _viewIdToCallbackDescr.emplace(viewId,
-                                           std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
-            _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
+        session->setViewId((viewId = _loKitDocument->getView()));
+        _viewIdToCallbackDescr.emplace(viewId,
+                                       std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
+        _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
 
-            Log::info() << "Document [" << _url << "] view ["
-                        << viewId << "] loaded, leaving "
-                        << (_clientViews + 1) << " views." << Log::end;
-        }
-        else
-        {
-            _loKitDocument->registerCallback(DocumentCallback, this);
-        }
+        Log::info() << "Document [" << _url << "] view ["
+                    << viewId << "] loaded, leaving "
+                    << (_clientViews + 1) << " views." << Log::end;
 
         return _loKitDocument;
     }
@@ -1269,8 +1254,6 @@ private:
     }
 
 private:
-
-    const bool _multiView;
     std::shared_ptr<lok::Office> _loKit;
     const std::string _jailId;
     const std::string _docKey;

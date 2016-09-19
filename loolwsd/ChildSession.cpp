@@ -39,7 +39,6 @@ ChildSession::ChildSession(const std::string& id,
                            const std::string& jailId,
                            IDocumentManager& docManager) :
     LOOLSession(id, Kind::ToMaster, ws),
-    _multiView(std::getenv("LOK_VIEW_CALLBACK")),
     _jailId(jailId),
     _docManager(docManager),
     _viewId(-1),
@@ -94,8 +93,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // Send invalidation and other sync-up messages.
         std::unique_lock<std::recursive_mutex> lock(Mutex); //TODO: Move to top of function?
 
-        if (_multiView)
-            _loKitDocument->setView(_viewId);
+        _loKitDocument->setView(_viewId);
 
         // Refresh the viewIds.
         sendTextFrame("remallviews:");
@@ -323,20 +321,17 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
         return false;
     }
 
-    if (_multiView)
-    {
-        std::ostringstream ossViewInfo;
-        const auto viewId = std::to_string(_viewId);
+    std::ostringstream ossViewInfo;
+    const auto viewId = std::to_string(_viewId);
 
-        // Create a message object
-        Object::Ptr viewInfoObj = new Object();
-        viewInfoObj->set("id", viewId);
-        viewInfoObj->set("username", _userName);
-        viewInfoObj->stringify(ossViewInfo);
+    // Create a message object
+    Object::Ptr viewInfoObj = new Object();
+    viewInfoObj->set("id", viewId);
+    viewInfoObj->set("username", _userName);
+    viewInfoObj->stringify(ossViewInfo);
 
-        Log::info("Created new view with viewid: [" + viewId + "] for username: [" + _userName + "].");
-        _docManager.notifyOtherSessions(getId(), "addview: " + ossViewInfo.str());
-    }
+    Log::info("Created new view with viewid: [" + viewId + "] for username: [" + _userName + "].");
+    _docManager.notifyOtherSessions(getId(), "addview: " + ossViewInfo.str());
 
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());
     if (_docType != "text" && part != -1)
@@ -373,8 +368,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-       _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     URI::decode(font, decodedFont);
     std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
@@ -403,8 +397,7 @@ bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
 {
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     const auto status = LOKitHelper::documentStatus(_loKitDocument->get());
     if (status.empty())
@@ -429,8 +422,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     if (command == ".uno:DocumentRepair")
     {
@@ -456,8 +448,7 @@ bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
 {
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     char* partPage = _loKitDocument->getPartPageRectangles();
     sendTextFrame("partpagerectangles: " + std::string(partPage));
@@ -481,8 +472,7 @@ bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, StringToke
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     _loKitDocument->setClientZoom(tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
     return true;
@@ -507,8 +497,7 @@ bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, Str
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     _loKitDocument->setClientVisibleArea(x, y, width, height);
     return true;
@@ -573,8 +562,7 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, Stri
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     char *textSelection = _loKitDocument->getTextSelection(mimeType.c_str(), nullptr);
 
@@ -600,8 +588,7 @@ bool ChildSession::paste(const char* buffer, int length, StringTokenizer& tokens
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     Log::info("Calling _loKit->paste()");
     _loKitDocument->paste(mimeType.c_str(), data, size);
@@ -633,8 +620,8 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringToke
                 "\"type\":\"string\","
                 "\"value\":\"" + fileName + "\""
             "}}";
-        if (_multiView)
-            _loKitDocument->setView(_viewId);
+
+        _loKitDocument->setView(_viewId);
 
         _loKitDocument->postUnoCommand(command.c_str(), arguments.c_str(), false);
     }
@@ -675,8 +662,7 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokeni
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     _loKitDocument->postKeyEvent(type, charcode, keycode);
 
@@ -721,8 +707,7 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringToke
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     _loKitDocument->postMouseEvent(type, x, y, count, buttons, modifier);
 
@@ -739,8 +724,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringToke
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
     const bool bNotify = (tokens[1] == ".uno:Save");
@@ -778,8 +762,7 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, StringToke
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     _loKitDocument->setTextSelection(type, x, y);
 
@@ -804,8 +787,7 @@ bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringT
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     _loKitDocument->setGraphicSelection(type, x, y);
 
@@ -822,8 +804,7 @@ bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, String
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     _loKitDocument->resetSelection();
 
@@ -853,8 +834,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenize
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     bool success = _loKitDocument->saveAs(url.c_str(),
             format.size() == 0 ? nullptr :format.c_str(),
@@ -883,8 +863,7 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, StringT
 
     if (part != _loKitDocument->getPart())
     {
-        if (_multiView)
-            _loKitDocument->setView(_viewId);
+        _loKitDocument->setView(_viewId);
 
         _loKitDocument->setPart(part);
     }
@@ -904,8 +883,7 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    if (_multiView)
-        _loKitDocument->setView(_viewId);
+    _loKitDocument->setView(_viewId);
 
     _loKitDocument->setPart(page);
     return true;

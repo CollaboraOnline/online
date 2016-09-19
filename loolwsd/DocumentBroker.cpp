@@ -334,42 +334,39 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
     // Save using session holding the edit-lock (or first if multview).
     for (auto& sessionIt: _sessions)
     {
-        if (sessionIt.second->isEditLocked())
+        // Invalidate the timestamp to force persisting.
+        _lastFileModifiedTime.fromEpochTime(0);
+
+        // We do not want save to terminate editing mode if we are in edit mode now
+
+        std::ostringstream oss;
+        // arguments init
+        oss << "{";
+
+        // Mention DontTerminateEdit always
+        oss << "\"DontTerminateEdit\":"
+            << "{"
+            << "\"type\":\"boolean\","
+            << "\"value\":true"
+            << "}";
+
+        // Mention DontSaveIfUnmodified
+        if (dontSaveIfUnmodified)
         {
-            // Invalidate the timestamp to force persisting.
-            _lastFileModifiedTime.fromEpochTime(0);
-
-            // We do not want save to terminate editing mode if we are in edit mode now
-
-            std::ostringstream oss;
-            // arguments init
-            oss << "{";
-
-            // Mention DontTerminateEdit always
-            oss << "\"DontTerminateEdit\":"
+            oss << ","
+                << "\"DontSaveIfUnmodified\":"
                 << "{"
                 << "\"type\":\"boolean\","
                 << "\"value\":true"
                 << "}";
-
-            // Mention DontSaveIfUnmodified
-            if (dontSaveIfUnmodified)
-            {
-                oss << ","
-                    << "\"DontSaveIfUnmodified\":"
-                    << "{"
-                    << "\"type\":\"boolean\","
-                    << "\"value\":true"
-                    << "}";
-            }
-
-            // arguments end
-            oss << "}";
-
-            Log::debug(".uno:Save arguments: " + oss.str());
-            sessionIt.second->sendToInputQueue("uno .uno:Save " + oss.str());
-            return true;
         }
+
+        // arguments end
+        oss << "}";
+
+        Log::debug(".uno:Save arguments: " + oss.str());
+        sessionIt.second->sendToInputQueue("uno .uno:Save " + oss.str());
+        return true;
     }
 
     Log::error("Failed to auto-save doc [" + _docKey + "]: No valid sessions.");
@@ -390,7 +387,7 @@ void DocumentBroker::takeEditLock(const std::string& id)
     // Forward to all children.
     for (auto& it: _sessions)
     {
-        it.second->setEditLock(it.first == id);
+        it.second->setEditLock();
     }
 }
 
@@ -418,7 +415,6 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     else if (!_isEditLockHeld)
     {
         Log::debug("Giving editing lock to the first editable session [" + id + "].");
-        _sessions.begin()->second->markEditLock(true);
         _isEditLockHeld = true;
     }
 
@@ -454,26 +450,21 @@ size_t DocumentBroker::removeSession(const std::string& id)
     auto it = _sessions.find(id);
     if (it != _sessions.end())
     {
-        const auto haveEditLock = it->second->isEditLocked();
-        it->second->markEditLock(false);
         _sessions.erase(it);
 
-        if (haveEditLock)
+        // pass the edit lock to first non-readonly session in map
+        bool editLockGiven = false;
+        for (auto& session: _sessions)
         {
-            // pass the edit lock to first non-readonly session in map
-            bool editLockGiven = false;
-            for (auto& session: _sessions)
+            if (!session.second->isReadOnly())
             {
-                if (!session.second->isReadOnly())
-                {
-                    session.second->setEditLock(true);
-                    editLockGiven = true;
-                    break;
-                }
+                session.second->setEditLock();
+                editLockGiven = true;
+                break;
             }
-
-            _isEditLockHeld = editLockGiven;
         }
+
+        _isEditLockHeld = editLockGiven;
     }
 
     return _sessions.size();

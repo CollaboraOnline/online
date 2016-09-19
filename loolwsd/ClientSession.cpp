@@ -42,7 +42,6 @@ ClientSession::ClientSession(const std::string& id,
     LOOLSession(id, Kind::ToClient, ws),
     _docBroker(std::move(docBroker)),
     _queue(std::move(queue)),
-    _haveEditLock(std::getenv("LOK_VIEW_CALLBACK")),
     _isReadOnly(readOnly),
     _loadFailed(false),
     _loadPart(-1)
@@ -187,8 +186,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        // Allow 'downloadas' for all kinds of views irrespective of editlock
-        if ( (isReadOnly() || !isEditLocked()) && tokens[0] != "downloadas" &&
+        // Allow 'downloadas' for all kinds of views
+        if ( (isReadOnly()) && tokens[0] != "downloadas" &&
              tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";
@@ -260,13 +259,11 @@ bool ClientSession::getStatus(const char *buffer, int length)
     return forwardToPeer(_peer, buffer, length, false);
 }
 
-bool ClientSession::setEditLock(const bool value)
+bool ClientSession::setEditLock()
 {
     // Update the sate and forward to child.
-    markEditLock(value);
-    const auto msg = "editlock: " + std::to_string(isEditLocked());
-    const auto mv = std::getenv("LOK_VIEW_CALLBACK") ? "1" : "0";
-    Log::debug("Forwarding [" + msg + "] to set editlock to " + std::to_string(value) + ". MultiView: " + mv);
+    const std::string msg = "editlock: 1";
+    Log::debug("Forwarding [" + msg + "] to set editlock to 1.");
     return forwardToPeer(_peer, msg.data(), msg.size(), false);
 }
 

@@ -285,9 +285,6 @@ int main(int argc, char** argv)
     if (!std::getenv("LD_BIND_NOW"))
         Log::info("Note: LD_BIND_NOW is not set.");
 
-    if (!std::getenv("LOK_VIEW_CALLBACK"))
-        Log::info("Note: LOK_VIEW_CALLBACK is not set.");
-
     // Open read fifo pipe with WSD.
     const Path pipePath = Path::forDirectory(childRoot + "/" + FIFO_PATH);
     const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
