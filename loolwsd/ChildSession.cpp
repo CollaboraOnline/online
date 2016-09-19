@@ -1070,6 +1070,9 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
     case LOK_CALLBACK_REDLINE_TABLE_SIZE_CHANGED:
         sendTextFrame("redlinetablechanged: " + rPayload);
         break;
+    case LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED:
+        sendTextFrame("redlinetablemodified: " + rPayload);
+        break;
     default:
         Log::error("Unknown callback event (" + std::to_string(nType) + "): " + rPayload);
     }
