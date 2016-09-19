@@ -36,7 +36,7 @@
     <trace desc="Dump commands and notifications for replay" enable="true">
         <path desc="Output file path" compress="true">/tmp/looltrace.gz</path>
         <filter>
-            <message desc="Regex pattern of messages to exclude">tile.*</message>
+            <message desc="Regex pattern of messages to exclude"></message>
         </filter>
         <outgoing>
             <record desc="Whether or not to record outgoing messages" default="false">false</record>
