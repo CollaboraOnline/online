@@ -296,7 +296,8 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                     break;
                 }
 
-                std::cerr << name << "Ignored: " << message << std::endl;
+                if ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
+                    std::cerr << name << "Ignored: " << message << std::endl;
             }
             else
             {
