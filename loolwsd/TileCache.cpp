@@ -475,26 +475,42 @@ int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_
     }
 }
 
-void TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscriber)
+std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscriber)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
     const auto sub = subscriber.get();
 
     Log::trace("Cancelling tiles for " + subscriber->getName());
+    std::ostringstream oss;
 
     for (auto it = _tilesBeingRendered.begin(); it != _tilesBeingRendered.end(); )
     {
         auto& subscribers = it->second->_subscribers;
         Log::trace("Tile " + it->first + " has " + std::to_string(subscribers.size()) + " subscribers.");
-        subscribers.erase(std::remove_if(subscribers.begin(), subscribers.end(),
-                                         [sub](std::weak_ptr<ClientSession>& ptr){ return ptr.lock().get() == sub; }),
-                          subscribers.end());
-        Log::trace(" Tile " + it->first + " has " + std::to_string(subscribers.size()) + " subscribers.");
 
-        // Remove if there are no more subscribers on this tile.
-        it = (subscribers.empty() ? _tilesBeingRendered.erase(it) : ++it);
+        const auto itRem = std::find_if(subscribers.begin(), subscribers.end(),
+                                        [sub](std::weak_ptr<ClientSession>& ptr){ return ptr.lock().get() == sub; });
+        if (itRem != subscribers.end())
+        {
+            Log::trace("Tile " + it->first + " has " + std::to_string(subscribers.size()) + " subscribers. Removing one.");
+            subscribers.erase(itRem, itRem + 1);
+            if (subscribers.empty())
+            {
+                // No other subscriber, remove it from the render queue.
+                oss << it->second->getVersion() << ',';
+                it = _tilesBeingRendered.erase(it);
+            }
+        }
+
+        if (!subscribers.empty())
+        {
+            ++it;
+        }
     }
+
+    const auto canceltiles = oss.str();
+    return (canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
