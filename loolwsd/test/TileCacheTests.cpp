@@ -53,6 +53,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSimpleCombine);
     CPPUNIT_TEST(testPerformance);
     CPPUNIT_TEST(testUnresponsiveClient);
+    CPPUNIT_TEST(testImpressTiles);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
 #if ENABLE_DEBUG
@@ -69,6 +70,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testSimpleCombine();
     void testPerformance();
     void testUnresponsiveClient();
+    void testImpressTiles();
     void testClientPartImpress();
     void testClientPartCalc();
     void testSimultaneousTilesRenderedJustOnce();
@@ -272,6 +274,22 @@ void TileCacheTests::testUnresponsiveClient()
 
     socket1.shutdown();
     socket2.shutdown();
+}
+
+void TileCacheTests::testImpressTiles()
+{
+    try
+    {
+        const std::string testName = "impressTiles ";
+        auto socket = *loadDocAndGetSocket("setclientpart.odp", _uri, testName);
+
+        sendTextFrame(socket, "tile part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0", testName);
+        getTileMessage(socket, testName);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
 }
 
 void TileCacheTests::testClientPartImpress()
