@@ -76,6 +76,14 @@ AC_ARG_WITH([libpng-libs],
             AS_HELP_STRING([--with-libpng-libs=<path>],
                            [Path to the "lib" directory with the libpng libraries]))
 
+AC_ARG_WITH([cppunit-includes],
+            AS_HELP_STRING([--with-cppunit-includes=<path>],
+                           [Path to the "include" directory with the Cppunit headers]))
+
+AC_ARG_WITH([cppunit-libs],
+            AS_HELP_STRING([--with-cppunit-libs=<path>],
+                           [Path to the "lib" directory with the Cppunit libraries]))
+
 AC_ARG_ENABLE([ssl],
             AS_HELP_STRING([--disable-ssl],
                            [Compile without SSL support]))
@@ -168,9 +176,19 @@ AS_IF([test -n "$with_libpng_includes"],
 AS_IF([test -n "$with_libpng_libs"],
       [LDFLAGS="$LDFLAGS -L${with_libpng_libs}"])
 
+AS_IF([test -n "$with_cppunit_includes"],
+      [CPPFLAGS="$CPPFLAGS -isystem ${with_cppunit_includes}"])
+
+AS_IF([test -n "$with_cppunit_libs"],
+      [LDFLAGS="$LDFLAGS -L${with_cppunit_libs}"])
+
 AS_IF([test `uname -s` = Linux],
       [AS_IF([test -n "$with_poco_libs"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_poco_libs}"])])
+
+AS_IF([test `uname -s` = Linux],
+      [AS_IF([test -n "$with_cppunit_libs"],
+             [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_cppunit_libs}"])])
 
 AS_IF([test `uname -s` != Darwin],
       [AC_SEARCH_LIBS([dlopen],
