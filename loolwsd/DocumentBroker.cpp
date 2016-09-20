@@ -545,11 +545,9 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    tileCombined.setVersion(++_tileVersion);
     Log::trace() << "TileCombined request for " << tileCombined.serialize() << Log::end;
 
     // Satisfy as many tiles from the cache.
-    std::vector<TileDesc> tiles;
     for (auto& tile : tileCombined.getTiles())
     {
         std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
@@ -577,12 +575,11 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             cachedTile->close();
 
             session->sendBinaryFrame(output.data(), output.size());
-            continue;
         }
         else
         {
             // Not cached, needs rendering.
-            tile.setVersion(_tileVersion);
+            tile.setVersion(++_tileVersion);
             const auto ver = tileCache().subscribeToTileRendering(tile, session);
             if (ver <= 0)
             {
@@ -590,29 +587,12 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
                 continue;
             }
             else
-            if (tile.intersectsWithRect(_cursorPosX, _cursorPosY,
-                                        _cursorWidth, _cursorHeight))
             {
-                // If this tile is right under the cursor, give it priority.
                 const auto req = tile.serialize("tile");
-                Log::debug() << "Priority tile request: " << req << Log::end;
+                Log::debug() << "Tile request: " << req << Log::end;
                 _childProcess->getWebSocket()->sendFrame(req.data(), req.size());
-
-                // No need to process with the group anymore.
-                continue;
             }
         }
-
-        tiles.push_back(tile);
-    }
-
-    for (auto& tile : tiles)
-    {
-        const auto tileMsg = tile.serialize("tile ");
-        Log::debug() << "TileCombined residual request for " << tileMsg << Log::end;
-
-        // Forward to child to render.
-        _childProcess->getWebSocket()->sendFrame(tileMsg.data(), tileMsg.size());
     }
 }
 
