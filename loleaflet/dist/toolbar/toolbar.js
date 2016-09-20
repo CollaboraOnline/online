@@ -123,13 +123,6 @@ function onClick(id, item, subItem) {
 			map.setPart(id);
 		}
 	}
-	else if (id === 'takeedit') {
-		if (!item.checked) {
-			map._socket.sendMessage('takeedit');
-			// And advertise which page we're on.
-			map._socket.sendMessage('setclientpart part=' + map._docLayer._selectedPart);
-		}
-	}
 	else if (id === 'searchprev') {
 		map.search(L.DomUtil.get('search-input').value, true);
 	}
@@ -496,8 +489,6 @@ var formatButtons = {
 	'incrementindent': true, 'decrementindent': true, 'insertgraphic': true
 };
 
-var takeEditPopupMessage = '<div>' + _('You are viewing now.') + '<br/>' + _('Click here to take edit.') + '</div>';
-var takeEditPopupTimeout = null;
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
 var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
 var userPopupTimeout = null;
@@ -1004,7 +995,9 @@ map.on('commandstatechanged', function (e) {
 		}
 		// only store the state for now;
 		// buttons with stored state === enabled will
-		// be enabled when we get the editlock
+		// be enabled later (if we are in editmode)
+		// If we are in viewmode, these store states will be used
+		// when we get the edit access
 		else if (state === 'enabled') {
 			formatButtons[id] = true;
 		}
@@ -1012,8 +1005,7 @@ map.on('commandstatechanged', function (e) {
 			formatButtons[id] = false;
 		}
 
-		// Change the toolbar button state immediately
-		// if we already have the editlock
+		// Change the toolbar button states immediately if we are in editmode
 		if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
 			// in case some buttons are in toolbar-up-more, find
 			// them and en/dis-able them.
@@ -1211,33 +1203,7 @@ map.on('hyperlinkclicked', function (e) {
 });
 
 map.on('updatepermission', function (e) {
-	var toolbar = w2ui['toolbar-down'];
-	if (e.perm === 'edit') {
-		toolbar.disable('takeedit');
-		toolbar.set('takeedit', {hint: _('You are editing (others can only view)'), caption: _('EDITING')});
-	}
-	else if (e.perm === 'view') {
-		toolbar.enable('takeedit');
-		toolbar.set('takeedit', {hint: _('Take edit lock (others can only view)'), caption: _('VIEWING')});
-		$('#tb_toolbar-down_item_takeedit')
-			.w2overlay({
-				class: 'loleaflet-font',
-				html: takeEditPopupMessage,
-				style: 'padding: 5px'
-			});
-		clearTimeout(takeEditPopupTimeout);
-		takeEditPopupTimeout = setTimeout(function() {
-			$('#tb_toolbar-down_item_takeedit').w2overlay('');
-			clearTimeout(takeEditPopupTimeout);
-			takeEditPopupTimeout = null;
-		}, 3000);
-	}
-	else if (e.perm === 'readonly') {
-		toolbar.disable('takeedit');
-		toolbar.set('takeedit', {hint: _('You are locked in readonly mode'), caption: _('READONLY')});
-	}
-
-	toolbar = w2ui['toolbar-up'];
+	var toolbar = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
 	// {En,Dis}able toolbar buttons
 	for (var id in formatButtons) {
@@ -1314,22 +1280,6 @@ map.on('updatepermission', function (e) {
 			toolbar.disable(id);
 		});
 		$('#search-input').prop('disabled', true);
-	}
-});
-
-map.on('mouseup keypress', function() {
-	if (map._permission === 'view') {
-		$('#tb_toolbar-down_item_takeedit')
-			.w2overlay({
-				html: takeEditPopupMessage,
-				style: 'padding: 5px'
-			});
-		clearTimeout(takeEditPopupTimeout);
-		takeEditPopupTimeout = setTimeout(function() {
-			$('#tb_toolbar-down_item_takeedit').w2overlay('');
-			clearTimeout(takeEditPopupTimeout);
-			takeEditPopupTimeout = null;
-		}, 3000);
 	}
 });
 

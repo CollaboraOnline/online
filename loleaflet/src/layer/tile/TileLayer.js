@@ -354,9 +354,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('unocommandresult:')) {
 			this._onUnoCommandResultMsg(textMsg);
 		}
-		else if (textMsg.startsWith('editlock:')) {
-			this._onEditLock(textMsg);
-		}
 		else if (textMsg.startsWith('contextmenu:')) {
 			this._onContextMenuMsg(textMsg);
 		}
@@ -1625,19 +1622,6 @@ L.TileLayer = L.GridLayer.extend({
 			                     + '&outputWidth=' + this._tileSize
 			                     + '&tileHeight=' + this._tileWidthTwips
 			                     + '&tileWidth=' + this._tileHeightTwips);
-		}
-	},
-
-	_onEditLock: function (textMsg) {
-		// if we have explicitly set this as readonly,
-		// then never listen server for editlock
-		if (this._map._permission === 'readonly') {
-			return;
-		}
-
-		var perm = parseInt(textMsg.split(' ')[1]) === 1 ? 'edit' : 'view';
-		if (perm !== this._map._permission) {
-			this._map.setPermission(perm);
 		}
 	},
 
