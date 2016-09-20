@@ -43,7 +43,7 @@ public:
     int subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber);
 
     /// Cancels all tile requests by the given subscriber.
-    void cancelTiles(const std::shared_ptr<ClientSession> &subscriber);
+    std::string cancelTiles(const std::shared_ptr<ClientSession> &subscriber);
 
     std::unique_ptr<std::fstream> lookupTile(const TileDesc& tile);
 

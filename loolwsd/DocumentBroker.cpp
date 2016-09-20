@@ -569,7 +569,12 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    tileCache().cancelTiles(session);
+    const auto canceltiles = tileCache().cancelTiles(session);
+    if (!canceltiles.empty())
+    {
+        Log::debug() << "Forwarding canceltiles request: " << canceltiles << Log::end;
+        _childProcess->getWebSocket()->sendFrame(canceltiles.data(), canceltiles.size());
+    }
 }
 
 void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
