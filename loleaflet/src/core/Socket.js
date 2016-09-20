@@ -74,9 +74,11 @@ L.Socket = L.Class.extend({
 		// TODO: Move the version number somewhere sensible.
 		this._doSend('loolclient ' + this.ProtocolVersionNumber);
 
+		var reconnecting = false;
 		var msg = 'load url=' + this._map.options.doc;
 		if (this._map._docLayer) {
 			// we are reconnecting after a lost connection
+			reconnecting = true;
 			msg += ' part=' + this._map.getCurrentPartNumber();
 			this._map.fire('statusindicator', {statusType : 'reconnected'});
 		}
@@ -99,6 +101,10 @@ L.Socket = L.Class.extend({
 			this._doSend(this._msgQueue[i].msg, this._msgQueue[i].coords);
 		}
 		this._msgQueue = [];
+
+		if (reconnecting) {
+			this._map.setPermission(this._map._oldPermission);
+		}
 
 		this._map._activate();
 	},
