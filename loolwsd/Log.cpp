@@ -15,6 +15,9 @@
 #include <sstream>
 #include <string>
 
+#include <sys/syscall.h>
+#include <unistd.h>
+
 #include <Poco/ConsoleChannel.h>
 #include <Poco/FileChannel.h>
 #include <Poco/FormattingChannel.h>
@@ -88,8 +91,8 @@ namespace Log
         const char *appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
         assert(strlen(appName) + 32 + 28 < 1024 - 1);
 
-        snprintf(buffer, 4095, "%s-%.2d %d:%.2d:%.2d.%.6d [ %s ] %s  ", appName,
-                 (Poco::Thread::current() ? Poco::Thread::current()->id() : 0),
+        snprintf(buffer, 4095, "%s-%.04lu %d:%.2d:%.2d.%.6d [ %s ] %s  ", appName,
+                 syscall(SYS_gettid),
                  (int)hours, (int)minutes, (int)seconds, (int)usec,
                  procName, level);
     }
