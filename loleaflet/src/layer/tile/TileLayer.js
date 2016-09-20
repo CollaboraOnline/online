@@ -378,14 +378,8 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('cellviewcursor:')) {
 			this._onCellViewCursorMsg(textMsg);
 		}
-		else if (textMsg.startsWith('addview:')) {
-			this._onAddViewMsg(textMsg);
-		}
-		else if (textMsg.startsWith('remview:')) {
-			this._onRemViewMsg(textMsg);
-		}
-		else if (textMsg.startsWith('remallviews:')) {
-			this._onRemAllViewMsg(textMsg);
+		else if (textMsg.startsWith('viewinfo:')) {
+			this._onViewInfoMsg(textMsg);
 		}
 		else if (textMsg.startsWith('textviewselection:')) {
 			this._onTextViewSelectionMsg(textMsg);
@@ -697,12 +691,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateViewCursor(viewId);
 	},
 
-	_onAddViewMsg: function(textMsg) {
-		textMsg = textMsg.substring('addview:'.length + 1);
-		var obj = JSON.parse(textMsg);
-		var viewId = parseInt(obj.id);
-		var username = obj.username;
-
+	_addView: function(viewId, username) {
 		// Ignore if viewid is same as ours
 		if (viewId === this._viewId) {
 			return;
@@ -718,10 +707,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateViewCursor(viewId);
 	},
 
-	_onRemViewMsg: function(textMsg) {
-		textMsg = textMsg.substring('remview:'.length + 1);
-		var viewId = parseInt(textMsg);
-
+	_removeView: function(viewId) {
 		// Couldn't be ours, now could it?!
 		if (viewId === this._viewId) {
 			return;
@@ -742,9 +728,24 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.removeView(viewId);
 	},
 
-	_onRemAllViewMsg: function(textMsg) {
-		for (var viewId in this._map._viewInfo) {
-			this._onRemViewMsg('remview: ' + viewId);
+	_onViewInfoMsg: function(textMsg) {
+		textMsg = textMsg.substring('viewinfo: '.length);
+		var viewInfo = JSON.parse(textMsg);
+
+		// A new view
+		var viewIds = [];
+		for (var viewInfoIdx in viewInfo) {
+			if (!(parseInt(viewInfo[viewInfoIdx].id) in this._map._viewInfo)) {
+				this._addView(viewInfo[viewInfoIdx].id, viewInfo[viewInfoIdx].username);
+			}
+			viewIds.push(viewInfo[viewInfoIdx].id);
+		}
+
+		// Check if any view is deleted
+		for (viewInfoIdx in this._map._viewInfo) {
+			if (viewIds.indexOf(parseInt(viewInfoIdx)) === -1) {
+				this._removeView(parseInt(viewInfoIdx));
+			}
 		}
 	},
 
