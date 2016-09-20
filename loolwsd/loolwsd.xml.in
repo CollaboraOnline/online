@@ -21,6 +21,16 @@
     <logging>
         <color type="bool">true</color>
         <level type="string" desc="Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="trace">trace</level>
+        <file enable="false">
+            <property name="path" desc="Log file path.">loolwsd.log</property>
+            <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>
+            <property name="archive" desc="Append either timestamp or number to the archived log filename.">timestamp</property>
+            <property name="compress" desc="Enable/disable log file compression.">true</property>
+            <property name="purgeAge" desc="The maximum age of log files to preserve. See Poco FileChannel.">10 days</property>
+            <property name="purgeCount" desc="The maximum number of log archives to preserve. Use 'none' to disable purging. See Poco FileChannel.">10</property>
+            <property name="rotateOnOpen" desc="Enable/disable log file rotation on opening.">true</property>
+            <property name="flush" desc="Enable/disable flushing after each entry. May harm performance.">false</property>
+        </file>
     </logging>
 
     <trace desc="Dump commands and notifications for replay" enable="true">
