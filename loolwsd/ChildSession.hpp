@@ -40,13 +40,9 @@ public:
     virtual
     void onUnload(const ChildSession& session) = 0;
 
-    /// Send message to all other sessions except 'sessionId'
+    /// Send updated view info to all active sessions
     virtual
-    void notifyOtherSessions(const std::string& sessionId, const std::string& message) const = 0;
-
-    /// Send other view's information to current view (one with sessionId)
-    virtual
-    void notifyCurrentViewOfOtherViews(const std::string& sessionId) const = 0;
+    void notifyViewInfo() = 0;
 };
 
 /// Represents the session to the WSD process, in a Kit process.
