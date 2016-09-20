@@ -64,6 +64,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 					}
 					tilePositionsY += tileTopLeft.y;
 					needsNewTiles = true;
+					if (this._debug && this._tiles[key]._debugTile) {
+						this._tiles[key]._debugTile.setStyle({fillOpacity: 0.5});
+					}
 				}
 				else {
 					// tile outside of the visible area, just remove it

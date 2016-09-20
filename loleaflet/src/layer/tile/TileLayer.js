@@ -12,6 +12,12 @@ if (typeof String.prototype.startsWith !== 'function') {
 	};
 }
 
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+	var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'), results = regex.exec(location.search);
+	return results === null ? '' : results[1].replace(/\+/g, ' ');
+}
+
 L.Compatibility = {
 	clipboardGet: function (event) {
 		var text = null;
@@ -145,6 +151,12 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewSelectionsGroup = new L.LayerGroup();
 		map.addLayer(this._viewSelectionsGroup);
 		this._viewSelections = {};
+
+		this._debug = (getParameterByName('debug') == '1');
+		if (this._debug) {
+			this._debugInfo = new L.LayerGroup();
+			map.addLayer(this._debugInfo);
+		}
 
 		this._searchResultsLayer = new L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
@@ -982,6 +994,25 @@ L.TileLayer = L.GridLayer.extend({
 		coords.part = command.part;
 		var key = this._tileCoordsToKey(coords);
 		var tile = this._tiles[key];
+		if (this._debug && tile) {
+			var tileBound = this._keyToBounds(key);
+			if (tile._debugLoadCount) {
+				tile._debugLoadCount += 1;
+			} else {
+				tile._debugLoadCount = 1;
+			}
+			if (!tile._debugPopup) {
+				tile._debugPopup = L.popup({offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false})
+						.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getCenter().lng)).setContent('-');
+				this._debugInfo.addLayer(tile._debugPopup);
+				tile._debugTile = L.rectangle(tileBound, {color: 'blue', weight: 1, fillOpacity: 0, pointerEvents: 'none'});
+				this._debugInfo.addLayer(tile._debugTile);
+			}
+			tile._debugPopup.setContent('' + this._tiles[key]._debugLoadCount);
+			if (tile._debugTile) {
+				tile._debugTile.setStyle({fillOpacity: 0});
+			}
+		}
 		if (command.id !== undefined) {
 			this._map.fire('tilepreview', {
 				tile: img,
@@ -1701,6 +1732,13 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_invalidateClientVisibleArea: function() {
+		if (this._debug) {
+			this._debugInfo.clearLayers();
+			for (var key in this._tiles) {
+				this._tiles[key]._debugPopup = null;
+				this._tiles[key]._debugTile = null;
+			}
+		}
 		this._clientVisibleArea = true;
 	}
 });
