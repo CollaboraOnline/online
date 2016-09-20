@@ -75,7 +75,6 @@ L.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			// we are reconnecting after a lost connection
 			msg += ' part=' + this._map.getCurrentPartNumber();
-			this._map.fire('statusindicator', {statusType : 'reconnected'});
 		}
 		if (this._map.options.timestamp) {
 			msg += ' timestamp=' + this._map.options.timestamp;
@@ -263,6 +262,11 @@ L.Socket = L.Class.extend({
 			this._map._docLayer = docLayer;
 			this._map.addLayer(docLayer);
 			this._map.fire('doclayerinit');
+		} else if (textMsg.startsWith('status:')) {
+			// we are reconnecting ...
+			this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
+			this._map.fire('statusindicator', {statusType: 'reconnected'});
+			this._map.setPermission(this._map.options.permission);
 		}
 
 		// these can arrive very early during the startup
