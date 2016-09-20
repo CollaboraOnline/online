@@ -545,12 +545,9 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    tileCombined.setVersion(++_tileVersion);
     Log::trace() << "TileCombined request for " << tileCombined.serialize() << Log::end;
 
     // Satisfy as many tiles from the cache.
-    // The rest, group by rows.
-    std::map<int, std::vector<TileDesc>> rows;
     for (auto& tile : tileCombined.getTiles())
     {
         std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
@@ -578,12 +575,11 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             cachedTile->close();
 
             session->sendBinaryFrame(output.data(), output.size());
-            continue;
         }
         else
         {
             // Not cached, needs rendering.
-            tile.setVersion(_tileVersion);
+            tile.setVersion(++_tileVersion);
             const auto ver = tileCache().subscribeToTileRendering(tile, session);
             if (ver <= 0)
             {
@@ -591,47 +587,12 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
                 continue;
             }
             else
-            if (tile.intersectsWithRect(_cursorPosX, _cursorPosY,
-                                        _cursorWidth, _cursorHeight))
             {
-                // If this tile is right under the cursor, give it priority.
                 const auto req = tile.serialize("tile");
-                Log::debug() << "Priority tile request: " << req << Log::end;
+                Log::debug() << "Tile request: " << req << Log::end;
                 _childProcess->getWebSocket()->sendFrame(req.data(), req.size());
-
-                // No need to process with the group anymore.
-                continue;
             }
         }
-
-        const auto tilePosY = tile.getTilePosY();
-        auto it = rows.lower_bound(tilePosY);
-        if (it != rows.end())
-        {
-            it->second.emplace_back(tile);
-        }
-        else
-        {
-            rows.emplace_hint(it, tilePosY, std::vector<TileDesc>({ tile }));
-        }
-    }
-
-    if (rows.empty())
-    {
-        // Done.
-        return;
-    }
-
-    auto& tiles = tileCombined.getTiles();
-    for (auto& row : rows)
-    {
-        tiles = row.second;
-        const auto tileMsg = tileCombined.serialize();
-        Log::debug() << "TileCombined residual request for " << tileMsg << Log::end;
-
-        // Forward to child to render.
-        const std::string request = "tilecombine " + tileMsg;
-        _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
     }
 }
 
