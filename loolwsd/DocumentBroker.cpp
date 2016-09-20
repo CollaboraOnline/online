@@ -112,7 +112,6 @@ DocumentBroker::DocumentBroker() :
     _cursorHeight(0),
     _isLoaded(false),
     _isModified(false),
-    _isEditLockHeld(false),
     _tileVersion(0)
 {
     Log::info("Empty DocumentBroker (marked to destroy) created.");
@@ -136,7 +135,6 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _cursorHeight(0),
     _isLoaded(false),
     _isModified(false),
-    _isEditLockHeld(false),
     _tileVersion(0)
 {
     assert(!_docKey.empty());
@@ -381,18 +379,6 @@ std::string DocumentBroker::getJailRoot() const
     return Poco::Path(_childRoot, _jailId).toString();
 }
 
-void DocumentBroker::takeEditLock(const std::string& id)
-{
-    Log::debug("Session " + id + " taking the editing lock.");
-    std::lock_guard<std::mutex> lock(_mutex);
-
-    // Forward to all children.
-    for (auto& it: _sessions)
-    {
-        it.second->setEditLock();
-    }
-}
-
 size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
 {
     const auto id = session->getId();
@@ -413,11 +399,6 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     if (session->isReadOnly())
     {
         Log::debug("Adding a readonly session [" + id + "]");
-    }
-    else if (!_isEditLockHeld)
-    {
-        Log::debug("Giving editing lock to the first editable session [" + id + "].");
-        _isEditLockHeld = true;
     }
 
     // Below values are recalculated when startDestroy() is called (before destroying the
@@ -453,20 +434,6 @@ size_t DocumentBroker::removeSession(const std::string& id)
     if (it != _sessions.end())
     {
         _sessions.erase(it);
-
-        // pass the edit lock to first non-readonly session in map
-        bool editLockGiven = false;
-        for (auto& session: _sessions)
-        {
-            if (!session.second->isReadOnly())
-            {
-                session.second->setEditLock();
-                editLockGiven = true;
-                break;
-            }
-        }
-
-        _isEditLockHeld = editLockGiven;
     }
 
     return _sessions.size();

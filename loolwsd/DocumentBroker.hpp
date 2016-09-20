@@ -194,10 +194,6 @@ public:
 
     std::string getJailRoot() const;
 
-    /// Ignore input events from all web socket sessions
-    /// except this one
-    void takeEditLock(const std::string& id);
-
     /// Add a new session. Returns the new number of sessions.
     size_t addSession(std::shared_ptr<ClientSession>& session);
     /// Connect a prison session to its client peer.
@@ -264,7 +260,6 @@ private:
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;
-    std::atomic<bool> _isEditLockHeld;
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.

@@ -143,13 +143,6 @@ clientvisiblearea x=<x> y=<y> width=<width> height=<height>
 
     Invokes lok::Document::setClientVisibleArea().
 
-takeedit
-
-    Request for an edit lock. If successful, client will receive an 'editlock: 1'
-    message meaning editlock is granted.
-
-    See 'editlock:' message in server -> client.
-
 useractive
 
     Sent when the user regains focus or clicks within the active area to
@@ -209,17 +202,6 @@ downloadas: jail=<jail directory> dir=<a tmp dir> name=<name> port=<port>
 
     The client should then request http://server:port/jail/dir/name in order to download
     the document
-
-editlock: <1 or 0>
-
-    Informs the client of any change in ownership of edit lock. A value of '1'
-    means client can edit the document, and '0' means that client can only view
-    the document. This message always follows the 'status:' message after a
-    document is loaded, so that client has this information as soon as it loads
-    the document.
-
-    Note that only one client can have the editlock at a time and
-    others can only view.
 
 error: cmd=<command> kind=<kind> [code=<error_code>]
 <freeErrorText>

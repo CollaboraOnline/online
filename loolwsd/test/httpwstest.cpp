@@ -361,12 +361,6 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
                         // Might be too strict, consider something flexible instread.
                         CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408 viewid=0"), status);
                     }
-                    else if (msg.find("editlock") == 0)
-                    {
-                        // First session always gets the lock.
-                        CPPUNIT_ASSERT_EQUAL(std::string("editlock: 1"), msg);
-                        return false;
-                    }
 
                     return true;
                 });
@@ -439,8 +433,7 @@ void HTTPWSTest::testBadLoad()
 
                 // For some reason the server claims a client has the 'edit lock' even if no
                 // document has been successfully loaded
-                if (LOOLProtocol::getFirstToken(buffer, n) == "editlock:" ||
-                    LOOLProtocol::getFirstToken(buffer, n) == "statusindicator:")
+                if (LOOLProtocol::getFirstToken(buffer, n) == "statusindicator:")
                     continue;
 
                 CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
@@ -1019,7 +1012,6 @@ void HTTPWSTest::testInactiveClient()
                     CPPUNIT_ASSERT_MESSAGE("unexpected message: " + msg,
                                             token == "addview:" ||
                                             token == "cursorvisible:" ||
-                                            token == "editlock:" ||
                                             token == "graphicselection:" ||
                                             token == "graphicviewselection:" ||
                                             token == "invalidatecursor:" ||

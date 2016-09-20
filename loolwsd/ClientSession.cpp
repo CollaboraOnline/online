@@ -93,12 +93,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return true;
     }
 
-    if (!isReadOnly() && tokens[0] == "takeedit")
-    {
-        _docBroker->takeEditLock(getId());
-        return true;
-    }
-    else if (tokens[0] == "load")
+    if (tokens[0] == "load")
     {
         if (_docURL != "")
         {
@@ -255,14 +250,6 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
 bool ClientSession::getStatus(const char *buffer, int length)
 {
     return forwardToPeer(_peer, buffer, length, false);
-}
-
-bool ClientSession::setEditLock()
-{
-    // Update the sate and forward to child.
-    const std::string msg = "editlock: 1";
-    Log::debug("Forwarding [" + msg + "] to set editlock to 1.");
-    return forwardToPeer(_peer, msg.data(), msg.size(), false);
 }
 
 bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
