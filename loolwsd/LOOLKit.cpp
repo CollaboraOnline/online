@@ -1002,8 +1002,8 @@ private:
         const auto viewId = session.getViewId();
         _loKitDocument->setView(viewId);
         _loKitDocument->registerCallback(nullptr, nullptr);
-        _viewIdToCallbackDescr.erase(viewId);
         _loKitDocument->destroyView(viewId);
+        _viewIdToCallbackDescr.erase(viewId);
         Log::debug("Destroyed view " + std::to_string(viewId));
     }
 
