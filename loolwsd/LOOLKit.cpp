@@ -71,6 +71,7 @@ typedef int (LokHookPreInit)  (const char *install_path, const char *user_profil
 using Poco::AutoPtr;
 using Poco::Exception;
 using Poco::File;
+using Poco::JSON::Array;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
 using Poco::Net::HTTPClientSession;
@@ -981,8 +982,6 @@ private:
         const auto& sessionId = session.getId();
         Log::info("Unloading [" + sessionId + "].");
 
-        // Broadcast the demise and removal of session.
-        notifyOtherSessions(sessionId, "remview: " + std::to_string(session.getViewId()));
         _tileQueue->removeCursorPosition(session.getViewId());
 
         if (_loKitDocument == nullptr)
@@ -1005,60 +1004,71 @@ private:
         _loKitDocument->destroyView(viewId);
         _viewIdToCallbackDescr.erase(viewId);
         Log::debug("Destroyed view " + std::to_string(viewId));
+        lock.unlock();
+
+        // Broadcast updated view info
+        notifyViewInfo();
     }
 
-    /// Notify all currently active sessions about session with given 'sessionId'
-    void notifyOtherSessions(const std::string& sessionId, const std::string& message) const override
+    /// Notify all views of viewId and their associated usernames
+    void notifyViewInfo() override
     {
-        std::unique_lock<std::mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lockLokDoc(_loKitDocument->getLock());
 
-        for (auto& it: _connections)
+        // Get the list of view ids from the core
+        int viewCount = _loKitDocument->getViewsCount();
+        std::vector<int> viewIds(viewCount);
+        _loKitDocument->getViewIds(viewIds.data(), viewCount);
+        lockLokDoc.unlock();
+
+        std::unique_lock<std::mutex> lock(_mutex);
+        // Store the list of viewid, username mapping in a map
+        std::map<int, std::string> viewInfoMap;
+        for (auto& connectionIt : _connections)
         {
-            if (it.second->isRunning() && it.second->getSessionId() != sessionId)
+            if (connectionIt.second->isRunning())
             {
-                auto session = it.second->getSession();
-                if (session && session->isActive())
-                {
-                    session->sendTextFrame(message);
-                }
+                const auto session = connectionIt.second->getSession();
+                const auto viewId = session->getViewId();
+                viewInfoMap[viewId] = session->getViewUserName();
             }
         }
-    }
 
-    /// Notify session (with given 'sessionId'), if active, of other existing views
-    void notifyCurrentViewOfOtherViews(const std::string& sessionId) const override
-    {
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        const auto& it = _connections.find(Util::decodeId(sessionId));
-        if (it == _connections.end() || !it->second)
+        // Double check if list of viewids from core and our list matches,
+        // and create an array of JSON objects containing id and username
+        Array::Ptr viewInfoArray = new Array();
+        int arrayIndex = 0;
+        for (auto& viewId: viewIds)
         {
-            Log::error("Cannot find current session [" + sessionId + "].");
-            return;
+            Object::Ptr viewInfoObj = new Object();
+            viewInfoObj->set("id", viewId);
+
+            if (viewInfoMap.find(viewId) == viewInfoMap.end())
+            {
+                Log::error("No username found for viewId [" + std::to_string(viewId) + "].");
+                viewInfoObj->set("username", "Unknown");
+            }
+            else
+            {
+                viewInfoObj->set("username", viewInfoMap[viewId]);
+            }
+
+            viewInfoArray->set(arrayIndex++, viewInfoObj);
         }
 
-        auto currentSession = it->second->getSession();
-        if (!currentSession->isActive())
-        {
-            return;
-        }
+        std::ostringstream ossViewInfo;
+        viewInfoArray->stringify(ossViewInfo);
 
+        // Broadcast updated viewinfo to all _active_ connections
         for (auto& connectionIt: _connections)
         {
-            if (connectionIt.second->isRunning() && connectionIt.second->getSessionId() != sessionId)
+            if (connectionIt.second->isRunning())
             {
                 auto session = connectionIt.second->getSession();
-                const auto viewId = session->getViewId();
-                const auto viewUserName = session->getViewUserName();
-
-                // Create a message object
-                Object::Ptr viewInfoObj = new Object();
-                viewInfoObj->set("id", viewId);
-                viewInfoObj->set("username", viewUserName);
-                std::ostringstream ossViewInfo;
-                viewInfoObj->stringify(ossViewInfo);
-
-                currentSession->sendTextFrame("addview: " + ossViewInfo.str());
+                if (session->isActive())
+                {
+                    session->sendTextFrame("viewinfo: " + ossViewInfo.str());
+                }
             }
         }
     }

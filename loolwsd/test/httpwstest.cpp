@@ -1010,22 +1010,20 @@ void HTTPWSTest::testInactiveClient()
                 {
                     const auto token = LOOLProtocol::getFirstToken(msg);
                     CPPUNIT_ASSERT_MESSAGE("unexpected message: " + msg,
-                                            token == "addview:" ||
                                             token == "cursorvisible:" ||
                                             token == "graphicselection:" ||
                                             token == "graphicviewselection:" ||
                                             token == "invalidatecursor:" ||
                                             token == "invalidatetiles:" ||
                                             token == "invalidateviewcursor:" ||
-                                            token == "remallviews:" ||
-                                            token == "remview:" ||
                                             token == "setpart:" ||
                                             token == "statechanged:" ||
                                             token == "textselection:" ||
                                             token == "textselectionend:" ||
                                             token == "textselectionstart:" ||
                                             token == "textviewselection:" ||
-                                            token == "viewcursorvisible:");
+                                            token == "viewcursorvisible:" ||
+                                            token == "viewinfo:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");
