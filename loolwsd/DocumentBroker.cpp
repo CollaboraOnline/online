@@ -609,13 +609,9 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            // If the tile right under the cursor, give it priority.
-            const bool priority = tile.intersectsWithRect(
-                _cursorPosX, _cursorPosY,
-                _cursorWidth, _cursorHeight);
             tileCache().saveTileAndNotify(
                 tile, buffer + firstLine.size() + 1,
-                length - firstLine.size() - 1, priority);
+                length - firstLine.size() - 1);
         }
         else
         {
@@ -648,7 +644,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
         {
             for (const auto& tile : tileCombined.getTiles())
             {
-                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize(), false);
+                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
                 offset += tile.getImgSize();
             }
         }
