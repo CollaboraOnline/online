@@ -55,7 +55,7 @@ if (title === '') {
     title = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
 }
 
-var permission = getParameterByName('permission');
+var permission = getParameterByName('permission') || 'edit';
 var timestamp = getParameterByName('timestamp');
 // Shows close button if non-zero value provided
 var closebutton = getParameterByName('closebutton');
