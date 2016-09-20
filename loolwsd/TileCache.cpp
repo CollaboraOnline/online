@@ -423,26 +423,30 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
 // FIXME: to be further simplified when we centralize tile messages.
 int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
 {
+    assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
+
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
 
+    std::ostringstream oss;
+    oss << '(' << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ')';
+    const auto name = oss.str();
+
     if (tileBeingRendered)
     {
-        Log::debug() << "Subscribing to tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
-                     << tile.getTilePosY() << ") which has "
-                     << tileBeingRendered->_subscribers.size()
-                     << " subscribers already. Adding one more." << Log::end;
-        assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
-
         for (const auto &s : tileBeingRendered->_subscribers)
         {
             if (s.lock().get() == subscriber.get())
             {
-                Log::debug("Redundant request to re-subscribe on a tile");
+                Log::debug("Redundant request to subscribe on tile " + name);
                 return 0;
             }
         }
+
+        Log::debug() << "Subscribing to tile " << name << " which has "
+                     << tileBeingRendered->_subscribers.size()
+                     << " subscribers already. Adding one more." << Log::end;
         tileBeingRendered->_subscribers.push_back(subscriber);
 
         const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
@@ -456,8 +460,7 @@ int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_
     }
     else
     {
-        Log::debug() << "Subscribing to tile (" << tile.getPart() << ',' << tile.getTilePosX() << ','
-                     << tile.getTilePosY() << ") which has no subscribers. Subscribing for ver: "
+        Log::debug() << "Subscribing to tile " << name << " which has no subscribers. Subscribing for ver: "
                      << tile.getVersion() << "." << Log::end;
 
         const std::string cachedName = cacheFileName(tile);
