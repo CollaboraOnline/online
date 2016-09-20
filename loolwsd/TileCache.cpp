@@ -477,11 +477,13 @@ int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_
 
 std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscriber)
 {
+    assert(subscriber && "cancelTiles expects valid subscriber");
+    Log::trace("Cancelling tiles for " + subscriber->getName());
+
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
     const auto sub = subscriber.get();
 
-    Log::trace("Cancelling tiles for " + subscriber->getName());
     std::ostringstream oss;
 
     for (auto it = _tilesBeingRendered.begin(); it != _tilesBeingRendered.end(); )
