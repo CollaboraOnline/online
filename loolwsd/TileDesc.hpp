@@ -81,8 +81,13 @@ public:
             << " tileposy=" << _tilePosY
             << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight
-            << " ver=" << _ver
-            << " imgsize=" << _imgSize;
+            << " ver=" << _ver;
+
+        if (_imgSize > 0)
+        {
+            oss << " imgsize=" << _imgSize;
+        }
+
         if (_id >= 0)
         {
             oss << " id=" << _id;
