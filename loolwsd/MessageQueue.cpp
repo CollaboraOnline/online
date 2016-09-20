@@ -11,8 +11,12 @@
 
 #include <algorithm>
 
+#include <Poco/StringTokenizer.h>
+
 #include <TileDesc.hpp>
 #include <Log.hpp>
+
+using Poco::StringTokenizer;
 
 MessageQueue::~MessageQueue()
 {
@@ -102,6 +106,35 @@ void TileQueue::put_impl(const Payload& value)
 {
     const auto msg = std::string(value.data(), value.size());
     Log::trace() << "Putting [" << msg << "]" << Log::end;
+
+    if (msg.compare(0, 11, "canceltiles") == 0)
+    {
+        Log::trace("Processing " + msg);
+        Log::trace() << "Before canceltiles have " << _queue.size() << " in queue." << Log::end;
+        const auto seqs = msg.substr(12);
+        StringTokenizer tokens(seqs, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        _queue.erase(std::remove_if(_queue.begin(), _queue.end(),
+                [&tokens](const Payload& v)
+                {
+                    const std::string s(v.data(), v.size());
+                    for (size_t i = 0; i < tokens.count(); ++i)
+                    {
+                        if (s.find("ver=" + tokens[i]) != std::string::npos)
+                        {
+                            Log::trace("Matched " + tokens[i] + ", Removing [" + s + "]");
+                            return true;
+                        }
+                    }
+
+                    return false;
+
+                }), _queue.end());
+
+        // Don't push canceltiles into the queue.
+        Log::trace() << "After canceltiles have " << _queue.size() << " in queue." << Log::end;
+        return;
+    }
+
     if (!_queue.empty())
     {
         if (msg.compare(0, 4, "tile") == 0 || msg.compare(0, 10, "tilecombine") == 0)
