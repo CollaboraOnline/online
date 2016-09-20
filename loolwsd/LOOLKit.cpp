@@ -1547,7 +1547,7 @@ void lokit_main(const std::string& childRoot,
                             Log::debug("CreateSession failed.");
                         }
                     }
-                    else if (tokens[0] == "tile")
+                    else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles")
                     {
                         if (document)
                         {
@@ -1555,18 +1555,7 @@ void lokit_main(const std::string& childRoot,
                         }
                         else
                         {
-                            Log::warn("No document while processing tile request.");
-                        }
-                    }
-                    else if (tokens[0] == "tilecombine")
-                    {
-                        if (document)
-                        {
-                            queue->put(message);
-                        }
-                        else
-                        {
-                            Log::warn("No document while processing tilecombine request.");
+                            Log::warn("No document while processing " + tokens[0] + " request.");
                         }
                     }
                     else if (document && document->canDiscard())
@@ -1576,7 +1565,7 @@ void lokit_main(const std::string& childRoot,
                     }
                     else
                     {
-                        Log::info("Bad or unknown token [" + tokens[0] + "]");
+                        Log::error("Bad or unknown token [" + tokens[0] + "]");
                     }
 
                     return true;
