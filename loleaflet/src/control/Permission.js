@@ -3,6 +3,7 @@
  */
 L.Map.include({
 	setPermission: function (perm) {
+		this._oldPermission = this._permission;
 		this._permission = perm;
 		if (perm === 'edit') {
 			this._socket.sendMessage('requestloksession');
