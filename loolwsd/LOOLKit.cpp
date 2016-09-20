@@ -1000,9 +1000,9 @@ private:
         std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
 
         const auto viewId = session.getViewId();
-        _viewIdToCallbackDescr.erase(viewId);
         _loKitDocument->setView(viewId);
         _loKitDocument->registerCallback(nullptr, nullptr);
+        _viewIdToCallbackDescr.erase(viewId);
         _loKitDocument->destroyView(viewId);
         Log::debug("Destroyed view " + std::to_string(viewId));
     }
