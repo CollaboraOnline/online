@@ -491,13 +491,11 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
                 // No other subscriber, remove it from the render queue.
                 oss << it->second->getVersion() << ',';
                 it = _tilesBeingRendered.erase(it);
+                continue;
             }
         }
 
-        if (!subscribers.empty())
-        {
-            ++it;
-        }
+        ++it;
     }
 
     const auto canceltiles = oss.str();
