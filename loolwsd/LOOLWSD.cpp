@@ -1403,7 +1403,9 @@ void LOOLWSD::initialize(Application& self)
     setenv("LOOL_LOGLEVEL", logLevel.c_str(), true);
     const auto withColor = !std::getenv("LOOL_NO_LOGCOLOR") && getConfigValue<bool>(conf, "logging.color", true);
     if (withColor)
+    {
         setenv("LOOL_LOGCOLOR", "1", true);
+    }
 
     const auto logToFile = getConfigValue<bool>(conf, "logging.file[@enable]", false);
     std::map<std::string, std::string> logProperties;
@@ -1419,6 +1421,17 @@ void LOOLWSD::initialize(Application& self)
         else if (!config().has(confPath))
         {
             break;
+        }
+    }
+
+    // Setup the logfile envar for the kit processes.
+    if (logToFile)
+    {
+        setenv("LOOL_LOGFILE", "1", true);
+        const auto it = logProperties.find("path");
+        if (it != logProperties.end())
+        {
+            setenv("LOOL_LOGFILENAME", it->second.c_str(), true);
         }
     }
 
