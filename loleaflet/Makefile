@@ -21,7 +21,16 @@ build:
 	jake bundle[,$(DEBUG),$(MINIFY)]
 	jake bundle[admin,$(DEBUG),$(MINIFY)]
 
-all: build
+.PHONY: build-l10n
+build-l10n:
+	mkdir -p dist/l10n/styles
+
+	util/po2json.py --quiet po/*.po
+	mv po/*.json dist/l10n/
+	util/po2json.py --quiet po/styles/*.po
+	mv po/styles/*.json dist/l10n/styles/
+
+all: build build-l10n
 
 .PHONY: dist
 dist: MINIFY=true
@@ -29,11 +38,6 @@ dist: all
 	rm -rf loleaflet-$(VERSION)
 	mkdir loleaflet-$(VERSION)
 	cp -ar dist loleaflet-$(VERSION)
-	util/po2json.py --quiet po/*.po
-	mv po/*.json loleaflet-$(VERSION)/dist/l10n
-	util/po2json.py --quiet po/styles/*.po
-	mkdir -p loleaflet-$(VERSION)/dist/l10n/styles/
-	mv po/styles/*.json loleaflet-$(VERSION)/dist/l10n/styles/
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
 	rm -rf loleaflet-$(VERSION)
 
