@@ -386,6 +386,11 @@ L.Map.Keyboard = L.Handler.extend({
 					this._map._socket.sendMessage('uno .uno:InsertEndnote');
 					return true;
 				}
+			} else if (e.originalEvent.altKey) {
+				switch (e.originalEvent.keyCode) {
+				case 68: // Ctrl + Shift + Alt + d for tile debugging mode
+					this._map._docLayer._onMessage('tiledebuggingmode:', null);
+				}
 			}
 
 			return false;
