@@ -53,6 +53,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSimpleCombine);
     CPPUNIT_TEST(testPerformance);
     CPPUNIT_TEST(testCancelTiles);
+    CPPUNIT_TEST(testCancelTilesMultiView);
     CPPUNIT_TEST(testUnresponsiveClient);
     CPPUNIT_TEST(testImpressTiles);
     CPPUNIT_TEST(testClientPartImpress);
@@ -72,6 +73,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testSimpleCombine();
     void testPerformance();
     void testCancelTiles();
+    void testCancelTilesMultiView();
     void testUnresponsiveClient();
     void testImpressTiles();
     void testClientPartImpress();
@@ -238,13 +240,35 @@ void TileCacheTests::testPerformance()
 void TileCacheTests::testCancelTiles()
 {
     const auto testName = "cancelTiles ";
-    auto socket = *loadDocAndGetSocket("load12.ods", _uri, testName);
+    auto socket = *loadDocAndGetSocket("setclientpart.ods", _uri, testName);
 
     // Request a huge tile, and cancel immediately.
     sendTextFrame(socket, "tilecombine part=0 width=2560 height=2560 tileposx=0 tileposy=0 tilewidth=38400 tileheight=38400");
     sendTextFrame(socket, "canceltiles");
 
     assertNotInResponse(socket, "tile:", testName);
+}
+
+void TileCacheTests::testCancelTilesMultiView()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL);
+
+    auto socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
+    auto socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
+
+    sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
+    sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
+
+    sendTextFrame(socket1, "canceltiles");
+
+    for (auto i = 0; i < 4; ++i)
+    {
+        getTileMessage(*socket2, "cancelTilesMultiView-2 ");
+    }
+
+    assertNotInResponse(socket1, "tile:", "cancelTilesMultiView-1 ");
+    assertNotInResponse(socket2, "tile:", "cancelTilesMultiView-2 ");
 }
 
 void TileCacheTests::testUnresponsiveClient()
