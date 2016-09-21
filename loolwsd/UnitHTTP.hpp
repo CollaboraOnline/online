@@ -72,8 +72,10 @@ public:
     virtual bool expectContinue() const override
         { return false; }
 #endif
+#if POCO_VERSION >= 0x02000000
     virtual bool secure() const override
         { return true; }
+#endif
 	virtual const SocketAddress& clientAddress() const override
         { return _clientAddress; }
 	virtual const SocketAddress& serverAddress() const override
