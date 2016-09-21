@@ -510,14 +510,12 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
         return;
     }
 
-    if (tileCache().subscribeToTileRendering(tile, session) > 0)
-    {
-        Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
+    tileCache().subscribeToTileRendering(tile, session);
 
-        // Forward to child to render.
-        const std::string request = "tile " + tile.serialize();
-        _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
-    }
+    // Forward to child to render.
+    Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
+    const std::string request = "tile " + tile.serialize();
+    _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
 }
 
 void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
