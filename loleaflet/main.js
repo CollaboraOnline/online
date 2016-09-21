@@ -61,6 +61,8 @@ var timestamp = getParameterByName('timestamp');
 var closebutton = getParameterByName('closebutton');
 // Shows revision history file menu option
 var revHistoryEnabled = getParameterByName('revisionhistory');
+// Loleaflet Debug mode
+var debugMode = getParameterByName('debug');
 if (wopiSrc === '' && filePath === '') {
     vex.dialog.alert(errorMessages.wrongwopisrc);
 }
@@ -89,7 +91,8 @@ var map = L.map('map', {
     docParams: docParams,
     permission: permission,
     timestamp: timestamp,
-    documentContainer: 'document-container'
+    documentContainer: 'document-container',
+    debug: debugMode
 });
 // toolbar.js (loaded in <script> tag accesses map as global variable,
 // so expose it

@@ -12,12 +12,6 @@ if (typeof String.prototype.startsWith !== 'function') {
 	};
 }
 
-function getParameterByName(name) {
-	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-	var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'), results = regex.exec(location.search);
-	return results === null ? '' : results[1].replace(/\+/g, ' ');
-}
-
 L.Compatibility = {
 	clipboardGet: function (event) {
 		var text = null;
@@ -152,7 +146,7 @@ L.TileLayer = L.GridLayer.extend({
 		map.addLayer(this._viewSelectionsGroup);
 		this._viewSelections = {};
 
-		this._debug = (getParameterByName('debug') == '1');
+		this._debug = map.options.debug;
 		if (this._debug) {
 			this._debugInfo = new L.LayerGroup();
 			map.addLayer(this._debugInfo);
