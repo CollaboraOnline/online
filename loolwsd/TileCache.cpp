@@ -414,7 +414,7 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
-int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
+void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
 {
     assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
 
@@ -433,7 +433,7 @@ int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_
             if (s.lock().get() == subscriber.get())
             {
                 Log::debug("Redundant request to subscribe on tile " + name);
-                return 0;
+                tileBeingRendered->setVersion(tile.getVersion());
             }
         }
 
@@ -446,10 +446,8 @@ int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_
         if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
         {
             // Tile painting has stalled. Reissue.
-            return tileBeingRendered->getVersion();
+            tileBeingRendered->setVersion(tile.getVersion());
         }
-
-        return 0;
     }
     else
     {
@@ -463,8 +461,6 @@ int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_
         tileBeingRendered = std::make_shared<TileBeingRendered>(cachedName, tile);
         tileBeingRendered->_subscribers.push_back(subscriber);
         _tilesBeingRendered[cachedName] = tileBeingRendered;
-
-        return tileBeingRendered->getVersion();
     }
 }
 

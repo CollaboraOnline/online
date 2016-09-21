@@ -40,7 +40,7 @@ public:
 
     /// Subscribes if no subscription exists and returns the version number.
     /// Otherwise returns 0 to signify a subscription exists.
-    int subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber);
+    void subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber);
 
     /// Cancels all tile requests by the given subscriber.
     std::string cancelTiles(const std::shared_ptr<ClientSession> &subscriber);
