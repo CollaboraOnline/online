@@ -309,6 +309,7 @@ L.Socket = L.Class.extend({
 			this._map._active = false;
 		}
 
+		this._docLayer.removeAllViews();
 		if (this.fail) {
 			this.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
