@@ -195,7 +195,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
         }
 
         // Remove subscriptions.
-        if (tileBeingRendered->getVersion() == tile.getVersion())
+        if (tileBeingRendered->getVersion() <= tile.getVersion())
         {
             Log::debug() << "STATISTICS: tile " << tile.getVersion() << " internal roundtrip "
                          << tileBeingRendered->getElapsedTimeMs() << " ms." << Log::end;
