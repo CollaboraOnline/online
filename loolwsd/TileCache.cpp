@@ -78,15 +78,18 @@ TileCache::~TileCache()
 struct TileCache::TileBeingRendered
 {
     std::vector<std::weak_ptr<ClientSession>> _subscribers;
-    TileBeingRendered(const std::string& cachedName, const int version)
+
+    TileBeingRendered(const std::string& cachedName, const TileDesc& tile)
      : _startTime(std::chrono::steady_clock::now()),
-       _cachedName(cachedName),
-       _ver(version)
+       _tile(tile),
+       _cachedName(cachedName)
     {
     }
 
+    const TileDesc& getTile() const { return _tile; }
     const std::string& getCacheName() const { return _cachedName; }
-    int getVersion() const { return _ver; }
+    int getVersion() const { return _tile.getVersion(); }
+    void setVersion(int version) { _tile.setVersion(version); }
 
     std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
     double getElapsedTimeMs() const { return std::chrono::duration_cast<std::chrono::milliseconds>
@@ -98,8 +101,8 @@ struct TileCache::TileBeingRendered
 
 private:
     std::chrono::steady_clock::time_point _startTime;
+    TileDesc _tile;
     std::string _cachedName;
-    int _ver;
 };
 
 std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(const TileDesc& tileDesc)
@@ -457,7 +460,7 @@ int TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_
 
         assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
 
-        tileBeingRendered = std::make_shared<TileBeingRendered>(cachedName, tile.getVersion());
+        tileBeingRendered = std::make_shared<TileBeingRendered>(cachedName, tile);
         tileBeingRendered->_subscribers.push_back(subscriber);
         _tilesBeingRendered[cachedName] = tileBeingRendered;
 
