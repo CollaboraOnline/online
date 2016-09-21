@@ -216,7 +216,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "invalidatetiles:")
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
-            _docBroker->tileCache().invalidateTiles(firstLine);
+            _docBroker->invalidateTiles(firstLine);
         }
         else if (tokens[0] == "invalidatecursor:")
         {

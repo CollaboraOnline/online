@@ -463,6 +463,17 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     return true;
 }
 
+void DocumentBroker::invalidateTiles(const std::string& tiles)
+{
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    // Remove from cache.
+    _tileCache->invalidateTiles(tiles);
+
+    //TODO: Re-issue the tiles again to avoid races.
+
+}
+
 void DocumentBroker::handleTileRequest(TileDesc& tile,
                                        const std::shared_ptr<ClientSession>& session)
 {
