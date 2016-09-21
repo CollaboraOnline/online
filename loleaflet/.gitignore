@@ -22,3 +22,6 @@ coverage/
 /load_test_out
 /spec/data/load_test
 *.tar.gz
+dist/l10n/ui-*json
+dist/l10n/help-*.json
+dist/l10n/styles/
