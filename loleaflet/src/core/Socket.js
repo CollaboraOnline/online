@@ -305,11 +305,13 @@ L.Socket = L.Class.extend({
 
 	_onSocketClose: function () {
 		this.hideBusy();
-		if (this._map) {
-			this._map._active = false;
+		if (this) {
+			this._active = false;
 		}
 
-		this._docLayer.removeAllViews();
+		if (this._docLayer) {
+			this._docLayer.removeAllViews();
+		}
 		if (this.fail) {
 			this.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
