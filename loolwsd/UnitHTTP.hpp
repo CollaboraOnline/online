@@ -72,7 +72,8 @@ public:
     virtual bool expectContinue() const override
         { return false; }
 #endif
-    virtual bool secure() const { return true; }
+    virtual bool secure() const override
+        { return true; }
 	virtual const SocketAddress& clientAddress() const override
         { return _clientAddress; }
 	virtual const SocketAddress& serverAddress() const override
