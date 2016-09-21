@@ -895,7 +895,9 @@ map.on('commandstatechanged', function (e) {
 			color = '#' + '0'.repeat(6 - color.length) + color;
 		}
 		div = L.DomUtil.get('fontcolorindicator');
-		L.DomUtil.setStyle(div, 'background', color);
+		if (div) {
+			L.DomUtil.setStyle(div, 'background', color);
+		}
 	}
 	else if (commandName === '.uno:BackColor' || commandName === '.uno:BackgroundColor' || commandName === '.uno:CharBackColor') {
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
@@ -908,7 +910,9 @@ map.on('commandstatechanged', function (e) {
 			color = '#' + '0'.repeat(6 - color.length) + color;
 		}
 		div = L.DomUtil.get('backcolorindicator');
-		L.DomUtil.setStyle(div, 'background', color);
+		if (div) {
+			L.DomUtil.setStyle(div, 'background', color);
+		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		var modifiedStatus = e.state === 'true';
