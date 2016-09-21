@@ -80,10 +80,10 @@ private:
     void removeFile(const std::string& fileName);
 
     std::string cacheFileName(const TileDesc& tile);
-    bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
+    bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight) const;
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
-    bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height);
+    bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height) const;
 
     /// Load the timestamp from modtime.txt.
     Poco::Timestamp getLastModified();
@@ -94,7 +94,7 @@ private:
 
     std::mutex _cacheMutex;
 
-    std::mutex _tilesBeingRenderedMutex;
+    mutable std::mutex _tilesBeingRenderedMutex;
 
     std::map<std::string, std::shared_ptr<TileBeingRendered>> _tilesBeingRendered;
 };
