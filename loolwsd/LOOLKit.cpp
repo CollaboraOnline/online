@@ -666,13 +666,16 @@ public:
             return;
         }
 
+        const double area = tile.getWidth() * tile.getHeight();
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tile.getPart(),
                                       tile.getWidth(), tile.getHeight(),
                                       tile.getTilePosX(), tile.getTilePosY(),
                                       tile.getTileWidth(), tile.getTileHeight());
+        const auto elapsed = timestamp.elapsed();
         Log::trace() << "paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY()
-                     << ") " << "ver: " << tile.getVersion() << " rendered in " << (timestamp.elapsed()/1000.) << " ms" << Log::end;
+                     << ") " << "ver: " << tile.getVersion() << " rendered in " << (elapsed/1000.)
+                     << " ms (" << area / elapsed << " MP/s)." << Log::end;
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         if (!png::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
@@ -741,14 +744,16 @@ public:
             return;
         }
 
+        const double area = pixmapWidth * pixmapHeight;
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
+        const auto elapsed = timestamp.elapsed();
         Log::debug() << "paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), ("
                      << renderArea.getWidth() << ", " << renderArea.getHeight() << ") ver: " << tileCombined.getVersion()
-                     << " rendered in " << (timestamp.elapsed()/1000.) <<  " ms." << Log::end;
+                     << " rendered in " << (elapsed/1000.) << " ms (" << area / elapsed << " MP/s)." << Log::end;
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         std::vector<char> output;

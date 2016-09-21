@@ -330,6 +330,7 @@ void TileCache::invalidateTiles(const std::string& tiles)
     }
     else if (tokens.count() != 6)
     {
+        Log::error("Unexpected invalidatetiles request: " + tiles);
         return;
     }
     else
