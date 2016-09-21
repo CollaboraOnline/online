@@ -728,6 +728,12 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.removeView(viewId);
 	},
 
+	removeAllViews: function() {
+		for (var viewInfoIdx in this._map._viewInfo) {
+			this._removeView(parseInt(viewInfoIdx));
+		}
+	},
+
 	_onViewInfoMsg: function(textMsg) {
 		textMsg = textMsg.substring('viewinfo: '.length);
 		var viewInfo = JSON.parse(textMsg);
