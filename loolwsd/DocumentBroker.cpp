@@ -558,18 +558,13 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
         {
             // Not cached, needs rendering.
             tile.setVersion(++_tileVersion);
-            const auto ver = tileCache().subscribeToTileRendering(tile, session);
-            if (ver <= 0)
-            {
-                // Already rendering. Skip.
-                continue;
-            }
-            else
-            {
-                const auto req = tile.serialize("tile");
-                Log::debug() << "Tile request: " << req << Log::end;
-                _childProcess->getWebSocket()->sendFrame(req.data(), req.size());
-            }
+            tileCache().subscribeToTileRendering(tile, session);
+
+            // Forward to child to render.
+            Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
+            const auto req = tile.serialize("tile");
+            Log::debug() << "Tile request: " << req << Log::end;
+            _childProcess->getWebSocket()->sendFrame(req.data(), req.size());
         }
     }
 }
