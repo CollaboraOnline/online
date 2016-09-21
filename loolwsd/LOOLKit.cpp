@@ -1349,7 +1349,15 @@ void lokit_main(const std::string& childRoot,
                 bool queryVersion)
 {
     // Reinitialize logging when forked.
-    Log::initialize("kit", getenv("LOOL_LOGLEVEL"), getenv("LOOL_LOGCOLOR"));
+    const bool logToFile = getenv("LOOL_LOGFILE");
+    const auto logFilename = getenv("LOOL_LOGFILENAME");
+    std::map<std::string, std::string> logProperties;
+    if (logToFile && logFilename)
+    {
+        logProperties["path"] = std::string(logFilename);
+    }
+
+    Log::initialize("kit", getenv("LOOL_LOGLEVEL"), getenv("LOOL_LOGCOLOR"), logToFile, logProperties);
     Util::rng::reseed();
 
     assert(!childRoot.empty());
