@@ -146,10 +146,10 @@ void TileQueue::put_impl(const Payload& value)
                 auto& it = _queue[i];
                 const std::string old(it.data(), it.size());
                 const auto oldMsg = old.substr(0, old.find(" ver"));
-                Log::trace() << "TileQueue #" << i << ": " << oldMsg << Log::end;
+                Log::trace() << "TileQueue #" << i << ": " << old << Log::end;
                 if (newMsg == oldMsg)
                 {
-                    Log::debug() << "Replacing duplicate tile: " << oldMsg << " -> " << newMsg << Log::end;
+                    Log::debug() << "Replacing duplicate tile: " << old << " -> " << msg << Log::end;
                     _queue[i] = value;
 
                     if (priority(msg))
