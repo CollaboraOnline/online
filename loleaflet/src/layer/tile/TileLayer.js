@@ -1170,10 +1170,12 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._map._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
 				&& !this._isEmptyRectangle(this._visibleCursor)) {
 			if (!this._cursorMarker) {
-				this._cursorMarker = L.cursor(null, null, {blink: true});
+				this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())),
+					{blink: true});
 			}
-
-			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
+			else {
+				this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
+			}
 			this._map.addLayer(this._cursorMarker);
 		}
 		else if (this._cursorMarker) {
@@ -1204,14 +1206,15 @@ L.TileLayer = L.GridLayer.extend({
 					blink: false,
 					header: true, // we want a 'hat' to our view cursors (which will contain view user names)
 					headerTimeout: 3000, // hide after some interval
+					zIndex: viewId,
 					headerName: this._map.getViewName(viewId)
 				};
-
-				viewCursorMarker = L.cursor(null, null, viewCursorOptions);
+				viewCursorMarker = L.cursor(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), viewCursorOptions);
 				this._viewCursors[viewId].marker = viewCursorMarker;
 			}
-
-			viewCursorMarker.setLatLng(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
+			else {
+				viewCursorMarker.setLatLng(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
+			}
 			this._map.addLayer(viewCursorMarker);
 		}
 		else if (viewCursorMarker) {
