@@ -104,7 +104,7 @@ void sendTextFrame(const std::shared_ptr<Poco::Net::WebSocket>& socket, const st
 }
 
 inline
-bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bool isView = false)
+bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bool isView = true)
 {
     bool isLoaded = false;
     try
@@ -156,7 +156,7 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bo
 }
 
 inline
-bool isDocumentLoaded(std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& name = "", bool isView = false)
+bool isDocumentLoaded(std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& name = "", bool isView = true)
 {
     return isDocumentLoaded(*ws, name, isView);
 }
@@ -356,7 +356,7 @@ std::string assertResponseLine(T& ws, const std::string& prefix, const std::stri
 template <typename T>
 std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string name = "")
 {
-    const auto res = getResponseLine(ws, prefix, name, 3000);
+    const auto res = getResponseLine(ws, prefix, name, 2000);
     CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
     return res;
 }
@@ -395,7 +395,7 @@ connectLOKit(const Poco::URI& uri,
 }
 
 inline
-std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& name = "", bool isView = false)
+std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& name = "", bool isView = true)
 {
     try
     {
@@ -420,7 +420,7 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, 
 }
 
 inline
-std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& name = "", bool isView = false)
+std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& name = "", bool isView = true)
 {
     try
     {
