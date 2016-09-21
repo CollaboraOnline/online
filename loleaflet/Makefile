@@ -62,8 +62,6 @@ pot:
 l10n: pot
 	for i in po/ui-*.po; do pot2po --input=po/templates/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 	for i in po/help-*.po; do pot2po --input=po/templates/loleaflet-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
-	rm po/loleaflet-ui.pot
-	rm po/loleaflet-help.pot
 
 spec/data/load-test:
 	if [ ! -d spec/data/load_test ]; then \
