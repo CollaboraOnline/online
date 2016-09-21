@@ -202,6 +202,10 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
             _tilesBeingRendered.erase(cachedName);
         }
     }
+    else
+    {
+        Log::debug("No subscribers for: " + cachedName);
+    }
 }
 
 std::string TileCache::getTextFile(const std::string& fileName)
@@ -310,21 +314,6 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
                 Log::debug("Removing tile: " + tileIterator.path().toString());
                 Util::removeFile(tileIterator.path());
             }
-        }
-    }
-
-    // Forget this tile as it will have to be rendered again.
-    for (auto it = _tilesBeingRendered.begin(); it != _tilesBeingRendered.end(); )
-    {
-        const std::string cachedName = it->first;
-        if (intersectsTile(cachedName, part, x, y, width, height))
-        {
-            Log::debug("Removing subscriptions for: " + cachedName);
-            it = _tilesBeingRendered.erase(it);
-        }
-        else
-        {
-            ++it;
         }
     }
 }
