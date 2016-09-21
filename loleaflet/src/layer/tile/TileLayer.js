@@ -102,6 +102,9 @@ L.TileLayer = L.GridLayer.extend({
 		// View cell cursors with viewId to 'cursor info' mapping.
 		this._cellViewCursors = {};
 
+		// View selection of other views
+		this._viewSelections = {};
+
 		// Graphic view selection rectangles
 		this._graphicViewMarkers = {};
 
@@ -142,9 +145,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._getToolbarCommandsValues();
 		this._selections = new L.LayerGroup();
 		map.addLayer(this._selections);
-		this._viewSelectionsGroup = new L.LayerGroup();
-		map.addLayer(this._viewSelectionsGroup);
-		this._viewSelections = {};
+
+		// This layergroup contains all the layers corresponding to other's view
+		this._viewLayerGroup = new L.LayerGroup();
+		map.addLayer(this._viewLayerGroup);
 
 		this._debug = map.options.debug;
 		if (this._debug) {
@@ -672,10 +676,10 @@ L.TileLayer = L.GridLayer.extend({
 				this._cellViewCursors[viewId].marker = cellViewCursorsMarker;
 			}
 			cellViewCursorsMarker.setBounds(this._cellViewCursors[viewId].bounds);
-			this._map.addLayer(cellViewCursorsMarker);
+			this._viewLayerGroup.addLayer(cellViewCursorsMarker);
 		}
 		else if (cellViewCursorsMarker) {
-			this._map.removeLayer(cellViewCursorsMarker);
+			this._viewLayerGroup.removeLayer(cellViewCursorsMarker);
 		}
 	},
 
@@ -720,7 +724,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		// Remove selection, if any.
 		if (this._viewSelections[viewId] && this._viewSelections[viewId].selection) {
-			this._viewSelectionsGroup.removeLayer(this._viewSelections[viewId].selection);
+			this._viewLayerGroup.removeLayer(this._viewSelections[viewId].selection);
 		}
 
 		// Remove the view and update (to refresh as needed).
@@ -1209,10 +1213,10 @@ L.TileLayer = L.GridLayer.extend({
 			else {
 				viewCursorMarker.setLatLng(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			}
-			this._map.addLayer(viewCursorMarker);
+			this._viewLayerGroup.addLayer(viewCursorMarker);
 		}
 		else if (viewCursorMarker) {
-			this._map.removeLayer(viewCursorMarker);
+			this._viewLayerGroup.removeLayer(viewCursorMarker);
 		}
 	},
 
@@ -1227,7 +1231,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			// Reset previous selections
 			if (viewSelection) {
-				this._viewSelectionsGroup.removeLayer(viewSelection);
+				this._viewLayerGroup.removeLayer(viewSelection);
 			}
 
 			viewSelection = new L.Polygon(viewPolygons, {
@@ -1238,10 +1242,10 @@ L.TileLayer = L.GridLayer.extend({
 				opacity: 0.25
 			});
 			this._viewSelections[viewId].selection = viewSelection;
-			this._viewSelectionsGroup.addLayer(viewSelection);
+			this._viewLayerGroup.addLayer(viewSelection);
 		}
 		else if (viewSelection) {
-			this._viewSelectionsGroup.removeLayer(viewSelection);
+			this._viewLayerGroup.removeLayer(viewSelection);
 		}
 	},
 
@@ -1266,10 +1270,10 @@ L.TileLayer = L.GridLayer.extend({
 			else {
 				viewMarker.setBounds(viewBounds);
 			}
-			this._map.addLayer(viewMarker);
+			this._viewLayerGroup.addLayer(viewMarker);
 		}
 		else if (viewMarker) {
-			this._map.removeLayer(viewMarker);
+			this._viewLayerGroup.removeLayer(viewMarker);
 		}
 	},
 
