@@ -39,13 +39,13 @@ dist: all
 
 pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
+		admin.strings.js \
 		evol.colorpicker.strings.js \
 		unocommands.js \
 		dist/errormessages.js \
 		dist/toolbar/toolbar.js \
 		src/admin/AdminSocketBase.js \
 		src/admin/AdminSocketOverview.js \
-		src/admin/AdminStrings.js \
 		src/admin/Util.js \
 		src/control/Control.ColumnHeader.js \
 		src/control/Control.DocumentRepair.js \
