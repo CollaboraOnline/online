@@ -72,7 +72,7 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry)
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    Log::initialize("tst", "trace", true, false);
+    Log::initialize("tst", "trace", !std::getenv("LOOL_NO_LOGCOLOR"), false);
 
 
     CPPUNIT_NS::TestResult controller;
