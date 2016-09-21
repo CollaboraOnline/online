@@ -5,7 +5,8 @@
 L.Cursor = L.Layer.extend({
 
 	options: {
-		opacity: 1
+		opacity: 1,
+		zIndex: 1000
 	},
 
 	initialize: function (latlng, size, options) {
@@ -84,8 +85,7 @@ L.Cursor = L.Layer.extend({
 
 	_setPos: function (pos) {
 		L.DomUtil.setPosition(this._container, pos);
-
-		this._zIndex = pos.y + this.options.zIndexOffset;
+		this._container.style.zIndex = this.options.zIndex;
 	},
 
 	setOpacity: function (opacity) {
