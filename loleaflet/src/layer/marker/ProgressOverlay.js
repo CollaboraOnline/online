@@ -20,6 +20,7 @@ L.ProgressOverlay = L.Layer.extend({
 			this.update();
 		}
 
+		this._spinnerInterval = L.LOUtil.startSpinner(this._spinnerCanvas, this.options.spinnerSpeed);
 		this._map.on('moveend', this.update, this);
 	},
 
@@ -55,8 +56,6 @@ L.ProgressOverlay = L.Layer.extend({
 		L.DomUtil.setStyle(this._value, 'line-height', this._size.y + 'px');
 
 		this._container.style.width  = this._size.x + 'px';
-
-		this._spinnerInterval = L.LOUtil.startSpinner(this._spinnerCanvas, this.options.spinnerSpeed);
 
 		L.DomEvent
 			.disableClickPropagation(this._progress)
