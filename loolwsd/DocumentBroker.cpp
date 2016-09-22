@@ -229,7 +229,7 @@ bool DocumentBroker::save(bool success, const std::string& result)
     // notify the waiting thread, if any.
     if (!success && result == "unmodified")
     {
-        Log::debug() << "Save skipped as document was not modified";
+        Log::debug("Save skipped as document was not modified");
         _saveCV.notify_all();
         return true;
     }
