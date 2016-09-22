@@ -137,7 +137,6 @@ using Poco::ProcessHandle;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
-using Poco::Thread;
 using Poco::ThreadPool;
 using Poco::URI;
 using Poco::Util::Application;
