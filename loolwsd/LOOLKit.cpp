@@ -368,26 +368,6 @@ private:
     std::atomic<bool> _joined;
 };
 
-/// Worker callback notification object.
-/// Used to pass callback data to the worker
-/// thread to invoke sessions with the data.
-class CallbackNotification : public Notification
-{
-public:
-    typedef AutoPtr<CallbackNotification> Ptr;
-
-    CallbackNotification(const std::shared_ptr<ChildSession>& session, const int nType, const std::string& rPayload)
-      : _session(session),
-        _nType(nType),
-        _aPayload(rPayload)
-    {
-    }
-
-    const std::shared_ptr<ChildSession> _session;
-    const int _nType;
-    const std::string _aPayload;
-};
-
 /// A document container.
 /// Owns LOKitDocument instance and connections.
 /// Manages the lifetime of a document.
@@ -430,7 +410,6 @@ public:
         _docPasswordType(PasswordType::ToView),
         _stop(false),
         _isLoading(0),
-        _tilesThread(tilesThread, this),
         _clientViews(0)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId + "].");
@@ -446,11 +425,9 @@ public:
 
         // Wait for the callback worker to finish.
         _stop = true;
-        _callbackQueue.wakeUpAll();
-        _callbackThread.join();
 
         _tileQueue->put("eof");
-        _tilesThread.join();
+        _callbackThread.join();
 
         // Flag all connections to stop.
         for (auto aIterator : _connections)
@@ -875,38 +852,7 @@ private:
             }
         }
 
-        // Forward to the same view only.
-        // Demultiplexing is done by Core.
-        // TODO: replace with a map to be faster.
-        bool isFound = false;
-        for (auto& it : pDescr->Doc->_connections)
-        {
-            auto session = it.second->getSession();
-            if (session && session->getViewId() == pDescr->ViewId)
-            {
-                if (it.second->isRunning())
-                {
-                    isFound = true;
-                    auto pNotif = new CallbackNotification(session, nType, payload);
-                    pDescr->Doc->_callbackQueue.enqueueNotification(pNotif);
-                }
-                else
-                {
-                    Log::error() << "Connection thread for session " << it.second->getSessionId() << " for view "
-                                 << pDescr->ViewId << " is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(nType)
-                                 << "] payload [" << payload << "]." << Log::end;
-                }
-
-                break;
-            }
-        }
-
-        if (!isFound)
-        {
-            Log::warn() << "Document::ViewCallback. The message [" << pDescr->ViewId
-                        << "] [" << LOKitHelper::kitCallbackTypeToString(nType)
-                        << "] [" << payload << "] is not sent to Master Session." << Log::end;
-        }
+        pDescr->Doc->_tileQueue->put("callback " + std::to_string(pDescr->ViewId) + " " + std::to_string(nType) + " " + payload);
     }
 
     static void DocumentCallback(const int nType, const char* pPayload, void* pData)
@@ -924,18 +870,8 @@ private:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        for (auto& it: _connections)
-        {
-            if (it.second->isRunning())
-            {
-                auto session = it.second->getSession();
-                if (session)
-                {
-                    auto pNotif = new CallbackNotification(session, nType, payload);
-                    _callbackQueue.enqueueNotification(pNotif);
-                }
-            }
-        }
+        // "-1" means broadcast
+        _tileQueue->put("callback -1 " + std::to_string(nType) + " " + payload);
     }
 
     /// Load a document (or view) and register callbacks.
@@ -1230,55 +1166,17 @@ private:
 
     void run() override
     {
-        Util::setThreadName("kit_callback");
-
-        Log::debug("Thread started.");
-
-        while (!_stop && !TerminationFlag)
-        {
-            Notification::Ptr aNotification(_callbackQueue.waitDequeueNotification());
-            if (!_stop && !TerminationFlag && aNotification)
-            {
-                CallbackNotification::Ptr aCallbackNotification = aNotification.cast<CallbackNotification>();
-                assert(aCallbackNotification);
-
-                const auto nType = aCallbackNotification->_nType;
-                try
-                {
-                    aCallbackNotification->_session->loKitCallback(nType, aCallbackNotification->_aPayload);
-                }
-                catch (const Exception& exc)
-                {
-                    Log::error() << "CallbackWorker::run: Exception while handling callback [" << LOKitHelper::kitCallbackTypeToString(nType) << "]: "
-                                 << exc.displayText()
-                                 << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                                 << Log::end;
-                }
-                catch (const std::exception& exc)
-                {
-                    Log::error("CallbackWorker::run: Exception while handling callback [" + LOKitHelper::kitCallbackTypeToString(nType) + "]: " + exc.what());
-                }
-            }
-            else
-                break;
-        }
-
-        Log::debug("Thread finished.");
-    }
-
-    static void tilesThread(Document* pThis)
-    {
-        Util::setThreadName("tile_renderer");
+        Util::setThreadName("lok_handler");
 
         Log::debug("Thread started.");
 
         try
         {
-            while (!pThis->_stop)
+            while (!_stop && !TerminationFlag)
             {
-                const auto input = pThis->_tileQueue->get();
+                const auto input = _tileQueue->get();
                 const std::string message(input.data(), input.size());
-                StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                StringTokenizer tokens(message, " ");
 
                 if (tokens[0] == "eof")
                 {
@@ -1288,11 +1186,50 @@ private:
 
                 if (tokens[0] == "tile")
                 {
-                    pThis->renderTile(tokens, pThis->_ws);
+                    renderTile(tokens, _ws);
                 }
                 else if (tokens[0] == "tilecombine")
                 {
-                    pThis->renderCombinedTiles(tokens, pThis->_ws);
+                    renderCombinedTiles(tokens, _ws);
+                }
+                else if (tokens[0] == "callback")
+                {
+                    int viewId = std::stoi(tokens[1]); // -1 means broadcast
+                    int type = std::stoi(tokens[2]);
+
+                    // payload is the rest of the message
+                    std::string payload(message.substr(tokens[0].length() + tokens[1].length() + tokens[2].length() + 3));
+
+                    // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
+                    // TODO: replace with a map to be faster.
+                    bool isFound = false;
+                    for (auto& it : _connections)
+                    {
+                        auto session = it.second->getSession();
+                        if (session && ((session->getViewId() == viewId) || (viewId == -1)))
+                        {
+                            if (it.second->isRunning())
+                            {
+                                isFound = true;
+                                session->loKitCallback(type, payload);
+                            }
+                            else
+                            {
+                                Log::error() << "Connection thread for session " << it.second->getSessionId() << " for view "
+                                             << viewId << " is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(type)
+                                             << "] payload [" << payload << "]." << Log::end;
+                            }
+
+                            break;
+                        }
+                    }
+
+                    if (!isFound)
+                    {
+                        Log::warn() << "Document::ViewCallback. The message [" << viewId
+                                    << "] [" << LOKitHelper::kitCallbackTypeToString(type)
+                                    << "] [" << payload << "] is not sent to Master Session." << Log::end;
+                    }
                 }
                 else
                 {
@@ -1336,8 +1273,6 @@ private:
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
     Poco::Thread _callbackThread;
-    std::thread _tilesThread;
-    Poco::NotificationQueue _callbackQueue;
     std::atomic_size_t _clientViews;
 };
 
