@@ -42,6 +42,8 @@ test/data/hello-world.odt
 *.exe
 cscope*
 *.orig
+loolwsd.log
+*.log.*.gz
 
 connect
 lokitclient
