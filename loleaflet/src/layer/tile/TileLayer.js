@@ -385,16 +385,17 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('graphicviewselection:')) {
 			this._onGraphicViewSelectionMsg(textMsg);
 		}
-		else if (textMsg.startsWith('tiledebuggingmode:')) {
-			this._invalidateClientVisibleArea();
-			this._debug = !this._debug;
-			if (this._debug) {
-				if (!this._debugInfo) {
-					this._debugInfo = new L.LayerGroup();
-					map.addLayer(this._debugInfo);
-				}
-				this._onMessage('invalidatetiles: EMPTY', null);
+	},
+
+	toggleTileDebugMode: function() {
+		this._invalidateClientVisibleArea();
+		this._debug = !this._debug;
+		if (this._debug) {
+			if (!this._debugInfo) {
+				this._debugInfo = new L.LayerGroup();
+				this._map.addLayer(this._debugInfo);
 			}
+			this._onMessage('invalidatetiles: EMPTY', null);
 		}
 	},
 
