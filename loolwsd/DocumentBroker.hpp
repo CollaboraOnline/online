@@ -267,6 +267,8 @@ private:
     /// Versioning is used to prevent races between
     /// painting and invalidation.
     std::atomic<size_t> _tileVersion;
+    /// The last version number when invalidation happened.
+    std::atomic<int> _invalidatedTileVersion;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;
