@@ -1265,7 +1265,8 @@ L.TileLayer = L.GridLayer.extend({
 					fill: false,
 					color: color
 				});
-				viewMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, borderColor: color});
+				// Disable autoPan, so the graphic view selection doesn't make the view jump to the popup.
+				viewMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, borderColor: color});
 				this._graphicViewMarkers[viewId].marker = viewMarker;
 			}
 			else {
