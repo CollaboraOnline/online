@@ -714,18 +714,20 @@ L.Map = L.Evented.extend({
 		clearTimeout(vex.timer);
 
 		if (!this._active) {
-			this._socket.sendMessage('useractive');
-
 			// Only activate when we are connected.
 			if (this._socket.connected()) {
+				this._socket.sendMessage('useractive');
 				this._active = true;
 				this._docLayer._onMessage('invalidatetiles: EMPTY', null);
+			} else {
+				this._active = true;
+				this._socket.initialize(this);
+			}
 
-				if (vex.dialogID > 0) {
-					var id = vex.dialogID;
-					vex.dialogID = -1;
-					return vex.close(id);
-				}
+			if (vex.dialogID > 0) {
+				var id = vex.dialogID;
+				vex.dialogID = -1;
+				return vex.close(id);
 			}
 		}
 

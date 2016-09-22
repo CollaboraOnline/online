@@ -74,13 +74,10 @@ L.Socket = L.Class.extend({
 		// TODO: Move the version number somewhere sensible.
 		this._doSend('loolclient ' + this.ProtocolVersionNumber);
 
-		var reconnecting = false;
 		var msg = 'load url=' + this._map.options.doc;
 		if (this._map._docLayer) {
 			// we are reconnecting after a lost connection
-			reconnecting = true;
 			msg += ' part=' + this._map.getCurrentPartNumber();
-			this._map.fire('statusindicator', {statusType : 'reconnected'});
 		}
 		if (this._map.options.timestamp) {
 			msg += ' timestamp=' + this._map.options.timestamp;
@@ -100,10 +97,6 @@ L.Socket = L.Class.extend({
 			this._doSend(this._msgQueue[i].msg, this._msgQueue[i].coords);
 		}
 		this._msgQueue = [];
-
-		if (reconnecting) {
-			this._map.setPermission(this._map.options.permission);
-		}
 
 		this._map._activate();
 	},
@@ -274,6 +267,11 @@ L.Socket = L.Class.extend({
 			this._map._docLayer = docLayer;
 			this._map.addLayer(docLayer);
 			this._map.fire('doclayerinit');
+		} else if (textMsg.startsWith('status:')) {
+			// we are reconnecting ...
+			this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
+			this._map.fire('statusindicator', {statusType: 'finish'});
+			this._map.setPermission(this._map.options.permission);
 		}
 
 		// these can arrive very early during the startup
