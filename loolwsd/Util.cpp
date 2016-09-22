@@ -87,7 +87,7 @@ namespace rng
     {
         std::stringstream ss;
         Poco::Base64Encoder b64(ss);
-        b64 << getBytes(length).data();
+        b64.write(getBytes(length).data(), length);
         return ss.str().substr(0, length);
     }
 
