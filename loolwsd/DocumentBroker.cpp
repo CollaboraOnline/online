@@ -587,14 +587,15 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
     try
     {
         auto tile = TileDesc::parse(firstLine);
-        const auto buffer = payload.data();
-        const auto length = payload.size();
 
+
+        const auto length = payload.size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            tileCache().saveTileAndNotify(
+            const auto buffer = payload.data();
+            tileCache().notifySubscribers(
                 tile, buffer + firstLine.size() + 1,
-                length - firstLine.size() - 1);
+                length - firstLine.size() - 1, true);
         }
         else
         {
@@ -619,21 +620,22 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
     try
     {
         auto tileCombined = TileCombined::parse(firstLine);
-        const auto buffer = payload.data();
-        const auto length = payload.size();
-        auto offset = firstLine.size() + 1;
 
+
+        const auto length = payload.size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
+            const auto buffer = payload.data();
+            auto offset = firstLine.size() + 1;
             for (const auto& tile : tileCombined.getTiles())
             {
-                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
+                tileCache().notifySubscribers(tile, buffer + offset, tile.getImgSize(), true);
                 offset += tile.getImgSize();
             }
         }
         else
         {
-            Log::error() << "Render request failed for " << firstLine << Log::end;
+            Log::debug() << "Render request declined for " << firstLine << Log::end;
             std::unique_lock<std::mutex> tileBeingRenderedLock(tileCache().getTilesBeingRenderedLock());
             for (const auto& tile : tileCombined.getTiles())
             {

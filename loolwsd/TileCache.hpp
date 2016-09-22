@@ -47,7 +47,7 @@ public:
 
     std::unique_ptr<std::fstream> lookupTile(const TileDesc& tile);
 
-    void saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size);
+    void notifySubscribers(const TileDesc& tile, const char *data, const size_t size, const bool save);
 
     std::string getTextFile(const std::string& fileName);
 
