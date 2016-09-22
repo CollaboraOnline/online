@@ -198,17 +198,9 @@ L.TileLayer = L.GridLayer.extend({
 		this);
 
 		map.on('updatepermission', function(e) {
-			// {En,Dis}able selection handles
-			for (var key in this._selectionHandles) {
-				this._selectionHandles[key].setDraggable(e.perm === 'edit');
-			}
-
-			// we want graphic selection handles to appear
-			// when in editmode, and dissappear when in view mode
 			if (e.perm !== 'edit') {
-				this._graphicSelection = null;
+				this._clearSelections();
 			}
-			this._onUpdateGraphicSelection();
 		}, this);
 
 		for (var key in this._selectionHandles) {
