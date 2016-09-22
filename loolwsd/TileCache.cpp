@@ -121,7 +121,6 @@ void TileCache::forgetTileBeingRendered(const TileDesc& tile)
 
     Util::assertIsLocked(_tilesBeingRenderedMutex);
 
-    assert(_tilesBeingRendered.find(cachedName) != _tilesBeingRendered.end());
     _tilesBeingRendered.erase(cachedName);
 }
 
