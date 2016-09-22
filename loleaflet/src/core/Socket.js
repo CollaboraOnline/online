@@ -103,7 +103,7 @@ L.Socket = L.Class.extend({
 		this._msgQueue = [];
 
 		if (reconnecting) {
-			this._map.setPermission(this._map._oldPermission);
+			this._map.setPermission(this._map.options.permission);
 		}
 
 		this._map._activate();
