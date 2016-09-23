@@ -151,10 +151,7 @@ L.TileLayer = L.GridLayer.extend({
 		map.addLayer(this._viewLayerGroup);
 
 		this._debug = map.options.debug;
-		if (this._debug) {
-			this._debugInfo = new L.LayerGroup();
-			map.addLayer(this._debugInfo);
-		}
+		this._debugInit();
 
 		this._searchResultsLayer = new L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
@@ -382,13 +379,15 @@ L.TileLayer = L.GridLayer.extend({
 	toggleTileDebugMode: function() {
 		this._invalidateClientVisibleArea();
 		this._debug = !this._debug;
-		if (this._debug) {
-			if (!this._debugInfo) {
-				this._debugInfo = new L.LayerGroup();
-				this._map.addLayer(this._debugInfo);
-			}
-			this._onMessage('invalidatetiles: EMPTY', null);
+		if (this._debugInfo) {
+			this._map.removeLayer(this._debugInfo);
 		}
+		if (!this._debug) {
+			this._debugDataCancelledTiles.setPrefix('');
+			this._debugDataTileCombine.setPrefix('');
+		}
+		this._debugInit();
+		this._onMessage('invalidatetiles: EMPTY', null);
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -1004,20 +1003,21 @@ L.TileLayer = L.GridLayer.extend({
 		var key = this._tileCoordsToKey(coords);
 		var tile = this._tiles[key];
 		if (this._debug && tile) {
-			var tileBound = this._keyToBounds(key);
 			if (tile._debugLoadCount) {
-				tile._debugLoadCount += 1;
+				tile._debugLoadCount++;
 			} else {
 				tile._debugLoadCount = 1;
+				tile._debugInvalidateCount = 1;
 			}
 			if (!tile._debugPopup) {
-				tile._debugPopup = L.popup({offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false})
-						.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getCenter().lng)).setContent('-');
+				var tileBound = this._keyToBounds(key);
+				tile._debugPopup = L.popup({className: 'debug', offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false})
+						.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getWest() + (tileBound.getEast() - tileBound.getWest())/4)).setContent('-');
 				this._debugInfo.addLayer(tile._debugPopup);
 				tile._debugTile = L.rectangle(tileBound, {color: 'blue', weight: 1, fillOpacity: 0, pointerEvents: 'none'});
 				this._debugInfo.addLayer(tile._debugTile);
 			}
-			tile._debugPopup.setContent('' + this._tiles[key]._debugLoadCount);
+			tile._debugPopup.setContent('' + this._tiles[key]._debugLoadCount + '/' + this._tiles[key]._debugInvalidateCount);
 			if (tile._debugTile) {
 				tile._debugTile.setStyle({fillOpacity: 0});
 			}
@@ -1753,7 +1753,48 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		this._clientVisibleArea = true;
+	},
+
+	_debugInit: function() {
+		if (this._debug) {
+			this._debugInfo = new L.LayerGroup();
+			map.addLayer(this._debugInfo);
+			this._debugInvalidBounds = {};
+			this._debugTimeout();
+			this._debugId = 0;
+			this._debugCancelledTiles = 0;
+			if (!this._debugDataCancelledTiles) {
+				this._debugDataTileCombine = L.control.attribution({prefix: '[tilecombine message]'}).addTo(map);
+				this._debugDataCancelledTiles = L.control.attribution({prefix: 'Cancelled tiles: 0'}).addTo(map);
+			}
+		}
+	},
+
+	_debugAddInvalidationRectangle: function(topLeftTwips, bottomRightTwips) {
+		var invalidBoundCoords = new L.LatLngBounds(this._twipsToLatLng(topLeftTwips, this._tileZoom),
+				this._twipsToLatLng(bottomRightTwips, this._tileZoom));
+		var rect = L.rectangle(invalidBoundCoords, {color: 'red', weight: 1, fillOpacity: 0.5, pointerEvents: 'none'});
+		this._debugInvalidBounds[this._debugId] = rect;
+		this._debugId++;
+		this._debugInfo.addLayer(rect);
+	},
+
+	_debugTimeout: function() {
+		if (this._debug) {
+			for (var key in this._debugInvalidBounds) {
+				var rect = this._debugInvalidBounds[key];
+				var opac = rect.options.fillOpacity;
+				if (opac < 0.1) {
+					this._debugInfo.removeLayer(rect);
+					delete this._debugInvalidBounds[key];
+				} else {
+					rect.setStyle({opacity: opac - 0.05, fillOpacity: opac - 0.05});
+				}
+			}
+			this._debugTimeoutId = setTimeout(function () { map._docLayer._debugTimeout() }, 50);
+		}
 	}
+
 });
 
 L.tileLayer = function (url, options) {

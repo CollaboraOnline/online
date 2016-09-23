@@ -566,6 +566,22 @@ a.leaflet-control-buttons:hover:first-child {
 	pointer-events: none;
 	}
 
+.debug .leaflet-popup-content {
+	margin: 1px 1px;
+	font: 28px/24px Tahoma, Verdana, sans-serif;
+	line-height: 1;
+	background: rgba(0, 0, 0, 0);
+	pointer-events: none;
+	}
+
+.debug .leaflet-popup-content-wrapper,
+.debug .leaflet-popup-tip {
+	background: rgba(255, 255, 255, 0);
+	color: #f70;
+	box-shadow: none;
+	pointer-events: none;
+	}
+
 /* div icon */
 
 .leaflet-div-icon {
