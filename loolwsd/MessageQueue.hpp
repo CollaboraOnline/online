@@ -112,8 +112,6 @@ public:
         {
             _cursorPositions[viewId] = cursorPosition;
         }
-
-        reprioritize(cursorPosition);
     }
 
     void removeCursorPosition(int viewId)
@@ -127,10 +125,6 @@ protected:
     virtual Payload get_impl() override;
 
 private:
-
-    /// Bring the underlying tile (if any) to the top.
-    /// There should be only one overlapping tile at most.
-    void reprioritize(const CursorPosition& cursorPosition);
 
     /// Check if the given tile msg underlies a cursor.
     bool priority(const std::string& tileMsg);
