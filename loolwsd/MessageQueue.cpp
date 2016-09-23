@@ -175,12 +175,11 @@ bool TileQueue::priority(const std::string& tileMsg)
 
     auto tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
 
-    for (auto& pair : _cursorPositions)
+    for (int view : _viewOrder)
     {
-        if (tile.intersectsWithRect(pair.second.X, pair.second.Y, pair.second.Width, pair.second.Height))
-        {
+        auto& cursor = _cursorPositions[view];
+        if (tile.intersectsWithRect(cursor.X, cursor.Y, cursor.Width, cursor.Height))
             return true;
-        }
     }
 
     return false;
