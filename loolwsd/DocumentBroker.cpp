@@ -469,9 +469,6 @@ void DocumentBroker::invalidateTiles(const std::string& tiles)
 
     // Remove from cache.
     _tileCache->invalidateTiles(tiles);
-
-    //TODO: Re-issue the tiles again to avoid races.
-
 }
 
 void DocumentBroker::handleTileRequest(TileDesc& tile,
