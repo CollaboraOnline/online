@@ -18,15 +18,16 @@ L.WriterTileLayer = L.TileLayer.extend({
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
+		if (this._debug) {
+			this._debugAddInvalidationRectangle(topLeftTwips, bottomRightTwips);
+		}
 		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
-
 		var tilePositionsX = '';
 		var tilePositionsY = '';
 		var needsNewTiles = false;
-
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
 			var tileTopLeft = this._coordsToTwips(coords);
@@ -51,6 +52,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 					needsNewTiles = true;
 					if (this._debug && this._tiles[key]._debugTile) {
 						this._tiles[key]._debugTile.setStyle({fillOpacity: 0.5});
+						this._tiles[key]._debugInvalidateCount++;
 					}
 				}
 				else {
@@ -76,6 +78,9 @@ L.WriterTileLayer = L.TileLayer.extend({
 				'tileheight=' + this._tileHeightTwips;
 
 			this._map._socket.sendMessage(message, '');
+			if (this._debug) {
+				this._debugDataTileCombine.setPrefix(message);
+			}
 		}
 
 		for (key in this._tileCache) {
