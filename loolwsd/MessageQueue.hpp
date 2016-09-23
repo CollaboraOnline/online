@@ -10,6 +10,7 @@
 #ifndef INCLUDED_MESSAGEQUEUE_HPP
 #define INCLUDED_MESSAGEQUEUE_HPP
 
+#include <algorithm>
 #include <condition_variable>
 #include <deque>
 #include <map>
@@ -112,10 +113,24 @@ public:
         {
             _cursorPositions[viewId] = cursorPosition;
         }
+
+        auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
+        if (view != _viewOrder.end())
+        {
+            std::swap(_viewOrder.front(), *view);
+        }
+        else
+        {
+            _viewOrder.push_front(viewId);
+        }
     }
 
     void removeCursorPosition(int viewId)
     {
+        auto it = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
+        if (it != _viewOrder.end())
+            _viewOrder.erase(it);
+
         _cursorPositions.erase(viewId);
     }
 
@@ -131,6 +146,10 @@ private:
 
 private:
     std::map<int, CursorPosition> _cursorPositions;
+
+    /// Check the views in the order of how the editing (cursor movement) has
+    /// been happening.
+    std::deque<int> _viewOrder;
 };
 
 #endif
