@@ -183,7 +183,7 @@ void TileQueue::reprioritize(const CursorPosition& cursorPosition)
 {
     for (size_t i = 0; i < _queue.size(); ++i)
     {
-        auto& it = _queue[i];
+        auto it = _queue[i];
         const std::string msg(it.data(), it.size());
         if (msg.compare(0, 5, "tile ") != 0)
         {
@@ -198,9 +198,8 @@ void TileQueue::reprioritize(const CursorPosition& cursorPosition)
             {
                 // Bump to top.
                 Log::trace() << "Bumping tile to top: " << msg << Log::end;
-                const Payload payload = it;
                 _queue.erase(_queue.begin() + i);
-                _queue.push_front(payload);
+                _queue.push_front(it);
             }
 
             return;
