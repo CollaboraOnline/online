@@ -135,8 +135,15 @@ void TileQueue::put_impl(const Payload& value)
         return;
     }
 
+    // TODO because we are doing tile combining ourselves in the get_impl(),
+    // we could split the "tilecombine" messages into separate tiles here;
+    // could lead to some improvements in case we are getting subsequent
+    // tilecombines with overlapping, but not completely same areas.
+
     if (!_queue.empty())
     {
+        // TODO probably we could do the same with the invalidation callbacks
+        // (later one wins).
         if (msg.compare(0, 4, "tile") == 0 || msg.compare(0, 10, "tilecombine") == 0)
         {
             const auto newMsg = msg.substr(0, msg.find(" ver"));
@@ -146,65 +153,17 @@ void TileQueue::put_impl(const Payload& value)
                 auto& it = _queue[i];
                 const std::string old(it.data(), it.size());
                 const auto oldMsg = old.substr(0, old.find(" ver"));
-                Log::trace() << "TileQueue #" << i << ": " << old << Log::end;
                 if (newMsg == oldMsg)
                 {
-                    Log::debug() << "Replacing duplicate tile: " << old << " -> " << msg << Log::end;
-                    _queue[i] = value;
-
-                    if (priority(msg))
-                    {
-                        // Bump to top.
-                        Log::debug() << "And bumping tile to top: " << msg << Log::end;
-                        _queue.erase(_queue.begin() + i);
-                        _queue.push_front(value);
-                    }
-
-                    return;
+                    Log::debug() << "Remove duplicate message: " << old << " -> " << msg << Log::end;
+                    _queue.erase(_queue.begin() + i);
+                    break;
                 }
             }
         }
     }
 
-    if (priority(msg))
-    {
-        Log::debug() << "Priority tile [" << msg << "]" << Log::end;
-        _queue.push_front(value);
-    }
-    else
-    {
-        BasicTileQueue::put_impl(value);
-    }
-}
-
-/// Bring the underlying tile (if any) to the top.
-/// There should be only one overlapping tile at most.
-void TileQueue::reprioritize(const CursorPosition& cursorPosition)
-{
-    for (size_t i = 0; i < _queue.size(); ++i)
-    {
-        auto it = _queue[i];
-        const std::string msg(it.data(), it.size());
-        if (msg.compare(0, 5, "tile ") != 0)
-        {
-            continue;
-        }
-
-        auto tile = TileDesc::parse(msg); //FIXME: Expensive, avoid.
-
-        if (tile.intersectsWithRect(cursorPosition.X, cursorPosition.Y, cursorPosition.Width, cursorPosition.Height))
-        {
-            if (i != 0)
-            {
-                // Bump to top.
-                Log::trace() << "Bumping tile to top: " << msg << Log::end;
-                _queue.erase(_queue.begin() + i);
-                _queue.push_front(it);
-            }
-
-            return;
-        }
-    }
+    BasicTileQueue::put_impl(value);
 }
 
 bool TileQueue::priority(const std::string& tileMsg)
@@ -231,7 +190,6 @@ MessageQueue::Payload TileQueue::get_impl()
 {
     std::vector<TileDesc> tiles;
     const auto front = _queue.front();
-    _queue.pop_front();
 
     auto msg = std::string(front.data(), front.size());
     Log::trace() << "MessageQueue Get, Size: " << _queue.size() << ", Front: " << msg << Log::end;
@@ -240,8 +198,29 @@ MessageQueue::Payload TileQueue::get_impl()
     {
         // Don't combine non-tiles or tiles with id.
         Log::trace() << "MessageQueue res: " << msg << Log::end;
+        _queue.pop_front();
         return front;
     }
+
+    // We are handling a tile; first try to find one that is at the cursor's
+    // position, otherwise handle the one that is at the front
+    bool foundPrioritized = false;
+    for (size_t i = 0; i < _queue.size(); ++i)
+    {
+        auto& it = _queue[i];
+        const std::string prio(it.data(), it.size());
+        if (priority(prio))
+        {
+            Log::debug() << "Handling a priority message: " << prio << Log::end;
+            _queue.erase(_queue.begin() + i);
+            msg = prio;
+            foundPrioritized = true;
+            break;
+        }
+    }
+
+    if (!foundPrioritized)
+        _queue.pop_front();
 
     tiles.emplace_back(TileDesc::parse(msg));
 
@@ -263,7 +242,7 @@ MessageQueue::Payload TileQueue::get_impl()
             }
 
             auto tile2 = TileDesc::parse(msg);
-            Log::trace() << "combining?: " << msg << Log::end;
+            Log::trace() << "combining candidate: " << msg << Log::end;
 
             // Check if adjacent tiles.
             bool found = false;
