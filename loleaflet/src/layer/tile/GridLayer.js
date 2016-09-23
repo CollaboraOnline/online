@@ -538,6 +538,10 @@ L.GridLayer = L.Layer.extend({
 					if (!this._tiles[key].loaded) {
 						L.DomUtil.remove(this._tiles[key].el);
 						delete this._tiles[key];
+						if (this._debug && this._debugDataCancelledTiles) {
+							this._debugCancelledTiles++;
+							this._debugDataCancelledTiles.setPrefix('Cancelled tiles: ' + this._debugCancelledTiles);
+						}
 					}
 				}
 				this._emptyTilesCount = 0;
@@ -607,6 +611,10 @@ L.GridLayer = L.Layer.extend({
 					if (!tile.loaded) {
 						L.DomUtil.remove(tile.el);
 						delete this._tiles[key];
+						if (this._debug && this._debugDataCancelledTiles) {
+							this._debugCancelledTiles++;
+							this._debugDataCancelledTiles.setPrefix('Cancelled tiles: ' + this._debugCancelledTiles);
+						}
 					}
 				}
 				this._emptyTilesCount = 0;
@@ -749,6 +757,9 @@ L.GridLayer = L.Layer.extend({
 			this._emptyTilesCount -= 1;
 		}
 		L.DomUtil.remove(tile.el);
+		if (this._debug && this._debugInfo && this._tiles[key]._debugPopup) {
+			this._debugInfo.removeLayer(this._tiles[key]._debugPopup);
+		}
 		delete this._tiles[key];
 
 		this.fire('tileunload', {
