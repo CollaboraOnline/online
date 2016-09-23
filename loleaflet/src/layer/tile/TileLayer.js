@@ -391,7 +391,11 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
-		var obj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		var jsonIdx = textMsg.indexOf('{');
+		if (jsonIdx === -1) {
+			return;
+		}
+		var obj = JSON.parse(textMsg.substring(jsonIdx));
 		if (obj.commandName == '.uno:DocumentRepair') {
 			this._onDocumentRepair(obj);
 		}

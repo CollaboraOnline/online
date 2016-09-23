@@ -409,14 +409,16 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
         const std::string json("{\"commandName\":\".uno:DocumentRepair\",\"Redo\":%s,\"Undo\":%s}");
         pValues = _loKitDocument->getCommandValues(".uno:Redo");
         pUndo = _loKitDocument->getCommandValues(".uno:Undo");
-        success = sendTextFrame("commandvalues: " + Poco::format(json, std::string(pValues), std::string(pUndo)));
+        success = sendTextFrame("commandvalues: " + Poco::format(json,
+                                                                 std::string(pValues == nullptr ? "" : pValues),
+                                                                 std::string(pUndo == nullptr ? "" : pUndo)));
         std::free(pValues);
         std::free(pUndo);
     }
     else
     {
         pValues = _loKitDocument->getCommandValues(command.c_str());
-        success = sendTextFrame("commandvalues: " + std::string(pValues));
+        success = sendTextFrame("commandvalues: " + std::string(pValues == nullptr ? "" : pValues));
         std::free(pValues);
     }
 
