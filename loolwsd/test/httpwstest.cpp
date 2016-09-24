@@ -93,6 +93,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testViewCursorVisible);
     CPPUNIT_TEST(testCellViewCursor);
     CPPUNIT_TEST(testGraphicViewSelection);
+    CPPUNIT_TEST(testGraphicInvalidate);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -134,6 +135,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testViewCursorVisible();
     void testCellViewCursor();
     void testGraphicViewSelection();
+    void testGraphicInvalidate();
 
     void loadDoc(const std::string& documentURL);
 
@@ -2103,6 +2105,46 @@ void HTTPWSTest::testGraphicViewSelection()
         testEachView("graphicviewselection.odp", "presentation", "graphicselection:", "graphicviewselection:");
         testEachView("graphicviewselection.odt", "text", "graphicselection:", "graphicviewselection:");
         testEachView("graphicviewselection.ods", "spreadsheet", "graphicselection:", "graphicviewselection:");
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testGraphicInvalidate()
+{
+    try
+    {
+        // Load a document.
+        std::string docPath;
+        std::string docURL;
+        std::string response;
+        std::vector<std::string> responses;
+
+        getDocumentPathAndURL("shape.ods", docPath, docURL);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket, "load url=" + docURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + docURL, isDocumentLoaded(socket));
+
+        // Send click message
+        sendTextFrame(socket, "mouse type=buttondown x=1035 y=400 count=1 buttons=1 modifier=0");
+        sendTextFrame(socket, "mouse type=buttonup x=1035 y=400 count=1 buttons=1 modifier=0");
+        getResponseMessage(socket, "graphicselection:", response, false, "testGraphicInvalidate ");
+
+        // Drag & drop graphic
+        sendTextFrame(socket, "mouse type=buttondown x=1035 y=400 count=1 buttons=1 modifier=0");
+        sendTextFrame(socket, "mouse type=move x=1035 y=450 count=1 buttons=1 modifier=0");
+        sendTextFrame(socket, "mouse type=buttonup x=1035 y=450 count=1 buttons=1 modifier=0");
+
+        collectMessages(socket, "invalidatetiles:", responses, 3, "testGraphicInvalidate ");
+        CPPUNIT_ASSERT_MESSAGE("No invalidatetiles: received", responses.size() > 0);
+        for (auto message : responses)
+        {
+            CPPUNIT_ASSERT_MESSAGE("Drag & Drop graphic invalidate all tiles", message.find("EMPTY") == std::string::npos);
+        }
     }
     catch (const Poco::Exception& exc)
     {
