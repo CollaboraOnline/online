@@ -142,7 +142,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
     return nullptr;
 }
 
-void TileCache::notifySubscribers(const TileDesc& tile, const char *data, const size_t size, const bool save)
+void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
 
@@ -151,14 +151,11 @@ void TileCache::notifySubscribers(const TileDesc& tile, const char *data, const 
     // Save to disk.
     const auto cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
                                                : cacheFileName(tile));
-    if (save)
-    {
-        const auto fileName = _cacheDir + "/" + cachedName;
-        Log::trace() << "Saving cache tile: " << fileName << Log::end;
-        std::fstream outStream(fileName, std::ios::out);
-        outStream.write(data, size);
-        outStream.close();
-    }
+    const auto fileName = _cacheDir + "/" + cachedName;
+    Log::trace() << "Saving cache tile: " << fileName << Log::end;
+    std::fstream outStream(fileName, std::ios::out);
+    outStream.write(data, size);
+    outStream.close();
 
     // Notify subscribers, if any.
     if (tileBeingRendered)

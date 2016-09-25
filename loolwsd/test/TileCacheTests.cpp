@@ -167,7 +167,7 @@ void TileCacheTests::testSimple()
     // Cache Tile
     const auto size = 1024;
     const auto data = genRandomData(size);
-    tc.notifySubscribers(tile, data.data(), size, true);
+    tc.saveTileAndNotify(tile, data.data(), size);
 
     // Find Tile
     file = tc.lookupTile(tile);
