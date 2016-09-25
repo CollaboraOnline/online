@@ -94,6 +94,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCellViewCursor);
     CPPUNIT_TEST(testGraphicViewSelection);
     CPPUNIT_TEST(testGraphicInvalidate);
+    CPPUNIT_TEST(testCursorPosition);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -136,6 +137,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testCellViewCursor();
     void testGraphicViewSelection();
     void testGraphicInvalidate();
+    void testCursorPosition();
 
     void loadDoc(const std::string& documentURL);
 
@@ -2145,6 +2147,58 @@ void HTTPWSTest::testGraphicInvalidate()
         {
             CPPUNIT_ASSERT_MESSAGE("Drag & Drop graphic invalidate all tiles", message.find("EMPTY") == std::string::npos);
         }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testCursorPosition()
+{
+    try
+    {
+         // Load a document.
+        std::string docPath;
+        std::string docURL;
+        std::string response;
+        std::vector<std::string> responses;
+
+        getDocumentPathAndURL("Example.odt", docPath, docURL);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+        Poco::Net::WebSocket socket0 = *connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket0, "load url=" + docURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + docURL, isDocumentLoaded(socket0));
+
+        // receive cursor position
+        getResponseMessage(socket0, "invalidatecursor:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatecursor: message as expected", !response.empty());
+        Poco::StringTokenizer cursorTokens(response, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
+
+        // Create second view
+        Poco::Net::WebSocket socket1 = *connectLOKit(_uri, request, _response);
+        sendTextFrame(socket1, "load url=" + docURL);
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + docURL, isDocumentLoaded(socket1));
+
+        //receive view cursor position
+        getResponseMessage(socket0, "invalidateviewcursor:", response, false);
+        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidateviewcursor: message as expected", !response.empty());
+
+        Poco::JSON::Parser parser;
+        const auto result = parser.parse(response);
+        const auto& command = result.extract<Poco::JSON::Object::Ptr>();
+        CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command->has("rectangle"));
+
+        Poco::StringTokenizer viewTokens(command->get("rectangle").toString(), ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.count());
+
+        // check both cursor should be equal
+        CPPUNIT_ASSERT_EQUAL(cursorTokens[0], viewTokens[0]);
+        CPPUNIT_ASSERT_EQUAL(cursorTokens[1], viewTokens[1]);
+        CPPUNIT_ASSERT_EQUAL(cursorTokens[2], viewTokens[2]);
+        CPPUNIT_ASSERT_EQUAL(cursorTokens[3], viewTokens[3]);
     }
     catch (const Poco::Exception& exc)
     {
