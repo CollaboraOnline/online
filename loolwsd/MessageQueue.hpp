@@ -97,22 +97,24 @@ public:
             _cursorPositions[viewId] = cursorPosition;
         }
 
-        auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
+        // Move to front, so the current front view
+        // becomes the second.
+        const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
         if (view != _viewOrder.end())
         {
-            std::swap(_viewOrder.front(), *view);
+            _viewOrder.erase(view);
         }
-        else
-        {
-            _viewOrder.push_front(viewId);
-        }
+
+        _viewOrder.push_front(viewId);
     }
 
     void removeCursorPosition(int viewId)
     {
-        auto it = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
-        if (it != _viewOrder.end())
-            _viewOrder.erase(it);
+        const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
+        if (view != _viewOrder.end())
+        {
+            _viewOrder.erase(view);
+        }
 
         _cursorPositions.erase(viewId);
     }
