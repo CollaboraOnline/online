@@ -526,6 +526,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     Log::trace() << "TileCombined request for " << tileCombined.serialize() << Log::end;
 
     // Satisfy as many tiles from the cache.
+    std::vector<TileDesc> tiles;
     for (auto& tile : tileCombined.getTiles())
     {
         std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
@@ -559,13 +560,19 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             // Not cached, needs rendering.
             tile.setVersion(++_tileVersion);
             tileCache().subscribeToTileRendering(tile, session);
-
-            // Forward to child to render.
-            Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
-            const auto req = tile.serialize("tile");
-            Log::debug() << "Tile request: " << req << Log::end;
-            _childProcess->getWebSocket()->sendFrame(req.data(), req.size());
+            tiles.push_back(tile);
         }
+    }
+
+    if (!tiles.empty())
+    {
+        auto newTileCombined = TileCombined::create(tiles);
+        newTileCombined.setVersion(++_tileVersion);
+
+        // Forward to child to render.
+        const auto req = newTileCombined.serialize("tilecombine");
+        Log::debug() << "Sending residual tilecombine: " << req << Log::end;
+        _childProcess->getWebSocket()->sendFrame(req.data(), req.size());
     }
 }
 

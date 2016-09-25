@@ -433,6 +433,7 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
             {
                 Log::debug("Redundant request to subscribe on tile " + name);
                 tileBeingRendered->setVersion(tile.getVersion());
+                return;
             }
         }
 
