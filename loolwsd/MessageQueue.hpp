@@ -66,26 +66,9 @@ protected:
     std::deque<Payload> _queue;
 };
 
-/** MessageQueue specialized for handling of tiles.
-
-Used for basic handling of incoming requests, only can remove tiles when it
-gets a "canceltiles" command.
-*/
-class BasicTileQueue : public MessageQueue
-{
-protected:
-    virtual void put_impl(const Payload& value) override;
-};
-
 /** MessageQueue specialized for priority handling of tiles.
-
-This class builds on BasicTileQueue, and additonaly provides de-duplication
-of tile requests.
-
-TODO: we'll need to add reordering of the tiles at some stage here too - so
-that the ones closest to the cursor position are returned first.
 */
-class TileQueue : public BasicTileQueue
+class TileQueue : public MessageQueue
 {
 private:
 

@@ -74,34 +74,6 @@ void MessageQueue::clear_impl()
     _queue.clear();
 }
 
-void BasicTileQueue::put_impl(const Payload& value)
-{
-    const auto msg = std::string(&value[0], value.size());
-    if (msg == "canceltiles")
-    {
-        Log::error("Unexpected canceltiles!");
-
-        // remove all the existing tiles from the queue
-        _queue.erase(std::remove_if(_queue.begin(), _queue.end(),
-                    [](const Payload& v)
-                    {
-                        // must not remove the tiles with 'id=', they are special, used
-                        // eg. for previews etc.
-                        const auto tmp = std::string(&v[0], v.size());
-                        return (tmp.compare(0, 5, "tile ") == 0) && (tmp.find("id=") == std::string::npos);
-                    }
-                    ),
-                _queue.end());
-
-        // put the "canceltiles" in front of other messages
-        _queue.push_front(value);
-    }
-    else
-    {
-        MessageQueue::put_impl(value);
-    }
-}
-
 void TileQueue::put_impl(const Payload& value)
 {
     const auto msg = std::string(value.data(), value.size());
@@ -163,7 +135,7 @@ void TileQueue::put_impl(const Payload& value)
         }
     }
 
-    BasicTileQueue::put_impl(value);
+    MessageQueue::put_impl(value);
 }
 
 bool TileQueue::priority(const std::string& tileMsg)
