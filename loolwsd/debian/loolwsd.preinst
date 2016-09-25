@@ -7,4 +7,4 @@ if [ -d /run/systemd/system ]; then
     deb-systemd-invoke stop loolwsd.service >/dev/null || true
 fi
 
-exit 0
+#DEBHELPER#

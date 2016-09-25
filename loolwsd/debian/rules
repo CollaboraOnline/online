@@ -13,7 +13,7 @@ export BUILDING_FROM_RPMBUILD=yes
 
 # main packaging script based on dh7 syntax
 %:
-	dh $@
+	dh $@ --with=systemd
 
 override_dh_auto_configure:
 	./configure $(CONFFLAGS)
