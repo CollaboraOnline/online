@@ -158,6 +158,10 @@ private:
 
 std::mutex Connection::Mutex;
 
+static constexpr auto FIRST_ROW_TILES = "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840";
+static constexpr auto FIRST_PAGE_TILES = "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840";
+static constexpr auto FIRST_PAGE_TILE_COUNT = 16;
+
 /// Main thread class to replay a trace file.
 class Worker: public Runnable
 {
@@ -201,35 +205,38 @@ private:
 
     bool modifyDoc(const std::shared_ptr<Connection>& con)
     {
-        con->send("key type=input char=97 key=0");
-        return !con->recv("invalidatetiles:").empty();
+        const auto startModify = std::chrono::steady_clock::now();
+
+        con->send("key type=input char=97 key=0");   // a
+        //con->send("key type=input char=0 key=1283"); // backspace
+        const bool success = !con->recv("invalidatetiles:").empty();
+
+        const auto now = std::chrono::steady_clock::now();
+        const auto deltaModify = std::chrono::duration_cast<std::chrono::microseconds>(now - startModify).count();
+        _latencyStats.push_back(deltaModify);
+
+        return success;
     }
 
     bool renderTile(const std::shared_ptr<Connection>& con)
     {
-        const auto startModify = std::chrono::steady_clock::now();
-
         modifyDoc(con);
 
-        const auto startRendering = std::chrono::steady_clock::now();
+        const auto start = std::chrono::steady_clock::now();
 
-        auto expectedTilesCount = 3;
-        con->send("tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
+        const auto expectedTilesCount = FIRST_PAGE_TILE_COUNT;
+        con->send(FIRST_PAGE_TILES);
         for (int i = 0; i < expectedTilesCount; ++i)
         {
             if (helpers::getTileMessage(*con->getWS(), con->getName()).empty())
             {
                 return false;
             }
+        }
 
         const auto now = std::chrono::steady_clock::now();
-
-        const auto deltaRendering = std::chrono::duration_cast<std::chrono::microseconds>(now - startRendering).count();
-        _renderingStats.push_back(deltaRendering);
-
-            const auto deltaModify = std::chrono::duration_cast<std::chrono::microseconds>(now - startModify).count();
-            _latencyStats.push_back(deltaModify);
-        }
+        const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(now - start).count();
+        _renderingStats.push_back(delta / expectedTilesCount);
 
         return true;
     }
@@ -238,18 +245,19 @@ private:
     {
         const auto start = std::chrono::steady_clock::now();
 
-        auto expectedTilesCount = 3;
-        con->send("tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
+        const auto expectedTilesCount = FIRST_PAGE_TILE_COUNT;
+        con->send(FIRST_PAGE_TILES);
         for (int i = 0; i < expectedTilesCount; ++i)
         {
             if (helpers::getTileMessage(*con->getWS(), con->getName()).empty())
             {
                 return false;
             }
-
-            const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count();
-            _cacheStats.push_back(delta);
         }
+
+        const auto now = std::chrono::steady_clock::now();
+        const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(now - start).count();
+        _cacheStats.push_back(delta / expectedTilesCount);
 
         return true;
     }
@@ -456,7 +464,7 @@ void Stress::handleOption(const std::string& optionName,
     else if (optionName == "bench")
         Stress::Benchmark = true;
     else if (optionName == "iter")
-        Stress::Iterations = std::max(std::stoi(value), 10);
+        Stress::Iterations = std::max(std::stoi(value), 1);
     else if (optionName == "nodelay")
         Stress::NoDelay = true;
     else if (optionName == "clientsperdoc")
@@ -522,6 +530,7 @@ int Stress::main(const std::vector<std::string>& args)
         if (!latencyStats.empty() && !renderingStats.empty() && !cachedStats.empty())
         {
             std::cerr << "\nResults:\n";
+            std::cerr << "Iterations: " << Stress::Iterations << "\n";
 
             std::cerr << "Latency best: " << latencyStats[0] << " microsecs, 95th percentile: " << percentile(latencyStats, 95) << " microsecs." << std::endl;
             std::cerr << "Tile best: " << renderingStats[0] << " microsecs, rendering 95th percentile: " << percentile(renderingStats, 95) << " microsecs." << std::endl;
