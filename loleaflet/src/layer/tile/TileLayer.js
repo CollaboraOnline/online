@@ -1177,6 +1177,13 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._cursorMarker);
 			this._isCursorOverlayVisible = false;
 		}
+
+		this.eachView(this._viewCursors, function (item) {
+			var viewCursorMarker = item.marker;
+			if (viewCursorMarker) {
+				viewCursorMarker.setOpacity(this._map.hasLayer(this._cursorMarker) && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
+			}
+		}, this, true);
 	},
 
 	// Update colored non-blinking view cursor
@@ -1210,6 +1217,7 @@ L.TileLayer = L.GridLayer.extend({
 			else {
 				viewCursorMarker.setLatLng(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			}
+			viewCursorMarker.setOpacity(this._map.hasLayer(this._cursorMarker) && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
 			this._viewLayerGroup.addLayer(viewCursorMarker);
 		}
 		else if (viewCursorMarker) {
@@ -1274,9 +1282,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	eachView: function (view, method, context) {
-		for (var key in view) {
-			method.call(context, key);
+	eachView: function (views, method, context, item) {
+		for (var key in views) {
+			method.call(context, item ? views[key] : key);
 		}
 	},
 
