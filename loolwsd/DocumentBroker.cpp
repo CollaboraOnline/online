@@ -112,8 +112,7 @@ DocumentBroker::DocumentBroker() :
     _cursorHeight(0),
     _isLoaded(false),
     _isModified(false),
-    _tileVersion(0),
-    _invalidatedTileVersion(0)
+    _tileVersion(0)
 {
     Log::info("Empty DocumentBroker (marked to destroy) created.");
 }
@@ -136,8 +135,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _cursorHeight(0),
     _isLoaded(false),
     _isModified(false),
-    _tileVersion(0),
-    _invalidatedTileVersion(0)
+    _tileVersion(0)
 {
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
@@ -472,9 +470,8 @@ void DocumentBroker::invalidateTiles(const std::string& tiles)
     // Remove from cache.
     _tileCache->invalidateTiles(tiles);
 
-    // Any older tile than this (inclusive) is not to be trusted.
-    _invalidatedTileVersion = _tileVersion;
-    Log::trace("Last invalidated tile version: " + std::to_string(_invalidatedTileVersion));
+    //TODO: Re-issue the tiles again to avoid races.
+
 }
 
 void DocumentBroker::handleTileRequest(TileDesc& tile,
@@ -591,14 +588,6 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
     {
         auto tile = TileDesc::parse(firstLine);
 
-        bool cache = true;
-        if (_invalidatedTileVersion > 0 && tile.getVersion() <= _invalidatedTileVersion)
-        {
-            // Drop from the cache, but forward to clients nontheless.
-            Log::info() << "Dropping potentially invalidated tile (cutoff "
-                        << _invalidatedTileVersion << "): " << firstLine << Log::end;
-            cache = false;
-        }
 
         const auto length = payload.size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
@@ -606,7 +595,7 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
             const auto buffer = payload.data();
             tileCache().notifySubscribers(
                 tile, buffer + firstLine.size() + 1,
-                length - firstLine.size() - 1, cache);
+                length - firstLine.size() - 1, true);
         }
         else
         {
@@ -632,14 +621,6 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
     {
         auto tileCombined = TileCombined::parse(firstLine);
 
-        bool cache = true;
-        if (_invalidatedTileVersion > 0 && tileCombined.getVersion() <= _invalidatedTileVersion)
-        {
-            // Drop from the cache, but forward to clients nontheless.
-            Log::info() << "Dropping potentially invalidated tile (cutoff "
-                        << _invalidatedTileVersion << "): " << firstLine << Log::end;
-            cache = false;
-        }
 
         const auto length = payload.size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
@@ -648,7 +629,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
             auto offset = firstLine.size() + 1;
             for (const auto& tile : tileCombined.getTiles())
             {
-                tileCache().notifySubscribers(tile, buffer + offset, tile.getImgSize(), cache);
+                tileCache().notifySubscribers(tile, buffer + offset, tile.getImgSize(), true);
                 offset += tile.getImgSize();
             }
         }
