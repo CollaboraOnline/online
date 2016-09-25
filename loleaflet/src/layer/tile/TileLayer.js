@@ -697,11 +697,6 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_addView: function(viewId, username) {
-		// Ignore if viewid is same as ours
-		if (viewId === this._viewId) {
-			return;
-		}
-
 		this._map.addView(viewId, username);
 
 		//TODO: We can initialize color and other properties here.
@@ -713,11 +708,6 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_removeView: function(viewId) {
-		// Couldn't be ours, now could it?!
-		if (viewId === this._viewId) {
-			return;
-		}
-
 		// Remove selection, if any.
 		if (this._viewSelections[viewId] && this._viewSelections[viewId].selection) {
 			this._viewLayerGroup.removeLayer(this._viewSelections[viewId].selection);

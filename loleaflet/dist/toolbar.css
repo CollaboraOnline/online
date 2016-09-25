@@ -306,3 +306,19 @@ button.leaflet-control-search-next
     border: 0px;
     background: rgba(66, 151, 215, 1);
 }
+
+tr.useritem:hover {
+    cursor: default;
+    background-color: rgba(67, 172, 232, 0.25);
+}
+
+tr.useritem > td {
+    padding: 7px;
+}
+
+tr.useritem > td.usercolor {
+    display: inline-block;
+    top: 5px;
+    left: 3px;
+    position: relative;
+}
