@@ -13,6 +13,7 @@ L.Cursor = L.Layer.extend({
 		L.setOptions(this, options);
 		this._latlng = L.latLng(latlng);
 		this._size = L.point(size);
+		this._initLayout();
 	},
 
 	onAdd: function () {
@@ -57,6 +58,12 @@ L.Cursor = L.Layer.extend({
 		return this;
 	},
 
+	setOpacity: function (opacity) {
+		if (this._container) {
+			L.DomUtil.setOpacity(this._cursor, opacity);
+		}
+	},
+
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'leaflet-cursor-container');
 		if (this.options.header) {
@@ -86,20 +93,6 @@ L.Cursor = L.Layer.extend({
 	_setPos: function (pos) {
 		L.DomUtil.setPosition(this._container, pos);
 		this._container.style.zIndex = this.options.zIndex;
-	},
-
-	setOpacity: function (opacity) {
-		this.options.opacity = opacity;
-		if (this._map) {
-			this._updateOpacity();
-		}
-
-		return this;
-	},
-
-	_updateOpacity: function () {
-		var opacity = this.options.opacity;
-		L.DomUtil.setOpacity(this._container, opacity);
 	},
 
 	_setSize: function () {
