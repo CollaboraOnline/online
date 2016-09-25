@@ -25,10 +25,4 @@ case "$1" in
 
 esac
 
-if [ -d /run/systemd/system ]; then
-    systemctl --system daemon-reload >/dev/null || true
-    systemctl enable loolwsd.service >/dev/null || true
-    deb-systemd-invoke start loolwsd.service >/dev/null || true
-fi
-
-exit 0
+#DEBHELPER#
