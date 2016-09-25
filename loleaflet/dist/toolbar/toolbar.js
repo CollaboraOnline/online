@@ -445,9 +445,7 @@ $(function () {
 			{type: 'html',  id: 'right'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break'},
-			{type: 'menu', id: 'userlist', caption: _('1 user'), items: [
-				{ id: '-1', text: _('You'), disabled: true },
-			]},
+			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table></div>' },
 			{type: 'break'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
 			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
@@ -458,6 +456,9 @@ $(function () {
 			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _('Zoom in')}
 		],
 		onClick: function (e) {
+			if (e.item.id === 'userlist') {
+				return;
+			}
 			onClick(e.target, e.item, e.subItem);
 		}
 	});
@@ -1291,18 +1292,26 @@ map.on('statusindicator', function (e) {
 	}
 });
 
-function getUserListItem(viewId, userName) {
-	var userListItem = { id: viewId, text: userName, disabled: true };
-	return userListItem;
+function getUserItem(viewId, userName, color) {
+	var html = '<tr class="useritem" id="user-' + viewId + '">' +
+	             '<td class=usercolor style="background-color: ' + color  +';"></td>' +
+	             '<td class="username">' + userName + '</td>' +
+	           '</tr>';
+	return html;
 }
 var nUsers = _('%n users');
-function updateUserListCount(userlist) {
-	var count = userlist.items.length;
+function updateUserListCount() {
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
 	if (count > 1) {
-		userlist.caption = nUsers.replace('%n', count);
+		userlistItem.text = nUsers.replace('%n', count);
 	} else if (count === 1) {
-		userlist.caption = _('1 user');
+		userlistItem.text = _('1 user');
+	} else {
+		userlistItem.text = _('No users');
 	}
+
+	w2ui['toolbar-down'].refresh();
 }
 
 map.on('addview', function(e) {
@@ -1319,11 +1328,16 @@ map.on('addview', function(e) {
 		userPopupTimeout = null;
 	}, 3000);
 
-	var userlist = w2ui['toolbar-down'].get('userlist');
-	userlist.items.push(getUserListItem(e.viewId, e.username));
-
-	updateUserListCount(userlist);
-	w2ui['toolbar-down'].refresh();
+	var username = e.username;
+	var color = L.LOUtil.getViewIdHexColor(e.viewId);
+	if (e.viewId === map._docLayer._viewId) {
+		username = _('You');
+		color = '#000';
+	}
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, color)).parent().parent()[0].outerHTML;
+	userlistItem.html = newhtml;
+	updateUserListCount();
 });
 
 map.on('removeview', function(e) {
@@ -1340,16 +1354,9 @@ map.on('removeview', function(e) {
 		userPopupTimeout = null;
 	}, 3000);
 
-	var userlist = w2ui['toolbar-down'].get('userlist');
-	for (var idx in userlist.items) {
-		if (userlist.items[idx].id == e.viewId) {
-			userlist.items.splice(idx, 1);
-			break;
-		}
-	}
-
-	updateUserListCount(userlist);
-	w2ui['toolbar-down'].refresh();
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
+	updateUserListCount();
 });
 
 $(window).resize(function() {
