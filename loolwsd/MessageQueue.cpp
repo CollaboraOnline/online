@@ -106,17 +106,22 @@ void TileQueue::put_impl(const Payload& value)
         Log::trace() << "After canceltiles have " << _queue.size() << " in queue." << Log::end;
         return;
     }
-
-    // TODO because we are doing tile combining ourselves in the get_impl(),
-    // we could split the "tilecombine" messages into separate tiles here;
-    // could lead to some improvements in case we are getting subsequent
-    // tilecombines with overlapping, but not completely same areas.
+    else if (msg.compare(0, 10, "tilecombine") == 0)
+    {
+        // Breakup tilecombine and deduplicate.
+        const auto tileCombined = TileCombined::parse(msg);
+        for (auto& tile : tileCombined.getTiles())
+        {
+            const auto newMsg = tile.serialize("tile");
+            _queue.push_back(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
+        }
+    }
 
     if (!_queue.empty())
     {
         // TODO probably we could do the same with the invalidation callbacks
         // (later one wins).
-        if (msg.compare(0, 4, "tile") == 0 || msg.compare(0, 10, "tilecombine") == 0)
+        if (msg.compare(0, 4, "tile") == 0)
         {
             const auto newMsg = msg.substr(0, msg.find(" ver"));
 
