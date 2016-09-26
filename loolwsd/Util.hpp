@@ -179,7 +179,7 @@ namespace Util
                 {
                     // Not performance critical to warrant caching.
                     Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
-                    Poco::RegularExpression::Match reMatch{};
+                    Poco::RegularExpression::Match reMatch{0, 0};
 
                     // Must be a full match.
                     if (re.match(subject, reMatch) && reMatch.offset == 0 && reMatch.length == subject.size())
