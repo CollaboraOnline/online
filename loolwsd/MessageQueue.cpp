@@ -64,7 +64,7 @@ bool MessageQueue::wait_impl() const
 
 MessageQueue::Payload MessageQueue::get_impl()
 {
-    auto result = _queue.front();
+    Payload result = _queue.front();
     _queue.pop_front();
     return result;
 }
@@ -108,39 +108,51 @@ void TileQueue::put_impl(const Payload& value)
     }
     else if (msg.compare(0, 11, "tilecombine") == 0)
     {
-        // Breakup tilecombine and deduplicate.
+        // Breakup tilecombine and deduplicate (we are re-combining the tiles
+        // in the get_impl() again)
         const auto tileCombined = TileCombined::parse(msg);
         for (auto& tile : tileCombined.getTiles())
         {
-            const auto newMsg = tile.serialize("tile");
-            _queue.push_back(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
-        }
-    }
+            const std::string newMsg = tile.serialize("tile");
 
-    if (!_queue.empty())
+            removeDuplicate(newMsg);
+
+            MessageQueue::put_impl(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
+        }
+        return;
+    }
+    else if (msg.compare(0, 4, "tile") == 0)
     {
-        // TODO probably we could do the same with the invalidation callbacks
-        // (later one wins).
-        if (msg.compare(0, 4, "tile") == 0)
-        {
-            const auto newMsg = msg.substr(0, msg.find(" ver"));
+        removeDuplicate(msg);
 
-            for (size_t i = 0; i < _queue.size(); ++i)
-            {
-                auto& it = _queue[i];
-                const std::string old(it.data(), it.size());
-                const auto oldMsg = old.substr(0, old.find(" ver"));
-                if (newMsg == oldMsg)
-                {
-                    Log::debug() << "Remove duplicate message: " << old << " -> " << msg << Log::end;
-                    _queue.erase(_queue.begin() + i);
-                    break;
-                }
-            }
-        }
+        MessageQueue::put_impl(value);
+        return;
     }
+
+    // TODO probably we could deduplacite the invalidation callbacks (later
+    // one wins) the same way as we do for the tiles - to be tested.
 
     MessageQueue::put_impl(value);
+}
+
+void TileQueue::removeDuplicate(const std::string& tileMsg)
+{
+    assert(tileMsg.compare(0, 4, "tile") == 0);
+
+    const std::string newMsg = tileMsg.substr(0, tileMsg.find(" ver"));
+
+    for (size_t i = 0; i < _queue.size(); ++i)
+    {
+        auto& it = _queue[i];
+        const std::string old(it.data(), it.size());
+        const std::string oldMsg = old.substr(0, old.find(" ver"));
+        if (newMsg == oldMsg)
+        {
+            Log::debug() << "Remove duplicate message: " << old << " -> " << tileMsg << Log::end;
+            _queue.erase(_queue.begin() + i);
+            break;
+        }
+    }
 }
 
 bool TileQueue::priority(const std::string& tileMsg)

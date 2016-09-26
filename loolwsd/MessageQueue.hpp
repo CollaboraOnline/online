@@ -125,6 +125,8 @@ protected:
     virtual Payload get_impl() override;
 
 private:
+    /// Search the queue for a duplicate tile and remove it (if present).
+    void removeDuplicate(const std::string& tileMsg);
 
     /// Check if the given tile msg underlies a cursor.
     bool priority(const std::string& tileMsg);
