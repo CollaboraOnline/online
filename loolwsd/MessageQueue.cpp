@@ -13,8 +13,9 @@
 
 #include <Poco/StringTokenizer.h>
 
-#include <TileDesc.hpp>
+#include <LOOLProtocol.hpp>
 #include <Log.hpp>
+#include <TileDesc.hpp>
 
 using Poco::StringTokenizer;
 
@@ -76,8 +77,9 @@ void MessageQueue::clear_impl()
 void TileQueue::put_impl(const Payload& value)
 {
     const auto msg = std::string(value.data(), value.size());
+    const std::string firstToken = LOOLProtocol::getFirstToken(value);
 
-    if (msg.compare(0, 11, "canceltiles") == 0)
+    if (firstToken == "canceltiles")
     {
         Log::trace("Processing " + msg);
         Log::trace() << "Before canceltiles have " << _queue.size() << " in queue." << Log::end;
@@ -104,7 +106,7 @@ void TileQueue::put_impl(const Payload& value)
         Log::trace() << "After canceltiles have " << _queue.size() << " in queue." << Log::end;
         return;
     }
-    else if (msg.compare(0, 11, "tilecombine") == 0)
+    else if (firstToken == "tilecombine")
     {
         // Breakup tilecombine and deduplicate (we are re-combining the tiles
         // in the get_impl() again)
@@ -119,7 +121,7 @@ void TileQueue::put_impl(const Payload& value)
         }
         return;
     }
-    else if (msg.compare(0, 4, "tile") == 0)
+    else if (firstToken == "tile")
     {
         removeDuplicate(msg);
 
@@ -135,8 +137,12 @@ void TileQueue::put_impl(const Payload& value)
 
 void TileQueue::removeDuplicate(const std::string& tileMsg)
 {
-    assert(tileMsg.compare(0, 4, "tile") == 0);
+    assert(LOOLProtocol::getFirstToken(tileMsg) == "tile");
 
+    // FIXME: This looks rather fragile; but OTOH if I understand correctly this doesn't handle
+    // input from clients, but strings we have created ourselves here in C++ code, so probably we
+    // can be sure that the "ver" parameter is always in such a location that this does what we
+    // mean.
     const std::string newMsg = tileMsg.substr(0, tileMsg.find(" ver"));
 
     for (size_t i = 0; i < _queue.size(); ++i)
@@ -155,11 +161,6 @@ void TileQueue::removeDuplicate(const std::string& tileMsg)
 
 bool TileQueue::priority(const std::string& tileMsg)
 {
-    if (tileMsg.compare(0, 5, "tile ") != 0)
-    {
-        return false;
-    }
-
     auto tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
 
     for (int view : _viewOrder)
@@ -179,7 +180,8 @@ MessageQueue::Payload TileQueue::get_impl()
 
     auto msg = std::string(front.data(), front.size());
 
-    if (msg.compare(0, 5, "tile ") != 0 || msg.find("id=") != std::string::npos)
+    std::string id;
+    if (LOOLProtocol::getFirstToken(msg) != "tile" || LOOLProtocol::getTokenStringFromMessage(msg, "id", id))
     {
         // Don't combine non-tiles or tiles with id.
         Log::trace() << "MessageQueue res: " << msg << Log::end;
@@ -198,7 +200,7 @@ MessageQueue::Payload TileQueue::get_impl()
         // avoid starving - stop the search when we reach a non-tile,
         // otherwise we may keep growing the queue of unhandled stuff (both
         // tiles and non-tiles)
-        if (prio.compare(0, 5, "tile ") != 0)
+        if (LOOLProtocol::getFirstToken(prio) != "tile")
             break;
 
         if (priority(prio))
@@ -221,8 +223,7 @@ MessageQueue::Payload TileQueue::get_impl()
     {
         auto& it = _queue[i];
         msg = std::string(it.data(), it.size());
-        if (msg.compare(0, 5, "tile ") != 0 ||
-            msg.find("id=") != std::string::npos)
+        if (LOOLProtocol::getFirstToken(msg) != "tile" || LOOLProtocol::getTokenStringFromMessage(msg, "id", id))
         {
             // Don't combine non-tiles or tiles with id.
             ++i;
