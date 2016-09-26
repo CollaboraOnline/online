@@ -106,7 +106,7 @@ void TileQueue::put_impl(const Payload& value)
         Log::trace() << "After canceltiles have " << _queue.size() << " in queue." << Log::end;
         return;
     }
-    else if (msg.compare(0, 10, "tilecombine") == 0)
+    else if (msg.compare(0, 11, "tilecombine") == 0)
     {
         // Breakup tilecombine and deduplicate.
         const auto tileCombined = TileCombined::parse(msg);
