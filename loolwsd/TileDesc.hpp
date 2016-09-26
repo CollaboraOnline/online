@@ -90,6 +90,21 @@ public:
         return intersects(other);
     }
 
+    bool onSameRow(const TileDesc& other) const
+    {
+        if (other.getPart() != getPart() ||
+            other.getWidth() != getWidth() ||
+            other.getHeight() != getHeight() ||
+            other.getTileWidth() != getTileWidth() ||
+            other.getTileHeight() != getTileHeight())
+        {
+            return false;
+        }
+
+        return other.getTilePosY() + other.getTileHeight() >= getTilePosY() &&
+               other.getTilePosY() <= getTilePosY() + getTileHeight();
+    }
+
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
     std::string serialize(const std::string& prefix = "") const
