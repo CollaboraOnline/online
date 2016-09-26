@@ -85,8 +85,13 @@ namespace LOOLProtocol
     inline
     bool tokenIndicatesUserInteraction(const std::string& token)
     {
-        // Exclude tokens that include these keywords,
-        // such as canceltiles statusindicator.
+        // Exclude tokens that include these keywords, such as canceltiles statusindicator.
+
+        // FIXME: This is wrong. That the token happens to contain (or not) a certain substring is
+        // no guarantee that it "indicates user interaction". It might be like that at the moment,
+        // but that is coincidental. We should check what the actual whole token is, at least, not
+        // look for a substring.
+
         return (token.find("tile") == std::string::npos &&
                 token.find("status") == std::string::npos &&
                 token.find("state") == std::string::npos);
