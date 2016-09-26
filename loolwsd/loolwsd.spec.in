@@ -18,7 +18,7 @@ Summary:        LibreOffice On-Line WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
 Source1:        loleaflet-@PACKAGE_VERSION@.tar.gz
-BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.1
+BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5
 %if 0%{?fedora} || 0%{?rhel} >= 7
 BuildRequires:  libpcap
 %else
@@ -33,7 +33,7 @@ Requires(post): coreutils grep sed
 %if 0%{?fedora} || 0%{?rhel} >= 7
 # loolwsd dependencies
 Requires:       expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssl-libs pcre xz-libs zlib
-Requires:       poco-crypto >= 1.7.1 poco-foundation >= 1.7.1 poco-json >= 1.7.1 poco-net >= 1.7.1 poco-netssl >= 1.7.1 poco-util >= 1.7.1 poco-xml >= 1.7.1
+Requires:       poco-crypto >= 1.7.5 poco-foundation >= 1.7.5 poco-json >= 1.7.5 poco-net >= 1.7.5 poco-netssl >= 1.7.5 poco-util >= 1.7.5 poco-xml >= 1.7.5
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages does not have real dependencies)
 Requires:       atk avahi-glib avahi-libs bzip2-libs cairo cups-libs dbus-glib dbus-libs fontconfig freetype GConf2 gdk-pixbuf2 glib2 gnome-vfs2 graphite2 gstreamer gstreamer-plugins-base gtk2 harfbuzz libdrm libffi libICE libSM libuuid libX11 libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXi libXinerama libXrandr libXrender libxshmfence libXt libXxf86vm mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi pango pixman
 %else
@@ -41,7 +41,7 @@ Requires:       atk avahi-glib avahi-libs bzip2-libs cairo cups-libs dbus-glib d
 # loolwsd dependencies
 Requires(post): libcap-progs
 Requires:       libcap2 libopenssl1_0_0 libpng12-0 libpcre1 libz1 %{?systemd_requires} %{fillup_prereq}
-Requires:       libPocoCrypto42 >= 1.7.1 libPocoFoundation42 >= 1.7.1 libPocoJSON42 >= 1.7.1 libPocoNet42 >= 1.7.1 libPocoNetSSL42 >= 1.7.1 libPocoUtil42 >= 1.7.1 libPocoXML42 >= 1.7.1
+Requires:       libPocoCrypto45 >= 1.7.5 libPocoFoundation45 >= 1.7.5 libPocoJSON45 >= 1.7.5 libPocoNet45 >= 1.7.5 libPocoNetSSL45 >= 1.7.5 libPocoUtil45 >= 1.7.5 libPocoXML45 >= 1.7.5
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages does not have real dependencies)
 Requires:       Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig libatk-1_0-0 libavahi-client3 libavahi-common3 libavahi-glib1 libbz2-1 libcairo2 libcom_err2 libdbus-1-3 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgraphite2-3 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libkeyutils1 liblzma5 libpixman-1-0 libpng16-16 libuuid1 libxml2 libffi4 libgbm1 libICE6 libselinux1 libSM6 libwayland-client0 libwayland-server0 libX11-6 libX11-xcb1 libXau6 libxcb1 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-render0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libXdamage1 libXext6 libXfixes3 libXrender1 libxshmfence1 libXxf86vm1
 %endif
