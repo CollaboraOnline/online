@@ -185,6 +185,13 @@ MessageQueue::Payload TileQueue::get_impl()
     {
         auto& it = _queue[i];
         const std::string prio(it.data(), it.size());
+
+        // avoid starving - stop the search when we reach a non-tile,
+        // otherwise we may keep growing the queue of unhandled stuff (both
+        // tiles and non-tiles)
+        if (prio.compare(0, 5, "tile ") != 0)
+            break;
+
         if (priority(prio))
         {
             Log::debug() << "Handling a priority message: " << prio << Log::end;
