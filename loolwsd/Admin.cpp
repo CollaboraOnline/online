@@ -230,6 +230,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
 
 AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
     : _admin(adminManager),
+      _sessionId(0),
       _isAuthenticated(false)
 {
 }
@@ -280,7 +281,9 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 
 /// An admin command processor.
 Admin::Admin() :
-    _model(AdminModel())
+    _model(AdminModel()),
+    _modelMutex(),
+    _forKitPid(0)
 {
     Log::info("Admin ctor.");
 

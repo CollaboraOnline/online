@@ -31,6 +31,19 @@ public:
     class FileInfo
     {
     public:
+        FileInfo(const std::string& filename,
+                 const Poco::Timestamp& modifiedTime,
+                 size_t size,
+                 const std::string& userId,
+                 const std::string& userName)
+            : _filename(filename),
+              _modifiedTime(modifiedTime),
+              _size(size),
+              _userId(userId),
+              _userName(userName)
+        {
+        }
+
         bool isValid() const
         {
             return !_filename.empty() && _size > 0;
@@ -50,7 +63,8 @@ public:
                 const std::string& uri) :
         _localStorePath(localStorePath),
         _jailPath(jailPath),
-        _uri(uri)
+        _uri(uri),
+        _fileInfo("", Poco::Timestamp(), 0, "", "")
     {
         Log::debug("Storage ctor: " + uri);
     }
