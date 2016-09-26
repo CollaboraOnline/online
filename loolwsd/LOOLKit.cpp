@@ -530,6 +530,7 @@ public:
     size_t purgeSessions()
     {
         std::vector<std::shared_ptr<ChildSession>> deadSessions;
+        size_t numRunning = 0;
         size_t num_connections = 0;
         {
             std::unique_lock<std::mutex> lock(_mutex, std::defer_lock);
@@ -539,20 +540,39 @@ public:
                 return -1;
             }
 
-            for (auto it = _connections.cbegin(); it != _connections.cend(); )
+            // If there are no live sessions, we don't need to do anything at all and can just
+            // bluntly exit, no need to clean up our own data structures. Also, there is a bug that
+            // causes the deadSessions.clear() call below to crash in some situations when the last
+            // session is being removed, see bccu#2035.
+            for (auto it = _connections.cbegin(); it != _connections.cend(); ++it)
             {
-                if (!it->second->isRunning())
+                if (it->second->isRunning())
+                    numRunning++;
+            }
+
+            if (numRunning > 0)
+            {
+                for (auto it = _connections.cbegin(); it != _connections.cend(); )
                 {
-                    deadSessions.push_back(it->second->getSession());
-                    it = _connections.erase(it);
-                }
-                else
-                {
-                    ++it;
+                    if (!it->second->isRunning())
+                    {
+                        deadSessions.push_back(it->second->getSession());
+                        it = _connections.erase(it);
+                    }
+                    else
+                    {
+                        ++it;
+                    }
                 }
             }
 
             num_connections = _connections.size();
+        }
+
+        if (numRunning == 0)
+        {
+            Log::info("No more sessions, exiting bluntly");
+            std::_Exit(Application::EXIT_OK);
         }
 
         // Don't destroy sessions while holding our lock.
