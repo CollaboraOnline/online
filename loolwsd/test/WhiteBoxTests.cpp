@@ -12,6 +12,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <Common.hpp>
+#include <LOOLProtocol.hpp>
 #include <Util.hpp>
 
 /// WhiteBox unit-tests.
@@ -19,14 +20,55 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(WhiteBoxTests);
 
+    CPPUNIT_TEST(testLOOLProtocolFunctions);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testLOOLProtocolFunctions();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
 };
+
+void WhiteBoxTests::testLOOLProtocolFunctions()
+{
+    int foo;
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenInteger("foo=42", "foo", foo));
+    CPPUNIT_ASSERT_EQUAL(42, foo);
+
+    std::string bar;
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenString("bar=hello-sailor", "bar", bar));
+    CPPUNIT_ASSERT_EQUAL(std::string("hello-sailor"), bar);
+
+    int mumble;
+    std::map<std::string, int> map { { "hello", 1 }, { "goodbye", 2 }, { "adieu", 3 } };
+
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenKeyword("mumble=goodbye", "mumble", map, mumble));
+    CPPUNIT_ASSERT_EQUAL(2, mumble);
+
+    std::string message("hello x=1 y=2 foo=42 bar=hello-sailor mumble=goodbye zip zap");
+    Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenInteger(tokens, "foo", foo));
+    CPPUNIT_ASSERT_EQUAL(42, foo);
+
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenString(tokens, "bar", bar));
+    CPPUNIT_ASSERT_EQUAL(std::string("hello-sailor"), bar);
+
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenKeyword(tokens, "mumble", map, mumble));
+    CPPUNIT_ASSERT_EQUAL(2, mumble);
+
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(message, "foo", foo));
+    CPPUNIT_ASSERT_EQUAL(42, foo);
+
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenStringFromMessage(message, "bar", bar));
+    CPPUNIT_ASSERT_EQUAL(std::string("hello-sailor"), bar);
+
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenKeywordFromMessage(message, "mumble", map, mumble));
+    CPPUNIT_ASSERT_EQUAL(2, mumble);
+
+}
 
 void WhiteBoxTests::testRegexListMatcher()
 {
