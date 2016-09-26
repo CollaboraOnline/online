@@ -201,43 +201,32 @@ MessageQueue::Payload TileQueue::get_impl()
     tiles.emplace_back(TileDesc::parse(msg));
 
     // Combine as many tiles as possible with the top one.
-    bool added;
-    do
+    for (size_t i = 0; i < _queue.size(); )
     {
-        added = false;
-        for (size_t i = 0; i < _queue.size(); )
+        auto& it = _queue[i];
+        msg = std::string(it.data(), it.size());
+        if (msg.compare(0, 5, "tile ") != 0 ||
+            msg.find("id=") != std::string::npos)
         {
-            auto& it = _queue[i];
-            msg = std::string(it.data(), it.size());
-            if (msg.compare(0, 5, "tile ") != 0 ||
-                msg.find("id=") != std::string::npos)
-            {
-                // Don't combine non-tiles or tiles with id.
-                ++i;
-                continue;
-            }
+            // Don't combine non-tiles or tiles with id.
+            ++i;
+            continue;
+        }
 
-            auto tile2 = TileDesc::parse(msg);
-            Log::trace() << "combining candidate: " << msg << Log::end;
+        auto tile2 = TileDesc::parse(msg);
+        Log::trace() << "combining candidate: " << msg << Log::end;
 
-            // Check if adjacent tiles.
-            bool found = false;
-            for (auto& tile : tiles)
-            {
-                if (tile.isAdjacent(tile2))
-                {
-                    tiles.emplace_back(tile2);
-                    _queue.erase(_queue.begin() + i);
-                    found = true;
-                    added = true;
-                    break;
-                }
-            }
-
-            i += !found;
+        // Check if it's on the same row.
+        if (tiles[0].onSameRow(tile2))
+        {
+            tiles.emplace_back(tile2);
+            _queue.erase(_queue.begin() + i);
+        }
+        else
+        {
+            ++i;
         }
     }
-    while (added);
 
     Log::trace() << "Combined " << tiles.size() << " tiles, leaving " << _queue.size() << " in queue." << Log::end;
 
