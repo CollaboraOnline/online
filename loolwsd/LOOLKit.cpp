@@ -785,6 +785,11 @@ private:
 
     static void GlobalCallback(const int nType, const char* pPayload, void* pData)
     {
+        if (TerminationFlag)
+        {
+            return;
+        }
+
         const std::string payload = pPayload ? pPayload : "(nil)";
         Log::trace() << "Document::GlobalCallback "
                      << LOKitHelper::kitCallbackTypeToString(nType)
@@ -804,6 +809,11 @@ private:
 
     static void ViewCallback(const int nType, const char* pPayload, void* pData)
     {
+        if (TerminationFlag)
+        {
+            return;
+        }
+
         CallbackDescriptor* pDescr = reinterpret_cast<CallbackDescriptor*>(pData);
         assert(pDescr && "Null callback data.");
         assert(pDescr->Doc && "Null Document instance.");
@@ -857,6 +867,11 @@ private:
 
     static void DocumentCallback(const int nType, const char* pPayload, void* pData)
     {
+        if (TerminationFlag)
+        {
+            return;
+        }
+
         const std::string payload = pPayload ? pPayload : "(nil)";
         Log::trace() << "Document::DocumentCallback "
                      << LOKitHelper::kitCallbackTypeToString(nType)
@@ -1175,6 +1190,11 @@ private:
             while (!_stop && !TerminationFlag)
             {
                 const auto input = _tileQueue->get();
+                if (_stop || TerminationFlag)
+                {
+                    break;
+                }
+
                 const std::string message(input.data(), input.size());
                 StringTokenizer tokens(message, " ");
 
