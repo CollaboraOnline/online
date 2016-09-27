@@ -176,6 +176,7 @@ L.TileLayer = L.GridLayer.extend({
 			map.on('zoomend', this._onCellCursorShift, this);
 		}
 		map.on('zoomend', this._updateClientZoom, this);
+		map.on('zoomend', L.bind(this.eachView, this, this._viewCursors, this._onUpdateViewCursor, this, false));
 		map.on('resize zoomend', this._invalidateClientVisibleArea, this);
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
