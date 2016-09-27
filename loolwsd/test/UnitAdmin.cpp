@@ -9,7 +9,6 @@
 
 #include "config.h"
 
-#include <cassert>
 #include <condition_variable>
 #include <mutex>
 
@@ -102,9 +101,9 @@ private:
         response.getCookies(cookies);
 
         // For now we only set one cookie
-        assert(cookies.size() == 1);
+        CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(cookies.size()));
         // and it is jwt=
-        assert(cookies[0].getName() == "jwt");
+        CPPUNIT_ASSERT_EQUAL(std::string("jwt"), cookies[0].getName());
 
         // Check cookie properties
         std::string cookiePath = cookies[0].getPath();

@@ -35,6 +35,7 @@ test_LDADD = $(CPPUNIT_LIBS)
 # unit test modules:
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
+unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
 unit_admin_la_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
 unit_fonts_la_SOURCES = UnitFonts.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
