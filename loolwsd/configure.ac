@@ -60,6 +60,10 @@ AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
                            [Path to a working installation directory or instdir of LibreOffice]))
 
+AC_ARG_WITH([logfile],
+            AS_HELP_STRING([--with-logfile=<path>],
+                           [Path to the location of the logfile.]))
+
 AC_ARG_WITH([poco-includes],
             AS_HELP_STRING([--with-poco-includes=<path>],
                            [Path to the "include" directory with the Poco headers]))
@@ -102,15 +106,28 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=])
 
 ENABLE_DEBUG=
+LOOLWSD_LOGLEVEL="warning"
+LOOLWSD_LOG_TO_FILE="false"
+LOOLWSD_LOGFILE="/var/log/loolwsd.log"
 debug_msg="secure mode: product build"
 if test "$enable_debug" = "yes"; then
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
+   LOOLWSD_LOGLEVEL="trace"
+   LOOLWSD_LOG_TO_FILE="true"
+   LOOLWSD_LOGFILE="loolwsd.log"
    debug_msg="low security debugging mode"
 else
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
 fi
 AC_SUBST(ENABLE_DEBUG)
+AC_SUBST(LOOLWSD_LOGLEVEL)
+AC_SUBST(LOOLWSD_LOG_TO_FILE)
+
+if test -n "$with_logfile" ; then
+   LOOLWSD_LOGFILE="$with_logfile"
+fi
+AC_SUBST(LOOLWSD_LOGFILE)
 
 MAX_DOCUMENTS=10
 AS_IF([test -n "$with_max_documents"],
