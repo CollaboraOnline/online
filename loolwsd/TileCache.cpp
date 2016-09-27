@@ -151,11 +151,12 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     // Save to disk.
     const auto cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
                                                : cacheFileName(tile));
+
+    // Ignore if we can't save the tile, things will work anyway, but slower. An error indication
+    // supposed to reach a sysadmin has been produced in that case.
     const auto fileName = _cacheDir + "/" + cachedName;
-    Log::trace() << "Saving cache tile: " << fileName << Log::end;
-    std::fstream outStream(fileName, std::ios::out);
-    outStream.write(data, size);
-    outStream.close();
+    if (Util::saveDataToFileSafely(fileName, data, size, Poco::Message::PRIO_CRITICAL))
+        Log::trace() << "Saved cache tile: " << fileName << Log::end;
 
     // Notify subscribers, if any.
     if (tileBeingRendered)
@@ -274,9 +275,8 @@ void TileCache::saveRendering(const std::string& name, const std::string& dir, c
 
     const std::string fileName = dirName + "/" + name;
 
-    std::fstream outStream(fileName, std::ios::out);
-    outStream.write(data, size);
-    outStream.close();
+    // Is failing to save a font as important as failing to save cached tiles?
+    Util::saveDataToFileSafely(fileName, data, size, Poco::Message::PRIO_CRITICAL);
 }
 
 std::unique_ptr<std::fstream> TileCache::lookupRendering(const std::string& name, const std::string& dir)
