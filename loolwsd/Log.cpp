@@ -74,6 +74,9 @@ namespace Log
 
     static void getPrefix(char *buffer, const char* level)
     {
+        // FIXME: If running under systemd it is redundant to output timestamps, as those will be
+        // attached to messages that the systemd journalling mechanism picks up anyway, won't they?
+
         Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - epochStart;
 
         const Poco::Int64 one_s = 1000000;
