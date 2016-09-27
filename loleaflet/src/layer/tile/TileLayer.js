@@ -384,8 +384,10 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._debugInfo);
 		}
 		if (!this._debug) {
+			this._debugDataPING.setPrefix('');
 			this._debugDataCancelledTiles.setPrefix('');
 			this._debugDataTileCombine.setPrefix('');
+			this._debugDataFromKeyInputToInvalidate.setPrefix('');
 		}
 		this._debugInit();
 		this._onMessage('invalidatetiles: EMPTY', null);
@@ -1000,6 +1002,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._debug && tile) {
 			if (tile._debugLoadCount) {
 				tile._debugLoadCount++;
+				this._debugLoadCount++;
 			} else {
 				tile._debugLoadCount = 1;
 				tile._debugInvalidateCount = 1;
@@ -1007,15 +1010,22 @@ L.TileLayer = L.GridLayer.extend({
 			if (!tile._debugPopup) {
 				var tileBound = this._keyToBounds(key);
 				tile._debugPopup = L.popup({className: 'debug', offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false})
-						.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getWest() + (tileBound.getEast() - tileBound.getWest())/4)).setContent('-');
+						.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getWest() + (tileBound.getEast() - tileBound.getWest())/5));
 				this._debugInfo.addLayer(tile._debugPopup);
 				tile._debugTile = L.rectangle(tileBound, {color: 'blue', weight: 1, fillOpacity: 0, pointerEvents: 'none'});
+				tile._debugTime = this._debugGetTimeArray();
 				this._debugInfo.addLayer(tile._debugTile);
 			}
-			tile._debugPopup.setContent('' + this._tiles[key]._debugLoadCount + '/' + this._tiles[key]._debugInvalidateCount);
+			if (tile._debugTime.date === 0)  {
+				tile._debugPopup.setContent('requested: ' + this._tiles[key]._debugInvalidateCount + '<br>received: ' + this._tiles[key]._debugLoadCount);
+			} else {
+				tile._debugPopup.setContent('requested: ' + this._tiles[key]._debugInvalidateCount + '<br>received: ' + this._tiles[key]._debugLoadCount +
+						'<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>'));
+			}
 			if (tile._debugTile) {
 				tile._debugTile.setStyle({fillOpacity: 0});
 			}
+			this._debugDataLoadCount.setPrefix('Total of requested tiles: ' + this._debugInvalidateCount + ', received: ' + this._debugLoadCount);
 		}
 		if (command.id !== undefined) {
 			this._map.fire('tilepreview', {
@@ -1758,28 +1768,76 @@ L.TileLayer = L.GridLayer.extend({
 		this._clientVisibleArea = true;
 	},
 
+	_debugGetTimeArray: function() {
+		return {count: 0, ms: 0, best: Number.MAX_SAFE_INTEGER, worst: 0, last: 0, date: 0};
+	},
+
 	_debugInit: function() {
 		if (this._debug) {
 			this._debugInfo = new L.LayerGroup();
 			map.addLayer(this._debugInfo);
 			this._debugInvalidBounds = {};
+			this._debugInvalidBoundsMessage = {};
 			this._debugTimeout();
 			this._debugId = 0;
 			this._debugCancelledTiles = 0;
+			this._debugLoadCount = 0;
+			this._debugInvalidateCount = 0;
 			if (!this._debugDataCancelledTiles) {
-				this._debugDataTileCombine = L.control.attribution({prefix: '[tilecombine message]'}).addTo(map);
-				this._debugDataCancelledTiles = L.control.attribution({prefix: 'Cancelled tiles: 0'}).addTo(map);
+				this._debugDataTileCombine = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
+				this._debugDataCancelledTiles = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
+				this._debugDataFromKeyInputToInvalidate = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
+				this._debugDataPING = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
+				this._debugDataLoadCount = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
+
 			}
+			this._debugTimePING = this._debugGetTimeArray();
+			this._debugTimeKeypress = this._debugGetTimeArray();
+			this._debugKeypressQueue = [];
 		}
 	},
 
-	_debugAddInvalidationRectangle: function(topLeftTwips, bottomRightTwips) {
+	_debugSetTimes: function(times, value) {
+		times.last = value;
+		if (value < times.best) {
+			times.best = value;
+		}
+		if (value > times.worst) {
+			times.worst = value;
+		}
+		times.ms += value;
+		times.count++;
+		return 'best: ' + times.best + ' ms, avg: ' + Math.round(times.ms/times.count) + ' ms, worst: ' + times.worst + ' ms, last: ' + value + ' ms';
+	},
+
+	_debugAddInvalidationRectangle: function(topLeftTwips, bottomRightTwips, command) {
+		var now = +new Date();
+
 		var invalidBoundCoords = new L.LatLngBounds(this._twipsToLatLng(topLeftTwips, this._tileZoom),
 				this._twipsToLatLng(bottomRightTwips, this._tileZoom));
-		var rect = L.rectangle(invalidBoundCoords, {color: 'red', weight: 1, fillOpacity: 0.5, pointerEvents: 'none'});
+		var rect = L.rectangle(invalidBoundCoords, {color: 'red', weight: 1, opacity: 1, fillOpacity: 0.4, pointerEvents: 'none'});
 		this._debugInvalidBounds[this._debugId] = rect;
+		this._debugInvalidBoundsMessage[this._debugId] = command;
 		this._debugId++;
 		this._debugInfo.addLayer(rect);
+
+		var oldestKeypress = this._debugKeypressQueue.shift();
+		if (oldestKeypress) {
+			var timeText = this._debugSetTimes(this._debugTimeKeypress, now - oldestKeypress);
+			this._debugDataFromKeyInputToInvalidate.setPrefix('Elapsed time between key input and next invalidate: ' + timeText);
+		}
+	},
+
+	_debugAddInvalidationMessage: function(message) {
+		this._debugInvalidBoundsMessage[this._debugId - 1] = message;
+		var messages = '';
+		for (var i = this._debugId - 1; i > this._debugId - 6; i--) {
+			if (i >= 0 && this._debugInvalidBoundsMessage[i]) {
+				messages += '' + i + ': ' + this._debugInvalidBoundsMessage[i] + ' <br>';
+			}
+		}
+		this._debugDataTileCombine.setPrefix(messages);
+		this._debugDataLoadCount.setPrefix('Total of requested tiles: ' + this._debugInvalidateCount + ', received: ' + this._debugLoadCount);
 	},
 
 	_debugTimeout: function() {
@@ -1787,11 +1845,15 @@ L.TileLayer = L.GridLayer.extend({
 			for (var key in this._debugInvalidBounds) {
 				var rect = this._debugInvalidBounds[key];
 				var opac = rect.options.fillOpacity;
-				if (opac < 0.1) {
-					this._debugInfo.removeLayer(rect);
-					delete this._debugInvalidBounds[key];
+				if (opac <= 0.04) {
+					rect.setStyle({fillOpacity: 0});
+					if (key < this._debugId - 5) {
+						this._debugInfo.removeLayer(rect);
+						delete this._debugInvalidBounds[key];
+						delete this._debugInvalidBoundsMessage[key];
+					}
 				} else {
-					rect.setStyle({opacity: opac - 0.05, fillOpacity: opac - 0.05});
+					rect.setStyle({fillOpacity: opac - 0.04});
 				}
 			}
 			this._debugTimeoutId = setTimeout(function () { map._docLayer._debugTimeout() }, 50);

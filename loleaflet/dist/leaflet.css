@@ -410,7 +410,7 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-control-attribution,
 .leaflet-control-scale-line {
 	padding: 0 5px;
-	color: #333;
+	color: #000;
 	}
 .leaflet-control-attribution a {
 	text-decoration: none;
@@ -566,18 +566,30 @@ a.leaflet-control-buttons:hover:first-child {
 	pointer-events: none;
 	}
 
+.debug .leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 0px;
+	}
+
 .debug .leaflet-popup-content {
 	margin: 1px 1px;
-	font: 28px/24px Tahoma, Verdana, sans-serif;
+	font: 9px/8px Tahoma, Verdana, sans-serif;
 	line-height: 1;
 	background: rgba(0, 0, 0, 0);
 	pointer-events: none;
 	}
 
-.debug .leaflet-popup-content-wrapper,
+.debug .leaflet-popup-content-wrapper {
+	background: rgba(255, 255, 255, 0.6);
+	color: #000;
+	box-shadow: none;
+	pointer-events: none;
+	}
+
 .debug .leaflet-popup-tip {
 	background: rgba(255, 255, 255, 0);
-	color: #f70;
+	color: #000;
 	box-shadow: none;
 	pointer-events: none;
 	}

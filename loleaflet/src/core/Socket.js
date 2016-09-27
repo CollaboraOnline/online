@@ -188,6 +188,11 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('error:') && !this._map._docLayer) {
 			this.fail = true;
 		}
+		else if (textMsg === 'pong' && this._map._docLayer && this._map._docLayer._debug) {
+			var times = this._map._docLayer._debugTimePING;
+			var timeText = this._map._docLayer._debugSetTimes(times, +new Date() - times.date);
+			this._map._docLayer._debugDataPING.setPrefix('Server ping time: ' + timeText);
+		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
 			this._map.showBusy(_('Connecting...'), false);

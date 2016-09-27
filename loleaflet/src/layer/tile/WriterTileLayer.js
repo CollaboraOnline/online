@@ -19,7 +19,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
 		if (this._debug) {
-			this._debugAddInvalidationRectangle(topLeftTwips, bottomRightTwips);
+			this._debugAddInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
 		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
@@ -52,7 +52,9 @@ L.WriterTileLayer = L.TileLayer.extend({
 					needsNewTiles = true;
 					if (this._debug && this._tiles[key]._debugTile) {
 						this._tiles[key]._debugTile.setStyle({fillOpacity: 0.5});
+						this._tiles[key]._debugTime.date = +new Date();
 						this._tiles[key]._debugInvalidateCount++;
+						this._debugInvalidateCount++;
 					}
 				}
 				else {
@@ -78,8 +80,9 @@ L.WriterTileLayer = L.TileLayer.extend({
 				'tileheight=' + this._tileHeightTwips;
 
 			this._map._socket.sendMessage(message, '');
+
 			if (this._debug) {
-				this._debugDataTileCombine.setPrefix(message);
+				this._debugAddInvalidationMessage(message);
 			}
 		}
 
