@@ -228,7 +228,7 @@ void HTTPWSTest::testBadRequest()
         session->setKeepAlive(true);
         session->sendRequest(request);
         session->receiveResponse(response);
-        CPPUNIT_ASSERT(response.getStatus() == Poco::Net::HTTPResponse::HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
+        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTPResponse::HTTP_SERVICE_UNAVAILABLE, response.getStatus());
     }
     catch (const Poco::Exception& exc)
     {
