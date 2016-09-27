@@ -68,7 +68,6 @@
 
 typedef int (LokHookPreInit)  (const char *install_path, const char *user_profile_path);
 
-using Poco::AutoPtr;
 using Poco::Exception;
 using Poco::File;
 using Poco::JSON::Array;
@@ -79,8 +78,6 @@ using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::NetException;
 using Poco::Net::WebSocket;
-using Poco::Notification;
-using Poco::NotificationQueue;
 using Poco::Path;
 using Poco::Process;
 using Poco::Runnable;
