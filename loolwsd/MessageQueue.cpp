@@ -53,7 +53,6 @@ void MessageQueue::remove_if(const std::function<bool(const Payload&)>& pred)
 void MessageQueue::put_impl(const Payload& value)
 {
     const auto msg = std::string(value.data(), value.size());
-    Log::trace() << "Pushing into MQ [" << msg << "]" << Log::end;
     _queue.push_back(value);
 }
 
@@ -77,7 +76,6 @@ void MessageQueue::clear_impl()
 void TileQueue::put_impl(const Payload& value)
 {
     const auto msg = std::string(value.data(), value.size());
-    Log::trace() << "Putting [" << msg << "]" << Log::end;
 
     if (msg.compare(0, 11, "canceltiles") == 0)
     {
@@ -180,7 +178,6 @@ MessageQueue::Payload TileQueue::get_impl()
     const auto front = _queue.front();
 
     auto msg = std::string(front.data(), front.size());
-    Log::trace() << "MessageQueue Get, Size: " << _queue.size() << ", Front: " << msg << Log::end;
 
     if (msg.compare(0, 5, "tile ") != 0 || msg.find("id=") != std::string::npos)
     {
