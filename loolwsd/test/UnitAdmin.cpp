@@ -412,8 +412,11 @@ public:
 
         // Register tests here.
         _tests.push_back(&UnitAdmin::testIncorrectPassword);
+#if ENABLE_SSL
         _tests.push_back(&UnitAdmin::testCorrectPassword);
+#endif
         _tests.push_back(&UnitAdmin::testWebSocketWithoutAuthToken);
+#if ENABLE_SSL
         _tests.push_back(&UnitAdmin::testWebSocketWithIncorrectAuthToken);
         _tests.push_back(&UnitAdmin::testAddDocNotify);
         _tests.push_back(&UnitAdmin::testUsersCount);
@@ -421,6 +424,7 @@ public:
         // FIXME make this one reliable, and enable again _tests.push_back(&UnitAdmin::testRmDocNotify);
         _tests.push_back(&UnitAdmin::testUsersCount);
         _tests.push_back(&UnitAdmin::testDocCount);
+#endif
     }
 
     // Runs tests sequentially in _tests
