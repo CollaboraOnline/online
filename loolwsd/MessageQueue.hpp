@@ -21,6 +21,8 @@
 */
 class MessageQueue
 {
+    friend class WhiteBoxTests;
+
 public:
 
     typedef std::vector<char> Payload;
