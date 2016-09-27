@@ -39,6 +39,15 @@
 #include "FileServer.hpp"
 #include "LOOLWSD.hpp"
 
+/* CODE */
+#define LOOLWSD_CODE "This development build is limited to %d documents, and %d connections - to avoid the impression that it is suitable for deployment in large enterprises. To find out more about deploying and scaling %s checkout - <a href=\"%s\">%s</a>."
+
+/* PRODUCT */
+#define LOOLWSD_PRODUCT "LibreOffice Online"
+
+/* PRODUCT URL */
+#define LOOLWSD_URL "https://wiki.documentfoundation.org/Development/LibreOffice_Online"
+
 using Poco::FileInputStream;
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
@@ -242,6 +251,7 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), accessTokenTtl);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(preprocess, std::string("%CODE%"), Poco::format(LOOLWSD_CODE, MAX_SESSIONS, MAX_SESSIONS, std::string(LOOLWSD_PRODUCT), std::string(LOOLWSD_URL), std::string(LOOLWSD_URL)));
 
     response.setContentType("text/html");
     response.setContentLength(preprocess.length());
