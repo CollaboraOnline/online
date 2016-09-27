@@ -46,10 +46,6 @@ L.Layer = L.Evented.extend({
 
 		this.onAdd(map);
 
-		if (this.getAttribution && this._map.attributionControl) {
-			this._map.attributionControl.addAttribution(this.getAttribution());
-		}
-
 		if (this.getEvents) {
 			map.on(this.getEvents(), this);
 		}
@@ -84,10 +80,6 @@ L.Map.include({
 
 		if (this._loaded) {
 			layer.onRemove(this);
-		}
-
-		if (layer.getAttribution && this.attributionControl) {
-			this.attributionControl.removeAttribution(layer.getAttribution());
 		}
 
 		if (layer.getEvents) {

@@ -10,21 +10,12 @@ L.Control.Attribution = L.Control.extend({
 
 	initialize: function (options) {
 		L.setOptions(this, options);
-
-		this._attributions = {};
 	},
 
 	onAdd: function (map) {
-		this._container = L.DomUtil.create('div', 'leaflet-control-attribution');
-		if (L.DomEvent) {
+		if (!this._container) {
+			this._container = L.DomUtil.create('div', 'leaflet-control-attribution');
 			L.DomEvent.disableClickPropagation(this._container);
-		}
-
-		// TODO ugly, refactor
-		for (var i in map._layers) {
-			if (map._layers[i].getAttribution) {
-				this.addAttribution(map._layers[i].getAttribution());
-			}
 		}
 
 		this._update();
@@ -38,51 +29,10 @@ L.Control.Attribution = L.Control.extend({
 		return this;
 	},
 
-	addAttribution: function (text) {
-		if (!text) { return this; }
-
-		if (!this._attributions[text]) {
-			this._attributions[text] = 0;
-		}
-		this._attributions[text]++;
-
-		this._update();
-
-		return this;
-	},
-
-	removeAttribution: function (text) {
-		if (!text) { return this; }
-
-		if (this._attributions[text]) {
-			this._attributions[text]--;
-			this._update();
-		}
-
-		return this;
-	},
-
 	_update: function () {
 		if (!this._map) { return; }
 
-		var attribs = [];
-
-		for (var i in this._attributions) {
-			if (this._attributions[i]) {
-				attribs.push(i);
-			}
-		}
-
-		var prefixAndAttribs = [];
-
-		if (this.options.prefix) {
-			prefixAndAttribs.push(this.options.prefix);
-		}
-		if (attribs.length) {
-			prefixAndAttribs.push(attribs.join(', '));
-		}
-
-		this._container.innerHTML = prefixAndAttribs.join(' | ');
+		this._container.innerHTML = this.options.prefix;
 	}
 });
 

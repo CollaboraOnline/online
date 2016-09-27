@@ -397,6 +397,9 @@ L.Map.Keyboard = L.Handler.extend({
 			} else if (e.originalEvent.altKey) {
 				switch (e.originalEvent.keyCode) {
 				case 68: // Ctrl + Shift + Alt + d for tile debugging mode
+					if (this._map._attributionControl) {
+						this._map.removeControl(this._map._attributionControl);
+					}
 					this._map._docLayer.toggleTileDebugMode();
 				}
 			}
