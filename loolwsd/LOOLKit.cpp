@@ -543,7 +543,7 @@ public:
             // If there are no live sessions, we don't need to do anything at all and can just
             // bluntly exit, no need to clean up our own data structures. Also, there is a bug that
             // causes the deadSessions.clear() call below to crash in some situations when the last
-            // session is being removed, see bccu#2035.
+            // session is being removed.
             for (auto it = _connections.cbegin(); it != _connections.cend(); ++it)
             {
                 if (it->second->isRunning())
