@@ -180,11 +180,11 @@ namespace Util
                 {
                     // Not performance critical to warrant caching.
                     std::regex re(value, std::regex::icase);
-                    std::smatch match;
+                    std::smatch smatch;
 
                     // Must be a full match.
-                    if (std::regex_match(subject, match, re) &&
-                        match.position() == 0 && match.length() == length)
+                    if (std::regex_match(subject, smatch, re) &&
+                        smatch.position() == 0 && smatch.length() == length)
                     {
                         return true;
                     }
