@@ -114,6 +114,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
              tokens[0] != "partpagerectangles" &&
+             tokens[0] != "ping" &&
              tokens[0] != "renderfont" &&
              tokens[0] != "requestloksession" &&
              tokens[0] != "resetselection" &&
@@ -149,6 +150,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "partpagerectangles")
     {
         return getPartPageRectangles(buffer, length);
+    }
+    else if (tokens[0] == "ping")
+    {
+        sendTextFrame("pong");
+        return true;
     }
     else if (tokens[0] == "renderfont")
     {

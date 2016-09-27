@@ -84,6 +84,10 @@ mouse type=<type> x=<x> y=<y> count=<count>
 
     <type> is 'buttondown', 'buttonup' or 'move', others are numbers.
 
+ping
+
+    requests a 'pong' server message.
+
 renderfont font=<font>
 
     requests the rendering of the given font.
