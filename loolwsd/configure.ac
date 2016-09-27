@@ -115,7 +115,7 @@ if test "$enable_debug" = "yes"; then
    ENABLE_DEBUG=true
    LOOLWSD_LOGLEVEL="trace"
    LOOLWSD_LOG_TO_FILE="true"
-   LOOLWSD_LOGFILE="loolwsd.log"
+   LOOLWSD_LOGFILE="/tmp/loolwsd.log"
    debug_msg="low security debugging mode"
 else
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
@@ -128,6 +128,7 @@ if test -n "$with_logfile" ; then
    LOOLWSD_LOGFILE="$with_logfile"
 fi
 AC_SUBST(LOOLWSD_LOGFILE)
+AC_DEFINE_UNQUOTED([LOOLWSD_LOGFILE],["$LOOLWSD_LOGFILE"],[Pathname of the logfile.])
 
 MAX_DOCUMENTS=10
 AS_IF([test -n "$with_max_documents"],

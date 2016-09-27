@@ -198,7 +198,15 @@ int main(int argc, char** argv)
     }
 
     // Initialization
-    Log::initialize("frk", getenv("LOOL_LOGLEVEL"), getenv("LOOL_LOGCOLOR"));
+    const bool logToFile = getenv("LOOL_LOGFILE");
+    const auto logFilename = getenv("LOOL_LOGFILENAME");
+    std::map<std::string, std::string> logProperties;
+    if (logToFile && logFilename)
+    {
+        logProperties["path"] = std::string(logFilename);
+    }
+
+    Log::initialize("frk", getenv("LOOL_LOGLEVEL"), getenv("LOOL_LOGCOLOR"), logToFile, logProperties);
 
     Util::setTerminationSignals();
     Util::setFatalSignals();
