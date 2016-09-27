@@ -76,9 +76,6 @@ if test "z$tst" == "z"; then
 	 echo ":test-result: PASS run_test.sh" >> $oldpath/$test_output
 	 retval=0
      else
-         echo "============================================================="
-	 echo "Test failed on unit:"
-         echo "============================================================="
 	 echo ":test-result: FAIL run_test.sh" >> $oldpath/$test_output
 	 retval=1
      fi
