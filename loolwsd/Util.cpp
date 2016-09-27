@@ -19,8 +19,11 @@
 
 #include <atomic>
 #include <cassert>
+#include <chrono>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <mutex>
@@ -33,6 +36,7 @@
 #include <Poco/Exception.h>
 #include <Poco/Format.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Message.h>
 #include <Poco/Process.h>
 #include <Poco/RandomStream.h>
 #include <Poco/TemporaryFile.h>
@@ -102,6 +106,17 @@ namespace rng
 }
 }
 
+namespace
+{
+    void alertSysadminOrLogNormally(const std::string& message, const std::string& tag, Poco::Message::Priority priority)
+    {
+        if (priority <= Poco::Message::PRIO_CRITICAL)
+            Util::alertSysadminWithoutSpamming(message, tag, 6);
+        else
+            Log::error(message + " Removing.");
+    }
+}
+
 namespace Util
 {
     std::string encodeId(const unsigned number, const int padding)
@@ -140,6 +155,87 @@ namespace Util
     bool windowingAvailable()
     {
         return std::getenv("DISPLAY") != nullptr;
+    }
+
+    bool saveDataToFileSafely(std::string fileName, const char *data, size_t size, Poco::Message::Priority priority)
+    {
+        const auto tempFileName = fileName + ".temp";
+        std::fstream outStream(tempFileName, std::ios::out);
+
+        // If we can't create the file properly, just remove it
+        if (!outStream.good())
+        {
+            alertSysadminOrLogNormally("Creating " + tempFileName + " failed, disk full?", "diskfull?", priority);
+            // Try removing both just in case
+            std::remove(tempFileName.c_str());
+            std::remove(fileName.c_str());
+            return false;
+        }
+        else
+        {
+            outStream.write(data, size);
+            if (!outStream.good())
+            {
+                alertSysadminOrLogNormally("Writing to " + tempFileName + " failed, disk full?", "diskfull?", priority);
+                outStream.close();
+                std::remove(tempFileName.c_str());
+                std::remove(fileName.c_str());
+                return false;
+            }
+            else
+            {
+                outStream.close();
+                if (!outStream.good())
+                {
+                    alertSysadminOrLogNormally("Closing " + tempFileName + " failed, disk full?", "diskfull?", priority);
+                    std::remove(tempFileName.c_str());
+                    std::remove(fileName.c_str());
+                    return false;
+                }
+                else
+                {
+                    // Everything OK, rename the file to its proper name
+                    if (std::rename(tempFileName.c_str(), fileName.c_str()) == 0)
+                    {
+                        Log::debug() << "Renaming " << tempFileName << " to " << fileName << " OK." << Log::end;
+                        return true;
+                    }
+                    else
+                    {
+                        alertSysadminOrLogNormally("Renaming " + tempFileName + " to " + fileName + " failed, disk full?", "diskfull?", priority);
+                        std::remove(tempFileName.c_str());
+                        std::remove(fileName.c_str());
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    void alertSysadminWithoutSpamming(const std::string& message, const std::string& tag, int maxMessagesPerDay)
+    {
+        static std::map<std::string, std::chrono::steady_clock::time_point> timeStamp;
+
+        const auto now = std::chrono::steady_clock::now();
+        const auto minInterval = std::chrono::seconds(24 * 60 * 60) / maxMessagesPerDay;
+
+        if (timeStamp.find(tag) == timeStamp.end() ||
+            timeStamp[tag] < now - minInterval)
+        {
+            // FIXME: Come up with something here that actually is a good way to notify the sysadmin
+            // so that this function actually does what it says on the tin. Is there some direct
+            // systemd way to log really important messages? And how to use that then conditionally
+            // on whether we actually are running under systemd, or just normally, for a developer
+            // or at some end-user that doesn't use systemd for LOOL.
+
+            // Or should we extend our Log API to also have the CRITICAL level, and then get all our
+            // normal decorations in the logging also for this? On the other hand, it is a bit
+            // redundant actually to have our logging output timestamps, for instance, as systemd's
+            // logging mechanism automatically attaches timestamps to output from processes it runs
+            // anyway, doesn't it?
+            Log::logger().critical(message);
+            timeStamp[tag] = now;
+        }
     }
 
     const char *signalName(const int signo)

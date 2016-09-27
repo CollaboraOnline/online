@@ -21,6 +21,7 @@
 
 #include <Poco/File.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/Message.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 
@@ -47,6 +48,19 @@ namespace Util
     std::string createRandomDir(const std::string& path);
 
     bool windowingAvailable();
+
+    // Save data to a file (overwriting an existing file if necessary) with checks for errors. Write
+    // to a temporary file in the same directory that is then atomically renamed to the desired name
+    // if everything goes well. In case of any error, both the destination file (if it already
+    // exists) and the temporary file (if was created, or existed already) are removed. Return true
+    // if everything succeeded. If priority is PRIO_CRITICAL or PRIO_FATAL, we will try to make sure
+    // an error message reaches a sysadmin. Such a message will be produced at most once every four
+    // hours during the runtime of the process to make it less likely they are ignored as spam.
+    bool saveDataToFileSafely(std::string fileName, const char *data, size_t size, Poco::Message::Priority priority);
+
+    // Log the message with priority PRIO_CRITICAL. Don't log messages with the same tag more often
+    // than maxMessagesPerDay.
+    void alertSysadminWithoutSpamming(const std::string& message, const std::string& tag, int maxMessagesPerDay);
 
     /// Assert that a lock is already taken.
     template <typename T>
