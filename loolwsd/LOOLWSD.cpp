@@ -1514,8 +1514,11 @@ void LOOLWSD::initialize(Application& self)
 
     ServerApplication::initialize(self);
 
-    Log::warn("Launch this in your browser:");
-    Log::warn(lcl_getLaunchURI());
+#if ENABLE_DEBUG
+    std::cerr << "\nLaunch this in your browser:\n\n" <<
+        lcl_getLaunchURI() <<
+        "\n\nFull log is available in: " << LOOLWSD_LOGFILE << std::endl;
+#endif
 }
 
 void LOOLWSD::initializeSSL()

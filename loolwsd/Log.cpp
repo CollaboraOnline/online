@@ -126,24 +126,20 @@ namespace Log
         strncpy(LogPrefix, oss.str().c_str(), sizeof(LogPrefix));
 
         // Configure the logger.
-        AutoPtr<Channel> channel = (withColor
-                                    ? static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel())
-                                    : static_cast<Poco::Channel*>(new Poco::ConsoleChannel()));
+        AutoPtr<Channel> channel;
 
         if (logToFile)
         {
-            auto splitterChannel(new SplitterChannel());
-            splitterChannel->addChannel(channel);
-
-            AutoPtr<FileChannel> rotatedFileChannel(new FileChannel("loolwsd.log"));
+            channel = static_cast<Poco::Channel*>(new FileChannel("loolwsd.log"));
             for (const auto& pair : config)
             {
-                rotatedFileChannel->setProperty(pair.first, pair.second);
+                channel->setProperty(pair.first, pair.second);
             }
-
-            splitterChannel->addChannel(rotatedFileChannel);
-            channel = splitterChannel;
         }
+        else if (withColor)
+            channel = static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel());
+        else
+            channel = static_cast<Poco::Channel*>(new Poco::ConsoleChannel());
 
         auto& logger = Poco::Logger::create(Source.name, channel, Poco::Message::PRIO_TRACE);
 
