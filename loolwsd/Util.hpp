@@ -187,18 +187,16 @@ namespace Util
             }
 
             // Not a perfect match, try regex.
-            const int length = subject.size();
             for (const auto& value : set)
             {
                 try
                 {
                     // Not performance critical to warrant caching.
-                    std::regex re(value, std::regex::icase);
-                    std::smatch smatch;
+                    Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
+                    Poco::RegularExpression::Match reMatch{};
 
                     // Must be a full match.
-                    if (std::regex_match(subject, smatch, re) &&
-                        smatch.position() == 0 && smatch.length() == length)
+                    if (re.match(subject, reMatch) && reMatch.offset == 0 && reMatch.length == subject.size())
                     {
                         return true;
                     }
