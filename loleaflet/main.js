@@ -93,7 +93,7 @@ var map = L.map('map', {
     timestamp: timestamp,
     documentContainer: 'document-container',
     debug: debugMode
-});
+}, attribution);
 // toolbar.js (loaded in <script> tag accesses map as global variable,
 // so expose it
 global.map = map;
