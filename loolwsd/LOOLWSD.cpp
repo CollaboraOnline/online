@@ -1400,7 +1400,7 @@ void LOOLWSD::initialize(Application& self)
 
     const auto logLevel = getConfigValue<std::string>(conf, "logging.level", "trace");
     setenv("LOOL_LOGLEVEL", logLevel.c_str(), true);
-    const auto withColor = !std::getenv("LOOL_NO_LOGCOLOR") && getConfigValue<bool>(conf, "logging.color", true);
+    const auto withColor = getConfigValue<bool>(conf, "logging.color", true);
     if (withColor)
     {
         setenv("LOOL_LOGCOLOR", "1", true);
