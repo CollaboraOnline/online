@@ -722,7 +722,11 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringToke
 
     _loKitDocument->setView(_viewId);
 
-    if (tokens.count() == 2)
+    if (tokens.count() == 2 && tokens[1] == ".uno:fakeDiskFull")
+    {
+        Util::alertAllUsers("internal", "diskfull");
+    }
+    else if (tokens.count() == 2)
     {
         _loKitDocument->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
     }

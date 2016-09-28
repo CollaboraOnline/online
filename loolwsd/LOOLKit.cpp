@@ -89,6 +89,10 @@ using Poco::Util::Application;
 
 using namespace LOOLProtocol;
 
+// We only host a single document in our lifetime.
+class Document;
+static std::shared_ptr<Document> document;
+
 namespace
 {
     typedef enum { COPY_ALL, COPY_LO, COPY_NO_USR } LinkOrCopyType;
@@ -800,6 +804,13 @@ public:
         ws->sendFrame(response.data(), length, WebSocket::FRAME_BINARY);
     }
 
+    void sendTextFrame(const std::string& message)
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+
+        _ws->sendFrame(message.data(), message.size());
+    }
+
 private:
 
     static void GlobalCallback(const int nType, const char* pPayload, void* pData)
@@ -1339,9 +1350,6 @@ void lokit_main(const std::string& childRoot,
     assert(!loTemplate.empty());
     assert(!loSubPath.empty());
 
-    // We only host a single document in our lifetime.
-    std::shared_ptr<Document> document;
-
     // Ideally this will be a random ID, but forkit will cleanup
     // our jail directory when we die, and it's simpler to know
     // the jailId (i.e. the path) implicitly by knowing our pid.
@@ -1507,7 +1515,7 @@ void lokit_main(const std::string& childRoot,
 
         const std::string socketName = "ChildControllerWS";
         IoUtil::SocketProcessor(ws,
-                [&socketName, &ws, &document, &loKit, &queue](const std::vector<char>& data)
+                [&socketName, &ws, &loKit, &queue](const std::vector<char>& data)
                 {
                     std::string message(data.data(), data.size());
 
@@ -1568,7 +1576,7 @@ void lokit_main(const std::string& childRoot,
                     return true;
                 },
                 []() {},
-                [&document]()
+                []()
                 {
                     if (document && document->canDiscard())
                     {
@@ -1674,6 +1682,16 @@ bool globalPreinit(const std::string &loTemplate)
     }
 
     return true;
+}
+
+namespace Util
+{
+
+void alertAllUsers(const std::string& cmd, const std::string& kind)
+{
+    document->sendTextFrame("errortoall: cmd=" + cmd + " kind=" + kind);
+}
+
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

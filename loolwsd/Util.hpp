@@ -21,7 +21,6 @@
 
 #include <Poco/File.h>
 #include <Poco/Net/WebSocket.h>
-#include <Poco/Message.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/RegularExpression.h>
@@ -54,14 +53,25 @@ namespace Util
     // to a temporary file in the same directory that is then atomically renamed to the desired name
     // if everything goes well. In case of any error, both the destination file (if it already
     // exists) and the temporary file (if was created, or existed already) are removed. Return true
-    // if everything succeeded. If priority is PRIO_CRITICAL or PRIO_FATAL, we will try to make sure
-    // an error message reaches a sysadmin. Such a message will be produced at most once every four
-    // hours during the runtime of the process to make it less likely they are ignored as spam.
-    bool saveDataToFileSafely(std::string fileName, const char *data, size_t size, Poco::Message::Priority priority);
+    // if everything succeeded.
+    bool saveDataToFileSafely(std::string fileName, const char *data, size_t size);
 
-    // Log the message with priority PRIO_CRITICAL. Don't log messages with the same tag more often
-    // than maxMessagesPerDay.
-    void alertSysadminWithoutSpamming(const std::string& message, const std::string& tag, int maxMessagesPerDay);
+    // We work around some of the mess of using the same sources both on the server side and in unit
+    // tests with conditional compilation based on BUILDING_TESTS.
+
+#ifndef BUILDING_TESTS
+    // Send a 'error:' message with the specified cmd and kind parameters to all connected
+    // clients. This function can be called either in loolwsd or loolkit processes, even if only
+    // loolwsd obviously has contact with the actual clients; in loolkit it will be forwarded to
+    // loolwsd for redistribution. (This function must be implemented separately in each program
+    // that uses it, it is not in Util.cpp.)
+    void alertAllUsers(const std::string& cmd, const std::string& kind);
+#else
+    // No-op implementation in the test programs
+    inline void alertAllUsers(const std::string&, const std::string&)
+    {
+    }
+#endif
 
     /// Assert that a lock is already taken.
     template <typename T>

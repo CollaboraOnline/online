@@ -211,8 +211,9 @@ error: cmd=<command> kind=<kind> [code=<error_code>]
 <freeErrorText>
 
     <command> is the command part of the corresponding client->server
-    message that caused the error. <kind> is some single-word
-    classification
+    message that caused the error. <command> can also be 'internal'
+    for errors generated without directly corresponding to a client
+    message. <kind> is some single-word classification
 
     <code> (when provided) further specifies the error as forwarded from
     LibreOffice
@@ -346,6 +347,11 @@ curpart: part=<partNumber>
     Sent to the parent process before certain messages that the parent
     needs to act on in addition to passing them on to the client, like
     invalidatetiles:
+
+errortoall: cmd=<command> kind=<kind> [code=<error_code>]
+
+    Causes the parent to send the corresponding error: message to all
+    clients.
 
 nextmessage: size=<upperlimit>
 
