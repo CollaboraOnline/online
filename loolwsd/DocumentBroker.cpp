@@ -112,6 +112,8 @@ DocumentBroker::DocumentBroker() :
     _cursorHeight(0),
     _isLoaded(false),
     _isModified(false),
+    _mutex(),
+    _saveMutex(),
     _tileVersion(0)
 {
     Log::info("Empty DocumentBroker (marked to destroy) created.");
@@ -135,6 +137,8 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _cursorHeight(0),
     _isLoaded(false),
     _isModified(false),
+    _mutex(),
+    _saveMutex(),
     _tileVersion(0)
 {
     assert(!_docKey.empty());

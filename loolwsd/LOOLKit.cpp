@@ -258,6 +258,7 @@ public:
         _sessionId(session->getId()),
         _session(std::move(session)),
         _ws(std::move(ws)),
+        _threadMutex(),
         _joined(false)
     {
         Log::info("Connection ctor in child for " + _sessionId);
@@ -406,6 +407,7 @@ public:
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
         _stop(false),
+        _mutex(),
         _isLoading(0),
         _clientViews(0)
     {

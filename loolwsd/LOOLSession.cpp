@@ -60,6 +60,7 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _isActive(true),
     _lastActivityTime(std::chrono::steady_clock::now()),
     _isCloseFrame(false),
+    _mutex(),
     _docPassword(""),
     _haveDocPassword(false),
     _isDocPasswordProtected(false)

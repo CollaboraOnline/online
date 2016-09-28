@@ -31,7 +31,9 @@ public:
     };
 
     TraceFileRecord() :
-        Dir(Direction::Invalid)
+        Dir(Direction::Invalid),
+        TimestampNs(0),
+        Pid(0)
     {
     }
 
@@ -54,7 +56,8 @@ public:
         _compress(compress),
         _filter(true),
         _stream(path, compress ? std::ios::binary : std::ios::out),
-        _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
+        _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP),
+        _mutex()
     {
         for (const auto& f : filters)
         {
