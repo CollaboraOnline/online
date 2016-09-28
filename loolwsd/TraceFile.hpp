@@ -67,42 +67,53 @@ public:
 
     ~TraceFileWriter()
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         _deflater.close();
         _stream.close();
     }
 
     void writeEvent(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
-        write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
-        flush();
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        writeLocked(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
+        flushLocked();
     }
 
     void writeIncoming(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         if (_filter.match(data))
         {
-            write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
+            writeLocked(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
         }
     }
 
     void writeOutgoing(const std::string& pId, const std::string& sessionId, const std::string& data)
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         if (_recordOutgoing && _filter.match(data))
         {
-            write(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
+            writeLocked(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
         }
     }
 
-    void flush()
+private:
+    void flushLocked()
     {
+        Util::assertIsLocked(_mutex);
+
         _deflater.flush();
         _stream.flush();
     }
 
-private:
-    void write(const std::string& pId, const std::string& sessionId, const std::string& data, const char delim)
+    void writeLocked(const std::string& pId, const std::string& sessionId, const std::string& data, const char delim)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
+        Util::assertIsLocked(_mutex);
+
         const Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - _epochStart;
         if (_compress)
         {
