@@ -45,7 +45,7 @@ public:
     void notifyViewInfo() = 0;
 };
 
-/// Represents the session to the WSD process, in a Kit process.
+/// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
 class ChildSession final : public LOOLSession
 {
 public:
