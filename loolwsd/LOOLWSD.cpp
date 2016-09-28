@@ -2001,6 +2001,21 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request
     }
 }
 
+namespace Util
+{
+
+void alertAllUsers(const std::string& cmd, const std::string& kind)
+{
+    std::lock_guard<std::mutex> docBrokersLock(docBrokersMutex);
+
+    for (auto& brokerIt : docBrokers)
+    {
+        brokerIt.second->alertAllUsersOfDocument(cmd, kind);
+    }
+}
+
+}
+
 POCO_SERVER_MAIN(LOOLWSD)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

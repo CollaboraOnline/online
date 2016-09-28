@@ -15,6 +15,7 @@
 
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
+#include <Poco/StringTokenizer.h>
 
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
@@ -27,6 +28,8 @@
 #include "Unit.hpp"
 
 using namespace LOOLProtocol;
+
+using Poco::StringTokenizer;
 
 void ChildProcess::socketProcessor()
 {
@@ -443,6 +446,16 @@ size_t DocumentBroker::removeSession(const std::string& id)
     return _sessions.size();
 }
 
+void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::string& kind)
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    for (auto& it: _sessions)
+    {
+        it.second->sendTextFrame("error: cmd=" + cmd + " kind=" + kind);
+    }
+}
+
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
     const auto msg = LOOLProtocol::getAbbreviatedMessage(payload);
@@ -457,6 +470,17 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     else if (msg.find("tilecombine:") == 0)
     {
        handleTileCombinedResponse(payload);
+    }
+    else if (msg.find("errortoall:") == 0)
+    {
+        StringTokenizer tokens(msg, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        assert(tokens.count() == 3);
+        std::string cmd, kind;
+        LOOLProtocol::getTokenString(tokens, "cmd", cmd);
+        assert(cmd != "");
+        LOOLProtocol::getTokenString(tokens, "kind", kind);
+        assert(kind != "");
+        Util::alertAllUsers(cmd, kind);
     }
     else
     {

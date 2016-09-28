@@ -98,6 +98,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGraphicViewSelection);
     CPPUNIT_TEST(testGraphicInvalidate);
     CPPUNIT_TEST(testCursorPosition);
+    CPPUNIT_TEST(testAlertAllUsers);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -141,6 +142,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testGraphicViewSelection();
     void testGraphicInvalidate();
     void testCursorPosition();
+    void testAlertAllUsers();
 
     void loadDoc(const std::string& documentURL);
 
@@ -2202,6 +2204,52 @@ void HTTPWSTest::testCursorPosition()
         CPPUNIT_ASSERT(std::abs(std::stoi(cursorTokens[1]) - std::stoi(viewTokens[1])) < tolerance);
         CPPUNIT_ASSERT(std::abs(std::stoi(cursorTokens[2]) - std::stoi(viewTokens[2])) < tolerance);
         CPPUNIT_ASSERT(std::abs(std::stoi(cursorTokens[3]) - std::stoi(viewTokens[3])) < tolerance);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testAlertAllUsers()
+{
+    // Load two documents, each in two sessions. Tell one session to fake a disk full
+    // situation. Expect to get the corresponding error back in all sessions.
+
+    try
+    {
+        std::string docPath[2];
+        std::string docURL[2];
+
+        getDocumentPathAndURL("Example.odt", docPath[0], docURL[0]);
+        getDocumentPathAndURL("hello.odt", docPath[1], docURL[1]);
+
+        Poco::Net::HTTPRequest* request[2];
+
+        for (int i = 0; i < 2; i++)
+            request[i] = new Poco::Net::HTTPRequest(Poco::Net::HTTPRequest::HTTP_GET, docURL[i]);
+
+        std::shared_ptr<Poco::Net::WebSocket> socket[4];
+        for (int i = 0; i < 4; i++)
+        {
+            socket[i] = connectLOKit(_uri, *(request[i/2]), _response);
+            sendTextFrame(socket[i], "load url=" + docURL[i/2]);
+        }
+
+        sendTextFrame(socket[0], "uno .uno:fakeDiskFull");
+
+        for (int i = 0; i < 4; i++)
+        {
+            std::string response;
+            getResponseMessage(socket[i], "error:", response, false);
+            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::string cmd;
+            LOOLProtocol::getTokenString(tokens, "cmd", cmd);
+            CPPUNIT_ASSERT_EQUAL(std::string("internal"), cmd);
+            std::string kind;
+            LOOLProtocol::getTokenString(tokens, "kind", kind);
+            CPPUNIT_ASSERT_EQUAL(std::string("diskfull"), kind);
+        }
     }
     catch (const Poco::Exception& exc)
     {
