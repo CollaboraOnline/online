@@ -20,7 +20,7 @@ L.Map = L.Evented.extend({
 		urlPrefix: 'lool'
 	},
 
-	initialize: function (id, options, attribution) { // (HTMLElement or String, Object)
+	initialize: function (id, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
 		if (this.options.documentContainer) {
@@ -53,10 +53,6 @@ L.Map = L.Evented.extend({
 		if (options.webserver === undefined) {
 			var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
 			options.webserver = options.server.replace(/^(ws|wss):/i, protocol);
-		}
-
-		if (attribution) {
-			this._attributionControl = L.control.attribution({prefix: attribution}).addTo(this);
 		}
 
 		// we are adding components like '/insertfile' at the end which would
@@ -1055,6 +1051,6 @@ L.Map = L.Evented.extend({
 	}
 });
 
-L.map = function (id, options, attribution) {
-	return new L.Map(id, options, attribution);
+L.map = function (id, options) {
+	return new L.Map(id, options);
 };
