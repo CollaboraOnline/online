@@ -19,6 +19,11 @@
 /* Default document used in the start test URI */
 #define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH "test/data/hello-world.odt"
 
+/* PRODUCT */
+#define LOOLWSD_PRODUCT "LibreOffice Online"
+
+/* PRODUCT URL */
+#define LOOLWSD_URL "https://wiki.documentfoundation.org/Development/LibreOffice_Online"
 
 // This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
 // parent process that listens on the TCP port and accepts connections from LOOL clients, and a
@@ -533,6 +538,14 @@ private:
     {
         Log::info("Starting GET request handler for session [" + id + "].");
 
+#if MAX_CONNECTIONS > 0
+        if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
+        {
+            Log::error("Maximum number of connections reached.");
+            throw WebSocketErrorMessageException(Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS, std::string(LOOLWSD_PRODUCT), std::string(LOOLWSD_URL), std::string(LOOLWSD_URL)));
+        }
+#endif
+
         // indicator to the client that document broker is searching
         std::string status("statusindicator: find");
         Log::trace("Sending to Client [" + status + "].");
@@ -634,7 +647,7 @@ private:
             {
                 --LOOLWSD::NumDocBrokers;
                 Log::error("Maximum number of open documents reached.");
-                throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_LIMIT_REACHED);
+                throw WebSocketErrorMessageException(Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS, std::string(LOOLWSD_PRODUCT), std::string(LOOLWSD_URL), std::string(LOOLWSD_URL)));
             }
 #endif
 
@@ -851,15 +864,6 @@ public:
                 UnitWSD::TestRequest::TEST_REQ_CLIENT,
                 request, response))
             return;
-
-#if MAX_CONNECTIONS > 0
-        if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
-        {
-            --LOOLWSD::NumConnections;
-            Log::error("Maximum number of connections reached.");
-            throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_LIMIT_REACHED);
-        }
-#endif
 
         handleClientRequest(request,response);
 
