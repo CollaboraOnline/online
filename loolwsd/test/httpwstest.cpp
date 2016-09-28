@@ -2049,7 +2049,6 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
     for (auto socketView : views)
     {
         sendTextFrame(*socketView, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE(Poco::format(load, itView) + documentURL, isDocumentLoaded(*socketView, Poco::format(view, itView), true));
 
         // Expected to receive response each view
         getResponseMessage(*socketView, protocolView, response, false, Poco::format(view, itView));
@@ -2161,6 +2160,8 @@ void HTTPWSTest::testCursorPosition()
 {
     try
     {
+        const auto testname = "cursorPosition ";
+
          // Load a document.
         std::string docPath;
         std::string docURL;
@@ -2172,22 +2173,20 @@ void HTTPWSTest::testCursorPosition()
         Poco::Net::WebSocket socket0 = *connectLOKit(_uri, request, _response);
 
         sendTextFrame(socket0, "load url=" + docURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + docURL, isDocumentLoaded(socket0));
 
         // receive cursor position
-        getResponseMessage(socket0, "invalidatecursor:", response, false);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatecursor: message as expected", !response.empty());
+        getResponseMessage(socket0, "invalidatecursor:", response, false, testname);
         Poco::StringTokenizer cursorTokens(response, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
+        assertResponseLine(socket0, "status:", testname);
 
         // Create second view
         Poco::Net::WebSocket socket1 = *connectLOKit(_uri, request, _response);
         sendTextFrame(socket1, "load url=" + docURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + docURL, isDocumentLoaded(socket1));
 
         //receive view cursor position
-        getResponseMessage(socket0, "invalidateviewcursor:", response, false);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidateviewcursor: message as expected", !response.empty());
+        getResponseMessage(socket1, "invalidateviewcursor:", response, false, testname);
+        assertResponseLine(socket1, "status:", testname);
 
         Poco::JSON::Parser parser;
         const auto result = parser.parse(response);
