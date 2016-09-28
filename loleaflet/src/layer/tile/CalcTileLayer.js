@@ -67,11 +67,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 					}
 					tilePositionsY += tileTopLeft.y;
 					needsNewTiles = true;
-					if (this._debug && this._tiles[key]._debugTile) {
-						this._tiles[key]._debugTile.setStyle({fillOpacity: 0.5});
-						this._tiles[key]._debugTime.date = +new Date();
-						this._tiles[key]._debugInvalidateCount++;
-						this._debugInvalidateCount++;
+					if (this._debug) {
+						this._debugAddInvalidationData(this._tiles[key]);
 					}
 				}
 				else {
