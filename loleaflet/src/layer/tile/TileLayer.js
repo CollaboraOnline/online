@@ -385,7 +385,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		if (!this._debug) {
 			this._debugDataPING.setPrefix('');
-			this._debugDataCancelledTiles.setPrefix('');
 			this._debugDataTileCombine.setPrefix('');
 			this._debugDataFromKeyInputToInvalidate.setPrefix('');
 		}
@@ -1025,7 +1024,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (tile._debugTile) {
 				tile._debugTile.setStyle({fillOpacity: 0});
 			}
-			this._debugDataLoadCount.setPrefix('Total of requested tiles: ' + this._debugInvalidateCount + ', received: ' + this._debugLoadCount);
+			this._debugShowTileData();
 		}
 		if (command.id !== undefined) {
 			this._map.fire('tilepreview', {
@@ -1769,7 +1768,13 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_debugGetTimeArray: function() {
-		return {count: 0, ms: 0, best: Number.MAX_SAFE_INTEGER, worst: 0, last: 0, date: 0};
+		return {count: 0, ms: 0, best: Number.MAX_SAFE_INTEGER, worst: 0, date: 0};
+	},
+
+	_debugShowTileData: function() {
+		this._debugDataLoadCount.setPrefix('Total of requested tiles: ' +
+				this._debugInvalidateCount + ', received: ' + this._debugLoadCount +
+				', cancelled: ' + this._debugCancelledTiles);
 	},
 
 	_debugInit: function() {
@@ -1783,9 +1788,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._debugCancelledTiles = 0;
 			this._debugLoadCount = 0;
 			this._debugInvalidateCount = 0;
-			if (!this._debugDataCancelledTiles) {
+			if (!this._debugDataTileCombine) {
 				this._debugDataTileCombine = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
-				this._debugDataCancelledTiles = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
 				this._debugDataFromKeyInputToInvalidate = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
 				this._debugDataPING = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
 				this._debugDataLoadCount = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
@@ -1798,7 +1802,6 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_debugSetTimes: function(times, value) {
-		times.last = value;
 		if (value < times.best) {
 			times.best = value;
 		}
@@ -1828,6 +1831,15 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_debugAddInvalidationData: function(tile) {
+		if (tile._debugTile) {
+			tile._debugTile.setStyle({fillOpacity: 0.5});
+			tile._debugTime.date = +new Date();
+			tile._debugInvalidateCount++;
+			this._debugInvalidateCount++;
+		}
+	},
+
 	_debugAddInvalidationMessage: function(message) {
 		this._debugInvalidBoundsMessage[this._debugId - 1] = message;
 		var messages = '';
@@ -1837,7 +1849,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		this._debugDataTileCombine.setPrefix(messages);
-		this._debugDataLoadCount.setPrefix('Total of requested tiles: ' + this._debugInvalidateCount + ', received: ' + this._debugLoadCount);
+		this._debugShowTileData();
 	},
 
 	_debugTimeout: function() {

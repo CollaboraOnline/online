@@ -538,9 +538,9 @@ L.GridLayer = L.Layer.extend({
 					if (!this._tiles[key].loaded) {
 						L.DomUtil.remove(this._tiles[key].el);
 						delete this._tiles[key];
-						if (this._debug && this._debugDataCancelledTiles) {
+						if (this._debug) {
 							this._debugCancelledTiles++;
-							this._debugDataCancelledTiles.setPrefix('Cancelled tiles: ' + this._debugCancelledTiles);
+							this._debugShowTotalData();
 						}
 					}
 				}
