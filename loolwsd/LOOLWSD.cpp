@@ -538,14 +538,6 @@ private:
     {
         Log::info("Starting GET request handler for session [" + id + "].");
 
-#if MAX_CONNECTIONS > 0
-        if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
-        {
-            Log::error("Maximum number of connections reached.");
-            throw WebSocketErrorMessageException(Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS, std::string(LOOLWSD_PRODUCT), std::string(LOOLWSD_URL), std::string(LOOLWSD_URL)));
-        }
-#endif
-
         // indicator to the client that document broker is searching
         std::string status("statusindicator: find");
         Log::trace("Sending to Client [" + status + "].");
@@ -864,6 +856,15 @@ public:
                 UnitWSD::TestRequest::TEST_REQ_CLIENT,
                 request, response))
             return;
+
+#if MAX_CONNECTIONS > 0
+        if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
+        {
+            --LOOLWSD::NumConnections;
+            Log::error("Maximum number of connections reached.");
+            throw WebSocketErrorMessageException(Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS, std::string(LOOLWSD_PRODUCT), std::string(LOOLWSD_URL), std::string(LOOLWSD_URL)));
+        }
+#endif
 
         handleClientRequest(request,response);
 
