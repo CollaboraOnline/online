@@ -345,10 +345,6 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
-
-    _loKitDocument->setView(_viewId);
-
     URI::decode(font, decodedFont);
     std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
@@ -358,7 +354,16 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
     Timestamp timestamp;
     int width, height;
-    unsigned char* ptrFont = _loKitDocument->renderFont(decodedFont.c_str(), &width, &height);
+    unsigned char* ptrFont = nullptr;
+
+    {
+        auto lock(_loKitDocument->getLock());
+
+        _loKitDocument->setView(_viewId);
+
+        ptrFont = _loKitDocument->renderFont(decodedFont.c_str(), &width, &height);
+    }
+
     Log::trace("renderFont [" + font + "] rendered in " + std::to_string(timestamp.elapsed()/1000.) + "ms");
 
     if (!ptrFont ||
@@ -374,11 +379,15 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
 bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
 {
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    std::string status;
+    {
+        auto lock(_loKitDocument->getLock());
 
-    _loKitDocument->setView(_viewId);
+        _loKitDocument->setView(_viewId);
 
-    const auto status = LOKitHelper::documentStatus(_loKitDocument->get());
+        status = LOKitHelper::documentStatus(_loKitDocument->get());
+    }
+
     if (status.empty())
     {
         Log::error("Failed to get document status.");
@@ -399,7 +408,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -427,11 +436,14 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
 
 bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
 {
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    char* partPage = nullptr;
+    {
+        auto lock(_loKitDocument->getLock());
 
-    _loKitDocument->setView(_viewId);
+        _loKitDocument->setView(_viewId);
+        partPage = _loKitDocument->getPartPageRectangles();
+    }
 
-    char* partPage = _loKitDocument->getPartPageRectangles();
     sendTextFrame("partpagerectangles: " + std::string(partPage));
     std::free(partPage);
     return true;
@@ -451,7 +463,7 @@ bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, StringToke
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -476,7 +488,7 @@ bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -513,11 +525,13 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, StringToke
     const Poco::Path filenameParam(name);
     const auto url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + filenameParam.getFileName();
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    {
+        auto lock(_loKitDocument->getLock());
 
-    _loKitDocument->saveAs(url.c_str(),
-            format.size() == 0 ? nullptr :format.c_str(),
-            filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
+        _loKitDocument->saveAs(url.c_str(),
+                format.size() == 0 ? nullptr :format.c_str(),
+                filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
+    }
 
     sendTextFrame("downloadas: jail=" + _jailId + " dir=" + tmpDir + " name=" + name +
                   " port=" + std::to_string(ClientPortNumber) + " id=" + id);
@@ -541,14 +555,16 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, Stri
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    char* textSelection = nullptr;
+    {
+        auto lock(_loKitDocument->getLock());
 
-    _loKitDocument->setView(_viewId);
+        _loKitDocument->setView(_viewId);
 
-    char *textSelection = _loKitDocument->getTextSelection(mimeType.c_str(), nullptr);
+        textSelection = _loKitDocument->getTextSelection(mimeType.c_str(), nullptr);
+    }
 
     sendTextFrame("textselectioncontent: " + std::string(textSelection));
-
     free(textSelection);
     return true;
 }
@@ -565,15 +581,13 @@ bool ChildSession::paste(const char* buffer, int length, StringTokenizer& tokens
 
     const std::string firstLine = getFirstLine(buffer, length);
     const char* data = buffer + firstLine.size() + 1;
-    size_t size = length - firstLine.size() - 1;
+    const size_t size = length - firstLine.size() - 1;
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
-    Log::info("Calling _loKit->paste()");
     _loKitDocument->paste(mimeType.c_str(), data, size);
-    Log::info("paste() returned");
 
     return true;
 }
@@ -581,7 +595,6 @@ bool ChildSession::paste(const char* buffer, int length, StringTokenizer& tokens
 bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string name, type;
-
     if (tokens.count() != 3 ||
         !getTokenString(tokens[1], "name", name) ||
         !getTokenString(tokens[2], "type", type))
@@ -589,8 +602,6 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringToke
         sendTextFrame("error: cmd=insertfile kind=syntax");
         return false;
     }
-
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     if (type == "graphic")
     {
@@ -601,6 +612,8 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringToke
                 "\"type\":\"string\","
                 "\"value\":\"" + fileName + "\""
             "}}";
+
+        auto lock(_loKitDocument->getLock());
 
         _loKitDocument->setView(_viewId);
 
@@ -613,7 +626,6 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringToke
 bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, charcode, keycode;
-
     if (tokens.count() != 4 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"input", LOK_KEYEVENT_KEYINPUT}, {"up", LOK_KEYEVENT_KEYUP}},
@@ -641,7 +653,7 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokeni
         return true;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -686,7 +698,7 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringToke
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -703,12 +715,12 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringToke
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
-
-    _loKitDocument->setView(_viewId);
-
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
     const bool bNotify = (tokens[1] == ".uno:Save");
+
+    auto lock(_loKitDocument->getLock());
+
+    _loKitDocument->setView(_viewId);
 
     if (tokens.count() == 2)
     {
@@ -727,7 +739,6 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringToke
 bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y;
-
     if (tokens.count() != 4 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"start", LOK_SETTEXTSELECTION_START},
@@ -741,7 +752,7 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, StringToke
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -753,7 +764,6 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, StringToke
 bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     int type, x, y;
-
     if (tokens.count() != 4 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"start", LOK_SETGRAPHICSELECTION_START},
@@ -766,7 +776,7 @@ bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringT
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -783,7 +793,7 @@ bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, String
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -813,13 +823,16 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenize
         }
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    bool success = false;
+    {
+        auto lock(_loKitDocument->getLock());
 
-    _loKitDocument->setView(_viewId);
+        _loKitDocument->setView(_viewId);
 
-    bool success = _loKitDocument->saveAs(url.c_str(),
-            format.size() == 0 ? nullptr :format.c_str(),
-            filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
+        success = _loKitDocument->saveAs(url.c_str(),
+                format.size() == 0 ? nullptr :format.c_str(),
+                filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
+    }
 
     sendTextFrame("saveas: url=" + url);
     std::string successStr = success ? "true" : "false";
@@ -840,7 +853,7 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, StringT
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     if (part != _loKitDocument->getPart())
     {
@@ -862,7 +875,7 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
         return false;
     }
 
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
+    auto lock(_loKitDocument->getLock());
 
     _loKitDocument->setView(_viewId);
 
@@ -872,30 +885,8 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
 
 void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
 {
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
-
-    // Cache important notifications to replay them when our client
-    // goes inactive and loses them.
-    if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-        nType == LOK_CALLBACK_CURSOR_VISIBLE ||
-        nType == LOK_CALLBACK_CELL_CURSOR ||
-        nType == LOK_CALLBACK_CELL_FORMULA ||
-        nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
-        nType == LOK_CALLBACK_TEXT_SELECTION ||
-        nType == LOK_CALLBACK_TEXT_SELECTION_START ||
-        nType == LOK_CALLBACK_TEXT_SELECTION_END ||
-        nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
-        nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
-        nType == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
-        nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
-        nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
-        nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
-        nType == LOK_CALLBACK_VIEW_LOCK)
-    {
-        _lastDocStates[nType] = rPayload;
-    }
-
     const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
+
     if (isCloseFrame())
     {
         Log::trace("Skipping callback [" + typeName + "] on closing session " + getName());
@@ -918,6 +909,30 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
 
     Log::trace() << "CallbackWorker::callback [" << getName() << "]: "
                  << typeName << " [" << rPayload << "]." << Log::end;
+
+    // Cache important notifications to replay them when our client
+    // goes inactive and loses them.
+    if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+        nType == LOK_CALLBACK_CURSOR_VISIBLE ||
+        nType == LOK_CALLBACK_CELL_CURSOR ||
+        nType == LOK_CALLBACK_CELL_FORMULA ||
+        nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
+        nType == LOK_CALLBACK_TEXT_SELECTION ||
+        nType == LOK_CALLBACK_TEXT_SELECTION_START ||
+        nType == LOK_CALLBACK_TEXT_SELECTION_END ||
+        nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
+        nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+        nType == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
+        nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
+        nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
+        nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
+        nType == LOK_CALLBACK_VIEW_LOCK)
+    {
+        auto lock(getLock());
+
+        _lastDocStates[nType] = rPayload;
+    }
+
     switch (nType)
     {
     case LOK_CALLBACK_INVALIDATE_TILES:
@@ -946,11 +961,11 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
                 }
 
                 sendTextFrame("invalidatetiles:"
-                                       " part=" + std::to_string(curPart) +
-                                       " x=" + std::to_string(x) +
-                                       " y=" + std::to_string(y) +
-                                       " width=" + std::to_string(width) +
-                                       " height=" + std::to_string(height));
+                              " part=" + std::to_string(curPart) +
+                              " x=" + std::to_string(x) +
+                              " y=" + std::to_string(y) +
+                              " width=" + std::to_string(width) +
+                              " height=" + std::to_string(height));
             }
             else
             {
