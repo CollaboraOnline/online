@@ -146,9 +146,9 @@ private:
     std::shared_ptr<Poco::Net::WebSocket> _ws;
 
     /// True if we have been disconnected.
-    bool _disconnected;
+    std::atomic<bool> _disconnected;
     /// True if the user is active, otherwise false (switched tabs).
-    bool _isActive;
+    std::atomic<bool> _isActive;
 
     std::chrono::steady_clock::time_point _lastActivityTime;
 
