@@ -862,7 +862,10 @@ public:
         {
             --LOOLWSD::NumConnections;
             Log::error("Maximum number of connections reached.");
-            throw WebSocketErrorMessageException(Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS, std::string(LOOLWSD_PRODUCT), std::string(LOOLWSD_URL), std::string(LOOLWSD_URL)));
+            response.setStatusAndReason(HTTPResponse::HTTP_NOT_ACCEPTABLE, Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS, std::string(LOOLWSD_PRODUCT), std::string(LOOLWSD_URL), std::string(LOOLWSD_URL)));
+            response.setContentLength(0);
+            response.send();
+            return;
         }
 #endif
 
