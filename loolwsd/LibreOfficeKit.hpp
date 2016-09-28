@@ -29,7 +29,8 @@ private:
 public:
     /// A lok::Document is typically created by the lok::Office::documentLoad() method.
     inline Document(LibreOfficeKitDocument* pDoc) :
-        _pDoc(pDoc)
+        _pDoc(pDoc),
+        _mutex()
     {
         Log::trace("lok::Document ctor.");
     }
@@ -492,7 +493,8 @@ private:
 public:
     /// A lok::Office is typically created by the lok_cpp_init() function.
     inline Office(LibreOfficeKit* pThis) :
-        _pOffice(pThis)
+        _pOffice(pThis),
+        _mutex()
     {
         Log::trace("lok::Office ctor.");
         assert(_pOffice);

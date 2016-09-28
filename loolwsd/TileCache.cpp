@@ -47,7 +47,9 @@ TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,
                      const std::string& cacheDir) :
     _docURL(docURL),
-    _cacheDir(cacheDir)
+    _cacheDir(cacheDir),
+    _cacheMutex(),
+    _tilesBeingRenderedMutex()
 {
     Log::info() << "TileCache ctor for uri [" << _docURL
                 << "] modifiedTime=" << (modifiedTime.raw()/1000000)

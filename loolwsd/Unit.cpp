@@ -110,7 +110,8 @@ UnitBase::UnitBase()
       _setRetValue(false),
       _retValue(0),
       _timeoutMilliSeconds(30 * 1000),
-      _timeoutShutdown(false)
+      _timeoutShutdown(false),
+      _type(TYPE_WSD)
 {
 }
 
