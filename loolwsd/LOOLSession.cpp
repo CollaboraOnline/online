@@ -66,7 +66,9 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
 {
     // Only a post request can have a null ws.
     if (_kind != Kind::ToClient)
-        assert(_ws);
+    {
+        assert(_ws && "Expected valid web-socket but got null.");
+    }
 }
 
 LOOLSession::~LOOLSession()
@@ -75,18 +77,18 @@ LOOLSession::~LOOLSession()
 
 bool LOOLSession::sendTextFrame(const char* buffer, const int length)
 {
-    if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
-    {
-        Log::error(getName() + ": Bad socket while sending [" + getAbbreviatedMessage(buffer, length) + "].");
-        return false;
-    }
-
     Log::trace(getName() + ": Send: " + getAbbreviatedMessage(buffer, length));
     try
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        if ( length > SMALL_MESSAGE_SIZE )
+        if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
+        {
+            Log::error(getName() + ": Bad socket while sending [" + getAbbreviatedMessage(buffer, length) + "].");
+            return false;
+        }
+
+        if (length > SMALL_MESSAGE_SIZE)
         {
             const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
             _ws->sendFrame(nextmessage.data(), nextmessage.size());
@@ -107,18 +109,18 @@ bool LOOLSession::sendTextFrame(const char* buffer, const int length)
 
 bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
-    if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
-    {
-        Log::error(getName() + ": Bad socket while sending binary frame of " + std::to_string(length) + " bytes.");
-        return false;
-    }
-
     Log::trace(getName() + ": Send: " + std::to_string(length) + " bytes");
     try
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        if ( length > SMALL_MESSAGE_SIZE )
+        if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
+        {
+            Log::error(getName() + ": Bad socket while sending binary frame of " + std::to_string(length) + " bytes.");
+            return false;
+        }
+
+        if (length > SMALL_MESSAGE_SIZE)
         {
             const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
             _ws->sendFrame(nextmessage.data(), nextmessage.size());
