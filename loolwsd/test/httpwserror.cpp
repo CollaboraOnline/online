@@ -36,12 +36,12 @@ class HTTPWSError : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPWSError);
 
     CPPUNIT_TEST(testMaxDocuments);
-    CPPUNIT_TEST(testMaxConnections);
+    //CPPUNIT_TEST(testMaxConnections);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testMaxDocuments();
-    void testMaxConnections();
+    //void testMaxConnections();
 
 public:
     HTTPWSError()
@@ -108,7 +108,7 @@ void HTTPWSError::testMaxDocuments()
 #endif
 }
 
-void HTTPWSError::testMaxConnections()
+/*void HTTPWSError::testMaxConnections()
 {
 #if MAX_CONNECTIONS > 0
     try
@@ -145,7 +145,7 @@ void HTTPWSError::testMaxConnections()
         CPPUNIT_FAIL(exc.displayText());
     }
 #endif
-}
+}*/
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSError);
 
