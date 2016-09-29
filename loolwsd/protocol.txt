@@ -246,6 +246,10 @@ nextmessage: size=<byteSize>
     must be handled by clients that cannot (like those using Poco
     1.6.0.
 
+pong
+
+    sent in reply to a 'ping' message
+
 status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height> viewid=<viewId> [partNames]
 
     <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
