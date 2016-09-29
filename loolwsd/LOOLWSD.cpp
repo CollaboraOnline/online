@@ -561,7 +561,7 @@ private:
     }
 
     /// Handle GET requests.
-    static void handleGetRequest(HTTPServerRequest& request, std::shared_ptr<WebSocket>& ws, const std::string& id)
+    static void handleGetRequest(const std::string& uri, std::shared_ptr<WebSocket>& ws, const std::string& id)
     {
         Log::info("Starting GET request handler for session [" + id + "].");
 
@@ -569,15 +569,6 @@ private:
         std::string status("statusindicator: find");
         Log::trace("Sending to Client [" + status + "].");
         ws->sendFrame(status.data(), (int) status.size());
-
-        // Remove the leading '/' in the GET URL.
-        std::string uri = request.getURI();
-        if (uri.size() > 0 && uri[0] == '/')
-            uri.erase(0, 1);
-
-        // Remove leading 'lool/ws/' from GET URL
-        if (uri.size() > 0 && uri.compare(0, 8, "lool/ws/") == 0)
-            uri.erase(0, 8);
 
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
@@ -912,8 +903,7 @@ public:
         Poco::URI requestUri(request.getURI());
         Log::debug("Handling GET: " + request.getURI());
 
-        std::vector<std::string> reqPathSegs;
-        requestUri.getPathSegments(reqPathSegs);
+        StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
         Util::setThreadName("client_ws_" + id);
 
@@ -954,12 +944,12 @@ public:
                 responded = handleGetWOPIDiscovery(request, response);
             }
             else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
-                     reqPathSegs.size() > 0 && reqPathSegs[0] == "lool")
+                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
             {
                 // All post requests have url prefix 'lool'.
                 responded = handlePostRequest(request, response, id);
             }
-            else if (reqPathSegs.size() > 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "ws")
+            else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
             {
                 auto ws = std::make_shared<WebSocket>(request, response);
                 responded = true; // After upgrading to WS we should not set HTTP response.
@@ -968,7 +958,9 @@ public:
                     // First, setup WS options.
                     ws->setBlocking(false);
                     ws->setSendTimeout(WS_SEND_TIMEOUT_MICROSECS);
-                    handleGetRequest(request, ws, id);
+                    std::string decodedUri;
+                    URI::decode(reqPathTokens[1], decodedUri);
+                    handleGetRequest(decodedUri, ws, id);
                 }
                 catch (const WebSocketErrorMessageException& exc)
                 {

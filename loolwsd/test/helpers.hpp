@@ -86,8 +86,9 @@ inline
 void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath, std::string& documentURL)
 {
     documentPath = Util::getTempFilePath(TDOC, docFilename);
-    documentURL = "lool/ws/file://" + Poco::Path(documentPath).makeAbsolute().toString();
-
+    std::string encodedUri;
+    Poco::URI::encode("file://" + Poco::Path(documentPath).makeAbsolute().toString(), ":/?", encodedUri);
+    documentURL = "lool/" + encodedUri + "/ws";
     std::cerr << "Test file: " << documentPath << std::endl;
 }
 
