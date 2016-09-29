@@ -440,7 +440,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.fire('print', {url: url});
 			}
 			else {
-				this._map.fire('filedownloadready', {url: url, name: name, id: command.id});
+				this._map.fire('filedownloadready', {url: url});
 			}
 		}
 		else if (command.id === 'slideshow') {
