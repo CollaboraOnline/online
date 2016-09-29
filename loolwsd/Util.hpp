@@ -73,6 +73,13 @@ namespace Util
     }
 #endif
 
+    // Check disk space on a list of file systems. The list is initially empty, and each call to the
+    // function with a non-empty 'path' adds the file system that path is located on to the list, if
+    // not already there. If the free space on any of the file systems in question is below 5%, call
+    // 'alertAllUsers("internal", "diskfull")'. The check will be made no more often than once a
+    // minute.
+    void checkDiskSpace(const std::string& path);
+
     /// Assert that a lock is already taken.
     template <typename T>
     void assertIsLocked(T& lock)
