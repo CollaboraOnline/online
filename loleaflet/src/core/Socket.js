@@ -12,7 +12,7 @@ L.Socket = L.Class.extend({
 			if (map.options.permission) {
 				map.options.docParams['permission'] = map.options.permission;
 			}
-			this.socket = new WebSocket(map.options.server + '/lool/ws/' + map.options.doc + '?' + $.param(map.options.docParams));
+			this.socket = new WebSocket(map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws');
 		} catch (e) {
 			this.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ' + e), cmd: 'socket', kind: 'failed', id: 3});
 			return null;
