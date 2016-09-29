@@ -198,7 +198,7 @@ int getErrorCode(Poco::Net::WebSocket& ws, std::string& message)
     Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
 
     message.clear();
-    Poco::Timespan timeout(250000);
+    Poco::Timespan timeout(5000000);
     ws.setReceiveTimeout(timeout);
     do
     {
