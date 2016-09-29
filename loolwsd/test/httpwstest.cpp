@@ -192,8 +192,8 @@ void HTTPWSTest::testBadRequest()
 {
     try
     {
-        // Load a document and get its status.
-        const std::string documentURL = "lool/ws/file:///fake.doc";
+        // Try to load a fake document and get its status.
+        const std::string documentURL = "/lool/file%3A%2F%2F%2Ffake.doc/ws";
 
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
@@ -905,8 +905,8 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
 {
     try
     {
-        const std::string documentPath = Util::getTempFilePath(TDOC, "password-protected.ods");
-        const std::string documentURL = "lool/ws/file://" + Poco::Path(documentPath).makeAbsolute().toString();
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
@@ -1030,8 +1030,8 @@ void HTTPWSTest::testInsertDelete()
 
 void HTTPWSTest::testEditLock()
 {
-    const std::string documentPath = Util::getTempFilePath(TDOC, "hello.odt");
-    const std::string documentURL = "lool/ws/file://" + Poco::Path(documentPath).makeAbsolute().toString();
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
     std::mutex mutex;
     std::condition_variable cv;
@@ -1179,7 +1179,9 @@ void HTTPWSTest::testSlideShow()
             CPPUNIT_ASSERT_EQUAL(static_cast<int>(_uri.getPort()), port);
             CPPUNIT_ASSERT_EQUAL(std::string("slideshow"), id);
 
-            const std::string path = "/lool/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
+            std::string encodedDoc;
+            Poco::URI::encode(documentPath, ":/?", encodedDoc);
+            const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
             std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
             Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
             session->sendRequest(requestSVG);

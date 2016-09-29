@@ -191,8 +191,9 @@ private:
         const std::string subscribeMessage = "subscribe adddoc";
         _adminWs->sendFrame(subscribeMessage.data(), subscribeMessage.size());
 
-        const std::string documentPath1 = Util::getTempFilePath(TDOC, "hello.odt");
-        const std::string documentURL1 = std::string("lool/ws/") + "file://" + Poco::Path(documentPath1).makeAbsolute().toString();
+
+        std::string documentPath1, documentURL1;
+        helpers::getDocumentPathAndURL("hello.odt", documentPath1, documentURL1);
         HTTPRequest request1(HTTPRequest::HTTP_GET, documentURL1);
         HTTPResponse response1;
         const Poco::URI docUri1(helpers::getTestServerURI());
@@ -255,8 +256,8 @@ private:
         }
 
         // Open another document (different)
-        const std::string documentPath2 = Util::getTempFilePath(TDOC, "insert-delete.odp");
-        const std::string documentURL2 = std::string("lool/ws/") + "file://" + Poco::Path(documentPath2).makeAbsolute().toString();
+        std::string documentPath2, documentURL2;
+        helpers::getDocumentPathAndURL("insert-delete.odp", documentPath2, documentURL2);
         HTTPRequest request2(HTTPRequest::HTTP_GET, documentURL2);
         HTTPResponse response2;
         const Poco::URI docUri2(helpers::getTestServerURI());

@@ -459,7 +459,7 @@ private:
 
             return true;
         }
-        else if (tokens.count() >= 3 && tokens[2] == "insertfile")
+        else if (tokens.count() >= 4 && tokens[3] == "insertfile")
         {
             Log::info("Insert file request.");
             response.set("Access-Control-Allow-Origin", "*");
@@ -475,6 +475,20 @@ private:
                 const std::string formChildid(form.get("childid"));
                 const std::string formName(form.get("name"));
 
+                // Validate the docKey
+                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                std::string decodedUri;
+                URI::decode(tokens[2], decodedUri);
+                const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+                auto docBrokerIt = docBrokers.find(docKey);
+
+                // Maybe just free the client from sending childid in form ?
+                if (docBrokerIt == docBrokers.end() || docBrokerIt->second->getJailId() != formChildid)
+                {
+                    throw BadRequestException("DocKey [" + docKey + "] or childid [" + formChildid + "] is invalid.");
+                }
+                docBrokersLock.unlock();
+
                 // protect against attempts to inject something funny here
                 if (formChildid.find('/') == std::string::npos && formName.find('/') == std::string::npos)
                 {
@@ -488,18 +502,30 @@ private:
                 }
             }
         }
-        else if (tokens.count() >= 5)
+        else if (tokens.count() >= 6)
         {
             Log::info("File download request.");
-            // The user might request a file to download
             //TODO: Check that the user in question has access to this file!
-            const std::string dirPath = LOOLWSD::ChildRoot + tokens[2]
-                                      + JAILED_DOCUMENT_ROOT + tokens[3];
+            const std::string dirPath = LOOLWSD::ChildRoot + tokens[3]
+                                      + JAILED_DOCUMENT_ROOT + tokens[4];
             std::string fileName;
-            URI::decode(tokens[4], fileName);
+            URI::decode(tokens[5], fileName);
             const std::string filePath = dirPath + "/" + fileName;
             Log::info("HTTP request for: " + filePath);
             File file(filePath);
+
+            // Validate the dockey
+            std::string decodedUri;
+            URI::decode(tokens[2], decodedUri);
+            const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+            std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+            auto docBrokerIt = docBrokers.find(docKey);
+            if (docBrokerIt == docBrokers.end())
+            {
+                throw BadRequestException("DocKey [" + docKey + "] is invalid.");
+            }
+            docBrokersLock.unlock();
+
             if (file.exists())
             {
                 response.set("Access-Control-Allow-Origin", "*");
@@ -522,7 +548,7 @@ private:
     }
 
     /// Handle GET requests.
-    static void handleGetRequest(HTTPServerRequest& request, std::shared_ptr<WebSocket>& ws, const std::string& id)
+    static void handleGetRequest(const std::string& uri, std::shared_ptr<WebSocket>& ws, const std::string& id)
     {
         Log::info("Starting GET request handler for session [" + id + "].");
 
@@ -530,16 +556,6 @@ private:
         std::string status("statusindicator: find");
         Log::trace("Sending to Client [" + status + "].");
         ws->sendFrame(status.data(), (int) status.size());
-
-        // Remove the leading '/' in the GET URL.
-        std::string uri = request.getURI();
-        if (uri.size() > 0 && uri[0] == '/')
-            uri.erase(0, 1);
-
-        // Remove leading 'lool/ws/' from GET URL
-        if (uri.size() > 0 && uri.compare(0, 8, "lool/ws/") == 0)
-            uri.erase(0, 8);
-
 
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
@@ -841,8 +857,9 @@ public:
         const auto id = LOOLWSD::GenSessionId();
 
         Poco::URI requestUri(request.getURI());
-        std::vector<std::string> reqPathSegs;
-        requestUri.getPathSegments(reqPathSegs);
+        Log::debug("Handling GET: " + request.getURI());
+
+        StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
         Util::setThreadName("client_ws_" + id);
 
@@ -884,17 +901,19 @@ public:
             }
             // All post requests have url prefix, lool
             else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
-                     reqPathSegs.size() > 0 && reqPathSegs[0] == "lool")
+                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
             {
                 responded = handlePostRequest(request, response, id);
             }
-            else if (reqPathSegs.size() > 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "ws")
+            else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
             {
                 auto ws = std::make_shared<WebSocket>(request, response);
                 try
                 {
                     responded = true; // After upgrading to WS we should not set HTTP response.
-                    handleGetRequest(request, ws, id);
+                    std::string decodedUri;
+                    URI::decode(reqPathTokens[1], decodedUri);
+                    handleGetRequest(decodedUri, ws, id);
                 }
                 catch (const WebSocketErrorMessageException& exc)
                 {
