@@ -33,7 +33,7 @@ wsd_sources = \
             ../Util.cpp
 
 test_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" -I$(top_srcdir) -DBUILDING_TESTS
-test_SOURCES = TileCacheTests.cpp WhiteBoxTests.cpp integration-http-server.cpp \
+test_SOURCES = TileCacheTests.cpp TileQueueTests.cpp WhiteBoxTests.cpp integration-http-server.cpp \
                httpwstest.cpp httpcrashtest.cpp httpwserror.cpp test.cpp $(wsd_sources)
 test_LDADD = $(CPPUNIT_LIBS)
 
