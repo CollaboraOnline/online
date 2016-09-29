@@ -515,18 +515,30 @@ private:
                 }
             }
         }
-        else if (tokens.count() >= 5)
+        else if (tokens.count() >= 6)
         {
             Log::info("File download request.");
-            // The user might request a file to download
             //TODO: Check that the user in question has access to this file!
-            const std::string dirPath = LOOLWSD::ChildRoot + tokens[2]
-                                      + JAILED_DOCUMENT_ROOT + tokens[3];
+            const std::string dirPath = LOOLWSD::ChildRoot + tokens[3]
+                                      + JAILED_DOCUMENT_ROOT + tokens[4];
             std::string fileName;
-            URI::decode(tokens[4], fileName);
+            URI::decode(tokens[5], fileName);
             const std::string filePath = dirPath + "/" + fileName;
             Log::info("HTTP request for: " + filePath);
             File file(filePath);
+
+            // Validate the dockey
+            std::string decodedUri;
+            URI::decode(tokens[2], decodedUri);
+            const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+            std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+            auto docBrokerIt = docBrokers.find(docKey);
+            if (docBrokerIt == docBrokers.end())
+            {
+                throw BadRequestException("DocKey [" + docKey + "] is invalid.");
+            }
+            docBrokersLock.unlock();
+
             if (file.exists())
             {
                 response.set("Access-Control-Allow-Origin", "*");
