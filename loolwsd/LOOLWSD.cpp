@@ -472,7 +472,7 @@ private:
 
             return true;
         }
-        else if (tokens.count() >= 3 && tokens[2] == "insertfile")
+        else if (tokens.count() >= 4 && tokens[3] == "insertfile")
         {
             Log::info("Insert file request.");
             response.set("Access-Control-Allow-Origin", "*");
@@ -487,6 +487,20 @@ private:
             {
                 const std::string formChildid(form.get("childid"));
                 const std::string formName(form.get("name"));
+
+                // Validate the docKey
+                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                std::string decodedUri;
+                URI::decode(tokens[2], decodedUri);
+                const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+                auto docBrokerIt = docBrokers.find(docKey);
+
+                // Maybe just free the client from sending childid in form ?
+                if (docBrokerIt == docBrokers.end() || docBrokerIt->second->getJailId() != formChildid)
+                {
+                    throw BadRequestException("DocKey [" + docKey + "] or childid [" + formChildid + "] is invalid.");
+                }
+                docBrokersLock.unlock();
 
                 // protect against attempts to inject something funny here
                 if (formChildid.find('/') == std::string::npos && formName.find('/') == std::string::npos)
