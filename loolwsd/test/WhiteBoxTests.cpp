@@ -24,14 +24,12 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLOOLProtocolFunctions);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
-    CPPUNIT_TEST(testTileQueue);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testLOOLProtocolFunctions();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
-    void testTileQueue();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -145,17 +143,6 @@ void WhiteBoxTests::testRegexListMatcher_Init()
     CPPUNIT_ASSERT(matcher.match("192.168.1.134"));
     CPPUNIT_ASSERT(!matcher.match("192.169.1.1"));
     CPPUNIT_ASSERT(matcher.match("192.168.."));
-}
-
-void WhiteBoxTests::testTileQueue()
-{
-    std::unique_ptr<TileQueue> queue(new TileQueue());
-
-    queue->put("tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
-    queue->put("tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
-
-    // the tilecombine's get merged, resulting in 3 "tile" messages
-    CPPUNIT_ASSERT_EQUAL(3, static_cast<int>(queue->_queue.size()));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
