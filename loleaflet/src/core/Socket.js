@@ -12,17 +12,17 @@ L.Socket = L.Class.extend({
 			if (map.options.permission) {
 				map.options.docParams['permission'] = map.options.permission;
 			}
-			this.socket = new WebSocket(map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws');
+			this.socket = new WebSocket(map.options.server + '/lool/ws/' + map.options.doc + '?' + $.param(map.options.docParams));
+			this.socket.onerror = L.bind(this._onSocketError, this);
+			this.socket.onclose = L.bind(this._onSocketClose, this);
+			this.socket.onopen = L.bind(this._onSocketOpen, this);
+			this.socket.onmessage = L.bind(this._onMessage, this);
+			this.socket.binaryType = 'arraybuffer';
 		} catch (e) {
-			this.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ' + e), cmd: 'socket', kind: 'failed', id: 3});
+			this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ' + e), cmd: 'socket', kind: 'failed', id: 3});
 			return null;
 		}
 		this._msgQueue = [];
-		this.socket.onerror = L.bind(this._onSocketError, map);
-		this.socket.onclose = L.bind(this._onSocketClose, map);
-		this.socket.onopen = L.bind(this._onOpen, this);
-		this.socket.onmessage = L.bind(this._onMessage, this);
-		this.socket.binaryType = 'arraybuffer';
 	},
 
 	close: function () {
@@ -69,7 +69,7 @@ L.Socket = L.Class.extend({
 		this.socket.send(msg);
 	},
 
-	_onOpen: function () {
+	_onSocketOpen: function () {
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
 		this._doSend('loolclient ' + this.ProtocolVersionNumber);
@@ -134,7 +134,7 @@ L.Socket = L.Class.extend({
 
 			// TODO: For now we expect perfect match in protocol versions
 			if (loolwsdVersionObj.Protocol !== this.ProtocolVersionNumber) {
-				this.fire('error', {msg: _('Unsupported server version.')});
+				this._map.fire('error', {msg: _('Unsupported server version.')});
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
@@ -186,7 +186,11 @@ L.Socket = L.Class.extend({
 			}
 		}
 		else if (textMsg.startsWith('error:') && !this._map._docLayer) {
-			this.fail = true;
+			textMsg = textMsg.substring(6);
+			vex.dialog.alert({
+				message: textMsg,
+				css: {'font-size': 'small'}
+			});
 		}
 		else if (textMsg === 'pong' && this._map._docLayer && this._map._docLayer._debug) {
 			var times = this._map._docLayer._debugTimePING;
@@ -301,26 +305,24 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketError: function () {
-		this.hideBusy();
+		this._map.hideBusy();
 		// Let onclose (_onSocketClose) report errors.
 	},
 
-	_onSocketClose: function () {
-		this.hideBusy();
-		if (this) {
-			this._active = false;
+	_onSocketClose: function (e) {
+		this._map.hideBusy();
+		this._map._active = false;
+
+		if (this._map._docLayer) {
+			this._map._docLayer.removeAllViews();
 		}
 
-		if (this._docLayer) {
-			this._docLayer.removeAllViews();
-		}
-		if (this.fail) {
-			this.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+		if (e.code && e.reason) {
+			this._map.fire('error', {msg: e.reason});
 		}
 		else {
-			this.fire('error', {msg: _('We are sorry, this is an unexpected connection error. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+			this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
-		this.fail = false;
 	},
 
 	parseServerCmd: function (msg) {
