@@ -97,6 +97,10 @@ void HTTPWSError::testMaxDocuments()
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         Poco::Net::WebSocket socket(*session, request, _response);
+        // send loolclient, load and partpagerectangles
+        sendTextFrame(socket, "loolclient ");
+        sendTextFrame(socket, "load ");
+        sendTextFrame(socket, "partpagerectangles ");
         statusCode = getErrorCode(socket, message);
         CPPUNIT_ASSERT_EQUAL(static_cast<Poco::UInt16>(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY), statusCode);
         CPPUNIT_ASSERT_MESSAGE("Wrong error message ", message.find("This development build") != std::string::npos);
@@ -117,6 +121,7 @@ void HTTPWSError::testMaxConnections()
         std::string docPath;
         std::string docURL;
         std::string message;
+        Poco::UInt16 statusCode;
         std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
 
         getDocumentPathAndURL("empty.odt", docPath, docURL);
@@ -125,31 +130,21 @@ void HTTPWSError::testMaxConnections()
 
         for(int it = 1; it < MAX_CONNECTIONS; it++)
         {
-            std::cerr << it << std::endl;
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
             auto ws = std::make_shared<Poco::Net::WebSocket>(*session, request, _response);
             views.emplace_back(ws);
         }
 
         // try to connect MAX_CONNECTIONS + 1
-        {
-            // Load a document and get its status.
-            const std::string documentURL = "lool/ws/file:///fake.doc";
-
-            Poco::Net::HTTPResponse response;
-            Poco::Net::HTTPRequest requestN(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-            std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-            requestN.set("Connection", "Upgrade");
-            requestN.set("Upgrade", "websocket");
-            requestN.set("Sec-WebSocket-Version", "13");
-            requestN.set("Sec-WebSocket-Key", "");
-            requestN.setChunkedTransferEncoding(false);
-            session->setKeepAlive(true);
-            session->sendRequest(requestN);
-            session->receiveResponse(response);
-            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTPResponse::HTTP_NOT_ACCEPTABLE, response.getStatus());
-            CPPUNIT_ASSERT_MESSAGE("Wrong error message ", response.getReason().find("This development build") != std::string::npos);
-        }
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
+        auto socketN = std::make_shared<Poco::Net::WebSocket>(*session, request, _response);
+        // send loolclient, load and partpagerectangles
+        sendTextFrame(socketN, "loolclient ");
+        sendTextFrame(socketN, "load ");
+        sendTextFrame(socketN, "partpagerectangles ");
+        statusCode = getErrorCode(*socketN, message);
+        CPPUNIT_ASSERT_EQUAL(static_cast<Poco::UInt16>(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY), statusCode);
+        CPPUNIT_ASSERT_MESSAGE("Wrong error message ", message.find("This development build") != std::string::npos);
     }
     catch (const Poco::Exception& exc)
     {
