@@ -500,8 +500,8 @@ L.TileLayer = L.GridLayer.extend({
 		var obj = JSON.parse(textMsg);
 		var viewId = parseInt(obj.viewId);
 
-		// Ignore yourself
-		if (viewId === this._viewId) {
+		// Ignore if viewid is ours or not in our db
+		if (viewId === this._viewId || !this._map._viewInfo[viewId]) {
 			return;
 		}
 
@@ -606,8 +606,8 @@ L.TileLayer = L.GridLayer.extend({
 		var obj = JSON.parse(textMsg);
 		var viewId = parseInt(obj.viewId);
 
-		// Ignore if viewid is same as ours
-		if (viewId === this._viewId) {
+		// Ignore if viewid is same as ours or not in our db
+		if (viewId === this._viewId || !this._map._viewInfo[viewId]) {
 			return;
 		}
 
@@ -686,8 +686,8 @@ L.TileLayer = L.GridLayer.extend({
 		var obj = JSON.parse(textMsg);
 		var viewId = parseInt(obj.viewId);
 
-		// Ignore if viewid is same as ours
-		if (viewId === this._viewId) {
+		// Ignore if viewid is same as ours or not in our db
+		if (viewId === this._viewId || !this._map._viewInfo[viewId]) {
 			return;
 		}
 
@@ -929,8 +929,8 @@ L.TileLayer = L.GridLayer.extend({
 		var viewId = parseInt(obj.viewId);
 		var viewPart = parseInt(obj.part);
 
-		// Ignore if viewid is same as ours
-		if (viewId === this._viewId) {
+		// Ignore if viewid is same as ours or not in our db
+		if (viewId === this._viewId || !this._map._viewInfo[viewId]) {
 			return;
 		}
 
