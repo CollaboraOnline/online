@@ -186,6 +186,7 @@ static void forkChildren(const int number)
 
     if (number > 0)
     {
+        Util::checkDiskSpace("");
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
         IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, aMessage);
@@ -715,6 +716,8 @@ private:
             status = "statusindicator: ready";
             Log::trace("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), (int) status.size());
+
+            Util::checkDiskSpace("");
 
             // Let messages flow
             IoUtil::SocketProcessor(ws,
@@ -1765,6 +1768,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         throw MissingOptionException("childroot");
     else if (ChildRoot[ChildRoot.size() - 1] != '/')
         ChildRoot += '/';
+
+    Util::checkDiskSpace(ChildRoot);
+    Util::checkDiskSpace(Cache + "/.");
 
     if (FileServerRoot.empty())
         FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().parent().toString();

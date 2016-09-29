@@ -14,7 +14,9 @@
 #include <csignal>
 #include <sys/poll.h>
 #include <sys/prctl.h>
+#include <sys/stat.h>
 #include <sys/uio.h>
+#include <sys/vfs.h>
 #include <unistd.h>
 
 #include <atomic>
@@ -110,7 +112,7 @@ namespace
 {
     void alertAllUsersAndLog(const std::string& message, const std::string& cmd, const std::string& kind)
     {
-        Log::error(message + " Removing.");
+        Log::error(message);
         Util::alertAllUsers(cmd, kind);
     }
 }
@@ -206,6 +208,75 @@ namespace Util
                         return false;
                     }
                 }
+            }
+        }
+    }
+
+    void checkDiskSpace(const std::string& path)
+    {
+        static std::mutex mutex;
+        std::lock_guard<std::mutex> lock(mutex);
+
+        struct fs
+        {
+            fs(const std::string& p, dev_t d)
+                : path(p), dev(d)
+            {
+            }
+
+            fs(dev_t d)
+                : fs("", d)
+            {
+            }
+
+            std::string path;
+            dev_t dev;
+        };
+
+        struct fsComparator
+        {
+            bool operator() (const fs& lhs, const fs& rhs) const
+            {
+                return (lhs.dev < rhs.dev);
+            }
+        };
+
+        static std::set<fs, fsComparator> filesystems;
+
+        if (path != "")
+        {
+            std::string dirPath = path;
+            std::string::size_type lastSlash = dirPath.rfind('/');
+            assert(lastSlash != std::string::npos);
+            dirPath = dirPath.substr(0, lastSlash + 1) + ".";
+
+            struct stat s;
+            if (stat(dirPath.c_str(), &s) == -1)
+                return;
+            filesystems.insert(fs(dirPath, s.st_dev));
+        }
+
+        static std::chrono::steady_clock::time_point lastCheck;
+        std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
+
+        // Don't check disk space more often that once a minute
+        if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
+            return;
+
+        lastCheck = now;
+
+        for (auto& i: filesystems)
+        {
+            struct stat s;
+            struct statfs sfs;
+            if (stat(i.path.c_str(), &s) == -1 ||
+                statfs(i.path.c_str(), &sfs) == -1)
+                continue;
+
+            if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
+            {
+                alertAllUsersAndLog("File system of " + i.path + " dangerously low on disk space", "internal", "diskfull");
+                break;
             }
         }
     }
