@@ -736,7 +736,7 @@ L.Map = L.Evented.extend({
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;
-			this._docLayer._onMessage('textselection:', null);
+			this._docLayer && this._docLayer._onMessage('textselection:', null);
 			if (this._socket.connected()) {
 				this._socket.sendMessage('userinactive');
 			}
@@ -776,7 +776,7 @@ L.Map = L.Evented.extend({
 			$(options.appendLocation).append(options.$vex);
 			vex.setupBodyClassName(options.$vex);
 
-			map._docLayer._onMessage('textselection:', null);
+			map._doclayer && map._docLayer._onMessage('textselection:', null);
 			map._socket.sendMessage('userinactive');
 
 		}, 30 * 1000); // Dim in 30 seconds.
@@ -784,7 +784,7 @@ L.Map = L.Evented.extend({
 
 	_onLostFocus: function () {
 		var doclayer = this._docLayer;
-		if (doclayer._isCursorVisible && doclayer._isCursorOverlayVisible) {
+		if (doclayer && doclayer._isCursorVisible && doclayer._isCursorOverlayVisible) {
 			doclayer._visibleCursorOnLostFocus = doclayer._visibleCursor;
 			doclayer._isCursorOverlayVisibleOnLostFocus = doclayer._isCursorVisibleOnLostFocus = true;
 			doclayer._isCursorOverlayVisible = false;
@@ -796,7 +796,7 @@ L.Map = L.Evented.extend({
 
 	_onGotFocus: function () {
 		var doclayer = this._docLayer;
-		if (doclayer._isCursorVisibleOnLostFocus && doclayer._isCursorOverlayVisibleOnLostFocus) {
+		if (doclayer && doclayer._isCursorVisibleOnLostFocus && doclayer._isCursorOverlayVisibleOnLostFocus) {
 			// we restore the old cursor position by a small delay, so that if the user clicks
 			// inside the document we skip to restore it, so that the user does not see the cursor
 			// jumping from the old position to the new one
