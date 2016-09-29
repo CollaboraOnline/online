@@ -41,11 +41,13 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testTileQueuePriority);
     CPPUNIT_TEST(testTileCombinedRendering);
+    CPPUNIT_TEST(testTileRecombining);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testTileQueuePriority();
     void testTileCombinedRendering();
+    void testTileRecombining();
 };
 
 void TileQueueTests::testTileQueuePriority()
@@ -125,6 +127,26 @@ void TileQueueTests::testTileCombinedRendering()
     queue.put(req2);
     queue.put(req3);
     CPPUNIT_ASSERT_EQUAL(payloadFull, queue.get());
+}
+
+void TileQueueTests::testTileRecombining()
+{
+    TileQueue queue;
+
+    queue.put("tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
+    queue.put("tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+
+    // the tilecombine's get merged, resulting in 3 "tile" messages
+    CPPUNIT_ASSERT_EQUAL(3, static_cast<int>(queue._queue.size()));
+
+    // but when we later extract that, it is just one "tilecombine" message
+    MessageQueue::Payload payload(queue.get());
+    std::string message(payload.data(), payload.size());
+
+    CPPUNIT_ASSERT_EQUAL(std::string("tilecombine part=0 width=256 height=256 tileposx=7680,0,3840 tileposy=0,0,0 imgsize=0,0,0 tilewidth=3840 tileheight=3840"), message);
+
+    // and nothing remains in the queue
+    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileQueueTests);

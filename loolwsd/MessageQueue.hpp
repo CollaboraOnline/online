@@ -21,7 +21,7 @@
 */
 class MessageQueue
 {
-    friend class WhiteBoxTests;
+    friend class TileQueueTests;
 
 public:
 
