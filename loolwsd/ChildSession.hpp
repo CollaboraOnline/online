@@ -43,6 +43,9 @@ public:
     /// Send updated view info to all active sessions
     virtual
     void notifyViewInfo() = 0;
+    /// Get a view ID <-> user name map.
+    virtual
+    std::map<int, std::string> getViewInfo() = 0;
 };
 
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
