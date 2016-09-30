@@ -15,7 +15,6 @@
 #include <thread>
 #include <regex>
 #include <vector>
-#include <string>
 
 #include <Poco/Dynamic/Var.h>
 #include <Poco/FileStream.h>
@@ -2200,12 +2199,11 @@ void HTTPWSTest::testCursorPosition()
         Poco::StringTokenizer viewTokens(command->get("rectangle").toString(), ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.count());
 
-        // check both cursor should be equal (but tolerate at most 2px -> 30 twips differences)
-        const int tolerance = 30;
-        CPPUNIT_ASSERT(std::abs(std::stoi(cursorTokens[0]) - std::stoi(viewTokens[0])) < tolerance);
-        CPPUNIT_ASSERT(std::abs(std::stoi(cursorTokens[1]) - std::stoi(viewTokens[1])) < tolerance);
-        CPPUNIT_ASSERT(std::abs(std::stoi(cursorTokens[2]) - std::stoi(viewTokens[2])) < tolerance);
-        CPPUNIT_ASSERT(std::abs(std::stoi(cursorTokens[3]) - std::stoi(viewTokens[3])) < tolerance);
+        // check both cursor should be equal
+        CPPUNIT_ASSERT_EQUAL(cursorTokens[0], viewTokens[0]);
+        CPPUNIT_ASSERT_EQUAL(cursorTokens[1], viewTokens[1]);
+        CPPUNIT_ASSERT_EQUAL(cursorTokens[2], viewTokens[2]);
+        CPPUNIT_ASSERT_EQUAL(cursorTokens[3], viewTokens[3]);
     }
     catch (const Poco::Exception& exc)
     {
