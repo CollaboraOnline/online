@@ -46,6 +46,10 @@ public:
     /// Get a view ID <-> user name map.
     virtual
     std::map<int, std::string> getViewInfo() = 0;
+    virtual
+    std::mutex& getMutex() = 0;
+    virtual
+    std::shared_ptr<TileQueue>& getTileQueue() = 0;
 };
 
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
