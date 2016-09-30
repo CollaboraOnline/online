@@ -2,7 +2,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global _ vex $ */
+/* global _ vex $ errorMessages */
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 
@@ -37,7 +37,8 @@ L.Socket = L.Class.extend({
 	},
 
 	sendMessage: function (msg, coords) {
-		if (!msg.startsWith('useractive') && !msg.startsWith('userinactive') && !this._map._active) {
+		if ((!msg.startsWith('useractive') && !msg.startsWith('userinactive') && !this._map._active) ||
+		    this._map._fatal) {
 			// Avoid communicating when we're inactive.
 			return;
 		}
@@ -142,6 +143,19 @@ L.Socket = L.Class.extend({
 			$('#lokit-version').text(lokitVersionObj.ProductName + ' ' +
 			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
 			                         ' (git hash: ' + lokitVersionObj.BuildId.substring(0, 7) + ')');
+		}
+		else if (textMsg.startsWith('error:') && command.errorCmd === 'internal') {
+			this._map._fatal = true;
+			if (command.errorKind === 'diskfull') {
+				this._map.fire('error', {msg: errorMessages.diskfull});
+			}
+
+			if (this._map._docLayer) {
+				this._map._docLayer.removeAllViews();
+			}
+			this.close();
+
+			return;
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
 			this.close();

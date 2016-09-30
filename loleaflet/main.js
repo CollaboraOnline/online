@@ -75,6 +75,7 @@ if (host === '') {
 global.closebutton = closebutton;
 global.revHistoryEnabled = revHistoryEnabled;
 global.title = title;
+global.errorMessages = errorMessages;
 var docURL, docParams;
 if (wopiSrc != '') {
     docURL = wopiSrc;
