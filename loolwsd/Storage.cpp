@@ -187,7 +187,13 @@ std::string LocalStorage::loadStorageFileToLocal()
     Log::info("Public URI [" + _uri +
               "] jailed to [" + _jailedFilePath + "].");
 
+    // Despite the talk about URIs it seems that _uri is actually just a pathname here
+
     const auto publicFilePath = _uri;
+
+    if (!Util::checkDiskSpace(publicFilePath))
+        throw StorageSpaceLowException("Low disk space for " + publicFilePath);
+
     Log::info("Linking " + publicFilePath + " to " + _jailedFilePath);
     if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
     {
