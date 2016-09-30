@@ -87,4 +87,4 @@ all-local: unittest
 	@echo
 	@echo "Running build-time unit tests.  For more thorough testing, please run 'make check'."
 	@echo
-	@${top_builddir}/test/unittest 2> unittest.log || cat unittest.log
+	@${top_builddir}/test/unittest 2> unittest.log || { cat unittest.log ; exit 1 ; }
