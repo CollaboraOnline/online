@@ -187,10 +187,7 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('error:') && !this._map._docLayer) {
 			textMsg = textMsg.substring(6);
-			vex.dialog.alert({
-				message: textMsg,
-				css: {'font-size': 'small'}
-			});
+			this._map.fire('error', {msg: textMsg});
 		}
 		else if (textMsg === 'pong' && this._map._docLayer && this._map._docLayer._debug) {
 			var times = this._map._docLayer._debugTimePING;
