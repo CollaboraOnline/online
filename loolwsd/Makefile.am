@@ -170,6 +170,9 @@ clean-cache cache-clean:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
 
+clang-tidy:
+	for i in *.cpp; do echo $$i; clang-tidy -header-filter=^$(PWD).* $$i || break; done
+
 # After building loolforkit, set its capabilities as required. Do it
 # already after a plain 'make' to allow for testing without
 # installing. When building for packaging, no need for this, as the

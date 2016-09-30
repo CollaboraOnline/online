@@ -450,9 +450,11 @@ void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::
 {
     std::lock_guard<std::mutex> lock(_mutex);
 
+    std::stringstream ss;
+    ss << "error: cmd=" << cmd << " kind=" << kind;
     for (auto& it: _sessions)
     {
-        it.second->sendTextFrame("error: cmd=" + cmd + " kind=" + kind);
+        it.second->sendTextFrame(ss.str());
     }
 }
 
