@@ -43,7 +43,7 @@ L.Control.DocumentRepair = L.Control.extend({
 		th = L.DomUtil.create('th', '', tr);
 		th.appendChild(document.createTextNode(_('Comment')));
 		th = L.DomUtil.create('th', '', tr);
-		th.appendChild(document.createTextNode(_('View ID')));
+		th.appendChild(document.createTextNode(_('User name')));
 		th = L.DomUtil.create('th', '', tr);
 		th.appendChild(document.createTextNode(_('Timestamp')));
 
@@ -74,7 +74,11 @@ L.Control.DocumentRepair = L.Control.extend({
 
 	fillAction: function (actions, type) {
 		for (var iterator = 0; iterator < actions.length; ++iterator) {
-			this.createAction(type, actions[iterator].index, actions[iterator].comment, actions[iterator].viewId, actions[iterator].dateTime);
+			var userName = actions[iterator].userName;
+			if (parseInt(actions[iterator].viewId) === this._map._docLayer._viewId) {
+				userName = _('You');
+			}
+			this.createAction(type, actions[iterator].index, actions[iterator].comment, userName, actions[iterator].dateTime);
 		}
 	},
 

@@ -996,6 +996,24 @@ private:
         notifyViewInfo();
     }
 
+    std::map<int, std::string> getViewInfo() override
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+        std::map<int, std::string> viewInfo;
+
+        for (auto& connection : _connections)
+        {
+            if (connection.second->isRunning())
+            {
+                const auto session = connection.second->getSession();
+                const auto viewId = session->getViewId();
+                viewInfo[viewId] = session->getViewUserName();
+            }
+        }
+
+        return viewInfo;
+    };
+
     /// Notify all views of viewId and their associated usernames
     void notifyViewInfo() override
     {
@@ -1007,18 +1025,9 @@ private:
         _loKitDocument->getViewIds(viewIds.data(), viewCount);
         lockLokDoc.unlock();
 
-        std::unique_lock<std::mutex> lock(_mutex);
         // Store the list of viewid, username mapping in a map
-        std::map<int, std::string> viewInfoMap;
-        for (auto& connectionIt : _connections)
-        {
-            if (connectionIt.second->isRunning())
-            {
-                const auto session = connectionIt.second->getSession();
-                const auto viewId = session->getViewId();
-                viewInfoMap[viewId] = session->getViewUserName();
-            }
-        }
+        std::map<int, std::string> viewInfoMap = getViewInfo();
+        std::unique_lock<std::mutex> lock(_mutex);
 
         // Double check if list of viewids from core and our list matches,
         // and create an array of JSON objects containing id and username

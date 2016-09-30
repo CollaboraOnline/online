@@ -397,6 +397,38 @@ bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
     return sendTextFrame("status: " + status);
 }
 
+namespace
+{
+
+/// Given a view ID <-> user name map and a .uno:DocumentRepair result, annotate with user names.
+void insertUserNames(const std::map<int, std::string>& viewInfo, std::string& json)
+{
+    Poco::JSON::Parser parser;
+    auto root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+    std::vector<std::string> directions { "Undo", "Redo" };
+    for (auto& directionName : directions)
+    {
+        auto direction = root->get(directionName).extract<Poco::JSON::Object::Ptr>();
+        if (direction->get("actions").type() == typeid(Poco::JSON::Array::Ptr))
+        {
+            auto actions = direction->get("actions").extract<Poco::JSON::Array::Ptr>();
+            for (auto& actionVar : *actions)
+            {
+                auto action = actionVar.extract<Poco::JSON::Object::Ptr>();
+                int viewId = action->getValue<int>("viewId");
+                auto it = viewInfo.find(viewId);
+                if (it != viewInfo.end())
+                    action->set("userName", Poco::Dynamic::Var(it->second));
+            }
+        }
+    }
+    std::stringstream ss;
+    root->stringify(ss);
+    json = ss.str();
+}
+
+}
+
 bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     bool success;
@@ -415,12 +447,16 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
     if (command == ".uno:DocumentRepair")
     {
         char* pUndo;
-        const std::string json("{\"commandName\":\".uno:DocumentRepair\",\"Redo\":%s,\"Undo\":%s}");
+        const std::string jsonTemplate("{\"commandName\":\".uno:DocumentRepair\",\"Redo\":%s,\"Undo\":%s}");
         pValues = _loKitDocument->getCommandValues(".uno:Redo");
         pUndo = _loKitDocument->getCommandValues(".uno:Undo");
-        success = sendTextFrame("commandvalues: " + Poco::format(json,
-                                                                 std::string(pValues == nullptr ? "" : pValues),
-                                                                 std::string(pUndo == nullptr ? "" : pUndo)));
+        std::string json = Poco::format(jsonTemplate,
+                                        std::string(pValues == nullptr ? "" : pValues),
+                                        std::string(pUndo == nullptr ? "" : pUndo));
+        // json only contains view IDs, insert matching user names.
+        std::map<int, std::string> viewInfo =_docManager.getViewInfo();
+        insertUserNames(viewInfo, json);
+        success = sendTextFrame("commandvalues: " + json);
         std::free(pValues);
         std::free(pUndo);
     }
