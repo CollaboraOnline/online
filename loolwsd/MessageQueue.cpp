@@ -163,7 +163,7 @@ int TileQueue::priority(const std::string& tileMsg)
 {
     auto tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
 
-    for (size_t i = 0; i < _viewOrder.size(); ++i)
+    for (int i = static_cast<int>(_viewOrder.size()) - 1; i >= 0; --i)
     {
         auto& cursor = _cursorPositions[_viewOrder[i]];
         if (tile.intersectsWithRect(cursor.X, cursor.Y, cursor.Width, cursor.Height))
@@ -205,10 +205,8 @@ MessageQueue::Payload TileQueue::get_impl()
             break;
 
         int p = priority(prio);
-        if (p == -1)
-            continue;
 
-        if (prioritySoFar == -1 || p < prioritySoFar)
+        if (p > prioritySoFar)
         {
             prioritySoFar = p;
             prioritized = i;
