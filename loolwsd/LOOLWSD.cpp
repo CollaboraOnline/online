@@ -1181,8 +1181,6 @@ public:
                 }
             }
 
-            docBroker->load(jailId);
-
             auto ws = std::make_shared<WebSocket>(request, response);
             auto session = std::make_shared<PrisonerSession>(sessionId, ws, docBroker);
 
@@ -1190,6 +1188,20 @@ public:
             if (!docBroker->connectPeers(session))
             {
                 Log::warn("Failed to connect " + session->getName() + " to its peer.");
+            }
+
+            try
+            {
+                docBroker->load(jailId);
+            }
+            catch (const StorageSpaceLowException&)
+            {
+                // We use the same message as is sent when some of lool's own locations are full,
+                // even if in this case it might be a totally different location (file system, or
+                // some other type of storage somewhere). This message is not sent to all clients,
+                // though, just to all sessions of this document.
+                docBroker->alertAllUsersOfDocument("internal", "diskfull");
+                throw;
             }
 
             std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
