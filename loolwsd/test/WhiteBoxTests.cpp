@@ -11,7 +11,9 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <ChildSession.hpp>
 #include <Common.hpp>
+#include <LOOLKit.hpp>
 #include <LOOLProtocol.hpp>
 #include <MessageQueue.hpp>
 #include <Util.hpp>
@@ -24,12 +26,14 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLOOLProtocolFunctions);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
+    CPPUNIT_TEST(testEmptyCellCursor);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testLOOLProtocolFunctions();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
+    void testEmptyCellCursor();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -143,6 +147,59 @@ void WhiteBoxTests::testRegexListMatcher_Init()
     CPPUNIT_ASSERT(matcher.match("192.168.1.134"));
     CPPUNIT_ASSERT(!matcher.match("192.169.1.1"));
     CPPUNIT_ASSERT(matcher.match("192.168.."));
+}
+
+/// A stub IDocumentManager implementation for unit test purposes.
+class DummyDocument : public IDocumentManager
+{
+    std::shared_ptr<TileQueue> _tileQueue;
+    std::mutex _mutex;
+public:
+    DummyDocument()
+        : _tileQueue(new TileQueue()),
+        _mutex()
+    {
+    }
+    std::shared_ptr<lok::Document> onLoad(const std::string& /*sessionId*/,
+                                          const std::string& /*jailedFilePath*/,
+                                          const std::string& /*userName*/,
+                                          const std::string& /*docPassword*/,
+                                          const std::string& /*renderOpts*/,
+                                          const bool /*haveDocPassword*/) override
+    {
+        return nullptr;
+    }
+
+    void onUnload(const ChildSession& /*session*/) override
+    {
+    }
+
+    void notifyViewInfo() override
+    {
+    }
+
+    std::map<int, std::string> getViewInfo() override
+    {
+        return {};
+    }
+
+    std::mutex& getMutex() override
+    {
+        return _mutex;
+    }
+
+    std::shared_ptr<TileQueue>& getTileQueue() override
+    {
+        return _tileQueue;
+    }
+};
+
+void WhiteBoxTests::testEmptyCellCursor()
+{
+    DummyDocument document;
+    CallbackDescriptor callbackDescriptor{&document, 0};
+    // This failed as stoi raised an std::invalid_argument exception.
+    documentViewCallback(LOK_CALLBACK_CELL_CURSOR, "EMPTY", &callbackDescriptor);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
