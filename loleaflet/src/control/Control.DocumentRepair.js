@@ -66,16 +66,23 @@ L.Control.DocumentRepair = L.Control.extend({
 		td.appendChild(document.createTextNode(comment));
 		td = L.DomUtil.create('td', '', row);
 		td.appendChild(document.createTextNode(viewId));
+
+		// Show relative date by default, absolute one as tooltip.
 		td = L.DomUtil.create('td', '', row);
 		var relativeDateTime = jQuery.timeago(dateTime.replace(/,.*/, 'Z'));
-		td.appendChild(document.createTextNode(relativeDateTime));
+		var span = document.createElement('span');
+		span.title = dateTime;
+		span.appendChild(document.createTextNode(relativeDateTime));
+		td.appendChild(span);
+
 		L.DomEvent.on(row, 'click', this._onRowClick, this);
 		L.DomEvent.on(row, 'dblclick', this._onJumpClick, this);
 	},
 
 	fillAction: function (actions, type) {
 		for (var iterator = 0; iterator < actions.length; ++iterator) {
-			var userName = actions[iterator].userName;
+			// No user name if the user in question is already disconnected.
+			var userName = actions[iterator].userName ? actions[iterator].userName : '';
 			if (parseInt(actions[iterator].viewId) === this._map._docLayer._viewId) {
 				userName = _('You');
 			}
