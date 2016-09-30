@@ -118,7 +118,8 @@ public:
                  const std::string& jailPath,
                  const std::string& uri) :
         StorageBase(localStorePath, jailPath, uri),
-        _isCopy(false)
+        _isCopy(false),
+        _localStorageId(LocalStorage::LastLocalStorageId++)
     {
         Log::info("LocalStorage ctor with localStorePath: [" + localStorePath +
                   "], jailPath: [" + jailPath + "], uri: [" + uri + "].");
@@ -133,6 +134,9 @@ public:
 private:
     /// True if the jailed file is not linked but copied.
     bool _isCopy;
+    static unsigned LastLocalStorageId;
+    /// Used to differentiate between multiple localhost users.
+    const unsigned _localStorageId;
 };
 
 /// WOPI protocol backed storage.

@@ -163,6 +163,8 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     throw BadRequestException("No Storage configured or invalid URI.");
 }
 
+unsigned LocalStorage::LastLocalStorageId = 0;
+
 StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uri)
 {
     const auto path = Poco::Path(uri.getPath());
@@ -171,7 +173,7 @@ StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uri)
     const auto file = Poco::File(path);
     const auto lastModified = file.getLastModified();
     const auto size = file.getSize();
-    return FileInfo({filename, lastModified, size, "localhost", "Local Host"});
+    return FileInfo({filename, lastModified, size, "localhost", std::string("Local Host #") + std::to_string(_localStorageId)});
 }
 
 std::string LocalStorage::loadStorageFileToLocal()
