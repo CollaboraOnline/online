@@ -53,6 +53,7 @@
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOKitHelper.hpp"
+#include "LOOLKit.hpp"
 #include "LOOLProtocol.hpp"
 #include "LibreOfficeKit.hpp"
 #include "Log.hpp"
@@ -95,6 +96,7 @@ static std::shared_ptr<Document> document;
 
 namespace
 {
+#ifndef BUILDING_TESTS
     typedef enum { COPY_ALL, COPY_LO, COPY_NO_USR } LinkOrCopyType;
     LinkOrCopyType linkOrCopyType;
     std::string sourceForLinkOrCopy;
@@ -251,6 +253,7 @@ namespace
             throw Exception("symlink() failed");
         }
     }
+#endif
 }
 
 /// Connection thread with a client (via WSD).
@@ -384,14 +387,6 @@ public:
     /// 1) Documents which require password to view
     /// 2) Document which require password to modify
     enum class PasswordType { ToView, ToModify };
-
-    /// Descriptor class used to link a LOK
-    /// callback to a specific view.
-    struct CallbackDescriptor
-    {
-        Document* const Doc;
-        const int ViewId;
-    };
 
 public:
     Document(const std::shared_ptr<lok::Office>& loKit,
@@ -811,8 +806,6 @@ public:
         _ws->sendFrame(message.data(), message.size());
     }
 
-private:
-
     static void GlobalCallback(const int nType, const char* pPayload, void* pData)
     {
         if (TerminationFlag)
@@ -853,7 +846,7 @@ private:
                      << "] [" << LOKitHelper::kitCallbackTypeToString(nType)
                      << "] [" << payload << "]." << Log::end;
 
-        std::unique_lock<std::mutex> lock(pDescr->Doc->_mutex);
+        std::unique_lock<std::mutex> lock(pDescr->Doc->getMutex());
 
         if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
             nType == LOK_CALLBACK_CELL_CURSOR)
@@ -867,7 +860,7 @@ private:
                 auto cursorWidth = std::stoi(tokens[2]);
                 auto cursorHeight = std::stoi(tokens[3]);
 
-                pDescr->Doc->_tileQueue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
+                pDescr->Doc->getTileQueue()->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
             }
         }
         else if (nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
@@ -888,12 +881,14 @@ private:
                 auto cursorWidth = std::stoi(tokens[2]);
                 auto cursorHeight = std::stoi(tokens[3]);
 
-                pDescr->Doc->_tileQueue->updateCursorPosition(std::stoi(viewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
+                pDescr->Doc->getTileQueue()->updateCursorPosition(std::stoi(viewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
             }
         }
 
-        pDescr->Doc->_tileQueue->put("callback " + std::to_string(pDescr->ViewId) + " " + std::to_string(nType) + " " + payload);
+        pDescr->Doc->getTileQueue()->put("callback " + std::to_string(pDescr->ViewId) + " " + std::to_string(nType) + " " + payload);
     }
+
+private:
 
     static void DocumentCallback(const int nType, const char* pPayload, void* pData)
     {
@@ -1013,6 +1008,16 @@ private:
 
         return viewInfo;
     };
+
+    std::mutex& getMutex() override
+    {
+        return _mutex;
+    }
+
+    std::shared_ptr<TileQueue>& getTileQueue() override
+    {
+        return _tileQueue;
+    }
 
     /// Notify all views of viewId and their associated usernames
     void notifyViewInfo() override
@@ -1335,6 +1340,12 @@ private:
     std::atomic_size_t _clientViews;
 };
 
+void documentViewCallback(const int nType, const char* pPayload, void* pData)
+{
+    Document::ViewCallback(nType, pPayload, pData);
+}
+
+#ifndef BUILDING_TESTS
 void lokit_main(const std::string& childRoot,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
@@ -1636,6 +1647,7 @@ void lokit_main(const std::string& childRoot,
     Log::info("Process finished.");
     std::_Exit(Application::EXIT_OK);
 }
+#endif
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)
@@ -1696,10 +1708,12 @@ bool globalPreinit(const std::string &loTemplate)
 namespace Util
 {
 
+#ifndef BUILDING_TESTS
 void alertAllUsers(const std::string& cmd, const std::string& kind)
 {
     document->sendTextFrame("errortoall: cmd=" + cmd + " kind=" + kind);
 }
+#endif
 
 }
 

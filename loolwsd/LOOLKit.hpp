@@ -17,7 +17,18 @@ void lokit_main(const std::string& childRoot,
                 bool queryVersionInfo);
 
 bool globalPreinit(const std::string &loTemplate);
+/// Wrapper around private Document::ViewCallback().
+void documentViewCallback(const int nType, const char* pPayload, void* pData);
 
+class IDocumentManager;
+
+/// Descriptor class used to link a LOK
+/// callback to a specific view.
+struct CallbackDescriptor
+{
+    IDocumentManager* const Doc;
+    const int ViewId;
+};
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
