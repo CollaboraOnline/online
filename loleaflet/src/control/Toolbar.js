@@ -48,6 +48,10 @@ L.Map.include({
 	},
 
 	downloadAs: function (name, format, options, id) {
+		if (this._fatal) {
+			return;
+		}
+
 		if (format === undefined || format === null) {
 			format = '';
 		}
