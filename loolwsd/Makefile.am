@@ -154,9 +154,16 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:admin_console.username=admin --o:admin_console.password=admin
 
-run_valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
+		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
+			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:admin_console.username=admin --o:admin_console.password=admin
+
+run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
+	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no \
 		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:admin_console.username=admin --o:admin_console.password=admin
