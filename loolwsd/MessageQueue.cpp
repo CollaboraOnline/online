@@ -211,6 +211,10 @@ MessageQueue::Payload TileQueue::get_impl()
             prioritySoFar = p;
             prioritized = i;
             msg = prio;
+
+            // found the highest priority already?
+            if (prioritySoFar == static_cast<int>(_viewOrder.size()) - 1)
+                break;
         }
     }
 
