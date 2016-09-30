@@ -159,18 +159,18 @@ void TileQueue::removeDuplicate(const std::string& tileMsg)
     }
 }
 
-bool TileQueue::priority(const std::string& tileMsg)
+int TileQueue::priority(const std::string& tileMsg)
 {
     auto tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
 
-    for (int view : _viewOrder)
+    for (size_t i = 0; i < _viewOrder.size(); ++i)
     {
-        auto& cursor = _cursorPositions[view];
+        auto& cursor = _cursorPositions[_viewOrder[i]];
         if (tile.intersectsWithRect(cursor.X, cursor.Y, cursor.Width, cursor.Height))
-            return true;
+            return i;
     }
 
-    return false;
+    return -1;
 }
 
 MessageQueue::Payload TileQueue::get_impl()
@@ -191,7 +191,8 @@ MessageQueue::Payload TileQueue::get_impl()
 
     // We are handling a tile; first try to find one that is at the cursor's
     // position, otherwise handle the one that is at the front
-    bool foundPrioritized = false;
+    int prioritized = 0;
+    int prioritySoFar = -1;
     for (size_t i = 0; i < _queue.size(); ++i)
     {
         auto& it = _queue[i];
@@ -203,18 +204,19 @@ MessageQueue::Payload TileQueue::get_impl()
         if (LOOLProtocol::getFirstToken(prio) != "tile")
             break;
 
-        if (priority(prio))
+        int p = priority(prio);
+        if (p == -1)
+            continue;
+
+        if (prioritySoFar == -1 || p < prioritySoFar)
         {
-            Log::debug() << "Handling a priority message: " << prio << Log::end;
-            _queue.erase(_queue.begin() + i);
+            prioritySoFar = p;
+            prioritized = i;
             msg = prio;
-            foundPrioritized = true;
-            break;
         }
     }
 
-    if (!foundPrioritized)
-        _queue.pop_front();
+    _queue.erase(_queue.begin() + prioritized);
 
     tiles.emplace_back(TileDesc::parse(msg));
 
