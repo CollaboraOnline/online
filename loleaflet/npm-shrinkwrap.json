@@ -2385,6 +2385,11 @@
       "from": "smartmenus@1.0.0",
       "resolved": "./node_shrinkwrap/smartmenus-1.0.0.tgz"
     },
+    "timeago": {
+      "version": "1.5.3",
+      "from": "timeago@1.5.3",
+      "resolved": "./node_shrinkwrap/timeago-1.5.3.tgz"
+    },
     "uglify-js": {
       "version": "2.4.24",
       "from": "uglify-js@>=2.4.16 <2.5.0",

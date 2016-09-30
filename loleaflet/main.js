@@ -7,6 +7,7 @@ global.$ = global.jQuery = $;
 require('smartmenus');
 require('jquery-ui');
 require('jquery-contextmenu');
+require('timeago');
 // FIXME: would be good to remove w2ui script tags and require
 // like other modules. problem is that w2ui doesn't export
 // its global variables for a module, so following doesn't work

@@ -67,7 +67,8 @@ L.Control.DocumentRepair = L.Control.extend({
 		td = L.DomUtil.create('td', '', row);
 		td.appendChild(document.createTextNode(viewId));
 		td = L.DomUtil.create('td', '', row);
-		td.appendChild(document.createTextNode(dateTime));
+		var relativeDateTime = jQuery.timeago(dateTime.replace(/,.*/, 'Z'));
+		td.appendChild(document.createTextNode(relativeDateTime));
 		L.DomEvent.on(row, 'click', this._onRowClick, this);
 		L.DomEvent.on(row, 'dblclick', this._onJumpClick, this);
 	},
