@@ -21,8 +21,6 @@
 */
 class MessageQueue
 {
-    friend class TileQueueTests;
-
 public:
 
     typedef std::vector<char> Payload;
@@ -73,6 +71,8 @@ protected:
 */
 class TileQueue : public MessageQueue
 {
+    friend class TileQueueTests;
+
 private:
 
     class CursorPosition

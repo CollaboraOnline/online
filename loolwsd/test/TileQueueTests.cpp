@@ -42,12 +42,14 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTileQueuePriority);
     CPPUNIT_TEST(testTileCombinedRendering);
     CPPUNIT_TEST(testTileRecombining);
+    CPPUNIT_TEST(testViewOrder);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testTileQueuePriority();
     void testTileCombinedRendering();
     void testTileRecombining();
+    void testViewOrder();
 };
 
 void TileQueueTests::testTileQueuePriority()
@@ -147,6 +149,43 @@ void TileQueueTests::testTileRecombining()
 
     // and nothing remains in the queue
     CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
+}
+
+void TileQueueTests::testViewOrder()
+{
+    TileQueue queue;
+
+    // should result in the 3, 2, 1, 0 order of the views
+    queue.updateCursorPosition(0, 0, 0, 0, 10, 100);
+    queue.updateCursorPosition(2, 0, 0, 0, 10, 100);
+    queue.updateCursorPosition(1, 0, 0, 7680, 10, 100);
+    queue.updateCursorPosition(3, 0, 0, 0, 10, 100);
+    queue.updateCursorPosition(2, 0, 0, 15360, 10, 100);
+    queue.updateCursorPosition(3, 0, 0, 23040, 10, 100);
+
+    const std::vector<std::string> tiles =
+    {
+        "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1",
+        "tile part=0 width=256 height=256 tileposx=0 tileposy=7680 tilewidth=3840 tileheight=3840 ver=-1",
+        "tile part=0 width=256 height=256 tileposx=0 tileposy=15360 tilewidth=3840 tileheight=3840 ver=-1",
+        "tile part=0 width=256 height=256 tileposx=0 tileposy=23040 tilewidth=3840 tileheight=3840 ver=-1"
+    };
+
+    for (auto &tile : tiles)
+        queue.put(tile);
+
+    CPPUNIT_ASSERT_EQUAL(4, static_cast<int>(tiles.size()));
+
+    // should result in the 3, 2, 1, 0 order of the tiles thanks to the cursor
+    // positions
+    for (size_t i = 0; i < tiles.size(); ++i)
+    {
+        MessageQueue::Payload payload(queue.get());
+        std::string message(payload.data(), payload.size());
+
+        CPPUNIT_ASSERT_EQUAL(tiles[3 - i], message);
+    }
+
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileQueueTests);
