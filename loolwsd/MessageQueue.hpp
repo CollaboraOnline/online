@@ -131,8 +131,10 @@ private:
     /// Search the queue for a duplicate tile and remove it (if present).
     void removeDuplicate(const std::string& tileMsg);
 
-    /// Check if the given tile msg underlies a cursor.
-    bool priority(const std::string& tileMsg);
+    /// Priority of the given tile message.
+    /// 0 is the highest prio, the bigger is the value, the lower is the prio.
+    /// -1 means the lowest prio (the tile does not intersect any of the cursors).
+    int priority(const std::string& tileMsg);
 
 private:
     std::map<int, CursorPosition> _cursorPositions;
