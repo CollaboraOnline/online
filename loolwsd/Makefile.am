@@ -180,10 +180,13 @@ clang-tidy:
 # installing the RPM or Debian package.
 
 all-local: loolforkit @JAILS_PATH@ $(SYSTEM_STAMP)
-	if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
+	@if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit; \
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount; \
 	    echo "Set required capabilities"; \
 	else \
 	    echo "Skipping capability setting"; \
 	fi
+
+# just run the build without any tests
+build-nocheck: all-am

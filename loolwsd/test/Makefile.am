@@ -2,8 +2,14 @@
 export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
 
+# unittest: tests that do not need loolwsd running, and that are run during a
+# normal build
+bin_PROGRAMS = unittest
+
+# unittest: tests that need loolwsd running, and that are run via 'make check'
 check_PROGRAMS = test
-noinst_PROGRAMS = test
+
+noinst_PROGRAMS = test unittest
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 
@@ -33,9 +39,13 @@ wsd_sources = \
             ../Util.cpp
 
 test_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" -I$(top_srcdir) -DBUILDING_TESTS
-test_SOURCES = TileCacheTests.cpp TileQueueTests.cpp WhiteBoxTests.cpp integration-http-server.cpp \
+test_SOURCES = TileCacheTests.cpp integration-http-server.cpp \
                httpwstest.cpp httpcrashtest.cpp httpwserror.cpp test.cpp $(wsd_sources)
 test_LDADD = $(CPPUNIT_LIBS)
+
+unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
+unittest_SOURCES = TileQueueTests.cpp WhiteBoxTests.cpp test.cpp $(wsd_sources)
+unittest_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
@@ -67,8 +77,14 @@ endif
 TEST_EXTENSIONS = .la
 LA_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
 
-EXTRA_DIST = data/hello.odt data/hello.txt $(test_SOURCES) run_unit.sh
+EXTRA_DIST = data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh
 
 check_valgrind: all
 	./run_unit.sh --log-file test.log --trs-file test.trs --valgrind
 
+# run unittest during the normal build
+all-local: unittest
+	@echo
+	@echo "Running build-time unit tests.  For more thorough testing, please run 'make check'."
+	@echo
+	@${top_builddir}/test/unittest 2> unittest.log || cat unittest.log
