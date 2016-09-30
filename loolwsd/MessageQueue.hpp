@@ -108,7 +108,7 @@ public:
             _viewOrder.erase(view);
         }
 
-        _viewOrder.push_front(viewId);
+        _viewOrder.push_back(viewId);
     }
 
     void removeCursorPosition(int viewId)
@@ -132,16 +132,16 @@ private:
     void removeDuplicate(const std::string& tileMsg);
 
     /// Priority of the given tile message.
-    /// 0 is the highest prio, the bigger is the value, the lower is the prio.
-    /// -1 means the lowest prio (the tile does not intersect any of the cursors).
+    /// -1 means the lowest prio (the tile does not intersect any of the cursors),
+    /// the higher the number, the bigger is priority [up to _viewOrder.size()-1].
     int priority(const std::string& tileMsg);
 
 private:
     std::map<int, CursorPosition> _cursorPositions;
 
     /// Check the views in the order of how the editing (cursor movement) has
-    /// been happening.
-    std::deque<int> _viewOrder;
+    /// been happening (0 == oldest, size() - 1 == newest).
+    std::vector<int> _viewOrder;
 };
 
 #endif
