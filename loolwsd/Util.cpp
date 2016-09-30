@@ -212,36 +212,44 @@ namespace Util
         }
     }
 
-    void checkDiskSpace(const std::string& path)
+} // namespace Util
+
+namespace
+{
+
+    struct fs
     {
-        static std::mutex mutex;
-        std::lock_guard<std::mutex> lock(mutex);
-
-        struct fs
+        fs(const std::string& p, dev_t d)
+            : path(p), dev(d)
         {
-            fs(const std::string& p, dev_t d)
-                : path(p), dev(d)
-            {
-            }
+        }
 
-            fs(dev_t d)
-                : fs("", d)
-            {
-            }
-
-            std::string path;
-            dev_t dev;
-        };
-
-        struct fsComparator
+        fs(dev_t d)
+            : fs("", d)
         {
-            bool operator() (const fs& lhs, const fs& rhs) const
-            {
-                return (lhs.dev < rhs.dev);
-            }
-        };
+        }
 
-        static std::set<fs, fsComparator> filesystems;
+        std::string path;
+        dev_t dev;
+    };
+
+    struct fsComparator
+    {
+        bool operator() (const fs& lhs, const fs& rhs) const
+        {
+            return (lhs.dev < rhs.dev);
+        }
+    };
+
+    static std::mutex fsmutex;
+    static std::set<fs, fsComparator> filesystems;
+} // unnamed namespace
+
+namespace Util
+{
+    void registerFileSystemForDiskSpaceChecks(const std::string& path)
+    {
+        std::lock_guard<std::mutex> lock(fsmutex);
 
         if (path != "")
         {
@@ -255,11 +263,16 @@ namespace Util
                 return;
             filesystems.insert(fs(dirPath, s.st_dev));
         }
+    }
+
+    void checkDiskSpaceOnRegisteredFileSystems()
+    {
+        std::lock_guard<std::mutex> lock(fsmutex);
 
         static std::chrono::steady_clock::time_point lastCheck;
         std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
 
-        // Don't check disk space more often that once a minute
+        // Don't check more often that once a minute
         if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
             return;
 
@@ -267,18 +280,24 @@ namespace Util
 
         for (auto& i: filesystems)
         {
-            struct stat s;
-            struct statfs sfs;
-            if (stat(i.path.c_str(), &s) == -1 ||
-                statfs(i.path.c_str(), &sfs) == -1)
-                continue;
-
-            if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
+            if (!checkDiskSpace(i.path))
             {
                 alertAllUsersAndLog("File system of " + i.path + " dangerously low on disk space", "internal", "diskfull");
                 break;
             }
         }
+    }
+
+    bool checkDiskSpace(const std::string& path)
+    {
+        assert(path != "");
+        struct statfs sfs;
+        if (statfs(path.c_str(), &sfs) == -1)
+            return true;
+
+        if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
+            return false;
+        return true;
     }
 
     const char *signalName(const int signo)
