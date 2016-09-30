@@ -73,12 +73,20 @@ namespace Util
     }
 #endif
 
-    // Check disk space on a list of file systems. The list is initially empty, and each call to the
-    // function with a non-empty 'path' adds the file system that path is located on to the list, if
-    // not already there. If the free space on any of the file systems in question is below 5%, call
+    // Add the file system that 'path' is located on to a list of file systems that are periodically
+    // checked for available space. The list is initially empty.
+    void registerFileSystemForDiskSpaceChecks(const std::string& path);
+
+    // Perform the check. If the free space on any of the registered file systems is below 5%, call
     // 'alertAllUsers("internal", "diskfull")'. The check will be made no more often than once a
     // minute.
-    void checkDiskSpace(const std::string& path);
+    void checkDiskSpaceOnRegisteredFileSystems();
+
+    // Check disk space on a specific file system, the one where 'path' is located. This does not
+    // add that file system to the list used by 'registerFileSystemForDiskSpaceChecks'. If the free
+    // space on the file system is below 5%, return false, otherwise true. Note that this function
+    // does not call 'alertAllUsers'.
+    bool checkDiskSpace(const std::string& path);
 
     /// Assert that a lock is already taken.
     template <typename T>
