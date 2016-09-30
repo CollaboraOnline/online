@@ -31,7 +31,8 @@ L.Control.ContextMenu = L.Control.extend({
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
 				   'TableDeleteMenu',
 				   'DeleteRows', 'DeleteColumns', 'DeleteTable',
-				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowWidth'],
+				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowWidth',
+				   'UpdateCurIndex','RemoveTableOf'],
 
 			spreadsheet: ['MergeCells', 'SplitCells',
 						  'InsertAnnotation', 'EditAnnotation', 'DeleteNote', 'ShowNote', 'HideNote'],
