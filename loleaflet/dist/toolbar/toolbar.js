@@ -476,6 +476,9 @@ $(function () {
 				return;
 			}
 			onClick(e.target, e.item, e.subItem);
+		},
+		onRefresh: function(e) {
+			$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
 		}
 	});
 });
@@ -1311,7 +1314,7 @@ map.on('statusindicator', function (e) {
 function getUserItem(viewId, userName, color) {
 	var html = '<tr class="useritem" id="user-' + viewId + '">' +
 	             '<td class=usercolor style="background-color: ' + color  +';"></td>' +
-	             '<td class="username">' + userName + '</td>' +
+	             '<td class="username loleaflet-font">' + userName + '</td>' +
 	           '</tr>';
 	return html;
 }
