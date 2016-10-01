@@ -938,7 +938,7 @@ public:
         const auto id = LOOLWSD::GenSessionId();
 
         Poco::URI requestUri(request.getURI());
-        Log::debug("Handling GET: " + request.getURI());
+        Log::debug("Handling: " + request.getURI());
 
         StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
