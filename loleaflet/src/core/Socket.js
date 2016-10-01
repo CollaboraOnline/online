@@ -201,6 +201,14 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('error:') && !this._map._docLayer) {
 			textMsg = textMsg.substring(6);
+			if (command.errorKind === 'limitreached') {
+				this._map._fatal = true;
+				textMsg = errorMessages.limitreached;
+				textMsg = textMsg.replace(/%0/g, command.params[0]);
+				textMsg = textMsg.replace(/%1/g, command.params[1]);
+				textMsg = textMsg.replace(/%2/g, (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online'));
+				textMsg = textMsg.replace(/%3/g, (typeof brandProductURL !== 'undefined' ? brandProductURL : 'https://wiki.documentfoundation.org/Development/LibreOffice_Online'));
+			}
 			this._map.fire('error', {msg: textMsg});
 		}
 		else if (textMsg === 'pong' && this._map._docLayer && this._map._docLayer._debug) {
@@ -410,6 +418,9 @@ L.Socket = L.Class.extend({
 			}
 			else if (tokens[i].substring(0, 7) === 'viewid=') {
 				command.viewid = tokens[i].substring(7);
+			}
+			else if (tokens[i].substring(0, 7) === 'params=') {
+				command.params = tokens[i].substring(7).split(',');
 			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
