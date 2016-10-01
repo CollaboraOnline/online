@@ -19,12 +19,6 @@
 /* Default document used in the start test URI */
 #define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH "test/data/hello-world.odt"
 
-/* PRODUCT */
-#define LOOLWSD_PRODUCT "LibreOffice Online"
-
-/* PRODUCT URL */
-#define LOOLWSD_URL "https://wiki.documentfoundation.org/Development/LibreOffice_Online"
-
 // This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
 // parent process that listens on the TCP port and accepts connections from LOOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
@@ -185,10 +179,8 @@ namespace {
 static inline
 void lcl_shutdownLimitReached(WebSocket& ws)
 {
-    const std::string msg = std::string("error: ") + Poco::format(PAYLOAD_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS,
-        std::string(LOOLWSD_PRODUCT),
-        std::string(LOOLWSD_URL),
-        std::string(LOOLWSD_URL));
+    const std::string error = Poco::format(PAYLOAD_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
+    const std::string close = Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, static_cast<int>(WebSocket::WS_POLICY_VIOLATION));
 
     /* loleaflet sends loolclient, load and partrectangles message immediately
        after web socket handshake, so closing web socket fails loading page in
@@ -209,16 +201,16 @@ void lcl_shutdownLimitReached(WebSocket& ws)
             ws.receiveFrame(buffer.data(), buffer.capacity(), flags);
             if (--handshake == 0)
             {
-                ws.sendFrame(msg.data(), msg.size());
-                ws.shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS));
+                ws.sendFrame(error.data(), error.size());
+                ws.shutdown(WebSocket::WS_POLICY_VIOLATION, close);
             }
         }
         while ((flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
     }
     catch (Exception& e)
     {
-        ws.sendFrame(msg.data(), msg.size());
-        ws.shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS));
+        ws.sendFrame(error.data(), error.size());
+        ws.shutdown(WebSocket::WS_POLICY_VIOLATION, close);
     }
 }
 
