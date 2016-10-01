@@ -207,7 +207,7 @@ downloadas: jail=<jail directory> dir=<a tmp dir> name=<name> port=<port>
     The client should then request http://server:port/jail/dir/name in order to download
     the document
 
-error: cmd=<command> kind=<kind> [code=<error_code>]
+error: cmd=<command> kind=<kind> [code=<error_code>] [params=1,2,3,...,N]
 <freeErrorText>
 
     <command> is the command part of the corresponding client->server

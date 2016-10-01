@@ -15,8 +15,8 @@
 //NOTE: For whatever reason Poco seems to trim the first character.
 
 constexpr auto SERVICE_UNAVALABLE_INTERNAL_ERROR = " Service is unavailable. Please try again later and report to your administrator if the issue persists.";
-constexpr auto SERVICE_UNAVALABLE_LIMIT_REACHED = "This development build is limited to %d documents, and %d connections";
-constexpr auto PAYLOAD_UNAVALABLE_LIMIT_REACHED = "This development build is limited to %d documents, and %d connections - to avoid the impression that it is suitable for deployment in large enterprises. To find out more about deploying and scaling %s checkout: <br/><a href=\"%s\">%s</a>.";
+constexpr auto SERVICE_UNAVALABLE_LIMIT_REACHED = "error: cmd=socket kind=close code=%d";
+constexpr auto PAYLOAD_UNAVALABLE_LIMIT_REACHED = "error: cmd=socket kind=limitreached params=%d,%d";
 
 #endif
 
