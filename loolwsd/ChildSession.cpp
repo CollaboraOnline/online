@@ -895,10 +895,10 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, StringT
 
     auto lock(_loKitDocument->getLock());
 
+    _loKitDocument->setView(_viewId);
+
     if (part != _loKitDocument->getPart())
     {
-        _loKitDocument->setView(_viewId);
-
         _loKitDocument->setPart(part);
     }
 
