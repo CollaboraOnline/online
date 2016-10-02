@@ -56,16 +56,6 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
 
     LOOLWSD::dumpOutgoingTrace(_docBroker->getJailId(), getId(), firstLine);
 
-    if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
-    {
-        // Keep track of timestamps of incoming client messages that indicate user activity.
-        updateLastActivityTime();
-    }
-
-    // Note that this handles both forwarding requests from the client to the child process, and
-    // forwarding replies from the child process to the client. Or does it?
-
-    // Snoop at some messages and manipulate tile cache information as needed
     auto peer = _peer.lock();
     if (!peer)
     {
@@ -139,9 +129,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        // Save as completed, inform the other (Kind::ToClient)
-        // PrisonerSession about it.
-
+        // Save-as completed, inform the ClientSession.
         const std::string filePrefix("file:///");
         if (url.find(filePrefix) == 0)
         {
@@ -252,6 +240,10 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
             _docBroker->tileCache().saveRendering(font, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
         }
+    }
+    else
+    {
+        Log::info("Ignoring notification on password protected document: " + firstLine);
     }
 
     // Detect json messages, since we must send those as text even though they are multiline.
