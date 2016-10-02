@@ -331,21 +331,21 @@ void TileCache::invalidateTiles(const std::string& tiles)
     {
         invalidateTiles(-1, 0, 0, INT_MAX, INT_MAX);
     }
-    else if (tokens.count() != 6)
-    {
-        Log::error("Unexpected invalidatetiles request: " + tiles);
-        return;
-    }
     else
     {
         int part, x, y, width, height;
-        if (getTokenInteger(tokens[1], "part", part) &&
+        if (tokens.count() == 6 &&
+            getTokenInteger(tokens[1], "part", part) &&
             getTokenInteger(tokens[2], "x", x) &&
             getTokenInteger(tokens[3], "y", y) &&
             getTokenInteger(tokens[4], "width", width) &&
             getTokenInteger(tokens[5], "height", height))
         {
             invalidateTiles(part, x, y, width, height);
+        }
+        else
+        {
+            Log::error("Unexpected invalidatetiles request: " + tiles);
         }
     }
 }
