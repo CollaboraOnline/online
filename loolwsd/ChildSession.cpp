@@ -977,18 +977,17 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
     {
     case LOK_CALLBACK_INVALIDATE_TILES:
         {
-            const auto curPart = _loKitDocument->getPart();
-
-            StringTokenizer tokens(rPayload, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (tokens.count() == 4)
+            StringTokenizer tokens(rPayload, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            if (tokens.count() == 5)
             {
-                int x, y, width, height;
+                int part, x, y, width, height;
                 try
                 {
                     x = std::stoi(tokens[0]);
                     y = std::stoi(tokens[1]);
                     width = std::stoi(tokens[2]);
                     height = std::stoi(tokens[3]);
+                    part = std::stoi(tokens[4]);
                 }
                 catch (const std::out_of_range&)
                 {
@@ -998,10 +997,11 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
                     y = 0;
                     width = INT_MAX;
                     height = INT_MAX;
+                    part = 0;
                 }
 
                 sendTextFrame("invalidatetiles:"
-                              " part=" + std::to_string(curPart) +
+                              " part=" + std::to_string(part) +
                               " x=" + std::to_string(x) +
                               " y=" + std::to_string(y) +
                               " width=" + std::to_string(width) +

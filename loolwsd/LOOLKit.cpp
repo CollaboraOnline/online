@@ -1105,7 +1105,8 @@ private:
             {
                 _loKit->get()->pClass->registerCallback(_loKit->get(), GlobalCallback, this);
                 const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
-                                 | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY;
+                                 | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
+                                 | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK;
                 _loKit->setOptionalFeatures(flags);
             }
 
