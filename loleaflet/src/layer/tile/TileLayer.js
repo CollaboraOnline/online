@@ -665,19 +665,23 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._cellViewCursors[viewId] || !this._cellViewCursors[viewId].bounds)
 			return;
 
-		var cellViewCursorsMarker = this._cellViewCursors[viewId].marker;
+		var cellViewCursorMarker = this._cellViewCursors[viewId].marker;
 		var viewPart = this._cellViewCursors[viewId].part;
 
 		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds) && this._selectedPart === viewPart) {
-			if (!cellViewCursorsMarker) {
-				cellViewCursorsMarker = L.rectangle(this._cellViewCursors[viewId].bounds, {fill: false, color: L.LOUtil.getViewIdHexColor(viewId), weight: 2});
-				this._cellViewCursors[viewId].marker = cellViewCursorsMarker;
+			if (!cellViewCursorMarker) {
+				var borderColor = L.LOUtil.getViewIdHexColor(viewId);
+				cellViewCursorMarker = L.rectangle(this._cellViewCursors[viewId].bounds, {fill: false, color: borderColor, weight: 2});
+				this._cellViewCursors[viewId].marker = cellViewCursorMarker;
+				cellViewCursorMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, borderColor: borderColor});
 			}
-			cellViewCursorsMarker.setBounds(this._cellViewCursors[viewId].bounds);
-			this._viewLayerGroup.addLayer(cellViewCursorsMarker);
+			else {
+				cellViewCursorMarker.setBounds(this._cellViewCursors[viewId].bounds);
+			}
+			this._viewLayerGroup.addLayer(cellViewCursorMarker);
 		}
-		else if (cellViewCursorsMarker) {
-			this._viewLayerGroup.removeLayer(cellViewCursorsMarker);
+		else if (cellViewCursorMarker) {
+			this._viewLayerGroup.removeLayer(cellViewCursorMarker);
 		}
 	},
 
