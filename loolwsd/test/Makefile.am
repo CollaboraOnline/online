@@ -4,9 +4,7 @@ AUTOMAKE_OPTION = serial-tests
 
 # unittest: tests that do not need loolwsd running, and that are run during a
 # normal build
-bin_PROGRAMS = unittest
-
-# unittest: tests that need loolwsd running, and that are run via 'make check'
+# test: tests that need loolwsd running, and that are run via 'make check'
 check_PROGRAMS = test
 
 noinst_PROGRAMS = test unittest
