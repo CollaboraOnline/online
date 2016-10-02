@@ -63,7 +63,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 #endif
     CPPUNIT_TEST(testLoad12ods);
     CPPUNIT_TEST(testTileInvalidateWriter);
-    //CPPUNIT_TEST(testTileInvalidateCalc);
+    CPPUNIT_TEST(testTileInvalidateCalc);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -609,44 +609,30 @@ void TileCacheTests::testWriterAnyKey()
 
 void TileCacheTests::testTileInvalidateCalc()
 {
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("empty.ods", documentPath, documentURL);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-
-    auto socket = *loadDocAndGetSocket(_uri, documentURL);
+    const std::string testname = "tileInvalidateCalc ";
+    auto socket = *loadDocAndGetSocket("empty.ods", _uri, testname);
 
     std::string text = "Test. Now go 3 \"Enters\": Now after the enters, goes this text";
     for (char ch : text)
     {
         sendChar(socket, ch); // Send ordinary characters -> one tile invalidation for each
         auto response = getResponseMessage(socket, "invalidatetiles:");
-        //CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
     }
 
+    std::cerr << "Sending enters" << std::endl;
     text = "\n\n\n";
     for (char ch : text)
     {
         sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages; I see 3 tiles invalidated for each
-        auto response1 = getResponseMessage(socket, "invalidatetiles:");
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response1.empty());
-        auto response2 = getResponseMessage(socket, "invalidatetiles:");
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response2.empty());
-        auto response3 = getResponseMessage(socket, "invalidatetiles:");
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response3.empty());
+        assertResponseLine(socket, "invalidatetiles:", testname);
     }
 
     text = "abcde";
     for (char ch : text)
     {
         sendChar(socket, ch);
-        auto response = getResponseMessage(socket, "invalidatetiles:");
-        CPPUNIT_ASSERT_MESSAGE("did not receive a invalidatetiles: message as expected", !response.empty());
+        assertResponseLine(socket, "invalidatetiles:", testname);
     }
-
-    // While extra invalidates are not desirable, they are inevitable at the moment.
-    //CPPUNIT_ASSERT_MESSAGE("received unexpected invalidatetiles: message", getResponseMessage(socket, "invalidatetiles:").empty());
-
-    socket.shutdown();
 }
 
 void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType, const std::string& name)
