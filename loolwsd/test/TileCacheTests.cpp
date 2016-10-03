@@ -64,6 +64,8 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLoad12ods);
     CPPUNIT_TEST(testTileInvalidateWriter);
     CPPUNIT_TEST(testTileInvalidateCalc);
+    CPPUNIT_TEST(testTileInvalidatePartCalc);
+    CPPUNIT_TEST(testTileInvalidatePartImpress);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -81,6 +83,10 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testTileInvalidateWriter();
     void testWriterAnyKey();
     void testTileInvalidateCalc();
+    void testTileInvalidatePartCalc();
+    void testTileInvalidatePartImpress();
+
+    void tileInvalidatePart(const std::string& filename, const std::string& testname);
 
     void checkTiles(Poco::Net::WebSocket& socket,
                     const std::string& type,
@@ -633,6 +639,53 @@ void TileCacheTests::testTileInvalidateCalc()
         sendChar(socket, ch);
         assertResponseLine(socket, "invalidatetiles:", testname);
     }
+}
+
+void TileCacheTests::tileInvalidatePart(const std::string& filename, const std::string& testname)
+{
+    const std::string testname1 = testname + "-1 ";
+    const std::string testname2 = testname + "-2 ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL(filename, documentPath, documentURL);
+    auto socket1 = *loadDocAndGetSocket(_uri, documentURL);
+
+    sendTextFrame(socket1, "setclientpart part=2", testname1);
+    assertResponseLine(socket1, "setpart:", testname1);
+    sendTextFrame(socket1, "mouse type=buttondown x=7886 y=8929 count=1 buttons=1 modifier=0", testname1);
+
+    auto socket2 = *loadDocAndGetSocket(_uri, documentURL);
+    sendTextFrame(socket2, "setclientpart part=5", testname2);
+    assertResponseLine(socket2, "setpart:", testname2);
+    sendTextFrame(socket2, "mouse type=buttondown x=7886 y=8929 count=1 buttons=1 modifier=0", testname2);
+
+    std::string text = "Some test";
+    for (char ch : text)
+    {
+        sendChar(socket1, ch);
+        sendChar(socket2, ch);
+
+        const auto response1 = assertResponseLine(socket1, "invalidatetiles:", testname1);
+        int value1;
+        LOOLProtocol::getTokenIntegerFromMessage(response1, "part", value1);
+        CPPUNIT_ASSERT_EQUAL(2, value1);
+
+        const auto response2 = assertResponseLine(socket2, "invalidatetiles:", testname2);
+        int value2;
+        LOOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
+        CPPUNIT_ASSERT_EQUAL(5, value2);
+    }
+}
+
+
+void TileCacheTests::testTileInvalidatePartCalc()
+{
+    tileInvalidatePart("setclientpart.ods", "tileInvalidatePartCalc");
+}
+
+void TileCacheTests::testTileInvalidatePartImpress()
+{
+    tileInvalidatePart("setclientpart.odp", "tileInvalidatePartImpress");
 }
 
 void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType, const std::string& name)
