@@ -10,7 +10,8 @@ L.Control.Dialog = L.Control.extend({
 	},
 
 	_onError: function (e) {
-		if (vex.dialogID > 0) {
+		if (vex.dialogID > 0 && !this._map._fatal) {
+			// TODO. queue message errors and pop-up dialogs
 			// Close other dialogs before presenting a new one.
 			vex.close(vex.dialogID);
 		}

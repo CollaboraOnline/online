@@ -10,16 +10,16 @@ L.Socket = L.Class.extend({
 		this._map = map;
 		try {
 			this.socket = new WebSocket(map.options.server + '/lool/' + encodeURIComponent(map.options.doc) + '/ws');
+			this.socket.onerror = L.bind(this._onSocketError, this);
+			this.socket.onclose = L.bind(this._onSocketClose, this);
+			this.socket.onopen = L.bind(this._onSocketOpen, this);
+			this.socket.onmessage = L.bind(this._onMessage, this);
+			this.socket.binaryType = 'arraybuffer';
 		} catch (e) {
-			this.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ' + e), cmd: 'socket', kind: 'failed', id: 3});
+			this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ' + e), cmd: 'socket', kind: 'failed', id: 3});
 			return null;
 		}
 		this._msgQueue = [];
-		this.socket.onerror = L.bind(this._onSocketError, map);
-		this.socket.onclose = L.bind(this._onSocketClose, map);
-		this.socket.onopen = L.bind(this._onOpen, this);
-		this.socket.onmessage = L.bind(this._onMessage, this);
-		this.socket.binaryType = 'arraybuffer';
 	},
 
 	close: function () {
@@ -66,7 +66,7 @@ L.Socket = L.Class.extend({
 		this.socket.send(msg);
 	},
 
-	_onOpen: function () {
+	_onSocketOpen: function () {
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
 		this._doSend('loolclient ' + this.ProtocolVersionNumber);
@@ -132,7 +132,7 @@ L.Socket = L.Class.extend({
 
 			// TODO: For now we expect perfect match in protocol versions
 			if (loolwsdVersionObj.Protocol !== this.ProtocolVersionNumber) {
-				this.fire('error', {msg: _('Unsupported server version.')});
+				this._map.fire('error', {msg: _('Unsupported server version.')});
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
@@ -184,11 +184,20 @@ L.Socket = L.Class.extend({
 			}
 		}
 		else if (textMsg.startsWith('error:') && !this._map._docLayer) {
-			this.fail = true;
+			textMsg = textMsg.substring(6);
+			if (command.errorKind === 'limitreached') {
+				this._map._fatal = true;
+				textMsg = limitreached;
+				textMsg = textMsg.replace(/%0/g, command.params[0]);
+				textMsg = textMsg.replace(/%1/g, command.params[1]);
+				textMsg = textMsg.replace(/%2/g, (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online'));
+				textMsg = textMsg.replace(/%3/g, (typeof brandProductURL !== 'undefined' ? brandProductURL : 'https://wiki.documentfoundation.org/Development/LibreOffice_Online'));
+			}
+			this._map.fire('error', {msg: textMsg});
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
-			this._map.showBusy('Connecting...', false);
+			this._map.showBusy(_('Connecting...'), false);
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
 			// log the tile msg separately as we need the tile coordinates
@@ -291,23 +300,20 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketError: function () {
-		this.hideBusy();
+		this._map.hideBusy();
 		// Let onclose (_onSocketClose) report errors.
 	},
 
-	_onSocketClose: function () {
-		this.hideBusy();
-		if (this._map) {
-			this._map._active = false;
-		}
+	_onSocketClose: function (e) {
+		this._map.hideBusy();
+		this._map._active = false;
 
-		if (this.fail) {
-			this.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+		if (e.code && e.reason) {
+			this._map.fire('error', {msg: e.reason});
 		}
 		else {
-			this.fire('error', {msg: _('We are sorry, this is an unexpected connection error. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+			this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
-		this.fail = false;
 	},
 
 	parseServerCmd: function (msg) {
@@ -381,6 +387,9 @@ L.Socket = L.Class.extend({
 			}
 			else if (tokens[i].substring(0, 5) === 'font=') {
 				command.font = window.decodeURIComponent(tokens[i].substring(5));
+			}
+			else if (tokens[i].substring(0, 7) === 'params=') {
+				command.params = tokens[i].substring(7).split(',');
 			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
