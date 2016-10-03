@@ -555,15 +555,8 @@ private:
         {
             Log::info("File download request.");
             //TODO: Check that the user in question has access to this file!
-            const std::string dirPath = LOOLWSD::ChildRoot + tokens[3]
-                                      + JAILED_DOCUMENT_ROOT + tokens[4];
-            std::string fileName;
-            URI::decode(tokens[5], fileName);
-            const std::string filePath = dirPath + "/" + fileName;
-            Log::info("HTTP request for: " + filePath);
-            File file(filePath);
 
-            // Validate the dockey
+            // 1. Validate the dockey
             std::string decodedUri;
             URI::decode(tokens[2], decodedUri);
             const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
@@ -573,24 +566,55 @@ private:
             {
                 throw BadRequestException("DocKey [" + docKey + "] is invalid.");
             }
+
+            // 2. Cross-check if received child id is correct
+            if (docBrokerIt->second->getJailId() != tokens[3])
+            {
+                throw BadRequestException("ChildId does not correspond to docKey");
+            }
+
+            // 3. Don't let user download the file in main doc directory containing
+            // the document being edited otherwise we will end up deleting main directory
+            // after download finishes
+            if (docBrokerIt->second->getJailId() == tokens[4])
+            {
+                throw BadRequestException("RandomDir cannot be equal to ChildId");
+            }
             docBrokersLock.unlock();
 
-            if (file.exists())
+            std::string fileName;
+            bool responded = false;
+            URI::decode(tokens[5], fileName);
+            const Path filePath(LOOLWSD::ChildRoot + tokens[3]
+                                + JAILED_DOCUMENT_ROOT + tokens[4] + "/" + fileName);
+            Log::info("HTTP request for: " + filePath.toString());
+            if (filePath.isAbsolute() && File(filePath).exists())
             {
                 response.set("Access-Control-Allow-Origin", "*");
                 HTMLForm form(request);
                 const std::string mimeType = form.has("mime_type")
                                            ? form.get("mime_type")
                                            : "application/octet-stream";
-                response.sendFile(filePath, mimeType);
-                //TODO: Cleanup on error.
-                Util::removeFile(dirPath, true);
-                return true;
+                try
+                {
+                    response.sendFile(filePath.toString(), mimeType);
+                    responded = true;
+                }
+                catch (const Exception& exc)
+                {
+                    Log::error() << "Error sending file to client. PocoException: " << exc.displayText()
+                                 << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                                 << Log::end;
+                }
+
+                Util::removeFile(File(filePath.parent()).path(), true);
             }
             else
             {
-                Log::error("Download file [" + filePath + "] not found.");
+                Log::error("Download file [" + filePath.toString() + "] not found.");
             }
+
+            return responded;
         }
 
         throw BadRequestException("Invalid or unknown request.");
