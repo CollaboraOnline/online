@@ -190,7 +190,7 @@ void lcl_shutdownLimitReached(WebSocket& ws)
     try
     {
         int flags = 0;
-        int handshake = 3;
+        int retries = 7;
         std::vector<char> buffer(READ_BUFFER_SIZE * 100);
 
         // 5 seconds timeout
@@ -199,15 +199,15 @@ void lcl_shutdownLimitReached(WebSocket& ws)
         {
             // ignore loolclient, load and partpagerectangles
             ws.receiveFrame(buffer.data(), buffer.capacity(), flags);
-            if (--handshake == 0)
+            if (--retries == 4)
             {
                 ws.sendFrame(error.data(), error.size());
                 ws.shutdown(WebSocket::WS_POLICY_VIOLATION, close);
             }
         }
-        while ((flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+        while (retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
     }
-    catch (Exception& e)
+    catch (Exception&)
     {
         ws.sendFrame(error.data(), error.size());
         ws.shutdown(WebSocket::WS_POLICY_VIOLATION, close);
