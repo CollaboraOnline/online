@@ -144,11 +144,15 @@ L.TileLayer = L.GridLayer.extend({
 		this._initContainer();
 		this._getToolbarCommandsValues();
 		this._selections = new L.LayerGroup();
-		map.addLayer(this._selections);
+		if (this.options.permission !== 'readonly') {
+			map.addLayer(this._selections);
+		}
 
 		// This layergroup contains all the layers corresponding to other's view
 		this._viewLayerGroup = new L.LayerGroup();
-		map.addLayer(this._viewLayerGroup);
+		if (this.options.permission !== 'readonly') {
+			map.addLayer(this._viewLayerGroup);
+		}
 
 		this._debug = map.options.debug;
 		this._debugInit();
