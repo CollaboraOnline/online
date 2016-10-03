@@ -15,6 +15,7 @@
 #include <thread>
 #include <regex>
 
+#include <Poco/BinaryReader.h>
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Dynamic/Var.h>
 #include <Poco/FileStream.h>
@@ -153,6 +154,33 @@ std::string getTestServerURI()
             + (clientPort? std::string(clientPort) : std::to_string(DEFAULT_CLIENT_PORT_NUMBER)));
 
     return serverURI;
+}
+
+inline
+int getErrorCode(Poco::Net::WebSocket& ws, std::string& message)
+{
+    int flags = 0;
+    int bytes = 0;
+    Poco::UInt16 statusCode = -1;
+    Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
+
+    message.clear();
+    Poco::Timespan timeout(5000000);
+    ws.setReceiveTimeout(timeout);
+    do
+    {
+        bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags);
+    }
+    while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+
+    if (bytes > 0)
+    {
+        Poco::MemoryBinaryReader reader(buffer, Poco::BinaryReader::NETWORK_BYTE_ORDER);
+        reader >> statusCode;
+        message.append(buffer.begin() + 2, bytes - 2);
+    }
+
+    return statusCode;
 }
 
 inline

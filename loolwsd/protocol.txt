@@ -220,7 +220,7 @@ editlock: <1 or 0>
     Note that only one client can have the editlock at a time and
     others can only view.
 
-error: cmd=<command> kind=<kind> [code=<error_code>]
+error: cmd=<command> kind=<kind> [code=<error_code>] [params=1,2,3,...,N]
 <freeErrorText>
 
     <command> is the command part of the corresponding client->server

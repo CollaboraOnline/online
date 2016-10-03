@@ -174,6 +174,48 @@ static std::map<std::string, std::shared_ptr<MasterProcessSession>> AvailableChi
 static int careerSpanSeconds = 0;
 #endif
 
+namespace {
+
+static inline
+void lcl_shutdownLimitReached(WebSocket& ws)
+{
+    const std::string error = Poco::format(PAYLOAD_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
+    const std::string close = Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, static_cast<int>(WebSocket::WS_POLICY_VIOLATION));
+
+    /* loleaflet sends loolclient, load and partrectangles message immediately
+       after web socket handshake, so closing web socket fails loading page in
+       some sensible browsers. Ignore handshake messages and gracefully
+       close in order to send error messages.
+    */
+    try
+    {
+        int flags = 0;
+        int retries = 7;
+        std::vector<char> buffer(READ_BUFFER_SIZE * 100);
+
+        // 5 seconds timeout
+        ws.setReceiveTimeout(5000000);
+        do
+        {
+            // ignore loolclient, load and partpagerectangles
+            ws.receiveFrame(buffer.data(), buffer.capacity(), flags);
+            if (--retries == 4)
+            {
+                ws.sendFrame(error.data(), error.size());
+                ws.shutdown(WebSocket::WS_POLICY_VIOLATION, close);
+            }
+        }
+        while (retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+    }
+    catch (Exception&)
+    {
+        ws.sendFrame(error.data(), error.size());
+        ws.shutdown(WebSocket::WS_POLICY_VIOLATION, close);
+    }
+}
+
+}
+
 static void forkChildren(const int number)
 {
     Util::assertIsLocked(newChildrenMutex);
@@ -620,7 +662,8 @@ private:
             {
                 --LOOLWSD::NumDocBrokers;
                 Log::error("Maximum number of open documents reached.");
-                throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_LIMIT_REACHED);
+                lcl_shutdownLimitReached(*ws);
+                return;
             }
 #endif
 
@@ -841,7 +884,10 @@ public:
         {
             --LOOLWSD::NumConnections;
             Log::error("Maximum number of connections reached.");
-            throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_LIMIT_REACHED);
+            // accept hand shake
+            WebSocket ws(request, response);
+            lcl_shutdownLimitReached(ws);
+            return;
         }
 #endif
 

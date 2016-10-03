@@ -28,7 +28,7 @@ wsd_sources = \
 
 test_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\" -I$(top_srcdir)
 test_SOURCES = TileCacheTests.cpp WhiteBoxTests.cpp integration-http-server.cpp \
-               httpwstest.cpp httpcrashtest.cpp test.cpp $(wsd_sources)
+               httpwstest.cpp httpcrashtest.cpp httpwserror.cpp test.cpp $(wsd_sources)
 test_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
