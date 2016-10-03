@@ -157,7 +157,7 @@ namespace Util
         return std::getenv("DISPLAY") != nullptr;
     }
 
-    bool saveDataToFileSafely(std::string fileName, const char *data, size_t size)
+    bool saveDataToFileSafely(const std::string& fileName, const char *data, size_t size)
     {
         const auto tempFileName = fileName + ".temp";
         std::fstream outStream(tempFileName, std::ios::out);

@@ -54,7 +54,7 @@ namespace Util
     // if everything goes well. In case of any error, both the destination file (if it already
     // exists) and the temporary file (if was created, or existed already) are removed. Return true
     // if everything succeeded.
-    bool saveDataToFileSafely(std::string fileName, const char *data, size_t size);
+    bool saveDataToFileSafely(const std::string& fileName, const char *data, size_t size);
 
     // We work around some of the mess of using the same sources both on the server side and in unit
     // tests with conditional compilation based on BUILDING_TESTS.
