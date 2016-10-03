@@ -91,8 +91,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             }
         }
     }
-    else
-    if (tokens[0] == "error:")
+    else if (tokens[0] == "error:")
     {
         std::string errorCommand;
         std::string errorKind;
@@ -112,15 +111,13 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             }
         }
     }
-    else
-    if (tokens[0] == "curpart:" &&
-        tokens.count() == 2 &&
-        getTokenInteger(tokens[1], "part", _curPart))
+    else if (tokens[0] == "curpart:" &&
+             tokens.count() == 2 &&
+             getTokenInteger(tokens[1], "part", _curPart))
     {
         return true;
     }
-    else
-    if (tokens.count() == 2 && tokens[0] == "saveas:")
+    else if (tokens.count() == 2 && tokens[0] == "saveas:")
     {
         std::string url;
         if (!getTokenString(tokens[1], "url", url))
