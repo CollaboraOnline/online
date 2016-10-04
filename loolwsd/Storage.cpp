@@ -244,7 +244,7 @@ bool LocalStorage::saveLocalFileToStorage()
 namespace {
 
 static inline
-Poco::Net::HTTPClientSession* lcl_getHTTPClientSession(const Poco::URI& uri)
+Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 {
     return (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(), Poco::Net::SSLManager::instance().defaultClientContext())
                        : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
@@ -256,7 +256,7 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
 {
     Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
 
-    std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uri));
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uri));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
@@ -319,7 +319,7 @@ std::string WopiStorage::loadStorageFileToLocal()
     const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
     Log::debug("Wopi requesting: " + url);
 
-    std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uriObject));
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url, Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
@@ -361,7 +361,7 @@ bool WopiStorage::saveLocalFileToStorage()
     const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
     Log::debug("Wopi posting: " + url);
 
-    std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uriObject));
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, url, Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("X-WOPIOverride", "PUT");
