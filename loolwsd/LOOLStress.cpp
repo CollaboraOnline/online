@@ -110,7 +110,10 @@ public:
 
         // Load a document and get its status.
         std::cout << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/ws/" + documentURL);
+
+        std::string encodedUri;
+        Poco::URI::encode(documentURL, ":/?", encodedUri);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
         Poco::Net::HTTPResponse response;
         auto ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
         std::cout << "Connected.\n";
