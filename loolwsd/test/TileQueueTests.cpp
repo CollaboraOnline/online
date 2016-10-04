@@ -43,6 +43,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTileCombinedRendering);
     CPPUNIT_TEST(testTileRecombining);
     CPPUNIT_TEST(testViewOrder);
+    CPPUNIT_TEST(testPreviewsDeprioritization);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -50,6 +51,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     void testTileCombinedRendering();
     void testTileRecombining();
     void testViewOrder();
+    void testPreviewsDeprioritization();
 };
 
 void TileQueueTests::testTileQueuePriority()
@@ -131,6 +133,15 @@ void TileQueueTests::testTileCombinedRendering()
     CPPUNIT_ASSERT_EQUAL(payloadFull, queue.get());
 }
 
+namespace {
+
+std::string payloadAsString(const MessageQueue::Payload& payload)
+{
+    return std::string(payload.data(), payload.size());
+}
+
+}
+
 void TileQueueTests::testTileRecombining()
 {
     TileQueue queue;
@@ -142,8 +153,7 @@ void TileQueueTests::testTileRecombining()
     CPPUNIT_ASSERT_EQUAL(3, static_cast<int>(queue._queue.size()));
 
     // but when we later extract that, it is just one "tilecombine" message
-    MessageQueue::Payload payload(queue.get());
-    std::string message(payload.data(), payload.size());
+    std::string message(payloadAsString(queue.get()));
 
     CPPUNIT_ASSERT_EQUAL(std::string("tilecombine part=0 width=256 height=256 tileposx=7680,0,3840 tileposy=0,0,0 imgsize=0,0,0 tilewidth=3840 tileheight=3840"), message);
 
@@ -174,18 +184,79 @@ void TileQueueTests::testViewOrder()
     for (auto &tile : tiles)
         queue.put(tile);
 
-    CPPUNIT_ASSERT_EQUAL(4, static_cast<int>(tiles.size()));
+    CPPUNIT_ASSERT_EQUAL(4, static_cast<int>(queue._queue.size()));
 
     // should result in the 3, 2, 1, 0 order of the tiles thanks to the cursor
     // positions
     for (size_t i = 0; i < tiles.size(); ++i)
     {
-        MessageQueue::Payload payload(queue.get());
-        std::string message(payload.data(), payload.size());
+        CPPUNIT_ASSERT_EQUAL(tiles[3 - i], payloadAsString(queue.get()));
+    }
+}
 
-        CPPUNIT_ASSERT_EQUAL(tiles[3 - i], message);
+void TileQueueTests::testPreviewsDeprioritization()
+{
+    TileQueue queue;
+
+    // simple case - put previews to the queue and get everything back again
+    const std::vector<std::string> previews =
+    {
+        "tile part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=0",
+        "tile part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=1",
+        "tile part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=2",
+        "tile part=3 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=3"
+    };
+
+    for (auto &preview : previews)
+        queue.put(preview);
+
+    for (size_t i = 0; i < previews.size(); ++i)
+    {
+        CPPUNIT_ASSERT_EQUAL(previews[i], payloadAsString(queue.get()));
     }
 
+    // stays empty after all is done
+    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
+
+    // re-ordering case - put previews and normal tiles to the queue and get
+    // everything back again but this time the tiles have to interleave with
+    // the previews
+    const std::vector<std::string> tiles =
+    {
+        "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1",
+        "tile part=0 width=256 height=256 tileposx=0 tileposy=7680 tilewidth=3840 tileheight=3840 ver=-1"
+    };
+
+    for (auto &preview : previews)
+        queue.put(preview);
+
+    queue.put(tiles[0]);
+
+    CPPUNIT_ASSERT_EQUAL(previews[0], payloadAsString(queue.get()));
+    CPPUNIT_ASSERT_EQUAL(tiles[0], payloadAsString(queue.get()));
+    CPPUNIT_ASSERT_EQUAL(previews[1], payloadAsString(queue.get()));
+
+    queue.put(tiles[1]);
+
+    CPPUNIT_ASSERT_EQUAL(previews[2], payloadAsString(queue.get()));
+    CPPUNIT_ASSERT_EQUAL(tiles[1], payloadAsString(queue.get()));
+    CPPUNIT_ASSERT_EQUAL(previews[3], payloadAsString(queue.get()));
+
+    // stays empty after all is done
+    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
+
+    // cursor positioning case - the cursor position should not prioritize the
+    // previews
+    queue.updateCursorPosition(0, 0, 0, 0, 10, 100);
+
+    queue.put(tiles[1]);
+    queue.put(previews[0]);
+
+    CPPUNIT_ASSERT_EQUAL(tiles[1], payloadAsString(queue.get()));
+    CPPUNIT_ASSERT_EQUAL(previews[0], payloadAsString(queue.get()));
+
+    // stays empty after all is done
+    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileQueueTests);

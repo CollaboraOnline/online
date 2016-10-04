@@ -131,6 +131,10 @@ private:
     /// Search the queue for a duplicate tile and remove it (if present).
     void removeDuplicate(const std::string& tileMsg);
 
+    /// De-prioritize the previews (tiles with 'id') - move them to the end of
+    /// the queue.
+    void deprioritizePreviews();
+
     /// Priority of the given tile message.
     /// -1 means the lowest prio (the tile does not intersect any of the cursors),
     /// the higher the number, the bigger is priority [up to _viewOrder.size()-1].
