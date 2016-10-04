@@ -94,6 +94,7 @@ int main(int /*argc*/, char** /*argv*/)
     runner.run(controller);
 
     CPPUNIT_NS::CompilerOutputter outputter(&result, std::cerr);
+    outputter.setNoWrap();
     outputter.write();
 
     return result.wasSuccessful() ? 0 : 1;
