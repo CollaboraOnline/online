@@ -177,7 +177,7 @@ static int careerSpanSeconds = 0;
 namespace {
 
 static inline
-void lcl_shutdownLimitReached(WebSocket& ws)
+void shutdownLimitReached(WebSocket& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
     const std::string close = Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, static_cast<int>(WebSocket::WS_POLICY_VIOLATION));
@@ -717,7 +717,7 @@ private:
             {
                 --LOOLWSD::NumDocBrokers;
                 Log::error("Maximum number of open documents reached.");
-                lcl_shutdownLimitReached(*ws);
+                shutdownLimitReached(*ws);
                 return;
             }
 #endif
@@ -945,7 +945,7 @@ public:
             Log::error("Maximum number of connections reached.");
             // accept hand shake
             WebSocket ws(request, response);
-            lcl_shutdownLimitReached(ws);
+            shutdownLimitReached(ws);
             return;
         }
 #endif
@@ -1362,14 +1362,14 @@ public:
 namespace {
 
 static inline
-ServerSocket* lcl_getServerSocket(int nClientPortNumber)
+ServerSocket* getServerSocket(int nClientPortNumber)
 {
     return (LOOLWSD::isSSLEnabled()) ? new SecureServerSocket(nClientPortNumber)
                        : new ServerSocket(nClientPortNumber);
 }
 
 static inline
-std::string lcl_getLaunchURI()
+std::string getLaunchURI()
 {
     std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
     aAbsTopSrcDir = Poco::Path(aAbsTopSrcDir).absolute().toString();
@@ -1618,7 +1618,7 @@ void LOOLWSD::initialize(Application& self)
 
 #if ENABLE_DEBUG
     std::cerr << "\nLaunch this in your browser:\n\n" <<
-        lcl_getLaunchURI() <<
+        getLaunchURI() <<
         "\n\nFull log is available in: " << LOOLWSD_LOGFILE << std::endl;
 #endif
 }
@@ -1901,7 +1901,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Start a server listening on the port for clients
 
-    std::unique_ptr<ServerSocket> psvs(lcl_getServerSocket(ClientPortNumber));
+    std::unique_ptr<ServerSocket> psvs(getServerSocket(ClientPortNumber));
 
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
     HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
