@@ -26,7 +26,13 @@ L.Control.Menubar = L.Control.extend({
 												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
 			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
-												  {name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'}]
+												{name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
+												{type: 'separator'},
+												{name: _('Footnote'), type: 'unocommand', uno: '.uno:InsertFootnote'},
+												{name: _('Endnote'), type: 'unocommand', uno: '.uno:InsertEndnote'},
+												{type: 'separator'},
+												{name: _('Page break'), type: 'unocommand', uno: '.uno:InsertPageBreak'},
+												{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'}]
 			},
 			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 												{type: 'separator'},
