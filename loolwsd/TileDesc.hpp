@@ -61,6 +61,7 @@ public:
     void setVersion(const int ver) { _ver = ver; }
     int getImgSize() const { return _imgSize; }
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
+    int getId() const { return _id; }
 
     bool intersectsWithRect(int x, int y, int w, int h) const
     {

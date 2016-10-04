@@ -27,8 +27,9 @@ client -> server
 canceltiles
 
     All outstanding tile messages from the client to the server are
-    dropped and will not be handled. There is no guarantee of exactly
-    which tile: messages might still be sent back to the client.
+    dropped and will not be handled, except tile messages with an id
+    parameter. There is no guarantee of exactly which tile: messages
+    might still be sent back to the client.
 
 downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
@@ -127,8 +128,9 @@ tileheight=<tileHeight> [timestamp=<time>] [id=<id>]
     All parameters are numbers.
 
     Note: id must be echoed back in the response verbatim. It is used
-    by Impress to render the slide thumbnails. It is only useful to
-    loleaflet and will break it if not returned in the response.
+    when rendering slide thumbnails of presentation documents, and not
+    for anything else. It is only useful to loleaflet and will break
+    it if not returned in the response.
 
 tilecombine <parameters>
 
