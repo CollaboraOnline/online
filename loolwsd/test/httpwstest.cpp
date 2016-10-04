@@ -2159,6 +2159,14 @@ void HTTPWSTest::testCursorPosition()
         getResponseMessage(socket0, "invalidatecursor:", response, false, testname);
         Poco::StringTokenizer cursorTokens(response, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
+
+        // FIXME: The 'status:' we look for below occasionally has arrived already before the
+        // 'invalidatecursor:' we wait for above, and then the assertResponseLine() call leads to an
+        // assertion failure. Is there any reason to think that something is "wrong" when that
+        // happens? Isn't the LOOL protocol intentionally supposed to be very loose with little
+        // strict requirements on the order of messages etc? In general the tests in this file are
+        // too fragile, they (unintentionally?) test undocumented, unstable and coincidental
+        // details.
         assertResponseLine(socket0, "status:", testname);
 
         // Create second view
