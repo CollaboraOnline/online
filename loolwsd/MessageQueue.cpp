@@ -143,6 +143,9 @@ void TileQueue::removeDuplicate(const std::string& tileMsg)
     // input from clients, but strings we have created ourselves here in C++ code, so probably we
     // can be sure that the "ver" parameter is always in such a location that this does what we
     // mean.
+    // FIXME: also the ver=... is only for debugging from what I can see, so
+    // double-check if we can actually avoid the 'ver' everywhere in the non-debug
+    // builds
     const std::string newMsg = tileMsg.substr(0, tileMsg.find(" ver"));
 
     for (size_t i = 0; i < _queue.size(); ++i)
@@ -173,19 +176,43 @@ int TileQueue::priority(const std::string& tileMsg)
     return -1;
 }
 
+void TileQueue::deprioritizePreviews()
+{
+    for (size_t i = 0; i < _queue.size(); ++i)
+    {
+        const auto front = _queue.front();
+        const std::string message(front.data(), front.size());
+
+        // stop at the first non-tile or non-'id' (preview) message
+        std::string id;
+        if (LOOLProtocol::getFirstToken(message) != "tile" || !LOOLProtocol::getTokenStringFromMessage(message, "id", id))
+            break;
+
+        _queue.pop_front();
+        _queue.push_back(front);
+    }
+}
+
 MessageQueue::Payload TileQueue::get_impl()
 {
-    std::vector<TileDesc> tiles;
     const auto front = _queue.front();
 
     auto msg = std::string(front.data(), front.size());
 
     std::string id;
-    if (LOOLProtocol::getFirstToken(msg) != "tile" || LOOLProtocol::getTokenStringFromMessage(msg, "id", id))
+    bool isTile = (LOOLProtocol::getFirstToken(msg) == "tile");
+    bool isPreview = isTile && LOOLProtocol::getTokenStringFromMessage(msg, "id", id);
+    if (!isTile || isPreview)
     {
         // Don't combine non-tiles or tiles with id.
         Log::trace() << "MessageQueue res: " << msg << Log::end;
         _queue.pop_front();
+
+        // de-prioritize the other tiles with id - usually the previews in
+        // Impress
+        if (isPreview)
+            deprioritizePreviews();
+
         return front;
     }
 
@@ -201,7 +228,7 @@ MessageQueue::Payload TileQueue::get_impl()
         // avoid starving - stop the search when we reach a non-tile,
         // otherwise we may keep growing the queue of unhandled stuff (both
         // tiles and non-tiles)
-        if (LOOLProtocol::getFirstToken(prio) != "tile")
+        if (LOOLProtocol::getFirstToken(prio) != "tile" || LOOLProtocol::getTokenStringFromMessage(prio, "id", id))
             break;
 
         int p = priority(prio);
@@ -220,6 +247,7 @@ MessageQueue::Payload TileQueue::get_impl()
 
     _queue.erase(_queue.begin() + prioritized);
 
+    std::vector<TileDesc> tiles;
     tiles.emplace_back(TileDesc::parse(msg));
 
     // Combine as many tiles as possible with the top one.
@@ -254,6 +282,7 @@ MessageQueue::Payload TileQueue::get_impl()
     if (tiles.size() == 1)
     {
         msg = tiles[0].serialize("tile");
+        Log::trace() << "MessageQueue res: " << msg << Log::end;
         return Payload(msg.data(), msg.data() + msg.size());
     }
 
