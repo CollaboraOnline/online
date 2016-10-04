@@ -65,6 +65,7 @@ L.Map = L.Evented.extend({
 		this._sizeChanged = true;
 		this._bDisableKeyboard = false;
 		this._active = true;
+		this._fatal = false;
 		this._enabled = true;
 
 		vex.dialogID = -1;
