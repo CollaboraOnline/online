@@ -271,6 +271,12 @@ void TileCacheTests::testCancelTilesMultiView()
         getTileMessage(*socket2, "cancelTilesMultiView-2 ");
     }
 
+    // FIXME: Note that especially when this is run on a loaded machine, the server might not honor
+    // the 'canceltiles' but still send out a tile, or it has already sent the tile before it even
+    // gets the 'canceltiles'. That is not an error. It is a bit silly to have it cause an assertion
+    // failure here. Transient failures make a unit test worse than no unit test. Should we remove
+    // this testCancelTilesMultiView altogether?
+
     assertNotInResponse(socket1, "tile:", "cancelTilesMultiView-1 ");
     assertNotInResponse(socket2, "tile:", "cancelTilesMultiView-2 ");
 }
