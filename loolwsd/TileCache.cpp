@@ -478,6 +478,13 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
 
     for (auto it = _tilesBeingRendered.begin(); it != _tilesBeingRendered.end(); )
     {
+        if (it->second->getTile().getId() >= 0)
+        {
+            // Tile is for a thumbnail, don't cancel it
+            ++it;
+            continue;
+        }
+
         auto& subscribers = it->second->_subscribers;
         Log::trace("Tile " + it->first + " has " + std::to_string(subscribers.size()) + " subscribers.");
 
