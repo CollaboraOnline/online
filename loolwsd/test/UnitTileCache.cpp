@@ -19,8 +19,7 @@
 class UnitTileCache: public UnitWSD
 {
 public:
-    UnitTileCache() :
-        _retValue(0)
+    UnitTileCache()
     {
     }
 
@@ -32,11 +31,6 @@ public:
 
         // Fail the lookup to force subscription and rendering.
         cacheFile.reset();
-    }
-
-    virtual void returnValue(int & retValue)
-    {
-        retValue = _retValue;
     }
 
     virtual void invokeTest()
@@ -59,13 +53,10 @@ private:
                 }
                 catch (const Poco::Exception& exc)
                 {
-                    _retValue = 1;
+                    exitTest(TestResult::TEST_FAILED);
                 }
             });
     }
-
-private:
-    int _retValue;
 };
 
 UnitBase *unit_create_wsd(void)
