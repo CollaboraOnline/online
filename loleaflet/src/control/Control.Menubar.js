@@ -132,7 +132,9 @@ L.Control.Menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
 												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
-												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
+												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+												{type: 'separator'},
+												{name: _('Freeze panes'), type: 'unocommand', uno: '.uno:FreezePanes'}]
 			},
 			{name: _('Cells'), type: 'menu', menu: [{name: _('Insert row'), type: 'unocommand', uno: '.uno:InsertRows'},
 												 {name: _('Insert column'), type: 'unocommand', uno: '.uno:InsertColumns'},
