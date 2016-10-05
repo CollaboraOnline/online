@@ -2,10 +2,10 @@
 <wopi-discovery>
     <net-zone name="external-http">
         <app name="application/vnd.lotus-wordpro">
-            <action name="edit" ext="lwp"/>
+            <action name="view" ext="lwp"/>
         </app>
         <app name="image/svg+xml">
-            <action name="edit" ext="svg"/>
+            <action name="view" ext="svg"/>
         </app>
         <app name="application/vnd.ms-powerpoint">
             <action name="edit" ext="pot"/>
@@ -16,7 +16,7 @@
 
 	<!-- Writer documents -->
         <app name="application/vnd.sun.xml.writer">
-            <action name="edit" ext="sxw"/>
+            <action name="view" ext="sxw"/>
         </app>
         <app name="application/vnd.oasis.opendocument.text">
             <action name="edit" ext="odt"/>
@@ -27,7 +27,7 @@
 
 	<!-- Calc documents -->
         <app name="application/vnd.sun.xml.calc">
-            <action name="edit" ext="sxc"/>
+            <action name="view" ext="sxc"/>
         </app>
         <app name="application/vnd.oasis.opendocument.spreadsheet">
             <action name="edit" ext="ods"/>
@@ -38,7 +38,7 @@
 
 	<!-- Impress documents -->
         <app name="application/vnd.sun.xml.impress">
-            <action name="edit" ext="sxi"/>
+            <action name="view" ext="sxi"/>
         </app>
         <app name="application/vnd.oasis.opendocument.presentation">
             <action name="edit" ext="odp"/>
@@ -49,9 +49,9 @@
 
 	<!-- Draw documents -->
         <app name="application/vnd.sun.xml.draw">
-            <action name="edit" ext="sxd"/>
+            <action name="view" ext="sxd"/>
         </app>
-        <app name="iapplication/vnd.oasis.opendocument.graphics">
+        <app name="application/vnd.oasis.opendocument.graphics">
             <action name="edit" ext="odg"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.graphics-flat-xml">
@@ -65,7 +65,7 @@
 
 	<!-- Text master documents -->
         <app name="application/vnd.sun.xml.writer.global">
-            <action name="edit" ext="sxg"/>
+            <action name="view" ext="sxg"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.text-master">
             <action name="edit" ext="odm"/>
@@ -73,7 +73,7 @@
 
 	<!-- Math documents -->
 	<app name="application/vnd.sun.xml.math">
-            <action name="edit" ext="sxm"/>
+            <action name="view" ext="sxm"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.formula">
             <action name="edit" ext="odf"/>
@@ -81,7 +81,7 @@
 
 	<!-- Text template documents -->
 	<app name="application/vnd.sun.xml.writer.template">
-            <action name="edit" ext="stw"/>
+            <action name="view" ext="stw"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.text-template">
             <action name="edit" ext="ott"/>
@@ -94,7 +94,7 @@
 
 	<!-- Spreadsheet template documents -->
 	<app name="application/vnd.sun.xml.calc.template">
-            <action name="edit" ext="stc"/>
+            <action name="view" ext="stc"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.spreadsheet-template">
             <action name="edit" ext="ots"/>
@@ -102,7 +102,7 @@
 
 	<!-- Presentation template documents -->
 	<app name="application/vnd.sun.xml.impress.template">
-            <action name="edit" ext="sti"/>
+            <action name="view" ext="sti"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.presentation-template">
             <action name="edit" ext="otp"/>
@@ -110,7 +110,7 @@
 
 	<!-- Drawing template documents -->
 	<app name="application/vnd.sun.xml.draw.template">
-            <action name="edit" ext="std"/>
+            <action name="view" ext="std"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.graphics-template">
             <action name="edit" ext="otg"/>
@@ -123,7 +123,7 @@
 
 	<!-- Extensions -->
 	<app name="application/vnd.openofficeorg.extension">
-            <action name="edit" ext="otx"/>
+            <action name="edit" ext="oxt"/>
         </app>
 
 	<!-- Microsoft Word Template -->
@@ -139,18 +139,18 @@
             <action name="edit" ext="docm"/>
         </app>
 	<app name="application/vnd.openxmlformats-officedocument.wordprocessingml.template">
-            <action name="edit" ext="dotx"/>
+            <action name="view" ext="dotx"/>
         </app>
 	<app name="application/vnd.ms-word.template.macroEnabled.12">
-            <action name="edit" ext="dotm"/>
+            <action name="view" ext="dotm"/>
         </app>
 
 	<!-- OOXML spreadsheet -->
 	<app name="application/vnd.openxmlformats-officedocument.spreadsheetml.template">
-            <action name="edit" ext="xltx"/>
+            <action name="view" ext="xltx"/>
         </app>
 	<app name="application/vnd.ms-excel.template.macroEnabled.12">
-            <action name="edit" ext="xltm"/>
+            <action name="view" ext="xltm"/>
         </app>
 	<app name="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
             <action name="edit" ext="xlsx"/>
@@ -178,19 +178,19 @@
 
 	<!-- Others -->
 	<app name="application/vnd.wordperfect">
-            <action name="edit" ext="wpd"/>
+            <action name="view" ext="wpd"/>
         </app>
 	<app name="application/x-aportisdoc">
-            <action name="edit" ext="pdb"/>
+            <action name="view" ext="pdb"/>
         </app>
 	<app name="application/x-hwp">
-            <action name="edit" ext="hwp"/>
+            <action name="view" ext="hwp"/>
         </app>
 	<app name="application/vnd.ms-works">
-            <action name="edit" ext="wps"/>
+            <action name="view" ext="wps"/>
         </app>
 	<app name="application/x-mswrite">
-            <action name="edit" ext="wri"/>
+            <action name="view" ext="wri"/>
         </app>
 	<app name="application/x-dif-document">
             <action name="edit" ext="dif"/>
@@ -205,31 +205,97 @@
             <action name="edit" ext="dbf"/>
         </app>
 	<app name="application/vnd.lotus-1-2-3">
-            <action name="edit" ext="wk1"/>
+            <action name="view" ext="wk1"/>
         </app>
 	<app name="image/cgm">
-            <action name="edit" ext="cgm"/>
+            <action name="view" ext="cgm"/>
         </app>
 	<app name="image/vnd.dxf">
-            <action name="edit" ext="dxf"/>
+            <action name="view" ext="dxf"/>
         </app>
 	<app name="image/x-emf">
-            <action name="edit" ext="emf"/>
+            <action name="view" ext="emf"/>
         </app>
 	<app name="image/x-wmf">
-            <action name="edit" ext="wmf"/>
+            <action name="view" ext="wmf"/>
         </app>
 	<app name="application/coreldraw">
-            <action name="edit" ext="cdr"/>
+            <action name="view" ext="cdr"/>
         </app>
 	<app name="application/vnd.visio2013">
-            <action name="edit" ext="vsd"/>
+            <action name="view" ext="vsd"/>
         </app>
 	<app name="application/vnd.visio">
-            <action name="edit" ext="vss"/>
+            <action name="view" ext="vss"/>
         </app>
 	<app name="application/x-mspublisher">
-            <action name="edit" ext="pub"/>
+            <action name="view" ext="pub"/>
+        </app>
+        <app name="application/x-sony-bbeb">
+            <action name="view" ext="lrf"/>
+        </app>
+        <app name="application/x-gnumeric">
+            <action name="view" ext="gnumeric"/>
+        </app>
+        <app name="application/macwriteii">
+            <action name="view" ext="mw"/>
+        </app>
+        <app name="application/x-iwork-numbers-sffnumbers">
+            <action name="view" ext="numbers"/>
+        </app>
+        <app name="application/vnd.oasis.opendocument.text-web">
+            <action name="edit" ext="oth"/>
+        </app>
+        <app name="application/x-pagemaker">
+            <action name="view" ext="p65"/>
+        </app>
+        <app name="application/rtf">
+            <action name="edit" ext="rtf"/>
+        </app>
+        <app name="application/x-fictionbook+xml">
+            <action name="view" ext="fb2"/>
+        </app>
+        <app name="application/clarisworks">
+            <action name="view" ext="cwk"/>
+        </app>
+        <app name="application/vnd.corel-draw">
+            <action name="view" ext="cdr"/>
+        </app>
+        <app name="image/x-wpg">
+            <action name="view" ext="wpg"/>
+        </app>
+        <app name="application/prs.plucker">
+            <action name="view" ext="pdb"/>
+        </app>
+        <app name="application/x-iwork-pages-sffpages">
+            <action name="view" ext="pages"/>
+        </app>
+        <app name="application/vnd.openxmlformats-officedocument.presentationml.slideshow">
+            <action name="edit" ext="ppsx"/>
+        </app>
+        <app name="application/x-iwork-keynote-sffkey">
+            <action name="view" ext="key"/>
+        </app>
+        <app name="application/x-abiword">
+            <action name="view" ext="abw"/>
+        </app>
+        <app name="image/x-freehand">
+            <action name="view" ext="fh"/>
+        </app>
+        <app name="application/vnd.palm">
+            <action name="view" ext="pdb"/>
+        </app>
+        <app name="application/vnd.sun.xml.chart">
+            <action name="view" ext="sxs"/>
+        </app>
+        <app name="application/vnd.sun.xml.writer.web">
+            <action name="view" ext="stw"/>
+        </app>
+        <app name="application/x-t602">
+            <action name="view" ext="602"/>
+        </app>
+        <app name="application/vnd.sun.xml.report.chart">
+            <action name="edit" ext="odc"/>
         </app>
     </net-zone>
 </wopi-discovery>
