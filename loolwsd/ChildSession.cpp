@@ -302,16 +302,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
         return false;
     }
 
-    std::ostringstream ossViewInfo;
-    const auto viewId = std::to_string(_viewId);
-
-    // Create a message object
-    Object::Ptr viewInfoObj = new Object();
-    viewInfoObj->set("id", viewId);
-    viewInfoObj->set("username", _userName);
-    viewInfoObj->stringify(ossViewInfo);
-
-    Log::info("Created new view with viewid: [" + viewId + "] for username: [" + _userName + "].");
+    Log::info("Created new view with viewid: [" + std::to_string(_viewId) + "] for username: [" + _userName + "].");
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());
     if (_docType != "text" && part != -1)
     {
