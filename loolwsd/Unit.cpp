@@ -164,6 +164,7 @@ void UnitBase::exitTest(TestResult result)
 
 void UnitBase::timeout()
 {
+    Log::error("Timed out waiting for unit test to complete");
     exitTest(TestResult::TEST_TIMED_OUT);
 }
 
