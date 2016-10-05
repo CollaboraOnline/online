@@ -50,17 +50,6 @@ public:
         setHasKitHooks();
     }
 
-    virtual void returnValue(int &retValue) override
-    {
-        // 0 when empty (success), otherwise failure.
-        if (!_failure.empty())
-        {
-            Log::error("UnitPrefork failed due to: " + _failure);
-        }
-
-        retValue = !_failure.empty();
-    }
-
     virtual void preSpawnCount(int &numPrefork) override
     {
         numPrefork = NumToPrefork;
@@ -111,7 +100,7 @@ public:
     virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
     {
         _childSockets.push_back(socket);
-        if (_childSockets.size() > NumToPrefork)
+        if (_childSockets.size() >= NumToPrefork)
         {
             Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
 
@@ -260,6 +249,7 @@ public:
                 else if (extDot && !strcmp(extDot, ".rdb"))
                     rdbCount++;
                 else if (strstr(buffer, "unit-prefork.log") || // our log
+                         strstr(buffer, "loolwsd.log") || // debug log
                          (strstr(buffer, "/proc/") && // our readdir
                           strstr(buffer, "/fd")))
                     ; // ignore
