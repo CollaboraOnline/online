@@ -231,5 +231,71 @@
 	<app name="application/x-mspublisher">
             <action name="view" ext="pub"/>
         </app>
+        <app name="application/x-sony-bbeb">
+            <action name="view" ext="lrf"/>
+        </app>
+        <app name="application/x-gnumeric">
+            <action name="view" ext="gnumeric"/>
+        </app>
+        <app name="application/macwriteii">
+            <action name="view" ext="mw"/>
+        </app>
+        <app name="application/x-iwork-numbers-sffnumbers">
+            <action name="view" ext="numbers"/>
+        </app>
+        <app name="application/vnd.oasis.opendocument.text-web">
+            <action name="edit" ext="oth"/>
+        </app>
+        <app name="application/x-pagemaker">
+            <action name="view" ext="p65"/>
+        </app>
+        <app name="application/rtf">
+            <action name="edit" ext="rtf"/>
+        </app>
+        <app name="application/x-fictionbook+xml">
+            <action name="view" ext="fb2"/>
+        </app>
+        <app name="application/clarisworks">
+            <action name="view" ext="cwk"/>
+        </app>
+        <app name="application/vnd.corel-draw">
+            <action name="view" ext="cdr"/>
+        </app>
+        <app name="image/x-wpg">
+            <action name="view" ext="wpg"/>
+        </app>
+        <app name="application/prs.plucker">
+            <action name="view" ext="pdb"/>
+        </app>
+        <app name="application/x-iwork-pages-sffpages">
+            <action name="view" ext="pages"/>
+        </app>
+        <app name="application/vnd.openxmlformats-officedocument.presentationml.slideshow">
+            <action name="edit" ext="ppsx"/>
+        </app>
+        <app name="application/x-iwork-keynote-sffkey">
+            <action name="view" ext="key"/>
+        </app>
+        <app name="application/x-abiword">
+            <action name="view" ext="abw"/>
+        </app>
+        <app name="image/x-freehand">
+            <action name="view" ext="fh"/>
+        </app>
+        <app name="application/vnd.palm">
+            <action name="view" ext="pdb"/>
+        </app>
+        <app name="application/vnd.sun.xml.chart">
+            <action name="view" ext="sxs"/>
+        </app>
+        <app name="application/vnd.sun.xml.writer.web">
+            <action name="view" ext="stw"/>
+        </app>
+        <app name="application/x-t602">
+            <action name="view" ext="602"/>
+        </app>
+        <app name="application/vnd.sun.xml.report.chart">
+            <action name="edit" ext="odc"/>
+        </app>
     </net-zone>
 </wopi-discovery>
