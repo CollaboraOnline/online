@@ -10,6 +10,7 @@
 #include <dirent.h>
 #include <dlfcn.h>
 #include <ftw.h>
+#include <sys/time.h>
 #include <sys/types.h>
 
 #include <cassert>
@@ -36,18 +37,21 @@ class UnitPrefork : public UnitWSD
 {
     std::string _failure;
     Poco::Timestamp _startTime;
-    size_t _totalPSS;
-    size_t _totalDirty;
+    size_t _childPSS;
+    size_t _childDirty;
     std::mutex _mutex;
     std::condition_variable _cv;
     std::vector< std::shared_ptr<Poco::Net::WebSocket> > _childSockets;
 
 public:
     UnitPrefork()
-        : _totalPSS(0),
-          _totalDirty(0)
+        : _childPSS(0),
+          _childDirty(0)
     {
         setHasKitHooks();
+#ifdef TEST_DIRTY_NUMBERS
+        setTimeout(100 * 1000);
+#endif
     }
 
     virtual void preSpawnCount(int &numPrefork) override
@@ -67,8 +71,8 @@ public:
             Log::info("Got memory stats [" + memory + "].");
             Poco::StringTokenizer tokens(memory, " ");
             assert(tokens.count() == 2);
-            _totalPSS += atoi(tokens[0].c_str());
-            _totalDirty += atoi(tokens[1].c_str());
+            _childPSS = atoi(tokens[0].c_str());
+            _childDirty = atoi(tokens[1].c_str());
         }
 
         // Don't signal before wait.
@@ -78,7 +82,7 @@ public:
     }
 
     bool getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket,
-                   size_t &totalPSS, size_t &totalDirty)
+                   size_t &childPSS, size_t &childDirty)
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -88,12 +92,14 @@ public:
         if (_cv.wait_for(lock, std::chrono::milliseconds(5 * 1000)) == std::cv_status::timeout)
         {
             _failure = "Timed out waiting for child to respond to unit-memdump.";
-            Log::error(_failure);
+            std::cerr << _failure << std::endl;
             return false;
         }
 
-        totalPSS = _totalPSS;
-        totalDirty = _totalDirty;
+        childPSS = _childPSS;
+        childDirty = _childDirty;
+        _childPSS = 0;
+        _childDirty = 0;
         return true;
     }
 
@@ -109,37 +115,44 @@ public:
                         << totalTime << Log::end;
             size_t totalPSSKb = 0;
             size_t totalDirtyKb = 0;
+
+            auto socketsCopy = _childSockets;
+
             // Skip the last one as it's not completely initialized yet.
-            for (size_t i = 0; i < _childSockets.size() - 1; ++i)
+            for (size_t i = 0; i < socketsCopy.size() - 1; ++i)
             {
-                Log::info() << "Getting memory of child #" << i + 1 << " of " << _childSockets.size() << Log::end;
-                if (!getMemory(_childSockets[i], totalPSSKb, totalDirtyKb))
+                Log::info() << "Getting memory of child #" << i + 1 << " of " << socketsCopy.size() << Log::end;
+                size_t childPSSKb = 0, childDirtyKb = 0;
+                if (!getMemory(socketsCopy[i], childPSSKb, childDirtyKb))
                 {
                     exitTest(TestResult::TEST_FAILED);
                     return;
                 }
+                std::cerr << "child # " << i + 1 << " pss: " << childPSSKb << " dirty: " << childDirtyKb << std::endl;
+                totalPSSKb += childPSSKb;
+                totalDirtyKb += childDirtyKb;
             }
 
-            Log::info() << "Memory use total   " << totalPSSKb << "k shared "
-                        << totalDirtyKb << "k dirty" << Log::end;
+            std::cerr << "Memory use total   " << totalPSSKb << "k shared "
+                        << totalDirtyKb << "k dirty" << std::endl;
 
-            totalPSSKb /= _childSockets.size();
-            totalDirtyKb /= _childSockets.size();
-            Log::info() << "Memory use average " << totalPSSKb << "k shared "
-                        << totalDirtyKb << "k dirty" << Log::end;
+            totalPSSKb /= socketsCopy.size();
+            totalDirtyKb /= socketsCopy.size();
+            std::cerr << "Memory use average " << totalPSSKb << "k shared "
+                        << totalDirtyKb << "k dirty" << std::endl;
 
-            Log::info() << "Launch time total   " << totalTime << " ms" << Log::end;
-            totalTime /= _childSockets.size();
-            Log::info() << "Launch time average " << totalTime << " ms" << Log::end;
+            std::cerr << "Launch time total   " << totalTime << " ms" << std::endl;
+            totalTime /= socketsCopy.size();
+            std::cerr << "Launch time average " << totalTime << " ms" << std::endl;
 
             if (!_failure.empty())
             {
-                Log::error("UnitPrefork failed due to: " + _failure);
+                std::cerr << "UnitPrefork failed due to: " << _failure << std::endl;
                 exitTest(TestResult::TEST_FAILED);
             }
             else
             {
-                Log::error("UnitPrefork success.");
+                std::cerr << "UnitPrefork success." << std::endl;
                 exitTest(TestResult::TEST_OK);
             }
         }
@@ -293,6 +306,15 @@ public:
         const auto token = LOOLProtocol::getFirstToken(message);
         if (token == "unit-memdump:")
         {
+#ifdef TEST_DIRTY_NUMBERS
+            // Jitter the numbers so they're not all the same.
+            struct timeval t;
+            gettimeofday(&t, NULL);
+            srand(t.tv_usec);
+            size_t size = ((size_t)rand() * 4096 * 1024) / RAND_MAX;
+            std::cerr << "allocate " << size << std::endl;
+            memset (malloc (size), 0, size);
+#endif
             std::string memory;
             if (!_failure.empty())
                 memory = _failure;
