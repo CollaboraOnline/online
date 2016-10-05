@@ -97,6 +97,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGraphicInvalidate);
     CPPUNIT_TEST(testCursorPosition);
     CPPUNIT_TEST(testAlertAllUsers);
+    CPPUNIT_TEST(testViewInfoMsg);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -140,6 +141,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testGraphicInvalidate();
     void testCursorPosition();
     void testAlertAllUsers();
+    void testViewInfoMsg();
 
     void loadDoc(const std::string& documentURL);
 
@@ -2238,6 +2240,76 @@ void HTTPWSTest::testAlertAllUsers()
         }
     }
     catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testViewInfoMsg()
+{
+    // Load 2 documents, cross-check the viewid received by each of them in their status message
+    // with the one sent in viewinfo message to itself as well as to other one
+
+    const std::string testname = "testViewInfoMsg:";
+    std::string docPath;
+    std::string docURL;
+    getDocumentPathAndURL("hello.odt", docPath, docURL);
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+    Poco::Net::WebSocket socket0 = *connectLOKit(_uri, request, _response);
+    Poco::Net::WebSocket socket1 = *connectLOKit(_uri, request, _response);
+
+    std::string response;
+    int part, parts, width, height;
+    int viewid[2];
+
+    try
+    {
+        // Load first view and remember the viewid
+        sendTextFrame(socket0, "load url=" + docURL);
+        getResponseMessage(socket0, "status:", response, false, testname + "socket[0] ");
+        parseDocSize(response, "text", part, parts, width, height, viewid[0]);
+
+        // Check if viewinfo message also mentions the same viewid
+        getResponseMessage(socket0, "viewinfo: ", response, false, testname + "socket[0] ");
+        Poco::JSON::Parser parser0;
+        Poco::JSON::Array::Ptr array = parser0.parse(response).extract<Poco::JSON::Array::Ptr>();
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), array->size());
+
+        Poco::JSON::Object::Ptr viewInfoObj0 = array->getObject(0);
+        int viewid0 = viewInfoObj0->get("id").convert<int>();
+        CPPUNIT_ASSERT_EQUAL(viewid[0], viewid0);
+
+        // Load second view and remember the viewid
+        sendTextFrame(socket1, "load url=" + docURL);
+        getResponseMessage(socket1, "status:", response, false, testname + "socket[1] ");
+        parseDocSize(response, "text", part, parts, width, height, viewid[1]);
+
+        // Check if viewinfo message in this view mentions
+        // viewid of both first loaded view and this view
+        getResponseMessage(socket1, "viewinfo: ", response, false, testname + "socket[1] ");
+        Poco::JSON::Parser parser1;
+        array = parser1.parse(response).extract<Poco::JSON::Array::Ptr>();
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), array->size());
+
+        viewInfoObj0 = array->getObject(0);
+        Poco::JSON::Object::Ptr viewInfoObj1 = array->getObject(1);
+        viewid0 = viewInfoObj0->get("id").convert<int>();
+        int viewid1 = viewInfoObj1->get("id").convert<int>();
+
+        if (viewid[0] == viewid0)
+            CPPUNIT_ASSERT_EQUAL(viewid[1], viewid1);
+        else if (viewid[0] == viewid1)
+            CPPUNIT_ASSERT_EQUAL(viewid[1], viewid0);
+        else
+            CPPUNIT_FAIL("Inconsistent viewid in viewinfo and status messages");
+
+        // Check if first view also got the same viewinfo message
+        std::string response1;
+        getResponseMessage(socket0, "viewinfo: ", response1, false, testname + "socket[0] ");
+        CPPUNIT_ASSERT_EQUAL(response, response1);
+    }
+    catch(const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
     }
