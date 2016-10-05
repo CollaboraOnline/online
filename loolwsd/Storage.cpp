@@ -314,12 +314,12 @@ std::string WopiStorage::loadStorageFileToLocal()
     // WOPI URI to download files ends in '/contents'.
     // Add it here to get the payload instead of file info.
     Poco::URI uriObject(_uri);
-    const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
-    Log::debug("Wopi requesting: " + url);
+    uriObject.setPath(uriObject.getPath() + "/contents");
+    Log::debug("Wopi requesting: " + uriObject.toString());
 
     std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uriObject));
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url, Poco::Net::HTTPMessage::HTTP_1_1);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
     psession->sendRequest(request);
 
@@ -342,7 +342,7 @@ std::string WopiStorage::loadStorageFileToLocal()
               std::ostreambuf_iterator<char>(ofs));
     const auto size = getFileSize(_jailedFilePath);
 
-    Log::info() << "WOPI::GetFile downloaded " << size << " bytes from [" << _uri
+    Log::info() << "WOPI::GetFile downloaded " << size << " bytes from [" << uriObject.toString()
                 << "] -> " << _jailedFilePath << ": "
                 << response.getStatus() << " " << response.getReason() << Log::end;
 
@@ -356,12 +356,12 @@ bool WopiStorage::saveLocalFileToStorage()
     const auto size = getFileSize(_jailedFilePath);
 
     Poco::URI uriObject(_uri);
-    const auto url = uriObject.getPath() + "/contents?" + uriObject.getQuery();
-    Log::debug("Wopi posting: " + url);
+    uriObject.setPath(uriObject.getPath() + "/contents");
+    Log::debug("Wopi posting: " + uriObject.toString());
 
     std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uriObject));
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, url, Poco::Net::HTTPMessage::HTTP_1_1);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("X-WOPIOverride", "PUT");
     request.setContentType("application/octet-stream");
     request.setContentLength(size);
@@ -378,7 +378,7 @@ bool WopiStorage::saveLocalFileToStorage()
     Log::info("WOPI::PutFile response: " + oss.str());
     const auto success = (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
     Log::info() << "WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath  << "]:"
-                << "] -> [" << url << "]: "
+                << "] -> [" << uriObject.toString() << "]: "
                 <<  response.getStatus() << " " << response.getReason() << Log::end;
 
     return success;
