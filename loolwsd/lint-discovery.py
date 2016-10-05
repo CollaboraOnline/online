@@ -53,8 +53,10 @@ class FilterTypeHandler(xml.sax.handler.ContentHandler):
     def __init__(self):
         self.name = None
         self.inMediaType = False
+        self.inExtensions = False
         self.content = []
         self.mediaType = None
+        self.extensions = None
 
     def startElement(self, name, attrs):
         if name == "node":
@@ -65,15 +67,21 @@ class FilterTypeHandler(xml.sax.handler.ContentHandler):
             for k, v in list(attrs.items()):
                 if k == "oor:name" and v == "MediaType":
                     self.inMediaType = True
+                elif k == "oor:name" and v == "Extensions":
+                    self.inExtensions = True
 
     def endElement(self, name):
         if name == "prop" and self.inMediaType:
             self.inMediaType = False
             self.mediaType = "".join(self.content).strip()
             self.content = []
+        elif name == "prop" and self.inExtensions:
+            self.inExtensions = False
+            self.extensions = "".join(self.content).strip()
+            self.content = []
 
     def characters(self, content):
-        if self.inMediaType:
+        if self.inMediaType or self.inExtensions:
             self.content.append(content)
 
 
@@ -125,11 +133,12 @@ def getFilterFlags(filterDir):
         parser.parse(os.path.join(typeFragments, typeFragment))
         # Did we find a MIME type?
         if filterTypeHandler.mediaType:
-            filterNames[filterTypeHandler.mediaType] = filterTypeHandler.name
+            v = (filterTypeHandler.name, filterTypeHandler.extensions)
+            filterNames[filterTypeHandler.mediaType] = v
 
     # core.git doesn't declares this, but probably this is the intention.
-    filterNames["application/x-dif-document"] = "calc_DIF"
-    filterNames["application/x-dbase"] = "calc_dBase"
+    filterNames["application/x-dif-document"] = ("calc_DIF", "dif")
+    filterNames["application/x-dbase"] = ("calc_dBase", "dbf")
 
     # Build a 'type name' -> 'filter flag list' dictionary.
     typeNameFlags = {}
@@ -147,9 +156,9 @@ def getFilterFlags(filterDir):
     # Now build the combined MIME type -> filter flags one.
     filterFlags = {}
     for i in filterNames.keys():
-        typeName = filterNames[i]
+        typeName, extensions = filterNames[i]
         if typeName in typeNameFlags.keys():
-            filterFlags[i] = typeNameFlags[typeName]
+            filterFlags[i] = (typeNameFlags[typeName], extensions)
 
     return filterFlags
 
@@ -195,7 +204,7 @@ def main():
         if mimeType in mimeTypeAliases.keys():
             mimeType = mimeTypeAliases[mimeType]
         if mimeType in filterFlags.keys():
-            flags = filterFlags[mimeType]
+            flags, extensions = filterFlags[mimeType]
             if "IMPORT" in flags and "EXPORT" in flags:
                 coreAction = "edit"
             else:
@@ -206,6 +215,30 @@ def main():
                 print("warning: action for '" + mimeType + "' " +
                       "is '" + discoveryAction + "', " +
                       "but it should be '" + coreAction + "'")
+
+    # Now see if there are any new types in the core.git filter config which
+    # are missing.
+    discoveryMimeTypes = [i[0] for i in discoveryHandler.appActions]
+    proposed = []
+    for filterMimeType in filterFlags.keys():
+        if filterMimeType not in discoveryMimeTypes:
+            flags, extensions = filterFlags[filterMimeType]
+            if "IMPORT" in flags and "EXPORT" in flags:
+                action = "edit"
+            else:
+                action = "view"
+            print("warning: mime type '" + filterMimeType + "' is known, " +
+                  "but not advertised in discovery.xml " +
+                  "(extension would be '" + extensions + "', and " +
+                  "action would be '"+action+"')")
+            proposed.append((filterMimeType, extensions, action))
+
+    # Produce a copy&paste-able XML output for the proposed changes.
+    for proposal in proposed:
+        print('        <app name="' + proposal[0] + '">')
+        print('            <action name="' + proposal[2] + '" ' +
+              'ext="' + proposal[1] + '"/>')
+        print('        </app>')
 
 if __name__ == "__main__":
     main()
