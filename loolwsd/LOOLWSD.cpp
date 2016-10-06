@@ -1535,6 +1535,9 @@ void LOOLWSD::initialize(Application& self)
         if (it != logProperties.end())
         {
             setenv("LOOL_LOGFILENAME", it->second.c_str(), true);
+#if ENABLE_DEBUG
+            std::cerr << "\nFull log is available in: " << it->second.c_str() << std::endl;
+#endif
         }
     }
 
@@ -1619,9 +1622,8 @@ void LOOLWSD::initialize(Application& self)
     ServerApplication::initialize(self);
 
 #if ENABLE_DEBUG
-    std::cerr << "\nLaunch this in your browser:\n\n" <<
-        getLaunchURI() <<
-        "\n\nFull log is available in: " << LOOLWSD_LOGFILE << std::endl;
+            std::cerr << "\nLaunch this in your browser:\n\n" <<
+                getLaunchURI() << "\n" << std::endl;
 #endif
 }
 
