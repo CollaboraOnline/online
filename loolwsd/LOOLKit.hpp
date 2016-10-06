@@ -14,7 +14,8 @@ void lokit_main(const std::string& childRoot,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
                 bool noCapabilities,
-                bool queryVersionInfo);
+                bool queryVersionInfo,
+                bool displayVersion);
 
 bool globalPreinit(const std::string &loTemplate);
 /// Wrapper around private Document::ViewCallback().
