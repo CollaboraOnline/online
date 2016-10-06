@@ -199,8 +199,6 @@ Parts (like slides in presentation, or sheets in spreadsheets):
             + e.parts == the number of parts that the document has
             + e.docType == 'text' | 'spreadsheet' | 'presentation' | 'drawing' | 'other'
             + [e.partNames] if present, part names (e.g. sheet names)
-        map.on('invalidatepreview', function (e) {})
-            + e.id = the preview's id
         map.on('tilepreview', function (e) {}) where:
             + e.tile - the preview image
             + e.id - the preview id
@@ -290,8 +288,6 @@ Writer pages:
             + e.currentPage = the page on which the cursor lies
             + e.pages = number of pages
             + e.docType = document type, should be 'text'
-        map.on('invalidatepreview', function (e) {})
-            + e.id = the preview's id
         map.on('partpagerectangles', function (e) {}) where:
             + e.pixelRectangles = An array of bounds representing each page's dimension in pixels on the current zoom level
             + e.twipsRectangles = An array of bounds representing each page's dimension in twips.

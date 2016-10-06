@@ -1749,9 +1749,6 @@ L.TileLayer = L.GridLayer.extend({
 								preview.tilePosY, preview.tileWidth, preview.tileHeight, {autoUpdate: true});
 					}
 				}
-				else {
-					this._map.fire('invalidatepreview', {id: preview.id});
-				}
 			}
 		}
 		this._previewInvalidations = [];
