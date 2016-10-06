@@ -186,9 +186,7 @@ function onClick(id, item, subItem) {
 		setTimeout(function () {$('#backColorPicker').colorpicker('showPalette');}, 0);
 	}
 	else if (id === 'sum') {
-		L.DomUtil.get('formulaInput').value = '=SUM()';
-		L.DomUtil.get('formulaInput').focus();
-		map.cellEnterString(L.DomUtil.get('formulaInput').value);
+		map.sendUnoCommand('.uno:AutoSum');
 	}
 	else if (id === 'function') {
 		L.DomUtil.get('formulaInput').value = '=';
