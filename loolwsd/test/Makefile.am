@@ -7,7 +7,7 @@ AUTOMAKE_OPTION = serial-tests
 # test: tests that need loolwsd running, and that are run via 'make check'
 check_PROGRAMS = test
 
-noinst_PROGRAMS = test unittest
+noinst_PROGRAMS = test unittest testlokit
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
 
@@ -46,6 +46,10 @@ unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 unittest_SOURCES = TileQueueTests.cpp WhiteBoxTests.cpp test.cpp $(wsd_sources)
 unittest_LDADD = $(CPPUNIT_LIBS)
 
+testlokit_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" -I$(top_srcdir) -DBUILDING_TESTS
+testlokit_SOURCES = testlokit.cpp test.cpp $(wsd_sources)
+testlokit_LDADD = $(CPPUNIT_LIBS)
+
 # unit test modules:
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
@@ -65,7 +69,13 @@ SYSTEM_STAMP =
 endif
 
 if HAVE_LO_PATH
-check-local:
+check-lokit: testlokit
+	@echo
+	@echo "Running testlokit."
+	@echo
+	@JAIL_PATH="file://@JAILS_PATH@/user" LO_PATH="@LO_PATH@/program" ${top_builddir}/test/testlokit > check-lokit.log 2>&1 || { cat check-lokit.log ; exit 1 ; }
+
+check-local: check-lokit
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME unit-fonts.la is unstable, disabled for now.
 TESTS = unit-timeout.la unit-prefork.la unit-tilecache.la unit-admin.la unit-storage.la
