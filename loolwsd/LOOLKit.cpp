@@ -1353,7 +1353,8 @@ void lokit_main(const std::string& childRoot,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
                 bool noCapabilities,
-                bool queryVersion)
+                bool queryVersion,
+                bool displayVersion)
 {
     // Reinitialize logging when forked.
     const bool logToFile = getenv("LOOL_LOGFILE");
@@ -1522,8 +1523,11 @@ void lokit_main(const std::string& childRoot,
         if (queryVersion)
         {
             char* versionInfo = loKit->getVersionInfo();
+            std::string versionString(versionInfo);
+            if (displayVersion)
+                std::cout << "office version details: " << versionString << std::endl;
             std::string encodedVersionStr;
-            URI::encode(std::string(versionInfo), "", encodedVersionStr);
+            URI::encode(versionString, "", encodedVersionStr);
             requestUrl += "&version=" + encodedVersionStr;
             free(versionInfo);
         }
