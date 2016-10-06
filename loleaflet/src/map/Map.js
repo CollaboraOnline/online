@@ -120,14 +120,17 @@ L.Map = L.Evented.extend({
 
 		// View info (user names and view ids)
 		this._viewInfo = {};
+
+		// View color map
+		this._viewColors = {};
 	},
 
 
 	// public methods that modify map state
 
-	addView: function(viewid, username) {
-		this._viewInfo[viewid] = username;
-		this.fire('addview', {viewId: viewid, username: username});
+	addView: function(viewid, username, color) {
+		this._viewInfo[viewid] = {'username': username, 'color': color};
+		this.fire('addview', {viewId: viewid, username: username, color: color});
 	},
 
 	removeView: function(viewid) {
@@ -137,7 +140,11 @@ L.Map = L.Evented.extend({
 	},
 
 	getViewName: function(viewid) {
-		return this._viewInfo[viewid];
+		return this._viewInfo[viewid].username;
+	},
+
+	getViewColor: function(viewid) {
+		return this._viewInfo[viewid].color;
 	},
 
 	// replaced by animation-powered implementation in Map.PanAnimation.js

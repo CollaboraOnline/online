@@ -682,7 +682,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds) && this._selectedPart === viewPart) {
 			if (!cellViewCursorMarker) {
-				var borderColor = L.LOUtil.getViewIdHexColor(viewId);
+				var borderColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 				cellViewCursorMarker = L.rectangle(this._cellViewCursors[viewId].bounds, {fill: false, color: borderColor, weight: 2});
 				this._cellViewCursors[viewId].marker = cellViewCursorMarker;
 				cellViewCursorMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, borderColor: borderColor});
@@ -714,8 +714,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateViewCursor(viewId);
 	},
 
-	_addView: function(viewId, username) {
-		this._map.addView(viewId, username);
+	_addView: function(viewId, username, color) {
+		this._map.addView(viewId, username, color);
 
 		//TODO: We can initialize color and other properties here.
 		if (typeof this._viewCursors[viewId] !== 'undefined') {
@@ -755,7 +755,7 @@ L.TileLayer = L.GridLayer.extend({
 		var viewIds = [];
 		for (var viewInfoIdx in viewInfo) {
 			if (!(parseInt(viewInfo[viewInfoIdx].id) in this._map._viewInfo)) {
-				this._addView(viewInfo[viewInfoIdx].id, viewInfo[viewInfoIdx].username);
+				this._addView(viewInfo[viewInfoIdx].id, viewInfo[viewInfoIdx].username, viewInfo[viewInfoIdx].color);
 			}
 			viewIds.push(viewInfo[viewInfoIdx].id);
 		}
@@ -1235,7 +1235,7 @@ L.TileLayer = L.GridLayer.extend({
 		   (this._docType === 'text' || this._selectedPart === viewPart)) {
 			if (!viewCursorMarker) {
 				var viewCursorOptions = {
-					color: L.LOUtil.getViewIdHexColor(viewId),
+					color: L.LOUtil.rgbToHex(this._map.getViewColor(viewId)),
 					blink: false,
 					header: true, // we want a 'hat' to our view cursors (which will contain view user names)
 					headerTimeout: 3000, // hide after some interval
@@ -1272,7 +1272,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			viewSelection = new L.Polygon(viewPolygons, {
 				pointerEvents: 'none',
-				fillColor: L.LOUtil.getViewIdHexColor(viewId),
+				fillColor: L.LOUtil.rgbToHex(this._map.getViewColor(viewId)),
 				fillOpacity: 0.25,
 				weight: 2,
 				opacity: 0.25
@@ -1293,7 +1293,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._isEmptyRectangle(viewBounds) &&
 		   (this._docType === 'text' || this._selectedPart === viewPart)) {
 			if (!viewMarker) {
-				var color = L.LOUtil.getViewIdHexColor(viewId);
+				var color = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 				viewMarker = L.rectangle(viewBounds, {
 					pointerEvents: 'auto',
 					fill: false,
