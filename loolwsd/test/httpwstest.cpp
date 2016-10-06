@@ -143,7 +143,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testAlertAllUsers();
     void testViewInfoMsg();
 
-    void loadDoc(const std::string& documentURL);
+    void loadDoc(const std::string& documentURL, const std::string& testname);
 
     void getPartHashCodes(const std::string response,
                           std::vector<std::string>& parts);
@@ -339,17 +339,17 @@ void HTTPWSTest::testCloseAfterClose()
     }
 }
 
-void HTTPWSTest::loadDoc(const std::string& documentURL)
+void HTTPWSTest::loadDoc(const std::string& documentURL, const std::string& testname)
 {
     try
     {
         // Load a document and wait for the status.
         // Don't replace with helpers, so we catch status.
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        auto socket = connectLOKit(_uri, request, _response);
-        sendTextFrame(*socket, "load url=" + documentURL);
+        auto socket = connectLOKit(_uri, request, _response, testname);
+        sendTextFrame(*socket, "load url=" + documentURL, testname);
 
-        SocketProcessor("", socket, [&](const std::string& msg)
+        SocketProcessor(testname, socket, [&](const std::string& msg)
                 {
                     const std::string prefix = "status: ";
                     if (msg.find(prefix) == 0)
@@ -362,8 +362,6 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
 
                     return true;
                 });
-
-        socket->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
@@ -400,7 +398,7 @@ void HTTPWSTest::testLoad()
 {
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL);
-    loadDoc(documentURL);
+    loadDoc(documentURL, "load ");
 }
 
 void HTTPWSTest::testBadLoad()
@@ -450,7 +448,7 @@ void HTTPWSTest::testReload()
     getDocumentPathAndURL("hello.odt", documentPath, documentURL);
     for (auto i = 0; i < 3; ++i)
     {
-        loadDoc(documentURL);
+        loadDoc(documentURL, "reload ");
     }
 }
 
@@ -551,14 +549,14 @@ void HTTPWSTest::testReloadWhileDisconnecting()
 
         auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
 
-        sendTextFrame(socket, "uno .uno:SelectAll");
-        sendTextFrame(socket, "uno .uno:Delete");
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "uno .uno:Delete", testname);
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
 
         // Closing connection too fast might not flush buffers.
         // Often nothing more than the SelectAll reaches the server before
         // the socket is closed, when the doc is not even modified yet.
-        getResponseMessage(socket, "statechanged");
+        getResponseMessage(socket, "statechanged", testname);
 
         const auto kitcount = getLoolKitProcessCount();
 
@@ -574,9 +572,9 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll");
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -587,19 +585,14 @@ void HTTPWSTest::testReloadWhileDisconnecting()
 
 void HTTPWSTest::testExcelLoad()
 {
+    const auto testname = "excelLoad ";
     try
     {
-        // Load a document and make it empty.
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("timeline.xlsx", documentPath, documentURL);
+        // Load a document and get status.
+        auto socket = loadDocAndGetSocket("timeline.xlsx", _uri, testname);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
-        sendTextFrame(socket, "status");
-        const auto status = assertResponseLine(socket, "status:");
+        sendTextFrame(socket, "status", testname);
+        const auto status = assertResponseLine(socket, "status:", testname);
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -613,29 +606,22 @@ void HTTPWSTest::testExcelLoad()
 
 void HTTPWSTest::testPaste()
 {
+    const auto testname = "paste ";
     try
     {
         // Load a document and make it empty, then paste some text into it.
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        sendTextFrame(socket, "status");
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
-
-        sendTextFrame(socket, "uno .uno:SelectAll");
-        sendTextFrame(socket, "uno .uno:Delete");
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "uno .uno:Delete", testname);
 
         // Paste some text into it.
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll");
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -646,21 +632,14 @@ void HTTPWSTest::testPaste()
 
 void HTTPWSTest::testLargePaste()
 {
+    const auto testname = "LargePaste ";
     try
     {
-        // Load a document and make it empty.
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        // Load a document and make it empty, then paste some text into it.
+        auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        sendTextFrame(socket, "status");
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
-
-        sendTextFrame(socket, "uno .uno:SelectAll");
-        sendTextFrame(socket, "uno .uno:Delete");
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "uno .uno:Delete", testname);
 
         // Paste some text into it.
         std::ostringstream oss;
@@ -671,13 +650,13 @@ void HTTPWSTest::testLargePaste()
 
         const auto documentContents = oss.str();
         std::cerr << "Pasting " << documentContents.size() << " characters into document." << std::endl;
-        sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents);
+        sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents, testname);
 
         // Check if the server is still alive.
         // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
-        sendTextFrame(socket, "uno .uno:SelectAll");
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-        const auto selection = assertResponseLine(socket, "textselectioncontent:");
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_MESSAGE("Pasted text was either corrupted or couldn't be read back",
                                "textselectioncontent: " + documentContents == selection);
     }
@@ -703,8 +682,6 @@ void HTTPWSTest::testRenderingOptions()
         sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
         sendTextFrame(socket, "status");
         const auto status = assertResponseLine(socket, "status:");
-
-        socket.shutdown();
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -1488,28 +1465,19 @@ std::string HTTPWSTest::getFontList(const std::string& message)
 
 void HTTPWSTest::testFontList()
 {
+    const auto testname = "fontList ";
     try
     {
         // Load a document
-        std::string documentPath, documentURL;
-        std::string text;
-        std::vector<char> response;
+        auto socket = *loadDocAndGetSocket("setclientpart.odp", _uri, testname);
 
-        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
-
-        sendTextFrame(socket, "commandvalues command=.uno:CharFontName");
-        response = getResponseMessage(socket, "commandvalues:", "testFontList ");
+        sendTextFrame(socket, "commandvalues command=.uno:CharFontName", testname);
+        const auto response = getResponseMessage(socket, "commandvalues:", testname);
         CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
 
         std::stringstream streamResponse;
         std::copy(response.begin() + std::string("commandvalues:").length() + 1, response.end(), std::ostream_iterator<char>(streamResponse));
-        text = getFontList(streamResponse.str());
-        CPPUNIT_ASSERT(!text.empty());
+        CPPUNIT_ASSERT(!getFontList(streamResponse.str()).empty());
     }
     catch (const Poco::Exception& exc)
     {
@@ -1519,16 +1487,10 @@ void HTTPWSTest::testFontList()
 
 void HTTPWSTest::testStateChanged(const std::string& filename, std::vector<std::string>& vecCommands)
 {
-    std::string docPath;
-    std::string docURL;
-    std::string response;
-    std::string text;
+    const auto testname = "stateChanged ";
 
-    getDocumentPathAndURL(filename.c_str(), docPath, docURL);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-
-    auto socket = loadDocAndGetSocket(_uri, docURL, "testCommands ");
-    SocketProcessor("", socket,
+    auto socket = loadDocAndGetSocket(filename, _uri, testname);
+    SocketProcessor(testname, socket,
         [&](const std::string& msg)
         {
             Poco::RegularExpression::MatchVec matches;
@@ -1969,50 +1931,35 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
     std::string documentPath, documentURL, response, text;
     getDocumentPathAndURL(doc, documentPath, documentURL);
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-    Poco::Net::WebSocket socket0 = *connectLOKit(_uri, request, _response);
-
-    sendTextFrame(socket0, "load url=" + documentURL);
-    CPPUNIT_ASSERT_MESSAGE(Poco::format(load, itView) + documentURL, isDocumentLoaded(socket0, Poco::format(view, itView)));
+    auto socket = *loadDocAndGetSocket(_uri, documentURL);
 
     // Check document size
-    sendTextFrame(socket0, "status");
-    getResponseMessage(socket0, "status:", response, false, Poco::format(view, itView));
+    sendTextFrame(socket, "status");
+    getResponseMessage(socket, "status:", response, false, Poco::format(view, itView));
     CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, std::string("status:")), !response.empty());
     parseDocSize(response, type, docPart, docParts, docWidth, docHeight, docViewId);
 
     // Send click message
     Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttondown"), docWidth/2, docHeight/6);
-    sendTextFrame(socket0, text); text.clear();
+    sendTextFrame(socket, text); text.clear();
     Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/2, docHeight/6);
-    sendTextFrame(socket0, text);
-    getResponseMessage(socket0, protocol, response, false, Poco::format(view, itView));
+    sendTextFrame(socket, text);
+    getResponseMessage(socket, protocol, response, false, Poco::format(view, itView));
     CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
-    // Connect 0..N Views, where N=10
+    // Connect and load 0..N Views, where N=10
     for (itView = 0; itView < 10; ++itView)
     {
-        views.emplace_back(connectLOKit(_uri, request, _response));
+        views.emplace_back(loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView)));
     }
 
-    itView = 1;
-    // Load 0..N view
+    // main view should receive response each view
+    itView = 0;
     for (auto socketView : views)
     {
-        sendTextFrame(*socketView, "load url=" + documentURL);
-
-        // Expected to receive response each view
-        getResponseMessage(*socketView, protocolView, response, false, Poco::format(view, itView));
+        getResponseMessage(socket, protocolView, response, false, Poco::format(view, itView));
         CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
         ++itView;
-    }
-
-    itView = 0;
-    // main view should receive response each view
-    for (auto socketView : views)
-    {
-        getResponseMessage(socket0, protocolView, response, false, Poco::format(view, itView));
-        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
     }
 }
 
