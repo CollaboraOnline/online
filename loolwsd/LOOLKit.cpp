@@ -977,7 +977,7 @@ private:
                     << " view" << (_clientViews != 1 ? "s" : "")
                     << Log::end;
 
-        std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
+        std::unique_lock<std::mutex> lockLokDoc(_loKitDocument->getLock());
 
         const auto viewId = session.getViewId();
         _loKitDocument->setView(viewId);
@@ -985,10 +985,16 @@ private:
         _loKitDocument->destroyView(viewId);
         _viewIdToCallbackDescr.erase(viewId);
         Log::debug("Destroyed view " + std::to_string(viewId));
-        lock.unlock();
+
+        // Get the list of view ids from the core
+        const int viewCount = _loKitDocument->getViewsCount();
+        std::vector<int> viewIds(viewCount);
+        _loKitDocument->getViewIds(viewIds.data(), viewCount);
+
+        lockLokDoc.unlock();
 
         // Broadcast updated view info
-        notifyViewInfo();
+        notifyViewInfo(viewIds);
     }
 
     std::map<int, std::string> getViewInfo() override
@@ -1020,16 +1026,8 @@ private:
     }
 
     /// Notify all views of viewId and their associated usernames
-    void notifyViewInfo() override
+    void notifyViewInfo(const std::vector<int>& viewIds) override
     {
-        std::unique_lock<std::mutex> lockLokDoc(_loKitDocument->getLock());
-
-        // Get the list of view ids from the core
-        int viewCount = _loKitDocument->getViewsCount();
-        std::vector<int> viewIds(viewCount);
-        _loKitDocument->getViewIds(viewIds.data(), viewCount);
-        lockLokDoc.unlock();
-
         // Store the list of viewid, username mapping in a map
         std::map<int, std::string> viewInfoMap = getViewInfo();
         std::unique_lock<std::mutex> lock(_mutex);

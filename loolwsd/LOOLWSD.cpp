@@ -234,9 +234,11 @@ static void forkChildren(const int number)
 static void preForkChildren()
 {
     std::unique_lock<std::mutex> lock(newChildrenMutex);
+
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     UnitWSD::get().preSpawnCount(numPreSpawn);
     --numPreSpawn; // ForKit always spawns one child at startup.
+
     forkChildren(numPreSpawn);
 }
 
