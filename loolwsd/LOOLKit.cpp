@@ -1179,7 +1179,10 @@ private:
 
             Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
             _loKitDocument->createView();
+            Log::trace("View created.");
         }
+
+        Util::assertIsLocked(lockLokDoc);
 
         Object::Ptr renderOptsObj = new Object();
 
