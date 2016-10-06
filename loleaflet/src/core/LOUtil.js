@@ -3,20 +3,6 @@
  */
 
 L.LOUtil = {
-	// Based on core.git's colordata.hxx: COL_AUTHOR1_DARK...COL_AUTHOR9_DARK
-	// consisting of arrays of RGB values
-	// Maybe move the color logic to separate file when it becomes complex
-	darkColors: [
-		[198, 146, 0],
-		[87, 157,  28],
-		[105,  43, 157],
-		[197,   0,  11],
-		[0, 128, 128],
-		[140, 132,  0],
-		[53,  85, 107],
-		[209, 118,   0]
-	],
-
 	startSpinner: function (spinnerCanvas, spinnerSpeed) {
 		var spinnerInterval;
 		spinnerCanvas.width = 50;
@@ -42,9 +28,7 @@ L.LOUtil = {
 		return spinnerInterval;
 	},
 
-	getViewIdHexColor: function(viewId) {
-		var color = this.darkColors[(viewId + 1) % this.darkColors.length];
-		var hex = color[2] | (color[1] << 8) | (color[0] << 16);
-		return '#' + ('000000' + hex.toString(16)).slice(-6);
+	rgbToHex: function(color) {
+		return '#' + ('000000' + color.toString(16)).slice(-6);
 	}
 };
