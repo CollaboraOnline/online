@@ -267,42 +267,6 @@ void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std
 }
 
 inline
-void collectMessages(Poco::Net::WebSocket& ws, const std::string& prefix, std::vector<std::string>& responses, int retries, const std::string& name = "")
-{
-    int flags = 0;
-    const Poco::Timespan waitTime(1000000);
-
-    ws.setReceiveTimeout(0);
-    do
-    {
-        if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
-        {
-            char buffer[READ_BUFFER_SIZE];
-            int bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
-            if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cerr << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
-                const std::string message = std::string(buffer, bytes);
-                if (message.find(prefix) == 0)
-                {
-                    responses.push_back(message);
-                }
-            }
-            else
-            {
-                std::cerr << name << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
-            }
-        }
-        else
-        {
-            std::cerr << name << "Timeout waiting for " << prefix << std::endl;
-            --retries;
-        }
-    }
-    while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-}
-
-inline
 std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string name = "", const size_t timeoutMs = 10000)
 {
     name = name + '[' + prefix + "] ";
