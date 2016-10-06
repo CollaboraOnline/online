@@ -874,7 +874,7 @@ private:
         }
 
         return viewInfo;
-    };
+    }
 
     std::mutex& getMutex() override
     {
@@ -891,6 +891,7 @@ private:
     {
         // Store the list of viewid, username mapping in a map
         std::map<int, std::string> viewInfoMap = getViewInfo();
+        std::map<std::string, int> viewColorsMap = getViewColors();
         std::unique_lock<std::mutex> lock(_mutex);
 
         // Double check if list of viewids from core and our list matches,
@@ -901,7 +902,7 @@ private:
         {
             Object::Ptr viewInfoObj = new Object();
             viewInfoObj->set("id", viewId);
-
+            int color = 0;
             if (viewInfoMap.find(viewId) == viewInfoMap.end())
             {
                 Log::error("No username found for viewId [" + std::to_string(viewId) + "].");
@@ -910,7 +911,12 @@ private:
             else
             {
                 viewInfoObj->set("username", viewInfoMap[viewId]);
+                if (viewColorsMap.find(viewInfoMap[viewId]) != viewColorsMap.end())
+                {
+                    color = viewColorsMap[viewInfoMap[viewId]];
+                }
             }
+            viewInfoObj->set("color", color);
 
             viewInfoArray->set(arrayIndex++, viewInfoObj);
         }
@@ -930,6 +936,49 @@ private:
     }
 
 private:
+
+    // Get the color value for all author names from the core
+    std::map<std::string, int> getViewColors()
+    {
+        std::string colorValues;
+        std::map<std::string, int> viewColors;
+
+        {
+            auto lock(_loKitDocument->getLock());
+
+            char* pValues = _loKitDocument->getCommandValues(".uno:TrackedChangeAuthors");
+            colorValues = std::string(pValues == nullptr ? "" : pValues);
+            std::free(pValues);
+        }
+
+        try
+        {
+            if (!colorValues.empty())
+            {
+                Poco::JSON::Parser parser;
+                auto root = parser.parse(colorValues).extract<Poco::JSON::Object::Ptr>();
+                if (root->get("authors").type() == typeid(Poco::JSON::Array::Ptr))
+                {
+                    auto authorsArray = root->get("authors").extract<Poco::JSON::Array::Ptr>();
+                    for (auto& authorVar: *authorsArray)
+                    {
+                        auto authorObj = authorVar.extract<Poco::JSON::Object::Ptr>();
+                        auto authorName = authorObj->get("name").convert<std::string>();
+                        auto colorValue = authorObj->get("color").convert<int>();
+                        viewColors[authorName] = colorValue;
+                    }
+                }
+            }
+        }
+        catch(const Exception& exc)
+        {
+            Log::error() << "Poco Exception: " << exc.displayText()
+                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
+                         << Log::end;
+        }
+
+        return viewColors;
+    }
 
     std::shared_ptr<lok::Document> load(const std::string& sessionId,
                                         const std::string& uri,
