@@ -14,7 +14,7 @@
 #include <cassert>
 #include <functional>
 #include <memory>
-#include <regex>
+#include <mutex>
 #include <set>
 #include <sstream>
 #include <string>
@@ -90,9 +90,15 @@ namespace Util
 
     /// Assert that a lock is already taken.
     template <typename T>
-    void assertIsLocked(T& lock)
+    void assertIsLocked(const T& lock)
     {
-        assert(!lock.try_lock());
+        assert(lock.owns_lock());
+    }
+
+    inline
+    void assertIsLocked(std::mutex& mtx)
+    {
+        assert(!mtx.try_lock());
     }
 
     /// Safely remove a file or directory.
