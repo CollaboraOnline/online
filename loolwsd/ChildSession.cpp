@@ -92,13 +92,22 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // Client is getting active again.
         // Send invalidation and other sync-up messages.
         std::unique_lock<std::recursive_mutex> lock(Mutex); //TODO: Move to top of function?
+        auto lockLokDoc(_loKitDocument->getLock());
 
         _loKitDocument->setView(_viewId);
 
-        // Notify all views about updated view info
-        _docManager.notifyViewInfo();
+        // Get the list of view ids from the core
+        const int viewCount = _loKitDocument->getViewsCount();
+        std::vector<int> viewIds(viewCount);
+        _loKitDocument->getViewIds(viewIds.data(), viewCount);
 
         const int curPart = _loKitDocument->getPart();
+
+        lockLokDoc.unlock();
+
+        // Notify all views about updated view info
+        _docManager.notifyViewInfo(viewIds);
+
         sendTextFrame("curpart: part=" + std::to_string(curPart));
         sendTextFrame("setpart: part=" + std::to_string(curPart));
 
@@ -296,13 +305,18 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
     _loKitDocument = _docManager.onLoad(getId(), _jailedFilePath, _userName, _docPassword, renderOpts, _haveDocPassword);
-    if (!_loKitDocument)
+    if (!_loKitDocument || _viewId < 0)
     {
         Log::error("Failed to get LoKitDocument instance.");
         return false;
     }
 
     Log::info("Created new view with viewid: [" + std::to_string(_viewId) + "] for username: [" + _userName + "].");
+
+    auto lockLokDoc(_loKitDocument->getLock());
+
+    _loKitDocument->setView(_viewId);
+
     _docType = LOKitHelper::getDocumentTypeAsString(_loKitDocument->get());
     if (_docType != "text" && part != -1)
     {
@@ -311,7 +325,6 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
 
     // Respond by the document status
     Log::debug("Sending status after loading view " + std::to_string(_viewId) + ".");
-    _loKitDocument->setView(_viewId);
     const auto status = LOKitHelper::documentStatus(_loKitDocument->get());
     if (status.empty() || !sendTextFrame("status: " + status))
     {
@@ -319,8 +332,15 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
         return false;
     }
 
+    // Get the list of view ids from the core
+    const int viewCount = _loKitDocument->getViewsCount();
+    std::vector<int> viewIds(viewCount);
+    _loKitDocument->getViewIds(viewIds.data(), viewCount);
+
+    lockLokDoc.unlock();
+
     // Inform everyone (including this one) about updated view info
-    _docManager.notifyViewInfo();
+    _docManager.notifyViewInfo(viewIds);
 
     Log::info("Loaded session " + getId());
     return true;

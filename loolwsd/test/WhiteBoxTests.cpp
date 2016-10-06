@@ -174,7 +174,7 @@ public:
     {
     }
 
-    void notifyViewInfo() override
+    void notifyViewInfo(const std::vector<int>& /*viewIds*/) override
     {
     }
 

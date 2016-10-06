@@ -42,7 +42,7 @@ public:
 
     /// Send updated view info to all active sessions
     virtual
-    void notifyViewInfo() = 0;
+    void notifyViewInfo(const std::vector<int>& viewIds) = 0;
     /// Get a view ID <-> user name map.
     virtual
     std::map<int, std::string> getViewInfo() = 0;
