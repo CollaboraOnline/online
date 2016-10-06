@@ -46,6 +46,7 @@ using Poco::Thread;
 using Poco::Util::Application;
 
 static bool NoCapsForKit = false;
+static bool DisplayVersion = false;
 static std::string UnitTestLibrary;
 static std::atomic<unsigned> ForkCounter( 0 );
 
@@ -158,7 +159,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
             Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
         }
 
-        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, NoCapsForKit, queryVersion);
+        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, NoCapsForKit, queryVersion, DisplayVersion);
     }
     else
     {
@@ -255,7 +256,8 @@ int main(int argc, char** argv)
         {
             std::string version, hash;
             Util::getVersionInfo(version, hash);
-            std::cout << "loolforkit " << version << " - " << hash << std::endl;
+            std::cout << "loolforkit version details: " << version << " - " << hash << std::endl;
+            DisplayVersion = true;
         }
 #if ENABLE_DEBUG
         // this process has various privileges - don't run arbitrary code.

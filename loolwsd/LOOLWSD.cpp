@@ -1661,7 +1661,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
-        std::cout << "loolwsd " << version << " - " << hash << std::endl;
+        std::cout << "loolwsd version details: " << version << " - " << hash << std::endl;
     }
 
     initializeSSL();
