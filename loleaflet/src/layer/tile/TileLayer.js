@@ -93,6 +93,9 @@ L.TileLayer = L.GridLayer.extend({
 		// Rectangle for cell cursor
 		this._cellCursor =  L.LatLngBounds.createDefault();
 		this._prevCellCursor = L.LatLngBounds.createDefault();
+		this._cellCursorOnPgUp = null;
+		this._cellCursorOnPgDn = null;
+
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
 		// View cursors with viewId to 'cursor info' mapping
@@ -559,11 +562,16 @@ L.TileLayer = L.GridLayer.extend({
 			verticalDirection = sign(this._cellCursor.getNorth() - this._prevCellCursor.getNorth());
 		}
 
+		var onPgUpDn = false;
 		if (!this._isEmptyRectangle(this._cellCursor) && !this._prevCellCursor.equals(this._cellCursor)) {
+			if ((this._cellCursorOnPgUp && this._cellCursorOnPgUp.equals(this._prevCellCursor)) ||
+				(this._cellCursorOnPgDn && this._cellCursorOnPgDn.equals(this._prevCellCursor))) {
+				onPgUpDn = true;
+			}
 			this._prevCellCursor = new L.LatLngBounds(this._cellCursor.getSouthWest(), this._cellCursor.getNorthEast());
 		}
 
-		this._onUpdateCellCursor(horizontalDirection, verticalDirection);
+		this._onUpdateCellCursor(horizontalDirection, verticalDirection, onPgUpDn);
 	},
 
 	_onDocumentRepair: function (textMsg) {
@@ -1115,6 +1123,21 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
+		if (this._prevCellCursor && type === 'input')
+		{
+			if (keycode === 1030) { // PgUp
+				if (this._cellCursorOnPgUp) {
+					return;
+				}
+				this._cellCursorOnPgUp = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
+			}
+			else if (keycode === 1031) { // PgDn
+				if (this._cellCursorOnPgDn) {
+					return;
+				}
+				this._cellCursorOnPgDn = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
+			}
+		}
 		if (this._clientZoom) {
 			// the zoom level has changed
 			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
@@ -1395,24 +1418,36 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_onUpdateCellCursor: function (horizontalDirection, verticalDirection) {
+	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn) {
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			var mapBounds = this._map.getBounds();
 			if (!mapBounds.contains(this._cellCursor)) {
-				var spacingX = Math.abs((this._cellCursor.getEast() - this._cellCursor.getWest())) / 4.0;
-				var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
 				var scrollX = 0, scrollY = 0;
-				if (horizontalDirection === -1 && this._cellCursor.getWest() < mapBounds.getWest()) {
-					scrollX = this._cellCursor.getWest() - mapBounds.getWest() - spacingX;
-				} else if (horizontalDirection === 1 && this._cellCursor.getEast() > mapBounds.getEast()) {
-					scrollX = this._cellCursor.getEast() - mapBounds.getEast() + spacingX;
-				}
-				if (verticalDirection === 1 && this._cellCursor.getNorth() > mapBounds.getNorth()) {
-					scrollY = this._cellCursor.getNorth() - mapBounds.getNorth() + spacingY;
-				} else if (verticalDirection === -1 && this._cellCursor.getSouth() < mapBounds.getSouth()) {
-					scrollY = this._cellCursor.getSouth() - mapBounds.getSouth() - spacingY;
-				}
+				if (onPgUpDn) {
+					var mapHalfHeight = (mapBounds.getNorth() - mapBounds.getSouth()) / 2;
+					var cellCursorOnPgUpDn = (this._cellCursorOnPgUp) ? this._cellCursorOnPgUp : this._cellCursorOnPgDn;
 
+					scrollY = this._cellCursor.getNorth() - cellCursorOnPgUpDn.getNorth();
+					if (this._cellCursor.getNorth() > mapBounds.getNorth() + scrollY) {
+						scrollY = (this._cellCursor.getNorth() - mapBounds.getNorth()) + mapHalfHeight;
+					} else if (this._cellCursor.getSouth() < mapBounds.getSouth() + scrollY) {
+						scrollY = (this._cellCursor.getNorth() - mapBounds.getNorth()) + mapHalfHeight;
+					}
+				}
+				else {
+					var spacingX = Math.abs((this._cellCursor.getEast() - this._cellCursor.getWest())) / 4.0;
+					var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
+					if (horizontalDirection === -1 && this._cellCursor.getWest() < mapBounds.getWest()) {
+						scrollX = this._cellCursor.getWest() - mapBounds.getWest() - spacingX;
+					} else if (horizontalDirection === 1 && this._cellCursor.getEast() > mapBounds.getEast()) {
+						scrollX = this._cellCursor.getEast() - mapBounds.getEast() + spacingX;
+					}
+					if (verticalDirection === 1 && this._cellCursor.getNorth() > mapBounds.getNorth()) {
+						scrollY = this._cellCursor.getNorth() - mapBounds.getNorth() + spacingY;
+					} else if (verticalDirection === -1 && this._cellCursor.getSouth() < mapBounds.getSouth()) {
+						scrollY = this._cellCursor.getSouth() - mapBounds.getSouth() - spacingY;
+					}
+				}
 				if (scrollX !== 0 || scrollY !== 0) {
 					var newCenter = mapBounds.getCenter();
 					newCenter.lng += scrollX;
@@ -1423,6 +1458,11 @@ L.TileLayer = L.GridLayer.extend({
 					center.y = Math.round(center.y < 0 ? 0 : center.y);
 					this._map.fire('scrollto', {x: center.x, y: center.y});
 				}
+			}
+
+			if (onPgUpDn) {
+				this._cellCursorOnPgUp = null;
+				this._cellCursorOnPgDn = null;
 			}
 
 			if (this._cellCursorMarker) {
