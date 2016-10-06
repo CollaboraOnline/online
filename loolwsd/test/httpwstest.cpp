@@ -239,7 +239,6 @@ void HTTPWSTest::testBadRequest()
 
 void HTTPWSTest::testHandShake()
 {
-    static const char* fail = "error:";
     try
     {
         std::string documentPath, documentURL;
@@ -252,26 +251,22 @@ void HTTPWSTest::testHandShake()
         Poco::Net::WebSocket socket(*session, request, response);
         socket.setReceiveTimeout(0);
 
-        std::string payload("statusindicator: find");
-
         int flags = 0;
         char buffer[1024] = {0};
         int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        CPPUNIT_ASSERT_EQUAL(payload, std::string(buffer, bytes));
+        CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags & Poco::Net::WebSocket::FRAME_TEXT);
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (bytes > 0 && !std::strstr(buffer, fail))
+        if (bytes > 0 && !std::strstr(buffer, "error:"))
         {
-            payload = "statusindicator: connect";
-            CPPUNIT_ASSERT_EQUAL(payload, std::string(buffer, bytes));
+            CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: connect"), std::string(buffer, bytes));
             CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags & Poco::Net::WebSocket::FRAME_TEXT);
 
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            if (!std::strstr(buffer, fail))
+            if (!std::strstr(buffer, "error:"))
             {
-                payload = "statusindicator: ready";
-                CPPUNIT_ASSERT_EQUAL(payload, std::string(buffer, bytes));
+                CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: ready"), std::string(buffer, bytes));
                 CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_TEXT), flags & Poco::Net::WebSocket::FRAME_TEXT);
             }
             else
