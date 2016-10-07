@@ -604,7 +604,7 @@ private:
                 }
                 catch (const Exception& exc)
                 {
-                    Log::error() << "Error sending file to client. PocoException: " << exc.displayText()
+                    Log::error() << "Error sending file to client: " << exc.displayText()
                                  << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                                  << Log::end;
                 }
@@ -1050,7 +1050,7 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error() << "ClientRequestHandler::handleRequest: PocoException: " << exc.displayText()
+            Log::error() << "ClientRequestHandler::handleRequest: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                          << Log::end;
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
