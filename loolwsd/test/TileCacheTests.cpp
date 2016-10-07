@@ -152,7 +152,7 @@ void TileCacheTests::testSimple()
     int tilePosY = 0;
     int tileWidth = 3840;
     int tileHeight = 3840;
-    TileDesc tile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    TileDesc tile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, -1, 0, -1, false);
 
     // No Cache
     auto file = tc.lookupTile(tile);
