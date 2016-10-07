@@ -49,6 +49,7 @@
 #include <Poco/DOM/Document.h>
 #include <Poco/DOM/Element.h>
 #include <Poco/DOM/NodeList.h>
+#include <Poco/Environment.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
@@ -112,6 +113,7 @@
 
 using namespace LOOLProtocol;
 
+using Poco::Environment;
 using Poco::Exception;
 using Poco::File;
 using Poco::Net::HTMLForm;
@@ -1842,6 +1844,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
     Util::setTerminationSignals();
     Util::setFatalSignals();
+
+    // down-pay all the forkit linking cost once & early.
+    Environment::set("LD_BIND_NOW", "1");
 
     if (DisplayVersion)
     {
