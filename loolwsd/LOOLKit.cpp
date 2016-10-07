@@ -1367,7 +1367,7 @@ void lokit_main(const std::string& childRoot,
         logProperties["path"] = std::string(logFilename);
     }
 
-    Log::initialize("kit", logLevel ? logLevel : "", logColor ? logColor : "", logToFile, logProperties);
+    Log::initialize("kit", logLevel ? logLevel : "", logColor != nullptr, logToFile, logProperties);
     Util::rng::reseed();
 
     assert(!childRoot.empty());
