@@ -999,7 +999,7 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
                     y = std::stoi(tokens[1]);
                     width = std::stoi(tokens[2]);
                     height = std::stoi(tokens[3]);
-                    part = std::stoi(tokens[4]);
+                    part = (_docType != "text" ? std::stoi(tokens[4]) : 0); // Writer renders everything as part 0.
                 }
                 catch (const std::out_of_range&)
                 {
