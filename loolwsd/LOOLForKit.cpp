@@ -200,9 +200,9 @@ int main(int argc, char** argv)
 
     // Initialization
     const bool logToFile = getenv("LOOL_LOGFILE");
-    const auto logFilename = getenv("LOOL_LOGFILENAME");
-    const auto logLevel = getenv("LOOL_LOGLEVEL");
-    const auto logColor = getenv("LOOL_LOGCOLOR");
+    const char* logFilename = getenv("LOOL_LOGFILENAME");
+    const char* logLevel = getenv("LOOL_LOGLEVEL");
+    const char* logColor = getenv("LOOL_LOGCOLOR");
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
     {
