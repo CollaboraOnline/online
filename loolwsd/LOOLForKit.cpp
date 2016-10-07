@@ -209,7 +209,7 @@ int main(int argc, char** argv)
         logProperties["path"] = std::string(logFilename);
     }
 
-    Log::initialize("frk", logLevel ? logLevel : "", logColor ? logColor : "", logToFile, logProperties);
+    Log::initialize("frk", logLevel ? logLevel : "", logColor != nullptr, logToFile, logProperties);
 
     Util::setTerminationSignals();
     Util::setFatalSignals();
