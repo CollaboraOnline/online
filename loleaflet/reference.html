@@ -1648,8 +1648,7 @@ unexpected behaviour.</h4>
 		</code></td>
 		<td><code>undefined</code></td>
 		<td>Triggers the creation of a preview with the given id, of maximum maxWidth X maxHeight size, of the
-            page / part with number 'index', keeping the original ration. By passing an
-            optional parameter {autoUpdate: true}, the preview will be automatically invalidated.</td>
+            page / part with number 'index', keeping the original ration.</td>
 	</tr>
 	<tr>
 		<td><code><b>getCustomPreview</b>(
@@ -1665,8 +1664,7 @@ unexpected behaviour.</h4>
 		</code></td>
 		<td><code>undefined</code></td>
 		<td>Triggers the creation of a preview with the given id, of width X height size, of the
-            [(tilePosX,tilePosY), (tilePosX + tileWidth, tilePosY + tileHeight)] section of the document. By passing an
-            optional parameter {autoUpdate: true}, the preview will be automatically invalidated.</td>
+            [(tilePosX,tilePosY), (tilePosX + tileWidth, tilePosY + tileHeight)] section of the document.</td>
 	</tr>
 	<tr>
 		<td><code><b>removePreviewUpdate</b>(
@@ -1711,7 +1709,14 @@ unexpected behaviour.</h4>
 	<tr>
 		<td><code><b>autoUpdate</b></code></td>
 		<td><code>Boolean</code></td>
-        <td>Whether a new preview is generated automatically when it becomes invalid.</td>
+        <td>Whether a new preview is generated automatically when it becomes
+        invalid.</td>
+	</tr>
+	<tr>
+	  <td><code><b>broadcast</b></code></td>
+	  <td><code>Boolean</code></td>
+          <td>Whether new preview should be broadcasted to other clients of same
+            document.</td>
 	</tr>
 </table>
 

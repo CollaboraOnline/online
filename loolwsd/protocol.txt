@@ -123,14 +123,15 @@ status
 styles
 
 tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth>
-tileheight=<tileHeight> [timestamp=<time>] [id=<id>]
+tileheight=<tileHeight> [timestamp=<time>] [id=<id> broadcast=<yesOrNo>]
 
-    All parameters are numbers.
+    Parameters are numbers except broadcast which is 'yes' or 'no'.
 
-    Note: id must be echoed back in the response verbatim. It is used
-    when rendering slide thumbnails of presentation documents, and not
-    for anything else. It is only useful to loleaflet and will break
-    it if not returned in the response.
+    Note: id must be echoed back in the response verbatim. It and the
+    following parameter, broadcast, are used when rendering slide
+    previews of presentation documents, and not for anything else. It
+    is only useful to loleaflet and will break it if not returned in
+    the response.
 
 tilecombine <parameters>
 

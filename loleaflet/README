@@ -178,11 +178,14 @@ Parts (like slides in presentation, or sheets in spreadsheets):
         map.setPart('next' | 'prev' | partNumber)
         map.getNumberOfParts()
         map.getCurrentPartNumber()
-        map.getPreview(id, index, maxWidth, maxHeight, [options])
+        map.getPreview(id, index, maxWidth, maxHeight, [options], forAllClients)
             + id = the ID of the request so that the response can be identified
             + index = the part / page 's number
             + maxWidth / maxHeight = max dimensions so that the ratio is preserved
-            + options = {autoUpdate: true} - automatically updates the previews
+            + options = {autoUpdate: <boolean>, broadcast: <boolean>} -
+	      + autoUpdate - boolean, automatically updates the previews
+	      + broadcast - boolean, whether the response (a preview of a slide) should be sent to all clients
+                viewing the same presentation
         map.getCustomPreview(id, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, [options])
             + id = the ID of the request so that the response can be identified
             + part = the part containing the desired preview

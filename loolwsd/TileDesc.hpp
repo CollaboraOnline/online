@@ -25,7 +25,7 @@
 class TileDesc
 {
 public:
-    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int ver = -1, int imgSize = 0, int id = -1) :
+    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int ver, int imgSize, int id, bool broadcast) :
         _part(part),
         _width(width),
         _height(height),
@@ -35,7 +35,8 @@ public:
         _tileHeight(tileHeight),
         _ver(ver),
         _imgSize(imgSize),
-        _id(id)
+        _id(id),
+        _broadcast(broadcast)
     {
         if (_part < 0 ||
             _width <= 0 ||
@@ -62,6 +63,7 @@ public:
     int getImgSize() const { return _imgSize; }
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
     int getId() const { return _id; }
+    bool getBroadcast() const { return _broadcast; }
 
     bool intersectsWithRect(int x, int y, int w, int h) const
     {
@@ -131,6 +133,11 @@ public:
             oss << " id=" << _id;
         }
 
+        if (_broadcast)
+        {
+            oss << " broadcast=yes";
+        }
+
         return oss.str();
     }
 
@@ -155,12 +162,14 @@ public:
                 pairs[name] = value;
             }
         }
+        std::string s;
+        bool broadcast = (LOOLProtocol::getTokenString(tokens, "broadcast", s) && s == "yes");
 
         return TileDesc(pairs["part"], pairs["width"], pairs["height"],
                         pairs["tileposx"], pairs["tileposy"],
                         pairs["tilewidth"], pairs["tileheight"],
                         pairs["ver"],
-                        pairs["imgsize"], pairs["id"]);
+                        pairs["imgsize"], pairs["id"], broadcast);
     }
 
     /// Deserialize a TileDesc from a string format.
@@ -182,6 +191,7 @@ private:
     int _ver; //< Versioning support.
     int _imgSize; //< Used for responses.
     int _id;
+    bool _broadcast;
 };
 
 /// One or more tile header.
@@ -243,7 +253,7 @@ private:
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
 
-            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, size, id);
+            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, size, id, false);
         }
     }
 
