@@ -1366,8 +1366,21 @@ namespace {
 static inline
 ServerSocket* getServerSocket(int nClientPortNumber)
 {
-    return (LOOLWSD::isSSLEnabled()) ? new SecureServerSocket(nClientPortNumber)
-                       : new ServerSocket(nClientPortNumber);
+    try
+    {
+        ServerSocket *socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket()
+            : new ServerSocket();
+        socket->bind(nClientPortNumber, false);
+        // 64 is the default value for the backlog parameter in Poco when creating a ServerSocket,
+        // so use it here, too.
+        socket->listen(64);
+        return socket;
+    }
+    catch (const Exception& exc)
+    {
+        Log::error() << "Could not create server socket: " << exc.displayText() << Log::end;
+        return nullptr;
+    }
 }
 
 static inline
@@ -1906,6 +1919,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Start a server listening on the port for clients
 
     std::unique_ptr<ServerSocket> psvs(getServerSocket(ClientPortNumber));
+    if (!psvs)
+        return Application::EXIT_SOFTWARE;
 
     ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
     HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
