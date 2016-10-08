@@ -38,8 +38,26 @@ namespace LOOLProtocol
     std::tuple<int, int, std::string> ParseVersion(const std::string& version);
 
     bool stringToInteger(const std::string& input, int& value);
-    bool parseNameIntegerPair(const std::string& token, std::string& name, int& value);
-    bool parseNameValuePair(const std::string& token, std::string& name, std::string& value);
+    inline
+    bool parseNameValuePair(const std::string& token, std::string& name, std::string& value, const char delim = '=')
+    {
+        const auto mid = token.find_first_of(delim);
+        if (mid != std::string::npos)
+        {
+            name = token.substr(0, mid);
+            value = token.substr(mid + 1);
+            return true;
+        }
+
+        return false;
+    }
+
+    inline
+    bool parseNameIntegerPair(const std::string& token, std::string& name, int& value, const char delim = '=')
+    {
+        std::string strValue;
+        return parseNameValuePair(token, name, strValue, delim) && stringToInteger(strValue, value);
+    }
 
     bool getTokenInteger(const std::string& token, const std::string& name, int& value);
     bool getTokenString(const std::string& token, const std::string& name, std::string& value);
@@ -115,7 +133,24 @@ namespace LOOLProtocol
     }
 
     /// Returns an abbereviation of the message (the first line, indicating truncation).
-    std::string getAbbreviatedMessage(const char *message, const int length);
+    inline
+    std::string getAbbreviatedMessage(const char *message, const int length)
+    {
+        if (message == nullptr || length <= 0)
+        {
+            return "";
+        }
+
+        const auto firstLine = getFirstLine(message, length);
+
+        // If first line is less than the length (minus newline), add ellipsis.
+        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+        {
+            return firstLine + "...";
+        }
+
+        return firstLine;
+    }
 
     inline
     std::string getAbbreviatedMessage(const std::string& message)
