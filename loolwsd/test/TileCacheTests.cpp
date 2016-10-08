@@ -63,6 +63,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 #endif
     CPPUNIT_TEST(testLoad12ods);
     CPPUNIT_TEST(testTileInvalidateWriter);
+    CPPUNIT_TEST(testTileInvalidateWriterPage);
     CPPUNIT_TEST(testTileInvalidateCalc);
     CPPUNIT_TEST(testTileInvalidatePartCalc);
     CPPUNIT_TEST(testTileInvalidatePartImpress);
@@ -81,6 +82,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testSimultaneousTilesRenderedJustOnce();
     void testLoad12ods();
     void testTileInvalidateWriter();
+    void testTileInvalidateWriterPage();
     void testWriterAnyKey();
     void testTileInvalidateCalc();
     void testTileInvalidatePartCalc();
@@ -535,6 +537,28 @@ void TileCacheTests::testTileInvalidateWriter()
     // TODO: implement a random-sequence "monkey test"
 }
 
+void TileCacheTests::testTileInvalidateWriterPage()
+{
+    const auto testname = "tileInvalidateWriterPage";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+
+    auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
+
+    sendChar(socket, '\n', skCtrl, testname); // Send Ctrl+Enter (page break).
+    assertResponseLine(socket, "invalidatetiles:", testname);
+
+    sendTextFrame(socket, "uno .uno:InsertTable { \"Columns\": { \"type\": \"long\",\"value\": 3 }, \"Rows\": { \"type\": \"long\",\"value\": 2 }}", testname);
+
+    const auto res = assertResponseLine(socket, "invalidatetiles:", testname);
+    int part = -1;
+    CPPUNIT_ASSERT_MESSAGE("No part# in invalidatetiles message.",
+                           LOOLProtocol::getTokenIntegerFromMessage(res, "part", part));
+    CPPUNIT_ASSERT_EQUAL(0, part);
+}
+
 // This isn't yet used
 void TileCacheTests::testWriterAnyKey()
 {
@@ -628,7 +652,7 @@ void TileCacheTests::testTileInvalidateCalc()
     for (char ch : text)
     {
         sendChar(socket, ch); // Send ordinary characters -> one tile invalidation for each
-        auto response = getResponseMessage(socket, "invalidatetiles:");
+        assertResponseLine(socket, "invalidatetiles:", testname);
     }
 
     std::cerr << "Sending enters" << std::endl;
