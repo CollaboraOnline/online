@@ -722,6 +722,24 @@ void DocumentBroker::setModified(const bool value)
     _isModified = value;
 }
 
+bool DocumentBroker::forwardToChild(const std::string& viewId, const char *buffer, int length)
+{
+    const auto message = std::string(buffer, length);
+    Log::trace() << "Forwarding payload to child [" << viewId << "]: " << message << Log::end;
+
+    const auto it = _sessions.find(viewId);
+    if (it != _sessions.end())
+    {
+        return it->second->sendTextFrame("child-" + viewId + ' ' + message);
+    }
+    else
+    {
+        Log::warn() << "Client session [" << viewId << "] not found to forward message: " << message << Log::end;
+    }
+
+    return false;
+}
+
 bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vector<char>& payload)
 {
     const std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
