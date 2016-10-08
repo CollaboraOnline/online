@@ -1124,6 +1124,8 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
                                                      int newWidth, int newHeight)> checkhandler)
 
 {
+    const auto testname = "limitCursor ";
+
     int docSheet = -1;
     int docSheets = 0;
     int docHeight = 0;
@@ -1143,24 +1145,22 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     std::string response;
     std::string text;
 
-    getDocumentPathAndURL("setclientpart.ods", docPath, docURL);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+    auto socket = loadDocAndGetSocket("empty.ods", _uri, testname);
 
-    auto socket = loadDocAndGetSocket(_uri, docURL, "limitCursor ");
     // check document size
-    sendTextFrame(socket, "status");
-    getResponseMessage(socket, "status:", response, false);
+    sendTextFrame(socket, "status", testname);
+    getResponseMessage(socket, "status:", response, false, testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
     parseDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
     // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
-    sendTextFrame(socket, "key type=input char=0 key=1027");
+    sendTextFrame(socket, "key type=input char=0 key=1027", testname);
 
     text.clear();
     Poco::format(text, "commandvalues command=.uno:CellCursor?outputHeight=%d&outputWidth=%d&tileHeight=%d&tileWidth=%d",
         256, 256, 3840, 3840);
-    sendTextFrame(socket, text);
-    getResponseMessage(socket, "commandvalues:", response, false);
+    sendTextFrame(socket, text, testname);
+    getResponseMessage(socket, "commandvalues:", response, false, testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
     getCursor(response, cursorX, cursorY, cursorWidth, cursorHeight);
 
@@ -1168,7 +1168,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     keyhandler(socket, cursorX, cursorY, cursorWidth, cursorHeight, docWidth, docHeight);
 
     // filter messages, and expect to receive new document size
-    getResponseMessage(socket, "status:", response, false);
+    getResponseMessage(socket, "status:", response, false, testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
     parseDocSize(response, "spreadsheet", newSheet, newSheets, newWidth, newHeight, docViewId);
 
@@ -2026,32 +2026,18 @@ void HTTPWSTest::testCursorPosition()
         std::vector<std::string> responses;
 
         getDocumentPathAndURL("Example.odt", docPath, docURL);
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-        Poco::Net::WebSocket socket0 = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket0, "load url=" + docURL);
+        auto socket0 = *loadDocAndGetSocket(_uri, docURL, testname);
 
         // receive cursor position
         getResponseMessage(socket0, "invalidatecursor:", response, false, testname);
         Poco::StringTokenizer cursorTokens(response, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
 
-        // FIXME: The 'status:' we look for below occasionally has arrived already before the
-        // 'invalidatecursor:' we wait for above, and then the assertResponseLine() call leads to an
-        // assertion failure. Is there any reason to think that something is "wrong" when that
-        // happens? Isn't the LOOL protocol intentionally supposed to be very loose with little
-        // strict requirements on the order of messages etc? In general the tests in this file are
-        // too fragile, they (unintentionally?) test undocumented, unstable and coincidental
-        // details.
-        assertResponseLine(socket0, "status:", testname);
-
         // Create second view
-        Poco::Net::WebSocket socket1 = *connectLOKit(_uri, request, _response);
-        sendTextFrame(socket1, "load url=" + docURL);
+        auto socket1 = *loadDocAndGetSocket(_uri, docURL, testname);
 
         //receive view cursor position
         getResponseMessage(socket1, "invalidateviewcursor:", response, false, testname);
-        assertResponseLine(socket1, "status:", testname);
 
         Poco::JSON::Parser parser;
         const auto result = parser.parse(response);
