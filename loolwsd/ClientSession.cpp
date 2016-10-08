@@ -358,4 +358,9 @@ bool ClientSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& mes
     return peer != nullptr;
 }
 
+bool ClientSession::forwardToChild(const char *buffer, int length)
+{
+    return _docBroker->forwardToChild(getId(), buffer, length);
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
