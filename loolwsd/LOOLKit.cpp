@@ -1231,14 +1231,15 @@ private:
         Log::trace("Forwarding payload to client: " + message);
 
         std::string name;
-        int viewId = -1;
-        if (LOOLProtocol::parseNameIntegerPair(prefix, name, viewId, '-') && name == "child")
+        std::string value;
+        if (LOOLProtocol::parseNameValuePair(prefix, name, value, '-') && name == "child")
         {
+            const unsigned viewId = Util::decodeId(value);
             const auto it = _connections.find(viewId);
-            if (it != _connections.end() && it->second->isRunning())
+            if (it != _connections.end())
             {
                 auto session = it->second->getSession();
-                if (session && session->getViewId() == viewId)
+                if (session)
                 {
                     return session->handleInput(message.data(), message.size());
                 }
@@ -1613,7 +1614,8 @@ void lokit_main(const std::string& childRoot,
                             Log::debug("CreateSession failed.");
                         }
                     }
-                    else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles")
+                    else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
+                             LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                     {
                         if (document)
                         {

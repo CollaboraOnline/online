@@ -188,11 +188,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";
-            return forwardToPeer(_peer, dummyFrame.c_str(), dummyFrame.size(), false);
+            return forwardToChild(dummyFrame.c_str(), dummyFrame.size());
         }
         else if (tokens[0] != "requestloksession")
         {
-            return forwardToPeer(_peer, buffer, length, false);
+            return forwardToChild(buffer, length);
         }
         else
         {
@@ -241,7 +241,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
             oss << " options=" << _docOptions;
 
         const auto loadRequest = oss.str();
-        return forwardToPeer(_peer, loadRequest.c_str(), loadRequest.size(), false);
+        return forwardToChild(loadRequest.c_str(), loadRequest.size());
     }
     catch (const Poco::SyntaxException&)
     {
@@ -253,7 +253,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
 
 bool ClientSession::getStatus(const char *buffer, int length)
 {
-    return forwardToPeer(_peer, buffer, length, false);
+    return forwardToChild(buffer, length);
 }
 
 bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
@@ -270,7 +270,7 @@ bool ClientSession::getCommandValues(const char *buffer, int length, StringToken
         return sendTextFrame(cmdValues);
     }
 
-    return forwardToPeer(_peer, buffer, length, false);
+    return forwardToChild(buffer, length);
 }
 
 bool ClientSession::getPartPageRectangles(const char *buffer, int length)
@@ -281,7 +281,7 @@ bool ClientSession::getPartPageRectangles(const char *buffer, int length)
         return sendTextFrame(partPageRectangles);
     }
 
-    return forwardToPeer(_peer, buffer, length, false);
+    return forwardToChild(buffer, length);
 }
 
 bool ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
@@ -313,7 +313,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, StringToke
         return sendBinaryFrame(output.data(), output.size());
     }
 
-    return forwardToPeer(_peer, buffer, length, false);
+    return forwardToChild(buffer, length);
 }
 
 bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)

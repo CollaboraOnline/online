@@ -725,12 +725,15 @@ void DocumentBroker::setModified(const bool value)
 bool DocumentBroker::forwardToChild(const std::string& viewId, const char *buffer, int length)
 {
     const auto message = std::string(buffer, length);
-    Log::trace() << "Forwarding payload to child [" << viewId << "]: " << message << Log::end;
+    Log::warn() << "Forwarding payload to child [" << viewId << "]: " << message << Log::end;
 
     const auto it = _sessions.find(viewId);
     if (it != _sessions.end())
     {
-        return it->second->sendTextFrame("child-" + viewId + ' ' + message);
+        const auto msg = "child-" + viewId + ' ' + message;
+        Log::debug("DocBroker to Child: " + msg);
+        _childProcess->getWebSocket()->sendFrame(msg.data(), msg.size());
+        return true;
     }
     else
     {
@@ -743,7 +746,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const char *buffe
 bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vector<char>& payload)
 {
     const std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
-    Log::trace("Forwarding payload to client: " + message);
+    Log::warn("Forwarding payload to client: " + message);
 
     std::string name;
     std::string sid;

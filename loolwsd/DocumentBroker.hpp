@@ -241,7 +241,7 @@ private:
     /// Saves the document to Storage (assuming LO Core saved to local copy).
     bool saveToStorage();
 
-    /// Forward a message from child process to a certain client.
+    /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::string& prefix, const std::vector<char>& payload);
 
 private:
