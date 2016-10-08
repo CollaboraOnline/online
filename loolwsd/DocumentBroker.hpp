@@ -238,6 +238,9 @@ private:
     /// Saves the document to Storage (assuming LO Core saved to local copy).
     bool saveToStorage();
 
+    /// Forward a message from child process to a certain client.
+    bool forwardToClient(const std::string& prefix, const std::vector<char>& payload);
+
 private:
     const Poco::URI _uriPublic;
     const std::string _docKey;
