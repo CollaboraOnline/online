@@ -58,31 +58,6 @@ namespace LOOLProtocol
         return true;
     }
 
-    bool parseNameIntegerPair(const std::string& token, std::string& name, int& value)
-    {
-        const auto mid = token.find_first_of('=');
-        if (mid != std::string::npos)
-        {
-            name = token.substr(0, mid);
-            return stringToInteger(token.substr(mid + 1), value);
-        }
-
-        return false;
-    }
-
-    bool parseNameValuePair(const std::string& token, std::string& name, std::string& value)
-    {
-        const auto mid = token.find_first_of('=');
-        if (mid != std::string::npos)
-        {
-            name = token.substr(0, mid);
-            value = token.substr(mid + 1);
-            return true;
-        }
-
-        return false;
-    }
-
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
     {
         size_t nextIdx;
@@ -223,24 +198,6 @@ namespace LOOLProtocol
             return false;
 
         return true;
-    }
-
-    std::string getAbbreviatedMessage(const char *message, const int length)
-    {
-        if (message == nullptr || length <= 0)
-        {
-            return "";
-        }
-
-        const auto firstLine = getFirstLine(message, length);
-
-        // If first line is less than the length (minus newline), add ellipsis.
-        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
-        {
-            return firstLine + "...";
-        }
-
-        return firstLine;
     }
 };
 
