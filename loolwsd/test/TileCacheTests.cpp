@@ -422,7 +422,7 @@ void TileCacheTests::testLoad12ods()
 {
     try
     {
-        const auto testName = "load12Ods ";
+        const auto testName = "load12ods ";
         auto socket = *loadDocAndGetSocket("load12.ods", _uri, testName);
 
         int docSheet = -1;
