@@ -405,26 +405,8 @@ void HTTPWSTest::testBadLoad()
         // Before loading request status.
         sendTextFrame(socket, "status");
 
-        int flags;
-        int n;
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            n = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cout << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
-            if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-            {
-                std::cout << "Received message: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
-                const std::string line = LOOLProtocol::getFirstLine(buffer, n);
-
-                if (LOOLProtocol::getFirstToken(buffer, n) == "statusindicator:")
-                    continue;
-
-                CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
-                break;
-            }
-        }
-        while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+        const auto line = assertResponseLine(socket, "error:");
+        CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
     }
     catch (const Poco::Exception& exc)
     {
