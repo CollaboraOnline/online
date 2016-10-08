@@ -1225,6 +1225,35 @@ private:
         return _loKitDocument;
     }
 
+    bool forwardToChild(const std::string& prefix, const std::vector<char>& payload)
+    {
+        const std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
+        Log::trace("Forwarding payload to client: " + message);
+
+        std::string name;
+        int viewId = -1;
+        if (LOOLProtocol::parseNameIntegerPair(prefix, name, viewId, '-') && name == "child")
+        {
+            const auto it = _connections.find(viewId);
+            if (it != _connections.end() && it->second->isRunning())
+            {
+                auto session = it->second->getSession();
+                if (session && session->getViewId() == viewId)
+                {
+                    return session->handleInput(message.data(), message.size());
+                }
+            }
+
+            Log::warn() << "Child session [" << viewId << "] not found to forward message: " << message << Log::end;
+        }
+        else
+        {
+            Log::error("Failed to parse prefix of forward-to-child message: " + message);
+        }
+
+        return false;
+    }
+
     void run() override
     {
         Util::setThreadName("lok_handler");
@@ -1235,7 +1264,7 @@ private:
         {
             while (!_stop && !TerminationFlag)
             {
-                const auto input = _tileQueue->get();
+                const TileQueue::Payload input = _tileQueue->get();
                 if (_stop || TerminationFlag)
                 {
                     break;
@@ -1257,6 +1286,10 @@ private:
                 else if (tokens[0] == "tilecombine")
                 {
                     renderCombinedTiles(tokens, _ws);
+                }
+                else if (LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
+                {
+                    forwardToChild(tokens[0], input);
                 }
                 else if (tokens[0] == "callback")
                 {
