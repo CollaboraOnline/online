@@ -465,15 +465,20 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
 
     LOOLWSD::dumpOutgoingTrace(getJailId(), "0", msg);
 
-    if (msg.find("tile:") == 0)
+    const auto command = LOOLProtocol::getFirstToken(msg);
+    if (command == "tile:")
     {
         handleTileResponse(payload);
     }
-    else if (msg.find("tilecombine:") == 0)
+    else if (command == "tilecombine:")
     {
        handleTileCombinedResponse(payload);
     }
-    else if (msg.find("errortoall:") == 0)
+    else if (LOOLProtocol::getFirstToken(command, '-') == "client")
+    {
+        forwardToClient(command, payload);
+    }
+    else if (command == "errortoall:")
     {
         StringTokenizer tokens(msg, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         assert(tokens.count() == 3);
@@ -715,6 +720,33 @@ void DocumentBroker::setModified(const bool value)
 {
     _tileCache->setUnsavedChanges(value);
     _isModified = value;
+}
+
+bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vector<char>& payload)
+{
+    const std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
+    Log::trace("Forwarding payload to client: " + message);
+
+    std::string name;
+    std::string sid;
+    if (LOOLProtocol::parseNameValuePair(prefix, name, sid, '-') && name == "client")
+    {
+        const auto it = _sessions.find(sid);
+        if (it != _sessions.end())
+        {
+            return it->second->sendTextFrame(message);
+        }
+        else
+        {
+            Log::warn() << "Client session [" << sid << "] not found to forward message: " << message << Log::end;
+        }
+    }
+    else
+    {
+        Log::error("Failed to parse prefix of forward-to-client message: " + message);
+    }
+
+    return false;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
