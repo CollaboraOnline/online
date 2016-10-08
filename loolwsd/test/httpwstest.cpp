@@ -1149,28 +1149,25 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
 
     // check document size
     sendTextFrame(socket, "status", testname);
-    getResponseMessage(socket, "status:", response, false, testname);
-    CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-    parseDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
+    response = assertResponseLine(socket, "status:", testname);
+    parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
     // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
     sendTextFrame(socket, "key type=input char=0 key=1027", testname);
 
     text.clear();
     Poco::format(text, "commandvalues command=.uno:CellCursor?outputHeight=%d&outputWidth=%d&tileHeight=%d&tileWidth=%d",
-        256, 256, 3840, 3840);
+                 256, 256, 3840, 3840);
     sendTextFrame(socket, text, testname);
-    getResponseMessage(socket, "commandvalues:", response, false, testname);
-    CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
-    getCursor(response, cursorX, cursorY, cursorWidth, cursorHeight);
+    const auto cursor = getResponseMessageString(socket, "commandvalues:", testname);
+    getCursor(cursor.substr(14), cursorX, cursorY, cursorWidth, cursorHeight);
 
     // move cursor
     keyhandler(socket, cursorX, cursorY, cursorWidth, cursorHeight, docWidth, docHeight);
 
     // filter messages, and expect to receive new document size
-    getResponseMessage(socket, "status:", response, false, testname);
-    CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-    parseDocSize(response, "spreadsheet", newSheet, newSheets, newWidth, newHeight, docViewId);
+    response = assertResponseLine(socket, "status:", testname);
+    parseDocSize(response.substr(7), "spreadsheet", newSheet, newSheets, newWidth, newHeight, docViewId);
 
     CPPUNIT_ASSERT_EQUAL(docSheets, newSheets);
     CPPUNIT_ASSERT_EQUAL(docSheet, newSheet);
@@ -2025,13 +2022,12 @@ void HTTPWSTest::testCursorPosition()
         std::string docPath;
         std::string docURL;
         std::string response;
-        std::vector<std::string> responses;
 
         getDocumentPathAndURL("Example.odt", docPath, docURL);
         auto socket0 = *loadDocAndGetSocket(_uri, docURL, testname);
 
         // receive cursor position
-        getResponseMessage(socket0, "invalidatecursor:", response, false, testname);
+        response = getResponseLine(socket0, "invalidatecursor:", testname);
         Poco::StringTokenizer cursorTokens(response, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
 
@@ -2039,7 +2035,7 @@ void HTTPWSTest::testCursorPosition()
         auto socket1 = *loadDocAndGetSocket(_uri, docURL, testname);
 
         //receive view cursor position
-        getResponseMessage(socket1, "invalidateviewcursor:", response, false, testname);
+        response = getResponseMessageString(socket1, "invalidateviewcursor:", testname);
 
         Poco::JSON::Parser parser;
         const auto result = parser.parse(response);
@@ -2129,11 +2125,11 @@ void HTTPWSTest::testViewInfoMsg()
     {
         // Load first view and remember the viewid
         sendTextFrame(socket0, "load url=" + docURL);
-        getResponseMessage(socket0, "status:", response, false, testname + "socket[0] ");
+        response = getResponseLine(socket0, "status:", testname + "socket[0] ");
         parseDocSize(response, "text", part, parts, width, height, viewid[0]);
 
         // Check if viewinfo message also mentions the same viewid
-        getResponseMessage(socket0, "viewinfo: ", response, false, testname + "socket[0] ");
+        response = getResponseMessageString(socket0, "viewinfo: ", testname + "socket[0] ");
         Poco::JSON::Parser parser0;
         Poco::JSON::Array::Ptr array = parser0.parse(response).extract<Poco::JSON::Array::Ptr>();
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), array->size());
@@ -2144,12 +2140,12 @@ void HTTPWSTest::testViewInfoMsg()
 
         // Load second view and remember the viewid
         sendTextFrame(socket1, "load url=" + docURL);
-        getResponseMessage(socket1, "status:", response, false, testname + "socket[1] ");
+        response = getResponseLine(socket1, "status:", testname + "socket[1] ");
         parseDocSize(response, "text", part, parts, width, height, viewid[1]);
 
         // Check if viewinfo message in this view mentions
         // viewid of both first loaded view and this view
-        getResponseMessage(socket1, "viewinfo: ", response, false, testname + "socket[1] ");
+        response = getResponseMessageString(socket1, "viewinfo: ", testname + "socket[1] ");
         Poco::JSON::Parser parser1;
         array = parser1.parse(response).extract<Poco::JSON::Array::Ptr>();
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), array->size());
@@ -2167,8 +2163,7 @@ void HTTPWSTest::testViewInfoMsg()
             CPPUNIT_FAIL("Inconsistent viewid in viewinfo and status messages");
 
         // Check if first view also got the same viewinfo message
-        std::string response1;
-        getResponseMessage(socket0, "viewinfo: ", response1, false, testname + "socket[0] ");
+        const auto response1 = getResponseMessageString(socket0, "viewinfo: ", testname + "socket[0] ");
         CPPUNIT_ASSERT_EQUAL(response, response1);
     }
     catch(const Poco::Exception& exc)

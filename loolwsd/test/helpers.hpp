@@ -217,56 +217,6 @@ int getErrorCode(Poco::Net::WebSocket& ws, std::string& message)
 }
 
 inline
-void getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string& response, const bool isLine, const std::string& name = "")
-{
-    try
-    {
-        int flags = 0;
-        int retries = 20;
-        const Poco::Timespan waitTime(1000000);
-
-        response.clear();
-        ws.setReceiveTimeout(0);
-        do
-        {
-            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
-            {
-                char buffer[READ_BUFFER_SIZE];
-                int bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-                {
-                    std::cerr << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
-                    const std::string message = isLine ?
-                                                LOOLProtocol::getFirstLine(buffer, bytes) :
-                                                std::string(buffer, bytes);
-
-                    if (message.find(prefix) == 0)
-                    {
-                        response = message.substr(prefix.length());
-                        break;
-                    }
-                }
-                else
-                {
-                    std::cerr << name << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << '\n';
-                }
-                retries = 10;
-            }
-            else
-            {
-                std::cerr << name << "Timeout waiting for " << prefix << "\n";
-                --retries;
-            }
-        }
-        while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    }
-    catch (const Poco::Net::WebSocketException& exc)
-    {
-        std::cerr << exc.message();
-    }
-}
-
-inline
 std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string name = "", const size_t timeoutMs = 10000)
 {
     name = name + '[' + prefix + "] ";
@@ -367,6 +317,19 @@ std::vector<char> getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>
     return getResponseMessage(*ws, prefix, name, timeoutMs);
 }
 
+inline
+std::string getResponseMessageString(Poco::Net::WebSocket& ws, const std::string& prefix, const std::string& name = "", const size_t timeoutMs = 10000)
+{
+    const auto response = getResponseMessage(ws, prefix, name, timeoutMs);
+    return std::string(response.data(), response.size());
+}
+
+inline
+std::string getResponseMessageString(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, const std::string& name = "", const size_t timeoutMs = 10000)
+{
+    return getResponseMessageString(*ws, prefix, name, timeoutMs);
+}
+
 template <typename T>
 std::string getResponseLine(T& ws, const std::string& prefix, const std::string name = "", const size_t timeoutMs = 10000)
 {
@@ -385,15 +348,9 @@ std::string assertResponseLine(T& ws, const std::string& prefix, const std::stri
 template <typename T>
 std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string name = "")
 {
-    const auto res = getResponseLine(ws, prefix, name, 2000);
+    const auto res = getResponseLine(ws, prefix, name, 1000);
     CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
     return res;
-}
-
-inline
-void getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, std::string& response, const bool isLine, const std::string& name = "")
-{
-    getResponseMessage(*ws, prefix, response, isLine, name);
 }
 
 // Connecting to a Kit process is managed by document broker, that it does several
