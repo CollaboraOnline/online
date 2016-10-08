@@ -109,12 +109,12 @@ DocumentBroker::DocumentBroker() :
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(true),
     _lastEditableSession(true),
+    _isLoaded(false),
+    _isModified(false),
     _cursorPosX(0),
     _cursorPosY(0),
     _cursorWidth(0),
     _cursorHeight(0),
-    _isLoaded(false),
-    _isModified(false),
     _mutex(),
     _saveMutex(),
     _tileVersion(0)
@@ -134,12 +134,12 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
     _lastEditableSession(false),
+    _isLoaded(false),
+    _isModified(false),
     _cursorPosX(0),
     _cursorPosY(0),
     _cursorWidth(0),
     _cursorHeight(0),
-    _isLoaded(false),
-    _isModified(false),
     _mutex(),
     _saveMutex(),
     _tileVersion(0)
@@ -244,7 +244,7 @@ bool DocumentBroker::save(bool success, const std::string& result)
     // If we aren't destroying the last editable session just yet, and the file
     // timestamp hasn't changed, skip saving.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
-    if (!isLastEditableSession() && newFileModifiedTime == _lastFileModifiedTime)
+    if (!_lastEditableSession && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
         Log::debug() << "Skipping unnecessary saving to URI [" << uri
@@ -409,7 +409,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     }
 
     // Below values are recalculated when startDestroy() is called (before destroying the
-    // document). It is safe to reset their values to their defaults whenever a new session is added
+    // document). It is safe to reset their values to their defaults whenever a new session is added.
     _lastEditableSession = false;
     _markToDestroy = false;
 
@@ -683,31 +683,32 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
     }
 }
 
-void DocumentBroker::startDestroy(const std::string& id)
+bool DocumentBroker::startDestroy(const std::string& id)
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    auto currentSession = _sessions.find(id);
+    const auto currentSession = _sessions.find(id);
     assert(currentSession != _sessions.end());
 
-    // Check if session which is being destroyed is last non-readonly session
-    bool lastEditableSession = !currentSession->second->isReadOnly();
-    for (auto& it: _sessions)
+    // Check if the session being destroyed is the last non-readonly session or not.
+    _lastEditableSession = !currentSession->second->isReadOnly();
+    if (_lastEditableSession && !_sessions.empty())
     {
-        if (it.second->getId() == id)
-            continue;
-
-        if (!it.second->isReadOnly())
+        for (const auto& it: _sessions)
         {
-            lastEditableSession = false;
+            if (it.second->getId() != id &&
+                !it.second->isReadOnly())
+            {
+                // Found another editable.
+                _lastEditableSession = false;
+                break;
+            }
         }
     }
 
-    // Last editable session going away
-    _lastEditableSession = lastEditableSession;
-
     // Last view going away, can destroy.
     _markToDestroy = (_sessions.size() <= 1);
+    return _lastEditableSession;
 }
 
 void DocumentBroker::setModified(const bool value)

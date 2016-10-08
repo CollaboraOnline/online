@@ -217,18 +217,16 @@ public:
                            const std::shared_ptr<ClientSession>& session);
     void handleTileCombinedRequest(TileCombined& tileCombined,
                                    const std::shared_ptr<ClientSession>& session);
-
     void cancelTileRequests(const std::shared_ptr<ClientSession>& session);
-
     void handleTileResponse(const std::vector<char>& payload);
     void handleTileCombinedResponse(const std::vector<char>& payload);
 
-    // Called before destroying any session
-    // This method calculates and sets important states of
-    // session being destroyed.
-    void startDestroy(const std::string& id);
+    /// Called before destroying any session.
+    /// This method calculates and sets important states of
+    /// session being destroyed. Returns true if session id
+    /// is the last editable session.
+    bool startDestroy(const std::string& id);
     bool isMarkedToDestroy() const { return _markToDestroy; }
-    bool isLastEditableSession() const { return _lastEditableSession; }
 
     bool handleInput(const std::vector<char>& payload);
 
@@ -256,12 +254,12 @@ private:
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;
     std::atomic<bool> _lastEditableSession;
+    std::atomic<bool> _isLoaded;
+    std::atomic<bool> _isModified;
     int _cursorPosX;
     int _cursorPosY;
     int _cursorWidth;
     int _cursorHeight;
-    bool _isLoaded;
-    bool _isModified;
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;
