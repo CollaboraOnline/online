@@ -539,7 +539,7 @@ void TileCacheTests::testTileInvalidateWriter()
 
 void TileCacheTests::testTileInvalidateWriterPage()
 {
-    const auto testname = "tileInvalidateWriterPage";
+    const auto testname = "tileInvalidateWriterPage ";
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL);
