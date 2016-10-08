@@ -801,7 +801,7 @@ private:
 
             Util::checkDiskSpaceOnRegisteredFileSystems();
 
-            // Let messages flow
+            // Let messages flow.
             IoUtil::SocketProcessor(ws,
                 [&session](const std::vector<char>& payload)
                 {
@@ -810,16 +810,17 @@ private:
                 [&session]() { session->closeFrame(); },
                 []() { return !!TerminationFlag; });
 
+            // Connection terminated. Destroy session.
             {
                 std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
 
-                // We cannot destroy it, before save, if this is the last session
+                // We cannot destroy it, before save, if this is the last session.
                 // Otherwise, we may end up removing the one and only session.
                 bool removedSession = false;
-                docBroker->startDestroy(id);
 
                 // We issue a force-save when last editable (non-readonly) session is going away
-                bool forceSave = docBroker->isLastEditableSession();
+                const bool forceSave = docBroker->startDestroy(id);
+
                 sessionsCount = docBroker->getSessionsCount();
                 if (sessionsCount > 1)
                 {
