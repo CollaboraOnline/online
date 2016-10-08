@@ -75,29 +75,29 @@ namespace LOOLProtocol
     bool parseStatus(const std::string& message, LibreOfficeKitDocumentType& type, int& nParts, int& currentPart, int& width, int& height);
 
     inline
-    std::string getDelimitedInitialSubstring(const char *message, const int length, const char delimiter)
+    std::string getDelimitedInitialSubstring(const char *message, const int length, const char delim)
     {
         if (message == nullptr || length <= 0)
         {
             return "";
         }
 
-        const char *foundDelimiter = static_cast<const char *>(std::memchr(message, delimiter, length));
-        const auto size = (foundDelimiter == nullptr ? length : foundDelimiter - message);
+        const char *founddelim = static_cast<const char *>(std::memchr(message, delim, length));
+        const auto size = (founddelim == nullptr ? length : founddelim - message);
         return std::string(message, size);
     }
 
     /// Returns the first token of a message.
     inline
-    std::string getFirstToken(const char *message, const int length)
+    std::string getFirstToken(const char *message, const int length, const char delim)
     {
-        return getDelimitedInitialSubstring(message, length, ' ');
+        return getDelimitedInitialSubstring(message, length, delim);
     }
 
     template <typename T>
-    std::string getFirstToken(const T& message)
+    std::string getFirstToken(const T& message, const char delim = ' ')
     {
-        return getFirstToken(message.data(), message.size());
+        return getFirstToken(message.data(), message.size(), delim);
     }
 
     /// Returns true if the token is a user-interaction token.
@@ -126,6 +126,7 @@ namespace LOOLProtocol
         return getDelimitedInitialSubstring(message, length, '\n');
     }
 
+    /// Returns the first line of any data which payload char*.
     template <typename T>
     std::string getFirstLine(const T& message)
     {

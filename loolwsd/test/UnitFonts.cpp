@@ -144,10 +144,10 @@ public:
     virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> &ws,
                                   std::string &message) override
     {
-        std::string token = LOOLProtocol::getFirstToken(message.c_str(), message.length());
+        const std::string token = LOOLProtocol::getFirstToken(message);
         if (token == "unit-getfontlist:")
         {
-            std::string fontListReply = getFontList() + "\n";
+            const std::string fontListReply = getFontList() + "\n";
             ws->sendFrame(fontListReply.c_str(), fontListReply.length());
             return true;
         }
