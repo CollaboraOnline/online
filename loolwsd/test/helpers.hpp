@@ -317,29 +317,17 @@ std::vector<char> getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>
     return getResponseMessage(*ws, prefix, name, timeoutMs);
 }
 
-inline
-std::string getResponseMessageString(Poco::Net::WebSocket& ws, const std::string& prefix, const std::string& name = "", const size_t timeoutMs = 10000)
+template <typename T>
+std::string getResponseString(T& ws, const std::string& prefix, const std::string& name = "", const size_t timeoutMs = 10000)
 {
     const auto response = getResponseMessage(ws, prefix, name, timeoutMs);
     return std::string(response.data(), response.size());
 }
 
-inline
-std::string getResponseMessageString(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, const std::string& name = "", const size_t timeoutMs = 10000)
-{
-    return getResponseMessageString(*ws, prefix, name, timeoutMs);
-}
-
 template <typename T>
-std::string getResponseLine(T& ws, const std::string& prefix, const std::string name = "", const size_t timeoutMs = 10000)
+std::string assertResponseString(T& ws, const std::string& prefix, const std::string name = "")
 {
-    return LOOLProtocol::getFirstLine(getResponseMessage(ws, prefix, name, timeoutMs));
-}
-
-template <typename T>
-std::string assertResponseLine(T& ws, const std::string& prefix, const std::string name = "")
-{
-    const auto res = getResponseLine(ws, prefix, name);
+    const auto res = getResponseString(ws, prefix, name);
     CPPUNIT_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
     return res;
 }
@@ -348,7 +336,7 @@ std::string assertResponseLine(T& ws, const std::string& prefix, const std::stri
 template <typename T>
 std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string name = "")
 {
-    const auto res = getResponseLine(ws, prefix, name, 1000);
+    const auto res = getResponseString(ws, prefix, name, 1000);
     CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
     return res;
 }

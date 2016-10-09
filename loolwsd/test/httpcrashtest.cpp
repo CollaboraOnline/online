@@ -149,7 +149,7 @@ void HTTPCrashTest::testBarren()
                         // Service unavailable. Try again.
                         auto socket2 = loadDocAndGetSocket(_uri, documentURL);
                         sendTextFrame(socket2, "status");
-                        const auto status = getResponseLine(socket2, "status");
+                        const auto status = getResponseString(socket2, "status");
                         CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
                         return false;
                     }
