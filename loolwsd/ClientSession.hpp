@@ -39,9 +39,9 @@ public:
      * Return the URL of the saved-as document when it's ready. If called
      * before it's ready, the call blocks till then.
      */
-    std::string getSaveAsUrl()
+    std::string getSaveAsUrl(const unsigned timeoutMs)
     {
-        const auto payload = _saveAsQueue.get();
+        const auto payload = _saveAsQueue.get(timeoutMs);
         return std::string(payload.data(), payload.size());
     }
 

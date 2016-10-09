@@ -32,10 +32,23 @@ void MessageQueue::put(const Payload& value)
     _cv.notify_one();
 }
 
-MessageQueue::Payload MessageQueue::get()
+MessageQueue::Payload MessageQueue::get(const unsigned timeoutMs)
 {
     std::unique_lock<std::mutex> lock(_mutex);
-    _cv.wait(lock, [this] { return wait_impl(); });
+
+    if (timeoutMs > 0)
+    {
+        if (!_cv.wait_for(lock, std::chrono::milliseconds(timeoutMs),
+                          [this] { return wait_impl(); }))
+        {
+            throw std::runtime_error("Timed out waiting to get queue item.");
+        }
+    }
+    else
+    {
+        _cv.wait(lock, [this] { return wait_impl(); });
+    }
+
     return get_impl();
 }
 
