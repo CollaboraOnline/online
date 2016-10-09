@@ -30,6 +30,7 @@ public:
     bool isReadOnly() const { return _isReadOnly; }
 
     void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }
+    std::shared_ptr<PrisonerSession> getPeer() const { return _peer.lock(); }
     bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
 
     void setUserName(const std::string& userName) { _userName = userName; }

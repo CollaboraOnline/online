@@ -50,6 +50,9 @@ public:
     std::mutex& getMutex() = 0;
     virtual
     std::shared_ptr<TileQueue>& getTileQueue() = 0;
+
+    virtual
+    bool sendTextFrame(const std::string& message) = 0;
 };
 
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
@@ -76,6 +79,20 @@ public:
     const std::string getViewUserName() const { return _userName; }
 
     void loKitCallback(const int nType, const std::string& rPayload);
+
+    bool sendTextFrame(const char* buffer, const int length) override
+    {
+        const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
+
+        const auto lock = getLock();
+
+        return _docManager.sendTextFrame(msg);
+    }
+
+    bool sendTextFrame(const std::string& text)
+    {
+        return sendTextFrame(text.data(), text.size());
+    }
 
 private:
     bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);

@@ -42,7 +42,9 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
+    virtual
     bool sendBinaryFrame(const char *buffer, int length);
+    virtual
     bool sendTextFrame(const char* buffer, const int length);
     bool sendTextFrame(const std::string& text)
     {
