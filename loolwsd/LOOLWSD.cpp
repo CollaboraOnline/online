@@ -432,7 +432,9 @@ private:
 
                     auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
                     const auto docKey = DocumentBroker::getDocKey(uriPublic);
+                    Log::debug("New DocumentBroker for docKey [" + docKey + "].");
                     auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
+                    child->setDocumentBroker(docBroker);
 
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
@@ -474,14 +476,24 @@ private:
                     session->handleInput(saveas.data(), saveas.size());
 
                     // Send it back to the client.
-                    Poco::URI resultURL(session->getSaveAsUrl(COMMAND_TIMEOUT_MS));
-                    if (!resultURL.getPath().empty())
+                    try
                     {
-                        const std::string mimeType = "application/octet-stream";
-                        std::string encodedFilePath;
-                        URI::encode(resultURL.getPath(), "", encodedFilePath);
-                        response.sendFile(encodedFilePath, mimeType);
-                        sent = true;
+                        Poco::URI resultURL(session->getSaveAsUrl(COMMAND_TIMEOUT_MS));
+                        Log::trace("Save-as URL: " + resultURL.toString());
+
+                        if (!resultURL.getPath().empty())
+                        {
+                            const std::string mimeType = "application/octet-stream";
+                            std::string encodedFilePath;
+                            URI::encode(resultURL.getPath(), "", encodedFilePath);
+                            Log::trace("Sending file: " + encodedFilePath);
+                            response.sendFile(encodedFilePath, mimeType);
+                            sent = true;
+                        }
+                    }
+                    catch (const std::exception& ex)
+                    {
+                        Log::error(std::string("Failed to get save-as url: ") + ex.what());
                     }
 
                     lock.lock();
@@ -495,6 +507,8 @@ private:
                     {
                         Log::error("Multiple sessions during conversion. " + std::to_string(sessionsCount) + " sessions remain.");
                     }
+
+                    session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE, "");
                 }
 
                 // Clean up the temporary directory the HTMLForm ctor created.
