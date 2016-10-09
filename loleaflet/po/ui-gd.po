@@ -6,7 +6,7 @@ msgstr ""
 "PO-Revision-Date: 2016-05-25 12:06+0000\n"
 "Last-Translator: Michael Bauer <fios@akerbeltz.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: gd\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,27 +16,27 @@ msgstr ""
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Dathan an ùrlair"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Dathan stannardach"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Dathan an lìn"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Air ais dhan phailead"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "An eachdraidh"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Chan eil eachdraidh ann fhathast."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -295,103 +295,103 @@ msgstr "Meud"
 
 #: dist/toolbar/toolbar.js:739
 msgid "Number of Sheets"
-msgstr ""
+msgstr "Àireamh de shiotaichean"
 
 #: dist/toolbar/toolbar.js:742
 msgid "Selected range of cells"
-msgstr ""
+msgstr "An rainse de cheallan a thagh thu"
 
 #: dist/toolbar/toolbar.js:745 dist/toolbar/toolbar.js:791
 msgid "Entering text mode"
-msgstr ""
+msgstr "A’ tòiseachadh modh an teacsa"
 
 #: dist/toolbar/toolbar.js:748 dist/toolbar/toolbar.js:794
 msgid "Selection Mode"
-msgstr ""
+msgstr "Am modh taghaidh"
 
 #: dist/toolbar/toolbar.js:751
 msgid "Choice of functions"
-msgstr ""
+msgstr "Taghadh de dh’fhoincseanan"
 
 #: dist/toolbar/toolbar.js:753
 msgid "Average"
-msgstr ""
+msgstr "Cuibheas"
 
 #: dist/toolbar/toolbar.js:754
 msgid "CountA"
-msgstr ""
+msgstr "CountA"
 
 #: dist/toolbar/toolbar.js:755
 msgid "Count"
-msgstr ""
+msgstr "Cunnt"
 
 #: dist/toolbar/toolbar.js:756
 msgid "Maximum"
-msgstr ""
+msgstr "As motha"
 
 #: dist/toolbar/toolbar.js:757
 msgid "Minimum"
-msgstr ""
+msgstr "As lugha"
 
 #: dist/toolbar/toolbar.js:759
 msgid "Selection count"
-msgstr ""
+msgstr "Cunnt an taghaidh"
 
 #: dist/toolbar/toolbar.js:760
 msgid "None"
-msgstr ""
+msgstr "Chan eil gin"
 
 #: dist/toolbar/toolbar.js:765
 msgid "Wrap Text"
-msgstr ""
+msgstr "Paisg an teacsa"
 
 #: dist/toolbar/toolbar.js:766
 msgid "Merge and Center Cells"
-msgstr ""
+msgstr "Co-aonaich is meadhanaich na ceallan"
 
 #: dist/toolbar/toolbar.js:768
 msgid "Format as Currency"
-msgstr ""
+msgstr "Fòrmataich mar airgeadra"
 
 #: dist/toolbar/toolbar.js:769
 msgid "Format as Percent"
-msgstr ""
+msgstr "Fòrmataich mar cheudad"
 
 #: dist/toolbar/toolbar.js:770
 msgid "Format as Number"
-msgstr ""
+msgstr "Fòrmataich mar àireamh"
 
 #: dist/toolbar/toolbar.js:771
 msgid "Format as Date"
-msgstr ""
+msgstr "Fòrmataich mar cheann-là"
 
 #: dist/toolbar/toolbar.js:772
 msgid "Add Decimal Place"
-msgstr ""
+msgstr "Cuir ionad deicheach ris"
 
 #: dist/toolbar/toolbar.js:773
 msgid "Delete Decimal Place"
-msgstr ""
+msgstr "Sguab an t-ionad deicheach às"
 
 #: dist/toolbar/toolbar.js:775
 msgid "Sort Ascending"
-msgstr ""
+msgstr "Seòrsaich a’ dìreadh"
 
 #: dist/toolbar/toolbar.js:776
 msgid "Sort Descending"
-msgstr ""
+msgstr "Seòrsaich a’ teàrnadh"
 
 #: dist/toolbar/toolbar.js:785
 msgid "Number of Pages"
-msgstr ""
+msgstr "Àireamh nan duilleagan"
 
 #: dist/toolbar/toolbar.js:788
 msgid "Word Counter"
-msgstr ""
+msgstr "Cunntas nam faclan"
 
 #: dist/toolbar/toolbar.js:802
 msgid "Number of Slides"
-msgstr ""
+msgstr "Àireamh de shleamhnagan"
 
 #: dist/toolbar/toolbar.js:919
 msgid "Document saved"
@@ -423,136 +423,135 @@ msgstr "’GA DHEASACHADH"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "You are locked in readonly mode"
-msgstr ""
+msgstr "Tha thu glaiste sa mhodh ri leughadh a-mhàin"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "READONLY"
-msgstr ""
+msgstr "RI LEUGHADH A-MHÀIN"
 
 #: dist/toolbar/toolbar.js:1324
 msgid "Layout"
-msgstr ""
+msgstr "Co-dhealbhachd"
 
 #: src/admin/AdminSocketBase.js:44
 msgid "Connection error"
-msgstr ""
+msgstr "Mearachd leis a’ cheangal"
 
 #: src/admin/AdminSocketOverview.js:58
-#, fuzzy
 msgid "Are you sure you want to terminate this session?"
-msgstr "A bheil thu cinnteach gu bheil thu airson an t-sleamhnag seo a sguabadh às?"
+msgstr "A bheil thu cinnteach gu bheil thu airson crìoch a chur air an t-seisean seo?"
 
 #: src/admin/AdminStrings.js:4
 msgid "Admin console"
-msgstr ""
+msgstr "Consoil na rianachd"
 
 #: src/admin/AdminStrings.js:5
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Toglaich an t-seòladaireachd"
 
 #: src/admin/AdminStrings.js:6
 msgid "Settings"
-msgstr ""
+msgstr "Roghainnean"
 
 #: src/admin/AdminStrings.js:7
 msgid "Overview"
-msgstr ""
+msgstr "Foir-shealladh"
 
 #: src/admin/AdminStrings.js:8
 msgid "(current)"
-msgstr ""
+msgstr "(làithreach)"
 
 #: src/admin/AdminStrings.js:9
 msgid "Analytics"
-msgstr ""
+msgstr "Analytics"
 
 #: src/admin/AdminStrings.js:10
 msgid "Dashboard"
-msgstr ""
+msgstr "Deas-bhòrd"
 
 #: src/admin/AdminStrings.js:11
 msgid "Users online"
-msgstr ""
+msgstr "Luchd-cleachdaidh air loidhne"
 
 #: src/admin/AdminStrings.js:12
 msgid "Documents opened"
-msgstr ""
+msgstr "Sgrìobhainnean fosgailte"
 
 #: src/admin/AdminStrings.js:13
 msgid "Memory consumed"
-msgstr ""
+msgstr "Cuimhne air caitheamh"
 
 #: src/admin/AdminStrings.js:14
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: src/admin/AdminStrings.js:15
 msgid "Document"
-msgstr ""
+msgstr "Sgrìobhainn"
 
 #: src/admin/AdminStrings.js:16
 msgid "Number of views"
-msgstr ""
+msgstr "Àireamh de sheallaidhean"
 
 #: src/admin/AdminStrings.js:17
 msgid "Elapsed time"
-msgstr ""
+msgstr "An ùine a dh’fhalbh"
 
 #: src/admin/AdminStrings.js:18
 msgid "Kill"
-msgstr ""
+msgstr "Marbh"
 
 #: src/admin/AdminStrings.js:19
 msgid "Graphs"
-msgstr ""
+msgstr "Grafaichean"
 
 #: src/admin/AdminStrings.js:21
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Meud an tasgadain airson stats na cuimhne"
 
 #: src/admin/AdminStrings.js:22
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Eadaramh ama airson stats na cuimhne (ann am ms)"
 
 #: src/admin/AdminStrings.js:23
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "Meud an tasgadain airson stats an CPU"
 
 #: src/admin/AdminStrings.js:24
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "Eadaramh ama airson stats an CPU (ann am ms)"
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/admin/Util.js:41
 msgid " hrs"
-msgstr ""
+msgstr " uair"
 
 #: src/admin/Util.js:43
 msgid " mins"
-msgstr ""
+msgstr " mion"
 
 #: src/admin/Util.js:45
 msgid " s"
-msgstr ""
+msgstr " d"
 
 #: src/control/Control.ColumnHeader.js:34
 msgid "Insert column before"
-msgstr ""
+msgstr "Cuir a-steach colbh roimhe"
 
 #: src/control/Control.ColumnHeader.js:41 src/control/Control.Menubar.js:134
 msgid "Delete column"
@@ -571,7 +570,7 @@ msgstr "Clò-bhuail"
 #: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:104
 msgid "See revision history"
-msgstr ""
+msgstr "Seall eachdraidh nan lèirmheasan"
 
 #: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
 #: src/control/Control.Menubar.js:105
@@ -709,12 +708,12 @@ msgstr "Cobhair"
 #: src/control/Control.Menubar.js:50 src/control/Control.Menubar.js:96
 #: src/control/Control.Menubar.js:136
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Ath-ghoiridean a’ mheur-chlàir"
 
 #: src/control/Control.Menubar.js:51 src/control/Control.Menubar.js:97
 #: src/control/Control.Menubar.js:137
 msgid "About"
-msgstr ""
+msgstr "Mu dhèidhinn"
 
 #: src/control/Control.Menubar.js:60
 msgid "ODF presentation (.odp)"
@@ -770,7 +769,7 @@ msgstr "A bheil thu cinnteach gu bheil thu airson an t-sleamhnag seo a sguabadh 
 
 #: src/control/Control.RowHeader.js:32
 msgid "Insert row above"
-msgstr ""
+msgstr "Cuir a-steach ràgh os a chionn"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -798,15 +797,15 @@ msgstr "Cuir a-steach ainm ùr an t-siota"
 
 #: src/control/Toolbar.js:59 src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "'Ga luchdadh a-nuas ..."
 
 #: src/control/Toolbar.js:80 src/map/Map.js:802
 msgid "Saving..."
-msgstr ""
+msgstr "’Ga shàbhaladh..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "An tionndadh seo de %productName le cumhachd"
 
 #: src/core/Socket.js:17
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -842,8 +841,8 @@ msgstr "Tha sinn duilich ach thachair mearachd ris nach robh dùil. Feuch ris a-
 
 #: src/map/Map.js:116
 msgid "Initializing..."
-msgstr ""
+msgstr "’Ga thòiseachadh..."
 
 #: src/map/Map.js:805
 msgid "Loading..."
-msgstr ""
+msgstr "’Ga luchdadh..."

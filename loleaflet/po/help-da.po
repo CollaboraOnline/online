@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-25 11:51+0200\n"
-"PO-Revision-Date: 2016-07-20 12:23+0000\n"
+"PO-Revision-Date: 2016-10-04 19:25+0000\n"
 "Last-Translator: Leif Lodahl <leiflodahl@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: da\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1469017407.000000\n"
+"X-POOTLE-MTIME: 1475609128.000000\n"
 
 #: dist/loleaflet-help.html+html.head.title:5
 msgid "LOLeaflet Help"
@@ -1310,7 +1310,7 @@ msgstr "Ctrl + Home"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:223
 msgid "Go and select text to start of textbox"
-msgstr "Marker til og gå til begyndelsen af en tekstblok"
+msgstr "Marker til og gå til begyndelsen af en tekstboks"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:223
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:223"
