@@ -142,8 +142,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				resize.column = iterator + 1;
 				resize.width = width;
 				L.DomUtil.setStyle(column, 'width', width + 'px');
-				L.DomUtil.setStyle(text, 'width', width - 3 + 'px');
-				L.DomUtil.setStyle(resize, 'width', '3px');
+				L.DomUtil.setStyle(text, 'width', width - 6 + 'px');
+				L.DomUtil.setStyle(resize, 'width', '6px');
 				this.mouseInit(resize);
 			}
 			L.DomEvent.addListener(text, 'click', this._onColumnHeaderClick, this);
