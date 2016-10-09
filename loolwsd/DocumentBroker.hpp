@@ -64,6 +64,7 @@ public:
 
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
     {
+        assert(docBroker && "Invalid DocumentBroker instance.");
         _docBroker = docBroker;
     }
 

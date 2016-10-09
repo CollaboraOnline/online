@@ -192,6 +192,11 @@ public:
     {
         return _tileQueue;
     }
+
+    bool sendTextFrame(const std::string& /*message*/) override
+    {
+        return true;
+    }
 };
 
 void WhiteBoxTests::testEmptyCellCursor()

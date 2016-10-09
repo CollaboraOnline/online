@@ -40,6 +40,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/Socket.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/NotificationQueue.h>
 #include <Poco/Process.h>
@@ -78,6 +79,7 @@ using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::NetException;
+using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Process;
@@ -799,11 +801,34 @@ public:
         ws->sendFrame(response.data(), length, WebSocket::FRAME_BINARY);
     }
 
-    void sendTextFrame(const std::string& message)
+    bool sendTextFrame(const std::string& message) override
     {
-        std::lock_guard<std::mutex> lock(_mutex);
+        try
+        {
+            if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
+            {
+                Log::error("Child Doc: Bad socket while sending [" + getAbbreviatedMessage(message) + "].");
+                return false;
+            }
 
-        _ws->sendFrame(message.data(), message.size());
+            const auto length = message.size();
+            if (length > SMALL_MESSAGE_SIZE)
+            {
+                const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+                _ws->sendFrame(nextmessage.data(), nextmessage.size());
+            }
+
+            _ws->sendFrame(message.data(), length);
+            return true;
+        }
+        catch (const Exception& exc)
+        {
+            Log::error() << "Document::sendTextFrame: "
+                         << "Exception: " << exc.displayText()
+                         << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+        }
+
+        return false;
     }
 
     static void GlobalCallback(const int nType, const char* pPayload, void* pData)

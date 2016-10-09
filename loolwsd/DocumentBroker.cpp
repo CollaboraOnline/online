@@ -756,7 +756,15 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
         const auto it = _sessions.find(sid);
         if (it != _sessions.end())
         {
-            return it->second->sendTextFrame(message);
+            const auto peer = it->second->getPeer();
+            if (peer)
+            {
+                return peer->handleInput(message.data(), message.size());
+            }
+            else
+            {
+                Log::warn() << "Client session [" << sid << "] has no peer to forward message: " << message << Log::end;
+            }
         }
         else
         {
