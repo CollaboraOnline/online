@@ -310,9 +310,9 @@ void TileCacheTests::testUnresponsiveClient()
         // Invalidate to force re-rendering.
         sendTextFrame(socket2, "uno .uno:SelectAll");
         sendTextFrame(socket2, "uno .uno:Delete");
-        assertResponseLine(socket2, "invalidatetiles:", "client2 ");
+        assertResponseString(socket2, "invalidatetiles:", "client2 ");
         sendTextFrame(socket2, "paste mimetype=text/html\n" + documentContents);
-        assertResponseLine(socket2, "invalidatetiles:", "client2 ");
+        assertResponseString(socket2, "invalidatetiles:", "client2 ");
 
         // Ask for tiles and don't read!
         sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
@@ -389,14 +389,14 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
 
     // Wait for the invalidatetile events to pass, otherwise they
     // remove our tile subscription.
-    assertResponseLine(socket1, "statechanged:", "client1 ");
-    assertResponseLine(socket2, "statechanged:", "client2 ");
+    assertResponseString(socket1, "statechanged:", "client1 ");
+    assertResponseString(socket2, "statechanged:", "client2 ");
 
     sendTextFrame(socket1, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
     sendTextFrame(socket2, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
 
-    const auto response1 = assertResponseLine(socket1, "tile:");
-    const auto response2 = assertResponseLine(socket2, "tile:");
+    const auto response1 = assertResponseString(socket1, "tile:");
+    const auto response2 = assertResponseString(socket2, "tile:");
 
     if (!response1.empty() && !response2.empty())
     {
@@ -427,7 +427,7 @@ void TileCacheTests::testLoad12ods()
         // check document size
         sendTextFrame(socket, "status");
 
-        const auto response = assertResponseLine(socket, "status:");
+        const auto response = assertResponseString(socket, "status:");
         parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
         checkBlackTiles(socket, docSheet, docWidth, docWidth, testName);
@@ -505,21 +505,21 @@ void TileCacheTests::testTileInvalidateWriter()
     for (char ch : text)
     {
         sendChar(socket, ch); // Send ordinary characters and wait for response -> one tile invalidation for each
-        assertResponseLine(socket, "invalidatetiles:");
+        assertResponseString(socket, "invalidatetiles:");
     }
 
     text = "\n\n\n";
     for (char ch : text)
     {
         sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages
-        assertResponseLine(socket, "invalidatetiles:");
+        assertResponseString(socket, "invalidatetiles:");
     }
 
     text = "abcde";
     for (char ch : text)
     {
         sendChar(socket, ch);
-        assertResponseLine(socket, "invalidatetiles:");
+        assertResponseString(socket, "invalidatetiles:");
     }
 
     // While extra invalidates are not desirable, they are inevitable at the moment.
@@ -539,11 +539,11 @@ void TileCacheTests::testTileInvalidateWriterPage()
     auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
 
     sendChar(socket, '\n', skCtrl, testname); // Send Ctrl+Enter (page break).
-    assertResponseLine(socket, "invalidatetiles:", testname);
+    assertResponseString(socket, "invalidatetiles:", testname);
 
     sendTextFrame(socket, "uno .uno:InsertTable { \"Columns\": { \"type\": \"long\",\"value\": 3 }, \"Rows\": { \"type\": \"long\",\"value\": 2 }}", testname);
 
-    const auto res = assertResponseLine(socket, "invalidatetiles:", testname);
+    const auto res = assertResponseString(socket, "invalidatetiles:", testname);
     int part = -1;
     CPPUNIT_ASSERT_MESSAGE("No part# in invalidatetiles message.",
                            LOOLProtocol::getTokenIntegerFromMessage(res, "part", part));
@@ -643,7 +643,7 @@ void TileCacheTests::testTileInvalidateCalc()
     for (char ch : text)
     {
         sendChar(socket, ch); // Send ordinary characters -> one tile invalidation for each
-        assertResponseLine(socket, "invalidatetiles:", testname);
+        assertResponseString(socket, "invalidatetiles:", testname);
     }
 
     std::cerr << "Sending enters" << std::endl;
@@ -651,14 +651,14 @@ void TileCacheTests::testTileInvalidateCalc()
     for (char ch : text)
     {
         sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages; I see 3 tiles invalidated for each
-        assertResponseLine(socket, "invalidatetiles:", testname);
+        assertResponseString(socket, "invalidatetiles:", testname);
     }
 
     text = "abcde";
     for (char ch : text)
     {
         sendChar(socket, ch);
-        assertResponseLine(socket, "invalidatetiles:", testname);
+        assertResponseString(socket, "invalidatetiles:", testname);
     }
 }
 
@@ -672,12 +672,12 @@ void TileCacheTests::tileInvalidatePart(const std::string& filename, const std::
     auto socket1 = *loadDocAndGetSocket(_uri, documentURL);
 
     sendTextFrame(socket1, "setclientpart part=2", testname1);
-    assertResponseLine(socket1, "setpart:", testname1);
+    assertResponseString(socket1, "setpart:", testname1);
     sendTextFrame(socket1, "mouse type=buttondown x=7886 y=8929 count=1 buttons=1 modifier=0", testname1);
 
     auto socket2 = *loadDocAndGetSocket(_uri, documentURL);
     sendTextFrame(socket2, "setclientpart part=5", testname2);
-    assertResponseLine(socket2, "setpart:", testname2);
+    assertResponseString(socket2, "setpart:", testname2);
     sendTextFrame(socket2, "mouse type=buttondown x=7886 y=8929 count=1 buttons=1 modifier=0", testname2);
 
     std::string text = "Some test";
@@ -686,12 +686,12 @@ void TileCacheTests::tileInvalidatePart(const std::string& filename, const std::
         sendChar(socket1, ch);
         sendChar(socket2, ch);
 
-        const auto response1 = assertResponseLine(socket1, "invalidatetiles:", testname1);
+        const auto response1 = assertResponseString(socket1, "invalidatetiles:", testname1);
         int value1;
         LOOLProtocol::getTokenIntegerFromMessage(response1, "part", value1);
         CPPUNIT_ASSERT_EQUAL(2, value1);
 
-        const auto response2 = assertResponseLine(socket2, "invalidatetiles:", testname2);
+        const auto response2 = assertResponseString(socket2, "invalidatetiles:", testname2);
         int value2;
         LOOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
         CPPUNIT_ASSERT_EQUAL(5, value2);
@@ -724,7 +724,7 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
 
     // check total slides 10
     sendTextFrame(socket, "status", name);
-    const auto response = assertResponseLine(socket, "status:", name);
+    const auto response = assertResponseString(socket, "status:", name);
     {
         std::string line;
         std::istringstream istr(response.substr(8));
@@ -767,7 +767,7 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
             // Wait for the change to take effect otherwise we get invalidatetile
             // which removes our next tile request subscription (expecting us to
             // issue a new tile request as a response, which a real client would do).
-            assertResponseLine(socket, "setpart:", name);
+            assertResponseString(socket, "setpart:", name);
 
             requestTiles(socket, it, docWidth, docHeight, name);
         }
@@ -819,7 +819,7 @@ void TileCacheTests::requestTiles(Poco::Net::WebSocket& socket, const int part, 
                                 part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
 
             sendTextFrame(socket, text, name);
-            tile = assertResponseLine(socket, "tile:", name);
+            tile = assertResponseString(socket, "tile:", name);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);

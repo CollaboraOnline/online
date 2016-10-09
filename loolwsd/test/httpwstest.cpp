@@ -382,7 +382,7 @@ void HTTPWSTest::testConnectNoLoad()
     socket2.reset();
 
     sendTextFrame(socket1, "status");
-    assertResponseLine(socket1, "status:");
+    assertResponseString(socket1, "status:");
 }
 
 void HTTPWSTest::testLoad()
@@ -406,7 +406,7 @@ void HTTPWSTest::testBadLoad()
         // Before loading request status.
         sendTextFrame(socket, "status");
 
-        const auto line = assertResponseLine(socket, "error:");
+        const auto line = assertResponseString(socket, "error:");
         CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
     }
     catch (const Poco::Exception& exc)
@@ -438,7 +438,7 @@ void HTTPWSTest::testGetTextSelection()
 
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -469,7 +469,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
 
         // Closing connection too fast might not flush buffers.
@@ -503,7 +503,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -547,7 +547,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -565,11 +565,11 @@ void HTTPWSTest::testExcelLoad()
         auto socket = loadDocAndGetSocket("timeline.xlsx", _uri, testname);
 
         sendTextFrame(socket, "status", testname);
-        const auto status = assertResponseLine(socket, "status:", testname);
+        const auto status = assertResponseString(socket, "status:", testname);
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(8), tokens.count());
     }
     catch (const Poco::Exception& exc)
     {
@@ -594,7 +594,7 @@ void HTTPWSTest::testPaste()
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -629,7 +629,7 @@ void HTTPWSTest::testLargePaste()
         // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseLine(socket, "textselectioncontent:", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_MESSAGE("Pasted text was either corrupted or couldn't be read back",
                                "textselectioncontent: " + documentContents == selection);
     }
@@ -654,7 +654,7 @@ void HTTPWSTest::testRenderingOptions()
 
         sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
         sendTextFrame(socket, "status");
-        const auto status = assertResponseLine(socket, "status:");
+        const auto status = assertResponseString(socket, "status:");
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -687,7 +687,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
         // Send a load request without password first
         sendTextFrame(socket, "load url=" + documentURL);
 
-        const auto response = getResponseMessageString(socket, "error:", testname);
+        const auto response = getResponseString(socket, "error:", testname);
         Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.count());
 
@@ -718,7 +718,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
         // Send a load request with incorrect password
         sendTextFrame(socket, "load url=" + documentURL + " password=2");
 
-        const auto response = getResponseMessageString(socket, "error:", testname);
+        const auto response = getResponseString(socket, "error:", testname);
         Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.count());
 
@@ -781,7 +781,7 @@ void HTTPWSTest::testInsertDelete()
         // check total slides 1
         std::cerr << "Expecting 1 slide." << std::endl;
         sendTextFrame(socket, "status");
-        response = getResponseMessageString(socket, "status:");
+        response = getResponseString(socket, "status:");
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
@@ -793,7 +793,7 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:InsertPage");
-            response = getResponseMessageString(socket, "status:");
+            response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             getPartHashCodes(response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
@@ -807,7 +807,7 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:DeletePage");
-            response = getResponseMessageString(socket, "status:");
+            response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             getPartHashCodes(response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
@@ -820,7 +820,7 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Undo");
-            response = getResponseMessageString(socket, "status:");
+            response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             getPartHashCodes(response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
@@ -835,7 +835,7 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Redo");
-            response = getResponseMessageString(socket, "status:");
+            response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             getPartHashCodes(response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
@@ -846,7 +846,7 @@ void HTTPWSTest::testInsertDelete()
         // check total slides 1
         std::cerr << "Expecting 1 slide." << std::endl;
         sendTextFrame(socket, "status");
-        response = getResponseMessageString(socket, "status:");
+        response = getResponseString(socket, "status:");
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
@@ -875,7 +875,7 @@ void HTTPWSTest::testSlideShow()
 
         // request slide show
         sendTextFrame(socket, "downloadas name=slideshow.svg id=slideshow format=svg options=", testname);
-        response = getResponseMessageString(socket, "downloadas:", testname);
+        response = getResponseString(socket, "downloadas:", testname);
         CPPUNIT_ASSERT_MESSAGE("did not receive a downloadas: message as expected", !response.empty());
 
         Poco::StringTokenizer tokens(response.substr(11), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -1139,7 +1139,7 @@ void HTTPWSTest::limitCursor(std::function<void(const std::shared_ptr<Poco::Net:
 
     // check document size
     sendTextFrame(socket, "status", testname);
-    response = assertResponseLine(socket, "status:", testname);
+    response = assertResponseString(socket, "status:", testname);
     parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
     // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
@@ -1149,14 +1149,14 @@ void HTTPWSTest::limitCursor(std::function<void(const std::shared_ptr<Poco::Net:
     Poco::format(text, "commandvalues command=.uno:CellCursor?outputHeight=%d&outputWidth=%d&tileHeight=%d&tileWidth=%d",
                  256, 256, 3840, 3840);
     sendTextFrame(socket, text, testname);
-    const auto cursor = getResponseMessageString(socket, "commandvalues:", testname);
+    const auto cursor = getResponseString(socket, "commandvalues:", testname);
     getCursor(cursor.substr(14), cursorX, cursorY, cursorWidth, cursorHeight);
 
     // move cursor
     keyhandler(socket, cursorX, cursorY, cursorWidth, cursorHeight, docWidth, docHeight);
 
     // filter messages, and expect to receive new document size
-    response = assertResponseLine(socket, "status:", testname);
+    response = assertResponseString(socket, "status:", testname);
     parseDocSize(response.substr(7), "spreadsheet", newSheet, newSheets, newWidth, newHeight, docViewId);
 
     CPPUNIT_ASSERT_EQUAL(docSheets, newSheets);
@@ -1185,13 +1185,13 @@ void HTTPWSTest::testInsertAnnotationWriter()
     // Read it back.
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    auto res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    auto res = getResponseString(socket, "textselectioncontent:", "insertAnnotationWriter ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: xxx yyy zzzz"), res);
     // Can we edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    res = getResponseString(socket, "textselectioncontent:", "insertAnnotationWriter ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
 
     // Confirm that the text is in the comment and not doc body.
@@ -1201,7 +1201,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
     // Read body text.
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    res = getResponseString(socket, "textselectioncontent:", "insertAnnotationWriter ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
 
     // Confirm that the comment is still intact.
@@ -1209,14 +1209,14 @@ void HTTPWSTest::testInsertAnnotationWriter()
     sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    res = getResponseString(socket, "textselectioncontent:", "insertAnnotationWriter ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
 
     // Can we still edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nand now for something completely different");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    res = getResponseString(socket, "textselectioncontent:", "insertAnnotationWriter ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
     // Close and reopen the same document and test again.
@@ -1231,7 +1231,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
     // Read body text.
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    res = getResponseString(socket, "textselectioncontent:", "insertAnnotationWriter ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
 
     // Confirm that the comment is still intact.
@@ -1239,14 +1239,14 @@ void HTTPWSTest::testInsertAnnotationWriter()
     sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    res = getResponseString(socket, "textselectioncontent:", "insertAnnotationWriter ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
     // Can we still edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nblah blah xyz");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", "insertAnnotationWriter ");
+    res = getResponseString(socket, "textselectioncontent:", "insertAnnotationWriter ");
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: blah blah xyz"), res);
 }
 
@@ -1265,7 +1265,7 @@ void HTTPWSTest::testEditAnnotationWriter()
     // Read body text.
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    auto res = getResponseLine(socket, "textselectioncontent:", testname);
+    auto res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
 
     // Confirm that the comment is intact.
@@ -1273,14 +1273,14 @@ void HTTPWSTest::testEditAnnotationWriter()
     sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", testname);
+    res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: blah blah xyz"), res);
 
     // Can we still edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nand now for something completely different");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", testname);
+    res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
     const auto kitcount = getLoolKitProcessCount();
@@ -1302,7 +1302,7 @@ void HTTPWSTest::testEditAnnotationWriter()
     // Read body text.
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", testname);
+    res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
 
     // Confirm that the comment is still intact.
@@ -1310,14 +1310,14 @@ void HTTPWSTest::testEditAnnotationWriter()
     sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", testname);
+    res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
     // Can we still edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nnew text different");
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    res = getResponseLine(socket, "textselectioncontent:", testname);
+    res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: new text different"), res);
 }
 
@@ -1335,7 +1335,7 @@ void HTTPWSTest::testInsertAnnotationCalc()
     // Read it back.
     sendTextFrame(socket, "uno .uno:SelectAll");
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8");
-    auto res = getResponseLine(socket, "textselectioncontent:", testname);
+    auto res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
 }
 
@@ -1349,7 +1349,7 @@ void HTTPWSTest::testCalcEditRendering()
     sendTextFrame(socket, "key type=input char=98 key=0");
     sendTextFrame(socket, "key type=input char=99 key=0");
 
-    assertResponseLine(socket, "cellformula: abc", testname);
+    assertResponseString(socket, "cellformula: abc", testname);
 
     const auto req = "tilecombine part=0 width=512 height=512 tileposx=3840 tileposy=0 tilewidth=7680 tileheight=7680";
     sendTextFrame(socket, req);
@@ -1894,7 +1894,7 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
 
     // Check document size
     sendTextFrame(socket, "status", Poco::format(view, itView));
-    response = getResponseLine(socket, "status:", Poco::format(view, itView));
+    response = getResponseString(socket, "status:", Poco::format(view, itView));
     CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, std::string("status:")), !response.empty());
     parseDocSize(response.substr(7), type, docPart, docParts, docWidth, docHeight, docViewId);
 
@@ -1905,7 +1905,7 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
 
     Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/2, docHeight/6);
     sendTextFrame(socket, text, Poco::format(view, itView));
-    response = getResponseLine(socket, protocol, Poco::format(view, itView));
+    response = getResponseString(socket, protocol, Poco::format(view, itView));
     CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
     // Connect and load 0..N Views, where N=10
@@ -1918,7 +1918,7 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
     itView = 0;
     for (auto socketView : views)
     {
-        getResponseLine(socket, protocolView, Poco::format(view, itView));
+        getResponseString(socket, protocolView, Poco::format(view, itView));
         CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
         ++itView;
     }
@@ -1986,14 +1986,14 @@ void HTTPWSTest::testGraphicInvalidate()
         // Send click message
         sendTextFrame(socket, "mouse type=buttondown x=1035 y=400 count=1 buttons=1 modifier=0", testname);
         sendTextFrame(socket, "mouse type=buttonup x=1035 y=400 count=1 buttons=1 modifier=0", testname);
-        getResponseLine(socket, "graphicselection:", testname);
+        getResponseString(socket, "graphicselection:", testname);
 
         // Drag & drop graphic
         sendTextFrame(socket, "mouse type=buttondown x=1035 y=400 count=1 buttons=1 modifier=0", testname);
         sendTextFrame(socket, "mouse type=move x=1035 y=450 count=1 buttons=1 modifier=0", testname);
         sendTextFrame(socket, "mouse type=buttonup x=1035 y=450 count=1 buttons=1 modifier=0", testname);
 
-        const auto message = getResponseLine(socket, "invalidatetiles:", testname);
+        const auto message = getResponseString(socket, "invalidatetiles:", testname);
         CPPUNIT_ASSERT_MESSAGE("Drag & Drop graphic invalidate all tiles", message.find("EMPTY") == std::string::npos);
     }
     catch (const Poco::Exception& exc)
@@ -2017,7 +2017,7 @@ void HTTPWSTest::testCursorPosition()
         auto socket0 = *loadDocAndGetSocket(_uri, docURL, testname);
 
         // receive cursor position
-        response = getResponseLine(socket0, "invalidatecursor:", testname);
+        response = getResponseString(socket0, "invalidatecursor:", testname);
         Poco::StringTokenizer cursorTokens(response.substr(17), ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
 
@@ -2025,7 +2025,7 @@ void HTTPWSTest::testCursorPosition()
         auto socket1 = *loadDocAndGetSocket(_uri, docURL, testname);
 
         //receive view cursor position
-        response = getResponseMessageString(socket1, "invalidateviewcursor:", testname);
+        response = getResponseString(socket1, "invalidateviewcursor:", testname);
 
         Poco::JSON::Parser parser;
         const auto result = parser.parse(response.substr(21));
@@ -2076,7 +2076,7 @@ void HTTPWSTest::testAlertAllUsers()
 
         for (int i = 0; i < 4; i++)
         {
-            std::string response = getResponseMessageString(socket[i], "error:", testname);
+            std::string response = getResponseString(socket[i], "error:", testname);
             Poco::StringTokenizer tokens(response.substr(6), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             std::string cmd;
             LOOLProtocol::getTokenString(tokens, "cmd", cmd);
@@ -2114,11 +2114,11 @@ void HTTPWSTest::testViewInfoMsg()
     {
         // Load first view and remember the viewid
         sendTextFrame(socket0, "load url=" + docURL);
-        response = getResponseLine(socket0, "status:", testname + "0 ");
+        response = getResponseString(socket0, "status:", testname + "0 ");
         parseDocSize(response.substr(7), "text", part, parts, width, height, viewid[0]);
 
         // Check if viewinfo message also mentions the same viewid
-        response = getResponseMessageString(socket0, "viewinfo: ", testname + "0 ");
+        response = getResponseString(socket0, "viewinfo: ", testname + "0 ");
         Poco::JSON::Parser parser0;
         Poco::JSON::Array::Ptr array = parser0.parse(response.substr(9)).extract<Poco::JSON::Array::Ptr>();
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), array->size());
@@ -2129,12 +2129,12 @@ void HTTPWSTest::testViewInfoMsg()
 
         // Load second view and remember the viewid
         sendTextFrame(socket1, "load url=" + docURL);
-        response = getResponseLine(socket1, "status:", testname + "1 ");
+        response = getResponseString(socket1, "status:", testname + "1 ");
         parseDocSize(response.substr(7), "text", part, parts, width, height, viewid[1]);
 
         // Check if viewinfo message in this view mentions
         // viewid of both first loaded view and this view
-        response = getResponseMessageString(socket1, "viewinfo: ", testname + "1 ");
+        response = getResponseString(socket1, "viewinfo: ", testname + "1 ");
         Poco::JSON::Parser parser1;
         array = parser1.parse(response.substr(9)).extract<Poco::JSON::Array::Ptr>();
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), array->size());
@@ -2152,7 +2152,7 @@ void HTTPWSTest::testViewInfoMsg()
             CPPUNIT_FAIL("Inconsistent viewid in viewinfo and status messages");
 
         // Check if first view also got the same viewinfo message
-        const auto response1 = getResponseMessageString(socket0, "viewinfo: ", testname + "0 ");
+        const auto response1 = getResponseString(socket0, "viewinfo: ", testname + "0 ");
         CPPUNIT_ASSERT_EQUAL(response, response1);
     }
     catch(const Poco::Exception& exc)
