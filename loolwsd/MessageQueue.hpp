@@ -43,7 +43,8 @@ public:
     }
 
     /// Thread safe obtaining of the message.
-    Payload get();
+    /// timeoutMs can be 0 to signify infinity.
+    Payload get(const unsigned timeoutMs = 0);
 
     /// Thread safe removal of all the pending messages.
     void clear();

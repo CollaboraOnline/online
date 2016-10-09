@@ -243,6 +243,7 @@ void HTTPServerTest::testConvertTo()
 {
     const auto srcPath = Util::getTempFilePath(TDOC, "hello.odt");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+    session->setTimeout(Poco::Timespan(2, 0)); // 2 seconds.
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
     Poco::Net::HTMLForm form;

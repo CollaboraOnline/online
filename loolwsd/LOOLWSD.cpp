@@ -474,8 +474,7 @@ private:
                     session->handleInput(saveas.data(), saveas.size());
 
                     // Send it back to the client.
-                    //TODO: Should have timeout to avoid waiting forever.
-                    Poco::URI resultURL(session->getSaveAsUrl());
+                    Poco::URI resultURL(session->getSaveAsUrl(COMMAND_TIMEOUT_MS));
                     if (!resultURL.getPath().empty())
                     {
                         const std::string mimeType = "application/octet-stream";
