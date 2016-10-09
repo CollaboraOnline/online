@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-17 13:27+0200\n"
-"PO-Revision-Date: 2016-06-28 09:58+0000\n"
+"PO-Revision-Date: 2016-09-09 15:43+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1467107888.000000\n"
+"X-POOTLE-MTIME: 1473435795.000000\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -294,106 +294,104 @@ msgid "Size"
 msgstr "Veľkosť"
 
 #: dist/toolbar/toolbar.js:739
-#, fuzzy
 msgid "Number of Sheets"
-msgstr "Počet zobrazení"
+msgstr "Počet hárkov"
 
 #: dist/toolbar/toolbar.js:742
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Vybraná oblasť buniek"
 
 #: dist/toolbar/toolbar.js:745 dist/toolbar/toolbar.js:791
 msgid "Entering text mode"
-msgstr ""
+msgstr "Prepínanie do textového režimu"
 
 #: dist/toolbar/toolbar.js:748 dist/toolbar/toolbar.js:794
 msgid "Selection Mode"
-msgstr ""
+msgstr "Režim výberu"
 
 #: dist/toolbar/toolbar.js:751
 msgid "Choice of functions"
-msgstr ""
+msgstr "Voľba funkcií"
 
 #: dist/toolbar/toolbar.js:753
 msgid "Average"
-msgstr ""
+msgstr "Priemer"
 
 #: dist/toolbar/toolbar.js:754
 msgid "CountA"
-msgstr ""
+msgstr "Počet hodnôt"
 
 #: dist/toolbar/toolbar.js:755
 msgid "Count"
-msgstr ""
+msgstr "Počet"
 
 #: dist/toolbar/toolbar.js:756
 msgid "Maximum"
-msgstr ""
+msgstr "Maximum"
 
 #: dist/toolbar/toolbar.js:757
 msgid "Minimum"
-msgstr ""
+msgstr "Minimum"
 
 #: dist/toolbar/toolbar.js:759
 msgid "Selection count"
-msgstr ""
+msgstr "Počet vybraných"
 
 #: dist/toolbar/toolbar.js:760
 msgid "None"
-msgstr ""
+msgstr "Žiadne"
 
 #: dist/toolbar/toolbar.js:765
 msgid "Wrap Text"
-msgstr ""
+msgstr "Zalomiť text"
 
 #: dist/toolbar/toolbar.js:766
 msgid "Merge and Center Cells"
-msgstr ""
+msgstr "Zlúčiť a centrovať bunky"
 
 #: dist/toolbar/toolbar.js:768
 msgid "Format as Currency"
-msgstr ""
+msgstr "Formátovať ako menu"
 
 #: dist/toolbar/toolbar.js:769
 msgid "Format as Percent"
-msgstr ""
+msgstr "Formátovať ako percentá"
 
 #: dist/toolbar/toolbar.js:770
 msgid "Format as Number"
-msgstr ""
+msgstr "Formátovať ako číslo"
 
 #: dist/toolbar/toolbar.js:771
 msgid "Format as Date"
-msgstr ""
+msgstr "Formátovať ako dátum"
 
 #: dist/toolbar/toolbar.js:772
 msgid "Add Decimal Place"
-msgstr ""
+msgstr "Pridať desatinné miesto"
 
 #: dist/toolbar/toolbar.js:773
 msgid "Delete Decimal Place"
-msgstr ""
+msgstr "Zmazať desatinné miesto"
 
 #: dist/toolbar/toolbar.js:775
 msgid "Sort Ascending"
-msgstr ""
+msgstr "Zoradiť vzostupne"
 
 #: dist/toolbar/toolbar.js:776
 msgid "Sort Descending"
-msgstr ""
+msgstr "Zoradiť zostupne"
 
 #: dist/toolbar/toolbar.js:785
 msgid "Number of Pages"
-msgstr ""
+msgstr "Počet strán"
 
 #: dist/toolbar/toolbar.js:788
 msgid "Word Counter"
-msgstr ""
+msgstr "Počet slov"
 
 #: dist/toolbar/toolbar.js:802
-#, fuzzy
 msgid "Number of Slides"
-msgstr "Počet zobrazení"
+msgstr "Počet snímok"
 
 #: dist/toolbar/toolbar.js:919
 msgid "Document saved"
@@ -425,11 +423,11 @@ msgstr "UPRAVOVANIE"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "You are locked in readonly mode"
-msgstr ""
+msgstr "Nachádzate sa v režime iba na čítanie"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "READONLY"
-msgstr ""
+msgstr "LEN NA ČÍTANIE"
 
 #: dist/toolbar/toolbar.js:1324
 msgid "Layout"
@@ -572,7 +570,7 @@ msgstr "Tlačiť"
 #: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:104
 msgid "See revision history"
-msgstr ""
+msgstr "Zobraziť históriu revízií"
 
 #: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
 #: src/control/Control.Menubar.js:105

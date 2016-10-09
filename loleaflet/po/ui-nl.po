@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-17 13:27+0200\n"
-"PO-Revision-Date: 2016-08-04 19:44+0000\n"
-"Last-Translator: vpanter <leo.moons@telenet.be>\n"
+"PO-Revision-Date: 2016-08-20 09:20+0000\n"
+"Last-Translator: kees538 <kees538@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1470339889.000000\n"
+"X-POOTLE-MTIME: 1471684809.000000\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -311,7 +311,7 @@ msgstr "Selectie modus"
 
 #: dist/toolbar/toolbar.js:751
 msgid "Choice of functions"
-msgstr ""
+msgstr "Lijst met functies"
 
 #: dist/toolbar/toolbar.js:753
 msgid "Average"
@@ -319,7 +319,7 @@ msgstr "Gemiddelde"
 
 #: dist/toolbar/toolbar.js:754
 msgid "CountA"
-msgstr ""
+msgstr "AantalA"
 
 #: dist/toolbar/toolbar.js:755
 msgid "Count"
@@ -343,7 +343,7 @@ msgstr "Geen"
 
 #: dist/toolbar/toolbar.js:765
 msgid "Wrap Text"
-msgstr ""
+msgstr "Tekst laten doorlopen"
 
 #: dist/toolbar/toolbar.js:766
 msgid "Merge and Center Cells"
@@ -423,7 +423,7 @@ msgstr "BEWERKEN"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "You are locked in readonly mode"
-msgstr ""
+msgstr "U staat in de modus alleen-lezen"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "READONLY"
@@ -570,7 +570,7 @@ msgstr "Afdrukken"
 #: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:104
 msgid "See revision history"
-msgstr ""
+msgstr "Bekijk de wijzigingsgeschiedenis"
 
 #: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
 #: src/control/Control.Menubar.js:105

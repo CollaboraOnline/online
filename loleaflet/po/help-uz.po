@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-25 11:51+0200\n"
-"PO-Revision-Date: 2016-08-03 19:20+0000\n"
+"PO-Revision-Date: 2016-08-29 21:24+0000\n"
 "Last-Translator: uzadmin <akmalxster@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: uz\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1470252025.000000\n"
+"X-POOTLE-MTIME: 1472505861.000000\n"
 
 #: dist/loleaflet-help.html+html.head.title:5
 msgid "LOLeaflet Help"
@@ -449,114 +449,111 @@ msgstr "Ctrl + Home"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:106
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "Hujjat boshiga o‘tish va belgilash"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:106
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:106"
 msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + Home"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "Go to end of line"
-msgstr ""
+msgstr "Qatorning oxiriga o‘tish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:107
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:107"
 msgid "End"
-msgstr ""
+msgstr "End"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "Qatorning oxiriga o‘tish va belgilash"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:108
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:108"
 msgid "Shift + End"
-msgstr ""
+msgstr "Shift + End"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:109
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Go to end of document"
-msgstr ""
+msgstr "Hujjatning oxiriga oʻtish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:109
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:109"
 msgid "Ctrl + End"
-msgstr "Ctrl + E"
+msgstr "Ctrl + End"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:110
 msgid "Go and select text to end of document"
-msgstr ""
+msgstr "Hujjatning oxiriga o‘tish va belgilash"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:110
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:110"
 msgid "Ctrl + Shift + End"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + End"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:111
 msgid "Move the view up one page"
-msgstr ""
+msgstr "Bitta oldingi sahifa ko‘rinishiga o‘tish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:111
 msgid "PageUp"
-msgstr ""
+msgstr "PageUp"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:112
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "Kursorni matn va sarlavhga orasiga o‘tkazish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:112
 msgid "Ctrl + PageUp"
-msgstr ""
+msgstr "Ctrl + PageUp"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:113
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "Belgilashni bir sahifa yuqoriga kengaytirish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:113
 msgid "Shift + PageUp"
-msgstr ""
+msgstr "Shift + PageUp"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:114
 msgid "Move the view down one page"
-msgstr ""
+msgstr "Bitta keyingi sahifa ko‘rinishiga o‘tish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:114
 msgid "PageDown"
-msgstr ""
+msgstr "PageDown"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:115
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "Kursorni matn va taglavha orasiga o‘tkazish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:115
 msgid "Ctrl + PageDown"
-msgstr ""
+msgstr "Ctrl + PageDown"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:116
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "Belgilashni bir sahifa pastga kengaytirish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:116
 msgid "Shift + PageDown"
-msgstr ""
+msgstr "Shift + PageDown"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:117
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "So‘z boshigacha o‘chirish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:117
 msgid "Ctrl + Backspace"
-msgstr ""
+msgstr "Ctrl + Backspace"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:118
 msgid "Delete to end of word"
-msgstr ""
+msgstr "So‘z oxirigacha o‘chirish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:118
 msgid "Ctrl + Del"
@@ -564,119 +561,116 @@ msgstr "Ctrl + Del"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:119
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "Gap boshigacha o‘chirish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:119
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Ctrl + Shift + Backspace"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:120
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Gap oxirigacha o‘chirish"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:120
-#, fuzzy
 msgid "Ctrl + Shift + Del"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + Del"
 
 #: dist/loleaflet-help.html+html.body.div.h2:122
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "Jadval uchun tugmalari birikmasi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:124
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:124"
 msgid "Ctrl + A"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + A"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:124
 msgid "If the active cell is empty: selects the whole table. Otherwise: selects the contents of the active cell. Pressing again selects the entire table."
-msgstr ""
+msgstr "Agar faol katak bo‘sh bo‘lsa: butun jadvalni belgilaydi. Aks holda: faol katak tarkibini belgilaydi. Yana bossangiz, butun jadvalni belgilaydi."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:125
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:125"
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Ctrl + Home"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:125
 msgid "If the active cell is empty: goes to the beginning of the table. Otherwise: first press goes to beginning of the active cell, second press goes to beginning of the current table, third press goes to beginning of document."
-msgstr ""
+msgstr "Agar faol katak bo‘sh bo‘lsa: jadvalning boshiga o‘tadi. Aks holda: birinchi bosishda faol katakning boshiga o‘tadi, ikkinchi marta bosganda joriy jadvalning boshiga o‘tadi, uchinchi marta bosganda hujjat boshiga o‘tadi."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:126
-#, fuzzy
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:126"
 msgid "Ctrl + End"
-msgstr "Ctrl + E"
+msgstr "Ctrl + End"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:126
 msgid "If the active cell is empty: goes to the end of the table. Otherwise: first press goes to the end of the active cell, second press goes to the end of the current table, third press goes to the end of the document."
-msgstr ""
+msgstr "Agar faol katak bo‘sh bo‘lsa: jadvalning oxiriga o‘tadi. Aks holda, birinchi marta bosganda faol katakning oxiriga o‘tadi, ikkinchi marta bosganda joriy jadvalning oxiriga o‘tadi, uchinchi marta bosganda hujjatning oxiriga o‘tadi."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:127
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Ctrl + Tab"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:127
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
-msgstr ""
+msgstr "To‘xtaydigan ichki oyna kiritadi (faqat jadvallarda). Oyna menejeriga qarab, o‘rniga Alt + Tab tugmalaridan foydalanish mumkin."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:128
 msgid "Alt + Arrow Keys"
-msgstr ""
+msgstr "Alt + Ko‘rsatkich tugmalari"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:128
 msgid "Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr ""
+msgstr "O‘ng/past katak chetidagi ustun/qator hajmini kattalashtiradi/kichiklashtiradi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:129
 msgid "Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt + Shift + Ko‘rsatkich tugmalari"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:129
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr ""
+msgstr "Chap/yuqori katak chetidagi ustun/qator hajmini kattalashtiradi/kichiklashtiradi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:130
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr ""
+msgstr "Alt + Ctrl + Ko‘rsatkich tugmalari"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:130
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:130"
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Alt tugmasi kabi, faqat faol katakni o‘zgartiradi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:131
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + Ko‘rsatkich tugmalari"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:131
 msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:131"
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Alt tugmasi kabi, faqat faol katakni o‘zgartiradi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:132
 msgid "Alt + Insert"
-msgstr ""
+msgstr "Alt + Insert"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:132
 msgid "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key inserts cell"
-msgstr ""
+msgstr "Kirtish rejimida 3 soniya,  Ko‘rsatkich tugmasi qator/ustunni kiritiadi, Ctrl + Ko‘rsatkich tugmasi katakni kiritadi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:133
 msgid "Alt + Del"
-msgstr ""
+msgstr "Alt + Del"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:133
 msgid "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key merges cell with neighboring cell"
-msgstr ""
+msgstr "3 soniya O‘chirish rejimida, Ko‘rsatkich tugmasi qator/ustunni o‘chiradi, Ctrl + Ko‘rsatkich tugmasi katakning yonidagi kataklar bilan birlashtiradi"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td:134
 msgid "Shift + Ctrl + Del"
-msgstr ""
+msgstr "Shift + Ctrl + Del"
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td.p:134
 msgid "If no whole cell is selected, the text from the cursor to the end of the current sentence is deleted. If the cursor is at the end of a cell, and no whole cell is selected, the contents of the next cell are deleted."
-msgstr ""
+msgstr "Butun katak tanlanmasa, kursordan oxirigacha belgilangan joriy gap matni o‘chiriladi. Agar kursor katak oxirida bo‘lsa va butun katak belgilanmagan bo‘lsa, keyingi katak tarkibi o‘chiriladi."
 
 #: dist/loleaflet-help.html+html.body.div.table.tr.td.p:135
 msgid "If no whole cell is selected and the cursor is at the end of the table, the paragraph following the table will be deleted, unless it is the last paragraph in the document."
