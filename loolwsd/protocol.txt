@@ -373,6 +373,24 @@ saveas: url=<url>
     <url> is a URL of the destination, encoded. Sent from the child to the
     parent after a saveAs() completed.
 
+client-<sessionId> <Payload Message>
+
+    Forwarding message between a child and its parent session.
+    The payload message is forwarded to the ClientSession.
+
+parent -> child
+===============
+
+child-<sessionId> <Payload Message>
+
+    Forwarding message between a parent and its child session.
+    The payload message is forwarded to the ChildSession.
+
+disconnect
+
+    Signals to the child that the client for the respective connection
+    has disconnected.
+
 Admin console
 ===============
 

@@ -441,6 +441,10 @@ size_t DocumentBroker::removeSession(const std::string& id)
     if (it != _sessions.end())
     {
         _sessions.erase(it);
+
+        // Let the child know the client has disconnected.
+        const std::string msg("child-" + id + " disconnect");
+        _childProcess->getWebSocket()->sendFrame(msg.data(), msg.size());
     }
 
     return _sessions.size();

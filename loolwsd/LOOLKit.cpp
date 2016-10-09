@@ -1264,6 +1264,13 @@ private:
             const auto it = _connections.find(viewId);
             if (it != _connections.end())
             {
+                if (message == "disconnect")
+                {
+                    Log::debug("Removing ChildSession " + value);
+                    _connections.erase(it);
+                    return true;
+                }
+
                 auto session = it->second->getSession();
                 if (session)
                 {
