@@ -153,6 +153,30 @@ namespace Util
     /// Return a string that is unique across processes and calls.
     std::string UniqueId();
 
+    /// Trim spaces from the left. Just spaces.
+    inline
+    void ltrim(std::string& s)
+    {
+        const auto pos = s.find_first_not_of(" ");
+        if (pos != std::string::npos)
+        {
+            s = s.substr(pos);
+        }
+    }
+
+    /// Trim spaces from the left and copy. Just spaces.
+    inline
+    std::string ltrimmed(const std::string& s)
+    {
+        const auto pos = s.find_first_not_of(" ");
+        if (pos != std::string::npos)
+        {
+            return s.substr(pos);
+        }
+
+        return s;
+    }
+
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.

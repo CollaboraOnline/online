@@ -1227,8 +1227,9 @@ private:
 
     bool forwardToChild(const std::string& prefix, const std::vector<char>& payload)
     {
-        const std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
-        Log::trace("Forwarding payload to client: " + message);
+        std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
+        Util::ltrim(message);
+        Log::trace("Forwarding payload to " + prefix + ' ' + message);
 
         std::string name;
         std::string value;

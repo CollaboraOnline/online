@@ -725,7 +725,7 @@ void DocumentBroker::setModified(const bool value)
 bool DocumentBroker::forwardToChild(const std::string& viewId, const char *buffer, int length)
 {
     const auto message = std::string(buffer, length);
-    Log::warn() << "Forwarding payload to child [" << viewId << "]: " << message << Log::end;
+    Log::trace() << "Forwarding payload to child [" << viewId << "]: " << message << Log::end;
 
     const auto it = _sessions.find(viewId);
     if (it != _sessions.end())
@@ -745,8 +745,9 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const char *buffe
 
 bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vector<char>& payload)
 {
-    const std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
-    Log::warn("Forwarding payload to client: " + message);
+    std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
+    Util::ltrim(message);
+    Log::trace("Forwarding payload to " + prefix + ' ' + message);
 
     std::string name;
     std::string sid;
