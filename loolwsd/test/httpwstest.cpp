@@ -338,21 +338,9 @@ void HTTPWSTest::loadDoc(const std::string& documentURL, const std::string& test
         // Don't replace with helpers, so we catch status.
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response, testname);
-        sendTextFrame(*socket, "load url=" + documentURL, testname);
+        sendTextFrame(socket, "load url=" + documentURL, testname);
 
-        SocketProcessor(testname, socket, [&](const std::string& msg)
-                {
-                    const std::string prefix = "status: ";
-                    if (msg.find(prefix) == 0)
-                    {
-                        const auto status = msg.substr(prefix.length());
-                        // Might be too strict, consider something flexible instread.
-                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408 viewid=0"), status);
-                        return false;
-                    }
-
-                    return true;
-                });
+        assertResponseString(socket, "status:", testname);
     }
     catch (const Poco::Exception& exc)
     {
