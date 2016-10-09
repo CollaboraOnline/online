@@ -154,12 +154,13 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                    int& cursorWidth,
                    int& cursorHeight);
 
-    void testLimitCursor( std::function<void(const std::shared_ptr<Poco::Net::WebSocket>& socket,
-                                             int cursorX, int cursorY,
-                                             int cursorWidth, int cursorHeight,
-                                             int docWidth, int docHeight)> keyhandler,
-                          std::function<void(int docWidth, int docHeight,
-                                             int newWidth, int newHeight)> checkhandler);
+    void limitCursor(std::function<void(const std::shared_ptr<Poco::Net::WebSocket>& socket,
+                                        int cursorX, int cursorY,
+                                        int cursorWidth, int cursorHeight,
+                                        int docWidth, int docHeight)> keyhandler,
+                     std::function<void(int docWidth, int docHeight,
+                                        int newWidth, int newHeight)> checkhandler,
+                     const std::string& testname);
 
     std::string getFontList(const std::string& message);
     void testStateChanged(const std::string& filename, std::vector<std::string>& vecComands);
@@ -674,6 +675,7 @@ void HTTPWSTest::testRenderingOptions()
 
 void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
 {
+    const auto testname = "passwordProtectedDocumentWithoutPassword ";
     try
     {
         std::string documentPath, documentURL;
@@ -684,21 +686,17 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
 
         // Send a load request without password first
         sendTextFrame(socket, "load url=" + documentURL);
-        std::string response;
 
-        getResponseMessage(socket, "error:", response, true);
-        CPPUNIT_ASSERT_MESSAGE("did not receive an error: message as expected", !response.empty());
-        {
-            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), tokens.count());
+        const auto response = getResponseMessageString(socket, "error:", testname);
+        Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.count());
 
-            std::string errorCommand;
-            std::string errorKind;
-            LOOLProtocol::getTokenString(tokens[0], "cmd", errorCommand);
-            LOOLProtocol::getTokenString(tokens[1], "kind", errorKind);
-            CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-            CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
-        }
+        std::string errorCommand;
+        std::string errorKind;
+        LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
+        LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
+        CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
+        CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
     }
     catch (const Poco::Exception& exc)
     {
@@ -708,6 +706,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
 
 void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
 {
+    const auto testname = "passwordProtectedDocumentWithWrongPassword ";
     try
     {
         std::string documentPath, documentURL;
@@ -719,20 +718,16 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
         // Send a load request with incorrect password
         sendTextFrame(socket, "load url=" + documentURL + " password=2");
 
-        std::string response;
-        getResponseMessage(socket, "error:", response, true);
-        CPPUNIT_ASSERT_MESSAGE("did not receive an error: message as expected", !response.empty());
-        {
-            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), tokens.count());
+        const auto response = getResponseMessageString(socket, "error:", testname);
+        Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.count());
 
-            std::string errorCommand;
-            std::string errorKind;
-            LOOLProtocol::getTokenString(tokens[0], "cmd", errorCommand);
-            LOOLProtocol::getTokenString(tokens[1], "kind", errorKind);
-            CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-            CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
-        }
+        std::string errorCommand;
+        std::string errorKind;
+        LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
+        LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
+        CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
+        CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
     }
     catch (const Poco::Exception& exc)
     {
@@ -786,9 +781,9 @@ void HTTPWSTest::testInsertDelete()
         // check total slides 1
         std::cerr << "Expecting 1 slide." << std::endl;
         sendTextFrame(socket, "status");
-        getResponseMessage(socket, "status:", response, false);
+        response = getResponseMessageString(socket, "status:");
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getPartHashCodes(response, parts);
+        getPartHashCodes(response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
 
         const auto slide1Hash = parts[0];
@@ -798,9 +793,9 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:InsertPage");
-            getResponseMessage(socket, "status:", response, false);
+            response = getResponseMessageString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(response, parts);
+            getPartHashCodes(response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
         }
 
@@ -812,9 +807,9 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:DeletePage");
-            getResponseMessage(socket, "status:", response, false);
+            response = getResponseMessageString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(response, parts);
+            getPartHashCodes(response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
         }
 
@@ -825,9 +820,9 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Undo");
-            getResponseMessage(socket, "status:", response, false);
+            response = getResponseMessageString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(response, parts);
+            getPartHashCodes(response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
         }
 
@@ -840,9 +835,9 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Redo");
-            getResponseMessage(socket, "status:", response, false);
+            response = getResponseMessageString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(response, parts);
+            getPartHashCodes(response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
         }
 
@@ -851,9 +846,9 @@ void HTTPWSTest::testInsertDelete()
         // check total slides 1
         std::cerr << "Expecting 1 slide." << std::endl;
         sendTextFrame(socket, "status");
-        getResponseMessage(socket, "status:", response, false);
+        response = getResponseMessageString(socket, "status:");
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getPartHashCodes(response, parts);
+        getPartHashCodes(response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
     }
     catch (const Poco::Exception& exc)
@@ -864,6 +859,7 @@ void HTTPWSTest::testInsertDelete()
 
 void HTTPWSTest::testSlideShow()
 {
+    const auto testname = "slideshow ";
     try
     {
         // Load a document
@@ -874,39 +870,38 @@ void HTTPWSTest::testSlideShow()
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
 
-        sendTextFrame(socket, "load url=" + documentURL);
+        sendTextFrame(socket, "load url=" + documentURL, testname);
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
         // request slide show
-        sendTextFrame(socket, "downloadas name=slideshow.svg id=slideshow format=svg options=");
-        getResponseMessage(socket, "downloadas:", response, false);
+        sendTextFrame(socket, "downloadas name=slideshow.svg id=slideshow format=svg options=", testname);
+        response = getResponseMessageString(socket, "downloadas:", testname);
         CPPUNIT_ASSERT_MESSAGE("did not receive a downloadas: message as expected", !response.empty());
-        {
-            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            // "downloadas: jail= dir= name=slideshow.svg port= id=slideshow"
-            const std::string jail = tokens[0].substr(std::string("jail=").size());
-            const std::string dir = tokens[1].substr(std::string("dir=").size());
-            const std::string name = tokens[2].substr(std::string("name=").size());
-            const int port = std::stoi(tokens[3].substr(std::string("port=").size()));
-            const std::string id = tokens[4].substr(std::string("id=").size());
-            CPPUNIT_ASSERT(!jail.empty());
-            CPPUNIT_ASSERT(!dir.empty());
-            CPPUNIT_ASSERT_EQUAL(std::string("slideshow.svg"), name);
-            CPPUNIT_ASSERT_EQUAL(static_cast<int>(_uri.getPort()), port);
-            CPPUNIT_ASSERT_EQUAL(std::string("slideshow"), id);
 
-            std::string encodedDoc;
-            Poco::URI::encode(documentPath, ":/?", encodedDoc);
-            const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
-            std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-            Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
-            session->sendRequest(requestSVG);
+        Poco::StringTokenizer tokens(response.substr(11), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        // "downloadas: jail= dir= name=slideshow.svg port= id=slideshow"
+        const std::string jail = tokens[0].substr(std::string("jail=").size());
+        const std::string dir = tokens[1].substr(std::string("dir=").size());
+        const std::string name = tokens[2].substr(std::string("name=").size());
+        const int port = std::stoi(tokens[3].substr(std::string("port=").size()));
+        const std::string id = tokens[4].substr(std::string("id=").size());
+        CPPUNIT_ASSERT(!jail.empty());
+        CPPUNIT_ASSERT(!dir.empty());
+        CPPUNIT_ASSERT_EQUAL(std::string("slideshow.svg"), name);
+        CPPUNIT_ASSERT_EQUAL(static_cast<int>(_uri.getPort()), port);
+        CPPUNIT_ASSERT_EQUAL(std::string("slideshow"), id);
 
-            Poco::Net::HTTPResponse responseSVG;
-            session->receiveResponse(responseSVG);
-            CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
-            CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
-        }
+        std::string encodedDoc;
+        Poco::URI::encode(documentPath, ":/?", encodedDoc);
+        const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+        Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
+        session->sendRequest(requestSVG);
+
+        Poco::Net::HTTPResponse responseSVG;
+        session->receiveResponse(responseSVG);
+        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
+        CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
     }
     catch (const Poco::Exception& exc)
     {
@@ -971,7 +966,7 @@ void HTTPWSTest::testMaxColumn()
 {
     try
     {
-        testLimitCursor(
+        limitCursor(
             // move cursor to last column
             [](const std::shared_ptr<Poco::Net::WebSocket>& socket,
                int cursorX, int cursorY, int cursorWidth, int cursorHeight,
@@ -996,8 +991,8 @@ void HTTPWSTest::testMaxColumn()
             {
                 CPPUNIT_ASSERT_EQUAL(docHeight, newHeight);
                 CPPUNIT_ASSERT(newWidth > docWidth);
-            }
-
+            },
+            "maxColumn"
         );
     }
     catch (const Poco::Exception& exc)
@@ -1010,7 +1005,7 @@ void HTTPWSTest::testMaxRow()
 {
     try
     {
-        testLimitCursor(
+        limitCursor(
             // move cursor to last row
             [](const std::shared_ptr<Poco::Net::WebSocket>& socket,
                int cursorX, int cursorY, int cursorWidth, int cursorHeight,
@@ -1035,8 +1030,8 @@ void HTTPWSTest::testMaxRow()
             {
                 CPPUNIT_ASSERT_EQUAL(docWidth, newWidth);
                 CPPUNIT_ASSERT(newHeight > docHeight);
-            }
-
+            },
+            "maxRow"
         );
     }
     catch (const Poco::Exception& exc)
@@ -1116,16 +1111,14 @@ void HTTPWSTest::getCursor(const std::string& message,
     CPPUNIT_ASSERT(cursorHeight >= 0);
 }
 
-void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco::Net::WebSocket>& socket,
-                                                     int cursorX, int cursorY,
-                                                     int cursorWidth, int cursorHeight,
-                                                     int docWidth, int docHeight)> keyhandler,
-                                  std::function<void(int docWidth, int docHeight,
-                                                     int newWidth, int newHeight)> checkhandler)
-
+void HTTPWSTest::limitCursor(std::function<void(const std::shared_ptr<Poco::Net::WebSocket>& socket,
+                                                int cursorX, int cursorY,
+                                                int cursorWidth, int cursorHeight,
+                                                int docWidth, int docHeight)> keyhandler,
+                             std::function<void(int docWidth, int docHeight,
+                                                int newWidth, int newHeight)> checkhandler,
+                             const std::string& testname)
 {
-    const auto testname = "limitCursor ";
-
     int docSheet = -1;
     int docSheets = 0;
     int docHeight = 0;
@@ -1140,10 +1133,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     int cursorWidth = 0;
     int cursorHeight = 0;
 
-    std::string docPath;
-    std::string docURL;
     std::string response;
-    std::string text;
 
     auto socket = loadDocAndGetSocket("empty.ods", _uri, testname);
 
@@ -1155,7 +1145,7 @@ void HTTPWSTest::testLimitCursor( std::function<void(const std::shared_ptr<Poco:
     // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
     sendTextFrame(socket, "key type=input char=0 key=1027", testname);
 
-    text.clear();
+    std::string text;
     Poco::format(text, "commandvalues command=.uno:CellCursor?outputHeight=%d&outputWidth=%d&tileHeight=%d&tileWidth=%d",
                  256, 256, 3840, 3840);
     sendTextFrame(socket, text, testname);
@@ -2028,7 +2018,7 @@ void HTTPWSTest::testCursorPosition()
 
         // receive cursor position
         response = getResponseLine(socket0, "invalidatecursor:", testname);
-        Poco::StringTokenizer cursorTokens(response, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer cursorTokens(response.substr(17), ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
 
         // Create second view
@@ -2038,7 +2028,7 @@ void HTTPWSTest::testCursorPosition()
         response = getResponseMessageString(socket1, "invalidateviewcursor:", testname);
 
         Poco::JSON::Parser parser;
-        const auto result = parser.parse(response);
+        const auto result = parser.parse(response.substr(21));
         const auto& command = result.extract<Poco::JSON::Object::Ptr>();
         CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command->has("rectangle"));
 
@@ -2061,7 +2051,7 @@ void HTTPWSTest::testAlertAllUsers()
 {
     // Load two documents, each in two sessions. Tell one session to fake a disk full
     // situation. Expect to get the corresponding error back in all sessions.
-
+    const auto testname = "alertAllUsers ";
     try
     {
         std::string docPath[2];
@@ -2079,16 +2069,15 @@ void HTTPWSTest::testAlertAllUsers()
         for (int i = 0; i < 4; i++)
         {
             socket[i] = connectLOKit(_uri, *(request[i/2]), _response);
-            sendTextFrame(socket[i], "load url=" + docURL[i/2]);
+            sendTextFrame(socket[i], "load url=" + docURL[i/2], testname);
         }
 
-        sendTextFrame(socket[0], "uno .uno:fakeDiskFull");
+        sendTextFrame(socket[0], "uno .uno:fakeDiskFull", testname);
 
         for (int i = 0; i < 4; i++)
         {
-            std::string response;
-            getResponseMessage(socket[i], "error:", response, false);
-            Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::string response = getResponseMessageString(socket[i], "error:", testname);
+            Poco::StringTokenizer tokens(response.substr(6), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             std::string cmd;
             LOOLProtocol::getTokenString(tokens, "cmd", cmd);
             CPPUNIT_ASSERT_EQUAL(std::string("internal"), cmd);
@@ -2108,7 +2097,7 @@ void HTTPWSTest::testViewInfoMsg()
     // Load 2 documents, cross-check the viewid received by each of them in their status message
     // with the one sent in viewinfo message to itself as well as to other one
 
-    const std::string testname = "testViewInfoMsg:";
+    const std::string testname = "testViewInfoMsg-";
     std::string docPath;
     std::string docURL;
     getDocumentPathAndURL("hello.odt", docPath, docURL);
@@ -2125,13 +2114,13 @@ void HTTPWSTest::testViewInfoMsg()
     {
         // Load first view and remember the viewid
         sendTextFrame(socket0, "load url=" + docURL);
-        response = getResponseLine(socket0, "status:", testname + "socket[0] ");
-        parseDocSize(response, "text", part, parts, width, height, viewid[0]);
+        response = getResponseLine(socket0, "status:", testname + "0 ");
+        parseDocSize(response.substr(7), "text", part, parts, width, height, viewid[0]);
 
         // Check if viewinfo message also mentions the same viewid
-        response = getResponseMessageString(socket0, "viewinfo: ", testname + "socket[0] ");
+        response = getResponseMessageString(socket0, "viewinfo: ", testname + "0 ");
         Poco::JSON::Parser parser0;
-        Poco::JSON::Array::Ptr array = parser0.parse(response).extract<Poco::JSON::Array::Ptr>();
+        Poco::JSON::Array::Ptr array = parser0.parse(response.substr(9)).extract<Poco::JSON::Array::Ptr>();
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), array->size());
 
         Poco::JSON::Object::Ptr viewInfoObj0 = array->getObject(0);
@@ -2140,14 +2129,14 @@ void HTTPWSTest::testViewInfoMsg()
 
         // Load second view and remember the viewid
         sendTextFrame(socket1, "load url=" + docURL);
-        response = getResponseLine(socket1, "status:", testname + "socket[1] ");
-        parseDocSize(response, "text", part, parts, width, height, viewid[1]);
+        response = getResponseLine(socket1, "status:", testname + "1 ");
+        parseDocSize(response.substr(7), "text", part, parts, width, height, viewid[1]);
 
         // Check if viewinfo message in this view mentions
         // viewid of both first loaded view and this view
-        response = getResponseMessageString(socket1, "viewinfo: ", testname + "socket[1] ");
+        response = getResponseMessageString(socket1, "viewinfo: ", testname + "1 ");
         Poco::JSON::Parser parser1;
-        array = parser1.parse(response).extract<Poco::JSON::Array::Ptr>();
+        array = parser1.parse(response.substr(9)).extract<Poco::JSON::Array::Ptr>();
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), array->size());
 
         viewInfoObj0 = array->getObject(0);
@@ -2163,7 +2152,7 @@ void HTTPWSTest::testViewInfoMsg()
             CPPUNIT_FAIL("Inconsistent viewid in viewinfo and status messages");
 
         // Check if first view also got the same viewinfo message
-        const auto response1 = getResponseMessageString(socket0, "viewinfo: ", testname + "socket[0] ");
+        const auto response1 = getResponseMessageString(socket0, "viewinfo: ", testname + "0 ");
         CPPUNIT_ASSERT_EQUAL(response, response1);
     }
     catch(const Poco::Exception& exc)

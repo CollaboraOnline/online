@@ -395,22 +395,15 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
     sendTextFrame(socket1, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
     sendTextFrame(socket2, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
 
-    std::string response1;
-    getResponseMessage(socket1, "tile:", response1, true);
-    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !response1.empty());
-
-    std::string response2;
-    getResponseMessage(socket2, "tile:", response2, true);
-    CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !response2.empty());
+    const auto response1 = assertResponseLine(socket1, "tile:");
+    const auto response2 = assertResponseLine(socket2, "tile:");
 
     if (!response1.empty() && !response2.empty())
     {
-        Poco::StringTokenizer tokens1(response1, " ");
         std::string renderId1;
-        LOOLProtocol::getTokenString(tokens1, "renderid", renderId1);
-        Poco::StringTokenizer tokens2(response2, " ");
+        LOOLProtocol::getTokenString(response1, "renderid", renderId1);
         std::string renderId2;
-        LOOLProtocol::getTokenString(tokens2, "renderid", renderId2);
+        LOOLProtocol::getTokenString(response2, "renderid", renderId2);
 
         CPPUNIT_ASSERT(renderId1 == renderId2 ||
                        (renderId1 == "cached" && renderId2 != "cached") ||
@@ -434,10 +427,8 @@ void TileCacheTests::testLoad12ods()
         // check document size
         sendTextFrame(socket, "status");
 
-        std::string response;
-        getResponseMessage(socket, "status:", response, false);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        parseDocSize(response, "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
+        const auto response = assertResponseLine(socket, "status:");
+        parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
         checkBlackTiles(socket, docSheet, docWidth, docWidth, testName);
     }
