@@ -61,30 +61,33 @@ int getLoolKitProcessCount()
         }
     }
 
-    std::cerr << "Number of loolkit processes: " << result << std::endl;
     return result;
 }
 
 static
 int countLoolKitProcesses(const int expected)
 {
-    // Fairly random number, I don't think there is any actual reason for using exactly this repeat
-    // count.
-    const size_t repeat = 21;
+    std::cerr << "Waiting to have " << expected << " loolkit processes. Loolkits: ";
+
+    // Retry for about 3 seconds.
+    const auto sleepMs = static_cast<int>(POLL_TIMEOUT_MS / 3);
+    const size_t repeat = (3000 / sleepMs) + 1;
     auto count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {
+        std::cerr << count << ' ';
         if (count == expected)
         {
-            return count;
+            break;
         }
 
         // Give polls in the lool processes time to time out etc
-        Poco::Thread::sleep(POLL_TIMEOUT_MS / 2);
+        Poco::Thread::sleep(sleepMs);
 
         count = getLoolKitProcessCount();
     }
 
+    std::cerr << std::endl;
     if (expected != count)
     {
         std::cerr << "Found " << count << " LoKit processes but was expecting " << expected << "." << std::endl;
