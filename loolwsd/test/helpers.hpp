@@ -106,64 +106,6 @@ void sendTextFrame(const std::shared_ptr<Poco::Net::WebSocket>& socket, const st
 }
 
 inline
-bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bool isView = true)
-{
-    bool isLoaded = false;
-    try
-    {
-        int flags = 0;
-        int retries = 30;
-        const Poco::Timespan waitTime(1000000);
-
-        ws.setReceiveTimeout(0);
-        do
-        {
-            char buffer[READ_BUFFER_SIZE];
-            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
-            {
-                int bytes = ws.receiveFrame(buffer, sizeof(buffer), flags);
-                if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
-                {
-                    std::cerr << name << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
-                    const std::string line = LOOLProtocol::getFirstLine(buffer, bytes);
-                    const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
-                    if (line.find(prefix) == 0)
-                    {
-                        isLoaded = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    std::cerr << name << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
-                    break;
-                }
-
-                retries = 10;
-            }
-            else
-            {
-                std::cerr << "Timeout\n";
-                --retries;
-            }
-        }
-        while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-    }
-    catch (const Poco::Net::WebSocketException& exc)
-    {
-        std::cerr << exc.message();
-    }
-
-    return isLoaded;
-}
-
-inline
-bool isDocumentLoaded(std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& name = "", bool isView = true)
-{
-    return isDocumentLoaded(*ws, name, isView);
-}
-
-inline
 Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
 {
 #if ENABLE_SSL
@@ -290,7 +232,7 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
             {
                 if (!timedout)
                 {
-                    std::cerr << name << "Timeout " ;
+                    std::cerr << name << "Timeout ";
                 }
                 else
                 {
@@ -339,6 +281,20 @@ std::string assertNotInResponse(T& ws, const std::string& prefix, const std::str
     const auto res = getResponseString(ws, prefix, name, 1000);
     CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
     return res;
+}
+
+inline
+bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bool isView = true)
+{
+    const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
+    const auto message = getResponseString(ws, prefix, name);
+    return LOOLProtocol::getFirstToken(message) == prefix;
+}
+
+inline
+bool isDocumentLoaded(std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& name = "", bool isView = true)
+{
+    return isDocumentLoaded(*ws, name, isView);
 }
 
 // Connecting to a Kit process is managed by document broker, that it does several
