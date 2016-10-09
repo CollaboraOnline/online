@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-17 13:27+0200\n"
-"PO-Revision-Date: 2016-08-04 19:22+0000\n"
+"PO-Revision-Date: 2016-09-17 17:56+0000\n"
 "Last-Translator: Modestas Rimkus <modestas.rimkus@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: lt\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1470338554.000000\n"
+"X-POOTLE-MTIME: 1474134963.000000\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -299,7 +299,7 @@ msgstr "Lakštų skaičius"
 
 #: dist/toolbar/toolbar.js:742
 msgid "Selected range of cells"
-msgstr "Pažymėta sritis"
+msgstr "Pažymėta langelių sritis"
 
 #: dist/toolbar/toolbar.js:745 dist/toolbar/toolbar.js:791
 msgid "Entering text mode"

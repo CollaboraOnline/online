@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-17 13:27+0200\n"
-"PO-Revision-Date: 2016-06-13 09:59+0000\n"
+"PO-Revision-Date: 2016-09-13 07:28+0000\n"
 "Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1465811945.000000\n"
+"X-POOTLE-MTIME: 1473751734.000000\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -294,106 +294,104 @@ msgid "Size"
 msgstr "Mida"
 
 #: dist/toolbar/toolbar.js:739
-#, fuzzy
 msgid "Number of Sheets"
-msgstr "Nre. de visualitzacions"
+msgstr "Nombre de fulls"
 
 #: dist/toolbar/toolbar.js:742
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Interval de cel·les seleccionades"
 
 #: dist/toolbar/toolbar.js:745 dist/toolbar/toolbar.js:791
 msgid "Entering text mode"
-msgstr ""
+msgstr "Entrada en mode de text"
 
 #: dist/toolbar/toolbar.js:748 dist/toolbar/toolbar.js:794
 msgid "Selection Mode"
-msgstr ""
+msgstr "Mode de selecció"
 
 #: dist/toolbar/toolbar.js:751
 msgid "Choice of functions"
-msgstr ""
+msgstr "Tria de funcions"
 
 #: dist/toolbar/toolbar.js:753
 msgid "Average"
-msgstr ""
+msgstr "Mitjana"
 
 #: dist/toolbar/toolbar.js:754
 msgid "CountA"
-msgstr ""
+msgstr "ComptaA"
 
 #: dist/toolbar/toolbar.js:755
 msgid "Count"
-msgstr ""
+msgstr "Compta"
 
 #: dist/toolbar/toolbar.js:756
 msgid "Maximum"
-msgstr ""
+msgstr "Màxim"
 
 #: dist/toolbar/toolbar.js:757
 msgid "Minimum"
-msgstr ""
+msgstr "Mínim"
 
 #: dist/toolbar/toolbar.js:759
 msgid "Selection count"
-msgstr ""
+msgstr "Recompte de la selecció"
 
 #: dist/toolbar/toolbar.js:760
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 #: dist/toolbar/toolbar.js:765
 msgid "Wrap Text"
-msgstr ""
+msgstr "Ajusta el text"
 
 #: dist/toolbar/toolbar.js:766
 msgid "Merge and Center Cells"
-msgstr ""
+msgstr "Fusiona i centra les cel·les"
 
 #: dist/toolbar/toolbar.js:768
 msgid "Format as Currency"
-msgstr ""
+msgstr "Formata com a moneda"
 
 #: dist/toolbar/toolbar.js:769
 msgid "Format as Percent"
-msgstr ""
+msgstr "Formata com a percentatge"
 
 #: dist/toolbar/toolbar.js:770
 msgid "Format as Number"
-msgstr ""
+msgstr "Formata com a nombre"
 
 #: dist/toolbar/toolbar.js:771
 msgid "Format as Date"
-msgstr ""
+msgstr "Formata com a data"
 
 #: dist/toolbar/toolbar.js:772
 msgid "Add Decimal Place"
-msgstr ""
+msgstr "Afegeix una posició decimal"
 
 #: dist/toolbar/toolbar.js:773
 msgid "Delete Decimal Place"
-msgstr ""
+msgstr "Suprimeix una posició decimal"
 
 #: dist/toolbar/toolbar.js:775
 msgid "Sort Ascending"
-msgstr ""
+msgstr "Ordre ascendent"
 
 #: dist/toolbar/toolbar.js:776
 msgid "Sort Descending"
-msgstr ""
+msgstr "Ordre descendent"
 
 #: dist/toolbar/toolbar.js:785
 msgid "Number of Pages"
-msgstr ""
+msgstr "Nombre de pàgines"
 
 #: dist/toolbar/toolbar.js:788
 msgid "Word Counter"
-msgstr ""
+msgstr "Comptador de paraules"
 
 #: dist/toolbar/toolbar.js:802
-#, fuzzy
 msgid "Number of Slides"
-msgstr "Nre. de visualitzacions"
+msgstr "Nombre de diapositives"
 
 #: dist/toolbar/toolbar.js:919
 msgid "Document saved"
@@ -425,11 +423,11 @@ msgstr "EDICIÓ"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "You are locked in readonly mode"
-msgstr ""
+msgstr "Esteu en mode de només lectura"
 
 #: dist/toolbar/toolbar.js:1212
 msgid "READONLY"
-msgstr ""
+msgstr "NOMÉS LECTURA"
 
 #: dist/toolbar/toolbar.js:1324
 msgid "Layout"
@@ -553,7 +551,7 @@ msgstr " s"
 
 #: src/control/Control.ColumnHeader.js:34
 msgid "Insert column before"
-msgstr ""
+msgstr "Insereix una columna abans"
 
 #: src/control/Control.ColumnHeader.js:41 src/control/Control.Menubar.js:134
 msgid "Delete column"
@@ -572,7 +570,7 @@ msgstr "Imprimeix"
 #: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:104
 msgid "See revision history"
-msgstr ""
+msgstr "Mostra l'historial de revisions"
 
 #: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
 #: src/control/Control.Menubar.js:105
@@ -710,12 +708,12 @@ msgstr "Ajuda"
 #: src/control/Control.Menubar.js:50 src/control/Control.Menubar.js:96
 #: src/control/Control.Menubar.js:136
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Dreceres de teclat"
 
 #: src/control/Control.Menubar.js:51 src/control/Control.Menubar.js:97
 #: src/control/Control.Menubar.js:137
 msgid "About"
-msgstr ""
+msgstr "Quant a"
 
 #: src/control/Control.Menubar.js:60
 msgid "ODF presentation (.odp)"
@@ -771,7 +769,7 @@ msgstr "Esteu segur que voleu suprimir aquesta diapositiva?"
 
 #: src/control/Control.RowHeader.js:32
 msgid "Insert row above"
-msgstr ""
+msgstr "Insereix una fila a sobre"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -799,7 +797,7 @@ msgstr "Introduïu el nom nou del full"
 
 #: src/control/Toolbar.js:59 src/control/Toolbar.js:68
 msgid "Downloading..."
-msgstr ""
+msgstr "S'està baixant..."
 
 #: src/control/Toolbar.js:80 src/map/Map.js:802
 msgid "Saving..."
@@ -807,7 +805,7 @@ msgstr "S'està desant..."
 
 #: src/control/Toolbar.js:212
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Aquesta versió del %productName funciona amb"
 
 #: src/core/Socket.js:17
 msgid "Oops, there is a problem connecting to LibreOffice Online : "

@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-17 13:27+0200\n"
-"PO-Revision-Date: 2016-05-13 11:33+0000\n"
+"PO-Revision-Date: 2016-09-20 10:14+0000\n"
 "Last-Translator: VenetoABC <veneto.abc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: vec\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1463059003.000000\n"
+"X-POOTLE-MTIME: 1474366470.000000\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -108,7 +108,7 @@ msgstr "Indrìo"
 #: dist/toolbar/toolbar.js:332 src/control/Control.Menubar.js:19
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:111
 msgid "Redo"
-msgstr "Vanti"
+msgstr "Refà"
 
 #: dist/toolbar/toolbar.js:338
 msgid "Bold"

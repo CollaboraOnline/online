@@ -3,40 +3,40 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-17 13:27+0200\n"
-"PO-Revision-Date: 2016-05-30 19:30+0000\n"
+"PO-Revision-Date: 2016-09-15 18:56+0000\n"
 "Last-Translator: Harri Pitkänen <hatapitk@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1464636600.000000\n"
+"X-POOTLE-MTIME: 1473965805.000000\n"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Teemavärit"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Vakiovärit"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Web-värit"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Takaisin palettiin"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Historia"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Ei vielä historiaa."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -295,103 +295,103 @@ msgstr "Koko"
 
 #: dist/toolbar/toolbar.js:739
 msgid "Number of Sheets"
-msgstr ""
+msgstr "Taulukoiden määrä"
 
 #: dist/toolbar/toolbar.js:742
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Valittu solualue"
 
 #: dist/toolbar/toolbar.js:745 dist/toolbar/toolbar.js:791
 msgid "Entering text mode"
-msgstr ""
+msgstr "Siirrytään tekstitilaan"
 
 #: dist/toolbar/toolbar.js:748 dist/toolbar/toolbar.js:794
 msgid "Selection Mode"
-msgstr ""
+msgstr "Valintatila"
 
 #: dist/toolbar/toolbar.js:751
 msgid "Choice of functions"
-msgstr ""
+msgstr "Funktioiden valinta"
 
 #: dist/toolbar/toolbar.js:753
 msgid "Average"
-msgstr ""
+msgstr "Keskiarvo"
 
 #: dist/toolbar/toolbar.js:754
 msgid "CountA"
-msgstr ""
+msgstr "LaskeA"
 
 #: dist/toolbar/toolbar.js:755
 msgid "Count"
-msgstr ""
+msgstr "Laske"
 
 #: dist/toolbar/toolbar.js:756
 msgid "Maximum"
-msgstr ""
+msgstr "Maksimi"
 
 #: dist/toolbar/toolbar.js:757
 msgid "Minimum"
-msgstr ""
+msgstr "Minimi"
 
 #: dist/toolbar/toolbar.js:759
 msgid "Selection count"
-msgstr ""
+msgstr "Valittujen lkm"
 
 #: dist/toolbar/toolbar.js:760
 msgid "None"
-msgstr ""
+msgstr "Ei mitään"
 
 #: dist/toolbar/toolbar.js:765
 msgid "Wrap Text"
-msgstr ""
+msgstr "Rivitä teksti"
 
 #: dist/toolbar/toolbar.js:766
 msgid "Merge and Center Cells"
-msgstr ""
+msgstr "Yhdistä ja keskitä solut"
 
 #: dist/toolbar/toolbar.js:768
 msgid "Format as Currency"
-msgstr ""
+msgstr "Muotoile valuutaksi"
 
 #: dist/toolbar/toolbar.js:769
 msgid "Format as Percent"
-msgstr ""
+msgstr "Muotoile prosenttiosuudeksi"
 
 #: dist/toolbar/toolbar.js:770
 msgid "Format as Number"
-msgstr ""
+msgstr "Muotoile numeroksi"
 
 #: dist/toolbar/toolbar.js:771
 msgid "Format as Date"
-msgstr ""
+msgstr "Muotoile päiväykseksi"
 
 #: dist/toolbar/toolbar.js:772
 msgid "Add Decimal Place"
-msgstr ""
+msgstr "Lisää desimaali"
 
 #: dist/toolbar/toolbar.js:773
 msgid "Delete Decimal Place"
-msgstr ""
+msgstr "Vähennä desimaali"
 
 #: dist/toolbar/toolbar.js:775
 msgid "Sort Ascending"
-msgstr ""
+msgstr "Lajittele nousevasti"
 
 #: dist/toolbar/toolbar.js:776
 msgid "Sort Descending"
-msgstr ""
+msgstr "Lajittele laskevasti"
 
 #: dist/toolbar/toolbar.js:785
 msgid "Number of Pages"
-msgstr ""
+msgstr "Sivujen lukumäärä"
 
 #: dist/toolbar/toolbar.js:788
 msgid "Word Counter"
-msgstr ""
+msgstr "Sanalaskuri"
 
 #: dist/toolbar/toolbar.js:802
 msgid "Number of Slides"
-msgstr ""
+msgstr "Diojen lukumäärä"
 
 #: dist/toolbar/toolbar.js:919
 msgid "Document saved"
