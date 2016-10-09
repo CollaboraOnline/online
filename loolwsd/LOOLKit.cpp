@@ -258,123 +258,6 @@ namespace
 #endif
 }
 
-/// Connection thread with a client (via WSD).
-class Connection: public Runnable
-{
-public:
-    Connection(std::shared_ptr<ChildSession> session,
-               std::shared_ptr<WebSocket> ws) :
-        _sessionId(session->getId()),
-        _session(std::move(session)),
-        _ws(std::move(ws)),
-        _threadMutex(),
-        _joined(false)
-    {
-        Log::info("Connection ctor in child for " + _sessionId);
-    }
-
-    ~Connection()
-    {
-        Log::info("~Connection dtor in child for " + _sessionId);
-        stop();
-        join();
-    }
-
-    const std::string& getSessionId() const { return _sessionId; };
-    std::shared_ptr<WebSocket> getWebSocket() const { return _ws; }
-    std::shared_ptr<ChildSession> getSession() { return _session; }
-
-    void start()
-    {
-        _thread.start(*this);
-
-        // Busy-wait until we run.
-        // This is important to make sure we can process
-        // callbacks, which if we're late to start will
-        // be dropped. No need for async notification here.
-        constexpr auto delay = COMMAND_TIMEOUT_MS / 20;
-        for (auto i = 0; i < 20 && !isRunning(); ++i)
-        {
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
-        }
-    }
-
-    bool isRunning()
-    {
-        return _thread.isRunning();
-    }
-
-    void stop()
-    {
-        // What should we do here?
-    }
-
-    void join()
-    {
-        // The thread is joinable only once.
-        std::unique_lock<std::mutex> lock(_threadMutex);
-        if (!_joined)
-        {
-            _thread.join();
-            _joined = true;
-        }
-    }
-
-    void run() override
-    {
-        Util::setThreadName("kit_ws_" + _sessionId);
-
-        Log::debug("Thread started.");
-        try
-        {
-            IoUtil::SocketProcessor(_ws,
-                [this](const std::vector<char>& payload)
-                {
-                    if (!_session->handleInput(payload.data(), payload.size()))
-                    {
-                        Log::info("Socket handler flagged for finishing.");
-                        return false;
-                    }
-
-                    return true;
-                },
-                [this]() { _session->closeFrame(); },
-                []() { return !!TerminationFlag; });
-
-            if (_session->isCloseFrame())
-            {
-                Log::trace("Normal close handshake.");
-                _ws->shutdown();
-            }
-            else
-            {
-                Log::trace("Abnormal close handshake.");
-               _ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
-            }
-        }
-        catch (const Exception& exc)
-        {
-            Log::error() << "Connection::run: Exception: " << exc.displayText()
-                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                         << Log::end;
-        }
-        catch (const std::exception& exc)
-        {
-            Log::error(std::string("Connection::run: Exception: ") + exc.what());
-        }
-
-        Log::debug("Thread finished.");
-    }
-
-private:
-    const std::string _sessionId;
-    Thread _thread;
-    std::shared_ptr<ChildSession> _session;
-    std::shared_ptr<WebSocket> _ws;
-    std::mutex _threadMutex;
-    std::atomic<bool> _joined;
-};
-
 /// A document container.
 /// Owns LOKitDocument instance and connections.
 /// Manages the lifetime of a document.
@@ -464,10 +347,10 @@ public:
 
             if (!_sessions.emplace(sessionId, session).second)
             {
-                Log::error("Connection already exists for child: " + _jailId + ", session: " + sessionId);
+                Log::error("Session already exists for child: " + _jailId + ", session: " + sessionId);
             }
 
-            Log::debug("Connections: " + std::to_string(_sessions.size()));
+            Log::debug("Sessions: " + std::to_string(_sessions.size()));
             return true;
         }
         catch (const std::exception& ex)
@@ -539,7 +422,7 @@ public:
 
     /// Returns true if at least one *live* connection exists.
     /// Does not consider user activity, just socket status.
-    bool hasConnections()
+    bool hasSessions()
     {
         // -ve values for failure.
         return purgeSessions() != 0;
@@ -550,7 +433,7 @@ public:
     bool canDiscard()
     {
         //TODO: Implement proper time-out on inactivity.
-        return !hasConnections();
+        return !hasSessions();
     }
 
     /// Set Document password for given URL
@@ -1296,7 +1179,7 @@ private:
                             }
                             else
                             {
-                                Log::error() << "Connection thread for session " << session->getId() << " for view "
+                                Log::error() << "Session thread for session " << session->getId() << " for view "
                                              << viewId << " is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(type)
                                              << "] payload [" << payload << "]." << Log::end;
                             }
