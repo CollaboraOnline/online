@@ -50,13 +50,6 @@ public:
         _saveAsQueue.put(url);
     }
 
-    bool isLoadFailed() const { return _loadFailed; }
-    void setLoadFailed(const std::string& reason)
-    {
-        Log::warn("Document load failed: " + reason);
-        _loadFailed = true;
-    }
-
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
 private:
@@ -88,8 +81,6 @@ private:
     /// Store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
 
-    /// Marks if document loading failed.
-    bool _loadFailed;
     int _loadPart;
 };
 

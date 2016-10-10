@@ -41,7 +41,6 @@ ClientSession::ClientSession(const std::string& id,
     LOOLSession(id, Kind::ToClient, ws),
     _docBroker(std::move(docBroker)),
     _isReadOnly(readOnly),
-    _loadFailed(false),
     _loadPart(-1)
 {
     Log::info("ClientSession ctor [" + getName() + "].");
