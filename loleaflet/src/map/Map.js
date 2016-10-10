@@ -134,7 +134,7 @@ L.Map = L.Evented.extend({
 	},
 
 	removeView: function(viewid) {
-		var username = this._viewInfo[viewid];
+		var username = this._viewInfo[viewid].username;
 		delete this._viewInfo[viewid];
 		this.fire('removeview', {viewId: viewid, username: username});
 	},
