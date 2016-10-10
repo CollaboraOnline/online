@@ -308,12 +308,7 @@ L.Socket = L.Class.extend({
 		this._map.hideBusy();
 		this._map._active = false;
 
-		if (e.code && e.reason) {
-			this._map.fire('error', {msg: e.reason});
-		}
-		else {
-			this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
-		}
+		this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 	},
 
 	parseServerCmd: function (msg) {
