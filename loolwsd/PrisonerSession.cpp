@@ -105,7 +105,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                     errorKind == "wrongpassword")
                 {
                     forwardToPeer(_peer, buffer, length, isBinary);
-                    peer->setLoadFailed(errorKind);
+                    Log::warn("Document load failed: " + errorKind);
                     return false;
                 }
             }
