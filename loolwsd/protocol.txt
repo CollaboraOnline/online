@@ -224,20 +224,13 @@ getchildid: id=<id>
 
     Returns the child id
 
-invalidate: part=<partNumber> x=<x> y=<y> width=<width> height=<height>
+invalidatetiles: part=<partNumber> x=<x> y=<y> width=<width> height=<height>
 
     All parameters are numbers. Tells the client to invalidate any
     cached tiles for the document area specified (in twips), at any
     zoom level.
 
-    The client should handle either this message or the
-    invalidatetiles: message, which has a different syntax, with
-    payload directly from the LOK_CALLBACK_INVALIDATE_TILES
-    callback. (The latter does not contain a part number, and as the
-    protocol is asynchronous, it is unclear whether a client can be
-    sure, or find out with certainty, for what part the
-    invalidatetiles: message is. The invalidatetiles: message will be
-    dropped soon.)
+invalidatetiles: EMPTY
 
 nextmessage: size=<byteSize>
 
@@ -282,16 +275,16 @@ tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<
     render a tile, or the string 'cached' if the tile was found in the
     cache.
 
-Each LOK_CALLBACK_FOO_BAR callback causes a corresponding message to
-the client, consisting of the FOO_BAR part in lowercase, without
-underscore, followed by a colon, space and the callback payload. For
-instance:
+Each LOK_CALLBACK_FOO_BAR callback except
+LOK_CALLBACK_INVALIDATE_TILES causes a corresponding message to the
+client, consisting of the FOO_BAR part in lowercase, without
+underscore, followed by a colon, space and the callback
+payload. (LOK_CALLBACK_INVALIDATE_TILES causes an invalidatetiles:
+message as documented above.) For instance:
 
 invalidatecursor: <payload>
 
 The payload contains a rectangle describing the cursor position.
-
-invalidatetiles: <payload>
 
 The communication between the parent process (the one keeping open the
 Websocket connections to the clients) and a child process (handling
