@@ -311,7 +311,8 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
         return false;
     }
 
-    Log::info("Created new view with viewid: [" + std::to_string(_viewId) + "] for username: [" + _userName + "].");
+    Log::info() << "Created new view with viewid: [" << _viewId << + "] for username: [" << _userName
+                << "] in session: [" << getId() << "]." << Log::end;
 
     auto lockLokDoc(_loKitDocument->getLock());
 
