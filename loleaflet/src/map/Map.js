@@ -130,7 +130,7 @@ L.Map = L.Evented.extend({
 
 	addView: function(viewid, username, color) {
 		this._viewInfo[viewid] = {'username': username, 'color': color};
-		this.fire('addview', {viewId: viewid, username: username, color: color});
+		this.fire('addview', {viewId: viewid, username: username});
 	},
 
 	removeView: function(viewid) {
@@ -144,6 +144,10 @@ L.Map = L.Evented.extend({
 	},
 
 	getViewColor: function(viewid) {
+		if (this._docLayer._docType !== 'text') {
+			return L.LOUtil.getViewIdHexColor(viewid);
+		}
+
 		return this._viewInfo[viewid].color;
 	},
 

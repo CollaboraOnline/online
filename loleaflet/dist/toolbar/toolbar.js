@@ -1330,7 +1330,7 @@ map.on('addview', function(e) {
 	}, 3000);
 
 	var username = e.username;
-	var color = L.LOUtil.rgbToHex(e.color);
+	var color = L.LOUtil.rgbToHex(map.getViewColor(e.viewId));
 	if (e.viewId === map._docLayer._viewId) {
 		username = _('You');
 		color = '#000';
