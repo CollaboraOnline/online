@@ -362,7 +362,7 @@ bool WopiStorage::saveLocalFileToStorage()
     std::unique_ptr<Poco::Net::HTTPClientSession> psession(lcl_getHTTPClientSession(uriObject));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-    request.set("X-WOPIOverride", "PUT");
+    request.set("X-WOPI-Override", "PUT");
     request.setContentType("application/octet-stream");
     request.setContentLength(size);
 
