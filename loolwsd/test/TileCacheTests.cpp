@@ -340,7 +340,7 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
 
         std::cout << "status: " << response << std::endl;
         Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 
         // Expected format is something like 'type= parts= current= width= height='.
         text = tokens[0].substr(type.size());

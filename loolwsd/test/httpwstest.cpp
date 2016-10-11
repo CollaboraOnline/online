@@ -657,9 +657,9 @@ void HTTPWSTest::testExcelLoad()
         while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
         socket.shutdown();
         Util::removeFile(documentPath);
-        // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
+        // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142 viewid=22'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
     }
     catch (const Poco::Exception& exc)
     {
@@ -814,9 +814,9 @@ void HTTPWSTest::testRenderingOptions()
         socket.shutdown();
         Util::removeFile(documentPath);
 
-        // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142'.
+        // Expected format is something like 'type=text parts=2 current=0 width=12808 height=1142 viewid=25'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 
         const std::string token = tokens[4];
         const std::string prefix = "height=";
@@ -1369,9 +1369,9 @@ void HTTPWSTest::getPartHashCodes(const std::string status,
 
     std::cerr << "Reading parts from [" << status << "]." << std::endl;
 
-    // Expected format is something like 'type= parts= current= width= height='.
+    // Expected format is something like 'type= parts= current= width= height= viewid='.
     Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 
     const auto type = tokens[0].substr(std::string("type=").size());
     CPPUNIT_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
@@ -1408,9 +1408,9 @@ void HTTPWSTest::getDocSize(const std::string& message, const std::string& type,
                             int& part, int& parts, int& width, int& height)
 {
     Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), tokens.count());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 
-    // Expected format is something like 'type= parts= current= width= height='.
+    // Expected format is something like 'type= parts= current= width= height= viewid='.
     const std::string text = tokens[0].substr(std::string("type=").size());
     parts = std::stoi(tokens[1].substr(std::string("parts=").size()));
     part = std::stoi(tokens[2].substr(std::string("current=").size()));
