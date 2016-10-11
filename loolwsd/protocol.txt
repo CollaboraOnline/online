@@ -241,9 +241,10 @@ nextmessage: size=<byteSize>
     must be handled by clients that cannot (like those using Poco
     1.6.0.
 
-pong
+pong rendercount=<num>
 
-    sent in reply to a 'ping' message
+    sent in reply to a 'ping' message, where <num> is the total number
+    of rendered tiles of the document.
 
 status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height> viewid=<viewId> [partNames]
 

@@ -234,6 +234,8 @@ public:
     /// Forward a message from client session to its respective child session.
     bool forwardToChild(const std::string& viewId, const char *buffer, int length);
 
+    int getRenderedTileCount() { return _debugRenderedTileCount; }
+
 private:
 
     /// Sends the .uno:Save command to LoKit.
@@ -274,6 +276,8 @@ private:
     /// Versioning is used to prevent races between
     /// painting and invalidation.
     std::atomic<size_t> _tileVersion;
+
+    int _debugRenderedTileCount;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;
