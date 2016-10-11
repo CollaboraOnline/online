@@ -304,15 +304,16 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('invalidatecursor:')) {
 			this._onInvalidateCursorMsg(textMsg);
 		}
-		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.match('EMPTY')) {
+		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.startsWith('EMPTY')) {
 			this._onInvalidateTilesMsg(textMsg);
 		}
-		else if (textMsg.startsWith('invalidatetiles:') && textMsg.match('EMPTY')) {
+		else if (textMsg.startsWith('invalidatetiles:') && textMsg.startsWith('EMPTY')) {
 			var msg = 'invalidatetiles: ';
 			if (this._docType === 'text') {
 				msg += 'part=0 ';
 			} else {
-				msg += 'part=' + this._selectedPart + ' ';
+				var partNumber = parseInt(textMsg.substring(6));
+				msg += 'part=' + (isNaN(partNumber) ? this._selectedPart : partNumber) + ' ';
 			}
 			msg += 'x=0 y=0 ';
 			msg += 'width=' + this._docWidthTwips + ' ';
