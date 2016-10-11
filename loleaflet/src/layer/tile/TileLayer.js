@@ -1027,7 +1027,11 @@ L.TileLayer = L.GridLayer.extend({
 				tile._debugPopup = L.popup({className: 'debug', offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false})
 						.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getWest() + (tileBound.getEast() - tileBound.getWest())/5));
 				this._debugInfo.addLayer(tile._debugPopup);
+				if (this._debugTiles[key]) {
+					this._debugInfo.removeLayer(this._debugTiles[key]);
+				}
 				tile._debugTile = L.rectangle(tileBound, {color: 'blue', weight: 1, fillOpacity: 0, pointerEvents: 'none'});
+				this._debugTiles[key] = tile._debugTile;
 				tile._debugTime = this._debugGetTimeArray();
 				this._debugInfo.addLayer(tile._debugTile);
 			}
@@ -1038,7 +1042,7 @@ L.TileLayer = L.GridLayer.extend({
 						'<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>'));
 			}
 			if (tile._debugTile) {
-				tile._debugTile.setStyle({fillOpacity: 0});
+				tile._debugTile.setStyle({fillOpacity: (command.renderid === 'cached') ? 0.1 : 0, fillColor: 'yellow' });
 			}
 			this._debugShowTileData();
 		}
@@ -1826,6 +1830,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._debug) {
 			this._debugInfo = new L.LayerGroup();
 			map.addLayer(this._debugInfo);
+			this._debugTiles = {};
 			this._debugInvalidBounds = {};
 			this._debugInvalidBoundsMessage = {};
 			this._debugTimeout();
@@ -1833,6 +1838,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._debugCancelledTiles = 0;
 			this._debugLoadCount = 0;
 			this._debugInvalidateCount = 0;
+			this._debugRenderCount = 0;
 			if (!this._debugDataTileCombine) {
 				this._debugDataTileCombine = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
 				this._debugDataFromKeyInputToInvalidate = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
@@ -1841,6 +1847,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			}
 			this._debugTimePING = this._debugGetTimeArray();
+			this._debugPINGQueue = [];
 			this._debugTimeKeypress = this._debugGetTimeArray();
 			this._debugKeypressQueue = [];
 		}
@@ -1874,11 +1881,16 @@ L.TileLayer = L.GridLayer.extend({
 			var timeText = this._debugSetTimes(this._debugTimeKeypress, now - oldestKeypress);
 			this._debugDataFromKeyInputToInvalidate.setPrefix('Elapsed time between key input and next invalidate: ' + timeText);
 		}
+
+		// query server ping time after invalidation messages
+		// pings will be paired with the pong messages
+		this._debugPINGQueue.push(+new Date());
+		this._map._socket.sendMessage('ping');
 	},
 
 	_debugAddInvalidationData: function(tile) {
 		if (tile._debugTile) {
-			tile._debugTile.setStyle({fillOpacity: 0.5});
+			tile._debugTile.setStyle({fillOpacity: 0.5, fillColor: 'blue'});
 			tile._debugTime.date = +new Date();
 			tile._debugInvalidateCount++;
 			this._debugInvalidateCount++;

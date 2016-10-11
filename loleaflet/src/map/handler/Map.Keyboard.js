@@ -314,9 +314,6 @@ L.Map.Keyboard = L.Handler.extend({
 					unoKeyCode = this._toUNOKeyCode(keyCode);
 				}
 				if (docLayer._debug) {
-					// query server ping time at key press
-					this._map._docLayer._debugTimePING.date = +new Date();
-					this._map._socket.sendMessage('ping');
 					// key press times will be paired with the invalidation messages
 					docLayer._debugKeypressQueue.push(+new Date());
 				}
