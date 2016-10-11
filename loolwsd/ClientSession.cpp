@@ -152,7 +152,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "ping")
     {
-        sendTextFrame("pong");
+        std::string count = std::to_string(_docBroker->getRenderedTileCount());
+        sendTextFrame("pong rendercount=" + count);
         return true;
     }
     else if (tokens[0] == "renderfont")

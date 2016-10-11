@@ -117,7 +117,8 @@ DocumentBroker::DocumentBroker() :
     _cursorHeight(0),
     _mutex(),
     _saveMutex(),
-    _tileVersion(0)
+    _tileVersion(0),
+    _debugRenderedTileCount(0)
 {
     Log::info("Empty DocumentBroker (marked to destroy) created.");
 }
@@ -142,7 +143,8 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _cursorHeight(0),
     _mutex(),
     _saveMutex(),
-    _tileVersion(0)
+    _tileVersion(0),
+    _debugRenderedTileCount(0)
 {
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
@@ -552,6 +554,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
     const std::string request = "tile " + tile.serialize();
     _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
+    _debugRenderedTileCount++;
 }
 
 void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
@@ -597,6 +600,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             tile.setVersion(++_tileVersion);
             tileCache().subscribeToTileRendering(tile, session);
             tiles.push_back(tile);
+            _debugRenderedTileCount++;
         }
     }
 
