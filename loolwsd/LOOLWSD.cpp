@@ -182,7 +182,6 @@ static inline
 void shutdownLimitReached(WebSocket& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
-    const std::string close = Poco::format(SERVICE_UNAVALABLE_LIMIT_REACHED, static_cast<int>(WebSocket::WS_POLICY_VIOLATION));
 
     /* loleaflet sends loolclient, load and partrectangles message immediately
        after web socket handshake, so closing web socket fails loading page in
@@ -204,7 +203,7 @@ void shutdownLimitReached(WebSocket& ws)
             if (--retries == 4)
             {
                 ws.sendFrame(error.data(), error.size());
-                ws.shutdown(WebSocket::WS_POLICY_VIOLATION, close);
+                ws.shutdown(WebSocket::WS_POLICY_VIOLATION, "");
             }
         }
         while (retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
@@ -212,7 +211,7 @@ void shutdownLimitReached(WebSocket& ws)
     catch (Exception&)
     {
         ws.sendFrame(error.data(), error.size());
-        ws.shutdown(WebSocket::WS_POLICY_VIOLATION, close);
+        ws.shutdown(WebSocket::WS_POLICY_VIOLATION, "");
     }
 }
 
@@ -897,8 +896,8 @@ private:
             // something wrong, with internal exceptions
             Log::trace("Abnormal close handshake.");
             session->closeFrame();
-            ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
-            session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
+            ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, "");
+            session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY, "");
         }
     }
 
@@ -1050,7 +1049,7 @@ public:
                         const std::string msg = std::string("error: ") + exc.what();
                         ws->sendFrame(msg.data(), msg.size());
                         // abnormal close frame handshake
-                        ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, msg);
+                        ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, "");
                     }
                     catch (const std::exception& exc2)
                     {
@@ -1275,8 +1274,8 @@ public:
                 // something wrong, with internal exceptions
                 Log::trace("Abnormal close handshake.");
                 session->closeFrame();
-                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
-                session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY, SERVICE_UNAVALABLE_INTERNAL_ERROR);
+                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY, "");
+                session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY, "");
             }
         }
         catch (const Exception& exc)
