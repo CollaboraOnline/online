@@ -103,7 +103,6 @@ void HTTPWSError::testMaxDocuments()
         sendTextFrame(socket, "partpagerectangles ");
         statusCode = getErrorCode(socket, message);
         CPPUNIT_ASSERT_EQUAL(static_cast<Poco::UInt16>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
-        CPPUNIT_ASSERT_MESSAGE("Wrong error message ", message.find("error: cmd=socket kind=close") != std::string::npos);
     }
     catch (const Poco::Exception& exc)
     {
@@ -144,7 +143,6 @@ void HTTPWSError::testMaxConnections()
         sendTextFrame(socketN, "partpagerectangles ");
         statusCode = getErrorCode(*socketN, message);
         CPPUNIT_ASSERT_EQUAL(static_cast<Poco::UInt16>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
-        CPPUNIT_ASSERT_MESSAGE("Wrong error message ", message.find("error: cmd=socket kind=close") != std::string::npos);
     }
     catch (const Poco::Exception& exc)
     {
