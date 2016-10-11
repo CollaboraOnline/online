@@ -36,13 +36,13 @@ MasterProcessSession::MasterProcessSession(const std::string& id,
                                            std::shared_ptr<Poco::Net::WebSocket> ws,
                                            std::shared_ptr<DocumentBroker> docBroker,
                                            std::shared_ptr<BasicTileQueue> queue,
-                                           const bool isReadOnly) :
+                                           const bool readOnly) :
     LOOLSession(id, kind, ws),
     _curPart(0),
     _loadPart(-1),
     _docBroker(docBroker),
     _queue(queue),
-    _isReadOnly(isReadOnly)
+    _isReadOnly(readOnly)
 {
     Log::info("MasterProcessSession ctor [" + getName() + "].");
 }
