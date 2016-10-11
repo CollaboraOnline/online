@@ -18,8 +18,10 @@
 
 #include <atomic>
 #include <cassert>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <mutex>
@@ -167,6 +169,61 @@ namespace Util
     bool windowingAvailable()
     {
         return std::getenv("DISPLAY") != nullptr;
+    }
+
+    bool saveDataToFileSafely(std::string fileName, const char *data, size_t size)
+    {
+        const auto tempFileName = fileName + ".temp";
+        std::fstream outStream(tempFileName, std::ios::out);
+
+        // If we can't create the file properly, just remove it
+        if (!outStream.good())
+        {
+            Log::error("Creating " + tempFileName + " failed, disk full?");
+            // Try removing both just in case
+            std::remove(tempFileName.c_str());
+            std::remove(fileName.c_str());
+            return false;
+        }
+        else
+        {
+            outStream.write(data, size);
+            if (!outStream.good())
+            {
+                Log::error("Writing to " + tempFileName + " failed, disk full?");
+                outStream.close();
+                std::remove(tempFileName.c_str());
+                std::remove(fileName.c_str());
+                return false;
+            }
+            else
+            {
+                outStream.close();
+                if (!outStream.good())
+                {
+                    Log::error("Closing " + tempFileName + " failed, disk full?");
+                    std::remove(tempFileName.c_str());
+                    std::remove(fileName.c_str());
+                    return false;
+                }
+                else
+                {
+                    // Everything OK, rename the file to its proper name
+                    if (std::rename(tempFileName.c_str(), fileName.c_str()) == 0)
+                    {
+                        Log::debug() << "Renaming " << tempFileName << " to " << fileName << " OK." << Log::end;
+                        return true;
+                    }
+                    else
+                    {
+                        Log::error("Renaming " + tempFileName + " to " + fileName + " failed, disk full?");
+                        std::remove(tempFileName.c_str());
+                        std::remove(fileName.c_str());
+                        return false;
+                    }
+                }
+            }
+        }
     }
 
     bool encodeBufferToPNG(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode)

@@ -49,6 +49,13 @@ namespace Util
 
     bool windowingAvailable();
 
+    // Save data to a file (overwriting an existing file if necessary) with checks for errors. Write
+    // to a temporary file in the same directory that is then atomically renamed to the desired name
+    // if everything goes well. In case of any error, both the destination file (if it already
+    // exists) and the temporary file (if was created, or existed already) are removed. Return true
+    // if everything succeeded.
+    bool saveDataToFileSafely(std::string fileName, const char *data, size_t size);
+
     // Sadly, older libpng headers don't use const for the pixmap pointer parameter to
     // png_write_row(), so can't use const here for pixmap.
     bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,

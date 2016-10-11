@@ -122,11 +122,8 @@ void TileCache::saveTile(int part, int width, int height, int tilePosX, int tile
 {
     const std::string fileName = _cacheDir + "/" + cacheFileName(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 
-    Log::trace() << "Saving cache tile: " << fileName << Log::end;
-
-    std::fstream outStream(fileName, std::ios::out);
-    outStream.write(data, size);
-    outStream.close();
+    if (Util::saveDataToFileSafely(fileName, data, size))
+        Log::trace() << "Saved cache tile: " << fileName << Log::end;
 }
 
 std::string TileCache::getTextFile(const std::string& fileName)
@@ -193,9 +190,7 @@ void TileCache::saveRendering(const std::string& name, const std::string& dir, c
 
     const std::string fileName = dirName + "/" + name;
 
-    std::fstream outStream(fileName, std::ios::out);
-    outStream.write(data, size);
-    outStream.close();
+    Util::saveDataToFileSafely(fileName, data, size);
 }
 
 std::unique_ptr<std::fstream> TileCache::lookupRendering(const std::string& name, const std::string& dir)
