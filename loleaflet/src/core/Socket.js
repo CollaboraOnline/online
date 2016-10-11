@@ -211,10 +211,13 @@ L.Socket = L.Class.extend({
 			}
 			this._map.fire('error', {msg: textMsg});
 		}
-		else if (textMsg === 'pong' && this._map._docLayer && this._map._docLayer._debug) {
+		else if (textMsg.startsWith('pong ') && this._map._docLayer && this._map._docLayer._debug) {
 			var times = this._map._docLayer._debugTimePING;
-			var timeText = this._map._docLayer._debugSetTimes(times, +new Date() - times.date);
-			this._map._docLayer._debugDataPING.setPrefix('Server ping time: ' + timeText);
+			var timeText = this._map._docLayer._debugSetTimes(times, +new Date() - this._map._docLayer._debugPINGQueue.shift());
+			this._map._docLayer._debugDataPING.setPrefix('Server ping time: ' + timeText +
+					'. Rendered tiles: ' + command.rendercount +
+					', last: ' + (command.rendercount - this._map._docLayer._debugRenderCount));
+			this._map._docLayer._debugRenderCount = command.rendercount;
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
@@ -416,6 +419,12 @@ L.Socket = L.Class.extend({
 			}
 			else if (tokens[i].substring(0, 7) === 'params=') {
 				command.params = tokens[i].substring(7).split(',');
+			}
+			else if (tokens[i].substring(0, 9) === 'renderid=') {
+				command.renderid = tokens[i].substring(9);
+			}
+			else if (tokens[i].substring(0, 12) === 'rendercount=') {
+				command.rendercount = parseInt(tokens[i].substring(12));
 			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
