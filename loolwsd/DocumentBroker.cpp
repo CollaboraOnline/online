@@ -405,7 +405,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
 
     // Request a new session from the child kit.
     Log::debug("DocBroker to Child: " + aMessage.substr(0, aMessage.length() - 1));
-    _childProcess->getWebSocket()->sendFrame(aMessage.data(), aMessage.size());
+    _childProcess->sendTextFrame(aMessage);
 
     auto ret = _sessions.emplace(id, session);
     if (!ret.second)
@@ -454,7 +454,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
         // Let the child know the client has disconnected.
         const std::string msg("child-" + id + " disconnect");
-        _childProcess->getWebSocket()->sendFrame(msg.data(), msg.size());
+        _childProcess->sendTextFrame(msg);
     }
 
     return _sessions.size();
@@ -561,7 +561,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     // Forward to child to render.
     Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
     const std::string request = "tile " + tile.serialize();
-    _childProcess->getWebSocket()->sendFrame(request.data(), request.size());
+    _childProcess->sendTextFrame(request);
     _debugRenderedTileCount++;
 }
 
@@ -620,7 +620,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
         // Forward to child to render.
         const auto req = newTileCombined.serialize("tilecombine");
         Log::debug() << "Sending residual tilecombine: " << req << Log::end;
-        _childProcess->getWebSocket()->sendFrame(req.data(), req.size());
+        _childProcess->sendTextFrame(req);
     }
 }
 
@@ -632,7 +632,7 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
     if (!canceltiles.empty())
     {
         Log::debug() << "Forwarding canceltiles request: " << canceltiles << Log::end;
-        _childProcess->getWebSocket()->sendFrame(canceltiles.data(), canceltiles.size());
+        _childProcess->sendTextFrame(canceltiles);
     }
 }
 
@@ -748,7 +748,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const char *buffe
     {
         const auto msg = "child-" + viewId + ' ' + message;
         Log::debug("DocBroker to Child: " + msg);
-        _childProcess->getWebSocket()->sendFrame(msg.data(), msg.size());
+        _childProcess->sendTextFrame(msg);
         return true;
     }
     else

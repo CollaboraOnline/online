@@ -87,7 +87,24 @@ public:
     }
 
     Poco::Process::PID getPid() const { return _pid; }
-    std::shared_ptr<Poco::Net::WebSocket> getWebSocket() const { return _ws; }
+
+    /// Send a text payload to the child-process WS.
+    bool sendTextFrame(const std::string& data)
+    {
+        try
+        {
+            _ws->sendFrame(data.data(), data.size());
+            return true;
+        }
+        catch (const std::exception& exc)
+        {
+            Log::error() << "Failed to send child [" << _pid << "] data ["
+                         << data << "] due to: " << exc.what() << Log::end;
+            throw;
+        }
+
+        return false;
+    }
 
     /// Check whether this child is alive and able to respond.
     bool isAlive() const
