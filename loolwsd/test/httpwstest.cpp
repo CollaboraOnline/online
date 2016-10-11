@@ -351,8 +351,22 @@ void HTTPWSTest::loadDoc(const std::string& documentURL)
                     if (msg.find(prefix) == 0)
                     {
                         const auto status = msg.substr(prefix.length());
-                        // Might be too strict, consider something flexible instread.
-                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
+                        Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+                        std::string type;
+                        int parts;
+                        int current;
+                        int width;
+                        int height;
+                        CPPUNIT_ASSERT(LOOLProtocol::getTokenString(tokens, "type", type));
+                        CPPUNIT_ASSERT_EQUAL(std::string("text"), type);
+                        CPPUNIT_ASSERT(LOOLProtocol::getTokenInteger(tokens, "parts", parts));
+                        CPPUNIT_ASSERT_EQUAL(1, parts);
+                        CPPUNIT_ASSERT(LOOLProtocol::getTokenInteger(tokens, "current", current));
+                        CPPUNIT_ASSERT_EQUAL(0, current);
+                        CPPUNIT_ASSERT(LOOLProtocol::getTokenInteger(tokens, "width", width));
+                        CPPUNIT_ASSERT_EQUAL(12808, width);
+                        CPPUNIT_ASSERT(LOOLProtocol::getTokenInteger(tokens, "height", height));
+                        CPPUNIT_ASSERT_EQUAL(16408, height);
                     }
                     else if (msg.find("editlock") == 0)
                     {
