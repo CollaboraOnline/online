@@ -78,6 +78,7 @@
 #include <Poco/Net/SocketAddress.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
+#include <Poco/Pipe.h>
 #include <Poco/Process.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
@@ -133,6 +134,7 @@ using Poco::Net::ServerSocket;
 using Poco::Net::SocketAddress;
 using Poco::Net::WebSocket;
 using Poco::Path;
+using Poco::Pipe;
 using Poco::Process;
 using Poco::ProcessHandle;
 using Poco::StreamCopier;
@@ -1848,7 +1850,11 @@ Process::PID LOOLWSD::createForKit()
               Poco::cat(std::string(" "), args.begin(), args.end()));
 
     lastForkRequestTime = std::chrono::steady_clock::now();
-    ProcessHandle child = Process::launch(forKitPath, args);
+    Pipe inPipe;
+    ProcessHandle child = Process::launch(forKitPath, args, &inPipe, nullptr, nullptr);
+
+    // The Pipe dtor closes the fd, so dup it.
+    ForKitWritePipe = dup(inPipe.writeHandle());
 
     return child.id();
 }
@@ -1906,23 +1912,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (ClientPortNumber == MasterPortNumber)
         throw IncompatibleOptionsException("port");
 
-    // Create the directory where the fifo pipe with ForKit will be.
-    const Path pipePath = Path::forDirectory(ChildRoot + "/" + FIFO_PATH);
-    if (!File(pipePath).exists() && !File(pipePath).createDirectory())
-    {
-        Log::error("Failed to create pipe directory [" + pipePath.toString() + "].");
-        return Application::EXIT_SOFTWARE;
-    }
-
-    // Create the fifo with ForKit.
-    const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
-    Log::debug("mkfifo(" + pipeLoolwsd + ")");
-    if (mkfifo(pipeLoolwsd.c_str(), 0666) < 0 && errno != EEXIST)
-    {
-        Log::syserror("Failed to create fifo [" + pipeLoolwsd + "].");
-        return Application::EXIT_SOFTWARE;
-    }
-
     // Configure the Server.
     // Note: TCPServer internally uses a ThreadPool to
     // dispatch connections (the default if not given).
@@ -1959,14 +1948,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Log::error("Failed to spawn loolforkit.");
         return Application::EXIT_SOFTWARE;
     }
-
-    // Open write fifo pipe with ForKit.
-    if ( (ForKitWritePipe = open(pipeLoolwsd.c_str(), O_WRONLY) ) < 0 )
-    {
-        Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for writing.");
-        return Application::EXIT_SOFTWARE;
-    }
-    Log::debug("open(" + pipeLoolwsd + ", WRONLY) = " + std::to_string(ForKitWritePipe));
 
     // Init the Admin manager
     Admin::instance().setForKitPid(forKitPid);

@@ -55,8 +55,6 @@ static std::map<Process::PID, std::string> childJails;
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 
-static int pipeFd = -1;
-
 /// Dispatcher class to demultiplex requests from
 /// WSD and handles them.
 class CommandDispatcher : public IoUtil::PipeReader
@@ -209,9 +207,8 @@ static int createLibreOfficeKit(const std::string& childRoot,
     Process::PID pid;
     if (!(pid = fork()))
     {
-        // quicker than a generic socket closing approach.
-        // (but pipeFd is a pipe, not a socket...?)
-        close(pipeFd);
+        // Close the pipe from loolwsd
+        close(0);
 
         UnitKit::get().postFork();
 
@@ -366,16 +363,6 @@ int main(int argc, char** argv)
     if (!std::getenv("LD_BIND_NOW"))
         Log::info("Note: LD_BIND_NOW is not set.");
 
-    // Open read fifo pipe with WSD.
-    const Path pipePath = Path::forDirectory(childRoot + "/" + FIFO_PATH);
-    const std::string pipeLoolwsd = Path(pipePath, FIFO_LOOLWSD).toString();
-    if ( (pipeFd = open(pipeLoolwsd.c_str(), O_RDONLY) ) < 0 )
-    {
-        Log::syserror("Failed to open pipe [" + pipeLoolwsd + "] for reading. Exiting.");
-        std::_Exit(Application::EXIT_SOFTWARE);
-    }
-    Log::debug("open(" + pipeLoolwsd + ", RDONLY) = " + std::to_string(pipeFd));
-
     if (!haveCorrectCapabilities())
         return Application::EXIT_SOFTWARE;
 
@@ -393,7 +380,7 @@ int main(int argc, char** argv)
         std::_Exit(Application::EXIT_SOFTWARE);
     }
 
-    CommandDispatcher commandDispatcher(pipeFd);
+    CommandDispatcher commandDispatcher(0);
     Log::info("ForKit process is ready.");
 
     while (!TerminationFlag)
@@ -433,8 +420,6 @@ int main(int argc, char** argv)
             cleanupChildren();
         }
     }
-
-    close(pipeFd);
 
     int returnValue = Application::EXIT_OK;
     UnitKit::get().returnValue(returnValue);
