@@ -228,7 +228,7 @@ static void forkChildren(const int number)
         Util::checkDiskSpaceOnRegisteredFileSystems();
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
-        IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, aMessage);
+        IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage);
         lastForkRequestTime = std::chrono::steady_clock::now();
     }
 }

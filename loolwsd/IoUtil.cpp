@@ -214,7 +214,7 @@ void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws)
 
 }
 
-ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size)
+ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size)
 {
     ssize_t count = 0;
     while(true)
@@ -244,7 +244,7 @@ ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size)
     return count;
 }
 
-ssize_t readFIFO(int pipe, char* buffer, ssize_t size)
+ssize_t readFromPipe(int pipe, char* buffer, ssize_t size)
 {
     ssize_t bytes;
     do
@@ -302,8 +302,8 @@ int PipeReader::readLine(std::string& line,
         else if (pipe.revents & (POLLIN | POLLPRI))
         {
             char buffer[READ_BUFFER_SIZE];
-            const auto bytes = readFIFO(_pipe, buffer, sizeof(buffer));
-            Log::trace() << "readFIFO for pipe: " << _name << " returned: " << bytes << Log::end;
+            const auto bytes = readFromPipe(_pipe, buffer, sizeof(buffer));
+            Log::trace() << "readFromPipe for pipe: " << _name << " returned: " << bytes << Log::end;
             if (bytes < 0)
             {
                 return -1;

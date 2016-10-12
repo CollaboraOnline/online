@@ -36,14 +36,14 @@ namespace IoUtil
     /// Call WebSocket::shutdown() ignoring Poco::IOException.
     void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws);
 
-    ssize_t writeFIFO(int pipe, const char* buffer, ssize_t size);
+    ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size);
     inline
-    ssize_t writeFIFO(int pipe, const std::string& message)
+    ssize_t writeToPipe(int pipe, const std::string& message)
     {
-        return writeFIFO(pipe, message.c_str(), message.size());
+        return writeToPipe(pipe, message.c_str(), message.size());
     }
 
-    ssize_t readFIFO(int pipe, char* buffer, ssize_t size);
+    ssize_t readFromPipe(int pipe, char* buffer, ssize_t size);
 
     /// Helper class to handle reading from a pipe.
     class PipeReader
