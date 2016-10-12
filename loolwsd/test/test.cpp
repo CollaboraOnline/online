@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <cstdlib>
 #include <iostream>
 
 #include <cppunit/BriefTestProgressListener.h>
@@ -25,7 +26,7 @@ class HTTPGetTest;
 
 bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry)
 {
-    const char* envar = getenv("CPPUNIT_TEST_NAME");
+    const char* envar = std::getenv("CPPUNIT_TEST_NAME");
     if (envar)
     {
         std::string testName(envar);

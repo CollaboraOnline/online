@@ -10,6 +10,7 @@
 #include "config.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include <condition_variable>
 #include <mutex>
 #include <thread>
@@ -118,7 +119,7 @@ Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
 inline
 std::string getTestServerURI()
 {
-    static const char* clientPort = getenv("LOOL_TEST_CLIENT_PORT");
+    static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
 
     static std::string serverURI(
 #if ENABLE_SSL

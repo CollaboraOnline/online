@@ -1803,11 +1803,11 @@ void LOOLWSD::handleOption(const std::string& optionName,
     else if (optionName == "careerspan")
         careerSpanSeconds = std::stoi(value);
 
-    static const char* clientPort = getenv("LOOL_TEST_CLIENT_PORT");
+    static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
         ClientPortNumber = std::stoi(clientPort);
 
-    static const char* masterPort = getenv("LOOL_TEST_MASTER_PORT");
+    static const char* masterPort = std::getenv("LOOL_TEST_MASTER_PORT");
     if (masterPort)
         MasterPortNumber = std::stoi(masterPort);
 #endif
