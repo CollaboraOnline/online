@@ -219,6 +219,10 @@ L.Socket = L.Class.extend({
 				textMsg = textMsg.replace(/%2/g, (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online'));
 				textMsg = textMsg.replace(/%3/g, (typeof brandProductURL !== 'undefined' ? brandProductURL : 'https://wiki.documentfoundation.org/Development/LibreOffice_Online'));
 			}
+			else if (command.errorKind === 'serviceunavailable') {
+				this._map._fatal = true;
+				textMsg = errorMessages.serviceunavailable;
+			}
 			this._map.fire('error', {msg: textMsg});
 		}
 		else if (textMsg.startsWith('pong ') && this._map._docLayer && this._map._docLayer._debug) {
