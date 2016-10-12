@@ -184,7 +184,7 @@ namespace Log
 
     void syserror(const std::string& msg)
     {
-        logger().error(prefix("SYS") + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
+        logger().error(prefix("ERR") + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
     }
 }
 
