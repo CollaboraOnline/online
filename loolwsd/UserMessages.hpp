@@ -13,8 +13,8 @@
 #define INCLUDED_USERMESSAGES_HPP
 
 //NOTE: For whatever reason Poco seems to trim the first character.
-constexpr auto SERVICE_UNAVALABLE_INTERNAL_ERROR = " Service is unavailable. Please try again later and report to your administrator if the issue persists.";
-constexpr auto PAYLOAD_UNAVALABLE_LIMIT_REACHED = "error: cmd=socket kind=limitreached params=%d,%d";
+constexpr auto SERVICE_UNAVAILABLE_INTERNAL_ERROR = "error: cmd=socket kind=serviceunavailable";
+constexpr auto PAYLOAD_UNAVAILABLE_LIMIT_REACHED = "error: cmd=socket kind=limitreached params=%d,%d";
 
 #endif
 
