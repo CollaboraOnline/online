@@ -199,10 +199,10 @@ int main(int argc, char** argv)
     }
 
     // Initialization
-    const bool logToFile = getenv("LOOL_LOGFILE");
-    const char* logFilename = getenv("LOOL_LOGFILENAME");
-    const char* logLevel = getenv("LOOL_LOGLEVEL");
-    const char* logColor = getenv("LOOL_LOGCOLOR");
+    const bool logToFile = std::getenv("LOOL_LOGFILE");
+    const char* logFilename = std::getenv("LOOL_LOGFILENAME");
+    const char* logLevel = std::getenv("LOOL_LOGLEVEL");
+    const char* logColor = std::getenv("LOOL_LOGCOLOR");
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
     {
@@ -220,11 +220,11 @@ int main(int argc, char** argv)
     std::string loTemplate;
 
 #if ENABLE_DEBUG
-    static const char* clientPort = getenv("LOOL_TEST_CLIENT_PORT");
+    static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
         ClientPortNumber = std::stoi(clientPort);
 
-    static const char* masterPort = getenv("LOOL_TEST_MASTER_PORT");
+    static const char* masterPort = std::getenv("LOOL_TEST_MASTER_PORT");
     if (masterPort)
         MasterPortNumber = std::stoi(masterPort);
 #endif

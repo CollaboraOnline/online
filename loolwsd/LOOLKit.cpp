@@ -13,15 +13,14 @@
 
 #include <dlfcn.h>
 #include <ftw.h>
-#include <climits>
 #include <malloc.h>
-#include <cstdlib>
 #include <sys/capability.h>
 #include <unistd.h>
 #include <utime.h>
 
 #include <atomic>
 #include <cassert>
+#include <climits>
 #include <condition_variable>
 #include <cstdlib>
 #include <iostream>
@@ -1304,10 +1303,10 @@ void lokit_main(const std::string& childRoot,
                 bool displayVersion)
 {
     // Reinitialize logging when forked.
-    const bool logToFile = getenv("LOOL_LOGFILE");
-    const char* logFilename = getenv("LOOL_LOGFILENAME");
-    const char* logLevel = getenv("LOOL_LOGLEVEL");
-    const char* logColor = getenv("LOOL_LOGCOLOR");
+    const bool logToFile = std::getenv("LOOL_LOGFILE");
+    const char* logFilename = std::getenv("LOOL_LOGFILENAME");
+    const char* logLevel = std::getenv("LOOL_LOGLEVEL");
+    const char* logColor = std::getenv("LOOL_LOGCOLOR");
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
     {
@@ -1370,7 +1369,7 @@ void lokit_main(const std::string& childRoot,
 
             // Copy (link) LO installation and other necessary files into it from the template.
             bool bLoopMounted = false;
-            if (getenv("LOOL_BIND_MOUNT"))
+            if (std::getenv("LOOL_BIND_MOUNT"))
             {
                 Path usrSrcPath(sysTemplate, "usr");
                 Path usrDestPath(jailPath, "usr");
