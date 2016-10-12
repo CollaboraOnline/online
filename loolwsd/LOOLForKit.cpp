@@ -172,7 +172,7 @@ static bool haveCorrectCapabilities()
         result = false;
     if (!haveCapability(CAP_MKNOD))
         result = false;
-    if (!haveCapability(CAP_SYS_CHROOT))
+    if (!haveCapability(CAP_FOWNER))
         result = false;
 
     return result;
