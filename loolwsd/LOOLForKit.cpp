@@ -140,12 +140,12 @@ static bool haveCapability(cap_value_t capability)
     {
         if (cap_name)
         {
-            Log::error("Capability " + std::string(cap_name) + " is not set for the loolkit program.");
+            Log::error("Capability " + std::string(cap_name) + " is not set for the loolforkit program.");
             cap_free(cap_name);
         }
         else
         {
-            Log::error("Capability " + std::to_string(capability) + " is not set for the loolkit program.");
+            Log::error("Capability " + std::to_string(capability) + " is not set for the loolforkit program.");
         }
         return false;
     }
