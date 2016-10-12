@@ -183,7 +183,7 @@ namespace {
 static inline
 void shutdownLimitReached(WebSocket& ws)
 {
-    const std::string error = Poco::format(PAYLOAD_UNAVALABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
+    const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
 
     /* loleaflet sends loolclient, load and partrectangles message immediately
        after web socket handshake, so closing web socket fails loading page in
@@ -395,7 +395,7 @@ private:
         {
             // Let the client know we can't serve now.
             Log::error(session->getName() + ": Failed to connect to lokit process. Client cannot serve now.");
-            throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
+            throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
         }
 
         Log::debug("Waiting child session permission, done!");
@@ -727,7 +727,7 @@ private:
             {
                 // Let the client know we can't serve now.
                 Log::error("Failed to get new child. Service Unavailable.");
-                throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
+                throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
             }
 
 #if MAX_DOCUMENTS > 0
@@ -760,7 +760,7 @@ private:
 #endif
             }
 
-            throw WebSocketErrorMessageException(SERVICE_UNAVALABLE_INTERNAL_ERROR);
+            throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
         }
 
         // Validate the URI and Storage before moving on.
@@ -877,6 +877,10 @@ private:
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
             Log::info("Finishing GET request handler for session [" + id + "].");
+        }
+        catch (const WebSocketErrorMessageException&)
+        {
+            throw;
         }
         catch (const std::exception& exc)
         {
@@ -1048,8 +1052,7 @@ public:
                     Log::error(std::string("ClientRequestHandler::handleRequest: WebSocketErrorMessageException: ") + exc.what());
                     try
                     {
-                        const std::string msg = std::string("error: ") + exc.what();
-                        ws->sendFrame(msg.data(), msg.size());
+                        ws->sendFrame(exc.what(), std::strlen(exc.what()));
                         // abnormal close frame handshake
                         ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
                     }
