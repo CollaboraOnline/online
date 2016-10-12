@@ -280,9 +280,6 @@ int main(int argc, char** argv)
 
     Log::initialize("frk", logLevel ? logLevel : "", logColor != nullptr, logToFile, logProperties);
 
-    if (!haveCorrectCapabilities())
-        return Application::EXIT_SOFTWARE;
-
     Util::setTerminationSignals();
     Util::setFatalSignals();
 
@@ -378,6 +375,9 @@ int main(int argc, char** argv)
         std::_Exit(Application::EXIT_SOFTWARE);
     }
     Log::debug("open(" + pipeLoolwsd + ", RDONLY) = " + std::to_string(pipeFd));
+
+    if (!haveCorrectCapabilities())
+        return Application::EXIT_SOFTWARE;
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))
