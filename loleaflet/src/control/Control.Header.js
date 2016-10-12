@@ -39,26 +39,19 @@ L.Control.Header = L.Control.extend({
 
 	_onMouseMove: function (e) {
 		this._dragging = true;
+		L.DomEvent.preventDefault(e);
 
 		var target = e.target || e.srcElement;
-		if ((L.DomUtil.hasClass(target, 'spreadsheet-header-column-text') ||
-		     L.DomUtil.hasClass(target, 'spreadsheet-header-row-text')) &&
-		    target.style.cursor != this.options.cursor) {
-			this._cursor = target.style.cursor;
-			this._target = target;
+		if (target.style.cursor !== this.options.cursor &&
+		   (L.DomUtil.hasClass(target, 'spreadsheet-header-column-text') ||
+		    L.DomUtil.hasClass(target, 'spreadsheet-header-row-text'))) {
 			target.style.cursor = this.options.cursor;
 		}
-
-		L.DomEvent.preventDefault(e);
 
 		this.onDragMove(this._item, this._start, this._offset, e);
 	},
 
 	_onMouseUp: function (e) {
-		if (this._target) {
-			this._target.style.cursor = this._oldCursor;
-		}
-
 		L.DomEvent.off(document, 'mousemove', this._onMouseMove, this);
 		L.DomEvent.off(document, 'mouseup', this._onMouseUp, this);
 
@@ -73,7 +66,7 @@ L.Control.Header = L.Control.extend({
 			setTimeout(L.bind(this.initialize, this), 400);
 		}
 
-		this._target = this._cursor = this._item = this._start = this._offset = null;
+		this._item = this._start = this._offset = null;
 		this._dragging = false;
 	},
 
