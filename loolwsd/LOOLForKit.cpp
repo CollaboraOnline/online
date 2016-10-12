@@ -109,6 +109,75 @@ public:
     }
 };
 
+static bool haveCapability(cap_value_t capability)
+{
+    cap_t caps = cap_get_proc();
+
+    if (caps == nullptr)
+    {
+        Log::syserror("cap_get_proc() failed.");
+        return false;
+    }
+
+    char *cap_name = cap_to_name(capability);
+    cap_flag_value_t value;
+
+    if (cap_get_flag(caps, capability, CAP_EFFECTIVE, &value) == -1)
+    {
+        if (cap_name)
+        {
+            Log::syserror("cap_get_flag failed for " + std::string(cap_name) + ".");
+            cap_free(cap_name);
+        }
+        else
+        {
+            Log::syserror("cap_get_flag failed for capability " + std::to_string(capability) + ".");
+        }
+        return false;
+    }
+
+    if (value != CAP_SET)
+    {
+        if (cap_name)
+        {
+            Log::error("Capability " + std::string(cap_name) + " is not set for the loolkit program.");
+            cap_free(cap_name);
+        }
+        else
+        {
+            Log::error("Capability " + std::to_string(capability) + " is not set for the loolkit program.");
+        }
+        return false;
+    }
+
+    if (cap_name)
+    {
+        Log::info("Have capability " + std::string(cap_name));
+        cap_free(cap_name);
+    }
+    else
+    {
+        Log::info("Have capability " + std::to_string(capability));
+    }
+
+    return true;
+}
+
+static bool haveCorrectCapabilities()
+{
+    bool result = true;
+
+    // Do check them all, don't shortcut with &&
+    if (!haveCapability(CAP_SYS_CHROOT))
+        result = false;
+    if (!haveCapability(CAP_MKNOD))
+        result = false;
+    if (!haveCapability(CAP_SYS_CHROOT))
+        result = false;
+
+    return result;
+}
+
 /// Check if some previously forked kids have died.
 static void cleanupChildren()
 {
@@ -210,6 +279,9 @@ int main(int argc, char** argv)
     }
 
     Log::initialize("frk", logLevel ? logLevel : "", logColor != nullptr, logToFile, logProperties);
+
+    if (!haveCorrectCapabilities())
+        return Application::EXIT_SOFTWARE;
 
     Util::setTerminationSignals();
     Util::setFatalSignals();
