@@ -507,7 +507,7 @@ private:
                         Log::error("Multiple sessions during conversion. " + std::to_string(sessionsCount) + " sessions remain.");
                     }
 
-                    session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE, "");
+                    session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE);
                 }
 
                 // Clean up the temporary directory the HTMLForm ctor created.
@@ -884,7 +884,7 @@ private:
         if (session->isCloseFrame())
         {
             Log::trace("Normal close handshake.");
-            if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE, ""))
+            if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE))
             {
                 // Client initiated close handshake
                 // respond close frame
@@ -897,7 +897,7 @@ private:
             Log::trace("Abnormal close handshake.");
             session->closeFrame();
             ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
-            session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY, "");
+            session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY);
         }
     }
 
@@ -1262,7 +1262,7 @@ public:
             if (session->isCloseFrame())
             {
                 Log::trace("Normal close handshake.");
-                if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE, ""))
+                if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE))
                 {
                     // LOKit initiated close handshake
                     // respond close frame
@@ -1275,7 +1275,7 @@ public:
                 Log::trace("Abnormal close handshake.");
                 session->closeFrame();
                 ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
-                session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY, "");
+                session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY);
             }
         }
         catch (const Exception& exc)
