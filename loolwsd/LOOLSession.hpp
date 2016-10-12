@@ -59,11 +59,11 @@ public:
     /// Called to handle disconnection command from socket.
     virtual bool handleDisconnect();
 
-    void shutdown(Poco::UInt16 statusCode, const std::string& message)
+    void shutdown(Poco::UInt16 statusCode)
     {
         if (_ws)
         {
-            _ws->shutdown(statusCode, message);
+            _ws->shutdown(statusCode);
         }
     }
 

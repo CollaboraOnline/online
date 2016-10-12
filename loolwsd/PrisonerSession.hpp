@@ -26,7 +26,7 @@ public:
     virtual ~PrisonerSession();
 
     void setPeer(const std::shared_ptr<ClientSession>& peer) { _peer = peer; }
-    bool shutdownPeer(Poco::UInt16 statusCode, const std::string& message);
+    bool shutdownPeer(Poco::UInt16 statusCode);
 
 private:
 

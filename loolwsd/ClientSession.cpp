@@ -348,12 +348,12 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
     return true;
 }
 
-bool ClientSession::shutdownPeer(Poco::UInt16 statusCode, const std::string& message)
+bool ClientSession::shutdownPeer(Poco::UInt16 statusCode)
 {
     auto peer = _peer.lock();
     if (peer && !peer->isCloseFrame())
     {
-        peer->shutdown(statusCode, message);
+        peer->shutdown(statusCode);
     }
     return peer != nullptr;
 }
