@@ -160,7 +160,6 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         return false;
     }
 
-    std::unique_lock<std::mutex> lock(_mutex);
     auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
@@ -382,7 +381,7 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
         const auto saveArgs = oss.str();
         Log::trace(".uno:Save arguments: " + saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
-        sessionIt.second->handleInput(command.data(), command.size());
+        forwardToChild(sessionIt.second->getId(), command.data(), command.size());
         return true;
     }
 
@@ -423,14 +422,34 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     _lastEditableSession = false;
     _markToDestroy = false;
 
+    try
+    {
+        load(id, std::to_string(_childProcess->getPid()));
+    }
+    catch (const StorageSpaceLowException&)
+    {
+        // We use the same message as is sent when some of lool's own locations are full,
+        // even if in this case it might be a totally different location (file system, or
+        // some other type of storage somewhere). This message is not sent to all clients,
+        // though, just to all sessions of this document.
+        alertAllUsersOfDocument("internal", "diskfull");
+        throw;
+    }
+
+    auto prisonerSession = std::make_shared<PrisonerSession>(id, shared_from_this());
+
+    // Connect the prison session to the client.
+    if (!connectPeers(prisonerSession))
+    {
+        Log::warn("Failed to connect " + session->getName() + " to its peer.");
+    }
+
     return _sessions.size();
 }
 
 bool DocumentBroker::connectPeers(std::shared_ptr<PrisonerSession>& session)
 {
     const auto id = session->getId();
-
-    std::lock_guard<std::mutex> lock(_mutex);
 
     auto it = _sessions.find(id);
     if (it != _sessions.end())

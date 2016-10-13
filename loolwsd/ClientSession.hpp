@@ -33,7 +33,7 @@ public:
     bool isReadOnly() const { return _isReadOnly; }
 
     void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }
-    std::shared_ptr<PrisonerSession> getPeer() const { return _peer.lock(); }
+    std::shared_ptr<PrisonerSession> getPeer() const { return _peer; }
     bool shutdownPeer(Poco::UInt16 statusCode);
 
     void setUserName(const std::string& userName) { _userName = userName; }
@@ -86,7 +86,7 @@ private:
     bool _isReadOnly;
 
     /// Our peer that connects us to the child.
-    std::weak_ptr<PrisonerSession> _peer;
+    std::shared_ptr<PrisonerSession> _peer;
 
     /// Store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;

@@ -35,10 +35,9 @@ using namespace LOOLProtocol;
 std::recursive_mutex ChildSession::Mutex;
 
 ChildSession::ChildSession(const std::string& id,
-                           std::shared_ptr<WebSocket> ws,
                            const std::string& jailId,
                            IDocumentManager& docManager) :
-    LOOLSession(id, Kind::ToMaster, ws),
+    LOOLSession(id, Kind::ToMaster, nullptr),
     _jailId(jailId),
     _docManager(docManager),
     _viewId(-1),

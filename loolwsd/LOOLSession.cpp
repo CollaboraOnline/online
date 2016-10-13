@@ -65,11 +65,6 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
     _haveDocPassword(false),
     _isDocPasswordProtected(false)
 {
-    // Only a post request can have a null ws.
-    if (_kind != Kind::ToClient)
-    {
-        assert(_ws && "Expected valid web-socket but got null.");
-    }
 }
 
 LOOLSession::~LOOLSession()

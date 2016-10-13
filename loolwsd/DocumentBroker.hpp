@@ -143,7 +143,7 @@ class ClientSession;
 /// in jail and brokering loading it from Storage
 /// and saving it back.
 /// Contains URI, physical path, etc.
-class DocumentBroker
+class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 {
 public:
 
