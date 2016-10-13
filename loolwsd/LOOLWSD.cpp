@@ -1132,32 +1132,24 @@ public:
                 request, response))
             return;
 
-        handlePrisonerRequest(request, response);
-    }
-
-    static void handlePrisonerRequest(HTTPServerRequest& request, HTTPServerResponse& response)
-    {
-        Util::setThreadName("prison_ws");
-
-        Log::debug("Child connection with URI [" + request.getURI() + "].");
-
+        Log::trace("Child connection with URI [" + request.getURI() + "].");
         assert(request.serverAddress().port() == MasterPortNumber);
-        if (request.getURI().find(NEW_CHILD_URI) == 0)
+        assert(request.getURI().find(NEW_CHILD_URI) == 0);
+
+        // New Child is spawned.
+        const auto params = Poco::URI(request.getURI()).getQueryParameters();
+        Poco::Process::PID pid = -1;
+        for (const auto& param : params)
         {
-            // New Child is spawned.
-            const auto params = Poco::URI(request.getURI()).getQueryParameters();
-            Poco::Process::PID pid = -1;
-            for (const auto& param : params)
+            if (param.first == "pid")
             {
-                if (param.first == "pid")
-                {
-                    pid = std::stoi(param.second);
-                }
-                else if (param.first == "version")
-                {
-                    LOOLWSD::LOKitVersion = param.second;
-                }
+                pid = std::stoi(param.second);
             }
+            else if (param.first == "version")
+            {
+                LOOLWSD::LOKitVersion = param.second;
+            }
+        }
 
         if (pid <= 0)
         {
@@ -1169,159 +1161,7 @@ public:
         auto ws = std::make_shared<WebSocket>(request, response);
         UnitWSD::get().newChild(ws);
 
-            addNewChild(std::make_shared<ChildProcess>(pid, ws));
-            return;
-        }
-
-        if (request.getURI().find(CHILD_URI) != 0)
-        {
-            Log::error("Invalid request URI: [" + request.getURI() + "].");
-            return;
-        }
-
-        std::string sessionId;
-        std::string jailId;
-        std::string docKey;
-        try
-        {
-            const auto params = Poco::URI(request.getURI()).getQueryParameters();
-            for (const auto& param : params)
-            {
-                if (param.first == "sessionId")
-                {
-                    sessionId = param.second;
-                }
-                else if (param.first == "jailId")
-                {
-                    jailId = param.second;
-                }
-                else if (param.first == "docKey")
-                {
-                    // We store encoded docKey in DocumentBroker only
-                    URI::encode(param.second, "", docKey);
-                }
-            }
-
-            Util::setThreadName("prison_ws_" + sessionId);
-
-            // Misleading debug message, we obviously started already a while ago and have done lots
-            // of stuff already.
-            Log::debug("Thread started.");
-
-            Log::debug("Child socket for SessionId: " + sessionId + ", jailId: " + jailId +
-                       ", docKey: " + docKey + " connected.");
-
-            // Jail id should be the PID, beacuse Admin need it to calculate the memory
-            const Poco::Process::PID pid = std::stoi(jailId);
-
-            std::shared_ptr<DocumentBroker> docBroker;
-            {
-                // This lock could become a bottleneck.
-                // In that case, we can use a pool and index by publicPath.
-                std::unique_lock<std::mutex> lock(docBrokersMutex);
-
-                // Lookup this document.
-                auto it = docBrokers.find(docKey);
-                if (it != docBrokers.end())
-                {
-                    // Get the DocumentBroker from the Cache.
-                    docBroker = it->second;
-                    assert(docBroker);
-                }
-                else
-                {
-                    // The client closed before we started,
-                    // or some early failure happened.
-                    Log::error("Failed to find DocumentBroker for docKey [" + docKey +
-                               "] while handling child connection for session [" + sessionId + "].");
-                    throw std::runtime_error("Invalid docKey.");
-                }
-            }
-
-            auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<PrisonerSession>(sessionId, docBroker);
-
-            // Connect the prison session to the client.
-            if (!docBroker->connectPeers(session))
-            {
-                Log::warn("Failed to connect " + session->getName() + " to its peer.");
-            }
-
-            try
-            {
-                docBroker->load(sessionId, jailId);
-            }
-            catch (const StorageSpaceLowException&)
-            {
-                // We use the same message as is sent when some of lool's own locations are full,
-                // even if in this case it might be a totally different location (file system, or
-                // some other type of storage somewhere). This message is not sent to all clients,
-                // though, just to all sessions of this document.
-                docBroker->alertAllUsersOfDocument("internal", "diskfull");
-                throw;
-            }
-
-            std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
-            AvailableChildSessions.emplace(sessionId, session);
-
-            Log::info() << " mapped " << session << " jailId=" << jailId << ", id=" << sessionId
-                        << " into _availableChildSessions, size=" << AvailableChildSessions.size() << Log::end;
-
-            lock.unlock();
-            AvailableChildSessionCV.notify_one();
-
-            Log::info("Adding doc " + docKey + " to Admin");
-            Admin::instance().addDoc(docKey, pid, docBroker->getFilename(), sessionId);
-
-            UnitWSD::get().onChildConnected(pid, sessionId);
-
-            IoUtil::SocketProcessor(ws,
-                [&session](const std::vector<char>& payload)
-                {
-                    return session->handleInput(payload.data(), payload.size());
-                },
-                [&session]() { session->closeFrame(); },
-                []() { return TerminationFlag.load(); });
-
-            if (session->isCloseFrame())
-            {
-                Log::trace("Normal close handshake.");
-                if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE))
-                {
-                    // LOKit initiated close handshake
-                    // respond close frame
-                    ws->shutdown();
-                }
-            }
-            else
-            {
-                // something wrong, with internal exceptions
-                Log::trace("Abnormal close handshake.");
-                session->closeFrame();
-                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
-                session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY);
-            }
-        }
-        catch (const Exception& exc)
-        {
-            Log::error() << "PrisonerRequestHandler::handleRequest: Exception: " << exc.displayText()
-                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                         << Log::end;
-        }
-        catch (const std::exception& exc)
-        {
-            Log::error(std::string("PrisonerRequestHandler::handleRequest: Exception: ") + exc.what());
-        }
-
-        if (!jailId.empty())
-        {
-            Log::info("Removing doc " + docKey + " from Admin");
-            Admin::instance().rmDoc(docKey, sessionId);
-        }
-
-        // Replenish.
-        prespawnChildren();
-        Log::debug("Thread finished.");
+        addNewChild(std::make_shared<ChildProcess>(pid, ws));
     }
 };
 
@@ -2141,7 +1981,7 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request
         ClientRequestHandler::handleClientRequest(request, response);
         break;
     case TestRequest::TEST_REQ_PRISONER:
-        PrisonerRequestHandler::handlePrisonerRequest(request, response);
+        // No longer used. Only bridges WSD with child.
         break;
     default:
         assert(false);
