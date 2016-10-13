@@ -879,7 +879,7 @@ void HTTPWSTest::testSlideShow()
 
         std::string encodedDoc;
         Poco::URI::encode(documentPath, ":/?", encodedDoc);
-        const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name + "?mime_type=image/svg%2Bxml";
+        const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name;
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
         session->sendRequest(requestSVG);
