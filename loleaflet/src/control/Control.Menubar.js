@@ -123,6 +123,7 @@ L.Control.Menubar = L.Control.extend({
 												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
 			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
+												  {name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
 												  {type: 'separator'},
 												  {name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
 												  {name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'}]
