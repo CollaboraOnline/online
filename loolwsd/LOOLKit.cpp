@@ -77,7 +77,6 @@ using Poco::JSON::Parser;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
-using Poco::Net::NetException;
 using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::Path;

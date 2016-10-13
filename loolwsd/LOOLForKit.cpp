@@ -39,7 +39,6 @@
 #include "Util.hpp"
 #include "security.h"
 
-using Poco::Path;
 using Poco::Process;
 using Poco::StringTokenizer;
 using Poco::Thread;

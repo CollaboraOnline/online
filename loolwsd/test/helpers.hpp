@@ -491,25 +491,25 @@ inline int getCharKey(char ch, SpecialKey specialKeys)
     return result | specialKeys;
 }
 
-inline void sendKeyEvent(Poco::Net::WebSocket& socket, const char* type, int chr, int key, const std::string testname = "")
+inline void sendKeyEvent(Poco::Net::WebSocket& socket, const char* type, int chr, int key, const std::string& testname = "")
 {
     std::ostringstream ssIn;
     ssIn << "key type=" << type << " char=" << chr << " key=" << key;
     sendTextFrame(socket, ssIn.str(), testname);
 }
 
-inline void sendKeyPress(Poco::Net::WebSocket& socket, int chr, int key, const std::string testname)
+inline void sendKeyPress(Poco::Net::WebSocket& socket, int chr, int key, const std::string& testname)
 {
     sendKeyEvent(socket, "input", chr, key, testname);
     sendKeyEvent(socket, "up", chr, key, testname);
 }
 
-inline void sendChar(Poco::Net::WebSocket& socket, char ch, SpecialKey specialKeys=skNone, const std::string testname = "")
+inline void sendChar(Poco::Net::WebSocket& socket, char ch, SpecialKey specialKeys=skNone, const std::string& testname = "")
 {
     sendKeyPress(socket, getCharChar(ch, specialKeys), getCharKey(ch, specialKeys), testname);
 }
 
-inline void sendText(Poco::Net::WebSocket& socket, const std::string& text, const std::string testname = "")
+inline void sendText(Poco::Net::WebSocket& socket, const std::string& text, const std::string& testname = "")
 {
     for (char ch : text)
     {
