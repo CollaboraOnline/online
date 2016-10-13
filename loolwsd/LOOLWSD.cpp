@@ -155,6 +155,7 @@ using Poco::XML::DOMWriter;
 using Poco::XML::Element;
 using Poco::XML::InputSource;
 using Poco::XML::NodeList;
+using Poco::XML::Node;
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
@@ -378,6 +379,28 @@ public:
 class ClientRequestHandler: public HTTPRequestHandler
 {
 private:
+    static std::string getContentType(const std::string& fileName)
+    {
+        const std::string nodePath = Poco::format("//[@ext='%s']", Poco::Path(fileName).getExtension());
+        std::string discPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
+        if (!File(discPath).exists())
+        {
+            discPath = LOOLWSD_DATADIR "/discovery.xml";
+        }
+
+        InputSource input(discPath);
+        DOMParser domParser;
+        AutoPtr<Poco::XML::Document> doc = domParser.parse(&input);
+        // TODO. discovery.xml missing application/pdf
+        Node* node = doc->getNodeByPath(nodePath);
+        if (node && (node = node->parentNode()) && node->hasAttributes())
+        {
+            return dynamic_cast<Element*>(node)->getAttribute("name");
+        }
+
+        return "application/octet-stream";
+    }
+
     static void waitBridgeCompleted(const std::shared_ptr<ClientSession>& session)
     {
         bool isFound = false;
@@ -609,13 +632,9 @@ private:
             if (filePath.isAbsolute() && File(filePath).exists())
             {
                 response.set("Access-Control-Allow-Origin", "*");
-                HTMLForm form(request);
-                const std::string mimeType = form.has("mime_type")
-                                           ? form.get("mime_type")
-                                           : "application/octet-stream";
                 try
                 {
-                    response.sendFile(filePath.toString(), mimeType);
+                    response.sendFile(filePath.toString(), getContentType(fileName));
                     responded = true;
                 }
                 catch (const Exception& exc)
