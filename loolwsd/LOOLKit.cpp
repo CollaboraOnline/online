@@ -330,19 +330,7 @@ public:
                         << " view for url: " << _url << " for sessionId: " << sessionId
                         << " on jailId: " << _jailId << Log::end;
 
-            // Open websocket connection between the child process and the
-            // parent. The parent forwards us requests that it can't handle (i.e most).
-            HTTPClientSession cs("127.0.0.1", MasterPortNumber);
-            cs.setTimeout(0);
-            const auto childUrl = std::string(CHILD_URI) + "sessionId=" + sessionId + "&jailId=" + _jailId + "&docKey=" + _docKey;
-            HTTPRequest request(HTTPRequest::HTTP_GET, childUrl);
-            HTTPResponse response;
-
-            auto ws = std::make_shared<WebSocket>(cs, request, response);
-            ws->setReceiveTimeout(0);
-
-            auto session = std::make_shared<ChildSession>(sessionId, ws, _jailId, *this);
-
+            auto session = std::make_shared<ChildSession>(sessionId, _jailId, *this);
             if (!_sessions.emplace(sessionId, session).second)
             {
                 Log::error("Session already exists for child: " + _jailId + ", session: " + sessionId);
@@ -1519,7 +1507,7 @@ void lokit_main(const std::string& childRoot,
 
                         // Validate and create session.
                         if (!(url == document->getUrl() &&
-                            document->createSession(sessionId)))
+                              document->createSession(sessionId)))
                         {
                             Log::debug("CreateSession failed.");
                         }

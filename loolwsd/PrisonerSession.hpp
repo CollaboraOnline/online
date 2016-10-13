@@ -20,7 +20,6 @@ class PrisonerSession final : public LOOLSession, public std::enable_shared_from
 {
 public:
     PrisonerSession(const std::string& id,
-                    std::shared_ptr<Poco::Net::WebSocket> ws,
                     std::shared_ptr<DocumentBroker> docBroker);
 
     virtual ~PrisonerSession();

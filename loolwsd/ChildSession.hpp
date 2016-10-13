@@ -67,7 +67,6 @@ public:
     /// jailId The JailID of the jail root directory,
     //         used by downloadas to construct jailed path.
     ChildSession(const std::string& id,
-                 std::shared_ptr<Poco::Net::WebSocket> ws,
                  const std::string& jailId,
                  IDocumentManager& docManager);
     virtual ~ChildSession();

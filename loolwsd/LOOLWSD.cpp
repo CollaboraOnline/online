@@ -813,9 +813,6 @@ private:
             Log::trace("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), (int) status.size());
 
-            // Wait until the client has connected with a prison socket.
-            waitBridgeCompleted(session);
-
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
             // Now the bridge beetween the client and kit process is connected
@@ -844,6 +841,7 @@ private:
                 []() { return !!TerminationFlag; });
 
             // Connection terminated. Destroy session.
+            Log::debug("Client session [" + id + "] terminated. Cleaning up.");
             {
                 std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
 
@@ -924,6 +922,8 @@ private:
             ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
             session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY);
         }
+
+        Log::info("Finished GET request handler for session [" + id + "].");
     }
 
     /// Sends back the WOPI Discovery XML.
@@ -1159,15 +1159,15 @@ public:
                 }
             }
 
-            if (pid <= 0)
-            {
-                Log::error("Invalid PID in child URI [" + request.getURI() + "].");
-                return;
-            }
+        if (pid <= 0)
+        {
+            Log::error("Invalid PID in child URI [" + request.getURI() + "].");
+            return;
+        }
 
-            Log::info("New child [" + std::to_string(pid) + "].");
-            auto ws = std::make_shared<WebSocket>(request, response);
-            UnitWSD::get().newChild(ws);
+        Log::info("New child [" + std::to_string(pid) + "].");
+        auto ws = std::make_shared<WebSocket>(request, response);
+        UnitWSD::get().newChild(ws);
 
             addNewChild(std::make_shared<ChildProcess>(pid, ws));
             return;
@@ -1239,7 +1239,7 @@ public:
             }
 
             auto ws = std::make_shared<WebSocket>(request, response);
-            auto session = std::make_shared<PrisonerSession>(sessionId, ws, docBroker);
+            auto session = std::make_shared<PrisonerSession>(sessionId, docBroker);
 
             // Connect the prison session to the client.
             if (!docBroker->connectPeers(session))

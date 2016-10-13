@@ -176,15 +176,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else
     {
-        // All other commands are such that they always require a
-        // LibreOfficeKitDocument session, i.e. need to be handled in
-        // a child process.
-        if (_peer.expired())
-        {
-            Log::error(getName() + " has no peer to handle [" + tokens[0] + "].");
-            return false;
-        }
-
         // Allow 'downloadas' for all kinds of views
         if ( (isReadOnly()) && tokens[0] != "downloadas" &&
              tokens[0] != "userinactive" && tokens[0] != "useractive")
@@ -352,12 +343,13 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
 
 bool ClientSession::shutdownPeer(Poco::UInt16 statusCode)
 {
-    auto peer = _peer.lock();
-    if (peer && !peer->isCloseFrame())
+    if (_peer && !_peer->isCloseFrame())
     {
-        peer->shutdown(statusCode);
+        _peer->shutdown(statusCode);
+        return true;
     }
-    return peer != nullptr;
+
+    return false;
 }
 
 bool ClientSession::forwardToChild(const char *buffer, int length)

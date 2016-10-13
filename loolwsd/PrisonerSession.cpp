@@ -34,9 +34,8 @@ using Poco::Path;
 using Poco::StringTokenizer;
 
 PrisonerSession::PrisonerSession(const std::string& id,
-                                 std::shared_ptr<Poco::Net::WebSocket> ws,
                                  std::shared_ptr<DocumentBroker> docBroker) :
-    LOOLSession(id, Kind::ToPrisoner, ws),
+    LOOLSession(id, Kind::ToPrisoner, nullptr),
     _docBroker(std::move(docBroker)),
     _curPart(0)
 {
