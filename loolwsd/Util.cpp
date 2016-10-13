@@ -505,7 +505,7 @@ namespace Util
         {
             nMem = std::stoi(sResponse);
         }
-        catch(std::exception& e)
+        catch(const std::exception&)
         {
             Log::warn() << "Trying to find memory of invalid/dead PID" << Log::end;
         }
