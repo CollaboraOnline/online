@@ -39,6 +39,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/Socket.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
 #include <Poco/Runnable.h>
@@ -74,6 +75,7 @@ using Poco::Net::NetException;
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPResponse;
 using Poco::Net::HTTPRequest;
+using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Process;
@@ -83,6 +85,10 @@ using Poco::Thread;
 using Poco::Timestamp;
 using Poco::Util::Application;
 using Poco::URI;
+
+// We only host a single document in our lifetime.
+class Document;
+static std::shared_ptr<Document> document;
 
 namespace
 {
@@ -359,7 +365,8 @@ public:
     Document(LibreOfficeKit *loKit,
              const std::string& jailId,
              const std::string& docKey,
-             const std::string& url)
+             const std::string& url,
+             std::shared_ptr<WebSocket>& ws)
       : _multiView(std::getenv("LOK_VIEW_CALLBACK")),
         _loKit(loKit),
         _jailId(jailId),
@@ -371,7 +378,8 @@ public:
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
         _isLoading(0),
-        _clientViews(0)
+        _clientViews(0),
+        _ws(ws)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId +
                   "] LOK_VIEW_CALLBACK=" + std::to_string(_multiView) + ".");
@@ -688,6 +696,36 @@ public:
         }
 
         ws->sendFrame(output.data(), length, WebSocket::FRAME_BINARY);
+    }
+
+    bool sendTextFrame(const std::string& message)
+    {
+        try
+        {
+            if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
+            {
+                Log::error("Child Doc: Bad socket while sending [" + getAbbreviatedMessage(message) + "].");
+                return false;
+            }
+
+            const auto length = message.size();
+            if (length > SMALL_MESSAGE_SIZE)
+            {
+                const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+                _ws->sendFrame(nextmessage.data(), nextmessage.size());
+            }
+
+            _ws->sendFrame(message.data(), length);
+            return true;
+        }
+        catch (const Exception& exc)
+        {
+            Log::error() << "Document::sendTextFrame: "
+                         << "Exception: " << exc.displayText()
+                         << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+        }
+
+        return false;
     }
 
     void sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& /*tokens*/)
@@ -1164,6 +1202,7 @@ private:
     std::atomic_size_t _isLoading;
     std::map<unsigned, std::shared_ptr<Connection>> _connections;
     std::atomic_size_t _clientViews;
+    std::shared_ptr<WebSocket> _ws;
 };
 
 namespace {
@@ -1203,9 +1242,6 @@ void lokit_main(const std::string& childRoot,
     assert(!sysTemplate.empty());
     assert(!loTemplate.empty());
     assert(!loSubPath.empty());
-
-    // We only host a single document in our lifetime.
-    std::shared_ptr<Document> document;
 
     // Ideally this will be a random ID, but forkit will cleanup
     // our jail directory when we die, and it's simpler to know
@@ -1364,7 +1400,7 @@ void lokit_main(const std::string& childRoot,
 
         const std::string socketName = "ChildControllerWS";
         IoUtil::SocketProcessor(ws,
-                [&socketName, &ws, &document, &loKit](const std::vector<char>& data)
+                [&socketName, &ws, &loKit](const std::vector<char>& data)
                 {
                     std::string message(data.data(), data.size());
 
@@ -1390,7 +1426,7 @@ void lokit_main(const std::string& childRoot,
 
                         if (!document)
                         {
-                            document = std::make_shared<Document>(loKit, jailId, docKey, url);
+                            document = std::make_shared<Document>(loKit, jailId, docKey, url, ws);
                         }
 
                         // Validate and create session.
@@ -1419,7 +1455,7 @@ void lokit_main(const std::string& childRoot,
                     return true;
                 },
                 []() {},
-                [&document]()
+                []()
                 {
                     if (document && document->canDiscard())
                         TerminationFlag = true;
@@ -1518,6 +1554,18 @@ bool globalPreinit(const std::string &loTemplate)
     }
 
     return true;
+}
+
+namespace Util
+{
+
+#ifndef BUILDING_TESTS
+void alertAllUsers(const std::string& cmd, const std::string& kind)
+{
+    document->sendTextFrame("errortoall: cmd=" + cmd + " kind=" + kind);
+}
+#endif
+
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -221,6 +221,7 @@ static void forkChildren(const int number)
 
     if (number > 0)
     {
+        Util::checkDiskSpaceOnRegisteredFileSystems();
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
         IoUtil::writeFIFO(LOOLWSD::ForKitWritePipe, aMessage);
@@ -741,6 +742,8 @@ private:
             Log::trace("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), (int) status.size());
 
+            Util::checkDiskSpaceOnRegisteredFileSystems();
+
             QueueHandler handler(queue, session, "wsd_queue_" + session->getId());
             Thread queueHandlerThread;
             queueHandlerThread.start(handler);
@@ -1153,7 +1156,19 @@ public:
                 }
             }
 
-            docBroker->load(jailId);
+            try
+            {
+                docBroker->load(jailId);
+            }
+            catch (const StorageSpaceLowException&)
+            {
+                // We use the same message as is sent when some of lool's own locations are full,
+                // even if in this case it might be a totally different location (file system, or
+                // some other type of storage somewhere). This message is not sent to all clients,
+                // though, just to all sessions of this document.
+                docBroker->alertAllUsersOfDocument("internal", "diskfull");
+                throw;
+            }
 
             auto ws = std::make_shared<WebSocket>(request, response);
             auto session = std::make_shared<MasterProcessSession>(sessionId, LOOLSession::Kind::ToPrisoner, ws, docBroker, nullptr);
@@ -1703,6 +1718,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     else if (ChildRoot[ChildRoot.size() - 1] != '/')
         ChildRoot += '/';
 
+    Util::registerFileSystemForDiskSpaceChecks(ChildRoot);
+    Util::registerFileSystemForDiskSpaceChecks(Cache + "/.");
+
     if (FileServerRoot.empty())
         FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().parent().toString();
     FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
@@ -1942,6 +1960,21 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request
         assert(false);
         break;
     }
+}
+
+namespace Util
+{
+
+void alertAllUsers(const std::string& cmd, const std::string& kind)
+{
+    std::lock_guard<std::mutex> docBrokersLock(docBrokersMutex);
+
+    for (auto& brokerIt : docBrokers)
+    {
+        brokerIt.second->alertAllUsersOfDocument(cmd, kind);
+    }
+}
+
 }
 
 POCO_SERVER_MAIN(LOOLWSD)

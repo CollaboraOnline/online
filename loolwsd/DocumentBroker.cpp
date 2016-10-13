@@ -441,6 +441,18 @@ size_t DocumentBroker::removeSession(const std::string& id)
     return _sessions.size();
 }
 
+void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::string& kind)
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    std::stringstream ss;
+    ss << "error: cmd=" << cmd << " kind=" << kind;
+    for (auto& it: _sessions)
+    {
+        it.second->sendTextFrame(ss.str());
+    }
+}
+
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
     Log::trace("DocumentBroker got child message: [" + LOOLProtocol::getAbbreviatedMessage(payload) + "].");

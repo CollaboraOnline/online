@@ -13,7 +13,9 @@
 #include <signal.h>
 #include <sys/poll.h>
 #include <sys/prctl.h>
+#include <sys/stat.h>
 #include <sys/uio.h>
+#include <sys/vfs.h>
 #include <unistd.h>
 
 #include <atomic>
@@ -130,6 +132,15 @@ namespace rng
 }
 }
 
+namespace
+{
+    void alertAllUsersAndLog(const std::string& message, const std::string& cmd, const std::string& kind)
+    {
+        Log::error(message);
+        Util::alertAllUsers(cmd, kind);
+    }
+}
+
 namespace Util
 {
     std::string encodeId(const unsigned number, const int padding)
@@ -179,7 +190,7 @@ namespace Util
         // If we can't create the file properly, just remove it
         if (!outStream.good())
         {
-            Log::error("Creating " + tempFileName + " failed, disk full?");
+            alertAllUsersAndLog("Creating " + tempFileName + " failed, disk full?", "internal", "diskfull");
             // Try removing both just in case
             std::remove(tempFileName.c_str());
             std::remove(fileName.c_str());
@@ -190,7 +201,7 @@ namespace Util
             outStream.write(data, size);
             if (!outStream.good())
             {
-                Log::error("Writing to " + tempFileName + " failed, disk full?");
+                alertAllUsersAndLog("Writing to " + tempFileName + " failed, disk full?", "internal", "diskfull");
                 outStream.close();
                 std::remove(tempFileName.c_str());
                 std::remove(fileName.c_str());
@@ -201,7 +212,7 @@ namespace Util
                 outStream.close();
                 if (!outStream.good())
                 {
-                    Log::error("Closing " + tempFileName + " failed, disk full?");
+                    alertAllUsersAndLog("Closing " + tempFileName + " failed, disk full?", "internal", "diskfull");
                     std::remove(tempFileName.c_str());
                     std::remove(fileName.c_str());
                     return false;
@@ -216,7 +227,7 @@ namespace Util
                     }
                     else
                     {
-                        Log::error("Renaming " + tempFileName + " to " + fileName + " failed, disk full?");
+                        alertAllUsersAndLog("Renaming " + tempFileName + " to " + fileName + " failed, disk full?", "internal", "diskfull");
                         std::remove(tempFileName.c_str());
                         std::remove(fileName.c_str());
                         return false;
@@ -224,6 +235,94 @@ namespace Util
                 }
             }
         }
+    }
+
+} // namespace Util
+
+namespace
+{
+
+    struct fs
+    {
+        fs(const std::string& p, dev_t d)
+            : path(p), dev(d)
+        {
+        }
+
+        fs(dev_t d)
+            : fs("", d)
+        {
+        }
+
+        std::string path;
+        dev_t dev;
+    };
+
+    struct fsComparator
+    {
+        bool operator() (const fs& lhs, const fs& rhs) const
+        {
+            return (lhs.dev < rhs.dev);
+        }
+    };
+
+    static std::mutex fsmutex;
+    static std::set<fs, fsComparator> filesystems;
+} // unnamed namespace
+
+namespace Util
+{
+    void registerFileSystemForDiskSpaceChecks(const std::string& path)
+    {
+        std::lock_guard<std::mutex> lock(fsmutex);
+
+        if (path != "")
+        {
+            std::string dirPath = path;
+            std::string::size_type lastSlash = dirPath.rfind('/');
+            assert(lastSlash != std::string::npos);
+            dirPath = dirPath.substr(0, lastSlash + 1) + ".";
+
+            struct stat s;
+            if (stat(dirPath.c_str(), &s) == -1)
+                return;
+            filesystems.insert(fs(dirPath, s.st_dev));
+        }
+    }
+
+    void checkDiskSpaceOnRegisteredFileSystems()
+    {
+        std::lock_guard<std::mutex> lock(fsmutex);
+
+        static std::chrono::steady_clock::time_point lastCheck;
+        std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
+
+        // Don't check more often that once a minute
+        if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
+            return;
+
+        lastCheck = now;
+
+        for (auto& i: filesystems)
+        {
+            if (!checkDiskSpace(i.path))
+            {
+                alertAllUsersAndLog("File system of " + i.path + " dangerously low on disk space", "internal", "diskfull");
+                break;
+            }
+        }
+    }
+
+    bool checkDiskSpace(const std::string& path)
+    {
+        assert(path != "");
+        struct statfs sfs;
+        if (statfs(path.c_str(), &sfs) == -1)
+            return true;
+
+        if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
+            return false;
+        return true;
     }
 
     bool encodeBufferToPNG(unsigned char *pixmap, int width, int height, std::vector<char>& output, LibreOfficeKitTileMode mode)

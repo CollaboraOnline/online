@@ -21,6 +21,12 @@ protected:
     using std::runtime_error::runtime_error;
 };
 
+class StorageSpaceLowException : public LoolException
+{
+public:
+    using LoolException::LoolException;
+};
+
 /// A bad-request exception that is means to signify,
 /// and translate into, an HTTP bad request.
 class BadRequestException : public LoolException

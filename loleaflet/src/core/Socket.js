@@ -144,6 +144,16 @@ L.Socket = L.Class.extend({
 			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
 			                         ' (git hash: ' + lokitVersionObj.BuildId.substring(0, 7) + ')');
 		}
+		else if (textMsg.startsWith('error:') && command.errorCmd === 'internal') {
+			this._map._fatal = true;
+			if (command.errorKind === 'diskfull') {
+				this._map.fire('error', {msg: diskfull});
+			}
+
+			this.close();
+
+			return;
+		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
 			this.close();
 

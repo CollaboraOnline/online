@@ -15,7 +15,12 @@ noinst_LTLIBRARIES = \
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
-AM_CPPFLAGS = -pthread -I$(top_srcdir)
+
+# We work around some of the mess of using the same sources both on
+# the server side and here in unit tests with conditional compilation
+# based on BUILDING_TESTS
+
+AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS
 
 wsd_sources = \
             ../IoUtil.cpp \
@@ -26,7 +31,7 @@ wsd_sources = \
             ../Unit.cpp \
             ../Util.cpp
 
-test_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\" -I$(top_srcdir)
+test_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\" -I$(top_srcdir) -DBUILDING_TESTS
 test_SOURCES = TileCacheTests.cpp WhiteBoxTests.cpp integration-http-server.cpp \
                httpwstest.cpp httpcrashtest.cpp httpwserror.cpp test.cpp $(wsd_sources)
 test_LDADD = $(CPPUNIT_LIBS)

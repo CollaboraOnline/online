@@ -237,6 +237,17 @@ private:
     URI _uri;
 };
 
+namespace Util
+{
+
+void alertAllUsers(const std::string& cmd, const std::string& kind)
+{
+    std::cout << "error: cmd=" << cmd << " kind=" << kind << std::endl;
+    (void) kind;
+}
+
+}
+
 POCO_APP_MAIN(Connect)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

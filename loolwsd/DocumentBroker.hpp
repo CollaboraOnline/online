@@ -197,6 +197,8 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
+    void alertAllUsersOfDocument(const std::string& cmd, const std::string& kind);
+
     void handleTileRequest(int part, int width, int height, int tilePosX,
                            int tilePosY, int tileWidth, int tileHeight, int id,
                            const std::shared_ptr<MasterProcessSession>& session);

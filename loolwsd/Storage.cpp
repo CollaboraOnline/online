@@ -191,6 +191,10 @@ std::string LocalStorage::loadStorageFileToLocal()
               "] jailed to [" + _jailedFilePath + "].");
 
     const auto publicFilePath = _uri;
+
+    if (!Util::checkDiskSpace(publicFilePath))
+        throw StorageSpaceLowException("Low disk space for " + publicFilePath);
+
     Log::info("Linking " + publicFilePath + " to " + _jailedFilePath);
     if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
     {
