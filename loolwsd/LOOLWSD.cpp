@@ -210,7 +210,7 @@ void shutdownLimitReached(WebSocket& ws)
         }
         while (retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
     }
-    catch (Exception&)
+    catch (const Exception&)
     {
         ws.sendFrame(error.data(), error.size());
         ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
