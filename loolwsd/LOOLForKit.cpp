@@ -206,12 +206,13 @@ static int createLibreOfficeKit(const std::string& childRoot,
     Process::PID pid;
     if (!(pid = fork()))
     {
+        // Child
+
         // Close the pipe from loolwsd
         close(0);
 
         UnitKit::get().postFork();
 
-        // child
         if (std::getenv("SLEEPKITFORDEBUGGER"))
         {
             std::cerr << "Sleeping " << std::getenv("SLEEPKITFORDEBUGGER")
