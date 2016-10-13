@@ -822,11 +822,9 @@ map.on('commandstatechanged', function (e) {
 			return;
 		}
 
-		// For impress documents, template name is prefixed with style name.
-		// Strip the template name until we support it
+		// For impress documents, no styles is supported.
 		if (map.getDocType() === 'presentation') {
-			state = state.split('~LT~')[1];
-			state = L.Styles.impressMapping[state];
+			return;
 		}
 
 		$('.styles-select option').each(function () {
