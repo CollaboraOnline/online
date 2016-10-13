@@ -157,7 +157,7 @@ namespace Util
     inline
     void ltrim(std::string& s)
     {
-        const auto pos = s.find_first_not_of(" ");
+        const auto pos = s.find_first_not_of(' ');
         if (pos != std::string::npos)
         {
             s = s.substr(pos);
@@ -168,7 +168,7 @@ namespace Util
     inline
     std::string ltrimmed(const std::string& s)
     {
-        const auto pos = s.find_first_not_of(" ");
+        const auto pos = s.find_first_not_of(' ');
         if (pos != std::string::npos)
         {
             return s.substr(pos);
