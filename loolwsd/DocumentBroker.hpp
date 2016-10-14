@@ -236,6 +236,10 @@ public:
 
     int getRenderedTileCount() { return _debugRenderedTileCount; }
 
+    /// Returns time taken in making calls to storage during load
+    /// Currently, only makes sense in case storage is WOPI
+    const std::chrono::duration<double> getStorageLoadDuration() const;
+
 private:
 
     /// Sends the .uno:Save command to LoKit.

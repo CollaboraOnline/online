@@ -796,4 +796,14 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
     return false;
 }
 
+const std::chrono::duration<double> DocumentBroker::getStorageLoadDuration() const
+{
+    if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
+    {
+        return dynamic_cast<WopiStorage*>(_storage.get())->getWopiLoadDuration();
+    }
+
+    return std::chrono::duration<double>::zero();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

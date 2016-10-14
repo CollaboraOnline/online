@@ -263,6 +263,7 @@ StorageBase::FileInfo WopiStorage::getFileInfo()
         return _fileInfo;
     }
 
+    const auto startTime = std::chrono::steady_clock::now();
     std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(_uri));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, _uri.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
@@ -270,8 +271,8 @@ StorageBase::FileInfo WopiStorage::getFileInfo()
     psession->sendRequest(request);
 
     Poco::Net::HTTPResponse response;
-    std::istream& rs = psession->receiveResponse(response);
 
+    std::istream& rs = psession->receiveResponse(response);
     auto logger = Log::trace();
     logger << "WOPI::CheckFileInfo header for URI [" << _uri.toString() << "]:\n";
     for (auto& pair : response)
@@ -288,7 +289,11 @@ StorageBase::FileInfo WopiStorage::getFileInfo()
     std::string userName;
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
-    Log::debug("WOPI::CheckFileInfo returned: " + resMsg);
+
+    const auto endTime = std::chrono::steady_clock::now();
+    const std::chrono::duration<double> diff = (endTime - startTime);
+    _wopiLoadDuration += diff;
+    Log::debug("WOPI::CheckFileInfo returned: " + resMsg + ". Call duration: " + std::to_string(diff.count()) + "s");
     const auto index = resMsg.find_first_of('{');
     if (index != std::string::npos)
     {
@@ -327,6 +332,7 @@ std::string WopiStorage::loadStorageFileToLocal()
     uriObject.setPath(uriObject.getPath() + "/contents");
     Log::debug("Wopi requesting: " + uriObject.toString());
 
+    const auto startTime = std::chrono::steady_clock::now();
     std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
@@ -350,10 +356,12 @@ std::string WopiStorage::loadStorageFileToLocal()
     std::copy(std::istreambuf_iterator<char>(rs),
               std::istreambuf_iterator<char>(),
               std::ostreambuf_iterator<char>(ofs));
+    const auto endTime = std::chrono::steady_clock::now();
+    const std::chrono::duration<double> diff = (endTime - startTime);
+    _wopiLoadDuration += diff;
     const auto size = getFileSize(_jailedFilePath);
-
     Log::info() << "WOPI::GetFile downloaded " << size << " bytes from [" << uriObject.toString()
-                << "] -> " << _jailedFilePath << ": "
+                << "] -> " << _jailedFilePath << " in " + std::to_string(diff.count()) + "s : "
                 << response.getStatus() << " " << response.getReason() << Log::end;
 
     _isLoaded = true;
