@@ -32,6 +32,8 @@ namespace Log
     void warn(const std::string& msg);
     void error(const std::string& msg);
     void syserror(const std::string& msg);
+    void fatal(const std::string& msg);
+    void sysfatal(const std::string& msg);
 
     /// Signal safe prefix logging
     void signalLogPrefix();
@@ -103,6 +105,12 @@ namespace Log
     StreamLogger error()
     {
         return StreamLogger([](const std::string& msg) { error(msg);});
+    }
+
+    inline
+    StreamLogger fatal()
+    {
+        return StreamLogger([](const std::string& msg) { fatal(msg);});
     }
 
     template <typename U>

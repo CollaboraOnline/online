@@ -186,6 +186,16 @@ namespace Log
     {
         logger().error(prefix("ERR") + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
     }
+
+    void fatal(const std::string& msg)
+    {
+        logger().fatal(prefix("FTL") + msg);
+    }
+
+    void sysfatal(const std::string& msg)
+    {
+        logger().fatal(prefix("FTL") + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
