@@ -332,6 +332,11 @@ redlinetablechanged:
     Signals that the redlines table has been modified.
     Redlines are used for tracking changes.
 
+stats: <key> <value>
+
+    Contains statistical data. Eg: 'stats: wopiduration 5' means that
+    wopi calls made in loading of document took 5 seconds.
+
 
 child -> parent
 ===============

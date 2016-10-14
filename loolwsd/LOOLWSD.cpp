@@ -834,6 +834,15 @@ private:
 
             Util::checkDiskSpaceOnRegisteredFileSystems();
 
+            // If its a WOPI host, return time taken to make calls to it
+            const auto storageCallDuration = docBroker->getStorageLoadDuration();
+            if (storageCallDuration != std::chrono::duration<double>::zero())
+            {
+                status = "stats: wopiloadduration " + std::to_string(storageCallDuration.count());
+                Log::trace("Sending to Client [" + status + "].");
+                ws->sendFrame(status.data(), (int) status.size());
+            }
+
             // Let messages flow.
             IoUtil::SocketProcessor(ws,
                 [&session](const std::vector<char>& payload)

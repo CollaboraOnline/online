@@ -154,7 +154,8 @@ public:
     WopiStorage(const Poco::URI& uri,
                 const std::string& localStorePath,
                 const std::string& jailPath) :
-        StorageBase(uri, localStorePath, jailPath)
+        StorageBase(uri, localStorePath, jailPath),
+        _wopiLoadDuration(0)
     {
         Log::info("WopiStorage ctor with localStorePath: [" + localStorePath +
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
@@ -166,6 +167,13 @@ public:
     std::string loadStorageFileToLocal() override;
 
     bool saveLocalFileToStorage() override;
+
+    /// Total time taken for making WOPI calls during load (includes GetFileInfo calls)
+    const std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
+
+private:
+    // Time spend in waiting for WOPI host during document load
+    std::chrono::duration<double> _wopiLoadDuration;
 };
 
 /// WebDAV protocol backed storage.
