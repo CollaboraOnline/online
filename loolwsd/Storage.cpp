@@ -143,7 +143,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
         Log::info("Public URI [" + uri.toString() + "] is a file.");
         if (FilesystemEnabled)
         {
-            return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
+            return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri));
         }
 
         Log::error("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
@@ -154,7 +154,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
         const auto& targetHost = uri.getHost();
         if (WopiHosts.match(targetHost) || isLocalhost(targetHost))
         {
-            return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
+            return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri));
         }
 
         Log::error("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
@@ -181,15 +181,15 @@ std::string LocalStorage::loadStorageFileToLocal()
     const auto rootPath = getLocalRootPath();
 
     // /chroot/jailId/user/doc/childId/file.ext
-    const auto filename = Poco::Path(_uri).getFileName();
+    const auto filename = Poco::Path(_uri.getPath()).getFileName();
     _jailedFilePath = Poco::Path(rootPath, filename).toString();
 
-    Log::info("Public URI [" + _uri +
+    Log::info("Public URI [" + _uri.getPath() +
               "] jailed to [" + _jailedFilePath + "].");
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
 
-    const auto publicFilePath = _uri;
+    const auto publicFilePath = _uri.getPath();
 
     if (!Util::checkDiskSpace(publicFilePath))
         throw StorageSpaceLowException("Low disk space for " + publicFilePath);
@@ -228,13 +228,13 @@ bool LocalStorage::saveLocalFileToStorage()
         // Copy the file back.
         if (_isCopy && Poco::File(_jailedFilePath).exists())
         {
-            Log::info("Copying " + _jailedFilePath + " to " + _uri);
-            Poco::File(_jailedFilePath).copyTo(_uri);
+            Log::info("Copying " + _jailedFilePath + " to " + _uri.getPath());
+            Poco::File(_jailedFilePath).copyTo(_uri.getPath());
         }
     }
     catch (const Poco::Exception& exc)
     {
-        Log::error("copyTo(\"" + _jailedFilePath + "\", \"" + _uri + "\") failed: " + exc.displayText());
+        Log::error("copyTo(\"" + _jailedFilePath + "\", \"" + _uri.getPath() + "\") failed: " + exc.displayText());
         throw;
     }
 
@@ -304,9 +304,9 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
 /// uri format: http://server/<...>/wopi*/files/<id>/content
 std::string WopiStorage::loadStorageFileToLocal()
 {
-    Log::info("Downloading URI [" + _uri + "].");
+    Log::info("Downloading URI [" + _uri.toString() + "].");
 
-    _fileInfo = getFileInfo(Poco::URI(_uri));
+    _fileInfo = getFileInfo(_uri);
     if (_fileInfo._size == 0 && _fileInfo._filename.empty())
     {
         //TODO: Should throw a more appropriate exception.
@@ -329,7 +329,7 @@ std::string WopiStorage::loadStorageFileToLocal()
     std::istream& rs = psession->receiveResponse(response);
 
     auto logger = Log::trace();
-    logger << "WOPI::GetFile header for URI [" << _uri << "]:\n";
+    logger << "WOPI::GetFile header for URI [" << _uri.toString() << "]:\n";
     for (auto& pair : response)
     {
         logger << '\t' + pair.first + ": " + pair.second << " / ";
@@ -354,7 +354,7 @@ std::string WopiStorage::loadStorageFileToLocal()
 
 bool WopiStorage::saveLocalFileToStorage()
 {
-    Log::info("Uploading URI [" + _uri + "] from [" + _jailedFilePath + "].");
+    Log::info("Uploading URI [" + _uri.toString() + "] from [" + _jailedFilePath + "].");
     const auto size = getFileSize(_jailedFilePath);
 
     Poco::URI uriObject(_uri);
@@ -397,7 +397,7 @@ StorageBase::FileInfo WebDAVStorage::getFileInfo(const Poco::URI& uri)
 std::string WebDAVStorage::loadStorageFileToLocal()
 {
     // TODO: implement webdav GET.
-    return _uri;
+    return _uri.toString();
 }
 
 bool WebDAVStorage::saveLocalFileToStorage()
