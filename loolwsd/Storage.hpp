@@ -58,13 +58,14 @@ public:
 
     /// localStorePath the absolute root path of the chroot.
     /// jailPath the path within the jail that the child uses.
-    StorageBase(const std::string& localStorePath,
-                const std::string& jailPath,
-                const Poco::URI& uri) :
+    StorageBase(const Poco::URI& uri,
+                const std::string& localStorePath,
+                const std::string& jailPath) :
+        _uri(uri),
         _localStorePath(localStorePath),
         _jailPath(jailPath),
-        _uri(uri),
-        _fileInfo("", Poco::Timestamp(), 0, "", "")
+        _fileInfo("", Poco::Timestamp(), 0, "", ""),
+        _isLoaded(false)
     {
         Log::debug("Storage ctor: " + uri.toString());
     }
@@ -72,6 +73,12 @@ public:
     std::string getLocalRootPath() const;
 
     const std::string getUri() const { return _uri.toString(); }
+
+    bool isLoaded() const { return _isLoaded; }
+
+    void setLocalStorePath(const std::string& localStorePath) { _localStorePath = localStorePath; }
+
+    void setJailPath(const std::string& jailPath) { _jailPath = jailPath; }
 
     /// Returns information about the file.
     virtual FileInfo getFileInfo() = 0;
@@ -93,16 +100,17 @@ public:
     static void initialize();
 
     /// Storage object creation factory.
-    static std::unique_ptr<StorageBase> create(const std::string& jailRoot,
-                                               const std::string& jailPath,
-                                               const Poco::URI& uri);
+    static std::unique_ptr<StorageBase> create(const Poco::URI& uri,
+                                               const std::string& jailRoot,
+                                               const std::string& jailPath);
 
 protected:
-    const std::string _localStorePath;
-    const std::string _jailPath;
     const Poco::URI _uri;
+    std::string _localStorePath;
+    std::string _jailPath;
     std::string _jailedFilePath;
     FileInfo _fileInfo;
+    bool _isLoaded;
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;
@@ -114,10 +122,10 @@ protected:
 class LocalStorage : public StorageBase
 {
 public:
-    LocalStorage(const std::string& localStorePath,
-                 const std::string& jailPath,
-                 const Poco::URI& uri) :
-        StorageBase(localStorePath, jailPath, uri),
+    LocalStorage(const Poco::URI& uri,
+                 const std::string& localStorePath,
+                 const std::string& jailPath) :
+        StorageBase(uri, localStorePath, jailPath),
         _isCopy(false),
         _localStorageId(LocalStorage::LastLocalStorageId++)
     {
@@ -143,10 +151,10 @@ private:
 class WopiStorage : public StorageBase
 {
 public:
-    WopiStorage(const std::string& localStorePath,
-                const std::string& jailPath,
-                const Poco::URI& uri) :
-        StorageBase(localStorePath, jailPath, uri)
+    WopiStorage(const Poco::URI& uri,
+                const std::string& localStorePath,
+                const std::string& jailPath) :
+        StorageBase(uri, localStorePath, jailPath)
     {
         Log::info("WopiStorage ctor with localStorePath: [" + localStorePath +
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
@@ -164,11 +172,11 @@ public:
 class WebDAVStorage : public StorageBase
 {
 public:
-    WebDAVStorage(const std::string& localStorePath,
+    WebDAVStorage(const Poco::URI& uri,
+                  const std::string& localStorePath,
                   const std::string& jailPath,
-                  const Poco::URI& uri,
                   std::unique_ptr<AuthBase> authAgent) :
-        StorageBase(localStorePath, jailPath, uri),
+        StorageBase(uri, localStorePath, jailPath),
         _authAgent(std::move(authAgent))
     {
         Log::info("WebDAVStorage ctor with localStorePath: [" + localStorePath +

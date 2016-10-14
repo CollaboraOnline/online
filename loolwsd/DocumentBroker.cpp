@@ -158,8 +158,8 @@ const StorageBase::FileInfo DocumentBroker::validate(const Poco::URI& uri)
     Log::info("Validating: " + uriString);
     try
     {
-        auto storage = StorageBase::create("", "", uri);
-        auto fileinfo = storage->getFileInfo();
+        _storage = StorageBase::create(uri, "", "");
+        auto fileinfo = _storage->getFileInfo();
         Log::info("After checkfileinfo: " + uriString + " -> " + fileinfo._filename);
         if (!fileinfo.isValid())
         {
@@ -188,12 +188,6 @@ bool DocumentBroker::load(const std::string& jailId)
         return false;
     }
 
-    if (_storage)
-    {
-        // Already loaded. Nothing to do.
-        return true;
-    }
-
     _jailId = jailId;
 
     // The URL is the publicly visible one, not visible in the chroot jail.
@@ -208,20 +202,35 @@ bool DocumentBroker::load(const std::string& jailId)
     if (LOOLWSD::NoCapsForKit)
         jailRoot = jailPath.toString() + "/" + getJailRoot();
 
-    auto storage = StorageBase::create(jailRoot, jailPath.toString(), _uriPublic);
-    if (storage)
+    if (_storage == nullptr)
     {
-        const auto fileInfo = storage->getFileInfo();
+        _storage = StorageBase::create(_uriPublic, jailRoot, jailPath.toString());
+    }
+    else
+    {
+        if (_storage->isLoaded())
+        {
+            // Already loaded. Nothing to do.
+            return true;
+        }
+
+        _storage->setLocalStorePath(jailRoot);
+        _storage->setJailPath(jailPath.toString());
+    }
+
+
+    if (_storage)
+    {
+        const auto fileInfo = _storage->getFileInfo();
         _filename = fileInfo._filename;
 
-        const auto localPath = storage->loadStorageFileToLocal();
+        const auto localPath = _storage->loadStorageFileToLocal();
         _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
 
         // Use the local temp file's timestamp.
-        _lastFileModifiedTime = Poco::File(storage->getLocalRootPath()).getLastModified();
+        _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
         _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
 
-        _storage = std::move(storage);
         return true;
     }
 
