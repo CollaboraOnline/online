@@ -60,18 +60,18 @@ public:
     /// jailPath the path within the jail that the child uses.
     StorageBase(const std::string& localStorePath,
                 const std::string& jailPath,
-                const std::string& uri) :
+                const Poco::URI& uri) :
         _localStorePath(localStorePath),
         _jailPath(jailPath),
         _uri(uri),
         _fileInfo("", Poco::Timestamp(), 0, "", "")
     {
-        Log::debug("Storage ctor: " + uri);
+        Log::debug("Storage ctor: " + uri.toString());
     }
 
     std::string getLocalRootPath() const;
 
-    const std::string& getUri() const { return _uri; }
+    const std::string getUri() const { return _uri.toString(); }
 
     /// Returns information about the file.
     virtual FileInfo getFileInfo(const Poco::URI& uri) = 0;
@@ -100,7 +100,7 @@ public:
 protected:
     const std::string _localStorePath;
     const std::string _jailPath;
-    const std::string _uri;
+    const Poco::URI _uri;
     std::string _jailedFilePath;
     FileInfo _fileInfo;
 
@@ -116,13 +116,13 @@ class LocalStorage : public StorageBase
 public:
     LocalStorage(const std::string& localStorePath,
                  const std::string& jailPath,
-                 const std::string& uri) :
+                 const Poco::URI& uri) :
         StorageBase(localStorePath, jailPath, uri),
         _isCopy(false),
         _localStorageId(LocalStorage::LastLocalStorageId++)
     {
         Log::info("LocalStorage ctor with localStorePath: [" + localStorePath +
-                  "], jailPath: [" + jailPath + "], uri: [" + uri + "].");
+                  "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
     FileInfo getFileInfo(const Poco::URI& uri) override;
@@ -145,11 +145,11 @@ class WopiStorage : public StorageBase
 public:
     WopiStorage(const std::string& localStorePath,
                 const std::string& jailPath,
-                const std::string& uri) :
+                const Poco::URI& uri) :
         StorageBase(localStorePath, jailPath, uri)
     {
         Log::info("WopiStorage ctor with localStorePath: [" + localStorePath +
-                  "], jailPath: [" + jailPath + "], uri: [" + uri + "].");
+                  "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
     FileInfo getFileInfo(const Poco::URI& uri) override;
@@ -166,13 +166,13 @@ class WebDAVStorage : public StorageBase
 public:
     WebDAVStorage(const std::string& localStorePath,
                   const std::string& jailPath,
-                  const std::string& uri,
+                  const Poco::URI& uri,
                   std::unique_ptr<AuthBase> authAgent) :
         StorageBase(localStorePath, jailPath, uri),
         _authAgent(std::move(authAgent))
     {
         Log::info("WebDAVStorage ctor with localStorePath: [" + localStorePath +
-                  "], jailPath: [" + jailPath + "], uri: [" + uri + "].");
+                  "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
     FileInfo getFileInfo(const Poco::URI& uri) override;
