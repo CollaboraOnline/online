@@ -122,9 +122,9 @@ public:
     /// When a new child kit process reports
     virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> & /* socket */) {}
     /// Intercept createStorage
-    virtual bool createStorage(const std::string& /* jailRoot */,
+    virtual bool createStorage(const Poco::URI& /* uri */,
+                               const std::string& /* jailRoot */,
                                const std::string& /* jailPath */,
-                               const Poco::URI& /* uri */,
                                std::unique_ptr<StorageBase> & /*rStorage */)
         { return false; }
     /// Intercept incoming requests, so unit tests can silently communicate

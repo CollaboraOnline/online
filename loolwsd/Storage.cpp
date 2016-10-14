@@ -128,11 +128,11 @@ bool isLocalhost(const std::string& targetHost)
     return false;
 }
 
-std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, const std::string& jailPath, const Poco::URI& uri)
+std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot, const std::string& jailPath)
 {
     std::unique_ptr<StorageBase> storage;
 
-    if (UnitWSD::get().createStorage(jailRoot, jailPath, uri, storage))
+    if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
     {
         Log::info("Storage load hooked.");
         if (storage)
@@ -143,7 +143,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
         Log::info("Public URI [" + uri.toString() + "] is a file.");
         if (FilesystemEnabled)
         {
-            return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri));
+            return std::unique_ptr<StorageBase>(new LocalStorage(uri, jailRoot, jailPath));
         }
 
         Log::error("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
@@ -154,7 +154,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
         const auto& targetHost = uri.getHost();
         if (WopiHosts.match(targetHost) || isLocalhost(targetHost))
         {
-            return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri));
+            return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
         }
 
         Log::error("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
@@ -217,6 +217,7 @@ std::string LocalStorage::loadStorageFileToLocal()
         throw;
     }
 
+    _isLoaded = true;
     // Now return the jailed path.
     return Poco::Path(_jailPath, filename).toString();
 }
@@ -255,6 +256,12 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 StorageBase::FileInfo WopiStorage::getFileInfo()
 {
     Log::debug("Getting info for wopi uri [" + _uri.toString() + "].");
+
+    if (_fileInfo.isValid())
+    {
+        Log::debug("Returning cached fileinfo for wopi uri [" + _uri.toString() + "].");
+        return _fileInfo;
+    }
 
     std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(_uri));
 
@@ -298,7 +305,8 @@ StorageBase::FileInfo WopiStorage::getFileInfo()
     }
 
     // WOPI doesn't support file last modified time.
-    return FileInfo({filename, Poco::Timestamp(), size, userId, userName});
+    _fileInfo = FileInfo({filename, Poco::Timestamp(), size, userId, userName});
+    return _fileInfo;
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -306,8 +314,8 @@ std::string WopiStorage::loadStorageFileToLocal()
 {
     Log::info("Downloading URI [" + _uri.toString() + "].");
 
-    _fileInfo = getFileInfo();
-    if (_fileInfo._size == 0 && _fileInfo._filename.empty())
+    getFileInfo();
+    if (!_fileInfo.isValid())
     {
         //TODO: Should throw a more appropriate exception.
         throw std::runtime_error("Failed to load file from storage.");
@@ -348,6 +356,7 @@ std::string WopiStorage::loadStorageFileToLocal()
                 << "] -> " << _jailedFilePath << ": "
                 << response.getStatus() << " " << response.getReason() << Log::end;
 
+    _isLoaded = true;
     // Now return the jailed path.
     return Poco::Path(_jailPath, _fileInfo._filename).toString();
 }
@@ -396,6 +405,7 @@ StorageBase::FileInfo WebDAVStorage::getFileInfo()
 std::string WebDAVStorage::loadStorageFileToLocal()
 {
     // TODO: implement webdav GET.
+    _isLoaded = true;
     return _uri.toString();
 }
 

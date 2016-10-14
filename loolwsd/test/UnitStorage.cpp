@@ -13,9 +13,9 @@
 class UnitStorage : public UnitWSD
 {
 public:
-    virtual bool createStorage(const std::string& /* jailRoot */,
+    virtual bool createStorage(const Poco::URI& /* uri */,
+                               const std::string& /* jailRoot */,
                                const std::string& /* jailPath */,
-                               const Poco::URI& /* uri */,
                                std::unique_ptr<StorageBase> & /* rStorage */)
     {
         // leave rStorage empty - fail to return anything
