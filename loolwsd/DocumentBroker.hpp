@@ -70,19 +70,30 @@ public:
 
     void close(const bool rude)
     {
-        _stop = true;
-        IoUtil::shutdownWebSocket(_ws);
-        _thread.join();
-        _ws.reset();
-        if (_pid != -1)
+        try
         {
-            Log::info("Closing child [" + std::to_string(_pid) + "].");
-            if (rude && kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
+            _stop = true;
+            IoUtil::shutdownWebSocket(_ws);
+            if (_thread.joinable())
             {
-                Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+                _thread.join();
             }
 
-           _pid = -1;
+            _ws.reset();
+            if (_pid != -1)
+            {
+                Log::info("Closing child [" + std::to_string(_pid) + "].");
+                if (rude && kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
+                {
+                    Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+                }
+
+               _pid = -1;
+            }
+        }
+        catch (const std::exception& ex)
+        {
+            Log::error("Eror while closing child process: " + std::string(ex.what()));
         }
     }
 
