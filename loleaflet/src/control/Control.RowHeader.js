@@ -139,9 +139,9 @@ L.Control.RowHeader = L.Control.Header.extend({
 				resize.row = iterator + 1;
 				resize.height = height;
 				L.DomUtil.setStyle(row, 'height', height + 'px');
-				L.DomUtil.setStyle(text, 'line-height', height + 'px');
-				L.DomUtil.setStyle(text, 'height', height - 6 + 'px');
-				L.DomUtil.setStyle(resize, 'height', '6px');
+				L.DomUtil.setStyle(text, 'line-height', height - 3 + 'px');
+				L.DomUtil.setStyle(text, 'height', height - 3 + 'px');
+				L.DomUtil.setStyle(resize, 'height', '3px');
 				this.mouseInit(resize);
 			}
 			L.DomEvent.addListener(text, 'click', this._onRowHeaderClick, this);
