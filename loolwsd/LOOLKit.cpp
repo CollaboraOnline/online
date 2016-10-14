@@ -179,7 +179,7 @@ namespace
             Log::error("nftw: stat failed for '" + std::string(fpath) + "'");
             return 1;
         default:
-            Log::error("nftw: unexpected type: '" + std::to_string(typeflag));
+            Log::fatal("nftw: unexpected type: '" + std::to_string(typeflag));
             assert(false);
             break;
         }
@@ -1454,7 +1454,7 @@ void lokit_main(const std::string& childRoot,
             loKit = std::make_shared<lok::Office>(kit);
             if (!loKit || !loKit->get())
             {
-                Log::error("LibreOfficeKit initialization failed. Exiting.");
+                Log::fatal("LibreOfficeKit initialization failed. Exiting.");
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
         }
@@ -1616,7 +1616,7 @@ bool globalPreinit(const std::string &loTemplate)
         handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
         if (!handle)
         {
-            Log::error("Failed to load " + libMerged + ": " + std::string(dlerror()));
+            Log::fatal("Failed to load " + libMerged + ": " + std::string(dlerror()));
             return false;
         }
         loadedLibrary = libMerged;
@@ -1629,14 +1629,14 @@ bool globalPreinit(const std::string &loTemplate)
             handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
             if (!handle)
             {
-                Log::error("Failed to load " + libSofficeapp + ": " + std::string(dlerror()));
+                Log::fatal("Failed to load " + libSofficeapp + ": " + std::string(dlerror()));
                 return false;
             }
             loadedLibrary = libSofficeapp;
         }
         else
         {
-            Log::error("Neither " + libSofficeapp + " or " + libMerged + " exist.");
+            Log::fatal("Neither " + libSofficeapp + " or " + libMerged + " exist.");
             return false;
         }
     }
@@ -1644,14 +1644,14 @@ bool globalPreinit(const std::string &loTemplate)
     LokHookPreInit* preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
-        Log::error("No lok_preinit symbol in " + loadedLibrary + ": " + std::string(dlerror()));
+        Log::fatal("No lok_preinit symbol in " + loadedLibrary + ": " + std::string(dlerror()));
         return false;
     }
 
     Log::trace("lok_preinit(" + loTemplate + "/program\", \"file:///user\")");
     if (preInit((loTemplate + "/program").c_str(), "file:///user") != 0)
     {
-        Log::error("lok_preinit() in " + loadedLibrary + " failed");
+        Log::fatal("lok_preinit() in " + loadedLibrary + " failed");
         return false;
     }
 

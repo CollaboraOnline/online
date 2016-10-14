@@ -1417,7 +1417,7 @@ ServerSocket* getServerSocket(int nClientPortNumber)
     }
     catch (const Exception& exc)
     {
-        Log::error() << "Could not create server socket: " << exc.displayText() << Log::end;
+        Log::fatal() << "Could not create server socket: " << exc.displayText() << Log::end;
         return nullptr;
     }
 }
@@ -1904,7 +1904,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        Log::syserror("Unable to access cache [" + Cache +
+        Log::sysfatal("Unable to access cache [" + Cache +
                       "] please make sure it exists, and has write permission for this user.");
         return Application::EXIT_SOFTWARE;
     }
@@ -1914,12 +1914,20 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // child) separately now. Also check for options that are
     // meaningless for the parent.
     if (SysTemplate.empty())
+    {
+        Log::fatal("Missing --systemplate option");
         throw MissingOptionException("systemplate");
+    }
     if (LoTemplate.empty())
+    {
+        Log::fatal("Missing --lotemplate option");
         throw MissingOptionException("lotemplate");
-
+    }
     if (ChildRoot.empty())
+    {
+        Log::fatal("Missing --childroot option");
         throw MissingOptionException("childroot");
+    }
     else if (ChildRoot[ChildRoot.size() - 1] != '/')
         ChildRoot += '/';
 
@@ -1967,7 +1975,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     const Process::PID forKitPid = createForKit();
     if (forKitPid < 0)
     {
-        Log::error("Failed to spawn loolforkit.");
+        Log::fatal("Failed to spawn loolforkit.");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -2039,7 +2047,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             if (errno == ECHILD)
             {
                 // No child processes.
-                Log::error("No Forkit instance. Terminating.");
+                Log::fatal("No Forkit instance. Terminating.");
                 TerminationFlag = true;
                 continue;
             }

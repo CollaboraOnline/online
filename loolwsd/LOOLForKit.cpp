@@ -112,7 +112,7 @@ static bool haveCapability(cap_value_t capability)
 
     if (caps == nullptr)
     {
-        Log::syserror("cap_get_proc() failed.");
+        Log::sysfatal("cap_get_proc() failed.");
         return false;
     }
 
@@ -123,12 +123,12 @@ static bool haveCapability(cap_value_t capability)
     {
         if (cap_name)
         {
-            Log::syserror("cap_get_flag failed for " + std::string(cap_name) + ".");
+            Log::sysfatal("cap_get_flag failed for " + std::string(cap_name) + ".");
             cap_free(cap_name);
         }
         else
         {
-            Log::syserror("cap_get_flag failed for capability " + std::to_string(capability) + ".");
+            Log::sysfatal("cap_get_flag failed for capability " + std::to_string(capability) + ".");
         }
         return false;
     }
@@ -137,7 +137,7 @@ static bool haveCapability(cap_value_t capability)
     {
         if (cap_name)
         {
-            Log::error("Capability " + std::string(cap_name) + " is not set for the loolforkit program.");
+            Log::fatal("Capability " + std::string(cap_name) + " is not set for the loolforkit program.");
             cap_free(cap_name);
         }
         else
@@ -376,7 +376,7 @@ int main(int argc, char** argv)
     // Ask this first child to send version information to master process
     if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true) < 0)
     {
-        Log::error("Failed to create a kit process.");
+        Log::fatal("Failed to create a kit process.");
         std::_Exit(Application::EXIT_SOFTWARE);
     }
 
