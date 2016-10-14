@@ -74,7 +74,7 @@ public:
     const std::string getUri() const { return _uri.toString(); }
 
     /// Returns information about the file.
-    virtual FileInfo getFileInfo(const Poco::URI& uri) = 0;
+    virtual FileInfo getFileInfo() = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
@@ -125,7 +125,7 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo(const Poco::URI& uri) override;
+    FileInfo getFileInfo() override;
 
     std::string loadStorageFileToLocal() override;
 
@@ -152,7 +152,7 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo(const Poco::URI& uri) override;
+    FileInfo getFileInfo() override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal() override;
@@ -175,7 +175,7 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo(const Poco::URI& uri) override;
+    FileInfo getFileInfo() override;
 
     std::string loadStorageFileToLocal() override;
 

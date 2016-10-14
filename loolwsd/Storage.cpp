@@ -165,10 +165,10 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
 
 unsigned LocalStorage::LastLocalStorageId = 0;
 
-StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uri)
+StorageBase::FileInfo LocalStorage::getFileInfo()
 {
-    const auto path = Poco::Path(uri.getPath());
-    Log::debug("Getting info for local uri [" + uri.toString() + "], path [" + path.toString() + "].");
+    const auto path = Poco::Path(_uri.getPath());
+    Log::debug("Getting info for local uri [" + _uri.toString() + "], path [" + path.toString() + "].");
     const auto& filename = path.getFileName();
     const auto file = Poco::File(path);
     const auto lastModified = file.getLastModified();
@@ -252,13 +252,13 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 
 } // anonymous namespace
 
-StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
+StorageBase::FileInfo WopiStorage::getFileInfo()
 {
-    Log::debug("Getting info for wopi uri [" + uri.toString() + "].");
+    Log::debug("Getting info for wopi uri [" + _uri.toString() + "].");
 
-    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uri));
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(_uri));
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, _uri.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
     psession->sendRequest(request);
 
@@ -266,7 +266,7 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
     std::istream& rs = psession->receiveResponse(response);
 
     auto logger = Log::trace();
-    logger << "WOPI::CheckFileInfo header for URI [" << uri.toString() << "]:\n";
+    logger << "WOPI::CheckFileInfo header for URI [" << _uri.toString() << "]:\n";
     for (auto& pair : response)
     {
         logger << '\t' + pair.first + ": " + pair.second << " / ";
@@ -306,7 +306,7 @@ std::string WopiStorage::loadStorageFileToLocal()
 {
     Log::info("Downloading URI [" + _uri.toString() + "].");
 
-    _fileInfo = getFileInfo(_uri);
+    _fileInfo = getFileInfo();
     if (_fileInfo._size == 0 && _fileInfo._filename.empty())
     {
         //TODO: Should throw a more appropriate exception.
@@ -386,10 +386,9 @@ bool WopiStorage::saveLocalFileToStorage()
     return success;
 }
 
-StorageBase::FileInfo WebDAVStorage::getFileInfo(const Poco::URI& uri)
+StorageBase::FileInfo WebDAVStorage::getFileInfo()
 {
-    Log::debug("Getting info for webdav uri [" + uri.toString() + "].");
-    (void)uri;
+    Log::debug("Getting info for webdav uri [" + _uri.toString() + "].");
     assert(false && "Not Implemented!");
     return FileInfo({"bazinga", Poco::Timestamp(), 0, "admin", "admin"});
 }
