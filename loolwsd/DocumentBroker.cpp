@@ -159,7 +159,7 @@ const StorageBase::FileInfo DocumentBroker::validate(const Poco::URI& uri)
     try
     {
         auto storage = StorageBase::create("", "", uri);
-        auto fileinfo = storage->getFileInfo(uri);
+        auto fileinfo = storage->getFileInfo();
         Log::info("After checkfileinfo: " + uriString + " -> " + fileinfo._filename);
         if (!fileinfo.isValid())
         {
@@ -211,7 +211,7 @@ bool DocumentBroker::load(const std::string& jailId)
     auto storage = StorageBase::create(jailRoot, jailPath.toString(), _uriPublic);
     if (storage)
     {
-        const auto fileInfo = storage->getFileInfo(_uriPublic);
+        const auto fileInfo = storage->getFileInfo();
         _filename = fileInfo._filename;
 
         const auto localPath = storage->loadStorageFileToLocal();
