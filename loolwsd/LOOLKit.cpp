@@ -1548,27 +1548,7 @@ void lokit_main(const std::string& childRoot,
                     return TerminationFlag.load();
                 });
 
-        // Clean up jail if we created one
-        if (bRunInsideJail && !jailPath.isRelative())
-        {
-            // In theory we should here do Util::removeFile("/", true), because we are inside the
-            // chroot jail, and all of it can be removed now when we are exiting. (At least the root
-            // of the chroot jail probably would not be removed even if we tried, so we still would
-            // need to complete the cleanup in loolforkit.)
-
-            // But: It is way too risky to actually do that (effectively, "rm -rf /") as it would
-            // trash a developer's machine if something goes wrong while hacking and debugging and
-            // the process isn't in a chroot after all when it comes here.
-
-            // So just remove what we can reasonably safely assume won't exist as global pathnames
-            // on a developer's machine, loSubpath (typically "/lo") and JAILED_DOCUMENT_ROOT
-            // ("/user/docs/").
-
-            Log::info("Removing '/" + loSubPath + "'");
-            Util::removeFile("/" + loSubPath, true);
-            Log::info("Removing '" + std::string(JAILED_DOCUMENT_ROOT) + "'");
-            Util::removeFile(std::string(JAILED_DOCUMENT_ROOT), true);
-        }
+        // Let forkit handle the jail cleanup.
     }
     catch (const Exception& exc)
     {
