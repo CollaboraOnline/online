@@ -180,7 +180,7 @@ static void cleanupChildren()
 {
     Process::PID exitedChildPid;
     int status;
-    while ((exitedChildPid = waitpid(-1, &status, WNOHANG)) > 0)
+    while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
     {
         if (childJails.find(exitedChildPid) != childJails.end())
         {
@@ -415,10 +415,9 @@ int main(int argc, char** argv)
             // If we need to spawn more, retry later.
             ForkCounter = (newInstances >= ForkCounter ? 0 : ForkCounter - newInstances);
         }
-        else
-        {
-            cleanupChildren();
-        }
+
+        // We virtually always fork when a child exits.
+        cleanupChildren();
     }
 
     int returnValue = Application::EXIT_OK;

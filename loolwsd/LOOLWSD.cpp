@@ -251,24 +251,35 @@ static void prespawnChildren()
     }
 
     // Do the cleanup first.
+    bool rebalance = false;
     for (int i = newChildren.size() - 1; i >= 0; --i)
     {
         if (!newChildren[i]->isAlive())
         {
+            Log::warn() << "Removing unused dead child [" << newChildren[i]->getPid()
+                         << "]." << Log::end;
             newChildren.erase(newChildren.begin() + i);
+
+            // Rebalance after cleanup.
+            rebalance = true;
         }
     }
 
+    int balance = LOOLWSD::NumPreSpawnedChildren;
+    balance -= newChildren.size();
+    if (balance <= 0)
+    {
+        return;
+    }
+
     const auto duration = (std::chrono::steady_clock::now() - lastForkRequestTime);
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_MS)
+    if (!rebalance &&
+        std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_MS)
     {
         // Not enough time passed to balance children.
         return;
     }
 
-    const int available = newChildren.size();
-    int balance = LOOLWSD::NumPreSpawnedChildren;
-    balance -= available;
     forkChildren(balance);
 }
 
