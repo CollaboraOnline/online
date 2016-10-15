@@ -63,6 +63,7 @@ public:
     {
         if (_ws)
         {
+            Log::trace("Shutting down WS [" + getName() + "].");
             _ws->shutdown(statusCode);
         }
     }
