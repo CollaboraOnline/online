@@ -794,7 +794,7 @@ private:
 
         // Check if readonly session is required
         bool isReadOnly = false;
-        for (auto& param: uriPublic.getQueryParameters())
+        for (const auto& param: uriPublic.getQueryParameters())
         {
             Log::debug("Query param: " + param.first + ", value: " + param.second);
             if (param.first == "permission")
