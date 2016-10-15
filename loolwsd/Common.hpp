@@ -16,11 +16,12 @@ constexpr int MAX_SESSIONS = 1024;
 
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
-constexpr int WSD_SLEEP_SECS = 2;
-constexpr int CHILD_TIMEOUT_SECS = 4;
-constexpr int POLL_TIMEOUT_MS = 1000;
+
 constexpr int COMMAND_TIMEOUT_MS = 5000;
-constexpr int WS_SEND_TIMEOUT_MICROSECS = 1000000; // 1 second.
+constexpr int CHILD_TIMEOUT_MS = COMMAND_TIMEOUT_MS;
+constexpr int CHILD_REBALANCE_INTERVAL_MS = CHILD_TIMEOUT_MS / 10;
+constexpr int POLL_TIMEOUT_MS = COMMAND_TIMEOUT_MS / 10;
+constexpr int WS_SEND_TIMEOUT_MS = 1000;
 
 /// Pipe and Socket read buffer size.
 /// Should be large enough for ethernet packets
