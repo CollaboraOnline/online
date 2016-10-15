@@ -25,6 +25,7 @@
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
 #include "helpers.hpp"
+#include "countloolkits.hpp"
 
 using namespace helpers;
 
@@ -32,6 +33,7 @@ class HTTPWSError : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
+    static int InitialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPWSError);
 
@@ -40,6 +42,8 @@ class HTTPWSError : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testCountHowManyLoolkits();
+    void testNoExtraLoolKitsLeft();
     void testMaxDocuments();
     void testMaxConnections();
 
@@ -66,30 +70,46 @@ public:
 
     void setUp()
     {
+        testCountHowManyLoolkits();
     }
 
     void tearDown()
     {
+        testNoExtraLoolKitsLeft();
     }
 };
+
+int HTTPWSError::InitialLoolKitCount = 1;
+
+void HTTPWSError::testCountHowManyLoolkits()
+{
+    InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
+    CPPUNIT_ASSERT(InitialLoolKitCount > 0);
+}
+
+void HTTPWSError::testNoExtraLoolKitsLeft()
+{
+    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
+
+    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
+}
 
 void HTTPWSError::testMaxDocuments()
 {
 #if MAX_DOCUMENTS > 0
+    const auto testname = "maxDocuments ";
     try
     {
         // Load a document.
         std::string docPath;
         std::string docURL;
-        std::string message;
-        Poco::UInt16 statusCode;
         std::vector<std::shared_ptr<Poco::Net::WebSocket>> docs;
 
-        for(int it = 1; it <= MAX_DOCUMENTS; it++)
+        for (int it = 1; it <= MAX_DOCUMENTS; ++it)
         {
             getDocumentPathAndURL("empty.odt", docPath, docURL);
             Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-            docs.emplace_back(connectLOKit(_uri, request, _response));
+            docs.emplace_back(loadDocAndGetSocket("empty.odt", _uri, testname));
         }
 
         // try to open MAX_DOCUMENTS + 1
@@ -97,12 +117,17 @@ void HTTPWSError::testMaxDocuments()
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         Poco::Net::WebSocket socket(*session, request, _response);
+
         // send loolclient, load and partpagerectangles
-        sendTextFrame(socket, "loolclient ");
-        sendTextFrame(socket, "load ");
-        sendTextFrame(socket, "partpagerectangles ");
-        statusCode = getErrorCode(socket, message);
-        CPPUNIT_ASSERT_EQUAL(static_cast<Poco::UInt16>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
+        sendTextFrame(socket, "loolclient ", testname);
+        sendTextFrame(socket, "load ", testname);
+        sendTextFrame(socket, "partpagerectangles ", testname);
+
+        std::string message;
+        const auto statusCode = getErrorCode(socket, message);
+        CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
+
+        socket.shutdown();
     }
     catch (const Poco::Exception& exc)
     {
@@ -114,18 +139,17 @@ void HTTPWSError::testMaxDocuments()
 void HTTPWSError::testMaxConnections()
 {
 #if MAX_CONNECTIONS > 0
+    const auto testname = "maxConnections ";
     try
     {
         // Load a document.
         std::string docPath;
         std::string docURL;
-        std::string message;
-        Poco::UInt16 statusCode;
         std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
 
         getDocumentPathAndURL("empty.odt", docPath, docURL);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-        auto socket = loadDocAndGetSocket(_uri, docURL, "testMaxConnections ");
+        auto socket = loadDocAndGetSocket(_uri, docURL, testname);
 
         for(int it = 1; it < MAX_CONNECTIONS; it++)
         {
@@ -136,13 +160,18 @@ void HTTPWSError::testMaxConnections()
 
         // try to connect MAX_CONNECTIONS + 1
         std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
-        auto socketN = std::make_shared<Poco::Net::WebSocket>(*session, request, _response);
+        Poco::Net::WebSocket socketN(*session, request, _response);
+
         // send loolclient, load and partpagerectangles
-        sendTextFrame(socketN, "loolclient ");
-        sendTextFrame(socketN, "load ");
-        sendTextFrame(socketN, "partpagerectangles ");
-        statusCode = getErrorCode(*socketN, message);
-        CPPUNIT_ASSERT_EQUAL(static_cast<Poco::UInt16>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
+        sendTextFrame(socketN, "loolclient ", testname);
+        sendTextFrame(socketN, "load ", testname);
+        sendTextFrame(socketN, "partpagerectangles ", testname);
+
+        std::string message;
+        const auto statusCode = getErrorCode(socketN, message);
+        CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
+
+        socketN.shutdown();
     }
     catch (const Poco::Exception& exc)
     {
