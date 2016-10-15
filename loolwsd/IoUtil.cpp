@@ -275,7 +275,7 @@ int PipeReader::readLine(std::string& line,
 
     // Poll in short intervals to check for stop condition.
     const auto pollTimeoutMs = 500;
-    auto maxPollCount = POLL_TIMEOUT_MS / pollTimeoutMs;
+    auto maxPollCount = std::max<int>(POLL_TIMEOUT_MS / pollTimeoutMs, 1);
     while (maxPollCount-- > 0)
     {
         if (stopPredicate())

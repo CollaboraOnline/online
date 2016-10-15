@@ -260,7 +260,7 @@ static void prespawnChildren()
     }
 
     const auto duration = (std::chrono::steady_clock::now() - lastForkRequestTime);
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= static_cast<int64_t>(CHILD_TIMEOUT_SECS) * 1000)
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_MS)
     {
         // Not enough time passed to balance children.
         return;
@@ -308,7 +308,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         Log::debug("getNewChild: Have " + std::to_string(available) + " children, forking " + std::to_string(balance));
         forkChildren(balance);
 
-        const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_SECS * 1000);
+        const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
         if (newChildrenCV.wait_for(lock, timeout, [](){ return !newChildren.empty(); }))
         {
             auto child = newChildren.back();
@@ -324,7 +324,8 @@ static std::shared_ptr<ChildProcess> getNewChild()
 
         Log::debug("getNewChild: No live child, forking more.");
     }
-    while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() < static_cast<int64_t>(CHILD_TIMEOUT_SECS) * 4000);
+    while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() <
+           CHILD_TIMEOUT_MS * 4);
 
     Log::debug("getNewChild: Timed out while waiting for new child.");
     return nullptr;
@@ -669,7 +670,7 @@ private:
             // If this document is going out, wait.
             Log::debug("Document [" + docKey + "] is marked to destroy, waiting to reload.");
 
-            const auto timeout = POLL_TIMEOUT_MS / 2;
+            const auto timeout = POLL_TIMEOUT_MS;
             bool timedOut = true;
             for (size_t i = 0; i < COMMAND_TIMEOUT_MS / timeout; ++i)
             {
@@ -1029,7 +1030,7 @@ public:
                 {
                     // First, setup WS options.
                     ws->setBlocking(false);
-                    ws->setSendTimeout(WS_SEND_TIMEOUT_MICROSECS);
+                    ws->setSendTimeout(WS_SEND_TIMEOUT_MS * 1000);
                     std::string decodedUri;
                     URI::decode(reqPathTokens[1], decodedUri);
                     handleGetRequest(decodedUri, ws, id);
@@ -1884,7 +1885,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 }
             }
 
-            std::this_thread::sleep_for(std::chrono::seconds(WSD_SLEEP_SECS));
+            std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS));
 
             // Make sure we have sufficient reserves.
             prespawnChildren();
