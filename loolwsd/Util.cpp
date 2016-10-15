@@ -50,6 +50,7 @@
 #include "Util.hpp"
 
 std::atomic<bool> TerminationFlag(false);
+std::mutex SigHandlerTrap;
 
 namespace Util
 {
@@ -393,6 +394,8 @@ namespace Util
     static
     void handleFatalSignal(const int signal)
     {
+        std::unique_lock<std::mutex> lock(SigHandlerTrap);
+
         Log::signalLogPrefix();
         Log::signalLog(" Fatal signal received: ");
         Log::signalLog(signalName(signal));
