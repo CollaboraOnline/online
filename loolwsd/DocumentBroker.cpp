@@ -126,12 +126,12 @@ DocumentBroker::DocumentBroker() :
 DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
                                const std::string& docKey,
                                const std::string& childRoot,
-                               std::shared_ptr<ChildProcess> childProcess) :
+                               const std::shared_ptr<ChildProcess>& childProcess) :
     _uriPublic(uriPublic),
     _docKey(docKey),
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
-    _childProcess(std::move(childProcess)),
+    _childProcess(childProcess),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
     _lastEditableSession(false),

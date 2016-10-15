@@ -171,7 +171,7 @@ public:
     DocumentBroker(const Poco::URI& uriPublic,
                    const std::string& docKey,
                    const std::string& childRoot,
-                   std::shared_ptr<ChildProcess> childProcess);
+                   const std::shared_ptr<ChildProcess>& childProcess);
 
     ~DocumentBroker()
     {

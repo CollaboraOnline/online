@@ -472,16 +472,10 @@ private:
                     std::shared_ptr<WebSocket> ws;
                     auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic);
 
-                    // Request the child to connect to us and add this session.
                     auto sessionsCount = docBroker->addSession(session);
                     Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
                     lock.unlock();
-
-                    // Wait until the client has connected with a prison socket.
-                    waitBridgeCompleted(session);
-                    // Now the bridge between the client and kit processes is connected
-                    // Let messages flow
 
                     std::string encodedFrom;
                     URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
@@ -524,6 +518,10 @@ private:
                     sessionsCount = docBroker->removeSession(id);
                     if (sessionsCount == 0)
                     {
+                        // At this point we're done.
+                        // We can't save if we hadn't, just kill.
+                        Log::debug("Closing child for docKey [" + docKey + "].");
+                        child->close(true);
                         Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
                         docBrokers.erase(docKey);
                     }
