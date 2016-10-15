@@ -52,7 +52,7 @@ void ChildProcess::socketProcessor()
             return true;
         },
         []() { },
-        [this]() { return !!this->_stop; });
+        [this]() { return TerminationFlag || this->_stop; });
 }
 
 namespace
