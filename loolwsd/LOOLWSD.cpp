@@ -169,11 +169,6 @@ static std::condition_variable newChildrenCV;
 static std::chrono::steady_clock::time_point lastForkRequestTime = std::chrono::steady_clock::now();
 static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
 static std::mutex docBrokersMutex;
-// Sessions to pre-spawned child processes that have connected but are not yet assigned a
-// document to work on.
-static std::mutex AvailableChildSessionMutex;
-static std::condition_variable AvailableChildSessionCV;
-static std::map<std::string, std::shared_ptr<PrisonerSession>> AvailableChildSessions;
 
 #if ENABLE_DEBUG
 static int careerSpanSeconds = 0;
@@ -399,30 +394,6 @@ private:
         }
 
         return "application/octet-stream";
-    }
-
-    static void waitBridgeCompleted(const std::shared_ptr<ClientSession>& session)
-    {
-        bool isFound = false;
-        std::unique_lock<std::mutex> lock(AvailableChildSessionMutex);
-        Log::debug() << "Waiting for client session [" << session->getId() << "] to connect." << Log::end;
-        AvailableChildSessionCV.wait_for(
-            lock,
-            std::chrono::milliseconds(COMMAND_TIMEOUT_MS),
-            [&isFound, &session]
-            {
-                return (isFound = AvailableChildSessions.find(session->getId()) != AvailableChildSessions.end());
-            });
-
-        if (!isFound)
-        {
-            // Let the client know we can't serve now.
-            Log::error(session->getName() + ": Failed to connect to lokit process. Client cannot serve now.");
-            throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
-        }
-
-        Log::debug("Waiting child session permission, done!");
-        AvailableChildSessions.erase(session->getId());
     }
 
     /// Handle POST requests.
