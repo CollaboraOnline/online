@@ -53,6 +53,16 @@ void ChildProcess::socketProcessor()
         },
         []() { },
         [this]() { return TerminationFlag || this->_stop; });
+
+    Log::debug() << "Child [" << getPid() << "] WS terminated. Notifying DocBroker." << Log::end;
+
+
+    // Notify the broker that we're done.
+    auto docBroker = _docBroker.lock();
+    if (docBroker)
+    {
+        docBroker->childSocketTerminated();
+    }
 }
 
 namespace
@@ -286,7 +296,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
 {
     std::unique_lock<std::mutex> lock(_mutex);
     if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
-        (!_isModified && !force))
+        !_childProcess->isAlive() || (!_isModified && !force))
     {
         // Nothing to do.
         Log::trace("Nothing to autosave [" + _docKey + "].");
@@ -822,6 +832,21 @@ const std::chrono::duration<double> DocumentBroker::getStorageLoadDuration() con
     }
 
     return std::chrono::duration<double>::zero();
+}
+
+void DocumentBroker::childSocketTerminated()
+{
+    if (!_childProcess->isAlive())
+    {
+        Log::error("Child for doc [" + _docKey + "] terminated prematurely.");
+    }
+
+    // We could restore the kit if this was unexpected.
+    // For now, close the connections to cleanup.
+    for (auto& pair : _sessions)
+    {
+        pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

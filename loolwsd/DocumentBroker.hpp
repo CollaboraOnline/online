@@ -266,6 +266,8 @@ public:
     /// Currently, only makes sense in case storage is WOPI
     const std::chrono::duration<double> getStorageLoadDuration() const;
 
+    void childSocketTerminated();
+
 private:
 
     /// Sends the .uno:Save command to LoKit.
