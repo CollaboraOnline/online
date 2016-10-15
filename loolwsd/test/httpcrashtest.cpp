@@ -165,21 +165,19 @@ void HTTPCrashTest::testBarren()
 
 void HTTPCrashTest::testCrashKit()
 {
+    const auto testname = "crashKit ";
     try
     {
-        // Load a document and get its status.
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        auto socket = *connectLOKit(_uri, request, _response);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+        auto socket = *loadDocAndGetSocket("empty.odt", _uri, testname);
 
         killLoKitProcesses();
 
+        // We expect the client connection to close.
+        // In the future we might restore the kit, but currently we don't.
         std::cerr << "Reading after kill." << std::endl;
+
+        // Drain the socket.
+        getResponseMessage(socket, "", testname, 1000);
 
         // 5 seconds timeout
         socket.setReceiveTimeout(5000000);
@@ -191,15 +189,17 @@ void HTTPCrashTest::testCrashKit()
         do
         {
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            std::cerr << testname << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
         }
         while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
         // respond close frame
         socket.shutdown();
+
         // no more messages is received.
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        CPPUNIT_ASSERT_EQUAL(0, bytes);
-        CPPUNIT_ASSERT_EQUAL(0, flags);
+        CPPUNIT_ASSERT_MESSAGE("Expected no more data", bytes <= 2); // The 2-byte marker is ok.
+        CPPUNIT_ASSERT_EQUAL(0x88, flags);
     }
     catch (const Poco::Exception& exc)
     {
