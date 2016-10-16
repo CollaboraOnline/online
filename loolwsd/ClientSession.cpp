@@ -35,12 +35,12 @@ using namespace LOOLProtocol;
 using Poco::StringTokenizer;
 
 ClientSession::ClientSession(const std::string& id,
-                             std::shared_ptr<Poco::Net::WebSocket> ws,
-                             std::shared_ptr<DocumentBroker> docBroker,
+                             const std::shared_ptr<Poco::Net::WebSocket>& ws,
+                             const std::shared_ptr<DocumentBroker>& docBroker,
                              const Poco::URI& uriPublic,
                              const bool readOnly) :
     LOOLSession(id, Kind::ToClient, ws),
-    _docBroker(std::move(docBroker)),
+    _docBroker(docBroker),
     _uriPublic(uriPublic),
     _isReadOnly(readOnly),
     _loadPart(-1)
@@ -62,7 +62,14 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
     Log::trace(getName() + ": handling [" + firstLine + "].");
 
-    LOOLWSD::dumpIncomingTrace(_docBroker->getJailId(), getId(), firstLine);
+    auto docBroker = getDocumentBroker();
+    if (!docBroker)
+    {
+        Log::error("No DocBroker found. Terminating session " + getName());
+        return false;
+    }
+
+    LOOLWSD::dumpIncomingTrace(docBroker->getJailId(), getId(), firstLine);
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {
@@ -101,7 +108,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=load kind=docalreadyloaded");
             return false;
         }
-        return loadDocument(buffer, length, tokens);
+
+        return loadDocument(buffer, length, tokens, docBroker);
     }
     else if (tokens[0] != "canceltiles" &&
              tokens[0] != "clientzoom" &&
@@ -141,38 +149,38 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "canceltiles")
     {
-        _docBroker->cancelTileRequests(shared_from_this());
+        docBroker->cancelTileRequests(shared_from_this());
         return true;
     }
     else if (tokens[0] == "commandvalues")
     {
-        return getCommandValues(buffer, length, tokens);
+        return getCommandValues(buffer, length, tokens, docBroker);
     }
     else if (tokens[0] == "partpagerectangles")
     {
-        return getPartPageRectangles(buffer, length);
+        return getPartPageRectangles(buffer, length, docBroker);
     }
     else if (tokens[0] == "ping")
     {
-        std::string count = std::to_string(_docBroker->getRenderedTileCount());
+        std::string count = std::to_string(docBroker->getRenderedTileCount());
         sendTextFrame("pong rendercount=" + count);
         return true;
     }
     else if (tokens[0] == "renderfont")
     {
-        return sendFontRendering(buffer, length, tokens);
+        return sendFontRendering(buffer, length, tokens, docBroker);
     }
     else if (tokens[0] == "status")
     {
-        return getStatus(buffer, length);
+        return getStatus(buffer, length, docBroker);
     }
     else if (tokens[0] == "tile")
     {
-        return sendTile(buffer, length, tokens);
+        return sendTile(buffer, length, tokens, docBroker);
     }
     else if (tokens[0] == "tilecombine")
     {
-        return sendCombinedTiles(buffer, length, tokens);
+        return sendCombinedTiles(buffer, length, tokens, docBroker);
     }
     else
     {
@@ -181,11 +189,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "userinactive" && tokens[0] != "useractive")
         {
             std::string dummyFrame = "dummymsg";
-            return forwardToChild(dummyFrame.c_str(), dummyFrame.size());
+            return forwardToChild(dummyFrame.c_str(), dummyFrame.size(), docBroker);
         }
         else if (tokens[0] != "requestloksession")
         {
-            return forwardToChild(buffer, length);
+            return forwardToChild(buffer, length, docBroker);
         }
         else
         {
@@ -197,7 +205,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     return false;
 }
 
-bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens,
+                                 const std::shared_ptr<DocumentBroker>& docBroker)
 {
     if (tokens.count() < 2)
     {
@@ -214,8 +223,8 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
 
         std::ostringstream oss;
         oss << "load";
-        oss << " url=" << _docBroker->getPublicUri().toString();
-        oss << " jail=" << _docBroker->getJailedUri().toString();
+        oss << " url=" << docBroker->getPublicUri().toString();
+        oss << " jail=" << docBroker->getJailedUri().toString();
 
         if (!_userName.empty())
         {
@@ -234,7 +243,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
             oss << " options=" << _docOptions;
 
         const auto loadRequest = oss.str();
-        return forwardToChild(loadRequest.c_str(), loadRequest.size());
+        return forwardToChild(loadRequest.c_str(), loadRequest.size(), docBroker);
     }
     catch (const Poco::SyntaxException&)
     {
@@ -244,12 +253,13 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
     return false;
 }
 
-bool ClientSession::getStatus(const char *buffer, int length)
+bool ClientSession::getStatus(const char *buffer, int length, const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    return forwardToChild(buffer, length);
+    return forwardToChild(buffer, length, docBroker);
 }
 
-bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens)
+bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens,
+                                     const std::shared_ptr<DocumentBroker>& docBroker)
 {
     std::string command;
     if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
@@ -257,27 +267,29 @@ bool ClientSession::getCommandValues(const char *buffer, int length, StringToken
         return sendTextFrame("error: cmd=commandvalues kind=syntax");
     }
 
-    const std::string cmdValues = _docBroker->tileCache().getTextFile("cmdValues" + command + ".txt");
+    const std::string cmdValues = docBroker->tileCache().getTextFile("cmdValues" + command + ".txt");
     if (cmdValues.size() > 0)
     {
         return sendTextFrame(cmdValues);
     }
 
-    return forwardToChild(buffer, length);
+    return forwardToChild(buffer, length, docBroker);
 }
 
-bool ClientSession::getPartPageRectangles(const char *buffer, int length)
+bool ClientSession::getPartPageRectangles(const char *buffer, int length,
+                                          const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    const std::string partPageRectangles = _docBroker->tileCache().getTextFile("partpagerectangles.txt");
+    const std::string partPageRectangles = docBroker->tileCache().getTextFile("partpagerectangles.txt");
     if (partPageRectangles.size() > 0)
     {
         return sendTextFrame(partPageRectangles);
     }
 
-    return forwardToChild(buffer, length);
+    return forwardToChild(buffer, length, docBroker);
 }
 
-bool ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens)
+bool ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens,
+                                      const std::shared_ptr<DocumentBroker>& docBroker)
 {
     std::string font;
     if (tokens.count() < 2 ||
@@ -292,7 +304,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, StringToke
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedRendering = _docBroker->tileCache().lookupRendering(font, "font");
+    std::unique_ptr<std::fstream> cachedRendering = docBroker->tileCache().lookupRendering(font, "font");
     if (cachedRendering && cachedRendering->is_open())
     {
         cachedRendering->seekg(0, std::ios_base::end);
@@ -306,15 +318,16 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, StringToke
         return sendBinaryFrame(output.data(), output.size());
     }
 
-    return forwardToChild(buffer, length);
+    return forwardToChild(buffer, length, docBroker);
 }
 
-bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens,
+                             const std::shared_ptr<DocumentBroker>& docBroker)
 {
     try
     {
         auto tileDesc = TileDesc::parse(tokens);
-        _docBroker->handleTileRequest(tileDesc, shared_from_this());
+        docBroker->handleTileRequest(tileDesc, shared_from_this());
     }
     catch (const std::exception& exc)
     {
@@ -325,12 +338,13 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringToke
     return true;
 }
 
-bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens,
+                                      const std::shared_ptr<DocumentBroker>& docBroker)
 {
     try
     {
         auto tileCombined = TileCombined::parse(tokens);
-        _docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
+        docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
     }
     catch (const std::exception& exc)
     {
@@ -352,9 +366,10 @@ bool ClientSession::shutdownPeer(Poco::UInt16 statusCode)
     return false;
 }
 
-bool ClientSession::forwardToChild(const char *buffer, int length)
+bool ClientSession::forwardToChild(const char *buffer, int length,
+                                   const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    return _docBroker->forwardToChild(getId(), buffer, length);
+    return docBroker->forwardToChild(getId(), buffer, length);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
