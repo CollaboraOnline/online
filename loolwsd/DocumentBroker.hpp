@@ -152,15 +152,13 @@ public:
                     << " sessions left." << Log::end;
     }
 
-    const StorageBase::FileInfo validate(const Poco::URI& uri);
-
     /// Loads a document from the public URI into the jail.
-    bool load(const std::string& jailId);
+    bool load(const std::string& sessionId, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
     void setLoaded() { _isLoaded = true; }
 
     /// Save the document to Storage if needs persisting.
-    bool save(bool success, const std::string& result = "");
+    bool save(const std::string& sesionId, bool success, const std::string& result = "");
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
 

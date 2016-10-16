@@ -76,22 +76,15 @@ public:
 
     bool isLoaded() const { return _isLoaded; }
 
-    void setLocalStorePath(const std::string& localStorePath) { _localStorePath = localStorePath; }
-
-    void setJailPath(const std::string& jailPath) { _jailPath = jailPath; }
-
     /// Returns information about the file.
-    virtual FileInfo getFileInfo() = 0;
+    virtual FileInfo getFileInfo(const Poco::URI& uriPublic) = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
     virtual std::string loadStorageFileToLocal() = 0;
 
     /// Writes the contents of the file back to the source.
-    /// TODO: Should we save to the specific client's URI?
-    /// The advantage is that subseqent views (to the first)
-    /// will not depend on the token of the first.
-    virtual bool saveLocalFileToStorage() = 0;
+    virtual bool saveLocalFileToStorage(const Poco::URI& uriPublic) = 0;
 
     static
     size_t getFileSize(const std::string& filename);
@@ -133,11 +126,11 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo() override;
+    FileInfo getFileInfo(const Poco::URI& uriPublic) override;
 
     std::string loadStorageFileToLocal() override;
 
-    bool saveLocalFileToStorage() override;
+    bool saveLocalFileToStorage(const Poco::URI& uriPublic) override;
 
 private:
     /// True if the jailed file is not linked but copied.
@@ -161,12 +154,12 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo() override;
+    FileInfo getFileInfo(const Poco::URI& uriPublic) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal() override;
 
-    bool saveLocalFileToStorage() override;
+    bool saveLocalFileToStorage(const Poco::URI& uriPublic) override;
 
     /// Total time taken for making WOPI calls during load (includes GetFileInfo calls)
     const std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
@@ -191,11 +184,11 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo() override;
+    FileInfo getFileInfo(const Poco::URI& uriPublic) override;
 
     std::string loadStorageFileToLocal() override;
 
-    bool saveLocalFileToStorage() override;
+    bool saveLocalFileToStorage(const Poco::URI& uriPublic) override;
 
 private:
     std::unique_ptr<AuthBase> _authAgent;

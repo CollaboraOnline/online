@@ -152,41 +152,24 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
 }
 
-const StorageBase::FileInfo DocumentBroker::validate(const Poco::URI& uri)
+bool DocumentBroker::load(const std::string& sessionId, const std::string& jailId)
 {
-    const auto uriString = uri.toString();
-    Log::info("Validating: " + uriString);
-    try
-    {
-        _storage = StorageBase::create(uri, "", "");
-        auto fileinfo = _storage->getFileInfo();
-        Log::info("After checkfileinfo: " + uriString + " -> " + fileinfo._filename);
-        if (!fileinfo.isValid())
-        {
-            Log::error("Invalid file info for uri " + uriString);
-            throw BadRequestException("Invalid URI or access denied.");
-        }
-
-        return fileinfo;
-    }
-    catch (const std::exception& ex)
-    {
-        Log::error("Exception while getting file info for uri " + uriString + ": " + ex.what());
-        throw BadRequestException("Invalid URI or access denied.");
-    }
-}
-
-bool DocumentBroker::load(const std::string& jailId)
-{
-    Log::debug("Loading from URI: " + _uriPublic.toString());
-
-    std::unique_lock<std::mutex> lock(_mutex);
-
     if (_markToDestroy)
     {
         // Tearing down.
         return false;
     }
+
+    std::unique_lock<std::mutex> lock(_mutex);
+    auto it = _sessions.find(sessionId);
+    if (it == _sessions.end())
+    {
+        Log::error("Session with sessionId [" + sessionId + "] not found while loading");
+        return false;
+    }
+
+    const Poco::URI& uriPublic = it->second->getPublicUri();
+    Log::debug("Loading from URI: " + uriPublic.toString());
 
     _jailId = jailId;
 
@@ -204,28 +187,36 @@ bool DocumentBroker::load(const std::string& jailId)
 
     if (_storage == nullptr)
     {
-        _storage = StorageBase::create(_uriPublic, jailRoot, jailPath.toString());
+        // TODO: Maybe better to pass docKey to storage here instead of uriPublic here because
+        // uriPublic would be different for each view of the document (due to
+        // different query params like access token etc.)
+        Log::debug("Creating new storage instance for URI [" + uriPublic.toString() + "].");
+        _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
     }
-    else
+
+    if (_storage)
     {
+        // Set the username for the session
+        // TODO: security: Set the permission (readonly etc.) of the session here also
+        const auto fileInfo = _storage->getFileInfo(uriPublic);
+        if (!fileInfo.isValid())
+        {
+            Log::error("Invalid fileinfo for URI [" + uriPublic.toString() + "].");
+            return false;
+        }
+        Log::debug("Setting username of the session to: " + fileInfo._userName);
+        it->second->setUserName(fileInfo._userName);
+
+        // Lets load the document now
         if (_storage->isLoaded())
         {
             // Already loaded. Nothing to do.
             return true;
         }
 
-        _storage->setLocalStorePath(jailRoot);
-        _storage->setJailPath(jailPath.toString());
-    }
-
-
-    if (_storage)
-    {
-        const auto fileInfo = _storage->getFileInfo();
-        _filename = fileInfo._filename;
-
         const auto localPath = _storage->loadStorageFileToLocal();
         _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
+        _filename = fileInfo._filename;
 
         // Use the local temp file's timestamp.
         _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
@@ -237,11 +228,19 @@ bool DocumentBroker::load(const std::string& jailId)
     return false;
 }
 
-bool DocumentBroker::save(bool success, const std::string& result)
+bool DocumentBroker::save(const std::string& sessionId, bool success, const std::string& result)
 {
     std::unique_lock<std::mutex> lock(_saveMutex);
 
-    const auto uri = _uriPublic.toString();
+    const auto it = _sessions.find(sessionId);
+    if (it == _sessions.end())
+    {
+        Log::error("Session with sessionId [" + sessionId + "] not found while saving");
+        return false;
+    }
+
+    const Poco::URI& uriPublic = it->second->getPublicUri();
+    const auto uri = uriPublic.toString();
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
@@ -268,7 +267,7 @@ bool DocumentBroker::save(bool success, const std::string& result)
     Log::debug("Saving to URI [" + uri + "].");
 
     assert(_storage && _tileCache);
-    if (_storage->saveLocalFileToStorage())
+    if (_storage->saveLocalFileToStorage(uriPublic))
     {
         _isModified = false;
         _tileCache->setUnsavedChanges(false);
