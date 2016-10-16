@@ -37,9 +37,11 @@ using Poco::StringTokenizer;
 ClientSession::ClientSession(const std::string& id,
                              std::shared_ptr<Poco::Net::WebSocket> ws,
                              std::shared_ptr<DocumentBroker> docBroker,
-                             bool readOnly) :
+                             const Poco::URI& uriPublic,
+                             const bool readOnly) :
     LOOLSession(id, Kind::ToClient, ws),
     _docBroker(std::move(docBroker)),
+    _uriPublic(uriPublic),
     _isReadOnly(readOnly),
     _loadPart(-1)
 {

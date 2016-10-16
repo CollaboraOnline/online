@@ -470,7 +470,7 @@ private:
 
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
-                    auto session = std::make_shared<ClientSession>(id, ws, docBroker);
+                    auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic);
 
                     // Request the child to connect to us and add this session.
                     auto sessionsCount = docBroker->addSession(session);
@@ -782,10 +782,6 @@ private:
             throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
         }
 
-        // Validate the URI and Storage before moving on.
-        const auto fileinfo = docBroker->validate(uriPublic);
-        Log::debug("Validated [" + uriPublic.toString() + "]");
-
         if (newDoc)
         {
             std::unique_lock<std::mutex> lock(docBrokersMutex);
@@ -806,12 +802,7 @@ private:
         std::shared_ptr<ClientSession> session;
         try
         {
-            session = std::make_shared<ClientSession>(id, ws, docBroker, isReadOnly);
-            if (!fileinfo._userName.empty())
-            {
-                Log::debug(uriPublic.toString() + " requested with username [" + fileinfo._userName + "]");
-                session->setUserName(fileinfo._userName);
-            }
+            session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);
@@ -1258,7 +1249,7 @@ public:
 
             try
             {
-                docBroker->load(jailId);
+                docBroker->load(sessionId, jailId);
             }
             catch (const StorageSpaceLowException&)
             {

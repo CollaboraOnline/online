@@ -13,6 +13,8 @@
 #include "LOOLSession.hpp"
 #include "MessageQueue.hpp"
 
+#include <Poco/URI.h>
+
 class DocumentBroker;
 class PrisonerSession;
 
@@ -23,7 +25,8 @@ public:
     ClientSession(const std::string& id,
                   std::shared_ptr<Poco::Net::WebSocket> ws,
                   std::shared_ptr<DocumentBroker> docBroker,
-                  bool isReadOnly = false);
+                  const Poco::URI& uriPublic,
+                  const bool isReadOnly = false);
 
     virtual ~ClientSession();
 
@@ -52,6 +55,10 @@ public:
 
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
 
+    /// Exact URI (including query params - access tokens etc.) with which
+    /// client made the request to us
+    const Poco::URI& getPublicUri() const { return _uriPublic; }
+
 private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
@@ -72,7 +79,10 @@ private:
 
     std::shared_ptr<DocumentBroker> _docBroker;
 
-    // Whether the session is opened as readonly
+    /// URI with which client made request to us
+    const Poco::URI _uriPublic;
+
+    /// Whether the session is opened as readonly
     bool _isReadOnly;
 
     /// Our peer that connects us to the child.

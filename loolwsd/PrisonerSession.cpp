@@ -86,7 +86,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                         result = resultObj->get("value").toString();
                 }
 
-                if (!_docBroker->save(success, result))
+                if (!_docBroker->save(getId(), success, result))
                     peer->sendTextFrame("error: cmd=internal kind=diskfull");
                 return true;
             }

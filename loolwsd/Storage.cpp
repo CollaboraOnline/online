@@ -165,10 +165,10 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
 
 unsigned LocalStorage::LastLocalStorageId = 0;
 
-StorageBase::FileInfo LocalStorage::getFileInfo()
+StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uriPublic)
 {
-    const auto path = Poco::Path(_uri.getPath());
-    Log::debug("Getting info for local uri [" + _uri.toString() + "], path [" + path.toString() + "].");
+    const auto path = Poco::Path(uriPublic.getPath());
+    Log::debug("Getting info for local uri [" + uriPublic.toString() + "], path [" + path.toString() + "].");
     const auto& filename = path.getFileName();
     const auto file = Poco::File(path);
     const auto lastModified = file.getLastModified();
@@ -222,20 +222,20 @@ std::string LocalStorage::loadStorageFileToLocal()
     return Poco::Path(_jailPath, filename).toString();
 }
 
-bool LocalStorage::saveLocalFileToStorage()
+bool LocalStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
 {
     try
     {
         // Copy the file back.
         if (_isCopy && Poco::File(_jailedFilePath).exists())
         {
-            Log::info("Copying " + _jailedFilePath + " to " + _uri.getPath());
-            Poco::File(_jailedFilePath).copyTo(_uri.getPath());
+            Log::info("Copying " + _jailedFilePath + " to " + uriPublic.getPath());
+            Poco::File(_jailedFilePath).copyTo(uriPublic.getPath());
         }
     }
     catch (const Poco::Exception& exc)
     {
-        Log::error("copyTo(\"" + _jailedFilePath + "\", \"" + _uri.getPath() + "\") failed: " + exc.displayText());
+        Log::error("copyTo(\"" + _jailedFilePath + "\", \"" + uriPublic.getPath() + "\") failed: " + exc.displayText());
         throw;
     }
 
@@ -253,20 +253,14 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 
 } // anonymous namespace
 
-StorageBase::FileInfo WopiStorage::getFileInfo()
+StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uriPublic)
 {
-    Log::debug("Getting info for wopi uri [" + _uri.toString() + "].");
-
-    if (_fileInfo.isValid())
-    {
-        Log::debug("Returning cached fileinfo for wopi uri [" + _uri.toString() + "].");
-        return _fileInfo;
-    }
+    Log::debug("Getting info for wopi uri [" + uriPublic.toString() + "].");
 
     const auto startTime = std::chrono::steady_clock::now();
-    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(_uri));
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriPublic));
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, _uri.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriPublic.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
     request.set("User-Agent", "LOOLWSD WOPI Agent");
     psession->sendRequest(request);
 
@@ -274,7 +268,7 @@ StorageBase::FileInfo WopiStorage::getFileInfo()
 
     std::istream& rs = psession->receiveResponse(response);
     auto logger = Log::trace();
-    logger << "WOPI::CheckFileInfo header for URI [" << _uri.toString() << "]:\n";
+    logger << "WOPI::CheckFileInfo header for URI [" << uriPublic.toString() << "]:\n";
     for (auto& pair : response)
     {
         logger << '\t' + pair.first + ": " + pair.second << " / ";
@@ -319,13 +313,6 @@ std::string WopiStorage::loadStorageFileToLocal()
 {
     Log::info("Downloading URI [" + _uri.toString() + "].");
 
-    getFileInfo();
-    if (!_fileInfo.isValid())
-    {
-        //TODO: Should throw a more appropriate exception.
-        throw std::runtime_error("Failed to load file from storage.");
-    }
-
     // WOPI URI to download files ends in '/contents'.
     // Add it here to get the payload instead of file info.
     Poco::URI uriObject(_uri);
@@ -369,12 +356,12 @@ std::string WopiStorage::loadStorageFileToLocal()
     return Poco::Path(_jailPath, _fileInfo._filename).toString();
 }
 
-bool WopiStorage::saveLocalFileToStorage()
+bool WopiStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
 {
-    Log::info("Uploading URI [" + _uri.toString() + "] from [" + _jailedFilePath + "].");
+    Log::info("Uploading URI [" + uriPublic.toString() + "] from [" + _jailedFilePath + "].");
     const auto size = getFileSize(_jailedFilePath);
 
-    Poco::URI uriObject(_uri);
+    Poco::URI uriObject(uriPublic);
     uriObject.setPath(uriObject.getPath() + "/contents");
     Log::debug("Wopi posting: " + uriObject.toString());
 
@@ -403,9 +390,9 @@ bool WopiStorage::saveLocalFileToStorage()
     return success;
 }
 
-StorageBase::FileInfo WebDAVStorage::getFileInfo()
+StorageBase::FileInfo WebDAVStorage::getFileInfo(const Poco::URI& uriPublic)
 {
-    Log::debug("Getting info for webdav uri [" + _uri.toString() + "].");
+    Log::debug("Getting info for webdav uri [" + uriPublic.toString() + "].");
     assert(false && "Not Implemented!");
     return FileInfo({"bazinga", Poco::Timestamp(), 0, "admin", "admin"});
 }
@@ -417,7 +404,7 @@ std::string WebDAVStorage::loadStorageFileToLocal()
     return _uri.toString();
 }
 
-bool WebDAVStorage::saveLocalFileToStorage()
+bool WebDAVStorage::saveLocalFileToStorage(const Poco::URI& /*uriPublic*/)
 {
     // TODO: implement webdav PUT.
     return false;
