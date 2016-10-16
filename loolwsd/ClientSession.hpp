@@ -81,7 +81,7 @@ private:
     bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool forwardToChild(const char *buffer, int length,
+    bool forwardToChild(const std::string& message,
                         const std::shared_ptr<DocumentBroker>& docBroker);
 
 private:

@@ -391,7 +391,7 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
         const auto saveArgs = oss.str();
         Log::trace(".uno:Save arguments: " + saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
-        forwardToChild(sessionIt.second->getId(), command.data(), command.size());
+        forwardToChild(sessionIt.second->getId(), command);
         return true;
     }
 
@@ -767,9 +767,8 @@ void DocumentBroker::setModified(const bool value)
     _isModified = value;
 }
 
-bool DocumentBroker::forwardToChild(const std::string& viewId, const char *buffer, int length)
+bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string& message)
 {
-    const auto message = std::string(buffer, length);
     Log::trace() << "Forwarding payload to child [" << viewId << "]: " << message << Log::end;
 
     const auto it = _sessions.find(viewId);
