@@ -23,8 +23,8 @@ class ClientSession final : public LOOLSession, public std::enable_shared_from_t
 {
 public:
     ClientSession(const std::string& id,
-                  std::shared_ptr<Poco::Net::WebSocket> ws,
-                  std::shared_ptr<DocumentBroker> docBroker,
+                  const std::shared_ptr<Poco::Net::WebSocket>& ws,
+                  const std::shared_ptr<DocumentBroker>& docBroker,
                   const Poco::URI& uriPublic,
                   const bool isReadOnly = false);
 
@@ -53,7 +53,7 @@ public:
         _saveAsQueue.put(url);
     }
 
-    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker; }
+    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
 
     /// Exact URI (including query params - access tokens etc.) with which
     /// client made the request to us
@@ -63,21 +63,30 @@ private:
 
     virtual bool _handleInput(const char *buffer, int length) override;
 
-    bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens,
+                      const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool getStatus(const char *buffer, int length);
-    bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool getPartPageRectangles(const char *buffer, int length);
+    bool getStatus(const char *buffer, int length,
+                   const std::shared_ptr<DocumentBroker>& docBroker);
+    bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens,
+                          const std::shared_ptr<DocumentBroker>& docBroker);
+    bool getPartPageRectangles(const char *buffer, int length,
+                               const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens,
+                  const std::shared_ptr<DocumentBroker>& docBroker);
+    bool sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens,
+                           const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool forwardToChild(const char *buffer, int length);
+    bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens,
+                           const std::shared_ptr<DocumentBroker>& docBroker);
+
+    bool forwardToChild(const char *buffer, int length,
+                        const std::shared_ptr<DocumentBroker>& docBroker);
 
 private:
 
-    std::shared_ptr<DocumentBroker> _docBroker;
+    std::weak_ptr<DocumentBroker> _docBroker;
 
     /// URI with which client made request to us
     const Poco::URI _uriPublic;
