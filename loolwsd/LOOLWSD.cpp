@@ -778,23 +778,20 @@ private:
                 isReadOnly = param.second == "readonly";
         }
 
+        auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
+
         // Above this point exceptions are safe and will auto-cleanup.
         // Below this, we need to cleanup internal references.
-        std::shared_ptr<ClientSession> session;
+
+
+        // Above this point exceptions are safe and will auto-cleanup.
+        // Below this, we need to cleanup internal references.
         try
         {
-            session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
-
-            // Request the child to connect to us and add this session.
-            auto sessionsCount = docBroker->addSession(session);
-            Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
-
             // indicator to a client that is waiting to connect to lokit process
             status = "statusindicator: connect";
             Log::trace("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), (int) status.size());
-
-            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
             // Now the bridge beetween the client and kit process is connected
             status = "statusindicator: ready";
@@ -811,6 +808,12 @@ private:
                 Log::trace("Sending to Client [" + status + "].");
                 ws->sendFrame(status.data(), (int) status.size());
             }
+
+            // Request the child to connect to us and add this session.
+            auto sessionsCount = docBroker->addSession(session);
+            Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
+
+            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
             // Let messages flow.
             IoUtil::SocketProcessor(ws,
