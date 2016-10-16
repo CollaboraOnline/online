@@ -163,12 +163,12 @@ int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
 static bool DisplayVersion = false;
-static std::vector<std::shared_ptr<ChildProcess>> newChildren;
-static std::mutex newChildrenMutex;
-static std::condition_variable newChildrenCV;
-static std::chrono::steady_clock::time_point lastForkRequestTime = std::chrono::steady_clock::now();
-static std::map<std::string, std::shared_ptr<DocumentBroker>> docBrokers;
-static std::mutex docBrokersMutex;
+static std::vector<std::shared_ptr<ChildProcess>> NewChildren;
+static std::mutex NewChildrenMutex;
+static std::condition_variable NewChildrenCV;
+static std::chrono::steady_clock::time_point LastForkRequestTime = std::chrono::steady_clock::now();
+static std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
+static std::mutex DocBrokersMutex;
 
 #if ENABLE_DEBUG
 static int careerSpanSeconds = 0;
@@ -217,7 +217,7 @@ void shutdownLimitReached(WebSocket& ws)
 
 static void forkChildren(const int number)
 {
-    Util::assertIsLocked(newChildrenMutex);
+    Util::assertIsLocked(NewChildrenMutex);
 
     if (number > 0)
     {
@@ -225,14 +225,14 @@ static void forkChildren(const int number)
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
         IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage);
-        lastForkRequestTime = std::chrono::steady_clock::now();
+        LastForkRequestTime = std::chrono::steady_clock::now();
     }
 }
 
 /// Called on startup only.
 static void preForkChildren()
 {
-    std::unique_lock<std::mutex> lock(newChildrenMutex);
+    std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     UnitWSD::get().preSpawnCount(numPreSpawn);
@@ -243,7 +243,7 @@ static void preForkChildren()
 
 static void prespawnChildren()
 {
-    std::unique_lock<std::mutex> lock(newChildrenMutex, std::defer_lock);
+    std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
     if (!lock.try_lock())
     {
         // We are forking already? Try later.
@@ -252,13 +252,13 @@ static void prespawnChildren()
 
     // Do the cleanup first.
     bool rebalance = false;
-    for (int i = newChildren.size() - 1; i >= 0; --i)
+    for (int i = NewChildren.size() - 1; i >= 0; --i)
     {
-        if (!newChildren[i]->isAlive())
+        if (!NewChildren[i]->isAlive())
         {
-            Log::warn() << "Removing unused dead child [" << newChildren[i]->getPid()
+            Log::warn() << "Removing unused dead child [" << NewChildren[i]->getPid()
                          << "]." << Log::end;
-            newChildren.erase(newChildren.begin() + i);
+            NewChildren.erase(NewChildren.begin() + i);
 
             // Rebalance after cleanup.
             rebalance = true;
@@ -266,13 +266,13 @@ static void prespawnChildren()
     }
 
     int balance = LOOLWSD::NumPreSpawnedChildren;
-    balance -= newChildren.size();
+    balance -= NewChildren.size();
     if (balance <= 0)
     {
         return;
     }
 
-    const auto duration = (std::chrono::steady_clock::now() - lastForkRequestTime);
+    const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
     if (!rebalance &&
         std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_MS)
     {
@@ -285,26 +285,26 @@ static void prespawnChildren()
 
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
 {
-    std::unique_lock<std::mutex> lock(newChildrenMutex);
-    newChildren.emplace_back(child);
-    const auto count = newChildren.size();
+    std::unique_lock<std::mutex> lock(NewChildrenMutex);
+    NewChildren.emplace_back(child);
+    const auto count = NewChildren.size();
     Log::info() << "Have " << count << " "
                 << (count == 1 ? "child" : "children")
                 << "." << Log::end;
 
-    newChildrenCV.notify_one();
+    NewChildrenCV.notify_one();
     return count;
 }
 
 static std::shared_ptr<ChildProcess> getNewChild()
 {
-    std::unique_lock<std::mutex> lock(newChildrenMutex);
+    std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     namespace chrono = std::chrono;
     const auto startTime = chrono::steady_clock::now();
     do
     {
-        const int available = newChildren.size();
+        const int available = NewChildren.size();
         int balance = LOOLWSD::NumPreSpawnedChildren;
         if (available == 0)
         {
@@ -320,10 +320,10 @@ static std::shared_ptr<ChildProcess> getNewChild()
         forkChildren(balance);
 
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
-        if (newChildrenCV.wait_for(lock, timeout, [](){ return !newChildren.empty(); }))
+        if (NewChildrenCV.wait_for(lock, timeout, [](){ return !NewChildren.empty(); }))
         {
-            auto child = newChildren.back();
-            newChildren.pop_back();
+            auto child = NewChildren.back();
+            NewChildren.pop_back();
 
             // Validate before returning.
             if (child && child->isAlive())
@@ -445,11 +445,11 @@ private:
 
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
-                    std::unique_lock<std::mutex> lock(docBrokersMutex);
+                    std::unique_lock<std::mutex> lock(DocBrokersMutex);
 
                     //FIXME: What if the same document is already open? Need a fake dockey here?
                     Log::debug("New DocumentBroker for docKey [" + docKey + "].");
-                    docBrokers.emplace(docKey, docBroker);
+                    DocBrokers.emplace(docKey, docBroker);
 
                     // Load the document.
                     std::shared_ptr<WebSocket> ws;
@@ -506,7 +506,7 @@ private:
                         Log::debug("Closing child for docKey [" + docKey + "].");
                         child->close(true);
                         Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
-                        docBrokers.erase(docKey);
+                        DocBrokers.erase(docKey);
                     }
                     else
                     {
@@ -547,18 +547,18 @@ private:
                 const std::string formName(form.get("name"));
 
                 // Validate the docKey
-                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
                 std::string decodedUri;
                 URI::decode(tokens[2], decodedUri);
                 const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
-                auto docBrokerIt = docBrokers.find(docKey);
+                auto docBrokerIt = DocBrokers.find(docKey);
 
                 // Maybe just free the client from sending childid in form ?
-                if (docBrokerIt == docBrokers.end() || docBrokerIt->second->getJailId() != formChildid)
+                if (docBrokerIt == DocBrokers.end() || docBrokerIt->second->getJailId() != formChildid)
                 {
                     throw BadRequestException("DocKey [" + docKey + "] or childid [" + formChildid + "] is invalid.");
                 }
-                docBrokersLock.unlock();
+                DocBrokersLock.unlock();
 
                 // protect against attempts to inject something funny here
                 if (formChildid.find('/') == std::string::npos && formName.find('/') == std::string::npos)
@@ -582,9 +582,9 @@ private:
             std::string decodedUri;
             URI::decode(tokens[2], decodedUri);
             const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
-            std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
-            auto docBrokerIt = docBrokers.find(docKey);
-            if (docBrokerIt == docBrokers.end())
+            std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+            auto docBrokerIt = DocBrokers.find(docKey);
+            if (docBrokerIt == DocBrokers.end())
             {
                 throw BadRequestException("DocKey [" + docKey + "] is invalid.");
             }
@@ -602,7 +602,7 @@ private:
             {
                 throw BadRequestException("RandomDir cannot be equal to ChildId");
             }
-            docBrokersLock.unlock();
+            DocBrokersLock.unlock();
 
             std::string fileName;
             bool responded = false;
@@ -652,13 +652,13 @@ private:
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
         std::shared_ptr<DocumentBroker> docBroker;
 
-        // scope the docBrokersLock
+        // scope the DocBrokersLock
         {
-            std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+            std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
 
             // Lookup this document.
-            auto it = docBrokers.find(docKey);
-            if (it != docBrokers.end())
+            auto it = DocBrokers.find(docKey);
+            if (it != DocBrokers.end())
             {
                 // Get the DocumentBroker from the Cache.
                 Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
@@ -672,7 +672,7 @@ private:
                 Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily.");
 
                 std::shared_ptr<DocumentBroker> tempBroker = std::make_shared<DocumentBroker>();
-                docBrokers.emplace(docKey, tempBroker);
+                DocBrokers.emplace(docKey, tempBroker);
             }
         }
 
@@ -687,16 +687,16 @@ private:
             {
                 std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
 
-                std::unique_lock<std::mutex> lock(docBrokersMutex);
-                auto it = docBrokers.find(docKey);
-                if (it == docBrokers.end())
+                std::unique_lock<std::mutex> lock(DocBrokersMutex);
+                auto it = DocBrokers.find(docKey);
+                if (it == DocBrokers.end())
                 {
                     // went away successfully
                     docBroker.reset();
                     Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily after the other instance is gone.");
 
                     std::shared_ptr<DocumentBroker> tempBroker = std::make_shared<DocumentBroker>();
-                    docBrokers.emplace(docKey, tempBroker);
+                    DocBrokers.emplace(docKey, tempBroker);
 
                     timedOut = false;
                     break;
@@ -753,8 +753,8 @@ private:
             if (!newDoc)
             {
                 // Remove.
-                std::unique_lock<std::mutex> lock(docBrokersMutex);
-                docBrokers.erase(docKey);
+                std::unique_lock<std::mutex> lock(DocBrokersMutex);
+                DocBrokers.erase(docKey);
 #if MAX_DOCUMENTS > 0
                 --LOOLWSD::NumDocBrokers;
 #endif
@@ -765,8 +765,8 @@ private:
 
         if (newDoc)
         {
-            std::unique_lock<std::mutex> lock(docBrokersMutex);
-            docBrokers[docKey] = docBroker;
+            std::unique_lock<std::mutex> lock(DocBrokersMutex);
+            DocBrokers[docKey] = docBroker;
         }
 
         // Check if readonly session is required
@@ -827,7 +827,7 @@ private:
             // Connection terminated. Destroy session.
             Log::debug("Client session [" + id + "] terminated. Cleaning up.");
             {
-                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
 
                 // We cannot destroy it, before save, if this is the last session.
                 // Otherwise, we may end up removing the one and only session.
@@ -866,9 +866,9 @@ private:
 
             if (sessionsCount == 0)
             {
-                std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
+                std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
                 Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
-                docBrokers.erase(docKey);
+                DocBrokers.erase(docKey);
 #if MAX_DOCUMENTS > 0
                 --LOOLWSD::NumDocBrokers;
 #endif
@@ -1695,7 +1695,7 @@ Process::PID LOOLWSD::createForKit()
     Log::info("Launching forkit process: " + forKitPath + " " +
               Poco::cat(std::string(" "), args.begin(), args.end()));
 
-    lastForkRequestTime = std::chrono::steady_clock::now();
+    LastForkRequestTime = std::chrono::steady_clock::now();
     Pipe inPipe;
     ProcessHandle child = Process::launch(forKitPath, args, &inPipe, nullptr, nullptr);
 
@@ -1884,8 +1884,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 {
                     try
                     {
-                        std::unique_lock<std::mutex> docBrokersLock(docBrokersMutex);
-                        for (auto& brokerIt : docBrokers)
+                        std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+                        for (auto& brokerIt : DocBrokers)
                         {
                             brokerIt.second->autoSave(false, 0);
                         }
@@ -1923,7 +1923,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Terminate child processes
     Log::info("Requesting child process " + std::to_string(forKitPid) + " to terminate");
     Util::requestTermination(forKitPid);
-    for (auto& child : newChildren)
+    for (auto& child : NewChildren)
     {
         child->close(true);
     }
@@ -1978,9 +1978,9 @@ namespace Util
 
 void alertAllUsers(const std::string& cmd, const std::string& kind)
 {
-    std::lock_guard<std::mutex> docBrokersLock(docBrokersMutex);
+    std::lock_guard<std::mutex> DocBrokersLock(DocBrokersMutex);
 
-    for (auto& brokerIt : docBrokers)
+    for (auto& brokerIt : DocBrokers)
     {
         brokerIt.second->alertAllUsersOfDocument(cmd, kind);
     }
