@@ -1895,7 +1895,12 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, c
     CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
     // Connect and load 0..N Views, where N=10
-    for (itView = 0; itView < 10; ++itView)
+#if MAX_DOCUMENTS > 0
+    const auto limit = std::min(10, MAX_DOCUMENTS - 1); // +1 connection above
+#else
+    constexpr auto limit = 10;
+#endif
+    for (itView = 0; itView < limit; ++itView)
     {
         views.emplace_back(loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView)));
     }
