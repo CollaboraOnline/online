@@ -258,7 +258,7 @@ public:
     bool handleInput(const std::vector<char>& payload);
 
     /// Forward a message from client session to its respective child session.
-    bool forwardToChild(const std::string& viewId, const char *buffer, int length);
+    bool forwardToChild(const std::string& viewId, const std::string& message);
 
     int getRenderedTileCount() { return _debugRenderedTileCount; }
 
