@@ -861,6 +861,9 @@ private:
                     sessionsCount = docBroker->removeSession(id);
                     Log::trace(docKey + ", ws_sessions--: " + std::to_string(sessionsCount));
                 }
+
+                // Lets remove this session from the admin console too
+                Admin::instance().rmDoc(docKey, id);
             }
 
             if (sessionsCount == 0)
