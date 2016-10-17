@@ -127,6 +127,11 @@ const StorageBase::FileInfo DocumentBroker::validate(const Poco::URI& uri)
 
         return fileinfo;
     }
+    catch (const UnauthorizedRequestException&)
+    {
+        // Sigh...
+        throw;
+    }
     catch (const std::exception&)
     {
         throw BadRequestException("Invalid URI or access denied.");

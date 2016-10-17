@@ -2,3 +2,4 @@ var wrongwopisrc = _('Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_p
 var emptyhosturl = _('The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator.');
 var diskfull = _('No disk space left on server, please contact the server administrator to continue.');
 var limitreached = _('This development build is limited to %0 documents, and %1 connections - to avoid the impression that it is suitable for deployment in large enterprises. To find out more about deploy    ing and scaling %2 checkout: <br/><a href=\"%3\">%3</a>.');
+var unauthorized = _('Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists.');

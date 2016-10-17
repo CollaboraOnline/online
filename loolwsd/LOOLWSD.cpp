@@ -691,8 +691,24 @@ private:
         }
 
         // Validate the URI and Storage before moving on.
-        const auto fileinfo = docBroker->validate(uriPublic);
-        Log::debug("Validated [" + uriPublic.toString() + "]");
+        StorageBase::FileInfo fileinfo;
+        try
+        {
+            fileinfo = docBroker->validate(uriPublic);
+            Log::debug("Validated [" + uriPublic.toString() + "]");
+        }
+        catch (const UnauthorizedRequestException& exc)
+        {
+            // This is more convoluted here than in the master branch. In master there is no
+            // docBroker->validate() call as above, and the UnauthorizedRequestException is thrown
+            // later, and is caught from the try block below. But we need to catch it here to be
+            // able to send the 'error:' message to the client before the socket gets closed.
+            Log::error("Error in client request handler: " + std::string(exc.what()));
+            status = "error: cmd=internal kind=unauthorized";
+            Log::trace("Sending to Client [" + status + "].");
+            ws->sendFrame(status.data(), (int) status.size());
+            throw;
+        }
 
         if (newDoc)
         {
@@ -1028,10 +1044,17 @@ public:
             Log::error("ClientRequestHandler::handleRequest:: Unexpected exception");
         }
 
+        if (responded)
+            Log::debug("Already sent response!?");
         if (!responded)
         {
+            Log::debug("Attempting to send response");
             response.setContentLength(0);
-            response.send();
+            std::ostream& os = response.send();
+            if (!os.good())
+                Log::debug("Response stream is not good after send");
+            else
+                Log::debug("Response stream *is* good after send");
         }
 
         Log::debug("Thread finished.");

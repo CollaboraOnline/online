@@ -143,6 +143,13 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
     else if (uri.isRelative() || uri.getScheme() == "file")
     {
         Log::info("Public URI [" + uri.toString() + "] is a file.");
+#if ENABLE_DEBUG
+        if (std::getenv("FAKE_UNAUTHORIZED"))
+        {
+            Log::error("Faking an UnauthorizedRequestException");
+            throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host in config.");
+        }
+#endif
         if (_filesystemEnabled)
         {
             return std::unique_ptr<StorageBase>(new LocalStorage(jailRoot, jailPath, uri.getPath()));
@@ -159,7 +166,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const std::string& jailRoot, co
             return std::unique_ptr<StorageBase>(new WopiStorage(jailRoot, jailPath, uri.toString()));
         }
 
-        Log::error("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
+        throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
     }
 
     throw BadRequestException("No Storage configured or invalid URI.");
