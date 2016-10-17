@@ -24,51 +24,34 @@
 
 class HTTPGetTest;
 
-bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry)
+bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry, const std::string testName)
 {
-    const char* envar = std::getenv("CPPUNIT_TEST_NAME");
-    if (envar)
+    Poco::RegularExpression re(testName, Poco::RegularExpression::RE_CASELESS);
+    Poco::RegularExpression::Match reMatch;
+
+    bool haveTests = false;
+    for (int i = 0; i < testRegistry->getChildTestCount(); ++i)
     {
-        std::string testName(envar);
-        if (testName.empty())
+        CPPUNIT_NS::Test* testSuite = testRegistry->getChildTestAt(i);
+        for (int j = 0; j < testSuite->getChildTestCount(); ++j)
         {
-            return false;
-        }
-
-        Poco::RegularExpression re(testName, Poco::RegularExpression::RE_CASELESS);
-        Poco::RegularExpression::Match reMatch;
-
-        bool haveTests = false;
-        for (int i = 0; i < testRegistry->getChildTestCount(); ++i)
-        {
-            CPPUNIT_NS::Test* testSuite = testRegistry->getChildTestAt(i);
-            for (int j = 0; j < testSuite->getChildTestCount(); ++j)
+            CPPUNIT_NS::Test* testCase = testSuite->getChildTestAt(j);
+            try
             {
-                CPPUNIT_NS::Test* testCase = testSuite->getChildTestAt(j);
-                try
+                if (re.match(testCase->getName(), reMatch))
                 {
-                    if (re.match(testCase->getName(), reMatch))
-                    {
-                        runner.addTest(testCase);
-                        haveTests = true;
-                    }
-                }
-                catch (const std::exception& exc)
-                {
-                    // Nothing to do; skip.
+                    runner.addTest(testCase);
+                    haveTests = true;
                 }
             }
+            catch (const std::exception& exc)
+            {
+                // Nothing to do; skip.
+            }
         }
-
-        if (!haveTests)
-        {
-            std::cerr << "Failed to match [" << testName << "] to any names in the test-suite. Running all tests." << std::endl;
-        }
-
-        return haveTests;
     }
 
-    return false;
+    return haveTests;
 }
 
 int main(int /*argc*/, char** /*argv*/)
@@ -86,10 +69,26 @@ int main(int /*argc*/, char** /*argv*/)
     CPPUNIT_NS::Test* testRegistry = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
 
     CPPUNIT_NS::TestRunner runner;
-    if (!filterTests(runner, testRegistry))
+    const char* envar = std::getenv("CPPUNIT_TEST_NAME");
+    std::string testName;
+    if (envar)
     {
-        // All tests.
+        testName = std::string(envar);
+    }
+
+    if (testName.empty())
+    {
+        // Add all tests.
         runner.addTest(testRegistry);
+    }
+    else
+    {
+        const bool testsAdded = filterTests(runner, testRegistry, testName);
+        if (!testsAdded)
+        {
+            std::cerr << "Failed to match [" << testName << "] to any names in the external test-suite. "
+                      << "No external tests will be executed" << std::endl;
+        }
     }
 
     runner.run(controller);
