@@ -69,9 +69,17 @@ int countLoolKitProcesses(const int expected)
 {
     std::cerr << "Waiting to have " << expected << " loolkit processes. Loolkits: ";
 
-    // Retry for about 3 seconds.
-    const auto sleepMs = static_cast<int>(POLL_TIMEOUT_MS / 3);
-    const size_t repeat = (3000 / sleepMs) + 1;
+    // We have to wait at least for the time the call docBroker->autoSave(forceSave,
+    // COMMAND_TIMEOUT_MS)) in ClientRequestHandler:::handleGetRequest() can take to wait for
+    // information about a successful auto-save. In the HTTPWSTest::testConnectNoLoad() there is
+    // nothing to auto-save, so it waits in vain.
+
+    // This does not need to depend on any constant from Common.hpp. The shorter the better (the
+    // quicker the test runs).
+    const auto sleepMs = 200;
+
+    // This has to cause waiting for at least COMMAND_TIMEOUT_MS. Add one second for safety.
+    const size_t repeat = ((COMMAND_TIMEOUT_MS + 1000) / sleepMs);
     auto count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {
