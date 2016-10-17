@@ -782,10 +782,6 @@ private:
 
         // Above this point exceptions are safe and will auto-cleanup.
         // Below this, we need to cleanup internal references.
-
-
-        // Above this point exceptions are safe and will auto-cleanup.
-        // Below this, we need to cleanup internal references.
         try
         {
             // indicator to a client that is waiting to connect to lokit process
