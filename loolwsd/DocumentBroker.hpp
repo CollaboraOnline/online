@@ -268,6 +268,9 @@ public:
 
     void childSocketTerminated();
 
+    /// Get the PID of the associated child process
+    Poco::Process::PID getPid() const { return _childProcess->getPid(); }
+
 private:
 
     /// Sends the .uno:Save command to LoKit.

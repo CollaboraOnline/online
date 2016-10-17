@@ -809,6 +809,9 @@ private:
                 ws->sendFrame(status.data(), (int) status.size());
             }
 
+            // Tell the admin console about this new doc
+            Admin::instance().addDoc(docKey, docBroker->getPid(), docBroker->getFilename(), id);
+
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
             // Let messages flow.
