@@ -796,6 +796,10 @@ private:
 
             Util::checkDiskSpaceOnRegisteredFileSystems();
 
+            // Request the child to connect to us and add this session.
+            auto sessionsCount = docBroker->addSession(session);
+            Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
+
             // If its a WOPI host, return time taken to make calls to it
             const auto storageCallDuration = docBroker->getStorageLoadDuration();
             if (storageCallDuration != std::chrono::duration<double>::zero())
@@ -804,10 +808,6 @@ private:
                 Log::trace("Sending to Client [" + status + "].");
                 ws->sendFrame(status.data(), (int) status.size());
             }
-
-            // Request the child to connect to us and add this session.
-            auto sessionsCount = docBroker->addSession(session);
-            Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
