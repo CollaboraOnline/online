@@ -18,6 +18,10 @@ valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=ye
 export LOOL_TEST_CLIENT_PORT=9984
 export LOOL_TEST_MASTER_PORT=9985
 
+# Note that these options are used by commands in the Makefile that
+# Automake generates. Don't be mislead by 'git grep' not showing any
+# use of --test-name for instance.
+
 tst=
 while test $# -gt 0; do
   case $1 in
