@@ -440,13 +440,17 @@ public:
             Log::info("UnitAdmin:: Finished test #" + std::to_string(_testCounter));
             if (res != TestResult::TEST_OK)
             {
+                Log::info("Exiting with " + (res == TestResult::TEST_FAILED ? "FAIL" : (res == TestResult::TEST_TIMED_OUT) ? "TIMEOUT" : "??? (" + std::to_string(res) + ")"));
                 exitTest(res);
                 return;
             }
 
             // End this when all tests are finished
             if (_tests.size() == _testCounter)
+            {
+                Log::info("Exiting with OK");
                 exitTest(TestResult::TEST_OK);
+            }
 
             _isTestRunning = false;
         }
