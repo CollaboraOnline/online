@@ -885,6 +885,13 @@ private:
         {
             throw;
         }
+        catch (const UnauthorizedRequestException& exc)
+        {
+            Log::error("Error in client request handler: " + std::string(exc.what()));
+            status = "error: cmd=internal kind=unauthorized";
+            Log::trace("Sending to Client [" + status + "].");
+            ws->sendFrame(status.data(), (int) status.size());
+        }
         catch (const std::exception& exc)
         {
             Log::error("Error in client request handler: " + std::string(exc.what()));
@@ -1096,10 +1103,18 @@ public:
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
         }
 
+        if (responded)
+            Log::debug("Already sent response!?");
         if (!responded)
         {
+            // I wonder if this code path has ever been exercised
+            Log::debug("Attempting to send response");
             response.setContentLength(0);
-            response.send();
+            std::ostream& os = response.send();
+            if (!os.good())
+                Log::debug("Response stream is not good after send");
+            else
+                Log::debug("Response stream *is* good after send");
         }
 
         Log::debug("Thread finished.");
