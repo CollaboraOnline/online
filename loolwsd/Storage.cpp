@@ -130,6 +130,11 @@ bool isLocalhost(const std::string& targetHost)
 
 std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot, const std::string& jailPath)
 {
+    // FIXME: By the time this gets called we have already sent to the client three
+    // 'statusindicator:' messages: 'find', 'connect' and 'ready'. We should ideally do the checks
+    // here much earlier. Also, using exceptions is lame and makes understanding the code harder,
+    // but that is just my personal preference.
+
     std::unique_ptr<StorageBase> storage;
 
     if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
@@ -141,6 +146,13 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     else if (uri.isRelative() || uri.getScheme() == "file")
     {
         Log::info("Public URI [" + uri.toString() + "] is a file.");
+#if ENABLE_DEBUG
+        if (std::getenv("FAKE_UNAUTHORIZED"))
+        {
+            Log::fatal("Faking an UnauthorizedRequestException");
+            throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host in config.");
+        }
+#endif
         if (FilesystemEnabled)
         {
             return std::unique_ptr<StorageBase>(new LocalStorage(uri, jailRoot, jailPath));
@@ -157,7 +169,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
         }
 
-        Log::error("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
+        throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
     }
 
     throw BadRequestException("No Storage configured or invalid URI.");

@@ -159,6 +159,9 @@ L.Socket = L.Class.extend({
 			if (command.errorKind === 'diskfull') {
 				this._map.fire('error', {msg: errorMessages.diskfull});
 			}
+			else if (command.errorKind === 'unauthorized') {
+				this._map.fire('error', {msg: errorMessages.unauthorized});
+			}
 
 			if (this._map._docLayer) {
 				this._map._docLayer.removeAllViews();
