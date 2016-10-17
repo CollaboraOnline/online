@@ -304,21 +304,24 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('invalidatecursor:')) {
 			this._onInvalidateCursorMsg(textMsg);
 		}
-		else if (textMsg.startsWith('invalidatetiles:') && !textMsg.startsWith('EMPTY')) {
-			this._onInvalidateTilesMsg(textMsg);
-		}
-		else if (textMsg.startsWith('invalidatetiles:') && textMsg.startsWith('EMPTY')) {
-			var msg = 'invalidatetiles: ';
-			if (this._docType === 'text') {
-				msg += 'part=0 ';
-			} else {
-				var partNumber = parseInt(textMsg.substring(6));
-				msg += 'part=' + (isNaN(partNumber) ? this._selectedPart : partNumber) + ' ';
+		else if (textMsg.startsWith('invalidatetiles:')) {
+			var payload = textMsg.substring('invalidatetiles:'.length + 1);
+			if (!payload.startsWith('EMPTY')) {
+				this._onInvalidateTilesMsg(textMsg);
 			}
-			msg += 'x=0 y=0 ';
-			msg += 'width=' + this._docWidthTwips + ' ';
-			msg += 'height=' + this._docHeightTwips;
-			this._onInvalidateTilesMsg(msg);
+			else {
+				var msg = 'invalidatetiles: ';
+				if (this._docType === 'text') {
+					msg += 'part=0 ';
+				} else {
+					var partNumber = parseInt(payload.substring('EMPTY'.length + 1));
+					msg += 'part=' + (isNaN(partNumber) ? this._selectedPart : partNumber) + ' ';
+				}
+				msg += 'x=0 y=0 ';
+				msg += 'width=' + this._docWidthTwips + ' ';
+				msg += 'height=' + this._docHeightTwips;
+				this._onInvalidateTilesMsg(msg);
+			}
 		}
 		else if (textMsg.startsWith('mousepointer:')) {
 			this._onMousePointerMsg(textMsg);
