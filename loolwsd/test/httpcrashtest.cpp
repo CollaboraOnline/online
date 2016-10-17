@@ -122,7 +122,6 @@ void HTTPCrashTest::testBarren()
     try
     {
         killLoKitProcesses();
-        countLoolKitProcesses(0);
 
         std::cerr << "Loading after kill." << std::endl;
 
