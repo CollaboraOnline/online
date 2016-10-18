@@ -101,18 +101,16 @@ void HTTPWSError::testMaxDocuments()
     try
     {
         // Load a document.
-        std::string docPath;
-        std::string docURL;
         std::vector<std::shared_ptr<Poco::Net::WebSocket>> docs;
 
         for (int it = 1; it <= MAX_DOCUMENTS; ++it)
         {
-            getDocumentPathAndURL("empty.odt", docPath, docURL);
-            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
             docs.emplace_back(loadDocAndGetSocket("empty.odt", _uri, testname));
         }
 
         // try to open MAX_DOCUMENTS + 1
+        std::string docPath;
+        std::string docURL;
         getDocumentPathAndURL("empty.odt", docPath, docURL);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
