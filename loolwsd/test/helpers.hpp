@@ -188,6 +188,22 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                 auto message = LOOLProtocol::getAbbreviatedMessage(response);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
+                    // FIXME: This is wrong in two ways:
+
+                    // 1) The message variable is the return value from getAbbreviatedMessage(),
+                    // That is a string that is intended for human-readable logging only. It is not
+                    // intended to be used for actually decoding the protocol. Sure, at the moment
+                    // it happens to work, but is still wrong.
+
+                    // 2) Using std::string::find() like this is silly. If message does not start
+                    // with prefix, the find() function will search through the whole buffer. That
+                    // is a waste of cycles. Use the LOOLProtocol functions to manipulate and
+                    // inspect LOOL protocol frames, that is what they are there
+                    // for. getFirstToken() should be quite efficient, and it doesn't incur the
+                    // (potential) overhead of setting up a StringTokenizer. Or, if this is actually
+                    // used to look for not just a first token, then introduce a startsWith()
+                    // function.
+
                     if (message.find(prefix) == 0)
                     {
                         std::cerr << name << "Got " << bytes << " bytes: " << message << std::endl;
