@@ -185,6 +185,7 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                 response.resize(READ_BUFFER_SIZE);
                 int bytes = ws.receiveFrame(response.data(), response.size(), flags);
                 response.resize(bytes >= 0 ? bytes : 0);
+                std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
                 auto message = LOOLProtocol::getAbbreviatedMessage(response);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
@@ -206,12 +207,10 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
 
                     if (message.find(prefix) == 0)
                     {
-                        std::cerr << name << "Got " << bytes << " bytes: " << message << std::endl;
                         return response;
                     }
                     else if (message.find("nextmessage") == 0)
                     {
-                        std::cerr << name << "Got " << bytes << " bytes: " << message << std::endl;
                         Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
                         int size = 0;
                         if (tokens.count() == 2 &&
@@ -220,10 +219,10 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                             response.resize(size);
                             bytes = ws.receiveFrame(response.data(), response.size(), flags);
                             response.resize(bytes >= 0 ? bytes : 0);
+                            std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
                             message = LOOLProtocol::getAbbreviatedMessage(response);
                             if (bytes > 0 && message.find(prefix) == 0)
                             {
-                                std::cerr << name << "Got " << bytes << " bytes: " << message << std::endl;
                                 return response;
                             }
                         }
@@ -232,7 +231,6 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                 else
                 {
                     response.resize(0);
-                    std::cerr << name << "Got " << bytes << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
                 }
 
                 if (bytes <= 0)
@@ -405,17 +403,13 @@ void SocketProcessor(const std::string& name,
         }
 
         n = socket->receiveFrame(buffer, sizeof(buffer), flags);
+        std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, n, flags) << std::endl;
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
-            std::cerr << name << "Got " << n << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, n) << std::endl;
             if (!handler(std::string(buffer, n)))
             {
                 break;
             }
-        }
-        else
-        {
-            std::cerr << name << "Got " << n << " bytes, flags: " << std::hex << flags << std::dec << std::endl;
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);

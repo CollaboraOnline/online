@@ -188,7 +188,7 @@ void HTTPCrashTest::testCrashKit()
         do
         {
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cerr << testname << "Got " << bytes << " bytes: " << LOOLProtocol::getAbbreviatedMessage(buffer, bytes) << std::endl;
+            std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
         }
         while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
