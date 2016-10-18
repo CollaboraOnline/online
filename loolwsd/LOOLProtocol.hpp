@@ -12,8 +12,11 @@
 
 #include <cstring>
 #include <map>
+#include <sstream>
 #include <string>
 
+#include <Poco/Format.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 
 #define LOK_USE_UNSTABLE_API
@@ -167,6 +170,36 @@ namespace LOOLProtocol
     std::string getAbbreviatedMessage(const T& message)
     {
         return getAbbreviatedMessage(message.data(), message.size());
+    }
+
+    // Return a string dump of a WebSocket frame: Its opcode, length, first line (if present),
+    // flags.  For human-readable logging purposes. Format not guaranteed to be stable. Not to be
+    // inspected programmatically.
+    inline
+    std::string getAbbreviatedFrameDump(const char *message, const int length, const int flags)
+    {
+        std::ostringstream result;
+        switch (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
+        {
+#define CASE(x) case Poco::Net::WebSocket::FRAME_OP_##x: result << #x; break
+        CASE(CONT);
+        CASE(TEXT);
+        CASE(BINARY);
+        CASE(CLOSE);
+        CASE(PING);
+        CASE(PONG);
+#undef CASE
+        default:
+            result << Poco::format("%#x", flags);
+            break;
+        }
+        result << " frame: " << length << " bytes";
+
+        if (length > 0 &&
+            ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_TEXT ||
+             (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_BINARY))
+            result << ": '" << getAbbreviatedMessage(message, length) << "'";
+        return result.str();
     }
 };
 
