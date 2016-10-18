@@ -176,6 +176,19 @@ static int careerSpanSeconds = 0;
 
 namespace {
 
+static void logNumDocBrokers(int lineNo)
+{
+    int size = 0;
+    int nonEmpty = 0;
+    for (auto& i : DocBrokers)
+    {
+        size++;
+        if (i.second->getPublicUri().toString() != "")
+            nonEmpty++;
+    }
+    Log::debug() << "line " << lineNo << ": NumDocBrokers=" << LOOLWSD::NumDocBrokers << " size: " << size << " of which non-empty: " << nonEmpty << Log::end;
+}
+
 static inline
 void shutdownLimitReached(WebSocket& ws)
 {
@@ -731,13 +744,17 @@ private:
             }
 
 #if MAX_DOCUMENTS > 0
+            std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+            logNumDocBrokers(__LINE__);
             if (++LOOLWSD::NumDocBrokers > MAX_DOCUMENTS)
             {
                 --LOOLWSD::NumDocBrokers;
                 Log::error("Maximum number of open documents reached.");
+                logNumDocBrokers(__LINE__);
                 shutdownLimitReached(*ws);
                 return;
             }
+            DocBrokersLock.unlock();
 #endif
 
             // Set one we just created.
@@ -757,6 +774,7 @@ private:
                 DocBrokers.erase(docKey);
 #if MAX_DOCUMENTS > 0
                 --LOOLWSD::NumDocBrokers;
+                logNumDocBrokers(__LINE__);
 #endif
             }
 
@@ -873,6 +891,7 @@ private:
                 DocBrokers.erase(docKey);
 #if MAX_DOCUMENTS > 0
                 --LOOLWSD::NumDocBrokers;
+                logNumDocBrokers(__LINE__);
 #endif
                 Log::info("Removing complete doc [" + docKey + "] from Admin.");
                 Admin::instance().rmDoc(docKey);
