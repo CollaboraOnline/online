@@ -175,7 +175,9 @@ protected:
 #else
         HTTPClientSession cs(_uri.getHost(), _uri.getPort());
 #endif
-        HTTPRequest request(HTTPRequest::HTTP_GET, std::string("lool/ws/") + args[0]);
+        std::string encodedUri;
+        URI::encode(args[0], ":/?", encodedUri);
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
         HTTPResponse response;
         WebSocket ws(cs, request, response);
 
