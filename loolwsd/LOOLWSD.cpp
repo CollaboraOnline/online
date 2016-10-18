@@ -906,7 +906,7 @@ private:
         }
         catch (const UnauthorizedRequestException& exc)
         {
-            Log::error("Error in client request handler: " + std::string(exc.what()));
+            Log::error("Error in client request handler: " + exc.toString());
             status = "error: cmd=internal kind=unauthorized";
             Log::trace("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), (int) status.size());
