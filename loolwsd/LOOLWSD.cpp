@@ -1080,7 +1080,7 @@ public:
                 catch (const WebSocketErrorMessageException& exc)
                 {
                     // Internal error that should be passed on to the client.
-                    Log::error(std::string("ClientRequestHandler::handleRequest: WebSocketErrorMessageException: ") + exc.what());
+                    Log::error(std::string("ClientRequestHandler::handleClientRequest: WebSocketErrorMessageException: ") + exc.what());
                     try
                     {
                         ws->sendFrame(exc.what(), std::strlen(exc.what()));
@@ -1089,7 +1089,7 @@ public:
                     }
                     catch (const std::exception& exc2)
                     {
-                        Log::error(std::string("ClientRequestHandler::handleRequest: exception while sending WS error message: ") + exc2.what());
+                        Log::error(std::string("ClientRequestHandler::handleClientRequest: exception while sending WS error message: ") + exc2.what());
                     }
                 }
             }
@@ -1101,24 +1101,24 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error() << "ClientRequestHandler::handleRequest: " << exc.displayText()
+            Log::error() << "ClientRequestHandler::handleClientRequest: " << exc.displayText()
                          << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
                          << Log::end;
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
         }
         catch (const UnauthorizedRequestException& exc)
         {
-            Log::error(std::string("ClientRequestHandler::handleRequest: UnauthorizedException: ") + exc.what());
+            Log::error(std::string("ClientRequestHandler::handleClientRequest: UnauthorizedException: ") + exc.what());
             response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
         }
         catch (const BadRequestException& exc)
         {
-            Log::error(std::string("ClientRequestHandler::handleRequest: BadRequestException: ") + exc.what());
+            Log::error(std::string("ClientRequestHandler::handleClientRequest: BadRequestException: ") + exc.what());
             response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
         }
         catch (const std::exception& exc)
         {
-            Log::error(std::string("ClientRequestHandler::handleRequest: Exception: ") + exc.what());
+            Log::error(std::string("ClientRequestHandler::handleClientRequest: Exception: ") + exc.what());
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
         }
 
