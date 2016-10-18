@@ -95,7 +95,7 @@ public:
                 {
                     {
                         std::unique_lock<std::mutex> lock(coutMutex);
-                        std::cout << "Got " << n << " bytes: " << getAbbreviatedMessage(buffer, n) << std::endl;
+                        std::cout << "Got " << getAbbreviatedFrameDump(buffer, n, flags) << std::endl;
                     }
 
                     std::string firstLine = getFirstLine(buffer, n);
