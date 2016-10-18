@@ -410,30 +410,30 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     const auto id = session->getId();
     const std::string aMessage = "session " + id + " " + _docKey + "\n";
 
-    std::lock_guard<std::mutex> lock(_mutex);
-
-    // Request a new session from the child kit.
-    Log::debug("DocBroker to Child: " + aMessage.substr(0, aMessage.length() - 1));
-    _childProcess->sendTextFrame(aMessage);
-
-    auto ret = _sessions.emplace(id, session);
-    if (!ret.second)
-    {
-        Log::warn("DocumentBroker: Trying to add already existing session.");
-    }
-
-    if (session->isReadOnly())
-    {
-        Log::debug("Adding a readonly session [" + id + "]");
-    }
-
-    // Below values are recalculated when startDestroy() is called (before destroying the
-    // document). It is safe to reset their values to their defaults whenever a new session is added.
-    _lastEditableSession = false;
-    _markToDestroy = false;
-
     try
     {
+        std::lock_guard<std::mutex> lock(_mutex);
+
+        // Request a new session from the child kit.
+        Log::debug("DocBroker to Child: " + aMessage.substr(0, aMessage.length() - 1));
+        _childProcess->sendTextFrame(aMessage);
+
+        auto ret = _sessions.emplace(id, session);
+        if (!ret.second)
+        {
+            Log::warn("DocumentBroker: Trying to add already existing session.");
+        }
+
+        if (session->isReadOnly())
+        {
+            Log::debug("Adding a readonly session [" + id + "]");
+        }
+
+        // Below values are recalculated when startDestroy() is called (before destroying the
+        // document). It is safe to reset their values to their defaults whenever a new session is added.
+        _lastEditableSession = false;
+        _markToDestroy = false;
+
         load(id, std::to_string(_childProcess->getPid()));
     }
     catch (const StorageSpaceLowException&)
@@ -491,6 +491,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
 void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::string& kind)
 {
+    Util::assertIsNotLocked(_mutex);
     std::lock_guard<std::mutex> lock(_mutex);
 
     std::stringstream ss;
