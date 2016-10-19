@@ -472,7 +472,8 @@ var formatButtons = {
 	'annotation': true, 'inserttable': true,
 	'fontcolor': true, 'backcolor': true, 'bullet': true, 'numbering': true,
 	'alignleft': true, 'alignhorizontal': true, 'alignright': true, 'alignblock': true,
-	'incrementindent': true, 'decrementindent': true, 'insertgraphic': true
+	'incrementindent': true, 'decrementindent': true, 'insertgraphic': true,
+	'insertfootnote': true, 'repair': true
 };
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
