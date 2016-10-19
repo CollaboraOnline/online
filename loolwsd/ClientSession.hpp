@@ -30,6 +30,7 @@ public:
 
     virtual ~ClientSession();
 
+    void setReadOnly();
     bool isReadOnly() const { return _isReadOnly; }
 
     void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }

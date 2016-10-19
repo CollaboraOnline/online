@@ -337,6 +337,11 @@ stats: <key> <value>
     Contains statistical data. Eg: 'stats: wopiduration 5' means that
     wopi calls made in loading of document took 5 seconds.
 
+perm: <permission>
+
+    <permission> can be one of 'edit', 'view', 'readonly'. Client must
+    change the UI accordingly (disabling buttons etc.)
+
 
 child -> parent
 ===============

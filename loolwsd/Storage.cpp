@@ -185,7 +185,7 @@ StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uriPublic)
     const auto file = Poco::File(path);
     const auto lastModified = file.getLastModified();
     const auto size = file.getSize();
-    return FileInfo({filename, lastModified, size, "localhost", std::string("Local Host #") + std::to_string(_localStorageId)});
+    return FileInfo({filename, lastModified, size, "localhost", std::string("Local Host #") + std::to_string(_localStorageId), true});
 }
 
 std::string LocalStorage::loadStorageFileToLocal()
@@ -293,6 +293,7 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uriPublic)
     size_t size = 0;
     std::string userId;
     std::string userName;
+    bool canWrite = false;
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
 
@@ -313,10 +314,12 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uriPublic)
         userId = (userIdVar.isString() ? userIdVar.toString() : "");
         const auto userNameVar = object->get("UserFriendlyName");
         userName = (userNameVar.isString() ? userNameVar.toString() : "anonymous");
+        const auto canWriteVar = object->get("UserCanWrite");
+        canWrite = canWriteVar.isString() ? (canWriteVar.toString() == "true") : false;
     }
 
     // WOPI doesn't support file last modified time.
-    _fileInfo = FileInfo({filename, Poco::Timestamp(), size, userId, userName});
+    _fileInfo = FileInfo({filename, Poco::Timestamp(), size, userId, userName, canWrite});
     return _fileInfo;
 }
 
@@ -371,6 +374,7 @@ std::string WopiStorage::loadStorageFileToLocal()
 bool WopiStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
 {
     Log::info("Uploading URI [" + uriPublic.toString() + "] from [" + _jailedFilePath + "].");
+    // TODO: Check if this URI has write permission (canWrite = true)
     const auto size = getFileSize(_jailedFilePath);
 
     Poco::URI uriObject(uriPublic);
@@ -406,7 +410,7 @@ StorageBase::FileInfo WebDAVStorage::getFileInfo(const Poco::URI& uriPublic)
 {
     Log::debug("Getting info for webdav uri [" + uriPublic.toString() + "].");
     assert(false && "Not Implemented!");
-    return FileInfo({"bazinga", Poco::Timestamp(), 0, "admin", "admin"});
+    return FileInfo({"bazinga", Poco::Timestamp(), 0, "admin", "admin", false});
 }
 
 std::string WebDAVStorage::loadStorageFileToLocal()

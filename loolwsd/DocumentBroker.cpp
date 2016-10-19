@@ -215,6 +215,11 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         }
         Log::debug("Setting username of the session to: " + fileInfo._userName);
         it->second->setUserName(fileInfo._userName);
+        if (!fileInfo._canWrite)
+        {
+            Log::debug("Setting the session as readonly");
+            it->second->setReadOnly();
+        }
 
         // Lets load the document now
         if (_storage->isLoaded())

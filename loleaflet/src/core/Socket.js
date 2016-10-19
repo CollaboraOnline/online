@@ -144,6 +144,19 @@ L.Socket = L.Class.extend({
 			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
 			                         ' (git hash: ' + lokitVersionObj.BuildId.substring(0, 7) + ')');
 		}
+		else if (textMsg.startsWith('perm:')) {
+			var perm = textMsg.substring('perm:'.length);
+
+			// This message is often received very early before doclayer is initialized
+			// Change options.permission so that when docLayer is initialized, it
+			// picks up the new value of permission rather than something else
+			this._map.options.permission = 'readonly';
+			// Lets also try to set the permission ourself since this can well be received
+			// after doclayer is initialized. There's no harm to call this in any case.
+			this._map.setPermission(perm);
+
+			return;
+		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'internal') {
 			this._map._fatal = true;
 			if (command.errorKind === 'diskfull') {

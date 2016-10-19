@@ -295,6 +295,9 @@ L.Map.include({
 	},
 
 	getDocType: function () {
+		if (!this._docLayer)
+			return null;
+
 		return this._docLayer._docType;
 	}
 });
