@@ -305,7 +305,15 @@ button.leaflet-control-search-next
     background: rgba(66, 151, 215, 1);
 }
 
-tr.useritem:hover {
+tr.useritem {
+    color: grey;
+}
+
+tr.editor {
+    color: black;
+}
+
+tr.editor:hover {
     cursor: default;
     background-color: rgba(67, 172, 232, 0.25);
 }

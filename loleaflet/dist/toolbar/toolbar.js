@@ -1333,8 +1333,9 @@ map.on('statusindicator', function (e) {
 
 function getUserItem(viewId, userName) {
 	var html = '<tr class="useritem" id="user-' + viewId + '">' +
-	             '<td class="username">' + userName + '</td>' +
-	           '</tr>';
+		          '<td class="username">' + userName + '</td>' +
+                  '<td class="lock"></td>' +
+               '</tr>';
 	return html;
 }
 var nUsers = _('%n users');
@@ -1351,6 +1352,13 @@ function updateUserListCount() {
 
 	w2ui['toolbar-down'].refresh();
 }
+
+map.on('editlock', function(e) {
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	var newhtml = $(userlistItem.html).find('.lock').html('').parent().removeClass('editor').parent().parent().parent()[0].outerHTML;
+	newhtml = $(newhtml).find('#user-' + e.viewid + ' .lock').html(' (Editing)').parent().addClass('editor').parent().parent().parent()[0].outerHTML;
+	userlistItem.html = newhtml;
+});
 
 map.on('addview', function(e) {
 	if (!e.viewId || !e.username)

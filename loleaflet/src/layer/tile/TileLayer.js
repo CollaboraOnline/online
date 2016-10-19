@@ -540,6 +540,14 @@ L.TileLayer = L.GridLayer.extend({
 				this._removeView(parseInt(viewInfoIdx));
 			}
 		}
+
+		// Change of lock ?
+		for (viewInfoIdx in viewInfo) {
+			if (viewInfo[viewInfoIdx].editlock) {
+				this._map.fire('editlock', {viewid: parseInt(viewInfo[viewInfoIdx].id)});
+				break;
+			}
+		}
 	},
 
 	_onPartPageRectanglesMsg: function (textMsg) {
