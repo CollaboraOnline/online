@@ -35,12 +35,14 @@ public:
                  const Poco::Timestamp& modifiedTime,
                  size_t size,
                  const std::string& userId,
-                 const std::string& userName)
+                 const std::string& userName,
+                 const bool canWrite)
             : _filename(filename),
               _modifiedTime(modifiedTime),
               _size(size),
               _userId(userId),
-              _userName(userName)
+              _userName(userName),
+              _canWrite(canWrite)
         {
         }
 
@@ -54,6 +56,7 @@ public:
         size_t _size;
         std::string _userId;
         std::string _userName;
+        bool _canWrite;
     };
 
     /// localStorePath the absolute root path of the chroot.
@@ -64,7 +67,7 @@ public:
         _uri(uri),
         _localStorePath(localStorePath),
         _jailPath(jailPath),
-        _fileInfo("", Poco::Timestamp(), 0, "", ""),
+        _fileInfo("", Poco::Timestamp(), 0, "", "", false),
         _isLoaded(false)
     {
         Log::debug("Storage ctor: " + uri.toString());

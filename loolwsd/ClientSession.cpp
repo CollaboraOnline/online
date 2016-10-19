@@ -368,4 +368,11 @@ bool ClientSession::forwardToChild(const std::string& message,
     return docBroker->forwardToChild(getId(), message);
 }
 
+void ClientSession::setReadOnly()
+{
+    _isReadOnly = true;
+    // Also inform the client
+    sendTextFrame("perm: readonly");
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

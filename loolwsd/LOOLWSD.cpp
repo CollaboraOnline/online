@@ -796,6 +796,9 @@ private:
                 isReadOnly = param.second == "readonly";
         }
 
+        // In case of WOPI and if this session is not set as readonly, it might be set so
+        // later after making a call to WOPI host which tells us the permission on files
+        // (UserCanWrite param)
         auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
 
         // Above this point exceptions are safe and will auto-cleanup.
