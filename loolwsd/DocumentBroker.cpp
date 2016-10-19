@@ -418,6 +418,15 @@ bool DocumentBroker::connectPeers(std::shared_ptr<MasterProcessSession>& session
     return false;
 }
 
+void DocumentBroker::setLoaded(const std::string& sessionId)
+{
+    if (!_isLoaded)
+    {
+        _isLoaded = true;
+        takeEditLock(sessionId);
+    }
+}
+
 size_t DocumentBroker::removeSession(const std::string& id)
 {
     std::lock_guard<std::mutex> lock(_mutex);

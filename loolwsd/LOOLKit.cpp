@@ -993,7 +993,7 @@ private:
     }
 
     /// Notify all views of viewId and their associated usernames
-    void notifyViewInfo() override
+    void notifyViewInfo(const std::string& editLockSessionId) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -1009,6 +1009,15 @@ private:
                 const auto session = connectionIt.second->getSession();
                 viewInfoObj->set("id", Util::decodeId(session->getId()));
                 viewInfoObj->set("username", session->getViewUserName());
+                Log::debug("editLockSessionId:" + editLockSessionId + ": and editlocked : " + std::to_string(session->isEditLocked()));
+                if (editLockSessionId != "")
+                {
+                    viewInfoObj->set("editlock", editLockSessionId == session->getId());
+                }
+                else
+                {
+                    viewInfoObj->set("editlock", session->isEditLocked());
+                }
 
                 viewInfoArray->set(arrayIndex++, viewInfoObj);
             }

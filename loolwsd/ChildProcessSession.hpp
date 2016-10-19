@@ -43,7 +43,7 @@ public:
 
     /// Send updated view info to all active sessions
     virtual
-    void notifyViewInfo() = 0;
+    void notifyViewInfo(const std::string& editLockSessionId = "") = 0;
 };
 
 class ChildProcessSession final : public LOOLSession
@@ -73,6 +73,7 @@ public:
 
     int getViewId() const { return _viewId; }
     const std::string getViewUserName() const { return _userName; }
+    bool isEditLocked() const { return _editLock; }
 
     const std::string& getDocType() const { return _docType; }
 
@@ -115,6 +116,8 @@ private:
     std::string _docType;
     const bool _multiView;
     const std::string _jailId;
+    // If this session holds the editlock
+    bool _editLock = false;
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
     std::map<int, std::string> _lastDocStates;

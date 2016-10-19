@@ -216,17 +216,11 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
             }
             else if (tokens[0] == "status:")
             {
-                _docBroker->setLoaded();
+                _docBroker->setLoaded(getId());
                 _docBroker->tileCache().saveTextFile(std::string(buffer, length), "status.txt");
 
                 // Forward the status response to the client.
                 forwardToPeer(buffer, length);
-
-                // And let clients know if they hold the edit lock.
-                std::string message = "editlock: ";
-                message += std::to_string(peer->isEditLocked());
-                Log::debug("Forwarding [" + message + "] in response to status.");
-                forwardToPeer(message.c_str(), message.size());
                 return true;
             }
             else if (tokens[0] == "commandvalues:")
@@ -443,7 +437,7 @@ bool MasterProcessSession::getStatus(const char *buffer, int length)
 
 void MasterProcessSession::setEditLock(const bool value)
 {
-    // Update the sate and forward to child.
+    // Update the state and forward to child.
     _bEditLock = value;
     const auto msg = std::string("editlock: ") + (value ? "1" : "0");
     forwardToPeer(msg.data(), msg.size());

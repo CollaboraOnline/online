@@ -554,13 +554,18 @@ bool ChildProcessSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens[0] == "editlock:")
         {
-            // Nothing for us to do but to let the
-            // client know about the edit lock state.
-            // Yes, this is echoed back because it's better
+            _editLock = (tokens[1] == "1");
+            // Tell everyone the updated viewinfo with lock given to
+            // current session id
+            if (_editLock)
+            {
+                _docManager.notifyViewInfo(getId());
+            }
+
+            // This is also echoed back because it's better
             // to do this on each child's queue and thread
             // than for WSD to potentially stall while notifying
             // each client with the edit lock state.
-            Log::trace("Echoing back [" + firstLine + "].");
             sendTextFrame(firstLine);
             return true;
         }

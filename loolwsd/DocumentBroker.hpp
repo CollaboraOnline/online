@@ -148,7 +148,8 @@ public:
     /// Loads a document from the public URI into the jail.
     bool load(const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
-    void setLoaded() { _isLoaded = true; }
+    /// Set this to loaded. sessionId is session id with which it was loaded
+    void setLoaded(const std::string& sessionId);
 
     /// Save the document to Storage if needs persisting.
     bool save(bool success, const std::string& result = "");
