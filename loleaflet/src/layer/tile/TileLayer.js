@@ -885,19 +885,6 @@ L.TileLayer = L.GridLayer.extend({
 		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
 						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
 		var cursorPos = this._visibleCursor.getNorthWest();
-
-		if (!e && !this._map.getBounds().contains(this._visibleCursor) && this._isCursorVisible) {
-			var center = this._map.project(cursorPos);
-			center = center.subtract(this._map.getSize().divideBy(2));
-			center.x = Math.round(center.x < 0 ? 0 : center.x);
-			center.y = Math.round(center.y < 0 ? 0 : center.y);
-
-			if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
-			    !(this._selectionHandles.end && this._selectionHandles.end.isDragged)) {
-				this._map.fire('scrollto', {x: center.x, y: center.y});
-			}
-		}
-
 		if (this._map._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
 				&& !this._isEmptyRectangle(this._visibleCursor)) {
 			if (this._cursorMarker) {
@@ -1028,17 +1015,6 @@ L.TileLayer = L.GridLayer.extend({
 					scrollY = this._cellCursor.getNorth() - mapBounds.getNorth() + spacingY;
 				} else if (verticalDirection === -1 && this._cellCursor.getSouth() < mapBounds.getSouth()) {
 					scrollY = this._cellCursor.getSouth() - mapBounds.getSouth() - spacingY;
-				}
-
-				if (scrollX !== 0 || scrollY !== 0) {
-					var newCenter = mapBounds.getCenter();
-					newCenter.lng += scrollX;
-					newCenter.lat += scrollY;
-					var center = this._map.project(newCenter);
-					center = center.subtract(this._map.getSize().divideBy(2));
-					center.x = Math.round(center.x < 0 ? 0 : center.x);
-					center.y = Math.round(center.y < 0 ? 0 : center.y);
-					this._map.fire('scrollto', {x: center.x, y: center.y});
 				}
 			}
 
