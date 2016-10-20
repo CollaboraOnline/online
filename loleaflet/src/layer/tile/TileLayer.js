@@ -893,7 +893,7 @@ L.TileLayer = L.GridLayer.extend({
 		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
 						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
 		var cursorPos = this._visibleCursor.getNorthWest();
-		if (this._map._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
+		if (this._map._permission !== 'readonly' && this._isCursorVisible && this._isCursorOverlayVisible
 				&& !this._isEmptyRectangle(this._visibleCursor)) {
 			if (this._cursorMarker) {
 				this._map.removeLayer(this._cursorMarker);
