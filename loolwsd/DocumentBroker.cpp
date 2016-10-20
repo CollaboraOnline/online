@@ -439,8 +439,8 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
         _lastEditableSession = false;
         _markToDestroy = false;
 
-        bool isLoaded = load(id, std::to_string(_childProcess->getPid()));
-        if (!isLoaded)
+        bool loaded = load(id, std::to_string(_childProcess->getPid()));
+        if (!loaded)
         {
             Log::error("Error loading document with URI [" + session->getPublicUri().toString() + "].");
             throw;
