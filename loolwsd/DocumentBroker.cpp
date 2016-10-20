@@ -449,8 +449,9 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
         loaded = load(id, std::to_string(_childProcess->getPid()));
         if (!loaded)
         {
-            Log::error("Error loading document with URI [" + session->getPublicUri().toString() + "].");
-            throw;
+            const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";
+            Log::error(msg);
+            throw std::runtime_error(msg);
         }
     }
     catch (const StorageSpaceLowException&)
