@@ -53,6 +53,9 @@ L.Socket = L.Class.extend({
 			// Only attempt to log text frames, not binary ones.
 			if (typeof msg === 'string') {
 				L.Log.log(msg, L.OUTGOING, coords);
+				if (this._map._docLayer && this._map._docLayer._debug) {
+					console.log('%cOUTGOING%c: ' + msg.concat(' ').replace(' ', '%c ', 1), 'background:#fbb;color:black', 'color:red', 'color:black');
+				}
 			}
 		}
 		else {
@@ -65,6 +68,9 @@ L.Socket = L.Class.extend({
 		// Only attempt to log text frames, not binary ones.
 		if (typeof msg === 'string') {
 			L.Log.log(msg, L.OUTGOING, coords);
+			if (this._map._docLayer && this._map._docLayer._debug) {
+				console.log('%cOUTGOING%c: ' + msg.concat(' ').replace(' ', '%c ', 1), 'background:#fbb;color:black', 'color:red', 'color:black');
+			}
 		}
 
 		this.socket.send(msg);
@@ -124,6 +130,10 @@ L.Socket = L.Class.extend({
 				index++;
 			}
 			textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
+		}
+
+		if (this._map._docLayer && this._map._docLayer._debug) {
+			console.log('%cINCOMING%c: ' + textMsg.concat(' ').replace(' ', '%c ', 1), 'background:#ddf;color:black', 'color:blue', 'color:black');
 		}
 
 		var command = this.parseServerCmd(textMsg);
@@ -214,7 +224,7 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('pong ') && this._map._docLayer && this._map._docLayer._debug) {
 			var times = this._map._docLayer._debugTimePING;
 			var timeText = this._map._docLayer._debugSetTimes(times, +new Date() - this._map._docLayer._debugPINGQueue.shift());
-			this._map._docLayer._debugDataPING.setPrefix('Server ping time: ' + timeText +
+			this._map._docLayer._debugData['ping'].setPrefix('Server ping time: ' + timeText +
 					'. Rendered tiles: ' + command.rendercount +
 					', last: ' + (command.rendercount - this._map._docLayer._debugRenderCount));
 			this._map._docLayer._debugRenderCount = command.rendercount;

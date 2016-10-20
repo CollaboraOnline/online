@@ -158,7 +158,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._debug = map.options.debug;
-		this._debugInit();
+		if (this._debug) {
+			this._debugInit();
+		}
 
 		this._searchResultsLayer = new L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
@@ -387,15 +389,16 @@ L.TileLayer = L.GridLayer.extend({
 	toggleTileDebugMode: function() {
 		this._invalidateClientVisibleArea();
 		this._debug = !this._debug;
-		if (this._debugInfo) {
-			this._map.removeLayer(this._debugInfo);
-		}
 		if (!this._debug) {
-			this._debugDataPING.setPrefix('');
-			this._debugDataTileCombine.setPrefix('');
-			this._debugDataFromKeyInputToInvalidate.setPrefix('');
+			map.removeLayer(this._debugInfo);
+			map.removeLayer(this._debugInfo2);
+		} else {
+			if (this._debugInfo) {
+				map.addLayer(this._debugInfo);
+				map.addLayer(this._debugInfo2);
+			}
+			this._debugInit();
 		}
-		this._debugInit();
 		this._onMessage('invalidatetiles: EMPTY', null);
 	},
 
@@ -405,7 +408,7 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 		var obj = JSON.parse(textMsg.substring(jsonIdx));
-		if (obj.commandName == '.uno:DocumentRepair') {
+		if (obj.commandName === '.uno:DocumentRepair') {
 			this._onDocumentRepair(obj);
 		}
 		else if (obj.commandName === '.uno:CellCursor') {
@@ -1821,36 +1824,65 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_debugShowTileData: function() {
-		this._debugDataLoadCount.setPrefix('Total of requested tiles: ' +
+		this._debugData['loadCount'].setPrefix('Total of requested tiles: ' +
 				this._debugInvalidateCount + ', received: ' + this._debugLoadCount +
 				', cancelled: ' + this._debugCancelledTiles);
 	},
 
 	_debugInit: function() {
-		if (this._debug) {
-			this._debugInfo = new L.LayerGroup();
-			map.addLayer(this._debugInfo);
-			this._debugTiles = {};
-			this._debugInvalidBounds = {};
-			this._debugInvalidBoundsMessage = {};
-			this._debugTimeout();
-			this._debugId = 0;
-			this._debugCancelledTiles = 0;
-			this._debugLoadCount = 0;
-			this._debugInvalidateCount = 0;
-			this._debugRenderCount = 0;
-			if (!this._debugDataTileCombine) {
-				this._debugDataTileCombine = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
-				this._debugDataFromKeyInputToInvalidate = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
-				this._debugDataPING = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
-				this._debugDataLoadCount = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
-
+		this._debugTiles = {};
+		this._debugInvalidBounds = {};
+		this._debugInvalidBoundsMessage = {};
+		this._debugTimeout();
+		this._debugId = 0;
+		this._debugCancelledTiles = 0;
+		this._debugLoadCount = 0;
+		this._debugInvalidateCount = 0;
+		this._debugRenderCount = 0;
+		if (!this._debugData) {
+			this._debugData = {};
+			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount'];
+			for (var i = 0; i < this._debugDataNames.length; i++) {
+				this._debugData[this._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
 			}
-			this._debugTimePING = this._debugGetTimeArray();
-			this._debugPINGQueue = [];
-			this._debugTimeKeypress = this._debugGetTimeArray();
-			this._debugKeypressQueue = [];
+			this._debugInfo = new L.LayerGroup();
+			this._debugInfo2 = new L.LayerGroup();
+			this._debugTyper = new L.LayerGroup();
+			map.addLayer(this._debugInfo);
+			map.addLayer(this._debugInfo2);
+			var overlayMaps = {
+				'Tile overlays': this._debugInfo,
+				'Screen overlays': this._debugInfo2,
+				'Typing': this._debugTyper,
+			}
+			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(map);
+
+			this._map.on('layeradd', function(e) {
+				if (e.layer === this._debugTyper) {
+					this._debugTypeTimeout();
+				} else if (e.layer === this._debugInfo2) {
+					for (var i = 0; i < this._debugDataNames.length; i++) {
+						this._debugData[this._debugDataNames[i]].addTo(map);
+					}
+				}
+			}, this);
+			map.on('layerremove', function(e) {
+				if (e.layer === this._debugTyper) {
+					clearTimeout(this._debugTypeTimeoutId);
+				} else if (e.layer === this._debugInfo2) {
+					for (var i in this._debugData) {
+						this._debugData[i].remove();
+					}
+				}
+			}, this);
 		}
+		this._debugTimePING = this._debugGetTimeArray();
+		this._debugPINGQueue = [];
+		this._debugTimeKeypress = this._debugGetTimeArray();
+		this._debugKeypressQueue = [];
+		this._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+		this._debugLorem += ' ' + this._debugLorem + '\n';
+		this._debugLoremPos = 0;
 	},
 
 	_debugSetTimes: function(times, value) {
@@ -1879,7 +1911,7 @@ L.TileLayer = L.GridLayer.extend({
 		var oldestKeypress = this._debugKeypressQueue.shift();
 		if (oldestKeypress) {
 			var timeText = this._debugSetTimes(this._debugTimeKeypress, now - oldestKeypress);
-			this._debugDataFromKeyInputToInvalidate.setPrefix('Elapsed time between key input and next invalidate: ' + timeText);
+			this._debugData['fromKeyInputToInvalidate'].setPrefix('Elapsed time between key input and next invalidate: ' + timeText);
 		}
 
 		// query server ping time after invalidation messages
@@ -1905,7 +1937,7 @@ L.TileLayer = L.GridLayer.extend({
 				messages += '' + i + ': ' + this._debugInvalidBoundsMessage[i] + ' <br>';
 			}
 		}
-		this._debugDataTileCombine.setPrefix(messages);
+		this._debugData['tileCombine'].setPrefix(messages);
 		this._debugShowTileData();
 	},
 
@@ -1915,11 +1947,12 @@ L.TileLayer = L.GridLayer.extend({
 				var rect = this._debugInvalidBounds[key];
 				var opac = rect.options.fillOpacity;
 				if (opac <= 0.04) {
-					rect.setStyle({fillOpacity: 0});
 					if (key < this._debugId - 5) {
 						this._debugInfo.removeLayer(rect);
 						delete this._debugInvalidBounds[key];
 						delete this._debugInvalidBoundsMessage[key];
+					} else {
+						rect.setStyle({fillOpacity: 0, opacity: 1 - (this._debugId - key) / 7});
 					}
 				} else {
 					rect.setStyle({fillOpacity: opac - 0.04});
@@ -1927,6 +1960,18 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			this._debugTimeoutId = setTimeout(function () { map._docLayer._debugTimeout() }, 50);
 		}
+	},
+
+	_debugTypeTimeout: function() {
+		var letter = this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length);
+		this._debugKeypressQueue.push(+new Date());
+		if (letter === '\n'.charCodeAt(0)) {
+			this._postKeyboardEvent('input', 0, 1280);
+		} else {
+			this._postKeyboardEvent('input', this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length), 0);
+		}
+		this._debugLoremPos++;
+		this._debugTypeTimeoutId = setTimeout(function () { map._docLayer._debugTypeTimeout() }, 50);
 	}
 
 });
