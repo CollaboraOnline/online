@@ -37,6 +37,7 @@ shared_sources = ChildSession.cpp \
                  LOOLSession.cpp \
                  MessageQueue.cpp \
                  Unit.cpp \
+                 UnitHTTP.cpp \
                  Util.cpp
 
 loolwsd_SOURCES = Admin.cpp \

@@ -143,6 +143,14 @@ public:
     virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
                             int tileWidth, int tileHeight, std::unique_ptr<std::fstream>& cacheFile);
 
+    // ---------------- DocumentBroker hooks ----------------
+    virtual bool filterLoad(const std::string &/* sessionId */,
+                            const std::string &/* jailId */,
+                            bool &/* result */)
+    {
+        return false;
+    }
+
     // ---------------- WSD events ----------------
     virtual void onChildConnected(const int /* pid */, const std::string& /* sessionId */) {}
     /// When admin notify message is sent

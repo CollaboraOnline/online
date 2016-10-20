@@ -16,10 +16,18 @@
 #include "Util.hpp"
 #include "helpers.hpp"
 
+using namespace helpers;
+
 class UnitTileCache: public UnitWSD
 {
+    enum {
+        PHASE_LOAD,             // load the document
+        PHASE_TILE,             // lookup tile method
+    } _phase;
+    std::unique_ptr<UnitWebSocket> _ws;
 public:
-    UnitTileCache()
+    UnitTileCache() :
+        _phase(PHASE_LOAD)
     {
     }
 
@@ -31,16 +39,31 @@ public:
 
         // Fail the lookup to force subscription and rendering.
         cacheFile.reset();
+
+        // FIXME: push through to the right place to exercise this.
+        exitTest(TestResult::TEST_OK);
     }
 
     virtual void invokeTest()
     {
-        // FIXME: push through to the right place to exercise this.
-        exitTest(TestResult::TEST_OK);
-        UnitHTTPServerResponse response;
-        UnitHTTPServerRequest request(response, std::string(CHILD_URI));
-        UnitWSD::testHandleRequest(TestRequest::TEST_REQ_PRISONER,
-                                   request, response);
+        switch (_phase)
+        {
+        case PHASE_LOAD:
+        {
+            _phase = PHASE_TILE;
+            std::string docPath;
+            std::string docURL;
+            getDocumentPathAndURL("empty.odt", docPath, docURL);
+            _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(docURL));
+            assert(_ws.get());
+
+            // FIXME: need to invoke the tile lookup ...
+            exitTest(TestResult::TEST_OK);
+            break;
+        }
+        case PHASE_TILE:
+            break;
+        }
     }
 
 private:

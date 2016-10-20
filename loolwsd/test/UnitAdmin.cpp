@@ -13,14 +13,10 @@
 #include <mutex>
 
 #include <Poco/Net/HTTPBasicCredentials.h>
-#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPSClientSession.h>
-#include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
@@ -28,6 +24,7 @@
 #include "Common.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
+#include "UnitHTTP.hpp"
 #include "Util.hpp"
 #include "helpers.hpp"
 
@@ -74,7 +71,7 @@ private:
         HTTPResponse response;
         std::string path(_uri.getPathAndQuery());
         HTTPRequest request(HTTPRequest::HTTP_GET, path);
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
+        std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
         session->sendRequest(request);
         session->receiveResponse(response);
@@ -91,7 +88,7 @@ private:
         HTTPResponse response;
         std::string path(_uri.getPathAndQuery());
         HTTPRequest request(HTTPRequest::HTTP_GET, path);
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
+        std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
         HTTPBasicCredentials credentials("admin", "admin");
         credentials.authenticate(request);
 
@@ -132,7 +129,7 @@ private:
         // try connecting without authentication; should result in NotAuthenticated
         HTTPResponse response;
         HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
+        std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
         _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
         const std::string testMessage = "documents";
@@ -163,7 +160,7 @@ private:
         // try connecting with incorrect auth token; should result in InvalidToken
         HTTPResponse response;
         HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
+        std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
         _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
         const std::string testMessage = "auth jwt=incorrectJWT";
@@ -194,7 +191,7 @@ private:
         // Authenticate first
         HTTPResponse response;
         HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(_uri));
+        std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
         _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
         const std::string authMessage = "auth jwt=" + _jwtCookie;
@@ -211,8 +208,8 @@ private:
         HTTPResponse response1;
         const Poco::URI docUri1(helpers::getTestServerURI());
         const std::string loadMessage1 = "load url=" + documentURL1;
-        std::unique_ptr<HTTPClientSession> session1(helpers::createSession(docUri1));
-        std::unique_ptr<HTTPClientSession> session2(helpers::createSession(docUri1));
+        std::unique_ptr<HTTPClientSession> session1(UnitHTTP::createSession());
+        std::unique_ptr<HTTPClientSession> session2(UnitHTTP::createSession());
 
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
         _messageReceived.clear();
@@ -275,7 +272,7 @@ private:
         HTTPResponse response2;
         const Poco::URI docUri2(helpers::getTestServerURI());
         const std::string loadMessage2 = "load url=" + documentURL2;
-        std::unique_ptr<HTTPClientSession> session3(helpers::createSession(docUri1));
+        std::unique_ptr<HTTPClientSession> session3(UnitHTTP::createSession());
 
         lock.lock(); // lock _messageReceivedMutex
         _messageReceived.clear();

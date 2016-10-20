@@ -7,28 +7,67 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <iostream>
+
+#include "Exceptions.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
+#include "helpers.hpp"
+
+using namespace helpers;
 
 class UnitStorage : public UnitWSD
 {
+    enum {
+        PHASE_LOAD,             // load the document
+        PHASE_FILTER,           // throw filter exception
+        PHASE_RE_LOAD,          // re-load the document
+    } _phase;
+    std::unique_ptr<UnitWebSocket> _ws;
 public:
-    virtual bool createStorage(const Poco::URI& /* uri */,
-                               const std::string& /* jailRoot */,
-                               const std::string& /* jailPath */,
-                               std::unique_ptr<StorageBase> & /* rStorage */)
+    UnitStorage() :
+        _phase(PHASE_LOAD)
     {
-        // leave rStorage empty - fail to return anything
-        return true;
     }
+
+    virtual bool filterLoad(const std::string &/* sessionId */,
+                            const std::string &/* jailId */,
+                            bool &/* result */)
+    {
+        if (_phase == PHASE_FILTER)
+        {
+            std::cerr << "throw low disk space exception" << std::endl;
+            _phase = PHASE_RE_LOAD;
+            throw StorageSpaceLowException("test: low disk space");
+        }
+        return false;
+    }
+
+    void loadDocument()
+    {
+        std::string docPath;
+        std::string docURL;
+        getDocumentPathAndURL("empty.odt", docPath, docURL);
+        _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(docURL));
+        assert(_ws.get());
+    }
+
     virtual void invokeTest()
     {
-        // FIXME: push through to the right place to exercise this.
-        exitTest(TestResult::TEST_OK);
-        UnitHTTPServerResponse response;
-        UnitHTTPServerRequest request(response, std::string(CHILD_URI));
-        UnitWSD::testHandleRequest(TestRequest::TEST_REQ_PRISONER,
-                                   request, response);
+        switch (_phase)
+        {
+        case PHASE_LOAD:
+            _phase = PHASE_FILTER;
+            loadDocument();
+            break;
+        case PHASE_FILTER:
+            break;
+        case PHASE_RE_LOAD:
+            loadDocument();
+            _ws.reset();
+            exitTest(TEST_OK);
+            break;
+        }
     }
 };
 

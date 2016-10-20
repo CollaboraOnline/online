@@ -164,6 +164,12 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
 
 bool DocumentBroker::load(const std::string& sessionId, const std::string& jailId)
 {
+    {
+        bool result;
+        if (UnitWSD::get().filterLoad(sessionId, jailId, result))
+            return result;
+    }
+
     if (_markToDestroy)
     {
         // Tearing down.
@@ -439,7 +445,8 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
         _lastEditableSession = false;
         _markToDestroy = false;
 
-        bool loaded = load(id, std::to_string(_childProcess->getPid()));
+        bool loaded;
+        loaded = load(id, std::to_string(_childProcess->getPid()));
         if (!loaded)
         {
             Log::error("Error loading document with URI [" + session->getPublicUri().toString() + "].");
