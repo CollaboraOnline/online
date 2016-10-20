@@ -1308,11 +1308,24 @@ map.on('statusindicator', function (e) {
 	}
 });
 
+function onUseritemClicked(e) {
+	var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
+
+	if (map._docLayer) {
+		if (map.getDocType() === 'spreadsheet') {
+			map._docLayer.goToCellViewCursor(viewId);
+		} else if (map.getDocType() === 'text') {
+			map._docLayer.goToViewCursor(viewId);
+		}
+	}
+}
+
 function getUserItem(viewId, userName, color) {
-	var html = '<tr class="useritem" id="user-' + viewId + '">' +
+	var html = '<tr class="useritem" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
 	             '<td class=usercolor style="background-color: ' + color  +';"></td>' +
 	             '<td class="username loleaflet-font">' + userName + '</td>' +
-	           '</tr>';
+	    '</tr>';
+
 	return html;
 }
 var nUsers = _('%n users');
