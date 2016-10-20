@@ -540,7 +540,7 @@ L.GridLayer = L.Layer.extend({
 						delete this._tiles[key];
 						if (this._debug) {
 							this._debugCancelledTiles++;
-							this._debugShowTotalData();
+							this._debugShowTileData();
 						}
 					}
 				}
