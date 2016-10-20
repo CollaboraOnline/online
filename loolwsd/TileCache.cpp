@@ -330,6 +330,16 @@ void TileCache::invalidateTiles(const std::string& tiles)
     if (tokens.count() == 2 && tokens[1] == "EMPTY")
     {
         invalidateTiles(-1, 0, 0, INT_MAX, INT_MAX);
+        return;
+    }
+    else if (tokens.count() == 3 && tokens[1] == "EMPTY,")
+    {
+        int part = 0;
+        if (stringToInteger(tokens[2], part))
+        {
+            invalidateTiles(part, 0, 0, INT_MAX, INT_MAX);
+            return;
+        }
     }
     else
     {
@@ -342,12 +352,11 @@ void TileCache::invalidateTiles(const std::string& tiles)
             getTokenInteger(tokens[5], "height", height))
         {
             invalidateTiles(part, x, y, width, height);
-        }
-        else
-        {
-            Log::error("Unexpected invalidatetiles request: " + tiles);
+            return;
         }
     }
+
+    Log::error("Unexpected invalidatetiles request: " + tiles);
 }
 
 void TileCache::removeFile(const std::string& fileName)
