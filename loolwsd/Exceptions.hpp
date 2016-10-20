@@ -12,6 +12,7 @@
 #ifndef INCLUDED_EXCEPTIONS_HPP
 #define INCLUDED_EXCEPTIONS_HPP
 
+#include <stdexcept>
 #include <exception>
 
 // Generic LOOL errors and base for others.

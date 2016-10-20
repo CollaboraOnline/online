@@ -9,11 +9,14 @@
 #ifndef INCLUDED_UNITHTTP_HPP
 #define INCLUDED_UNITHTTP_HPP
 
+#include <memory>
 #include <sstream>
 
 #include <Poco/Version.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPServerParams.h>
+#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/SocketAddress.h>
@@ -84,6 +87,24 @@ public:
         { return _dummyParams; }
     virtual Poco::Net::HTTPServerResponse& response() const override
         { return _response; }
+};
+
+namespace UnitHTTP {
+    Poco::Net::HTTPClientSession *createSession();
+}
+
+class UnitWebSocket
+{
+    Poco::Net::HTTPClientSession *_session;
+    Poco::Net::WebSocket *_socket;
+ public:
+    /// Get a websocket connected for a given URL
+    UnitWebSocket(const std::string &docURL);
+    ~UnitWebSocket()
+    {
+        delete _socket;
+        delete _session;
+    }
 };
 
 #endif

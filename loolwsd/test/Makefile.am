@@ -66,7 +66,7 @@ if HAVE_LO_PATH
 check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME unit-fonts.la is unstable, disabled for now.
-TESTS = unit-timeout.la unit-prefork.la unit-tilecache.la unit-admin.la unit-storage.la
+TESTS = unit-tilecache.la unit-storage.la unit-timeout.la unit-prefork.la unit-admin.la
 else
 TESTS = ${top_builddir}/test/test
 endif
