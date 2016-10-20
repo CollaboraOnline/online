@@ -704,6 +704,43 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	goToCellViewCursor: function(viewId) {
+		if (this._cellViewCursors[viewId] && !this._isEmptyRectangle(this._cellViewCursors[viewId].bounds)) {
+			if (!this._map.getBounds().contains(this._cellViewCursors[viewId].bounds)) {
+				var mapBounds = this._map.getBounds();
+				var scrollX = 0;
+				var scrollY = 0;
+				var spacingX = Math.abs(this._cellViewCursors[viewId].bounds.getEast() - this._cellViewCursors[viewId].bounds.getWest()) / 4.0;
+				var spacingY = Math.abs(this._cellViewCursors[viewId].bounds.getSouth() - this._cellViewCursors[viewId].bounds.getNorth()) / 4.0;
+				if (this._cellViewCursors[viewId].bounds.getWest() < mapBounds.getWest()) {
+					scrollX = this._cellViewCursors[viewId].bounds.getWest() - mapBounds.getWest() - spacingX;
+				} else if (this._cellViewCursors[viewId].bounds.getEast() > mapBounds.getEast()) {
+					scrollX = this._cellViewCursors[viewId].bounds.getEast() - mapBounds.getEast() + spacingX;
+				}
+
+				if (this._cellViewCursors[viewId].bounds.getNorth() > mapBounds.getNorth()) {
+					scrollY = this._cellViewCursors[viewId].bounds.getNorth() - mapBounds.getNorth() + spacingY;
+				} else if (this._cellViewCursors[viewId].bounds.getSouth() < mapBounds.getSouth()) {
+					scrollY = this._cellViewCursors[viewId].bounds.getSouth() - mapBounds.getSouth() - spacingY;
+				}
+
+				if (scrollX !== 0 || scrollY !== 0) {
+					var newCenter = mapBounds.getCenter();
+					newCenter.lat += scrollX;
+					newCenter.lat += scrollY;
+					var center = this._map.project(newCenter);
+					center = center.subtract(this._map.getSize().divideBy(2));
+					center.x = Math.round(center.x < 0 ? 0 : center.x);
+					center.y = Math.round(center.y < 0 ? 0 : center.y);
+					this._map.fire('scrollto', {x: center.x, y: center.y});
+				}
+			}
+
+			var borderColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
+			this._cellViewCursors[viewId].marker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, borderColor: borderColor});
+		}
+	},
+
 	_onViewCursorVisibleMsg: function(textMsg) {
 		textMsg = textMsg.substring('viewcursorvisible:'.length + 1);
 		var obj = JSON.parse(textMsg);
@@ -1267,6 +1304,27 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	goToViewCursor: function(viewId) {
+		if (viewId === this._viewId) {
+			this._onUpdateCursor();
+			return;
+		}
+
+		if (this._viewCursors[viewId] && this._viewCursors[viewId].visible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds)) {
+			if (!this._map.getBounds().contains(this._viewCursors[viewId].bounds)) {
+				var viewCursorPos = this._viewCursors[viewId].bounds.getNorthWest();
+				var center = this._map.project(viewCursorPos);
+				center = center.subtract(this._map.getSize().divideBy(2));
+				center.x = Math.round(center.x < 0 ? 0 : center.x);
+				center.y = Math.round(center.y < 0 ? 0 : center.y);
+
+				this._map.fire('scrollto', {x: center.x, y: center.y});
+			}
+
+			this._viewCursors[viewId].marker.showCursorHeader();
+		}
+	},
+
 	_onUpdateTextViewSelection: function (viewId) {
 		viewId = parseInt(viewId);
 		var viewPolygons = this._viewSelections[viewId].polygons;
@@ -1446,7 +1504,7 @@ L.TileLayer = L.GridLayer.extend({
 					}
 				}
 				else {
-					var spacingX = Math.abs((this._cellCursor.getEast() - this._cellCursor.getWest())) / 4.0;
+					var spacingX = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest()) / 4.0;
 					var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
 					if (horizontalDirection === -1 && this._cellCursor.getWest() < mapBounds.getWest()) {
 						scrollX = this._cellCursor.getWest() - mapBounds.getWest() - spacingX;
