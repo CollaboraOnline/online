@@ -265,6 +265,8 @@ function insertTable() {
 				' }, "Rows": { "type": "long","value": '
 				+ row + ' }}';
 			map._socket.sendMessage(msg);
+			// refocus map due popup
+			map.focus();
 		}
 	}, '.col');
 
