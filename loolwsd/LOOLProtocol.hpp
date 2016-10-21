@@ -103,6 +103,30 @@ namespace LOOLProtocol
         return getFirstToken(message.data(), message.size(), delim);
     }
 
+    inline
+    bool matchPrefix(const std::string& prefix, const std::string& message)
+    {
+        return (message.size() >= prefix.size() &&
+                message.compare(0, prefix.size(), prefix) == 0);
+    }
+
+    inline
+    bool matchPrefix(const std::string& prefix, const std::string& message, const bool ignoreWhitespace)
+    {
+        if (ignoreWhitespace)
+        {
+            const auto posPre = prefix.find_first_not_of(' ');
+            const auto posMsg = message.find_first_not_of(' ');
+
+            return matchPrefix(posPre == std::string::npos ? prefix : prefix.substr(posPre),
+                               posMsg == std::string::npos ? message : message.substr(posMsg));
+        }
+        else
+        {
+            return matchPrefix(prefix, message);
+        }
+    }
+
     /// Returns true if the token is a user-interaction token.
     /// Currently this excludes commands sent automatically.
     /// Notice that this doesn't guarantee editing activity,

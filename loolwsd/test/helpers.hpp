@@ -186,42 +186,24 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
                 int bytes = ws.receiveFrame(response.data(), response.size(), flags);
                 response.resize(bytes >= 0 ? bytes : 0);
                 std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
-                auto message = LOOLProtocol::getAbbreviatedMessage(response);
+                const auto message = LOOLProtocol::getFirstLine(response);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
-                    // FIXME: This is wrong in two ways:
-
-                    // 1) The message variable is the return value from getAbbreviatedMessage(),
-                    // That is a string that is intended for human-readable logging only. It is not
-                    // intended to be used for actually decoding the protocol. Sure, at the moment
-                    // it happens to work, but is still wrong.
-
-                    // 2) Using std::string::find() like this is silly. If message does not start
-                    // with prefix, the find() function will search through the whole buffer. That
-                    // is a waste of cycles. Use the LOOLProtocol functions to manipulate and
-                    // inspect LOOL protocol frames, that is what they are there
-                    // for. getFirstToken() should be quite efficient, and it doesn't incur the
-                    // (potential) overhead of setting up a StringTokenizer. Or, if this is actually
-                    // used to look for not just a first token, then introduce a startsWith()
-                    // function.
-
-                    if (message.find(prefix) == 0)
+                    if (LOOLProtocol::matchPrefix(prefix, message))
                     {
                         return response;
                     }
-                    else if (message.find("nextmessage") == 0)
+                    else if (LOOLProtocol::matchPrefix("nextmessage", message))
                     {
-                        Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
                         int size = 0;
-                        if (tokens.count() == 2 &&
-                            tokens[0] == "nextmessage:" && LOOLProtocol::getTokenInteger(tokens[1], "size", size) && size > 0)
+                        if (LOOLProtocol::getTokenIntegerFromMessage(message, "size", size) && size > 0)
                         {
                             response.resize(size);
                             bytes = ws.receiveFrame(response.data(), response.size(), flags);
                             response.resize(bytes >= 0 ? bytes : 0);
                             std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
-                            message = LOOLProtocol::getAbbreviatedMessage(response);
-                            if (bytes > 0 && message.find(prefix) == 0)
+                            if (bytes > 0 &&
+                                LOOLProtocol::matchPrefix(prefix, LOOLProtocol::getFirstLine(response)))
                             {
                                 return response;
                             }
@@ -259,10 +241,15 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
             }
         }
         while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+
+        if (timedout)
+        {
+            std::cerr << std::endl;
+        }
     }
     catch (const Poco::Net::WebSocketException& exc)
     {
-        std::cerr << exc.message();
+        std::cerr << std::endl << exc.message();
     }
 
     return std::vector<char>();
