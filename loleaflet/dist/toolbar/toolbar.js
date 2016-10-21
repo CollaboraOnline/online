@@ -1331,8 +1331,19 @@ map.on('statusindicator', function (e) {
 	}
 });
 
+function onUseritemClicked(e) {
+	var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
+	if (map._docLayer) {
+		if (map.getDocType() === 'spreadsheet') {
+			map._docLayer.goToCellCursor(viewId);
+		} else if (map.getDocType() === 'text') {
+			map._docLayer.goToCursor(viewId);
+		}
+	}
+}
+
 function getUserItem(viewId, userName) {
-	var html = '<tr class="useritem" id="user-' + viewId + '">' +
+	var html = '<tr class="useritem" id="user-' + viewId + '" onclick=onUseritemClicked(event)>' +
 		          '<td class="username">' + userName + '</td>' +
                   '<td class="lock"></td>' +
                '</tr>';

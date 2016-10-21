@@ -910,6 +910,18 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	goToCursor: function() {
+		if (this._isCursorVisible && !this._map.getBounds().contains(this._visibleCursor)) {
+			var cursorPos = this._visibleCursor.getNorthWest();
+			var center = this._map.project(cursorPos);
+			center = center.subtract(this._map.getSize().divideBy(2));
+			center.x = Math.round(center.x < 0 ? 0 : center.x);
+			center.y = Math.round(center.y < 0 ? 0 : center.y);
+
+			this._map.fire('scrollto', {x: center.x, y: center.y});
+		}
+	},
+
 	// Update dragged graphics selection resize.
 	_onGraphicEdit: function (e) {
 		if (!e.handle) { return; }
@@ -1038,6 +1050,39 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (this._cellCursorMarker) {
 			this._map.removeLayer(this._cellCursorMarker);
+		}
+	},
+
+	goToCellCursor: function() {
+		// TODO: Lots of common code with onUpdateCellCursor. Factor out
+		var mapBounds = this._map.getBounds();
+		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor) && !mapBounds.contains(this._cellCursor)) {
+			var scrollX = 0;
+			var scrollY = 0;
+
+			var spacingX = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest()) / 4.0;
+			var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
+			if (this._cellCursor.getWest() < mapBounds.getWest()) {
+				scrollX = this._cellCursor.getWest() - mapBounds.getWest() - spacingX;
+			} else if (this._cellCursor.getEast() > mapBounds.getEast()) {
+				scrollX = this._cellCursor.getEast() - mapBounds.getEast() + spacingX;
+			}
+			if (this._cellCursor.getNorth() > mapBounds.getNorth()) {
+				scrollY = this._cellCursor.getNorth() - mapBounds.getNorth() + spacingY;
+			} else if (this._cellCursor.getSouth() < mapBounds.getSouth()) {
+				scrollY = this._cellCursor.getSouth() - mapBounds.getSouth() - spacingY;
+			}
+
+			if (scrollX !== 0 || scrollY !== 0) {
+				var newCenter = mapBounds.getCenter();
+				newCenter.lng += scrollX;
+				newCenter.lat += scrollY;
+				var center = this._map.project(newCenter);
+				center = center.subtract(this._map.getSize().divideBy(2));
+				center.x = Math.round(center.x < 0 ? 0 : center.x);
+				center.y = Math.round(center.y < 0 ? 0 : center.y);
+				this._map.fire('scrollto', {x: center.x, y: center.y});
+			}
 		}
 	},
 
