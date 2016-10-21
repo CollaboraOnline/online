@@ -114,7 +114,7 @@ public:
     // ---------------- WSD hooks ----------------
 
     /// Manipulate and modify the configuration before any usage.
-    virtual void configure(Poco::Util::LayeredConfiguration & /* config */) {}
+    virtual void configure(Poco::Util::LayeredConfiguration & /* config */);
     /// Main-loop reached, time for testing
     virtual void invokeTest() {}
     /// Tweak the count of pre-spawned kits.
