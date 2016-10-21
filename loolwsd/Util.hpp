@@ -167,13 +167,15 @@ namespace Util
 
     /// Trim spaces from the left. Just spaces.
     inline
-    void ltrim(std::string& s)
+    std::string& ltrim(std::string& s)
     {
         const auto pos = s.find_first_not_of(' ');
         if (pos != std::string::npos)
         {
             s = s.substr(pos);
         }
+
+        return s;
     }
 
     /// Trim spaces from the left and copy. Just spaces.
