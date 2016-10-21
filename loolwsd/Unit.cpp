@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <iostream>
 #include "Unit.hpp"
 #include "config.h"
 
@@ -164,7 +165,7 @@ void UnitBase::exitTest(TestResult result)
 
 void UnitBase::timeout()
 {
-    Log::error("Timed out waiting for unit test to complete");
+    std::cerr << "Timed out waiting for unit test to complete" << std::endl;
     exitTest(TestResult::TEST_TIMED_OUT);
 }
 
