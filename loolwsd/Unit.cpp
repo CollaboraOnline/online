@@ -133,6 +133,17 @@ UnitWSD::~UnitWSD()
 {
 }
 
+void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)
+{
+    if (_dlHandle) // really running a unit shlib.
+    {
+        // Force HTTP - helps stracing.
+        config.setBool("ssl.enable", false);
+        // Force console output - easier to debug.
+        config.setBool("logging.file[@enable]", false);
+    }
+}
+
 void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
                          int tileWidth, int tileHeight, std::unique_ptr<std::fstream>& cacheFile)
 {
