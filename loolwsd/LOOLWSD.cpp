@@ -1155,6 +1155,11 @@ public:
                 request, response))
             return;
 
+        handlePrisonerRequest(request, response);
+    }
+
+    static void handlePrisonerRequest(HTTPServerRequest& request, HTTPServerResponse& response)
+    {
         Log::trace("Child connection with URI [" + request.getURI() + "].");
         assert(request.serverAddress().port() == MasterPortNumber);
         assert(request.getURI().find(NEW_CHILD_URI) == 0);
@@ -2004,7 +2009,7 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request
         ClientRequestHandler::handleClientRequest(request, response);
         break;
     case TestRequest::TEST_REQ_PRISONER:
-        // No longer used. Only bridges WSD with child.
+        PrisonerRequestHandler::handlePrisonerRequest(request, response);
         break;
     default:
         assert(false);
