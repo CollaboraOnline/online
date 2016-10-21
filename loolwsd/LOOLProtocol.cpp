@@ -151,19 +151,19 @@ namespace LOOLProtocol
 
     bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value)
     {
-        Poco::StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer tokens(message, " \n", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         return getTokenInteger(tokens, name, value);
     }
 
     bool getTokenStringFromMessage(const std::string& message, const std::string& name, std::string& value)
     {
-        Poco::StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer tokens(message, " \n", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         return getTokenString(tokens, name, value);
     }
 
     bool getTokenKeywordFromMessage(const std::string& message, const std::string& name, const std::map<std::string, int>& map, int& value)
     {
-        Poco::StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer tokens(message, " \n", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         return getTokenKeyword(tokens, name, map, value);
     }
 
