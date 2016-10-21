@@ -235,6 +235,8 @@ public:
      */
     inline void postKeyEvent(int nType, int nCharCode, int nKeyCode)
     {
+        Log::trace() << "lok::Document: postKeyEvent: Type=" << nType
+                     << ", CharCode=" << nCharCode << ", KeyCode=" << nKeyCode << Log::end;
         _pDoc->pClass->postKeyEvent(_pDoc, nType, nCharCode, nKeyCode);
     }
 
@@ -250,6 +252,9 @@ public:
      */
     inline void postMouseEvent(int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
     {
+        Log::trace() << "lok::Document: postMouseEvent: Type=" << nType
+                     << ", X=" << nX << ", nY=" << nY << ", Count=" << nCount
+                     << ", Buttons=" << nButtons << ", Modifier=" << nModifier << Log::end;
         _pDoc->pClass->postMouseEvent(_pDoc, nType, nX, nY, nCount, nButtons, nModifier);
     }
 
@@ -276,6 +281,9 @@ public:
      */
     inline void postUnoCommand(const char* pCommand, const char* pArguments = NULL, bool bNotifyWhenFinished = false)
     {
+        Log::trace() << "lok::Document: postUnoCommand: Command=" << pCommand
+                     << ", Args=" << (pArguments ? pArguments : "''")
+                     << ", NotifyWhenFinished=" << bNotifyWhenFinished << Log::end;
         _pDoc->pClass->postUnoCommand(_pDoc, pCommand, pArguments, bNotifyWhenFinished);
     }
 
