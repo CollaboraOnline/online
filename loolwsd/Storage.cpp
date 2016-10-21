@@ -258,6 +258,14 @@ Poco::Net::HTTPClientSession* lcl_getHTTPClientSession(const Poco::URI& uri)
                        : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
 
+Poco::Dynamic::Var getOrWarn(const Poco::JSON::Object::Ptr &object, const char *key)
+{
+    const auto value = object->get(key);
+    if (value.isEmpty())
+        Log::error("Missing JSON property: '" + std::string(key) + "'");
+    return value;
+}
+
 } // anonymous namespace
 
 ///////////////////
@@ -300,13 +308,18 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uri)
         Poco::JSON::Parser parser;
         const auto result = parser.parse(stringJSON);
         const auto& object = result.extract<Poco::JSON::Object::Ptr>();
-        filename = object->get("BaseFileName").toString();
-        size = std::stoul(object->get("Size").toString(), nullptr, 0);
-        const auto userIdVar = object->get("UserId");
+        filename = getOrWarn(object, "BaseFileName").toString();
+        const auto sizeVar = getOrWarn(object, "Size");
+        size = std::stoul(sizeVar.toString(), nullptr, 0);
+        const auto userIdVar = getOrWarn(object, "UserId");
         userId = (userIdVar.isString() ? userIdVar.toString() : "");
-        const auto userNameVar = object->get("UserFriendlyName");
+        const auto userNameVar = getOrWarn(object,"UserFriendlyName");
         userName = (userNameVar.isString() ? userNameVar.toString() : "anonymous");
+        const auto canWriteVar = getOrWarn(object, "UserCanWrite");
+        // not used yet - but - will be required in newer versions.
     }
+    else
+        Log::error("WOPI::CheckFileInfo is missing JSON payload");
 
     // WOPI doesn't support file last modified time.
     return FileInfo({filename, Poco::Timestamp(), size, userId, userName});
