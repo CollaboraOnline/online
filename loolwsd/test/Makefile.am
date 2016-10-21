@@ -9,7 +9,7 @@ check_PROGRAMS = test
 
 noinst_PROGRAMS = test unittest
 
-AM_CXXFLAGS = $(CPPUNIT_CFLAGS)
+AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\"
 
 noinst_LTLIBRARIES = \
         unit-timeout.la unit-prefork.la \
@@ -37,7 +37,7 @@ wsd_sources = \
             ../Unit.cpp \
             ../Util.cpp
 
-test_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" -I$(top_srcdir) -DBUILDING_TESTS
+test_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 test_SOURCES = TileCacheTests.cpp integration-http-server.cpp \
                httpwstest.cpp httpcrashtest.cpp httpwserror.cpp test.cpp $(wsd_sources)
 test_LDADD = $(CPPUNIT_LIBS)
@@ -50,13 +50,11 @@ unittest_LDADD = $(CPPUNIT_LIBS)
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
-unit_admin_la_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
 unit_fonts_la_SOURCES = UnitFonts.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
 unit_tilecache_la_SOURCES = UnitTileCache.cpp
-unit_tilecache_la_CPPFLAGS = -DTDOC=\"$(top_srcdir)/test/data\"
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
