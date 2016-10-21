@@ -193,7 +193,7 @@ namespace LOOLProtocol
             result << Poco::format("%#x", flags);
             break;
         }
-        result << " frame: " << length << " bytes";
+        result << " " << length << " bytes";
 
         if (length > 0 &&
             ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_TEXT ||
