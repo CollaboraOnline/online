@@ -184,12 +184,6 @@ namespace LOOLProtocol
         return firstLine;
     }
 
-    inline
-    std::string getAbbreviatedMessage(const std::string& message)
-    {
-        return getAbbreviatedMessage(message.data(), message.size());
-    }
-
     template <typename T>
     std::string getAbbreviatedMessage(const T& message)
     {
