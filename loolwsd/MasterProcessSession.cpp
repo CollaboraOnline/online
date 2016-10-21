@@ -221,6 +221,13 @@ bool MasterProcessSession::_handleInput(const char *buffer, int length)
 
                 // Forward the status response to the client.
                 forwardToPeer(buffer, length);
+
+                // And let clients know if they hold the edit lock.
+                std::string message = "editlock: ";
+                message += std::to_string(peer->isEditLocked());
+                Log::debug("Forwarding [" + message + "] in response to status.");
+                forwardToPeer(message.c_str(), message.size());
+
                 return true;
             }
             else if (tokens[0] == "commandvalues:")
