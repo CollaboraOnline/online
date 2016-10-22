@@ -12,12 +12,6 @@ jails_path="@JAILS_PATH@"
 lo_path="@LO_PATH@"
 valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes"
 
-# run the test on a dedicated port
-# TODO when we update test execution that the tests run in parallel, we'll
-# needd ifferent numbers for the tests run in parallel here
-export LOOL_TEST_CLIENT_PORT=9984
-export LOOL_TEST_MASTER_PORT=9985
-
 # Note that these options are used by commands in the Makefile that
 # Automake generates. Don't be mislead by 'git grep' not showing any
 # use of --test-name for instance.
@@ -62,6 +56,10 @@ echo "test output is '$test_output'"
 echo > $test_output
 
 if test "z$tst" == "z"; then
+     # run the test on a dedicated port
+     export LOOL_TEST_CLIENT_PORT=9984
+     export LOOL_TEST_MASTER_PORT=9985
+
      echo "executing external tests"
      ${valgrind} \
      ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
