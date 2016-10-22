@@ -228,6 +228,25 @@ static void forkChildren(const int number)
     }
 }
 
+/// Cleans up dead children.
+/// Returns true if removed at least one.
+static bool cleanupChildren()
+{
+    bool removed = false;
+    for (int i = NewChildren.size() - 1; i >= 0; --i)
+    {
+        if (!NewChildren[i]->isAlive())
+        {
+            Log::warn() << "Removing unused dead child [" << NewChildren[i]->getPid()
+                         << "]." << Log::end;
+            NewChildren.erase(NewChildren.begin() + i);
+            removed = true;
+        }
+    }
+
+    return removed;
+}
+
 /// Called on startup only.
 static void preForkChildren()
 {
@@ -240,6 +259,8 @@ static void preForkChildren()
     forkChildren(numPreSpawn);
 }
 
+/// Proatively spawn children processes
+/// to load documents with alacrity.
 static void prespawnChildren()
 {
     std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
@@ -250,19 +271,7 @@ static void prespawnChildren()
     }
 
     // Do the cleanup first.
-    bool rebalance = false;
-    for (int i = NewChildren.size() - 1; i >= 0; --i)
-    {
-        if (!NewChildren[i]->isAlive())
-        {
-            Log::warn() << "Removing unused dead child [" << NewChildren[i]->getPid()
-                         << "]." << Log::end;
-            NewChildren.erase(NewChildren.begin() + i);
-
-            // Rebalance after cleanup.
-            rebalance = true;
-        }
-    }
+    const bool rebalance = cleanupChildren();
 
     int balance = LOOLWSD::NumPreSpawnedChildren;
     balance -= NewChildren.size();
@@ -303,6 +312,9 @@ static std::shared_ptr<ChildProcess> getNewChild()
     const auto startTime = chrono::steady_clock::now();
     do
     {
+        // Do the cleanup first.
+        cleanupChildren();
+
         const int available = NewChildren.size();
         int balance = LOOLWSD::NumPreSpawnedChildren;
         if (available == 0)
