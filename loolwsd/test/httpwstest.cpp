@@ -1857,113 +1857,94 @@ void HTTPWSTest::testOptimalResize()
     }
 }
 
-void HTTPWSTest::testEachView(const std::string& doc, const std::string& type, const std::string& protocol, const std::string& protocolView, const std::string& testname)
+void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
+                              const std::string& protocol, const std::string& protocolView,
+                              const std::string& testname)
 {
-    int docPart = -1;
-    int docParts = 0;
-    int docHeight = 0;
-    int docWidth = 0;
-    int docViewId = -1;
-    int itView = 0;
-
-    // 0..N Views
-    std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
     const std::string view = testname + "view %d -> ";
     const std::string load = testname + "view %d, cannot load the document ";
     const std::string error = testname + "view %d, did not receive a %s message as expected";
 
-    // Load a document
-    std::string documentPath, documentURL, response, text;
-    getDocumentPathAndURL(doc, documentPath, documentURL);
+    try
+    {
+        // Load a document
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL(doc, documentPath, documentURL);
 
-    auto socket = *loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView));
+        int itView = 0;
+        auto socket = *loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView));
 
-    // Check document size
-    sendTextFrame(socket, "status", Poco::format(view, itView));
-    response = getResponseString(socket, "status:", Poco::format(view, itView));
-    CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, std::string("status:")), !response.empty());
-    parseDocSize(response.substr(7), type, docPart, docParts, docWidth, docHeight, docViewId);
+        // Check document size
+        sendTextFrame(socket, "status", Poco::format(view, itView));
+        auto response = getResponseString(socket, "status:", Poco::format(view, itView));
+        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, std::string("status:")), !response.empty());
+        int docPart = -1;
+        int docParts = 0;
+        int docHeight = 0;
+        int docWidth = 0;
+        int docViewId = -1;
+        parseDocSize(response.substr(7), type, docPart, docParts, docWidth, docHeight, docViewId);
 
-    // Send click message
-    Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttondown"), docWidth/2, docHeight/6);
-    sendTextFrame(socket, text, Poco::format(view, itView));
-    text.clear();
+        // Send click message
+        std::string text;
+        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttondown"), docWidth/2, docHeight/6);
+        sendTextFrame(socket, text, Poco::format(view, itView));
+        text.clear();
 
-    Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/2, docHeight/6);
-    sendTextFrame(socket, text, Poco::format(view, itView));
-    response = getResponseString(socket, protocol, Poco::format(view, itView));
-    CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
+        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/2, docHeight/6);
+        sendTextFrame(socket, text, Poco::format(view, itView));
+        response = getResponseString(socket, protocol, Poco::format(view, itView));
+        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
-    // Connect and load 0..N Views, where N=10
+        // Connect and load 0..N Views, where N<=limit
+        std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
 #if MAX_DOCUMENTS > 0
-    const auto limit = std::min(10, MAX_DOCUMENTS - 1); // +1 connection above
+        const auto limit = std::min(5, MAX_DOCUMENTS - 1); // +1 connection above
 #else
-    constexpr auto limit = 10;
+        constexpr auto limit = 5;
 #endif
-    for (itView = 0; itView < limit; ++itView)
+        for (itView = 0; itView < limit; ++itView)
+        {
+            views.emplace_back(loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView)));
+        }
+
+        // main view should receive response each view
+        itView = 0;
+        for (auto socketView : views)
+        {
+            getResponseString(socket, protocolView, Poco::format(view, itView));
+            CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
+            ++itView;
+        }
+    }
+    catch (const Poco::Exception& exc)
     {
-        views.emplace_back(loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView)));
+        CPPUNIT_FAIL(exc.displayText());
     }
 
-    // main view should receive response each view
-    itView = 0;
-    for (auto socketView : views)
-    {
-        getResponseString(socket, protocolView, Poco::format(view, itView));
-        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
-        ++itView;
-    }
+    testNoExtraLoolKitsLeft();
 }
 
 void HTTPWSTest::testInvalidateViewCursor()
 {
-    try
-    {
-        testEachView("viewcursor.odp", "presentation", "invalidatecursor:", "invalidateviewcursor:", "invalidateViewCursor ");
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
+    testEachView("viewcursor.odp", "presentation", "invalidatecursor:", "invalidateviewcursor:", "invalidateViewCursor ");
 }
 
 void HTTPWSTest::testViewCursorVisible()
 {
-    try
-    {
-        testEachView("viewcursor.odp", "presentation", "cursorvisible:", "viewcursorvisible:", "viewCursorVisible ");
-
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
+    testEachView("viewcursor.odp", "presentation", "cursorvisible:", "viewcursorvisible:", "viewCursorVisible ");
 }
 
 void HTTPWSTest::testCellViewCursor()
 {
-    try
-    {
-        testEachView("empty.ods", "spreadsheet", "cellcursor:", "cellviewcursor:", "cellViewCursor");
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
+    testEachView("empty.ods", "spreadsheet", "cellcursor:", "cellviewcursor:", "cellViewCursor");
 }
 
 void HTTPWSTest::testGraphicViewSelection()
 {
-    try
-    {
-        testEachView("graphicviewselection.odp", "presentation", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odp ");
-        testEachView("graphicviewselection.odt", "text", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odt ");
-        testEachView("graphicviewselection.ods", "spreadsheet", "graphicselection:", "graphicviewselection:", "graphicViewSelection-ods ");
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
+    testEachView("graphicviewselection.odp", "presentation", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odp ");
+    testEachView("graphicviewselection.odt", "text", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odt ");
+    testEachView("graphicviewselection.ods", "spreadsheet", "graphicselection:", "graphicviewselection:", "graphicViewSelection-ods ");
 }
 
 void HTTPWSTest::testGraphicInvalidate()
