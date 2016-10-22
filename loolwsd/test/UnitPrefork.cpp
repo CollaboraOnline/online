@@ -62,14 +62,14 @@ public:
     virtual bool filterChildMessage(const std::vector<char>& payload) override
     {
         const std::string memory = LOOLProtocol::getFirstLine(payload);
-        if (!memory.compare(0,6,"error:"))
+        Poco::StringTokenizer tokens(memory, " ");
+        if (tokens[0] == "error:")
         {
             _failure = memory;
         }
         else
         {
             Log::info("Got memory stats [" + memory + "].");
-            Poco::StringTokenizer tokens(memory, " ");
             assert(tokens.count() == 2);
             _childPSS = atoi(tokens[0].c_str());
             _childDirty = atoi(tokens[1].c_str());
@@ -81,69 +81,53 @@ public:
         return true;
     }
 
-    bool getMemory(const std::shared_ptr<Poco::Net::WebSocket> &socket,
-                   size_t &childPSS, size_t &childDirty)
+    virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        /// Fetch memory usage data from the last process ...
-        socket->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n"));
-
-        if (_cv.wait_for(lock, std::chrono::milliseconds(5 * 1000)) == std::cv_status::timeout)
-        {
-            _failure = "Timed out waiting for child to respond to unit-memdump.";
-            std::cerr << _failure << std::endl;
-            return false;
-        }
-
-        childPSS = _childPSS;
-        childDirty = _childDirty;
-        _childPSS = 0;
-        _childDirty = 0;
-        return true;
-    }
-
-    virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
-    {
         _childSockets.push_back(socket);
         if (_childSockets.size() >= NumToPrefork)
         {
             Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
 
-            auto totalTime = (1000. * elapsed)/Poco::Timestamp::resolution();
+            const auto totalTime = (1000. * elapsed)/Poco::Timestamp::resolution();
             Log::info() << "Launched " << _childSockets.size() << " in "
                         << totalTime << Log::end;
             size_t totalPSSKb = 0;
             size_t totalDirtyKb = 0;
 
-            auto socketsCopy = _childSockets;
-
             // Skip the last one as it's not completely initialized yet.
-            for (size_t i = 0; i < socketsCopy.size() - 1; ++i)
+            for (size_t i = 0; i < _childSockets.size() - 1; ++i)
             {
-                Log::info() << "Getting memory of child #" << i + 1 << " of " << socketsCopy.size() << Log::end;
-                size_t childPSSKb = 0, childDirtyKb = 0;
-                if (!getMemory(socketsCopy[i], childPSSKb, childDirtyKb))
+                Log::info() << "Getting memory of child #" << i + 1 << " of " << _childSockets.size() << Log::end;
+
+                _childSockets[i]->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n"));
+                if (_cv.wait_for(lock, std::chrono::milliseconds(5 * 1000)) == std::cv_status::timeout)
                 {
+                    _failure = "Timed out waiting for child to respond to unit-memdump.";
+                    std::cerr << _failure << std::endl;
                     exitTest(TestResult::TEST_FAILED);
                     return;
                 }
-                std::cerr << "child # " << i + 1 << " pss: " << childPSSKb << " dirty: " << childDirtyKb << std::endl;
-                totalPSSKb += childPSSKb;
-                totalDirtyKb += childDirtyKb;
+
+                std::cerr << "child # " << i + 1 << " pss: " << _childPSS << " (totalPSS: " << (totalPSSKb + _childPSS)
+                          << "), dirty: " << _childDirty << " (totalDirty: " << (totalDirtyKb + _childDirty) << std::endl;
+                totalPSSKb += _childPSS;
+                _childPSS = 0;
+                totalDirtyKb += _childDirty;
+                _childDirty = 0;
             }
 
             std::cerr << "Memory use total   " << totalPSSKb << "k shared "
                         << totalDirtyKb << "k dirty" << std::endl;
 
-            totalPSSKb /= socketsCopy.size();
-            totalDirtyKb /= socketsCopy.size();
+            totalPSSKb /= _childSockets.size();
+            totalDirtyKb /= _childSockets.size();
             std::cerr << "Memory use average " << totalPSSKb << "k shared "
                         << totalDirtyKb << "k dirty" << std::endl;
 
             std::cerr << "Launch time total   " << totalTime << " ms" << std::endl;
-            totalTime /= socketsCopy.size();
-            std::cerr << "Launch time average " << totalTime << " ms" << std::endl;
+            std::cerr << "Launch time average " << (totalTime / _childSockets.size()) << " ms" << std::endl;
 
             if (!_failure.empty())
             {
@@ -159,7 +143,8 @@ public:
     }
 };
 
-namespace {
+namespace
+{
     std::vector<int> pids;
 
     const char *startsWith(const char *line, const char *tag)
