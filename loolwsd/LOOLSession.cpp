@@ -209,6 +209,22 @@ bool LOOLSession::handleDisconnect()
     return false;
 }
 
+void LOOLSession::shutdown(Poco::UInt16 statusCode)
+{
+    if (_ws)
+    {
+        try {
+            Log::trace("Shutting down WS [" + getName() + "].");
+            _ws->shutdown(statusCode);
+        }
+        catch (const Poco::Exception &exc)
+        {
+            Log::warn("LOOLSession::shutdown WebSocket: Exception: " +
+                      exc.displayText() + (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+        }
+    }
+}
+
 bool LOOLSession::handleInput(const char *buffer, int length)
 {
     assert(buffer != nullptr);

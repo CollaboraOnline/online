@@ -211,7 +211,6 @@ void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws)
     {
         Log::warn("Util::shutdownWebSocket: Exception: " + exc.displayText() + (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
-
 }
 
 ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size)
