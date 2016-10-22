@@ -58,6 +58,8 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testImpressTiles);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
+    CPPUNIT_TEST(testTilesRenderedJustOnce);
+    CPPUNIT_TEST(testTilesRenderedJustOnceMultiClient);
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
 #endif
@@ -79,6 +81,8 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testImpressTiles();
     void testClientPartImpress();
     void testClientPartCalc();
+    void testTilesRenderedJustOnce();
+    void testTilesRenderedJustOnceMultiClient();
     void testSimultaneousTilesRenderedJustOnce();
     void testLoad12ods();
     void testTileInvalidateWriter();
@@ -374,6 +378,162 @@ void TileCacheTests::testClientPartCalc()
     catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void TileCacheTests::testTilesRenderedJustOnce()
+{
+    const auto testname = "tilesRenderdJustOnce ";
+
+    auto socket = *loadDocAndGetSocket("empty.odt", _uri, testname);
+
+    assertResponseString(socket, "statechanged: .uno:AcceptTrackedChange=", testname);
+
+    for (int i = 0; i < 10; ++i)
+    {
+        // Get initial rendercount.
+        sendTextFrame(socket, "ping", testname);
+        const auto ping1 = assertResponseString(socket, "pong", testname);
+        int renderCount1 = 0;
+        CPPUNIT_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping1, "rendercount", renderCount1));
+        CPPUNIT_ASSERT_EQUAL(i * 3, renderCount1);
+
+        // Modify.
+        sendText(socket, "a", testname);
+        assertResponseString(socket, "invalidatetiles:", testname);
+
+        // Get 3 tiles.
+        sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname);
+        assertResponseString(socket, "tile:", testname);
+        assertResponseString(socket, "tile:", testname);
+        assertResponseString(socket, "tile:", testname);
+
+        // Get new rendercount.
+        sendTextFrame(socket, "ping", testname);
+        const auto ping2 = assertResponseString(socket, "pong", testname);
+        int renderCount2 = 0;
+        CPPUNIT_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping2, "rendercount", renderCount2));
+        CPPUNIT_ASSERT_EQUAL((i+1) * 3, renderCount2);
+
+        // Get same 3 tiles.
+        sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname);
+        const auto tile1 = assertResponseString(socket, "tile:", testname);
+        std::string renderId1;
+        LOOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
+        CPPUNIT_ASSERT_EQUAL(std::string("cached"), renderId1);
+
+        const auto tile2 = assertResponseString(socket, "tile:", testname);
+        std::string renderId2;
+        LOOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
+        CPPUNIT_ASSERT_EQUAL(std::string("cached"), renderId2);
+
+        const auto tile3 = assertResponseString(socket, "tile:", testname);
+        std::string renderId3;
+        LOOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
+        CPPUNIT_ASSERT_EQUAL(std::string("cached"), renderId3);
+
+        // Get new rendercount.
+        sendTextFrame(socket, "ping", testname);
+        const auto ping3 = assertResponseString(socket, "pong", testname);
+        int renderCount3 = 0;
+        CPPUNIT_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping3, "rendercount", renderCount3));
+        CPPUNIT_ASSERT_EQUAL(renderCount2, renderCount3);
+    }
+}
+
+void TileCacheTests::testTilesRenderedJustOnceMultiClient()
+{
+    const std::string testname = "tilesRenderdJustOnceMultiClient";
+    const auto testname1 = testname + "-1 ";
+    const auto testname2 = testname + "-2 ";
+    const auto testname3 = testname + "-3 ";
+    const auto testname4 = testname + "-4 ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+
+    std::cerr << "Connecting first client." << std::endl;
+    auto socket = *loadDocAndGetSocket(_uri, documentURL, testname1);
+    std::cerr << "Connecting second client." << std::endl;
+    auto socket2 = *loadDocAndGetSocket(_uri, documentURL, testname2);
+    std::cerr << "Connecting third client." << std::endl;
+    auto socket3 = *loadDocAndGetSocket(_uri, documentURL, testname3);
+    std::cerr << "Connecting fourth client." << std::endl;
+    auto socket4 = *loadDocAndGetSocket(_uri, documentURL, "tilesRenderdJustOnce-4 ");
+
+    for (int i = 0; i < 10; ++i)
+    {
+        // No tiles at this point.
+        assertNotInResponse(socket, "tile:", testname1);
+        assertNotInResponse(socket2, "tile:", testname2);
+        assertNotInResponse(socket3, "tile:", testname3);
+        assertNotInResponse(socket4, "tile:", testname4);
+
+        // Get initial rendercount.
+        sendTextFrame(socket, "ping", testname1);
+        const auto ping1 = assertResponseString(socket, "pong", testname1);
+        int renderCount1 = 0;
+        CPPUNIT_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping1, "rendercount", renderCount1));
+        CPPUNIT_ASSERT_EQUAL(i * 3, renderCount1);
+
+        // Modify.
+        sendText(socket, "a", testname1);
+        assertResponseString(socket, "invalidatetiles:", testname1);
+
+        // Get 3 tiles.
+        sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname1);
+        assertResponseString(socket, "tile:", testname1);
+        assertResponseString(socket, "tile:", testname1);
+        assertResponseString(socket, "tile:", testname1);
+
+        assertResponseString(socket2, "invalidatetiles:", testname2);
+        sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname2);
+        assertResponseString(socket2, "tile:", testname2);
+        assertResponseString(socket2, "tile:", testname2);
+        assertResponseString(socket2, "tile:", testname2);
+
+        assertResponseString(socket3, "invalidatetiles:", testname3);
+        sendTextFrame(socket3, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname3);
+        assertResponseString(socket3, "tile:", testname3);
+        assertResponseString(socket3, "tile:", testname3);
+        assertResponseString(socket3, "tile:", testname3);
+
+        assertResponseString(socket4, "invalidatetiles:", testname4);
+        sendTextFrame(socket4, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname4);
+        assertResponseString(socket4, "tile:", testname4);
+        assertResponseString(socket4, "tile:", testname4);
+        assertResponseString(socket4, "tile:", testname4);
+
+        // Get new rendercount.
+        sendTextFrame(socket, "ping", testname1);
+        const auto ping2 = assertResponseString(socket, "pong", testname1);
+        int renderCount2 = 0;
+        CPPUNIT_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping2, "rendercount", renderCount2));
+        CPPUNIT_ASSERT_EQUAL((i+1) * 3, renderCount2);
+
+        // Get same 3 tiles.
+        sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname1);
+        const auto tile1 = assertResponseString(socket, "tile:", testname1);
+        std::string renderId1;
+        LOOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
+        CPPUNIT_ASSERT_EQUAL(std::string("cached"), renderId1);
+
+        const auto tile2 = assertResponseString(socket, "tile:", testname1);
+        std::string renderId2;
+        LOOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
+        CPPUNIT_ASSERT_EQUAL(std::string("cached"), renderId2);
+
+        const auto tile3 = assertResponseString(socket, "tile:", testname1);
+        std::string renderId3;
+        LOOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
+        CPPUNIT_ASSERT_EQUAL(std::string("cached"), renderId3);
+
+        // Get new rendercount.
+        sendTextFrame(socket, "ping", testname1);
+        const auto ping3 = assertResponseString(socket, "pong", testname1);
+        int renderCount3 = 0;
+        CPPUNIT_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping3, "rendercount", renderCount3));
+        CPPUNIT_ASSERT_EQUAL(renderCount2, renderCount3);
     }
 }
 
