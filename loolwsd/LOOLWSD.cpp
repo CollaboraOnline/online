@@ -176,19 +176,6 @@ static int careerSpanSeconds = 0;
 
 namespace {
 
-static void logNumDocBrokers(int lineNo)
-{
-    int size = 0;
-    int nonEmpty = 0;
-    for (auto& i : DocBrokers)
-    {
-        size++;
-        if (i.second->getPublicUri().toString() != "")
-            nonEmpty++;
-    }
-    Log::debug() << "line " << lineNo << ": NumDocBrokers=" << LOOLWSD::NumDocBrokers << " size: " << size << " of which non-empty: " << nonEmpty << Log::end;
-}
-
 static inline
 void shutdownLimitReached(WebSocket& ws)
 {
@@ -746,12 +733,9 @@ private:
 
 #if MAX_DOCUMENTS > 0
             std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
-            logNumDocBrokers(__LINE__);
-            if (++LOOLWSD::NumDocBrokers > MAX_DOCUMENTS)
+            if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
             {
-                --LOOLWSD::NumDocBrokers;
                 Log::error("Maximum number of open documents reached.");
-                logNumDocBrokers(__LINE__);
                 shutdownLimitReached(*ws);
                 return;
             }
@@ -773,10 +757,6 @@ private:
                 // Remove.
                 std::unique_lock<std::mutex> lock(DocBrokersMutex);
                 DocBrokers.erase(docKey);
-#if MAX_DOCUMENTS > 0
-                --LOOLWSD::NumDocBrokers;
-                logNumDocBrokers(__LINE__);
-#endif
             }
 
             throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
@@ -887,10 +867,6 @@ private:
                 std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
                 Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
                 DocBrokers.erase(docKey);
-#if MAX_DOCUMENTS > 0
-                --LOOLWSD::NumDocBrokers;
-                logNumDocBrokers(__LINE__);
-#endif
             }
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
@@ -1367,7 +1343,6 @@ Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
-std::atomic<unsigned> LOOLWSD::NumDocBrokers;
 std::atomic<unsigned> LOOLWSD::NumConnections;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 
@@ -1543,7 +1518,6 @@ void LOOLWSD::initialize(Application& self)
     setenv ("SAL_DISABLE_OPENCL", "true", 1);
 
     // In Trial Versions we might want to set some limits.
-    LOOLWSD::NumDocBrokers = 0;
     LOOLWSD::NumConnections = 0;
     Log::info() << "Open Documents Limit: " << (MAX_DOCUMENTS > 0 ?
                                                 std::to_string(MAX_DOCUMENTS) :
