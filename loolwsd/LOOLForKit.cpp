@@ -215,10 +215,14 @@ static int createLibreOfficeKit(const std::string& childRoot,
 
         if (std::getenv("SLEEPKITFORDEBUGGER"))
         {
-            std::cerr << "Sleeping " << std::getenv("SLEEPKITFORDEBUGGER")
-                      << " seconds to give you time to attach debugger to process "
-                      << Process::id() << std::endl;
-            Thread::sleep(std::stoul(std::getenv("SLEEPKITFORDEBUGGER")) * 1000);
+            const auto delaySecs = std::stoul(std::getenv("SLEEPKITFORDEBUGGER"));
+            if (delaySecs > 0)
+            {
+                std::cerr << "Sleeping " << delaySecs
+                          << " seconds to give you time to attach debugger to process "
+                          << Process::id() << std::endl;
+                Thread::sleep(delaySecs * 1000);
+            }
         }
 
         lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, NoCapsForKit, queryVersion, DisplayVersion);
@@ -258,10 +262,14 @@ int main(int argc, char** argv)
 
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
-        std::cerr << "Sleeping " << std::getenv("SLEEPFORDEBUGGER")
-                  << " seconds to give you time to attach debugger to process "
-                  << Process::id() << std::endl;
-        Thread::sleep(std::stoul(std::getenv("SLEEPFORDEBUGGER")) * 1000);
+        const auto delaySecs = std::stoul(std::getenv("SLEEPFORDEBUGGER"));
+        if (delaySecs > 0)
+        {
+            std::cerr << "Sleeping " << delaySecs
+                      << " seconds to give you time to attach debugger to process "
+                      << Process::id() << std::endl;
+            Thread::sleep(delaySecs * 1000);
+        }
     }
 
     // Initialization
