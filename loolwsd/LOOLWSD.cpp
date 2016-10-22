@@ -1293,6 +1293,53 @@ ServerSocket* getServerSocket(int nClientPortNumber)
 }
 
 static inline
+ServerSocket* findFreeServerPort(int &nClientPortNumber)
+{
+    ServerSocket *socket = NULL;
+    while (!socket)
+    {
+        socket = getServerSocket(nClientPortNumber);
+        if (!socket)
+        {
+            nClientPortNumber++;
+            Log::info("client port busy - trying " + nClientPortNumber);
+        }
+    }
+    return socket;
+}
+
+static inline
+ServerSocket* getMasterSocket(int nMasterPortNumber)
+{
+    try
+    {
+        SocketAddress addr2("127.0.0.1", nMasterPortNumber);
+        return new ServerSocket(addr2);
+    }
+    catch (const Exception& exc)
+    {
+        Log::fatal() << "Could not create master socket: " << exc.displayText() << Log::end;
+        return nullptr;
+    }
+}
+
+static inline
+ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
+{
+    ServerSocket *socket = NULL;
+    while (!socket)
+    {
+        socket = getServerSocket(nMasterPortNumber);
+        if (!socket)
+        {
+            nMasterPortNumber++;
+            Log::info("master port busy - trying " + nMasterPortNumber);
+        }
+    }
+    return socket;
+}
+
+static inline
 std::string getLaunchURI()
 {
     std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
@@ -1825,7 +1872,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Start a server listening on the port for clients
 
-    std::unique_ptr<ServerSocket> psvs(getServerSocket(ClientPortNumber));
+    std::unique_ptr<ServerSocket> psvs(
+        UnitWSD::isUnitTesting() ?
+            findFreeServerPort(ClientPortNumber) :
+            getServerSocket(ClientPortNumber));
     if (!psvs)
         return Application::EXIT_SOFTWARE;
 
@@ -1836,8 +1886,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // And one on the port for child processes
     SocketAddress addr2("127.0.0.1", MasterPortNumber);
-    ServerSocket svs2(addr2);
-    HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, svs2, params2);
+    std::unique_ptr<ServerSocket> psvs2(
+        UnitWSD::isUnitTesting() ?
+            findFreeMasterPort(MasterPortNumber) :
+            getMasterSocket(MasterPortNumber));
+    if (!psvs2)
+        return Application::EXIT_SOFTWARE;
+    HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, *psvs2, params2);
     Log::info("Starting prisoner server listening on " + std::to_string(MasterPortNumber));
     srv2.start();
 

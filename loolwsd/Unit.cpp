@@ -100,6 +100,11 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
     return Global != NULL;
 }
 
+bool UnitBase::isUnitTesting()
+{
+    return Global && Global->_dlHandle;
+}
+
 void UnitBase::setTimeout(int timeoutMilliSeconds)
 {
     assert(!TimeoutThread.isRunning());
@@ -135,13 +140,14 @@ UnitWSD::~UnitWSD()
 
 void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)
 {
-    if (_dlHandle) // really running a unit shlib.
+    if (isUnitTesting())
     {
         // Force HTTP - helps stracing.
         config.setBool("ssl.enable", false);
         // Force console output - easier to debug.
         config.setBool("logging.file[@enable]", false);
     }
+    // else - a product run.
 }
 
 void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tilePosY,

@@ -71,6 +71,9 @@ public:
     /// Load unit test hook shared library from this path
     static bool init(UnitType type, const std::string &unitLibPath);
 
+    /// Do we have a unit test library hooking things & loaded
+    static bool isUnitTesting();
+
     /// Tweak the return value from the process.
 	virtual void returnValue(int & /* retValue */);
 
