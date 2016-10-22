@@ -1003,8 +1003,8 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
                 }
                 catch (const std::out_of_range&)
                 {
-                    // something went wrong, invalidate everything
-                    Log::warn("Ignoring integer values out of range: " + rPayload);
+                    // We might get INT_MAX +/- some delta that
+                    // can overflow signed int and we end up here.
                     x = 0;
                     y = 0;
                     width = INT_MAX;
