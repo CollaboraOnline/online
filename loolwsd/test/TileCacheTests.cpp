@@ -401,9 +401,9 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
     if (!response1.empty() && !response2.empty())
     {
         std::string renderId1;
-        LOOLProtocol::getTokenString(response1, "renderid", renderId1);
+        LOOLProtocol::getTokenStringFromMessage(response1, "renderid", renderId1);
         std::string renderId2;
-        LOOLProtocol::getTokenString(response2, "renderid", renderId2);
+        LOOLProtocol::getTokenStringFromMessage(response2, "renderid", renderId2);
 
         CPPUNIT_ASSERT(renderId1 == renderId2 ||
                        (renderId1 == "cached" && renderId2 != "cached") ||
