@@ -106,13 +106,6 @@ namespace Util
         assert(!mtx.try_lock());
     }
 
-    inline
-    void assertIsNotLocked(std::mutex& mtx)
-    {
-        assert(mtx.try_lock());
-        mtx.unlock();
-    }
-
     /// Safely remove a file or directory.
     /// Supresses exception when the file is already removed.
     /// This can happen when there is a race (unavoidable) or when
