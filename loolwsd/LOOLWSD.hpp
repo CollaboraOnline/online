@@ -48,7 +48,6 @@ public:
     static std::string ServerName;
     static std::string FileServerRoot;
     static std::string LOKitVersion;
-    static std::atomic<unsigned> NumDocBrokers;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
 
