@@ -173,12 +173,7 @@ public:
                    const std::string& childRoot,
                    const std::shared_ptr<ChildProcess>& childProcess);
 
-    ~DocumentBroker()
-    {
-        Log::info() << "~DocumentBroker [" << _uriPublic.toString()
-                    << "] destroyed with " << getSessionsCount()
-                    << " sessions left." << Log::end;
-    }
+    ~DocumentBroker();
 
     /// Loads a document from the public URI into the jail.
     bool load(const std::string& sessionId, const std::string& jailId);
