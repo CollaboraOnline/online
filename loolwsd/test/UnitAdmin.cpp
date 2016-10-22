@@ -201,6 +201,9 @@ private:
         const std::string subscribeMessage = "subscribe adddoc";
         _adminWs->sendFrame(subscribeMessage.data(), subscribeMessage.size());
 
+        // FIXME: we really should wait for the subscription to be
+        // registered and have a reply to avoid a race here.
+        Poco::Thread::sleep(250);
 
         std::string documentPath1, documentURL1;
         helpers::getDocumentPathAndURL("hello.odt", documentPath1, documentURL1);
@@ -439,6 +442,7 @@ public:
             {
                 Log::info("Exiting with " + (res == TestResult::TEST_FAILED ? "FAIL" : (res == TestResult::TEST_TIMED_OUT) ? "TIMEOUT" : "??? (" + std::to_string(res) + ")"));
                 exitTest(res);
+                assert(false);
                 return;
             }
 
