@@ -222,6 +222,12 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
 
                 if ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
                 {
+                    // Don't ignore errors.
+                    if (LOOLProtocol::matchPrefix("error:", message))
+                    {
+                        throw std::runtime_error(message);
+                    }
+
                     std::cerr << name << "Ignored: " << message << std::endl;
                 }
             }
