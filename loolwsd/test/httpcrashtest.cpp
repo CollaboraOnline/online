@@ -119,6 +119,7 @@ void HTTPCrashTest::testNoExtraLoolKitsLeft()
 void HTTPCrashTest::testBarren()
 {
     // Kill all kit processes and try loading a document.
+    const auto testname = "barren ";
     try
     {
         killLoKitProcesses();
@@ -126,35 +127,11 @@ void HTTPCrashTest::testBarren()
         std::cerr << "Loading after kill." << std::endl;
 
         // Load a document and get its status.
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        auto socket = connectLOKit(_uri, request, _response);
+        sendTextFrame(socket, "status", testname);
+        assertResponseString(socket, "status:", testname);
 
-        // First load should fail.
-        sendTextFrame(socket, "load url=" + documentURL);
-        SocketProcessor("Barren ", socket, [&](const std::string& msg)
-                {
-                    const std::string prefix = "status: ";
-                    if (msg.find(prefix) == 0)
-                    {
-                        const auto status = msg.substr(prefix.length());
-                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408 viewid=0"), status);
-                        return false;
-                    }
-                    else if (msg.find("Service") == 0)
-                    {
-                        // Service unavailable. Try again.
-                        auto socket2 = loadDocAndGetSocket(_uri, documentURL);
-                        sendTextFrame(socket2, "status");
-                        const auto status = getResponseString(socket2, "status");
-                        CPPUNIT_ASSERT_EQUAL(std::string("type=text parts=1 current=0 width=12808 height=16408"), status);
-                        return false;
-                    }
-
-                    return true;
-                });
     }
     catch (const Poco::Exception& exc)
     {
