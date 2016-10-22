@@ -17,6 +17,7 @@
 #include <Poco/SHA1Engine.h>
 #include <Poco/StringTokenizer.h>
 
+#include "Admin.hpp"
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
 #include "LOOLProtocol.hpp"
@@ -160,6 +161,15 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     assert(!_childRoot.empty());
 
     Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
+}
+
+DocumentBroker::~DocumentBroker()
+{
+    Admin::instance().rmDoc(_docKey);
+
+    Log::info() << "~DocumentBroker [" << _uriPublic.toString()
+                << "] destroyed with " << getSessionsCount()
+                << " sessions left." << Log::end;
 }
 
 bool DocumentBroker::load(const std::string& sessionId, const std::string& jailId)
@@ -464,6 +474,9 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
         throw;
     }
 
+    // Tell the admin console about this new doc
+    Admin::instance().addDoc(_docKey, getPid(), getFilename(), id);
+
     auto prisonerSession = std::make_shared<PrisonerSession>(id, shared_from_this());
 
     // Connect the prison session to the client.
@@ -503,6 +516,9 @@ size_t DocumentBroker::removeSession(const std::string& id)
         const std::string msg("child-" + id + " disconnect");
         _childProcess->sendTextFrame(msg);
     }
+
+    // Lets remove this session from the admin console too
+    Admin::instance().rmDoc(_docKey, id);
 
     return _sessions.size();
 }
