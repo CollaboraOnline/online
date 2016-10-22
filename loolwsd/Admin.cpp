@@ -317,6 +317,7 @@ void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
 void Admin::rmDoc(const std::string& docKey)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
+    Log::info("Removing complete doc [" + docKey + "] from Admin.");
     _model.removeDocument(docKey);
 }
 
