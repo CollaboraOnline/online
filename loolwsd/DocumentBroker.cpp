@@ -60,8 +60,9 @@ void ChildProcess::socketProcessor()
 
     // Notify the broker that we're done.
     auto docBroker = _docBroker.lock();
-    if (docBroker)
+    if (docBroker && !_stop)
     {
+        // No need to notify if asked to stop.
         docBroker->childSocketTerminated();
     }
 }

@@ -55,11 +55,8 @@ public:
 
     ~ChildProcess()
     {
-        if (_pid > 0)
-        {
-            Log::info("~ChildProcess dtor [" + std::to_string(_pid) + "].");
-            close(false);
-        }
+        Log::debug("~ChildProcess dtor [" + std::to_string(_pid) + "].");
+        close(true);
     }
 
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
@@ -68,11 +65,18 @@ public:
         _docBroker = docBroker;
     }
 
+    void stop()
+    {
+        Log::debug("Stopping ChildProcess [" + std::to_string(_pid) + "]");
+        _stop = true;
+    }
+
     void close(const bool rude)
     {
         try
         {
-            _stop = true;
+            Log::debug("Closing ChildProcess [" + std::to_string(_pid) + "].");
+            stop();
             IoUtil::shutdownWebSocket(_ws);
             if (_thread.joinable())
             {
