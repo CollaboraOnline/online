@@ -221,6 +221,7 @@ void shutdownLimitReached(WebSocket& ws)
     }
     catch (const Exception&)
     {
+        // FIXME: handle exceptions thrown from here ? ...
         ws.sendFrame(error.data(), error.size());
         ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
     }
@@ -934,6 +935,7 @@ private:
             // something wrong, with internal exceptions
             Log::trace("Abnormal close handshake.");
             session->closeFrame();
+            // FIXME: handle exception thrown from here ? ...
             ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
             session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY);
         }
