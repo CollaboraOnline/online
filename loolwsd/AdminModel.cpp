@@ -20,6 +20,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
+#include "LOOLProtocol.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
@@ -56,64 +57,70 @@ int Document::expireView(const std::string& sessionId)
 
 bool Subscriber::notify(const std::string& message)
 {
-    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-    if (_subscriptions.find(tokens[0]) == _subscriptions.end())
+    if (_subscriptions.find(LOOLProtocol::getFirstToken(message)) == _subscriptions.end())
+    {
+        // No subscribers for the given message.
         return true;
+    }
 
     auto webSocket = _ws.lock();
     if (webSocket)
     {
-        UnitWSD::get().onAdminNotifyMessage(message);
-        webSocket->sendFrame(message.data(), message.length());
-        return true;
+        try
+        {
+            UnitWSD::get().onAdminNotifyMessage(message);
+            webSocket->sendFrame(message.data(), message.length());
+            return true;
+        }
+        catch (const std::exception& ex)
+        {
+            Log::error() << "Failed to notify Admin subscriber with message ["
+                         << message << "] due to [" << ex.what() << "]." << Log::end;
+        }
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
-bool  Subscriber::subscribe(const std::string& command)
+bool Subscriber::subscribe(const std::string& command)
 {
     auto ret = _subscriptions.insert(command);
     return ret.second;
 }
 
-void  Subscriber::unsubscribe(const std::string& command)
+void Subscriber::unsubscribe(const std::string& command)
 {
     _subscriptions.erase(command);
 }
 
 std::string AdminModel::query(const std::string& command)
 {
-    StringTokenizer tokens(command, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-    if (tokens[0] == "documents")
+    const auto token = LOOLProtocol::getFirstToken(command);
+    if (token == "documents")
     {
         return getDocuments();
     }
-    else if (tokens[0] == "active_users_count")
+    else if (token == "active_users_count")
     {
         return std::to_string(getTotalActiveViews());
     }
-    else if (tokens[0] == "active_docs_count")
+    else if (token == "active_docs_count")
     {
         return std::to_string(_documents.size());
     }
-    else if (tokens[0] == "mem_stats")
+    else if (token == "mem_stats")
     {
         return getMemStats();
     }
-    else if (tokens[0] == "mem_stats_size")
+    else if (token == "mem_stats_size")
     {
         return std::to_string(_memStatsSize);
     }
-    else if (tokens[0] == "cpu_stats")
+    else if (token == "cpu_stats")
     {
         return getCpuStats();
     }
-    else if (tokens[0] == "cpu_stats_size")
+    else if (token == "cpu_stats_size")
     {
         return std::to_string(_cpuStatsSize);
     }
@@ -127,10 +134,14 @@ unsigned AdminModel::getTotalMemoryUsage()
     unsigned totalMem = 0;
     for (auto& it: _documents)
     {
-        if (it.second.isExpired())
-            continue;
-
-        totalMem += Util::getMemoryUsage(it.second.getPid());
+        if (!it.second.isExpired())
+        {
+            const int mem = Util::getMemoryUsage(it.second.getPid());
+            if (mem > 0)
+            {
+                totalMem += mem;
+            }
+        }
     }
 
     return totalMem;
@@ -148,19 +159,19 @@ void AdminModel::subscribe(int nSessionId, std::shared_ptr<Poco::Net::WebSocket>
 void AdminModel::subscribe(int nSessionId, const std::string& command)
 {
     auto subscriber = _subscribers.find(nSessionId);
-    if (subscriber == _subscribers.end() )
-        return;
-
-    subscriber->second.subscribe(command);
+    if (subscriber != _subscribers.end())
+    {
+        subscriber->second.subscribe(command);
+    }
 }
 
 void AdminModel::unsubscribe(int nSessionId, const std::string& command)
 {
     auto subscriber = _subscribers.find(nSessionId);
-    if (subscriber == _subscribers.end())
-        return;
-
-    subscriber->second.unsubscribe(command);
+    if (subscriber != _subscribers.end())
+    {
+        subscriber->second.unsubscribe(command);
+    }
 }
 
 void AdminModel::addMemStats(unsigned memUsage)
@@ -225,6 +236,7 @@ void AdminModel::setMemStatsSize(unsigned size)
 
 void AdminModel::notify(const std::string& message)
 {
+    Log::debug("Message to admin console: " + message);
     auto it = std::begin(_subscribers);
     while (it != std::end(_subscribers))
     {
@@ -234,7 +246,7 @@ void AdminModel::notify(const std::string& message)
         }
         else
         {
-            it++;
+            ++it;
         }
     }
 }
@@ -246,7 +258,7 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
     ret.first->second.addView(sessionId);
 
     // Notify the subscribers
-    unsigned memUsage = Util::getMemoryUsage(pid);
+    const unsigned memUsage = Util::getMemoryUsage(pid);
     std::ostringstream oss;
     std::string encodedFilename;
     Poco::URI::encode(filename, " ", encodedFilename);
@@ -255,7 +267,6 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
         << encodedFilename << " "
         << sessionId << " "
         << std::to_string(memUsage);
-    Log::info("Message to admin console: " + oss.str());
     notify(oss.str());
 }
 
@@ -269,7 +280,6 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
         oss << "rmdoc "
             << docIt->second.getPid() << " "
             << sessionId;
-        Log::info("Message to admin console: " + oss.str());
         notify(oss.str());
 
         // TODO: The idea is to only expire the document and keep the history
@@ -294,7 +304,6 @@ void AdminModel::removeDocument(const std::string& docKey)
             oss << "rmdoc "
                 << docIt->second.getPid() << " "
                 << pair.first;
-            Log::info("Message to admin console: " + oss.str());
             notify(oss.str());
         }
 
@@ -304,24 +313,24 @@ void AdminModel::removeDocument(const std::string& docKey)
 
 std::string AdminModel::getMemStats()
 {
-    std::string response;
+    std::ostringstream oss;
     for (auto& i: _memStats)
     {
-        response += std::to_string(i) + ",";
+        oss << i << ',';
     }
 
-    return response;
+    return oss.str();
 }
 
 std::string AdminModel::getCpuStats()
 {
-    std::string response;
+    std::ostringstream oss;
     for (auto& i: _cpuStats)
     {
-        response += std::to_string(i) + ",";
+        oss << i << ',';
     }
 
-    return response;
+    return oss.str();
 }
 
 unsigned AdminModel::getTotalActiveViews()
