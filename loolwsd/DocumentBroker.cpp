@@ -525,7 +525,6 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
 void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::string& kind)
 {
-    Util::assertIsNotLocked(_mutex);
     std::lock_guard<std::mutex> lock(_mutex);
 
     std::stringstream ss;
