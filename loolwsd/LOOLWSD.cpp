@@ -206,11 +206,9 @@ void shutdownLimitReached(WebSocket& ws)
         }
         while (retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
     }
-    catch (const Exception&)
+    catch (const std::exception& ex)
     {
-        // FIXME: handle exceptions thrown from here ? ...
-        ws.sendFrame(error.data(), error.size());
-        ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
+        Log::error("Error while shuting down socket on reaching limit: " + std::string(ex.what()));
     }
 }
 
