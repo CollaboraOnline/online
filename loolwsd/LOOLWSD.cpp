@@ -2025,29 +2025,30 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         }
         else // pid == 0, no children have died
         {
-            if (!std::getenv("LOOL_NO_AUTOSAVE"))
+            if (!std::getenv("LOOL_NO_AUTOSAVE") &&
+                (time(nullptr) >= last30SecCheck + 30))
             {
-                if (time(nullptr) >= last30SecCheck + 30)
+                try
                 {
-                    try
+                    std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+                    cleanupDocBrokers();
+                    for (auto& brokerIt : DocBrokers)
                     {
-                        std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
-                        cleanupDocBrokers();
-                        for (auto& brokerIt : DocBrokers)
-                        {
-                            brokerIt.second->autoSave(false, 0);
-                        }
+                        brokerIt.second->autoSave(false, 0);
                     }
-                    catch (const std::exception& exc)
-                    {
-                        Log::error("Exception: " + std::string(exc.what()));
-                    }
-
-                    last30SecCheck = time(nullptr);
                 }
-            }
+                catch (const std::exception& exc)
+                {
+                    Log::error("Exception: " + std::string(exc.what()));
+                }
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS));
+                last30SecCheck = time(nullptr);
+            }
+            else
+            {
+                // Don't wait if we had been saving, which takes a while anyway.
+                std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS));
+            }
 
             // Make sure we have sufficient reserves.
             prespawnChildren();
