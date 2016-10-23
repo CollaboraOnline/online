@@ -851,13 +851,12 @@ private:
 
         for (auto& pair : _sessions)
         {
-            const auto session = pair.second;
-            if (!session->isCloseFrame())
-            {
-                const auto viewId = session->getViewId();
-                viewInfo[viewId] = session->getViewUserName();
-            }
+            const auto& session = pair.second;
+            const auto viewId = session->getViewId();
+            viewInfo[viewId] = session->getViewUserName();
         }
+
+        viewInfo.insert(_oldSessionIds.begin(), _oldSessionIds.end());
 
         return viewInfo;
     }
@@ -1133,6 +1132,7 @@ private:
                 if (message == "disconnect")
                 {
                     Log::debug("Removing ChildSession " + viewId);
+                    _oldSessionIds[it->second->getViewId()] = it->second->getViewUserName();
                     _sessions.erase(it);
                     return true;
                 }
@@ -1271,6 +1271,7 @@ private:
     std::atomic_size_t _isLoading;
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<std::string, std::shared_ptr<ChildSession>> _sessions;
+    std::map<int, std::string> _oldSessionIds;
     Poco::Thread _callbackThread;
     std::atomic_size_t _clientViews;
 };

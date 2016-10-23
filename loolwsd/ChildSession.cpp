@@ -466,7 +466,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
                                         std::string(pValues == nullptr ? "" : pValues),
                                         std::string(pUndo == nullptr ? "" : pUndo));
         // json only contains view IDs, insert matching user names.
-        std::map<int, std::string> viewInfo =_docManager.getViewInfo();
+        std::map<int, std::string> viewInfo = _docManager.getViewInfo();
         insertUserNames(viewInfo, json);
         success = sendTextFrame("commandvalues: " + json);
         std::free(pValues);
