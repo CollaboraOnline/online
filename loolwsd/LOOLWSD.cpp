@@ -667,6 +667,12 @@ private:
         {
             std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
 
+            if (TerminationFlag)
+            {
+                Log::error("Termination flag set. No loading new session [" + id + "]");
+                return;
+            }
+
             // Lookup this document.
             auto it = DocBrokers.find(docKey);
             if (it != DocBrokers.end())
@@ -719,6 +725,12 @@ private:
                     timedOut = false;
                     break;
                 }
+
+                if (TerminationFlag)
+                {
+                    Log::error("Termination flag set. No loading new session [" + id + "]");
+                    return;
+                }
             }
 
             if (timedOut)
@@ -726,6 +738,12 @@ private:
                 // Still here, but marked to destroy. Proceed and hope to recover.
                 Log::error("Timed out while waiting for document to unload before loading.");
             }
+        }
+
+        if (TerminationFlag)
+        {
+            Log::error("Termination flag set. No loading new session [" + id + "]");
+            return;
         }
 
         bool newDoc = false;
