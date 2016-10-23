@@ -979,7 +979,8 @@ public:
         if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
         {
             --LOOLWSD::NumConnections;
-            Log::error("Maximum number of connections reached.");
+            Log::error() << "Limit on maximum number of connections of "
+                         << MAX_CONNECTIONS << " reached." << Log::end;
             // accept hand shake
             WebSocket ws(request, response);
             shutdownLimitReached(ws);
