@@ -167,6 +167,7 @@ static std::vector<std::shared_ptr<ChildProcess>> NewChildren;
 static std::mutex NewChildrenMutex;
 static std::condition_variable NewChildrenCV;
 static std::chrono::steady_clock::time_point LastForkRequestTime = std::chrono::steady_clock::now();
+static std::atomic<int> OutstandingForks(1); // Forkit always spawns 1.
 static std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 static std::mutex DocBrokersMutex;
 
@@ -257,6 +258,8 @@ static void forkChildren(const int number)
         Util::checkDiskSpaceOnRegisteredFileSystems();
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
+
+        ++OutstandingForks;
         IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage);
         LastForkRequestTime = std::chrono::steady_clock::now();
     }
@@ -315,27 +318,29 @@ static void prespawnChildren()
     // Do the cleanup first.
     const bool rebalance = cleanupChildren();
 
+    const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
+    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    if (durationMs >= CHILD_TIMEOUT_MS)
+    {
+        // Children taking too long to spawn.
+        // Forget we had requested any, and request anew.
+        OutstandingForks = 0;
+    }
+
     int balance = LOOLWSD::NumPreSpawnedChildren;
     balance -= NewChildren.size();
-    if (balance <= 0)
-    {
-        return;
-    }
+    balance -= OutstandingForks;
 
-    const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
-    if (!rebalance &&
-        std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() <= CHILD_TIMEOUT_MS)
+    if (rebalance || durationMs >= CHILD_TIMEOUT_MS)
     {
-        // Not enough time passed to balance children.
-        return;
+        forkChildren(balance);
     }
-
-    forkChildren(balance);
 }
 
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
 {
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
+    --OutstandingForks;
     NewChildren.emplace_back(child);
     const auto count = NewChildren.size();
     Log::info() << "Have " << count << " "
