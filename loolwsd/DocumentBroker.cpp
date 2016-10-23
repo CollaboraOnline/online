@@ -237,19 +237,29 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         }
 
         // Lets load the document now
-        if (_storage->isLoaded())
+        const bool loaded = _storage->isLoaded();
+        if (!loaded)
         {
-            // Already loaded. Nothing to do.
-            return true;
+            const auto localPath = _storage->loadStorageFileToLocal();
+            _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
+            _filename = fileInfo._filename;
+
+            // Use the local temp file's timestamp.
+            _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
+            _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
         }
 
-        const auto localPath = _storage->loadStorageFileToLocal();
-        _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
-        _filename = fileInfo._filename;
-
-        // Use the local temp file's timestamp.
-        _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
-        _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
+        // If its WOPI storage, send the duration that it took for WOPI calls
+        if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
+        {
+            // Get the time taken to load the file from storage
+            auto callDuration = dynamic_cast<WopiStorage*>(_storage.get())->getWopiLoadDuration();
+            // Add the time taken to check file info
+            callDuration += fileInfo._callDuration;
+            const std::string msg = "stats: wopiloadduration " + std::to_string(callDuration.count());
+            Log::trace("Sending to Client [" + msg + "].");
+            it->second->sendTextFrame(msg);
+        }
 
         return true;
     }
@@ -854,16 +864,6 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
     }
 
     return false;
-}
-
-const std::chrono::duration<double> DocumentBroker::getStorageLoadDuration() const
-{
-    if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
-    {
-        return dynamic_cast<WopiStorage*>(_storage.get())->getWopiLoadDuration();
-    }
-
-    return std::chrono::duration<double>::zero();
 }
 
 void DocumentBroker::childSocketTerminated()

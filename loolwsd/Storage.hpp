@@ -42,7 +42,8 @@ public:
               _size(size),
               _userId(userId),
               _userName(userName),
-              _canWrite(canWrite)
+              _canWrite(canWrite),
+              _callDuration(0)
         {
         }
 
@@ -57,6 +58,10 @@ public:
         std::string _userId;
         std::string _userName;
         bool _canWrite;
+
+        // Time it took to fetch fileinfo from storage
+        // Matters in case of external storage such as WOPI
+        std::chrono::duration<double> _callDuration;
     };
 
     /// localStorePath the absolute root path of the chroot.
@@ -164,11 +169,11 @@ public:
 
     bool saveLocalFileToStorage(const Poco::URI& uriPublic) override;
 
-    /// Total time taken for making WOPI calls during load (includes GetFileInfo calls)
-    const std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
+    /// Total time taken for making WOPI calls during load
+    std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
 
 private:
-    // Time spend in waiting for WOPI host during document load
+    // Time spend in loading the file from storage
     std::chrono::duration<double> _wopiLoadDuration;
 };
 

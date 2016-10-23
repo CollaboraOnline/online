@@ -881,15 +881,6 @@ private:
             auto sessionsCount = docBroker->addSession(session);
             Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
 
-            // If its a WOPI host, return time taken to make calls to it
-            const auto storageCallDuration = docBroker->getStorageLoadDuration();
-            if (storageCallDuration != std::chrono::duration<double>::zero())
-            {
-                status = "stats: wopiloadduration " + std::to_string(storageCallDuration.count());
-                Log::trace("Sending to Client [" + status + "].");
-                ws->sendFrame(status.data(), (int) status.size());
-            }
-
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
             // Let messages flow.
