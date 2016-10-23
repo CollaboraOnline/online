@@ -141,6 +141,11 @@ AS_IF([test -n "$with_max_connections"],
 AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum number of open connections])
 AC_SUBST(MAX_CONNECTIONS)
 
+if test $MAX_CONNECTIONS -lt $MAX_DOCUMENTS; then
+    AC_MSG_ERROR([Each document must have at least one connection, therefore, max_connections cannot be less than
+                  max_documents.])
+fi
+
 # Test for build environment
 
 CXXFLAGS="$CXXFLAGS -std=c++11"
