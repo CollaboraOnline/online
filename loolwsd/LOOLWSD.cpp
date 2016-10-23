@@ -192,17 +192,27 @@ void shutdownLimitReached(WebSocket& ws)
         int retries = 7;
         std::vector<char> buffer(READ_BUFFER_SIZE * 100);
 
-        // 5 seconds timeout
-        ws.setReceiveTimeout(5000000);
+        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
         do
         {
-            // ignore loolclient, load and partpagerectangles
-            ws.receiveFrame(buffer.data(), buffer.capacity(), flags);
-            if (--retries == 4)
+            if (ws.poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR))
             {
-                ws.sendFrame(error.data(), error.size());
-                ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
+                // Already disconnected, can't send 'close' frame.
+                ws.close();
+                return;
             }
+
+            // Let the client know we are shutting down.
+            ws.sendFrame(error.data(), error.size());
+
+            // Ignore incoming messages.
+            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
+            {
+                ws.receiveFrame(buffer.data(), buffer.capacity(), flags);
+            }
+
+            // Shutdown.
+            ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
         }
         while (retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
     }
@@ -684,6 +694,17 @@ private:
             }
             else
             {
+                // New Document.
+#if MAX_DOCUMENTS > 0
+                if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
+                {
+                    Log::error() << "Limit on maximum number of open documents of "
+                                 << MAX_DOCUMENTS << " reached." << Log::end;
+                    shutdownLimitReached(*ws);
+                    return;
+                }
+#endif
+
                 // Store a dummy (marked to destroy) document broker until we
                 // have the real one, so that the other requests block
                 Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily.");
@@ -758,17 +779,6 @@ private:
                 Log::error("Failed to get new child. Service Unavailable.");
                 throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
             }
-
-#if MAX_DOCUMENTS > 0
-            std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
-            if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
-            {
-                Log::error("Maximum number of open documents reached.");
-                shutdownLimitReached(*ws);
-                return;
-            }
-            DocBrokersLock.unlock();
-#endif
 
             // Set one we just created.
             Log::debug("New DocumentBroker for docKey [" + docKey + "].");
