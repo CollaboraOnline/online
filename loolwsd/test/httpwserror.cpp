@@ -103,10 +103,14 @@ void HTTPWSError::testMaxDocuments()
         // Load a document.
         std::vector<std::shared_ptr<Poco::Net::WebSocket>> docs;
 
+        std::cerr << "Loading max number of documents: " << MAX_DOCUMENTS << std::endl;
         for (int it = 1; it <= MAX_DOCUMENTS; ++it)
         {
             docs.emplace_back(loadDocAndGetSocket("empty.odt", _uri, testname));
+            std::cerr << "Loaded document #" << it << " of " << MAX_DOCUMENTS << std::endl;
         }
+
+        std::cerr << "Loading one more document beyond the limit." << std::endl;
 
         // try to open MAX_DOCUMENTS + 1
         std::string docPath;
@@ -120,6 +124,8 @@ void HTTPWSError::testMaxDocuments()
         sendTextFrame(socket, "loolclient ", testname);
         sendTextFrame(socket, "load ", testname);
         sendTextFrame(socket, "partpagerectangles ", testname);
+
+        assertResponseString(socket, "error:", testname);
 
         std::string message;
         const auto statusCode = getErrorCode(socket, message);
