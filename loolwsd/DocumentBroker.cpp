@@ -222,8 +222,6 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
 
     if (_storage)
     {
-        // Set the username for the session
-        // TODO: security: Set the permission (readonly etc.) of the session here also
         const auto fileInfo = _storage->getFileInfo(uriPublic);
         if (!fileInfo.isValid())
         {
