@@ -334,7 +334,7 @@ redlinetablechanged:
 
 stats: <key> <value>
 
-    Contains statistical data. Eg: 'stats: wopiduration 5' means that
+    Contains statistical data. Eg: 'stats: wopiloadduration 5' means that
     wopi calls made in loading of document took 5 seconds.
 
 perm: <permission>

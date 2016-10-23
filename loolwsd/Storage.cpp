@@ -306,9 +306,8 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uriPublic)
     Poco::StreamCopier::copyToString(rs, resMsg);
 
     const auto endTime = std::chrono::steady_clock::now();
-    const std::chrono::duration<double> diff = (endTime - startTime);
-    _wopiLoadDuration += diff;
-    Log::debug("WOPI::CheckFileInfo returned: " + resMsg + ". Call duration: " + std::to_string(diff.count()) + "s");
+    const std::chrono::duration<double> callDuration = (endTime - startTime);
+    Log::debug("WOPI::CheckFileInfo returned: " + resMsg + ". Call duration: " + std::to_string(callDuration.count()) + "s");
     const auto index = resMsg.find_first_of('{');
     if (index != std::string::npos)
     {
@@ -331,6 +330,7 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uriPublic)
 
     // WOPI doesn't support file last modified time.
     _fileInfo = FileInfo({filename, Poco::Timestamp(), size, userId, userName, canWrite});
+    _fileInfo._callDuration = callDuration;
     return _fileInfo;
 }
 
