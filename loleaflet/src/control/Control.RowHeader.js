@@ -52,6 +52,20 @@ L.Control.RowHeader = L.Control.Header.extend({
 						var row = parseInt(options.$trigger.attr('rel').split('spreadsheet-row-')[1]);
 						rowHeaderObj.optimalHeight.call(rowHeaderObj, row);
 					}
+				},
+				'hideRow': {
+					name: _('Hide Rows'),
+					callback: function(key, options) {
+						var row = parseInt(options.$trigger.attr('rel').split('spreadsheet-row-')[1]);
+						rowHeaderObj.hideRow.call(rowHeaderObj, row);
+					}
+				},
+				'showRow': {
+					name: _('Show Rows'),
+					callback: function(key, options) {
+						var row = parseInt(options.$trigger.attr('rel').split('spreadsheet-row-')[1]);
+						rowHeaderObj.showRow.call(rowHeaderObj, row);
+					}
 				}
 			},
 			zIndex: 10
@@ -62,7 +76,9 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (!this._dialog) {
 			this._dialog = L.control.metricInput(this._onDialogResult, this, 0, {title: _('Optimal Row Height')});
 		}
-		this._selectRow(row, 0);
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectRow(row, 0);
+		}
 		this._dialog.addTo(this._map);
 		this._map.enable(false);
 		this._dialog.show();
@@ -72,13 +88,31 @@ L.Control.RowHeader = L.Control.Header.extend({
 		// First select the corresponding row because
 		// .uno:InsertRows doesn't accept any row number
 		// as argument and just inserts before the selected row
-		this._selectRow(row, 0);
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectRow(row, 0);
+		}
 		this._map.sendUnoCommand('.uno:InsertRows');
 	},
 
 	deleteRow: function(row) {
-		this._selectRow(row, 0);
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectRow(row, 0);
+		}
 		this._map.sendUnoCommand('.uno:DeleteRows');
+	},
+
+	hideRow: function(row) {
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectRow(row, 0);
+		}
+		this._map.sendUnoCommand('.uno:HideRow');
+	},
+
+	showRow: function(row) {
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectColumn(row, 0);
+		}
+		this._map.sendUnoCommand('.uno:ShowRow');
 	},
 
 	clearRows: function () {
