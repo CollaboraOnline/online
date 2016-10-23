@@ -224,6 +224,30 @@ void shutdownLimitReached(WebSocket& ws)
 
 }
 
+/// Remove dead DocBrokers.
+/// Returns true if at least one is removed.
+bool cleanupDocBrokers()
+{
+    Util::assertIsLocked(DocBrokersMutex);
+
+    const auto count = DocBrokers.size();
+    for (auto it = DocBrokers.begin(); it != DocBrokers.end(); )
+    {
+        // Cleanup used and dead entries.
+        if (it->second->isLoaded() && !it->second->isAlive())
+        {
+            Log::debug("Removing dead DocBroker [" + it->first + "].");
+            it = DocBrokers.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
+    return (count != DocBrokers.size());
+}
+
 static void forkChildren(const int number)
 {
     Util::assertIsLocked(NewChildrenMutex);
@@ -273,6 +297,14 @@ static void preForkChildren()
 /// to load documents with alacrity.
 static void prespawnChildren()
 {
+    // First remove dead DocBrokers, if possible.
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
+    if (docBrokersLock.try_lock())
+    {
+        cleanupDocBrokers();
+        docBrokersLock.unlock();
+    }
+
     std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
     if (!lock.try_lock())
     {
@@ -467,6 +499,8 @@ private:
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
                     std::unique_lock<std::mutex> lock(DocBrokersMutex);
+
+                    cleanupDocBrokers();
 
                     //FIXME: What if the same document is already open? Need a fake dockey here?
                     Log::debug("New DocumentBroker for docKey [" + docKey + "].");
@@ -682,6 +716,8 @@ private:
                 Log::error("Termination flag set. No loading new session [" + id + "]");
                 return;
             }
+
+            cleanupDocBrokers();
 
             // Lookup this document.
             auto it = DocBrokers.find(docKey);
@@ -1991,6 +2027,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     try
                     {
                         std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+                        cleanupDocBrokers();
                         for (auto& brokerIt : DocBrokers)
                         {
                             brokerIt.second->autoSave(false, 0);
