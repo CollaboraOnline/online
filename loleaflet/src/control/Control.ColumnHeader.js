@@ -54,6 +54,20 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
 						colHeaderObj.optimalWidth.call(colHeaderObj, colAlpha);
 					}
+				},
+				'hideColumn': {
+					name: _('Hide Columns'),
+					callback: function(key, options) {
+						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
+						colHeaderObj.hideColumn.call(colHeaderObj, colAlpha);
+					}
+				},
+				'showColumn': {
+					name: _('Show Columns'),
+					callback: function(key, options) {
+						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
+						colHeaderObj.showColumn.call(colHeaderObj, colAlpha);
+					}
 				}
 			},
 			zIndex: 10
@@ -66,7 +80,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 							     this._map._docLayer.twipsToHMM(this._map._docLayer.STD_EXTRA_WIDTH),
 							     {title: _('Optimal Column Width')});
 		}
-		this._selectColumn(colAlpha, 0);
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectColumn(colAlpha, 0);
+		}
 		this._dialog.addTo(this._map);
 		this._map.enable(false);
 		this._dialog.show();
@@ -76,13 +92,31 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// First select the corresponding column because
 		// .uno:InsertColumn doesn't accept any column number
 		// as argument and just inserts before the selected column
-		this._selectColumn(colAlpha, 0);
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectColumn(colAlpha, 0);
+		}
 		this._map.sendUnoCommand('.uno:InsertColumns');
 	},
 
 	deleteColumn: function(colAlpha) {
-		this._selectColumn(colAlpha, 0);
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectColumn(colAlpha, 0);
+		}
 		this._map.sendUnoCommand('.uno:DeleteColumns');
+	},
+
+	hideColumn: function(colAlpha) {
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectColumn(colAlpha, 0);
+		}
+		this._map.sendUnoCommand('.uno:HideColumn');
+	},
+
+	showColumn: function(colAlpha) {
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectColumn(colAlpha, 0);
+		}
+		this._map.sendUnoCommand('.uno:ShowColumn');
 	},
 
 	clearColumns : function () {
