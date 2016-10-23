@@ -510,7 +510,7 @@ namespace Util
         }
         catch(const std::exception&)
         {
-            Log::warn() << "Trying to find memory of invalid/dead PID" << Log::end;
+            Log::warn() << "Trying to find memory of invalid/dead PID " << nPid << Log::end;
         }
 
         return nMem;
