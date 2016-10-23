@@ -140,21 +140,27 @@ void HTTPWSError::testMaxConnections()
     const auto testname = "maxConnections ";
     try
     {
+        std::cerr << "Opening max number of connections: " << MAX_CONNECTIONS << std::endl;
+
         // Load a document.
         std::string docPath;
         std::string docURL;
-        std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
 
         getDocumentPathAndURL("empty.odt", docPath, docURL);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
         auto socket = loadDocAndGetSocket(_uri, docURL, testname);
+        std::cerr << "Opened connect #1 of " << MAX_CONNECTIONS << std::endl;
 
+        std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
         for(int it = 1; it < MAX_CONNECTIONS; it++)
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
             auto ws = std::make_shared<Poco::Net::WebSocket>(*session, request, _response);
             views.emplace_back(ws);
+            std::cerr << "Opened connect #" << (it+1) << " of " << MAX_CONNECTIONS << std::endl;
         }
+
+        std::cerr << "Opening one more connection beyond the limit." << std::endl;
 
         // try to connect MAX_CONNECTIONS + 1
         std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
