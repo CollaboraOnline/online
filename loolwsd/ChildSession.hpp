@@ -75,7 +75,7 @@ public:
     bool getPartPageRectangles(const char *buffer, int length);
     int getViewId() const { return _viewId; }
     void setViewId(const int viewId) { _viewId = viewId; }
-    const std::string getViewUserName() const { return _userName; }
+    const std::string& getViewUserName() const { return _userName; }
 
     void loKitCallback(const int nType, const std::string& rPayload);
 
