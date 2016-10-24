@@ -6,7 +6,7 @@
 L.Control.Tabs = L.Control.extend({
 	onAdd: function(map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
-		this._initalized = false;
+		this._initialized = false;
 	},
 
 	_onUpdatePermission: function(e) {
