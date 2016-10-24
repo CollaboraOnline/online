@@ -810,6 +810,11 @@ L.TileLayer = L.GridLayer.extend({
 				this._removeView(parseInt(viewInfoIdx));
 			}
 		}
+
+		//FIXME: Ugly hack to prevent the toolbar from reseting the zoomlevel to 100%.
+		var center = this._map.getCenter();
+		this._map.setView(center, this._map._zoom-1, {reset: false, animate: false});
+		this._map.setView(center, this._map._zoom+1, {reset: true, animate: false});
 	},
 
 	_onPartPageRectanglesMsg: function (textMsg) {
