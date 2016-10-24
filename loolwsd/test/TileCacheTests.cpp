@@ -385,7 +385,7 @@ void TileCacheTests::testTilesRenderedJustOnce()
 {
     const auto testname = "tilesRenderdJustOnce ";
 
-    auto socket = *loadDocAndGetSocket("empty.odt", _uri, testname);
+    auto socket = *loadDocAndGetSocket("with_comment.odt", _uri, testname);
 
     assertResponseString(socket, "statechanged: .uno:AcceptTrackedChange=", testname);
 
@@ -450,7 +450,7 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
     const auto testname4 = testname + "-4 ";
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("with_comment.odt", documentPath, documentURL);
 
     std::cerr << "Connecting first client." << std::endl;
     auto socket = *loadDocAndGetSocket(_uri, documentURL, testname1);
