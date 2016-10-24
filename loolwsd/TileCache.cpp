@@ -167,20 +167,37 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
         {
             std::string response = tile.serialize("tile:");
             Log::debug("Sending tile message to subscribers: " + response);
-            response += '\n';
 
-            std::vector<char> output;
-            output.reserve(static_cast<size_t>(4) * tile.getWidth() * tile.getHeight());
-            output.resize(response.size());
+            std::vector<char> output(256 + size);
+            output.resize(response.size() + 1 + size);
+
             std::memcpy(output.data(), response.data(), response.size());
+            output[response.size()] = '\n';
+            std::memcpy(output.data() + response.size() + 1, data, size);
 
-            const auto pos = output.size();
-            output.resize(pos + size);
-            std::memcpy(output.data() + pos, data, size);
-
-            for (const auto& i: tileBeingRendered->_subscribers)
+            // Send to first subscriber as-is (without cache marker).
+            auto firstSubscriber = tileBeingRendered->_subscribers[0].lock();
+            if (firstSubscriber)
             {
-                auto subscriber = i.lock();
+                try
+                {
+                    firstSubscriber->sendBinaryFrame(output.data(), output.size());
+                }
+                catch (const std::exception& ex)
+                {
+                    Log::warn("Failed to send tile to " + firstSubscriber->getName() + ": " + ex.what());
+                }
+            }
+
+            // All others must get served from the cache.
+            response += " renderid=cached\n";
+            output.resize(response.size() + size);
+            std::memcpy(output.data(), response.data(), response.size());
+            std::memcpy(output.data() + response.size(), data, size);
+
+            for (size_t i = 1; i < tileBeingRendered->_subscribers.size(); ++i)
+            {
+                auto subscriber = tileBeingRendered->_subscribers[i].lock();
                 if (subscriber)
                 {
                     try
