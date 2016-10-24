@@ -32,6 +32,7 @@ L.Control.Tabs = L.Control.extend({
 
 		$.contextMenu({
 			selector: '.spreadsheet-context-menu',
+			className: 'loleaflet-font',
 			callback: function(key, options) {
 				var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
 
