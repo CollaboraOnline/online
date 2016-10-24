@@ -61,7 +61,7 @@ public:
     // The dir parameter should be the type of rendering, like "font", "style", etc
     void saveRendering(const std::string& name, const std::string& dir, const char *data, size_t size);
 
-    std::unique_ptr<std::fstream> lookupRendering(const std::string& name, const std::string& dir);
+    std::unique_ptr<std::fstream> lookupCachedFile(const std::string& name, const std::string& dir);
 
     // The tiles parameter is an invalidatetiles: message as sent by the child process
     void invalidateTiles(const std::string& tiles);
