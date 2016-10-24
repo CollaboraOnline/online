@@ -1920,8 +1920,8 @@ L.TileLayer = L.GridLayer.extend({
 			var overlayMaps = {
 				'Tile overlays': this._debugInfo,
 				'Screen overlays': this._debugInfo2,
-				'Typing': this._debugTyper,
-			}
+				'Typing': this._debugTyper
+			};
 			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(map);
 
 			this._map.on('layeradd', function(e) {
@@ -2025,7 +2025,7 @@ L.TileLayer = L.GridLayer.extend({
 					rect.setStyle({fillOpacity: opac - 0.04});
 				}
 			}
-			this._debugTimeoutId = setTimeout(function () { map._docLayer._debugTimeout() }, 50);
+			this._debugTimeoutId = setTimeout(function () { map._docLayer._debugTimeout(); }, 50);
 		}
 	},
 
@@ -2038,7 +2038,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._postKeyboardEvent('input', this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length), 0);
 		}
 		this._debugLoremPos++;
-		this._debugTypeTimeoutId = setTimeout(function () { map._docLayer._debugTypeTimeout() }, 50);
+		this._debugTypeTimeoutId = setTimeout(function () { map._docLayer._debugTypeTimeout(); }, 50);
 	}
 
 });
