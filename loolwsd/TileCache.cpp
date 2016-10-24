@@ -280,7 +280,7 @@ void TileCache::saveRendering(const std::string& name, const std::string& dir, c
     Util::saveDataToFileSafely(fileName, data, size);
 }
 
-std::unique_ptr<std::fstream> TileCache::lookupRendering(const std::string& name, const std::string& dir)
+std::unique_ptr<std::fstream> TileCache::lookupCachedFile(const std::string& name, const std::string& dir)
 {
     const std::string dirName = _cacheDir + "/" + dir;
     const std::string fileName = dirName + "/" + name;

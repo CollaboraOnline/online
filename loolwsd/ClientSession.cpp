@@ -300,7 +300,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, StringToke
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedRendering = docBroker->tileCache().lookupRendering(font, "font");
+    std::unique_ptr<std::fstream> cachedRendering = docBroker->tileCache().lookupCachedFile(font, "font");
     if (cachedRendering && cachedRendering->is_open())
     {
         cachedRendering->seekg(0, std::ios_base::end);
