@@ -39,15 +39,6 @@
 #include "FileServer.hpp"
 #include "LOOLWSD.hpp"
 
-/* CODE */
-#define LOOLWSD_CODE "This development build is limited to %d documents, and %d connections - to avoid the impression that it is suitable for deployment in large enterprises. To find out more about deploying and scaling %s checkout - <a href=\"%s\">%s</a>."
-
-/* PRODUCT */
-#define LOOLWSD_PRODUCT "LibreOffice Online"
-
-/* PRODUCT URL */
-#define LOOLWSD_URL "https://wiki.documentfoundation.org/Development/LibreOffice_Online"
-
 using Poco::FileInputStream;
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
