@@ -310,6 +310,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
     std::string userId;
     std::string userName;
     bool canWrite = false;
+    std::string postMessageOrigin;
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
 
@@ -332,6 +333,8 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         userName = (userNameVar.isString() ? userNameVar.toString() : "anonymous");
         const auto canWriteVar = getOrWarn(object, "UserCanWrite");
         canWrite = canWriteVar.isString() ? (canWriteVar.toString() == "true") : false;
+        const auto postMessageOriginVar = getOrWarn(object, "PostMessageOrigin");
+        postMessageOrigin = postMessageOriginVar.isString() ? postMessageOriginVar.toString() : "";
     }
     else
         Log::error("WOPI::CheckFileInfo is missing JSON payload");
@@ -342,7 +345,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         _fileInfo = FileInfo({filename, Poco::Timestamp(), size});
     }
 
-    return WOPIFileInfo({userId, userName, canWrite, callDuration});
+    return WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, callDuration});
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content

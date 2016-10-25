@@ -167,6 +167,18 @@ L.Socket = L.Class.extend({
 
 			return;
 		}
+		else if (textMsg.startsWith('wopi: ')) {
+			// Handle WOPI related messages
+			textMsg = textMsg.substring('wopi: '.length);
+			if (textMsg.startsWith('postmessageorigin ')) {
+				this._map._wopi['PostMessageOrigin'] = textMsg.substring('postmessageorigin '.length);
+				this._map._wopi['DocumentLoadedTime'] = Date.now();
+				// Tell the host that we are ready now
+				this._map.WOPIPostMessage('App_LoadingStatus', {'DocumentLoadedTime': this._map._wopi['DocumentLoadedTime']});
+			}
+
+			return;
+		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'internal') {
 			this._map._fatal = true;
 			if (command.errorKind === 'diskfull') {

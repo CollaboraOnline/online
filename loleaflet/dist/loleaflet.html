@@ -6,6 +6,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script>
+  // Start listening for Host_PostmessageReady message and save the
+  // result for future
+  window.WOPIpostMessageReady = false;
+  var PostMessageReadyListener = function(e) {
+    var msg = JSON.parse(e.data);
+    if (msg.MessageId === 'Host_PostmessageReady') {
+      window.WOPIPostmessageReady = true;
+      window.removeEventListener('message', PostMessageReadyListener, false);
+    }
+  };
+  window.addEventListener('message', PostMessageReadyListener, false);
+</script>
 <link rel="stylesheet" href="/loleaflet/%VERSION%/branding.css"> <!-- add your logo here -->
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/styles-localizations.json" type="application/vnd.oftn.l10n+json" />

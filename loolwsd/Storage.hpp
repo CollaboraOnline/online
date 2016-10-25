@@ -166,10 +166,12 @@ public:
         WOPIFileInfo(const std::string& userid,
                      const std::string& username,
                      const bool userCanWrite,
+                     const std::string& postMessageOrigin,
                      const std::chrono::duration<double> callDuration)
             : _userid(userid),
               _username(username),
               _userCanWrite(userCanWrite),
+              _postMessageOrigin(postMessageOrigin),
               _callDuration(callDuration)
             {
             }
@@ -180,6 +182,8 @@ public:
         std::string _username;
         /// If user accessing the file has write permission
         bool _userCanWrite;
+        /// WOPI Post message property
+        std::string _postMessageOrigin;
         /// Time it took to call WOPI's CheckFileInfo
         std::chrono::duration<double> _callDuration;
     };
