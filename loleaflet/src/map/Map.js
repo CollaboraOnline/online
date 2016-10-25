@@ -123,6 +123,12 @@ L.Map = L.Evented.extend({
 
 		// View color map
 		this._viewColors = {};
+
+		// WOPI specific properties container
+		this._wopi = {};
+
+		// WOPI PostMessage Listener
+		L.DomEvent.on(window, 'message', this._WOPIPostMessageListener, this);
 	},
 
 
@@ -149,6 +155,25 @@ L.Map = L.Evented.extend({
 		}
 
 		return this._viewInfo[viewid].color;
+	},
+
+	_WOPIPostMessageListener: function(e) {
+		// TODO
+		//console.log(e);
+	},
+
+	WOPIPostMessage: function(msgId, values) {
+		if (this.options.storageType === 'wopi' && this._wopiPostMessageOrigin !== '') {
+			if (window.top !== window.self) {
+				var msg = {
+					'MessageId': msgId,
+					'SendTime': Date.now(),
+					'Values': values
+				};
+
+				window.parent.postMessage(JSON.stringify(msg), this._wopi['PostMessageOrigin']);
+			}
+		}
 	},
 
 	// replaced by animation-powered implementation in Map.PanAnimation.js

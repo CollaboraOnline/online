@@ -237,6 +237,11 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
                 it->second->setReadOnly();
             }
 
+            if (!wopifileinfo._postMessageOrigin.empty())
+            {
+                it->second->sendTextFrame("wopi: postmessageorigin " + wopifileinfo._postMessageOrigin);
+            }
+
             getInfoCallDuration = wopifileinfo._callDuration;
         }
         else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
