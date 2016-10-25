@@ -57,15 +57,17 @@ int Document::expireView(const std::string& sessionId)
 
 bool Subscriber::notify(const std::string& message)
 {
-    if (_subscriptions.find(LOOLProtocol::getFirstToken(message)) == _subscriptions.end())
-    {
-        // No subscribers for the given message.
-        return true;
-    }
-
+    // If there is no socket, then return false to
+    // signify we're disconnected.
     auto webSocket = _ws.lock();
     if (webSocket)
     {
+        if (_subscriptions.find(LOOLProtocol::getFirstToken(message)) == _subscriptions.end())
+        {
+            // No subscribers for the given message.
+            return true;
+        }
+
         try
         {
             UnitWSD::get().onAdminNotifyMessage(message);
@@ -182,10 +184,7 @@ void AdminModel::addMemStats(unsigned memUsage)
         _memStats.pop_front();
     }
 
-    std::ostringstream oss;
-    oss << "mem_stats "
-        << std::to_string(memUsage);
-    notify(oss.str());
+    notify("mem_stats " + std::to_string(memUsage));
 }
 
 void AdminModel::addCpuStats(unsigned cpuUsage)
@@ -196,10 +195,7 @@ void AdminModel::addCpuStats(unsigned cpuUsage)
         _cpuStats.pop_front();
     }
 
-    std::ostringstream oss;
-    oss << "cpu_stats "
-        << std::to_string(cpuUsage);
-    notify(oss.str());
+    notify("cpu_stats " + std::to_string(cpuUsage));
 }
 
 void AdminModel::setCpuStatsSize(unsigned size)
@@ -211,11 +207,7 @@ void AdminModel::setCpuStatsSize(unsigned size)
     }
     _cpuStatsSize = size;
 
-    std::ostringstream oss;
-    oss << "settings "
-        << "cpu_stats_size="
-        << std::to_string(_cpuStatsSize);
-    notify(oss.str());
+    notify("settings cpu_stats_size=" + std::to_string(_cpuStatsSize));
 }
 
 void AdminModel::setMemStatsSize(unsigned size)
@@ -227,26 +219,24 @@ void AdminModel::setMemStatsSize(unsigned size)
     }
     _memStatsSize = size;
 
-    std::ostringstream oss;
-    oss << "settings "
-        << "mem_stats_size="
-        << std::to_string(_memStatsSize);
-    notify(oss.str());
+    notify("settings mem_stats_size=" + std::to_string(_memStatsSize));
 }
 
 void AdminModel::notify(const std::string& message)
 {
-    Log::debug("Message to admin console: " + message);
-    auto it = std::begin(_subscribers);
-    while (it != std::end(_subscribers))
+    if (!_subscribers.empty())
     {
-        if (!it->second.notify(message))
+        Log::trace("Message to admin console: " + message);
+        for (auto it = std::begin(_subscribers); it != std::end(_subscribers); )
         {
-            it = _subscribers.erase(it);
-        }
-        else
-        {
-            ++it;
+            if (!it->second.notify(message))
+            {
+                it = _subscribers.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
         }
     }
 }
@@ -263,10 +253,10 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
     std::string encodedFilename;
     Poco::URI::encode(filename, " ", encodedFilename);
     oss << "adddoc "
-        << pid << " "
-        << encodedFilename << " "
-        << sessionId << " "
-        << std::to_string(memUsage);
+        << pid << ' '
+        << encodedFilename << ' '
+        << sessionId << ' '
+        << memUsage;
     notify(oss.str());
 }
 
@@ -278,7 +268,7 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
         // Notify the subscribers
         std::ostringstream oss;
         oss << "rmdoc "
-            << docIt->second.getPid() << " "
+            << docIt->second.getPid() << ' '
             << sessionId;
         notify(oss.str());
 
@@ -302,7 +292,7 @@ void AdminModel::removeDocument(const std::string& docKey)
             // Notify the subscribers
             std::ostringstream oss;
             oss << "rmdoc "
-                << docIt->second.getPid() << " "
+                << docIt->second.getPid() << ' '
                 << pair.first;
             notify(oss.str());
         }
