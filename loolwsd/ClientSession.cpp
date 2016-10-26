@@ -227,8 +227,12 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
         oss << " url=" << docBroker->getPublicUri().toString();
         oss << " jail=" << docBroker->getJailedUri().toString();
 
-        if (!_userName.empty())
+        if (!_userId.empty() && !_userName.empty())
         {
+            std::string encodedUserId;
+            Poco::URI::encode(_userId, "", encodedUserId);
+            oss << " authorid=" + encodedUserId;
+
             std::string encodedUserName;
             Poco::URI::encode(_userName, "", encodedUserName);
             oss << " author=" + encodedUserName;

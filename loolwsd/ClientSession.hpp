@@ -37,6 +37,7 @@ public:
     std::shared_ptr<PrisonerSession> getPeer() const { return _peer; }
     bool shutdownPeer(Poco::UInt16 statusCode);
 
+    void setUserId(const std::string& userId) { _userId = userId; }
     void setUserName(const std::string& userName) { _userName = userName; }
 
     /**

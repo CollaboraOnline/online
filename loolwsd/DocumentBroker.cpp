@@ -223,11 +223,12 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
     if (_storage)
     {
         // Call the storage specific file info functions
-        std::string username;
+        std::string userid, username;
         std::chrono::duration<double> getInfoCallDuration;
         if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
         {
             const WopiStorage::WOPIFileInfo wopifileinfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(uriPublic);
+            userid = wopifileinfo._userid;
             username = wopifileinfo._username;
 
             if (!wopifileinfo._userCanWrite)
@@ -241,10 +242,12 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
         {
             const LocalStorage::LocalFileInfo localfileinfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo(uriPublic);
+            userid = localfileinfo._userid;
             username = localfileinfo._username;
         }
 
-        Log::debug("Setting username of the session to: " + username);
+        Log::debug("Setting username [" + username + "] and userId [" + userid + "] for session [" + sessionId + "]");
+        it->second->setUserId(userid);
         it->second->setUserName(username);
 
         // Get basic file information from the storage

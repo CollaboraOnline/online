@@ -157,6 +157,12 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
             _jailedFilePath = tokens[i].substr(strlen("jail="));
             ++offset;
         }
+        else if (tokens[i].find("authorid=") == 0)
+        {
+            std::string userId = tokens[i].substr(strlen("authorid="));
+            Poco::URI::decode(userId, _userId);
+            ++offset;
+        }
         else if (tokens[i].find("author=") == 0)
         {
             std::string userName = tokens[i].substr(strlen("author="));
