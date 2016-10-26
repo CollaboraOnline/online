@@ -758,8 +758,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateViewCursor(viewId);
 	},
 
-	_addView: function(viewId, username, color) {
-		this._map.addView(viewId, username, color);
+	_addView: function(viewId, userid, username, color) {
+		this._map.addView(viewId, userid, username, color);
 
 		//TODO: We can initialize color and other properties here.
 		if (typeof this._viewCursors[viewId] !== 'undefined') {
@@ -799,7 +799,7 @@ L.TileLayer = L.GridLayer.extend({
 		var viewIds = [];
 		for (var viewInfoIdx in viewInfo) {
 			if (!(parseInt(viewInfo[viewInfoIdx].id) in this._map._viewInfo)) {
-				this._addView(viewInfo[viewInfoIdx].id, viewInfo[viewInfoIdx].username, viewInfo[viewInfoIdx].color);
+				this._addView(viewInfo[viewInfoIdx].id, viewInfo[viewInfoIdx].userid, viewInfo[viewInfoIdx].username, viewInfo[viewInfoIdx].color);
 			}
 			viewIds.push(viewInfo[viewInfoIdx].id);
 		}

@@ -134,8 +134,8 @@ L.Map = L.Evented.extend({
 
 	// public methods that modify map state
 
-	addView: function(viewid, username, color) {
-		this._viewInfo[viewid] = {'username': username, 'color': color};
+	addView: function(viewid, userid, username, color) {
+		this._viewInfo[viewid] = {'userid': userid, 'username': username, 'color': color};
 		this.fire('addview', {viewId: viewid, username: username});
 	},
 
