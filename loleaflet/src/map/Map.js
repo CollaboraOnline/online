@@ -137,12 +137,14 @@ L.Map = L.Evented.extend({
 	addView: function(viewid, userid, username, color) {
 		this._viewInfo[viewid] = {'userid': userid, 'username': username, 'color': color};
 		this.fire('addview', {viewId: viewid, username: username});
+		this.WOPIPostMessage('View_Added', {ViewId: viewid, UserId: userid, UserName: username, Color: color});
 	},
 
 	removeView: function(viewid) {
 		var username = this._viewInfo[viewid].username;
 		delete this._viewInfo[viewid];
 		this.fire('removeview', {viewId: viewid, username: username});
+		this.WOPIPostMessage('View_Removed', {ViewId: viewid});
 	},
 
 	getViewName: function(viewid) {
@@ -158,8 +160,24 @@ L.Map = L.Evented.extend({
 	},
 
 	_WOPIPostMessageListener: function(e) {
-		// TODO
-		//console.log(e);
+		if (!window.WOPIPostmessageReady) {
+			return;
+		}
+
+		var msg = JSON.parse(e.data);
+		if (msg.MessageId === 'Get_Views') {
+			var getMembersRespVal = [];
+			for (var viewInfoIdx in this._viewInfo) {
+				getMembersRespVal.push({
+					ViewId: viewInfoIdx,
+					UserName: this._viewInfo[viewInfoIdx].username,
+					UserId: this._viewInfo[viewInfoIdx].userid,
+					Color: this._viewInfo[viewInfoIdx].color
+				});
+			}
+
+			this.WOPIPostMessage('Get_Views_Resp', getMembersRespVal);
+		}
 	},
 
 	WOPIPostMessage: function(msgId, values) {
