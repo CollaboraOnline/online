@@ -175,7 +175,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     throw BadRequestException("No Storage configured or invalid URI.");
 }
 
-unsigned LocalStorage::LastLocalStorageId = 0;
+std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 
 LocalStorage::LocalFileInfo LocalStorage::getLocalFileInfo(const Poco::URI& uriPublic)
 {
