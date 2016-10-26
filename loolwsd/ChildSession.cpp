@@ -413,7 +413,7 @@ namespace
 {
 
 /// Given a view ID <-> user name map and a .uno:DocumentRepair result, annotate with user names.
-void insertUserNames(const std::map<int, std::string>& viewInfo, std::string& json)
+void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
 {
     Poco::JSON::Parser parser;
     auto root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
@@ -430,7 +430,7 @@ void insertUserNames(const std::map<int, std::string>& viewInfo, std::string& js
                 int viewId = action->getValue<int>("viewId");
                 auto it = viewInfo.find(viewId);
                 if (it != viewInfo.end())
-                    action->set("userName", Poco::Dynamic::Var(it->second));
+                    action->set("userName", Poco::Dynamic::Var(it->second.username));
             }
         }
     }
@@ -466,7 +466,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
                                         std::string(pValues == nullptr ? "" : pValues),
                                         std::string(pUndo == nullptr ? "" : pUndo));
         // json only contains view IDs, insert matching user names.
-        std::map<int, std::string> viewInfo = _docManager.getViewInfo();
+        std::map<int, UserInfo> viewInfo = _docManager.getViewInfo();
         insertUserNames(viewInfo, json);
         success = sendTextFrame("commandvalues: " + json);
         std::free(pValues);

@@ -16,6 +16,7 @@
 #include <Poco/NotificationQueue.h>
 
 #include "Common.hpp"
+#include "LOOLKit.hpp"
 #include "LOOLSession.hpp"
 #include "LibreOfficeKit.hpp"
 
@@ -43,9 +44,9 @@ public:
     /// Send updated view info to all active sessions
     virtual
     void notifyViewInfo(const std::vector<int>& viewIds) = 0;
-    /// Get a view ID <-> user name map.
+    /// Get a view ID <-> UserInfo map.
     virtual
-    std::map<int, std::string> getViewInfo() = 0;
+    std::map<int, UserInfo> getViewInfo() = 0;
     virtual
     std::mutex& getMutex() = 0;
     virtual
