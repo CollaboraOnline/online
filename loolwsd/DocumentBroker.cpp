@@ -222,18 +222,37 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
 
     if (_storage)
     {
-        const auto fileInfo = _storage->getFileInfo(uriPublic);
+        // Call the storage specific file info functions
+        std::string username;
+        std::chrono::duration<double> getInfoCallDuration;
+        if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
+        {
+            const WopiStorage::WOPIFileInfo wopifileinfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(uriPublic);
+            username = wopifileinfo._username;
+
+            if (!wopifileinfo._userCanWrite)
+            {
+                Log::debug("Setting the session as readonly");
+                it->second->setReadOnly();
+            }
+
+            getInfoCallDuration = wopifileinfo._callDuration;
+        }
+        else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
+        {
+            const LocalStorage::LocalFileInfo localfileinfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo(uriPublic);
+            username = localfileinfo._username;
+        }
+
+        Log::debug("Setting username of the session to: " + username);
+        it->second->setUserName(username);
+
+        // Get basic file information from the storage
+        const auto fileInfo = _storage->getFileInfo();
         if (!fileInfo.isValid())
         {
             Log::error("Invalid fileinfo for URI [" + uriPublic.toString() + "].");
             return false;
-        }
-        Log::debug("Setting username of the session to: " + fileInfo._userName);
-        it->second->setUserName(fileInfo._userName);
-        if (!fileInfo._canWrite)
-        {
-            Log::debug("Setting the session as readonly");
-            it->second->setReadOnly();
         }
 
         // Lets load the document now
@@ -249,13 +268,13 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
             _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
         }
 
-        // If its WOPI storage, send the duration that it took for WOPI calls
+        // Since document has been loaded, send the stats if its WOPI
         if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
         {
             // Get the time taken to load the file from storage
-            auto callDuration = dynamic_cast<WopiStorage*>(_storage.get())->getWopiLoadDuration();
+            auto callDuration = static_cast<WopiStorage*>(_storage.get())->getWopiLoadDuration();
             // Add the time taken to check file info
-            callDuration += fileInfo._callDuration;
+            callDuration += getInfoCallDuration;
             const std::string msg = "stats: wopiloadduration " + std::to_string(callDuration.count());
             Log::trace("Sending to Client [" + msg + "].");
             it->second->sendTextFrame(msg);

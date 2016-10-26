@@ -26,24 +26,17 @@ class StorageBase
 {
 public:
 
-    /// Represents a file's attributes.
+    /// Represents basic file's attributes.
     /// Used for local and network files.
     class FileInfo
     {
     public:
         FileInfo(const std::string& filename,
                  const Poco::Timestamp& modifiedTime,
-                 size_t size,
-                 const std::string& userId,
-                 const std::string& userName,
-                 const bool canWrite)
+                 size_t size)
             : _filename(filename),
               _modifiedTime(modifiedTime),
-              _size(size),
-              _userId(userId),
-              _userName(userName),
-              _canWrite(canWrite),
-              _callDuration(0)
+              _size(size)
         {
         }
 
@@ -55,13 +48,6 @@ public:
         std::string _filename;
         Poco::Timestamp _modifiedTime;
         size_t _size;
-        std::string _userId;
-        std::string _userName;
-        bool _canWrite;
-
-        // Time it took to fetch fileinfo from storage
-        // Matters in case of external storage such as WOPI
-        std::chrono::duration<double> _callDuration;
     };
 
     /// localStorePath the absolute root path of the chroot.
@@ -72,7 +58,7 @@ public:
         _uri(uri),
         _localStorePath(localStorePath),
         _jailPath(jailPath),
-        _fileInfo("", Poco::Timestamp(), 0, "", "", false),
+        _fileInfo("", Poco::Timestamp(), 0),
         _isLoaded(false)
     {
         Log::debug("Storage ctor: " + uri.toString());
@@ -84,8 +70,8 @@ public:
 
     bool isLoaded() const { return _isLoaded; }
 
-    /// Returns information about the file.
-    virtual FileInfo getFileInfo(const Poco::URI& uriPublic) = 0;
+    /// Returns the basic information about the file.
+    virtual FileInfo getFileInfo() { return _fileInfo; }
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
@@ -127,14 +113,29 @@ public:
                  const std::string& localStorePath,
                  const std::string& jailPath) :
         StorageBase(uri, localStorePath, jailPath),
-        _isCopy(false),
-        _localStorageId(LocalStorage::LastLocalStorageId++)
+        _isCopy(false)
     {
         Log::info("LocalStorage ctor with localStorePath: [" + localStorePath +
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo(const Poco::URI& uriPublic) override;
+    class LocalFileInfo {
+    public:
+        LocalFileInfo(const std::string& userid,
+                      const std::string& username)
+            : _userid(userid),
+              _username(username)
+        {
+        }
+
+        std::string _userid;
+        std::string _username;
+    };
+
+    /// Returns the URI specific file data
+    /// Also stores the basic file information which can then be
+    /// obtained using getFileInfo method
+    LocalFileInfo getLocalFileInfo(const Poco::URI& uriPublic);
 
     std::string loadStorageFileToLocal() override;
 
@@ -144,8 +145,6 @@ private:
     /// True if the jailed file is not linked but copied.
     bool _isCopy;
     static unsigned LastLocalStorageId;
-    /// Used to differentiate between multiple localhost users.
-    const unsigned _localStorageId;
 };
 
 /// WOPI protocol backed storage.
@@ -162,7 +161,33 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo(const Poco::URI& uriPublic) override;
+    class WOPIFileInfo {
+    public:
+        WOPIFileInfo(const std::string& userid,
+                     const std::string& username,
+                     const bool userCanWrite,
+                     const std::chrono::duration<double> callDuration)
+            : _userid(userid),
+              _username(username),
+              _userCanWrite(userCanWrite),
+              _callDuration(callDuration)
+            {
+            }
+
+        /// User id of the user accessing the file
+        std::string _userid;
+        /// Display Name of user accessing the file
+        std::string _username;
+        /// If user accessing the file has write permission
+        bool _userCanWrite;
+        /// Time it took to call WOPI's CheckFileInfo
+        std::chrono::duration<double> _callDuration;
+    };
+
+    /// Returns the response of CheckFileInfo WOPI call for given URI
+    /// Also extracts the basic file information from the response
+    /// which can then be obtained using getFileInfo()
+    WOPIFileInfo getWOPIFileInfo(const Poco::URI& uriPublic);
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal() override;
@@ -192,7 +217,8 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    FileInfo getFileInfo(const Poco::URI& uriPublic) override;
+    // Implement me
+    // WebDAVFileInfo getWebDAVFileInfo(const Poco::URI& uriPublic);
 
     std::string loadStorageFileToLocal() override;
 

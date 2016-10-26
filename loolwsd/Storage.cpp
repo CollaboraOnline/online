@@ -177,15 +177,23 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
 
 unsigned LocalStorage::LastLocalStorageId = 0;
 
-StorageBase::FileInfo LocalStorage::getFileInfo(const Poco::URI& uriPublic)
+LocalStorage::LocalFileInfo LocalStorage::getLocalFileInfo(const Poco::URI& uriPublic)
 {
     const auto path = Poco::Path(uriPublic.getPath());
     Log::debug("Getting info for local uri [" + uriPublic.toString() + "], path [" + path.toString() + "].");
-    const auto& filename = path.getFileName();
-    const auto file = Poco::File(path);
-    const auto lastModified = file.getLastModified();
-    const auto size = file.getSize();
-    return FileInfo({filename, lastModified, size, "localhost", std::string("Local Host #") + std::to_string(_localStorageId), true});
+
+    if (!_fileInfo.isValid())
+    {
+        const auto& filename = path.getFileName();
+        const auto file = Poco::File(path);
+        const auto lastModified = file.getLastModified();
+        const auto size = file.getSize();
+
+        _fileInfo = FileInfo({filename, lastModified, size});
+    }
+
+    // Set automatic userid and username
+    return LocalFileInfo({"localhost", std::string("Local Host #") + std::to_string(LastLocalStorageId++)});
 }
 
 std::string LocalStorage::loadStorageFileToLocal()
@@ -273,7 +281,7 @@ Poco::Dynamic::Var getOrWarn(const Poco::JSON::Object::Ptr &object, const char *
 
 } // anonymous namespace
 
-StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uriPublic)
+WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPublic)
 {
     Log::debug("Getting info for wopi uri [" + uriPublic.toString() + "].");
 
@@ -328,10 +336,13 @@ StorageBase::FileInfo WopiStorage::getFileInfo(const Poco::URI& uriPublic)
     else
         Log::error("WOPI::CheckFileInfo is missing JSON payload");
 
-    // WOPI doesn't support file last modified time.
-    _fileInfo = FileInfo({filename, Poco::Timestamp(), size, userId, userName, canWrite});
-    _fileInfo._callDuration = callDuration;
-    return _fileInfo;
+    if (!_fileInfo.isValid())
+    {
+        // WOPI doesn't support file last modified time.
+        _fileInfo = FileInfo({filename, Poco::Timestamp(), size});
+    }
+
+    return WOPIFileInfo({userId, userName, canWrite, callDuration});
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -415,13 +426,6 @@ bool WopiStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
                 <<  response.getStatus() << " " << response.getReason() << Log::end;
 
     return success;
-}
-
-StorageBase::FileInfo WebDAVStorage::getFileInfo(const Poco::URI& uriPublic)
-{
-    Log::debug("Getting info for webdav uri [" + uriPublic.toString() + "].");
-    assert(false && "Not Implemented!");
-    return FileInfo({"bazinga", Poco::Timestamp(), 0, "admin", "admin", false});
 }
 
 std::string WebDAVStorage::loadStorageFileToLocal()
