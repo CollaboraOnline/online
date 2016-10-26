@@ -1123,15 +1123,15 @@ private:
         Log::trace("Forwarding payload to " + prefix + ' ' + message);
 
         std::string name;
-        std::string viewId;
-        if (LOOLProtocol::parseNameValuePair(prefix, name, viewId, '-') && name == "child")
+        std::string sessionId;
+        if (LOOLProtocol::parseNameValuePair(prefix, name, sessionId, '-') && name == "child")
         {
-            const auto it = _sessions.find(viewId);
+            const auto it = _sessions.find(sessionId);
             if (it != _sessions.end())
             {
                 if (message == "disconnect")
                 {
-                    Log::debug("Removing ChildSession " + viewId);
+                    Log::debug("Removing ChildSession " + sessionId);
                     _oldSessionIds[it->second->getViewId()] = it->second->getViewUserName();
                     _sessions.erase(it);
                     return true;
@@ -1144,7 +1144,7 @@ private:
                 }
             }
 
-            Log::warn() << "Child session [" << viewId << "] not found to forward message: " << message << Log::end;
+            Log::warn() << "Child session [" << sessionId << "] not found to forward message: " << message << Log::end;
         }
         else
         {
