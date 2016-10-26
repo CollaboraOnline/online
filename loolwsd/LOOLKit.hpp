@@ -30,6 +30,17 @@ struct CallbackDescriptor
     IDocumentManager* const Doc;
     const int ViewId;
 };
+
+/// User Info container used to store user information
+/// till the end of process lifecycle - including
+/// after any child session goes away
+struct UserInfo
+{
+    std::string userid;
+    std::string username;
+};
+
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

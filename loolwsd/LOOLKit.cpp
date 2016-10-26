@@ -844,16 +844,16 @@ private:
         notifyViewInfo(viewIds);
     }
 
-    std::map<int, std::string> getViewInfo() override
+    std::map<int, UserInfo> getViewInfo() override
     {
         std::unique_lock<std::mutex> lock(_mutex);
-        std::map<int, std::string> viewInfo;
+        std::map<int, UserInfo> viewInfo;
 
         for (auto& pair : _sessions)
         {
             const auto& session = pair.second;
             const auto viewId = session->getViewId();
-            viewInfo[viewId] = session->getViewUserName();
+            viewInfo[viewId] = UserInfo({session->getViewUserId(), session->getViewUserName()});
         }
 
         viewInfo.insert(_oldSessionIds.begin(), _oldSessionIds.end());
@@ -875,7 +875,7 @@ private:
     void notifyViewInfo(const std::vector<int>& viewIds) override
     {
         // Store the list of viewid, username mapping in a map
-        std::map<int, std::string> viewInfoMap = getViewInfo();
+        std::map<int, UserInfo> viewInfoMap = getViewInfo();
         std::map<std::string, int> viewColorsMap = getViewColors();
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -895,10 +895,11 @@ private:
             }
             else
             {
-                viewInfoObj->set("username", viewInfoMap[viewId]);
-                if (viewColorsMap.find(viewInfoMap[viewId]) != viewColorsMap.end())
+                viewInfoObj->set("userid", viewInfoMap[viewId].userid);
+                viewInfoObj->set("username", viewInfoMap[viewId].username);
+                if (viewColorsMap.find(viewInfoMap[viewId].username) != viewColorsMap.end())
                 {
-                    color = viewColorsMap[viewInfoMap[viewId]];
+                    color = viewColorsMap[viewInfoMap[viewId].username];
                 }
             }
             viewInfoObj->set("color", color);
@@ -1132,7 +1133,7 @@ private:
                 if (message == "disconnect")
                 {
                     Log::debug("Removing ChildSession " + sessionId);
-                    _oldSessionIds[it->second->getViewId()] = it->second->getViewUserName();
+                    _oldSessionIds[it->second->getViewId()] = UserInfo({it->second->getViewUserId(), it->second->getViewUserName()});
                     _sessions.erase(it);
                     return true;
                 }
@@ -1271,7 +1272,7 @@ private:
     std::atomic_size_t _isLoading;
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<std::string, std::shared_ptr<ChildSession>> _sessions;
-    std::map<int, std::string> _oldSessionIds;
+    std::map<int, UserInfo> _oldSessionIds;
     Poco::Thread _callbackThread;
     std::atomic_size_t _clientViews;
 };

@@ -178,7 +178,7 @@ public:
     {
     }
 
-    std::map<int, std::string> getViewInfo() override
+    std::map<int, UserInfo> getViewInfo() override
     {
         return {};
     }
