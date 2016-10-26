@@ -1718,8 +1718,9 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
-    optionSet.addOption(Option("port", "", "Port number to listen to (default: " + std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),"
-                             " must not be " + std::to_string(MasterPortNumber) + ".")
+    optionSet.addOption(Option("port", "", "Port number to listen to (default: " +
+                               std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),"
+                               " must not be " + std::to_string(MasterPortNumber) + ".")
                         .required(false)
                         .repeatable(false)
                         .argument("port number"));
@@ -1809,6 +1810,7 @@ Process::PID LOOLWSD::createForKit()
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
+    args.push_back("--masterport=" + std::to_string(MasterPortNumber));
     if (UnitWSD::get().hasKitHooks())
         args.push_back("--unitlib=" + UnitTestLibrary);
     if (DisplayVersion)
@@ -1957,6 +1959,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     while (!TerminationFlag)
     {
         UnitWSD::get().invokeTest();
+        if (TerminationFlag)
+            break;
 
         const pid_t pid = waitpid(forKitPid, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
