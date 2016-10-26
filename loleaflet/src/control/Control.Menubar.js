@@ -321,9 +321,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'rev-history') {
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode
-			if (window.top !== window.self) {
-				window.parent.postMessage('rev-history', '*');
-			}
+			map.WOPIPostMessage('rev-history');
 		} else if (id === 'repair') {
 			map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		}

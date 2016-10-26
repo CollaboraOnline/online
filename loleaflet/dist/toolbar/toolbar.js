@@ -215,7 +215,7 @@ function onClick(id, item, subItem) {
 		resizeToolbar();
 	}
 	else if (id === 'close') {
-		window.parent.postMessage('close', '*');
+		map.WOPIPostMessage('UI_Close');
 		map.remove();
 	}
 }
