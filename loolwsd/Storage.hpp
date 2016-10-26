@@ -144,7 +144,7 @@ public:
 private:
     /// True if the jailed file is not linked but copied.
     bool _isCopy;
-    static unsigned LastLocalStorageId;
+    static std::atomic<unsigned> LastLocalStorageId;
 };
 
 /// WOPI protocol backed storage.
