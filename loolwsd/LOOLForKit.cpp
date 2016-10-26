@@ -297,7 +297,6 @@ int main(int argc, char** argv)
     static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
         ClientPortNumber = std::stoi(clientPort);
-
     static const char* masterPort = std::getenv("LOOL_TEST_MASTER_PORT");
     if (masterPort)
         MasterPortNumber = std::stoi(masterPort);
@@ -331,6 +330,11 @@ int main(int argc, char** argv)
         {
             eq = std::strchr(cmd, '=');
             ClientPortNumber = std::stoll(std::string(eq+1));
+        }
+        else if (std::strstr(cmd, "--masterport=") == cmd)
+        {
+            eq = std::strchr(cmd, '=');
+            MasterPortNumber = std::stoll(std::string(eq+1));
         }
         else if (std::strstr(cmd, "--version") == cmd)
         {
