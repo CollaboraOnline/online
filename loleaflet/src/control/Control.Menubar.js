@@ -25,6 +25,12 @@ L.Control.Menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
+			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
+												{type: 'separator'},
+												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
+												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
+												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
+			},
 			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
 												{name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
 												{type: 'separator'},
@@ -33,12 +39,6 @@ L.Control.Menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: _('Page break'), type: 'unocommand', uno: '.uno:InsertPageBreak'},
 												{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'}]
-			},
-			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
-												{type: 'separator'},
-												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
-												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
-												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
 			},
 			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
 																						{name: _('Rows after'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
@@ -77,13 +77,13 @@ L.Control.Menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'}]
-			},
 			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 												{type: 'separator'},
 												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
 												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
 												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
+			},
+			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'}]
 			},
 			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
 																						{name: _('Rows after'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
@@ -123,17 +123,17 @@ L.Control.Menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
-												  {name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
-												  {type: 'separator'},
-												  {name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
-												  {name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'}]
-			},
 			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 												{type: 'separator'},
 												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
 												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
 												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
+			},
+			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
+												  {name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
+												  {type: 'separator'},
+												  {name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
+												  {name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'}]
 			},
 			{name: _('Cells'), type: 'menu', menu: [{name: _('Insert row'), type: 'unocommand', uno: '.uno:InsertRows'},
 												 {name: _('Insert column'), type: 'unocommand', uno: '.uno:InsertColumns'},
