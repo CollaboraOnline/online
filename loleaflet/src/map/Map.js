@@ -185,7 +185,7 @@ L.Map = L.Evented.extend({
 	},
 
 	WOPIPostMessage: function(msgId, values) {
-		if (this.options.storageType === 'wopi' && this._wopiPostMessageOrigin !== '') {
+		if (this.options.storageType === 'wopi' && !!this._wopi['PostMessageOrigin']) {
 			if (window.top !== window.self) {
 				var msg = {
 					'MessageId': msgId,
