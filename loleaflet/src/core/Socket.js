@@ -245,7 +245,7 @@ L.Socket = L.Class.extend({
 				textMsg = textMsg.replace(/%0/g, command.params[0]);
 				textMsg = textMsg.replace(/%1/g, command.params[1]);
 				textMsg = textMsg.replace(/%2/g, (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online'));
-				textMsg = textMsg.replace(/%3/g, (typeof brandProductURL !== 'undefined' ? brandProductURL : 'https://wiki.documentfoundation.org/Development/LibreOffice_Online'));
+				textMsg = textMsg.replace(/%3/g, (typeof brandProductFAQURL !== 'undefined' ? brandProductFAQURL : 'https://wiki.documentfoundation.org/Development/LibreOffice_Online'));
 			}
 			else if (command.errorKind === 'serviceunavailable') {
 				this._map._fatal = true;
