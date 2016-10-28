@@ -31,16 +31,26 @@ L.Control.Menubar = L.Control.extend({
 												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
 												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
-												{name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
-												{type: 'separator'},
-												{name: _('Footnote'), type: 'unocommand', uno: '.uno:InsertFootnote'},
-												{name: _('Endnote'), type: 'unocommand', uno: '.uno:InsertEndnote'},
-												{type: 'separator'},
-												{name: _('Page break'), type: 'unocommand', uno: '.uno:InsertPageBreak'},
-												{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'}]
+			{name: _('Insert'), type: 'menu', menu: [
+				{name: _('Image'), id: 'insertgraphic', type: 'action'},
+				{name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
+				{type: 'separator'},
+				{name: _('Footnote'), type: 'unocommand', uno: '.uno:InsertFootnote'},
+				{name: _('Endnote'), type: 'unocommand', uno: '.uno:InsertEndnote'},
+				{type: 'separator'},
+				{name: _('Page break'), type: 'unocommand', uno: '.uno:InsertPageBreak'},
+				{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'},
+				{type: 'separator'},
+				{name: _('Formatting mark'), type: 'menu', menu: [
+						{name: _('Non-breaking space'), type: 'unocommand', uno: '.uno:InsertNonBreakingSpace'},
+						{name: _('Non-breaking hyphen'), type: 'unocommand', uno: '.uno:InsertHardHyphen'},
+						{name: _('Soft hyphen'), type: 'unocommand', uno: '.uno:InsertSoftHyphen'},
+						{name: _('No-with optional break'), type: 'unocommand', uno: '.uno:InsertZWSP'},
+						{name: _('No-with no break'), type: 'unocommand', uno: '.uno:InsertZWNBSP'},
+						{name: _('Left-to-right mark'), type: 'unocommand', uno: '.uno:InsertLRM'},
+						{name: _('Right-to-left mark'), type: 'unocommand', uno: '.uno:InsertRLM'}]}]
 			},
-			{name: _('Format'), type: 'menu', menu:[
+			{name: _('Format'), type: 'menu', menu: [
 				{name: _('Text'), type: 'menu', menu: [
 						{name: _('Bold'), type: 'unocommand', uno: '.uno:Bold'},
 						{name: _('Italic'), type: 'unocommand', uno: '.uno:Italic'},
