@@ -66,6 +66,9 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('Sentence case'), type: 'unocommand', uno: '.uno:ChangeCaseToSentenceCase'},
 						{name: _('Capitalize Every Word'), type: 'unocommand', uno: '.uno:ChangeCaseToTitleCase'},
 						{name: _('tOGGLE cASE'), type: 'unocommand', uno: '.uno:ChangeCaseToToggleCase'}]},
+				{name: _('Text orientation'), type: 'menu', menu: [
+						{name: _('Set paragraph left-to-right'), type: 'unocommand', uno: '.uno:ParaLeftToRight'},
+						{name: _('Set paragraph right-to-left'), type: 'unocommand', uno: '.uno:ParaRightToLeft'}]},
 				{name: _('Spacing'), type: 'menu', menu: [
 						{name: _('Line spacing: 1'), type: 'unocommand', uno: '.uno:SpacePara1'},
 						{name: _('Line spacing: 1.5'), type: 'unocommand', uno: '.uno:SpacePara15'},
