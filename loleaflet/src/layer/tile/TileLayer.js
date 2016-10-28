@@ -1176,7 +1176,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
-		if (this._prevCellCursor && type === 'input')
+		if (this._docType === 'spreadsheet' && this._prevCellCursor && type === 'input')
 		{
 			if (keycode === 1030) { // PgUp
 				if (this._cellCursorOnPgUp) {
