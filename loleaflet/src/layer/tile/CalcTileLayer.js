@@ -155,6 +155,19 @@ L.CalcTileLayer = L.TileLayer.extend({
 		});
 	},
 
+	_onUpdateSelectionHeader: function () {
+		var layers = this._selections.getLayers();
+		var layer = layers.pop();
+		if (layers.length === 0 && layer && layer.getLatLngs().length === 1) {
+			var start = this._latLngToTwips(layer.getBounds().getNorthWest()).add([1, 1]);
+			var end = this._latLngToTwips(layer.getBounds().getSouthEast()).subtract([1, 1]);
+			this._map.fire('updateselectionheader', {start: start, end: end});
+		}
+		else {
+			this._map.fire('clearselectionheader');
+		}
+	},
+
 	_onStatusMsg: function (textMsg) {
 		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
@@ -210,9 +223,15 @@ L.CalcTileLayer = L.TileLayer.extend({
 				context: this
 			});
 			this._onUpdateViewPort();
+			this._onUpdateSelectionHeader();
 		}
 		else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
+	},
+
+	_onTextSelectionMsg: function (textMsg) {
+		L.TileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
+		this._onUpdateSelectionHeader();
 	}
 });

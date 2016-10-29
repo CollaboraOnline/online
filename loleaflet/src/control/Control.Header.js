@@ -9,10 +9,66 @@ L.Control.Header = L.Control.extend({
 
 	initialize: function () {
 		this._clicks = 0;
+		this._selection = {start: -1, end: -1};
 	},
 
 	mouseInit: function (element) {
 		L.DomEvent.on(element, 'mousedown', this._onMouseDown, this);
+	},
+
+	select: function (item) {
+		if (item && !L.DomUtil.hasClass(item, 'spreadsheet-header-selected')) {
+			L.DomUtil.addClass(item, 'spreadsheet-header-selected');
+		}
+	},
+
+	unselect: function (item) {
+		if (item && L.DomUtil.hasClass(item, 'spreadsheet-header-selected')) {
+			L.DomUtil.removeClass(item, 'spreadsheet-header-selected');
+		}
+	},
+
+	clearSelection: function (element) {
+		var childs = element.children;
+		for (var iterator = this._selection.start; iterator <= this._selection.end; iterator++) {
+			this.unselect(childs[iterator]);
+		}
+		this._selection.start = this._selection.end = -1;
+	},
+
+	updateSelection: function(element, start, end) {
+		var childs = element.children;
+		var x0 = 0, x1 = 0;
+		var itStart = -1, itEnd = -1;
+		var selected = false;
+		var iterator = 0;
+		for (var len = childs.length; iterator < len; iterator++) {
+			x0 = (iterator > 0 ? childs[iterator - 1].size : 0);
+			x1 = childs[iterator].size;
+			if (x0 <= start && start <= x1) {
+				selected = true;
+				itStart = iterator;
+			}
+			if (selected) {
+				this.select(childs[iterator]);
+			}
+			if (x0 <= end && end <= x1) {
+				itEnd = iterator;
+				break;
+			}
+		}
+		if (this._selection.start !== -1 && itStart !== -1 && itStart > this._selection.start) {
+			for (iterator = this._selection.start; iterator < itStart; iterator++) {
+				this.unselect(childs[iterator]);
+			}
+		}
+		if (this._selection.end !== -1 && itEnd !== -1 && itEnd < this._selection.end) {
+			for (iterator = itEnd + 1; iterator <= this._selection.end; iterator++) {
+				this.unselect(childs[iterator]);
+			}
+		}
+		this._selection.start = itStart;
+		this._selection.end = itEnd;
 	},
 
 	_onMouseDown: function (e) {

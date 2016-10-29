@@ -108,6 +108,15 @@
 	overflow: hidden;
 	}
 
+.spreadsheet-header-selected {
+	background: #3465A4; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(#3465A4, #729FCF, #004586);
+	background: -o-linear-gradient(#3465A4, #729FCF, #004586);
+	background: -moz-linear-gradient(#3465A4, #729FCF, #004586);
+	background: linear-gradient(#3465A4, #729FCF, #004586);
+	color: white;
+	}
+
 .spreadsheet-header-column:hover {
 	background-color: #DDD;
 	}
