@@ -19,6 +19,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._map.on('updatescrolloffset', this.setScrollPosition, this);
 		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
+		this._map.on('updateselectionheader', this._onUpdateSelection, this);
+		this._map.on('clearselectionheader', this._onClearSelection, this);
 		var docContainer = this._map.options.documentContainer;
 		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-rows-container', docContainer.parentElement);
 		this._rows = L.DomUtil.create('div', 'spreadsheet-header-rows', headersContainer);
@@ -140,6 +142,14 @@ L.Control.RowHeader = L.Control.Header.extend({
 		L.DomUtil.setStyle(this._rows, 'top', this._position + 'px');
 	},
 
+	_onClearSelection: function (e) {
+		this.clearSelection(this._rows);
+	},
+
+	_onUpdateSelection: function (e) {
+		this.updateSelection(this._rows, e.start.y, e.end.y);
+	},
+
 	viewRowColumnHeaders: function (e) {
 		this.fillRows(e.data.rows, e.converter, e.context);
 	},
@@ -154,6 +164,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			row = L.DomUtil.create('div', 'spreadsheet-header-row', this._rows);
 			text = L.DomUtil.create('div', 'spreadsheet-header-row-text', row);
 			resize = L.DomUtil.create('div', 'spreadsheet-header-row-resize', row);
+			row.size = rows[iterator].size;
 			var content = rows[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-row-' + content); // for easy addressing
 			text.innerHTML = content;
