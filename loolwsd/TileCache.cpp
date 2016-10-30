@@ -444,13 +444,13 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 {
     assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
 
-    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
-
-    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
-
     std::ostringstream oss;
     oss << '(' << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ')';
     const auto name = oss.str();
+
+    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
+
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
 
     if (tileBeingRendered)
     {
