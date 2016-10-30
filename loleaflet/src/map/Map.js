@@ -136,15 +136,19 @@ L.Map = L.Evented.extend({
 
 	addView: function(viewid, userid, username, color) {
 		this._viewInfo[viewid] = {'userid': userid, 'username': username, 'color': color};
-		this.fire('addview', {viewId: viewid, username: username});
 		this.WOPIPostMessage('View_Added', {ViewId: viewid, UserId: userid, UserName: username, Color: color});
+
+		// Fire last, otherwise not all events are handled correctly.
+		this.fire('addview', {viewId: viewid, username: username});
 	},
 
 	removeView: function(viewid) {
 		var username = this._viewInfo[viewid].username;
 		delete this._viewInfo[viewid];
-		this.fire('removeview', {viewId: viewid, username: username});
 		this.WOPIPostMessage('View_Removed', {ViewId: viewid});
+
+		// Fire last, otherwise not all events are handled correctly.
+		this.fire('removeview', {viewId: viewid, username: username});
 	},
 
 	getViewName: function(viewid) {
