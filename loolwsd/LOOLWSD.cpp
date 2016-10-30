@@ -1335,14 +1335,14 @@ static inline ServerSocket* getServerSocket(int nClientPortNumber)
 
 static inline ServerSocket* findFreeServerPort(int& nClientPortNumber)
 {
-    ServerSocket *socket = NULL;
+    ServerSocket* socket = nullptr;
     while (!socket)
     {
         socket = getServerSocket(nClientPortNumber);
         if (!socket)
         {
             nClientPortNumber++;
-            Log::info("client port busy - trying " + nClientPortNumber);
+            Log::info("client port busy - trying " + std::to_string(nClientPortNumber));
         }
     }
     return socket;
@@ -1365,14 +1365,14 @@ static inline ServerSocket* getMasterSocket(int nMasterPortNumber)
 static inline
 ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
 {
-    ServerSocket *socket = NULL;
+    ServerSocket* socket = nullptr;
     while (!socket)
     {
         socket = getServerSocket(nMasterPortNumber);
         if (!socket)
         {
             nMasterPortNumber++;
-            Log::info("master port busy - trying " + nMasterPortNumber);
+            Log::info("master port busy - trying " + std::to_string(nMasterPortNumber));
         }
     }
     return socket;
