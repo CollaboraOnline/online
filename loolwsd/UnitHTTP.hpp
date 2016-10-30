@@ -12,14 +12,14 @@
 #include <memory>
 #include <sstream>
 
-#include <Poco/Version.h>
-#include <Poco/Net/WebSocket.h>
+#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPServerParams.h>
-#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/SocketAddress.h>
+#include <Poco/Net/WebSocket.h>
+#include <Poco/Version.h>
 
 #include "Common.hpp"
 
@@ -31,11 +31,18 @@ class UnitHTTPServerResponse : public Poco::Net::HTTPServerResponse
 {
     bool _sent;
     std::stringstream _dummyStream;
+
 public:
-    UnitHTTPServerResponse() : _sent (false) {}
+    UnitHTTPServerResponse() :
+        _sent(false)
+    {
+    }
     virtual void sendContinue() override {}
     virtual std::ostream& send() override
-		{ _sent = true; return _dummyStream; }
+    {
+        _sent = true;
+        return _dummyStream;
+    }
     virtual void sendFile(const std::string& /* path */,
                           const std::string& /* mediaType */) override {}
     virtual void sendBuffer(const void* /* pBuffer */,
@@ -50,56 +57,75 @@ public:
 class UnitHTTPServerParams : public Poco::Net::HTTPServerParams
 {
 public:
-    ~UnitHTTPServerParams() { }
+    ~UnitHTTPServerParams() {}
 };
 
 /// Unit test stub for a server request
 class UnitHTTPServerRequest : public Poco::Net::HTTPServerRequest
 {
 protected:
-    UnitHTTPServerResponse &_response;
+    UnitHTTPServerResponse& _response;
     Poco::Net::SocketAddress _clientAddress;
     Poco::Net::SocketAddress _serverAddress;
     std::stringstream _dummyStream;
     UnitHTTPServerParams _dummyParams;
+
 public:
-    UnitHTTPServerRequest(UnitHTTPServerResponse &inResponse,
-                          const std::string &uri)
-        : _response(inResponse),
-          _clientAddress(),
-          _serverAddress(MasterPortNumber)
-        { setURI(uri); }
+    UnitHTTPServerRequest(UnitHTTPServerResponse& inResponse,
+                          const std::string& uri) :
+        _response(inResponse),
+        _clientAddress(),
+        _serverAddress(MasterPortNumber)
+    {
+        setURI(uri);
+    }
     virtual std::istream& stream() override
-        { return _dummyStream; }
+    {
+        return _dummyStream;
+    }
 #if POCO_VERSION < 0x02000000
     virtual bool expectContinue() const override
-        { return false; }
+    {
+        return false;
+    }
 #endif
 #if POCO_VERSION >= 0x02000000
     virtual bool secure() const override
-        { return true; }
+    {
+        return true;
+    }
 #endif
-	virtual const SocketAddress& clientAddress() const override
-        { return _clientAddress; }
-	virtual const SocketAddress& serverAddress() const override
-        { return _serverAddress; }
-	virtual const HTTPServerParams& serverParams() const override
-        { return _dummyParams; }
+    virtual const SocketAddress& clientAddress() const override
+    {
+        return _clientAddress;
+    }
+    virtual const SocketAddress& serverAddress() const override
+    {
+        return _serverAddress;
+    }
+    virtual const HTTPServerParams& serverParams() const override
+    {
+        return _dummyParams;
+    }
     virtual Poco::Net::HTTPServerResponse& response() const override
-        { return _response; }
+    {
+        return _response;
+    }
 };
 
-namespace UnitHTTP {
-    Poco::Net::HTTPClientSession *createSession();
+namespace UnitHTTP
+{
+    Poco::Net::HTTPClientSession* createSession();
 }
 
 class UnitWebSocket
 {
-    Poco::Net::HTTPClientSession *_session;
-    Poco::Net::WebSocket *_socket;
- public:
+    Poco::Net::HTTPClientSession* _session;
+    Poco::Net::WebSocket* _socket;
+
+public:
     /// Get a websocket connected for a given URL
-    UnitWebSocket(const std::string &docURL);
+    UnitWebSocket(const std::string& docURL);
     ~UnitWebSocket()
     {
         delete _socket;

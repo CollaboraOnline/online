@@ -20,7 +20,6 @@
 class AuthBase
 {
 public:
-
     /// Called to acquire an access token.
     virtual const std::string getAccessToken() = 0;
 
@@ -29,7 +28,7 @@ public:
 };
 
 /// JWT Authorization.
-class JWTAuth: public AuthBase
+class JWTAuth : public AuthBase
 {
 public:
     JWTAuth(const std::string& keyPath, const std::string& name, const std::string& sub, const std::string& aud)

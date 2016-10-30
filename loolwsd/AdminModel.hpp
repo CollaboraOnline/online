@@ -170,7 +170,6 @@ public:
     void removeDocument(const std::string& docKey);
 
 private:
-
     std::string getMemStats();
 
     std::string getCpuStats();

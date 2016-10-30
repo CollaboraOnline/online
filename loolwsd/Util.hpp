@@ -35,7 +35,6 @@ extern std::atomic<bool> TerminationFlag;
 /// and prevent _Exit while collecting backtrace.
 extern std::mutex SigHandlerTrap;
 
-
 namespace Util
 {
     namespace rng
@@ -59,7 +58,7 @@ namespace Util
     // if everything goes well. In case of any error, both the destination file (if it already
     // exists) and the temporary file (if was created, or existed already) are removed. Return true
     // if everything succeeded.
-    bool saveDataToFileSafely(const std::string& fileName, const char *data, size_t size);
+    bool saveDataToFileSafely(const std::string& fileName, const char* data, size_t size);
 
     // We work around some of the mess of using the same sources both on the server side and in unit
     // tests with conditional compilation based on BUILDING_TESTS.
@@ -100,8 +99,7 @@ namespace Util
         assert(lock.owns_lock());
     }
 
-    inline
-    void assertIsLocked(std::mutex& mtx)
+    inline void assertIsLocked(std::mutex& mtx)
     {
         assert(!mtx.try_lock());
     }
@@ -110,8 +108,7 @@ namespace Util
     /// Supresses exception when the file is already removed.
     /// This can happen when there is a race (unavoidable) or when
     /// we don't care to check before we remove (when no race exists).
-    inline
-    void removeFile(const std::string& path, const bool recursive = false)
+    inline void removeFile(const std::string& path, const bool recursive = false)
     {
         try
         {
@@ -123,8 +120,7 @@ namespace Util
         }
     }
 
-    inline
-    void removeFile(const Poco::Path& path, const bool recursive = false)
+    inline void removeFile(const Poco::Path& path, const bool recursive = false)
     {
         removeFile(path.toString(), recursive);
     }
@@ -136,7 +132,7 @@ namespace Util
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename);
 
     /// Returns the name of the signal.
-    const char *signalName(int signo);
+    const char* signalName(int signo);
 
     /// Trap signals to cleanup and exit the process gracefully.
     void setTerminationSignals();
@@ -159,8 +155,7 @@ namespace Util
     std::string UniqueId();
 
     /// Trim spaces from the left. Just spaces.
-    inline
-    std::string& ltrim(std::string& s)
+    inline std::string& ltrim(std::string& s)
     {
         const auto pos = s.find_first_not_of(' ');
         if (pos != std::string::npos)
@@ -172,8 +167,7 @@ namespace Util
     }
 
     /// Trim spaces from the left and copy. Just spaces.
-    inline
-    std::string ltrimmed(const std::string& s)
+    inline std::string ltrimmed(const std::string& s)
     {
         const auto pos = s.find_first_not_of(' ');
         if (pos != std::string::npos)
@@ -237,8 +231,7 @@ namespace Util
 
         bool match(const std::string& subject) const
         {
-            return (_allowByDefault || match(_allowed, subject)) &&
-                    !match(_denied, subject);
+            return (_allowByDefault || match(_allowed, subject)) && !match(_denied, subject);
         }
 
     private:
@@ -281,7 +274,7 @@ namespace Util
 
     /// A logical constant that is allowed to initialize
     /// exactly once and checks usage before initialization.
-    template<typename T>
+    template <typename T>
     class RuntimeConstant
     {
         T _value;

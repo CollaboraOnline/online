@@ -11,11 +11,11 @@
 #ifndef INCLUDED_STORAGE_HPP
 #define INCLUDED_STORAGE_HPP
 
-#include <string>
 #include <set>
+#include <string>
 
-#include <Poco/Util/Application.h>
 #include <Poco/URI.h>
+#include <Poco/Util/Application.h>
 
 #include "Auth.hpp"
 #include "Log.hpp"
@@ -25,7 +25,6 @@
 class StorageBase
 {
 public:
-
     /// Represents basic file's attributes.
     /// Used for local and network files.
     class FileInfo
@@ -80,8 +79,7 @@ public:
     /// Writes the contents of the file back to the source.
     virtual bool saveLocalFileToStorage(const Poco::URI& uriPublic) = 0;
 
-    static
-    size_t getFileSize(const std::string& filename);
+    static size_t getFileSize(const std::string& filename);
 
     /// Must be called at startup to configure.
     static void initialize();
@@ -161,7 +159,8 @@ public:
                   "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
     }
 
-    class WOPIFileInfo {
+    class WOPIFileInfo
+    {
     public:
         WOPIFileInfo(const std::string& userid,
                      const std::string& username,

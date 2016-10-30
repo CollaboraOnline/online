@@ -75,7 +75,6 @@ class TileQueue : public MessageQueue
     friend class TileQueueTests;
 
 private:
-
     class CursorPosition
     {
     public:
@@ -87,10 +86,9 @@ private:
     };
 
 public:
-
     void updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
     {
-        auto cursorPosition = CursorPosition({part, x, y, width, height});
+        auto cursorPosition = CursorPosition({ part, x, y, width, height });
         auto it = _cursorPositions.find(viewId);
         if (it != _cursorPositions.end())
         {

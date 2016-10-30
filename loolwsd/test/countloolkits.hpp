@@ -14,8 +14,7 @@
 #include <Poco/StringTokenizer.h>
 
 /// Counts the number of LoolKit process instances without wiating.
-static
-int getLoolKitProcessCount()
+static int getLoolKitProcessCount()
 {
     int result = 0;
     for (auto i = Poco::DirectoryIterator(std::string("/proc")); i != Poco::DirectoryIterator(); ++i)
@@ -64,8 +63,7 @@ int getLoolKitProcessCount()
     return result;
 }
 
-static
-int countLoolKitProcesses(const int expected)
+static int countLoolKitProcesses(const int expected)
 {
     std::cerr << "Waiting to have " << expected << " loolkit processes. Loolkits: ";
 

@@ -9,10 +9,10 @@
 #ifndef INCLUDED_UNIT_HPP
 #define INCLUDED_UNIT_HPP
 
-#include <string>
-#include <memory>
 #include <atomic>
 #include <cassert>
+#include <memory>
+#include <string>
 
 #include <Poco/Net/WebSocket.h>
 
@@ -24,13 +24,16 @@ class UnitHTTPServerRequest;
 class UnitHTTPServerResponse;
 
 // Forward declaration to avoid pulling the world here.
-namespace Poco {
-    namespace Net {
+namespace Poco
+{
+    namespace Net
+    {
         class HTTPServerRequest;
         class HTTPServerResponse;
     }
 
-    namespace Util {
+    namespace Util
+    {
         class LayeredConfiguration;
     }
 }
@@ -50,7 +53,6 @@ class UnitBase
     friend UnitKit;
 
 protected:
-
     // ---------------- Helper API ----------------
     /// After this time we invoke 'timeout' default 30 seconds
     void setTimeout(int timeoutMilliSeconds);
@@ -58,33 +60,42 @@ protected:
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 
-    enum TestResult { TEST_FAILED, TEST_OK, TEST_TIMED_OUT };
+    enum TestResult
+    {
+        TEST_FAILED,
+        TEST_OK,
+        TEST_TIMED_OUT
+    };
 
     /// Encourages the process to exit with this value (unless hooked)
     void exitTest(TestResult result);
 
-             UnitBase();
+    UnitBase();
     virtual ~UnitBase();
 
 public:
-    enum UnitType { TYPE_WSD, TYPE_KIT };
+    enum UnitType
+    {
+        TYPE_WSD,
+        TYPE_KIT
+    };
     /// Load unit test hook shared library from this path
-    static bool init(UnitType type, const std::string &unitLibPath);
+    static bool init(UnitType type, const std::string& unitLibPath);
 
     /// Do we have a unit test library hooking things & loaded
     static bool isUnitTesting();
 
     /// Tweak the return value from the process.
-	virtual void returnValue(int & /* retValue */);
+    virtual void returnValue(int& /* retValue */);
 
 private:
     void setHandle(void *dlHandle) { _dlHandle = dlHandle; }
-    static UnitBase *linkAndCreateUnit(UnitType type, const std::string &unitLibPath);
+    static UnitBase *linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
     void *_dlHandle;
     bool _setRetValue;
-    int  _retValue;
-    int  _timeoutMilliSeconds;
+    int _retValue;
+    int _timeoutMilliSeconds;
     std::atomic<bool> _timeoutShutdown;
     static UnitBase *Global;
     UnitType _type;
@@ -94,17 +105,22 @@ private:
 class UnitWSD : public UnitBase
 {
     bool _hasKitHooks;
+
 public:
-             UnitWSD();
+    UnitWSD();
     virtual ~UnitWSD();
 
-	static UnitWSD &get()
+    static UnitWSD& get()
     {
-        assert (Global && Global->_type == UnitType::TYPE_WSD);
+        assert(Global && Global->_type == UnitType::TYPE_WSD);
         return *static_cast<UnitWSD *>(Global);
     }
 
-    enum TestRequest { TEST_REQ_CLIENT, TEST_REQ_PRISONER };
+    enum TestRequest
+    {
+        TEST_REQ_CLIENT,
+        TEST_REQ_PRISONER
+    };
     /// Simulate an incoming request
     void testHandleRequest(TestRequest type,
                            UnitHTTPServerRequest& request,
@@ -117,29 +133,35 @@ public:
     // ---------------- WSD hooks ----------------
 
     /// Manipulate and modify the configuration before any usage.
-    virtual void configure(Poco::Util::LayeredConfiguration & /* config */);
+    virtual void configure(Poco::Util::LayeredConfiguration& /* config */);
     /// Main-loop reached, time for testing
     virtual void invokeTest() {}
     /// Tweak the count of pre-spawned kits.
-    virtual void preSpawnCount(int & /* numPrefork */) {}
+    virtual void preSpawnCount(int& /* numPrefork */) {}
     /// When a new child kit process reports
-    virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> & /* socket */) {}
+    virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket>& /* socket */) {}
     /// Intercept createStorage
     virtual bool createStorage(const Poco::URI& /* uri */,
                                const std::string& /* jailRoot */,
                                const std::string& /* jailPath */,
-                               std::unique_ptr<StorageBase> & /*rStorage */)
-        { return false; }
+                               std::unique_ptr<StorageBase>& /*rStorage */)
+    {
+        return false;
+    }
     /// Intercept incoming requests, so unit tests can silently communicate
     virtual bool filterHandleRequest(
-                     TestRequest /* type */,
-                     Poco::Net::HTTPServerRequest& /* request */,
-                     Poco::Net::HTTPServerResponse& /* response */)
-        { return false; }
+        TestRequest /* type */,
+        Poco::Net::HTTPServerRequest& /* request */,
+        Poco::Net::HTTPServerResponse& /* response */)
+    {
+        return false;
+    }
 
     /// Child sent a message
     virtual bool filterChildMessage(const std::vector<char>& /* payload */)
-        { return false; }
+    {
+        return false;
+    }
 
     // ---------------- TileCache hooks ----------------
     /// Called before the lookupTile call returns. Should always be called to fire events.
@@ -147,9 +169,9 @@ public:
                             int tileWidth, int tileHeight, std::unique_ptr<std::fstream>& cacheFile);
 
     // ---------------- DocumentBroker hooks ----------------
-    virtual bool filterLoad(const std::string &/* sessionId */,
-                            const std::string &/* jailId */,
-                            bool &/* result */)
+    virtual bool filterLoad(const std::string& /* sessionId */,
+                            const std::string& /* jailId */,
+                            bool& /* result */)
     {
         return false;
     }
@@ -177,11 +199,11 @@ public:
 class UnitKit : public UnitBase
 {
 public:
-             UnitKit();
+    UnitKit();
     virtual ~UnitKit();
-	static UnitKit &get()
+    static UnitKit& get()
     {
-        assert (Global && Global->_type == UnitType::TYPE_KIT);
+        assert(Global && Global->_type == UnitType::TYPE_KIT);
         return *static_cast<UnitKit *>(Global);
     }
 
@@ -199,14 +221,18 @@ public:
     virtual void postFork() {}
 
     /// Kit got a message
-    virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> & /* ws */,
-                                  std::string &/* message */)
-        { return false; }
+    virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket>& /* ws */,
+                                  std::string& /* message */)
+    {
+        return false;
+    }
 
     /// Allow a custom LibreOfficeKit wrapper
     virtual LibreOfficeKit *lok_init(const char * /* instdir */,
                                      const char * /* userdir */)
-        { return NULL; }
+    {
+        return NULL;
+    }
 };
 
 #endif

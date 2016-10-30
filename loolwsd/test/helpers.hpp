@@ -10,11 +10,11 @@
 #include "config.h"
 
 #include <algorithm>
-#include <cstdlib>
 #include <condition_variable>
+#include <cstdlib>
 #include <mutex>
-#include <thread>
 #include <regex>
+#include <thread>
 
 #include <Poco/BinaryReader.h>
 #include <Poco/DirectoryIterator.h>
@@ -41,9 +41,9 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <Common.hpp>
+#include <LOOLProtocol.hpp>
 #include <UserMessages.hpp>
 #include <Util.hpp>
-#include <LOOLProtocol.hpp>
 
 #ifndef TDOC
 #error TDOC must be defined (see Makefile.am)

@@ -21,8 +21,8 @@
 #include <string>
 #include <thread>
 
-#include <Poco/URI.h>
 #include <Poco/Net/WebSocket.h>
+#include <Poco/URI.h>
 
 #include "IoUtil.hpp"
 #include "Log.hpp"
@@ -92,7 +92,7 @@ public:
                     Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
                 }
 
-               _pid = -1;
+                _pid = -1;
             }
         }
         catch (const std::exception& ex)
@@ -161,13 +161,11 @@ class ClientSession;
 class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 {
 public:
-
     static Poco::URI sanitizeURI(const std::string& uri);
 
     /// Returns a document-specific key based
     /// on the URI of the document.
-    static
-    std::string getDocKey(const Poco::URI& uri);
+    static std::string getDocKey(const Poco::URI& uri);
 
     /// Dummy document broker that is marked to destroy.
     DocumentBroker();
@@ -265,13 +263,16 @@ public:
     /// Currently, only makes sense in case storage is WOPI
     const std::chrono::duration<double> getStorageLoadDuration() const;
 
+    /// Called by the ChildProcess object to notify
+    /// that it has terminated on its own.
+    /// This happens either when the child exists
+    /// or upon failing to process an incoming message.
     void childSocketTerminated();
 
     /// Get the PID of the associated child process
     Poco::Process::PID getPid() const { return _childProcess->getPid(); }
 
 private:
-
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const bool dontSaveIfUnmodified);
 
@@ -292,7 +293,7 @@ private:
     std::string _filename;
     std::chrono::steady_clock::time_point _lastSaveTime;
     Poco::Timestamp _lastFileModifiedTime;
-    std::map<std::string, std::shared_ptr<ClientSession>> _sessions;
+    std::map<std::string, std::shared_ptr<ClientSession> > _sessions;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;

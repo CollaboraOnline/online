@@ -25,8 +25,8 @@
 
 #include <unistd.h>
 
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 
 #include <cassert>
@@ -175,7 +175,8 @@ static std::mutex DocBrokersMutex;
 static int careerSpanSeconds = 0;
 #endif
 
-namespace {
+namespace
+{
 
 static inline
 void shutdownLimitReached(WebSocket& ws)
@@ -275,7 +276,7 @@ static bool cleanupChildren()
         if (!NewChildren[i]->isAlive())
         {
             Log::warn() << "Removing unused dead child [" << NewChildren[i]->getPid()
-                         << "]." << Log::end;
+                        << "]." << Log::end;
             NewChildren.erase(NewChildren.begin() + i);
             removed = true;
         }
@@ -344,8 +345,8 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     NewChildren.emplace_back(child);
     const auto count = NewChildren.size();
     Log::info() << "Have " << count << " "
-                << (count == 1 ? "child" : "children")
-                << "." << Log::end;
+                << (count == 1 ? "child." : "children.")
+                << Log::end;
 
     NewChildrenCV.notify_one();
     return count;
@@ -378,7 +379,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         forkChildren(balance);
 
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
-        if (NewChildrenCV.wait_for(lock, timeout, [](){ return !NewChildren.empty(); }))
+        if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
         {
             auto child = NewChildren.back();
             NewChildren.pop_back();
@@ -441,7 +442,7 @@ public:
 };
 
 /// Handle a public connection from a client.
-class ClientRequestHandler: public HTTPRequestHandler
+class ClientRequestHandler : public HTTPRequestHandler
 {
 private:
     static std::string getContentType(const std::string& fileName)
@@ -507,7 +508,7 @@ private:
 
                     cleanupDocBrokers();
 
-                    //FIXME: What if the same document is already open? Need a fake dockey here?
+                    // FIXME: What if the same document is already open? Need a fake dockey here?
                     Log::debug("New DocumentBroker for docKey [" + docKey + "].");
                     DocBrokers.emplace(docKey, docBroker);
 
@@ -525,7 +526,7 @@ private:
                     const std::string load = "load url=" + encodedFrom;
                     session->handleInput(load.data(), load.size());
 
-                    //FIXME: Check for security violations.
+                    // FIXME: Check for security violations.
                     Path toPath(docBroker->getPublicUri().getPath());
                     toPath.setExtension(format);
                     const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
@@ -584,7 +585,7 @@ private:
 
             if (!sent)
             {
-                //TODO: We should differentiate between bad request and failed conversion.
+                // TODO: We should differentiate between bad request and failed conversion.
                 throw BadRequestException("Failed to convert and send file.");
             }
 
@@ -636,7 +637,7 @@ private:
         else if (tokens.count() >= 6)
         {
             Log::info("File download request.");
-            //TODO: Check that the user in question has access to this file!
+            // TODO: Check that the user in question has access to this file!
 
             // 1. Validate the dockey
             std::string decodedUri;
@@ -706,7 +707,7 @@ private:
         // indicator to the client that document broker is searching
         std::string status("statusindicator: find");
         Log::trace("Sending to Client [" + status + "].");
-        ws->sendFrame(status.data(), (int) status.size());
+        ws->sendFrame(status.data(), status.size());
 
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
@@ -760,11 +761,10 @@ private:
             // If this document is going out, wait.
             Log::debug("Document [" + docKey + "] is marked to destroy, waiting to reload.");
 
-            const auto timeout = POLL_TIMEOUT_MS;
             bool timedOut = true;
-            for (size_t i = 0; i < COMMAND_TIMEOUT_MS / timeout; ++i)
+            for (size_t i = 0; i < COMMAND_TIMEOUT_MS / POLL_TIMEOUT_MS; ++i)
             {
-                std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+                std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
 
                 std::unique_lock<std::mutex> lock(DocBrokersMutex);
                 auto it = DocBrokers.find(docKey);
@@ -790,7 +790,7 @@ private:
 
                 if (TerminationFlag)
                 {
-                    Log::error("Termination flag set. No loading new session [" + id + "]");
+                    Log::error("Termination flag set. Not loading new session [" + id + "]");
                     return;
                 }
             }
@@ -849,7 +849,7 @@ private:
 
         // Check if readonly session is required
         bool isReadOnly = false;
-        for (const auto& param: uriPublic.getQueryParameters())
+        for (const auto& param : uriPublic.getQueryParameters())
         {
             Log::debug("Query param: " + param.first + ", value: " + param.second);
             if (param.first == "permission")
@@ -868,12 +868,12 @@ private:
             // indicator to a client that is waiting to connect to lokit process
             status = "statusindicator: connect";
             Log::trace("Sending to Client [" + status + "].");
-            ws->sendFrame(status.data(), (int) status.size());
+            ws->sendFrame(status.data(), status.size());
 
             // Now the bridge beetween the client and kit process is connected
             status = "statusindicator: ready";
             Log::trace("Sending to Client [" + status + "].");
-            ws->sendFrame(status.data(), (int) status.size());
+            ws->sendFrame(status.data(), status.size());
 
             Util::checkDiskSpaceOnRegisteredFileSystems();
 
@@ -951,7 +951,7 @@ private:
             Log::error("Error in client request handler: " + exc.toString());
             status = "error: cmd=internal kind=unauthorized";
             Log::trace("Sending to Client [" + status + "].");
-            ws->sendFrame(status.data(), (int) status.size());
+            ws->sendFrame(status.data(), status.size());
         }
         catch (const std::exception& exc)
         {
@@ -1048,7 +1048,7 @@ public:
         }
 #endif
 
-        handleClientRequest(request,response);
+        handleClientRequest(request, response);
 
 #if MAX_CONNECTIONS > 0
         --LOOLWSD::NumConnections;
@@ -1071,7 +1071,9 @@ public:
         bool responded = false;
         try
         {
-            if ((request.getMethod() == HTTPRequest::HTTP_GET || request.getMethod() == HTTPRequest::HTTP_HEAD) && request.getURI() == "/")
+            if ((request.getMethod() == HTTPRequest::HTTP_GET ||
+                 request.getMethod() == HTTPRequest::HTTP_HEAD) &&
+                request.getURI() == "/")
             {
                 std::string mimeType = "text/plain";
                 std::string responseString = "OK";
@@ -1185,7 +1187,7 @@ public:
 };
 
 /// Handle requests from prisoners (internal).
-class PrisonerRequestHandler: public HTTPRequestHandler
+class PrisonerRequestHandler : public HTTPRequestHandler
 {
 public:
 
@@ -1236,7 +1238,7 @@ public:
 
 /// External (client) connection handler factory.
 /// Creates handler objects.
-class ClientRequestHandlerFactory: public HTTPRequestHandlerFactory
+class ClientRequestHandlerFactory : public HTTPRequestHandlerFactory
 {
 public:
     ClientRequestHandlerFactory()
@@ -1287,7 +1289,7 @@ public:
 
 /// Internal (prisoner) connection handler factory.
 /// Creates handler objects.
-class PrisonerRequestHandlerFactory: public HTTPRequestHandlerFactory
+class PrisonerRequestHandlerFactory : public HTTPRequestHandlerFactory
 {
 public:
     HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
@@ -1309,18 +1311,18 @@ public:
     }
 };
 
-namespace {
+namespace
+{
 
-static inline
-ServerSocket* getServerSocket(int nClientPortNumber)
+static inline ServerSocket* getServerSocket(int nClientPortNumber)
 {
     try
     {
-        ServerSocket *socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket()
-            : new ServerSocket();
+        ServerSocket* socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket() : new ServerSocket();
         socket->bind(nClientPortNumber, false);
-        // 64 is the default value for the backlog parameter in Poco when creating a ServerSocket,
-        // so use it here, too.
+
+        // 64 is the default value for the backlog parameter in Poco
+        // when creating a ServerSocket, so use it here, too.
         socket->listen(64);
         return socket;
     }
@@ -1331,8 +1333,7 @@ ServerSocket* getServerSocket(int nClientPortNumber)
     }
 }
 
-static inline
-ServerSocket* findFreeServerPort(int &nClientPortNumber)
+static inline ServerSocket* findFreeServerPort(int& nClientPortNumber)
 {
     ServerSocket *socket = NULL;
     while (!socket)
@@ -1347,8 +1348,7 @@ ServerSocket* findFreeServerPort(int &nClientPortNumber)
     return socket;
 }
 
-static inline
-ServerSocket* getMasterSocket(int nMasterPortNumber)
+static inline ServerSocket* getMasterSocket(int nMasterPortNumber)
 {
     try
     {
@@ -1378,8 +1378,7 @@ ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
     return socket;
 }
 
-static inline
-std::string getLaunchURI()
+static inline std::string getLaunchURI()
 {
     std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
     aAbsTopSrcDir = Poco::Path(aAbsTopSrcDir).absolute().toString();
@@ -1445,8 +1444,7 @@ void LOOLWSD::initialize(Application& self)
         throw std::runtime_error("Do not run as root. Please run as lool user.");
     }
 
-    if (!UnitWSD::init(UnitWSD::UnitType::TYPE_WSD,
-                       UnitTestLibrary))
+    if (!UnitWSD::init(UnitWSD::UnitType::TYPE_WSD, UnitTestLibrary))
     {
         throw std::runtime_error("Failed to load wsd unit test library.");
     }
@@ -1454,41 +1452,40 @@ void LOOLWSD::initialize(Application& self)
     auto& conf = config();
 
     // Add default values of new entries here.
-    static const std::map<std::string, std::string> DefAppConfig = {
-        { "tile_cache_path", LOOLWSD_CACHEDIR },
-        { "sys_template_path", "systemplate" },
-        { "lo_template_path", "/opt/collaboraoffice5.1" },
-        { "child_root_path", "jails" },
-        { "lo_jail_subpath", "lo" },
-        { "server_name", "" },
-        { "file_server_root_path", "../loleaflet/../" },
-        { "num_prespawn_children", "1" },
-        { "per_document.max_concurrency", "4" },
-        { "loleaflet_html", "loleaflet.html" },
-        { "logging.color", "true" },
-        { "logging.level", "trace" },
-        { "ssl.enable", "true" },
-        { "ssl.termination", "true" },
-        { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
-        { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
-        { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
-        { "storage.filesystem[@allow]", "false" },
-        { "storage.wopi[@allow]", "true" },
-        { "storage.wopi.host[0][@allow]", "true" },
-        { "storage.wopi.host[0]", "localhost" },
-        { "storage.wopi.max_file_size", "0" },
-        { "storage.webdav[@allow]", "false" },
-        { "logging.file[@enable]", "false" },
-        { "logging.file.property[0][@name]", "path" },
-        { "logging.file.property[0]", "loolwsd.log" },
-        { "logging.file.property[1][@name]", "rotation" },
-        { "logging.file.property[1]", "never" },
-        { "logging.file.property[2][@name]", "compress" },
-        { "logging.file.property[2]", "true" },
-        { "logging.file.property[3][@name]", "flush" },
-        { "logging.file.property[3]", "false" },
-        { "trace[@enable]", "false" }
-    };
+    static const std::map<std::string, std::string> DefAppConfig
+        = { { "tile_cache_path", LOOLWSD_CACHEDIR },
+            { "sys_template_path", "systemplate" },
+            { "lo_template_path", "/opt/collaboraoffice5.1" },
+            { "child_root_path", "jails" },
+            { "lo_jail_subpath", "lo" },
+            { "server_name", "" },
+            { "file_server_root_path", "../loleaflet/../" },
+            { "num_prespawn_children", "1" },
+            { "per_document.max_concurrency", "4" },
+            { "loleaflet_html", "loleaflet.html" },
+            { "logging.color", "true" },
+            { "logging.level", "trace" },
+            { "ssl.enable", "true" },
+            { "ssl.termination", "true" },
+            { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
+            { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
+            { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
+            { "storage.filesystem[@allow]", "false" },
+            { "storage.wopi[@allow]", "true" },
+            { "storage.wopi.host[0][@allow]", "true" },
+            { "storage.wopi.host[0]", "localhost" },
+            { "storage.wopi.max_file_size", "0" },
+            { "storage.webdav[@allow]", "false" },
+            { "logging.file[@enable]", "false" },
+            { "logging.file.property[0][@name]", "path" },
+            { "logging.file.property[0]", "loolwsd.log" },
+            { "logging.file.property[1][@name]", "rotation" },
+            { "logging.file.property[1]", "never" },
+            { "logging.file.property[2][@name]", "compress" },
+            { "logging.file.property[2]", "true" },
+            { "logging.file.property[3][@name]", "flush" },
+            { "logging.file.property[3]", "false" },
+            { "trace[@enable]", "false" } };
 
     // Set default values, in case they are missing from the config file.
     AutoPtr<AppConfigMap> pDefConfig(new AppConfigMap(DefAppConfig));
@@ -1586,17 +1583,17 @@ void LOOLWSD::initialize(Application& self)
     }
 
     // Otherwise we profile the soft-device at jail creation time.
-    setenv ("SAL_DISABLE_OPENCL", "true", 1);
+    setenv("SAL_DISABLE_OPENCL", "true", 1);
 
     // In Trial Versions we might want to set some limits.
     LOOLWSD::NumConnections = 0;
-    Log::info() << "Open Documents Limit: " << (MAX_DOCUMENTS > 0 ?
-                                                std::to_string(MAX_DOCUMENTS) :
-                                                std::string("unlimited")) << Log::end;
+    Log::info() << "Open Documents Limit: "
+                << (MAX_DOCUMENTS ? std::to_string(MAX_DOCUMENTS) : std::string("unlimited"))
+                << Log::end;
 
-    Log::info() << "Client Connections Limit: " << (MAX_CONNECTIONS > 0 ?
-                                                    std::to_string(MAX_CONNECTIONS) :
-                                                    std::string("unlimited")) << Log::end;
+    Log::info() << "Client Connections Limit: "
+                << (MAX_CONNECTIONS ? std::to_string(MAX_CONNECTIONS) : std::string("unlimited"))
+                << Log::end;
 
     // Command Tracing.
     if (getConfigValue<bool>(conf, "trace[@enable]", false))
@@ -1628,8 +1625,8 @@ void LOOLWSD::initialize(Application& self)
     ServerApplication::initialize(self);
 
 #if ENABLE_DEBUG
-            std::cerr << "\nLaunch this in your browser:\n\n" <<
-                getLaunchURI() << "\n" << std::endl;
+    std::cerr << "\nLaunch this in your browser:\n\n"
+              << getLaunchURI() << '\n' << std::endl;
 #endif
 }
 
@@ -1824,7 +1821,7 @@ Process::PID LOOLWSD::createForKit()
         args.push_back("--nocaps");
     }
 
-    Log::info("Launching forkit process: " + forKitPath + " " +
+    Log::info("Launching forkit process: " + forKitPath + ' ' +
               Poco::cat(std::string(" "), args.begin(), args.end()));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
@@ -1854,7 +1851,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     initializeSSL();
 
-    char *locale = setlocale(LC_ALL, nullptr);
+    char* locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
         setlocale(LC_ALL, "en_US.utf8");
 
@@ -1918,7 +1915,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (!psvs)
         return Application::EXIT_SOFTWARE;
 
-    ThreadPool threadPool(NumPreSpawnedChildren*6, MAX_SESSIONS * 2);
+    ThreadPool threadPool(NumPreSpawnedChildren * 6, MAX_SESSIONS * 2);
     HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
     Log::info("Starting master server listening on " + std::to_string(ClientPortNumber));
     srv.start();
@@ -1988,8 +1985,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 else if (WIFSTOPPED(status) == true)
                 {
                     Log::info() << "Child process [" << pid << "] stopped with "
-                                << Util::signalName(WSTOPSIG(status))
-                                << Log::end;
+                                << Util::signalName(WSTOPSIG(status)) << Log::end;
                 }
                 else if (WIFCONTINUED(status) == true)
                 {
@@ -2027,9 +2023,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 {
                     std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
                     cleanupDocBrokers();
-                    for (auto& brokerIt : DocBrokers)
+                    for (auto& pair : DocBrokers)
                     {
-                        brokerIt.second->autoSave(false, 0);
+                        pair.second->autoSave(false, 0);
                     }
                 }
                 catch (const std::exception& exc)

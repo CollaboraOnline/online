@@ -9,13 +9,13 @@
 
 #include <Poco/Runnable.h>
 
-#include "MessageQueue.hpp"
-#include "LOOLSession.hpp"
 #include "LOOLProtocol.hpp"
+#include "LOOLSession.hpp"
+#include "MessageQueue.hpp"
 #include "Util.hpp"
 
 /// This thread handles incoming messages on a given kit instance.
-class QueueHandler: public Poco::Runnable
+class QueueHandler : public Poco::Runnable
 {
 public:
     QueueHandler(std::shared_ptr<MessageQueue> queue,

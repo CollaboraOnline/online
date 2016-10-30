@@ -40,14 +40,14 @@ public:
 
     /// Subscribes if no subscription exists and returns the version number.
     /// Otherwise returns 0 to signify a subscription exists.
-    void subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber);
+    void subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber);
 
     /// Cancels all tile requests by the given subscriber.
-    std::string cancelTiles(const std::shared_ptr<ClientSession> &subscriber);
+    std::string cancelTiles(const std::shared_ptr<ClientSession>& subscriber);
 
     std::unique_ptr<std::fstream> lookupTile(const TileDesc& tile);
 
-    void saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size);
+    void saveTileAndNotify(const TileDesc& tile, const char* data, const size_t size);
 
     std::string getTextFile(const std::string& fileName);
 
@@ -59,7 +59,7 @@ public:
 
     // Saves a font / style / etc rendering
     // The dir parameter should be the type of rendering, like "font", "style", etc
-    void saveRendering(const std::string& name, const std::string& dir, const char *data, size_t size);
+    void saveRendering(const std::string& name, const std::string& dir, const char* data, size_t size);
 
     std::unique_ptr<std::fstream> lookupCachedFile(const std::string& name, const std::string& dir);
 
@@ -96,7 +96,7 @@ private:
 
     mutable std::mutex _tilesBeingRenderedMutex;
 
-    std::map<std::string, std::shared_ptr<TileBeingRendered>> _tilesBeingRendered;
+    std::map<std::string, std::shared_ptr<TileBeingRendered> > _tilesBeingRendered;
 };
 
 #endif

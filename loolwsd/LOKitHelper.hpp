@@ -10,8 +10,8 @@
 #ifndef INCLUDED_LOKITHELPER_HPP
 #define INCLUDED_LOKITHELPER_HPP
 
-#include <string>
 #include <sstream>
+#include <string>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
@@ -19,8 +19,7 @@
 
 namespace LOKitHelper
 {
-    inline
-    std::string documentTypeToString(LibreOfficeKitDocumentType type)
+    inline std::string documentTypeToString(LibreOfficeKitDocumentType type)
     {
         switch (type)
         {
@@ -37,16 +36,14 @@ namespace LOKitHelper
         }
     }
 
-    inline
-    std::string getDocumentTypeAsString(LibreOfficeKitDocument *loKitDocument)
+    inline std::string getDocumentTypeAsString(LibreOfficeKitDocument *loKitDocument)
     {
         assert(loKitDocument && "null loKitDocument");
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
         return documentTypeToString(type);
     }
 
-    inline
-    std::string kitCallbackTypeToString(const int nType)
+    inline std::string kitCallbackTypeToString(const int nType)
     {
         // Keep in the same order as in LibreOfficeKitEnums.h
         switch (nType)
@@ -116,10 +113,9 @@ namespace LOKitHelper
         return std::to_string(nType);
     }
 
-    inline
-    std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
+    inline std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
     {
-        char* ptrValue;
+        char *ptrValue;
         assert(loKitDocument && "null loKitDocument");
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
 

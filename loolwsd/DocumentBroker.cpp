@@ -77,10 +77,9 @@ std::string getCachePath(const std::string& uri)
 
     digestEngine.update(uri.c_str(), uri.size());
 
-    return (LOOLWSD::Cache + "/" +
+    return (LOOLWSD::Cache + '/' +
             Poco::DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
 }
-
 }
 
 Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
@@ -169,7 +168,7 @@ DocumentBroker::~DocumentBroker()
     Admin::instance().rmDoc(_docKey);
 
     Log::info() << "~DocumentBroker [" << _uriPublic.toString()
-                << "] destroyed with " << getSessionsCount()
+                << "] destroyed with " << _sessions.size()
                 << " sessions left." << Log::end;
 }
 
@@ -374,7 +373,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
     {
         // Find the most recent activity.
         double inactivityTimeMs = std::numeric_limits<double>::max();
-        for (auto& sessionIt: _sessions)
+        for (auto& sessionIt : _sessions)
         {
             inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
         }
@@ -413,7 +412,7 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
     Util::assertIsLocked(_mutex);
 
     // Save using session holding the edit-lock (or first if multview).
-    for (auto& sessionIt: _sessions)
+    for (auto& sessionIt : _sessions)
     {
         // Invalidate the timestamp to force persisting.
         _lastFileModifiedTime.fromEpochTime(0);
@@ -565,7 +564,7 @@ void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::
 
     std::stringstream ss;
     ss << "error: cmd=" << cmd << " kind=" << kind;
-    for (auto& it: _sessions)
+    for (auto& it : _sessions)
     {
         it.second->sendTextFrame(ss.str());
     }
@@ -585,7 +584,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     }
     else if (command == "tilecombine:")
     {
-       handleTileCombinedResponse(payload);
+        handleTileCombinedResponse(payload);
     }
     else if (LOOLProtocol::getFirstToken(command, '-') == "client")
     {
@@ -658,7 +657,8 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     tileCache().subscribeToTileRendering(tile, session);
 
     // Forward to child to render.
-    Log::debug() << "Sending render request for tile (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
+    Log::debug() << "Sending render request for tile (" << tile.getPart() << ','
+                 << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
     const std::string request = "tile " + tile.serialize();
     _childProcess->sendTextFrame(request);
     _debugRenderedTileCount++;
@@ -746,9 +746,8 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            tileCache().saveTileAndNotify(
-                tile, buffer + firstLine.size() + 1,
-                length - firstLine.size() - 1);
+            const auto offset = firstLine.size() + 1;
+            tileCache().saveTileAndNotify(tile, buffer + offset, length - offset);
         }
         else
         {
@@ -814,7 +813,7 @@ bool DocumentBroker::startDestroy(const std::string& id)
     _lastEditableSession = !currentSession->second->isReadOnly();
     if (_lastEditableSession && !_sessions.empty())
     {
-        for (const auto& it: _sessions)
+        for (const auto& it : _sessions)
         {
             if (it.second->getId() != id &&
                 !it.second->isReadOnly())

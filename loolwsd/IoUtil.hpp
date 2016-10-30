@@ -11,13 +11,13 @@
 #define INCLUDED_IOUTIL_HPP
 
 #include <functional>
-#include <string>
 #include <memory>
+#include <string>
 
 #include <sys/poll.h>
 
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Logger.h>
+#include <Poco/Net/WebSocket.h>
 
 namespace IoUtil
 {
@@ -37,8 +37,7 @@ namespace IoUtil
     void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws);
 
     ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size);
-    inline
-    ssize_t writeToPipe(int pipe, const std::string& message)
+    inline ssize_t writeToPipe(int pipe, const std::string& message)
     {
         return writeToPipe(pipe, message.c_str(), message.size());
     }
