@@ -12,8 +12,8 @@
 
 #include <mutex>
 
-#include <Poco/Thread.h>
 #include <Poco/NotificationQueue.h>
+#include <Poco/Thread.h>
 
 #include "Common.hpp"
 #include "LOOLKit.hpp"
@@ -28,32 +28,26 @@ class IDocumentManager
 {
 public:
     /// Reqest loading a document, or a new view, if one exists.
-    virtual
-    std::shared_ptr<lok::Document> onLoad(const std::string& sessionId,
-                                          const std::string& jailedFilePath,
-                                          const std::string& userName,
-                                          const std::string& docPassword,
-                                          const std::string& renderOpts,
-                                          const bool haveDocPassword) = 0;
+    virtual std::shared_ptr<lok::Document> onLoad(const std::string& sessionId,
+                                                  const std::string& jailedFilePath,
+                                                  const std::string& userName,
+                                                  const std::string& docPassword,
+                                                  const std::string& renderOpts,
+                                                  const bool haveDocPassword)
+        = 0;
 
     /// Unload a client session, which unloads the document
     /// if it is the last and only.
-    virtual
-    void onUnload(const ChildSession& session) = 0;
+    virtual void onUnload(const ChildSession& session) = 0;
 
     /// Send updated view info to all active sessions
-    virtual
-    void notifyViewInfo(const std::vector<int>& viewIds) = 0;
+    virtual void notifyViewInfo(const std::vector<int>& viewIds) = 0;
     /// Get a view ID <-> UserInfo map.
-    virtual
-    std::map<int, UserInfo> getViewInfo() = 0;
-    virtual
-    std::mutex& getMutex() = 0;
-    virtual
-    std::shared_ptr<TileQueue>& getTileQueue() = 0;
+    virtual std::map<int, UserInfo> getViewInfo() = 0;
+    virtual std::mutex& getMutex() = 0;
+    virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;
 
-    virtual
-    bool sendTextFrame(const std::string& message) = 0;
+    virtual bool sendTextFrame(const std::string& message) = 0;
 };
 
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
@@ -72,8 +66,8 @@ public:
                  IDocumentManager& docManager);
     virtual ~ChildSession();
 
-    bool getStatus(const char *buffer, int length);
-    bool getPartPageRectangles(const char *buffer, int length);
+    bool getStatus(const char* buffer, int length);
+    bool getPartPageRectangles(const char* buffer, int length);
     int getViewId() const { return _viewId; }
     void setViewId(const int viewId) { _viewId = viewId; }
     const std::string& getViewUserId() const { return _userId; }
@@ -96,30 +90,30 @@ public:
     }
 
 private:
-    bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool loadDocument(const char* buffer, int length, Poco::StringTokenizer& tokens);
 
-    bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool sendFontRendering(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool getCommandValues(const char* buffer, int length, Poco::StringTokenizer& tokens);
 
-    bool clientZoom(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool clientVisibleArea(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool downloadAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool clientZoom(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool clientVisibleArea(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool downloadAs(const char* buffer, int length, Poco::StringTokenizer& tokens);
     bool getChildId();
-    bool getTextSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool paste(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool insertFile(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool keyEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool mouseEvent(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool unoCommand(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool selectText(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool selectGraphic(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool resetSelection(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool saveAs(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool setClientPart(const char *buffer, int length, Poco::StringTokenizer& tokens);
-    bool setPage(const char *buffer, int length, Poco::StringTokenizer& tokens);
+    bool getTextSelection(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool paste(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool insertFile(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool keyEvent(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool mouseEvent(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool unoCommand(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool selectText(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool selectGraphic(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool resetSelection(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool saveAs(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool setClientPart(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool setPage(const char* buffer, int length, Poco::StringTokenizer& tokens);
 
     virtual void disconnect() override;
-    virtual bool _handleInput(const char *buffer, int length) override;
+    virtual bool _handleInput(const char* buffer, int length) override;
 
 private:
     const std::string _jailId;

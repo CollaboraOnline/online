@@ -17,7 +17,7 @@ void lokit_main(const std::string& childRoot,
                 bool queryVersionInfo,
                 bool displayVersion);
 
-bool globalPreinit(const std::string &loTemplate);
+bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
 void documentViewCallback(const int nType, const char* pPayload, void* pData);
 
@@ -39,7 +39,6 @@ struct UserInfo
     std::string userid;
     std::string username;
 };
-
 
 #endif
 

@@ -62,32 +62,30 @@ public:
     const Poco::URI& getPublicUri() const { return _uriPublic; }
 
 private:
+    virtual bool _handleInput(const char* buffer, int length) override;
 
-    virtual bool _handleInput(const char *buffer, int length) override;
-
-    bool loadDocument(const char *buffer, int length, Poco::StringTokenizer& tokens,
+    bool loadDocument(const char* buffer, int length, Poco::StringTokenizer& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool getStatus(const char *buffer, int length,
+    bool getStatus(const char* buffer, int length,
                    const std::shared_ptr<DocumentBroker>& docBroker);
-    bool getCommandValues(const char *buffer, int length, Poco::StringTokenizer& tokens,
+    bool getCommandValues(const char* buffer, int length, Poco::StringTokenizer& tokens,
                           const std::shared_ptr<DocumentBroker>& docBroker);
-    bool getPartPageRectangles(const char *buffer, int length,
+    bool getPartPageRectangles(const char* buffer, int length,
                                const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool sendTile(const char *buffer, int length, Poco::StringTokenizer& tokens,
+    bool sendTile(const char* buffer, int length, Poco::StringTokenizer& tokens,
                   const std::shared_ptr<DocumentBroker>& docBroker);
-    bool sendCombinedTiles(const char *buffer, int length, Poco::StringTokenizer& tokens,
+    bool sendCombinedTiles(const char* buffer, int length, Poco::StringTokenizer& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool sendFontRendering(const char *buffer, int length, Poco::StringTokenizer& tokens,
+    bool sendFontRendering(const char* buffer, int length, Poco::StringTokenizer& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
 
     bool forwardToChild(const std::string& message,
                         const std::shared_ptr<DocumentBroker>& docBroker);
 
 private:
-
     std::weak_ptr<DocumentBroker> _docBroker;
 
     /// URI with which client made request to us

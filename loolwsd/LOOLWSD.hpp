@@ -29,7 +29,7 @@ class TraceFileWriter;
 
 /// The Server class which is responsible for all
 /// external interactions.
-class LOOLWSD: public Poco::Util::ServerApplication
+class LOOLWSD : public Poco::Util::ServerApplication
 {
 public:
     LOOLWSD();
@@ -51,32 +51,26 @@ public:
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
 
-    static
-    std::string GenSessionId()
+    static std::string GenSessionId()
     {
         return Util::encodeId(++NextSessionId, 4);
     }
 
-    static
-    bool isSSLEnabled()
+    static bool isSSLEnabled()
     {
         return LOOLWSD::SSLEnabled.get();
     }
 
-    static
-    bool isSSLTermination()
+    static bool isSSLTermination()
     {
         return LOOLWSD::SSLTermination.get();
     }
 
-    static
-    void dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
+    static void dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
 
-    static
-    void dumpIncomingTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
+    static void dumpIncomingTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
 
-    static
-    void dumpOutgoingTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
+    static void dumpOutgoingTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
 
 protected:
     void initialize(Poco::Util::Application& self) override;
@@ -93,7 +87,6 @@ private:
     void displayHelp();
     Poco::Process::PID createForKit();
 
-
     class ConfigValueGetter
     {
         Poco::Util::LayeredConfiguration& _config;
@@ -104,17 +97,17 @@ private:
                           const std::string& name)
             : _config(config)
             , _name(name)
-        {}
+        {
+        }
 
         void operator()(unsigned int& value) { value = _config.getUInt(_name); }
         void operator()(bool& value) { value = _config.getBool(_name); }
         void operator()(std::string& value) { value = _config.getString(_name); }
     };
 
-    template<typename T>
-    static
-    bool getSafeConfig(Poco::Util::LayeredConfiguration& config,
-                       const std::string& name, T& value)
+    template <typename T>
+    static bool getSafeConfig(Poco::Util::LayeredConfiguration& config,
+                              const std::string& name, T& value)
     {
         try
         {

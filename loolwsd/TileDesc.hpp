@@ -135,8 +135,7 @@ public:
     }
 
     /// Deserialize a TileDesc from a tokenized string.
-    static
-    TileDesc parse(const Poco::StringTokenizer& tokens)
+    static TileDesc parse(const Poco::StringTokenizer& tokens)
     {
         // We don't expect undocumented fields and
         // assume all values to be int.
@@ -165,12 +164,10 @@ public:
     }
 
     /// Deserialize a TileDesc from a string format.
-    static
-    TileDesc parse(const std::string& message)
+    static TileDesc parse(const std::string& message)
     {
         Poco::StringTokenizer tokens(message, " ",
-                                     Poco::StringTokenizer::TOK_IGNORE_EMPTY |
-                                     Poco::StringTokenizer::TOK_TRIM);
+                                     Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         return parse(tokens);
     }
 
@@ -182,8 +179,8 @@ private:
     int _tilePosY;
     int _tileWidth;
     int _tileHeight;
-    int _ver;       //< Versioning support.
-    int _imgSize;   //< Used for responses.
+    int _ver; //< Versioning support.
+    int _imgSize; //< Used for responses.
     int _id;
 };
 
@@ -251,7 +248,6 @@ private:
     }
 
 public:
-
     int getPart() const { return _part; }
     int getWidth() const { return _width; }
     int getHeight() const { return _height; }
@@ -312,8 +308,7 @@ public:
     }
 
     /// Deserialize a TileDesc from a tokenized string.
-    static
-    TileCombined parse(const Poco::StringTokenizer& tokens)
+    static TileCombined parse(const Poco::StringTokenizer& tokens)
     {
         // We don't expect undocumented fields and
         // assume all values to be int.
@@ -363,17 +358,14 @@ public:
     }
 
     /// Deserialize a TileDesc from a string format.
-    static
-    TileCombined parse(const std::string& message)
+    static TileCombined parse(const std::string& message)
     {
         Poco::StringTokenizer tokens(message, " ",
-                                     Poco::StringTokenizer::TOK_IGNORE_EMPTY |
-                                     Poco::StringTokenizer::TOK_TRIM);
+                                     Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         return parse(tokens);
     }
 
-    static
-    TileCombined create(const std::vector<TileDesc>& tiles)
+    static TileCombined create(const std::vector<TileDesc>& tiles)
     {
         assert(!tiles.empty());
 
@@ -399,7 +391,7 @@ private:
     int _height;
     int _tileWidth;
     int _tileHeight;
-    int _ver;       //< Versioning support.
+    int _ver; //< Versioning support.
     int _id;
 };
 

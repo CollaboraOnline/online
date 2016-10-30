@@ -16,17 +16,17 @@
 #include <mutex>
 #include <ostream>
 
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Buffer.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Types.h>
 
-#include "MessageQueue.hpp"
 #include "LOOLProtocol.hpp"
-#include "TileCache.hpp"
 #include "Log.hpp"
+#include "MessageQueue.hpp"
+#include "TileCache.hpp"
 
 /// Base class of a WebSocket session.
 class LOOLSession
@@ -36,22 +36,25 @@ public:
     /// 1) Between the master loolwsd server to the end-user LOOL client
     /// 2) Between the master loolwsd server and a jailed child process, in the master process
     /// 3) Ditto, in the jailed process
-    enum class Kind { ToClient, ToPrisoner, ToMaster };
+    enum class Kind
+    {
+        ToClient,
+        ToPrisoner,
+        ToMaster
+    };
 
     const std::string& getId() const { return _id; }
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
-    virtual
-    bool sendBinaryFrame(const char *buffer, int length);
-    virtual
-    bool sendTextFrame(const char* buffer, const int length);
+    virtual bool sendBinaryFrame(const char* buffer, int length);
+    virtual bool sendTextFrame(const char* buffer, const int length);
     bool sendTextFrame(const std::string& text)
     {
         return sendTextFrame(text.data(), text.size());
     }
 
-    bool handleInput(const char *buffer, int length);
+    bool handleInput(const char* buffer, int length);
 
     /// Invoked when we want to disconnect a session.
     virtual void disconnect();
@@ -92,7 +95,7 @@ protected:
     }
 
     template <typename T>
-    bool forwardToPeer(T& p, const char *buffer, int length, const bool binary)
+    bool forwardToPeer(T& p, const char* buffer, int length, const bool binary)
     {
         const auto message = LOOLProtocol::getAbbreviatedMessage(buffer, length);
 
@@ -126,11 +129,9 @@ protected:
     }
 
 private:
-
-    virtual bool _handleInput(const char *buffer, int length) = 0;
+    virtual bool _handleInput(const char* buffer, int length) = 0;
 
 private:
-
     /// A session ID specific to an end-to-end connection (from user to lokit).
     const std::string _id;
 
@@ -185,8 +186,8 @@ protected:
     std::string _userName;
 };
 
-template<typename charT, typename traits>
-inline std::basic_ostream<charT, traits> & operator <<(std::basic_ostream<charT, traits> & stream, LOOLSession::Kind kind)
+template <typename charT, typename traits>
+inline std::basic_ostream<charT, traits>& operator<<(std::basic_ostream<charT, traits>& stream, LOOLSession::Kind kind)
 {
     switch (kind)
     {

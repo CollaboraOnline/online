@@ -28,11 +28,9 @@ public:
     bool shutdownPeer(Poco::UInt16 statusCode);
 
 private:
-
-    virtual bool _handleInput(const char *buffer, int length) override;
+    virtual bool _handleInput(const char* buffer, int length) override;
 
 private:
-
     std::shared_ptr<DocumentBroker> _docBroker;
     std::weak_ptr<ClientSession> _peer;
     int _curPart;

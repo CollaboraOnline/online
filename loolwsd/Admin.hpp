@@ -27,7 +27,7 @@
 class Admin;
 
 /// Admin requests over HTTP(S) handler.
-class AdminRequestHandler: public Poco::Net::HTTPRequestHandler
+class AdminRequestHandler : public Poco::Net::HTTPRequestHandler
 {
 public:
     AdminRequestHandler(Admin* adminManager);
@@ -87,8 +87,7 @@ public:
 
     void rescheduleCpuTimer(unsigned interval);
 
-    static
-    AdminRequestHandler* createRequestHandler()
+    static AdminRequestHandler* createRequestHandler()
     {
         return new AdminRequestHandler(&instance());
     }

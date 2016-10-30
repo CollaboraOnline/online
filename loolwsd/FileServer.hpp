@@ -25,7 +25,7 @@
 #include "Log.hpp"
 
 /// Handles file requests over HTTP(S).
-class FileServerRequestHandler: public Poco::Net::HTTPRequestHandler
+class FileServerRequestHandler : public Poco::Net::HTTPRequestHandler
 {
     std::string getRequestPathname(const Poco::Net::HTTPServerRequest& request);
 

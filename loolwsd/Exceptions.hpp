@@ -12,8 +12,8 @@
 #ifndef INCLUDED_EXCEPTIONS_HPP
 #define INCLUDED_EXCEPTIONS_HPP
 
-#include <stdexcept>
 #include <exception>
+#include <stdexcept>
 
 // Generic LOOL errors and base for others.
 class LoolException : public std::runtime_error
@@ -66,7 +66,6 @@ class WebSocketErrorMessageException : public LoolException
 public:
     using LoolException::LoolException;
 };
-
 
 #endif
 

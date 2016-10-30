@@ -10,9 +10,9 @@
 #ifndef INCLUDED_LOG_HPP
 #define INCLUDED_LOG_HPP
 
-#include <string>
-#include <sstream>
 #include <functional>
+#include <sstream>
+#include <string>
 
 #include <Poco/Logger.h>
 
@@ -38,7 +38,7 @@ namespace Log
     /// Signal safe prefix logging
     void signalLogPrefix();
     /// Signal safe logging
-    void signalLog(const char *message);
+    void signalLog(const char* message);
 
     /// The following is to write streaming logs.
     /// Log::info() << "Value: 0x" << std::hex << value
@@ -54,81 +54,74 @@ namespace Log
     /// operator for logging.
     class StreamLogger
     {
-        public:
-            StreamLogger(std::function<void(const std::string&)> func)
-              : _func(std::move(func))
-            {
-            }
+    public:
+        StreamLogger(std::function<void(const std::string&)> func)
+            : _func(std::move(func))
+        {
+        }
 
-            StreamLogger(StreamLogger&& sl) noexcept
-              : _stream(sl._stream.str())
-              , _func(std::move(sl._func))
-            {
-            }
+        StreamLogger(StreamLogger&& sl) noexcept
+            : _stream(sl._stream.str()),
+              _func(std::move(sl._func))
+        {
+        }
 
-            void flush() const
-            {
-                _func(_stream.str());
-            }
+        void flush() const
+        {
+            _func(_stream.str());
+        }
 
-            std::ostringstream _stream;
+        std::ostringstream _stream;
 
-        private:
-            std::function<void(const std::string&)> _func;
+    private:
+        std::function<void(const std::string&)> _func;
     };
 
-    inline
-    StreamLogger trace()
+    inline StreamLogger trace()
     {
-        return StreamLogger([](const std::string& msg) { trace(msg);});
+        return StreamLogger([](const std::string& msg) { trace(msg); });
     }
 
-    inline
-    StreamLogger debug()
+    inline StreamLogger debug()
     {
-        return StreamLogger([](const std::string& msg) { debug(msg);});
+        return StreamLogger([](const std::string& msg) { debug(msg); });
     }
 
-    inline
-    StreamLogger info()
+    inline StreamLogger info()
     {
-        return StreamLogger([](const std::string& msg) { info(msg);});
+        return StreamLogger([](const std::string& msg) { info(msg); });
     }
 
-    inline
-    StreamLogger warn()
+    inline StreamLogger warn()
     {
-        return StreamLogger([](const std::string& msg) { warn(msg);});
+        return StreamLogger([](const std::string& msg) { warn(msg); });
     }
 
-    inline
-    StreamLogger error()
+    inline StreamLogger error()
     {
-        return StreamLogger([](const std::string& msg) { error(msg);});
+        return StreamLogger([](const std::string& msg) { error(msg); });
     }
 
-    inline
-    StreamLogger fatal()
+    inline StreamLogger fatal()
     {
-        return StreamLogger([](const std::string& msg) { fatal(msg);});
+        return StreamLogger([](const std::string& msg) { fatal(msg); });
     }
 
     template <typename U>
-    StreamLogger& operator <<(StreamLogger& lhs, const U& rhs)
+    StreamLogger& operator<<(StreamLogger& lhs, const U& rhs)
     {
         lhs._stream << rhs;
         return lhs;
     }
 
     template <typename U>
-    StreamLogger& operator <<(StreamLogger&& lhs, U&& rhs)
+    StreamLogger& operator<<(StreamLogger&& lhs, U&& rhs)
     {
         lhs._stream << rhs;
         return lhs;
     }
 
-    inline
-    void operator <<(StreamLogger& lhs, const _end_marker&)
+    inline void operator<<(StreamLogger& lhs, const _end_marker&)
     {
         (void)end;
         lhs.flush();

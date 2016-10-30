@@ -29,11 +29,10 @@ namespace LOOLProtocol
     constexpr unsigned ProtocolMajorVersionNumber = 0;
     constexpr unsigned ProtocolMinorVersionNumber = 1;
 
-    inline
-    std::string GetProtocolVersion()
+    inline std::string GetProtocolVersion()
     {
         return std::to_string(ProtocolMajorVersionNumber) + '.'
-             + std::to_string(ProtocolMinorVersionNumber);
+            + std::to_string(ProtocolMinorVersionNumber);
     }
 
     // Parse a string into a version tuple.
