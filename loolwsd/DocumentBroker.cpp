@@ -170,6 +170,8 @@ DocumentBroker::~DocumentBroker()
     Log::info() << "~DocumentBroker [" << _uriPublic.toString()
                 << "] destroyed with " << _sessions.size()
                 << " sessions left." << Log::end;
+
+    assert(_sessions.empty() && "DocumentBroker still has unremoved sessions!");
 }
 
 bool DocumentBroker::load(const std::string& sessionId, const std::string& jailId)
