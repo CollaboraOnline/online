@@ -740,29 +740,27 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
 void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);
+    Log::debug("Handling tile combined: " + firstLine);
+
     try
     {
-        auto tile = TileDesc::parse(firstLine);
-        const auto buffer = payload.data();
         const auto length = payload.size();
-
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
+            const auto tile = TileDesc::parse(firstLine);
+            const auto buffer = payload.data();
             const auto offset = firstLine.size() + 1;
             tileCache().saveTileAndNotify(tile, buffer + offset, length - offset);
         }
         else
         {
             Log::debug() << "Render request declined for " << firstLine << Log::end;
-            std::unique_lock<std::mutex> tileBeingRenderedLock(tileCache().getTilesBeingRenderedLock());
-            tileCache().forgetTileBeingRendered(tile);
+            // They will get re-issued if we don't forget them.
         }
     }
     catch (const std::exception& exc)
     {
         Log::error("Failed to process tile response [" + firstLine + "]: " + exc.what() + ".");
-        //FIXME: Return error.
-        //sendTextFrame("error: cmd=tile kind=syntax");
     }
 }
 
@@ -773,13 +771,12 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
 
     try
     {
-        auto tileCombined = TileCombined::parse(firstLine);
-        const auto buffer = payload.data();
         const auto length = payload.size();
-        auto offset = firstLine.size() + 1;
-
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
+            const auto tileCombined = TileCombined::parse(firstLine);
+            const auto buffer = payload.data();
+            auto offset = firstLine.size() + 1;
             for (const auto& tile : tileCombined.getTiles())
             {
                 tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
@@ -788,19 +785,13 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
         }
         else
         {
-            Log::error() << "Render request failed for " << firstLine << Log::end;
-            std::unique_lock<std::mutex> tileBeingRenderedLock(tileCache().getTilesBeingRenderedLock());
-            for (const auto& tile : tileCombined.getTiles())
-            {
-                tileCache().forgetTileBeingRendered(tile);
-            }
+            Log::error() << "Render request declined for " << firstLine << Log::end;
+            // They will get re-issued if we don't forget them.
         }
     }
     catch (const std::exception& exc)
     {
         Log::error("Failed to process tile response [" + firstLine + "]: " + exc.what() + ".");
-        //FIXME: Return error.
-        //sendTextFrame("error: cmd=tile kind=syntax");
     }
 }
 
