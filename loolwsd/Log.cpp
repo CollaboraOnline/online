@@ -36,8 +36,10 @@ namespace Log
     using namespace Poco;
 
     static const Poco::Int64 epochStart = Poco::Timestamp().epochMicroseconds();
+
     /// Helper to avoid destruction ordering issues.
-    struct StaticNames {
+    struct StaticNames
+    {
         std::atomic<bool> inited;
         std::string name;
         std::string id;
@@ -56,9 +58,10 @@ namespace Log
     //   $ man 7 signal
     void signalLog(const char *message)
     {
-        while (true) {
-            int length = strlen(message);
-            int written = write (STDERR_FILENO, message, length);
+        while (true)
+        {
+            const int length = strlen(message);
+            const int written = write (STDERR_FILENO, message, length);
             if (written < 0)
             {
                 if (errno == EINTR)
@@ -66,6 +69,7 @@ namespace Log
                 else
                     break;
             }
+
             message += written;
             if (message[0] == '\0')
                 break;
@@ -81,17 +85,19 @@ namespace Log
 
         const Poco::Int64 one_s = 1000000;
         const Poco::Int64 hours = usec / (one_s*60*60);
-        usec %= (one_s*60*60);
+        usec %= (one_s * 60 * 60);
         const Poco::Int64 minutes = usec / (one_s*60);
-        usec %= (one_s*60);
+        usec %= (one_s * 60);
         const Poco::Int64 seconds = usec / (one_s);
         usec %= (one_s);
 
         char procName[32]; // we really need only 16
         if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) != 0)
+        {
             strncpy(procName, "<noid>", sizeof(procName) - 1);
+        }
 
-        const char *appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
+        const char* appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
         assert(strlen(appName) + 32 + 28 < 1024 - 1);
 
         snprintf(buffer, 4095, "%s-%.04lu %d:%.2d:%.2d.%.6d [ %s ] %s  ", appName,

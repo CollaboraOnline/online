@@ -35,6 +35,8 @@ namespace Log
     void fatal(const std::string& msg);
     void sysfatal(const std::string& msg);
 
+    inline bool traceEnabled() { return logger().getLevel() > Poco::Message::PRIO_TRACE; }
+
     /// Signal safe prefix logging
     void signalLogPrefix();
     /// Signal safe logging
@@ -55,31 +57,47 @@ namespace Log
     class StreamLogger
     {
     public:
+        /// No-op instance.
+        StreamLogger()
+          : _enabled(false)
+        {
+        }
+
         StreamLogger(std::function<void(const std::string&)> func)
-            : _func(std::move(func))
+          : _func(std::move(func)),
+            _enabled(true)
         {
         }
 
         StreamLogger(StreamLogger&& sl) noexcept
-            : _stream(sl._stream.str()),
-              _func(std::move(sl._func))
+          : _stream(sl._stream.str()),
+            _func(std::move(sl._func)),
+            _enabled(sl._enabled)
         {
         }
 
+        bool enabled() const { return _enabled; }
+
         void flush() const
         {
-            _func(_stream.str());
+            if (_enabled)
+            {
+                _func(_stream.str());
+            }
         }
 
         std::ostringstream _stream;
 
     private:
         std::function<void(const std::string&)> _func;
+        const bool _enabled;
     };
 
     inline StreamLogger trace()
     {
-        return StreamLogger([](const std::string& msg) { trace(msg); });
+        return traceEnabled()
+             ? StreamLogger([](const std::string& msg) { trace(msg); })
+             : StreamLogger();
     }
 
     inline StreamLogger debug()
@@ -110,14 +128,22 @@ namespace Log
     template <typename U>
     StreamLogger& operator<<(StreamLogger& lhs, const U& rhs)
     {
-        lhs._stream << rhs;
+        if (lhs.enabled())
+        {
+            lhs._stream << rhs;
+        }
+
         return lhs;
     }
 
     template <typename U>
     StreamLogger& operator<<(StreamLogger&& lhs, U&& rhs)
     {
-        lhs._stream << rhs;
+        if (lhs.enabled())
+        {
+            lhs._stream << rhs;
+        }
+
         return lhs;
     }
 
