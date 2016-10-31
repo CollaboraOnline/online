@@ -118,7 +118,12 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('To next paragraph in level'), type: 'unocommand', uno: '.uno:JumpDownThisLevel'},
 						{name: _('To previous paragraph in level'), type: 'unocommand', uno: '.uno:JumpUpThisLevel'},
 						{name: _('Continue previous numbering'), type: 'unocommand', uno: '.uno:ContinueNumbering'}]},
-				{name: _('Clear direct formatting'), type: 'unocommand', uno: '.uno:ResetAttributes'}
+				{name: _('Clear direct formatting'), type: 'unocommand', uno: '.uno:ResetAttributes'},
+				{name: _('Page'), type: 'menu', menu: [
+						{name: 'A4', type: 'unocommand', uno: '.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21000"},"AttributePageSize.Height":{"type":"long", "value": "29700"}}'},
+						{name: 'A5', type: 'unocommand', uno: '.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "14800"},"AttributePageSize.Height":{"type":"long", "value": "21000"}}'},
+						{name: 'Letter', type: 'unocommand', uno: '.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21590"},"AttributePageSize.Height":{"type":"long", "value": "27940"}}'},
+						{name: 'Legal', type: 'unocommand', uno: '.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21590"},"AttributePageSize.Height":{"type":"long", "value": "35560"}}'}]}
 			]},
 			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
 																						{name: _('Rows after'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
