@@ -702,11 +702,11 @@ private:
     /// Handle GET requests.
     static void handleGetRequest(const std::string& uri, std::shared_ptr<WebSocket>& ws, const std::string& id)
     {
-        Log::info("Starting GET request handler for session [" + id + "].");
+        LOG_INF("Starting GET request handler for session [" << id << "].");
 
         // indicator to the client that document broker is searching
         std::string status("statusindicator: find");
-        Log::trace("Sending to Client [" + status + "].");
+        LOG_TRC("Sending to Client [" << status << "].");
         ws->sendFrame(status.data(), status.size());
 
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
@@ -867,12 +867,12 @@ private:
         {
             // indicator to a client that is waiting to connect to lokit process
             status = "statusindicator: connect";
-            Log::trace("Sending to Client [" + status + "].");
+            LOG_TRC("Sending to Client [" << status << "].");
             ws->sendFrame(status.data(), status.size());
 
             // Now the bridge beetween the client and kit process is connected
             status = "statusindicator: ready";
-            Log::trace("Sending to Client [" + status + "].");
+            LOG_TRC("Sending to Client [" + status + "].");
             ws->sendFrame(status.data(), status.size());
 
             Util::checkDiskSpaceOnRegisteredFileSystems();
@@ -1039,8 +1039,8 @@ public:
         if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
         {
             --LOOLWSD::NumConnections;
-            Log::error() << "Limit on maximum number of connections of "
-                         << MAX_CONNECTIONS << " reached." << Log::end;
+            LOG_ERR("Limit on maximum number of connections of "
+                    << MAX_CONNECTIONS << " reached.");
             // accept hand shake
             WebSocket ws(request, response);
             shutdownLimitReached(ws);
@@ -1147,24 +1147,23 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error() << "ClientRequestHandler::handleClientRequest: " << exc.displayText()
-                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                         << Log::end;
+            LOG_ERR("ClientRequestHandler::handleClientRequest: " << exc.displayText()
+                    << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
         }
         catch (const UnauthorizedRequestException& exc)
         {
-            Log::error("ClientRequestHandler::handleClientRequest: UnauthorizedException: " + exc.toString());
+            LOG_ERR("ClientRequestHandler::handleClientRequest: UnauthorizedException: " << exc.toString());
             response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
         }
         catch (const BadRequestException& exc)
         {
-            Log::error("ClientRequestHandler::handleClientRequest: BadRequestException: " + exc.toString());
+            LOG_ERR("ClientRequestHandler::handleClientRequest: BadRequestException: " << exc.toString());
             response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
         }
         catch (const std::exception& exc)
         {
-            Log::error("ClientRequestHandler::handleClientRequest: Exception: " + std::string(exc.what()));
+            LOG_ERR("ClientRequestHandler::handleClientRequest: Exception: " << exc.what());
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
         }
 
