@@ -170,6 +170,13 @@ namespace Log
     }
 }
 
+#define LOG_TRC(X) if (Log::traceEnabled()) { std::ostringstream oss; oss << Log::prefix("TRC") << X; Log::logger().trace(oss.str()); }
+#define LOG_DBG(X) if (Log::debugEnabled()) { std::ostringstream oss; oss << Log::prefix("DBG") << X; Log::logger().debug(oss.str()); }
+#define LOG_INF(X) if (Log::infoEnabled()) { std::ostringstream oss; oss << Log::prefix("INF") << X; Log::logger().information(oss.str()); }
+#define LOG_WRN(X) if (Log::warnEnabled()) { std::ostringstream oss; oss << Log::prefix("WRN") << X; Log::logger().warning(oss.str()); }
+#define LOG_ERR(X) if (Log::errorEnabled()) { std::ostringstream oss; oss << Log::prefix("ERR") << X; Log::logger().error(oss.str()); }
+#define LOG_FTL(X) if (Log::fatalEnabled()) { std::ostringstream oss; oss << Log::prefix("FTL") << X; Log::logger().fatal(oss.str()); }
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
