@@ -713,48 +713,47 @@ private:
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
         std::shared_ptr<DocumentBroker> docBroker;
 
-        // scope the DocBrokersLock
-        {
-            std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-            if (TerminationFlag)
+        if (TerminationFlag)
+        {
+            Log::error("Termination flag set. No loading new session [" + id + "]");
+            return;
+        }
+
+        cleanupDocBrokers();
+
+        // Lookup this document.
+        auto it = DocBrokers.find(docKey);
+        if (it != DocBrokers.end())
+        {
+            // Get the DocumentBroker from the Cache.
+            Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
+            docBroker = it->second;
+            assert(docBroker);
+        }
+        else
+        {
+            // New Document.
+#if MAX_DOCUMENTS > 0
+            if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
             {
-                Log::error("Termination flag set. No loading new session [" + id + "]");
+                Log::error() << "Limit on maximum number of open documents of "
+                             << MAX_DOCUMENTS << " reached." << Log::end;
+                shutdownLimitReached(*ws);
                 return;
             }
-
-            cleanupDocBrokers();
-
-            // Lookup this document.
-            auto it = DocBrokers.find(docKey);
-            if (it != DocBrokers.end())
-            {
-                // Get the DocumentBroker from the Cache.
-                Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
-                docBroker = it->second;
-                assert(docBroker);
-            }
-            else
-            {
-                // New Document.
-#if MAX_DOCUMENTS > 0
-                if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
-                {
-                    Log::error() << "Limit on maximum number of open documents of "
-                                 << MAX_DOCUMENTS << " reached." << Log::end;
-                    shutdownLimitReached(*ws);
-                    return;
-                }
 #endif
 
-                // Store a dummy (marked to destroy) document broker until we
-                // have the real one, so that the other requests block
-                Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily.");
+            // Store a dummy (marked to destroy) document broker until we
+            // have the real one, so that the other requests block
+            Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily.");
 
-                std::shared_ptr<DocumentBroker> tempBroker = std::make_shared<DocumentBroker>();
-                DocBrokers.emplace(docKey, tempBroker);
-            }
+            std::shared_ptr<DocumentBroker> tempBroker = std::make_shared<DocumentBroker>();
+            DocBrokers.emplace(docKey, tempBroker);
         }
+
+        docBrokersLock.unlock();
 
         if (docBroker && docBroker->isMarkedToDestroy())
         {
@@ -767,7 +766,7 @@ private:
                 std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
 
                 std::unique_lock<std::mutex> lock(DocBrokersMutex);
-                auto it = DocBrokers.find(docKey);
+                it = DocBrokers.find(docKey);
                 if (it == DocBrokers.end())
                 {
                     // went away successfully
