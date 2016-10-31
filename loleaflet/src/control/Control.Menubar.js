@@ -128,12 +128,7 @@ L.Control.Menubar = L.Control.extend({
 												  {name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
 												  {name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'}]
 			},
-			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
-												{type: 'separator'},
-												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
-												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
-												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
-			},
+			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'}]},
 			{name: _('Cells'), type: 'menu', menu: [{name: _('Insert row'), type: 'unocommand', uno: '.uno:InsertRows'},
 												 {name: _('Insert column'), type: 'unocommand', uno: '.uno:InsertColumns'},
 												 {type: 'separator'},
