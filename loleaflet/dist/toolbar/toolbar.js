@@ -754,6 +754,9 @@ map.on('doclayerinit', function () {
 	var statusbar = w2ui['toolbar-down'];
 	switch (docType) {
 	case 'spreadsheet':
+		statusbar.disable('zoomreset');
+		statusbar.disable('zoomout');
+		statusbar.disable('zoomin');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'StatusDocPos',

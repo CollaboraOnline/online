@@ -208,12 +208,7 @@ L.Control.Menubar = L.Control.extend({
 												{type: 'separator'},
 												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'},
-												{type: 'separator'},
-												{name: _('Zoom in'), id: 'zoomin', type: 'action'},
-												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
-												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
-			},
+			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'}]},
 			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
 												  {name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
 												  {type: 'separator'},
