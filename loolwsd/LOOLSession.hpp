@@ -106,18 +106,18 @@ protected:
         }
         else if (peer->isCloseFrame())
         {
-            Log::trace(getName() + ": peer began the closing handshake. Dropping forward message [" + message + "].");
+            LOG_TRC(getName() << ": peer began the closing handshake. Dropping forward message [" << message << "].");
             return true;
         }
         else if (peer->isHeadless())
         {
             // Fail silently and return as there is no actual websocket
             // connection in this case.
-            Log::info(getName() + ": Headless peer, not forwarding message [" + message + "].");
+            LOG_INF(getName() << ": Headless peer, not forwarding message [" << message << "].");
             return true;
         }
 
-        Log::trace(getName() + " -> " + peer->getName() + ": " + message);
+        LOG_TRC(getName() << " -> " << peer->getName() << ": " << message);
         return binary ? peer->sendBinaryFrame(buffer, length)
                       : peer->sendTextFrame(buffer, length);
     }

@@ -73,14 +73,14 @@ LOOLSession::~LOOLSession()
 
 bool LOOLSession::sendTextFrame(const char* buffer, const int length)
 {
-    Log::trace(getName() + ": Send: " + getAbbreviatedMessage(buffer, length));
+    LOG_TRC(getName() << ": Send: " << getAbbreviatedMessage(buffer, length));
     try
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
         if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
         {
-            Log::error(getName() + ": Bad socket while sending [" + getAbbreviatedMessage(buffer, length) + "].");
+            LOG_ERR(getName() << ": Bad socket while sending [" << getAbbreviatedMessage(buffer, length) << "].");
             return false;
         }
 
@@ -96,9 +96,8 @@ bool LOOLSession::sendTextFrame(const char* buffer, const int length)
     }
     catch (const Exception& exc)
     {
-        Log::error() << "LOOLSession::sendTextFrame: "
-                     << "Exception: " << exc.displayText()
-                     << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+        LOG_ERR("LOOLSession::sendTextFrame: Exception: " << exc.displayText() <<
+                (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
     }
 
     return false;
@@ -106,14 +105,14 @@ bool LOOLSession::sendTextFrame(const char* buffer, const int length)
 
 bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
 {
-    Log::trace(getName() + ": Send: " + std::to_string(length) + " bytes");
+    LOG_TRC(getName() << ": Send: " << std::to_string(length) << " bytes.");
     try
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
         if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
         {
-            Log::error(getName() + ": Bad socket while sending binary frame of " + std::to_string(length) + " bytes.");
+            LOG_ERR(getName() << ": Bad socket while sending binary frame of " << length << " bytes.");
             return false;
         }
 
@@ -128,9 +127,8 @@ bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
     }
     catch (const Exception& exc)
     {
-        Log::error() << "LOOLSession::sendBinaryFrame: "
-                     << "Exception: " << exc.displayText()
-                     << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+        LOG_ERR("LOOLSession::sendBinaryFrame: Exception: " << exc.displayText() <<
+                (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
     }
 
     return false;
@@ -205,7 +203,8 @@ void LOOLSession::disconnect()
     }
     catch (const IOException& exc)
     {
-        Log::error("LOOLSession::disconnect: Exception: " + exc.displayText() + (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+        LOG_ERR("LOOLSession::disconnect: Exception: " << exc.displayText() <<
+                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
 }
 
@@ -220,14 +219,15 @@ void LOOLSession::shutdown(Poco::UInt16 statusCode)
 {
     if (_ws)
     {
-        try {
-            Log::trace("Shutting down WS [" + getName() + "].");
+        try
+        {
+            LOG_TRC("Shutting down WS [" << getName() << "].");
             _ws->shutdown(statusCode);
         }
         catch (const Poco::Exception &exc)
         {
-            Log::warn("LOOLSession::shutdown WebSocket: Exception: " +
-                      exc.displayText() + (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+            LOG_WRN("LOOLSession::shutdown WebSocket: Exception: " <<
+                    exc.displayText() << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
         }
     }
 }
@@ -239,25 +239,23 @@ bool LOOLSession::handleInput(const char *buffer, int length)
     const auto summary = getAbbreviatedMessage(buffer, length);
     try
     {
-        Log::trace(getName() + ": Recv: " + summary);
+        LOG_TRC(getName() << ": Recv: " << summary);
         if (TerminationFlag)
         {
-            Log::warn("Input while terminating: [" + summary + "].");
+            LOG_WRN("Input while terminating: [" << summary << "].");
         }
 
         return _handleInput(buffer, length);
     }
     catch (const Exception& exc)
     {
-        Log::error() << "LOOLSession::handleInput: Exception while handling [" + summary + "] in "
-                     << getName() << ": "
-                     << exc.displayText()
-                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                     << Log::end;
+        LOG_ERR("LOOLSession::handleInput: Exception while handling [" << summary <<
+                "] in " << getName() << ": " << exc.displayText() <<
+                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
     catch (const std::exception& exc)
     {
-        Log::error("LOOLSession::handleInput: Exception while handling [" + summary + "]: " + exc.what());
+        LOG_ERR("LOOLSession::handleInput: Exception while handling [" << summary << "]: " << exc.what());
     }
 
     return false;
