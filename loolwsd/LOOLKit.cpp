@@ -637,6 +637,7 @@ public:
             if (length > SMALL_MESSAGE_SIZE)
             {
                 const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+                LOG_TRC("Sending large message [" << nextmessage << "].");
                 _ws->sendFrame(nextmessage.data(), nextmessage.size());
             }
 
