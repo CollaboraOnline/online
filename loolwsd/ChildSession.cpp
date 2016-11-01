@@ -978,7 +978,8 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
         nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
         nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
-        nType == LOK_CALLBACK_VIEW_LOCK)
+        nType == LOK_CALLBACK_VIEW_LOCK ||
+        nType == LOK_CALLBACK_STATE_CHANGED)
     {
         auto lock(getLock());
 
