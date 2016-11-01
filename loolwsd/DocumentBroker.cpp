@@ -851,8 +851,21 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
 
 bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vector<char>& payload)
 {
-    std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
-    Util::ltrim(message);
+    assert(payload.size() > prefix.size());
+
+    // Remove the prefix and trim.
+    size_t index = prefix.size();
+    for ( ; index < payload.size(); ++index)
+    {
+        if (payload[index] != ' ')
+        {
+            break;
+        }
+    }
+
+    auto data = payload.data() + index;
+    auto size = payload.size() - index;
+    const auto message = getAbbreviatedMessage(data, size);
     Log::trace("Forwarding payload to " + prefix + ' ' + message);
 
     std::string name;
@@ -865,7 +878,7 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
             const auto peer = it->second->getPeer();
             if (peer)
             {
-                return peer->handleInput(message.data(), message.size());
+                return peer->handleInput(data, size);
             }
             else
             {
