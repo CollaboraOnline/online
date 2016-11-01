@@ -111,9 +111,17 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         sendTextFrame("setpart: part=" + std::to_string(curPart));
 
         //TODO: Is the order of these important?
+        for (const auto& pair : _lastDocEvents)
+        {
+            const auto typeName = LOKitHelper::kitCallbackTypeToString(pair.first);
+            LOG_TRC("Replaying missed event: " << typeName << ": " << pair.second);
+            loKitCallback(pair.first, pair.second);
+        }
+
         for (const auto& pair : _lastDocStates)
         {
-            loKitCallback(pair.first, pair.second);
+            LOG_TRC("Replaying missed state-change: STATE_CHANED: " << pair.second);
+            loKitCallback(LOK_CALLBACK_STATE_CHANGED, pair.second);
         }
 
         Log::debug("Finished replaying messages.");
@@ -938,6 +946,8 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
 void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
 {
     const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
+    Log::trace() << "CallbackWorker::callback [" << getName() << "]: "
+                 << typeName << " [" << rPayload << "]." << Log::end;
 
     if (isCloseFrame())
     {
@@ -951,39 +961,47 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
     }
     else if (!isActive())
     {
+        // Cache important notifications to replay them when our client
+        // goes inactive and loses them.
+        if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+            nType == LOK_CALLBACK_CURSOR_VISIBLE ||
+            nType == LOK_CALLBACK_CELL_CURSOR ||
+            nType == LOK_CALLBACK_CELL_FORMULA ||
+            nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
+            nType == LOK_CALLBACK_TEXT_SELECTION ||
+            nType == LOK_CALLBACK_TEXT_SELECTION_START ||
+            nType == LOK_CALLBACK_TEXT_SELECTION_END ||
+            nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
+            nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+            nType == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
+            nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
+            nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
+            nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
+            nType == LOK_CALLBACK_VIEW_LOCK)
+        {
+            auto lock(getLock());
+
+            _lastDocEvents[nType] = rPayload;
+        }
+
+        if (nType == LOK_CALLBACK_STATE_CHANGED)
+        {
+            std::string name;
+            std::string value;
+            if (LOOLProtocol::parseNameValuePair(rPayload, name, value, '='))
+            {
+                auto lock(getLock());
+
+                _lastDocStates[name] = rPayload;
+            }
+        }
+
         // Pass save notifications through.
         if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
         {
             Log::trace("Skipping callback [" + typeName + "] on inactive session " + getName());
             return;
         }
-    }
-
-    Log::trace() << "CallbackWorker::callback [" << getName() << "]: "
-                 << typeName << " [" << rPayload << "]." << Log::end;
-
-    // Cache important notifications to replay them when our client
-    // goes inactive and loses them.
-    if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-        nType == LOK_CALLBACK_CURSOR_VISIBLE ||
-        nType == LOK_CALLBACK_CELL_CURSOR ||
-        nType == LOK_CALLBACK_CELL_FORMULA ||
-        nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
-        nType == LOK_CALLBACK_TEXT_SELECTION ||
-        nType == LOK_CALLBACK_TEXT_SELECTION_START ||
-        nType == LOK_CALLBACK_TEXT_SELECTION_END ||
-        nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
-        nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
-        nType == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
-        nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
-        nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
-        nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
-        nType == LOK_CALLBACK_VIEW_LOCK ||
-        nType == LOK_CALLBACK_STATE_CHANGED)
-    {
-        auto lock(getLock());
-
-        _lastDocStates[nType] = rPayload;
     }
 
     switch (nType)
