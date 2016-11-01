@@ -97,7 +97,7 @@ public:
         }
         catch (const std::exception& ex)
         {
-            Log::error("Eror while closing child process: " + std::string(ex.what()));
+            Log::error("Error while closing child process: " + std::string(ex.what()));
         }
     }
 
