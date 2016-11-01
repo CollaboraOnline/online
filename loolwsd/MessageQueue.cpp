@@ -102,6 +102,9 @@ void TileQueue::put_impl(const Payload& value)
                 [&tokens](const Payload& v)
                 {
                     const std::string s(v.data(), v.size());
+                    // Tile is for a thumbnail, don't cancel it
+                    if (s.find("id=") != std::string::npos)
+                        return false;
                     for (size_t i = 0; i < tokens.count(); ++i)
                     {
                         if (s.find("ver=" + tokens[i]) != std::string::npos)
