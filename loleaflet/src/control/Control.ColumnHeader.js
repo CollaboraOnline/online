@@ -21,6 +21,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
 		this._map.on('updateselectionheader', this._onUpdateSelection, this);
 		this._map.on('clearselectionheader', this._onClearSelection, this);
+		this._map.on('updatecurrentheader', this._onUpdateCurrentColumn, this);
 		var docContainer = this._map.options.documentContainer;
 		var cornerHeader = L.DomUtil.create('div', 'spreadsheet-header-corner', docContainer.parentElement);
 		L.DomEvent.addListener(cornerHeader, 'click', this._onCornerHeaderClick, this);
@@ -152,6 +153,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 	_onUpdateSelection: function (e) {
 		this.updateSelection(this._columns, e.start.x, e.end.x);
+	},
+
+	_onUpdateCurrentColumn: function (e) {
+		this.updateCurrent(this._columns, e.x);
 	},
 
 	viewRowColumnHeaders: function (e) {
